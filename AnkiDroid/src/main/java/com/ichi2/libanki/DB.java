@@ -30,6 +30,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.utils.VersionUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -50,8 +51,12 @@ public class DB {
 
     private static final String[] MOD_SQLS = new String[] { "insert", "update", "delete" };
 
+    private static final int DB_VERSION = VersionUtils.getPkgVersionCode();
+
     /** may be injected to use a different sqlite implementation - null means use default */
     private static SupportSQLiteOpenHelper.Factory sqliteOpenHelperFactory = null;
+
+    private ArrayList<MigrationCallback> migrationCallbacks = new ArrayList<>();
 
     /**
      * The deck, which is actually an SQLite database.
@@ -63,6 +68,15 @@ public class DB {
      * Open a database connection to an ".anki" SQLite file.
      */
     public DB(String ankiFilename) {
+        this(ankiFilename, null);
+    }
+
+
+    public DB(String ankiFilename, MigrationCallback callback) {
+
+        if (callback != null) {
+            addMigrationCallback(callback);
+        }
 
         SupportSQLiteOpenHelper.Configuration configuration = SupportSQLiteOpenHelper.Configuration.builder(AnkiDroidApp.getInstance())
                 .name(ankiFilename)
@@ -77,6 +91,11 @@ public class DB {
         mMod = false;
     }
 
+
+    /** Get the version of the database we should use */
+    protected int getDbVersion() {
+        return DB_VERSION;
+    }
 
     /**
      * You may swap in your own SQLite implementation by altering the factory here. An
@@ -99,7 +118,7 @@ public class DB {
 
     /** Get the SQLite callback object to use when creating connections - overridable for testability */
     protected SupportSQLiteOpenHelperCallback getDBCallback() {
-        return new SupportSQLiteOpenHelperCallback(1);
+        return new SupportSQLiteOpenHelperCallback(getDbVersion());
     }
 
 
@@ -111,9 +130,33 @@ public class DB {
      */
     public class SupportSQLiteOpenHelperCallback extends SupportSQLiteOpenHelper.Callback {
 
-        protected SupportSQLiteOpenHelperCallback(int version) { super(version); }
-        public void onCreate(SupportSQLiteDatabase db) {/* do nothing */ }
-        public void onUpgrade(SupportSQLiteDatabase db, int oldVersion, int newVersion) { /* do nothing */ }
+
+        protected SupportSQLiteOpenHelperCallback(int version) {
+            super(version);
+            Timber.d("constructor for version %s", version);
+        }
+
+
+        @Override
+        public void onCreate(SupportSQLiteDatabase db) {
+            Timber.d("onCreate(), db version %s", db.getVersion());
+        }
+
+
+        @Override
+        public void onUpgrade(SupportSQLiteDatabase db, int oldVersion, int newVersion) {
+            Timber.d("onUpgrade() db version current/from/to %s/%s/%s, ", db.getVersion(), oldVersion, newVersion);
+            for (MigrationCallback callback : migrationCallbacks) {
+                callback.doMigration(db, oldVersion, newVersion);
+            }
+        }
+
+
+        @Override
+        public void onOpen(SupportSQLiteDatabase db) {
+            Timber.d("onOpen() db version is currently: %s", db.getVersion());
+            super.onOpen(db);
+        }
 
 
         /** Send error message, but do not call super() which would delete the database */
@@ -125,6 +168,15 @@ public class DB {
         }
     }
 
+    /** Implement this and register to listen for database migration events */
+    public interface MigrationCallback {
+        void doMigration(SupportSQLiteDatabase db, int oldVersion, int newVersion);
+    }
+
+
+    public void addMigrationCallback(MigrationCallback callback) {
+        migrationCallbacks.add(callback);
+    }
 
     /**
      * Closes a previously opened database connection.

@@ -50,6 +50,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.app.ShareCompat;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -89,6 +90,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
@@ -97,6 +99,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
@@ -121,7 +124,8 @@ import timber.log.Timber;
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
-        ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
+        ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener,
+        DB.MigrationCallback {
 
 
     /**
@@ -886,6 +890,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         automaticSync();
         CardBrowser.clearLastDeckId();
+        new BootService().onReceive(this, new Intent(this, BootService.class));
     }
 
     private void showCollectionErrorDialog() {
@@ -1248,6 +1253,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // do nothing
             }
         });
+    }
+
+    public void doMigration(SupportSQLiteDatabase db, int oldVersion, int newVersion) {
+        Timber.d("doMigration() from %s to %s", oldVersion, newVersion);
+        if (oldVersion < 20900151 && newVersion >= 20900151) {
+            integrityCheck();
+        }
     }
 
 

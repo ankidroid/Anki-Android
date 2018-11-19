@@ -19,9 +19,16 @@ import java.util.Random;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.GrantPermissionRule;
+import timber.log.Timber;
 
 @RunWith(AndroidJUnit4.class)
 public class DBTest {
+
+    private static int upgradeTestDBVersion = 1;
+
+    private boolean databaseIsUpgraded = false;
+
+    private boolean databaseIsCorrupt = false;
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
@@ -31,14 +38,14 @@ public class DBTest {
     public void testDBCorruption() throws Exception {
 
         String storagePath = CollectionHelper.getDefaultAnkiDroidDirectory();
-        File illFatedDBFile = new File(storagePath, "illFatedDB.anki2");
+        File illFatedDBFile = new File(storagePath, "testIllFatedDB.anki2");
 
         // Make sure we have clean state to start with
         SQLiteDatabase.deleteDatabase(illFatedDBFile);
         Assert.assertFalse("database exists already", illFatedDBFile.exists());
 
         TestDB illFatedDB = new TestDB(illFatedDBFile.getCanonicalPath());
-        Assert.assertFalse("database should not be corrupt yet", illFatedDB.databaseIsCorrupt);
+        Assert.assertFalse("database should not be corrupt yet", databaseIsCorrupt);
 
         // Scribble in it
         byte[] b = new byte[1024];
@@ -57,7 +64,7 @@ public class DBTest {
             // do nothing, it is expected
         }
 
-        Assert.assertTrue("database corruption not detected", illFatedDB.databaseIsCorrupt);
+        Assert.assertTrue("database corruption not detected", databaseIsCorrupt);
 
         // our handler avoids deleting databases, in contrast with default handler
         Assert.assertTrue("database incorrectly deleted on corruption", illFatedDBFile.exists());
@@ -66,20 +73,44 @@ public class DBTest {
         SQLiteDatabase.deleteDatabase(illFatedDBFile);
     }
 
+    @Test
+    public void testDatabaseUpgrade() throws Exception {
+        String storagePath = CollectionHelper.getDefaultAnkiDroidDirectory();
+        File upgradeDBFile = new File(storagePath, "testUpgradeDB.anki2");
 
+        // Make sure we have clean state to start with
+        SQLiteDatabase.deleteDatabase(upgradeDBFile);
+        Assert.assertFalse("database exists already", upgradeDBFile.exists());
 
-    // Test fixture that lets us inspect corruption handler status
+        TestDB upgradeDB = new TestDB(upgradeDBFile.getCanonicalPath());
+        Assert.assertFalse("database should not be upgraded yet", databaseIsUpgraded);
+        upgradeDB.close();
+
+        upgradeTestDBVersion++;
+        TestDB upgradedDB = new TestDB(upgradeDBFile.getCanonicalPath());
+        Assert.assertEquals(upgradeTestDBVersion, upgradedDB.getDatabase().getVersion());
+        Timber.d("current upgraded status: %s", databaseIsUpgraded);
+        Assert.assertTrue("database never upgraded", databaseIsUpgraded);
+
+        upgradedDB.close();
+        SQLiteDatabase.deleteDatabase(upgradeDBFile);
+    }
+
+    // Test fixture that lets us inspect corruption handler and upgrade status
     public class TestDB extends DB {
-
-        private boolean databaseIsCorrupt = false;
 
         private TestDB(String ankiFilename) {
             super(ankiFilename);
         }
 
         @Override
+        protected int getDbVersion() {
+            return upgradeTestDBVersion;
+        }
+
+        @Override
         protected SupportSQLiteOpenHelperCallback getDBCallback() {
-            return new TestSupportSQLiteOpenHelperCallback(1);
+            return new TestSupportSQLiteOpenHelperCallback(getDbVersion());
         }
 
         public class TestSupportSQLiteOpenHelperCallback extends SupportSQLiteOpenHelperCallback {
@@ -91,6 +122,12 @@ public class DBTest {
             public void onCorruption(SupportSQLiteDatabase db) {
                 databaseIsCorrupt = true;
                 super.onCorruption(db);
+            }
+
+            @Override
+            public void onUpgrade(SupportSQLiteDatabase db, int oldVersion, int newVersion) {
+                databaseIsUpgraded = true;
+                super.onUpgrade(db, oldVersion, newVersion);
             }
         }
     }

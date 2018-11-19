@@ -50,7 +50,12 @@ public class Storage {
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
         // connect
-        DB db = new DB(path);
+        DB db;
+        if (context instanceof DB.MigrationCallback) {
+            db = new DB(path, (DB.MigrationCallback) context);
+        } else {
+            db = new DB(path);
+        }
         try {
             // initialize
             int ver;
