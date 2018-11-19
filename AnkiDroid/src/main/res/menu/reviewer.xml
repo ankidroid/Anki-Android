@@ -21,7 +21,7 @@
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_reset_card_progress"
-        android:icon="@drawable/ic_action_refresh"
+        android:icon="@drawable/ic_refresh_white_24dp"
         android:title="@string/card_editor_reset_card"
         ankidroid:showAsAction="never"/>
     <item
