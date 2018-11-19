@@ -648,4 +648,18 @@ public class Card implements Cloneable {
         }
         return TextUtils.join(",  ", members);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Card) {
+            return this.getId() == ((Card)obj).getId();
+        }
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        // Map a long to an int. For API>=24 you would just do `Long.hashCode(this.getId())`
+        return (int)(this.getId()^(this.getId()>>>32));
+    }
 }
