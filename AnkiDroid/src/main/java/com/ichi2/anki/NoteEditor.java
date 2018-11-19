@@ -1007,10 +1007,12 @@ public class NoteEditor extends AnkiActivity {
         } catch (JSONException e) {
            throw new RuntimeException(e);
         }
-        // Also pass the card ID if not adding new note
+        // Also pass the note id and ord if not adding new note
         if (!mAddNote) {
             intent.putExtra("noteId", mCurrentEditedCard.note().getId());
             Timber.d("showCardTemplateEditor() with note %s", mCurrentEditedCard.note().getId());
+            intent.putExtra("ordId", mCurrentEditedCard.getOrd());
+            Timber.d("showCardTemplateEditor() with ord %s", mCurrentEditedCard.getOrd());
         }
         startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
     }
