@@ -71,6 +71,7 @@ public class CardTemplateEditor extends AnkiActivity {
     private SlidingTabLayout mSlidingTabLayout;
     private long mModelId;
     private long mNoteId;
+    private int mOrdId;
     private static final int REQUEST_PREVIEWER = 0;
     private static final String DUMMY_TAG = "DUMMY_NOTE_TO_DELETE_x0-90-fa";
 
@@ -132,11 +133,14 @@ public class CardTemplateEditor extends AnkiActivity {
                 finishWithoutAnimation();
                 return;
             }
-            // get id for currently edited card (optional)
+            // get id for currently edited note (optional)
             mNoteId = getIntent().getLongExtra("noteId", -1L);
+            // get id for currently edited template (optional)
+            mOrdId = getIntent().getIntExtra("ordId", -1);
         } else {
             mModelId = savedInstanceState.getLong("modelId");
             mNoteId = savedInstanceState.getLong("noteId");
+            mOrdId = savedInstanceState.getInt("ordId");
             try {
                 mModelBackup = new JSONObject(savedInstanceState.getString("modelBackup"));
             } catch (JSONException e) {
@@ -159,6 +163,7 @@ public class CardTemplateEditor extends AnkiActivity {
         }
         outState.putLong("modelId", mModelId);
         outState.putLong("noteId", mNoteId);
+        outState.putLong("ordId", mOrdId);
         super.onSaveInstanceState(outState);
     }
 
@@ -240,6 +245,11 @@ public class CardTemplateEditor extends AnkiActivity {
         }
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId);
+
+        // Set the tab to the current template if an ord id was provided
+        if (mOrdId != -1) {
+            mViewPager.setCurrentItem(mOrdId);
+        }
     }
 
     public boolean modelHasChanged() {
