@@ -168,14 +168,19 @@ public class CardTemplateEditor extends AnkiActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (modelHasChanged()) {
+            showDiscardChangesDialog();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
-                if (modelHasChanged()) {
-                    showDiscardChangesDialog();
-                } else {
-                    finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                }
+                onBackPressed();
                 return true;
             }
             default:
