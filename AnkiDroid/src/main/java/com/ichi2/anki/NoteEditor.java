@@ -1062,17 +1062,21 @@ public class NoteEditor extends AnkiActivity {
                 break;
             }
             case REQUEST_TEMPLATE_EDIT: {
-                if (resultCode == RESULT_OK) {
+                    // Model can change regardless of exit type - update ourselves and CardBrowser
                     mReloadRequired = true;
-                }
-                // rebuild the model post-template-edit so we get the correct number of cards
-                Timber.d("onActivityResult() template edit - reloading model");
-                mEditorNote.reloadModel();
-                updateCards(mEditorNote.model());
+                    mEditorNote.reloadModel();
+                    if (!mEditorNote.cards().contains(mCurrentEditedCard)) {
+                        Timber.d("onActivityResult() template edit return - current card is gone");
+                        UIUtils.showSimpleSnackbar(this, R.string.template_for_current_card_deleted, false);
+                        closeNoteEditor();
+                    } else {
+                        Timber.d("onActivityResult() template edit return - current card exists");
+                        // reload current card - the template ordinals are possibly different post-edit
+                        mCurrentEditedCard = getCol().getCard(mCurrentEditedCard.getId());
+                        updateCards(mEditorNote.model());
+                    }
                 break;
             }
-            default:
-                break;
         }
     }
 
