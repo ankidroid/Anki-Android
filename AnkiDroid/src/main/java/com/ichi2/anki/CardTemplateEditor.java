@@ -80,8 +80,8 @@ public class CardTemplateEditor extends AnkiActivity {
     // Listeners
     // ----------------------------------------------------------------------------
 
-    /* Used for updating the collection when a reverse card is added */
-    private DeckTask.TaskListener mUpdateTemplateHandler = new DeckTask.TaskListener() {
+    /* Used for updating the collection when a reverse card is added or a template is deleted */
+    private DeckTask.TaskListener mAddRemoveTemplateHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
             showProgressBar();
@@ -667,7 +667,7 @@ public class CardTemplateEditor extends AnkiActivity {
             activity.getCol().modSchemaNoCheck();
             Object [] args = new Object[] {model, tmpl};
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REMOVE_TEMPLATE,
-                    activity.mUpdateTemplateHandler,  new DeckTask.TaskData(args));
+                    activity.mAddRemoveTemplateHandler,  new DeckTask.TaskData(args));
             activity.dismissAllDialogFragments();
         }
 
@@ -723,7 +723,7 @@ public class CardTemplateEditor extends AnkiActivity {
             // Add new template to the current model via AsyncTask
             Object [] args = new Object[] {model, newTemplate};
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_TEMPLATE,
-                    activity.mUpdateTemplateHandler,  new DeckTask.TaskData(args));
+                    activity.mAddRemoveTemplateHandler,  new DeckTask.TaskData(args));
             activity.dismissAllDialogFragments();
         }
 
