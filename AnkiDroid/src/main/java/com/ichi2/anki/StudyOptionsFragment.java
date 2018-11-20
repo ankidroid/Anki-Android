@@ -415,7 +415,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             }
             // Set the back button listener
             if (!mFragmented) {
-                final Drawable icon = AppCompatResources.getDrawable(getContext(), R.drawable.ic_arrow_back_white_24dp);
+                final Drawable icon = AppCompatResources.getDrawable(getContext(), R.drawable.ic_arrow_back_white);
                 icon.setAutoMirrored(true);
                 mToolbar.setNavigationIcon(icon);
                 mToolbar.setNavigationOnClickListener(v -> ((AnkiActivity) getActivity()).finishWithAnimation(END));
