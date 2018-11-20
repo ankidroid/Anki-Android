@@ -1732,6 +1732,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         mCustomButtons.put(R.id.action_undo, Integer.parseInt(preferences.getString("customButtonUndo", "2")));
+        mCustomButtons.put(R.id.action_reset_card_progress, Integer.parseInt(preferences.getString("customButtonResetProgress", "3")));
         mCustomButtons.put(R.id.action_mark_card, Integer.parseInt(preferences.getString("customButtonMarkCard", "2")));
         mCustomButtons.put(R.id.action_edit, Integer.parseInt(preferences.getString("customButtonEditCard", "1")));
         mCustomButtons.put(R.id.action_add_note_reviewer, Integer.parseInt(preferences.getString("customButtonAddCard", "3")));

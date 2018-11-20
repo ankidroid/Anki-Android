@@ -20,6 +20,11 @@
         android:title="@string/undo"
         ankidroid:showAsAction="always"/>
     <item
+        android:id="@+id/action_reset_card_progress"
+        android:icon="@drawable/ic_refresh_white_24dp"
+        android:title="@string/card_editor_reset_card"
+        ankidroid:showAsAction="never"/>
+    <item
         android:id="@+id/action_mark_card"
         android:icon="@drawable/ic_star_outline_white_24dp"
         android:title="@string/menu_mark_note"
