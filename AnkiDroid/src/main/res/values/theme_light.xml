@@ -57,8 +57,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="currentDeckBackgroundColor">@color/theme_light_row_current</item>
         <item name="dynDeckColor">#2222bb</item>
         <item name="deckDivider">@drawable/divider</item>
-        <item name="expandRef">@drawable/ic_chevron_right_black_24dp</item>
-        <item name="collapseRef">@drawable/ic_expand_more_black_24dp</item>
+        <item name="expandRef">@drawable/ic_chevron_right_black</item>
+        <item name="collapseRef">@drawable/ic_expand_more_black</item>
         <!-- Count colors -->
         <item name="newCountColor">@color/material_indigo_700</item>
         <item name="learnCountColor">@color/material_red_700</item>
@@ -116,11 +116,11 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="fab_item_background">@drawable/fab_label_background_pre21</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
-        <item name="attachFileImage">@drawable/ic_attachment_black_24dp</item>
-        <item name="upDownImage">@drawable/ic_import_export_black_24dp</item>
-        <item name="dialogErrorIcon">@drawable/ic_warning_black_36dp</item>
-        <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_black_36dp</item>
-        <item name="dialogSendIcon">@drawable/ic_send_black_36dp</item>
+        <item name="attachFileImage">@drawable/ic_attachment_black</item>
+        <item name="upDownImage">@drawable/ic_import_export_black</item>
+        <item name="dialogErrorIcon">@drawable/ic_warning_black</item>
+        <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_black</item>
+        <item name="dialogSendIcon">@drawable/ic_send_black</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_dark_theme">false</item>

@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/action_save"
-        android:icon="@drawable/ic_done_white_24dp"
+        android:icon="@drawable/ic_done_white"
         android:title="@string/save"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_preview"
-        android:icon="@drawable/ic_remove_red_eye_white_24dp"
+        android:icon="@drawable/ic_remove_red_eye_white"
         android:title="@string/card_editor_preview_card"
         ankidroid:showAsAction="ifRoom"
         android:visible="true"/>
