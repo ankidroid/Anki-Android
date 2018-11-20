@@ -61,6 +61,26 @@ public class Reviewer extends AbstractFlashcardViewer {
     private static final int ADD_NOTE = 12;
     private Long mLastSelectedBrowserDid = null;
 
+
+    private DeckTask.TaskListener mResetProgressCardHandler = new DeckTask.TaskListener() {
+
+
+        @Override
+        public void onPreExecute() {
+            Timber.d("Reviewer::ResetProgressCardHandler() onPreExecute");
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            Timber.d("Reviewer::ResetProgressCardHandler() onPostExecute");
+            int cardCount = result.getObjArray().length;
+            UIUtils.showThemedToast(Reviewer.this,
+                    getResources().getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true);
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
@@ -268,18 +288,19 @@ public class Reviewer extends AbstractFlashcardViewer {
         return true;
     }
 
+
     private void showResetCardDialog() {
+        // Show confirmation dialog before resetting card progress
+        Timber.i("showResetCardDialog() Reset progress button pressed");
         // Show confirmation dialog before resetting card progress
         ConfirmationDialog dialog = new ConfirmationDialog();
         String title = getResources().getString(R.string.reset_card_dialog_title);
         String message = getResources().getString(R.string.reset_card_dialog_message);
         dialog.setArgs(title, message);
         Runnable confirm = () -> {
-            Timber.i("NoteEditor:: OK button pressed");
-            getCol().getSched().forgetCards(new long[]{mCurrentCard.getId()});
-            getCol().reset();
-            UIUtils.showThemedToast(Reviewer.this,
-                    getResources().getString(R.string.reset_card_dialog_acknowledge), true);
+            Timber.i("NoteEditor:: ResetProgress button pressed");
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
+                    new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS}));
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);
