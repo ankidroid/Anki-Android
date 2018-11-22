@@ -116,6 +116,11 @@
             <Preference
                 android:key="advanced_statistics_link"
                 android:title="@string/advanced_statistics_title"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="html_javascript_debugging"
+                android:summary="@string/html_javascript_debugging_summ"
+                android:title="@string/html_javascript_debugging"/>
         </PreferenceCategory>
 
 

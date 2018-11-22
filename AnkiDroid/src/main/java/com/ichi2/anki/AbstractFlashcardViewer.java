@@ -109,13 +109,6 @@ import timber.log.Timber;
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /**
-     * Whether to save the content of the card in the file system.
-     * <p>
-     * Set this to true for debugging only.
-     */
-    private static final boolean SAVE_CARD_CONTENT = BuildConfig.DEBUG;
-
-    /**
      * Result codes that are returned when this activity finishes.
      */
     public static final int RESULT_DEFAULT = 50;
@@ -1772,8 +1765,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCard == null) {
             mCard = createWebView();
             // On your desktop use chrome://inspect to connect to emulator WebViews
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                if (BuildConfig.DEBUG) WebView.setWebContentsDebuggingEnabled(true);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
+                    AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
+                WebView.setWebContentsDebuggingEnabled(true);
             }
             mCardFrame.addView(mCard);
         }
@@ -2154,7 +2148,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 .replace("::style::", style.toString()).replace("::class::", cardClass));
         Timber.d("base url = %s", mBaseUrl);
 
-        if (SAVE_CARD_CONTENT) {
+        if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
             try {
                 FileOutputStream f = new FileOutputStream(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this),
                         "card.html"));
