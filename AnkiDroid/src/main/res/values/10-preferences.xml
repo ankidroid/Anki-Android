@@ -153,6 +153,9 @@
     <string name="custom_buttons_setting_menu_only">Menu only</string>
     <string name="reset_custom_buttons">Reset to default</string>
 
+    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Advanced statistics</string>
     <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
