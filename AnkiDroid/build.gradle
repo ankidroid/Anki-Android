@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'jacoco'
 
+repositories {
+    google()
+    jcenter()
+}
 def homePath = System.properties['user.home']
 android {
     compileSdkVersion 28
@@ -68,8 +72,16 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
     }
-}
+    testOptions.unitTests.all {
+        testLogging {
+            events "failed", "skipped"
+            showStackTraces = true
+            exceptionFormat = "full"
+        }
 
+        maxParallelForks = gradleTestMaxParallelForks
+    }
+}
 
 play {
     serviceAccountEmail = '294046724212-r3bef6kl46pb9gk0h1pl5rcjmpfrdpjl@developer.gserviceaccount.com'
@@ -80,6 +92,16 @@ play {
 // Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:deprecation" << "-Xmaxwarns" << "1000" << "-Werror"
+
+    // https://guides.gradle.org/performance/#compiling_java
+    // 1- fork improves things over time with repeated builds, doesn't harm CI single builds
+    options.fork = true
+    // 2- incremental will be the default in the future and can help now
+    options.incremental = true
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
 }
 
 // Our merge report task
