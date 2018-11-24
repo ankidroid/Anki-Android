@@ -49,7 +49,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
@@ -98,6 +97,7 @@ import timber.log.Timber;
  *
  * @see <a href="http://ankisrs.net/docs/manual.html#cards">the Anki Desktop manual</a>
  */
+@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
 public class NoteEditor extends AnkiActivity {
 
 //    public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
@@ -613,7 +613,7 @@ public class NoteEditor extends AnkiActivity {
                 second = "";
             }
             // Some users add cards via SEND intent from clipboard. In this case SUBJECT is empty
-            if (first.equals("")) {
+            if ("".equals(first)) {
                 // Assume that if only one field was sent then it should be the front
                 first = second;
                 second = "";
@@ -633,7 +633,7 @@ public class NoteEditor extends AnkiActivity {
         for (int i = 0; i < notepad_lines.length; i++) {
             if (notepad_lines[i].startsWith("[") && notepad_lines[i].endsWith("]")) {
                 category = notepad_lines[i].substring(1, notepad_lines[i].length() - 1);
-                if (category.equals("default")) {
+                if ("default".equals(category)) {
                     if (notepad_lines.length > i + 1) {
                         String[] entry_lines = notepad_lines[i + 1].split(":");
                         if (entry_lines.length > 1) {
@@ -860,7 +860,6 @@ public class NoteEditor extends AnkiActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Resources res = getResources();
         switch (item.getItemId()) {
             case android.R.id.home:
                 Timber.i("NoteEditor:: Home button pressed");
@@ -1104,7 +1103,7 @@ public class NoteEditor extends AnkiActivity {
         Typeface mCustomTypeface = null;
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String customFont = preferences.getString("browserEditorFont", "");
-        if (!customFont.equals("")) {
+        if (!"".equals(customFont)) {
             mCustomTypeface = AnkiFont.getTypeface(this, customFont);
         }
 
@@ -1284,11 +1283,13 @@ public class NoteEditor extends AnkiActivity {
 
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                // do nothing
             }
 
 
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                // do nothing
             }
         });
         editText.setEnabled(enabled);

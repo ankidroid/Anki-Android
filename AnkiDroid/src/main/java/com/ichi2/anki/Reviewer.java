@@ -60,7 +60,6 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
-    private Long mLastSelectedBrowserDid = null;
 
 
     private DeckTask.TaskListener mRescheduleCardHandler = new ScheduleDeckTaskListener() {
@@ -84,7 +83,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     /** We need to listen for and handle repositions / reschedules / resets very similarly */
     abstract class ScheduleDeckTaskListener extends DeckTask.TaskListener {
 
-        abstract int getToastResourceId();
+        abstract protected int getToastResourceId();
 
         @Override
         public void onPreExecute() {
@@ -427,8 +426,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (colIsOpen() && getCol().getDecks().isDyn(getParentDid())) {
             menu.findItem(R.id.action_open_deck_options).setVisible(false);
         }
-        if(mSpeakText){
-            if(mCustomButtons.get(R.id.action_select_tts) != MENU_DISABLED)
+        if (mSpeakText && mCustomButtons.get(R.id.action_select_tts) != MENU_DISABLED) {
                 menu.findItem(R.id.action_select_tts).setVisible(true);
         }
         // Setup bury / suspend providers
@@ -537,10 +535,8 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     public void fillFlashcard() {
         super.fillFlashcard();
-        if (!sDisplayAnswer) {
-            if (mShowWhiteboard && mWhiteboard != null) {
-                mWhiteboard.clear();
-            }
+        if (!sDisplayAnswer && mShowWhiteboard && mWhiteboard != null) {
+            mWhiteboard.clear();
         }
     }
 
@@ -556,10 +552,8 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected void onStop() {
         super.onStop();
 
-        if (!isFinishing()) {
-            if (colIsOpen() && mSched != null) {
-                WidgetStatus.update(this);
-            }
+        if (!isFinishing() && colIsOpen() && mSched != null) {
+            WidgetStatus.update(this);
         }
         UIUtils.saveCollectionInBackground(this);
     }
