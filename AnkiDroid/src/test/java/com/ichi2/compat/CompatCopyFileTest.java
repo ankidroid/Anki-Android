@@ -20,6 +20,9 @@ import com.ichi2.anki.TestUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,11 +33,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Objects;
 
-public class CompatDefaultTest {
-
-    protected Compat getCompat() {
-        return new CompatV15();
-    }
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = { 16, 26 })
+public class CompatCopyFileTest {
 
     @Test
     public void testCopyFileToStream() throws Exception {
@@ -42,7 +43,7 @@ public class CompatDefaultTest {
         File copy = File.createTempFile("testCopyFileToStream", ".zip");
         copy.deleteOnExit();
         FileOutputStream outputStream = new FileOutputStream(copy.getCanonicalPath());
-        getCompat().copyFile(resource.getPath(), outputStream);
+        CompatHelper.getCompat().copyFile(resource.getPath(), outputStream);
         outputStream.close();
         Assert.assertEquals(TestUtils.getMD5(resource.getPath()), TestUtils.getMD5(copy.getCanonicalPath()));
     }
@@ -53,7 +54,7 @@ public class CompatDefaultTest {
         URL resource = Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip");
         File copy = File.createTempFile("testCopyStreamToFile", ".zip");
         copy.deleteOnExit();
-        getCompat().copyFile(resource.openStream(), copy.getCanonicalPath());
+        CompatHelper.getCompat().copyFile(resource.openStream(), copy.getCanonicalPath());
         Assert.assertEquals(TestUtils.getMD5(resource.getPath()), TestUtils.getMD5(copy.getCanonicalPath()));
     }
 
@@ -66,7 +67,7 @@ public class CompatDefaultTest {
 
         // Try copying from a bogus file
         try {
-            getCompat().copyFile(new FileInputStream(""), copy.getCanonicalPath());
+            CompatHelper.getCompat().copyFile(new FileInputStream(""), copy.getCanonicalPath());
             Assert.fail("Should have caught an exception");
         } catch (FileNotFoundException e) {
             // This is expected
@@ -76,7 +77,7 @@ public class CompatDefaultTest {
         try {
             FileOutputStream outputStream = new FileOutputStream(copy.getCanonicalPath());
             outputStream.close();
-            getCompat().copyFile(resource.getPath(), outputStream);
+            CompatHelper.getCompat().copyFile(resource.getPath(), outputStream);
             Assert.fail("Should have caught an exception");
         } catch (IOException e) {
             // this is expected
@@ -86,7 +87,7 @@ public class CompatDefaultTest {
         try {
             InputStream source = resource.openStream();
             source.close();
-            getCompat().copyFile(source, copy.getCanonicalPath());
+            CompatHelper.getCompat().copyFile(source, copy.getCanonicalPath());
             Assert.fail("Should have caught an exception");
         } catch (IOException e) {
             // this is expected
@@ -94,7 +95,7 @@ public class CompatDefaultTest {
 
         // Try copying to a bogus file
         try {
-            getCompat().copyFile(resource.openStream(), "");
+            CompatHelper.getCompat().copyFile(resource.openStream(), "");
             Assert.fail("Should have caught an exception");
         } catch (Exception e) {
             // this is expected
