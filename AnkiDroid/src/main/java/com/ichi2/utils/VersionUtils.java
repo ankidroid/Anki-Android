@@ -62,6 +62,14 @@ public class VersionUtils {
             return pInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             Timber.e(e, "Couldn't find package named %s", context.getPackageName());
+        } catch (NullPointerException npe) {
+            if (context.getPackageManager() == null) {
+                Timber.e("getPkgVersionCode() null package manager?");
+            } else if (context.getPackageName() == null) {
+                Timber.e("getPkgVersionCode() null package name?");
+            }
+            AnkiDroidApp.sendExceptionReport(npe, "Unexpected exception getting version code?");
+            Timber.e(npe, "Unexpected exception getting version code?");
         }
         return 0;
     }
