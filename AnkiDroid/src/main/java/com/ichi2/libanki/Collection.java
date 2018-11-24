@@ -1230,6 +1230,7 @@ public class Collection {
 
 
     public boolean undoAvailable() {
+        Timber.d("undoAvailable() undo size: %s", mUndo.size());
         return mUndo.size() > 0;
     }
 
@@ -1379,7 +1380,7 @@ public class Collection {
                     Card card = cards[i];
                     card.flush(false);
                 }
-                return -1;
+                return 0;
 
             default:
                 return 0;

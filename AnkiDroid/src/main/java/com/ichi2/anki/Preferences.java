@@ -232,7 +232,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 reset_custom_buttons.setOnPreferenceClickListener(preference -> {
                     SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(getBaseContext()).edit();
                     edit.remove("customButtonUndo");
-                    edit.remove("customButtonResetProgress");
+                    edit.remove("customButtonScheduleCard");
                     edit.remove("customButtonMarkCard");
                     edit.remove("customButtonEditCard");
                     edit.remove("customButtonAddCard");
