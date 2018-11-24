@@ -19,12 +19,13 @@ env:
    - API=16 AUDIO=-no-audio
    - API=17
    #- API=18 # API18 has started being flaky
-   - API=19
    # API 20 doesn't have an emulator
    - API=21
    - API=22
    #- API=23 EMU_FLAVOR=google_apis # fails consistently but can run local
    - API=24
+   # API16 and API19 are the fastest APIs, Travis runs 5 at a time and we have 6, this is the fastest way to do all 6 APIs
+   - API=19
    #- API=25 EMU_FLAVOR=google_apis # fails consistently but can run local
    # API >= 26 don't have arm emulators, and Travis doesn't support x86
 
