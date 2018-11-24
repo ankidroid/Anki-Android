@@ -213,7 +213,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * Variables to hold layout objects that we need to update or handle events for
      */
     private View mLookUpIcon;
-    private FrameLayout mCardContainer;
     private WebView mCard;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
@@ -225,7 +224,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected TextView mNext2;
     protected TextView mNext3;
     protected TextView mNext4;
-    private Button mFlipCard;
     protected EditText mAnswerField;
     protected TextView mEase1;
     protected TextView mEase2;
@@ -638,7 +636,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             } else {
                 mTypeWarning = getResources().getString(R.string.unknown_type_field_warning, fld);
             }
-        } else if (mTypeCorrect.equals("")) {
+        } else if ("".equals(mTypeCorrect)) {
             mTypeCorrect = null;
         } else {
             mTypeWarning = null;
@@ -1250,6 +1248,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mChosenAnswer.setText("\u2022\u2022\u2022\u2022");
                 mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_light_blue_500));
                 break;
+            default:
+                Timber.w("Unknown easy type %s", ease);
+                break;
         }
 
         // remove chosen answer hint after a while
@@ -1266,7 +1267,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // Set the content view to the one provided and initialize accessors.
     @SuppressWarnings("deprecation") // Tracked separately as #5023 on github for clipboard
     protected void initLayout() {
-        mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
+        FrameLayout mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
 
         mTopBarLayout = (RelativeLayout) findViewById(R.id.top_bar);
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
@@ -1316,7 +1317,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mNext4.setVisibility(View.GONE);
         }
 
-        mFlipCard = (Button) findViewById(R.id.flip_card);
+        Button mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
         mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
@@ -1387,6 +1388,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 cardContainerParams.addRule(RelativeLayout.BELOW, R.id.top_bar);
                 answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 break;
+            default:
+                Timber.w("Unknown answerButtonsPosition: %s", answerButtonsPosition);
+                break;
         }
         answerArea.setLayoutParams(answerAreaParams);
         mCardContainer.setLayoutParams(cardContainerParams);
@@ -1444,7 +1448,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     mFlipCardLayout.performClick();
                     return true;
                 }
-                if (url.equals("signal:typefocus")) {
+                if ("signal:typefocus".equals(url)) {
                     // Hide the “SHOW ANSWER” button when the input has focus. The soft keyboard takes up enough space
                     // by itself.
                     mFlipCardLayout.setVisibility(View.GONE);
@@ -1809,6 +1813,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             case Card.TYPE_REV:
                 revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
                 break;
+            default:
+                Timber.w("Unknown card type %s", mSched.countIdx(mCurrentCard));
+                break;
         }
 
         mTextBarNew.setText(newCount);
@@ -2126,7 +2133,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         }
 
-        content = SmpToHtmlEntity(content);
+        content = smpToHtmlEntity(content);
         mCardContent = new SpannedString(mCardTemplate.replace("::content::", content)
                 .replace("::style::", style.toString()).replace("::class::", cardClass));
         Timber.d("base url = %s", mBaseUrl);
@@ -2159,7 +2166,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @param text
      * @return
      */
-    private String SmpToHtmlEntity(String text) {
+    private String smpToHtmlEntity(String text) {
         StringBuffer sb = new StringBuffer();
         Matcher m = Pattern.compile("([^\u0000-\uFFFF])").matcher(text);
         while (m.find()) {
@@ -2552,6 +2559,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 break;
             case GESTURE_PLAY_MEDIA:
                 playSounds(true);
+                break;
+            default:
+                Timber.w("Unknown command requested: %s", which);
                 break;
         }
     }
