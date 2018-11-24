@@ -61,6 +61,7 @@ public class BitmapUtil {
 
             fis.close();
         } catch (IOException e) {
+            // do nothing
         }
         return bmp;
     }
@@ -86,7 +87,7 @@ public class BitmapUtil {
                 }
             }
         } catch (Exception e) {
-            Timber.e(e.getMessage());
+            Timber.e(e);
         }
     }
 
