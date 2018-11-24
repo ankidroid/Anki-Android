@@ -180,57 +180,6 @@ public class NoteEditor extends AnkiActivity {
     // restoring the Activity.
     private Bundle mSavedFields;
 
-    private DeckTask.TaskListener mRepositionCardHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            Timber.d("NoteEditor::RepositionCardHandler() onPreExecute");
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("NoteEditor::RepositionCardHandler() onPostExecute");
-            mReloadRequired = true;
-            int cardCount = result.getObjArray().length;
-            UIUtils.showThemedToast(NoteEditor.this,
-                    getResources().getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true);
-        }
-    };
-
-    private DeckTask.TaskListener mResetProgressCardHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            Timber.d("NoteEditor::ResetProgressCardHandler() onPreExecute");
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("NoteEditor::ResetProgressCardHandler() onPostExecute");
-            mReloadRequired = true;
-            int cardCount = result.getObjArray().length;
-            UIUtils.showThemedToast(NoteEditor.this,
-                    getResources().getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true);
-        }
-    };
-
-    private DeckTask.TaskListener mRescheduleCardHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            Timber.d("NoteEditor::RescheduleCardHandler() onPreExecute");
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("NoteEditor::RescheduleCardHandler() onPostExecute");
-            mReloadRequired = true;
-            int cardCount = result.getObjArray().length;
-            UIUtils.showThemedToast(NoteEditor.this,
-                    getResources().getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true);
-        }
-    };
-
     private DeckTask.TaskListener mSaveFactHandler = new DeckTask.TaskListener() {
         private boolean mCloseAfter = false;
         private Intent mIntent;
@@ -894,11 +843,6 @@ public class NoteEditor extends AnkiActivity {
             menu.findItem(R.id.action_copy_card).setVisible(false);
         } else {
             menu.findItem(R.id.action_add_card_from_card_editor).setVisible(true);
-            menu.findItem(R.id.action_reset_card_progress).setVisible(true);
-            menu.findItem(R.id.action_reschedule_card).setVisible(true);
-            if (mCurrentEditedCard.getType() == Card.TYPE_NEW) {
-                menu.findItem(R.id.action_reposition_card).setVisible(true);
-            }
         }
         if (mEditFields != null) {
             for (int i = 0; i < mEditFields.size(); i++) {
@@ -938,53 +882,6 @@ public class NoteEditor extends AnkiActivity {
                     intent.putExtra(EXTRA_CONTENTS, getFieldsText());
                 }
                 startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
-                return true;
-            }
-            case R.id.action_reset_card_progress: {
-                Timber.i("NoteEditor:: Reset progress button pressed");
-                // Show confirmation dialog before resetting card progress
-                ConfirmationDialog dialog = new ConfirmationDialog();
-                String title = res.getString(R.string.reset_card_dialog_title);
-                String message = res.getString(R.string.reset_card_dialog_message);
-                dialog.setArgs(title, message);
-                Runnable confirm = () -> {
-                    Timber.i("NoteEditor:: ResetProgress button pressed");
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
-                            new DeckTask.TaskData(new Object[]{new long[]{mCurrentEditedCard.getId()}, Collection.DismissType.RESET_CARDS}));
-                };
-                dialog.setConfirm(confirm);
-                showDialogFragment(dialog);
-                return true;
-            }
-            case R.id.action_reschedule_card: {
-                Timber.i("NoteEditor:: Reschedule button pressed");
-                IntegerDialog rescheduleDialog = new IntegerDialog();
-                rescheduleDialog.setArgs(
-                        res.getString(R.string.reschedule_card_dialog_title),
-                        res.getString(R.string.reschedule_card_dialog_message),
-                        4);
-                rescheduleDialog.setCallbackRunnable(rescheduleDialog.new IntRunnable() {
-                    public void run() {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
-                                new DeckTask.TaskData(new Object[]{new long[]{mCurrentEditedCard.getId()}, Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
-                    }
-                });
-                showDialogFragment(rescheduleDialog);
-                return true;
-            }
-            case R.id.action_reposition_card: {
-                Timber.i("NoteEditor:: Reposition button pressed");
-                IntegerDialog repositionDialog = new IntegerDialog();
-                repositionDialog.setArgs(
-                        res.getString(R.string.reposition_card_dialog_title),
-                        res.getString(R.string.reposition_card_dialog_message),
-                        5);
-                repositionDialog.setCallbackRunnable(repositionDialog.new IntRunnable() {
-                    public void run() {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
-                                new DeckTask.TaskData(new Object[]{new long[]{mCurrentEditedCard.getId()}, Collection.DismissType.REPOSITION_CARDS, this.getInt()}));                    }
-                });
-                showDialogFragment(repositionDialog);
                 return true;
             }
             default:

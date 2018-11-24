@@ -38,6 +38,7 @@ import android.widget.FrameLayout;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -62,24 +63,43 @@ public class Reviewer extends AbstractFlashcardViewer {
     private Long mLastSelectedBrowserDid = null;
 
 
-    private DeckTask.TaskListener mResetProgressCardHandler = new DeckTask.TaskListener() {
-
-
-        @Override
-        public void onPreExecute() {
-            Timber.d("Reviewer::ResetProgressCardHandler() onPreExecute");
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Reviewer::ResetProgressCardHandler() onPostExecute");
-            int cardCount = result.getObjArray().length;
-            UIUtils.showThemedToast(Reviewer.this,
-                    getResources().getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true);
+    private DeckTask.TaskListener mRescheduleCardHandler = new ScheduleDeckTaskListener() {
+        protected int getToastResourceId() {
+            return R.plurals.reschedule_cards_dialog_acknowledge;
         }
     };
 
+    private DeckTask.TaskListener mRepositionCardHandler =new ScheduleDeckTaskListener() {
+        protected int getToastResourceId() {
+            return R.plurals.reposition_card_dialog_acknowledge;
+        }
+    };
+
+    private DeckTask.TaskListener mResetProgressCardHandler = new ScheduleDeckTaskListener() {
+        protected int getToastResourceId() {
+            return R.plurals.reset_cards_dialog_acknowledge;
+        }
+    };
+
+    /** We need to listen for and handle repositions / reschedules / resets very similarly */
+    abstract class ScheduleDeckTaskListener extends DeckTask.TaskListener {
+
+        abstract int getToastResourceId();
+
+        @Override
+        public void onPreExecute() {
+            Timber.d("Reviewer::ScheduleDeckTaskListener() onPreExecute");
+        }
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            Timber.d("Reviewer::ScheduleDeckTaskListener() onPostExecute");
+            invalidateOptionsMenu();
+            int cardCount = result.getObjArray().length;
+            UIUtils.showThemedToast(Reviewer.this,
+                    getResources().getQuantityString(getToastResourceId(), cardCount, cardCount), true);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,6 +309,37 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
+    private void showRepositionCardDialog() {
+        IntegerDialog repositionDialog = new IntegerDialog();
+        repositionDialog.setArgs(
+                getResources().getString(R.string.reposition_card_dialog_title),
+                getResources().getString(R.string.reposition_card_dialog_message),
+                5);
+        repositionDialog.setCallbackRunnable(repositionDialog.new IntRunnable() {
+            public void run() {
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
+                        new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.REPOSITION_CARDS, this.getInt()}));                    }
+        });
+        showDialogFragment(repositionDialog);
+    }
+
+
+    private void showRescheduleCardDialog() {
+        IntegerDialog rescheduleDialog = new IntegerDialog();
+        rescheduleDialog.setArgs(
+                getResources().getString(R.string.reschedule_card_dialog_title),
+                getResources().getString(R.string.reschedule_card_dialog_message),
+                4);
+        rescheduleDialog.setCallbackRunnable(rescheduleDialog.new IntRunnable() {
+            public void run() {
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
+                        new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
+            }
+        });
+        showDialogFragment(rescheduleDialog);
+    }
+
+
     private void showResetCardDialog() {
         // Show confirmation dialog before resetting card progress
         Timber.i("showResetCardDialog() Reset progress button pressed");
@@ -397,6 +448,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_bury).setIcon(R.drawable.ic_flip_to_back_white_24dp);
             menu.findItem(R.id.action_bury).setTitle(R.string.menu_bury_card);
         }
+        MenuItemCompat.setActionProvider(menu.findItem(R.id.action_schedule), new ScheduleProvider(this));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -667,7 +719,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     /**
-     * Inner class which implements the submenu for the Suspend button
+     * Inner class which implements the submenu for the Bury button
      */
     class BuryProvider extends ActionProvider implements MenuItem.OnMenuItemClickListener {
         public BuryProvider(Context context) {
@@ -701,6 +753,52 @@ public class Reviewer extends AbstractFlashcardViewer {
                     return true;
                 case R.id.action_bury_note:
                     dismiss(DismissType.BURY_NOTE);
+                    return true;
+                default:
+                    return false;
+            }
+        }
+    }
+
+
+    /**
+     * Inner class which implements the submenu for the Schedule button
+     */
+    class ScheduleProvider extends ActionProvider implements MenuItem.OnMenuItemClickListener {
+        public ScheduleProvider(Context context) {
+            super(context);
+        }
+
+        @Override
+        public View onCreateActionView() {
+            return null;    // Just return null for a simple dropdown menu
+        }
+
+        @Override
+        public boolean hasSubMenu() {
+            return true;
+        }
+
+        @Override
+        public void onPrepareSubMenu(SubMenu subMenu) {
+            subMenu.clear();
+            getMenuInflater().inflate(R.menu.reviewer_schedule, subMenu);
+            for (int i = 0; i < subMenu.size(); i++) {
+                subMenu.getItem(i).setOnMenuItemClickListener(this);
+            }
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_reposition_card:
+                    showRepositionCardDialog();
+                    return true;
+                case R.id.action_reschedule_card:
+                    showRescheduleCardDialog();
+                    return true;
+                case R.id.action_reset_card_progress:
+                    showResetCardDialog();
                     return true;
                 default:
                     return false;

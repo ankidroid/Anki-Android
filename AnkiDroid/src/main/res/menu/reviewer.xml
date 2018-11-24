@@ -20,11 +20,6 @@
         android:title="@string/undo"
         ankidroid:showAsAction="always"/>
     <item
-        android:id="@+id/action_reset_card_progress"
-        android:icon="@drawable/ic_refresh_white_24dp"
-        android:title="@string/card_editor_reset_card"
-        ankidroid:showAsAction="never"/>
-    <item
         android:id="@+id/action_mark_card"
         android:icon="@drawable/ic_star_outline_white_24dp"
         android:title="@string/menu_mark_note"
@@ -42,7 +37,7 @@
     <item
         android:id="@+id/action_replay"
         android:title="@string/replay_audio"
-        android:icon="@drawable/ic_replay_white_24dp"
+        android:icon="@drawable/ic_play_circle_white"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_bury"
@@ -71,4 +66,10 @@
         android:id="@+id/action_select_tts"
         android:title="@string/select_tts"
         android:visible="false" />
+    <item
+        android:id="@+id/action_schedule"
+        android:title="@string/card_editor_card_scheduling"
+        android:icon="@drawable/ic_card_reschedule_white">
+        <menu />
+    </item>
 </menu>
