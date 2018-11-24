@@ -4,6 +4,10 @@ def groupId = "com.ichi2.anki"
 def artifactId = "api"
 def version = "1.1.0alpha6"
 
+repositories {
+    google()
+    jcenter()
+}
 android {
     compileSdkVersion 28
 
@@ -23,6 +27,15 @@ android {
         unitTests {
             includeAndroidResources = true
         }
+    }
+    testOptions.unitTests.all {
+        testLogging {
+            events "failed", "skipped"
+            showStackTraces = true
+            exceptionFormat = "full"
+        }
+
+        maxParallelForks = gradleTestMaxParallelForks
     }
 }
 
@@ -94,4 +107,15 @@ generateRelease.dependsOn(zipRelease)
 artifacts {
     archives androidSourcesJar
     archives androidJavadocsJar
+}
+
+// Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:deprecation" << "-Xmaxwarns" << "1000" << "-Werror"
+
+    // https://guides.gradle.org/performance/#compiling_java
+    // 1- fork improves things over time with repeated builds, doesn't harm CI single builds
+    options.fork = true
+    // 2- incremental will be the default in the future and can help now
+    options.incremental = true
 }

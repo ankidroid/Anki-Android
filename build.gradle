@@ -15,15 +15,15 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
-
 ext {
     travisBuild = System.getenv("TRAVIS") == "true"
     // allows for -Dpre-dex=false to be set
     preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
+
+    // Travis may report host CPU counts vs guest, everyone else gets 50% of cores
+    gradleTestMaxParallelForks = 1
+    if (!travisBuild) {
+        gradleTestMaxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    }
 }
+
