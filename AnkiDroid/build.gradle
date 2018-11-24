@@ -110,12 +110,14 @@ dependencies {
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.exifinterface:exifinterface:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'io.requery:sqlite-android:3.25.2'
     implementation 'androidx.sqlite:sqlite:2.0.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'org.bitbucket.cowwoc:diff-match-patch:1.1'
 
     // May need a resolution strategy for support libs to our versions
     implementation'ch.acra:acra-http:5.2.1'
