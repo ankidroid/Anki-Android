@@ -2,6 +2,7 @@
  * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  * Copyright (c) 2013 Jolta Technologies                                                *
  * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>                    *
+ * Copyright (c) 2018 Mike Hardy <mike@mikehardy.net>                                   *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -21,8 +22,11 @@ package com.ichi2.anki;
 import android.os.Bundle;
 import android.view.View;
 
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
+
+import org.json.JSONObject;
 
 import timber.log.Timber;
 
@@ -35,6 +39,8 @@ public class Previewer extends AbstractFlashcardViewer {
     private long[] mCardList;
     private int mIndex;
     private boolean mShowingAnswer;
+    private String mEditedModelFileName = null;
+    private JSONObject mEditedModel = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,11 @@ public class Previewer extends AbstractFlashcardViewer {
             finishWithoutAnimation();
             return;
         }
+        mEditedModelFileName = getIntent().getStringExtra("editedModelFileName");
+        if (mEditedModelFileName != null) {
+            Timber.d("onCreate() loading edited model from %s", mEditedModelFileName);
+            mEditedModel = CardTemplateEditor.getTempModel(mEditedModelFileName);
+        }
         showBackIcon();
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
@@ -57,7 +68,7 @@ public class Previewer extends AbstractFlashcardViewer {
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
-        mCurrentCard = col.getCard(mCardList[mIndex]);
+        mCurrentCard = new PreviewerCard(col, mCardList[mIndex]);
         displayCardQuestion();
         showBackIcon();
     }
@@ -110,7 +121,7 @@ public class Previewer extends AbstractFlashcardViewer {
                 if (view.getId() == R.id.flashcard_layout_ease2) {
                     // ...but if they clicked "forward" we need to move to the next card first
                     mIndex++;
-                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                    mCurrentCard = new PreviewerCard(getCol(), mCardList[mIndex]);
                 }
                 displayCardQuestion();
             } else {
@@ -118,7 +129,7 @@ public class Previewer extends AbstractFlashcardViewer {
                 if (view.getId() == R.id.flashcard_layout_ease1) {
                     // ...but if they clicked "reverse" we need to go to the previous card first
                     mIndex--;
-                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                    mCurrentCard = new PreviewerCard(getCol(), mCardList[mIndex]);
                 }
                 displayCardAnswer();
             }
@@ -174,6 +185,22 @@ public class Previewer extends AbstractFlashcardViewer {
         } else {
             mEase2Layout.setEnabled(true);
             mNext2.setText(">");
+        }
+    }
+
+
+    public class PreviewerCard extends Card {
+        public PreviewerCard(Collection col, long id) {
+            super(col, id);
+        }
+
+        @Override
+        /** Override the method that fetches the model so we can render unsaved models */
+        public JSONObject model() {
+            if (mEditedModel != null) {
+                return mEditedModel;
+            }
+            return super.model();
         }
     }
 }

@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -43,6 +45,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.DeckTask;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
@@ -53,10 +56,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.annotation.Nullable;
 
 import timber.log.Timber;
 
@@ -774,6 +783,57 @@ public class CardTemplateEditor extends AnkiActivity {
                 n+=1;
             }
             return name;
+        }
+    }
+
+
+    /** Clear any temp model files saved into internal cache directory */
+    public static int clearTempModelFiles(@NonNull Context context) {
+        int deleteCount = 0;
+        for (File c : context.getCacheDir().listFiles()) {
+            if (c.getAbsolutePath().endsWith("json") && c.getAbsolutePath().contains("editedTemplate")) {
+                if (!c.delete()) {
+                    Timber.w("Unable to delete temp file %s", c.getAbsolutePath());
+                } else {
+                    deleteCount++;
+                    Timber.d("Deleted temp model file %s", c.getAbsolutePath());
+                }
+            }
+        }
+        return deleteCount;
+    }
+
+
+    /**
+     * Save the current model to a temp file in the application internal cache directory
+     * @return String representing the absolute path of the saved file, or null if there was a problem
+     */
+    public static @Nullable String saveTempModel(@NonNull Context context, @NonNull JSONObject tempModel) {
+        Timber.d("saveTempModel() saving tempModel");
+        File tempModelFile;
+        try (ByteArrayInputStream source = new ByteArrayInputStream(tempModel.toString().getBytes())) {
+            tempModelFile = File.createTempFile("editedTemplate", ".json", context.getCacheDir());
+            CompatHelper.getCompat().copyFile(source, tempModelFile.getAbsolutePath());
+        } catch (IOException ioe) {
+            Timber.e(ioe, "Unable to create+write temp file for model");
+            return null;
+        }
+        return tempModelFile.getAbsolutePath();
+    }
+
+
+    /**
+     * Get the model temporarily saved into the file represented by the given path
+     * @return JSONObject holding the model, or null if there was a problem
+     */
+    public static @Nullable JSONObject getTempModel(@NonNull String tempModelFileName) {
+        Timber.d("getTempModel() fetching tempModel %s", tempModelFileName);
+        try (ByteArrayOutputStream target = new ByteArrayOutputStream()) {
+            CompatHelper.getCompat().copyFile(tempModelFileName, target);
+            return new JSONObject(target.toString());
+        } catch (IOException | JSONException e) {
+            Timber.e(e, "Unable to read+parse tempModel from file %s", tempModelFileName);
+            return null;
         }
     }
 }
