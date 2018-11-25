@@ -1078,10 +1078,10 @@ public class Models {
                 b.add("");
             }
             Object[] data;
-            data = new Object[] {1L, 1L, m.getLong("id"), 1L, t.getInt("ord"), "",
+            data = new Object[] {1L, 1L, m, 1L, t.getInt("ord"), "",
                     Utils.joinFields(a.toArray(new String[a.size()])) };
             String full = mCol._renderQA(data).get("q");
-            data = new Object[] {1L, 1L, m.getLong("id"), 1L, t.getInt("ord"), "",
+            data = new Object[] {1L, 1L, m, 1L, t.getInt("ord"), "",
                     Utils.joinFields(b.toArray(new String[b.size()])) };
             String empty = mCol._renderQA(data).get("q");
             // if full and empty are the same, the template is invalid and there is no way to satisfy it
