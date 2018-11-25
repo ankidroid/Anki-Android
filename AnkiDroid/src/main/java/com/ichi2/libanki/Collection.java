@@ -1016,7 +1016,7 @@ public class Collection {
         // unpack fields and create dict
         String[] flist = Utils.splitFields((String) data[6]);
         Map<String, String> fields = new HashMap<>();
-        JSONObject model = mModels.get((Long) data[2]);
+        JSONObject model = (JSONObject)data[2];
         Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
         for (String name : fmap.keySet()) {
             fields.put(name, flist[fmap.get(name).first]);
@@ -1088,7 +1088,8 @@ public class Collection {
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
                             + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where, null);
             while (cur.moveToNext()) {
-                data.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getLong(2), cur.getLong(3), cur.getInt(4),
+                data.add(new Object[] { cur.getLong(0), cur.getLong(1),
+                        getModels().get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
                         cur.getString(5), cur.getString(6), cur.getInt(7)});
             }
         } finally {
