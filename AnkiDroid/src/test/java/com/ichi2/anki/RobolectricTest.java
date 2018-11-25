@@ -4,6 +4,7 @@ import com.ichi2.libanki.DB;
 
 import org.junit.After;
 import org.junit.Before;
+import org.robolectric.shadows.ShadowLog;
 
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 
@@ -12,7 +13,7 @@ public class RobolectricTest {
     @Before
     public void setUp() {
         // If you want to see the Android logging (from Timber), you need to set it up here
-        //ShadowLog.stream = System.out;
+        ShadowLog.stream = System.out;
 
         // Robolectric can't handle our default sqlite implementation of requery, it needs the framework
         DB.setSqliteOpenHelperFactory(new FrameworkSQLiteOpenHelperFactory());
