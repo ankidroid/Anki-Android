@@ -159,7 +159,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'androidx.annotation:annotation:1.0.0'
-    implementation 'org.bitbucket.cowwoc:diff-match-patch:1.1'
+    implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
 
     // May need a resolution strategy for support libs to our versions
     implementation'ch.acra:acra-http:5.2.1'
