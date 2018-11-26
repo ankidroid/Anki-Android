@@ -41,7 +41,7 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.3.1'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.3.2'
     testImplementation "org.robolectric:robolectric:4.0.2"
 }
 
