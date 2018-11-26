@@ -161,7 +161,18 @@ public class ContentProviderTest {
         assertEquals("Check that all created decks have been deleted", mNumDecksBeforeTest, col.getDecks().count());
         // Delete test model
         col.modSchema(false);
-        col.getModels().rem(col.getModels().get(mModelId));
+
+        removeAllModelsByName(col, BASIC_MODEL_NAME);
+        removeAllModelsByName(col, TEST_MODEL_NAME);
+    }
+
+
+    private void removeAllModelsByName(Collection col, String name) throws Exception {
+        JSONObject testModel = col.getModels().byName(name);
+        while (testModel != null) {
+            col.getModels().rem(testModel);
+            testModel = col.getModels().byName(name);
+        }
     }
 
 
