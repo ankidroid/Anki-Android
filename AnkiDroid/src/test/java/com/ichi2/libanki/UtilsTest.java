@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki;
 
+import com.ichi2.anki.TestUtils;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -69,5 +72,14 @@ public class UtilsTest {
         } catch (IOException ioe) {
             Assert.fail("Unexpected exception: " + ioe);
         }
+    }
+
+    @Test
+    public void testCopyFile() throws Exception {
+        URL resource = Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip");
+        File copy = File.createTempFile("testCopyFileToStream", ".zip");
+        copy.deleteOnExit();
+        Utils.copyFile(new File(resource.getFile()), copy);
+        Assert.assertEquals(TestUtils.getMD5(resource.getPath()), TestUtils.getMD5(copy.getCanonicalPath()));
     }
 }
