@@ -37,19 +37,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
@@ -587,7 +583,6 @@ public class Utils {
 
     public static void unzipFiles(ZipFile zipFile, String targetDirectory, String[] zipEntries,
                                   Map<String, String> zipEntryToFilenameMap) throws IOException {
-        byte[] buf = new byte[FILE_COPY_BUFFER_SIZE];
         File dir = new File(targetDirectory);
         if (!dir.exists() && !dir.mkdirs()) {
             throw new IOException("Failed to create target directory: " + targetDirectory);
@@ -595,42 +590,25 @@ public class Utils {
         if (zipEntryToFilenameMap == null) {
             zipEntryToFilenameMap = new HashMap<>();
         }
-        BufferedInputStream zis = null;
-        BufferedOutputStream bos = null;
-        try {
-            for (String requestedEntry : zipEntries) {
-                ZipEntry ze = zipFile.getEntry(requestedEntry);
-                if (ze != null) {
-                    String name = ze.getName();
-                    if (zipEntryToFilenameMap.containsKey(name)) {
-                        name = zipEntryToFilenameMap.get(name);
-                    }
-                    File destFile = new File(dir, name);
-                    if (!isInside(destFile, dir)) {
-                        Timber.e("Refusing to decompress invalid path: " + destFile.getCanonicalPath());
-                        throw new IOException("File is outside extraction target directory.");
-                    }
+        for (String requestedEntry : zipEntries) {
+            ZipEntry ze = zipFile.getEntry(requestedEntry);
+            if (ze != null) {
+                String name = ze.getName();
+                if (zipEntryToFilenameMap.containsKey(name)) {
+                    name = zipEntryToFilenameMap.get(name);
+                }
+                File destFile = new File(dir, name);
+                if (!isInside(destFile, dir)) {
+                    Timber.e("Refusing to decompress invalid path: %s", destFile.getCanonicalPath());
+                    throw new IOException("File is outside extraction target directory.");
+                }
 
-                    if (!ze.isDirectory()) {
-                        Timber.i("uncompress %s", name);
-                        zis = new BufferedInputStream(zipFile.getInputStream(ze));
-                        bos = new BufferedOutputStream(new FileOutputStream(destFile), FILE_COPY_BUFFER_SIZE);
-                        int n;
-                        while ((n = zis.read(buf, 0, FILE_COPY_BUFFER_SIZE)) != -1) {
-                            bos.write(buf, 0, n);
-                        }
-                        bos.flush();
-                        bos.close();
-                        zis.close();
+                if (!ze.isDirectory()) {
+                    Timber.i("uncompress %s", name);
+                    try (InputStream zis = zipFile.getInputStream(ze)) {
+                        writeToFile(zis, destFile.getAbsolutePath());
                     }
                 }
-            }
-        } finally {
-            if (bos != null) {
-                bos.close();
-            }
-            if (zis != null) {
-                zis.close();
             }
         }
     }
@@ -873,33 +851,16 @@ public class Utils {
      * Simply copy a file to another location
      * @param sourceFile The source file
      * @param destFile The destination file, doesn't need to exist yet.
-     * @throws IOException
      */
     public static void copyFile(File sourceFile, File destFile) throws IOException {
-        if(!destFile.exists()) {
-            destFile.createNewFile();
-        }
-
-        FileChannel source = null;
-        FileChannel destination = null;
-
-        try {
-            source = new FileInputStream(sourceFile).getChannel();
-            destination = new FileOutputStream(destFile).getChannel();
-            destination.transferFrom(source, 0, source.size());
-        } finally {
-            if (source != null) {
-                source.close();
-            }
-            if (destination != null) {
-                destination.close();
-            }
+        try (FileInputStream source = new FileInputStream(sourceFile)) {
+            writeToFile(source, destFile.getAbsolutePath());
         }
     }
 
     /**
      * Like org.json.JSONObject except that it doesn't escape forward slashes
-     * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape chracter '/'.
+     * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape character '/'.
      * The org.json.JSONObject parser accepts both escaped and unescaped forward slashes, so we only need to worry for
      * our output, when we write to the database or syncing.
      *
@@ -913,7 +874,7 @@ public class Utils {
 
     /**
      * Like org.json.JSONArray except that it doesn't escape forward slashes
-     * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape chracter '/'.
+     * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape character '/'.
      * The org.json.JSONArray parser accepts both escaped and unescaped forward slashes, so we only need to worry for
      * our output, when we write to the database or syncing.
      *

@@ -194,19 +194,13 @@ public class CompatV15 implements Compat {
 
     // Until API 26 do the copy using streams
     public long copyFile(@NonNull String source, @NonNull OutputStream target) throws IOException {
-        InputStream fileInputStream = null;
         long count;
 
-        try {
-            fileInputStream = new FileInputStream(new File(source));
+        try (InputStream fileInputStream = new FileInputStream(new File(source))) {
             count = copyFile(fileInputStream, target);
         } catch (IOException e) {
             Timber.e(e, "copyFile() error copying source %s", source);
             throw e;
-        } finally {
-            if (fileInputStream != null) {
-                fileInputStream.close();
-            }
         }
 
         return count;
@@ -214,16 +208,13 @@ public class CompatV15 implements Compat {
 
     // Until API 26 do the copy using streams
     public long copyFile(@NonNull InputStream source, @NonNull String target) throws IOException {
-        OutputStream targetStream = new FileOutputStream(target);
         long bytesCopied;
 
-        try {
+        try (OutputStream targetStream = new FileOutputStream(target)) {
             bytesCopied = copyFile(source, targetStream);
         } catch (IOException ioe) {
             Timber.e(ioe, "Error while copying to file %s", target);
             throw ioe;
-        } finally {
-            targetStream.close();
         }
         return bytesCopied;
     }
