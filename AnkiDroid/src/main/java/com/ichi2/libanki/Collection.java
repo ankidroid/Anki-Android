@@ -800,12 +800,15 @@ public class Collection {
 
 
     private Card _newCard(Note note, JSONObject template, int due, boolean flush) {
-        Card card = new Card(this);
+        return _newCard(new Card(this), note, template, due, flush);
+    }
+
+    public Card _newCard(Card card, Note note, JSONObject template, int due, boolean flush) {
         card.setNid(note.getId());
         try {
             card.setOrd(template.getInt("ord"));
         } catch (JSONException e) {
-            new RuntimeException(e);
+            throw new RuntimeException(e);
         }
         // Use template did (deck override) if valid, otherwise model did
         long did = template.optLong("did", 0);

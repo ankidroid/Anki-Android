@@ -489,7 +489,7 @@ public class Models {
     }
 
 
-    public ArrayList<String> fieldNames(JSONObject m) {
+    public static ArrayList<String> fieldNames(JSONObject m) {
         JSONArray ja;
         try {
             ja = m.getJSONArray("flds");

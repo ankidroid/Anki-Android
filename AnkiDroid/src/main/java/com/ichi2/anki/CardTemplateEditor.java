@@ -77,6 +77,7 @@ import timber.log.Timber;
 public class CardTemplateEditor extends AnkiActivity {
     private TemplatePagerAdapter mTemplateAdapter;
     private JSONObject mModelBackup = null;
+    public static String INTENT_MODEL_FILENAME = "editedModelFilename";
     private ViewPager mViewPager;
     private SlidingTabLayout mSlidingTabLayout;
     private long mModelId;
