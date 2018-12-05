@@ -69,7 +69,7 @@ install:
   - adb shell input keyevent 82 &
 
 script:
-  - ./gradlew jacocoTestReport -Pandroid.testInstrumentationRunnerArguments.notPackage=com.ichi2.anki.uitests
+  - ./gradlew jacocoTestReport
 
 # Codacy integration, partials for all APIs, then an optional finalize
 after_success:
