@@ -2,8 +2,6 @@ package com.ichi2.anki;
 
 import android.content.Context;
 
-import androidx.test.core.app.ApplicationProvider;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -22,7 +20,7 @@ public class DeckPickerTest extends RobolectricTest {
     public void verifyCodeMessages() {
 
         Map<Integer, String> mCodeResponsePairs = new HashMap<>();
-        final Context context = ApplicationProvider.getApplicationContext();
+        final Context context = getTargetContext();
         mCodeResponsePairs.put(407, context.getString(R.string.sync_error_407_proxy_required));
         mCodeResponsePairs.put(409, context.getString(R.string.sync_error_409));
         mCodeResponsePairs.put(413, context.getString(R.string.sync_error_413_collection_size));

@@ -32,7 +32,7 @@ import org.robolectric.shadows.ShadowDialog;
 import org.robolectric.shadows.ShadowLog;
 
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
-import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.core.app.ApplicationProvider;
 
 public class RobolectricTest {
 
@@ -68,7 +68,7 @@ public class RobolectricTest {
 
 
     protected Context getTargetContext() {
-        return InstrumentationRegistry.getInstrumentation().getTargetContext();
+        return ApplicationProvider.getApplicationContext();
     }
 
 
@@ -78,7 +78,7 @@ public class RobolectricTest {
 
 
     protected Collection getCol() {
-        return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        return CollectionHelper.getInstance().getCol(getTargetContext());
     }
 
 
