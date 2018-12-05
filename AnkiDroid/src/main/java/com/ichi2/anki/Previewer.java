@@ -95,14 +95,12 @@ public class Previewer extends AbstractFlashcardViewer {
 
     // we don't want the Activity title to be changed.
     @Override
-    protected void updateScreenCounts() {
-    }
+    protected void updateScreenCounts() { /* do nothing */ }
 
 
     // No Gestures!
     @Override
-    protected void executeCommand(int which) {
-    }
+    protected void executeCommand(int which) { /* do nothing */ }
 
     private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override
