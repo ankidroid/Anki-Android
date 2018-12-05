@@ -89,9 +89,10 @@ public class Previewer extends AbstractFlashcardViewer {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        outState.putLongArray("cardList", mCardList);
         outState.putInt("index", mIndex);
         outState.putBoolean("showingAnswer", mShowingAnswer);
+        super.onSaveInstanceState(outState);
     }
 
 
@@ -148,7 +149,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
     private void updateButtonState() {
         // If we are in single-card mode, we show the "Show Answer" button on the question side
-        // and hide all the button s on the answer side.
+        // and hide all the buttons on the answer side.
         if (mCardList.length == 1) {
             if (!mShowingAnswer) {
                 mFlipCardLayout.setVisibility(View.VISIBLE);
