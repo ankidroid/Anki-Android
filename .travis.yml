@@ -21,7 +21,7 @@ env:
    - API=21
    - API=22
    #- API=23 EMU_FLAVOR=google_apis # fails consistently but can run local
-   - API=24
+   #- API=24 #API24 flaky now as well (after API18 started flaking). It is a progressive disease with more tests I think
    # API16 and API19 are the fastest APIs, Travis runs 5 at a time and we have 6, this is the fastest way to do all 6 APIs
    - API=19
    #- API=25 EMU_FLAVOR=google_apis # fails consistently but can run local
