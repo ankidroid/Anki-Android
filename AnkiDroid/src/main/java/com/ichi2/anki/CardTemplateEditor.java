@@ -64,6 +64,7 @@ import timber.log.Timber;
 /**
  * Allows the user to view the template for the current note type
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
 public class CardTemplateEditor extends AnkiActivity {
     private TemplatePagerAdapter mTemplateAdapter;
     private JSONObject mModelBackup = null;
@@ -218,8 +219,7 @@ public class CardTemplateEditor extends AnkiActivity {
         mViewPager.setAdapter(mTemplateAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(final int position, final float v, final int i2) {
-            }
+            public void onPageScrolled(final int position, final float v, final int i2) { /* do nothing */ }
 
             @Override
             public void onPageSelected(final int position) {
@@ -230,8 +230,7 @@ public class CardTemplateEditor extends AnkiActivity {
             }
 
             @Override
-            public void onPageScrollStateChanged(final int position) {
-            }
+            public void onPageScrollStateChanged(final int position) { /* do nothing */ }
         });
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
@@ -416,9 +415,9 @@ public class CardTemplateEditor extends AnkiActivity {
                         }
                     }
                     @Override
-                    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+                    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { /* do nothing */ }
                     @Override
-                    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+                    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { /* do nothing */ }
                 };
                 mFront.addTextChangedListener(templateEditorWatcher);
                 mCss.addTextChangedListener(templateEditorWatcher);
