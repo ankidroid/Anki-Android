@@ -835,6 +835,13 @@ public class Collection {
 
     private Card _newCard(Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         Card card = new Card(this);
+        return getNewLinkedCard(card, note, template, due, parameterDid, flush);
+    }
+
+    // This contains the original libanki implementation of _newCard, with the added parameter that
+    // you pass the Card object in. This allows you to work on 'Card' subclasses that may not have
+    // actual backing store (for instance, if you are previewing unsaved changes on templates)
+    public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         long nid = note.getId();
         int ord = -1;
         long did;
