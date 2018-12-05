@@ -27,6 +27,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import androidx.annotation.Nullable;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
@@ -333,8 +336,6 @@ public class Models {
             setCurrent(mModels.values().iterator().next());
         }
     }
-
-
     public void add(JSONObject m) {
         _setID(m);
         update(m);
@@ -680,7 +681,7 @@ public class Models {
      * Templates ***********************************************************************************************
      */
 
-    public JSONObject newTemplate(String name) {
+    public static JSONObject newTemplate(String name) {
         JSONObject t;
         t = new JSONObject(defaultTemplate);
         t.put("name", name);
@@ -739,15 +740,12 @@ public class Models {
                 break;
             }
         }
-        String sql = "select c.id from cards c, notes f where c.nid=f.id and mid = " +
-            m.getLong("id") + " and ord = " + ord;
-        long[] cids = Utils.toPrimitive(mCol.getDb().queryColumn(Long.class, sql, 0));
-        // all notes with this template must have at least two cards, or we could end up creating orphaned notes
-        sql = "select nid, count() from cards where nid in (select nid from cards where id in " +
-            Utils.ids2str(cids) + ") group by nid having count() < 2 limit 1";
-        if (mCol.getDb().queryScalar(sql) != 0) {
+        // the code in "isRemTemplateSafe" was in place here in libanki. It is extracted to a method for reuse
+        long[] cids = isRemTemplateSafe(mCol, m, ord);
+        if (cids == null) {
             return false;
         }
+
         // ok to proceed; remove cards
         mCol.modSchema();
         mCol.remCards(cids);
@@ -771,7 +769,26 @@ public class Models {
     }
 
 
-    public void _updateTemplOrds(JSONObject m) {
+    /**
+     * Extracted from remTemplate so we can test if removing a template is safe without actually removing it
+     * Verifies all notes with this template have at least two cards, to guard against creating orphaned notes
+     * @return null if not safe, long[] of card ids to delete if it is safe
+     */
+    public static @Nullable long[] isRemTemplateSafe(Collection col, JSONObject m, int ord) throws JSONException {
+        String sql = "select c.id from cards c, notes f where c.nid=f.id and mid = " +
+                m.getLong("id") + " and ord = " + ord;
+        long[] cids = Utils.toPrimitive(col.getDb().queryColumn(Long.class, sql, 0));
+        // all notes with this template must have at least two cards, or we could end up creating orphaned notes
+        sql = "select nid, count() from cards where nid in (select nid from cards where id in " +
+                Utils.ids2str(cids) + ") group by nid having count() < 2 limit 1";
+        if (col.getDb().queryScalar(sql) != 0) {
+            return null;
+        }
+        return cids;
+    }
+
+
+    public static void _updateTemplOrds(JSONObject m) {
         JSONArray ja;
         ja = m.getJSONArray("tmpls");
         for (int i = 0; i < ja.length(); i++) {
