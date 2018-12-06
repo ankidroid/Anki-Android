@@ -78,6 +78,7 @@ public class CardTemplateEditor extends AnkiActivity {
     private TemplatePagerAdapter mTemplateAdapter;
     private JSONObject mModelBackup = null;
     public static String INTENT_MODEL_FILENAME = "editedModelFilename";
+    private ArrayList<Object[]> mTemplateChanges = new ArrayList<>();
     private ViewPager mViewPager;
     private SlidingTabLayout mSlidingTabLayout;
     private long mModelId;
@@ -125,6 +126,7 @@ public class CardTemplateEditor extends AnkiActivity {
         }
     };
 
+    public enum ChangeType { ADD, DELETE }
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -139,6 +141,7 @@ public class CardTemplateEditor extends AnkiActivity {
         if (savedInstanceState == null) {
             // get model id
             mModelId = getIntent().getLongExtra("modelId", -1L);
+            mTemplateChanges = null;
             if (mModelId == -1) {
                 Timber.e("CardTemplateEditor :: no model ID was provided");
                 finishWithoutAnimation();
@@ -784,6 +787,100 @@ public class CardTemplateEditor extends AnkiActivity {
                 n+=1;
             }
             return name;
+        }
+    }
+
+
+    /**
+     * Template deletes shift card ordinals in the database. To operate without saving, we must keep track to apply in order.
+     * In addition, we don't want to persist a template add just to delete it later, so we combine those if they happen
+     */
+    public void addTemplateChange(ChangeType type, int ordinal) {
+        Timber.d("addTemplateChange() type %s for ordinal %s", type, ordinal);
+        if (mTemplateChanges == null) {
+            mTemplateChanges = new ArrayList<>();
+        }
+        Object[] change = new Object[] {ordinal, type};
+
+        // If we are deleting something we added but have not saved, edit it out of the change list
+        if (type == ChangeType.DELETE) {
+            int ordinalAdjustment = 0;
+            for (int i = mTemplateChanges.size() - 1; i >= 0; i--) {
+                Object[] oldChange = mTemplateChanges.get(i );
+                switch ((ChangeType)oldChange[1]) {
+                    case DELETE: {
+                        // Deleting an ordinal at or below us? Adjust our comparison basis...
+                        if ((Integer)oldChange[0] - ordinalAdjustment <= ordinal) {
+                            ordinalAdjustment++;
+                            continue;
+                        }
+                        break;
+                    }
+                    case ADD:
+                        if (ordinal == (Integer)oldChange[0] - ordinalAdjustment) {
+                            // Deleting something we added this session? Edit it out via compaction
+                            compactTemplateChanges((Integer)oldChange[0]);
+                            return;
+                        }
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+        }
+
+        Timber.d("addTemplateChange() added ord/type: %s/%s", change[0], change[1]);
+        mTemplateChanges.add(change);
+    }
+
+
+    public @NonNull ArrayList<Object[]> getTemplateChanges() {
+        if (mTemplateChanges == null) {
+            mTemplateChanges = new ArrayList<>();
+        }
+        return mTemplateChanges;
+    }
+
+
+    /**
+     * Scan the sequence of template add/deletes, looking for the given ordinal.
+     * When found, purge that ordinal and shift future changes down if they had ordinals higher than the one purged
+     */
+    private void compactTemplateChanges(int addedOrdinalToDelete) {
+
+        Timber.d("compactTemplateChanges() merge/purge add/delete ordinal added as %s", addedOrdinalToDelete);
+        boolean postChange = false;
+        int ordinalAdjustment = 0;
+        for (int i = 0; i < mTemplateChanges.size(); i++) {
+            Object[] change = mTemplateChanges.get(i);
+            int ordinal = (Integer)change[0];
+            ChangeType changeType = (ChangeType)change[1];
+            Timber.d("compactTemplateChanges() examining change entry %s / %s", ordinal, changeType);
+
+            // Only make adjustments after the ordinal we want to delete was added
+            if (!postChange) {
+                if (ordinal == addedOrdinalToDelete && changeType == ChangeType.ADD) {
+                    Timber.d("compactTemplateChanges() found our entry at index %s", i);
+                    // Remove this entry to start compaction, then fix up the loop counter since we altered size
+                    postChange = true;
+                    mTemplateChanges.remove(i);
+                    i--;
+                }
+                continue;
+            }
+
+            // We compact all deletes with higher ordinals, so any delete is below us: shift our comparison basis
+            if (changeType == ChangeType.DELETE) {
+                ordinalAdjustment++;
+                Timber.d("compactTemplateChanges() delete affecting purged template, shifting basis, adj: %s", ordinalAdjustment);
+            }
+
+            // If following ordinals were higher, we move them as part of compaction
+            if ((ordinal + ordinalAdjustment) > addedOrdinalToDelete) {
+                Timber.d("compactTemplateChanges() shifting later/higher ordinal down");
+                change[0] = --ordinal;
+            }
         }
     }
 
