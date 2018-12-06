@@ -409,8 +409,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         data.result = new Object[] {"connectionError" };
                     } else if (e.getMessage().equals("UserAbortedSync")) {
                         data.result = new Object[] {"UserAbortedSync" };
-                    } else {
-                        AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
                     }
                     mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage();
                 }
