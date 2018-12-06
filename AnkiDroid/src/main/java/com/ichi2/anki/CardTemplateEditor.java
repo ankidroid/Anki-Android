@@ -225,7 +225,7 @@ public class CardTemplateEditor extends AnkiActivity {
         super.onCollectionLoaded(col);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mTemplateAdapter = new TemplatePagerAdapter(getSupportFragmentManager());
+        mTemplateAdapter = getNewTemplatePagerAdapter(getSupportFragmentManager());
         mTemplateAdapter.setModel(col.getModels().get(mModelId));
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -314,8 +314,14 @@ public class CardTemplateEditor extends AnkiActivity {
     // INNER CLASSES
     // ----------------------------------------------------------------------------
 
+
+    protected TemplatePagerAdapter getNewTemplatePagerAdapter(FragmentManager fm) {
+        return new TemplatePagerAdapter(fm);
+    }
+
+
     /**
-     * A {@link androidx.core.app.FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link androidx.fragment.app.FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the tabs.
      */
     public class TemplatePagerAdapter extends FragmentPagerAdapter {
