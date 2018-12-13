@@ -3,8 +3,10 @@ package com.ichi2.anki.tests.libanki;
 import android.Manifest;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
+import android.os.Build;
 
 import com.ichi2.anki.CollectionHelper;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.DB;
 
 import org.junit.Assert;
@@ -29,6 +31,13 @@ public class DBTest {
 
     @Test
     public void testDBCorruption() throws Exception {
+
+        // SQLiteDatabase.deleteDatabase() was added in API16.
+        // Corruption handling added in API1 and changed in API11 so implementation's ok
+        // Per Google Play Console 2018/12/11 potential impact is 141 users.
+        if (CompatHelper.getSdkVersion() < Build.VERSION_CODES.JELLY_BEAN) {
+            return;
+        }
 
         String storagePath = CollectionHelper.getDefaultAnkiDroidDirectory();
         File illFatedDBFile = new File(storagePath, "illFatedDB.anki2");
