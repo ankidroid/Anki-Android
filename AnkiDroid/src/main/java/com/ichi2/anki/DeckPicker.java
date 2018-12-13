@@ -915,16 +915,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // installation of AnkiDroid and we don't run the check.
             // FIXME to use new API and change from int to long is very problematic. It's strongly typed in the XML and needs handling
             // FIXME or it isn't backwards compatible - blows up development and may hurt users
-            int current = VersionUtils.getPkgVersionCode();
-            Timber.i("Current AnkiDroid version: %s", current);
-            int previous;
+            int currentPrefs = VersionUtils.getPkgVersionCode();
+            Timber.i("Current AnkiDroid prefs version: %s", currentPrefs);
+            int previousPrefs;
             if (!preferences.contains("lastUpgradeVersion")) {
                 // Fresh install
-                previous = current;
+                previousPrefs = currentPrefs;
             } else {
                 try {
-                    previous = preferences.getInt("lastUpgradeVersion", current);
-                    Timber.i("Previous AnkiDroid version: %s", previous);
+                    previousPrefs = preferences.getInt("lastUpgradeVersion", currentPrefs);
+                    Timber.i("Previous AnkiDroid prefs version: %s", previousPrefs);
                 } catch (ClassCastException e) {
                     // Previous versions stored this as a string.
                     String s = preferences.getString("lastUpgradeVersion", "");
@@ -932,32 +932,32 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     // We manually set the version here, but anything older will force a DB
                     // check.
                     if ("2.0.2".equals(s)) {
-                        previous = 40;
+                        previousPrefs = 40;
                     } else {
-                        previous = 0;
+                        previousPrefs = 0;
                     }
                 }
             }
-            preferences.edit().putInt("lastUpgradeVersion", current).apply();
+            preferences.edit().putInt("lastUpgradeVersion", currentPrefs).apply();
 
             // New version, clear out old exception report limits
             AnkiDroidApp.deleteACRALimiterData(this);
 
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
-            if (previous < 20300200) {
+            if (previousPrefs < 20300200) {
                 File mediaDb = new File(CollectionHelper.getCurrentAnkiDroidDirectory(this), "collection.media.ad.db2");
                 if (mediaDb.exists()) {
                     mediaDb.delete();
                 }
             }
             // Recommend the user to do a full-sync if they're upgrading from before 2.3.1beta8
-            if (previous < 20301208) {
+            if (previousPrefs < 20301208) {
                 mRecommendFullSync = true;
             }
 
             // Fix "font-family" definition in templates created by AnkiDroid before 2.6alhpa23
-            if (previous < 20600123) {
+            if (previousPrefs < 20600123) {
                 try {
                     Models models = getCol().getModels();
                     for (JSONObject m : models.all()) {
@@ -978,30 +978,30 @@ public class DeckPicker extends NavigationDrawerActivity implements
             int upgradeDbVersion = AnkiDroidApp.CHECK_DB_AT_VERSION;
 
             // Specifying a checkpoint in the future is not supported, please don't do it!
-            if (current < upgradePrefsVersion) {
+            if (currentPrefs < upgradePrefsVersion) {
                 UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_PREFERENCES_AT_VERSION", false);
                 onFinishedStartup();
                 return;
             }
-            if (current < upgradeDbVersion) {
+            if (currentPrefs < upgradeDbVersion) {
                 UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_DB_AT_VERSION", false);
                 onFinishedStartup();
                 return;
             }
 
             //noinspection ConstantConditions
-            if (previous < upgradeDbVersion || previous < upgradePrefsVersion) {
-                if (previous < upgradePrefsVersion) {
+            if (previousPrefs < upgradeDbVersion || previousPrefs < upgradePrefsVersion) {
+                if (previousPrefs < upgradePrefsVersion) {
                     Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
                     CompatHelper.removeHiddenPreferences(this.getApplicationContext());
-                    upgradePreferences(previous);
+                    upgradePreferences(previousPrefs);
                 }
                 // Integrity check loads asynchronously and then restart deck picker when finished
                 //noinspection ConstantConditions
-                if (previous < upgradeDbVersion) {
+                if (previousPrefs < upgradeDbVersion) {
                     Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
                     integrityCheck();
-                } else if (previous < upgradePrefsVersion) {
+                } else if (previousPrefs < upgradePrefsVersion) {
                     // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
                     // proceed
                     restartActivity();
