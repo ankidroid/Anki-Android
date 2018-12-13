@@ -171,7 +171,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private EditText mDialogEditText;
 
     // flag asking user to do a full sync which is used in upgrade path
-    private boolean mRecommendFullSync = false;
+    protected boolean mRecommendFullSync = false;
 
     // flag keeping track of when the app has been paused
     private boolean mActivityPaused = false;
@@ -847,7 +847,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * loadStudyOptionsFragment() if tablet
      * Automatic sync
      */
-    private void onFinishedStartup() {
+    protected void onFinishedStartup() {
         // create backup in background if needed
         BackupManager.performBackupInBackground(getCol().getPath());
 
@@ -888,7 +888,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
+    @VisibleForTesting
+    protected void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
+        Timber.d("showStartupScreensAndDialogs()");
 
         if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
             // Not enough space to do backup
@@ -916,32 +918,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // FIXME to use new API and change from int to long is very problematic. It's strongly typed in the XML and needs handling
             // FIXME or it isn't backwards compatible - blows up development and may hurt users
             int currentPrefs = VersionUtils.getPkgVersionCode();
-            Timber.i("Current AnkiDroid prefs version: %s", currentPrefs);
-            int previousPrefs;
-            if (!preferences.contains("lastUpgradeVersion")) {
-                // Fresh install
-                previousPrefs = currentPrefs;
-            } else {
-                try {
-                    previousPrefs = preferences.getInt("lastUpgradeVersion", currentPrefs);
-                    Timber.i("Previous AnkiDroid prefs version: %s", previousPrefs);
-                } catch (ClassCastException e) {
-                    // Previous versions stored this as a string.
-                    String s = preferences.getString("lastUpgradeVersion", "");
-                    // The last version of AnkiDroid that stored this as a string was 2.0.2.
-                    // We manually set the version here, but anything older will force a DB
-                    // check.
-                    if ("2.0.2".equals(s)) {
-                        previousPrefs = 40;
-                    } else {
-                        previousPrefs = 0;
-                    }
-                }
-            }
+            int previousPrefs = getPreviousPrefs(preferences, currentPrefs);
+            Timber.i("AnkiDroid prefs versions previous -> current: %s / %s", previousPrefs, currentPrefs);
             preferences.edit().putInt("lastUpgradeVersion", currentPrefs).apply();
-
-            // New version, clear out old exception report limits
-            AnkiDroidApp.deleteACRALimiterData(this);
 
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
@@ -956,7 +935,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 mRecommendFullSync = true;
             }
 
-            // Fix "font-family" definition in templates created by AnkiDroid before 2.6alhpa23
+            // Fix "font-family" definition in templates created by AnkiDroid before 2.6alpha23
             if (previousPrefs < 20600123) {
                 try {
                     Models models = getCol().getModels();
@@ -974,16 +953,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
 
             // Check if preference upgrade or database check required, otherwise go to new feature screen
-            int upgradePrefsVersion = AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION;
-            int upgradeDbVersion = AnkiDroidApp.CHECK_DB_AT_VERSION;
+            int upgradePrefsVersion = getUpgradePrefsVersion();
+            int upgradeDbVersion = getCheckDbAtVersion();
 
             // Specifying a checkpoint in the future is not supported, please don't do it!
             if (currentPrefs < upgradePrefsVersion) {
+                Timber.e("Invalid upgradePrefsVersion value %s", upgradePrefsVersion);
                 UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_PREFERENCES_AT_VERSION", false);
                 onFinishedStartup();
                 return;
             }
             if (currentPrefs < upgradeDbVersion) {
+                Timber.e("Invalid upgradeDbVersion value %s", upgradeDbVersion);
                 UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_DB_AT_VERSION", false);
                 onFinishedStartup();
                 return;
@@ -1034,7 +1015,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private void upgradePreferences(long previousVersionCode) {
+    protected void upgradePreferences(long previousVersionCode) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         // clear all prefs if super old version to prevent any errors
         if (previousVersionCode < 20300130) {
@@ -1066,6 +1047,43 @@ public class DeckPicker extends NavigationDrawerActivity implements
             preferences.edit().remove("fullscreenReview").apply();
         }
     }
+
+
+    protected int getCheckDbAtVersion() {
+        return AnkiDroidApp.CHECK_DB_AT_VERSION;
+    }
+
+
+    protected int getUpgradePrefsVersion() {
+        return AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION;
+    }
+
+
+    private int getPreviousPrefs(SharedPreferences preferences, int currentPrefs) {
+        int previousPrefs;
+        if (!preferences.contains("lastUpgradeVersion")) {
+            // Fresh install
+            previousPrefs = currentPrefs;
+        } else {
+            try {
+                previousPrefs = preferences.getInt("lastUpgradeVersion", currentPrefs);
+                Timber.i("Previous AnkiDroid prefs version: %s", previousPrefs);
+            } catch (ClassCastException e) {
+                // Previous versions stored this as a string.
+                String s = preferences.getString("lastUpgradeVersion", "");
+                // The last version of AnkiDroid that stored this as a string was 2.0.2.
+                // We manually set the version here, but anything older will force a DB
+                // check.
+                if ("2.0.2".equals(s)) {
+                    previousPrefs = 40;
+                } else {
+                    previousPrefs = 0;
+                }
+            }
+        }
+        return previousPrefs;
+    }
+
 
     private void undo() {
         String undoReviewString = getResources().getString(R.string.undo_action_review);
@@ -1611,7 +1629,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting
     @Nullable
     public String rewriteError(int code) {
         String msg;
