@@ -895,122 +895,134 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
             // Not enough space to do backup
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance());
-        } else if (preferences.getBoolean("noSpaceLeft", false)) {
+            return;
+        }
+        if (preferences.getBoolean("noSpaceLeft", false)) {
             // No space left
             showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance());
             preferences.edit().remove("noSpaceLeft").apply();
-        } else if (preferences.getString("lastVersion", "").equals("")) {
+            return;
+        }
+        if (preferences.getString("lastVersion", "").equals("")) {
             // Fresh install
             preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
             onFinishedStartup();
-        } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName())) {
-            // AnkiDroid is being updated and a collection already exists.
+            return;
+        }
 
-            // The user might appreciate us now, see if they will help us get better?
-            if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
-                showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance());
-            }
-
-            // For upgrades, we check if we are upgrading
-            // to a version that contains additions to the database integrity check routine that we would
-            // like to run on all collections. A missing version number is assumed to be a fresh
-            // installation of AnkiDroid and we don't run the check.
-            // FIXME to use new API and change from int to long is very problematic. It's strongly typed in the XML and needs handling
-            // FIXME or it isn't backwards compatible - blows up development and may hurt users
-            int currentPrefs = VersionUtils.getPkgVersionCode();
-            int previousPrefs = getPreviousPrefs(preferences, currentPrefs);
-            Timber.i("AnkiDroid prefs versions previous -> current: %s / %s", previousPrefs, currentPrefs);
-            preferences.edit().putInt("lastUpgradeVersion", currentPrefs).apply();
-
-            // Delete the media database made by any version before 2.3 beta due to upgrade errors.
-            // It is rebuilt on the next sync or media check
-            if (previousPrefs < 20300200) {
-                File mediaDb = new File(CollectionHelper.getCurrentAnkiDroidDirectory(this), "collection.media.ad.db2");
-                if (mediaDb.exists()) {
-                    mediaDb.delete();
-                }
-            }
-            // Recommend the user to do a full-sync if they're upgrading from before 2.3.1beta8
-            if (previousPrefs < 20301208) {
-                mRecommendFullSync = true;
-            }
-
-            // Fix "font-family" definition in templates created by AnkiDroid before 2.6alpha23
-            if (previousPrefs < 20600123) {
-                try {
-                    Models models = getCol().getModels();
-                    for (JSONObject m : models.all()) {
-                        String css = m.getString("css");
-                        if (css.contains("font-familiy")) {
-                            m.put("css", css.replace("font-familiy", "font-family"));
-                            models.save(m);
-                        }
-                    }
-                    models.flush();
-                } catch (JSONException e) {
-                    Timber.e(e, "Failed to upgrade css definitions.");
-                }
-            }
-
-            // Check if preference upgrade or database check required, otherwise go to new feature screen
-            int upgradePrefsVersion = getUpgradePrefsVersion();
-            int upgradeDbVersion = getCheckDbAtVersion();
-
-            // Specifying a checkpoint in the future is not supported, please don't do it!
-            if (currentPrefs < upgradePrefsVersion) {
-                Timber.e("Invalid upgradePrefsVersion value %s", upgradePrefsVersion);
-                UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_PREFERENCES_AT_VERSION", false);
-                onFinishedStartup();
-                return;
-            }
-            if (currentPrefs < upgradeDbVersion) {
-                Timber.e("Invalid upgradeDbVersion value %s", upgradeDbVersion);
-                UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_DB_AT_VERSION", false);
-                onFinishedStartup();
-                return;
-            }
-
-            //noinspection ConstantConditions
-            if (previousPrefs < upgradeDbVersion || previousPrefs < upgradePrefsVersion) {
-                if (previousPrefs < upgradePrefsVersion) {
-                    Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
-                    CompatHelper.removeHiddenPreferences(this.getApplicationContext());
-                    upgradePreferences(previousPrefs);
-                }
-                // Integrity check loads asynchronously and then restart deck picker when finished
-                //noinspection ConstantConditions
-                if (previousPrefs < upgradeDbVersion) {
-                    Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
-                    integrityCheck();
-                } else if (previousPrefs < upgradePrefsVersion) {
-                    // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
-                    // proceed
-                    restartActivity();
-                }
-            } else {
-                // If no changes are required we go to the new features activity
-                // There the "lastVersion" is set, so that this code is not reached again
-                if (VersionUtils.isReleaseVersion()) {
-                    Intent infoIntent = new Intent(this, Info.class);
-                    infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
-
-                    if (skip != 0) {
-                        startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION,
-                                ActivityTransitionAnimation.LEFT);
-                    } else {
-                        startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
-                    }
-                } else {
-                    // Don't show new features dialog for development builds
-                    preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
-                    String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
-                    UIUtils.showSnackbar(this, ver, true, -1, null, findViewById(R.id.root_layout), null);
-                    showStartupScreensAndDialogs(preferences, 2);
-                }
-            }
-        } else {
+        if (skip >= 2 || preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName())) {
             // This is the main call when there is nothing special required
             onFinishedStartup();
+            return;
+        }
+
+        // -----------------------------------------------------------
+        // AnkiDroid is being updated and a collection already exists.
+        // -----------------------------------------------------------
+        AnkiDroidApp.deleteACRALimiterData(this);
+
+        // The user might appreciate us now, see if they will help us get better?
+        if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
+            showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance());
+        }
+
+        // Upgrades might require preference or database work.
+        // A missing version number is assumed to be a fresh install of AnkiDroid and we don't run the check.
+        // FIXME to use new API and change from int to long is very problematic. It's strongly typed in the XML and needs handling
+        // FIXME or it isn't backwards compatible - blows up development and may hurt users
+        int currentVersion = VersionUtils.getPkgVersionCode();
+        int previousPrefs = getPreviousPrefs(preferences, currentVersion);
+        Timber.i("AnkiDroid prefs versions previous -> current: %s / %s", previousPrefs, currentVersion);
+        preferences.edit().putInt("lastUpgradeVersion", currentVersion).apply();
+
+        // Delete the media database made by any version before 2.3 beta due to upgrade errors.
+        // It is rebuilt on the next sync or media check
+        if (previousPrefs < 20300200) {
+            File mediaDb = new File(CollectionHelper.getCurrentAnkiDroidDirectory(this), "collection.media.ad.db2");
+            if (mediaDb.exists()) {
+                mediaDb.delete();
+            }
+        }
+        // Recommend the user to do a full-sync if they're upgrading from before 2.3.1beta8
+        if (previousPrefs < 20301208) {
+            mRecommendFullSync = true;
+        }
+
+        // Fix "font-family" definition in templates created by AnkiDroid before 2.6alpha23
+        if (previousPrefs < 20600123) {
+            try {
+                Models models = getCol().getModels();
+                for (JSONObject m : models.all()) {
+                    String css = m.getString("css");
+                    if (css.contains("font-familiy")) {
+                        m.put("css", css.replace("font-familiy", "font-family"));
+                        models.save(m);
+                    }
+                }
+                models.flush();
+            } catch (JSONException e) {
+                Timber.e(e, "Failed to upgrade css definitions.");
+            }
+        }
+
+        // Check if preference upgrade or database check required, otherwise go to new feature screen
+        int upgradePrefsVersion = getUpgradePrefsVersion();
+        int upgradeDbVersion = getCheckDbAtVersion();
+
+        // Specifying a checkpoint in the future is not supported, please don't do it!
+        if (currentVersion < upgradePrefsVersion) {
+            Timber.e("Invalid upgradePrefsVersion value %s", upgradePrefsVersion);
+            UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_PREFERENCES_AT_VERSION", false);
+            onFinishedStartup();
+            return;
+        }
+        if (currentVersion < upgradeDbVersion) {
+            Timber.e("Invalid upgradeDbVersion value %s", upgradeDbVersion);
+            UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_DB_AT_VERSION", false);
+            onFinishedStartup();
+            return;
+        }
+
+        //noinspection ConstantConditions
+        if (previousPrefs < upgradeDbVersion || previousPrefs < upgradePrefsVersion) {
+            if (previousPrefs < upgradePrefsVersion) {
+                Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
+                CompatHelper.removeHiddenPreferences(this.getApplicationContext());
+                upgradePreferences(previousPrefs);
+            }
+            //noinspection ConstantConditions
+            if (previousPrefs < upgradeDbVersion) {
+                Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
+                // integrityCheck is async, but restarts the AnkiActivity every time no matter what
+                integrityCheck();
+                return;
+            }
+
+            // If we upgraded preferences but didn't touch the database, we still need to restart to proceed
+            restartActivity();
+
+        } else {
+            // If no changes are required we go to the new features activity
+            // There the "lastVersion" is set, so that this code is not reached again
+            if (VersionUtils.isReleaseVersion()) {
+                Intent infoIntent = new Intent(this, Info.class);
+                infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
+
+                if (skip != 0) {
+                    startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION,
+                            ActivityTransitionAnimation.LEFT);
+                } else {
+                    startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
+                }
+                return;
+            }
+
+            // Don't show new features dialog for development builds
+            Timber.d("Running a development version");
+            preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+            String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
+            UIUtils.showSnackbar(this, ver, true, -1, null, findViewById(R.id.root_layout), null);
+            showStartupScreensAndDialogs(preferences, 2);
         }
     }
 
