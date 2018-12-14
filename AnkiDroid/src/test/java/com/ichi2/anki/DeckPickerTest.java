@@ -104,12 +104,30 @@ public class DeckPickerTest extends RobolectricTest {
                 !deckPicker.mRecommendFullSync,      // we should not recommend a sync
                 !deckPicker.prefsUpgraded,           // no prefs upgrade
                 !deckPicker.integrityChecked,        // no integrity check
-                !deckPicker.finishedStartup,          // we not should finish startup
+                !deckPicker.finishedStartup,         // we not should finish startup
                 !deckPicker.activityRestarted,       // we should not restart
                 Info.class, shadowDeckPicker.getNextStartedActivity(),  // Info intent
                 "9.9.1");                  // we have a 9.9.1 last version
     }
 
+
+    @Test
+    public void verifyDevelopmentUpgrade() {
+
+        // Pretend we are 9.9alpha1, going to 9.9alpha2 and make sure we get no Info popup
+        // This may break at some point if we get past version 9.9.0 with the same naming scheme
+        prepareVersion(90900101, "9.9alpha1", 90900102, "9.9alpha2");
+        deckPickerController.create();
+        assertState(
+                deckPicker.startupScreensDisplayed,  // we should be called
+                !deckPicker.mRecommendFullSync,      // we should not recommend a sync
+                !deckPicker.prefsUpgraded,           // no prefs upgrade
+                !deckPicker.integrityChecked,        // no integrity check
+                deckPicker.finishedStartup,          // we should finish startup
+                !deckPicker.activityRestarted,       // we should not restart
+                null, shadowDeckPicker.getNextStartedActivity(),  // No intent
+                "9.9alpha2");              // we have a 9.9.2 last version
+    }
 
     @Test
     public void verifyFreshInstall() {
