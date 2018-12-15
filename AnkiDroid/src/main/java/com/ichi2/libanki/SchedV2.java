@@ -42,8 +42,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -1941,9 +1943,9 @@ public class SchedV2 {
     private void _updateCutoff() {
         int oldToday = mToday;
         // days since col created
-        mToday = (int) ((Utils.now() - mCol.getCrt()) / 86400);
+        mToday = _daysSinceCreation();
         // end of day cutoff
-        mDayCutoff = mCol.getCrt() + ((mToday + 1) * 86400);
+        mDayCutoff = _dayCutoff();
         if (oldToday != mToday) {
             mCol.log(mToday, mDayCutoff);
         }
@@ -1956,7 +1958,42 @@ public class SchedV2 {
         int unburied = mCol.getConf().optInt("lastUnburied", 0);
         if (unburied < mToday) {
             unburyCards();
+            try {
+                mCol.getConf().put("lastUnburied", mToday);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
+    }
+
+
+    private long _dayCutoff() {
+        int rolloverTime = mCol.getConf().optInt("rollover", 4);
+        if (rolloverTime < 0) {
+            rolloverTime = 24 + rolloverTime;
+        }
+        Date currentDate = new Date();
+        Date cutoffDate = new Date();
+        cutoffDate.setHours(rolloverTime);
+        cutoffDate.setMinutes(0);
+        cutoffDate.setSeconds(0);
+        Calendar c = Calendar.getInstance();
+        c.setTime(cutoffDate);
+        if (currentDate.compareTo(cutoffDate) > 0) {
+            c.add(Calendar.DATE, 1);
+        }
+
+        return c.getTimeInMillis() / 1000;
+    }
+
+
+    private int _daysSinceCreation() {
+        Date startDate = new Date(mCol.getCrt() * 1000);
+        startDate.setHours(mCol.getConf().optInt("rollover", 4));
+        startDate.setMinutes(0);
+        startDate.setSeconds(0);
+
+        return (int) ((new Date().getTime() - startDate.getTime()) / 1000) / 86400;
     }
 
 
