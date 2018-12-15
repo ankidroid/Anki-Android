@@ -29,6 +29,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
 
+import com.google.common.primitives.Ints;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.hooks.Hooks;
 
@@ -1275,9 +1276,11 @@ public class SchedV2 {
     }
 
 
-    public int _revForDeck(long did, int lim) {
-    	lim = Math.min(lim, mReportLimit);
-    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
+    public int _revForDeck(long did, int lim, HashMap<Long, HashMap<Long, HashMap>> childMap) {
+        ArrayList<Long> dids = mCol.getDecks().childDids(did, childMap);
+        dids.add(0, did);
+        lim = Math.min(lim, mReportLimit);
+        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(Ints.toArray(dids)) + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
     }
 
 
