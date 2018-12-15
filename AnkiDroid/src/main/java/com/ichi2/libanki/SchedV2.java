@@ -956,26 +956,83 @@ public class SchedV2 {
         _logLrn(card, ease, conf, leaving, type, lastLeft);
     }
 
-            // due today?
-            if (card.getDue() < mDayCutoff) {
-                mLrnCount += card.getLeft() / 1000;
-                // if the queue is not empty and there's nothing else to do, make
-                // sure we don't put it at the head of the queue and end up showing
-                // it twice in a row
-                card.setQueue(1);
-                if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
-                    long smallestDue = mLrnQueue.getFirst()[0];
-                    card.setDue(Math.max(card.getDue(), smallestDue + 1));
-                }
-                _sortIntoLrn(card.getDue(), card.getId());
-            } else {
-                // the card is due in one or more days, so we need to use the day learn queue
-                long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
-                card.setDue(mToday + ahead);
-                card.setQueue(3);
-            }
+
+    private void _updateRevIvlOnFail(Card card, JSONObject conf) {
+        card.setLastIvl(card.getIvl());
+        card.setIvl(_lapseIvl(card, conf));
+    }
+
+
+    private int _moveToFirstStep(Card card, JSONObject conf) {
+        card.setLeft(_startingLeft(card));
+
+        // relearning card?
+        if (card.getType() == 3) {
+            _updateRevIvlOnFail(card, conf);
         }
-        _logLrn(card, ease, conf, leaving, type, lastLeft);
+
+        return _rescheduleLrnCard(card, conf);
+    }
+
+
+    private void _moveToNextStep(Card card, JSONObject conf) {
+        // decrement real left count and recalculate left today
+        int left = (card.getLeft() % 1000) - 1;
+        try {
+            card.setLeft(_leftToday(conf.getJSONArray("delays"), left) * 1000 + left);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        _rescheduleLrnCard(card, conf);
+    }
+
+
+    private void _repeatStep(Card card, JSONObject conf) {
+        int delay = _delayForRepeatingGrade(conf, card.getLeft());
+        _rescheduleLrnCard(card, conf, delay);
+    }
+
+
+    private int _rescheduleLrnCard(Card card, JSONObject conf) {
+        return _rescheduleLrnCard(card, conf, null);
+    }
+
+
+    private int _rescheduleLrnCard(Card card, JSONObject conf, Integer delay) {
+        // normal delay for the current step?
+        if (delay == null) {
+            delay = _delayForGrade(conf, card.getLeft());
+        }
+
+        // due today?
+        if (card.getDue() < mDayCutoff) {
+            // Add some randomness, up to 5 minutes or 25%
+            int maxExtra = (int) Math.min(300, Math.round(delay * 0.25));
+            int fuzz = new Random().nextInt(maxExtra);
+            card.setDue(Math.min(mDayCutoff - 1, card.getDue() + fuzz));
+            card.setQueue(1);
+            try {
+                if (card.getDue() < (Utils.intNow() + mCol.getConf().getInt("collapseTime"))) {
+                    // if the queue is not empty and there's nothing else to do, make
+                    // sure we don't put it at the head of the queue and end up showing
+                    // it twice in a row
+                    if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
+                        long smallestDue = mLrnQueue.getFirst()[0];
+                        card.setDue(Math.max(card.getDue(), smallestDue + 1));
+                    }
+                    _sortIntoLrn(card.getDue(), card.getId());
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            // the card is due in one or more days, so we need to use the day learn queue
+            long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
+            card.setDue(mToday + ahead);
+            card.setQueue(3);
+        }
+        return delay;
     }
 
 
@@ -1002,8 +1059,26 @@ public class SchedV2 {
     }
 
 
+    private int  _delayForRepeatingGrade(JSONObject conf, int left) {
+        // halfway between last and  next
+        int delay1 = _delayForGrade(conf, left);
+        int delay2;
+        try {
+            if (conf.getJSONArray("delays").length() > 1) {
+                delay2 = _delayForGrade(conf, left - 1);
+            } else {
+                delay2 = delay1 * 2;
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        int avg = (delay1 + Math.max(delay1, delay2)) / 2;
+        return avg;
+    }
+
+
     private JSONObject _lrnConf(Card card) {
-        if (card.getType() == 2) {
+        if (card.getType() == 2 || card.getType() == 3) {
             return _lapseConf(card);
         } else {
             return _newConf(card);
@@ -1012,32 +1087,22 @@ public class SchedV2 {
 
 
     private void _rescheduleAsRev(Card card, JSONObject conf, boolean early) {
-        boolean lapse = (card.getType() == 2);
+        boolean lapse = (card.getType() == 2 || card.getType() == 3);
         if (lapse) {
-            if (_resched(card)) {
-                card.setDue(Math.max(mToday + 1, card.getODue()));
-            } else {
-                card.setDue(card.getODue());
-            }
-            card.setODue(0);
+            _rescheduleGraduatingLapse(card);
         } else {
             _rescheduleNew(card, conf, early);
         }
+        // if we were dynamic, graduating means moving back to the old deck
+        if (card.getODid() != 0) {
+            _removeFromFiltered(card);
+        }
+    }
+
+    private void _rescheduleGraduatingLapse(Card card) {
+        card.setDue(mToday + card.getIvl());
         card.setQueue(2);
         card.setType(2);
-        // if we were dynamic, graduating means moving back to the old deck
-        boolean resched = _resched(card);
-        if (card.getODid() != 0) {
-            card.setDid(card.getODid());
-            card.setODue(0);
-            card.setODid(0);
-            // if rescheduling is off, it needs to be set back to a new card
-            if (!resched && !lapse) {
-                card.setType(0);
-                card.setQueue(card.getType());
-                card.setDue(mCol.nextID("pos"));
-            }
-        }
     }
 
 
@@ -1090,18 +1155,8 @@ public class SchedV2 {
     }
 
 
-    private int _graduatingIvl(Card card, JSONObject conf, boolean early, boolean adj) {
-        if (card.getType() == 2) {
-            // lapsed card being relearnt
-            if (card.getODid() != 0) {
-                try {
-                    if (conf.getBoolean("resched")) {
-                        return _dynIvlBoost(card);
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+    private int _graduatingIvl(Card card, JSONObject conf, boolean early, boolean fuzz) {
+        if (card.getType() == 2 || card.getType() == 3) {
             return card.getIvl();
         }
         int ideal;
@@ -1114,11 +1169,10 @@ public class SchedV2 {
             } else {
                 ideal = ja.getInt(1);
             }
-            if (adj) {
-                return _adjRevIvl(card, ideal);
-            } else {
-                return ideal;
+            if (fuzz) {
+                ideal = _fuzzedIvl(ideal);
             }
+            return ideal;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1134,6 +1188,8 @@ public class SchedV2 {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+        card.setType(2);
+        card.setQueue(2);
     }
 
 
@@ -1159,36 +1215,14 @@ public class SchedV2 {
     }
 
 
-    public void removeLrn() {
-    	removeLrn(null);
-    }
-
-    /* Remove cards from the learning queues. */
-    private void removeLrn(long[] ids) {
-        String extra;
-        if (ids != null && ids.length > 0) {
-            extra = " AND id IN " + Utils.ids2str(ids);
-        } else {
-            // benchmarks indicate it's about 10x faster to search all decks with the index than scan the table
-            extra = " AND did IN " + Utils.ids2str(mCol.getDecks().allIds());
-        }
-        // review cards in relearning
-        mCol.getDb().execute(
-                "update cards set due = odue, queue = 2, mod = " + Utils.intNow() +
-                ", usn = " + mCol.usn() + ", odue = 0 where queue IN (1,3) and type = 2 " + extra);
-        // new cards in learning
-        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE queue IN (1,3) " + extra, 0)));
-    }
-
-
     private int _lrnForDeck(long did) {
         try {
             int cnt = mCol.getDb().queryScalar(
-                    "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = " + did
+                    "SELECT count() FROM (SELECT null FROM cards WHERE did = " + did
                             + " AND queue = 1 AND due < " + (Utils.intNow() + mCol.getConf().getInt("collapseTime"))
                             + " LIMIT " + mReportLimit + ")");
             return cnt + mCol.getDb().queryScalar(
-                    "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did
+                    "SELECT count() FROM (SELECT null FROM cards WHERE did = " + did
                             + " AND queue = 3 AND due <= " + mToday
                             + " LIMIT " + mReportLimit + ")");
         } catch (SQLException | JSONException e) {
