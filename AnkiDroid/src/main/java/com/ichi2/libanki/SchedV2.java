@@ -2529,13 +2529,13 @@ public class SchedV2 {
     public boolean haveBuried(long did) {
         List<Long> all = new ArrayList<>(mCol.getDecks().children(did).values());
         all.add(did);
-        return haveBuried(all);
+        return haveBuriedSiblings(all) || haveManuallyBuried(all);
     }
 
     public void unburyCardsForDeck(long did) {
         List<Long> all = new ArrayList<>(mCol.getDecks().children(did).values());
         all.add(did);
-        unburyCardsForDeck(all);
+        unburyCardsForDeck("all", all);
     }
 
 
