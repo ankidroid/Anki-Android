@@ -8,7 +8,7 @@
   - [Inital setup (one time)](#inital-setup-one-time)
   - [Making a new pull request](#making-a-new-pull-request)
   - [Dealing with merge conflicts](#dealing-with-merge-conflicts)
-  - [Running unit tests](#running-unit-tests)
+  - [Running automated tests](#running-automated-tests)
   - [Compiling from the command line](#compiling-from-the-command-line)
   - [Handling translations](#handling-translations)
   - [Making parallel builds](#making-parallel-builds)
