@@ -1851,17 +1851,13 @@ public class SchedV2 {
             }
             // dynamic deck; override some attributes, use original deck for others
             JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
-            JSONArray delays = conf.optJSONArray("delays");
-            if (delays == null) {
-                delays = oconf.getJSONObject("new").getJSONArray("delays");
-            }
             JSONObject dict = new JSONObject();
             // original deck
             dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
             dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
             dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true));
+            dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"));
             // overrides
-            dict.put("delays", delays);
             dict.put("separate", conf.getBoolean("separate"));
             dict.put("order", Consts.NEW_CARDS_DUE);
             dict.put("perDay", mReportLimit);
@@ -1881,18 +1877,14 @@ public class SchedV2 {
             }
             // dynamic deck; override some attributes, use original deck for others
             JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
-            JSONArray delays = conf.optJSONArray("delays");
-            if (delays == null) {
-                delays = oconf.getJSONObject("lapse").getJSONArray("delays");
-            }
             JSONObject dict = new JSONObject();
             // original deck
             dict.put("minInt", oconf.getJSONObject("lapse").getInt("minInt"));
             dict.put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"));
             dict.put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"));
             dict.put("mult", oconf.getJSONObject("lapse").getDouble("mult"));
+            dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"));
             // overrides
-            dict.put("delays", delays);
             dict.put("resched", conf.getBoolean("resched"));
             return dict;
         } catch (JSONException e) {
@@ -1921,15 +1913,22 @@ public class SchedV2 {
     }
 
 
-    private boolean _resched(Card card) {
+    private boolean _previewingCard(Card card) {
         JSONObject conf = _cardConf(card);
+
         try {
-            if (conf.getInt("dyn") == 0) {
-                return true;
-            }
-            return conf.getBoolean("resched");
+            return conf.getBoolean("dyn") && !conf.getBoolean("resched");
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+
+    private int _previewDelay(Card card) {
+        try {
+            return _cardConf(card).getInt("previewDelay") * 60;
+        } catch (JSONException e) {
+            return 10 * 60;
         }
     }
 
