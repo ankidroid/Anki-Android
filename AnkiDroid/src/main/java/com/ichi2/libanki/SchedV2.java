@@ -1303,53 +1303,44 @@ public class SchedV2 {
         if (mRevCount == 0) {
             return false;
         }
-        while (mRevDids.size() > 0) {
-            long did = mRevDids.getFirst();
-            int lim = Math.min(mQueueLimit, _deckRevLimit(did));
+        int lim = Math.min(mQueueLimit, _currentRevLimit());
+        if (lim != 0) {
             Cursor cur = null;
-            if (lim != 0) {
-                mRevQueue.clear();
-                // fill the queue with the current did
-                try {
-                    cur = mCol
-                            .getDb()
-                            .getDatabase()
-                            .query(
-                                    "SELECT id FROM cards WHERE did = " + did + " AND queue = 2 AND due <= " + mToday
-                                            + " LIMIT " + lim, null);
-                    while (cur.moveToNext()) {
-                        mRevQueue.add(cur.getLong(0));
-                    }
-                } finally {
-                    if (cur != null && !cur.isClosed()) {
-                        cur.close();
-                    }
+            mRevQueue.clear();
+            // fill the queue with the current did
+            try {
+                cur = mCol
+                        .getDb()
+                        .getDatabase()
+                        .query(
+                                "SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 2 AND due <= " + mToday
+                                        + " ORDER BY due LIMIT " + lim, null);
+                while (cur.moveToNext()) {
+                    mRevQueue.add(cur.getLong(0));
                 }
-                if (!mRevQueue.isEmpty()) {
-                    // ordering
-                    try {
-                        if (mCol.getDecks().get(did).getInt("dyn") != 0) {
-                            // dynamic decks need due order preserved
-                            // Note: libanki reverses mRevQueue and returns the last element in _getRevCard().
-                            // AnkiDroid differs by leaving the queue intact and returning the *first* element
-                            // in _getRevCard().
-                        } else {
-                            Random r = new Random();
-                            r.setSeed(mToday);
-                            Collections.shuffle(mRevQueue, r);
-                        }
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                    // is the current did empty?
-                    if (mRevQueue.size() < lim) {
-                        mRevDids.remove();
-                    }
-                    return true;
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
                 }
             }
-            // nothing left in the deck; move to next
-            mRevDids.remove();
+            if (!mRevQueue.isEmpty()) {
+                try {
+                    if (mCol.getDecks().get(mCol.getDecks().selected(), false).getInt("dyn") != 0) {
+                        // dynamic decks need due order preserved
+                        // Note: libanki reverses mRevQueue and returns the last element in _getRevCard().
+                        // AnkiDroid differs by leaving the queue intact and returning the *first* element
+                        // in _getRevCard().
+                    } else {
+                        // fixme: as soon as a card is answered, this is no longer consistent
+                        Random r = new Random();
+                        r.setSeed(mToday);
+                        Collections.shuffle(mRevQueue, r);
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                return true;
+            }
         }
         if (mRevCount != 0) {
             // if we didn't get a card but the count is non-zero,
