@@ -39,7 +39,10 @@ On opening the project it should start to build and should eventually prompt you
 
 After installing all these dependencies, the project should build successfully.
 
-## Connecting your device to Android studio via abd
+## Installing an emulator for testing
+Provided you are able to use hardware acceleration for the Android emulators, [setup an emulator](https://developer.android.com/tools/devices/managing-avds.html) is a very effective method for testing code and running the connected android tests. If possible, verify your work periodically against both the newest version of the emulator available and the oldest version we support that you can run (at this time API18 is the oldest emulator easy to run though [it is possible to run all the way down to API15 on linux at least with some effort[(https://issuetracker.google.com/issues/37138030#comment13).
+
+## Connecting your device to Android studio via abd to use for testing
 In order to run a custom build of AnkiDroid on your device or attach the debugger, you'll need to connect your device over the adb protocol. Open your Android device, and [enable](https://developer.android.com/studio/debug/dev-options.html) developer options and `USB debugging`. Finally when you connect your device to your computer over USB, it should get recognized by Android Studio and you should start to see output from it in the logcat section of Android studio.
 
 ## Running AnkiDroid from within Android studio
@@ -51,17 +54,17 @@ An apk file signed with a standard "debug" key will be generated named `"AnkiDro
 ## AnkiDroid source code overview: Where to find what
  * `/AnkiDroid/src/main/` is the root directory for the main project (`%root`)
  * `%root/java/com/ichi2/anki/` is the directory containing the main AnkiDroid source code.
- * `%root/java/com/ichi2/anki/DeckPicker.java` is the code which runs when first booting into AnkiDroid.
+ * `%root/java/com/ichi2/anki/DeckPicker.java` is the code which runs when starting AnkiDroid from the Android launcher.
  * `%root/java/com/ichi2/libanki/` contains the underlying Anki code which is common to all Anki clients. It is ported directly from the [Anki Desktop python code](https://github.com/dae/anki/tree/master/anki) into Java.
    * Because `libanki` code comes upstream from the common Anki code, edit it only when necessary. Keeping the code consistent with the common core makes it easier to integrate future upgrades.
- * `%root/assets/flashcard.css` contains the CSS file included with each flash card
+ * `%root/assets/ ` contains the flashcard.css and HTML templates included with each flash card
  * `%root/res/` contains the [Android resource XML files](http://developer.android.com/guide/topics/resources/providing-resources.html) for the project.
  * `%root/res/values/` contains app strings, whiteboard colors, and a basic HTML template for flashcards.
  * `%root/res/layout/` contains the GUI layouts for most screens.
  * `%root/res/drawable-****/` contains the icons used throughout the app at [various resolutions](https://www.google.com/design/spec/style/icons.html).
 
 ## Issues to get started with
-If you are a new developer looking to contribute something to AnkiDroid, but you don't know what work to get started with, please take a look and see if there's anything that you'd like to work on in the issue tracker. In particular, [issues with the label "HelpWanted"](https://github.com/ankidroid/Anki-Android/labels/HelpWanted) are tasks that have been specially highlighted as work that we'd really like to have done, but don't have time to do ourselves. 
+If you are a new developer looking to contribute something to AnkiDroid, but you don't know what work to get started with, please take a look and see if there's anything that you'd like to work on in the issue tracker. In particular, [issues with the label "HelpWanted"](https://github.com/ankidroid/Anki-Android/labels/HelpWanted) or are tasks that have been specially highlighted as work that we'd really like to have done, but don't have time to do ourselves, and the similar "Good First Issue" label has been added to any tasks that seem like a good way to get started working with the codebase.
 
 If it's unclear exactly what needs to be done, or how to do it, please don't hesitate to ask for clarification or help!
 
@@ -109,15 +112,24 @@ git rebase master
 git push origin HEAD -f
 ```
 
-## Running unit tests
-Several unit tests are defined in the `AnkiDroid/androidTest` folder. You can run the tests from within Android Studio by simply right clicking on the test and running it (be sure to choose the icon with the Android symbol if there are multiple options shown), or from the command line using
+## Running automated tests
+
+### Unit tests
+There are unit tests defined in the `AnkiDroid/src/test` directory, with [an extendable test superclass available using the Robolectric framework](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/test/java/com/ichi2/anki/RobolectricTest.java) to make standard Android services available, including sqlite so you can operate on Anki Collections in your tests - each Collection created on the fly prior to each test method and deleted afterwards for isolation. You can run these tests by selecting them directly from AndroidStudio for individual tests or all tests from one file, or you can run them from the command line and generate a coverage report to verify the effect of your testing from the command line using:
 ```
-./gradlew connectedCheck
+./gradlew jacocoUnitTestReport
 ```
 
-**Note:** Some of the unit tests involve the deletion of models, which will force a full-sync, so it's not recommended to try running the tests on your main device.
+Afterwards you should find the coverage report in `%AnkiDroidRoot%/AnkiAndroid/build/reports/jacoco/jacocoUnitTestReport/html/index.html`
 
-**Note:** Successful completion of the tests on an SDK23+ device when running from Android Studio may require you to manually grant the storage permission on the device before running the tests. Command line invocation should not have this problem.
+### On-device integration tests
+In addition to the unit tests, several integration tests are defined in the `AnkiDroid/src/androidTest` folder. You can run the tests from within Android Studio by simply right clicking on the test and running it against the chosen connected Android device (be sure to choose the icon with the Android symbol if there are multiple options shown), or from the command line against all connected devices at once using
+```
+./gradlew jacocoTestReport
+```
+After this you should find a coverage report that integrates unit and integration test execution in `%AnkiDroidRoot%/AnkiAndroid/build/reports/jacoco/jacocoTestReport/html/index.html`
+
+**Note:** Some of the connected tests involve the deletion of models, which will force a full-sync, so it's not recommended to try running the tests on your main device.
 
 ## Compiling from the command line
 If you have the Android SDK installed, you should be able to compile from the command line even without installing Android Studio.
