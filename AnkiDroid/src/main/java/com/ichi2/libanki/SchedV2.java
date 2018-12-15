@@ -30,6 +30,7 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 
 import com.google.common.primitives.Ints;
+import com.google.common.primitives.Longs;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.hooks.Hooks;
 
@@ -262,13 +263,6 @@ public class SchedV2 {
         return 4;
     }
 
-    private void unburyCardsForDeck(List<Long> allDecks) {
-        // Refactored to allow unburying an arbitrary deck
-        String sids = Utils.ids2str(allDecks);
-        mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = -2 and did in " + sids, 0));
-        mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = -2 and did in " + sids,
-                new Object[] { Utils.intNow(), mCol.usn() });
-    }
 
     /**
      * Rev/lrn/time daily stats *************************************************
@@ -2218,16 +2212,26 @@ public class SchedV2 {
 
 
     /**
-     * Suspending *************************************************************** ********************************
+     * Suspending & burying ********************************************************** ********************************
      */
+
+    /**
+     * learning and relearning cards may be seconds-based or day-based;
+     * other types map directly to queues
+     */
+    private String _restoreQueueSnippet() {
+        return "queue = (case when type in (1,3) then\n" +
+                "  (case when (case when odue then odue else due end) > 1000000000 then 1 else 3 end)\n" +
+                "else\n" +
+                "  type\n" +
+                "end)  ";
+    }
 
     /**
      * Suspend cards.
      */
     public void suspendCards(long[] ids) {
         mCol.log(ids);
-        remFromDyn(ids);
-        removeLrn(ids);
         mCol.getDb().execute(
                 "UPDATE cards SET queue = -1, mod = " + Utils.intNow() + ", usn = " + mCol.usn() + " WHERE id IN "
                         + Utils.ids2str(ids));
@@ -2240,17 +2244,58 @@ public class SchedV2 {
     public void unsuspendCards(long[] ids) {
         mCol.log(ids);
         mCol.getDb().execute(
-                "UPDATE cards SET queue = type, mod = " + Utils.intNow() + ", usn = " + mCol.usn()
+                "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = " + Utils.intNow() + ", usn = " + mCol.usn()
                         + " WHERE queue = -1 AND id IN " + Utils.ids2str(ids));
     }
 
 
     public void buryCards(long[] cids) {
+        buryCards(cids, true);
+    }
+
+
+    public void buryCards(long[] cids, boolean manual) {
+        int queue = manual ? -3 : -2;
         mCol.log(cids);
-        remFromDyn(cids);
-        removeLrn(cids);
-        mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(cids),
-                new Object[]{Utils.now(), mCol.usn()});
+        mCol.getDb().execute("update cards set queue=?,mod=?,usn=? where id in " + Utils.ids2str(cids),
+                new Object[]{queue, Utils.now(), mCol.usn()});
+    }
+
+
+    /**
+     * Unbury all buried cards in all decks
+     */
+    public void unburyCards() {
+        mCol.log(mCol.getDb().queryColumn( Long.class,"select id from cards where queue in (-2, -3)", 0));
+        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where queue in (-2, -3)");
+    }
+
+
+    public void unburyCardsForDeck() {
+        unburyCardsForDeck("all");
+    }
+
+
+    public void unburyCardsForDeck(String type) {
+        unburyCardsForDeck(type, null);
+    }
+
+    public void unburyCardsForDeck(String type, List<Long> allDecks) {
+        String queue;
+        if (type == "all") {
+            queue = "queue in (-2, -3)";
+        } else if (type == "manual") {
+            queue = "queue = -3";
+        } else if (type == "siblings") {
+            queue = "queue = -2";
+        } else {
+            throw new RuntimeException("unknown type");
+        }
+
+        String sids = Utils.ids2str(allDecks != null ? allDecks : mCol.getDecks().active());
+
+        mCol.log(mCol.getDb().queryColumn(Long.class,"select id from cards where " + queue + " and did in " + sids, 0));
+        mCol.getDb().execute("update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + " and did in " + sids, new Object[]{mCol.usn()});
     }
 
 
@@ -2270,7 +2315,7 @@ public class SchedV2 {
      */
 
     private void _burySiblings(Card card) {
-        LinkedList<Long> toBury = new LinkedList<>();
+        ArrayList<Long> toBury = new ArrayList<>();
         JSONObject nconf = _newConf(card);
         boolean buryNew = nconf.optBoolean("bury", true);
         JSONObject rconf = _revConf(card);
@@ -2305,9 +2350,7 @@ public class SchedV2 {
         }
         // then bury
         if (toBury.size() > 0) {
-            mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(toBury),
-                    new Object[] { Utils.now(), mCol.usn() });
-            mCol.log(toBury);
+            buryCards(Longs.toArray(toBury),false);
         }
     }
 
