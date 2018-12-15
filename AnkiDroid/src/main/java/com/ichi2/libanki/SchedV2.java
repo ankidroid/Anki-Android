@@ -375,6 +375,7 @@ public class SchedV2 {
         ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> data = new ArrayList<>();
+        HashMap<Long, HashMap<Long, HashMap>> childMap = mCol.getDecks().childMap();
         try {
             for (JSONObject deck : decks) {
                 // if we've already seen the exact same deck name, remove the
@@ -406,11 +407,12 @@ public class SchedV2 {
                 // learning
                 int lrn = _lrnForDeck(deck.getLong("id"));
                 // reviews
-                int rlim = _deckRevLimitSingle(deck);
+                Integer plim = null;
                 if (!TextUtils.isEmpty(p)) {
-                    rlim = Math.min(rlim, lims.get(p)[1]);
+                    plim = lims.get(p)[1];
                 }
-                int rev = _revForDeck(deck.getLong("id"), rlim);
+                int rlim = _deckRevLimitSingle(deck, plim);
+                int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
                 // save to list
                 data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
                 // add deck as a parent
@@ -487,7 +489,6 @@ public class SchedV2 {
             children = _groupChildrenMain(children);
             // tally up children counts
             for (DeckDueTreeNode ch : children) {
-                rev +=  ch.revCount;
                 lrn +=  ch.lrnCount;
                 _new += ch.newCount;
             }
@@ -496,7 +497,6 @@ public class SchedV2 {
             JSONObject deck = mCol.getDecks().get(did);
             try {
                 if (conf.getInt("dyn") == 0) {
-                    rev = Math.max(0, Math.min(rev, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
                     _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
                 }
             } catch (JSONException e) {
