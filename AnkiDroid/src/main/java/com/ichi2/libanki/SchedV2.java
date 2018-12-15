@@ -154,44 +154,59 @@ public class SchedV2 {
         if (mBurySiblingsOnAnswer) {
             _burySiblings(card);
         }
-        card.setReps(card.getReps() + 1);
-        // former is for logging new cards, latter also covers filt. decks
-        card.setWasNew((card.getType() == 0));
-        boolean wasNewQ = (card.getQueue() == 0);
-        if (wasNewQ) {
-            // came from the new queue, move to learning
-            card.setQueue(1);
-            // if it was a new card, it's now a learning card
-            if (card.getType() == 0) {
-                card.setType(1);
-            }
-            // init reps to graduation
-            card.setLeft(_startingLeft(card));
-            // dynamic?
-            if (card.getODid() != 0 && card.getType() == 2) {
-                if (_resched(card)) {
-                    // reviews get their ivl boosted on first sight
-                    card.setIvl(_dynIvlBoost(card));
-                    card.setODue(mToday + card.getIvl());
-                }
-            }
-            _updateStats(card, "new");
-        }
-        if (card.getQueue() == 1 || card.getQueue() == 3) {
-            _answerLrnCard(card, ease);
-            if (!wasNewQ) {
-                _updateStats(card, "lrn");
-            }
-        } else if (card.getQueue() == 2) {
-            _answerRevCard(card, ease);
-            _updateStats(card, "rev");
-        } else {
-            throw new RuntimeException("Invalid queue");
-        }
+
+        _answerCard(card, ease);
+
         _updateStats(card, "time", card.timeTaken());
         card.setMod(Utils.intNow());
         card.setUsn(mCol.usn());
         card.flushSched();
+    }
+
+
+    public void _answerCard(Card card, int ease) {
+        if (_previewingCard(card)) {
+            _answerCardPreview(card, ease);
+            return;
+        }
+
+        card.setReps(card.getReps() + 1);
+
+        if (card.getQueue() == 0) {
+            // came from the new queue, move to learning
+            card.setQueue(1);
+            // if it was a new card, it's now a learning card
+            card.setType(1);
+            // init reps to graduation
+            card.setLeft(_startingLeft(card));
+            // update daily limit
+            _updateStats(card, "new");
+        }
+        if (card.getQueue() == 1 || card.getQueue() == 3) {
+            _answerLrnCard(card, ease);
+        } else if (card.getQueue() == 2) {
+            _answerRevCard(card, ease);
+            // Update daily limit
+            _updateStats(card, "rev");
+        } else {
+            throw new RuntimeException("Invalid queue");
+        }
+    }
+
+
+    public void _answerCardPreview(Card card, int ease) {
+        if (ease == 1) {
+            // Repeat after delay
+            card.setQueue(4);
+            card.setDue(Utils.intNow() + _previewDelay(card));
+            mLrnCount += 1;
+        } else if (ease == 2) {
+            // Restore original card state and remove from filtered deck
+            _restorePreviewCard(card);
+            _removeFromFiltered(card);
+        } else {
+            throw new RuntimeException("Invalid ease");
+        }
     }
 
 
