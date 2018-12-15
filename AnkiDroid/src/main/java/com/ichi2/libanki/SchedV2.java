@@ -1606,7 +1606,7 @@ public class SchedV2 {
     }
 
 
-    public List<Long> rebuildDyn(long did) {
+    public Integer rebuildDyn(long did) {
         if (did == 0) {
             did = mCol.getDecks().selected();
         }
@@ -1621,40 +1621,47 @@ public class SchedV2 {
         }
         // move any existing cards back first, then fill
         emptyDyn(did);
-        List<Long> ids = _fillDyn(deck);
-        if (ids.isEmpty()) {
+        int cnt = _fillDyn(deck);
+        if (cnt == 0) {
             return null;
         }
         // and change to our new deck
         mCol.getDecks().select(did);
-        return ids;
+        return cnt;
     }
 
 
-    private List<Long> _fillDyn(JSONObject deck) {
+    private int _fillDyn(JSONObject deck) {
+        int start = -100000;
+        int total = 0;
         JSONArray terms;
         List<Long> ids;
         try {
-            terms = deck.getJSONArray("terms").getJSONArray(0);
-            String search = terms.getString(0);
-            int limit = terms.getInt(1);
-            int order = terms.getInt(2);
-            String orderlimit = _dynOrder(order, limit);
-            if (!TextUtils.isEmpty(search.trim())) {
-                search = String.format(Locale.US, "(%s)", search);
+            terms = deck.getJSONArray("terms");
+            for (int i = 0; i < terms.length(); i++) {
+                JSONObject term = terms.getJSONObject(i);
+                String search = terms.getString(0);
+                int limit = terms.getInt(1);
+                int order = terms.getInt(2);
+
+                String orderlimit = _dynOrder(order, limit);
+                if (!TextUtils.isEmpty(search.trim())) {
+                    search = String.format(Locale.US, "(%s)", search);
+                }
+                search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered", search);
+                ids = mCol.findCards(search, orderlimit);
+                if (ids.isEmpty()) {
+                    return total;
+                }
+                // move the cards over
+                mCol.log(deck.getLong("id"), ids);
+                _moveToDyn(deck.getLong("id"), ids, start + total);
+                total += ids.size();
             }
-            search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered", search);
-            ids = mCol.findCards(search, orderlimit);
-            if (ids.isEmpty()) {
-                return ids;
-            }
-            // move the cards over
-            mCol.log(deck.getLong("id"), ids);
-            _moveToDyn(deck.getLong("id"), ids);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        return ids;
+        return total;
     }
 
 
@@ -1668,11 +1675,10 @@ public class SchedV2 {
             lim = "did = " + did;
         }
         mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where " + lim, 0));
-        // move out of cram queue
+        // update queue in preview case
         mCol.getDb().execute(
-                "update cards set did = odid, queue = (case when type = 1 then 0 " +
-                "else type end), type = (case when type = 1 then 0 else type end), " +
-                "due = odue, odue = 0, odid = 0, usn = ? where " + lim,
+                "update cards set did = odid, " + _restoreQueueSnippet() +
+                ", due = odue, odue = 0, odid = 0, usn = ? where " + lim,
                 new Object[] { mCol.usn() });
     }
 
@@ -1730,37 +1736,63 @@ public class SchedV2 {
     }
 
 
-    private void _moveToDyn(long did, List<Long> ids) {
-        ArrayList<Object[]> data = new ArrayList<>();
-        //long t = Utils.intNow(); // unused variable present (and unused) upstream
-        int u = mCol.usn();
-        for (long c = 0; c < ids.size(); c++) {
-            // start at -100000 so that reviews are all due
-            data.add(new Object[] { did, -100000 + c, u, ids.get((int) c) });
-        }
-        // due reviews stay in the review queue. careful: can't use "odid or did", as sqlite converts to boolean
-        String queue = "(CASE WHEN type = 2 AND (CASE WHEN odue THEN odue <= " + mToday +
-                " ELSE due <= " + mToday + " END) THEN 2 ELSE 0 END)";
-        mCol.getDb().executeMany(
-                "UPDATE cards SET odid = (CASE WHEN odid THEN odid ELSE did END), " +
-                        "odue = (CASE WHEN odue THEN odue ELSE due END), did = ?, queue = " +
-                        queue + ", due = ?, usn = ? WHERE id = ?", data);
+    private void _moveToDrn(long did, List<Long> ids) {
+        _moveToDyn(did, ids, -100000);
     }
 
 
-    private int _dynIvlBoost(Card card) {
-        if (card.getODid() == 0 || card.getType() != 2 || card.getFactor() == 0) {
-            Timber.e("error: deck is not a filtered deck");
-            return 0;
+    private void _moveToDyn(long did, List<Long> ids, int start) {
+        JSONObject deck = mCol.getDecks().get(did);
+        ArrayList<Object[]> data = new ArrayList<>();
+        int u = mCol.usn();
+        int due = start;
+        for (Long id : ids) {
+            data.add(new Object[] {
+                did, due, u, id
+            });
+            due += 1;
         }
-        long elapsed = card.getIvl() - (card.getODue() - mToday);
-        double factor = ((card.getFactor() / 1000.0) + 1.2) / 2.0;
-        int ivl = Math.max(1, Math.max(card.getIvl(), (int) (elapsed * factor)));
-        JSONObject conf = _revConf(card);
+        String queue = "";
         try {
-            return Math.min(conf.getInt("maxIvl"), ivl);
+            if (!deck.getBoolean("resched")) {
+                queue = ", queue = 2";
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        }
+
+        mCol.getDb().executeMany(
+                "UPDATE cards SET odid = did, " +
+                        "odue = due, did = ?, due = ?, usn = ? " + queue + " WHERE id = ?", data);
+    }
+
+
+    private void _removeFromFiltered(Card card) {
+        if (card.getODid() != 0) {
+            card.setDid(card.getODid());
+            card.setODue(0);
+            card.setODid(0);
+        }
+    }
+
+
+    private void _restorePreviewCard(Card card) {
+        if (card.getODid() == 0) {
+            throw new RuntimeException("ODid wasn't set");
+        }
+
+        card.setDue(card.getODue());
+
+        // learning and relearning cards may be seconds-based or day-based;
+        // other types map directly to queues
+        if (card.getType() == 1 || card.getType() == 3) {
+            if (card.getODue() > 1000000000) {
+                card.setQueue(1);
+            } else {
+                card.setQueue(3);
+            }
+        } else {
+            card.setQueue(card.getType());
         }
     }
 
