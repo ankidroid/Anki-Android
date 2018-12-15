@@ -529,15 +529,25 @@ public class SchedV2 {
                 return c;
             }
         }
+        // Day learning first and card due?
+        boolean dayLearnFirst = mCol.getConf().optBoolean("dayLearnFirst", false);
+        if (dayLearnFirst) {
+            c = _getLrnDayCard();
+            if (c != null) {
+                return c;
+            }
+        }
         // Card due for review?
         c = _getRevCard();
         if (c != null) {
             return c;
         }
         // day learning card due?
-        c = _getLrnDayCard();
-        if (c != null) {
-            return c;
+        if (!dayLearnFirst) {
+            c = _getLrnDayCard();
+            if (c != null) {
+                return c;
+            }
         }
         // New cards left?
         c = _getNewCard();
