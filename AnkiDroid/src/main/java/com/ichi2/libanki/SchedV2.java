@@ -2157,19 +2157,31 @@ public class SchedV2 {
      * Return the next interval for CARD, in seconds.
      */
     public long nextIvl(Card card, int ease) {
+        // preview mode?
+        if (_previewingCard(card)) {
+            if (ease == 1) {
+                return _previewDelay(card);
+            }
+            return 0;
+        }
         try {
             if (card.getQueue() == 0 || card.getQueue() == 1 || card.getQueue() == 3) {
                 return _nextLrnIvl(card, ease);
             } else if (ease == 1) {
-                // lapsed
+                // lapse
                 JSONObject conf = _lapseConf(card);
                 if (conf.getJSONArray("delays").length() > 0) {
                     return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
                 }
-                return _nextLapseIvl(card, conf) * 86400L;
+                return _lapseIvl(card, conf) * 86400L;
             } else {
                 // review
-                return _nextRevIvl(card, ease) * 86400L;
+                boolean early = card.getODid() != 0 && (card.getODue() > mToday);
+                if (early) {
+                    return _earlyReviewIvl(card, ease) * 86400;
+                } else {
+                    return _nextRevIvl(card, ease, false) * 86400;
+                }
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -2187,19 +2199,13 @@ public class SchedV2 {
             if (ease == 1) {
                 // fail
                 return _delayForGrade(conf, conf.getJSONArray("delays").length());
-            } else if (ease == 3) {
-                // early removal
-                if (!_resched(card)) {
-                    return 0;
-                }
-                return _graduatingIvl(card, conf, true, false) * 86400L;
-            } else {
+            } else if (ease == 2) {
+                return _delayForRepeatingGrade(conf, card.getLeft());
+            } else if (ease == 4) {
+                return _graduatingIvl(card, conf, true, false) * 86400;
+            } else { // ease == 3
                 int left = card.getLeft() % 1000 - 1;
                 if (left <= 0) {
-                    // graduate
-                    if (!_resched(card)) {
-                        return 0;
-                    }
                     return _graduatingIvl(card, conf, false, false) * 86400L;
                 } else {
                     return _delayForGrade(conf, left);
