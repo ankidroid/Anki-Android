@@ -219,11 +219,7 @@ public class SchedV2 {
         int[] counts = {mNewCount, mLrnCount, mRevCount};
         if (card != null) {
             int idx = countIdx(card);
-            if (idx == 1) {
-                counts[1] += card.getLeft() / 1000;
-            } else {
-                counts[idx] += 1;
-            }
+            counts[idx] += 1;
         }
         return counts;
     }
@@ -244,7 +240,7 @@ public class SchedV2 {
 
 
     public int countIdx(Card card) {
-        if (card.getQueue() == 3) {
+        if (card.getQueue() == 3 || card.getQueue() == 4) {
             return 1;
         }
         return card.getQueue();
@@ -252,45 +248,15 @@ public class SchedV2 {
 
 
     public int answerButtons(Card card) {
-        if (card.getODue() != 0) {
-            // normal review in dyn deck?
-            if (card.getODid() != 0 && card.getQueue() == 2) {
-                return 4;
-            }
-            JSONObject conf = _lrnConf(card);
-            try {
-                if (card.getType() == 0 || card.getType() == 1 || conf.getJSONArray("delays").length() > 1) {
-                    return 3;
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            return 2;
-        } else if (card.getQueue() == 2) {
-            return 4;
-        } else {
-            return 3;
-        }
-    }
-
-
-    /*
-     * Unbury cards.
-     */
-    public void unburyCards() {
+        JSONObject conf = _cardConf(card);
         try {
-            mCol.getConf().put("lastUnburied", mToday);
-            mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = -2", 0));
+            if (card.getODid() != 0 && !conf.getBoolean("resched")) {
+                return 2;
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-
-        mCol.getDb().execute("update cards set queue=type where queue = -2");
-    }
-
-
-    public void unburyCardsForDeck() {
-        unburyCardsForDeck(mCol.getDecks().active());
+        return 4;
     }
 
     private void unburyCardsForDeck(List<Long> allDecks) {
