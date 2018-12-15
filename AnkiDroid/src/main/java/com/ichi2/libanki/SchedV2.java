@@ -55,7 +55,7 @@ import timber.log.Timber;
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
                     "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
-public class Sched {
+public class SchedV2 {
 
 
 
@@ -102,7 +102,7 @@ public class Sched {
      * positive revlog intervals are in days (rev), negative in seconds (lrn)
      */
 
-    public Sched(Collection col) {
+    public SchedV2(Collection col) {
         mCol = col;
         mQueueLimit = 50;
         mReportLimit = 1000;
@@ -341,7 +341,7 @@ public class Sched {
         try {
             for (long did : mCol.getDecks().active()) {
                 // get the individual deck's limit
-                int lim = (Integer)limFn.invoke(Sched.this, mCol.getDecks().get(did));
+                int lim = (Integer)limFn.invoke(SchedV2.this, mCol.getDecks().get(did));
                 if (lim == 0) {
                     continue;
                 }
@@ -351,13 +351,13 @@ public class Sched {
                     // add if missing
                     long id = p.getLong("id");
                     if (!pcounts.containsKey(id)) {
-                        pcounts.put(id, (Integer)limFn.invoke(Sched.this, p));
+                        pcounts.put(id, (Integer)limFn.invoke(SchedV2.this, p));
                     }
                     // take minimum of child and parent
                     lim = Math.min(pcounts.get(id), lim);
                 }
                 // see how many cards we actually have
-                int cnt = (Integer)cntFn.invoke(Sched.this, did, lim);
+                int cnt = (Integer)cntFn.invoke(SchedV2.this, did, lim);
                 // if non-zero, decrement from parents counts
                 for (JSONObject p : parents) {
                     long id = p.getLong("id");
@@ -569,8 +569,8 @@ public class Sched {
 
     private void _resetNewCount() {
         try {
-            mNewCount = _walkingCount(Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class),
-                    Sched.class.getDeclaredMethod("_cntFnNew", long.class, int.class));
+            mNewCount = _walkingCount(SchedV2.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class),
+                    SchedV2.class.getDeclaredMethod("_cntFnNew", long.class, int.class));
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
@@ -703,7 +703,7 @@ public class Sched {
     private int _deckNewLimit(long did, Method fn) {
         try {
             if (fn == null) {
-                fn = Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class);
+                fn = SchedV2.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class);
             }
             List<JSONObject> decks = mCol.getDecks().parents(did);
             decks.add(mCol.getDecks().get(did));
@@ -711,7 +711,7 @@ public class Sched {
             // for the deck and each of its parents
             int rem = 0;
             for (JSONObject g : decks) {
-                rem = (Integer) fn.invoke(Sched.this, g);
+                rem = (Integer) fn.invoke(SchedV2.this, g);
                 if (lim == -1) {
                     lim = rem;
                 } else {
@@ -1201,7 +1201,7 @@ public class Sched {
 
     private int _deckRevLimit(long did) {
         try {
-            return _deckNewLimit(did, Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class));
+            return _deckNewLimit(did, SchedV2.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class));
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
@@ -1229,8 +1229,8 @@ public class Sched {
 
     private void _resetRevCount() {
         try {
-            mRevCount = _walkingCount(Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class),
-                    Sched.class.getDeclaredMethod("_cntFnRev", long.class, int.class));
+            mRevCount = _walkingCount(SchedV2.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class),
+                    SchedV2.class.getDeclaredMethod("_cntFnRev", long.class, int.class));
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
