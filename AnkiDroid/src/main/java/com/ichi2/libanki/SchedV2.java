@@ -2086,16 +2086,36 @@ public class SchedV2 {
     }
 
 
-    public boolean haveBuried() {
-        return haveBuried(mCol.getDecks().active());
+    public boolean haveBuriedSiblings() {
+        return haveBuriedSiblings(mCol.getDecks().active());
     }
 
-    private boolean haveBuried(List<Long> allDecks) {
+
+    private boolean haveBuriedSiblings(List<Long> allDecks) {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
         int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
                 "select 1 from cards where queue = -2 and did in %s limit 1", sdids));
         return cnt != 0;
+    }
+
+
+    public boolean haveManuallyBuried() {
+        return haveManuallyBuried(mCol.getDecks().active());
+    }
+
+
+    private boolean haveManuallyBuried(List<Long> allDecks) {
+        // Refactored to allow querying an arbitrary deck
+        String sdids = Utils.ids2str(allDecks);
+        int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
+                "select 1 from cards where queue = -3 and did in %s limit 1", sdids));
+        return cnt != 0;
+    }
+
+
+    private boolean haveBuried() {
+        return haveManuallyBuried() || haveBuriedSiblings();
     }
 
 
