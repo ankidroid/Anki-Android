@@ -2,6 +2,7 @@
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  * Copyright (c) 2013 Houssam Salem <houssam.salem.au@gmail.com>                        *
+ * Copyright (c) 2018 Chris Williams <chris@chrispwill.com>                             *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General private License as published by the Free Software       *
@@ -64,16 +65,17 @@ public class SchedV2 {
 
     private String mName = "std";
     private boolean mHaveCustomStudy = true;
-    private boolean mSpreadRev = true;
     private boolean mBurySiblingsOnAnswer = true;
 
     private Collection mCol;
     private int mQueueLimit;
     private int mReportLimit;
+    private int mDynReportLimit;
     private int mReps;
     private boolean mHaveQueues;
-    private int mToday;
+    private Integer mToday;
     public long mDayCutoff;
+    private long mLrnCutoff;
 
     private int mNewCount;
     private int mLrnCount;
@@ -106,8 +108,11 @@ public class SchedV2 {
         mCol = col;
         mQueueLimit = 50;
         mReportLimit = 1000;
+        mDynReportLimit = 99999;
         mReps = 0;
+        mToday = null;
         mHaveQueues = false;
+        mLrnCutoff = 0;
         _updateCutoff();
     }
 
