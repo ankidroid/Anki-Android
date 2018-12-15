@@ -806,6 +806,12 @@ public class SchedV2 {
         if (!mLrnQueue.isEmpty()) {
             return true;
         }
+        long cutoff = 0;
+        try {
+            cutoff = Utils.intNow() + mCol.getConf().getLong("collapseTime");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         Cursor cur = null;
         mLrnQueue.clear();
         try {
@@ -813,8 +819,8 @@ public class SchedV2 {
                     .getDb()
                     .getDatabase()
                     .query(
-                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = 1 AND due < "
-                                    + mDayCutoff + " LIMIT " + mReportLimit, null);
+                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (1, 4) AND due < "
+                                    + cutoff + " LIMIT " + mReportLimit, null);
             while (cur.moveToNext()) {
                 mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
             }
@@ -840,6 +846,7 @@ public class SchedV2 {
 
 
     private Card _getLrnCard(boolean collapse) {
+        _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
             double cutoff = Utils.now();
             if (collapse) {
@@ -852,7 +859,7 @@ public class SchedV2 {
             if (mLrnQueue.getFirst()[0] < cutoff) {
                 long id = mLrnQueue.remove()[1];
                 Card card = mCol.getCard(id);
-                mLrnCount -= card.getLeft() / 1000;
+                mLrnCount -= 1;
                 return card;
             }
         }
