@@ -1817,15 +1817,6 @@ public class SchedV2 {
                 n.flush();
                 // handle
                 if (conf.getInt("leechAction") == 0) {
-                    // if it has an old due, remove it from cram/relearning
-                    if (card.getODue() != 0) {
-                        card.setDue(card.getODue());
-                    }
-                    if (card.getODid() != 0) {
-                        card.setDid(card.getODid());
-                    }
-                    card.setODue(0);
-                    card.setODid(0);
                     card.setQueue(-1);
                 }
                 // notify UI
