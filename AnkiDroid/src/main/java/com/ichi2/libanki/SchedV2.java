@@ -736,7 +736,7 @@ public class SchedV2 {
     public int _deckNewLimitSingle(JSONObject g) {
         try {
             if (g.getInt("dyn") != 0) {
-                return mReportLimit;
+                return mDynReportLimit;
             }
             JSONObject c = mCol.getDecks().confForDid(g.getLong("id"));
             return Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
