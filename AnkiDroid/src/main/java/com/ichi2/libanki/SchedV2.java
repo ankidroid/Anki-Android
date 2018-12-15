@@ -1235,22 +1235,40 @@ public class SchedV2 {
      * Reviews ****************************************************************** *****************************
      */
 
-    private int _deckRevLimit(long did) {
-        try {
-            return _deckNewLimit(did, SchedV2.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class));
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
+    private int _currentRevLimit() {
+        JSONObject d = mCol.getDecks().get(mCol.getDecks().selected(), false);
+        return _deckRevLimitSingle(d);
     }
 
 
     private int _deckRevLimitSingle(JSONObject d) {
+        return _deckRevLimitSingle(d, null);
+    }
+
+
+    private int _deckRevLimitSingle(JSONObject d, Integer parentLimit) {
+        // invalid deck selected?
+        if (d == null) {
+            return 0;
+        }
         try {
             if (d.getInt("dyn") != 0) {
-                return mReportLimit;
+                return mDynReportLimit;
             }
             JSONObject c = mCol.getDecks().confForDid(d.getLong("id"));
-            return Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+            int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+
+            if (parentLimit != null) {
+                return Math.min(parentLimit, lim);
+            } else if (!d.getString("name").contains("::")) {
+                return lim;
+            } else {
+                for (JSONObject parent : mCol.getDecks().parents(d.getInt("id"))) {
+                    // pass in dummy parentLimit so we don't do parent lookup again
+                    lim = Math.min(lim, _deckRevLimitSingle(parent, lim));
+                }
+                return lim;
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
