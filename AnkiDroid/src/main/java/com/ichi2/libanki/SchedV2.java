@@ -922,65 +922,39 @@ public class SchedV2 {
     }
 
 
-    /**
-     * @param ease 1=no, 2=yes, 3=remove
-     */
     private void _answerLrnCard(Card card, int ease) {
         JSONObject conf = _lrnConf(card);
         int type;
-        if (card.getODid() != 0 && !card.getWasNew()) {
-            type = 3;
-        } else if (card.getType() == 2) {
+        if (card.getType() == 2 || card.getType() == 3) {
             type = 2;
         } else {
             type = 0;
         }
-        boolean leaving = false;
+
         // lrnCount was decremented once when card was fetched
         int lastLeft = card.getLeft();
+        boolean leaving = false;
+
         // immediate graduate?
-        if (ease == 3) {
+        if (ease == 4) {
             _rescheduleAsRev(card, conf, true);
             leaving = true;
             // graduation time?
-        } else if (ease == 2 && (card.getLeft() % 1000) - 1 <= 0) {
-            _rescheduleAsRev(card, conf, false);
-            leaving = true;
-        } else {
-            // one step towards graduation
-            if (ease == 2) {
-                // decrement real left count and recalculate left today
-                int left = (card.getLeft() % 1000) - 1;
-                try {
-                    card.setLeft(_leftToday(conf.getJSONArray("delays"), left) * 1000 + left);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-                // failed
+        } else if (ease == 3) {
+            if ((card.getLeft() % 1000) - 1 <= 0) {
+                _rescheduleAsRev(card, conf, false);
+                leaving = true;
             } else {
-                card.setLeft(_startingLeft(card));
-                boolean resched = _resched(card);
-                if (conf.has("mult") && resched) {
-                    // review that's lapsed
-                    try {
-                        card.setIvl(Math.max(Math.max(1, (int) (card.getIvl() * conf.getDouble("mult"))), conf.getInt("minInt")));
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    // new card; no ivl adjustment
-                    // pass
-                }
-                if (resched && card.getODid() != 0) {
-                    card.setODue(mToday + 1);
-                }
+                _moveToNextStep(card, conf);
             }
-            int delay = _delayForGrade(conf, card.getLeft());
-            if (card.getDue() < Utils.now()) {
-                // not collapsed; add some randomness
-                delay *= Utils.randomFloatInRange(1f, 1.25f);
-            }
-            card.setDue((int) (Utils.now() + delay));
+        } else if (ease == 2) {
+            _repeatStep(card, conf);
+        } else {
+            // move back to first step
+            _moveToFirstStep(card, conf);
+        }
+        _logLrn(card, ease, conf, leaving, type, lastLeft);
+    }
 
             // due today?
             if (card.getDue() < mDayCutoff) {
