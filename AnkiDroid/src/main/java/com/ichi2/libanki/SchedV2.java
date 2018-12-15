@@ -2521,6 +2521,47 @@ public class SchedV2 {
     }
 
 
+    /**
+     * Changing scheduler versions **************************************************
+     * *********************************************
+     */
+
+    private void _emptyAllFiltered() {
+        mCol.getDb().execute(String.format(Locale.US,"update cards set did = odid, queue = (case when type = 1 then 0 when type = 3 then 2 else type end), type = (case when type = 1 then 0 when type = 3 then 2 else type end), due = odue, odue = 0, odid = 0, usn = %d where odid != 0", mCol.usn()));
+    }
+
+
+    private void _removeAllFromLearning() {
+        mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", Utils.intNow(), mCol.usn()));
+    }
+
+
+    private void _resetSuspendedLearning() {
+        mCol.getDb().execute(String.format(Locale.US,"update cards set type = (case when type = 1 then 0 when type in (2, 3) then 2 else type end), due = (case when odue then odue else due end), odue = 0, mod = %d, usn = %d where queue < 0", Utils.intNow(), mCol.usn()));
+    }
+
+
+    // no 'manually buried' queue in v1
+    private void _moveManuallyBuried() {
+        mCol.getDb().execute(String.format(Locale.US, "update cards set queue=-2, mod=%d where queue=-3", Utils.intNow()));
+    }
+
+
+    public void moveToV1() {
+        _emptyAllFiltered();
+        _removeAllFromLearning();
+
+        _moveManuallyBuried();
+        _resetSuspendedLearning();
+    }
+
+
+    public void moveToV2() {
+        _emptyAllFiltered();
+        _removeAllFromLearning();
+    }
+
+
     /*
      * ***********************************************************
      * The methods below are not in LibAnki.
