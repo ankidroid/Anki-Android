@@ -1458,26 +1458,34 @@ public class SchedV2 {
      */
 
     /**
-     * Ideal next interval for CARD, given EASE.
+     * Next interval for CARD, given EASE.
      */
-    private int _nextRevIvl(Card card, int ease) {
+    private int _nextRevIvl(Card card, int ease, boolean fuzz) {
+        long delay = _daysLate(card);
+        int interval = 0;
+        JSONObject conf = _revConf(card);
+        double fct = card.getFactor() / 1000.0;
+        double hardFactor = conf.optDouble("hardFactor", 1.2);
+        int hardMin;
+        if (hardFactor > 1) {
+            hardMin = card.getIvl();
+        } else {
+            hardMin = 0;
+        }
+
+        int ivl2 = _constrainedIvl(card.getIvl() * hardFactor, conf, hardMin, fuzz);
+        if (ease == 2) {
+            return ivl2;
+        }
+
+        int ivl3 = _constrainedIvl((card.getIvl() + delay / 2) * fct, conf, ivl2, fuzz);
+        if (ease == 3) {
+            return ivl3;
+        }
+
         try {
-            long delay = _daysLate(card);
-            int interval = 0;
-            JSONObject conf = _revConf(card);
-            double fct = card.getFactor() / 1000.0;
-            int ivl2 = _constrainedIvl((int)((card.getIvl() + delay/4) * 1.2), conf, card.getIvl());
-            int ivl3 = _constrainedIvl((int)((card.getIvl() + delay/2) * fct), conf, ivl2);
-            int ivl4 = _constrainedIvl((int)((card.getIvl() + delay) * fct * conf.getDouble("ease4")), conf, ivl3);
-            if (ease == 2) {
-                interval = ivl2;
-            } else if (ease == 3) {
-                interval = ivl3;
-            } else if (ease == 4) {
-            	interval = ivl4;
-            }
-            // interval capped?
-            return Math.min(interval, conf.getInt("maxIvl"));
+            int ivl4 = _constrainedIvl((card.getIvl() + delay * fct * conf.getInt("ease4")), conf, ivl3, fuzz);
+            return ivl4;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1510,11 +1518,20 @@ public class SchedV2 {
     }
 
 
-    /** Integer interval after interval factor and prev+1 constraints applied */
-    private int _constrainedIvl(int ivl, JSONObject conf, double prev) {
-    	double newIvl = ivl;
-    	newIvl = ivl * conf.optDouble("ivlFct",1.0);
-        return (int) Math.max(newIvl, prev + 1);
+    private int _constrainedIvl(double ivl, JSONObject conf, double prev, boolean fuzz) {
+        int newIvl = (int) (ivl * conf.optDouble("ivlFct", 1));
+        if (fuzz) {
+            newIvl = _fuzzedIvl(newIvl);
+        }
+
+        newIvl = (int) Math.max(Math.max(newIvl, prev + 1), 1);
+        try {
+            newIvl = Math.min(newIvl, conf.getInt("maxIvl"));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return (int) ivl;
     }
 
 
@@ -1528,16 +1545,53 @@ public class SchedV2 {
 
 
     private void _updateRevIvl(Card card, int ease) {
-        int idealIvl = _nextRevIvl(card, ease);
-        card.setIvl(_adjRevIvl(card, idealIvl));
+        card.setIvl(_nextRevIvl(card, ease, true));
     }
 
-    @SuppressWarnings("PMD.UnusedFormalParameter") // it's unused upstream as well
-    private int _adjRevIvl(Card card, int idealIvl) {
-        if (mSpreadRev) {
-            idealIvl = _fuzzedIvl(idealIvl);
+
+    private void _updateEarlyRevIvl(Card card, int ease) {
+        card.setIvl(_earlyReviewIvl(card, ease));
+    }
+
+
+    private int _earlyReviewIvl(Card card, int ease) {
+        if (card.getODid() == 0 || card.getType() != 2 || card.getFactor() == 0) {
+            throw new RuntimeException("Unexpected card parameters");
         }
-        return idealIvl;
+        if (ease <= 1) {
+            throw new RuntimeException("Ease must be greater than 1");
+        }
+
+        long elapsed = card.getIvl() - (card.getODue() - mToday);
+
+        JSONObject conf = _revConf(card);
+
+        double easyBonus = 1;
+        // early 3/4 reviews shouldn't decrease previous interval
+        double minNewIvl = 1;
+
+        double factor;
+        if (ease == 2)  {
+            factor = conf.optDouble("hardFactor", 1.2);
+            // hard cards shouldn't have their interval decreased by more than 50%
+            // of the normal factor
+            minNewIvl = factor / 2;
+        } else if (ease == 3) {
+            factor = card.getFactor() / 1000;
+        } else { // ease == 4
+            factor = card.getFactor() / 1000;
+            try {
+                double ease4 = conf.getDouble("ease4");
+                // 1.3 -> 1.15
+                easyBonus = ease4 - (ease4 - 1)/2;
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        double ivl = Math.max(elapsed * factor, 1);
+
+        return _constrainedIvl(ivl, conf, 0, false);
     }
 
 
