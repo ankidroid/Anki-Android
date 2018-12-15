@@ -97,7 +97,6 @@ public class SchedV2 {
 
     private LinkedList<Long> mNewDids;
     private LinkedList<Long> mLrnDids;
-    private LinkedList<Long> mRevDids;
 
     // Not in libanki
     private WeakReference<Activity> mContextReference;
@@ -1458,7 +1457,6 @@ public class SchedV2 {
      */
     private int _nextRevIvl(Card card, int ease, boolean fuzz) {
         long delay = _daysLate(card);
-        int interval = 0;
         JSONObject conf = _revConf(card);
         double fct = card.getFactor() / 1000.0;
         double hardFactor = conf.optDouble("hardFactor", 1.2);
@@ -1569,9 +1567,6 @@ public class SchedV2 {
         double factor;
         if (ease == 2)  {
             factor = conf.optDouble("hardFactor", 1.2);
-            // hard cards shouldn't have their interval decreased by more than 50%
-            // of the normal factor
-            minNewIvl = factor / 2;
         } else if (ease == 3) {
             factor = card.getFactor() / 1000;
         } else { // ease == 4
@@ -1586,6 +1581,9 @@ public class SchedV2 {
         }
 
         double ivl = Math.max(elapsed * factor, 1);
+
+        // cap interval decreases
+        ivl = Math.max(card.getIvl() * minNewIvl, ivl) * easyBonus;
 
         return _constrainedIvl(ivl, conf, 0, false);
     }
@@ -1635,10 +1633,10 @@ public class SchedV2 {
         try {
             terms = deck.getJSONArray("terms");
             for (int i = 0; i < terms.length(); i++) {
-                JSONObject term = terms.getJSONObject(i);
-                String search = terms.getString(0);
-                int limit = terms.getInt(1);
-                int order = terms.getInt(2);
+                JSONArray term = terms.getJSONArray(i);
+                String search = term.getString(0);
+                int limit = term.getInt(1);
+                int order = term.getInt(2);
 
                 String orderlimit = _dynOrder(order, limit);
                 if (!TextUtils.isEmpty(search.trim())) {
@@ -1729,11 +1727,6 @@ public class SchedV2 {
             	break;
         }
         return t + " limit " + l;
-    }
-
-
-    private void _moveToDrn(long did, List<Long> ids) {
-        _moveToDyn(did, ids, -100000);
     }
 
 
@@ -2282,11 +2275,11 @@ public class SchedV2 {
 
     public void unburyCardsForDeck(String type, List<Long> allDecks) {
         String queue;
-        if (type == "all") {
+        if (type.equals("all")) {
             queue = "queue in (-2, -3)";
-        } else if (type == "manual") {
+        } else if (type.equals("manual")) {
             queue = "queue = -3";
-        } else if (type == "siblings") {
+        } else if (type.equals("siblings")) {
             queue = "queue = -2";
         } else {
             throw new RuntimeException("unknown type");
