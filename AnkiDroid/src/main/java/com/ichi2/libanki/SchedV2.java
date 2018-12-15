@@ -1961,11 +1961,12 @@ public class SchedV2 {
         }
         Date currentDate = new Date();
         Date cutoffDate = new Date();
-        cutoffDate.setHours(rolloverTime);
-        cutoffDate.setMinutes(0);
-        cutoffDate.setSeconds(0);
         Calendar c = Calendar.getInstance();
         c.setTime(cutoffDate);
+        c.set(Calendar.HOUR, rolloverTime);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
         if (currentDate.compareTo(cutoffDate) > 0) {
             c.add(Calendar.DATE, 1);
         }
@@ -1976,11 +1977,14 @@ public class SchedV2 {
 
     private int _daysSinceCreation() {
         Date startDate = new Date(mCol.getCrt() * 1000);
-        startDate.setHours(mCol.getConf().optInt("rollover", 4));
-        startDate.setMinutes(0);
-        startDate.setSeconds(0);
+        Calendar c = Calendar.getInstance();
+        c.setTime(startDate);
+        c.set(Calendar.HOUR, mCol.getConf().optInt("rollover", 4));
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
 
-        return (int) ((new Date().getTime() - startDate.getTime()) / 1000) / 86400;
+        return (int) ((new Date().getTime() - c.getTimeInMillis()) / 1000) / 86400;
     }
 
 
@@ -2275,11 +2279,11 @@ public class SchedV2 {
 
     public void unburyCardsForDeck(String type, List<Long> allDecks) {
         String queue;
-        if (type.equals("all")) {
+        if ("all".equals(type)) {
             queue = "queue in (-2, -3)";
-        } else if (type.equals("manual")) {
+        } else if ("manual".equals(type)) {
             queue = "queue = -3";
-        } else if (type.equals("siblings")) {
+        } else if ("siblings".equals(type)) {
             queue = "queue = -2";
         } else {
             throw new RuntimeException("unknown type");
