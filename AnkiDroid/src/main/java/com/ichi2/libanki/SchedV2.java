@@ -1377,12 +1377,14 @@ public class SchedV2 {
 
     private void _answerRevCard(Card card, int ease) {
         int delay = 0;
+        boolean early = card.getODid() != 0 && card.getODue() > mToday;
+        int type = early ? 3 : 1;
         if (ease == 1) {
             delay = _rescheduleLapse(card);
         } else {
-            _rescheduleRev(card, ease);
+            _rescheduleRev(card, ease, early);
         }
-        _logRev(card, ease, delay);
+        _logRev(card, ease, delay, type);
     }
 
 
@@ -1390,44 +1392,25 @@ public class SchedV2 {
         JSONObject conf;
         try {
             conf = _lapseConf(card);
-            card.setLastIvl(card.getIvl());
-            if (_resched(card)) {
-                card.setLapses(card.getLapses() + 1);
-                card.setIvl(_nextLapseIvl(card, conf));
-                card.setFactor(Math.max(1300, card.getFactor() - 200));
-                card.setDue(mToday + card.getIvl());
-                // if it's a filtered deck, update odue as well
-                if (card.getODid() != 0) {
-                    card.setODue(card.getDue());
-                }
-            }
-            // if suspended as a leech, nothing to do
-            int delay = 0;
-            if (_checkLeech(card, conf) && card.getQueue() == -1) {
-                return delay;
-            }
-            // if no relearning steps, nothing to do
-            if (conf.getJSONArray("delays").length() == 0) {
-                return delay;
-            }
-            // record rev due date for later
-            if (card.getODue() == 0) {
-                card.setODue(card.getDue());
-            }
-            delay = _delayForGrade(conf, 0);
-            card.setDue((long) (delay + Utils.now()));
-            card.setLeft(_startingLeft(card));
-            // queue 1
-            if (card.getDue() < mDayCutoff) {
-                mLrnCount += card.getLeft() / 1000;
-                card.setQueue(1);
-                _sortIntoLrn(card.getDue(), card.getId());
+            card.setLapses(card.getLapses() + 1);
+            card.setFactor(Math.max(1300, card.getFactor() - 200));
+            int delay;
+
+            boolean suspended = _checkLeech(card, conf) && card.getQueue() == -1;
+            if (conf.getJSONArray("delays").length() != 0 && !suspended) {
+                card.setType(3);
+                delay = _moveToFirstStep(card, conf);
             } else {
-                // day learn queue
-                long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
-                card.setDue(mToday + ahead);
-                card.setQueue(3);
+                // no relearning steps
+                _updateRevIvlOnFail(card, conf);
+                _rescheduleAsRev(card, conf, false);
+                // need to reset the queue after rescheduling
+                if (suspended) {
+                    card.setQueue(-1);
+                }
+                delay = 0;
             }
+
             return delay;
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -1435,37 +1418,37 @@ public class SchedV2 {
     }
 
 
-    private int _nextLapseIvl(Card card, JSONObject conf) {
+    private int _lapseIvl(Card card, JSONObject conf) {
         try {
-            return Math.max(conf.getInt("minInt"), (int)(card.getIvl() * conf.getDouble("mult")));
+            int ivl = Math.max(1, Math.max(conf.getInt("minInt"), (int)(card.getIvl() * conf.getDouble("mult"))));
+            return ivl;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
 
 
-    private void _rescheduleRev(Card card, int ease) {
+    private void _rescheduleRev(Card card, int ease, boolean early) {
         // update interval
         card.setLastIvl(card.getIvl());
-        if (_resched(card)) {
-            _updateRevIvl(card, ease);
-            // then the rest
-            card.setFactor(Math.max(1300, card.getFactor() + FACTOR_ADDITION_VALUES[ease - 2]));
-            card.setDue(mToday + card.getIvl());
+        if (early) {
+            _updateEarlyRevIvl(card, ease);
         } else {
-            card.setDue(card.getODue());
+            _updateRevIvl(card, ease);
         }
-        if (card.getODid() != 0) {
-            card.setDid(card.getODid());
-            card.setODid(0);
-            card.setODue(0);
-        }
+
+        // then the rest
+        card.setFactor(Math.max(1300, card.getFactor() + FACTOR_ADDITION_VALUES[ease - 2]));
+        card.setDue(mToday + card.getIvl());
+
+        // card leaves filtered deck
+        _removeFromFiltered(card);
     }
 
 
-    private void _logRev(Card card, int ease, int delay) {
+    private void _logRev(Card card, int ease, int delay, int type) {
         log(card.getId(), mCol.usn(), ease, ((delay != 0) ? (-delay) : card.getIvl()), card.getLastIvl(),
-                card.getFactor(), card.timeTaken(), 1);
+                card.getFactor(), card.timeTaken(), type);
     }
 
 
