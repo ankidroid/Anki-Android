@@ -1285,28 +1285,14 @@ public class SchedV2 {
 
 
     private void _resetRevCount() {
-        try {
-            mRevCount = _walkingCount(SchedV2.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class),
-                    SchedV2.class.getDeclaredMethod("_cntFnRev", long.class, int.class));
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    // Dynamically invoked in _walkingCount, passed as a parameter in _resetRevCount
-    @SuppressWarnings("unused")
-    private int _cntFnRev(long did, int lim) {
-        return mCol.getDb().queryScalar(
-                "SELECT count() FROM (SELECT id FROM cards WHERE did = " + did + " AND queue = 2 and due <= " + mToday
-                        + " LIMIT " + lim + ")");
+        int lim = _currentRevLimit();
+        mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
     }
 
 
     private void _resetRev() {
         _resetRevCount();
         mRevQueue.clear();
-        mRevDids = mCol.getDecks().active();
     }
 
 
