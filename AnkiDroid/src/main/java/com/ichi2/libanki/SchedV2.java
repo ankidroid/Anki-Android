@@ -752,20 +752,45 @@ public class SchedV2 {
      * Learning queues *********************************************************** ************************************
      */
 
+    private boolean _updateLrnCutoff(boolean force) {
+        try {
+            long nextCutoff = Utils.intNow() + mCol.getConf().getInt("collapseTime");
+            if (nextCutoff - mLrnCutoff > 60 || force) {
+                mLrnCutoff = nextCutoff;
+                return true;
+            }
+            return false;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private void _maybeResetLrn(boolean force) {
+        if (_updateLrnCutoff(force)) {
+            _resetLrn();
+        }
+    }
+
+
     private void _resetLrnCount() {
         // sub-day
         mLrnCount = mCol.getDb().queryScalar(
-                "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did IN " + _deckLimit()
-                + " AND queue = 1 AND due < " + mDayCutoff + " LIMIT " + mReportLimit + ")");
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit()
+                + " AND queue = 1 AND due < " + mLrnCutoff);
 
         // day
         mLrnCount += mCol.getDb().queryScalar(
-                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = 3 AND due <= " + mToday
-                        + " LIMIT " + mReportLimit);
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = 3 AND due <= " + mToday);
+
+        // previews
+        mLrnCount += mCol.getDb().queryScalar(
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = 4");
     }
 
 
     private void _resetLrn() {
+        _updateLrnCutoff(true);
         _resetLrnCount();
         mLrnQueue.clear();
         mLrnDayQueue.clear();
