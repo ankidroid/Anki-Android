@@ -9,7 +9,6 @@ import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class DeckPickerTest extends RobolectricTest {
@@ -52,8 +53,8 @@ public class DeckPickerTest extends RobolectricTest {
         ShadowStatFs.registerStats(backupPath, 10 * 1024 * 1024, 10 * 1024 * 1024, 10 * 1024 * 1024);
 
         // Make sure that we are clean to start
-        Assert.assertFalse("startup screens already displayed?", deckPicker.startupScreensDisplayed);
-        Assert.assertFalse("startup already finished?", deckPicker.finishedStartup);
+        assertFalse("startup screens already displayed?", deckPicker.startupScreensDisplayed);
+        assertFalse("startup already finished?", deckPicker.finishedStartup);
     }
 
     @Test
@@ -97,7 +98,7 @@ public class DeckPickerTest extends RobolectricTest {
 
         // Pretend we are 9.9.0, going to 9.9.1 and make sure we get an Info popup
         // This may break at some point if we get past version 9.9.0 with the same naming scheme
-        prepareVersion(90901300, "9.9.1", 90902300, "9.9.2");
+        prepareUpgrade((long)90901300, 90901300, "9.9.1", 90902300, "9.9.2");
         deckPickerController.create();
         assertState(
                 deckPicker.startupScreensDisplayed,  // we should be called
@@ -107,7 +108,8 @@ public class DeckPickerTest extends RobolectricTest {
                 !deckPicker.finishedStartup,         // we not should finish startup
                 !deckPicker.activityRestarted,       // we should not restart
                 Info.class, shadowDeckPicker.getNextStartedActivity(),  // Info intent
-                "9.9.1");                  // we have a 9.9.1 last version
+                "9.9.1",                   // we have a 9.9.1 last version
+                90902300);
     }
 
 
@@ -116,7 +118,7 @@ public class DeckPickerTest extends RobolectricTest {
 
         // Pretend we are 9.9alpha1, going to 9.9alpha2 and make sure we get no Info popup
         // This may break at some point if we get past version 9.9.0 with the same naming scheme
-        prepareVersion(90900101, "9.9alpha1", 90900102, "9.9alpha2");
+        prepareUpgrade((long)90900101, 90900101, "9.9alpha1", 90900102, "9.9alpha2");
         deckPickerController.create();
         assertState(
                 deckPicker.startupScreensDisplayed,  // we should be called
@@ -126,14 +128,15 @@ public class DeckPickerTest extends RobolectricTest {
                 deckPicker.finishedStartup,          // we should finish startup
                 !deckPicker.activityRestarted,       // we should not restart
                 null, shadowDeckPicker.getNextStartedActivity(),  // No intent
-                "9.9alpha2");              // we have a 9.9.2 last version
+                "9.9alpha2",               // we have a 9.9.2 last version
+                90900102);
     }
 
     @Test
     public void verifyFreshInstall() {
 
         // Pretend we are a fresh 2.9.1 install
-        prepareVersion(0, "", 20901300, "2.9.1");
+        prepareUpgrade(null, -1, "", 20901300, "2.9.1");
         deckPickerController.create();
         assertState(
                 deckPicker.startupScreensDisplayed,  // we should be called
@@ -143,14 +146,15 @@ public class DeckPickerTest extends RobolectricTest {
                 deckPicker.finishedStartup,          // we should finish startup
                 !deckPicker.activityRestarted,       // we should not restart
                 null, shadowDeckPicker.getNextStartedActivity(),  // no intent
-                "2.9.1");                  // we have a 2.9.1 last version
+                "2.9.1",                   // we have a 2.9.1 last version
+                20901300);
     }
 
     @Test
     public void verifyNoUpgrade() {
 
         // Set things up so it looks like a simple app restart on same versions
-        prepareVersion(20901300, "2.9.1", 20901300, "2.9.1");
+        prepareUpgrade((long)20901300, 20901300, "2.9.1", 20901300, "2.9.1");
         deckPickerController.create();
         assertState(
                 deckPicker.startupScreensDisplayed,  // we should be called
@@ -160,17 +164,18 @@ public class DeckPickerTest extends RobolectricTest {
                 deckPicker.finishedStartup,          // we should finish startup
                 !deckPicker.activityRestarted,       // we should not restart
                 null, shadowDeckPicker.getNextStartedActivity(),  // no intent
-                "2.9.1");                  // we have a 2.9.1 last version
+                "2.9.1",                   // we have a 2.9.1 last version
+                20901300);
     }
 
 
     @Test
-    public void verifyPrefsNoDatabaseUpgrade() {
+    public void verifyPrefsNoIntegrityCheck() {
 
         // Set things up so it looks like it would trigger a prefs upgrade but no database check
         deckPicker.prefCheckVersion = 20902300;
         deckPicker.dbCheckVersion = 20901300;
-        prepareVersion(20901300, "2.9.1", 20902300, "2.9.2");
+        prepareUpgrade((long)20901300, 20901300, "2.9.1", 20902300, "2.9.2");
         deckPickerController.create();
         assertState(
                 deckPicker.startupScreensDisplayed,  // we should be called
@@ -180,15 +185,37 @@ public class DeckPickerTest extends RobolectricTest {
                 !deckPicker.finishedStartup,         // we should not finish startup
                 deckPicker.activityRestarted,        // we should restart
                 TestDeckPicker.class, shadowDeckPicker.getNextStartedActivity(),  // restart is ourselves
-                "2.9.1");                  // we have a 2.9.1 last version
+                "2.9.1",                   // we have a 2.9.1 last version (will update after restart)
+                20902300);
     }
 
 
     @Test
-    public void verifyInterruptingUpgrade() {
+    public void verifyIntegrityCheckDatabaseVersion() {
+
+        // See if we can do a database check without prefs, with correct database versions
+        deckPicker.dbCheckVersion = 20900148;
+        prepareUpgrade(null, 20804300, "2.8.4", 20902901, "2.9.0beta1");
+        deckPickerController.create();
+        //clickDialogButton(DialogAction.POSITIVE);
+        assertState(
+                deckPicker.startupScreensDisplayed,  // we should be called
+                !deckPicker.mRecommendFullSync,      // we should not recommend a sync
+                !deckPicker.prefsUpgraded,           // no prefs upgrade
+                deckPicker.integrityChecked,         // integrity check
+                !deckPicker.finishedStartup,         // we should not finish startup
+                !deckPicker.activityRestarted,       // no restart
+                null, shadowDeckPicker.getNextStartedActivity(),  // no activities should start
+                "2.8.4",                   // no version update  (will update after integrity check restarts)
+                20902901);                  // db version should be set
+    }
+
+
+    @Test
+    public void verifyReallyOldUpgrade() {
 
         // Pretend we are before 2.3.0beta, and across to 2.9.2, verify full sync and integrity check
-        prepareVersion(20201300, "2.2.1", 20902300, "2.9.2");
+        prepareUpgrade(null, 20201300, "2.2.1", 20902300, "2.9.2");
         deckPickerController.create();
         assertState(
                 deckPicker.startupScreensDisplayed, // method call should work
@@ -198,31 +225,39 @@ public class DeckPickerTest extends RobolectricTest {
                 !deckPicker.finishedStartup,        // startup won't finish because of the other work
                 !deckPicker.activityRestarted,      // activity doesn't restart because integrity check hijacks
                 null, shadowDeckPicker.getNextStartedActivity(),       // no intents should start
-                "");                      // no one puts a lastVersion yet
+                "",                       // no one puts a lastVersion yet (will update after restart)
+                20902300);
     }
 
 
+    @SuppressWarnings("PMD.ExcessiveParameterList")
     private void assertState(boolean startupScreens, boolean fullSync, boolean prefsUpgrade, boolean integrity,
-                             boolean finished, boolean restart, Class intentWanted, Intent intent, String lastVersion) {
-        Assert.assertTrue("startup screen state incorrect", startupScreens);
-        Assert.assertTrue("full sync state incorrect", fullSync);
-        Assert.assertTrue("prefs upgrade state incorrect", prefsUpgrade);
-        Assert.assertTrue("integrity check state incorrect", integrity);
-        Assert.assertTrue("startup finish state incorrect", finished);
-        Assert.assertTrue("restart state incorrect", restart);
+                             boolean finished, boolean restart, Class intentWanted, Intent intent, String lastVersion,
+                             long dbVersion) {
+        assertTrue("startup screen state incorrect", startupScreens);
+        assertTrue("full sync state incorrect", fullSync);
+        assertTrue("prefs upgrade state incorrect", prefsUpgrade);
+        assertTrue("integrity check state incorrect", integrity);
+        assertTrue("startup finish state incorrect", finished);
+        assertTrue("restart state incorrect", restart);
         if (intentWanted == null) {
-            Assert.assertNull("should not have started an Intent", intent);
+            assertNull("should not have started an Intent", intent);
         } else {
-            Assert.assertEquals("Wrong intent started", intentWanted, Shadows.shadowOf(intent).getIntentClass());
+            assertEquals("Wrong intent started", intentWanted, Shadows.shadowOf(intent).getIntentClass());
         }
-        Assert.assertEquals("lastVersion set incorrectly", lastVersion, AnkiDroidApp.getSharedPrefs(getTargetContext()).getString("lastVersion", ""));
+        assertEquals("lastVersion set incorrectly", lastVersion, AnkiDroidApp.getSharedPrefs(getTargetContext()).getString("lastVersion", ""));
+        assertEquals("Database version not correct?", new Long(dbVersion), getCol().getLastAnkiDroidVersion());
     }
 
 
-    private void prepareVersion(int prevCode, String prevName, int curCode, String curName) {
+    private void prepareUpgrade(Long prevDbCode, int prevPrefCode, String prevName, int curCode, String curName) {
+        // FIXME should prepare the database as well?
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(getTargetContext());
-        prefs.edit().putInt("lastUpgradeVersion", prevCode).apply();
+        prefs.edit().putInt("lastUpgradeVersion", prevPrefCode).apply();
         prefs.edit().putString("lastVersion", prevName).apply();
+        if (prevDbCode != null) {
+            getCol().setLastAnkiDroidVersion(prevDbCode);
+        }
         ShadowPackageManager shadowPackageManager = Shadows.shadowOf(getTargetContext().getPackageManager());
         PackageInfo ankiPackageInfo = shadowPackageManager.getInternalMutablePackageInfo(getTargetContext().getPackageName());
         ankiPackageInfo.setLongVersionCode(curCode);
