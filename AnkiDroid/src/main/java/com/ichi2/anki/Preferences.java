@@ -59,6 +59,7 @@ import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
+import com.ichi2.ui.ConfirmationPreference;
 import com.ichi2.ui.SeekBarPreference;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -309,17 +310,17 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     screen.addPreference(analyticsDebugMode);
                 }
                 // Force full sync option
-                Preference fullSyncPreference = screen.findPreference("force_full_sync");
-                fullSyncPreference.setOnPreferenceClickListener(preference -> {
+                ConfirmationPreference fullSyncPreference = (ConfirmationPreference)screen.findPreference("force_full_sync");
+                fullSyncPreference.setDialogMessage(R.string.force_full_sync_summary);
+                fullSyncPreference.setDialogTitle(R.string.force_full_sync_title);
+                fullSyncPreference.setOkHandler(() -> {
                     if (getCol() == null) {
-                        Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
-                        return false;
+                        Toast.makeText(getApplicationContext(), R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+                        return;
                     }
-                    // TODO: Could be useful to show the full confirmation dialog
                     getCol().modSchemaNoCheck();
                     getCol().setMod();
                     Toast.makeText(getApplicationContext(), android.R.string.ok, Toast.LENGTH_SHORT).show();
-                    return true;
                 });
                 // Workaround preferences
                 removeUnnecessaryAdvancedPrefs(screen);
