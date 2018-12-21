@@ -1215,7 +1215,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_DATABASE, new DeckTask.TaskListener() {
             @Override
             public void onPreExecute() {
-                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
+                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, AnkiDroidApp.getAppResources().getString(R.string.app_name),
                         getResources().getString(R.string.check_db_message), false);
             }
 
@@ -1239,6 +1239,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 } else {
                     handleDbError();
                 }
+            }
+
+
+            @Override
+            public void onProgressUpdate(DeckTask.TaskData... values) {
+                mProgressDialog.setContent(values[0].getString());
             }
         });
     }
