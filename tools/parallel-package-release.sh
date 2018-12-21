@@ -27,7 +27,7 @@ export KEYPWD
 # Get on to the tag requested
 #git checkout $TAG
 
-BUILDNAMES='A B C'
+BUILDNAMES='A B C D E'
 for BUILD in $BUILDNAMES; do
     git reset --hard
     git clean -f
