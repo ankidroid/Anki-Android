@@ -902,7 +902,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(false);
         }
 
-        long result = col.fixIntegrity();
+        long result = col.fixIntegrity(new ProgressCallback(this, AnkiDroidApp.getAppResources()));
         if (result == -1) {
             return new TaskData(false);
         } else {
