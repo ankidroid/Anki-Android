@@ -773,6 +773,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                                 sched.forgetCards(cardIds);
                                 break;
                         }
+                        // In all cases schedule a new card so Reviewer doesn't sit on the old one
+                        col.reset();
+                        publishProgress(new TaskData(getCard(sched), 0));
                         break;
                     }
                 }
