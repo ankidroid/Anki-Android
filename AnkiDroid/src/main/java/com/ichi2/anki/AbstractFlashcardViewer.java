@@ -437,27 +437,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     };
 
-    protected DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            // do nothing
-        }
 
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-            mAnswerCardHandler.onProgressUpdate(values);
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (!result.getBoolean()) {
-                closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
-            }
-            mAnswerCardHandler.onPostExecute(result);
-        }
-    };
+    protected DeckTask.TaskListener mDismissCardHandler = new NextCardHandler() { /* superclass is sufficient */ };
 
 
     private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
@@ -522,18 +503,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     };
 
-    protected DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener() {
+    abstract class NextCardHandler extends DeckTask.TaskListener {
         private boolean mNoMoreCards;
 
 
         @Override
-        public void onPreExecute() {
-            blockControls();
-        }
+        public void onPreExecute() { /* do nothing */}
 
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+            displayNext(values[0].getCard());
+        }
+
+        protected void displayNext(Card nextCard) {
+
             Resources res = getResources();
 
             if (mSched == null) {
@@ -542,11 +526,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 return;
             }
 
-            mCurrentCard = values[0].getCard();
+            mCurrentCard = nextCard;
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
-                mNoMoreCards = true;
+                mNoMoreCards = true; // other handlers use this, toggle state every time through
             } else {
+                mNoMoreCards = false; // other handlers use this, toggle state every time through
                 // Start reviewing next card
                 updateTypeAnswerInfo();
                 hideProgressBar();
@@ -576,8 +561,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            if (!result.getBoolean()) {
-                // RuntimeException occured on answering cards
+            postNextCardDisplay(result.getBoolean());
+        }
+
+        protected void postNextCardDisplay(boolean displaySuccess) {
+            if (!displaySuccess) {
+                // RuntimeException occurred on answering cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
                 return;
             }
@@ -589,6 +578,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // set the correct mark/unmark icon on action bar
             refreshActionBar();
             findViewById(R.id.root_layout).requestFocus();
+        }
+    }
+
+
+    protected DeckTask.TaskListener mAnswerCardHandler = new NextCardHandler() {
+
+
+        @Override
+        public void onPreExecute() {
+            blockControls();
         }
     };
 
