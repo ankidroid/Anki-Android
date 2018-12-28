@@ -81,18 +81,14 @@ public class Reviewer extends AbstractFlashcardViewer {
     };
 
     /** We need to listen for and handle repositions / reschedules / resets very similarly */
-    abstract class ScheduleDeckTaskListener extends DeckTask.TaskListener {
+    abstract class ScheduleDeckTaskListener extends NextCardHandler {
 
         abstract protected int getToastResourceId();
 
-        @Override
-        public void onPreExecute() {
-            Timber.d("Reviewer::ScheduleDeckTaskListener() onPreExecute");
-        }
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Reviewer::ScheduleDeckTaskListener() onPostExecute");
+            super.onPostExecute(result);
             invalidateOptionsMenu();
             int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(Reviewer.this,
