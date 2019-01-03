@@ -46,7 +46,9 @@ Provided you are able to use hardware acceleration for the Android emulators, [s
 In order to run a custom build of AnkiDroid on your device or attach the debugger, you'll need to connect your device over the adb protocol. Open your Android device, and [enable](https://developer.android.com/studio/debug/dev-options.html) developer options and `USB debugging`. Finally when you connect your device to your computer over USB, it should get recognized by Android Studio and you should start to see output from it in the logcat section of Android studio.
 
 ## Running AnkiDroid from within Android studio
-Connect your device to your computer, or [setup an emulator](https://developer.android.com/tools/devices/managing-avds.html), then select `Run -> Run 'AnkiDroid'` from the menu in Android Studio. This will compile a version of AnkiDroid suitable for testing (i.e. signed with a debug key), and pop up a window where you can select the device or emulator that you want to install and run the code on. See the main [Android developer documentation](https://developer.android.com/tools/building/building-studio.html) for more detailed information.
+Connect your device to your computer, or [setup an emulator](https://developer.android.com/tools/devices/managing-avds.html), then select `Run -> Run 'AnkiDroid'` from the menu in Android Studio. This will compile a version of AnkiDroid suitable for testing (i.e. signed with a debug key), and pop up a window where you can select the device or emulator that you want to install and run the code on. See the main [Android developer documentation](https://developer.android.com/tools/building/building-studio.html) for more detailed information. 
+
+Make sure that your Run Configuration for the AnkiDroid Project is set to use the APK from the app bundle instead of the Default APK.
 
 An apk file signed with a standard "debug" key will be generated named `"AnkiDroid-debug.apk"` in:
 `%AnkiDroidRoot%/AnkiDroid/build/outputs/apk/`
