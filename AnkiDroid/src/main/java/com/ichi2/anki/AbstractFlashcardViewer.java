@@ -2324,7 +2324,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         } else {
             sb.append(QUESTION_CLASS);
         }
-        sb.append("\">");
+        sb.append(" id=\"qa\">");
         sb.append(content);
         sb.append("</div>");
         return sb.toString();
