@@ -2132,10 +2132,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mNightMode) {
             // Enable the night-mode class
             cardClass += " night_mode";
+
+            // Emit the dark_mode selector to allow dark theme overrides
+            if (Themes.getCurrentTheme(this) == Themes.THEME_NIGHT_DARK) {
+                cardClass += " ankidroid_dark_mode";
+            }
+
             // If card styling doesn't contain any mention of the night_mode class then do color inversion as fallback
             // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
             if (!mCurrentCard.css().contains(".night_mode")) {
                 content = HtmlColors.invertColors(content);
+            }
+        } else {
+            // Emit the plain_mode selector to allow plain theme overrides
+            if (Themes.getCurrentTheme(this) == Themes.THEME_DAY_PLAIN) {
+                cardClass += " ankidroid_plain_mode";
             }
         }
 
