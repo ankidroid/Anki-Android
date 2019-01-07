@@ -8,6 +8,10 @@ body.night_mode {
   background-color: black;
 }
 
+body.ankidroid_dark_mode {
+  background-color: #303030;
+}
+
 #content {
   margin: 0.5em;
 }
@@ -52,6 +56,10 @@ body.night_mode {
 
 .night_mode .typeBad {
   background-color: #905050;
+}
+
+.ankidroid_dark_mode input#typeans {
+  background-color: #303030;
 }
 
 .replaybutton {
