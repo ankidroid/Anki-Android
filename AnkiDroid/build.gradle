@@ -178,7 +178,7 @@ dependencies {
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.3.2'
     testImplementation 'org.mockito:mockito-core:2.23.4'
-    testImplementation 'org.powermock:powermock-core:2.0.0-RC.4'
+    testImplementation 'org.powermock:powermock-core:2.0.0'
     testImplementation 'org.powermock:powermock-module-junit4:2.0.0-RC.4'
     testImplementation 'org.powermock:powermock-api-mockito2:2.0.0-RC.4'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
