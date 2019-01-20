@@ -218,15 +218,19 @@ Here is an annotated description of the JSONObjects in the models field of the `
     mod : "modification time in milliseconds",
     name : "model name",
     req : [
-            "Array of arrays describing which fields are required 
-                for each card to be generated, looks like: [[0, "any", [0, 3, 6]]], this is required to display a template",
-            [
-              "the 'ord' value of the template object from the 'tmpls' array you are setting the required fields of",
-              '? string, "all" or "any"',
-              ["? another array of 'ord' values from field object you want to require from the 'flds' array"]
-            ]
-          ],
-    sortf : "Integer specifying which field is used for sorting in the browser",
+            "Array of arrays describing, for each template T, which fields are required to generate T.
+             The array is of the form [T,string,list], where:
+             -  T is the ordinal of the template. 
+             - The string is 'none', 'all' or 'any'. 
+             - The list contains ordinal of fields, in increasing order.
+             The meaning is as follows:
+             - if the string is 'none', then no cards are generated for this template. The list should be empty.
+             - if the string is 'all' then the card is generated only if each field of the list are filled
+             - if the string is 'any', then the card is generated if any of the field of the list is filled.
+
+             The algorithm to decide how to compute req from the template is explained on: 
+             https://github.com/Arthur-Milchior/anki/blob/master/documentation/templates_generation_rules.md"
+          ],    sortf : "Integer specifying which field is used for sorting in the browser",
     tags : "Anki saves the tags of the last added note to the current model, use an empty array []",
     tmpls : [
               "JSONArray containing object of CardTemplate for each card in model",
