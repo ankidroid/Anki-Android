@@ -268,7 +268,7 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
     timeToday: "two number array used somehow for custom study. Currently unused in the code", 
     dyn: "1 if dynamic (AKA filtered) deck", 
     extendNew: "extended new card limit (for custom study)", 
-    conf: "id of option group from dconf in `col` table", 
+    conf: "id of option group from dconf in `col` table. Or absent if the deck is dynamic", 
     revToday: "two number. First one currently not used. Second is the negation (-)
                of the number of review cards added today by custom study", 
     lrnToday: "two number array used somehow for custom study. Currently unused in the code", 
