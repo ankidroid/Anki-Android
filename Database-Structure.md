@@ -259,7 +259,8 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
 ```java
 {
     name: "name of deck", 
-    extendRev: "extended review card limit (for custom study)", 
+    extendRev: "extended review card limit (for custom study)
+                Potentially absent, in this case it's considered to be 10 by aqt.customstudy", 
     usn: "usn: Update sequence number: used in same way as other usn vales in db", 
     collapsed: "true when deck is collapsed", 
     browserCollapsed: "true when deck collapsed in browser", 
@@ -267,8 +268,10 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
                of the number of new cards added today by custom study", 
     timeToday: "two number array used somehow for custom study. Currently unused in the code", 
     dyn: "1 if dynamic (AKA filtered) deck", 
-    extendNew: "extended new card limit (for custom study)", 
-    conf: "id of option group from dconf in `col` table. Or absent if the deck is dynamic", 
+    extendNew: "extended new card limit (for custom study). 
+                Potentially absent, in this case it's considered to be 10 by aqt.customstudy", 
+    conf: "id of option group from dconf in `col` table. Or absent if the deck is dynamic. 
+          Its absent in filtere deck", 
     revToday: "two number. First one currently not used. Second is the negation (-)
                of the number of review cards added today by custom study", 
     lrnToday: "two number array used somehow for custom study. Currently unused in the code", 
