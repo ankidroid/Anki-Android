@@ -76,6 +76,15 @@
                 android:key="providerEnabled"
                 android:summary="@string/enable_api_summary"
                 android:title="@string/enable_api_title"/>
+            <Preference
+                android:key="thirdpartyapps_link"
+                android:summary="See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities."
+                android:title="Apps which work with AnkiDroid">
+                <intent
+                    android:action="android.intent.action.VIEW"
+                    android:data="https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps"
+                    />
+            </Preference>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="tts"
@@ -101,15 +110,6 @@
                 android:key="convertFenText"
                 android:summary="@string/convert_fen_text_summ"
                 android:title="@string/convert_fen_text" />
-            <Preference
-                android:key="ankireview_link"
-                android:summary="Review is an alternative flashcard review plugin with a gesture and animation based UI."
-                android:title="Review for AnkiDroid">
-                <intent
-                    android:action="android.intent.action.VIEW"
-                    android:data="market://details?id=com.luc.ankireview"
-                    />
-            </Preference>
             <CheckBoxPreference
                 android:id="@+id/scrolling_buttons_checkbox"
                 android:defaultValue="false"
