@@ -6,6 +6,7 @@
 * [Hanping Cantonese Dictionary](https://play.google.com/store/apps/details?id=com.embermitre.hanping.cantodict.app.pro)
 * [Kanji Study](https://play.google.com/store/apps/details?id=com.mindtwisted.kanjistudy)
 * [Kata](https://play.google.com/store/apps/details?id=im.dacer.kata)
+* [Pleco Chinese Dictionary](https://play.google.com/store/apps/details?id=com.pleco.chinesesystem)
 * [ReadDict](https://play.google.com/store/apps/details?id=com.a10adevelopment.readdict)
 * [Takoboto Japanese Dictionary](https://play.google.com/store/apps/details?id=jp.takoboto)
 * [Word of the day](https://play.google.com/store/apps/details?id=me.siavash.android.wotd)
