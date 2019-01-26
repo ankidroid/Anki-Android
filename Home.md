@@ -13,7 +13,7 @@ Other supplementary information can be found in the Wiki pages below:
 * [Advanced card formatting guide](wiki/Advanced-formatting)
 * [List of permissions](wiki/Permissions)
 * [List of freely distributable fonts](wiki/Freely-distributable-fonts)
-* [List of Third Party Apps which integrate with AnkiDroid](wiki/ThirdPartyApps)
+* [List of Third Party Apps which integrate with AnkiDroid](wiki/Third-Party-Apps)
 
 ## Documentation for contributors and developers
 The following pages contain information for people interested in contributing to the AnkiDroid project. Everyone is welcome!
