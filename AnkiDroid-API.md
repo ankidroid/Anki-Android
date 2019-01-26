@@ -8,7 +8,7 @@ Starting From AnkiDroid v2.5, notes can be added directly to AnkiDroid's databas
 ### List of apps that support the Instant-Add API
 Please add your app to this list if it supports the instant-add API
 
-[List of Third Party Apps which integrate with AnkiDroid](wiki/ThirdPartyApps)
+[List of Third Party Apps which integrate with AnkiDroid](ThirdPartyApps)
 
 ### Gradle dependency
 First things first, you should add the following dependency to your module's `build.gradle` file:
