@@ -1,12 +1,11 @@
 ### [Aedict3 Japanese Dictionary](https://play.google.com/store/apps/details?id=sk.baka.aedict3)
 Japanese dictionary with AnkiDroid export feature.
 ### [AnkiEditor](https://github.com/jkennethcarino/AnkiEditor)
-AnkiEditor is an advanced note editor plug-in for AnkiDroid, a spaced repetition flashcard program for Android. AnkiEditor allows you to create basic notes; use WYSIWYG editor that can format text, set text foreground and background color, insert table/link, etc. similar to Anki's note editor on PCs.
+AnkiEditor is an advanced note editor plug-in for AnkiDroid, a spaced repetition flashcard program for Android. AnkiEditor allows you to create basic notes; use WYSIWYG editor that can format text, set text foreground and background color, insert table/link, etc.
 ### [Bildkortsappen](https://github.com/rabinv/bildkortsappen)
-Bildkortsappen is an Android app to create flashcards for language learning. Given a word, it presents an interface where the user can pick images which correspond to that word (currently from Google Image Search) or real-world example sentences which use that word (from a concordance).
-The flashcards are created directly in AnkiDroid and use Javascript to display a random subset of the chosen images and example sentences on the front side, and a user-specified reverse side.
+Bildkortsappen is an Android app to create flashcards for language learning. Given a word, it presents an interface where the user can pick images which correspond to that word (currently from Google Image Search) or real-world example sentences which use that word.
 ### [Hanping Chinese Dictionary Pro](https://play.google.com/store/apps/details?id=com.embermitre.hanping.app.pro)
-Look up Mandarin Chinese words offline using English, Pinyin or Chinese characters (Hanzi) in a clean, intuitive, yet powerful interface. AnkiDroid Flashcards support (bulk export as well as auto-export when word is starred) for studying using Anki flashcards (spaced repetition system)
+Look up Mandarin Chinese words offline using English, Pinyin or Chinese characters (Hanzi) in a clean, intuitive, yet powerful interface. AnkiDroid Flashcards support (bulk export as well as auto-export when word is starred).
 ### [Hanping Cantonese Dictionary](https://play.google.com/store/apps/details?id=com.embermitre.hanping.cantodict.app.pro)
 Cantonese dictionary with AnkiDroid Flashcards support (bulk export as well as auto-export when word is starred) for studying using Anki flashcards.
 ### [Kanji Study](https://play.google.com/store/apps/details?id=com.mindtwisted.kanjistudy)
