@@ -2,6 +2,8 @@
 Japanese dictionary with AnkiDroid export feature.
 ### [AnkiEditor](https://github.com/jkennethcarino/AnkiEditor)
 AnkiEditor is an advanced note editor plug-in for AnkiDroid, a spaced repetition flashcard program for Android. AnkiEditor allows you to create basic notes; use WYSIWYG editor that can format text, set text foreground and background color, insert table/link, etc.
+### [AnkiReview](https://play.google.com/store/apps/details?id=com.luc.ankireview)
+AnkiReview is an alternative reviewing UI for your AnkiDroid decks which makes use of gestures and animations. It uses its own flashcard styles to easily customize cards with a WYSIWYG interface (no HTML/CSS required).
 ### [Bildkortsappen](https://github.com/rabinv/bildkortsappen)
 Bildkortsappen is an Android app to create flashcards for language learning. Given a word, it presents an interface where the user can pick images which correspond to that word (currently from Google Image Search) or real-world example sentences which use that word.
 ### [Hanping Chinese Dictionary Pro](https://play.google.com/store/apps/details?id=com.embermitre.hanping.app.pro)
