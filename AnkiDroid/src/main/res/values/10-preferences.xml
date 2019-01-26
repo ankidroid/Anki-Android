@@ -152,6 +152,8 @@
     <string name="custom_buttons_setting_if_room">Show if room</string>
     <string name="custom_buttons_setting_menu_only">Menu only</string>
     <string name="reset_custom_buttons">Reset to default</string>
+    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
 
     <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
