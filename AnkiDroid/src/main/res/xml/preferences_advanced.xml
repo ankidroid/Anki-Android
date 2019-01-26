@@ -101,6 +101,15 @@
                 android:key="convertFenText"
                 android:summary="@string/convert_fen_text_summ"
                 android:title="@string/convert_fen_text" />
+            <Preference
+                android:key="ankireview_link"
+                android:summary="Review is an alternative flashcard review plugin with a gesture and animation based UI."
+                android:title="Review for AnkiDroid">
+                <intent
+                    android:action="android.intent.action.VIEW"
+                    android:data="market://details?id=com.luc.ankireview"
+                    />
+            </Preference>
             <CheckBoxPreference
                 android:id="@+id/scrolling_buttons_checkbox"
                 android:defaultValue="false"
