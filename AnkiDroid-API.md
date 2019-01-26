@@ -7,17 +7,7 @@ Starting From AnkiDroid v2.5, notes can be added directly to AnkiDroid's databas
 
 ### List of apps that support the Instant-Add API
 Please add your app to this list if it supports the instant-add API
-* [Aedict3](https://play.google.com/store/apps/details?id=sk.baka.aedict3)
-* [AnkiEditor](https://github.com/jkennethcarino/AnkiEditor)
-* [AnkiMate](https://play.google.com/store/apps/details?id=com.ryannm.android.autoanki)
-* [Bildkortsappen](https://github.com/rabinv/bildkortsappen)
-* [Hanping Chinese Dictionary Pro](https://play.google.com/store/apps/details?id=com.embermitre.hanping.app.pro)
-* [Hanping Cantonese Dictionary](https://play.google.com/store/apps/details?id=com.embermitre.hanping.cantodict.app.pro)
-* [Kanji Study](https://play.google.com/store/apps/details?id=com.mindtwisted.kanjistudy)
-* [Kata](https://play.google.com/store/apps/details?id=im.dacer.kata)
-* [ReadDict](https://play.google.com/store/apps/details?id=com.a10adevelopment.readdict)
-* [Takoboto Japanese Dictionary](https://play.google.com/store/apps/details?id=jp.takoboto)
-* [Word of the day](https://play.google.com/store/apps/details?id=me.siavash.android.wotd)
+[List of Third Party apps which make use of AnkiDroid API](wiki/ThirdPartyApps)
 
 ### Gradle dependency
 First things first, you should add the following dependency to your module's `build.gradle` file:
