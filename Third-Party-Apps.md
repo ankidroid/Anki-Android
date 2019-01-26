@@ -1,6 +1,5 @@
 * [Aedict3](https://play.google.com/store/apps/details?id=sk.baka.aedict3)
 * [AnkiEditor](https://github.com/jkennethcarino/AnkiEditor)
-* [AnkiMate](https://play.google.com/store/apps/details?id=com.ryannm.android.autoanki)
 * [Bildkortsappen](https://github.com/rabinv/bildkortsappen)
 * [Hanping Chinese Dictionary Pro](https://play.google.com/store/apps/details?id=com.embermitre.hanping.app.pro)
 * [Hanping Cantonese Dictionary](https://play.google.com/store/apps/details?id=com.embermitre.hanping.cantodict.app.pro)
@@ -9,4 +8,3 @@
 * [Pleco Chinese Dictionary](https://play.google.com/store/apps/details?id=com.pleco.chinesesystem)
 * [ReadDict](https://play.google.com/store/apps/details?id=com.a10adevelopment.readdict)
 * [Takoboto Japanese Dictionary](https://play.google.com/store/apps/details?id=jp.takoboto)
-* [Word of the day](https://play.google.com/store/apps/details?id=me.siavash.android.wotd)
