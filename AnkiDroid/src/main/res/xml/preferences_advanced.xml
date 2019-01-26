@@ -78,8 +78,8 @@
                 android:title="@string/enable_api_title"/>
             <Preference
                 android:key="thirdpartyapps_link"
-                android:summary="See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities."
-                android:title="Apps which work with AnkiDroid">
+                android:summary="@string/thirdparty_apps_summary"
+                android:title="@string/thirdparty_apps_title">
                 <intent
                     android:action="android.intent.action.VIEW"
                     android:data="https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps"
