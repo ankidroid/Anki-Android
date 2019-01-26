@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'jacoco'
 
+jacoco {
+    toolVersion = "$rootProject.ext.jacocoVersion"
+
+}
 repositories {
     google()
     jcenter()
@@ -61,6 +65,9 @@ android {
         }
     }
 
+    jacoco {
+        version = "$rootProject.ext.jacocoVersion"
+    }
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
         preDexLibraries = preDexEnabled && !travisBuild
