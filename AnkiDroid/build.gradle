@@ -109,6 +109,7 @@ tasks.withType(JavaCompile) {
 
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
 }
 
 // Our merge report task
