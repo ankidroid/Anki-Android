@@ -472,8 +472,13 @@ public class AnkiDroidApp extends Application {
             // because Robolectric runs them on the JVM but on Android the elements are different.
             StackTraceElement[] stackTrace = new Throwable().getStackTrace();
             if (stackTrace.length <= CALL_STACK_INDEX) {
-                throw new IllegalStateException(
-                        "Synthetic stacktrace didn't have enough elements: are you using proguard?");
+
+                // --- this is not present in the Timber.DebugTree copy/paste ---
+                // We are in production and should not crash the app for a logging failure
+                return TAG + " unknown class";
+                //throw new IllegalStateException(
+                //        "Synthetic stacktrace didn't have enough elements: are you using proguard?");
+                // --- end of alteration from upstream Timber.DebugTree.getTag ---
             }
             return createStackElementTag(stackTrace[CALL_STACK_INDEX]);
         }
