@@ -946,12 +946,12 @@ public class Decks {
 
     public ArrayList<Long> childDids(long did, HashMap<Long, HashMap<Long, HashMap>> childMap) {
         ArrayList<Long> array = new ArrayList<>();
-
-        for (HashMap.Entry<Long, HashMap> entry : childMap.get(did).entrySet()) {
-            array.add(entry.getKey());
-            array.addAll(childDids(entry.getKey(), entry.getValue()));
+        if (childMap.containsKey(did)) {
+            for (HashMap.Entry<Long, HashMap> entry : childMap.get(did).entrySet()) {
+                array.add(entry.getKey());
+                array.addAll(childDids(entry.getKey(), entry.getValue()));
+            }
         }
-
         return array;
     }
 

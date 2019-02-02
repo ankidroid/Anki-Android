@@ -103,6 +103,9 @@ public class Collection {
     private static final Pattern fClozePatternA = Pattern.compile("\\{\\{(.*?)cloze:");
     private static final Pattern fClozeTagStart = Pattern.compile("<%cloze:");
 
+    private static final int fDefaultSchedulerVersion = 1;
+    private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
+
     // other options
     public static final String defaultConf = "{"
             +
@@ -166,7 +169,7 @@ public class Collection {
         }
         mStartReps = 0;
         mStartTime = 0;
-        mSched = new Sched(this);
+        _loadScheduler();
         if (!mConf.optBoolean("newBury", false)) {
             try {
                 mConf.put("newBury", true);
@@ -182,6 +185,54 @@ public class Collection {
         String n = (new File(mPath)).getName().replace(".anki2", "");
         // TODO:
         return n;
+    }
+
+
+    /**
+     * Scheduler
+     * ***********************************************************
+     */
+
+
+    private int schedVer() {
+        int ver = mConf.optInt("schedVer", fDefaultSchedulerVersion);
+        if (fSupportedSchedulerVersions.contains(ver)) {
+            return ver;
+        } else {
+            throw new RuntimeException("Unsupported scheduler version");
+        }
+    }
+
+    private void _loadScheduler() {
+        int ver = schedVer();
+        if (ver == 1) {
+            mSched = new Sched(this);
+        } else if (ver == 2) {
+            mSched = new SchedV2(this);
+        }
+    }
+
+    private void changeSchedulerVer(Integer ver) throws ConfirmModSchemaException {
+        if (ver == schedVer()) {
+            return;
+        }
+        if (!fSupportedSchedulerVersions.contains(ver)) {
+            throw new RuntimeException("Unsupported scheduler version");
+        }
+        modSchema(true);
+        SchedV2 v2Sched = new SchedV2(this);
+        if (ver == 1) {
+            v2Sched.moveToV1()
+        } else {
+            v2Sched.moveToV2();
+        }
+        try {
+            mConf.put("schedVer", ver);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        setMod();
+        _loadScheduler();
     }
 
 

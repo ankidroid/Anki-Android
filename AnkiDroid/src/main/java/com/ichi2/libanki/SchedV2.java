@@ -29,7 +29,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
 
-import com.google.common.primitives.Ints;
 import com.google.common.primitives.Longs;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.hooks.Hooks;
@@ -60,7 +59,7 @@ import timber.log.Timber;
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
                     "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
-public class SchedV2 {
+public class SchedV2 extends Sched {
 
 
 
@@ -101,13 +100,19 @@ public class SchedV2 {
     // Not in libanki
     private WeakReference<Activity> mContextReference;
 
+
     /**
-     * queue types: 0=new/cram, 1=lrn, 2=rev, 3=day lrn, -1=suspended, -2=buried
-     * revlog types: 0=lrn, 1=rev, 2=relrn, 3=cram
+     * card types: 0=new, 1=lrn, 2=rev, 3=relrn
+     * queue types: 0=new, 1=(re)lrn, 2=rev, 3=day (re)lrn,
+     *   4=preview, -1=suspended, -2=sibling buried, -3=manually buried
+     * revlog types: 0=lrn, 1=rev, 2=relrn, 3=early review
      * positive revlog intervals are in days (rev), negative in seconds (lrn)
+     * odue/odid store original due/did when cards moved to filtered deck
+     *
      */
 
     public SchedV2(Collection col) {
+        super(col);
         mCol = col;
         mQueueLimit = 50;
         mReportLimit = 1000;
@@ -178,7 +183,6 @@ public class SchedV2 {
         if (card.getQueue() == 0) {
             // came from the new queue, move to learning
             card.setQueue(1);
-            // if it was a new card, it's now a learning card
             card.setType(1);
             // init reps to graduation
             card.setLeft(_startingLeft(card));
@@ -208,6 +212,7 @@ public class SchedV2 {
             _restorePreviewCard(card);
             _removeFromFiltered(card);
         } else {
+            // This is in place of the assert
             throw new RuntimeException("Invalid ease");
         }
     }
@@ -403,9 +408,11 @@ public class SchedV2 {
                 // learning
                 int lrn = _lrnForDeck(deck.getLong("id"));
                 // reviews
-                Integer plim = null;
+                Integer plim;
                 if (!TextUtils.isEmpty(p)) {
                     plim = lims.get(p)[1];
+                } else {
+                    plim = null;
                 }
                 int rlim = _deckRevLimitSingle(deck, plim);
                 int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
@@ -935,8 +942,9 @@ public class SchedV2 {
         if (ease == 4) {
             _rescheduleAsRev(card, conf, true);
             leaving = true;
-            // graduation time?
+        // next step?
         } else if (ease == 3) {
+            // graduation time?
             if ((card.getLeft() % 1000) - 1 <= 0) {
                 _rescheduleAsRev(card, conf, false);
                 leaving = true;
@@ -1004,12 +1012,13 @@ public class SchedV2 {
         // due today?
         if (card.getDue() < mDayCutoff) {
             // Add some randomness, up to 5 minutes or 25%
-            int maxExtra = (int) Math.min(300, Math.round(delay * 0.25));
+            int maxExtra = (int) Math.min(300, (int)(delay * 0.25));
             int fuzz = new Random().nextInt(maxExtra);
             card.setDue(Math.min(mDayCutoff - 1, card.getDue() + fuzz));
             card.setQueue(1);
             try {
                 if (card.getDue() < (Utils.intNow() + mCol.getConf().getInt("collapseTime"))) {
+                    mLrnCount += 1;
                     // if the queue is not empty and there's nothing else to do, make
                     // sure we don't put it at the head of the queue and end up showing
                     // it twice in a row
@@ -1163,6 +1172,7 @@ public class SchedV2 {
                 // graduate
                 ideal = ja.getInt(0);
             } else {
+                // early remove
                 ideal = ja.getInt(1);
             }
             if (fuzz) {
@@ -1275,7 +1285,7 @@ public class SchedV2 {
         ArrayList<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);
-        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(Ints.toArray(dids)) + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
+        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(dids) + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
     }
 
 
@@ -1372,7 +1382,7 @@ public class SchedV2 {
 
     private void _answerRevCard(Card card, int ease) {
         int delay = 0;
-        boolean early = card.getODid() != 0 && card.getODue() > mToday;
+        boolean early = card.getODid() != 0 && (card.getODue() > mToday);
         int type = early ? 3 : 1;
         if (ease == 1) {
             delay = _rescheduleLapse(card);
@@ -1478,7 +1488,8 @@ public class SchedV2 {
         }
 
         try {
-            int ivl4 = _constrainedIvl((card.getIvl() + delay * fct * conf.getInt("ease4")), conf, ivl3, fuzz);
+            int ivl4 = _constrainedIvl((
+                    (card.getIvl() + delay) * fct * conf.getInt("ease4")), conf, ivl3, fuzz);
             return ivl4;
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -1548,6 +1559,7 @@ public class SchedV2 {
     }
 
 
+    // next interval for card when answered early+correctly
     private int _earlyReviewIvl(Card card, int ease) {
         if (card.getODid() == 0 || card.getType() != 2 || card.getFactor() == 0) {
             throw new RuntimeException("Unexpected card parameters");
@@ -1567,6 +1579,9 @@ public class SchedV2 {
         double factor;
         if (ease == 2)  {
             factor = conf.optDouble("hardFactor", 1.2);
+            // hard cards shouldn't have their interval decreased by more than 50%
+            // of the normal factor
+            minNewIvl = factor / 2;
         } else if (ease == 3) {
             factor = card.getFactor() / 1000;
         } else { // ease == 4
@@ -1600,7 +1615,9 @@ public class SchedV2 {
     }
 
 
-    public Integer rebuildDyn(long did) {
+    // Note: The original returns an integer result. We return List<Long> with that number to satisfy the
+    // interface requirements. The result isn't used anywhere so this isn't a problem.
+    public List<Long> rebuildDyn(long did) {
         if (did == 0) {
             did = mCol.getDecks().selected();
         }
@@ -1621,7 +1638,7 @@ public class SchedV2 {
         }
         // and change to our new deck
         mCol.getDecks().select(did);
-        return cnt;
+        return Collections.singletonList((long)cnt);
     }
 
 
@@ -1906,7 +1923,7 @@ public class SchedV2 {
         JSONObject conf = _cardConf(card);
 
         try {
-            return conf.getBoolean("dyn") && !conf.getBoolean("resched");
+            return conf.getInt("dyn") != 0 && !conf.getBoolean("resched");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1914,11 +1931,7 @@ public class SchedV2 {
 
 
     private int _previewDelay(Card card) {
-        try {
-            return _cardConf(card).getInt("previewDelay") * 60;
-        } catch (JSONException e) {
-            return 10 * 60;
-        }
+        return _cardConf(card).optInt("previewDelay", 10) * 60;
     }
 
 
@@ -1928,7 +1941,7 @@ public class SchedV2 {
      */
 
     private void _updateCutoff() {
-        int oldToday = mToday;
+        int oldToday = mToday == null ? 0 : mToday;
         // days since col created
         mToday = _daysSinceCreation();
         // end of day cutoff
@@ -1959,19 +1972,19 @@ public class SchedV2 {
         if (rolloverTime < 0) {
             rolloverTime = 24 + rolloverTime;
         }
-        Date currentDate = new Date();
-        Date cutoffDate = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(cutoffDate);
-        c.set(Calendar.HOUR, rolloverTime);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
-        if (currentDate.compareTo(cutoffDate) > 0) {
-            c.add(Calendar.DATE, 1);
+        Calendar date = Calendar.getInstance();
+        date.setTime(new Date());
+        date.set(Calendar.HOUR_OF_DAY, rolloverTime);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+        date.set(Calendar.MILLISECOND, 0);
+        Calendar today = Calendar.getInstance();
+        today.setTime(new Date());
+        if (date.before(today)) {
+            date.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        return c.getTimeInMillis() / 1000;
+        return date.getTimeInMillis() / 1000;
     }
 
 
@@ -2105,7 +2118,7 @@ public class SchedV2 {
     }
 
 
-    private boolean haveBuried() {
+    public boolean haveBuried() {
         return haveManuallyBuried() || haveBuriedSiblings();
     }
 
@@ -2156,6 +2169,7 @@ public class SchedV2 {
             return 0;
         }
         try {
+            // (re)learning?
             if (card.getQueue() == 0 || card.getQueue() == 1 || card.getQueue() == 3) {
                 return _nextLrnIvl(card, ease);
             } else if (ease == 1) {
@@ -2180,8 +2194,8 @@ public class SchedV2 {
     }
 
 
+    // this isn't easily extracted from the learn code
     private long _nextLrnIvl(Card card, int ease) {
-        // this isn't easily extracted from the learn code
         if (card.getQueue() == 0) {
             card.setLeft(_startingLeft(card));
         }
@@ -2197,6 +2211,7 @@ public class SchedV2 {
             } else { // ease == 3
                 int left = card.getLeft() % 1000 - 1;
                 if (left <= 0) {
+                    // graduate
                     return _graduatingIvl(card, conf, false, false) * 86400L;
                 } else {
                     return _delayForGrade(conf, left);
@@ -2292,7 +2307,8 @@ public class SchedV2 {
         String sids = Utils.ids2str(allDecks != null ? allDecks : mCol.getDecks().active());
 
         mCol.log(mCol.getDb().queryColumn(Long.class,"select id from cards where " + queue + " and did in " + sids, 0));
-        mCol.getDb().execute("update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + " and did in " + sids, new Object[]{mCol.usn()});
+        mCol.getDb().execute("update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + " and did in " + sids,
+                new Object[]{Utils.intNow(), mCol.usn()});
     }
 
 
@@ -2529,10 +2545,14 @@ public class SchedV2 {
 
 
     private void _removeAllFromLearning() {
+        // remove review cards from relearning
         mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", Utils.intNow(), mCol.usn()));
+        // remove new cards from learning
+        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "select id from cards where queue in (1,3)", 0)));
     }
 
 
+    // v1 doesn't support buried/suspended (re)learning cards
     private void _resetSuspendedLearning() {
         mCol.getDb().execute(String.format(Locale.US,"update cards set type = (case when type = 1 then 0 when type in (2, 3) then 2 else type end), due = (case when odue then odue else due end), odue = 0, mod = %d, usn = %d where queue < 0", Utils.intNow(), mCol.usn()));
     }
@@ -2734,72 +2754,4 @@ public class SchedV2 {
         mContextReference = contextReference;
     }
 
-
-    /**
-     * Holds the data for a single node (row) in the deck due tree (the user-visible list
-     * of decks and their counts). A node also contains a list of nodes that refer to the
-     * next level of sub-decks for that particular deck (which can be an empty list).
-     *
-     * The names field is an array of names that build a deck name from a hierarchy (i.e., a nested
-     * deck will have an entry for every level of nesting). While the python version interchanges
-     * between a string and a list of strings throughout processing, we always use an array for
-     * this field and use names[0] for those cases.
-     */
-    public class DeckDueTreeNode implements Comparable {
-        public String[] names;
-        public long did;
-        public int depth;
-        public int revCount;
-        public int lrnCount;
-        public int newCount;
-        public List<DeckDueTreeNode> children = new ArrayList<>();
-
-        public DeckDueTreeNode(String[] names, long did, int revCount, int lrnCount, int newCount) {
-            this.names = names;
-            this.did = did;
-            this.revCount = revCount;
-            this.lrnCount = lrnCount;
-            this.newCount = newCount;
-        }
-
-        public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount) {
-            this(new String[]{name}, did, revCount, lrnCount, newCount);
-        }
-
-        public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount,
-                               List<DeckDueTreeNode> children) {
-            this(new String[]{name}, did, revCount, lrnCount, newCount);
-            this.children = children;
-        }
-
-        /**
-         * Sort on the head of the node.
-         */
-        @Override
-        public int compareTo(Object other) {
-            DeckDueTreeNode rhs = (DeckDueTreeNode) other;
-            // Consider each subdeck name in the ordering
-            for (int i = 0; i < names.length && i < rhs.names.length; i++) {
-                int cmp = names[i].compareTo(rhs.names[i]);
-                if (cmp == 0) {
-                    continue;
-                }
-                return cmp;
-            }
-            // If we made it this far then the arrays are of different length. The longer one should
-            // always come after since it contains all of the sections of the shorter one inside it
-            // (i.e., the short one is an ancestor of the longer one).
-            if (rhs.names.length > names.length) {
-                return -1;
-            } else {
-                return 1;
-            }
-        }
-
-        @Override
-        public String toString() {
-            return String.format(Locale.US, "%s, %d, %d, %d, %d, %d, %s",
-                    Arrays.toString(names), did, depth, revCount, lrnCount, newCount, children);
-        }
-    }
 }
