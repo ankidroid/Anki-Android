@@ -29,7 +29,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
 
-import com.google.common.primitives.Longs;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.hooks.Hooks;
 
@@ -112,7 +111,7 @@ public class SchedV2 extends Sched {
      */
 
     public SchedV2(Collection col) {
-        super(col);
+        super();
         mCol = col;
         mQueueLimit = 50;
         mReportLimit = 1000;
@@ -2363,7 +2362,7 @@ public class SchedV2 extends Sched {
         }
         // then bury
         if (toBury.size() > 0) {
-            buryCards(Longs.toArray(toBury),false);
+            buryCards(Utils.arrayList2array(toBury),false);
         }
     }
 
