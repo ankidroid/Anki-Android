@@ -63,7 +63,7 @@ public class Consts {
     public static final int SYNC_ZIP_COUNT = 25;
     public static final String SYNC_BASE = "https://sync.ankiweb.net/";
     public static final String SYNC_MEDIA_BASE = "https://sync.ankiweb.net/msync/";
-    public static final int SYNC_VER = 8;
+    public static final int SYNC_VER = 9;
 
     public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
 
