@@ -194,7 +194,7 @@ public class Collection {
      */
 
 
-    private int schedVer() {
+    public int schedVer() {
         int ver = mConf.optInt("schedVer", fDefaultSchedulerVersion);
         if (fSupportedSchedulerVersions.contains(ver)) {
             return ver;
@@ -212,7 +212,7 @@ public class Collection {
         }
     }
 
-    private void changeSchedulerVer(Integer ver) throws ConfirmModSchemaException {
+    public void changeSchedulerVer(Integer ver) throws ConfirmModSchemaException {
         if (ver == schedVer()) {
             return;
         }

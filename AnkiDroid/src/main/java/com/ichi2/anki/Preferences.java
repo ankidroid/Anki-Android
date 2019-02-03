@@ -46,6 +46,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
@@ -98,7 +99,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // Other variables
     private final HashMap<String, String> mOriginalSumarries = new HashMap<>();
     private static final String [] sCollectionPreferences = {"showEstimates", "showProgress",
-            "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset"};
+            "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer"};
 
 
     // ----------------------------------------------------------------------------
@@ -396,6 +397,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             calendar.setTimeInMillis(timestamp.getTime());
                             ((SeekBarPreference)pref).setValue(calendar.get(Calendar.HOUR_OF_DAY));
                             break;
+                        case "schedVer":
+                            ((CheckBoxPreference)pref).setChecked(conf.optInt("schedVer", 1) == 2);
                     }
                 } catch (JSONException | NumberFormatException e) {
                     throw new RuntimeException();
@@ -546,6 +549,57 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         Timber.i("AnkiDroid ContentProvider disabled by user");
                     }
                     pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP);
+                    break;
+                }
+                case "schedVer": {
+                    boolean wantNew = ((CheckBoxPreference) pref).isChecked();
+                    boolean haveNew = getCol().schedVer() == 2;
+                    // northing to do?
+                    if (haveNew == wantNew) {
+                        break;
+                    }
+                    MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
+                    if (haveNew && !wantNew) {
+                        // Going back to V1
+                        builder.title(R.string.sched_ver_toggle_title);
+                        builder.content(R.string.sched_ver_2to1);
+                        builder.onPositive((dialog, which) -> {
+                            getCol().modSchemaNoCheck();
+                            try {
+                                getCol().changeSchedulerVer(1);
+                                ((CheckBoxPreference) pref).setChecked(false);
+                            } catch (ConfirmModSchemaException e2) {
+                                // This should never be reached as we explicitly called modSchemaNoCheck()
+                                throw new RuntimeException(e2);
+                            }
+                        });
+                        builder.onNegative((dialog, which) -> {
+                            ((CheckBoxPreference) pref).setChecked(true);
+                        });
+                        builder.positiveText(R.string.dialog_ok);
+                        builder.negativeText(R.string.dialog_cancel);
+                        builder.show();
+                        break;
+                    }
+                    // Going to V2
+                    builder.title(R.string.sched_ver_toggle_title);
+                    builder.content(R.string.sched_ver_1to2);
+                    builder.onPositive((dialog, which) -> {
+                        getCol().modSchemaNoCheck();
+                        try {
+                            getCol().changeSchedulerVer(2);
+                            ((CheckBoxPreference) pref).setChecked(true);
+                        } catch (ConfirmModSchemaException e2) {
+                            // This should never be reached as we explicitly called modSchemaNoCheck()
+                            throw new RuntimeException(e2);
+                        }
+                    });
+                    builder.onNegative((dialog, which) -> {
+                        ((CheckBoxPreference) pref).setChecked(false);
+                    });
+                    builder.positiveText(R.string.dialog_ok);
+                    builder.negativeText(R.string.dialog_cancel);
+                    builder.show();
                     break;
                 }
             }

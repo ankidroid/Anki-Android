@@ -133,6 +133,11 @@
         </PreferenceCategory>
 
 
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="schedVer"
+        android:title="@string/sched_ver"
+        android:summary="@string/sched_ver_summ" />
     <Preference
         android:key="about_dialog_preference"
         android:title="@string/about_title">
