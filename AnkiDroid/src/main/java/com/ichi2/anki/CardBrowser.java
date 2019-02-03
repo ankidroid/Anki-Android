@@ -57,6 +57,7 @@ import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.IntegerDialog;
+import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -948,6 +949,20 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             case R.id.action_reposition_cards: {
                 Timber.i("CardBrowser:: Reposition button pressed");
+
+                // Only new cards may be repositioned
+                long[] cardIds = getSelectedCardIds();
+                for (int i = 0; i < cardIds.length; i++) {
+                    if (getCol().getCard(cardIds[i]).getQueue() != Card.TYPE_NEW) {
+                        SimpleMessageDialog dialog = SimpleMessageDialog.newInstance(
+                                getString(R.string.vague_error),
+                                getString(R.string.reposition_card_not_new_error),
+                                false);
+                        showDialogFragment(dialog);
+                        return false;
+                    }
+                }
+
                 IntegerDialog repositionDialog = new IntegerDialog();
                 repositionDialog.setArgs(
                         getString(R.string.reposition_card_dialog_title),
@@ -956,7 +971,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 repositionDialog.setCallbackRunnable(repositionDialog.new IntRunnable() {
                     public void run() {
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
-                                new DeckTask.TaskData(new Object[] {getSelectedCardIds(), Collection.DismissType.REPOSITION_CARDS, this.getInt()}));
+                                new DeckTask.TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, this.getInt()}));
                     }
                 });
                 showDialogFragment(repositionDialog);
