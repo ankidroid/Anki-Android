@@ -1007,6 +1007,7 @@ public class SchedV2 extends Sched {
         if (delay == null) {
             delay = _delayForGrade(conf, card.getLeft());
         }
+        card.setDue(Utils.intNow() + delay);
 
         // due today?
         if (card.getDue() < mDayCutoff) {
