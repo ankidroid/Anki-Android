@@ -81,10 +81,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
@@ -164,7 +165,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private TextView mActionBarTitle;
     private boolean mReloadRequired = false;
     private boolean mInMultiSelectMode = false;
-    private HashSet<Integer> mCheckedCardPositions = new HashSet<>();
+    private Set<Integer> mCheckedCardPositions = new LinkedHashSet<>();
     private int mLastSelectedPosition;
     private Menu mActionBarMenu;
 
