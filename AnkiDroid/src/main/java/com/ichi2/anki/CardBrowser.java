@@ -904,10 +904,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_preview: {
                 Intent previewer = new Intent(CardBrowser.this, Previewer.class);
-                previewer.putExtra("index", 0);
-                if (mInMultiSelectMode) {
+                if (mInMultiSelectMode && mCheckedCardPositions.size() > 1) {
+                    // Multiple cards have been explicitly selected, so preview only those cards
+                    previewer.putExtra("index", 0);
                     previewer.putExtra("cardList", getSelectedCardIds());
                 } else {
+                    // Preview all cards, starting from the one that is currently selected
+                    int startIndex = mCheckedCardPositions.isEmpty() ? 0: mCheckedCardPositions.iterator().next();
+                    previewer.putExtra("index", startIndex);
                     previewer.putExtra("cardList", getAllCardIds());
                 }
                 startActivityWithoutAnimation(previewer);
