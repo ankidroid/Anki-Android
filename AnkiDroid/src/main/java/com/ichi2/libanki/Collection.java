@@ -55,6 +55,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -1548,7 +1549,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         long oldSize = file.length();
         int currentTask = 1;
-        int totalTasks = (mModels.all().size() * 4) + 18; // 4 things are in all-models loops, 18 things are one-offs
+        int totalTasks = (mModels.all().size() * 4) + 20; // 4 things are in all-models loops, 20 things are one-offs
         try {
             mDb.getDatabase().beginTransaction();
             try {
@@ -1670,7 +1671,7 @@ public class Collection {
                         + " WHERE due > 1000000 AND queue = 0");
                 // new card position
                 mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
-                // reviews should have a reasonable due
+                // reviews should have a reasonable due #
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 10000", 0);
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
@@ -1678,6 +1679,21 @@ public class Collection {
                 	problems.add("Reviews had incorrect due date.");
                     mDb.execute("UPDATE cards SET due = 0, mod = " + Utils.intNow() + ", usn = " + usn()
                             + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+                }
+                // v2 sched had a bug that could create decimal intervals
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
+                        "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
+                int rowCount = s.executeUpdateDelete();
+                if (rowCount > 0) {
+                    problems.add("Fixed " + rowCount + " cards with v2 scheduler bug.");
+                }
+                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                s = mDb.getDatabase().compileStatement(
+                        "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
+                rowCount = s.executeUpdateDelete();
+                if (rowCount > 0) {
+                    problems.add("Fixed " + rowCount + " review history entries with v2 scheduler bug.");
                 }
                 mDb.getDatabase().setTransactionSuccessful();
                 // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
