@@ -801,16 +801,20 @@ public class Stats {
         if (lim.length() > 0) {
             lim = " and " + lim;
         }
-
-        Calendar sd = GregorianCalendar.getInstance();
-        sd.setTimeInMillis(mCol.getCrt() * 1000);
-
+        int rolloverHour;
+        if (mCol.schedVer() == 1) {
+            Calendar sd = GregorianCalendar.getInstance();
+            sd.setTimeInMillis(mCol.getCrt() * 1000);
+            rolloverHour = sd.get(Calendar.HOUR_OF_DAY);
+        } else {
+            rolloverHour = mCol.getConf().optInt("rollover", 4);
+        }
         int pd = _periodDays();
         if (pd > 0) {
             lim += " and id > " + ((mCol.getSched().getDayCutoff() - (SECONDS_PER_DAY * pd)) * 1000);
         }
         long cutoff = mCol.getSched().getDayCutoff();
-        long cut = cutoff - sd.get(Calendar.HOUR_OF_DAY) * 3600;
+        long cut = cutoff - rolloverHour * 3600;
 
         ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
@@ -821,7 +825,7 @@ public class Stats {
                 "count() " +
                 "from revlog where type in (0,1,2) " + lim +" " +
                 "group by hour having count() > 30 order by hour";
-        Timber.d(sd.get(Calendar.HOUR_OF_DAY) + " : " +cutoff + " breakdown query: %s", query);
+        Timber.d(rolloverHour + " : " +cutoff + " breakdown query: %s", query);
         try {
             cur = mCol.getDb()
                     .getDatabase()
