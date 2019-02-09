@@ -1536,7 +1536,7 @@ public class SchedV2 extends Sched {
             throw new RuntimeException(e);
         }
 
-        return (int) ivl;
+        return newIvl;
     }
 
 
