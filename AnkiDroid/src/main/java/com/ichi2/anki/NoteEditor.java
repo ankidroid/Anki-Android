@@ -25,6 +25,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
@@ -33,6 +34,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 
 import android.util.Pair;
+import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -1117,6 +1119,13 @@ public class NoteEditor extends AnkiActivity {
             View editline_view = getLayoutInflater().inflate(R.layout.card_multimedia_editline, null);
             FieldEditText newTextbox = (FieldEditText) editline_view.findViewById(R.id.id_note_editText);
 
+            // Use custom implementation of ActionMode.Callback customize selection and insert menus
+            ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox);
+            newTextbox.setCustomSelectionActionModeCallback(actionModeCallback);
+            if (Build.VERSION.SDK_INT >= 23) {
+                newTextbox.setCustomInsertionActionModeCallback(actionModeCallback);
+            }
+
             initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode);
 
             TextView label = newTextbox.getLabel();
@@ -1676,5 +1685,68 @@ public class NoteEditor extends AnkiActivity {
         public void onNothingSelected(AdapterView<?> parent) {
             // Do Nothing
         }
+    }
+
+    /**
+     * Custom ActionMode.Callback implementation for adding and handling cloze deletion action
+     * button in the text selection menu.
+     */
+    private class ActionModeCallback implements ActionMode.Callback {
+        FieldEditText mTextBox;
+        int mClozeCounter = 1;
+
+        ActionModeCallback(FieldEditText textBox) {
+            super();
+            mTextBox = textBox;
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            // TODO: use something better than this magic reference id number 16
+            // Adding the cloze deletion floating context menu item, but only once.
+            if (menu.findItem(16) == null) {
+                menu.add(Menu.NONE, 16, Menu.NONE, "Cloze deletion");
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            if (item.getItemId() == 16) {
+                // get the current text and selection locations
+                int selectionStart = mTextBox.getSelectionStart();
+                int selectionEnd = mTextBox.getSelectionEnd();
+                String text = mTextBox.getText().toString();
+
+                // Split the text in the places where the cloze deletion will be inserted
+                String beforeText = text.substring(0, selectionStart);
+                String selectedText = text.substring(selectionStart, selectionEnd);
+                String afterText = text.substring(selectionEnd);
+
+                // Format the cloze deletion open bracket
+                String clozeOpenBracket = "{{c" + mClozeCounter + "::";
+                mClozeCounter++; // increase counter for next cloze deletion
+
+                // Update text field with updated text and selection
+                mTextBox.setText(beforeText + clozeOpenBracket + selectedText + "}}" + afterText);
+                int clozeOpenSize = clozeOpenBracket.length();
+                mTextBox.setSelection(selectionStart+clozeOpenSize, selectionEnd+clozeOpenSize);
+
+                mode.finish();
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) { }
     }
 }
