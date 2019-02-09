@@ -1489,7 +1489,7 @@ public class SchedV2 extends Sched {
 
         try {
             int ivl4 = _constrainedIvl((
-                    (card.getIvl() + delay) * fct * conf.getInt("ease4")), conf, ivl3, fuzz);
+                    (card.getIvl() + delay) * fct * conf.getDouble("ease4")), conf, ivl3, fuzz);
             return ivl4;
         } catch (JSONException e) {
             throw new RuntimeException(e);
