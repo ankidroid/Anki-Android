@@ -18,6 +18,8 @@ package com.ichi2.libanki;
 
 import android.content.Context;
 
+import com.ichi2.anki.R;
+import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.compat.CompatHelper;
 
 import org.json.JSONArray;
@@ -69,6 +71,7 @@ class AnkiExporter extends Exporter {
     String mMediaDir;
     int mCount;
     ArrayList<String> mMediaFiles = new ArrayList<>();
+    boolean _v2sched;
 
 
     public AnkiExporter(Collection col) {
@@ -88,7 +91,7 @@ class AnkiExporter extends Exporter {
      * @throws IOException
      */
 
-    public void exportInto(String path, Context context) throws JSONException, IOException {
+    public void exportInto(String path, Context context) throws JSONException, IOException, ImportExportException {
         // create a new collection at the target
         new File(path).delete();
         Collection dst = Storage.Collection(context, path);
@@ -306,13 +309,16 @@ public final class AnkiPackageExporter extends AnkiExporter {
 
 
     @Override
-    public void exportInto(String path, Context context) throws IOException, JSONException {
+    public void exportInto(String path, Context context) throws IOException, JSONException, ImportExportException {
+        // sched info+v2 scheduler not compatible w/ older clients
+        _v2sched = mCol.schedVer() != 1 && mIncludeSched;
+
         // open a zip file
         ZipFile z = new ZipFile(path);
         // if all decks and scheduling included, full export
         JSONObject media;
         if (mIncludeSched && mDid == null) {
-            media = exportVerbatim(z);
+            media = exportVerbatim(z, context);
         } else {
             // otherwise, filter
             media = exportFiltered(z, path, context);
@@ -323,11 +329,17 @@ public final class AnkiPackageExporter extends AnkiExporter {
     }
 
 
-    private JSONObject exportVerbatim(ZipFile z) throws IOException {
+    private JSONObject exportVerbatim(ZipFile z, Context context) throws IOException {
         // close our deck & write it into the zip file, and reopen
         mCount = mCol.cardCount();
         mCol.close();
-        z.write(mCol.getPath(), "collection.anki2");
+        if (!_v2sched) {
+            z.write(mCol.getPath(), "collection.anki2");
+        } else {
+            _addDummyCollection(z, context);
+            z.write(mCol.getPath(), "collection.anki21");
+        }
+
         mCol.reopen();
         // copy all media
         JSONObject media = new JSONObject();
@@ -352,9 +364,14 @@ public final class AnkiPackageExporter extends AnkiExporter {
     }
 
 
-    private JSONObject exportFiltered(ZipFile z, String path, Context context) throws IOException, JSONException {
+    private JSONObject exportFiltered(ZipFile z, String path, Context context) throws IOException, JSONException, ImportExportException {
         // export into the anki2 file
         String colfile = path.replace(".apkg", ".anki2");
+
+        if (_v2sched) {
+            throw new ImportExportException(context.getString(R.string.export_v2_forbidden));
+        }
+
         super.exportInto(colfile, context);
         z.write(colfile, "collection.anki2");
         // and media
@@ -396,6 +413,21 @@ public final class AnkiPackageExporter extends AnkiExporter {
     protected void prepareMedia() {
         // chance to move each file in self.mediaFiles into place before media
         // is zipped up
+    }
+
+    // create a dummy collection to ensure older clients don't try to read
+    // data they don't understand
+    private void _addDummyCollection(ZipFile zip, Context context) throws IOException {
+        File f = File.createTempFile("dummy", ".anki2");
+        String path = f.getAbsolutePath();
+        f.delete();
+        Collection c = Storage.Collection(context, path);
+        Note n = c.newNote();
+        n.setItem("Front", context.getString(R.string.export_v2_dummy_note));
+        c.addNote(n);
+        c.save();
+        c.close();
+        zip.write(f.getAbsolutePath(), "collection.anki2");
     }
 }
 

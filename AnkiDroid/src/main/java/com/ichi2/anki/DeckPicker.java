@@ -257,9 +257,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
-            AnkiPackageImporter imp = (AnkiPackageImporter) result.getObjArray()[0];
-            showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
-            updateDeckList();
+            // If boolean and string are both set, we are signalling an error message
+            // instead of a successful result.
+            if (result.getBoolean() && result.getString() != null) {
+                showSimpleMessageDialog(result.getString());
+            } else {
+                AnkiPackageImporter imp = (AnkiPackageImporter) result.getObjArray()[0];
+                showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
+                updateDeckList();
+            }
         }
 
 
@@ -329,11 +335,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
-            String exportPath = result.getString();
-            if (exportPath != null) {
-                showAsyncDialogFragment(DeckPickerExportCompleteDialog.newInstance(exportPath));
+
+            // If boolean and string are both set, we are signalling an error message
+            // instead of a successful result.
+            if (result.getBoolean() && result.getString() != null) {
+                showSimpleMessageDialog(result.getString());
             } else {
-                UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.export_unsuccessful), true);
+                String exportPath = result.getString();
+                if (exportPath != null) {
+                    showAsyncDialogFragment(DeckPickerExportCompleteDialog.newInstance(exportPath));
+                } else {
+                    UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.export_unsuccessful), true);
+                }
             }
         }
     };

@@ -20,6 +20,7 @@ package com.ichi2.libanki.importer;
 import android.content.Context;
 import android.content.res.Resources;
 
+import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -52,7 +53,7 @@ public abstract class Importer {
         mContext = col.getContext();
     }
 
-    abstract public void run();
+    abstract public void run() throws ImportExportException;
 
     /**
      * Timestamps

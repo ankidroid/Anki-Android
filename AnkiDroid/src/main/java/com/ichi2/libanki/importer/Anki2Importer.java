@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
@@ -90,7 +91,7 @@ public class Anki2Importer extends Importer {
 
 
     @Override
-    public void run() {
+    public void run() throws ImportExportException {
         publishProgress(0, 0, 0);
         try {
             _prepareFiles();
@@ -105,9 +106,21 @@ public class Anki2Importer extends Importer {
     }
 
 
-    private void _prepareFiles() {
+    private void _prepareFiles() throws ImportExportException {
+        boolean importingV2 = mFile.endsWith(".anki21");
+        if (importingV2 && mCol.schedVer() == 1) {
+            throw new ImportExportException(mContext.getString(R.string.import_needs_v2));
+        }
+
         mDst = mCol;
         mSrc = Storage.Collection(mContext, mFile);
+
+        if (!importingV2 && mCol.schedVer() != 1) {
+            if (mSrc.getDb().queryScalar("select 1 from cards where queue != 0 limit 1") > 0) {
+                mSrc.close(false);
+                throw new ImportExportException(mContext.getString(R.string.import_cannot_with_v2));
+            }
+        }
     }
 
 

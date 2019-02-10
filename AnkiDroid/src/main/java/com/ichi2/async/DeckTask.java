@@ -30,6 +30,7 @@ import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -981,7 +982,11 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         String path = params[0].getString();
         AnkiPackageImporter imp = new AnkiPackageImporter(col, path);
         imp.setProgressCallback(new ProgressCallback(this, res));
-        imp.run();
+        try {
+            imp.run();
+        } catch (ImportExportException e) {
+            return new TaskData(e.getMessage(), true);
+        }
         return new TaskData(new Object[] {imp});
     }
 
@@ -1000,7 +1005,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
 
         // from anki2.py
-        String colFile = new File(dir, "collection.anki2").getAbsolutePath();
+        String colname = "collection.anki21";
         ZipFile zip;
         try {
             zip = new ZipFile(new File(path), ZipFile.OPEN_READ);
@@ -1010,10 +1015,15 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(false);
         }
         try {
-            Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] { "collection.anki2", "media" }, null);
+            // v2 scheduler?
+            if (zip.getEntry(colname) == null) {
+                colname = "collection.anki2";
+            }
+            Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] { colname, "media" }, null);
         } catch (IOException e) {
             return new TaskData(-2, null, false);
         }
+        String colFile = new File(dir, colname).getAbsolutePath();
         if (!(new File(colFile)).exists()) {
             return new TaskData(-2, null, false);
         }
@@ -1134,6 +1144,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         } catch (JSONException e) {
             Timber.e(e, "JSOnException in doInBackgroundExportApkg");
             return new TaskData(false);
+        } catch (ImportExportException e) {
+            Timber.e(e, "ImportExportException in doInBackgroundExportApkg");
+            return new TaskData(e.getMessage(), true);
         }
         return new TaskData(apkgPath);
     }

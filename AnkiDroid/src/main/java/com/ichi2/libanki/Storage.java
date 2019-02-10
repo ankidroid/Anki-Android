@@ -64,6 +64,8 @@ public class Storage {
         Collection col = new Collection(context, db, path, server, log);
             if (ver < Consts.SCHEMA_VERSION) {
                 _upgrade(col, ver);
+            } else if (ver > Consts.SCHEMA_VERSION) {
+                throw new RuntimeException("This file requires a newer version of Anki.");
             } else if (create) {
                 try {
                     // add in reverse order so basic is default
