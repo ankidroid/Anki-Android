@@ -2563,6 +2563,11 @@ public class SchedV2 extends Sched {
         mCol.getDb().execute(String.format(Locale.US, "update cards set queue=-2, mod=%d where queue=-3", Utils.intNow()));
     }
 
+    // adding 'hard' in v2 scheduler means old ease entries need shifting
+    // up or down
+    private void _remapLearningAnswers(String sql) {
+        mCol.getDb().execute("update revlog set " + sql);
+    }
 
     public void moveToV1() {
         _emptyAllFiltered();
@@ -2570,12 +2575,14 @@ public class SchedV2 extends Sched {
 
         _moveManuallyBuried();
         _resetSuspendedLearning();
+        _remapLearningAnswers("ease=ease-1 where ease in (3,4)");
     }
 
 
     public void moveToV2() {
         _emptyAllFiltered();
         _removeAllFromLearning();
+        _remapLearningAnswers("ease=ease+1 where ease in (2,3)");
     }
 
 
