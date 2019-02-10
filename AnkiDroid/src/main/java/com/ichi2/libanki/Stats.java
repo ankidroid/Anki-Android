@@ -1085,13 +1085,19 @@ public class Stats {
             lim = "";
         }
 
+        String ease4repl;
+        if (mCol.schedVer() == 1) {
+            ease4repl = "3";
+        } else {
+            ease4repl = "ease";
+        }
         ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
         String query = "select (case " +
                 "                when type in (0,2) then 0 " +
                 "        when lastIvl < 21 then 1 " +
                 "        else 2 end) as thetype, " +
-                "        (case when type in (0,2) and ease = 4 then 3 else ease end), count() from revlog " + lim + " " +
+                "        (case when type in (0,2) and ease = 4 then " + ease4repl +" else ease end), count() from revlog " + lim + " " +
                 "        group by thetype, ease " +
                 "        order by thetype, ease";
         Timber.d("AnswerButtons query: %s", query);
