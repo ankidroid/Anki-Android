@@ -20,6 +20,7 @@ package com.ichi2.libanki.importer;
 import com.google.gson.stream.JsonReader;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
@@ -46,23 +47,28 @@ public class AnkiPackageImporter extends Anki2Importer {
     }
 
     @Override
-    public void run() {
+    public void run() throws ImportExportException {
         publishProgress(0, 0, 0);
         File tempDir = new File(new File(mCol.getPath()).getParent(), "tmpzip");
         Collection tmpCol;
         try {
             // We extract the zip contents into a temporary directory and do a little more
             // validation than the desktop client to ensure the extracted collection is an apkg.
+            String colname = "collection.anki21";
             try {
                 // extract the deck from the zip file
                 mZip = new ZipFile(new File(mFile), ZipFile.OPEN_READ);
-                Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{"collection.anki2", "media"}, null);
+                // v2 scheduler?
+                if (mZip.getEntry(colname) == null) {
+                    colname = "collection.anki2";
+                }
+                Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{colname, "media"}, null);
             } catch (IOException e) {
                 Timber.e(e, "Failed to unzip apkg.");
                 mLog.add(getRes().getString(R.string.import_log_no_apkg));
                 return;
             }
-            String colpath = new File(tempDir, "collection.anki2").getAbsolutePath();
+            String colpath = new File(tempDir, colname).getAbsolutePath();
             if (!(new File(colpath)).exists()) {
                 mLog.add(getRes().getString(R.string.import_log_no_apkg));
                 return;

@@ -20,6 +20,7 @@ import android.Manifest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
+import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.anki.tests.Shared;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
@@ -66,7 +67,7 @@ public class ImportTest {
     public RetryRule retry = new RetryRule(10);
 
     @Test
-    public void testAnki2Mediadupes() throws IOException, JSONException {
+    public void testAnki2Mediadupes() throws IOException, JSONException, ImportExportException {
         List<String> expected;
         List<String> actual;
 
@@ -129,7 +130,7 @@ public class ImportTest {
     }
 
     @Test
-    public void testApkg() throws IOException {
+    public void testApkg() throws IOException, ImportExportException {
         List<String> expected;
         List<String> actual;
 
@@ -165,7 +166,7 @@ public class ImportTest {
     }
 
     @Test
-    public void testAnki2Diffmodels() throws IOException {
+    public void testAnki2Diffmodels() throws IOException, ImportExportException {
         // create a new empty deck
         Collection dst = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         // import the 1 card version of the model
@@ -199,7 +200,7 @@ public class ImportTest {
     }
 
     @Test
-    public void testAnki2DiffmodelTemplates() throws IOException, JSONException {
+    public void testAnki2DiffmodelTemplates() throws IOException, JSONException, ImportExportException {
         // different from the above as this one tests only the template text being
         // changed, not the number of cards/fields
         Collection dst = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
@@ -222,7 +223,7 @@ public class ImportTest {
     }
 
     @Test
-    public void testAnki2Updates() throws IOException {
+    public void testAnki2Updates() throws IOException, ImportExportException {
         // create a new empty deck
         Collection dst = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         String tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "update1.apkg");
@@ -317,7 +318,7 @@ public class ImportTest {
      */
 
     @Test
-    public void testDupeIgnore() throws IOException {
+    public void testDupeIgnore() throws IOException, ImportExportException {
         // create a new empty deck
         Collection dst = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         String tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "update1.apkg");
