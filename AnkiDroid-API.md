@@ -140,4 +140,10 @@ For the App Automate you can import [this example Flow](https://llamalab.com/aut
 
 The Instant-add API is a high-level wrapper around the lower level [ContentProvider]() based API. The ContentProvider API contains more features than the Instant-add API, but is more complicated to use. Check the [source code](https://github.com/ankidroid/Anki-Android/tree/master/AnkiDroid/src/main/java/com/ichi2/anki/provider) itself and the accompanying [FlashCardsContract](https://github.com/ankidroid/Anki-Android/blob/master/api/src/main/java/com/ichi2/anki/FlashCardsContract.java) file in the API. The open-source [AnkiDroid-Wear](https://github.com/wlky/AnkiDroid-Wear) app may also be useful as an example of how to use the low-level API.
 
+# React-Native API Wrapper
+
+React-Native developers may use [React-Native-AnkiDroid](https://github.com/is343/react-native-ankidroid) to add some simple Instant-Add implementation to their React-Native apps.
+
+
 We welcome contributions to create a more developer-friendly API for the features in the ContentProvider, as well as contributions to the low-level API to add new features, and of course contributions to improve / update documentation.
+
