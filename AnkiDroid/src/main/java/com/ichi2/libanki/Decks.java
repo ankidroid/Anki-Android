@@ -943,23 +943,25 @@ public class Decks {
 
 
 
-
-    public ArrayList<Long> childDids(long did, HashMap<Long, HashMap<Long, HashMap>> childMap) {
-        ArrayList<Long> array = new ArrayList<>();
-        if (childMap.containsKey(did)) {
-            for (HashMap.Entry<Long, HashMap> entry : childMap.get(did).entrySet()) {
-                array.add(entry.getKey());
-                array.addAll(childDids(entry.getKey(), entry.getValue()));
-            }
+    private void gather(HashMap<Long, HashMap> node, List<Long> arr) {
+        for (Long did : node.keySet()) {
+            HashMap child = node.get(did);
+            arr.add(did);
+            gather(child, arr);
         }
-        return array;
+    }
+
+    public List<Long> childDids(Long did, HashMap<Long, HashMap> childMap) {
+        List<Long> arr = new ArrayList<>();
+        gather(childMap.get(did), arr);
+        return arr;
     }
 
 
-    public HashMap<Long, HashMap<Long, HashMap>> childMap() {
+    public HashMap<Long, HashMap> childMap() {
         HashMap<String, JSONObject> nameMap = nameMap();
 
-        HashMap<Long, HashMap<Long, HashMap>> childMap = new HashMap<Long, HashMap<Long, HashMap>>();
+        HashMap<Long, HashMap> childMap = new HashMap<>();
 
         // Go through all decks, sorted by name
         ArrayList<JSONObject> decks = all();

@@ -375,7 +375,7 @@ public class SchedV2 extends Sched {
         ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> data = new ArrayList<>();
-        HashMap<Long, HashMap<Long, HashMap>> childMap = mCol.getDecks().childMap();
+        HashMap<Long, HashMap> childMap = mCol.getDecks().childMap();
         try {
             for (JSONObject deck : decks) {
                 // if we've already seen the exact same deck name, remove the
@@ -1281,8 +1281,8 @@ public class SchedV2 extends Sched {
     }
 
 
-    public int _revForDeck(long did, int lim, HashMap<Long, HashMap<Long, HashMap>> childMap) {
-        ArrayList<Long> dids = mCol.getDecks().childDids(did, childMap);
+    public int _revForDeck(long did, int lim, HashMap<Long, HashMap> childMap) {
+        List<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);
         return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(dids) + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
