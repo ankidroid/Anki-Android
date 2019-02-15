@@ -57,7 +57,7 @@ android {
 
     testOptions {
         // we should use orchestrator, but app data shared on /sdcard makes it unstable
-        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        //execution 'ANDROIDX_TEST_ORCHESTRATOR'
         animationsDisabled true
 
         unitTests {
