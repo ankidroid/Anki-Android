@@ -47,7 +47,8 @@ public class NotificationService extends BroadcastReceiver {
         int dueCardsCount = WidgetStatus.fetchDue(context);
         if (dueCardsCount >= minCardsDue) {
             // Build basic notification
-            String cardsDueText = context.getString(R.string.widget_minimum_cards_due_notification_ticker_text, dueCardsCount);
+            String cardsDueText = context.getResources()
+                    .getQuantityString(R.plurals.widget_minimum_cards_due_notification_ticker_text, dueCardsCount, dueCardsCount);
 
             // This generates a log warning "Use of stream types is deprecated..."
             // The NotificationCompat code uses setSound() no matter what we do and triggers it.
