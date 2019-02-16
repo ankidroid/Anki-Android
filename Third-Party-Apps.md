@@ -10,10 +10,10 @@ Bildkortsappen is an Android app to create flashcards for language learning. Giv
 Look up Mandarin Chinese words offline using English, Pinyin or Chinese characters (Hanzi) in a clean, intuitive, yet powerful interface. AnkiDroid Flashcards support (bulk export as well as auto-export when word is starred).
 ### [Hanping Cantonese Dictionary](https://play.google.com/store/apps/details?id=com.embermitre.hanping.cantodict.app.pro)
 Cantonese dictionary with AnkiDroid Flashcards support (bulk export as well as auto-export when word is starred) for studying using Anki flashcards.
-### [Japanese Kanji Study](https://play.google.com/store/apps/details?id=com.mindtwisted.kanjistudy)
-Japanese Kanji Study is an Android app focused on learning kanji. Crafted with love, you can study with flashcards, customizable quizzes and writing challenges. As of v4.2.2, the AnkiDroid integration allows you to export well-formatted cards for words and sentences to any of your decks. Exported word cards also include a link back to that entry within the app. 
 ### [Kata](https://play.google.com/store/apps/details?id=im.dacer.kata)
 Auto segregate Japanese text(kanji, katakana, hiragana), get the translation and show furigana above kanji. Can export to AnkiDroid.
+### [Japanese Kanji Study](https://play.google.com/store/apps/details?id=com.mindtwisted.kanjistudy)
+Japanese Kanji Study is an Android app focused on learning kanji. Crafted with love, you can study with flashcards, customizable quizzes and writing challenges. As of v4.2.2, the AnkiDroid integration allows you to export well-formatted cards for words and sentences to any of your decks. Exported word cards also include a link back to that entry within the app. 
 ### [Pleco Chinese Dictionary](https://play.google.com/store/apps/details?id=com.pleco.chinesesystem)
 Pleco is the ultimate Chinese learning companion - an integrated Chinese English dictionary / document reader / flashcard system with fullscreen handwriting input and live camera-based character lookups. Flashcards can be added directly into AnkiDroid and the Note type and field mappings are customizable.
 ### [ReadDict](https://play.google.com/store/apps/details?id=com.a10adevelopment.readdict)
