@@ -10,8 +10,8 @@ Bildkortsappen is an Android app to create flashcards for language learning. Giv
 Look up Mandarin Chinese words offline using English, Pinyin or Chinese characters (Hanzi) in a clean, intuitive, yet powerful interface. AnkiDroid Flashcards support (bulk export as well as auto-export when word is starred).
 ### [Hanping Cantonese Dictionary](https://play.google.com/store/apps/details?id=com.embermitre.hanping.cantodict.app.pro)
 Cantonese dictionary with AnkiDroid Flashcards support (bulk export as well as auto-export when word is starred) for studying using Anki flashcards.
-### [Kanji Study](https://play.google.com/store/apps/details?id=com.mindtwisted.kanjistudy)
-Kanji Study is my ongoing project that tries to be a helpful and easy-to-use tool for learning Japanese kanji. Study with flashcards, customizable quizzes and writing challenges. Each kanji has detailed information and many examples. 
+### [Japanese Kanji Study](https://play.google.com/store/apps/details?id=com.mindtwisted.kanjistudy)
+Japanese Kanji Study is an Android app focused on learning kanji. Crafted with love, you can study with flashcards, customizable quizzes and writing challenges. As of v4.2.2, the AnkiDroid integration allows you to export well-formatted cards for words and sentences to any of your decks. Exported word cards also include a link back to that entry within the app. 
 ### [Kata](https://play.google.com/store/apps/details?id=im.dacer.kata)
 Auto segregate Japanese text(kanji, katakana, hiragana), get the translation and show furigana above kanji. Can export to AnkiDroid.
 ### [Pleco Chinese Dictionary](https://play.google.com/store/apps/details?id=com.pleco.chinesesystem)
