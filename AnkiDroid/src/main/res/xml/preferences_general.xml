@@ -51,12 +51,10 @@
             android:entries="@array/add_to_cur_labels"
             android:entryValues="@array/add_to_cur_values"
             android:key="useCurrent"
-            android:summary=""
             android:title="@string/use_current" />
         <ListPreference
             android:defaultValue="0"
             android:key="language"
-            android:summary="@string/preference_summary_literal"
             android:title="@string/language" />
         <CheckBoxPreference
             android:defaultValue="true"

@@ -95,7 +95,6 @@
                 android:entries="@array/dictionary_labels"
                 android:entryValues="@array/dictionary_values"
                 android:key="dictionary"
-                android:summary="@string/preference_summary_literal"
                 android:title="@string/dictionary" />
             <com.ichi2.preferences.CustomDialogPreference
                 android:dialogIcon="@drawable/ic_dialog_alert"
