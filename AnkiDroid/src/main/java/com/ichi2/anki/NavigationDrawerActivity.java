@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -33,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
 
 import timber.log.Timber;
@@ -68,6 +70,10 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         mDrawerLayout = mainView.findViewById(R.id.drawer_layout);
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        // Force transparent status bar with primary dark color underlayed so that the drawer displays under status bar
+        CompatHelper.getCompat().setStatusBarColor(getWindow(), ContextCompat.getColor(this, R.color.transparent));
+        mDrawerLayout.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, R.attr.colorPrimaryDark));
+        // Setup toolbar and hamburger
         mNavigationView = mDrawerLayout.findViewById(R.id.navdrawer_items_container);
         mNavigationView.setNavigationItemSelectedListener(this);
         Toolbar toolbar = mainView.findViewById(R.id.toolbar);
