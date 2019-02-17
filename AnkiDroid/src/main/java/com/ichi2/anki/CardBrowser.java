@@ -534,7 +534,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         });
         // get the font and font size from the preferences
         int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
-        String sflCustomFont = preferences.getString("browserEditorFont", "");
+        String sflCustomFont = preferences.getString("browserEditorFont", "0");
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         mCardsAdapter = new MultiColumnListAdapter(
                 this,
@@ -1634,7 +1634,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mToIds = to;
             mColorFlagKey = colorFlagKey;
             mFontSizeScalePcent = fontSizeScalePcent;
-            if (!"".equals(customFont)) {
+            if (!"0".equals(customFont)) {
                 mCustomTypeface = AnkiFont.getTypeface(context, customFont);
             }
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

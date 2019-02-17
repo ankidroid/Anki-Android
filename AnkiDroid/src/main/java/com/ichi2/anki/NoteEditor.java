@@ -1108,8 +1108,8 @@ public class NoteEditor extends AnkiActivity {
         // Use custom font if selected from preferences
         Typeface mCustomTypeface = null;
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        String customFont = preferences.getString("browserEditorFont", "");
-        if (!"".equals(customFont)) {
+        String customFont = preferences.getString("browserEditorFont", "0");
+        if (!"0".equals(customFont)) {
             mCustomTypeface = AnkiFont.getTypeface(this, customFont);
         }
 
