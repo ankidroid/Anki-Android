@@ -39,50 +39,50 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- How to format a percentage shown in the summary field of a preference -->
-  <string name="preference_summary_percentage">XXX%</string>
-  <!-- Navigation drawer strings -->
-  <string name="drawer_open">Apri barra di navigazione</string>
-  <string name="drawer_close">Chiudi barra di navigazione</string>
-  <string name="CardEditorLaterMessage">Informazione salvata per più tardi</string>
-  <string name="CardEditorCardDeck">Mazzo:</string>
-  <string name="CardEditorNoteDeck">Mazzo:</string>
-  <string name="CardEditorModel">Tipo:</string>
-  <string name="CardEditorTags">Etichette: %1$s</string>
-  <string name="CardEditorCards">Carte : %1$s</string>
-  <string name="tag_name">Nome etichetta</string>
-  <string name="add_new_filter_tags">Aggiungi/filtra etichette</string>
-  <string name="add_tag">Aggiungi etichetta</string>
-  <string name="check_all_tags">Seleziona/deseleziona tutte le etichette</string>
-  <string name="filter_tags">Filtra etichette</string>
-  <string name="no_tags">Non hai ancora aggiunto nessuna etichetta.</string>
-  <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
-  <string name="updated_version">Aggiornato alla versione %s</string>
-  <!-- Reviewer.java -->
-  <string name="enable_whiteboard">Abilita la lavagna</string>
-  <string name="disable_whiteboard">Disabilita la lavagna</string>
-  <string name="show_whiteboard">Mostra lavagna</string>
-  <string name="hide_whiteboard">Nascondi lavagna</string>
-  <string name="clear_whiteboard">Pulisci lavagna</string>
-  <string name="replay_audio">Riproduci audio</string>
-  <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
-  <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
-  <string name="corrupt_font">File dei caratteri corrotto %s</string>
-  <!-- Browser -->
-  <string-array name="browser_column1_headings">
-    <item>Domanda</item>
-    <item>Ordina per</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Risposta</item>
-    <item>Carta</item>
-    <item>Mazzo</item>
-    <item>Nota</item>
-    <item>Domanda</item>
-    <item>Etichette</item>
-    <item>Errori</item>
-    <item>Ripetizioni</item>
-    <!--
+    <!-- How to format a percentage shown in the summary field of a preference -->
+    <string name="preference_summary_percentage">XXX%</string>
+    <!-- Navigation drawer strings -->
+    <string name="drawer_open">Apri barra di navigazione</string>
+    <string name="drawer_close">Chiudi barra di navigazione</string>
+    <string name="CardEditorLaterMessage">Informazione salvata per più tardi</string>
+    <string name="CardEditorCardDeck">Mazzo:</string>
+    <string name="CardEditorNoteDeck">Mazzo:</string>
+    <string name="CardEditorModel">Tipo:</string>
+    <string name="CardEditorTags">Etichette: %1$s</string>
+    <string name="CardEditorCards">Carte : %1$s</string>
+    <string name="tag_name">Nome etichetta</string>
+    <string name="add_new_filter_tags">Aggiungi/filtra etichette</string>
+    <string name="add_tag">Aggiungi etichetta</string>
+    <string name="check_all_tags">Seleziona/deseleziona tutte le etichette</string>
+    <string name="filter_tags">Filtra etichette</string>
+    <string name="no_tags">Non hai ancora aggiunto nessuna etichetta.</string>
+    <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
+    <string name="updated_version">Aggiornato alla versione %s</string>
+    <!-- Reviewer.java -->
+    <string name="enable_whiteboard">Abilita la lavagna</string>
+    <string name="disable_whiteboard">Disabilita la lavagna</string>
+    <string name="show_whiteboard">Mostra lavagna</string>
+    <string name="hide_whiteboard">Nascondi lavagna</string>
+    <string name="clear_whiteboard">Pulisci lavagna</string>
+    <string name="replay_audio">Riproduci audio</string>
+    <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
+    <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
+    <string name="corrupt_font">File dei caratteri corrotto %s</string>
+    <!-- Browser -->
+    <string-array name="browser_column1_headings">
+        <item>Domanda</item>
+        <item>Ordina per</item>
+    </string-array>
+    <string-array name="browser_column2_headings">
+        <item>Risposta</item>
+        <item>Carta</item>
+        <item>Mazzo</item>
+        <item>Nota</item>
+        <item>Domanda</item>
+        <item>Etichette</item>
+        <item>Errori</item>
+        <item>Ripetizioni</item>
+        <!--
     <item>Changed</item>
     <item>Created</item>
     <item>Due</item>
@@ -90,142 +90,150 @@
     <item>Edited</item>
     <item>Interval</item>
         -->
-  </string-array>
-  <!-- Custom study options -->
-  <string name="custom_study_increase_new_limit">Aumenta il limite odierno di carte nuove</string>
-  <string name="custom_study_increase_review_limit">Aumenta il limite odierno di ripetizioni</string>
-  <string name="custom_study_review_forgotten">Ripeti carte dimenticate</string>
-  <string name="custom_study_review_ahead">Ripeti in anticipo</string>
-  <string name="custom_study_random_selection">Studia una selezione casuale di carte</string>
-  <string name="custom_study_preview_new">Anteprima carte nuove</string>
-  <string name="custom_study_limit_tags">Limita ad etichette particolari</string>
-  <!-- Card editor -->
-  <string name="cardeditor_title_add_note">Aggiungi nota</string>
-  <string name="cardeditor_title_edit_card">Modifica nota</string>
-  <string name="discard_unsaved_changes">Chiudi e perdi input?</string>
-  <string name="factadder_saving_error">Errore salvataggio nota</string>
-  <string name="saving_facts">Salvataggio nota</string>
-  <string name="saving_model">Salvo il modello</string>
-  <string name="add">Aggiungi</string>
-  <string name="save">Salva</string>
-  <string name="close">Chiudi</string>
-  <string name="select">Seleziona</string>
-  <string name="saving_changes">Salvataggio delle modifiche ...</string>
-  <string name="reordering_cards">Riordino le carte...</string>
-  <string name="field_remapping">%1$s (di \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Verranno eliminate eventuali carte senza connessione. Se una nota non ha nessuna carta rimanente, sarà perduta. Sei sicuro di voler continuare?</string>
-  <plurals name="timebox_reached">
-    <item quantity="one">%1$d carta studiata in %2$s</item>
-    <item quantity="other">%1$d carte studiate in %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minuto</item>
-    <item quantity="other">%1$d minuti</item>
-  </plurals>
-  <string name="studyoptions_welcome_title">Benvenuto in AnkiDroid</string>
-  <string name="fact_adder_intent_title">Carta AnkiDroid</string>
-  <string name="card_editor_add_card">Aggiungi nota</string>
-  <string name="card_editor_copy_card">Copia carta</string>
-  <string name="card_editor_reposition_card">Riposiziona</string>
-  <string name="card_editor_reset_card">Reimposta progresso</string>
-  <string name="card_editor_reschedule_card">Rischedula</string>
-  <string name="card_editor_preview_card">Anteprima</string>
-  <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo dispositivo</string>
-  <string name="rename">Rinomina</string>
-  <string name="default_conf_delete_error">Il gruppo di opzioni predefinito non può essere rimosso</string>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">%d carta aggiunta</item>
-    <item quantity="other">%d carte aggiunte</item>
-  </plurals>
-  <string name="help_title">Aiuto</string>
-  <string name="check_db">Controlla database</string>
-  <string name="check_media">Controlla file multimediali</string>
-  <string name="empty_cards">Carte vuote</string>
-  <string name="check_db_message">Controllo database.\nAttendi...</string>
-  <string name="empty_card_warning">Questa carta è vuota. Utilizza l\'opzione \"Carte vuote\" dal menu sulla schermata di elenco dei mazzi.</string>
-  <string name="unknown_type_field_warning">Digita la risposta: campo sconosciuto %s</string>
-  <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
-  <string name="show_hint">Mostra %s</string>
-  <string name="info_rate">Valuta AnkiDroid</string>
-  <string name="col_load_failed">Caricamento della collezione fallito.\nPremi indietro per chiudere AnkiDroid.</string>
-  <string name="import_title">Importazione in corso</string>
-  <string name="import_select_title">Scegli un file da importare</string>
-  <string name="import_message_add">Aggiungi</string>
-  <string name="import_message_replace_confirm">La tua collezione esistente verrà eliminata e sostituita con i dati del file %s. Sei sicuro?</string>
-  <string name="import_message_add_confirm">Aggiungere \"%s\" alla collezione? Può richiedere molto tempo</string>
-  <string name="import_log_no_apkg">Questo non è un file apkg valido</string>
-  <string name="import_error_not_apkg_extension">Il nome del file %s non ha l\'estensione .apkg</string>
-  <string name="import_error_content_provider">Il file selezionato non ha potuto essere importato automaticamente da AnkiDroid. Consulta il manuale utente per importare manualmente i file anki: \n %s</string>
-  <string name="import_replacing">Sostituzione collezione&#8230;</string>
-  <string name="export_include_schedule">Includi schedulazione</string>
-  <string name="export_include_media">Includi Media</string>
-  <string name="confirm_apkg_export">Esporta collezione come file apkg?</string>
-  <string name="confirm_apkg_export_deck">Esporta \"%s\" come file apkg?</string>
-  <string name="export_in_progress">Esporto il file apkg&#8230;</string>
-  <string name="export_successful_title">Inviare apkg?</string>
-  <string name="export_successful">Il file \"%s\" è stato esportato. Vuoi inviarlo con un\'altra app?</string>
-  <string name="export_email_subject">AnkiDroid ha esportato le carte: %s</string>
-  <string name="export_email_text">
-        <![CDATA[
-        Ciao!
+    </string-array>
+    <!-- Custom study options -->
+    <string name="custom_study_increase_new_limit">Aumenta il limite odierno di carte nuove</string>
+    <string name="custom_study_increase_review_limit">Aumenta il limite odierno di ripetizioni</string>
+    <string name="custom_study_review_forgotten">Ripeti carte dimenticate</string>
+    <string name="custom_study_review_ahead">Ripeti in anticipo</string>
+    <string name="custom_study_random_selection">Studia una selezione casuale di carte</string>
+    <string name="custom_study_preview_new">Anteprima carte nuove</string>
+    <string name="custom_study_limit_tags">Limita ad etichette particolari</string>
+    <!-- Card editor -->
+    <string name="cardeditor_title_add_note">Aggiungi nota</string>
+    <string name="cardeditor_title_edit_card">Modifica nota</string>
+    <string name="discard_unsaved_changes">Chiudi e perdi input?</string>
+    <string name="factadder_saving_error">Errore salvataggio nota</string>
+    <string name="saving_facts">Salvataggio nota</string>
+    <string name="saving_model">Salvo il modello</string>
+    <string name="add">Aggiungi</string>
+    <string name="save">Salva</string>
+    <string name="close">Chiudi</string>
+    <string name="select">Seleziona</string>
+    <string name="saving_changes">Salvataggio delle modifiche ...</string>
+    <string name="reordering_cards">Riordino le carte...</string>
+    <string name="field_remapping">%1$s (di \'%2$s\')</string>
+    <string name="confirm_map_cards_to_nothing">Verranno eliminate eventuali carte senza connessione. Se una nota non ha nessuna carta rimanente, sarà perduta. Sei sicuro di voler continuare?</string>
+    <plurals name="timebox_reached">
+        <item quantity="one">%1$d carta studiata in %2$s</item>
+        <item quantity="other">%1$d carte studiate in %2$s</item>
+    </plurals>
+    <plurals name="timebox_reached_minutes">
+        <item quantity="one">%1$d minuto</item>
+        <item quantity="other">%1$d minuti</item>
+    </plurals>
+    <string name="studyoptions_welcome_title">Benvenuto in AnkiDroid</string>
+    <string name="fact_adder_intent_title">Carta AnkiDroid</string>
+    <string name="card_editor_add_card">Aggiungi nota</string>
+    <string name="card_editor_copy_card">Copia carta</string>
+    <string name="card_editor_card_scheduling">Scheduling</string>
+    <string name="card_editor_reposition_card">Riposiziona</string>
+    <string name="card_editor_reset_card">Reimposta progresso</string>
+    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_preview_card">Anteprima</string>
+    <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo dispositivo</string>
+    <string name="rename">Rinomina</string>
+    <string name="default_conf_delete_error">Il gruppo di opzioni predefinito non può essere rimosso</string>
+    <plurals name="factadder_cards_added">
+        <item quantity="one">%d carta aggiunta</item>
+        <item quantity="other">%d carte aggiunte</item>
+    </plurals>
+    <string name="help_title">Aiuto</string>
+    <string name="check_db">Controlla database</string>
+    <string name="check_media">Controlla file multimediali</string>
+    <string name="empty_cards">Carte vuote</string>
+    <string name="check_db_message">Controllo database.\nAttendi...</string>
+    <string name="empty_card_warning">Questa carta è vuota. Utilizza l\'opzione \"Carte vuote\" dal menu sulla schermata di elenco dei mazzi.</string>
+    <string name="unknown_type_field_warning">Digita la risposta: campo sconosciuto %s</string>
+    <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
+    <string name="show_hint">Mostra %s</string>
+    <string name="info_rate">Valuta AnkiDroid</string>
+    <string name="col_load_failed">Caricamento della collezione fallito.\nPremi indietro per chiudere AnkiDroid.</string>
+    <string name="import_title">Importazione in corso</string>
+    <string name="import_select_title">Scegli un file da importare</string>
+    <string name="import_message_add">Aggiungi</string>
+    <string name="import_message_replace_confirm">La tua collezione esistente verrà eliminata e sostituita con i dati del file %s. Sei sicuro?</string>
+    <string name="import_message_add_confirm">Aggiungere \"%s\" alla collezione? Può richiedere molto tempo</string>
+    <string name="import_log_no_apkg">Questo non è un file apkg valido</string>
+    <string name="import_error_not_apkg_extension">Il nome del file %s non ha l\'estensione .apkg</string>
+    <string name="import_error_content_provider">Il file selezionato non ha potuto essere importato automaticamente da AnkiDroid. Consulta il manuale utente per importare manualmente i file anki: \n %s</string>
+    <string name="import_replacing">Sostituzione collezione&#8230;</string>
+    <string name="export_include_schedule">Includi schedulazione</string>
+    <string name="export_include_media">Includi Media</string>
+    <string name="confirm_apkg_export">Esporta collezione come file apkg?</string>
+    <string name="confirm_apkg_export_deck">Esporta \"%s\" come file apkg?</string>
+    <string name="export_in_progress">Esporto il file apkg&#8230;</string>
+    <string name="export_successful_title">Inviare apkg?</string>
+    <string name="export_send_button">Send</string>
+    <string name="export_save_button">Save to file</string>
+    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
+    <string name="export_save_apkg_successful">Successfully saved apkg</string>
+    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_successful">Il file \"%s\" è stato esportato. Vuoi inviarlo con un\'altra app?</string>
+    <string name="export_email_subject">AnkiDroid ha esportato le carte: %s</string>
+    <string name="export_email_text"><![CDATA[        Ciao!
         <br/><br/>
         Questo è un mazzo di carte di studio per Anki inviato da <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
         Prova ad aprirlo utilizzando una delle <a href="http://ankisrs.net/#download">distribuzioni Anki</a> disponibili ed approfitta di un metodo di studio facile ed efficiente!
-        ]]>
-    </string>
-  <string name="export_unsuccessful">Errore nell\'esportazione del file apkg</string>
-  <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
-  <string name="upgrade_import_no_file_found">Nessun file importabile %1$s trovato</string>
-  <string name="study_options">Opzioni del mazzo</string>
-  <string name="select_tts">Imposta lingua TTS</string>
-  <string name="custom_study">Studio personalizzato</string>
-  <string name="more_options">Più</string>
-  <string name="dyn_deck_desc">Questo è un mazzo speciale per studiare al di fuori della pianificazione normale. Le carte ritorneranno automaticamente nel mazzo originale dopo che le hai ripetute. L\'eliminazione di questo mazzo dall\'elenco dei mazzi riporterà tutte le carte rimanenti nel loro mazzo originale.</string>
-  <string name="steps_error">I passi devono essere un numero maggiore di 0</string>
-  <string name="steps_min_error">Almeno un passo è necessario</string>
-  <string name="sched_end">(fine)</string>
-  <string name="sched_unbury_action">Per vederle ora tocca \"Disseppellisci\" nel menu.</string>
-  <string name="sched_has_buried">Alcune carte correlate o seppellite sono state rinviate ad una prossima sessione.</string>
-  <string name="tag_editor_add_feedback">Tocca \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
-  <string name="tag_editor_add_feedback_existing">Etichetta esistente \"%1$s\" selezionata</string>
-  <string name="lookup_hint">Dopo aver copiato il testo, tocca la carta in un punto qualsiasi per mostrare l\'icona di ricerca</string>
-  <!-- Time spans -->
-  <plurals name="time_span_seconds">
-    <item quantity="one">%s secondo</item>
-    <item quantity="other">%s secondi</item>
-  </plurals>
-  <plurals name="time_span_minutes">
-    <item quantity="one">%s minuto</item>
-    <item quantity="other">%s minuti</item>
-  </plurals>
-  <plurals name="time_span_hours">
-    <item quantity="one">%s ora</item>
-    <item quantity="other">%s ore</item>
-  </plurals>
-  <plurals name="time_span_days">
-    <item quantity="one">%s giorno</item>
-    <item quantity="other">%s giorni</item>
-  </plurals>
-  <plurals name="time_span_months">
-    <item quantity="one">%s mese</item>
-    <item quantity="other">%s mesi</item>
-  </plurals>
-  <plurals name="time_span_years">
-    <item quantity="one">%s anno</item>
-    <item quantity="other">%s anni</item>
-  </plurals>
-  <!-- The reason for making a simple “< x” translatable are RTL
+        ]]></string>
+    <string name="export_unsuccessful">Errore nell\'esportazione del file apkg</string>
+    <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
+    <string name="upgrade_import_no_file_found">Nessun file importabile %1$s trovato</string>
+    <string name="study_options">Options</string>
+    <string name="select_tts">Imposta lingua TTS</string>
+    <string name="custom_study">Studio personalizzato</string>
+    <string name="more_options">Più</string>
+    <string name="dyn_deck_desc">Questo è un mazzo speciale per studiare al di fuori della pianificazione normale. Le carte ritorneranno automaticamente nel mazzo originale dopo che le hai ripetute. L\'eliminazione di questo mazzo dall\'elenco dei mazzi riporterà tutte le carte rimanenti nel loro mazzo originale.</string>
+    <string name="steps_error">I passi devono essere un numero maggiore di 0</string>
+    <string name="steps_min_error">Almeno un passo è necessario</string>
+    <string name="sched_end">(fine)</string>
+    <string name="sched_unbury_action">Per vederle ora tocca \"Disseppellisci\" nel menu.</string>
+    <string name="sched_has_buried">Alcune carte correlate o seppellite sono state rinviate ad una prossima sessione.</string>
+    <string name="tag_editor_add_feedback">Tocca \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
+    <string name="tag_editor_add_feedback_existing">Etichetta esistente \"%1$s\" selezionata</string>
+    <string name="lookup_hint">Dopo aver copiato il testo, tocca la carta in un punto qualsiasi per mostrare l\'icona di ricerca</string>
+    <!-- Time spans -->
+    <plurals name="time_span_seconds">
+        <item quantity="one">%s secondo</item>
+        <item quantity="other">%s secondi</item>
+    </plurals>
+    <plurals name="time_span_minutes">
+        <item quantity="one">%s minuto</item>
+        <item quantity="other">%s minuti</item>
+    </plurals>
+    <plurals name="time_span_hours">
+        <item quantity="one">%s ora</item>
+        <item quantity="other">%s ore</item>
+    </plurals>
+    <plurals name="time_span_days">
+        <item quantity="one">%s giorno</item>
+        <item quantity="other">%s giorni</item>
+    </plurals>
+    <plurals name="time_span_months">
+        <item quantity="one">%s mese</item>
+        <item quantity="other">%s mesi</item>
+    </plurals>
+    <plurals name="time_span_years">
+        <item quantity="one">%s anno</item>
+        <item quantity="other">%s anni</item>
+    </plurals>
+    <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
-  <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">Quel mazzo esiste già.</string>
-  <string name="decks_rename_filtered_nosubdecks">Un mazzo filtrato non può avere sottomazzi.</string>
-  <string name="filtered_deck_name">Mazzo filtrato</string>
-  <string name="reminder_title">Non dimenticare di studiare oggi!</string>
-  <plurals name="reminder_text">
-    <item quantity="one">%2$d nuova carta da studiare in %1$s</item>
-    <item quantity="other">%2$d nuove carte da studiare in %1$s</item>
-  </plurals>
-  <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Errore nella condivisione del file apkg</string>
+    <string name="less_than_time">&lt; %s</string>
+    <string name="decks_rename_exists">Quel mazzo esiste già.</string>
+    <string name="decks_rename_filtered_nosubdecks">Un mazzo filtrato non può avere sottomazzi.</string>
+    <string name="filtered_deck_name">Mazzo filtrato</string>
+    <string name="reminder_title">Non dimenticare di studiare oggi!</string>
+    <plurals name="reminder_text">
+        <item quantity="one">%2$d card to review in %1$s</item>
+        <item quantity="other">%2$d cards to review in %1$s</item>
+    </plurals>
+    <!-- Currently only used if exporting APKG fails -->
+    <string name="apk_share_error">Errore nella condivisione del file apkg</string>
+    <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
+    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
+    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
+    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
 </resources>

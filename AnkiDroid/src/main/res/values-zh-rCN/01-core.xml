@@ -39,127 +39,132 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Navigation drawer items-->
-  <string name="decks">牌组</string>
-  <string name="card_browser">卡片浏览器</string>
-  <string name="statistics">统计</string>
-  <string name="settings">设置</string>
-  <string name="help">帮助</string>
-  <string name="send_feedback">反馈</string>
-  <string name="studyoptions_title">牌组概览</string>
-  <string name="studyoptions_due_today">今天待复习：</string>
-  <string name="studyoptions_new_total">新卡片数量：</string>
-  <string name="studyoptions_total_cards">全部卡片数量：</string>
-  <string name="studyoptions_eta">预计所需时间（分钟）：</string>
-  <string name="studyoptions_start">开始学习</string>
-  <!-- DeckPicker.java -->
-  <string name="expand">展开</string>
-  <string name="collapse">折叠</string>
-  <string name="study_more">学习更多</string>
-  <plurals name="deckpicker_title">
-    <item quantity="other">%1$d张卡片待复习 (%2$s)</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="other">剩余%d分钟</item>
-  </plurals>
-  <!-- The deck picker via AnkiStatsTaskHandler.java -->
-  <plurals name="studied_cards_today">
-    <item quantity="other">今天学习了%1$d张卡片，用了%2$s。</item>
-  </plurals>
-  <!-- flashcard_portrait.xml -->
-  <string name="type_answer_hint">输入答案</string>
-  <string name="show_answer">显示答案</string>
-  <string name="ease_button_again">重来</string>
-  <string name="ease_button_hard">困难</string>
-  <string name="ease_button_good">一般</string>
-  <string name="ease_button_easy">简单</string>
-  <string name="studyoptions_congrats_undo">撤消%s</string>
-  <string name="menu_import">导入牌组</string>
-  <string name="undo">撤销</string>
-  <string name="undo_action_review">上次复习</string>
-  <string name="undo_action_bury_card">隐藏卡片</string>
-  <string name="undo_action_bury_note">隐藏笔记</string>
-  <string name="undo_action_suspend_card">暂停卡片</string>
-  <string name="undo_action_suspend_note">暂停笔记</string>
-  <string name="undo_action_delete">删除笔记</string>
-  <string name="undo_action_delete_multi">删除卡牌记录</string>
-  <string name="undo_action_change_deck_multi">更换牌组</string>
-  <string name="move_all_to_deck">Move all to deck</string>
-  <string name="unbury">取消隐藏</string>
-  <string name="rename_deck">重命名</string>
-  <string name="menu_add">添加</string>
-  <string name="menu_add_note">添加笔记</string>
-  <string name="menu_my_account">同步帐户</string>
-  <string name="menu_dismiss_note">隐藏/删除</string>
-  <string name="menu_bury_card">隐藏卡片</string>
-  <string name="menu_bury_note">隐藏笔记</string>
-  <string name="menu_suspend_card">暂停卡片</string>
-  <string name="menu_suspend_note">暂停笔记</string>
-  <string name="menu_bury">隐藏</string>
-  <string name="menu_suspend">暂停</string>
-  <string name="menu_delete_note">删除笔记</string>
-  <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
-  <string name="menu_select">选择文本</string>
-  <string name="menu_search">在%1$s中查找</string>
-  <string name="menu_mark_note">标记笔记</string>
-  <string name="menu_unmark_note">取消标记</string>
-  <string name="new_deck">创建牌组</string>
-  <string name="create">创建</string>
-  <string name="new_dynamic_deck">创建筛选牌组</string>
-  <string name="night_mode">夜间模式</string>
-  <string name="directory_inaccessible">无法访问AnkiDroid目录</string>
-  <!--
+    <!-- Navigation drawer items-->
+    <string name="decks">牌组</string>
+    <string name="card_browser">卡片浏览器</string>
+    <string name="statistics">统计</string>
+    <string name="settings">设置</string>
+    <string name="help">帮助</string>
+    <string name="send_feedback">反馈</string>
+    <string name="studyoptions_title">牌组概览</string>
+    <string name="studyoptions_due_today">今天待复习：</string>
+    <string name="studyoptions_new_total">新卡片数量：</string>
+    <string name="studyoptions_total_cards">全部卡片数量：</string>
+    <string name="studyoptions_eta">预计所需时间（分钟）：</string>
+    <string name="studyoptions_start">开始学习</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">展开</string>
+    <string name="collapse">折叠</string>
+    <string name="study_more">学习更多</string>
+    <plurals name="deckpicker_title">
+        <item quantity="other">%1$d张卡片待复习 (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="other">剩余%d分钟</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="other">今天学习了%1$d张卡片，用了%2$s。</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">输入答案</string>
+    <string name="show_answer">显示答案</string>
+    <string name="ease_button_again">重来</string>
+    <string name="ease_button_hard">困难</string>
+    <string name="ease_button_good">一般</string>
+    <string name="ease_button_easy">简单</string>
+    <string name="studyoptions_congrats_undo">撤消%s</string>
+    <string name="menu_import">导入牌组</string>
+    <string name="undo">撤销</string>
+    <string name="undo_action_review">上次复习</string>
+    <string name="undo_action_bury_card">隐藏卡片</string>
+    <string name="undo_action_bury_note">隐藏笔记</string>
+    <string name="undo_action_suspend_card">暂停卡片</string>
+    <string name="undo_action_suspend_note">暂停笔记</string>
+    <string name="undo_action_delete">删除笔记</string>
+    <string name="undo_action_delete_multi">删除卡牌记录</string>
+    <string name="undo_action_change_deck_multi">更换牌组</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">将所有移动至牌组</string>
+    <string name="unbury">取消隐藏</string>
+    <string name="rename_deck">重命名</string>
+    <string name="menu_add">添加</string>
+    <string name="menu_add_note">添加笔记</string>
+    <string name="menu_my_account">同步帐户</string>
+    <string name="menu_dismiss_note">隐藏/删除</string>
+    <string name="menu_bury_card">隐藏卡片</string>
+    <string name="menu_bury_note">隐藏笔记</string>
+    <string name="menu_suspend_card">暂停卡片</string>
+    <string name="menu_suspend_note">暂停笔记</string>
+    <string name="menu_bury">隐藏</string>
+    <string name="menu_suspend">暂停</string>
+    <string name="menu_delete_note">删除笔记</string>
+    <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
+    <string name="menu_select">选择文本</string>
+    <string name="menu_search">在%1$s中查找</string>
+    <string name="menu_mark_note">标记笔记</string>
+    <string name="menu_unmark_note">取消标记</string>
+    <string name="new_deck">创建牌组</string>
+    <string name="create">创建</string>
+    <string name="new_dynamic_deck">创建筛选牌组</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="directory_inaccessible">无法访问AnkiDroid目录</string>
+    <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
         s, min, h, d, are standard (ISO 31-1) units and should usually
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-  <string name="time_quantity_seconds">%d秒</string>
-  <string name="time_quantity_minutes">%d分钟</string>
-  <string name="time_quantity_hours">%d小时</string>
-  <string name="time_quantity_days">%d天</string>
-  <string name="time_quantity_months">%.1f月</string>
-  <string name="time_quantity_years">%.1f年</string>
-  <!-- or "%.1f a" -->
-  <string name="rebuild_cram_deck">重建强记模式牌组。\n请稍等&#8230;</string>
-  <string name="rebuild_cram_label">重建</string>
-  <string name="empty_cram_label">清空</string>
-  <string name="empty_cram_deck">清空强记模式牌组。\n请稍等&#8230;</string>
-  <string name="custom_study_deck_name">自定义学习的进程</string>
-  <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
-  <string name="empty_deck">这个牌组是空的.</string>
-  <string name="studyoptions_empty">这个牌组是空的，请点击 + 按钮来添加内容。</string>
-  <string name="studyoptions_limit_reached">达到每日学习限制</string>
-  <string name="studyoptions_empty_schedule">计划中没有需要学习的卡片</string>
-  <string name="studyoptions_congrats_finished">恭喜！你已经完成了目前的学习任务。</string>
-  <string name="studyoptions_congrats_more_rev">已达到今天的复习数量限制，但仍有一些卡片需要复习。你可以选择在牌组选项中增加复习数量。</string>
-  <string name="studyoptions_congrats_more_new">还有新卡牌待学习，但已达到每日上限。您可以增加设置中的每日学习上限，不过请留意，这会增加您短期的复习工作量。</string>
-  <string name="studyoptions_congrats_custom">若要在正常计划之外学习，请点击下面的自定义学习按钮。</string>
-  <string name="studyoptions_no_cards_due">没有卡片待复习。</string>
-  <string name="sd_card_not_mounted">未挂载储存设备</string>
-  <string name="button_sync">同步</string>
-  <string name="cancel_sync_confirm">你想要取消同步吗？</string>
-  <string name="continue_sync">继续同步</string>
-  <string name="sync_cancelled">同步已取消</string>
-  <string name="sync_cancel_message">正在取消&#8230;\n这可能需要一点时间。</string>
-  <string name="export">导出</string>
-  <string name="export_collection">导出集合</string>
-  <string name="export_deck">导出牌组</string>
-  <string name="nothing">无</string>
-  <!-- Card template editor -->
-  <string name="title_activity_template_editor">卡片类型</string>
-  <string name="card_template_editor_front">正面</string>
-  <string name="card_template_editor_back">背面</string>
-  <string name="card_template_editor_styling">样式</string>
-  <string name="card_template_editor_menu_delete">删除</string>
-  <string name="card_template_editor_cant_delete">至少需要保留一个卡片类型。</string>
-  <plurals name="card_template_editor_confirm_delete">
-    <item quantity="other">确定删除\"%2$s\"笔记类型类型和它包含的%1$d张卡片吗？</item>
-  </plurals>
-  <string name="invalid_template">无法生成卡片</string>
-  <string name="card_template_editor_would_delete_note">移除这个笔记类型需要删除一个或多个笔记，请首先创建一个新的笔记类型。</string>
-  <!-- Permissions -->
-  <string name="read_write_permission_label">读取并写入 AnkiDroid 数据库</string>
-  <string name="read_write_permission_description">浏览现有的笔记、 卡片、 笔记类型和牌组，或者自己动手创建新的~</string>
+    <string name="time_quantity_seconds">%d秒</string>
+    <string name="time_quantity_minutes">%d分钟</string>
+    <string name="time_quantity_hours">%d小时</string>
+    <string name="time_quantity_days">%d天</string>
+    <string name="time_quantity_months">%.1f月</string>
+    <string name="time_quantity_years">%.1f年</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">重建强记模式牌组。\n请稍等&#8230;</string>
+    <string name="rebuild_cram_label">重建</string>
+    <string name="empty_cram_label">清空</string>
+    <string name="empty_cram_deck">清空强记模式牌组。\n请稍等&#8230;</string>
+    <string name="custom_study_deck_name">自定义学习的进程</string>
+    <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
+    <string name="empty_deck">此列表为空</string>
+    <string name="studyoptions_empty">这个牌组是空的，请点击 + 按钮来添加内容。</string>
+    <string name="studyoptions_limit_reached">达到每日学习限制</string>
+    <string name="studyoptions_empty_schedule">计划中没有需要学习的卡片</string>
+    <string name="studyoptions_congrats_finished">恭喜！你已经完成了目前的学习任务。</string>
+    <string name="studyoptions_congrats_more_rev">已达到今天的复习数量限制，但仍有一些卡片需要复习。你可以选择在牌组选项中增加复习数量。</string>
+    <string name="studyoptions_congrats_more_new">还有新卡牌待学习，但已达到每日上限。您可以增加设置中的每日学习上限，不过请留意，这会增加您短期的复习工作量。</string>
+    <string name="studyoptions_congrats_custom">若要在正常计划之外学习，请点击下面的自定义学习按钮。</string>
+    <string name="studyoptions_no_cards_due">没有卡片待复习。</string>
+    <string name="sd_card_not_mounted">未挂载储存设备</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">同步</string>
+    <string name="cancel_sync_confirm">你想要取消同步吗？</string>
+    <string name="continue_sync">继续同步</string>
+    <string name="sync_cancelled">同步已取消</string>
+    <string name="sync_cancel_message">正在取消&#8230;\n这可能需要一点时间。</string>
+    <string name="export">导出</string>
+    <string name="export_collection">导出集合</string>
+    <string name="export_deck">导出牌组</string>
+    <string name="nothing">无</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">卡片类型</string>
+    <string name="card_template_editor_front">正面</string>
+    <string name="card_template_editor_back">背面</string>
+    <string name="card_template_editor_styling">样式</string>
+    <string name="card_template_editor_menu_delete">删除</string>
+    <string name="card_template_editor_cant_delete">至少需要保留一个卡片类型。</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="other">确定删除\"%2$s\"笔记类型类型和它包含的%1$d张卡片吗？</item>
+    </plurals>
+    <string name="invalid_template">无法生成卡片</string>
+    <string name="card_template_editor_would_delete_note">移除这个笔记类型需要删除一个或多个笔记，请首先创建一个新的笔记类型。</string>
+    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">读取并写入 AnkiDroid 数据库</string>
+    <string name="read_write_permission_description">浏览现有的笔记、 卡片、 笔记类型和牌组，或者自己动手创建新的~</string>
 </resources>

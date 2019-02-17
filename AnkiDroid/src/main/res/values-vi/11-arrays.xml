@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Luôn thông báo lỗi</item>
-    <item>Không bao giờ thông báo lỗi</item>
-    <item>Hỏi tôi</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Không làm gì</item>
-    <item>Cho xem đáp án</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Phục hồi</item>
-    <item>Sửa ghi chú</item>
-    <item>Đánh dấu ghi chú</item>
-    <item>Biểu thức tra cứu</item>
-    <item>Tạm dừng thẻ</item>
-    <item>Tạm ngưng thẻ</item>
-    <item>Xoá ghi chú</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Ẩn ghi chú</item>
-    <item>Tạm dừng ghi chú</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Tạm dừng thẻ</item>
-    <item>Chỉ có thẻ</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Ngẫu nhiên</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
-    <item>Latest added first</item>
-    <item>Relative overdueness</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Sử dụng xấp thẻ hiện tại</item>
-    <item>Quyết định theo kiểu ghi chú</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Trộn thẻ mới và đánh giá</item>
-    <item>Thẻ mới sau khi đánh giá</item>
-    <item>Thẻ mới trước khi đánh giá</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Luôn cho phép</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Luôn thông báo lỗi</item>
+        <item>Không bao giờ thông báo lỗi</item>
+        <item>Hỏi tôi</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Không làm gì</item>
+        <item>Cho xem đáp án</item>
+        <item>Answer button 1</item>
+        <item>Answer button 2</item>
+        <item>Answer button 3</item>
+        <item>Answer button 4</item>
+        <item>Answer recommended (green)</item>
+        <item>Answer better than recommended</item>
+        <item>Phục hồi</item>
+        <item>Sửa ghi chú</item>
+        <item>Đánh dấu ghi chú</item>
+        <item>Biểu thức tra cứu</item>
+        <item>Tạm dừng thẻ</item>
+        <item>Tạm ngưng thẻ</item>
+        <item>Xoá ghi chú</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Ẩn ghi chú</item>
+        <item>Tạm dừng ghi chú</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Tạm dừng thẻ</item>
+        <item>Chỉ có thẻ</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>New cards in random order</item>
+        <item>New cards in order added</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Oldest seen first</item>
+        <item>Ngẫu nhiên</item>
+        <item>Increasing intervals</item>
+        <item>Decreasing intervals</item>
+        <item>Most lapsed</item>
+        <item>Order added</item>
+        <item>Order due</item>
+        <item>Latest added first</item>
+        <item>Relative overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Sử dụng xấp thẻ hiện tại</item>
+        <item>Quyết định theo kiểu ghi chú</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Trộn thẻ mới và đánh giá</item>
+        <item>Thẻ mới sau khi đánh giá</item>
+        <item>Thẻ mới trước khi đánh giá</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>When no font specified on flashcards</item>
+        <item>Luôn cho phép</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Light</item>
+        <item>Plain</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Black</item>
+        <item>Dark</item>
+    </string-array>
 </resources>

@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Rapportera alltid</item>
-    <item>Rapportera aldrig</item>
-    <item>Fråga mig</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Ingen åtgärd</item>
-    <item>Visa svar</item>
-    <item>Svarsknapp 1</item>
-    <item>Svarsknapp 2</item>
-    <item>Svarsknapp 3</item>
-    <item>Svarsknapp 4</item>
-    <item>Rekommenderat svar (grön)</item>
-    <item>Svar bättre än rekommenderat</item>
-    <item>Ångra</item>
-    <item>Redigera not</item>
-    <item>Märk not</item>
-    <item>Sökutryck</item>
-    <item>Göm kort</item>
-    <item>Uteslut kort</item>
-    <item>Ta bort not</item>
-    <item>Spela upp media</item>
-    <item>Avbryt inlärning</item>
-    <item>Göm not</item>
-    <item>Uteslut not</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Åsidosätt kort</item>
-    <item>Endast etikett</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Nya kort i slumpmässig ordning</item>
-    <item>Nya kort i ordningen de lades till</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Äldst först</item>
-    <item>Slumpmässigt</item>
-    <item>Ökande intervall</item>
-    <item>Minskande intervall</item>
-    <item>Mest felbesvarade</item>
-    <item>Ordningen de lades till</item>
-    <item>Efter förfallotid</item>
-    <item>Senast tillagda först</item>
-    <item>Relativ försening innan repetition</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Använd nuvarande kortlek</item>
-    <item>Välj efter nottyp</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Blanda nya kort och repetitionskort</item>
-    <item>Nya kort efter repetitioner</item>
-    <item>Nya kort före repetitioner</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>När inget typsnitt angetts på flashkort</item>
-    <item>Alltid</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Ljus</item>
-    <item>Enkel</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Svart</item>
-    <item>Mörk</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Rapportera alltid</item>
+        <item>Rapportera aldrig</item>
+        <item>Fråga mig</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Ingen åtgärd</item>
+        <item>Visa svar</item>
+        <item>Svarsknapp 1</item>
+        <item>Svarsknapp 2</item>
+        <item>Svarsknapp 3</item>
+        <item>Svarsknapp 4</item>
+        <item>Rekommenderat svar (grön)</item>
+        <item>Svar bättre än rekommenderat</item>
+        <item>Ångra</item>
+        <item>Redigera not</item>
+        <item>Märk not</item>
+        <item>Sökutryck</item>
+        <item>Göm kort</item>
+        <item>Uteslut kort</item>
+        <item>Ta bort not</item>
+        <item>Spela upp media</item>
+        <item>Avbryt inlärning</item>
+        <item>Göm not</item>
+        <item>Uteslut not</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Åsidosätt kort</item>
+        <item>Endast etikett</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Nya kort i slumpmässig ordning</item>
+        <item>Nya kort i ordningen de lades till</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Äldst först</item>
+        <item>Slumpmässigt</item>
+        <item>Ökande intervall</item>
+        <item>Minskande intervall</item>
+        <item>Mest felbesvarade</item>
+        <item>Ordningen de lades till</item>
+        <item>Efter förfallotid</item>
+        <item>Senast tillagda först</item>
+        <item>Relativ försening innan repetition</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Använd nuvarande kortlek</item>
+        <item>Välj efter nottyp</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Blanda nya kort och repetitionskort</item>
+        <item>Nya kort efter repetitioner</item>
+        <item>Nya kort före repetitioner</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>När inget typsnitt angetts på flashkort</item>
+        <item>Alltid</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Ljus</item>
+        <item>Enkel</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Svart</item>
+        <item>Mörk</item>
+    </string-array>
 </resources>

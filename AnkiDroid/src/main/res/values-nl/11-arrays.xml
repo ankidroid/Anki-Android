@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Altijd rapporteren</item>
-    <item>Nooit rapporteren</item>
-    <item>Mij vragen</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Geen actie</item>
-    <item>Toon Antwoord</item>
-    <item>Antwoordknop 1</item>
-    <item>Antwoordknop 2</item>
-    <item>Antwoordknop 3</item>
-    <item>Antwoordknop 4</item>
-    <item>Aanbevolen antwoord (groen)</item>
-    <item>Antwoord beter dan aangeraden</item>
-    <item>Ongedaan maken</item>
-    <item>Memo bewerken</item>
-    <item>Markeer memo</item>
-    <item>Uitdrukking opzoeken</item>
-    <item>Kaart verbergen</item>
-    <item>Kaart uitstellen</item>
-    <item>Verwijder memo</item>
-    <item>Media afspelen</item>
-    <item>Leren afbreken</item>
-    <item>Opmerking begraven</item>
-    <item>Memo opschorten</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Kaart uitstellen</item>
-    <item>Alleen label toevoegen</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Nieuwe kaarten in willekeurige volgorde</item>
-    <item>Nieuwe kaarten in volgorde van toevoeging</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Oudste eerst zien</item>
-    <item>Willekeurig</item>
-    <item>Toenemende intervallen</item>
-    <item>Afnemende intervallen</item>
-    <item>Meeste vergissingen</item>
-    <item>Volgorde van toevoegen</item>
-    <item>Volgorde van \'te doen\' kaarten</item>
-    <item>Laatste eerst toevoegen</item>
-    <item>Relatieve overdueness</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Gebruik huidige set</item>
-    <item>Beslissen per memotype</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Mix nieuwe en herhaalde kaarten</item>
-    <item>Nieuwe kaarten na herhaalde kaarten</item>
-    <item>Nieuwe kaarten voor herhaalde kaarten</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Wanneer geen lettertype opgegeven op flitskaartjes</item>
-    <item>Altijd</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Licht</item>
-    <item>Eenvoudig</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Zwart</item>
-    <item>Donker</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Altijd rapporteren</item>
+        <item>Nooit rapporteren</item>
+        <item>Mij vragen</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Geen actie</item>
+        <item>Toon Antwoord</item>
+        <item>Antwoordknop 1</item>
+        <item>Antwoordknop 2</item>
+        <item>Antwoordknop 3</item>
+        <item>Antwoordknop 4</item>
+        <item>Aanbevolen antwoord (groen)</item>
+        <item>Antwoord beter dan aangeraden</item>
+        <item>Ongedaan maken</item>
+        <item>Memo bewerken</item>
+        <item>Markeer memo</item>
+        <item>Uitdrukking opzoeken</item>
+        <item>Kaart verbergen</item>
+        <item>Kaart uitstellen</item>
+        <item>Verwijder memo</item>
+        <item>Media afspelen</item>
+        <item>Leren afbreken</item>
+        <item>Opmerking begraven</item>
+        <item>Memo opschorten</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Kaart uitstellen</item>
+        <item>Alleen label toevoegen</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Nieuwe kaarten in willekeurige volgorde</item>
+        <item>Nieuwe kaarten in volgorde van toevoeging</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Oudste eerst zien</item>
+        <item>Willekeurig</item>
+        <item>Toenemende intervallen</item>
+        <item>Afnemende intervallen</item>
+        <item>Meeste vergissingen</item>
+        <item>Volgorde van toevoegen</item>
+        <item>Volgorde van \'te doen\' kaarten</item>
+        <item>Laatste eerst toevoegen</item>
+        <item>Relatieve overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Gebruik huidige set</item>
+        <item>Beslissen per memotype</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Mix nieuwe en herhaalde kaarten</item>
+        <item>Nieuwe kaarten na herhaalde kaarten</item>
+        <item>Nieuwe kaarten voor herhaalde kaarten</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Wanneer geen lettertype opgegeven op flitskaartjes</item>
+        <item>Altijd</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Licht</item>
+        <item>Eenvoudig</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Zwart</item>
+        <item>Donker</item>
+    </string-array>
 </resources>

@@ -39,107 +39,121 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_young">Juna</string>
-  <string name="statistics_mature">Maljuna</string>
-  <string name="statistics_young_and_learn">Young+Learn</string>
-  <string name="statistics_unlearned">Nevidita</string>
-  <string name="statistics_suspended_and_buried">Suspended+Buried</string>
-  <string name="statistics_relearn">Relerni</string>
-  <string name="statistics_learn">Learn</string>
-  <string name="statistics_cram">Cram</string>
-  <string name="stats_cards">Kartoj</string>
-  <string name="stats_cards_intervals">Cards with given interval</string>
-  <string name="stats_cumulative_cards">Kartoj entute</string>
-  <string name="stats_cumulative_answers">Respondoj entute</string>
-  <string name="stats_cumulative_time_minutes">Minutoj entute</string>
-  <string name="stats_cumulative_time_hours">Horoj entute</string>
-  <string name="stats_cumulative">Entute</string>
-  <string name="stats_cumulative_percentage">Procentoj entute</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Entute ĝusta %</string>
-  <string name="stats_answers">Respondoj</string>
-  <string name="stats_minutes">Minutoj</string>
-  <string name="stats_hours">Horoj</string>
-  <string name="stats_percentage">Percentage</string>
-  <string name="stats_period_month">1 monato</string>
-  <string name="stats_period_year">1 jaro</string>
-  <string name="stats_period_lifetime">Vivodaŭro de la kartaro</string>
-  <string name="stats_deck_collection">kolekto</string>
-  <string name="stats_time_of_day">Time of day</string>
-  <string name="stats_day_of_week">Day of week</string>
-  <string formatted="false" name="stats_percentage_correct">% ĝusta</string>
-  <string name="stats_reviews">Ripetoj</string>
-  <string name="stats_answer_type">Answer type</string>
-  <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
-  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; ĝusta)</string>
-  <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
-  <string name="stats_today_mature_cards">Ĝustaj respondoj ĉe maljunaj kartoj: %1$d/%2$d (%3$.1f%%)</string>
-  <string name="stats_today_no_mature_cards">No mature cards were studied today</string>
-  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
-  <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
-  <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
-  <string name="stats_overview_reviews_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_reviews_per_day_all">If you studied every day: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_time_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-  <string name="stats_overview_time_per_day_all">If you studied every day:  &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
-  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
-  <string name="stats_overview_average_interval">"Average interval: "</string>
-  <string name="stats_overview_longest_interval">"Longest interval: "</string>
-  <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
-  <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; months</string>
-  <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; days</string>
-  <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hours</string>
-  <string name="deck_summary_all_decks">All decks</string>
-  <string name="stats_select_time_scale">Select timescale</string>
-  <string-array name="due_x_axis_title">
-    <item>Days</item>
-    <item>Weeks</item>
-    <item>Months</item>
-  </string-array>
-  <string name="stats_today">Today</string>
-  <string name="stats_overview">Overview</string>
-  <string name="stats_forecast">Forecast</string>
-  <string name="stats_review_count">Review count</string>
-  <string name="stats_review_time">Review time</string>
-  <string name="stats_added">Added</string>
-  <string name="stats_review_intervals">Intervals</string>
-  <string name="stats_breakdown">Hourly breakdown</string>
-  <string name="stats_weekly_breakdown">Weekly breakdown</string>
-  <string name="stats_answer_buttons">Answer buttons</string>
-  <string name="stats_cards_types">Card types</string>
-  <string-array name="stats_day_time_strings">
-    <item>4AM</item>
-    <item>10AM</item>
-    <item>4PM</item>
-    <item>10PM</item>
-    <item>3AM</item>
-  </string-array>
-  <string-array name="stats_week_days">
-    <item>Sun</item>
-    <item>Mon</item>
-    <item>Tue</item>
-    <item>Wed</item>
-    <item>Thu</item>
-    <item>Fri</item>
-    <item>Sat</item>
-  </string-array>
-  <string-array name="stats_eases_ticks">
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-  </string-array>
-  <plurals name="stats_today_cards">
-    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
-    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
-  </plurals>
+    <string name="statistics_young">Junaj</string>
+    <string name="statistics_mature">Maljunaj</string>
+    <string name="statistics_young_and_learn">Junaj kaj lernataj</string>
+    <string name="statistics_unlearned">Novaj</string>
+    <string name="statistics_suspended_and_buried">Kaŝitaj</string>
+    <string name="statistics_relearn">Relernendaj</string>
+    <string name="statistics_learn">Lernataj</string>
+    <string name="statistics_cram">Antaŭlernado</string>
+    <string name="stats_cards">Kartoj</string>
+    <string name="stats_cards_intervals">Kartoj laŭ intertempo</string>
+    <string name="stats_cumulative_cards">Kartoj entute</string>
+    <string name="stats_cumulative_answers">Respondoj entute</string>
+    <string name="stats_cumulative_time_minutes">Minutoj entute</string>
+    <string name="stats_cumulative_time_hours">Horoj entute</string>
+    <string name="stats_cumulative">Entute</string>
+    <string name="stats_cumulative_percentage">Elcentoj entute</string>
+    <string formatted="false" name="stats_cumulative_correct_percentage">Entute ĝustaj %</string>
+    <string name="stats_answers">Respondoj</string>
+    <string name="stats_minutes">Minutoj</string>
+    <string name="stats_hours">Horoj</string>
+    <string name="stats_percentage">Elcento</string>
+    <string name="stats_period_month">1 monato</string>
+    <string name="stats_period_year">1 jaro</string>
+    <string name="stats_period_lifetime">Vivodaŭro de la kartaro</string>
+    <string name="stats_deck_collection">kolekto</string>
+    <string name="stats_time_of_day">Horo</string>
+    <string name="stats_day_of_week">Tago</string>
+    <string formatted="false" name="stats_percentage_correct">% ĝustaj</string>
+    <string name="stats_reviews">Ripetoj</string>
+    <string name="stats_answer_type">Respondotipo</string>
+    <string name="stats_today_again_count">Kiom da ripetoj: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; ĝuste)</string>
+    <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_mature_cards">Ĝustaj respondoj al maljunaj kartoj: %1$d/%2$d (%3$.1f%%)</string>
+    <string name="stats_today_no_mature_cards">Hodiaŭ neniuj maljunaj kartoj estis lernitaj</string>
+    <string name="stats_overview_forecast_total">Entute: &lt;b&gt;%1$d&lt;/b&gt; ripetoj</string>
+    <string name="stats_overview_forecast_average">Meznombro: &lt;b&gt;%1$.1f&lt;/b&gt; ripetoj/tago</string>
+    <string name="stats_overview_forecast_due_tomorrow">Morgaŭ lernendaj: &lt;b&gt;%1$d&lt;/b&gt;</string>
+    <string name="stats_overview_days_studied">Tagoj de lernado: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d el %3$d)</string>
+    <string name="stats_overview_total_reviews">Entute: &lt;b&gt;%1$d&lt;/b&gt; ripetoj</string>
+    <string name="stats_overview_reviews_per_day_studydays">Meznombro por lerntagoj: &lt;b&gt;%1$.1f&lt;/b&gt; ripetoj/tago</string>
+    <string name="stats_overview_reviews_per_day_all">Se vi lernus ĉiutage: &lt;b&gt;%1$.1f&lt;/b&gt; ripetoj/tago</string>
+    <string name="stats_overview_time_per_day_studydays">Meznombro por lerntagoj: &lt;b&gt;%1$.1f&lt;/b&gt; minutoj/tago</string>
+    <string name="stats_overview_time_per_day_all">Se vi lernus ĉiutage:  &lt;b&gt;%1$.1f&lt;/b&gt; minutoj/tago</string>
+    <string name="stats_overview_new_cards_per_day">Meznombro: &lt;b&gt;%1$.1f&lt;/b&gt; kartoj/tago</string>
+    <string name="stats_overview_total_new_cards">Entute: &lt;b&gt;%1$d&lt;/b&gt; kartoj</string>
+    <string name="stats_overview_average_interval">"Mezuma intertempo: "</string>
+    <string name="stats_overview_longest_interval">"Plej longa intertempo: "</string>
+    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; jaroj</string>
+    <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; monatoj</string>
+    <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; tagoj</string>
+    <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; horoj</string>
+    <string name="deck_summary_all_decks">Ĉiuj kartaroj</string>
+    <string name="stats_select_time_scale">Elektu tempdaŭron</string>
+    <string-array name="due_x_axis_title">
+        <item>Tagoj</item>
+        <item>Semajnoj</item>
+        <item>Monatoj</item>
+    </string-array>
+    <string name="stats_today">Hodiaŭ</string>
+    <string name="stats_overview">Sumigo</string>
+    <string name="stats_forecast">Prognozo</string>
+    <string name="stats_review_count">Nombro da ripetoj</string>
+    <string name="stats_review_time">Tempo de ripetoj</string>
+    <string name="stats_added">Aldonita</string>
+    <string name="stats_review_intervals">Intertempoj</string>
+    <string name="stats_breakdown">Hora distribuo</string>
+    <string name="stats_weekly_breakdown">Semajna distribuo</string>
+    <string name="stats_answer_buttons">Respond-butonoj</string>
+    <string name="stats_cards_types">Kart-tipoj</string>
+    <string-array name="stats_day_time_strings">
+        <item>04:00</item>
+        <item>10:00</item>
+        <item>16:00</item>
+        <item>22:00</item>
+        <item>03:00</item>
+    </string-array>
+    <string-array name="stats_week_days">
+        <item>di</item>
+        <item>lu</item>
+        <item>ma</item>
+        <item>mer</item>
+        <item>ĵa</item>
+        <item>ve</item>
+        <item>sa</item>
+    </string-array>
+    <string-array name="stats_eases_ticks">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="stats_eases_ticks_schedv2">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <plurals name="stats_today_cards">
+        <item quantity="one">Hodiaŭ lernis &lt;b&gt;%1$d karton&lt;/b&gt; dum &lt;b&gt;%2$s&lt;/b&gt;</item>
+        <item quantity="other">Hodiaŭ lernis &lt;b&gt;%1$d kartojn&lt;/b&gt; dum &lt;b&gt;%2$s&lt;/b&gt;</item>
+    </plurals>
 </resources>

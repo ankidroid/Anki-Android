@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Informar sempre</item>
-    <item>Non informar nunca</item>
-    <item>Preguntarme</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Sen acción</item>
-    <item>Amosar resposta</item>
-    <item>Botón de resposta 1</item>
-    <item>Botón de resposta 2</item>
-    <item>Botón de resposta 3</item>
-    <item>Botón de resposta 4</item>
-    <item>Resposta recomendada (verde)</item>
-    <item>Resposta mellor ca recomendada</item>
-    <item>Desfacer</item>
-    <item>Editar nota</item>
-    <item>Marcar a nota</item>
-    <item>Buscar expresión</item>
-    <item>Agochar cartón</item>
-    <item>Suspender cartón</item>
-    <item>Eliminar nota</item>
-    <item>Reproducir medio</item>
-    <item>Abortar aprendizaxe</item>
-    <item>Agochar nota</item>
-    <item>Suspender nota</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Suspender cartón</item>
-    <item>Só etiquetar</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Novos cartóns ordenados ao chou</item>
-    <item>Cartóns novos na orde de adición</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Máis antigos primeiro</item>
-    <item>Ao chou</item>
-    <item>Intervalos crecentes</item>
-    <item>Intervalos decrecentes</item>
-    <item>Most lapsed</item>
-    <item>Orde de adición</item>
-    <item>Order due</item>
-    <item>Última engadida primeiro</item>
-    <item>Relative overdueness</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Empregar baralla actual</item>
-    <item>Decidir polo tipo de nota</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Mesturar cartóns novos e revisións</item>
-    <item>Cartóns novos despois das revisións</item>
-    <item>Cartóns novos antes das revisóns</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Cando non se especificou unha fonte nos cartóns</item>
-    <item>Sempre</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Simple</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Informar sempre</item>
+        <item>Non informar nunca</item>
+        <item>Preguntarme</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Sen acción</item>
+        <item>Amosar resposta</item>
+        <item>Botón de resposta 1</item>
+        <item>Botón de resposta 2</item>
+        <item>Botón de resposta 3</item>
+        <item>Botón de resposta 4</item>
+        <item>Resposta recomendada (verde)</item>
+        <item>Resposta mellor ca recomendada</item>
+        <item>Desfacer</item>
+        <item>Editar nota</item>
+        <item>Marcar a nota</item>
+        <item>Buscar expresión</item>
+        <item>Agochar cartón</item>
+        <item>Suspender cartón</item>
+        <item>Eliminar nota</item>
+        <item>Reproducir medio</item>
+        <item>Abortar aprendizaxe</item>
+        <item>Agochar nota</item>
+        <item>Suspender nota</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Suspender cartón</item>
+        <item>Só etiquetar</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Novos cartóns ordenados ao chou</item>
+        <item>Cartóns novos na orde de adición</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Máis antigos primeiro</item>
+        <item>Ao chou</item>
+        <item>Intervalos crecentes</item>
+        <item>Intervalos decrecentes</item>
+        <item>Máis atrasadas</item>
+        <item>Orde de adición</item>
+        <item>Orde de revisión</item>
+        <item>Última engadida primeiro</item>
+        <item>Atrasos relativos</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Empregar baralla actual</item>
+        <item>Decidir polo tipo de nota</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Mesturar cartóns novos e revisións</item>
+        <item>Cartóns novos despois das revisións</item>
+        <item>Cartóns novos antes das revisóns</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Cando non se especificou unha fonte nos cartóns</item>
+        <item>Sempre</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Claro</item>
+        <item>Simple</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Negro</item>
+        <item>Escuro</item>
+    </string-array>
 </resources>

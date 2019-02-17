@@ -39,27 +39,27 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remone some other files.</string>
-  <string name="sd_space_warning">Less than %d MB space on your SD card left.\nFree some space to avoid data loss.</string>
-  <string name="backup_delete">Deleting backups&#8230;</string>
-  <string name="backup_restore">Restore from backup</string>
-  <string name="backup_new_collection">New collection</string>
-  <string name="backup_del_collection">Delete collection and create new one</string>
-  <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
-  <string name="backup_full_sync_from_server">Full sync from server</string>
-  <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
-  <string name="error_handling_title">Error handling</string>
-  <string name="error_handling_options">Options</string>
-  <string name="backup_retry_opening">Retry opening</string>
-  <string name="backup_error_menu_repair">Repair database</string>
-  <string name="backup_repair_deck">Repair</string>
-  <string name="backup_repair_deck_progress">Repairing database&#8230;</string>
-  <string name="backup_error">Error</string>
-  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
-  <string name="backup_restore_select_title">Select backup to restore</string>
-  <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>
-  <string name="open_collection_failed_title">Collection not opened</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
-  <string name="deck_repair_error">Collection couldn’t be repaired</string>
+    <string name="backup_deck_no_space_left">Fiaskis konservi sekurkopion. Spaco mankas en la SD-karto. Bonvolu malpliigi nombron da sekurkopioj aŭ forigi kelkajn dosierojn.</string>
+    <string name="sd_space_warning">Malpli ol %d MB da spaco en via SD-karto.\nLiberigu iom da spaco por ke ne perdu datumojn.</string>
+    <string name="backup_delete">Forigado de sekurkopioj&#8230;</string>
+    <string name="backup_restore">Restarigi el sekurkopio</string>
+    <string name="backup_new_collection">Nova kolekto</string>
+    <string name="backup_del_collection">Forigi kolekton kaj krei novan</string>
+    <string name="backup_del_collection_question">Ĉu forigi la kolekton kaj krei novan? Tio ĉi forviŝos vian lernadan progreson kaj forigos ĉiujn kartojn.</string>
+    <string name="backup_full_sync_from_server">Plena samtempigo el la servilo</string>
+    <string name="backup_full_sync_from_server_question">Ĉu anstataŭigi vian kolekton per tiu de AnkiWeb. Tio ĉi forviŝos vian lernadan progreson kaj informojn aldonitajn ekde la antaŭa samtempigado.</string>
+    <string name="error_handling_title">Pritraktado de eraroj</string>
+    <string name="error_handling_options">Agordoj</string>
+    <string name="backup_retry_opening">Reprovi malfermi</string>
+    <string name="backup_error_menu_repair">Ripari datumbazon</string>
+    <string name="backup_repair_deck">Ripari</string>
+    <string name="backup_repair_deck_progress">Riparado de datumbazo&#8230;</string>
+    <string name="backup_error">Eraro</string>
+    <string name="backup_invalid_file_error">La elektita dosiero de sekurkopio estas malĝusta</string>
+    <string name="backup_restore_select_title">Elektu sekurkopion por restarigi</string>
+    <string name="backup_restore_no_backups">Neniuj sekurkopioj en tiu ĉi aparato. Se vi havas sekurkopiojn en via labortabla komputilo, permane kopiu ilin al dosierujo de AnkiDroid.</string>
+    <string name="open_collection_failed_title">Fiaskis malfermi kolekton</string>
+    <string name="corrupt_db_message">Via kolekto difektiĝis.\n\nMalfermu agordojn por restarigi ĝin el sekurkopio; se tio fiaskos, legu la jenajn instrukciojn pri kiel permane ripari la datumbazon:\n%1$s</string>
+    <string name="access_collection_failed_message">Eraro okazis dum aliri vian kolekton. Ĝi eble okazis pro malserioza eraro aŭ kontraŭe.\n\nProvu ekigi kontroli datumbazon aŭ restarigu ĝin el sekurkopio per la butono “agordoj”. Se tiu ĉi mesaĝo daŭros plue okazi, bonvolu raporti problemon:\n%1$s</string>
+    <string name="deck_repair_error">Ne povis ripari kolekton</string>
 </resources>

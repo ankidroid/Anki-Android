@@ -39,57 +39,57 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- CardBrowser -->
-  <plurals name="card_browser_subtitle">
-    <item quantity="other">%d cards shown</item>
-  </plurals>
-  <string name="card_browser_all_decks">Semua deck</string>
-  <string name="card_browser_delete_card">Delete notes</string>
-  <string name="card_browser_suspend_card">Suspend cards</string>
-  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
-  <string name="card_browser_change_deck">Change deck</string>
-  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-  <string name="card_browser_mark_card">Mark notes</string>
-  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
-  <string name="card_browser_unmark_card">Unmark notes</string>
-  <string name="delete_card_title">Hapus catatan?</string>
-  <string name="delete_cards_title">Delete notes?</string>
-  <string name="delete_card_message">Hapus semua kartu dari catatan ini? \ n Bidang pencarian: % s</string>
-  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
-  <string name="deleted_message">Notes deleted</string>
-  <string name="changed_deck_message">Moved to %s</string>
-  <string name="card_browser_suspended_cards">(un)suspended cards</string>
-  <string name="card_browser_show_marked">Filter ditandai</string>
-  <string name="card_browser_show_suspended">Filter ditangguhkan</string>
-  <string name="card_browser_search_by_tag">Filter menurut tag</string>
-  <string name="card_browser_tags_shown">Tags: %1$s</string>
-  <string name="card_browser_list_my_searches">Pencarian saya</string>
-  <string name="card_browser_list_my_searches_save">Simpan pencarian</string>
-  <string name="card_browser_list_my_searches_title">Pilih pencarian tersimpan</string>
-  <string name="card_browser_list_my_searches_new_name">Nama untuk pencarian saat ini</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">Anda tidak dapat menyimpan pencarian tanpa nama</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Nama ada</string>
-  <string name="card_browser_list_my_searches_remove_content">Hapus \" % 1 $ s \"?</string>
-  <string name="card_browser_change_display_order">Ubah urutan tampilan</string>
-  <string name="card_browser_change_display_order_title">Pilih urutan tampilan</string>
-  <string name="card_browser_change_display_order_reverse">Pilih bidang dua kali untuk membalikkan</string>
-  <string name="card_details_question">Soalan</string>
-  <string name="card_details_answer">Jawapan</string>
-  <string name="card_details_due">Lewat</string>
-  <string name="card_details_tags">Tags</string>
-  <string name="card_browser_filtering_cards">Menyaring kartu... \ n Tekan tombol kembali untuk membatalkan</string>
-  <string-array name="card_browser_order_labels">
-    <item>Tidak ada pemilahan (lebih cepat)</item>
-    <item>Dengan bidang sortir</item>
-    <item>Dengan waktu yang dibuat</item>
-    <item>Dengan waktu diedit</item>
-    <item>Dengan waktu yang berubah</item>
-    <item>Dengan karena waktu</item>
-    <item>Dengan interval</item>
-    <item>Dengan mudah</item>
-    <item>Dengan review</item>
-    <item>By lapses</item>
-  </string-array>
-  <string name="card_browser_select_all">Select all</string>
-  <string name="card_browser_select_none">Select none</string>
+    <!-- CardBrowser -->
+    <plurals name="card_browser_subtitle">
+        <item quantity="other">%d cards shown</item>
+    </plurals>
+    <string name="card_browser_all_decks">Semua deck</string>
+    <string name="card_browser_delete_card">Delete notes</string>
+    <string name="card_browser_suspend_card">Suspend cards</string>
+    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+    <string name="card_browser_change_deck">Change deck</string>
+    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+    <string name="card_browser_mark_card">Mark notes</string>
+    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+    <string name="card_browser_unmark_card">Unmark notes</string>
+    <string name="delete_card_title">Hapus catatan?</string>
+    <string name="delete_cards_title">Delete notes?</string>
+    <string name="delete_card_message">Hapus semua kartu dari catatan ini?\n Bidang pencarian: %s</string>
+    <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+    <string name="deleted_message">Notes deleted</string>
+    <string name="changed_deck_message">Moved to %s</string>
+    <string name="card_browser_suspended_cards">(un)suspended cards</string>
+    <string name="card_browser_show_marked">Filter ditandai</string>
+    <string name="card_browser_show_suspended">Filter ditangguhkan</string>
+    <string name="card_browser_search_by_tag">Filter menurut tag</string>
+    <string name="card_browser_tags_shown">Tags: %1$s</string>
+    <string name="card_browser_list_my_searches">Pencarian saya</string>
+    <string name="card_browser_list_my_searches_save">Simpan pencarian</string>
+    <string name="card_browser_list_my_searches_title">Pilih pencarian tersimpan</string>
+    <string name="card_browser_list_my_searches_new_name">Nama untuk pencarian saat ini</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Anda tidak dapat menyimpan pencarian tanpa nama</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Nama ada</string>
+    <string name="card_browser_list_my_searches_remove_content">Hapus \" %1$s \"?</string>
+    <string name="card_browser_change_display_order">Ubah urutan tampilan</string>
+    <string name="card_browser_change_display_order_title">Pilih urutan tampilan</string>
+    <string name="card_browser_change_display_order_reverse">Pilih bidang dua kali untuk membalikkan</string>
+    <string name="card_details_question">Soalan</string>
+    <string name="card_details_answer">Jawapan</string>
+    <string name="card_details_due">Lewat</string>
+    <string name="card_details_tags">Tags</string>
+    <string name="card_browser_filtering_cards">Menyaring kartu... \ n Tekan tombol kembali untuk membatalkan</string>
+    <string-array name="card_browser_order_labels">
+        <item>Tidak ada pemilahan (lebih cepat)</item>
+        <item>Dengan bidang sortir</item>
+        <item>Dengan waktu yang dibuat</item>
+        <item>Dengan waktu diedit</item>
+        <item>Dengan waktu yang berubah</item>
+        <item>Dengan karena waktu</item>
+        <item>Dengan interval</item>
+        <item>Dengan mudah</item>
+        <item>Dengan review</item>
+        <item>By lapses</item>
+    </string-array>
+    <string name="card_browser_select_all">Select all</string>
+    <string name="card_browser_select_none">Select none</string>
 </resources>

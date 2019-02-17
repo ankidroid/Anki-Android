@@ -39,29 +39,32 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">Карти остават</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid карти остават</string>
-  <string name="widget_no_cards_due">Няма оставащи карти</string>
-  <string name="widget_loading">Зареждане на джаджа...</string>
-  <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d карта остава в %2$s</item>
-    <item quantity="other">%1$d карти остават в %2$s</item>
-  </plurals>
-  <plurals name="widget_decks">
-    <item quantity="one">%1$d тесте</item>
-    <item quantity="other">%1$d тестета</item>
-  </plurals>
-  <string name="widget_small">AnkiDroid малък</string>
-  <string name="widget_small_button">AnkiDroid</string>
-  <plurals name="widget_cards_due">
-    <item quantity="one">%d card due</item>
-    <item quantity="other">%d cards due</item>
-  </plurals>
-  <plurals name="widget_eta">
-    <item quantity="one">%d minute remaining</item>
-    <item quantity="other">%d minutes remaining</item>
-  </plurals>
-  <string name="widget_add_note">Нова бележка</string>
-  <string name="widget_add_note_button">Добавяне на нова бележка в AnkiDroid</string>
+    <!-- Widget -->
+    <string name="widget_minimum_cards_due_notification_ticker_title">Карти остават</string>
+    <plurals name="widget_minimum_cards_due_notification_ticker_text">
+        <item quantity="one">%d AnkiDroid card due</item>
+        <item quantity="other">%d AnkiDroid cards due</item>
+    </plurals>
+    <string name="widget_no_cards_due">Няма оставащи карти</string>
+    <string name="widget_loading">Зареждане на джаджа...</string>
+    <plurals name="widget_cards_in_decks_due">
+        <item quantity="one">%1$d карта остава в %2$s</item>
+        <item quantity="other">%1$d карти остават в %2$s</item>
+    </plurals>
+    <plurals name="widget_decks">
+        <item quantity="one">%1$d тесте</item>
+        <item quantity="other">%1$d тестета</item>
+    </plurals>
+    <string name="widget_small">AnkiDroid малък</string>
+    <string name="widget_small_button">AnkiDroid</string>
+    <plurals name="widget_cards_due">
+        <item quantity="one">%d card due</item>
+        <item quantity="other">%d cards due</item>
+    </plurals>
+    <plurals name="widget_eta">
+        <item quantity="one">%d minute remaining</item>
+        <item quantity="other">%d minutes remaining</item>
+    </plurals>
+    <string name="widget_add_note">Нова бележка</string>
+    <string name="widget_add_note_button">Добавяне на нова бележка в AnkiDroid</string>
 </resources>

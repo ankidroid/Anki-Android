@@ -39,99 +39,109 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Verificar a base de datos?</string>
-  <string name="check_db_warning">Isto pode levar moito tempo</string>
-  <string name="check_db_acknowledge">Base de datos verificada</string>
-  <string name="check_db_acknowledge_shrunk">Base de datos verificada e optimizada.\nReducida en %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Eliminar baralla</string>
-  <string name="delete_deck_default_deck">A baralla predefinida non se pode eliminar.</string>
-  <string name="delete_deck_title">Eliminar baralla?</string>
-  <plurals name="delete_deck_message">
-    <item quantity="one">Eliminar todos os cartóns de %1$s? Contén %2$d cartón.</item>
-    <item quantity="other">Eliminar todos os cartóns de %1$s? Contén %2$d cartóns.</item>
-  </plurals>
-  <string name="delete_cram_deck_message">Enviar todos os cartóns de %s as súas barallas orixinais?</string>
-  <string name="no_tts_available_message">Ningún idioma de síntese de voz dispoñible</string>
-  <string name="initializing_tts">Iniciando TTS&#8230;</string>
-  <string name="tts_no_tts">Non fales</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Cartóns Android</h2>AnkiDroid é unha aplicación de cartóns compatible co software de escritorio <a href=\"%2$s\">Anki</a>. Podes crear, descargar e aprender materias en ámbolos dous programas, e sincronizalos dun xeito doado co AnkiWeb.]]></item>
-    <item><![CDATA[Para axudarnos a facer o AnkiDroid mellor, por favor informa dos erros no <a href=\"%1$s\">seguimento de problemas</a>; ideas sobre novas características son benvidas. Atopa respostas na <a href=\"%2$s\">wiki</a> ou comeza unha conversa no <a href=\"%3$s\">foro</a>.]]></item>
-    <item><![CDATA[AnkiDroid é <a href=\"%1$s\">software de código aberto<a/>, polo que é animado a <a href=\"%2$s\">colaborar</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
-    <item><![CDATA[Ankidroid distribúese baixo <a href=\"%1$s\">licenza GNU-GPL v3</a> e o código fonte está dispoñible <a href=\"%2$s\">no GitHub</a>.]]></item>
-  </string-array>
-  <string name="preview_title">Vista previa</string>
-  <string name="reposition_card_dialog_title">Reposition new card</string>
-  <string name="reposition_card_dialog_message">Start position:</string>
-  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
-  <string name="reset_card_dialog_title">Reiniciar o progreso do cartón</string>
-  <string name="reset_card_dialog_message">Este cartón colocarase ao final da nova cola.</string>
-  <string name="reset_card_dialog_acknowledge">Reiniciar cartón</string>
-  <string name="reschedule_card_dialog_title">Reprogramar cartón</string>
-  <string name="reschedule_card_dialog_message">Reprogramar unha revisión en x días:</string>
-  <string name="reschedule_card_dialog_acknowledge">Cartón reprogramado</string>
-  <string name="answering_error_title">Erro na base de datos</string>
-  <string name="answering_error_message">Produciuse un erro ao escribir na colección. A base de datos pode estar corrompida ou non existir espazo abondo non disco.\n\nSe isto acontece con moi frecuencia, tenta verificar a base de datos, reparar a colección ou restaurar dende unha copia. Para iso preme en \"opcións\".\n\nTamén podería ser un erro do programa; por favor, envía un informe do erro para que o verifiquemos.</string>
-  <string name="answering_error_report">Informar de erros</string>
-  <string name="repair_deck_dialog">Tes a certeza de querer tentar reparar a base de datos?\n\nAntes de comezar, crearase unha copia no cartafol \"%s\".</string>
-  <string name="intent_add_saved_information">Datos gardados</string>
-  <string name="intent_add_clear_all">Limpar todo</string>
-  <string name="intent_aedict_empty">A categoría \'predeterminado\' está baleira</string>
-  <string name="intent_aedict_category">Para engadir cartóns ao AnkiDroid elimina todas as categorías do caderno de notas ou engade unha chamada \"predefinido\"</string>
-  <string name="custom_study_new_total_new">Novos cartóns na baralla: %s</string>
-  <string name="custom_study_rev_total_rev">Revisións pendentes na baralla: %s</string>
-  <string name="custom_study_new_extend">Incrementar o límite de cartóns novos para hoxe</string>
-  <string name="custom_study_rev_extend">Aumentar o límite de revisións para hoxe en</string>
-  <string name="custom_study_forgotten">Revisar os cartóns esquecidos nos últimos x días:</string>
-  <string name="custom_study_ahead">Revisar con x días de adianto:</string>
-  <string name="custom_study_random">Seleccionar da baralla x cartóns ao chou:</string>
-  <string name="custom_study_preview">Vista previa dos novos cartóns engadidos nos últimos x días:</string>
-  <string name="rebuild_custom_study_deck">Reconstruíndo a baralla de estudo personalizado.\nPor favor, agarda&#8230;</string>
-  <string name="importing_collection">Importando colección&#8230;</string>
-  <string name="import_media_count">Importando ficheiros de medios %1$d%%&#8230;</string>
-  <string name="import_progress">• Importando notas: %1$d%%\n• Importando cartóns: %2$d%%\n• Post-procesando: %3$d%%</string>
-  <string name="import_update_details">Actualizada(s) %1$d de %2$d notas existentes.</string>
-  <string name="import_update_ignored">Ignoráronse algunhas actualizacións porque o tipo de nota mudou</string>
-  <string name="import_complete_count">Cartóns importados: %d</string>
-  <string name="sd_card_full_title">Cartón SD cheo</string>
-  <string name="sd_card_almost_full_title">Cartón SD case cheo</string>
-  <string name="restore_backup_title">Restaurar copia?</string>
-  <string name="restore_backup">A túa colección será substituída cunha copia antiga. Perderase calquera progreso non gardado.</string>
-  <string name="dialog_cancel">Cancelar</string>
-  <string name="dialog_ok">Aceptar</string>
-  <string name="dialog_continue">Continuar</string>
-  <string name="dialog_positive_create">Crear</string>
-  <string name="dialog_positive_delete">Eliminar</string>
-  <string name="dialog_positive_disable">Desactivar</string>
-  <string name="dialog_positive_overwrite">Substituír</string>
-  <string name="dialog_positive_remove">Eliminar</string>
-  <string name="dialog_positive_repair">Reparar</string>
-  <string name="dialog_positive_replace">Substituír</string>
-  <string name="dialog_positive_restore">Restaurar</string>
-  <string name="dialog_positive_set">Definir</string>
-  <string name="lookup_button_content">Procurar</string>
-  <string name="dialog_collection_path_not_dir">A ruta especificada non era un cartafol válido</string>
-  <!-- Media checking -->
-  <string name="check_media_title">Verificar multimedia?</string>
-  <string name="check_media_warning">Isto pode levar moito tempo con coleccións grandes de medios</string>
-  <string name="check_media_message">Verificando multimedia&#8230;</string>
-  <string name="check_media_acknowledge">Multimedia verificada</string>
-  <string name="check_media_failed">Fallou a verificación da multimedia</string>
-  <string name="check_media_invalid">Ficheiros cunha codificación inválida: %d</string>
-  <string name="check_media_unused">Ficheiros no cartafol de medios pero sen usar por calquera cartón: %d</string>
-  <string name="check_media_nohave">Ficheiros usados nos cartóns pero non existen no cartafol de medios: %d</string>
-  <string name="check_media_no_unused_missing">Non se atoparon ficheiros sen usar ou perdidos</string>
-  <string name="check_media_db_updated">Reconstruída a base de datos de medios</string>
-  <string name="check_media_delete_unused">Eliminar os non empregados</string>
-  <string name="check_media_deleted">Ficheiros eliminados: %d</string>
-  <!-- Tags Dialog Options -->
-  <string name="tags_dialog_option_all_cards">Todos os cartóns</string>
-  <string name="tags_dialog_option_new_cards">Novo</string>
-  <string name="tags_dialog_option_due_cards">Pendentes</string>
-  <!-- Empty cards -->
-  <string name="emtpy_cards_finding">Buscando cartóns baleiros&#8230;</string>
-  <string name="empty_cards_none">Non hai cartóns baleiros</string>
-  <string name="empty_cards_count">Cartóns a eliminar: %d</string>
-  <string name="empty_cards_deleted">Cartóns eliminados: %d</string>
+    <string name="check_db_title">Verificar a base de datos?</string>
+    <string name="check_db_warning">Isto pode levar moito tempo</string>
+    <string name="check_db_acknowledge">Base de datos verificada</string>
+    <string name="check_db_acknowledge_shrunk">Base de datos verificada e optimizada.\nReducida en %d kB.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Eliminar baralla</string>
+    <string name="delete_deck_default_deck">A baralla predefinida non se pode eliminar.</string>
+    <string name="delete_deck_title">Eliminar baralla?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Eliminar todos os cartóns de %1$s? Contén %2$d cartón.</item>
+        <item quantity="other">Eliminar todos os cartóns de %1$s? Contén %2$d cartóns.</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Enviar todos os cartóns de %s as súas barallas orixinais?</string>
+    <string name="no_tts_available_message">Ningún idioma de síntese de voz dispoñible</string>
+    <string name="initializing_tts">Iniciando TTS&#8230;</string>
+    <string name="tts_no_tts">Non fales</string>
+    <string-array name="about_content">
+        <item><![CDATA[<h2>%1$s:<br/>Cartóns Android</h2>AnkiDroid é unha aplicación de cartóns compatible co software de escritorio <a href=\"%2$s\">Anki</a>. Podes crear, descargar e aprender materias en ámbolos dous programas, e sincronizalos dun xeito doado co AnkiWeb.]]></item>
+        <item><![CDATA[Para axudarnos a facer o AnkiDroid mellor, por favor informa dos erros no <a href=\"%1$s\">seguimento de problemas</a>; ideas sobre novas características son benvidas. Atopa respostas na <a href=\"%2$s\">wiki</a> ou comeza unha conversa no <a href=\"%3$s\">foro</a>.]]></item>
+        <item><![CDATA[AnkiDroid é <a href=\"%1$s\">software de código aberto<a/>, polo que é animado a <a href=\"%2$s\">colaborar</a> :-)]]></item>
+        <item><![CDATA[Os que non son desenvolvedores tamén poden axudar. Por exemplo, poden <a href=\"%1$s\">axudar a traducir</a> o AnkiDroid, actualizar o wiki, fornecer capturas, ou blogar sobre AnkiDroid.]]></item>
+        <item><![CDATA[Ankidroid distribúese baixo <a href=\"%1$s\">licenza GNU-GPL v3</a> e o código fonte está dispoñible <a href=\"%2$s\">no GitHub</a>.]]></item>
+    </string-array>
+    <string name="preview_title">Vista previa</string>
+    <string name="reposition_card_dialog_title">Reposicionar novo cartón</string>
+    <string name="reposition_card_dialog_message">Posición inicial:</string>
+    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <plurals name="reposition_card_dialog_acknowledge">
+        <item quantity="one">%d card repositioned</item>
+        <item quantity="other">%d cards repositioned</item>
+    </plurals>
+    <string name="reset_card_dialog_title">Reiniciar o progreso do cartón</string>
+    <string name="reset_card_dialog_message">Este cartón colocarase ao final da nova cola.</string>
+    <plurals name="reset_cards_dialog_acknowledge">
+        <item quantity="one">%d card reset</item>
+        <item quantity="other">%d cards reset</item>
+    </plurals>
+    <string name="reschedule_card_dialog_title">Reprogramar cartón</string>
+    <string name="reschedule_card_dialog_message">Reprogramar unha revisión en x días:</string>
+    <plurals name="reschedule_cards_dialog_acknowledge">
+        <item quantity="one">%d card rescheduled</item>
+        <item quantity="other">%d cards rescheduled</item>
+    </plurals>
+    <string name="answering_error_title">Erro na base de datos</string>
+    <string name="answering_error_message">Produciuse un erro ao escribir na colección. A base de datos pode estar corrompida ou non existir espazo abondo non disco.\n\nSe isto acontece con moi frecuencia, tenta verificar a base de datos, reparar a colección ou restaurar dende unha copia. Para iso preme en \"opcións\".\n\nTamén podería ser un erro do programa; por favor, envía un informe do erro para que o verifiquemos.</string>
+    <string name="answering_error_report">Informar de erros</string>
+    <string name="repair_deck_dialog">Tes a certeza de querer tentar reparar a base de datos?\n\nAntes de comezar, crearase unha copia no cartafol \"%s\".</string>
+    <string name="intent_add_saved_information">Datos gardados</string>
+    <string name="intent_add_clear_all">Limpar todo</string>
+    <string name="intent_aedict_empty">A categoría \'predeterminado\' está baleira</string>
+    <string name="intent_aedict_category">Para engadir cartóns ao AnkiDroid elimina todas as categorías do caderno de notas ou engade unha chamada \"predefinido\"</string>
+    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_extend">Incrementar o límite de cartóns novos para hoxe</string>
+    <string name="custom_study_rev_extend">Aumentar o límite de revisións para hoxe en</string>
+    <string name="custom_study_forgotten">Revisar os cartóns esquecidos nos últimos x días:</string>
+    <string name="custom_study_ahead">Revisar con x días de adianto:</string>
+    <string name="custom_study_random">Seleccionar da baralla x cartóns ao chou:</string>
+    <string name="custom_study_preview">Vista previa dos novos cartóns engadidos nos últimos x días:</string>
+    <string name="rebuild_custom_study_deck">Reconstruíndo a baralla de estudo personalizado.\nPor favor, agarda&#8230;</string>
+    <string name="importing_collection">Importando colección&#8230;</string>
+    <string name="import_media_count">Importando ficheiros de medios %1$d%%&#8230;</string>
+    <string name="import_progress">• Importando notas: %1$d%%\n• Importando cartóns: %2$d%%\n• Post-procesando: %3$d%%</string>
+    <string name="import_update_details">Actualizada(s) %1$d de %2$d notas existentes.</string>
+    <string name="import_update_ignored">Ignoráronse algunhas actualizacións porque o tipo de nota mudou</string>
+    <string name="import_complete_count">Cartóns importados: %d</string>
+    <string name="sd_card_full_title">Cartón SD cheo</string>
+    <string name="sd_card_almost_full_title">Cartón SD case cheo</string>
+    <string name="restore_backup_title">Restaurar copia?</string>
+    <string name="restore_backup">A túa colección será substituída cunha copia antiga. Perderase calquera progreso non gardado.</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="dialog_ok">Aceptar</string>
+    <string name="dialog_continue">Continuar</string>
+    <string name="dialog_positive_create">Crear</string>
+    <string name="dialog_positive_delete">Eliminar</string>
+    <string name="dialog_positive_disable">Desactivar</string>
+    <string name="dialog_positive_overwrite">Substituír</string>
+    <string name="dialog_positive_remove">Eliminar</string>
+    <string name="dialog_positive_repair">Reparar</string>
+    <string name="dialog_positive_replace">Substituír</string>
+    <string name="dialog_positive_restore">Restaurar</string>
+    <string name="dialog_positive_set">Definir</string>
+    <string name="lookup_button_content">Procurar</string>
+    <string name="dialog_collection_path_not_dir">A ruta especificada non era un cartafol válido</string>
+    <!-- Media checking -->
+    <string name="check_media_title">Verificar multimedia?</string>
+    <string name="check_media_warning">Isto pode levar moito tempo con coleccións grandes de medios</string>
+    <string name="check_media_message">Verificando multimedia&#8230;</string>
+    <string name="check_media_acknowledge">Multimedia verificada</string>
+    <string name="check_media_failed">Fallou a verificación da multimedia</string>
+    <string name="check_media_invalid">Ficheiros cunha codificación inválida: %d</string>
+    <string name="check_media_unused">Ficheiros no cartafol de medios pero sen usar por calquera cartón: %d</string>
+    <string name="check_media_nohave">Ficheiros usados nos cartóns pero non existen no cartafol de medios: %d</string>
+    <string name="check_media_no_unused_missing">Non se atoparon ficheiros sen usar ou perdidos</string>
+    <string name="check_media_db_updated">Reconstruída a base de datos de medios</string>
+    <string name="check_media_delete_unused">Eliminar os non empregados</string>
+    <string name="check_media_deleted">Ficheiros eliminados: %d</string>
+    <!-- Tags Dialog Options -->
+    <string name="tags_dialog_option_all_cards">Todos os cartóns</string>
+    <string name="tags_dialog_option_new_cards">Novo</string>
+    <string name="tags_dialog_option_due_cards">Pendentes</string>
+    <!-- Empty cards -->
+    <string name="emtpy_cards_finding">Buscando cartóns baleiros&#8230;</string>
+    <string name="empty_cards_none">Non hai cartóns baleiros</string>
+    <string name="empty_cards_count">Cartóns a eliminar: %d</string>
+    <string name="empty_cards_deleted">Cartóns eliminados: %d</string>
 </resources>

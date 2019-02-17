@@ -39,37 +39,42 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">Zapadlih kartic</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d kartic AnkiDroid zapadlo</string>
-  <string name="widget_no_cards_due">Nobena kar. ni zapadla</string>
-  <string name="widget_loading">Nalaganje pripomočka &#8230;</string>
-  <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d kartica zapade v %2$s</item>
-    <item quantity="two">%1$d kartici zapadeta v %2$s</item>
-    <item quantity="few">%1$d kartice zapadejo v %2$s</item>
-    <item quantity="other">%1$d kartic zapade v %2$s</item>
-  </plurals>
-  <plurals name="widget_decks">
-    <item quantity="one">%1$d komplet</item>
-    <item quantity="two">%1$d kompleta</item>
-    <item quantity="few">%1$d kompleti</item>
-    <item quantity="other">%1$d kompletov</item>
-  </plurals>
-  <string name="widget_small">AnkiDroid - majhen</string>
-  <string name="widget_small_button">AnkiDroid</string>
-  <plurals name="widget_cards_due">
-    <item quantity="one">%d kartica zapadla</item>
-    <item quantity="two">%d kartici zapadli</item>
-    <item quantity="few">%d kartice zapadle</item>
-    <item quantity="other">%d kartic zapadlih</item>
-  </plurals>
-  <plurals name="widget_eta">
-    <item quantity="one">Preostala je %d minuta</item>
-    <item quantity="two">Preostali sta %d minuti</item>
-    <item quantity="few">Preostale so %d minute</item>
-    <item quantity="other">Preostalih je %d minut</item>
-  </plurals>
-  <string name="widget_add_note">Dodaj zapisek</string>
-  <string name="widget_add_note_button">Dodaj nov zapisek AnkiDroid</string>
+    <!-- Widget -->
+    <string name="widget_minimum_cards_due_notification_ticker_title">Zapadlih kartic</string>
+    <plurals name="widget_minimum_cards_due_notification_ticker_text">
+        <item quantity="one">%d AnkiDroid card due</item>
+        <item quantity="two">%d AnkiDroid cards due</item>
+        <item quantity="few">%d AnkiDroid cards due</item>
+        <item quantity="other">%d AnkiDroid cards due</item>
+    </plurals>
+    <string name="widget_no_cards_due">Nobena kar. ni zapadla</string>
+    <string name="widget_loading">Nalaganje pripomočka &#8230;</string>
+    <plurals name="widget_cards_in_decks_due">
+        <item quantity="one">%1$d kartica zapade v %2$s</item>
+        <item quantity="two">%1$d kartici zapadeta v %2$s</item>
+        <item quantity="few">%1$d kartice zapadejo v %2$s</item>
+        <item quantity="other">%1$d kartic zapade v %2$s</item>
+    </plurals>
+    <plurals name="widget_decks">
+        <item quantity="one">%1$d komplet</item>
+        <item quantity="two">%1$d kompleta</item>
+        <item quantity="few">%1$d kompleti</item>
+        <item quantity="other">%1$d kompletov</item>
+    </plurals>
+    <string name="widget_small">AnkiDroid - majhen</string>
+    <string name="widget_small_button">AnkiDroid</string>
+    <plurals name="widget_cards_due">
+        <item quantity="one">%d kartica zapadla</item>
+        <item quantity="two">%d kartici zapadli</item>
+        <item quantity="few">%d kartice zapadle</item>
+        <item quantity="other">%d kartic zapadlih</item>
+    </plurals>
+    <plurals name="widget_eta">
+        <item quantity="one">Preostala je %d minuta</item>
+        <item quantity="two">Preostali sta %d minuti</item>
+        <item quantity="few">Preostale so %d minute</item>
+        <item quantity="other">Preostalih je %d minut</item>
+    </plurals>
+    <string name="widget_add_note">Dodaj zapisek</string>
+    <string name="widget_add_note_button">Dodaj nov zapisek AnkiDroid</string>
 </resources>

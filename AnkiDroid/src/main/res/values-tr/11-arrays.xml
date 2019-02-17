@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Her zaman bildir</item>
-    <item>Hiçbir zaman bildirme</item>
-    <item>Bana sor</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Eylem yok</item>
-    <item>Cevabı göster</item>
-    <item>1. cevap düğmesi</item>
-    <item>2. cevap düğmesi</item>
-    <item>3. cevap düğmesi</item>
-    <item>4. cevap düğmesi</item>
-    <item>Önerilen cevabı (yeşil) ver</item>
-    <item>Önerilenden daha iyi cevap ver</item>
-    <item>Geri al</item>
-    <item>Notu düzenle</item>
-    <item>Notu işâretle</item>
-    <item>İfadeyi ara</item>
-    <item>Kartı gizle</item>
-    <item>Kartı askıya al</item>
-    <item>Notu sil</item>
-    <item>Medyayı oynat</item>
-    <item>Öğrenmeyi durdur</item>
-    <item>Notu gizle</item>
-    <item>Notu askıya al</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Kartı askıya al</item>
-    <item>Yalnızca etiket</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Yeni kartlar rastgele sırada</item>
-    <item>Yeni kartlar ekleniş sırasına göre</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Eski çıkanlar ilk önce</item>
-    <item>Rastgele</item>
-    <item>Artan aralıkta</item>
-    <item>Azalan aralıkta</item>
-    <item>En çok yanıltan</item>
-    <item>Ekleniş sırası</item>
-    <item>Çıkma sırası</item>
-    <item>En son eklenenler ilk</item>
-    <item>Görece vadesi geçmişlik</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Geçerli desteyi kullan</item>
-    <item>Not türüne göre karar ver</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Yeni kartları ve çalışmaları karıştır</item>
-    <item>Yeni kartlar çalışmalardan sonra</item>
-    <item>Yeni kartlar çalışmalardan önce</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Bilgi kartlarında font belirtilmediği zaman</item>
-    <item>Her zaman</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Açık</item>
-    <item>Düz</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Siyah</item>
-    <item>Koyu</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Her zaman bildir</item>
+        <item>Hiçbir zaman bildirme</item>
+        <item>Bana sor</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Eylem yok</item>
+        <item>Cevabı göster</item>
+        <item>1. cevap düğmesi</item>
+        <item>2. cevap düğmesi</item>
+        <item>3. cevap düğmesi</item>
+        <item>4. cevap düğmesi</item>
+        <item>Önerilen cevabı (yeşil) ver</item>
+        <item>Önerilenden daha iyi cevap ver</item>
+        <item>Geri al</item>
+        <item>Notu düzenle</item>
+        <item>Notu işâretle</item>
+        <item>İfadeyi ara</item>
+        <item>Kartı gizle</item>
+        <item>Kartı askıya al</item>
+        <item>Notu sil</item>
+        <item>Medyayı oynat</item>
+        <item>Öğrenmeyi durdur</item>
+        <item>Notu gizle</item>
+        <item>Notu askıya al</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Kartı askıya al</item>
+        <item>Yalnızca etiket</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Yeni kartlar rastgele sırada</item>
+        <item>Yeni kartlar ekleniş sırasına göre</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Eski çıkanlar ilk önce</item>
+        <item>Rastgele</item>
+        <item>Artan aralıkta</item>
+        <item>Azalan aralıkta</item>
+        <item>En çok yanıltan</item>
+        <item>Ekleniş sırası</item>
+        <item>Çıkma sırası</item>
+        <item>En son eklenenler ilk</item>
+        <item>Görece vadesi geçmişlik</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Geçerli desteyi kullan</item>
+        <item>Not türüne göre karar ver</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Yeni kartları ve çalışmaları karıştır</item>
+        <item>Yeni kartlar çalışmalardan sonra</item>
+        <item>Yeni kartlar çalışmalardan önce</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Bilgi kartlarında font belirtilmediği zaman</item>
+        <item>Her zaman</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Açık</item>
+        <item>Düz</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Siyah</item>
+        <item>Koyu</item>
+    </string-array>
 </resources>

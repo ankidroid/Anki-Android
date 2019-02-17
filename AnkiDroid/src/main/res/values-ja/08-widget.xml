@@ -39,25 +39,27 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">課題</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">あと%d枚</string>
-  <string name="widget_no_cards_due">学習予定日時に達したカードはありません</string>
-  <string name="widget_loading">ウィジェットをロード中...</string>
-  <plurals name="widget_cards_in_decks_due">
-    <item quantity="other">%2$s枚中%1$d枚が学習予定日時に達しています</item>
-  </plurals>
-  <plurals name="widget_decks">
-    <item quantity="other">%1$d個のデッキ</item>
-  </plurals>
-  <string name="widget_small">AnkiDroid 小</string>
-  <string name="widget_small_button">AnkiDroid</string>
-  <plurals name="widget_cards_due">
-    <item quantity="other">現在の課題: %d枚</item>
-  </plurals>
-  <plurals name="widget_eta">
-    <item quantity="other">残り%d分</item>
-  </plurals>
-  <string name="widget_add_note">AnkiDroid ノートを追加</string>
-  <string name="widget_add_note_button">AnkiDroid の新規ノートを追加</string>
+    <!-- Widget -->
+    <string name="widget_minimum_cards_due_notification_ticker_title">課題</string>
+    <plurals name="widget_minimum_cards_due_notification_ticker_text">
+        <item quantity="other">%d AnkiDroid cards due</item>
+    </plurals>
+    <string name="widget_no_cards_due">学習予定日時に達したカードはありません</string>
+    <string name="widget_loading">ウィジェットをロード中...</string>
+    <plurals name="widget_cards_in_decks_due">
+        <item quantity="other">%2$s枚中%1$d枚が学習予定日時に達しています</item>
+    </plurals>
+    <plurals name="widget_decks">
+        <item quantity="other">%1$d個のデッキ</item>
+    </plurals>
+    <string name="widget_small">AnkiDroid 小</string>
+    <string name="widget_small_button">AnkiDroid</string>
+    <plurals name="widget_cards_due">
+        <item quantity="other">現在の課題: %d枚</item>
+    </plurals>
+    <plurals name="widget_eta">
+        <item quantity="other">残り%d分</item>
+    </plurals>
+    <string name="widget_add_note">AnkiDroid ノートを追加</string>
+    <string name="widget_add_note_button">AnkiDroid の新規ノートを追加</string>
 </resources>

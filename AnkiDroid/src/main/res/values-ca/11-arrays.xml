@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Envia-ho sempre</item>
-    <item>No ho enviïs mai</item>
-    <item>Pregunta-ho</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Cap acció</item>
-    <item>Mostra la resposta</item>
-    <item>Botó de resposta 1</item>
-    <item>Botó de resposta 2</item>
-    <item>Botó de resposta 3</item>
-    <item>Botó de resposta 4</item>
-    <item>Resposta recomanada (verd)</item>
-    <item>Resposta millor que la recomanada</item>
-    <item>Desfés</item>
-    <item>Edita l\'anotació</item>
-    <item>Marca l\'anotació</item>
-    <item>Cerca l\'expressió</item>
-    <item>Aparca la fitxa</item>
-    <item>Suspèn la fitxa</item>
-    <item>Elimina l\'anotació</item>
-    <item>Reprodueix el media</item>
-    <item>Abandona l\'estudi</item>
-    <item>Enterrar l\'anotació</item>
-    <item>Amaga l\'anotació</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Suspèn la fitxa</item>
-    <item>Només l\'etiqueta</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Mostra les fitxes noves desendreçades</item>
-    <item>Mostra les fitxes noves pel ordre en que s\'han afegit</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Primer les que fa més temps que no heu vist</item>
-    <item>A l\'atzar</item>
-    <item>A intervals creixents</item>
-    <item>A intervals decreixents</item>
-    <item>Més espaiades</item>
-    <item>Ordre en que s\'han afegit</item>
-    <item>Per ordre de venciment</item>
-    <item>Primera les darrers que s\'ahn afegit</item>
-    <item>Retràs d\'entrega relatiu</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Utilitza aquest paquet</item>
-    <item>Dedueix pel tipus de nota</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Barreja cartes noves i revisions</item>
-    <item>Cartes noves després de revisions</item>
-    <item>Cartes noves abans de revisions</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Quan cap font està especificada en les flashcards</item>
-    <item>Sempre</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Clar</item>
-    <item>Pla</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Negre</item>
-    <item>Fosc</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Envia-ho sempre</item>
+        <item>No ho enviïs mai</item>
+        <item>Pregunta-ho</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Cap acció</item>
+        <item>Mostra la resposta</item>
+        <item>Botó de resposta 1</item>
+        <item>Botó de resposta 2</item>
+        <item>Botó de resposta 3</item>
+        <item>Botó de resposta 4</item>
+        <item>Resposta recomanada (verd)</item>
+        <item>Resposta millor que la recomanada</item>
+        <item>Desfés</item>
+        <item>Edita l\'anotació</item>
+        <item>Marca l\'anotació</item>
+        <item>Cerca l\'expressió</item>
+        <item>Aparca la fitxa</item>
+        <item>Suspèn la fitxa</item>
+        <item>Elimina l\'anotació</item>
+        <item>Reprodueix el media</item>
+        <item>Abandona l\'estudi</item>
+        <item>Enterrar l\'anotació</item>
+        <item>Amaga l\'anotació</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Suspèn la fitxa</item>
+        <item>Només l\'etiqueta</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Mostra les fitxes noves desendreçades</item>
+        <item>Mostra les fitxes noves pel ordre en que s\'han afegit</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Primer les que fa més temps que no heu vist</item>
+        <item>A l\'atzar</item>
+        <item>A intervals creixents</item>
+        <item>A intervals decreixents</item>
+        <item>Més espaiades</item>
+        <item>Ordre en que s\'han afegit</item>
+        <item>Per ordre de venciment</item>
+        <item>Primera les darrers que s\'ahn afegit</item>
+        <item>Retràs d\'entrega relatiu</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Utilitza aquest paquet</item>
+        <item>Dedueix pel tipus de nota</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Barreja cartes noves i revisions</item>
+        <item>Cartes noves després de revisions</item>
+        <item>Cartes noves abans de revisions</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Quan cap font està especificada en les flashcards</item>
+        <item>Sempre</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Clar</item>
+        <item>Pla</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Negre</item>
+        <item>Fosc</item>
+    </string-array>
 </resources>

@@ -39,99 +39,109 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Проверка на базата данни?</string>
-  <string name="check_db_warning">Това може да отнеме дълго време</string>
-  <string name="check_db_acknowledge">Базата данни проверена</string>
-  <string name="check_db_acknowledge_shrunk">Базата данни проверена и оптимизирана.\nНамалена с %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Изтрий колода</string>
-  <string name="delete_deck_default_deck">Основното тесте не може да бъде изтрито</string>
-  <string name="delete_deck_title">Изтрий колода</string>
-  <plurals name="delete_deck_message">
-    <item quantity="one">Изтрий всички карти в %1$s? Той съдържа %2$d карта.</item>
-    <item quantity="other">Изтрий всички карти в %1$s? Той съдържа %2$d карти.</item>
-  </plurals>
-  <string name="delete_cram_deck_message">Изпрати всички карти в %s обратно към техните оригинални тестета?</string>
-  <string name="no_tts_available_message">Няма наличен синтез за език</string>
-  <string name="initializing_tts">Зареждане на ситезиран говор&#8230;</string>
-  <string name="tts_no_tts">Не говори</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Флашкарти за Андроид</h2>AnkiDroid е приложение за флашкарти, което е напълно съвместимо с настолният софтуер <a href=\"%2$s\">Anki</a>. Вие можете да създадете, свалите и учите материали на AnkiDroid или Anki Desktop, и да ги синхронизирате лесно с AnkiWeb.]]></item>
-    <item><![CDATA[За да помогнете да направим AnkiDroid по-добър, моля докладвайте за бъговете към <a href=\"%1$s\">нашия въпросник</a>; идеи да нови функции са добре дошли. Намерете отговори на въпросите си в <a href=\"%2$s\"> уикито ни</a> или започнете дискусия във <a href=\"%3$s\"> форума ни</a>.]]></item>
-    <item><![CDATA[AnkiDroid е <a href=\"%1$s\">софтуер с отворен код<a/>, така че всеки е окуражен да <a href=\"%2$s\"> стане сътрудник</a> :-)]]></item>
-    <item><![CDATA[Ако не сте програмисти, също можете да помогнете. Можете <a href=\"%1$s\">да помогнете в превода</a> на AnkiDroid, да обновите уикито или да пишете в блога си за AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid се разпространява под <a href=\"%1$s\">GNU GPL v3 лиценз</a> и изходният код е наличен <a href=\"%2$s\">на GitHub</a>.]]></item>
-  </string-array>
-  <string name="preview_title">Преглед</string>
-  <string name="reposition_card_dialog_title">Reposition new card</string>
-  <string name="reposition_card_dialog_message">Start position:</string>
-  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
-  <string name="reset_card_dialog_title">Начално състояние на прогреса на картата</string>
-  <string name="reset_card_dialog_message">Тази карта ще бъде поставен в края на опашката на новите карти</string>
-  <string name="reset_card_dialog_acknowledge">Нулиране на картите</string>
-  <string name="reschedule_card_dialog_title">Промяна графика на карта</string>
-  <string name="reschedule_card_dialog_message">Повторно планиране за преглед след x дни:</string>
-  <string name="reschedule_card_dialog_acknowledge">Повторно планиране на карти</string>
-  <string name="answering_error_title">Грешка в базата данни</string>
-  <string name="answering_error_message">Писането в колекцията е неуспешно. Базата данни може да е повредена или може би няма празно пространство на диска.\n\nАко това се случва по-често, опитайте да в проверите база данни, да поправите колекцията или да възстановите от архива. Докоснете \"Опции\" за това.\n\А може да е грешка в AnkiDroid; Съобщете за тази грешка, да да можем да я проверим.</string>
-  <string name="answering_error_report">Доклад грешки</string>
-  <string name="repair_deck_dialog">Наистина ли искате да опитате да поправите базата данни? \n\nПреди да започнете, копие ще бъде създадено в папка \"%s\".</string>
-  <string name="intent_add_saved_information">Записани данни</string>
-  <string name="intent_add_clear_all">Изчисти всичко</string>
-  <string name="intent_aedict_empty">Категория \"по подразбиране\" е празна</string>
-  <string name="intent_aedict_category">За да добавите карти за AnkiDroid, премахнете всички категории на Notepad или добавите такава с име \'default\'</string>
-  <string name="custom_study_new_total_new">Нови карти в тестето: %s</string>
-  <string name="custom_study_rev_total_rev">Изискващи повторение: %s</string>
-  <string name="custom_study_new_extend">Увеличаване на днешното ограничение за нови карти с</string>
-  <string name="custom_study_rev_extend">Увеличаване на днешния лимит за преглед на</string>
-  <string name="custom_study_forgotten">Повтаряне на забравени карти през последните x дни:</string>
-  <string name="custom_study_ahead">Преглед за следващите x дни:</string>
-  <string name="custom_study_random">Избор на x случайни карти от тестето:</string>
-  <string name="custom_study_preview">Преглед на нови карти, добавени през последните x дни:</string>
-  <string name="rebuild_custom_study_deck">Пренареждане на специално тесте за учене&#8230;</string>
-  <string name="importing_collection">Изнасяне на колекция&#8230;</string>
-  <string name="import_media_count">Изнасяне на медийни файлове %1$d%%&#8230;</string>
-  <string name="import_progress">• Импортирани бележки: %1$d%%\n• Импортирани карти: %2$d%%\n• Обработени: %3$d%%</string>
-  <string name="import_update_details">Актуализирани са %1$d от %2$d съществуващи бележки.</string>
-  <string name="import_update_ignored">Някои актуализации са игнорирани, защото е променен типа на бележките</string>
-  <string name="import_complete_count">Внесени карти: %d</string>
-  <string name="sd_card_full_title">SD картата е пълна</string>
-  <string name="sd_card_almost_full_title">SD картата е почти пълна</string>
-  <string name="restore_backup_title">Възстановяване от архив?</string>
-  <string name="restore_backup">Вашата колекция ще бъде заменена с по-старо копие. Всякакъв незаписан напредък, ще бъде загубен.</string>
-  <string name="dialog_cancel">Отказ</string>
-  <string name="dialog_ok">Да</string>
-  <string name="dialog_continue">Продължи</string>
-  <string name="dialog_positive_create">Създай</string>
-  <string name="dialog_positive_delete">Изтрий</string>
-  <string name="dialog_positive_disable">Деактивирай</string>
-  <string name="dialog_positive_overwrite">Презапиши</string>
-  <string name="dialog_positive_remove">Премахни</string>
-  <string name="dialog_positive_repair">Поправи</string>
-  <string name="dialog_positive_replace">Замени</string>
-  <string name="dialog_positive_restore">Възстанови</string>
-  <string name="dialog_positive_set">Задай</string>
-  <string name="lookup_button_content">Търсене</string>
-  <string name="dialog_collection_path_not_dir">Указаният път не е валидна директория</string>
-  <!-- Media checking -->
-  <string name="check_media_title">Проверка на медия?</string>
-  <string name="check_media_warning">Това може да отнеме дълго време при големи мултимедийни колекции</string>
-  <string name="check_media_message">Проверка на медия&#8230;</string>
-  <string name="check_media_acknowledge">Медията е проверена</string>
-  <string name="check_media_failed">Неуспешна проверка на медия</string>
-  <string name="check_media_invalid">Файлове с невалидно кодиране: %d</string>
-  <string name="check_media_unused">Файловете са в медийната папка, но не се използват от всички карти: %d</string>
-  <string name="check_media_nohave">Файлове, използвани в картите не са медийната папка: %d</string>
-  <string name="check_media_no_unused_missing">Няма намерени неизползвани или липсващи файлове</string>
-  <string name="check_media_db_updated">Медийната база данни е възстановена</string>
-  <string name="check_media_delete_unused">Изтрий неизползваните</string>
-  <string name="check_media_deleted">Изтрити файлове: %d</string>
-  <!-- Tags Dialog Options -->
-  <string name="tags_dialog_option_all_cards">Всички карти</string>
-  <string name="tags_dialog_option_new_cards">Ново</string>
-  <string name="tags_dialog_option_due_cards">Край</string>
-  <!-- Empty cards -->
-  <string name="emtpy_cards_finding">Намиране на празни карти&#8230;</string>
-  <string name="empty_cards_none">Няма празни карти</string>
-  <string name="empty_cards_count">Карти за изтриване: %d</string>
-  <string name="empty_cards_deleted">Изтрити карти: %d</string>
+    <string name="check_db_title">Проверка на базата данни?</string>
+    <string name="check_db_warning">Това може да отнеме дълго време</string>
+    <string name="check_db_acknowledge">Базата данни проверена</string>
+    <string name="check_db_acknowledge_shrunk">Базата данни проверена и оптимизирана.\nНамалена с %d kB.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Изтрий колода</string>
+    <string name="delete_deck_default_deck">Основното тесте не може да бъде изтрито</string>
+    <string name="delete_deck_title">Изтрий колода</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Изтрий всички карти в %1$s? Той съдържа %2$d карта.</item>
+        <item quantity="other">Изтрий всички карти в %1$s? Той съдържа %2$d карти.</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Изпрати всички карти в %s обратно към техните оригинални тестета?</string>
+    <string name="no_tts_available_message">Няма наличен синтез за език</string>
+    <string name="initializing_tts">Зареждане на ситезиран говор&#8230;</string>
+    <string name="tts_no_tts">Не говори</string>
+    <string-array name="about_content">
+        <item><![CDATA[<h2>%1$s:<br/>Флашкарти за Андроид</h2>AnkiDroid е приложение за флашкарти, което е напълно съвместимо с настолният софтуер <a href=\"%2$s\">Anki</a>. Вие можете да създадете, свалите и учите материали на AnkiDroid или Anki Desktop, и да ги синхронизирате лесно с AnkiWeb.]]></item>
+        <item><![CDATA[За да помогнете да направим AnkiDroid по-добър, моля докладвайте за бъговете към <a href=\"%1$s\">нашия въпросник</a>; идеи да нови функции са добре дошли. Намерете отговори на въпросите си в <a href=\"%2$s\"> уикито ни</a> или започнете дискусия във <a href=\"%3$s\"> форума ни</a>.]]></item>
+        <item><![CDATA[AnkiDroid е <a href=\"%1$s\">софтуер с отворен код<a/>, така че всеки е окуражен да <a href=\"%2$s\"> стане сътрудник</a> :-)]]></item>
+        <item><![CDATA[Ако не сте програмисти, също можете да помогнете. Можете <a href=\"%1$s\">да помогнете в превода</a> на AnkiDroid, да обновите уикито или да пишете в блога си за AnkiDroid.]]></item>
+        <item><![CDATA[AnkiDroid се разпространява под <a href=\"%1$s\">GNU GPL v3 лиценз</a> и изходният код е наличен <a href=\"%2$s\">на GitHub</a>.]]></item>
+    </string-array>
+    <string name="preview_title">Преглед</string>
+    <string name="reposition_card_dialog_title">Reposition new card</string>
+    <string name="reposition_card_dialog_message">Start position:</string>
+    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <plurals name="reposition_card_dialog_acknowledge">
+        <item quantity="one">%d card repositioned</item>
+        <item quantity="other">%d cards repositioned</item>
+    </plurals>
+    <string name="reset_card_dialog_title">Начално състояние на прогреса на картата</string>
+    <string name="reset_card_dialog_message">Тази карта ще бъде поставен в края на опашката на новите карти</string>
+    <plurals name="reset_cards_dialog_acknowledge">
+        <item quantity="one">%d card reset</item>
+        <item quantity="other">%d cards reset</item>
+    </plurals>
+    <string name="reschedule_card_dialog_title">Промяна графика на карта</string>
+    <string name="reschedule_card_dialog_message">Повторно планиране за преглед след x дни:</string>
+    <plurals name="reschedule_cards_dialog_acknowledge">
+        <item quantity="one">%d card rescheduled</item>
+        <item quantity="other">%d cards rescheduled</item>
+    </plurals>
+    <string name="answering_error_title">Грешка в базата данни</string>
+    <string name="answering_error_message">Писането в колекцията е неуспешно. Базата данни може да е повредена или може би няма празно пространство на диска.\n\nАко това се случва по-често, опитайте да в проверите база данни, да поправите колекцията или да възстановите от архива. Докоснете \"Опции\" за това.\n\А може да е грешка в AnkiDroid; Съобщете за тази грешка, да да можем да я проверим.</string>
+    <string name="answering_error_report">Доклад грешки</string>
+    <string name="repair_deck_dialog">Наистина ли искате да опитате да поправите базата данни? \n\nПреди да започнете, копие ще бъде създадено в папка \"%s\".</string>
+    <string name="intent_add_saved_information">Записани данни</string>
+    <string name="intent_add_clear_all">Изчисти всичко</string>
+    <string name="intent_aedict_empty">Категория \"по подразбиране\" е празна</string>
+    <string name="intent_aedict_category">За да добавите карти за AnkiDroid, премахнете всички категории на Notepad или добавите такава с име \'default\'</string>
+    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_extend">Увеличаване на днешното ограничение за нови карти с</string>
+    <string name="custom_study_rev_extend">Увеличаване на днешния лимит за преглед на</string>
+    <string name="custom_study_forgotten">Повтаряне на забравени карти през последните x дни:</string>
+    <string name="custom_study_ahead">Преглед за следващите x дни:</string>
+    <string name="custom_study_random">Избор на x случайни карти от тестето:</string>
+    <string name="custom_study_preview">Преглед на нови карти, добавени през последните x дни:</string>
+    <string name="rebuild_custom_study_deck">Пренареждане на специално тесте за учене&#8230;</string>
+    <string name="importing_collection">Изнасяне на колекция&#8230;</string>
+    <string name="import_media_count">Изнасяне на медийни файлове %1$d%%&#8230;</string>
+    <string name="import_progress">• Импортирани бележки: %1$d%%\n• Импортирани карти: %2$d%%\n• Обработени: %3$d%%</string>
+    <string name="import_update_details">Актуализирани са %1$d от %2$d съществуващи бележки.</string>
+    <string name="import_update_ignored">Някои актуализации са игнорирани, защото е променен типа на бележките</string>
+    <string name="import_complete_count">Внесени карти: %d</string>
+    <string name="sd_card_full_title">SD картата е пълна</string>
+    <string name="sd_card_almost_full_title">SD картата е почти пълна</string>
+    <string name="restore_backup_title">Възстановяване от архив?</string>
+    <string name="restore_backup">Вашата колекция ще бъде заменена с по-старо копие. Всякакъв незаписан напредък, ще бъде загубен.</string>
+    <string name="dialog_cancel">Отказ</string>
+    <string name="dialog_ok">Да</string>
+    <string name="dialog_continue">Продължи</string>
+    <string name="dialog_positive_create">Създай</string>
+    <string name="dialog_positive_delete">Изтрий</string>
+    <string name="dialog_positive_disable">Деактивирай</string>
+    <string name="dialog_positive_overwrite">Презапиши</string>
+    <string name="dialog_positive_remove">Премахни</string>
+    <string name="dialog_positive_repair">Поправи</string>
+    <string name="dialog_positive_replace">Замени</string>
+    <string name="dialog_positive_restore">Възстанови</string>
+    <string name="dialog_positive_set">Задай</string>
+    <string name="lookup_button_content">Търсене</string>
+    <string name="dialog_collection_path_not_dir">Указаният път не е валидна директория</string>
+    <!-- Media checking -->
+    <string name="check_media_title">Проверка на медия?</string>
+    <string name="check_media_warning">Това може да отнеме дълго време при големи мултимедийни колекции</string>
+    <string name="check_media_message">Проверка на медия&#8230;</string>
+    <string name="check_media_acknowledge">Медията е проверена</string>
+    <string name="check_media_failed">Неуспешна проверка на медия</string>
+    <string name="check_media_invalid">Файлове с невалидно кодиране: %d</string>
+    <string name="check_media_unused">Файловете са в медийната папка, но не се използват от всички карти: %d</string>
+    <string name="check_media_nohave">Файлове, използвани в картите не са медийната папка: %d</string>
+    <string name="check_media_no_unused_missing">Няма намерени неизползвани или липсващи файлове</string>
+    <string name="check_media_db_updated">Медийната база данни е възстановена</string>
+    <string name="check_media_delete_unused">Изтрий неизползваните</string>
+    <string name="check_media_deleted">Изтрити файлове: %d</string>
+    <!-- Tags Dialog Options -->
+    <string name="tags_dialog_option_all_cards">Всички карти</string>
+    <string name="tags_dialog_option_new_cards">Ново</string>
+    <string name="tags_dialog_option_due_cards">Край</string>
+    <!-- Empty cards -->
+    <string name="emtpy_cards_finding">Намиране на празни карти&#8230;</string>
+    <string name="empty_cards_none">Няма празни карти</string>
+    <string name="empty_cards_count">Карти за изтриване: %d</string>
+    <string name="empty_cards_deleted">Изтрити карти: %d</string>
 </resources>

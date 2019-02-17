@@ -39,57 +39,57 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- CardBrowser -->
-  <plurals name="card_browser_subtitle">
-    <item quantity="other">%d 카드 표시됨</item>
-  </plurals>
-  <string name="card_browser_all_decks">모든 카드 묶음</string>
-  <string name="card_browser_delete_card">Delete notes</string>
-  <string name="card_browser_suspend_card">Suspend cards</string>
-  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
-  <string name="card_browser_change_deck">Change deck</string>
-  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-  <string name="card_browser_mark_card">Mark notes</string>
-  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
-  <string name="card_browser_unmark_card">Unmark notes</string>
-  <string name="delete_card_title">노트를 삭제할까요?</string>
-  <string name="delete_cards_title">Delete notes?</string>
-  <string name="delete_card_message">정말로 이 노트에 포함된 모든 카드를 삭제할까요?\n검색창: %s</string>
-  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
-  <string name="deleted_message">Notes deleted</string>
-  <string name="changed_deck_message">Moved to %s</string>
-  <string name="card_browser_suspended_cards">(un)suspended cards</string>
-  <string name="card_browser_show_marked">표시된 카드 필터링</string>
-  <string name="card_browser_show_suspended">보류된 카드 필터링</string>
-  <string name="card_browser_search_by_tag">태그별 필터링</string>
-  <string name="card_browser_tags_shown">태그: %1$s</string>
-  <string name="card_browser_list_my_searches">내가 검색한 항목</string>
-  <string name="card_browser_list_my_searches_save">검색 항목 저장</string>
-  <string name="card_browser_list_my_searches_title">저장된 검색 항목 선택</string>
-  <string name="card_browser_list_my_searches_new_name">현재 검색 항목의 이름</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">이름 없이 검색 항목을 저장할 수 없습니다.</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">이름이 이미 존재합니다!</string>
-  <string name="card_browser_list_my_searches_remove_content">\"%1$s\"을 삭제할까요?</string>
-  <string name="card_browser_change_display_order">표시 순서 변경</string>
-  <string name="card_browser_change_display_order_title">표시 순서를 선택하세요</string>
-  <string name="card_browser_change_display_order_reverse">역순으로 정렬하려면 필드를 두번 선택하세요</string>
-  <string name="card_details_question">문제</string>
-  <string name="card_details_answer">정답</string>
-  <string name="card_details_due">예정</string>
-  <string name="card_details_tags">태그</string>
-  <string name="card_browser_filtering_cards">카드 필터링 중&#8230; \n취소하려면 뒤로가기 버튼을 누르세요</string>
-  <string-array name="card_browser_order_labels">
-    <item>정렬 안함(빠름)</item>
-    <item>정렬 필드에 따라</item>
-    <item>생성된 시간에 따라</item>
-    <item>편집된 시간에 따라</item>
-    <item>수정된 시간에 따라</item>
-    <item>학습 예정 시간에 따라</item>
-    <item>학습 간격에 따라</item>
-    <item>난이도에 따라</item>
-    <item>복습에 따라</item>
-    <item>오답 횟수에 따라</item>
-  </string-array>
-  <string name="card_browser_select_all">Select all</string>
-  <string name="card_browser_select_none">Select none</string>
+    <!-- CardBrowser -->
+    <plurals name="card_browser_subtitle">
+        <item quantity="other">%d 카드 표시됨</item>
+    </plurals>
+    <string name="card_browser_all_decks">모든 카드 덱</string>
+    <string name="card_browser_delete_card">노트 삭제</string>
+    <string name="card_browser_suspend_card">카드 보류</string>
+    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+    <string name="card_browser_change_deck">카드 덱</string>
+    <string name="card_browser_unsuspend_card">카드 보류 해제</string>
+    <string name="card_browser_mark_card">노트 마크하기</string>
+    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+    <string name="card_browser_unmark_card">노트 마크 해제하기</string>
+    <string name="delete_card_title">노트를 삭제할까요?</string>
+    <string name="delete_cards_title">노트를 삭제할까요?</string>
+    <string name="delete_card_message">이 노트에 포함된 모든 카드를 삭제할까요?\n검색창: %s</string>
+    <string name="delete_card_mult_message">선택된 모든 노트들의 모든 카드를 삭제할까요?\n(선택된 카드 뿐만 아니라 모든 카드가 삭제됩니다.)</string>
+    <string name="deleted_message">노트가 삭제되었습니다.</string>
+    <string name="changed_deck_message">%s로 이동되었습니다.</string>
+    <string name="card_browser_suspended_cards">(un)suspended cards</string>
+    <string name="card_browser_show_marked">표시된 카드 필터링</string>
+    <string name="card_browser_show_suspended">보류된 카드 필터링</string>
+    <string name="card_browser_search_by_tag">태그별 필터링</string>
+    <string name="card_browser_tags_shown">태그: %1$s</string>
+    <string name="card_browser_list_my_searches">내가 검색한 항목</string>
+    <string name="card_browser_list_my_searches_save">검색 항목 저장</string>
+    <string name="card_browser_list_my_searches_title">저장된 검색 항목 선택</string>
+    <string name="card_browser_list_my_searches_new_name">현재 검색 항목의 이름</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">이름 없이 검색 항목을 저장할 수 없습니다.</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">이름이 이미 존재합니다!</string>
+    <string name="card_browser_list_my_searches_remove_content">\"%1$s\"을 삭제할까요?</string>
+    <string name="card_browser_change_display_order">표시 순서 변경</string>
+    <string name="card_browser_change_display_order_title">표시 순서를 선택하세요</string>
+    <string name="card_browser_change_display_order_reverse">역순으로 정렬하려면 필드를 두번 선택하세요</string>
+    <string name="card_details_question">문제</string>
+    <string name="card_details_answer">정답</string>
+    <string name="card_details_due">예정</string>
+    <string name="card_details_tags">태그</string>
+    <string name="card_browser_filtering_cards">카드 필터링 중&#8230; \n취소하려면 뒤로가기 버튼을 누르세요</string>
+    <string-array name="card_browser_order_labels">
+        <item>정렬 안함(더 빠름)</item>
+        <item>정렬 필드에 따라</item>
+        <item>생성된 시간에 따라</item>
+        <item>편집된 시간에 따라</item>
+        <item>수정된 시간에 따라</item>
+        <item>학습 예정 시간에 따라</item>
+        <item>학습 간격에 따라</item>
+        <item>난이도에 따라</item>
+        <item>복습에 따라</item>
+        <item>오답 횟수에 따라</item>
+    </string-array>
+    <string name="card_browser_select_all">모두 선택</string>
+    <string name="card_browser_select_none">모두 선택 안함</string>
 </resources>

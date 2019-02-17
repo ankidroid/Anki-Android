@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>हमेशा सूचित करें</item>
-    <item>कभी सूचित न करें</item>
-    <item>मुझसे पूछें</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>कोई क्रिया नहीं</item>
-    <item>उत्तर दिखाएँ</item>
-    <item>उत्तर बटन 1</item>
-    <item>उत्तर बटन 2</item>
-    <item>उत्तर बटन 3</item>
-    <item>उत्तर बटन 4</item>
-    <item>सुझाया गया उत्तर (हरा)</item>
-    <item>उत्तर सुझाव से बेहतर</item>
-    <item>पूर्ववत्</item>
-    <item>नोट संपादित करें</item>
-    <item>नोट चिह्नित करें</item>
-    <item>वाक्यांश खोजें</item>
-    <item>पत्ता दफन करें</item>
-    <item>पत्ता निलंबित करें</item>
-    <item>नोट मिटाएँ</item>
-    <item>मीडिया चलाएँ</item>
-    <item>सीखना रोक दें</item>
-    <item>नोट दफन करें</item>
-    <item>नोट निलंबित करें</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>पत्ता निलंबित करें</item>
-    <item>केवल टैग</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>नए पत्ते यादृच्छिक क्रम में</item>
-    <item>क्रम में नए कार्ड जोड़े गए</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>सबसे पुराना देखा पहले</item>
-    <item>यादृच्छिक</item>
-    <item>बढ़ते अंतराल</item>
-    <item>घटते अंतराल</item>
-    <item>सर्वाधिक चूका</item>
-    <item>जोड़ने का क्रम</item>
-    <item>आदेश बाकी</item>
-    <item>नवीनतम जोड़ा गया पहले</item>
-    <item>सापेक्षिक विलम्ब</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>वर्तमान डेक का उपयोग करें</item>
-    <item>नोट प्रकार द्वारा तय</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>नए कार्ड और समीक्षाएं मिक्स</item>
-    <item>समीक्षा के बाद नए कार्ड</item>
-    <item>समीक्षा से पहले नए कार्ड</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>जब स्पैनिश पर कोई फ़ॉंट निर्दिष्ट नहीं है</item>
-    <item>हमेशा</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>उजाला</item>
-    <item>सादा</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>काला</item>
-    <item>अंधेरा</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>हमेशा सूचित करें</item>
+        <item>कभी सूचित न करें</item>
+        <item>मुझसे पूछें</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>कोई क्रिया नहीं</item>
+        <item>उत्तर दिखाएँ</item>
+        <item>उत्तर बटन 1</item>
+        <item>उत्तर बटन 2</item>
+        <item>उत्तर बटन 3</item>
+        <item>उत्तर बटन 4</item>
+        <item>सुझाया गया उत्तर (हरा)</item>
+        <item>उत्तर सुझाव से बेहतर</item>
+        <item>पूर्ववत्</item>
+        <item>नोट संपादित करें</item>
+        <item>नोट चिह्नित करें</item>
+        <item>वाक्यांश खोजें</item>
+        <item>पत्ता दफन करें</item>
+        <item>पत्ता निलंबित करें</item>
+        <item>नोट मिटाएँ</item>
+        <item>मीडिया चलाएँ</item>
+        <item>सीखना रोक दें</item>
+        <item>नोट दफन करें</item>
+        <item>नोट निलंबित करें</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>पत्ता निलंबित करें</item>
+        <item>केवल टैग</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>नए पत्ते यादृच्छिक क्रम में</item>
+        <item>क्रम में नए कार्ड जोड़े गए</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>सबसे पुराना देखा पहले</item>
+        <item>यादृच्छिक</item>
+        <item>बढ़ते अंतराल</item>
+        <item>घटते अंतराल</item>
+        <item>सर्वाधिक चूका</item>
+        <item>जोड़ने का क्रम</item>
+        <item>आदेश बाकी</item>
+        <item>नवीनतम जोड़ा गया पहले</item>
+        <item>सापेक्षिक विलम्ब</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>वर्तमान डेक का उपयोग करें</item>
+        <item>नोट प्रकार द्वारा तय</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>नए कार्ड और समीक्षाएं मिक्स</item>
+        <item>समीक्षा के बाद नए कार्ड</item>
+        <item>समीक्षा से पहले नए कार्ड</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>जब स्पैनिश पर कोई फ़ॉंट निर्दिष्ट नहीं है</item>
+        <item>हमेशा</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>उजाला</item>
+        <item>सादा</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>काला</item>
+        <item>अंधेरा</item>
+    </string-array>
 </resources>

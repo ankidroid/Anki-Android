@@ -39,99 +39,109 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Datenbank überprüfen</string>
-  <string name="check_db_warning">Dies kann lange dauern</string>
-  <string name="check_db_acknowledge">Datenbank überprüft</string>
-  <string name="check_db_acknowledge_shrunk">Datenbank überprüft und optimiert.\nUm %d kB verkleinert.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
-  <string name="delete_deck_default_deck">Der Standardstapel kann nicht gelöscht werden</string>
-  <string name="delete_deck_title">Stapel löschen?</string>
-  <plurals name="delete_deck_message">
-    <item quantity="one">Alle Karten in %1$s löschen? Er enthält %2$d Karte.</item>
-    <item quantity="other">Alle Karten in %1$s löschen? Er enthält %2$d Karten.</item>
-  </plurals>
-  <string name="delete_cram_deck_message">Alle Karten aus %s wieder in ihren ursprünglichen Stapel einsortieren?</string>
-  <string name="no_tts_available_message">Keine Vorlesesprache verfügbar</string>
-  <string name="initializing_tts">Initialisiere Vorlesen&#8230;</string>
-  <string name="tts_no_tts">Nicht vorlesen</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Lernkartei für Android</h2>AnkiDroid ist eine Lernkartei-Anwendung, die voll kompatibel mit der Desktop-Software <a href=\"%2$s\">Anki</a> ist. Sie können mit AnkiDroid oder Anki Desktop Inhalte erstellen, herunterladen und lernen, und dann ganz einfach mit AnkiWeb synchronisieren.]]></item>
-    <item><![CDATA[Um AnkiDroid zu verbessern, melden Sie Bugs bitte in dem <a href=\"%1$s\">Issue-Tracker</a>; Sie können dort auch Ideen für neue Funktionen eintragen. Schauen Sie sich auch das <a href=\"%2$s\">Wiki</a> an oder schreiben Sie einen Post im <a href=\"%3$s\">Forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid ist <a href=\"%1$s\">quelloffene Software<a/>, und wir würden uns freuen, auch Sie <a href=\"%2$s\">als neue Mitwirkende</a> willkommen heißen zu können :-)]]></item>
-    <item><![CDATA[Auch Nicht-Entwickler können helfen. Sie können z. B. beim <a href=\"%1$s\">Übersetzen</a> von AnkiDroid helfen, das Wiki aktualisieren, Bildschirmfotos machen oder über AnkiDroid bloggen.]]></item>
-    <item><![CDATA[AnkiDroid ist nach <a href=\"%1$s\">GNU-GPL v3</a> lizenziert, der Quellcode ist <a href=\"%2$s\">bei GitHub</a> verfügbar.]]></item>
-  </string-array>
-  <string name="preview_title">Vorschau</string>
-  <string name="reposition_card_dialog_title">Position der neuen Karte ändern</string>
-  <string name="reposition_card_dialog_message">Anfangsposition:</string>
-  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
-  <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
-  <string name="reset_card_dialog_message">Diese Karte wird am Ende der Reihe neuer Karten platziert.</string>
-  <string name="reset_card_dialog_acknowledge">Karte zurücksetzen</string>
-  <string name="reschedule_card_dialog_title">Karte neu planen</string>
-  <string name="reschedule_card_dialog_message">Neues Intervall: In x Tagen Lernen:</string>
-  <string name="reschedule_card_dialog_acknowledge">Karte neu geplant</string>
-  <string name="answering_error_title">Datenbankfehler</string>
-  <string name="answering_error_message">Beim Zugriff auf die Datenbank ist ein Fehler aufgetreten. Dies kann an einer defekten Datenbank oder an unzureichendem Speicherplatz liegen.\n\nWenn dies öfter vorkommt, versuchen Sie bitte, die Sammlung zu reparieren oder von einem Backup wiederherzustellen. Klicken Sie dafür auf »Optionen«.\n\nEs könnte aber auch ein AnkiDroid-Fehler sein; bitte melden Sie den Fehler deshalb, damit wir das überprüfen können.</string>
-  <string name="answering_error_report">Fehler melden</string>
-  <string name="repair_deck_dialog">Möchten Sie wirklich versuchen, die Datenbank zu reparieren?\n\nBevor der Versuch startet, wird eine Kopie im Unterordner »%s« angelegt.</string>
-  <string name="intent_add_saved_information">Gespeicherte Daten</string>
-  <string name="intent_add_clear_all">Alles löschen</string>
-  <string name="intent_aedict_empty">Kategorie »Standard« ist leer</string>
-  <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie »Standard« hinzu</string>
-  <string name="custom_study_new_total_new">Neue Karten im Stapel: %s</string>
-  <string name="custom_study_rev_total_rev">Fällige Wiederholungen des Stapels: %s</string>
-  <string name="custom_study_new_extend">Limit für neue Karten für heute erhöhen um</string>
-  <string name="custom_study_rev_extend">Limit für Wiederholungen für heute erhöhen um</string>
-  <string name="custom_study_forgotten">Karten wiederholen, die in den letzten x Tagen vergessen wurden:</string>
-  <string name="custom_study_ahead">x Tage im Voraus lernen:</string>
-  <string name="custom_study_random">x Karten zufällig aus dem Stapel wählen:</string>
-  <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
-  <string name="rebuild_custom_study_deck">Erstelle neuen Stapel für eine benutzerdefinierte Sitzung&#8230;</string>
-  <string name="importing_collection">Importiere Sammlung&#8230;</string>
-  <string name="import_media_count">Importiere Mediendateien %1$d%%&#8230;</string>
-  <string name="import_progress">• Importiere Notizen: %1$d%%\n• Importiere Karten: %2$d%%\n• Nachbearbeitung: %3$d%%</string>
-  <string name="import_update_details">%1$d von %2$d bestehenden Notizen aktualisiert.</string>
-  <string name="import_update_ignored">Manche Aktualisierungen wurden ignoriert, da der Notiztyp verändert wurde</string>
-  <string name="import_complete_count">Karten importiert: %d</string>
-  <string name="sd_card_full_title">SD-Karte voll</string>
-  <string name="sd_card_almost_full_title">SD-Karte fast voll</string>
-  <string name="restore_backup_title">Sicherung wiederherstellen?</string>
-  <string name="restore_backup">Ihre Sammlung wird durch eine ältere ersetzt. Nicht gesicherter Lernfortschritt geht verloren.</string>
-  <string name="dialog_cancel">Abbrechen</string>
-  <string name="dialog_ok">OK</string>
-  <string name="dialog_continue">Weiter</string>
-  <string name="dialog_positive_create">Erstellen</string>
-  <string name="dialog_positive_delete">Löschen</string>
-  <string name="dialog_positive_disable">Abschalten</string>
-  <string name="dialog_positive_overwrite">Überschreiben</string>
-  <string name="dialog_positive_remove">Löschen</string>
-  <string name="dialog_positive_repair">Reparieren</string>
-  <string name="dialog_positive_replace">Ersetzen</string>
-  <string name="dialog_positive_restore">Wiederherstellen</string>
-  <string name="dialog_positive_set">Anwenden</string>
-  <string name="lookup_button_content">Nachschlagen</string>
-  <string name="dialog_collection_path_not_dir">Der angegebene Pfad ist kein gültiges Verzeichnis</string>
-  <!-- Media checking -->
-  <string name="check_media_title">Medien überprüfen?</string>
-  <string name="check_media_warning">Bei großen Mediensammlungen kann dies lange dauern</string>
-  <string name="check_media_message">Überprüfe Medien&#8230;</string>
-  <string name="check_media_acknowledge">Medien überprüft</string>
-  <string name="check_media_failed">Überprüfen der Medien gescheitert</string>
-  <string name="check_media_invalid">Dateien mit ungültiger Codierung: %d</string>
-  <string name="check_media_unused">Dateien im Medien-Ordner, die von keiner Karte benutzt werden: %d</string>
-  <string name="check_media_nohave">Dateien, die von Karten benutzt werden, aber im Medien-Ordner fehlen: %d</string>
-  <string name="check_media_no_unused_missing">Keine unbenutzten oder fehlenden Dateien gefunden.</string>
-  <string name="check_media_db_updated">Mediendatenbank neu gebaut.</string>
-  <string name="check_media_delete_unused">Unbenutzte löschen</string>
-  <string name="check_media_deleted">Gelöschte Dateien: %d</string>
-  <!-- Tags Dialog Options -->
-  <string name="tags_dialog_option_all_cards">Alle Karten</string>
-  <string name="tags_dialog_option_new_cards">Neue</string>
-  <string name="tags_dialog_option_due_cards">Fällige</string>
-  <!-- Empty cards -->
-  <string name="emtpy_cards_finding">Suche leere Karten&#8230;</string>
-  <string name="empty_cards_none">Keine leere Karten</string>
-  <string name="empty_cards_count">%d Karten zu löschen</string>
-  <string name="empty_cards_deleted">%d Karten gelöscht</string>
+    <string name="check_db_title">Datenbank überprüfen</string>
+    <string name="check_db_warning">Dies kann lange dauern</string>
+    <string name="check_db_acknowledge">Datenbank überprüft</string>
+    <string name="check_db_acknowledge_shrunk">Datenbank überprüft und optimiert.\nUm %d kB verkleinert.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
+    <string name="delete_deck_default_deck">Der Standardstapel kann nicht gelöscht werden</string>
+    <string name="delete_deck_title">Stapel löschen?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Alle Karten in %1$s löschen? Er enthält %2$d Karte.</item>
+        <item quantity="other">Alle Karten in %1$s löschen? Er enthält %2$d Karten.</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Alle Karten aus %s wieder in ihren ursprünglichen Stapel einsortieren?</string>
+    <string name="no_tts_available_message">Keine Vorlesesprache verfügbar</string>
+    <string name="initializing_tts">Initialisiere Vorlesen&#8230;</string>
+    <string name="tts_no_tts">Nicht vorlesen</string>
+    <string-array name="about_content">
+        <item><![CDATA[<h2>%1$s:<br/>Lernkartei für Android</h2>AnkiDroid ist eine Lernkartei-Anwendung, die voll kompatibel mit der Desktop-Software <a href=\"%2$s\">Anki</a> ist. Sie können mit AnkiDroid oder Anki Desktop Inhalte erstellen, herunterladen und lernen, und dann ganz einfach mit AnkiWeb synchronisieren.]]></item>
+        <item><![CDATA[Um AnkiDroid zu verbessern, melden Sie Bugs bitte in dem <a href=\"%1$s\">Issue-Tracker</a>; Sie können dort auch Ideen für neue Funktionen eintragen. Schauen Sie sich auch das <a href=\"%2$s\">Wiki</a> an oder schreiben Sie einen Post im <a href=\"%3$s\">Forum</a>.]]></item>
+        <item><![CDATA[AnkiDroid ist <a href=\"%1$s\">quelloffene Software<a/>, und wir würden uns freuen, auch Sie <a href=\"%2$s\">als neue Mitwirkende</a> willkommen heißen zu können :-)]]></item>
+        <item><![CDATA[Auch Nicht-Entwickler können helfen. Sie können z. B. beim <a href=\"%1$s\">Übersetzen</a> von AnkiDroid helfen, das Wiki aktualisieren, Bildschirmfotos machen oder über AnkiDroid bloggen.]]></item>
+        <item><![CDATA[AnkiDroid ist nach <a href=\"%1$s\">GNU-GPL v3</a> lizenziert, der Quellcode ist <a href=\"%2$s\">bei GitHub</a> verfügbar.]]></item>
+    </string-array>
+    <string name="preview_title">Vorschau</string>
+    <string name="reposition_card_dialog_title">Position der neuen Karte ändern</string>
+    <string name="reposition_card_dialog_message">Anfangsposition:</string>
+    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <plurals name="reposition_card_dialog_acknowledge">
+        <item quantity="one">%d card repositioned</item>
+        <item quantity="other">%d cards repositioned</item>
+    </plurals>
+    <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
+    <string name="reset_card_dialog_message">Diese Karte wird am Ende der Reihe neuer Karten platziert.</string>
+    <plurals name="reset_cards_dialog_acknowledge">
+        <item quantity="one">%d card reset</item>
+        <item quantity="other">%d cards reset</item>
+    </plurals>
+    <string name="reschedule_card_dialog_title">Karte neu planen</string>
+    <string name="reschedule_card_dialog_message">Neues Intervall: In x Tagen Lernen:</string>
+    <plurals name="reschedule_cards_dialog_acknowledge">
+        <item quantity="one">%d card rescheduled</item>
+        <item quantity="other">%d cards rescheduled</item>
+    </plurals>
+    <string name="answering_error_title">Datenbankfehler</string>
+    <string name="answering_error_message">Beim Zugriff auf die Datenbank ist ein Fehler aufgetreten. Dies kann an einer defekten Datenbank oder an unzureichendem Speicherplatz liegen.\n\nWenn dies öfter vorkommt, versuchen Sie bitte, die Sammlung zu reparieren oder von einem Backup wiederherzustellen. Klicken Sie dafür auf »Optionen«.\n\nEs könnte aber auch ein AnkiDroid-Fehler sein; bitte melden Sie den Fehler deshalb, damit wir das überprüfen können.</string>
+    <string name="answering_error_report">Fehler melden</string>
+    <string name="repair_deck_dialog">Möchten Sie wirklich versuchen, die Datenbank zu reparieren?\n\nBevor der Versuch startet, wird eine Kopie im Unterordner »%s« angelegt.</string>
+    <string name="intent_add_saved_information">Gespeicherte Daten</string>
+    <string name="intent_add_clear_all">Alles löschen</string>
+    <string name="intent_aedict_empty">Kategorie »Standard« ist leer</string>
+    <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie »Standard« hinzu</string>
+    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_extend">Limit für neue Karten für heute erhöhen um</string>
+    <string name="custom_study_rev_extend">Limit für Wiederholungen für heute erhöhen um</string>
+    <string name="custom_study_forgotten">Karten wiederholen, die in den letzten x Tagen vergessen wurden:</string>
+    <string name="custom_study_ahead">x Tage im Voraus lernen:</string>
+    <string name="custom_study_random">x Karten zufällig aus dem Stapel wählen:</string>
+    <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
+    <string name="rebuild_custom_study_deck">Erstelle neuen Stapel für eine benutzerdefinierte Sitzung&#8230;</string>
+    <string name="importing_collection">Importiere Sammlung&#8230;</string>
+    <string name="import_media_count">Importiere Mediendateien %1$d%%&#8230;</string>
+    <string name="import_progress">• Importiere Notizen: %1$d%%\n• Importiere Karten: %2$d%%\n• Nachbearbeitung: %3$d%%</string>
+    <string name="import_update_details">%1$d von %2$d bestehenden Notizen aktualisiert.</string>
+    <string name="import_update_ignored">Manche Aktualisierungen wurden ignoriert, da der Notiztyp verändert wurde</string>
+    <string name="import_complete_count">Karten importiert: %d</string>
+    <string name="sd_card_full_title">SD-Karte voll</string>
+    <string name="sd_card_almost_full_title">SD-Karte fast voll</string>
+    <string name="restore_backup_title">Sicherung wiederherstellen?</string>
+    <string name="restore_backup">Ihre Sammlung wird durch eine ältere ersetzt. Nicht gesicherter Lernfortschritt geht verloren.</string>
+    <string name="dialog_cancel">Abbrechen</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_continue">Weiter</string>
+    <string name="dialog_positive_create">Erstellen</string>
+    <string name="dialog_positive_delete">Löschen</string>
+    <string name="dialog_positive_disable">Abschalten</string>
+    <string name="dialog_positive_overwrite">Überschreiben</string>
+    <string name="dialog_positive_remove">Löschen</string>
+    <string name="dialog_positive_repair">Reparieren</string>
+    <string name="dialog_positive_replace">Ersetzen</string>
+    <string name="dialog_positive_restore">Wiederherstellen</string>
+    <string name="dialog_positive_set">Anwenden</string>
+    <string name="lookup_button_content">Nachschlagen</string>
+    <string name="dialog_collection_path_not_dir">Der angegebene Pfad ist kein gültiges Verzeichnis</string>
+    <!-- Media checking -->
+    <string name="check_media_title">Medien überprüfen?</string>
+    <string name="check_media_warning">Bei großen Mediensammlungen kann dies lange dauern</string>
+    <string name="check_media_message">Überprüfe Medien&#8230;</string>
+    <string name="check_media_acknowledge">Medien überprüft</string>
+    <string name="check_media_failed">Überprüfen der Medien gescheitert</string>
+    <string name="check_media_invalid">Dateien mit ungültiger Codierung: %d</string>
+    <string name="check_media_unused">Dateien im Medien-Ordner, die von keiner Karte benutzt werden: %d</string>
+    <string name="check_media_nohave">Dateien, die von Karten benutzt werden, aber im Medien-Ordner fehlen: %d</string>
+    <string name="check_media_no_unused_missing">Keine unbenutzten oder fehlenden Dateien gefunden.</string>
+    <string name="check_media_db_updated">Mediendatenbank neu gebaut.</string>
+    <string name="check_media_delete_unused">Unbenutzte löschen</string>
+    <string name="check_media_deleted">Gelöschte Dateien: %d</string>
+    <!-- Tags Dialog Options -->
+    <string name="tags_dialog_option_all_cards">Alle Karten</string>
+    <string name="tags_dialog_option_new_cards">Neue</string>
+    <string name="tags_dialog_option_due_cards">Fällige</string>
+    <!-- Empty cards -->
+    <string name="emtpy_cards_finding">Suche leere Karten&#8230;</string>
+    <string name="empty_cards_none">Keine leere Karten</string>
+    <string name="empty_cards_count">%d Karten zu löschen</string>
+    <string name="empty_cards_deleted">%d Karten gelöscht</string>
 </resources>

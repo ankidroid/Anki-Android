@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Завжди звітувати</item>
-    <item>Ніколи не сповіщати</item>
-    <item>Запитайте мене</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Ніяких дій</item>
-    <item>Показати відповідь</item>
-    <item>Кнопка відповіді 1</item>
-    <item>Кнопка відповіді 2</item>
-    <item>Кнопка відповіді 3</item>
-    <item>Кнопка відповіді 4</item>
-    <item>Рекомендована відповідь (зелений)</item>
-    <item>Краще, ніж рекомендовано</item>
-    <item>Скасувати</item>
-    <item>Редагувати нотатку</item>
-    <item>Міткувати нотатку</item>
-    <item>Пошук виразу</item>
-    <item>Приховати картку</item>
-    <item>Відкласти картку</item>
-    <item>Видалити нотатку</item>
-    <item>Відтворити медіа</item>
-    <item>Перервати навчання</item>
-    <item>Приховати нотатку</item>
-    <item>Відкласти нотатку</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Відкласти картку</item>
-    <item>Тільки мітки</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Нові картки у випадковому порядку</item>
-    <item>Нові картки в порядку додавання</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Найстарші спочатку</item>
-    <item>Випадковий порядок</item>
-    <item>Зростаючі інтервали</item>
-    <item>Спадні інтервали</item>
-    <item>З найбільшою кількістю ляпсів</item>
-    <item>В порядку додавання</item>
-    <item>В порядку черги</item>
-    <item>Остання додана іде першою</item>
-    <item>Відносна затримка</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Використовувати поточну колоду</item>
-    <item>Вирішити за типом примітки</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Змішати нові карти і повторювані</item>
-    <item>Нові карти після повторюваних</item>
-    <item>Нові карт перед повторюваними</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Коли немає шрифту, вказаного на навчальних картках</item>
-    <item>Завжди</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Світлий</item>
-    <item>Звичайний</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Чорний</item>
-    <item>Темний</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Завжди звітувати</item>
+        <item>Ніколи не сповіщати</item>
+        <item>Запитайте мене</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Ніяких дій</item>
+        <item>Показати відповідь</item>
+        <item>Кнопка відповіді 1</item>
+        <item>Кнопка відповіді 2</item>
+        <item>Кнопка відповіді 3</item>
+        <item>Кнопка відповіді 4</item>
+        <item>Рекомендована відповідь (зелений)</item>
+        <item>Краще, ніж рекомендовано</item>
+        <item>Скасувати</item>
+        <item>Редагувати нотатку</item>
+        <item>Міткувати нотатку</item>
+        <item>Пошук виразу</item>
+        <item>Приховати картку</item>
+        <item>Відкласти картку</item>
+        <item>Видалити нотатку</item>
+        <item>Відтворити медіа</item>
+        <item>Перервати навчання</item>
+        <item>Приховати нотатку</item>
+        <item>Відкласти нотатку</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Відкласти картку</item>
+        <item>Тільки мітки</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Нові картки у випадковому порядку</item>
+        <item>Нові картки в порядку додавання</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Найстарші спочатку</item>
+        <item>Випадковий порядок</item>
+        <item>Зростаючі інтервали</item>
+        <item>Спадні інтервали</item>
+        <item>З найбільшою кількістю ляпсів</item>
+        <item>В порядку додавання</item>
+        <item>В порядку черги</item>
+        <item>Остання додана іде першою</item>
+        <item>Відносна затримка</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Використовувати поточну колоду</item>
+        <item>Вирішити за типом примітки</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Змішати нові карти і повторювані</item>
+        <item>Нові карти після повторюваних</item>
+        <item>Нові карт перед повторюваними</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Коли немає шрифту, вказаного на навчальних картках</item>
+        <item>Завжди</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Світлий</item>
+        <item>Звичайний</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Чорний</item>
+        <item>Темний</item>
+    </string-array>
 </resources>

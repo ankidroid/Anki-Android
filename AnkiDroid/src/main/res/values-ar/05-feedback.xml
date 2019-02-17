@@ -39,15 +39,15 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Feedback.java -->
-  <string name="empty_string"></string>
-  <string name="error_reporting_choice">نمط الإبلاغ عن الأخطاء</string>
-  <string name="feedback_disclaimer">تنويه: لا نقوم بجمع أي معلومات شخصية عنك مثل عنوان البريد الإلكتروني الخاص بك أو رقم هاتفك أو IMEI الخاص بهاتفك. نقوم فقط بجمع بعض المعلومات عن الجهاز مثل الشركة المصنعة والطراز ونسخة الأندرويد الخاص بجهازك، فضلا عن طبيعة تقارير الخطأ نفسها والخطوات التي أدت إلى حدوثها.</string>
-  <string name="feedback_title">مرئيات</string>
-  <string name="feedback_default_text">الرجاء أدخل مرئياتك، أو المعلومات حول طبيعة أي أخطاء تبلغ عنها.</string>
-  <string name="feedback_auto_toast_text">واجهت ankidroid مشكلة؛ يتم الآن إرسال تقرير إلى المطورين&#8230;</string>
-  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
-  <string name="feedback_copy_debug">Copy debug info</string>
-  <string name="feedback_report">Report</string>
-  <string name="feedback_report_automatically">Send error reports automatically</string>
+    <!-- Feedback.java -->
+    <string name="empty_string"></string>
+    <string name="error_reporting_choice">نمط الإبلاغ عن الأخطاء</string>
+    <string name="feedback_disclaimer">تنويه: لا نقوم بجمع أي معلومات شخصية عنك مثل عنوان البريد الإلكتروني الخاص بك أو رقم هاتفك أو IMEI الخاص بهاتفك. نقوم فقط بجمع بعض المعلومات عن الجهاز مثل الشركة المصنعة والطراز ونسخة الأندرويد الخاص بجهازك، فضلا عن طبيعة تقارير الخطأ نفسها والخطوات التي أدت إلى حدوثها.</string>
+    <string name="feedback_title">AnkiDroid Feedback</string>
+    <string name="feedback_default_text">الرجاء أدخل مرئياتك، أو المعلومات حول طبيعة أي أخطاء تبلغ عنها.</string>
+    <string name="feedback_auto_toast_text">واجهت ankidroid مشكلة؛ يتم الآن إرسال تقرير إلى المطورين&#8230;</string>
+    <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+    <string name="feedback_copy_debug">Copy debug info</string>
+    <string name="feedback_report">Report</string>
+    <string name="feedback_report_automatically">Send error reports automatically</string>
 </resources>

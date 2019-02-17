@@ -39,99 +39,109 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Veritabanını kontrol et</string>
-  <string name="check_db_warning">Bu uzun sürebilir</string>
-  <string name="check_db_acknowledge">Veritabanı kontrol edildi</string>
-  <string name="check_db_acknowledge_shrunk">Veritabanı kontrol ve optimize edildi.\n%d KB küçültüldü.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Desteyi Sil</string>
-  <string name="delete_deck_default_deck">Varsayılan deste silinemez.</string>
-  <string name="delete_deck_title">Desteyi Sil</string>
-  <plurals name="delete_deck_message">
-    <item quantity="one">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
-    <item quantity="other">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
-  </plurals>
-  <string name="delete_cram_deck_message">Tüm kartları orijinal destelerine %s geri göndermek istediğinizden emin misiniz?</string>
-  <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
-  <string name="initializing_tts">Metin okuma başlatılıyor&#8230;</string>
-  <string name="tts_no_tts">Konuşma</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid, masaüstü yazılımı <a href=\"%2$s\">Anki</a>\'yle tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstü\'nde materyal oluşturup, indirip ve öğrenip, bunları AnkiWeb\'le kolayca senkronize edebilirsiniz.]]></item>
-    <item><![CDATA[AnkiDroid\'i daha iyi hâle getirmemize yardım etmek için, lütfen bugları <a href=\"%1$s\">sorun takipçisi</a>ne bildirin; yeni özellik fikirlerinizi de bekliyoruz. <a href=\"%2$s\">Wiki</a>de sorularınıza cevap arayın veya <a href=\"%3$s\">forum</a>da bir tartışma açın.]]></item>
-    <item><![CDATA[AnkiDroid <a href=\"%1$s\">açık kaynaklı bir programdır<a/>, böylece herkes <a href=\"%2$s\"> katılımcı olabilir</a> :-)]]></item>
-    <item><![CDATA[Yazılımcı olmayanlar da yardım edebilir. Örneğin; AnkiDroid\'in <a href=\"%1$s\">tercümesine yardım edebilir</a>, vikiyi güncelleyebilir, ekran görüntüleri sağlayabilir, veya AnkiDroid hakkında bloglayabilirsiniz.]]></item>
-    <item><![CDATA[AnkiDroid GNU-GPL v3 <a href=\"%1$s\"> lisansı altında çıkartılmıştır </a> kaynak kodlarına <a href=\"%2$s\"> GitHub\'dan ulaşabilirsiniz</a>.]]></item>
-  </string-array>
-  <string name="preview_title">Önizleme</string>
-  <string name="reposition_card_dialog_title">Reposition new card</string>
-  <string name="reposition_card_dialog_message">Start position:</string>
-  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
-  <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>
-  <string name="reset_card_dialog_message">Bu kart yeni kart sırasının sonuna koyulacak.</string>
-  <string name="reset_card_dialog_acknowledge">Kartı sıfırla</string>
-  <string name="reschedule_card_dialog_title">Kartın zamanını değiştir</string>
-  <string name="reschedule_card_dialog_message">Şu kadar gün sonra çalışmaya zamanla:</string>
-  <string name="reschedule_card_dialog_acknowledge">Kartın zamanı değiştirildi</string>
-  <string name="answering_error_title">Veritabanı hatası</string>
-  <string name="answering_error_message">Koleksiyon yazılırken bir hatâ meydana geldi. Bu bozuk bir veritabanıyla veya yetersiz disk alanıyla ilgili olabilir.\n\nEğer bu daha sık olmaya başlarsa, lütfen veritabanını kontrol etmeyi, koleksiyonu onarmayı veya bir yedekten geri yüklemeyi deneyin.\n\nTabii bu bir AnkiDroid sorunu da olabilir; lütfen hatâyı bildirin ki kontrol edebilelim.</string>
-  <string name="answering_error_report">Hatayı bildir</string>
-  <string name="repair_deck_dialog">Veritabanını onarmayı gerçekten denemek istiyor musunuz?\n\nGirişime başlamadan önce, \"%s\" altklasöründe bir kopya oluşturulacak.</string>
-  <string name="intent_add_saved_information">Veri kaydedildi</string>
-  <string name="intent_add_clear_all">Hepsini temizle</string>
-  <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
-  <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
-  <string name="custom_study_new_total_new">Desteden yeni kartlar: %s</string>
-  <string name="custom_study_rev_total_rev">Destede çalışılacak kart: %s</string>
-  <string name="custom_study_new_extend">Bugünün yeni kart limitini artırın</string>
-  <string name="custom_study_rev_extend">Bugünün gözden geçirme limitini artırın</string>
-  <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
-  <string name="custom_study_ahead">X günleri önce izle:</string>
-  <string name="custom_study_random">X kartları rastgele desteden seç:</string>
-  <string name="custom_study_preview">Son x günlerdeki eklenen yeni kartları önizle:</string>
-  <string name="rebuild_custom_study_deck">Özel çalışma destesi yapılandırılıyor.\nLütfen bekleyin...</string>
-  <string name="importing_collection">Arşiv içeri aktarılıyor.\nLütfen bekleyin&#8230;</string>
-  <string name="import_media_count">Medya dosyaları %1$d%% içeri aktarılıyor.\nLütfen bekleyin&#8230;</string>
-  <string name="import_progress">• Notlar aktarılıyor: %1$d%%\n• Kartlar aktarılıyor: %2$d%%\n• Sonişleme: %3$d%%</string>
-  <string name="import_update_details">Mevcut %2$d notun %1$d tanesi güncellendi.</string>
-  <string name="import_update_ignored">Bazı güncellemeler not türü değiştiği için yoksayıldı</string>
-  <string name="import_complete_count">Aktarılmış kart: %d</string>
-  <string name="sd_card_full_title">SD kart dolu</string>
-  <string name="sd_card_almost_full_title">SD kart neredeyse dolu</string>
-  <string name="restore_backup_title">Yedek geri yüklensin mi?</string>
-  <string name="restore_backup">Koleksiyonunuz eski bir kopyayla değiştirilecek. Kaydedilmemiş ilerlemeler kaybolacak.</string>
-  <string name="dialog_cancel">İptâl</string>
-  <string name="dialog_ok">Tamam</string>
-  <string name="dialog_continue">Devam Et</string>
-  <string name="dialog_positive_create">Oluştur</string>
-  <string name="dialog_positive_delete">Sil</string>
-  <string name="dialog_positive_disable">Devredışı Bırak</string>
-  <string name="dialog_positive_overwrite">Üzerine Yaz</string>
-  <string name="dialog_positive_remove">Kaldır</string>
-  <string name="dialog_positive_repair">Onar</string>
-  <string name="dialog_positive_replace">Değiştir</string>
-  <string name="dialog_positive_restore">Geri Yükle</string>
-  <string name="dialog_positive_set">Ayarla</string>
-  <string name="lookup_button_content">Sözlüğe bak</string>
-  <string name="dialog_collection_path_not_dir">Belirtilen konum geçerli bir dizin değildi.</string>
-  <!-- Media checking -->
-  <string name="check_media_title">Medya kontrol edilsin mi?</string>
-  <string name="check_media_warning">Bu, büyük medya koleksiyonlarıyla uzun sürebilir.</string>
-  <string name="check_media_message">Medya kontrol ediliyor&#8230;</string>
-  <string name="check_media_acknowledge">Medya kontrol edildi</string>
-  <string name="check_media_failed">Medya kontrolü başarısız</string>
-  <string name="check_media_invalid">Geçersiz kodlamalı dosyalar: %d</string>
-  <string name="check_media_unused">Medya klasöründe olup hiçbir kartta kullanılmayan dosyalar: %d</string>
-  <string name="check_media_nohave">Kartlarda kullanılıp medya klasöründe olmayan dosyalar: %d</string>
-  <string name="check_media_no_unused_missing">Kullanılmayan veya eksik dosya bulunmuyor.</string>
-  <string name="check_media_db_updated">Medya veritabanı yeniden inşa edildi.</string>
-  <string name="check_media_delete_unused">Kullanılmayanları sil</string>
-  <string name="check_media_deleted">Silinen dosyalar: %d</string>
-  <!-- Tags Dialog Options -->
-  <string name="tags_dialog_option_all_cards">Tüm kartlar</string>
-  <string name="tags_dialog_option_new_cards">Yeni</string>
-  <string name="tags_dialog_option_due_cards">Çıkacak</string>
-  <!-- Empty cards -->
-  <string name="emtpy_cards_finding">Boş kartlar aranıyor&#8230;</string>
-  <string name="empty_cards_none">Boş kart yok</string>
-  <string name="empty_cards_count">Silinecek kartlar %d</string>
-  <string name="empty_cards_deleted">Silinmiş Kartlar %d</string>
+    <string name="check_db_title">Veritabanını kontrol et</string>
+    <string name="check_db_warning">Bu uzun sürebilir</string>
+    <string name="check_db_acknowledge">Veritabanı kontrol edildi</string>
+    <string name="check_db_acknowledge_shrunk">Veritabanı kontrol ve optimize edildi.\n%d KB küçültüldü.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Desteyi Sil</string>
+    <string name="delete_deck_default_deck">Varsayılan deste silinemez.</string>
+    <string name="delete_deck_title">Desteyi Sil</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
+        <item quantity="other">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Tüm kartları orijinal destelerine %s geri göndermek istediğinizden emin misiniz?</string>
+    <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
+    <string name="initializing_tts">Metin okuma başlatılıyor&#8230;</string>
+    <string name="tts_no_tts">Konuşma</string>
+    <string-array name="about_content">
+        <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid, masaüstü yazılımı <a href=\"%2$s\">Anki</a>\'yle tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstü\'nde materyal oluşturup, indirip ve öğrenip, bunları AnkiWeb\'le kolayca senkronize edebilirsiniz.]]></item>
+        <item><![CDATA[AnkiDroid\'i daha iyi hâle getirmemize yardım etmek için, lütfen bugları <a href=\"%1$s\">sorun takipçisi</a>ne bildirin; yeni özellik fikirlerinizi de bekliyoruz. <a href=\"%2$s\">Wiki</a>de sorularınıza cevap arayın veya <a href=\"%3$s\">forum</a>da bir tartışma açın.]]></item>
+        <item><![CDATA[AnkiDroid <a href=\"%1$s\">açık kaynaklı bir programdır<a/>, böylece herkes <a href=\"%2$s\"> katılımcı olabilir</a> :-)]]></item>
+        <item><![CDATA[Yazılımcı olmayanlar da yardım edebilir. Örneğin; AnkiDroid\'in <a href=\"%1$s\">tercümesine yardım edebilir</a>, vikiyi güncelleyebilir, ekran görüntüleri sağlayabilir, veya AnkiDroid hakkında bloglayabilirsiniz.]]></item>
+        <item><![CDATA[AnkiDroid GNU-GPL v3 <a href=\"%1$s\"> lisansı altında çıkartılmıştır </a> kaynak kodlarına <a href=\"%2$s\"> GitHub\'dan ulaşabilirsiniz</a>.]]></item>
+    </string-array>
+    <string name="preview_title">Önizleme</string>
+    <string name="reposition_card_dialog_title">Reposition new card</string>
+    <string name="reposition_card_dialog_message">Start position:</string>
+    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <plurals name="reposition_card_dialog_acknowledge">
+        <item quantity="one">%d card repositioned</item>
+        <item quantity="other">%d cards repositioned</item>
+    </plurals>
+    <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>
+    <string name="reset_card_dialog_message">Bu kart yeni kart sırasının sonuna koyulacak.</string>
+    <plurals name="reset_cards_dialog_acknowledge">
+        <item quantity="one">%d card reset</item>
+        <item quantity="other">%d cards reset</item>
+    </plurals>
+    <string name="reschedule_card_dialog_title">Kartın zamanını değiştir</string>
+    <string name="reschedule_card_dialog_message">Şu kadar gün sonra çalışmaya zamanla:</string>
+    <plurals name="reschedule_cards_dialog_acknowledge">
+        <item quantity="one">%d card rescheduled</item>
+        <item quantity="other">%d cards rescheduled</item>
+    </plurals>
+    <string name="answering_error_title">Veritabanı hatası</string>
+    <string name="answering_error_message">Koleksiyon yazılırken bir hatâ meydana geldi. Bu bozuk bir veritabanıyla veya yetersiz disk alanıyla ilgili olabilir.\n\nEğer bu daha sık olmaya başlarsa, lütfen veritabanını kontrol etmeyi, koleksiyonu onarmayı veya bir yedekten geri yüklemeyi deneyin.\n\nTabii bu bir AnkiDroid sorunu da olabilir; lütfen hatâyı bildirin ki kontrol edebilelim.</string>
+    <string name="answering_error_report">Hatayı bildir</string>
+    <string name="repair_deck_dialog">Veritabanını onarmayı gerçekten denemek istiyor musunuz?\n\nGirişime başlamadan önce, \"%s\" altklasöründe bir kopya oluşturulacak.</string>
+    <string name="intent_add_saved_information">Veri kaydedildi</string>
+    <string name="intent_add_clear_all">Hepsini temizle</string>
+    <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
+    <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
+    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_extend">Bugünün yeni kart limitini artırın</string>
+    <string name="custom_study_rev_extend">Bugünün gözden geçirme limitini artırın</string>
+    <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
+    <string name="custom_study_ahead">X günleri önce izle:</string>
+    <string name="custom_study_random">X kartları rastgele desteden seç:</string>
+    <string name="custom_study_preview">Son x günlerdeki eklenen yeni kartları önizle:</string>
+    <string name="rebuild_custom_study_deck">Özel çalışma destesi yapılandırılıyor.\nLütfen bekleyin...</string>
+    <string name="importing_collection">Arşiv içeri aktarılıyor.\nLütfen bekleyin&#8230;</string>
+    <string name="import_media_count">Medya dosyaları %1$d%% içeri aktarılıyor.\nLütfen bekleyin&#8230;</string>
+    <string name="import_progress">• Notlar aktarılıyor: %1$d%%\n• Kartlar aktarılıyor: %2$d%%\n• Sonişleme: %3$d%%</string>
+    <string name="import_update_details">Mevcut %2$d notun %1$d tanesi güncellendi.</string>
+    <string name="import_update_ignored">Bazı güncellemeler not türü değiştiği için yoksayıldı</string>
+    <string name="import_complete_count">Aktarılmış kart: %d</string>
+    <string name="sd_card_full_title">SD kart dolu</string>
+    <string name="sd_card_almost_full_title">SD kart neredeyse dolu</string>
+    <string name="restore_backup_title">Yedek geri yüklensin mi?</string>
+    <string name="restore_backup">Koleksiyonunuz eski bir kopyayla değiştirilecek. Kaydedilmemiş ilerlemeler kaybolacak.</string>
+    <string name="dialog_cancel">İptâl</string>
+    <string name="dialog_ok">Tamam</string>
+    <string name="dialog_continue">Devam Et</string>
+    <string name="dialog_positive_create">Oluştur</string>
+    <string name="dialog_positive_delete">Sil</string>
+    <string name="dialog_positive_disable">Devredışı Bırak</string>
+    <string name="dialog_positive_overwrite">Üzerine Yaz</string>
+    <string name="dialog_positive_remove">Kaldır</string>
+    <string name="dialog_positive_repair">Onar</string>
+    <string name="dialog_positive_replace">Değiştir</string>
+    <string name="dialog_positive_restore">Geri Yükle</string>
+    <string name="dialog_positive_set">Ayarla</string>
+    <string name="lookup_button_content">Sözlüğe bak</string>
+    <string name="dialog_collection_path_not_dir">Belirtilen konum geçerli bir dizin değildi.</string>
+    <!-- Media checking -->
+    <string name="check_media_title">Medya kontrol edilsin mi?</string>
+    <string name="check_media_warning">Bu, büyük medya koleksiyonlarıyla uzun sürebilir.</string>
+    <string name="check_media_message">Medya kontrol ediliyor&#8230;</string>
+    <string name="check_media_acknowledge">Medya kontrol edildi</string>
+    <string name="check_media_failed">Medya kontrolü başarısız</string>
+    <string name="check_media_invalid">Geçersiz kodlamalı dosyalar: %d</string>
+    <string name="check_media_unused">Medya klasöründe olup hiçbir kartta kullanılmayan dosyalar: %d</string>
+    <string name="check_media_nohave">Kartlarda kullanılıp medya klasöründe olmayan dosyalar: %d</string>
+    <string name="check_media_no_unused_missing">Kullanılmayan veya eksik dosya bulunmuyor.</string>
+    <string name="check_media_db_updated">Medya veritabanı yeniden inşa edildi.</string>
+    <string name="check_media_delete_unused">Kullanılmayanları sil</string>
+    <string name="check_media_deleted">Silinen dosyalar: %d</string>
+    <!-- Tags Dialog Options -->
+    <string name="tags_dialog_option_all_cards">Tüm kartlar</string>
+    <string name="tags_dialog_option_new_cards">Yeni</string>
+    <string name="tags_dialog_option_due_cards">Çıkacak</string>
+    <!-- Empty cards -->
+    <string name="emtpy_cards_finding">Boş kartlar aranıyor&#8230;</string>
+    <string name="empty_cards_none">Boş kart yok</string>
+    <string name="empty_cards_count">Silinecek kartlar %d</string>
+    <string name="empty_cards_deleted">Silinmiş Kartlar %d</string>
 </resources>

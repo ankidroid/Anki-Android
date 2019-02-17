@@ -39,57 +39,57 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- CardBrowser -->
-  <plurals name="card_browser_subtitle">
-    <item quantity="other">共有%d张卡片</item>
-  </plurals>
-  <string name="card_browser_all_decks">所有牌组</string>
-  <string name="card_browser_delete_card">删除卡牌记录</string>
-  <string name="card_browser_suspend_card">Suspend cards</string>
-  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
-  <string name="card_browser_change_deck">Change deck</string>
-  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-  <string name="card_browser_mark_card">Mark notes</string>
-  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
-  <string name="card_browser_unmark_card">Unmark notes</string>
-  <string name="delete_card_title">确认删除笔记？</string>
-  <string name="delete_cards_title">是否删除卡牌记录？</string>
-  <string name="delete_card_message">确认删除此笔记的所有卡片？\n搜索字段：%s</string>
-  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
-  <string name="deleted_message">卡牌记录已删除</string>
-  <string name="changed_deck_message">移动至 %s</string>
-  <string name="card_browser_suspended_cards">(un)suspended cards</string>
-  <string name="card_browser_show_marked">筛选已标记卡牌</string>
-  <string name="card_browser_show_suspended">筛选已暂停卡牌</string>
-  <string name="card_browser_search_by_tag">按标签筛选</string>
-  <string name="card_browser_tags_shown">标签: %1$s</string>
-  <string name="card_browser_list_my_searches">我的搜索</string>
-  <string name="card_browser_list_my_searches_save">保存搜索结果</string>
-  <string name="card_browser_list_my_searches_title">选择一个已保存的搜索结果</string>
-  <string name="card_browser_list_my_searches_new_name">当前搜索的名称</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">没有输入名称时不能保存搜索结果</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">名称已存在</string>
-  <string name="card_browser_list_my_searches_remove_content">确认删除“%1$s”？</string>
-  <string name="card_browser_change_display_order">改变排序方式</string>
-  <string name="card_browser_change_display_order_title">排序方式</string>
-  <string name="card_browser_change_display_order_reverse">选择字段两次，以翻转。</string>
-  <string name="card_details_question">问题</string>
-  <string name="card_details_answer">答案</string>
-  <string name="card_details_due">到期时间</string>
-  <string name="card_details_tags">标签</string>
-  <string name="card_browser_filtering_cards">正在筛选卡牌&#8230; \n按返回键取消</string>
-  <string-array name="card_browser_order_labels">
-    <item>不排序(更快)</item>
-    <item>按字段名称排序</item>
-    <item>按创建时间排序</item>
-    <item>按编辑时间排序</item>
-    <item>按改变时间排序</item>
-    <item>按到期时间排序</item>
-    <item>按间隔时间排序</item>
-    <item>按难易程度排序</item>
-    <item>按复习时间排序</item>
-    <item>按失误次数排序</item>
-  </string-array>
-  <string name="card_browser_select_all">全选</string>
-  <string name="card_browser_select_none">取消全选</string>
+    <!-- CardBrowser -->
+    <plurals name="card_browser_subtitle">
+        <item quantity="other">共有%d张卡片</item>
+    </plurals>
+    <string name="card_browser_all_decks">所有牌组</string>
+    <string name="card_browser_delete_card">删除卡牌记录</string>
+    <string name="card_browser_suspend_card">搁置卡片</string>
+    <string name="card_browser_toggle_suspend_card">(取消) 搁置卡片</string>
+    <string name="card_browser_change_deck">更换牌组</string>
+    <string name="card_browser_unsuspend_card">取消擱置卡片</string>
+    <string name="card_browser_mark_card">标记笔记</string>
+    <string name="card_browser_toggle_mark_card">(未标)记的笔记</string>
+    <string name="card_browser_unmark_card">未标记的笔记</string>
+    <string name="delete_card_title">确认删除笔记？</string>
+    <string name="delete_cards_title">是否删除卡牌记录？</string>
+    <string name="delete_card_message">确认删除此笔记的所有卡片？\n搜索字段：%s</string>
+    <string name="delete_card_mult_message">刪除所有选定笔记中的卡片 \n (不只选中的卡)</string>
+    <string name="deleted_message">卡牌记录已删除</string>
+    <string name="changed_deck_message">移动至 %s</string>
+    <string name="card_browser_suspended_cards">(取消) 搁置的卡片</string>
+    <string name="card_browser_show_marked">筛选已标记卡牌</string>
+    <string name="card_browser_show_suspended">筛选已暂停卡牌</string>
+    <string name="card_browser_search_by_tag">按标签筛选</string>
+    <string name="card_browser_tags_shown">标签: %1$s</string>
+    <string name="card_browser_list_my_searches">我的搜索</string>
+    <string name="card_browser_list_my_searches_save">保存搜索结果</string>
+    <string name="card_browser_list_my_searches_title">选择一个已保存的搜索结果</string>
+    <string name="card_browser_list_my_searches_new_name">当前搜索的名称</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">没有输入名称时不能保存搜索结果</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">名称已存在</string>
+    <string name="card_browser_list_my_searches_remove_content">确认删除“%1$s”？</string>
+    <string name="card_browser_change_display_order">改变排序方式</string>
+    <string name="card_browser_change_display_order_title">排序方式</string>
+    <string name="card_browser_change_display_order_reverse">选择字段两次，以翻转。</string>
+    <string name="card_details_question">问题</string>
+    <string name="card_details_answer">答案</string>
+    <string name="card_details_due">到期时间</string>
+    <string name="card_details_tags">标签</string>
+    <string name="card_browser_filtering_cards">正在筛选卡牌&#8230; \n按返回键取消</string>
+    <string-array name="card_browser_order_labels">
+        <item>不排序(更快)</item>
+        <item>按字段名称排序</item>
+        <item>按创建时间排序</item>
+        <item>按编辑时间排序</item>
+        <item>按改变时间排序</item>
+        <item>按到期时间排序</item>
+        <item>按间隔时间排序</item>
+        <item>按难易程度排序</item>
+        <item>按复习时间排序</item>
+        <item>按失误次数排序</item>
+    </string-array>
+    <string name="card_browser_select_all">全选</string>
+    <string name="card_browser_select_none">取消全选</string>
 </resources>

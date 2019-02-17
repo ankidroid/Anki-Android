@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>أرسل التقرير دائماً</item>
-    <item>لا ترسل التقرير بتاتاً</item>
-    <item>إسألني</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>بدون اجراء</item>
-    <item>أظهر الإجابة</item>
-    <item>زر الإجابة 1</item>
-    <item>زر الإجابة 2</item>
-    <item>زر الإجابة 3</item>
-    <item>زر الإجابة 4</item>
-    <item>الإجابة الموصى بها (أخضر)</item>
-    <item>الإجابة أفضل مما أوصى بها</item>
-    <item>تراجع</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
-    <item>تعبير البحث</item>
-    <item>أخف البطاقة</item>
-    <item>علق البطاقة</item>
-    <item>Delete note</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>علق البطاقة</item>
-    <item>الوسم فقط</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>البطاقات الجديدة في ترتيب عشوائي</item>
-    <item>البطاقات الجديدة في ترتيب إضافتها</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>مشاهدة الأقدم أولا</item>
-    <item>عشوائي</item>
-    <item>زيادة الفترات</item>
-    <item>تقليل الفترات</item>
-    <item>الأكثر نسيانا</item>
-    <item>إضافة الترتيب</item>
-    <item>ترتيب الاستحقاق</item>
-    <item>Latest added first</item>
-    <item>Relative overdueness</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>أرسل التقرير دائماً</item>
+        <item>لا ترسل التقرير بتاتاً</item>
+        <item>إسألني</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>بدون اجراء</item>
+        <item>أظهر الإجابة</item>
+        <item>زر الإجابة 1</item>
+        <item>زر الإجابة 2</item>
+        <item>زر الإجابة 3</item>
+        <item>زر الإجابة 4</item>
+        <item>الإجابة الموصى بها (أخضر)</item>
+        <item>الإجابة أفضل مما أوصى بها</item>
+        <item>تراجع</item>
+        <item>Edit note</item>
+        <item>Mark note</item>
+        <item>تعبير البحث</item>
+        <item>أخف البطاقة</item>
+        <item>علق البطاقة</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>علق البطاقة</item>
+        <item>الوسم فقط</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>البطاقات الجديدة في ترتيب عشوائي</item>
+        <item>البطاقات الجديدة في ترتيب إضافتها</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>مشاهدة الأقدم أولا</item>
+        <item>عشوائي</item>
+        <item>زيادة الفترات</item>
+        <item>تقليل الفترات</item>
+        <item>الأكثر نسيانا</item>
+        <item>إضافة الترتيب</item>
+        <item>ترتيب الاستحقاق</item>
+        <item>Latest added first</item>
+        <item>Relative overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Use current deck</item>
+        <item>Decide by note type</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Mix new cards and reviews</item>
+        <item>New cards after reviews</item>
+        <item>New cards before reviews</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>When no font specified on flashcards</item>
+        <item>Always</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Light</item>
+        <item>Plain</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Black</item>
+        <item>Dark</item>
+    </string-array>
 </resources>

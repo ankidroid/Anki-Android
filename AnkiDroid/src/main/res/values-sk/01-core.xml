@@ -39,139 +39,144 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Navigation drawer items-->
-  <string name="decks">Balíčky</string>
-  <string name="card_browser">Prehliadač kartičiek</string>
-  <string name="statistics">Štatistiky</string>
-  <string name="settings">Nastavenia</string>
-  <string name="help">Pomoc</string>
-  <string name="send_feedback">Poslať spätnú väzbu</string>
-  <string name="studyoptions_title">Prehľad o balíčku</string>
-  <string name="studyoptions_due_today">Dnes na preskúšanie:</string>
-  <string name="studyoptions_new_total">Celkový počet nových kartičiek:</string>
-  <string name="studyoptions_total_cards">Celkový počet kartičiek:</string>
-  <string name="studyoptions_eta">Odhadovaný čas (min):</string>
-  <string name="studyoptions_start">Študovať teraz</string>
-  <!-- DeckPicker.java -->
-  <string name="expand">Rozbaliť</string>
-  <string name="collapse">Zbaliť</string>
-  <string name="study_more">Študovať viac</string>
-  <plurals name="deckpicker_title">
-    <item quantity="one">%1$d kartička na preskúšanie (%2$s)</item>
-    <item quantity="few">%1$d kartičky na preskúšanie (%2$s)</item>
-    <item quantity="many">%1$d cards due (%2$s)</item>
-    <item quantity="other">%1$d kartičiek na preskúšanie (%2$s)</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">zostáva %d minúta</item>
-    <item quantity="few">zostávajú %d minúty</item>
-    <item quantity="many">%d minutes left</item>
-    <item quantity="other">zostáva %d minút</item>
-  </plurals>
-  <!-- The deck picker via AnkiStatsTaskHandler.java -->
-  <plurals name="studied_cards_today">
-    <item quantity="one">Dnes naučená %1$d kartička počas %2$s</item>
-    <item quantity="few">Dnes naučené %1$d kartičky počas %2$s</item>
-    <item quantity="many">Studied %1$d cards in %2$s today</item>
-    <item quantity="other">Dnes naučených %1$d kartičiek počas %2$s</item>
-  </plurals>
-  <!-- flashcard_portrait.xml -->
-  <string name="type_answer_hint">Napísať odpoveď</string>
-  <string name="show_answer">Zobraziť odpoveď</string>
-  <string name="ease_button_again">Znovu</string>
-  <string name="ease_button_hard">Ťažké</string>
-  <string name="ease_button_good">Dobré</string>
-  <string name="ease_button_easy">Ľahké</string>
-  <string name="studyoptions_congrats_undo">Späť %s</string>
-  <string name="menu_import">Import</string>
-  <string name="undo">Späť</string>
-  <string name="undo_action_review">posledné opakovanie</string>
-  <string name="undo_action_bury_card">skryť kartičku</string>
-  <string name="undo_action_bury_note">skryť poznámku</string>
-  <string name="undo_action_suspend_card">pozastaviť kartičku</string>
-  <string name="undo_action_suspend_note">pozastaviť poznámku</string>
-  <string name="undo_action_delete">vymazať poznámku</string>
-  <string name="undo_action_delete_multi">delete notes</string>
-  <string name="undo_action_change_deck_multi">change decks</string>
-  <string name="move_all_to_deck">Move all to deck</string>
-  <string name="unbury">Odkryť</string>
-  <string name="rename_deck">Premenovať balíček</string>
-  <string name="menu_add">Pridať</string>
-  <string name="menu_add_note">Pridať poznámku</string>
-  <string name="menu_my_account">Synchronizácia účtu</string>
-  <string name="menu_dismiss_note">Skryt / vymazať</string>
-  <string name="menu_bury_card">Skryť kartičku</string>
-  <string name="menu_bury_note">Skryť poznámku</string>
-  <string name="menu_suspend_card">Pozastaviť kartičku</string>
-  <string name="menu_suspend_note">Pozastaviť poznámku</string>
-  <string name="menu_bury">Skryť</string>
-  <string name="menu_suspend">Pozastaviť</string>
-  <string name="menu_delete_note">Vymazať poznámku</string>
-  <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>
-  <string name="menu_select">Zvoliť text</string>
-  <string name="menu_search">Vyhľadať v %1$s</string>
-  <string name="menu_mark_note">Označiť poznámku</string>
-  <string name="menu_unmark_note">Odznačiť poznámku</string>
-  <string name="new_deck">Vytvoriť balíček</string>
-  <string name="create">Vytvoriť</string>
-  <string name="new_dynamic_deck">Vytvoriť filtrovaný balíček</string>
-  <string name="night_mode">Nočný režim</string>
-  <string name="directory_inaccessible">Adresár AnkiDroid je neprístupný</string>
-  <!--
+    <!-- Navigation drawer items-->
+    <string name="decks">Balíčky</string>
+    <string name="card_browser">Prehliadač kartičiek</string>
+    <string name="statistics">Štatistiky</string>
+    <string name="settings">Nastavenia</string>
+    <string name="help">Pomoc</string>
+    <string name="send_feedback">Poslať spätnú väzbu</string>
+    <string name="studyoptions_title">Prehľad o balíčku</string>
+    <string name="studyoptions_due_today">Dnes na preskúšanie:</string>
+    <string name="studyoptions_new_total">Celkový počet nových kartičiek:</string>
+    <string name="studyoptions_total_cards">Celkový počet kartičiek:</string>
+    <string name="studyoptions_eta">Odhadovaný čas (min):</string>
+    <string name="studyoptions_start">Študovať teraz</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">Rozbaliť</string>
+    <string name="collapse">Zbaliť</string>
+    <string name="study_more">Študovať viac</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d kartička na preskúšanie (%2$s)</item>
+        <item quantity="few">%1$d kartičky na preskúšanie (%2$s)</item>
+        <item quantity="many">%1$d kartičiek na preskúšanie (%2$s)</item>
+        <item quantity="other">%1$d kartičiek na preskúšanie (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">zostáva %d minúta</item>
+        <item quantity="few">zostávajú %d minúty</item>
+        <item quantity="many">zostáva %d minút</item>
+        <item quantity="other">zostáva %d minút</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">Dnes naučená %1$d kartička počas %2$s</item>
+        <item quantity="few">Dnes naučené %1$d kartičky počas %2$s</item>
+        <item quantity="many">Dnes naučených %1$d kartičiek počas %2$s</item>
+        <item quantity="other">Dnes naučených %1$d kartičiek počas %2$s</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">Napísať odpoveď</string>
+    <string name="show_answer">Zobraziť odpoveď</string>
+    <string name="ease_button_again">Znovu</string>
+    <string name="ease_button_hard">Ťažké</string>
+    <string name="ease_button_good">Dobré</string>
+    <string name="ease_button_easy">Ľahké</string>
+    <string name="studyoptions_congrats_undo">Späť %s</string>
+    <string name="menu_import">Import</string>
+    <string name="undo">Späť</string>
+    <string name="undo_action_review">posledné opakovanie</string>
+    <string name="undo_action_bury_card">skryť kartičku</string>
+    <string name="undo_action_bury_note">skryť poznámku</string>
+    <string name="undo_action_suspend_card">pozastaviť kartičku</string>
+    <string name="undo_action_suspend_note">pozastaviť poznámku</string>
+    <string name="undo_action_delete">vymazať poznámku</string>
+    <string name="undo_action_delete_multi">vymazať poznámky</string>
+    <string name="undo_action_change_deck_multi">zmeniť balíčky</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Premiestniť všetky do balíčka</string>
+    <string name="unbury">Odkryť</string>
+    <string name="rename_deck">Premenovať balíček</string>
+    <string name="menu_add">Pridať</string>
+    <string name="menu_add_note">Pridať poznámku</string>
+    <string name="menu_my_account">Synchronizácia účtu</string>
+    <string name="menu_dismiss_note">Skryt / vymazať</string>
+    <string name="menu_bury_card">Skryť kartičku</string>
+    <string name="menu_bury_note">Skryť poznámku</string>
+    <string name="menu_suspend_card">Pozastaviť kartičku</string>
+    <string name="menu_suspend_note">Pozastaviť poznámku</string>
+    <string name="menu_bury">Skryť</string>
+    <string name="menu_suspend">Pozastaviť</string>
+    <string name="menu_delete_note">Vymazať poznámku</string>
+    <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>
+    <string name="menu_select">Zvoliť text</string>
+    <string name="menu_search">Vyhľadať v %1$s</string>
+    <string name="menu_mark_note">Označiť poznámku</string>
+    <string name="menu_unmark_note">Odznačiť poznámku</string>
+    <string name="new_deck">Vytvoriť balíček</string>
+    <string name="create">Vytvoriť</string>
+    <string name="new_dynamic_deck">Vytvoriť filtrovaný balíček</string>
+    <string name="night_mode">Nočný režim</string>
+    <string name="directory_inaccessible">Adresár AnkiDroid je neprístupný</string>
+    <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
         s, min, h, d, are standard (ISO 31-1) units and should usually
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-  <string name="time_quantity_seconds">%d s</string>
-  <string name="time_quantity_minutes">%d min</string>
-  <string name="time_quantity_hours">%d h</string>
-  <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mes</string>
-  <string name="time_quantity_years">%.1f r</string>
-  <!-- or "%.1f a" -->
-  <string name="rebuild_cram_deck">Obnovujem balíček na drvenie sa.\nProsím počkajte...</string>
-  <string name="rebuild_cram_label">Znovu zostaviť</string>
-  <string name="empty_cram_label">Vyprázdniť</string>
-  <string name="empty_cram_deck">Vyprázdňujem balíček na drvenie sa.\nProsím počkajte...</string>
-  <string name="custom_study_deck_name">Vlastné štúdium</string>
-  <string name="custom_study_deck_exists">Prosím premenujte najprv existujúci balíček Vlastné štúdium.</string>
-  <string name="empty_deck">Tento balíček je prázdny</string>
-  <string name="studyoptions_empty">Tento balíček je prázdny. Stlačte + pre pridávanie obsahu.</string>
-  <string name="studyoptions_limit_reached">Denný limit učenia bol dosiahnutý</string>
-  <string name="studyoptions_empty_schedule">Na dnes nie sú naplánované žiadne kartičky na učenie</string>
-  <string name="studyoptions_congrats_finished">Blahoželáme! Na teraz ste tento balíček dokončili.</string>
-  <string name="studyoptions_congrats_more_rev">Bol dosiahnutý denný limit, ale stále zostávajú nejaké kartičky na opakovanie. Pre optimálne zapamätanie zvážte zvýšenie tohto limitu v nastaveniach.</string>
-  <string name="studyoptions_congrats_more_new">Bol dosiahnutý denný limit. Dostupné sú aj ďalšie nové kartičky; v nastaveniach môžete zvýšiť svoj denný limit, no bude to mať za následok zvýšenie počtu kartičiek na opakovanie v krátkodobom časovom horizonte.</string>
-  <string name="studyoptions_congrats_custom">Ak chcete študovať mimo bežný plán, kliknite na tlačidlo Vlastné štúdium nižšie.</string>
-  <string name="studyoptions_no_cards_due">Ešte nie sú žiadne kartičky na preskúšanie</string>
-  <string name="sd_card_not_mounted">Ukladacie zariadenie nepripojené</string>
-  <string name="button_sync">Synchronizácia</string>
-  <string name="cancel_sync_confirm">Chcete prerušiť synchronizáciu?</string>
-  <string name="continue_sync">Pokračovať v synchronizácii</string>
-  <string name="sync_cancelled">Synchronizácia zrušená</string>
-  <string name="sync_cancel_message">Ruší sa synchronizácia&#8230;\nMôže to chvíľu trvať.</string>
-  <string name="export">Export</string>
-  <string name="export_collection">Exportovať zbierku</string>
-  <string name="export_deck">Exportovať balíček</string>
-  <string name="nothing">Nič</string>
-  <!-- Card template editor -->
-  <string name="title_activity_template_editor">Typy kartičiek</string>
-  <string name="card_template_editor_front">Šablóna prednej strany</string>
-  <string name="card_template_editor_back">Šablóna zadnej strany</string>
-  <string name="card_template_editor_styling">Štýl</string>
-  <string name="card_template_editor_menu_delete">Vymazať</string>
-  <string name="card_template_editor_cant_delete">Vyžaduje sa aspoň jeden typ kartičky</string>
-  <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Vymazať “%2$s” typ kartičky a jeho %1$d kartičku?</item>
-    <item quantity="few">Vymazať “%2$s” typy kartičiek a ich %1$d kartičky?</item>
-    <item quantity="many">Delete the “%2$s” card type, and its %1$d cards?</item>
-    <item quantity="other">Vymazať “%2$s” typov kartičiek a ich %1$d kartičiek?</item>
-  </plurals>
-  <string name="invalid_template">Kartičku nie je možné vygenerovať</string>
-  <string name="card_template_editor_would_delete_note">Odstránením tejto kartičky spôsobíte, že jedna alebo viac poznámok budú vymazané. Predtým si vytvorte, prosím, nový typ kartičky.</string>
-  <!-- Permissions -->
-  <string name="read_write_permission_label">Čítať a písať do databázy AnkiDroid</string>
-  <string name="read_write_permission_description">prístup k existujúcim poznámkam, kartičkám, typom poznámok, balíčkom ako aj vytváranie nových</string>
+    <string name="time_quantity_seconds">%d s</string>
+    <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours">%d h</string>
+    <string name="time_quantity_days">%d d</string>
+    <string name="time_quantity_months">%.1f mes</string>
+    <string name="time_quantity_years">%.1f r</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">Obnovujem balíček na drvenie sa.\nProsím počkajte...</string>
+    <string name="rebuild_cram_label">Znovu zostaviť</string>
+    <string name="empty_cram_label">Vyprázdniť</string>
+    <string name="empty_cram_deck">Vyprázdňujem balíček na drvenie sa.\nProsím počkajte...</string>
+    <string name="custom_study_deck_name">Vlastné štúdium</string>
+    <string name="custom_study_deck_exists">Prosím premenujte najprv existujúci balíček Vlastné štúdium.</string>
+    <string name="empty_deck">Tento balíček je prázdny</string>
+    <string name="studyoptions_empty">Tento balíček je prázdny. Stlačte + pre pridávanie obsahu.</string>
+    <string name="studyoptions_limit_reached">Denný limit učenia bol dosiahnutý</string>
+    <string name="studyoptions_empty_schedule">Na dnes nie sú naplánované žiadne kartičky na učenie</string>
+    <string name="studyoptions_congrats_finished">Blahoželáme! Na teraz ste tento balíček dokončili.</string>
+    <string name="studyoptions_congrats_more_rev">Bol dosiahnutý denný limit, ale stále zostávajú nejaké kartičky na opakovanie. Pre optimálne zapamätanie zvážte zvýšenie tohto limitu v nastaveniach.</string>
+    <string name="studyoptions_congrats_more_new">Bol dosiahnutý denný limit. Dostupné sú aj ďalšie nové kartičky; v nastaveniach môžete zvýšiť svoj denný limit, no bude to mať za následok zvýšenie počtu kartičiek na opakovanie v krátkodobom časovom horizonte.</string>
+    <string name="studyoptions_congrats_custom">Ak chcete študovať mimo bežný plán, kliknite na tlačidlo Vlastné štúdium nižšie.</string>
+    <string name="studyoptions_no_cards_due">Ešte nie sú žiadne kartičky na preskúšanie</string>
+    <string name="sd_card_not_mounted">Ukladacie zariadenie nepripojené</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">Synchronizácia</string>
+    <string name="cancel_sync_confirm">Chcete prerušiť synchronizáciu?</string>
+    <string name="continue_sync">Pokračovať v synchronizácii</string>
+    <string name="sync_cancelled">Synchronizácia zrušená</string>
+    <string name="sync_cancel_message">Ruší sa synchronizácia&#8230;\nMôže to chvíľu trvať.</string>
+    <string name="export">Export</string>
+    <string name="export_collection">Exportovať zbierku</string>
+    <string name="export_deck">Exportovať balíček</string>
+    <string name="nothing">Nič</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">Typy kartičiek</string>
+    <string name="card_template_editor_front">Šablóna prednej strany</string>
+    <string name="card_template_editor_back">Šablóna zadnej strany</string>
+    <string name="card_template_editor_styling">Štýl</string>
+    <string name="card_template_editor_menu_delete">Vymazať</string>
+    <string name="card_template_editor_cant_delete">Vyžaduje sa aspoň jeden typ kartičky</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Vymazať “%2$s” typ kartičky a jeho %1$d kartičku?</item>
+        <item quantity="few">Vymazať “%2$s” typy kartičiek a ich %1$d kartičky?</item>
+        <item quantity="many">Vymazať “%2$s” typov kartičiek a ich %1$d kartičiek?</item>
+        <item quantity="other">Vymazať “%2$s” typov kartičiek a ich %1$d kartičiek?</item>
+    </plurals>
+    <string name="invalid_template">Kartičku nie je možné vygenerovať</string>
+    <string name="card_template_editor_would_delete_note">Odstránením tejto kartičky spôsobíte, že jedna alebo viac poznámok budú vymazané. Predtým si vytvorte, prosím, nový typ kartičky.</string>
+    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">Čítať a písať do databázy AnkiDroid</string>
+    <string name="read_write_permission_description">prístup k existujúcim poznámkam, kartičkám, typom poznámok, balíčkom ako aj vytváranie nových</string>
 </resources>

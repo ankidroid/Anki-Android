@@ -39,27 +39,27 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">बैकअप सहेजा नहीं गया। SD कार्ड पर्याप्त स्थान नहीं है। बैकअप की गहराई घटाएँ या कुछ अन्य फ़ाइल हटाएँ।</string>
-  <string name="sd_space_warning">SD कार्ड में %d MB से कम जगह है। \nडेटा हानि से बचने के लिए जगह खाली करें।</string>
-  <string name="backup_delete">बैकअप हटाए जा रहे...</string>
-  <string name="backup_restore">बैकअप से पुनर्स्थापित करें</string>
-  <string name="backup_new_collection">नया संग्रह</string>
-  <string name="backup_del_collection">संग्रह हटाएँ और नया संग्रह बनाएँ</string>
-  <string name="backup_del_collection_question">संग्रह हटाएँ और नया संग्रह बनाएँ? यह आपके सीखने की प्रगति को हटा देगा और सभी पत्तों को मिटा देगा।</string>
-  <string name="backup_full_sync_from_server">परिसेवक से पूर्ण समकालन</string>
-  <string name="backup_full_sync_from_server_question">AnkiWeb के संग्रह से अपने संग्रह को अधिलेखित करें? यह पिछले समकालन के बाद से आपके सीखने की प्रगति और जोड़े जानकारी को मिटा देगा।</string>
-  <string name="error_handling_title">त्रुटि प्रबंधन</string>
-  <string name="error_handling_options">विकल्प</string>
-  <string name="backup_retry_opening">खोलने का पुनः प्रयास करें</string>
-  <string name="backup_error_menu_repair">डेटाबेस सुधारें</string>
-  <string name="backup_repair_deck">सुधारें</string>
-  <string name="backup_repair_deck_progress">डेटाबेस सुधारा जा रहा है...</string>
-  <string name="backup_error">त्रुटि</string>
-  <string name="backup_invalid_file_error">चयनित बैकअप फ़ाइल अमान्य था</string>
-  <string name="backup_restore_select_title">पुनर्स्थापित करने के लिए बैकअप चुनें</string>
-  <string name="backup_restore_no_backups">इस डिवाइस पर कोई बैकअप उपलब्ध नहीं है । यदि आप अपने डेस्कटॉप कंप्यूटर पर बैकअप है, उंहें अपने AnkiDroid फ़ोल्डर में मैंयुअल रूप से प्रतिलिपि बनाएं ।</string>
-  <string name="open_collection_failed_title">संग्रह नहीं खोला गया</string>
-  <string name="corrupt_db_message">आपका संग्रह दूषित हो गया है । \ n \ nTouch \"विकल्प\" बैकअप से पुनर्स्थापित करने के लिए, या कि काम नहीं करता है, तो मैन्युअल रूप से डेटाबेस को सुधारने के लिए निम्न निर्देश देखें: \ n%1$s</string>
-  <string name="access_collection_failed_message">अपने संग्रह तक पहुँचते समय कोई त्रुटि हुई। यह एक हानिरहित दोष से हो सकता है, या इसके साथ एक समस्या हो सकती है। \n\nडेटाबेस जाँच आज़माएँ, या \"विकल्प\" बटन दबाकर बैकअप से पुनर्स्थापित करें। आप यह संदेश बार-बार देख रहे हैं, कृपया एक दोष सूचना दर्ज करें: \n%1$s</string>
-  <string name="deck_repair_error">संग्रह सुधारा नहीं कर सका</string>
+    <string name="backup_deck_no_space_left">बैकअप सहेजा नहीं गया। SD कार्ड पर्याप्त स्थान नहीं है। बैकअप की गहराई घटाएँ या कुछ अन्य फ़ाइल हटाएँ।</string>
+    <string name="sd_space_warning">SD कार्ड में %d MB से कम जगह है। \nडेटा हानि से बचने के लिए जगह खाली करें।</string>
+    <string name="backup_delete">बैकअप हटाए जा रहे...</string>
+    <string name="backup_restore">बैकअप से पुनर्स्थापित करें</string>
+    <string name="backup_new_collection">नया संग्रह</string>
+    <string name="backup_del_collection">संग्रह हटाएँ और नया संग्रह बनाएँ</string>
+    <string name="backup_del_collection_question">संग्रह हटाएँ और नया संग्रह बनाएँ? यह आपके सीखने की प्रगति को हटा देगा और सभी पत्तों को मिटा देगा।</string>
+    <string name="backup_full_sync_from_server">परिसेवक से पूर्ण समकालन</string>
+    <string name="backup_full_sync_from_server_question">AnkiWeb के संग्रह से अपने संग्रह को अधिलेखित करें? यह पिछले समकालन के बाद से आपके सीखने की प्रगति और जोड़े जानकारी को मिटा देगा।</string>
+    <string name="error_handling_title">त्रुटि प्रबंधन</string>
+    <string name="error_handling_options">विकल्प</string>
+    <string name="backup_retry_opening">खोलने का पुनः प्रयास करें</string>
+    <string name="backup_error_menu_repair">डेटाबेस सुधारें</string>
+    <string name="backup_repair_deck">सुधारें</string>
+    <string name="backup_repair_deck_progress">डेटाबेस सुधारा जा रहा है...</string>
+    <string name="backup_error">त्रुटि</string>
+    <string name="backup_invalid_file_error">चयनित बैकअप फ़ाइल अमान्य था</string>
+    <string name="backup_restore_select_title">पुनर्स्थापित करने के लिए बैकअप चुनें</string>
+    <string name="backup_restore_no_backups">इस डिवाइस पर कोई बैकअप उपलब्ध नहीं है । यदि आप अपने डेस्कटॉप कंप्यूटर पर बैकअप है, उंहें अपने AnkiDroid फ़ोल्डर में मैंयुअल रूप से प्रतिलिपि बनाएं ।</string>
+    <string name="open_collection_failed_title">संग्रह नहीं खोला गया</string>
+    <string name="corrupt_db_message">आपका संग्रह दूषित हो गया है । \ n \ nTouch \"विकल्प\" बैकअप से पुनर्स्थापित करने के लिए, या कि काम नहीं करता है, तो मैन्युअल रूप से डेटाबेस को सुधारने के लिए निम्न निर्देश देखें: \ n%1$s</string>
+    <string name="access_collection_failed_message">अपने संग्रह तक पहुँचते समय कोई त्रुटि हुई। यह एक हानिरहित दोष से हो सकता है, या इसके साथ एक समस्या हो सकती है। \n\nडेटाबेस जाँच आज़माएँ, या \"विकल्प\" बटन दबाकर बैकअप से पुनर्स्थापित करें। आप यह संदेश बार-बार देख रहे हैं, कृपया एक दोष सूचना दर्ज करें: \n%1$s</string>
+    <string name="deck_repair_error">संग्रह सुधारा नहीं कर सका</string>
 </resources>

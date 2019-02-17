@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Στείλε πάντα αναφορά</item>
-    <item>Μη στέλνεις ποτέ αναφορά</item>
-    <item>Ρωτήστε με</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Καμία ενέργεια</item>
-    <item>Εμφάνιση απάντησης</item>
-    <item>Κουμπί απάντησης 1</item>
-    <item>Κουμπί απάντησης 2</item>
-    <item>Κουμπί απάντησης 3</item>
-    <item>Κουμπί απάντησης 4</item>
-    <item>Προτεινόμεμη απάμτηση (πράσινη)</item>
-    <item>Απάντηση καλύτερη από την προτεινόμενη</item>
-    <item>Αναίρεση</item>
-    <item>Επεξεργασία σημείωσης</item>
-    <item>Μαρκάρισμα σημείωσης</item>
-    <item>Αναζήτηση έκφρασης</item>
-    <item>Θάψιμο κάρτας</item>
-    <item>Αναστολή κάρτας</item>
-    <item>Διαγραφή σημείωσης</item>
-    <item>Αναπαραγωγή πολυμέσων</item>
-    <item>Ματαίωση μάθησης</item>
-    <item>Απόκρυψης σημείωσης</item>
-    <item>Αναστολής σημείωσης</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Αναστολή κάρτας</item>
-    <item>Μόνο ετικέτα</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Νέες κάρτες σε τυχαία σειρά</item>
-    <item>Νέες κάρτες σε σειρά προσθήκης</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Πρώτα οι παλαιότερες που έχετε δει</item>
-    <item>Τυχαία</item>
-    <item>Κατά αυξανόμενα διαστήματα</item>
-    <item>Κατά φθίνοντα διαστήματα</item>
-    <item>Aυτές με τις περισσότερες ολισθήσεις</item>
-    <item>Κατά σειρά προσθήκης</item>
-    <item>Κατά σειρά αναμονής</item>
-    <item>Κατά σειρά πρόσφατης προσθήκης</item>
-    <item>Relative overdueness</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Χρήση προσωρινής τράπουλας</item>
-    <item>Απόφαση κατά τύπο σημείωσης</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Ανάμειξη νέων καρτών και επαναλήψεων</item>
-    <item>Οι νέες κάρτες μετά από τις επαναλήψεις</item>
-    <item>Οι νέες κάρτες πριν τις επαναλήψεις</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Όταν δε συγκεκριμενοποιείται γραμματοσειρά στις κάρτες</item>
-    <item>Πάντα</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Φωτεινό</item>
-    <item>Απλό</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Μαύρο</item>
-    <item>Σκοτεινό</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Στείλε πάντα αναφορά</item>
+        <item>Μη στέλνεις ποτέ αναφορά</item>
+        <item>Ρωτήστε με</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Καμία ενέργεια</item>
+        <item>Εμφάνιση απάντησης</item>
+        <item>Κουμπί απάντησης 1</item>
+        <item>Κουμπί απάντησης 2</item>
+        <item>Κουμπί απάντησης 3</item>
+        <item>Κουμπί απάντησης 4</item>
+        <item>Προτεινόμεμη απάμτηση (πράσινη)</item>
+        <item>Απάντηση καλύτερη από την προτεινόμενη</item>
+        <item>Αναίρεση</item>
+        <item>Επεξεργασία σημείωσης</item>
+        <item>Μαρκάρισμα σημείωσης</item>
+        <item>Αναζήτηση έκφρασης</item>
+        <item>Θάψιμο κάρτας</item>
+        <item>Αναστολή κάρτας</item>
+        <item>Διαγραφή σημείωσης</item>
+        <item>Αναπαραγωγή πολυμέσων</item>
+        <item>Ματαίωση μάθησης</item>
+        <item>Απόκρυψης σημείωσης</item>
+        <item>Αναστολής σημείωσης</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Αναστολή κάρτας</item>
+        <item>Μόνο ετικέτα</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Νέες κάρτες σε τυχαία σειρά</item>
+        <item>Νέες κάρτες σε σειρά προσθήκης</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Πρώτα οι παλαιότερες που έχετε δει</item>
+        <item>Τυχαία</item>
+        <item>Κατά αυξανόμενα διαστήματα</item>
+        <item>Κατά φθίνοντα διαστήματα</item>
+        <item>Aυτές με τις περισσότερες ολισθήσεις</item>
+        <item>Κατά σειρά προσθήκης</item>
+        <item>Κατά σειρά αναμονής</item>
+        <item>Κατά σειρά πρόσφατης προσθήκης</item>
+        <item>Relative overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Χρήση προσωρινής τράπουλας</item>
+        <item>Απόφαση κατά τύπο σημείωσης</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Ανάμειξη νέων καρτών και επαναλήψεων</item>
+        <item>Οι νέες κάρτες μετά από τις επαναλήψεις</item>
+        <item>Οι νέες κάρτες πριν τις επαναλήψεις</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Όταν δε συγκεκριμενοποιείται γραμματοσειρά στις κάρτες</item>
+        <item>Πάντα</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Φωτεινό</item>
+        <item>Απλό</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Μαύρο</item>
+        <item>Σκοτεινό</item>
+    </string-array>
 </resources>

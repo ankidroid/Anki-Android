@@ -39,131 +39,136 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Navigation drawer items-->
-  <string name="decks">Mazzi</string>
-  <string name="card_browser">Browser delle carte</string>
-  <string name="statistics">Statistiche</string>
-  <string name="settings">Impostazioni</string>
-  <string name="help">Guida</string>
-  <string name="send_feedback">Invia commenti</string>
-  <string name="studyoptions_title">Panoramica del mazzo</string>
-  <string name="studyoptions_due_today">Scadono oggi:</string>
-  <string name="studyoptions_new_total">Totale carte nuove:</string>
-  <string name="studyoptions_total_cards">Totale carte:</string>
-  <string name="studyoptions_eta">Tempo stimato (min):</string>
-  <string name="studyoptions_start">Studia ora</string>
-  <!-- DeckPicker.java -->
-  <string name="expand">Espandi</string>
-  <string name="collapse">Nascondi</string>
-  <string name="study_more">Studia ancora</string>
-  <plurals name="deckpicker_title">
-    <item quantity="one">%1$d carta da ripetere (%2$s)</item>
-    <item quantity="other">%1$d carte da ripetere (%2$s)</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">Resta %d minuto</item>
-    <item quantity="other">Restano %d minuti</item>
-  </plurals>
-  <!-- The deck picker via AnkiStatsTaskHandler.java -->
-  <plurals name="studied_cards_today">
-    <item quantity="one">Oggi hai studiato %1$d carta in %2$s</item>
-    <item quantity="other">Oggi hai studiato %1$d carte in %2$s</item>
-  </plurals>
-  <!-- flashcard_portrait.xml -->
-  <string name="type_answer_hint">Digita la risposta</string>
-  <string name="show_answer">Mostra la risposta</string>
-  <string name="ease_button_again">Ripeti</string>
-  <string name="ease_button_hard">Difficile</string>
-  <string name="ease_button_good">Buono</string>
-  <string name="ease_button_easy">Facile</string>
-  <string name="studyoptions_congrats_undo">Annulla %s</string>
-  <string name="menu_import">Importa</string>
-  <string name="undo">Annulla</string>
-  <string name="undo_action_review">ultima ripetizione</string>
-  <string name="undo_action_bury_card">seppellisci carta</string>
-  <string name="undo_action_bury_note">seppellisci nota</string>
-  <string name="undo_action_suspend_card">sospendi carta</string>
-  <string name="undo_action_suspend_note">sospendi nota</string>
-  <string name="undo_action_delete">elimina nota</string>
-  <string name="undo_action_delete_multi">elimina note</string>
-  <string name="undo_action_change_deck_multi">cambia mazzi</string>
-  <string name="move_all_to_deck">Sposta tutto nel mazzo</string>
-  <string name="unbury">Disseppellisci</string>
-  <string name="rename_deck">Rinomina mazzo</string>
-  <string name="menu_add">Aggiungi</string>
-  <string name="menu_add_note">Aggiungi nota</string>
-  <string name="menu_my_account">Sincronizza account</string>
-  <string name="menu_dismiss_note">Nascondi / Cancella</string>
-  <string name="menu_bury_card">Seppellisci carta</string>
-  <string name="menu_bury_note">Seppellisci nota</string>
-  <string name="menu_suspend_card">Sospendi carta</string>
-  <string name="menu_suspend_note">Sospendi nota</string>
-  <string name="menu_bury">Seppellisci</string>
-  <string name="menu_suspend">Sospendi</string>
-  <string name="menu_delete_note">Elimina nota</string>
-  <string name="delete_note_message">Vuoi veramente eliminare questa nota e tutte le sue carte?\n%s</string>
-  <string name="menu_select">Seleziona testo</string>
-  <string name="menu_search">Ricerca in %1$s</string>
-  <string name="menu_mark_note">Contrassegna nota</string>
-  <string name="menu_unmark_note">Rimuovi contrassegno nota</string>
-  <string name="new_deck">Crea mazzo</string>
-  <string name="create">Crea</string>
-  <string name="new_dynamic_deck">Crea mazzo filtrato</string>
-  <string name="night_mode">Modalità notturna</string>
-  <string name="directory_inaccessible">La directory AnkiDroid è inaccessibile</string>
-  <!--
+    <!-- Navigation drawer items-->
+    <string name="decks">Mazzi</string>
+    <string name="card_browser">Browser delle carte</string>
+    <string name="statistics">Statistiche</string>
+    <string name="settings">Impostazioni</string>
+    <string name="help">Guida</string>
+    <string name="send_feedback">Invia commenti</string>
+    <string name="studyoptions_title">Panoramica del mazzo</string>
+    <string name="studyoptions_due_today">Scadono oggi:</string>
+    <string name="studyoptions_new_total">Totale carte nuove:</string>
+    <string name="studyoptions_total_cards">Totale carte:</string>
+    <string name="studyoptions_eta">Tempo stimato (min):</string>
+    <string name="studyoptions_start">Studia ora</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">Espandi</string>
+    <string name="collapse">Nascondi</string>
+    <string name="study_more">Studia ancora</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d carta da ripetere (%2$s)</item>
+        <item quantity="other">%1$d carte da ripetere (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">Resta %d minuto</item>
+        <item quantity="other">Restano %d minuti</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">Oggi hai studiato %1$d carta in %2$s</item>
+        <item quantity="other">Oggi hai studiato %1$d carte in %2$s</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">Digita la risposta</string>
+    <string name="show_answer">Mostra la risposta</string>
+    <string name="ease_button_again">Ripeti</string>
+    <string name="ease_button_hard">Difficile</string>
+    <string name="ease_button_good">Buono</string>
+    <string name="ease_button_easy">Facile</string>
+    <string name="studyoptions_congrats_undo">Annulla %s</string>
+    <string name="menu_import">Importa</string>
+    <string name="undo">Annulla</string>
+    <string name="undo_action_review">ultima ripetizione</string>
+    <string name="undo_action_bury_card">seppellisci carta</string>
+    <string name="undo_action_bury_note">seppellisci nota</string>
+    <string name="undo_action_suspend_card">sospendi carta</string>
+    <string name="undo_action_suspend_note">sospendi nota</string>
+    <string name="undo_action_delete">elimina nota</string>
+    <string name="undo_action_delete_multi">elimina note</string>
+    <string name="undo_action_change_deck_multi">cambia mazzi</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Sposta tutto nel mazzo</string>
+    <string name="unbury">Disseppellisci</string>
+    <string name="rename_deck">Rinomina mazzo</string>
+    <string name="menu_add">Aggiungi</string>
+    <string name="menu_add_note">Aggiungi nota</string>
+    <string name="menu_my_account">Sincronizza account</string>
+    <string name="menu_dismiss_note">Nascondi / Cancella</string>
+    <string name="menu_bury_card">Seppellisci carta</string>
+    <string name="menu_bury_note">Seppellisci nota</string>
+    <string name="menu_suspend_card">Sospendi carta</string>
+    <string name="menu_suspend_note">Sospendi nota</string>
+    <string name="menu_bury">Seppellisci</string>
+    <string name="menu_suspend">Sospendi</string>
+    <string name="menu_delete_note">Elimina nota</string>
+    <string name="delete_note_message">Vuoi veramente eliminare questa nota e tutte le sue carte?\n%s</string>
+    <string name="menu_select">Seleziona testo</string>
+    <string name="menu_search">Ricerca in %1$s</string>
+    <string name="menu_mark_note">Contrassegna nota</string>
+    <string name="menu_unmark_note">Rimuovi contrassegno nota</string>
+    <string name="new_deck">Crea mazzo</string>
+    <string name="create">Crea</string>
+    <string name="new_dynamic_deck">Crea mazzo filtrato</string>
+    <string name="night_mode">Modalità notturna</string>
+    <string name="directory_inaccessible">La directory AnkiDroid è inaccessibile</string>
+    <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
         s, min, h, d, are standard (ISO 31-1) units and should usually
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-  <string name="time_quantity_seconds">%d s</string>
-  <string name="time_quantity_minutes">%d min</string>
-  <string name="time_quantity_hours">%d h</string>
-  <string name="time_quantity_days">%d g</string>
-  <string name="time_quantity_months">%.1f me</string>
-  <string name="time_quantity_years">%.1f a</string>
-  <!-- or "%.1f a" -->
-  <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
-  <string name="rebuild_cram_label">Ricrea</string>
-  <string name="empty_cram_label">Svuota</string>
-  <string name="empty_cram_deck">Svuoto mazzo per lo studio focalizzato.\nAttendi...</string>
-  <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
-  <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
-  <string name="empty_deck">Questo mazzo è vuoto</string>
-  <string name="studyoptions_empty">Questo mazzo è vuoto. Premi il pulsante + per aggiungere nuovi contenuti.</string>
-  <string name="studyoptions_limit_reached">Raggiunto il limite giornaliero di studio</string>
-  <string name="studyoptions_empty_schedule">Nessuna carta programmata per lo studio</string>
-  <string name="studyoptions_congrats_finished">Complimenti! Per ora hai finito.</string>
-  <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>
-  <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
-  <string name="studyoptions_congrats_custom">Per studiare al di fuori della programmazione normale, clicca sul pulsante \'Studio Personalizzato\' qui sotto.</string>
-  <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
-  <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>
-  <string name="button_sync">Sincronizza</string>
-  <string name="cancel_sync_confirm">Vuoi annullare la sincronizzazione?</string>
-  <string name="continue_sync">Continua la sincronizzazione</string>
-  <string name="sync_cancelled">Sincronizzazione annullata</string>
-  <string name="sync_cancel_message">Annullo...\nPotrebbe richiedere del tempo.</string>
-  <string name="export">Esportare</string>
-  <string name="export_collection">Esporta la collezione</string>
-  <string name="export_deck">Esporta il mazzo</string>
-  <string name="nothing">Niente</string>
-  <!-- Card template editor -->
-  <string name="title_activity_template_editor">Tipi di carte</string>
-  <string name="card_template_editor_front">Modello del fronte</string>
-  <string name="card_template_editor_back">Modello del retro</string>
-  <string name="card_template_editor_styling">Stile</string>
-  <string name="card_template_editor_menu_delete">Elimina</string>
-  <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
-  <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Eliminare il tipo di carta \'%2$s\', e la sua carta %1$d?</item>
-    <item quantity="other">Eliminare il tipo di carta \'%2$s\', e le sue carte %1$d?</item>
-  </plurals>
-  <string name="invalid_template">Una carta non può essere generata</string>
-  <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
-  <!-- Permissions -->
-  <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
-  <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>
+    <string name="time_quantity_seconds">%d s</string>
+    <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours">%d h</string>
+    <string name="time_quantity_days">%d g</string>
+    <string name="time_quantity_months">%.1f me</string>
+    <string name="time_quantity_years">%.1f a</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
+    <string name="rebuild_cram_label">Ricrea</string>
+    <string name="empty_cram_label">Svuota</string>
+    <string name="empty_cram_deck">Svuoto mazzo per lo studio focalizzato.\nAttendi...</string>
+    <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
+    <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
+    <string name="empty_deck">Questo mazzo è vuoto</string>
+    <string name="studyoptions_empty">Questo mazzo è vuoto. Premi il pulsante + per aggiungere nuovi contenuti.</string>
+    <string name="studyoptions_limit_reached">Raggiunto il limite giornaliero di studio</string>
+    <string name="studyoptions_empty_schedule">Nessuna carta programmata per lo studio</string>
+    <string name="studyoptions_congrats_finished">Complimenti! Per ora hai finito.</string>
+    <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>
+    <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
+    <string name="studyoptions_congrats_custom">Per studiare al di fuori della programmazione normale, clicca sul pulsante \'Studio Personalizzato\' qui sotto.</string>
+    <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
+    <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">Sincronizza</string>
+    <string name="cancel_sync_confirm">Vuoi annullare la sincronizzazione?</string>
+    <string name="continue_sync">Continua la sincronizzazione</string>
+    <string name="sync_cancelled">Sincronizzazione annullata</string>
+    <string name="sync_cancel_message">Annullo...\nPotrebbe richiedere del tempo.</string>
+    <string name="export">Esportare</string>
+    <string name="export_collection">Esporta la collezione</string>
+    <string name="export_deck">Esporta il mazzo</string>
+    <string name="nothing">Niente</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">Tipi di carte</string>
+    <string name="card_template_editor_front">Modello del fronte</string>
+    <string name="card_template_editor_back">Modello del retro</string>
+    <string name="card_template_editor_styling">Stile</string>
+    <string name="card_template_editor_menu_delete">Elimina</string>
+    <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Eliminare il tipo di carta \'%2$s\', e la sua carta %1$d?</item>
+        <item quantity="other">Eliminare il tipo di carta \'%2$s\', e le sue carte %1$d?</item>
+    </plurals>
+    <string name="invalid_template">Una carta non può essere generata</string>
+    <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
+    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
+    <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>
 </resources>

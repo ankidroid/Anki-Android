@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Raportoi aina</item>
-    <item>Älä raportoi koskaan</item>
-    <item>Kysy</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Ei toimintoa</item>
-    <item>Näytä vastaus</item>
-    <item>Vastauspainike 1</item>
-    <item>Vastauspainike 2</item>
-    <item>Vastauspainike 3</item>
-    <item>Vastauspainike 4</item>
-    <item>Vastaa ehdotettu (vihreä)</item>
-    <item>Vastaa paremmin kuin ehdotettu</item>
-    <item>Kumoa</item>
-    <item>Muokkaa merkintää</item>
-    <item>Merkitse merkintä</item>
-    <item>Hakutermi</item>
-    <item>Piilota kortti</item>
-    <item>Keskeytä kortti</item>
-    <item>Poista merkintä</item>
-    <item>Toista media</item>
-    <item>Keskeytä oppiminen</item>
-    <item>Piilota merkintä</item>
-    <item>Jäädytä merkintä</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Jäädytä kortti</item>
-    <item>Vain tunniste</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Uusia kortteja satunnaisessa järjestyksessä</item>
-    <item>Uudet kortit lisäysjärjestyksessä</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Vanhimmat nähdyt ensin</item>
-    <item>Satunnainen</item>
-    <item>Kasvavin välein</item>
-    <item>Vähentyvin välein</item>
-    <item>Eniten unohdetut</item>
-    <item>Lisäysjärjestyksessä</item>
-    <item>Näyttöjärjestyksessä</item>
-    <item>Viimeisimmät lisätyt ensin</item>
-    <item>Suhteellinen erääntyneisyys</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Käytä tätä pakkaa</item>
-    <item>Valitse korttityyppi</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Sekoita uusiakortteja ja kertauksia</item>
-    <item>Uudet kortit kertauksien jälkeen</item>
-    <item>Uudet kortit ennen kertauksia</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Kun korteille ei ole määritelty kirjasintyyppiä</item>
-    <item>Aina</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Vaalea</item>
-    <item>Pelkistetty</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Musta</item>
-    <item>Tumma</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Raportoi aina</item>
+        <item>Älä raportoi koskaan</item>
+        <item>Kysy</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Ei toimintoa</item>
+        <item>Näytä vastaus</item>
+        <item>Vastauspainike 1</item>
+        <item>Vastauspainike 2</item>
+        <item>Vastauspainike 3</item>
+        <item>Vastauspainike 4</item>
+        <item>Vastaa ehdotettu (vihreä)</item>
+        <item>Vastaa paremmin kuin ehdotettu</item>
+        <item>Kumoa</item>
+        <item>Muokkaa merkintää</item>
+        <item>Merkitse merkintä</item>
+        <item>Hakutermi</item>
+        <item>Piilota kortti</item>
+        <item>Keskeytä kortti</item>
+        <item>Poista merkintä</item>
+        <item>Toista media</item>
+        <item>Keskeytä oppiminen</item>
+        <item>Piilota merkintä</item>
+        <item>Jäädytä merkintä</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Jäädytä kortti</item>
+        <item>Vain tunniste</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Uusia kortteja satunnaisessa järjestyksessä</item>
+        <item>Uudet kortit lisäysjärjestyksessä</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Vanhimmat nähdyt ensin</item>
+        <item>Satunnainen</item>
+        <item>Kasvavin välein</item>
+        <item>Vähentyvin välein</item>
+        <item>Eniten unohdetut</item>
+        <item>Lisäysjärjestyksessä</item>
+        <item>Näyttöjärjestyksessä</item>
+        <item>Viimeisimmät lisätyt ensin</item>
+        <item>Suhteellinen erääntyneisyys</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Käytä tätä pakkaa</item>
+        <item>Valitse korttityyppi</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Sekoita uusiakortteja ja kertauksia</item>
+        <item>Uudet kortit kertauksien jälkeen</item>
+        <item>Uudet kortit ennen kertauksia</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Kun korteille ei ole määritelty kirjasintyyppiä</item>
+        <item>Aina</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Vaalea</item>
+        <item>Pelkistetty</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Musta</item>
+        <item>Tumma</item>
+    </string-array>
 </resources>

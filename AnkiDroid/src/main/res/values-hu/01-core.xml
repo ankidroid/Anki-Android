@@ -39,131 +39,136 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Navigation drawer items-->
-  <string name="decks">Paklik</string>
-  <string name="card_browser">Kártya böngésző</string>
-  <string name="statistics">Statisztika</string>
-  <string name="settings">Beállítások</string>
-  <string name="help">Segítség</string>
-  <string name="send_feedback">Visszajelzés küldése</string>
-  <string name="studyoptions_title">Pakli áttekintő</string>
-  <string name="studyoptions_due_today">Ma esedékes:</string>
-  <string name="studyoptions_new_total">Összes új kártya:</string>
-  <string name="studyoptions_total_cards">Összes kártya:</string>
-  <string name="studyoptions_eta">Becsült idő (perc):</string>
-  <string name="studyoptions_start">Gyakorlás</string>
-  <!-- DeckPicker.java -->
-  <string name="expand">Nagyítás</string>
-  <string name="collapse">Collapse</string>
-  <string name="study_more">Tanulj többet</string>
-  <plurals name="deckpicker_title">
-    <item quantity="one">%1$d kártya esedékes (%2$s)</item>
-    <item quantity="other">%1$d kártya esedékes (%2$s)</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">%d perc van hátra</item>
-    <item quantity="other">%d perc van hátra</item>
-  </plurals>
-  <!-- The deck picker via AnkiStatsTaskHandler.java -->
-  <plurals name="studied_cards_today">
-    <item quantity="one">Ma %1$d kártyát tanultál %2$s alatt</item>
-    <item quantity="other">Ma %1$d kártyát tanultál %2$s alatt</item>
-  </plurals>
-  <!-- flashcard_portrait.xml -->
-  <string name="type_answer_hint">Válasz begépelése</string>
-  <string name="show_answer">Válasz mutatása</string>
-  <string name="ease_button_again">Újra</string>
-  <string name="ease_button_hard">Nehéz</string>
-  <string name="ease_button_good">Jó</string>
-  <string name="ease_button_easy">Könnyű</string>
-  <string name="studyoptions_congrats_undo">%s visszavonása</string>
-  <string name="menu_import">Importálás</string>
-  <string name="undo">Visszavonás</string>
-  <string name="undo_action_review">Utoljára ismételt kártya</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
-  <string name="undo_action_suspend_card">kártya felfüggesztése</string>
-  <string name="undo_action_suspend_note">jegyzet felfüggesztése</string>
-  <string name="undo_action_delete">jegyzet törlése</string>
-  <string name="undo_action_delete_multi">delete notes</string>
-  <string name="undo_action_change_deck_multi">change decks</string>
-  <string name="move_all_to_deck">Move all to deck</string>
-  <string name="unbury">Félretétel megszüntetése</string>
-  <string name="rename_deck">Pakli átnevezése</string>
-  <string name="menu_add">Hozzáadás</string>
-  <string name="menu_add_note">Megjegyzés hozzáadása</string>
-  <string name="menu_my_account">Fiók szinkronizálása</string>
-  <string name="menu_dismiss_note">Elrejtés / Törlés</string>
-  <string name="menu_bury_card">Kártya holnapra halasztása</string>
-  <string name="menu_bury_note">Jegyzet holnapra halasztása</string>
-  <string name="menu_suspend_card">Kártya felfüggesztése</string>
-  <string name="menu_suspend_note">Jegyzet felfüggesztése</string>
-  <string name="menu_bury">Holnapra halasztás</string>
-  <string name="menu_suspend">Felfüggesztés</string>
-  <string name="menu_delete_note">Jegyzet törlése</string>
-  <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
-  <string name="menu_select">Szöveg kijelölése</string>
-  <string name="menu_search">Keresés itt: %1$s</string>
-  <string name="menu_mark_note">Jegyzet megjelölése</string>
-  <string name="menu_unmark_note">Unmark note</string>
-  <string name="new_deck">Pakli létrehozása</string>
-  <string name="create">Létrehozás</string>
-  <string name="new_dynamic_deck">Szűrt pakli létrehozása</string>
-  <string name="night_mode">Éjszakai mód</string>
-  <string name="directory_inaccessible">Nem érhető el az AnkiDroid könyvtár</string>
-  <!--
+    <!-- Navigation drawer items-->
+    <string name="decks">Paklik</string>
+    <string name="card_browser">Kártya böngésző</string>
+    <string name="statistics">Statisztika</string>
+    <string name="settings">Beállítások</string>
+    <string name="help">Segítség</string>
+    <string name="send_feedback">Visszajelzés küldése</string>
+    <string name="studyoptions_title">Pakli áttekintő</string>
+    <string name="studyoptions_due_today">Ma esedékes:</string>
+    <string name="studyoptions_new_total">Összes új kártya:</string>
+    <string name="studyoptions_total_cards">Összes kártya:</string>
+    <string name="studyoptions_eta">Becsült idő (perc):</string>
+    <string name="studyoptions_start">Gyakorlás</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">Nagyítás</string>
+    <string name="collapse">Összeomlás</string>
+    <string name="study_more">Tanulj többet</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d kártya esedékes (%2$s)</item>
+        <item quantity="other">%1$d kártya esedékes (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">%d perc van hátra</item>
+        <item quantity="other">%d perc van hátra</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">Ma %1$d kártyát tanultál %2$s alatt</item>
+        <item quantity="other">Ma %1$d kártyát tanultál %2$s alatt</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">Válasz begépelése</string>
+    <string name="show_answer">Válasz mutatása</string>
+    <string name="ease_button_again">Újra</string>
+    <string name="ease_button_hard">Nehéz</string>
+    <string name="ease_button_good">Jó</string>
+    <string name="ease_button_easy">Könnyű</string>
+    <string name="studyoptions_congrats_undo">%s visszavonása</string>
+    <string name="menu_import">Importálás</string>
+    <string name="undo">Visszavonás</string>
+    <string name="undo_action_review">Utoljára ismételt kártya</string>
+    <string name="undo_action_bury_card">kártya félretétele</string>
+    <string name="undo_action_bury_note">jegyzet félretétele</string>
+    <string name="undo_action_suspend_card">kártya felfüggesztése</string>
+    <string name="undo_action_suspend_note">jegyzet felfüggesztése</string>
+    <string name="undo_action_delete">jegyzet törlése</string>
+    <string name="undo_action_delete_multi">jegyzetek törlése</string>
+    <string name="undo_action_change_deck_multi">pakli csere</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Összes pakli áthelyezése</string>
+    <string name="unbury">Félretétel megszüntetése</string>
+    <string name="rename_deck">Pakli átnevezése</string>
+    <string name="menu_add">Hozzáadás</string>
+    <string name="menu_add_note">Megjegyzés hozzáadása</string>
+    <string name="menu_my_account">Fiók szinkronizálása</string>
+    <string name="menu_dismiss_note">Elrejtés / Törlés</string>
+    <string name="menu_bury_card">Kártya holnapra halasztása</string>
+    <string name="menu_bury_note">Jegyzet holnapra halasztása</string>
+    <string name="menu_suspend_card">Kártya felfüggesztése</string>
+    <string name="menu_suspend_note">Jegyzet felfüggesztése</string>
+    <string name="menu_bury">Holnapra halasztás</string>
+    <string name="menu_suspend">Felfüggesztés</string>
+    <string name="menu_delete_note">Jegyzet törlése</string>
+    <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
+    <string name="menu_select">Szöveg kijelölése</string>
+    <string name="menu_search">Keresés itt: %1$s</string>
+    <string name="menu_mark_note">Jegyzet megjelölése</string>
+    <string name="menu_unmark_note">Jegyzet megjelölés megszüntetése</string>
+    <string name="new_deck">Pakli létrehozása</string>
+    <string name="create">Létrehozás</string>
+    <string name="new_dynamic_deck">Szűrt pakli létrehozása</string>
+    <string name="night_mode">Éjszakai mód</string>
+    <string name="directory_inaccessible">Nem érhető el az AnkiDroid könyvtár</string>
+    <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
         s, min, h, d, are standard (ISO 31-1) units and should usually
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-  <string name="time_quantity_seconds">%d másodperc</string>
-  <string name="time_quantity_minutes">%d perc</string>
-  <string name="time_quantity_hours">%d óra</string>
-  <string name="time_quantity_days">%d nap</string>
-  <string name="time_quantity_months">%.1f hónap</string>
-  <string name="time_quantity_years">%.1f év</string>
-  <!-- or "%.1f a" -->
-  <string name="rebuild_cram_deck">Magoló pakli újraépítése.\nKérlek, várj...</string>
-  <string name="rebuild_cram_label">Újraépít</string>
-  <string name="empty_cram_label">Kiürítés</string>
-  <string name="empty_cram_deck">Magoló pakli ürítése.\nKérlek, várj...</string>
-  <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
-  <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglevő, Egyéni tanulás paklit.</string>
-  <string name="empty_deck">Ez a pakli üres</string>
-  <string name="studyoptions_empty">Ez a pakli üres. Adj hozzá új tartalmat a \"+\" megnyomásával.</string>
-  <string name="studyoptions_limit_reached">Elérted a napi tanulási mennyiséget</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
-  <string name="studyoptions_congrats_finished">Gratulálok! Mára végeztél.</string>
-  <string name="studyoptions_congrats_more_rev">A mai ismétlési korlátot elérted, de még mindig maradt ismétlendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
-  <string name="studyoptions_congrats_more_new">További új kártyák állnak rendelkezésre, azonban a napi limitet elérted. A napi limitet az opciók menüben módosíthatod, de kérlek ne feledd, hogy ez rövidtávon megnöveli az ismétléseid számát.</string>
-  <string name="studyoptions_congrats_custom">Ahhoz, hogy a szokásostól eltérő ütemben tanulhass, kattints lent, az \"Egyéni tanulás\" gombra.</string>
-  <string name="studyoptions_no_cards_due">Jelenleg nincs esedékes kártya</string>
-  <string name="sd_card_not_mounted">Nincs elérhető tárolóhely</string>
-  <string name="button_sync">Szinkronizálás</string>
-  <string name="cancel_sync_confirm">Tényleg megszakítod a szinkronizálást?</string>
-  <string name="continue_sync">Continue sync</string>
-  <string name="sync_cancelled">Szinkronizálás megszakítva</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
-  <string name="export">Exportálás</string>
-  <string name="export_collection">Gyűjtemény exportálása</string>
-  <string name="export_deck">Pakli exportálása</string>
-  <string name="nothing">Semmi</string>
-  <!-- Card template editor -->
-  <string name="title_activity_template_editor">Card types</string>
-  <string name="card_template_editor_front">Front template</string>
-  <string name="card_template_editor_back">Back template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_delete">Törlés</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required</string>
-  <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
-  </plurals>
-  <string name="invalid_template">A card could not be generated</string>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
-  <!-- Permissions -->
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="time_quantity_seconds">%d másodperc</string>
+    <string name="time_quantity_minutes">%d perc</string>
+    <string name="time_quantity_hours">%d óra</string>
+    <string name="time_quantity_days">%d nap</string>
+    <string name="time_quantity_months">%.1f hónap</string>
+    <string name="time_quantity_years">%.1f év</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">Magolós pakli újraépítése.\nKérlek, várj&#8230;</string>
+    <string name="rebuild_cram_label">Újraépítés</string>
+    <string name="empty_cram_label">Kiürítés</string>
+    <string name="empty_cram_deck">Magolós pakli ürítése.\nKérlek, várj&#8230;</string>
+    <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
+    <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglévő, Egyéni tanulás paklit</string>
+    <string name="empty_deck">Ez a pakli üres</string>
+    <string name="studyoptions_empty">Ez a pakli üres. Adj hozzá új tartalmat a \"+\" megnyomásával.</string>
+    <string name="studyoptions_limit_reached">Elérted a napi tanulási mennyiséget</string>
+    <string name="studyoptions_empty_schedule">A tanuláshoz nincsenek kártyák ütemezve</string>
+    <string name="studyoptions_congrats_finished">Gratulálok! Mára végeztél.</string>
+    <string name="studyoptions_congrats_more_rev">A mai ismétlési korlátot elérted, de még mindig maradt ismétlendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
+    <string name="studyoptions_congrats_more_new">További új kártyák állnak rendelkezésre, azonban a napi limitet elérted. A napi limitet az opciók menüben módosíthatod, de kérlek ne feledd, hogy ez rövidtávon megnöveli az ismétléseid számát.</string>
+    <string name="studyoptions_congrats_custom">Ahhoz, hogy a szokásostól eltérő ütemben tanulhass, kattints lent, az \"Egyéni tanulás\" gombra.</string>
+    <string name="studyoptions_no_cards_due">Jelenleg nincs esedékes kártya</string>
+    <string name="sd_card_not_mounted">Nincs elérhető tárolóhely</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">Szinkronizálás</string>
+    <string name="cancel_sync_confirm">Tényleg megszakítod a szinkronizálást?</string>
+    <string name="continue_sync">Szinkronizálás folytatása</string>
+    <string name="sync_cancelled">Szinkronizálás megszakítva</string>
+    <string name="sync_cancel_message">Visszavonás&#8230;\nEz eltarthat egy darabig.</string>
+    <string name="export">Exportálás</string>
+    <string name="export_collection">Gyűjtemény exportálása</string>
+    <string name="export_deck">Pakli exportálása</string>
+    <string name="nothing">Semmi</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">Kártyatípusok</string>
+    <string name="card_template_editor_front">Sablon az első oldalhoz</string>
+    <string name="card_template_editor_back">Sablon vissza</string>
+    <string name="card_template_editor_styling">Stílus</string>
+    <string name="card_template_editor_menu_delete">Törlés</string>
+    <string name="card_template_editor_cant_delete">Legalább egy kártya típus szükséges</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Törlöd a “%2$s” és a %1$d kártya típusát?</item>
+        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    </plurals>
+    <string name="invalid_template">A kártya nem hozható létre</string>
+    <string name="card_template_editor_would_delete_note">A kártyatípus eltávolítása egy vagy több megjegyzés törlését okozhatja. Először hozz létre egy új kártyatípust.</string>
+    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">AnkiDroid adatbázist olvasás/írás</string>
+    <string name="read_write_permission_description">meglévő jegyzetek, kártyák, jegyzetfajták és paklik elérése, valamint újak létrehozása</string>
 </resources>

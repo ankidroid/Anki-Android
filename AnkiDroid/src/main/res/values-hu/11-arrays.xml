@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Mindig jelentse</item>
-    <item>Soha ne jelentse</item>
-    <item>Kérdezzen rá</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Nincs művelet</item>
-    <item>Válasz mutatása</item>
-    <item>Válasz gomb 1</item>
-    <item>Válasz gomb 2</item>
-    <item>Válasz gomb 3</item>
-    <item>Válasz gomb 4</item>
-    <item>Javasolt válasz (zöld)</item>
-    <item>Jobb válasz, mint a javasolt</item>
-    <item>Visszavonás</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
-    <item>Kifejezés keresése</item>
-    <item>Kártya holnapra halasztása</item>
-    <item>Kártya felfüggesztése</item>
-    <item>Delete note</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Jegyzet holnapra halasztása</item>
-    <item>Suspend note</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Kártya felfüggesztése</item>
-    <item>Csak címke</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Új kártyák véletlenszerűen</item>
-    <item>Új kártyák hozzáadás sorrendjében</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Legrégebben látottat először</item>
-    <item>Véletlenszerű</item>
-    <item>Növekvő időközönként</item>
-    <item>Csökkenő időközönként</item>
-    <item>A legtöbbször lejárt</item>
-    <item>Rendezés hozzáadva</item>
-    <item>Rendezés</item>
-    <item>Utoljára hozzáadott előbb</item>
-    <item>Relative overdueness</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Jelenlegi pakli használata</item>
-    <item>Jegyzettípustól függ</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Új kártyák az ismétlendők közé</item>
-    <item>Új kártyák az ismétlendők után</item>
-    <item>Új kártyák az ismétlendők elé</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Mindig</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Mindig jelentse</item>
+        <item>Soha ne jelentse</item>
+        <item>Kérdezzen rá</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Nincs művelet</item>
+        <item>Válasz mutatása</item>
+        <item>Válasz gomb 1</item>
+        <item>Válasz gomb 2</item>
+        <item>Válasz gomb 3</item>
+        <item>Válasz gomb 4</item>
+        <item>Javasolt válasz (zöld)</item>
+        <item>Jobb válasz, mint a javasolt</item>
+        <item>Visszavonás</item>
+        <item>Megjegyzés szerkesztése</item>
+        <item>Jelöld meg a jegyzetet</item>
+        <item>Kifejezés keresése</item>
+        <item>Kártya holnapra halasztása</item>
+        <item>Kártya felfüggesztése</item>
+        <item>Megjegyzés törlése</item>
+        <item>Média lejátszása</item>
+        <item>A tanulás megszakítása</item>
+        <item>Jegyzet holnapra halasztása</item>
+        <item>Folyamatosan függessze fel a jegyzetet</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Kártya felfüggesztése</item>
+        <item>Csak címke</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Új kártyák véletlenszerűen</item>
+        <item>Új kártyák hozzáadás sorrendjében</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Legrégebben látottat először</item>
+        <item>Véletlenszerű</item>
+        <item>Növekvő időközönként</item>
+        <item>Csökkenő időközönként</item>
+        <item>A legtöbbször lejárt</item>
+        <item>Rendezés hozzáadva</item>
+        <item>Rendezés</item>
+        <item>Utoljára hozzáadott előbb</item>
+        <item>Relatív lejárt</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Jelenlegi pakli használata</item>
+        <item>Jegyzettípustól függ</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Új kártyák az ismétlendők közé</item>
+        <item>Új kártyák az ismétlendők után</item>
+        <item>Új kártyák az ismétlendők elé</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Ha a kártyára nincs megadva betűtípus</item>
+        <item>Mindig</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Világos</item>
+        <item>Egyszerű</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Fekete</item>
+        <item>Sötét</item>
+    </string-array>
 </resources>

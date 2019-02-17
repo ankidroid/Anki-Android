@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Immer melden</item>
-    <item>Niemals melden</item>
-    <item>Nachfragen</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Keine Aktion</item>
-    <item>Antwort zeigen</item>
-    <item>Antwortschaltfläche 1</item>
-    <item>Antwortschaltfläche 2</item>
-    <item>Antwortschaltfläche 3</item>
-    <item>Antwortschaltfläche 4</item>
-    <item>Empfohlene Antwort (grün)</item>
-    <item>Antwort besser als empfohlen</item>
-    <item>Rückgängig</item>
-    <item>Notiz bearbeiten</item>
-    <item>Notiz markieren</item>
-    <item>Nachschlagen</item>
-    <item>Karte zurückstellen</item>
-    <item>Dauerhaft aussetzen</item>
-    <item>Notiz löschen</item>
-    <item>Medien abspielen</item>
-    <item>Lernen beenden</item>
-    <item>Notiz vorläufig aussetzen</item>
-    <item>Notiz dauerhaft aussetzen</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Karte dauerhaft aussetzen</item>
-    <item>Nur Schlagwort</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Neue Karten in zufälliger Reihenfolge</item>
-    <item>Neue Karten in Reihenfolge des Hinzufügens</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Am frühesten gesehene zuerst</item>
-    <item>Zufällig</item>
-    <item>Steigende Intervalle</item>
-    <item>Abnehmende Intervalle</item>
-    <item>Meiste Fehlschläge</item>
-    <item>In Reihenfolge des Hinzufügens</item>
-    <item>Nach Fälligkeit</item>
-    <item>Zuletzt hinzugefügte zuerst</item>
-    <item>Relative Überfälligkeit</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Aktuellen Stapel verwenden</item>
-    <item>Nach Notiztyp entscheiden</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Neue Karten und Wiederholungen mischen</item>
-    <item>Neue Karten nach Wiederholungen</item>
-    <item>Neue Karten vor Wiederholungen</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Wenn keine Schriftart für Karte angegeben</item>
-    <item>Immer</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Hell</item>
-    <item>Schlicht</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Schwarz</item>
-    <item>Dunkel</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Immer melden</item>
+        <item>Niemals melden</item>
+        <item>Nachfragen</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Keine Aktion</item>
+        <item>Antwort zeigen</item>
+        <item>Antwortschaltfläche 1</item>
+        <item>Antwortschaltfläche 2</item>
+        <item>Antwortschaltfläche 3</item>
+        <item>Antwortschaltfläche 4</item>
+        <item>Empfohlene Antwort (grün)</item>
+        <item>Antwort besser als empfohlen</item>
+        <item>Rückgängig</item>
+        <item>Notiz bearbeiten</item>
+        <item>Notiz markieren</item>
+        <item>Nachschlagen</item>
+        <item>Karte zurückstellen</item>
+        <item>Dauerhaft aussetzen</item>
+        <item>Notiz löschen</item>
+        <item>Medien abspielen</item>
+        <item>Lernen beenden</item>
+        <item>Notiz vorläufig aussetzen</item>
+        <item>Notiz dauerhaft aussetzen</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Karte dauerhaft aussetzen</item>
+        <item>Nur Schlagwort</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Neue Karten in zufälliger Reihenfolge</item>
+        <item>Neue Karten in Reihenfolge des Hinzufügens</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Am frühesten gesehene zuerst</item>
+        <item>Zufällig</item>
+        <item>Steigende Intervalle</item>
+        <item>Abnehmende Intervalle</item>
+        <item>Meiste Fehlschläge</item>
+        <item>In Reihenfolge des Hinzufügens</item>
+        <item>Nach Fälligkeit</item>
+        <item>Zuletzt hinzugefügte zuerst</item>
+        <item>Relative Überfälligkeit</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Aktuellen Stapel verwenden</item>
+        <item>Nach Notiztyp entscheiden</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Neue Karten und Wiederholungen mischen</item>
+        <item>Neue Karten nach Wiederholungen</item>
+        <item>Neue Karten vor Wiederholungen</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Wenn keine Schriftart für Karte angegeben</item>
+        <item>Immer</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Hell</item>
+        <item>Schlicht</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Schwarz</item>
+        <item>Dunkel</item>
+    </string-array>
 </resources>

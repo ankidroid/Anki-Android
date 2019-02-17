@@ -11,8 +11,9 @@ fa: فلش کارتهای انکی دروید
 fi: AnkiDroid-muistikortit
 fr: AnkiDroid (Cartes mémoire)
 gl: Cartóns AnkiDroid
+he: AnkiDroid כרטיסי לימוד
 hi: AnkiDroid फ़्लैशकार्ड
-hu: AnkiDroid szókártyák
+hu: AnkiDroid Szókártyák
 id: Kad imbas AnkiDroid
 ko: AnkiDroid 플래시 카드
 lt: „AnkiDroid“ atminties kortelės
@@ -28,3 +29,4 @@ tr: AnkiDroid Bilgi Kartları
 vi: Thẻ thông minh AnkiDroid
 zh-CN: AnkiDroid 记忆卡片
 zh-TW: AnkiDroid 抽認卡
+eo: AnkiDroid

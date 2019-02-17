@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Vedno prijavi</item>
-    <item>Nikoli ne prijavi</item>
-    <item>Vprašaj me</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Brez dejanja</item>
-    <item>Prikaži odgovor</item>
-    <item>1. gumb za odgovor</item>
-    <item>2. gumb za odgovor</item>
-    <item>3. gumb za odgovor</item>
-    <item>4. gumb za odgovor</item>
-    <item>Priporočilo za odgovor (zeleno)</item>
-    <item>Odgovori bolje kot priporočeno</item>
-    <item>Razveljavi</item>
-    <item>Uredi zapisek</item>
-    <item>Označi zapisek</item>
-    <item>Iskalni izraz</item>
-    <item>Prikrij kartico</item>
-    <item>Pridrži kartico</item>
-    <item>Izbriši zapisek</item>
-    <item>Predvajaj predstavnost</item>
-    <item>Prekini učenje</item>
-    <item>Prikrij zapisek</item>
-    <item>Pridrži zapisek</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Pridrži kartico</item>
-    <item>Samo oznako</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Nove kartice v naključnem vrstnem redu</item>
-    <item>Nove kartice v vrstnem redu dodajanja</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Najprej videna najprej</item>
-    <item>Nakjučno</item>
-    <item>Naraščajoči razmiki</item>
-    <item>Padajoči razmiki</item>
-    <item>Z največ spodrsljaji</item>
-    <item>Vrs. red dodajanja</item>
-    <item>Vrs. red zapad.</item>
-    <item>Nazadnje dodana najprej</item>
-    <item>Relativna zapadlost</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Uporabi trenutni komplet</item>
-    <item>Odloči se po vrsti zapiska</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Premešaj nove kartice in preglede</item>
-    <item>Nove kartice za pregledi</item>
-    <item>Nove kartice pred pregledi</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Ko na pomnilnih karticah ni določena pisava</item>
-    <item>Vedno</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Svetla</item>
-    <item>Gola</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Črna</item>
-    <item>Temna</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Vedno prijavi</item>
+        <item>Nikoli ne prijavi</item>
+        <item>Vprašaj me</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Brez dejanja</item>
+        <item>Prikaži odgovor</item>
+        <item>1. gumb za odgovor</item>
+        <item>2. gumb za odgovor</item>
+        <item>3. gumb za odgovor</item>
+        <item>4. gumb za odgovor</item>
+        <item>Priporočilo za odgovor (zeleno)</item>
+        <item>Odgovori bolje kot priporočeno</item>
+        <item>Razveljavi</item>
+        <item>Uredi zapisek</item>
+        <item>Označi zapisek</item>
+        <item>Iskalni izraz</item>
+        <item>Prikrij kartico</item>
+        <item>Pridrži kartico</item>
+        <item>Izbriši zapisek</item>
+        <item>Predvajaj predstavnost</item>
+        <item>Prekini učenje</item>
+        <item>Prikrij zapisek</item>
+        <item>Pridrži zapisek</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Pridrži kartico</item>
+        <item>Samo oznako</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Nove kartice v naključnem vrstnem redu</item>
+        <item>Nove kartice v vrstnem redu dodajanja</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Najprej videna najprej</item>
+        <item>Nakjučno</item>
+        <item>Naraščajoči razmiki</item>
+        <item>Padajoči razmiki</item>
+        <item>Z največ spodrsljaji</item>
+        <item>Vrs. red dodajanja</item>
+        <item>Vrs. red zapad.</item>
+        <item>Nazadnje dodana najprej</item>
+        <item>Relativna zapadlost</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Uporabi trenutni komplet</item>
+        <item>Odloči se po vrsti zapiska</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Premešaj nove kartice in preglede</item>
+        <item>Nove kartice za pregledi</item>
+        <item>Nove kartice pred pregledi</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Ko na pomnilnih karticah ni določena pisava</item>
+        <item>Vedno</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Svetla</item>
+        <item>Gola</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Črna</item>
+        <item>Temna</item>
+    </string-array>
 </resources>

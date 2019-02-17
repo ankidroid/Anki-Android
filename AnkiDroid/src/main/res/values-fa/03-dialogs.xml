@@ -39,101 +39,111 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">بررسی پایگاه داده</string>
-  <string name="check_db_warning">این عملیات ممکن است مدت زیادی طول بکشد</string>
-  <string name="check_db_acknowledge">بانک اطلاعاتی بررسی شد</string>
-  <string name="check_db_acknowledge_shrunk">بانک اطلاعاتی بررسی و بهینه سازی شد.\nفضای از بین رفته %d کیلوبایت.</string>
-  <string name="contextmenu_deckpicker_delete_deck">حذف دسته</string>
-  <string name="delete_deck_default_deck">دسته پیش فرض نمی تواند حذف شود</string>
-  <string name="delete_deck_title">حذف دسته؟</string>
-  <plurals name="delete_deck_message">
-    <item quantity="one">حذف همه کارت ها در %1$s؟ این دسته شامل %2$d کارت می باشد.</item>
-    <item quantity="other">حذف همه کارت ها در %1$s؟ این دسته شامل %2$d کارت می باشد.</item>
-  </plurals>
-  <string name="delete_cram_deck_message">آیا مایلید که همه کارتهای موجود در %s  را به دسته اصلی خودتان برگردانید؟</string>
-  <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
-  <string name="initializing_tts">در حال راه‌اندازی تبدیل متن به گفتار&#8230;</string>
-  <string name="tts_no_tts">حرف نزن</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>فلش کارتهایی برای آندروید</h2>این یک برنامه ای است که فلش کارتهای آن کاملا با نسخه رایانه ای سازگاری دارند<a href=\"%2$s\">آنکى</a>. شما در هر دو نسخه تلفن همراه و رایانه می توانید فلش کارت بسازید، دانلود کنید و یاد بگیرید، و به آسانی آنها را با پایگاه اینترنتی برنامه همگام سازی کنید.]]></item>
-    <item><![CDATA[برای بهتر کردن برنامه لطفا اشکالات را به <a href=\"%1$s\">دنبال کننده موضوع </a> گزارش کنید. نظراتي که قابلیت جدید معرفی کنند هم مورد استقبال قرار خواهد گرفت. پاسخ اشکالات خود را در<a href=\"%2$s\">ویکی </a>پیدا کنید یا یک بحث جدید را در <a href=\"%3$s\"> انجمن </a> شروع کنید.]]></item>
-    <item><![CDATA[این برنامه یک <a href=\"%1$s\"> نرم افزار متن باز است <a/>،بنابراین همه ترغیب به <a href=\"%2$s\"> یک مشارکت کننده بودن می شوند</a>]]></item>
-    <item><![CDATA[غیر برنامه نویسان نیز می توانند کمک کنند. برای مثال، شما می توانید <a href=\"%1$s\">به ترجمه این برنامه </a> کمک کنید، یا ویکی را به روز کنید، عکس صفحه تهیه کنید، يا درباره این برنامه وبلاگ بزنید.]]></item>
-    <item><![CDATA[این برنامه تحت مجوز <a href=\"%1$s\">GNU-GPL v3</a>منتشر شده است و منبع کدها قابل دسترسی است <a href=\"%2$s\">در GitHub</a>.]]></item>
-  </string-array>
-  <string name="preview_title">پیش نمایش</string>
-  <string name="reposition_card_dialog_title">Reposition new card</string>
-  <string name="reposition_card_dialog_message">Start position:</string>
-  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
-  <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
-  <string name="reset_card_dialog_message">این کارت در انتهاي ردیف کارت جدید قرار خواهد گرفت</string>
-  <string name="reset_card_dialog_acknowledge">کارت تنظیم مجدد شد</string>
-  <string name="reschedule_card_dialog_title">زمانبندی دوباره کارت</string>
-  <string name="reschedule_card_dialog_message">زمانبندی مجدد برای مرور در x روز:</string>
-  <string name="reschedule_card_dialog_acknowledge">کارت زمانبندی مجدد شد</string>
-  <string name="answering_error_title">خطای پایگاه داده</string>
-  <string name="answering_error_message">یک خطا هنگام نوشتن مجموعه رخ داده است. که می تواند مربوط به پایگاه داده آسیب دیده و یا فضای ناکافی هارد باشد.\n\nاگر در اغلب موارد این حالت اتفاق می افتد, لطفا پایگاه داده را بررسی کنید, مجموعه را تعمیر کنید یا آن را از فایل پشتیبان بازگردانید.  به این منظور روی \'تنظیمات\' کلیک کنید .\n\nدر صورتی که درست نشد, احتمالا اشکال از برنامه آنکی دروید است; لطفا خطایی را که ما می توانیم آن را بررسی کنیم گزارش کنید.</string>
-  <string name="answering_error_report">گزارش خطا</string>
-  <string name="repair_deck_dialog">آیا شما واقعا می خواهید پایگاه داده را تعمیر کنید؟\n\nقبل از شروع , یک کپی در پوشه فرعی \'%s\' به وجود خواهد آمد .</string>
-  <string name="intent_add_saved_information">اطلاعات ذخیره شد</string>
-  <string name="intent_add_clear_all">پاک کردن همه</string>
-  <string name="intent_aedict_empty">مجموعه \'پیش فرض\' خالی است</string>
-  <string name="intent_aedict_category">اضافه کردن کارت به آنکی دروید سبب حذف همه یادداشت های مجموعه ها یا اضافه کردن یک نام پیش فرض به آنها می شود</string>
-  <string name="custom_study_new_total_new">کارت های جدید در دسته کارت: %s</string>
-  <string name="custom_study_rev_total_rev">موعد مرورهای دسته: %s</string>
-  <string name="custom_study_new_extend">محدوده افزایش کارتهای جدید امروز</string>
-  <string name="custom_study_rev_extend">محدوده افزایش کارتها برای مرور امروز</string>
-  <string name="custom_study_forgotten">مرور کارت های فراموش شده در x روز گذشته:</string>
-  <string name="custom_study_ahead">مرور پیش از موعد تا x روز:</string>
-  <string name="custom_study_random">انتخاب x کارت تصادفی از دسته:</string>
-  <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
-  <string name="rebuild_custom_study_deck">ساخت مجدد دسته مطالعه سفارشی.\nلطفا صبر کنید...</string>
-  <string name="importing_collection">در حال ورود مجموعه.\nلطفا صبر کنید&#8230;</string>
-  <string name="import_media_count">در حال وارد کردن فایلهای رسانه %1$d%%&#8230;</string>
-  <string name="import_progress">* در حال وارد کردن یادداشتها: %1$d%%\n
+    <string name="check_db_title">بررسی پایگاه داده</string>
+    <string name="check_db_warning">این عملیات ممکن است مدت زیادی طول بکشد</string>
+    <string name="check_db_acknowledge">بانک اطلاعاتی بررسی شد</string>
+    <string name="check_db_acknowledge_shrunk">بانک اطلاعاتی بررسی و بهینه سازی شد.\nفضای از بین رفته %d کیلوبایت.</string>
+    <string name="contextmenu_deckpicker_delete_deck">حذف دسته</string>
+    <string name="delete_deck_default_deck">دسته پیش فرض نمی تواند حذف شود</string>
+    <string name="delete_deck_title">حذف دسته؟</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">حذف همه کارت ها در %1$s؟ این دسته شامل %2$d کارت می باشد.</item>
+        <item quantity="other">حذف همه کارت ها در %1$s؟ این دسته شامل %2$d کارت می باشد.</item>
+    </plurals>
+    <string name="delete_cram_deck_message">آیا مایلید که همه کارتهای موجود در %s  را به دسته اصلی خودتان برگردانید؟</string>
+    <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
+    <string name="initializing_tts">در حال راه‌اندازی تبدیل متن به گفتار&#8230;</string>
+    <string name="tts_no_tts">حرف نزن</string>
+    <string-array name="about_content">
+        <item><![CDATA[<h2>%1$s:<br/>فلش کارتهایی برای آندروید</h2>این یک برنامه ای است که فلش کارتهای آن کاملا با نسخه رایانه ای سازگاری دارند<a href=\"%2$s\">آنکى</a>. شما در هر دو نسخه تلفن همراه و رایانه می توانید فلش کارت بسازید، دانلود کنید و یاد بگیرید، و به آسانی آنها را با پایگاه اینترنتی برنامه همگام سازی کنید.]]></item>
+        <item><![CDATA[برای بهتر کردن برنامه لطفا اشکالات را به <a href=\"%1$s\">دنبال کننده موضوع </a> گزارش کنید. نظراتي که قابلیت جدید معرفی کنند هم مورد استقبال قرار خواهد گرفت. پاسخ اشکالات خود را در<a href=\"%2$s\">ویکی </a>پیدا کنید یا یک بحث جدید را در <a href=\"%3$s\"> انجمن </a> شروع کنید.]]></item>
+        <item><![CDATA[این برنامه یک <a href=\"%1$s\"> نرم افزار متن باز است <a/>،بنابراین همه ترغیب به <a href=\"%2$s\"> یک مشارکت کننده بودن می شوند</a>]]></item>
+        <item><![CDATA[غیر برنامه نویسان نیز می توانند کمک کنند. برای مثال، شما می توانید <a href=\"%1$s\">به ترجمه این برنامه </a> کمک کنید، یا ویکی را به روز کنید، عکس صفحه تهیه کنید، يا درباره این برنامه وبلاگ بزنید.]]></item>
+        <item><![CDATA[این برنامه تحت مجوز <a href=\"%1$s\">GNU-GPL v3</a>منتشر شده است و منبع کدها قابل دسترسی است <a href=\"%2$s\">در GitHub</a>.]]></item>
+    </string-array>
+    <string name="preview_title">پیش نمایش</string>
+    <string name="reposition_card_dialog_title">تغییر مکان کارت جدید</string>
+    <string name="reposition_card_dialog_message">موقعیت شروع:</string>
+    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <plurals name="reposition_card_dialog_acknowledge">
+        <item quantity="one">%d card repositioned</item>
+        <item quantity="other">%d cards repositioned</item>
+    </plurals>
+    <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
+    <string name="reset_card_dialog_message">این کارت در انتهاي ردیف کارت جدید قرار خواهد گرفت</string>
+    <plurals name="reset_cards_dialog_acknowledge">
+        <item quantity="one">%d card reset</item>
+        <item quantity="other">%d cards reset</item>
+    </plurals>
+    <string name="reschedule_card_dialog_title">زمانبندی دوباره کارت</string>
+    <string name="reschedule_card_dialog_message">زمانبندی مجدد برای مرور در x روز:</string>
+    <plurals name="reschedule_cards_dialog_acknowledge">
+        <item quantity="one">%d card rescheduled</item>
+        <item quantity="other">%d cards rescheduled</item>
+    </plurals>
+    <string name="answering_error_title">خطای پایگاه داده</string>
+    <string name="answering_error_message">یک خطا هنگام نوشتن مجموعه رخ داده است. که می تواند مربوط به پایگاه داده آسیب دیده و یا فضای ناکافی هارد باشد.\n\nاگر در اغلب موارد این حالت اتفاق می افتد, لطفا پایگاه داده را بررسی کنید, مجموعه را تعمیر کنید یا آن را از فایل پشتیبان بازگردانید.  به این منظور روی \'تنظیمات\' کلیک کنید .\n\nدر صورتی که درست نشد, احتمالا اشکال از برنامه آنکی دروید است; لطفا خطایی را که ما می توانیم آن را بررسی کنیم گزارش کنید.</string>
+    <string name="answering_error_report">گزارش خطا</string>
+    <string name="repair_deck_dialog">آیا شما واقعا می خواهید پایگاه داده را تعمیر کنید؟\n\nقبل از شروع , یک کپی در پوشه فرعی \'%s\' به وجود خواهد آمد .</string>
+    <string name="intent_add_saved_information">اطلاعات ذخیره شد</string>
+    <string name="intent_add_clear_all">پاک کردن همه</string>
+    <string name="intent_aedict_empty">مجموعه \'پیش فرض\' خالی است</string>
+    <string name="intent_aedict_category">اضافه کردن کارت به آنکی دروید سبب حذف همه یادداشت های مجموعه ها یا اضافه کردن یک نام پیش فرض به آنها می شود</string>
+    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_extend">محدوده افزایش کارتهای جدید امروز</string>
+    <string name="custom_study_rev_extend">محدوده افزایش کارتها برای مرور امروز</string>
+    <string name="custom_study_forgotten">مرور کارت های فراموش شده در x روز گذشته:</string>
+    <string name="custom_study_ahead">مرور پیش از موعد تا x روز:</string>
+    <string name="custom_study_random">انتخاب x کارت تصادفی از دسته:</string>
+    <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
+    <string name="rebuild_custom_study_deck">ساخت مجدد دسته مطالعه سفارشی.\nلطفا صبر کنید...</string>
+    <string name="importing_collection">در حال ورود مجموعه.\nلطفا صبر کنید&#8230;</string>
+    <string name="import_media_count">در حال وارد کردن فایلهای رسانه %1$d%%&#8230;</string>
+    <string name="import_progress">* در حال وارد کردن یادداشتها: %1$d%%\n
 * در حال وارد کردن کارت ها: %2$d%%\n
 * پردازش انجام شده: %3$d%%\n</string>
-  <string name="import_update_details">%1$d از %2$d یادداشت موجود به روزرسانی شده است.</string>
-  <string name="import_update_ignored">بعضی از به روزرسانی ها نادیده گرفته شدند زیرا نوع یادداشت تغییر کرده است</string>
-  <string name="import_complete_count">کارت های وارد شده: %d</string>
-  <string name="sd_card_full_title">کارت حافظه پر</string>
-  <string name="sd_card_almost_full_title">کارت حافظه تقریبا پر</string>
-  <string name="restore_backup_title">بازیابی نسخه پشتیبان؟</string>
-  <string name="restore_backup">مجموعه شما با یک نسخه قدیمی تر جایگزین خواهد شد. موارد ذخیره نشده از بین خواهند رفت.</string>
-  <string name="dialog_cancel">لغو</string>
-  <string name="dialog_ok">تایید</string>
-  <string name="dialog_continue">ادامه</string>
-  <string name="dialog_positive_create">ایجاد</string>
-  <string name="dialog_positive_delete">حذف</string>
-  <string name="dialog_positive_disable">غیر فعال کردن</string>
-  <string name="dialog_positive_overwrite">رونويسي</string>
-  <string name="dialog_positive_remove">حذف</string>
-  <string name="dialog_positive_repair">اصلاح</string>
-  <string name="dialog_positive_replace">جایگزین کردن</string>
-  <string name="dialog_positive_restore">بازگرداني</string>
-  <string name="dialog_positive_set">تنظیم</string>
-  <string name="lookup_button_content">جستجوی اطلاعات بیشتر</string>
-  <string name="dialog_collection_path_not_dir">مسیر مشخص شده یک مسیر معتبر نیست</string>
-  <!-- Media checking -->
-  <string name="check_media_title">رسانه بررسی شود؟</string>
-  <string name="check_media_warning">در صورت حجیم بودن رسانه مجموعه،این ممکن است طول بکشد</string>
-  <string name="check_media_message">در حال بررسی رسانه&#8230;</string>
-  <string name="check_media_acknowledge">رسانه بررسی شد</string>
-  <string name="check_media_failed">خطا در بررسی رسانه</string>
-  <string name="check_media_invalid">فایل هایي با کدگذاری نامعتبر: %d</string>
-  <string name="check_media_unused">فایل هایي که در پوشه رسانه هستند ولی توسط هیچ کارتی استفاده نشده اند: %d</string>
-  <string name="check_media_nohave">فایل هایي که در کارت ها استفاده شده اند ولی در پوشه رسانه وجود ندارند: %d</string>
-  <string name="check_media_no_unused_missing">هیچ فایل مفقود شده یا بلا استفاده یافت نشد</string>
-  <string name="check_media_db_updated">پایگاه داده رسانه بازسازی شد</string>
-  <string name="check_media_delete_unused">حذف استفاده نشده ها</string>
-  <string name="check_media_deleted">فایل های حذف شده: %d</string>
-  <!-- Tags Dialog Options -->
-  <string name="tags_dialog_option_all_cards">همه کارتها</string>
-  <string name="tags_dialog_option_new_cards">جدید</string>
-  <string name="tags_dialog_option_due_cards">موعد</string>
-  <!-- Empty cards -->
-  <string name="emtpy_cards_finding">در حال پیدا کردن کارت های خالی&#8230;</string>
-  <string name="empty_cards_none">کارت خالی یافت نشد</string>
-  <string name="empty_cards_count">کارتها برای اینکه حذف شوند: %d</string>
-  <string name="empty_cards_deleted">کارتهای حذف شده: %d</string>
+    <string name="import_update_details">%1$d از %2$d یادداشت موجود به روزرسانی شده است.</string>
+    <string name="import_update_ignored">بعضی از به روزرسانی ها نادیده گرفته شدند زیرا نوع یادداشت تغییر کرده است</string>
+    <string name="import_complete_count">کارت های وارد شده: %d</string>
+    <string name="sd_card_full_title">کارت حافظه پر</string>
+    <string name="sd_card_almost_full_title">کارت حافظه تقریبا پر</string>
+    <string name="restore_backup_title">بازیابی نسخه پشتیبان؟</string>
+    <string name="restore_backup">مجموعه شما با یک نسخه قدیمی تر جایگزین خواهد شد. موارد ذخیره نشده از بین خواهند رفت.</string>
+    <string name="dialog_cancel">لغو</string>
+    <string name="dialog_ok">تایید</string>
+    <string name="dialog_continue">ادامه</string>
+    <string name="dialog_positive_create">ایجاد</string>
+    <string name="dialog_positive_delete">حذف</string>
+    <string name="dialog_positive_disable">غیر فعال کردن</string>
+    <string name="dialog_positive_overwrite">رونويسي</string>
+    <string name="dialog_positive_remove">حذف</string>
+    <string name="dialog_positive_repair">اصلاح</string>
+    <string name="dialog_positive_replace">جایگزین کردن</string>
+    <string name="dialog_positive_restore">بازگرداني</string>
+    <string name="dialog_positive_set">تنظیم</string>
+    <string name="lookup_button_content">جستجوی اطلاعات بیشتر</string>
+    <string name="dialog_collection_path_not_dir">مسیر مشخص شده یک مسیر معتبر نیست</string>
+    <!-- Media checking -->
+    <string name="check_media_title">رسانه بررسی شود؟</string>
+    <string name="check_media_warning">در صورت حجیم بودن رسانه مجموعه،این ممکن است طول بکشد</string>
+    <string name="check_media_message">در حال بررسی رسانه&#8230;</string>
+    <string name="check_media_acknowledge">رسانه بررسی شد</string>
+    <string name="check_media_failed">خطا در بررسی رسانه</string>
+    <string name="check_media_invalid">فایل هایي با کدگذاری نامعتبر: %d</string>
+    <string name="check_media_unused">فایل هایي که در پوشه رسانه هستند ولی توسط هیچ کارتی استفاده نشده اند: %d</string>
+    <string name="check_media_nohave">فایل هایي که در کارت ها استفاده شده اند ولی در پوشه رسانه وجود ندارند: %d</string>
+    <string name="check_media_no_unused_missing">هیچ فایل مفقود شده یا بلا استفاده یافت نشد</string>
+    <string name="check_media_db_updated">پایگاه داده رسانه بازسازی شد</string>
+    <string name="check_media_delete_unused">حذف استفاده نشده ها</string>
+    <string name="check_media_deleted">فایل های حذف شده: %d</string>
+    <!-- Tags Dialog Options -->
+    <string name="tags_dialog_option_all_cards">همه کارتها</string>
+    <string name="tags_dialog_option_new_cards">جدید</string>
+    <string name="tags_dialog_option_due_cards">موعد</string>
+    <!-- Empty cards -->
+    <string name="emtpy_cards_finding">در حال پیدا کردن کارت های خالی&#8230;</string>
+    <string name="empty_cards_none">کارت خالی یافت نشد</string>
+    <string name="empty_cards_count">کارتها برای اینکه حذف شوند: %d</string>
+    <string name="empty_cards_deleted">کارتهای حذف شده: %d</string>
 </resources>

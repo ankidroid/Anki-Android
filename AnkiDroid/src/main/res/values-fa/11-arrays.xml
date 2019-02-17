@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>هميشه گزارش بده</item>
-    <item>هرگز گزارش نده</item>
-    <item>بپرس</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>هیچ عملیاتی</item>
-    <item>نمایش پاسخ</item>
-    <item>دكمه پاسخ 1</item>
-    <item>دكمه پاسخ 2</item>
-    <item>دكمه پاسخ 3</item>
-    <item>دكمه پاسخ 4</item>
-    <item>پاسخ توصيه شده-سبز</item>
-    <item>پاسخ بهتر از توصيه شده</item>
-    <item>بازگردانی</item>
-    <item>ويرايش يادداشت</item>
-    <item>علامتگذاری یادداشت</item>
-    <item>جستجوي عبارت</item>
-    <item>تعليق موقت</item>
-    <item>تعلیق کارت</item>
-    <item>حذف یادداشت</item>
-    <item>پخش رسانه</item>
-    <item>توقف یادگیری</item>
-    <item>مخفی کردن یادداشت</item>
-    <item>یادداشت معلق شده</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>تعلیق کارت</item>
-    <item>تنها برچسب</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>کارت های جدید در صورت تصادفی</item>
-    <item>كارتهاي جديد به ترتيب اضافه شدن</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>اول قديمي ها ديده شود</item>
-    <item>تصادفي</item>
-    <item>افزايش فواصل</item>
-    <item>كاهش فواصل</item>
-    <item>بيشترين فاصله زماني</item>
-    <item>به ترتيب اضافه شدن</item>
-    <item>به ترتيب موعد</item>
-    <item>اولين اضافه شده هاي اخير</item>
-    <item>Relative overdueness</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>استفاده از دسته فعلی</item>
-    <item>تصمیم گیری براساس نوع یادداشت</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>ادغام کارتهای جدید و مرور شده</item>
-    <item>کارتهای جدید بعد از مرور شده ها</item>
-    <item>کارتهای جدید قبل از مرور شده ها</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>هنگامیکه هیچ فونتی برای فلش کارت تعیین نشده</item>
-    <item>همیشه</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>روشن</item>
-    <item>ساده و بی رنگ</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>سیاه</item>
-    <item>تیره</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>هميشه گزارش بده</item>
+        <item>هرگز گزارش نده</item>
+        <item>بپرس</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>هیچ عملیاتی</item>
+        <item>نمایش پاسخ</item>
+        <item>دكمه پاسخ 1</item>
+        <item>دكمه پاسخ 2</item>
+        <item>دكمه پاسخ 3</item>
+        <item>دكمه پاسخ 4</item>
+        <item>پاسخ توصيه شده-سبز</item>
+        <item>پاسخ بهتر از توصيه شده</item>
+        <item>بازگردانی</item>
+        <item>ويرايش يادداشت</item>
+        <item>علامتگذاری یادداشت</item>
+        <item>جستجوي عبارت</item>
+        <item>تعليق موقت</item>
+        <item>تعلیق کارت</item>
+        <item>حذف یادداشت</item>
+        <item>پخش رسانه</item>
+        <item>توقف یادگیری</item>
+        <item>مخفی کردن یادداشت</item>
+        <item>یادداشت معلق شده</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>تعلیق کارت</item>
+        <item>تنها برچسب</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>کارت های جدید در صورت تصادفی</item>
+        <item>كارتهاي جديد به ترتيب اضافه شدن</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>اول قديمي ها ديده شود</item>
+        <item>تصادفي</item>
+        <item>افزايش فواصل</item>
+        <item>كاهش فواصل</item>
+        <item>بيشترين فاصله زماني</item>
+        <item>به ترتيب اضافه شدن</item>
+        <item>به ترتيب موعد</item>
+        <item>اولين اضافه شده هاي اخير</item>
+        <item>Relative overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>استفاده از دسته فعلی</item>
+        <item>تصمیم گیری براساس نوع یادداشت</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>ادغام کارتهای جدید و مرور شده</item>
+        <item>کارتهای جدید بعد از مرور شده ها</item>
+        <item>کارتهای جدید قبل از مرور شده ها</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>هنگامیکه هیچ فونتی برای فلش کارت تعیین نشده</item>
+        <item>همیشه</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>روشن</item>
+        <item>ساده و بی رنگ</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>سیاه</item>
+        <item>تیره</item>
+    </string-array>
 </resources>

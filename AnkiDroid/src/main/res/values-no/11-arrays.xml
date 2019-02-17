@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Rapporter alltid</item>
-    <item>Aldri rapporter</item>
-    <item>Spør meg</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Ingen handling</item>
-    <item>Vis svar</item>
-    <item>Svar-knapp 1</item>
-    <item>Svar-knapp 2</item>
-    <item>Svar-knapp 3</item>
-    <item>Svar-knapp 4</item>
-    <item>Anbefalt svar (grønn)</item>
-    <item>Svaret bedre enn antatt</item>
-    <item>Angre</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
-    <item>Oppslagsuttrykk</item>
-    <item>Begrav kort</item>
-    <item>Suspender kort</item>
-    <item>Delete note</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Suspender kort</item>
-    <item>Kun emneord</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Nye kort i tilfeldig rekkefølge</item>
-    <item>Nye kort i den rekkefølgen de ble lagt til</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Lengst siden sett først</item>
-    <item>Tilfeldig</item>
-    <item>Økende intervaller</item>
-    <item>Synkende intervaller</item>
-    <item>Besvart feil flest ganger</item>
-    <item>I rekkefølgen lagt til</item>
-    <item>Rekkefølge etter forfallsdato</item>
-    <item>Latest added first</item>
-    <item>Relative overdueness</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Rapporter alltid</item>
+        <item>Aldri rapporter</item>
+        <item>Spør meg</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Ingen handling</item>
+        <item>Vis svar</item>
+        <item>Svar-knapp 1</item>
+        <item>Svar-knapp 2</item>
+        <item>Svar-knapp 3</item>
+        <item>Svar-knapp 4</item>
+        <item>Anbefalt svar (grønn)</item>
+        <item>Svaret bedre enn antatt</item>
+        <item>Angre</item>
+        <item>Edit note</item>
+        <item>Mark note</item>
+        <item>Oppslagsuttrykk</item>
+        <item>Begrav kort</item>
+        <item>Suspender kort</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Suspender kort</item>
+        <item>Kun emneord</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Nye kort i tilfeldig rekkefølge</item>
+        <item>Nye kort i den rekkefølgen de ble lagt til</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Lengst siden sett først</item>
+        <item>Tilfeldig</item>
+        <item>Økende intervaller</item>
+        <item>Synkende intervaller</item>
+        <item>Besvart feil flest ganger</item>
+        <item>I rekkefølgen lagt til</item>
+        <item>Rekkefølge etter forfallsdato</item>
+        <item>Latest added first</item>
+        <item>Relative overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Use current deck</item>
+        <item>Decide by note type</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Mix new cards and reviews</item>
+        <item>New cards after reviews</item>
+        <item>New cards before reviews</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>When no font specified on flashcards</item>
+        <item>Always</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Light</item>
+        <item>Plain</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Black</item>
+        <item>Dark</item>
+    </string-array>
 </resources>

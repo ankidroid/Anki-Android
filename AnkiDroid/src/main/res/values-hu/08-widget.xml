@@ -39,29 +39,32 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">Esedékes kártyák</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d darab AnkiDroid kártya esedékes</string>
-  <string name="widget_no_cards_due">Nincs esedékes kártya</string>
-  <string name="widget_loading">Widget betöltése...</string>
-  <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d kártya esedékes %2$s</item>
-    <item quantity="other">%1$d kártya esedékes %2$s</item>
-  </plurals>
-  <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d decks</item>
-  </plurals>
-  <string name="widget_small">AnkiDroid kicsi</string>
-  <string name="widget_small_button">AnkiDroid</string>
-  <plurals name="widget_cards_due">
-    <item quantity="one">%d card due</item>
-    <item quantity="other">%d cards due</item>
-  </plurals>
-  <plurals name="widget_eta">
-    <item quantity="one">%d minute remaining</item>
-    <item quantity="other">%d minutes remaining</item>
-  </plurals>
-  <string name="widget_add_note">Add note</string>
-  <string name="widget_add_note_button">Add new AnkiDroid note</string>
+    <!-- Widget -->
+    <string name="widget_minimum_cards_due_notification_ticker_title">Esedékes kártyák</string>
+    <plurals name="widget_minimum_cards_due_notification_ticker_text">
+        <item quantity="one">%d AnkiDroid card due</item>
+        <item quantity="other">%d AnkiDroid cards due</item>
+    </plurals>
+    <string name="widget_no_cards_due">Nincs esedékes kártya</string>
+    <string name="widget_loading">Widget betöltése...</string>
+    <plurals name="widget_cards_in_decks_due">
+        <item quantity="one">%1$d kártya esedékes %2$s</item>
+        <item quantity="other">%1$d kártya esedékes %2$s</item>
+    </plurals>
+    <plurals name="widget_decks">
+        <item quantity="one">%1$d pakli</item>
+        <item quantity="other">%1$d decks</item>
+    </plurals>
+    <string name="widget_small">AnkiDroid kicsi</string>
+    <string name="widget_small_button">AnkiDroid</string>
+    <plurals name="widget_cards_due">
+        <item quantity="one">%d kártya esedékes</item>
+        <item quantity="other">%d cards due</item>
+    </plurals>
+    <plurals name="widget_eta">
+        <item quantity="one">%d perc maradt</item>
+        <item quantity="other">%d minutes remaining</item>
+    </plurals>
+    <string name="widget_add_note">Megjegyzés hozzáadása</string>
+    <string name="widget_add_note_button">Új AnkiDroid megjegyzés hozzáadása</string>
 </resources>

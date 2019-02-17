@@ -39,58 +39,58 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- CardBrowser -->
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
-  </plurals>
-  <string name="card_browser_all_decks">All decks</string>
-  <string name="card_browser_delete_card">Delete notes</string>
-  <string name="card_browser_suspend_card">Suspend cards</string>
-  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
-  <string name="card_browser_change_deck">Change deck</string>
-  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-  <string name="card_browser_mark_card">Mark notes</string>
-  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
-  <string name="card_browser_unmark_card">Unmark notes</string>
-  <string name="delete_card_title">Delete note?</string>
-  <string name="delete_cards_title">Delete notes?</string>
-  <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
-  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
-  <string name="deleted_message">Notes deleted</string>
-  <string name="changed_deck_message">Moved to %s</string>
-  <string name="card_browser_suspended_cards">(un)suspended cards</string>
-  <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filter by tag</string>
-  <string name="card_browser_tags_shown">Tags: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
-  <string name="card_browser_change_display_order">Change display order</string>
-  <string name="card_browser_change_display_order_title">Choose display order</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
-  <string name="card_details_question">Question</string>
-  <string name="card_details_answer">Answer</string>
-  <string name="card_details_due">Due</string>
-  <string name="card_details_tags">Tags</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
-  <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
-    <item>By sort field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
-    <item>By lapses</item>
-  </string-array>
-  <string name="card_browser_select_all">Select all</string>
-  <string name="card_browser_select_none">Select none</string>
+    <!-- CardBrowser -->
+    <plurals name="card_browser_subtitle">
+        <item quantity="one">Montras %d karton</item>
+        <item quantity="other">Montras %d kartojn</item>
+    </plurals>
+    <string name="card_browser_all_decks">Ĉiuj kartaroj</string>
+    <string name="card_browser_delete_card">Forigi notojn</string>
+    <string name="card_browser_suspend_card">Kaŝi karton daŭre</string>
+    <string name="card_browser_toggle_suspend_card">(mal)kaŝi kartojn</string>
+    <string name="card_browser_change_deck">Ŝanĝi kartaron</string>
+    <string name="card_browser_unsuspend_card">Malkaŝi kartojn</string>
+    <string name="card_browser_mark_card">Marki notojn</string>
+    <string name="card_browser_toggle_mark_card">(mal)marki notojn</string>
+    <string name="card_browser_unmark_card">Malmarki notojn</string>
+    <string name="delete_card_title">Ĉu forigi noton?</string>
+    <string name="delete_cards_title">Ĉu forigi notojn?</string>
+    <string name="delete_card_message">Ĉu forigi ĉiujn kartojn de tiu ĉi noto?\nSerĉ-kampo: %s</string>
+    <string name="delete_card_mult_message">Ĉu forigi ĉiujn kartojn de ĉiuj elektitaj notoj?\n(ne nur elektitaj kartoj)</string>
+    <string name="deleted_message">Forigis notojn</string>
+    <string name="changed_deck_message">Movis al %s</string>
+    <string name="card_browser_suspended_cards">(mal)kaŝis kartojn</string>
+    <string name="card_browser_show_marked">Filtri markitajn</string>
+    <string name="card_browser_show_suspended">Filtri daŭre kaŝitajn</string>
+    <string name="card_browser_search_by_tag">Filtri laŭ etikedo</string>
+    <string name="card_browser_tags_shown">Etikedoj: %1$s</string>
+    <string name="card_browser_list_my_searches">Miaj serĉoj</string>
+    <string name="card_browser_list_my_searches_save">Konservi serĉon</string>
+    <string name="card_browser_list_my_searches_title">Elekti konservitan serĉon</string>
+    <string name="card_browser_list_my_searches_new_name">Nomo por la nuna serĉo</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Ne povas konservi serĉon sen nomo</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Nomo jam ekzistas</string>
+    <string name="card_browser_list_my_searches_remove_content">Ĉu forigi “%1$s”?</string>
+    <string name="card_browser_change_display_order">Ŝanĝi ordon de vidigo</string>
+    <string name="card_browser_change_display_order_title">Elekti ordon de vidigo</string>
+    <string name="card_browser_change_display_order_reverse">Elektu kampon dufoje por inversigi</string>
+    <string name="card_details_question">Demando</string>
+    <string name="card_details_answer">Respondo</string>
+    <string name="card_details_due">Lernendaj</string>
+    <string name="card_details_tags">Etikedoj</string>
+    <string name="card_browser_filtering_cards">Filtrado de etikedoj&#8230;\nPremu reen-butonon por rezigni</string>
+    <string-array name="card_browser_order_labels">
+        <item>Sen ordigo (pli rapide)</item>
+        <item>Laŭ ordig-kampon</item>
+        <item>Laŭ tempo de kreo</item>
+        <item>Laŭ tempo de redakto</item>
+        <item>Laŭ tempo de ŝanĝo</item>
+        <item>Laŭ tempo de lerno</item>
+        <item>Laŭ intertempo</item>
+        <item>Laŭ facileco</item>
+        <item>Laŭ ripetoj</item>
+        <item>Laŭ misrespondoj</item>
+    </string-array>
+    <string name="card_browser_select_all">Elekti ĉiujn</string>
+    <string name="card_browser_select_none">Elekti neniujn</string>
 </resources>

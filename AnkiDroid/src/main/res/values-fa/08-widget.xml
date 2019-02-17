@@ -39,29 +39,32 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">موعد مرور کارتها</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">موعد مرور %d کارت آنکی دروید</string>
-  <string name="widget_no_cards_due">عدم موعد مرور کارتها</string>
-  <string name="widget_loading">بارگذاری ویدجت...</string>
-  <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">موعد مرور %1$d کارت در %2$s</item>
-    <item quantity="other">موعد مرور %1$d کارت در %2$s</item>
-  </plurals>
-  <plurals name="widget_decks">
-    <item quantity="one">%1$d دسته</item>
-    <item quantity="other">%1$d دسته ها</item>
-  </plurals>
-  <string name="widget_small">آنکی دروید کوچک</string>
-  <string name="widget_small_button">AnkiDroid</string>
-  <plurals name="widget_cards_due">
-    <item quantity="one">موعد مرور %d کارت</item>
-    <item quantity="other">موعد مرور %d کارت</item>
-  </plurals>
-  <plurals name="widget_eta">
-    <item quantity="one">%d دقیقه باقیمانده</item>
-    <item quantity="other">%d دقیقه باقیمانده</item>
-  </plurals>
-  <string name="widget_add_note">افزودن یادداشت</string>
-  <string name="widget_add_note_button">افزودن یادداشت جدید</string>
+    <!-- Widget -->
+    <string name="widget_minimum_cards_due_notification_ticker_title">موعد مرور کارتها</string>
+    <plurals name="widget_minimum_cards_due_notification_ticker_text">
+        <item quantity="one">%d AnkiDroid card due</item>
+        <item quantity="other">%d AnkiDroid cards due</item>
+    </plurals>
+    <string name="widget_no_cards_due">عدم موعد مرور کارتها</string>
+    <string name="widget_loading">بارگذاری ویدجت...</string>
+    <plurals name="widget_cards_in_decks_due">
+        <item quantity="one">موعد مرور %1$d کارت در %2$s</item>
+        <item quantity="other">موعد مرور %1$d کارت در %2$s</item>
+    </plurals>
+    <plurals name="widget_decks">
+        <item quantity="one">%1$d دسته</item>
+        <item quantity="other">%1$d دسته ها</item>
+    </plurals>
+    <string name="widget_small">آنکی دروید کوچک</string>
+    <string name="widget_small_button">AnkiDroid</string>
+    <plurals name="widget_cards_due">
+        <item quantity="one">موعد مرور %d کارت</item>
+        <item quantity="other">موعد مرور %d کارت</item>
+    </plurals>
+    <plurals name="widget_eta">
+        <item quantity="one">%d دقیقه باقیمانده</item>
+        <item quantity="other">%d دقیقه باقیمانده</item>
+    </plurals>
+    <string name="widget_add_note">افزودن یادداشت</string>
+    <string name="widget_add_note_button">افزودن یادداشت جدید</string>
 </resources>

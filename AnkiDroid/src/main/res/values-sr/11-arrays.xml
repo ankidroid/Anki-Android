@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Увек пријављуј</item>
-    <item>Никада не пријављуј</item>
-    <item>Питај ме</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Нема радње</item>
-    <item>Прикажи одговор</item>
-    <item>Дугме одговора 1</item>
-    <item>Дугме одговора 2</item>
-    <item>Дугме одговора 3</item>
-    <item>Дугме одговора 4</item>
-    <item>Препоручени одговор (зелени)</item>
-    <item>Боље од препорученог</item>
-    <item>Опозови</item>
-    <item>Уреди белешку</item>
-    <item>Означи белешку</item>
-    <item>Претрага израза</item>
-    <item>Сакриј, покажи касније</item>
-    <item>Откажи картицу</item>
-    <item>Избриши белешку</item>
-    <item>Пусти медију</item>
-    <item>Прекини учење</item>
-    <item>Закопај белешку</item>
-    <item>Откажи белешку</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Откажи картицу</item>
-    <item>Додај само таг</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Нове картице у случајном редоследу</item>
-    <item>Нове картице у редоследу додавања</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Најстарије виђене прво</item>
-    <item>Насумице</item>
-    <item>По увећању размака</item>
-    <item>По умањењу размака</item>
-    <item>Највеће истеклих</item>
-    <item>Додат редослед прегледа</item>
-    <item>У редоследу додавања</item>
-    <item>Прво последње додате</item>
-    <item>Relative overdueness</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Користи текући шпил</item>
-    <item>Одлучи по типу белешке</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Помешај нове и поновљене картице</item>
-    <item>Нове картице после поновљених</item>
-    <item>Нове картице пре поновљених</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Када нема фонт одређен за картице</item>
-    <item>Увек</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Увек пријављуј</item>
+        <item>Никада не пријављуј</item>
+        <item>Питај ме</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Нема радње</item>
+        <item>Прикажи одговор</item>
+        <item>Дугме одговора 1</item>
+        <item>Дугме одговора 2</item>
+        <item>Дугме одговора 3</item>
+        <item>Дугме одговора 4</item>
+        <item>Препоручени одговор (зелени)</item>
+        <item>Боље од препорученог</item>
+        <item>Опозови</item>
+        <item>Уреди белешку</item>
+        <item>Означи белешку</item>
+        <item>Претрага израза</item>
+        <item>Сакриј, покажи касније</item>
+        <item>Откажи картицу</item>
+        <item>Избриши белешку</item>
+        <item>Пусти медију</item>
+        <item>Прекини учење</item>
+        <item>Закопај белешку</item>
+        <item>Откажи белешку</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Откажи картицу</item>
+        <item>Додај само таг</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Нове картице у случајном редоследу</item>
+        <item>Нове картице у редоследу додавања</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Најстарије виђене прво</item>
+        <item>Насумице</item>
+        <item>По увећању размака</item>
+        <item>По умањењу размака</item>
+        <item>Највеће истеклих</item>
+        <item>Додат редослед прегледа</item>
+        <item>У редоследу додавања</item>
+        <item>Прво последње додате</item>
+        <item>Relative overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Користи текући шпил</item>
+        <item>Одлучи по типу белешке</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Помешај нове и поновљене картице</item>
+        <item>Нове картице после поновљених</item>
+        <item>Нове картице пре поновљених</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Када нема фонт одређен за картице</item>
+        <item>Увек</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Light</item>
+        <item>Plain</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Black</item>
+        <item>Dark</item>
+    </string-array>
 </resources>

@@ -39,27 +39,27 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">Säkerhetskopiering kunde inte utföras på grund av otillräckligt utrymme på SD-kortet\n\nFrigör utrymme eller minska djupet på säkerhetskopian.</string>
-  <string name="sd_space_warning">Mindre än %d mb utrymme kvar på ditt SD-kort.\nFrigör utrymme för att undvika dataförlust.</string>
-  <string name="backup_delete">Tar bort säkerhetskopior.\nVar god vänta...</string>
-  <string name="backup_restore">Återställ från säkerhetskopia</string>
-  <string name="backup_new_collection">Ny samling</string>
-  <string name="backup_del_collection">Ta bort samling och skapa en ny</string>
-  <string name="backup_del_collection_question">Är du säker att du vill ta bort denna samling och skapa en ny? Detta kommer ta bort alla inlärningsdata samt radera alla kort!</string>
-  <string name="backup_full_sync_from_server">Fullständig synkronisering från servern</string>
-  <string name="backup_full_sync_from_server_question">Är du säker att du vill skriva över din samling med den från AnkiWeb? Detta kommer ta bort alla inlärningsdata och ändrad information sedan din senaste synkning!</string>
-  <string name="error_handling_title">Felhantering</string>
-  <string name="error_handling_options">Alternativ</string>
-  <string name="backup_retry_opening">Prova att öppna igen</string>
-  <string name="backup_error_menu_repair">Reparera databas</string>
-  <string name="backup_repair_deck">Reparera</string>
-  <string name="backup_repair_deck_progress">Reparerar databas.\nVar vänlig vänta...</string>
-  <string name="backup_error">Fel</string>
-  <string name="backup_invalid_file_error">Den valda återställningsfilen var ogiltig</string>
-  <string name="backup_restore_select_title">Välj säkerhetskopia att återställa</string>
-  <string name="backup_restore_no_backups">Inga säkerhetskopior för samlingen finns på den här enheten. Om du har säkerhetskopior på din stationära dator, kopiera dem manuellt till din AnkiDroid-mapp</string>
-  <string name="open_collection_failed_title">Samlingen är inte öppnad</string>
-  <string name="corrupt_db_message">Din saming har blivit korrupt. \n\n Tryck på \"Alternativ\" för att återställa ifrån en backup, eller om det inte fungerar, läs följande instruktioner för att manuellt reparera databasen:\n%1$s</string>
-  <string name="access_collection_failed_message">Ett fel uppstod vid tillgång till din samling. Det kan ha orsakats av en ofarlig bugg, eller så kan det finnas ett problem med den. \n\nFörsök att köra Kontrollera Databas, eller återställ ifrån backup genom att trycka på “Alternativ” knappen. Om du fortsätter att se detta meddelande, vänligen lämna en felrapport:\n%1$s</string>
-  <string name="deck_repair_error">Samlingen kunde inte repareras</string>
+    <string name="backup_deck_no_space_left">Säkerhetskopiering kunde inte utföras på grund av otillräckligt utrymme på SD-kortet\n\nFrigör utrymme eller minska djupet på säkerhetskopian.</string>
+    <string name="sd_space_warning">Mindre än %d mb utrymme kvar på ditt SD-kort.\nFrigör utrymme för att undvika dataförlust.</string>
+    <string name="backup_delete">Tar bort säkerhetskopior.\nVar god vänta...</string>
+    <string name="backup_restore">Återställ från säkerhetskopia</string>
+    <string name="backup_new_collection">Ny samling</string>
+    <string name="backup_del_collection">Ta bort samling och skapa en ny</string>
+    <string name="backup_del_collection_question">Är du säker att du vill ta bort denna samling och skapa en ny? Detta kommer ta bort alla inlärningsdata samt radera alla kort!</string>
+    <string name="backup_full_sync_from_server">Fullständig synkronisering från servern</string>
+    <string name="backup_full_sync_from_server_question">Är du säker att du vill skriva över din samling med den från AnkiWeb? Detta kommer ta bort alla inlärningsdata och ändrad information sedan din senaste synkning!</string>
+    <string name="error_handling_title">Felhantering</string>
+    <string name="error_handling_options">Alternativ</string>
+    <string name="backup_retry_opening">Prova att öppna igen</string>
+    <string name="backup_error_menu_repair">Reparera databas</string>
+    <string name="backup_repair_deck">Reparera</string>
+    <string name="backup_repair_deck_progress">Reparerar databas.\nVar vänlig vänta...</string>
+    <string name="backup_error">Fel</string>
+    <string name="backup_invalid_file_error">Den valda återställningsfilen var ogiltig</string>
+    <string name="backup_restore_select_title">Välj säkerhetskopia att återställa</string>
+    <string name="backup_restore_no_backups">Inga säkerhetskopior för samlingen finns på den här enheten. Om du har säkerhetskopior på din stationära dator, kopiera dem manuellt till din AnkiDroid-mapp</string>
+    <string name="open_collection_failed_title">Samlingen är inte öppnad</string>
+    <string name="corrupt_db_message">Din saming har blivit korrupt. \n\n Tryck på \"Alternativ\" för att återställa ifrån en backup, eller om det inte fungerar, läs följande instruktioner för att manuellt reparera databasen:\n%1$s</string>
+    <string name="access_collection_failed_message">Ett fel uppstod vid tillgång till din samling. Det kan ha orsakats av en ofarlig bugg, eller så kan det finnas ett problem med den. \n\nFörsök att köra Kontrollera Databas, eller återställ ifrån backup genom att trycka på “Alternativ” knappen. Om du fortsätter att se detta meddelande, vänligen lämna en felrapport:\n%1$s</string>
+    <string name="deck_repair_error">Samlingen kunde inte repareras</string>
 </resources>

@@ -39,99 +39,109 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">¿Comprobar base de datos?</string>
-  <string name="check_db_warning">Esto podría tomar mucho tiempo</string>
-  <string name="check_db_acknowledge">Base de datos comprobada</string>
-  <string name="check_db_acknowledge_shrunk">Base de datos comprobada y optimizada.\nReducida en %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Eliminar mazo</string>
-  <string name="delete_deck_default_deck">El mazo por defecto no se puede eliminar.</string>
-  <string name="delete_deck_title">¿Eliminar mazo?</string>
-  <plurals name="delete_deck_message">
-    <item quantity="one">¿Borrar todas las tarjetas en %1$s? Contiene %2$d tarjeta.</item>
-    <item quantity="other">¿Borrar todas las tarjetas en %1$s? Contiene %2$d tarjetas.</item>
-  </plurals>
-  <string name="delete_cram_deck_message">¿Estás seguro de que deseas mandar todas las tarjetas de %s de vuelta a sus mazos originales?</string>
-  <string name="no_tts_available_message">No hay idiomas de texto-a-voz disponibles</string>
-  <string name="initializing_tts">Inicializando TTS&#8230;</string>
-  <string name="tts_no_tts">No hablar</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Tarjetas para Android</h2>AnkiDroid es una aplicación de tarjetas totalmente compatible con <a href=\"%2$s\">Anki</a>, el software de escritorio. Se puede crear, descargar y aprender material tanto en AnkiDroid como en Anki de escritorio, y sincronizarlo fácilmente con AnkiWeb.]]></item>
-    <item><![CDATA[Para ayudarnos a mejorar la AnkiDroid, por favor informe los errores por <a href=\"%1$s\">el issue tracker</a>; nuevas ideas son muy agradadecidas también. Encuentre las respuestas en <a href=\"%2$s\"> la wiki</a> o inicie una discusión en <a href=\"%3$s\">el foro</a>.]]></item>
-    <item><![CDATA[AnkiDroid es <a href=\"%1$s\">software libre<a/>, por lo que todo el mundo se anima a <a href=\"%2$s\"> ser un colaborador</a> :-)]]></item>
-    <item><![CDATA[Aunque no seas desarrollador también puedes ayudar. Por ejemplo, puedes <a href=\"%1$s\">ayudar a traducir</a> AnkiDroid, actualizar la wiki, aportar capturas de pantalla o escribir en blogs sobre AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid está publicado bajo la <a href=\"%1$s\">licencia de GNU-GPL v3</a> y el código fuente está disponible <a href=\"%2$s\">en GitHub</a>.]]></item>
-  </string-array>
-  <string name="preview_title">Vista previa</string>
-  <string name="reposition_card_dialog_title">Reposition new card</string>
-  <string name="reposition_card_dialog_message">Start position:</string>
-  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
-  <string name="reset_card_dialog_title">Resetear el progreso de la tarjeta</string>
-  <string name="reset_card_dialog_message">Esta tarjeta se colocará al final de la nueva cola de tarjetas.</string>
-  <string name="reset_card_dialog_acknowledge">Tarjeta restablecida</string>
-  <string name="reschedule_card_dialog_title">Reprogramar tarjeta</string>
-  <string name="reschedule_card_dialog_message">Reprogramar para revisión en x días:</string>
-  <string name="reschedule_card_dialog_acknowledge">Tarjeta reprogramada</string>
-  <string name="answering_error_title">Error en la base de datos</string>
-  <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, haz clic en \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
-  <string name="answering_error_report">Reportar error</string>
-  <string name="repair_deck_dialog">¿Realmente deseas intentar reparar la base de datos?\n\nAntes de iniciar el intento, se creará una copia en la subcarpeta \'%s\'.</string>
-  <string name="intent_add_saved_information">Datos guardados</string>
-  <string name="intent_add_clear_all">Borrar todo</string>
-  <string name="intent_aedict_empty">La categoría \'por defecto\' está vacía</string>
-  <string name="intent_aedict_category">Para añadir tarjetas AnkiDroid borra todas las categorías del Bloc de notas o agrega una llamada \'por defecto\'</string>
-  <string name="custom_study_new_total_new">Tarjetas nuevas en el mazo: %s</string>
-  <string name="custom_study_rev_total_rev">Repasos pendientes en el mazo: %s</string>
-  <string name="custom_study_new_extend">Aumentar el límite de tarjetas nuevas para hoy en</string>
-  <string name="custom_study_rev_extend">Aumentar el límite de repasos para hoy en</string>
-  <string name="custom_study_forgotten">Revisar tarjetas olvidadas en los últimos x días:</string>
-  <string name="custom_study_ahead">Revisar con x días de adelanto:</string>
-  <string name="custom_study_random">Selecciona x tarjetas al azar del mazo:</string>
-  <string name="custom_study_preview">Previsualizar nuevas tarjetas añadidas en los últimos x días:</string>
-  <string name="rebuild_custom_study_deck">Reconstruyendo mazo de estudio personalizada&#8230;</string>
-  <string name="importing_collection">Importando colección&#8230;</string>
-  <string name="import_media_count">Importando archivos multimedia %1$d%%&#8230;</string>
-  <string name="import_progress">• Importando notas: %1$d%%\n• Importando tarjetas: %2$d%%\n• Postprocesando: %3$d%%</string>
-  <string name="import_update_details">Se ha(n) actualizado %1$d de %2$d notas existentes.</string>
-  <string name="import_update_ignored">Se han ignorado algunas actualizaciones porque el tipo de nota ha cambiado</string>
-  <string name="import_complete_count">Tarjetas importadas: %d</string>
-  <string name="sd_card_full_title">Tarjeta SD llena</string>
-  <string name="sd_card_almost_full_title">Tarjeta SD casi llena</string>
-  <string name="restore_backup_title">¿Restaurar copia de seguridad?</string>
-  <string name="restore_backup">Su colección será reemplazada con una copia más antigua. Cualquier progreso no guardado se perderá.</string>
-  <string name="dialog_cancel">Cancelar</string>
-  <string name="dialog_ok">Aceptar</string>
-  <string name="dialog_continue">Continuar</string>
-  <string name="dialog_positive_create">Crear</string>
-  <string name="dialog_positive_delete">Eliminar</string>
-  <string name="dialog_positive_disable">Deshabilitar</string>
-  <string name="dialog_positive_overwrite">Sobreescribir</string>
-  <string name="dialog_positive_remove">Quitar</string>
-  <string name="dialog_positive_repair">Reparar</string>
-  <string name="dialog_positive_replace">Reemplazar</string>
-  <string name="dialog_positive_restore">Restaurar</string>
-  <string name="dialog_positive_set">Establecer</string>
-  <string name="lookup_button_content">Buscar</string>
-  <string name="dialog_collection_path_not_dir">La ruta especificada no era un directorio válido</string>
-  <!-- Media checking -->
-  <string name="check_media_title">¿Comprobar archivos multimedia?</string>
-  <string name="check_media_warning">Esto puede tardar mucho con las colecciones de grandes archivos multimedia</string>
-  <string name="check_media_message">Comprobando archivos multimedia&#8230;</string>
-  <string name="check_media_acknowledge">Archivos multimedia comprobados</string>
-  <string name="check_media_failed">La comprobación de los archivos multimedia ha fallado</string>
-  <string name="check_media_invalid">Archivos con codificación no válida: %d</string>
-  <string name="check_media_unused">Archivos en la carpeta de archivos multimedia pero no utilizados por ninguna tarjeta: %d</string>
-  <string name="check_media_nohave">Archivos utilizados en las tarjetas pero no en la carpeta de archivos multimedia: %d</string>
-  <string name="check_media_no_unused_missing">No hay archivos no utilizados o perdidos.</string>
-  <string name="check_media_db_updated">Base de datos de archivos multimedia reconstruida</string>
-  <string name="check_media_delete_unused">Eliminar no utilizados</string>
-  <string name="check_media_deleted">Archivos eliminados: %d</string>
-  <!-- Tags Dialog Options -->
-  <string name="tags_dialog_option_all_cards">Todas las tarjetas</string>
-  <string name="tags_dialog_option_new_cards">Nuevo</string>
-  <string name="tags_dialog_option_due_cards">Pendientes</string>
-  <!-- Empty cards -->
-  <string name="emtpy_cards_finding">Buscando tarjetas vacías&#8230;</string>
-  <string name="empty_cards_none">No hay tarjetas vacías</string>
-  <string name="empty_cards_count">Tarjetas a eliminar: %d</string>
-  <string name="empty_cards_deleted">Tarjetas eliminadas: %d</string>
+    <string name="check_db_title">¿Comprobar base de datos?</string>
+    <string name="check_db_warning">Esto podría tomar mucho tiempo</string>
+    <string name="check_db_acknowledge">Base de datos comprobada</string>
+    <string name="check_db_acknowledge_shrunk">Base de datos comprobada y optimizada.\nReducida en %d kB.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Eliminar mazo</string>
+    <string name="delete_deck_default_deck">El mazo por defecto no se puede eliminar.</string>
+    <string name="delete_deck_title">¿Eliminar mazo?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">¿Borrar todas las tarjetas en %1$s? Contiene %2$d tarjeta.</item>
+        <item quantity="other">¿Borrar todas las tarjetas en %1$s? Contiene %2$d tarjetas.</item>
+    </plurals>
+    <string name="delete_cram_deck_message">¿Estás seguro de que deseas mandar todas las tarjetas de %s de vuelta a sus mazos originales?</string>
+    <string name="no_tts_available_message">No hay idiomas de texto-a-voz disponibles</string>
+    <string name="initializing_tts">Inicializando TTS&#8230;</string>
+    <string name="tts_no_tts">No hablar</string>
+    <string-array name="about_content">
+        <item><![CDATA[<h2>%1$s:<br/>Tarjetas para Android</h2>AnkiDroid es una aplicación de tarjetas totalmente compatible con <a href=\"%2$s\">Anki</a>, el software de escritorio. Se puede crear, descargar y aprender material tanto en AnkiDroid como en Anki de escritorio, y sincronizarlo fácilmente con AnkiWeb.]]></item>
+        <item><![CDATA[Para ayudarnos a mejorar la AnkiDroid, por favor informe los errores por <a href=\"%1$s\">el issue tracker</a>; nuevas ideas son muy agradadecidas también. Encuentre las respuestas en <a href=\"%2$s\"> la wiki</a> o inicie una discusión en <a href=\"%3$s\">el foro</a>.]]></item>
+        <item><![CDATA[AnkiDroid es <a href=\"%1$s\">software libre<a/>, por lo que todo el mundo se anima a <a href=\"%2$s\"> ser un colaborador</a> :-)]]></item>
+        <item><![CDATA[Aunque no seas desarrollador también puedes ayudar. Por ejemplo, puedes <a href=\"%1$s\">ayudar a traducir</a> AnkiDroid, actualizar la wiki, aportar capturas de pantalla o escribir en blogs sobre AnkiDroid.]]></item>
+        <item><![CDATA[AnkiDroid está publicado bajo la <a href=\"%1$s\">licencia de GNU-GPL v3</a> y el código fuente está disponible <a href=\"%2$s\">en GitHub</a>.]]></item>
+    </string-array>
+    <string name="preview_title">Vista previa</string>
+    <string name="reposition_card_dialog_title">Reposicionar nueva tarjeta</string>
+    <string name="reposition_card_dialog_message">Posición de inicio:</string>
+    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <plurals name="reposition_card_dialog_acknowledge">
+        <item quantity="one">%d card repositioned</item>
+        <item quantity="other">%d cards repositioned</item>
+    </plurals>
+    <string name="reset_card_dialog_title">Resetear el progreso de la tarjeta</string>
+    <string name="reset_card_dialog_message">Esta tarjeta se colocará al final de la nueva cola de tarjetas.</string>
+    <plurals name="reset_cards_dialog_acknowledge">
+        <item quantity="one">%d card reset</item>
+        <item quantity="other">%d cards reset</item>
+    </plurals>
+    <string name="reschedule_card_dialog_title">Reprogramar tarjeta</string>
+    <string name="reschedule_card_dialog_message">Reprogramar para revisión en x días:</string>
+    <plurals name="reschedule_cards_dialog_acknowledge">
+        <item quantity="one">%d card rescheduled</item>
+        <item quantity="other">%d cards rescheduled</item>
+    </plurals>
+    <string name="answering_error_title">Error en la base de datos</string>
+    <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, haz clic en \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
+    <string name="answering_error_report">Reportar error</string>
+    <string name="repair_deck_dialog">¿Realmente deseas intentar reparar la base de datos?\n\nAntes de iniciar el intento, se creará una copia en la subcarpeta \'%s\'.</string>
+    <string name="intent_add_saved_information">Datos guardados</string>
+    <string name="intent_add_clear_all">Borrar todo</string>
+    <string name="intent_aedict_empty">La categoría \'por defecto\' está vacía</string>
+    <string name="intent_aedict_category">Para añadir tarjetas AnkiDroid borra todas las categorías del Bloc de notas o agrega una llamada \'por defecto\'</string>
+    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_extend">Aumentar el límite de tarjetas nuevas para hoy en</string>
+    <string name="custom_study_rev_extend">Aumentar el límite de repasos para hoy en</string>
+    <string name="custom_study_forgotten">Revisar tarjetas olvidadas en los últimos x días:</string>
+    <string name="custom_study_ahead">Revisar con x días de adelanto:</string>
+    <string name="custom_study_random">Selecciona x tarjetas al azar del mazo:</string>
+    <string name="custom_study_preview">Previsualizar nuevas tarjetas añadidas en los últimos x días:</string>
+    <string name="rebuild_custom_study_deck">Reconstruyendo mazo de estudio personalizada&#8230;</string>
+    <string name="importing_collection">Importando colección&#8230;</string>
+    <string name="import_media_count">Importando archivos multimedia %1$d%%&#8230;</string>
+    <string name="import_progress">• Importando notas: %1$d%%\n• Importando tarjetas: %2$d%%\n• Postprocesando: %3$d%%</string>
+    <string name="import_update_details">Se ha(n) actualizado %1$d de %2$d notas existentes.</string>
+    <string name="import_update_ignored">Se han ignorado algunas actualizaciones porque el tipo de nota ha cambiado</string>
+    <string name="import_complete_count">Tarjetas importadas: %d</string>
+    <string name="sd_card_full_title">Tarjeta SD llena</string>
+    <string name="sd_card_almost_full_title">Tarjeta SD casi llena</string>
+    <string name="restore_backup_title">¿Restaurar copia de seguridad?</string>
+    <string name="restore_backup">Su colección será reemplazada con una copia más antigua. Cualquier progreso no guardado se perderá.</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="dialog_ok">Aceptar</string>
+    <string name="dialog_continue">Continuar</string>
+    <string name="dialog_positive_create">Crear</string>
+    <string name="dialog_positive_delete">Eliminar</string>
+    <string name="dialog_positive_disable">Deshabilitar</string>
+    <string name="dialog_positive_overwrite">Sobreescribir</string>
+    <string name="dialog_positive_remove">Quitar</string>
+    <string name="dialog_positive_repair">Reparar</string>
+    <string name="dialog_positive_replace">Reemplazar</string>
+    <string name="dialog_positive_restore">Restaurar</string>
+    <string name="dialog_positive_set">Establecer</string>
+    <string name="lookup_button_content">Buscar</string>
+    <string name="dialog_collection_path_not_dir">La ruta especificada no era un directorio válido</string>
+    <!-- Media checking -->
+    <string name="check_media_title">¿Comprobar archivos multimedia?</string>
+    <string name="check_media_warning">Esto puede tardar mucho con las colecciones de grandes archivos multimedia</string>
+    <string name="check_media_message">Comprobando archivos multimedia&#8230;</string>
+    <string name="check_media_acknowledge">Archivos multimedia comprobados</string>
+    <string name="check_media_failed">La comprobación de los archivos multimedia ha fallado</string>
+    <string name="check_media_invalid">Archivos con codificación no válida: %d</string>
+    <string name="check_media_unused">Archivos en la carpeta de archivos multimedia pero no utilizados por ninguna tarjeta: %d</string>
+    <string name="check_media_nohave">Archivos utilizados en las tarjetas pero no en la carpeta de archivos multimedia: %d</string>
+    <string name="check_media_no_unused_missing">No hay archivos no utilizados o perdidos.</string>
+    <string name="check_media_db_updated">Base de datos de archivos multimedia reconstruida</string>
+    <string name="check_media_delete_unused">Eliminar no utilizados</string>
+    <string name="check_media_deleted">Archivos eliminados: %d</string>
+    <!-- Tags Dialog Options -->
+    <string name="tags_dialog_option_all_cards">Todas las tarjetas</string>
+    <string name="tags_dialog_option_new_cards">Nuevo</string>
+    <string name="tags_dialog_option_due_cards">Pendientes</string>
+    <!-- Empty cards -->
+    <string name="emtpy_cards_finding">Buscando tarjetas vacías&#8230;</string>
+    <string name="empty_cards_none">No hay tarjetas vacías</string>
+    <string name="empty_cards_count">Tarjetas a eliminar: %d</string>
+    <string name="empty_cards_deleted">Tarjetas eliminadas: %d</string>
 </resources>

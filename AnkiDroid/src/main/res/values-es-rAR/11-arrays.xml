@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Reportar siempre</item>
-    <item>No reportar nunca</item>
-    <item>Pregúnteme</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Sin acción</item>
-    <item>Mostrar respuesta</item>
-    <item>Botón de respuesta 1</item>
-    <item>Botón de respuesta 2</item>
-    <item>Botón de respuesta 3</item>
-    <item>Botón de respuesta 4</item>
-    <item>Respuesta recomendada (verde)</item>
-    <item>Respuesta mejor que la recomendada</item>
-    <item>Deshacer</item>
-    <item>Editar nota</item>
-    <item>Marcar nota</item>
-    <item>Buscar expresión</item>
-    <item>Enterrar tarjeta</item>
-    <item>Suspender tarjeta</item>
-    <item>Eliminar nota</item>
-    <item>Reproducir multimedia</item>
-    <item>Detener el aprendizaje</item>
-    <item>Enterrar nota</item>
-    <item>Suspender nota</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Suspender tarjeta</item>
-    <item>Solamente etiqueta</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Tarjetas nuevas al azar</item>
-    <item>Tarjetas nuevas en orden añadido</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Ver primero las más antiguas</item>
-    <item>Al azar</item>
-    <item>Incrementando intervalos</item>
-    <item>Reduciendo intervalos</item>
-    <item>Más caducado</item>
-    <item>Orden añadido</item>
-    <item>Orden de tarjetas programadas</item>
-    <item>Primero las añadidas más recientemente</item>
-    <item>Sobreprogramación relativa</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Utilizar el mazo actual</item>
-    <item>Decidir por tipo de nota</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Mezclar tarjetas nuevas y repasos</item>
-    <item>Tarjetas nuevas después de los repasos</item>
-    <item>Tarjetas nuevas antes de los repasos</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Cuando no haya una fuente especificada en las tarjetas flash</item>
-    <item>Siempre</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Claro</item>
-    <item>Plano</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Negro</item>
-    <item>Oscuro</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Reportar siempre</item>
+        <item>No reportar nunca</item>
+        <item>Pregúnteme</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Sin acción</item>
+        <item>Mostrar respuesta</item>
+        <item>Botón de respuesta 1</item>
+        <item>Botón de respuesta 2</item>
+        <item>Botón de respuesta 3</item>
+        <item>Botón de respuesta 4</item>
+        <item>Respuesta recomendada (verde)</item>
+        <item>Respuesta mejor que la recomendada</item>
+        <item>Deshacer</item>
+        <item>Editar nota</item>
+        <item>Marcar nota</item>
+        <item>Buscar expresión</item>
+        <item>Enterrar tarjeta</item>
+        <item>Suspender tarjeta</item>
+        <item>Eliminar nota</item>
+        <item>Reproducir multimedia</item>
+        <item>Detener el aprendizaje</item>
+        <item>Enterrar nota</item>
+        <item>Suspender nota</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Suspender tarjeta</item>
+        <item>Solamente etiqueta</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Tarjetas nuevas al azar</item>
+        <item>Tarjetas nuevas en orden añadido</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Ver primero las más antiguas</item>
+        <item>Al azar</item>
+        <item>Incrementando intervalos</item>
+        <item>Reduciendo intervalos</item>
+        <item>Más caducado</item>
+        <item>Orden añadido</item>
+        <item>Orden de tarjetas programadas</item>
+        <item>Primero las añadidas más recientemente</item>
+        <item>Sobreprogramación relativa</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Utilizar el mazo actual</item>
+        <item>Decidir por tipo de nota</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Mezclar tarjetas nuevas y repasos</item>
+        <item>Tarjetas nuevas después de los repasos</item>
+        <item>Tarjetas nuevas antes de los repasos</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Cuando no haya una fuente especificada en las tarjetas flash</item>
+        <item>Siempre</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Claro</item>
+        <item>Plano</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Negro</item>
+        <item>Oscuro</item>
+    </string-array>
 </resources>

@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Sempre reportar</item>
-    <item>Nunca reportar</item>
-    <item>Pergunte-me</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Nenhuma ação</item>
-    <item>Mostrar resposta</item>
-    <item>Botão de resposta 1</item>
-    <item>Botão de resposta 2</item>
-    <item>Botão de resposta 3</item>
-    <item>Botão de resposta 4</item>
-    <item>Resposta recomendada (verde)</item>
-    <item>Resposta melhor que recomendada</item>
-    <item>Desfazer</item>
-    <item>Editar nota</item>
-    <item>Marcar nota</item>
-    <item>Verificar expressão</item>
-    <item>Ocultar cartão</item>
-    <item>Suspender cartão</item>
-    <item>Excluir nota</item>
-    <item>Reproduzir mídia</item>
-    <item>Abortar a aprendizagem</item>
-    <item>Ocultar nota</item>
-    <item>Suspender nota</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Suspender cartão</item>
-    <item>Por Tag somente em</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Novos cartões em ordem aleatória</item>
-    <item>Novos cartões na ordem adicionada</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Mais antigos primeiro</item>
-    <item>Aleatório</item>
-    <item>Intervalos crescentes</item>
-    <item>Intervalos decrescentes</item>
-    <item>Mais falhados</item>
-    <item>Ordem de adição</item>
-    <item>Ordem de revisão</item>
-    <item>Cartões novos primeiro</item>
-    <item>Atrasos relativos</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Usar o baralho atual</item>
-    <item>Decidir pelo tipo de nota</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Misturar novos cartões e revisões</item>
-    <item>Novos cartões após revisões</item>
-    <item>Novos cartões antes das revisões</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Quando nenhuma fonte especificada nos cartões</item>
-    <item>Sempre</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Claro</item>
-    <item>Plano</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Preto</item>
-    <item>Escuro</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Sempre reportar</item>
+        <item>Nunca reportar</item>
+        <item>Pergunte-me</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Nenhuma ação</item>
+        <item>Mostrar resposta</item>
+        <item>Botão de resposta 1</item>
+        <item>Botão de resposta 2</item>
+        <item>Botão de resposta 3</item>
+        <item>Botão de resposta 4</item>
+        <item>Resposta recomendada (verde)</item>
+        <item>Resposta melhor que recomendada</item>
+        <item>Desfazer</item>
+        <item>Editar nota</item>
+        <item>Marcar nota</item>
+        <item>Verificar expressão</item>
+        <item>Ocultar cartão</item>
+        <item>Suspender cartão</item>
+        <item>Excluir nota</item>
+        <item>Reproduzir mídia</item>
+        <item>Abortar a aprendizagem</item>
+        <item>Ocultar nota</item>
+        <item>Suspender nota</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Suspender cartão</item>
+        <item>Por Tag somente em</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Novos cartões em ordem aleatória</item>
+        <item>Novos cartões na ordem adicionada</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Mais antigos primeiro</item>
+        <item>Aleatório</item>
+        <item>Intervalos crescentes</item>
+        <item>Intervalos decrescentes</item>
+        <item>Mais falhados</item>
+        <item>Ordem de adição</item>
+        <item>Ordem de revisão</item>
+        <item>Cartões novos primeiro</item>
+        <item>Atrasos relativos</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Usar o baralho atual</item>
+        <item>Decidir pelo tipo de nota</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Misturar novos cartões e revisões</item>
+        <item>Novos cartões após revisões</item>
+        <item>Novos cartões antes das revisões</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Quando nenhuma fonte especificada nos cartões</item>
+        <item>Sempre</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Claro</item>
+        <item>Plano</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Preto</item>
+        <item>Escuro</item>
+    </string-array>
 </resources>

@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>常に報告する</item>
-    <item>報告しない</item>
-    <item>毎回確認する</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>何もしない</item>
-    <item>解答を表示</item>
-    <item>回答ボタン１</item>
-    <item>回答ボタン２</item>
-    <item>回答ボタン３</item>
-    <item>回答ボタン４</item>
-    <item>推奨される回答（緑色）</item>
-    <item>推奨される回答よりも良い回答</item>
-    <item>元に戻す</item>
-    <item>ノートを編集</item>
-    <item>ノートにマーク</item>
-    <item>検索式</item>
-    <item>カードを延期</item>
-    <item>カードを保留</item>
-    <item>ノートを削除</item>
-    <item>音声・動画を再生</item>
-    <item>学習を中断</item>
-    <item>ノートを延期</item>
-    <item>ノートを保留</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>タグを付けて保留</item>
-    <item>タグを付けるだけ</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>新規カードを無作為に選んで表示する</item>
-    <item>新規カードを追加順に表示する</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>前回表示日時が古い順</item>
-    <item>ランダム</item>
-    <item>間隔が小さい順</item>
-    <item>間隔が大きい順</item>
-    <item>忘却回数が多い順</item>
-    <item>作成日時が古い順</item>
-    <item>学習予定日時が古い順</item>
-    <item>作成日時が新しい順</item>
-    <item>期日超過が相対的に大きい順</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>選択中のデッキ</item>
-    <item>ノートタイプから選択</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>新規カードと復習カードを混ぜる</item>
-    <item>復習カードの後</item>
-    <item>復習カードの前</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>フォントが指定されていない場合</item>
-    <item>全て</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>ライトブルー</item>
-    <item>プレーン</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>ブラック</item>
-    <item>ダークグレー</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>常に報告する</item>
+        <item>報告しない</item>
+        <item>毎回確認する</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>何もしない</item>
+        <item>解答を表示</item>
+        <item>回答ボタン１</item>
+        <item>回答ボタン２</item>
+        <item>回答ボタン３</item>
+        <item>回答ボタン４</item>
+        <item>推奨される回答（緑色）</item>
+        <item>推奨される回答よりも良い回答</item>
+        <item>元に戻す</item>
+        <item>ノートを編集</item>
+        <item>ノートにマーク</item>
+        <item>検索式</item>
+        <item>カードを延期</item>
+        <item>カードを保留</item>
+        <item>ノートを削除</item>
+        <item>音声・動画を再生</item>
+        <item>学習を中断</item>
+        <item>ノートを延期</item>
+        <item>ノートを保留</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>タグを付けて保留</item>
+        <item>タグを付けるだけ</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>新規カードを無作為に選んで表示する</item>
+        <item>新規カードを追加順に表示する</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>前回表示日時が古い順</item>
+        <item>ランダム</item>
+        <item>間隔が小さい順</item>
+        <item>間隔が大きい順</item>
+        <item>忘却回数が多い順</item>
+        <item>作成日時が古い順</item>
+        <item>学習予定日時が古い順</item>
+        <item>作成日時が新しい順</item>
+        <item>期日超過が相対的に大きい順</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>選択中のデッキ</item>
+        <item>ノートタイプから選択</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>新規カードと復習カードを混ぜる</item>
+        <item>復習カードの後</item>
+        <item>復習カードの前</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>フォントが指定されていない場合</item>
+        <item>全て</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>ライトブルー</item>
+        <item>プレーン</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>ブラック</item>
+        <item>ダークグレー</item>
+    </string-array>
 </resources>

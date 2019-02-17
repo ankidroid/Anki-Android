@@ -39,58 +39,58 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- CardBrowser -->
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
-  </plurals>
-  <string name="card_browser_all_decks">Minden pakli</string>
-  <string name="card_browser_delete_card">Delete notes</string>
-  <string name="card_browser_suspend_card">Suspend cards</string>
-  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
-  <string name="card_browser_change_deck">Change deck</string>
-  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-  <string name="card_browser_mark_card">Mark notes</string>
-  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
-  <string name="card_browser_unmark_card">Unmark notes</string>
-  <string name="delete_card_title">Jegyzet törlése</string>
-  <string name="delete_cards_title">Delete notes?</string>
-  <string name="delete_card_message">Tényleg törölni akarod a jegyzet összes kártyáját?\nKereső mező: %s</string>
-  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
-  <string name="deleted_message">Notes deleted</string>
-  <string name="changed_deck_message">Moved to %s</string>
-  <string name="card_browser_suspended_cards">(un)suspended cards</string>
-  <string name="card_browser_show_marked">Megjelöltek szűrése</string>
-  <string name="card_browser_show_suspended">Szűrés felfüggesztve</string>
-  <string name="card_browser_search_by_tag">Címke szerinti szűrés</string>
-  <string name="card_browser_tags_shown">Címkék: %1$s</string>
-  <string name="card_browser_list_my_searches">Kereséseim</string>
-  <string name="card_browser_list_my_searches_save">Keresés mentése</string>
-  <string name="card_browser_list_my_searches_title">Mentett keresés kiválasztása</string>
-  <string name="card_browser_list_my_searches_new_name">Jelenlegi keresés neve</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">Nem menthetsz keresést név nélkül</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">A név már létezik</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
-  <string name="card_browser_change_display_order">Megjelenítési sorrend módosítása</string>
-  <string name="card_browser_change_display_order_title">Válassz megjelenítési sorrendet</string>
-  <string name="card_browser_change_display_order_reverse">Fordított sorrendhez válaszd ki a mezőt kétszer.</string>
-  <string name="card_details_question">Kérdés</string>
-  <string name="card_details_answer">Válasz</string>
-  <string name="card_details_due">Esedékes</string>
-  <string name="card_details_tags">Címkék</string>
-  <string name="card_browser_filtering_cards">Kártyák szűrése&#8230;\nNyomd meg a vissza gombot a megszüntetéshez</string>
-  <string-array name="card_browser_order_labels">
-    <item>Rendezés nélkül (gyorsabb)</item>
-    <item>By sort field</item>
-    <item>Létrehozás dátuma szerint</item>
-    <item>Utolsó módosítás dátuma szerint</item>
-    <item>Módosítás dátuma szerint</item>
-    <item>Esedékesség szerint</item>
-    <item>Ismétlési intervallum szerint</item>
-    <item>Nehézség szerint</item>
-    <item>Ismétlésszám szerint</item>
-    <item>Tévesztések szerint</item>
-  </string-array>
-  <string name="card_browser_select_all">Select all</string>
-  <string name="card_browser_select_none">Select none</string>
+    <!-- CardBrowser -->
+    <plurals name="card_browser_subtitle">
+        <item quantity="one">%d kártyát mutat</item>
+        <item quantity="other">%d cards shown</item>
+    </plurals>
+    <string name="card_browser_all_decks">Minden pakli</string>
+    <string name="card_browser_delete_card">Jegyzet törlése</string>
+    <string name="card_browser_suspend_card">Kártyák felfüggesztése</string>
+    <string name="card_browser_toggle_suspend_card">Kártyák felfüggesztése</string>
+    <string name="card_browser_change_deck">Pakli csere</string>
+    <string name="card_browser_unsuspend_card">Kártya felfüggesztése</string>
+    <string name="card_browser_mark_card">Jegyzet megjelölése</string>
+    <string name="card_browser_toggle_mark_card">Bejegyzések megjelölése</string>
+    <string name="card_browser_unmark_card">Bejegyzések elvetése</string>
+    <string name="delete_card_title">Jegyzet törlése?</string>
+    <string name="delete_cards_title">Jegyzetek törlése?</string>
+    <string name="delete_card_message">Valóban törölöd a jegyzet összes kártyáját?\nKereső mező: %s</string>
+    <string name="delete_card_mult_message">Valóban törlöd az összes kiválasztott bejegyzés összes kártyáját?\n(Nem csak a kiválasztott kártyákat)</string>
+    <string name="deleted_message">Megjegyzések törölve</string>
+    <string name="changed_deck_message">Áthelyezés ide %s</string>
+    <string name="card_browser_suspended_cards">Felfüggesztett kártyák</string>
+    <string name="card_browser_show_marked">Megjelöltek szűrése</string>
+    <string name="card_browser_show_suspended">Szűrés felfüggesztve</string>
+    <string name="card_browser_search_by_tag">Címke szerinti szűrés</string>
+    <string name="card_browser_tags_shown">Címkék: %1$s</string>
+    <string name="card_browser_list_my_searches">Kereséseim</string>
+    <string name="card_browser_list_my_searches_save">Keresés mentése</string>
+    <string name="card_browser_list_my_searches_title">Mentett keresés kiválasztása</string>
+    <string name="card_browser_list_my_searches_new_name">Jelenlegi keresés neve</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Nem menthetsz keresést név nélkül</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">A név már létezik</string>
+    <string name="card_browser_list_my_searches_remove_content">Törlés “%1$s”?</string>
+    <string name="card_browser_change_display_order">Megjelenítési sorrend módosítása</string>
+    <string name="card_browser_change_display_order_title">Válassz megjelenítési sorrendet</string>
+    <string name="card_browser_change_display_order_reverse">Fordított sorrendhez válaszd ki a mezőt kétszer.</string>
+    <string name="card_details_question">Kérdés</string>
+    <string name="card_details_answer">Válasz</string>
+    <string name="card_details_due">Esedékes</string>
+    <string name="card_details_tags">Címkék</string>
+    <string name="card_browser_filtering_cards">Kártyák szűrése&#8230;\nNyomd meg a vissza gombot a megszüntetéshez</string>
+    <string-array name="card_browser_order_labels">
+        <item>Rendezés nélkül (gyorsabb)</item>
+        <item>Rendezés mező szerint</item>
+        <item>Létrehozás dátuma szerint</item>
+        <item>Utolsó módosítás dátuma szerint</item>
+        <item>Módosítás dátuma szerint</item>
+        <item>Esedékesség szerint</item>
+        <item>Ismétlési intervallum szerint</item>
+        <item>Nehézség szerint</item>
+        <item>Ismétlésszám szerint</item>
+        <item>Tévesztések szerint</item>
+    </string-array>
+    <string name="card_browser_select_all">Összes kijelölése</string>
+    <string name="card_browser_select_none">Nincs kijelölve semmi</string>
 </resources>

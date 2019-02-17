@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Zawsze</item>
-    <item>Nigdy</item>
-    <item>Zapytaj mnie</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Nic nie rób</item>
-    <item>Pokaż odpowiedź</item>
-    <item>Przycisk odpowiedzi 1</item>
-    <item>Przycisk odpowiedzi 2</item>
-    <item>Przycisk odpowiedzi 3</item>
-    <item>Przycisk odpowiedzi 4</item>
-    <item>Zalecana odpowiedź (zielony)</item>
-    <item>Odpowiedź lepsza niż zalecana</item>
-    <item>Cofnij</item>
-    <item>Edytuj notatkę</item>
-    <item>Wyróżnij notatkę</item>
-    <item>Wyszukaj wyrażenie</item>
-    <item>Ukryj kartę</item>
-    <item>Wstrzymaj kartę</item>
-    <item>Usuń notatkę</item>
-    <item>Odtwórz plik multimedialny</item>
-    <item>Przerwij naukę</item>
-    <item>Zakop notatkę</item>
-    <item>Zawieś notatkę</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Zawieś kartę</item>
-    <item>Tylko znaczniki</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Nowe karty w kolejności losowej</item>
-    <item>Nowe karty w kolejności dodania</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Najstarszy jako pierwszy</item>
-    <item>Losowo</item>
-    <item>Zwiększane interwałów</item>
-    <item>Zmniejszane interwałów</item>
-    <item>Najczęściej zapominane</item>
-    <item>W kolejności dodania</item>
-    <item>W kolejności do przejrzenia</item>
-    <item>Ostatnio dodane na początku</item>
-    <item>Względne zaległości</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Użyj obecnej talii</item>
-    <item>Wybór na podstawie typu notatki</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Mieszaj nowe karty i powtórki</item>
-    <item>Nowe karty po powtórkach</item>
-    <item>Nowe karty przed powtórkami</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Kiedy żaden font nie jest wybrany dla danych kart</item>
-    <item>Zawsze</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Jasny</item>
-    <item>Zwykły</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Czarny</item>
-    <item>Ciemny</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Zawsze</item>
+        <item>Nigdy</item>
+        <item>Zapytaj mnie</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Nic nie rób</item>
+        <item>Pokaż odpowiedź</item>
+        <item>Przycisk odpowiedzi 1</item>
+        <item>Przycisk odpowiedzi 2</item>
+        <item>Przycisk odpowiedzi 3</item>
+        <item>Przycisk odpowiedzi 4</item>
+        <item>Zalecana odpowiedź (zielony)</item>
+        <item>Odpowiedź lepsza niż zalecana</item>
+        <item>Cofnij</item>
+        <item>Edytuj notatkę</item>
+        <item>Wyróżnij notatkę</item>
+        <item>Wyszukaj wyrażenie</item>
+        <item>Ukryj kartę</item>
+        <item>Wstrzymaj kartę</item>
+        <item>Usuń notatkę</item>
+        <item>Odtwórz plik multimedialny</item>
+        <item>Przerwij naukę</item>
+        <item>Zakop notatkę</item>
+        <item>Zawieś notatkę</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Zawieś kartę</item>
+        <item>Tylko znaczniki</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Nowe karty w kolejności losowej</item>
+        <item>Nowe karty w kolejności dodania</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Najstarszy jako pierwszy</item>
+        <item>Losowo</item>
+        <item>Zwiększane interwałów</item>
+        <item>Zmniejszane interwałów</item>
+        <item>Najczęściej zapominane</item>
+        <item>W kolejności dodania</item>
+        <item>W kolejności do przejrzenia</item>
+        <item>Ostatnio dodane na początku</item>
+        <item>Względne zaległości</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Użyj obecnej talii</item>
+        <item>Wybór na podstawie typu notatki</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Mieszaj nowe karty i powtórki</item>
+        <item>Nowe karty po powtórkach</item>
+        <item>Nowe karty przed powtórkami</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Kiedy żaden font nie jest wybrany dla danych kart</item>
+        <item>Zawsze</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Jasny</item>
+        <item>Zwykły</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Czarny</item>
+        <item>Ciemny</item>
+    </string-array>
 </resources>

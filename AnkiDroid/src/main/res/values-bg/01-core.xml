@@ -39,131 +39,136 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Navigation drawer items-->
-  <string name="decks">Тестета</string>
-  <string name="card_browser">Разглеждане на картите</string>
-  <string name="statistics">Статистика</string>
-  <string name="settings">Настойки</string>
-  <string name="help">Помощ</string>
-  <string name="send_feedback">Изпратете отзив</string>
-  <string name="studyoptions_title">Преглед на тестето</string>
-  <string name="studyoptions_due_today">Оставащи днес:</string>
-  <string name="studyoptions_new_total">Общо нови карти:</string>
-  <string name="studyoptions_total_cards">Общо карти:</string>
-  <string name="studyoptions_eta">Очаквано време (мин.):</string>
-  <string name="studyoptions_start">Учене</string>
-  <!-- DeckPicker.java -->
-  <string name="expand">Разширяване</string>
-  <string name="collapse">Свиване</string>
-  <string name="study_more">Учи повече</string>
-  <plurals name="deckpicker_title">
-    <item quantity="one">%1$d карта остава (%2$s)</item>
-    <item quantity="other">%1$d карти остават (%2$s)</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">%d минута остава</item>
-    <item quantity="other">%d минути остава</item>
-  </plurals>
-  <!-- The deck picker via AnkiStatsTaskHandler.java -->
-  <plurals name="studied_cards_today">
-    <item quantity="one">Научена %1$d карта в %2$s днес</item>
-    <item quantity="other">Научени %1$d карти в %2$s днес</item>
-  </plurals>
-  <!-- flashcard_portrait.xml -->
-  <string name="type_answer_hint">Напиши отговор</string>
-  <string name="show_answer">Покажи отговора</string>
-  <string name="ease_button_again">Отново</string>
-  <string name="ease_button_hard">Трудно</string>
-  <string name="ease_button_good">Добре</string>
-  <string name="ease_button_easy">Лесно</string>
-  <string name="studyoptions_congrats_undo">Отмени %s</string>
-  <string name="menu_import">Импортиране</string>
-  <string name="undo">Отмени</string>
-  <string name="undo_action_review">последен преглед</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
-  <string name="undo_action_suspend_card">отлагане на карта</string>
-  <string name="undo_action_suspend_note">отлагане на бележка</string>
-  <string name="undo_action_delete">изтрий бележка</string>
-  <string name="undo_action_delete_multi">delete notes</string>
-  <string name="undo_action_change_deck_multi">change decks</string>
-  <string name="move_all_to_deck">Move all to deck</string>
-  <string name="unbury">Откопай</string>
-  <string name="rename_deck">Преименувай тестето</string>
-  <string name="menu_add">Добави</string>
-  <string name="menu_add_note">Добави бележка</string>
-  <string name="menu_my_account">Акаунт за синхронизириране</string>
-  <string name="menu_dismiss_note">Скрий / изтрий</string>
-  <string name="menu_bury_card">Зарови карта</string>
-  <string name="menu_bury_note">Зарови бележка</string>
-  <string name="menu_suspend_card">Прекрати картата</string>
-  <string name="menu_suspend_note">Отлагане на бележка</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
-  <string name="menu_delete_note">Изтрий бележка</string>
-  <string name="delete_note_message">Наистина изтрий тази бележка и всичките и карти? \n%s</string>
-  <string name="menu_select">Избор на текст</string>
-  <string name="menu_search">Търсене в %1$s</string>
-  <string name="menu_mark_note">Маркирай бележка</string>
-  <string name="menu_unmark_note">Размаркирай бележка</string>
-  <string name="new_deck">Създай тесте</string>
-  <string name="create">Създай</string>
-  <string name="new_dynamic_deck">Създайте филтрирано тесте</string>
-  <string name="night_mode">Нощен режим</string>
-  <string name="directory_inaccessible">AnkiDroid директорията е недостъпна</string>
-  <!--
+    <!-- Navigation drawer items-->
+    <string name="decks">Тестета</string>
+    <string name="card_browser">Разглеждане на картите</string>
+    <string name="statistics">Статистика</string>
+    <string name="settings">Настойки</string>
+    <string name="help">Помощ</string>
+    <string name="send_feedback">Изпратете отзив</string>
+    <string name="studyoptions_title">Преглед на тестето</string>
+    <string name="studyoptions_due_today">Оставащи днес:</string>
+    <string name="studyoptions_new_total">Общо нови карти:</string>
+    <string name="studyoptions_total_cards">Общо карти:</string>
+    <string name="studyoptions_eta">Очаквано време (мин.):</string>
+    <string name="studyoptions_start">Учене</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">Разширяване</string>
+    <string name="collapse">Свиване</string>
+    <string name="study_more">Учи повече</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d карта остава (%2$s)</item>
+        <item quantity="other">%1$d карти остават (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">%d минута остава</item>
+        <item quantity="other">%d минути остава</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">Научена %1$d карта в %2$s днес</item>
+        <item quantity="other">Научени %1$d карти в %2$s днес</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">Напиши отговор</string>
+    <string name="show_answer">Покажи отговора</string>
+    <string name="ease_button_again">Отново</string>
+    <string name="ease_button_hard">Трудно</string>
+    <string name="ease_button_good">Добре</string>
+    <string name="ease_button_easy">Лесно</string>
+    <string name="studyoptions_congrats_undo">Отмени %s</string>
+    <string name="menu_import">Импортиране</string>
+    <string name="undo">Отмени</string>
+    <string name="undo_action_review">последен преглед</string>
+    <string name="undo_action_bury_card">bury card</string>
+    <string name="undo_action_bury_note">bury note</string>
+    <string name="undo_action_suspend_card">отлагане на карта</string>
+    <string name="undo_action_suspend_note">отлагане на бележка</string>
+    <string name="undo_action_delete">изтрий бележка</string>
+    <string name="undo_action_delete_multi">delete notes</string>
+    <string name="undo_action_change_deck_multi">change decks</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="unbury">Откопай</string>
+    <string name="rename_deck">Преименувай тестето</string>
+    <string name="menu_add">Добави</string>
+    <string name="menu_add_note">Добави бележка</string>
+    <string name="menu_my_account">Акаунт за синхронизириране</string>
+    <string name="menu_dismiss_note">Скрий / изтрий</string>
+    <string name="menu_bury_card">Зарови карта</string>
+    <string name="menu_bury_note">Зарови бележка</string>
+    <string name="menu_suspend_card">Прекрати картата</string>
+    <string name="menu_suspend_note">Отлагане на бележка</string>
+    <string name="menu_bury">Bury</string>
+    <string name="menu_suspend">Suspend</string>
+    <string name="menu_delete_note">Изтрий бележка</string>
+    <string name="delete_note_message">Наистина изтрий тази бележка и всичките и карти? \n%s</string>
+    <string name="menu_select">Избор на текст</string>
+    <string name="menu_search">Търсене в %1$s</string>
+    <string name="menu_mark_note">Маркирай бележка</string>
+    <string name="menu_unmark_note">Размаркирай бележка</string>
+    <string name="new_deck">Създай тесте</string>
+    <string name="create">Създай</string>
+    <string name="new_dynamic_deck">Създайте филтрирано тесте</string>
+    <string name="night_mode">Нощен режим</string>
+    <string name="directory_inaccessible">AnkiDroid директорията е недостъпна</string>
+    <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
         s, min, h, d, are standard (ISO 31-1) units and should usually
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-  <string name="time_quantity_seconds">%d сек</string>
-  <string name="time_quantity_minutes">%d мин</string>
-  <string name="time_quantity_hours">%d ч</string>
-  <string name="time_quantity_days">%d д</string>
-  <string name="time_quantity_months">%.1f мес</string>
-  <string name="time_quantity_years">%.1f г</string>
-  <!-- or "%.1f a" -->
-  <string name="rebuild_cram_deck">Пренареждане тестето за зубрене&#8230;</string>
-  <string name="rebuild_cram_label">Възстанови</string>
-  <string name="empty_cram_label">Празно</string>
-  <string name="empty_cram_deck">Изчистване тестето за зубрене&#8230;</string>
-  <string name="custom_study_deck_name">Допълнително време за учене</string>
-  <string name="custom_study_deck_exists">Първо преименувайте съществуващото тесте за учене</string>
-  <string name="empty_deck">Това тесте е празно</string>
-  <string name="studyoptions_empty">Това тесте е празно. Натиснете бутона + за добавяне на ново съдържание.</string>
-  <string name="studyoptions_limit_reached">Дневен лимит на учене достигнат</string>
-  <string name="studyoptions_empty_schedule">Няма насрочени карти за учене</string>
-  <string name="studyoptions_congrats_finished">Поздравления! Вие сте приключили за сега.</string>
-  <string name="studyoptions_congrats_more_rev">Днешната граница е достигната, но все още има карти за преглед. Можете да увеличите границата в опциите.</string>
-  <string name="studyoptions_congrats_more_new">Днешната граница е достигната. Има още нови карти на разположение; Можете да увеличите границата в опциите, но това ще увеличи натоваране на Вашия краткосрочен преглед.</string>
-  <string name="studyoptions_congrats_custom">За да учите извън нормалният график, докоснете бутона \"Допълнително учене\"</string>
-  <string name="studyoptions_no_cards_due">Няма оставащи карти</string>
-  <string name="sd_card_not_mounted">Не е поставена SD-карта памет</string>
-  <string name="button_sync">Синхрон</string>
-  <string name="cancel_sync_confirm">Искате ли да прекратите синхронизирането?</string>
-  <string name="continue_sync">Продължи синхронизацията</string>
-  <string name="sync_cancelled">Синхронизирането е прекратено</string>
-  <string name="sync_cancel_message">Отменяне&#8230;\nТова може да отнеме известно време.</string>
-  <string name="export">Експортиране</string>
-  <string name="export_collection">Изнасяне на колекцията</string>
-  <string name="export_deck">Експортиране на тесте</string>
-  <string name="nothing">Нищо</string>
-  <!-- Card template editor -->
-  <string name="title_activity_template_editor">Тип на картата</string>
-  <string name="card_template_editor_front">Шаблон лицева страна</string>
-  <string name="card_template_editor_back">Шаблон обратна страна</string>
-  <string name="card_template_editor_styling">Оформление</string>
-  <string name="card_template_editor_menu_delete">Изтриване</string>
-  <string name="card_template_editor_cant_delete">Трябва да има поне една карта</string>
-  <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Изтриване на тип карта \"%2$s\" и неговата %1$d карта?</item>
-    <item quantity="other">Изтриване на тип карта \"%2$s\" и неговите %1$d карти?</item>
-  </plurals>
-  <string name="invalid_template">Картата не може да се генерира</string>
-  <string name="card_template_editor_would_delete_note">Изтриването на този тип карти ще доведе до премахване на една или няколко бележки. Моля, първо създайте нов тип карти.</string>
-  <!-- Permissions -->
-  <string name="read_write_permission_label">Четене и записване в базата данни AnkiDroid</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="time_quantity_seconds">%d сек</string>
+    <string name="time_quantity_minutes">%d мин</string>
+    <string name="time_quantity_hours">%d ч</string>
+    <string name="time_quantity_days">%d д</string>
+    <string name="time_quantity_months">%.1f мес</string>
+    <string name="time_quantity_years">%.1f г</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">Пренареждане тестето за зубрене&#8230;</string>
+    <string name="rebuild_cram_label">Възстанови</string>
+    <string name="empty_cram_label">Празно</string>
+    <string name="empty_cram_deck">Изчистване тестето за зубрене&#8230;</string>
+    <string name="custom_study_deck_name">Допълнително време за учене</string>
+    <string name="custom_study_deck_exists">Първо преименувайте съществуващото тесте за учене</string>
+    <string name="empty_deck">Това тесте е празно</string>
+    <string name="studyoptions_empty">Това тесте е празно. Натиснете бутона + за добавяне на ново съдържание.</string>
+    <string name="studyoptions_limit_reached">Дневен лимит на учене достигнат</string>
+    <string name="studyoptions_empty_schedule">Няма насрочени карти за учене</string>
+    <string name="studyoptions_congrats_finished">Поздравления! Вие сте приключили за сега.</string>
+    <string name="studyoptions_congrats_more_rev">Днешната граница е достигната, но все още има карти за преглед. Можете да увеличите границата в опциите.</string>
+    <string name="studyoptions_congrats_more_new">Днешната граница е достигната. Има още нови карти на разположение; Можете да увеличите границата в опциите, но това ще увеличи натоваране на Вашия краткосрочен преглед.</string>
+    <string name="studyoptions_congrats_custom">За да учите извън нормалният график, докоснете бутона \"Допълнително учене\"</string>
+    <string name="studyoptions_no_cards_due">Няма оставащи карти</string>
+    <string name="sd_card_not_mounted">Не е поставена SD-карта памет</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">Синхрон</string>
+    <string name="cancel_sync_confirm">Искате ли да прекратите синхронизирането?</string>
+    <string name="continue_sync">Продължи синхронизацията</string>
+    <string name="sync_cancelled">Синхронизирането е прекратено</string>
+    <string name="sync_cancel_message">Отменяне&#8230;\nТова може да отнеме известно време.</string>
+    <string name="export">Експортиране</string>
+    <string name="export_collection">Изнасяне на колекцията</string>
+    <string name="export_deck">Експортиране на тесте</string>
+    <string name="nothing">Нищо</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">Тип на картата</string>
+    <string name="card_template_editor_front">Шаблон лицева страна</string>
+    <string name="card_template_editor_back">Шаблон обратна страна</string>
+    <string name="card_template_editor_styling">Оформление</string>
+    <string name="card_template_editor_menu_delete">Изтриване</string>
+    <string name="card_template_editor_cant_delete">Трябва да има поне една карта</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Изтриване на тип карта \"%2$s\" и неговата %1$d карта?</item>
+        <item quantity="other">Изтриване на тип карта \"%2$s\" и неговите %1$d карти?</item>
+    </plurals>
+    <string name="invalid_template">Картата не може да се генерира</string>
+    <string name="card_template_editor_would_delete_note">Изтриването на този тип карти ще доведе до премахване на една или няколко бележки. Моля, първо създайте нов тип карти.</string>
+    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">Четене и записване в базата данни AnkiDroid</string>
+    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

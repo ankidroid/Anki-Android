@@ -39,29 +39,32 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">Fitxes pendents</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d fitxes pendents</string>
-  <string name="widget_no_cards_due">No hi ha fitxes pendents</string>
-  <string name="widget_loading">S\'està carregant el giny ...</string>
-  <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d carta per fer en %2$s</item>
-    <item quantity="other">%1$d cartes per fer en %2$s</item>
-  </plurals>
-  <plurals name="widget_decks">
-    <item quantity="one">%1$d paquet</item>
-    <item quantity="other">%1$d paquets</item>
-  </plurals>
-  <string name="widget_small">AnkiDroid Petit</string>
-  <string name="widget_small_button">AnkiDroid</string>
-  <plurals name="widget_cards_due">
-    <item quantity="one">%d carta pendent</item>
-    <item quantity="other">%d cartes pendents</item>
-  </plurals>
-  <plurals name="widget_eta">
-    <item quantity="one">%d minut restant</item>
-    <item quantity="other">%d minuts restants</item>
-  </plurals>
-  <string name="widget_add_note">Afegir nota</string>
-  <string name="widget_add_note_button">Afegir una nota nova a AnkiDroid</string>
+    <!-- Widget -->
+    <string name="widget_minimum_cards_due_notification_ticker_title">Fitxes pendents</string>
+    <plurals name="widget_minimum_cards_due_notification_ticker_text">
+        <item quantity="one">%d AnkiDroid card due</item>
+        <item quantity="other">%d AnkiDroid cards due</item>
+    </plurals>
+    <string name="widget_no_cards_due">No hi ha fitxes pendents</string>
+    <string name="widget_loading">S\'està carregant el giny ...</string>
+    <plurals name="widget_cards_in_decks_due">
+        <item quantity="one">%1$d carta per fer en %2$s</item>
+        <item quantity="other">%1$d cartes per fer en %2$s</item>
+    </plurals>
+    <plurals name="widget_decks">
+        <item quantity="one">%1$d paquet</item>
+        <item quantity="other">%1$d paquets</item>
+    </plurals>
+    <string name="widget_small">AnkiDroid Petit</string>
+    <string name="widget_small_button">AnkiDroid</string>
+    <plurals name="widget_cards_due">
+        <item quantity="one">%d carta pendent</item>
+        <item quantity="other">%d cartes pendents</item>
+    </plurals>
+    <plurals name="widget_eta">
+        <item quantity="one">%d minut restant</item>
+        <item quantity="other">%d minuts restants</item>
+    </plurals>
+    <string name="widget_add_note">Afegir nota</string>
+    <string name="widget_add_note_button">Afegir una nota nova a AnkiDroid</string>
 </resources>

@@ -39,58 +39,58 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- CardBrowser -->
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">%d ficha mostrada</item>
-    <item quantity="other">%d fichas mostradas</item>
-  </plurals>
-  <string name="card_browser_all_decks">Todos os baralhos</string>
-  <string name="card_browser_delete_card">Delete notes</string>
-  <string name="card_browser_suspend_card">Suspend cards</string>
-  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
-  <string name="card_browser_change_deck">Change deck</string>
-  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-  <string name="card_browser_mark_card">Mark notes</string>
-  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
-  <string name="card_browser_unmark_card">Unmark notes</string>
-  <string name="delete_card_title">Apagar nota?</string>
-  <string name="delete_cards_title">Delete notes?</string>
-  <string name="delete_card_message">Eliminar todas as fichas desta nota? \nCampo de procura: %s</string>
-  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
-  <string name="deleted_message">Notes deleted</string>
-  <string name="changed_deck_message">Moved to %s</string>
-  <string name="card_browser_suspended_cards">(un)suspended cards</string>
-  <string name="card_browser_show_marked">Filtro marcado</string>
-  <string name="card_browser_show_suspended">Filtro suspenso</string>
-  <string name="card_browser_search_by_tag">Filtrar por etiqueta</string>
-  <string name="card_browser_tags_shown">Etiquetas: %1$s</string>
-  <string name="card_browser_list_my_searches">Minhas procuras</string>
-  <string name="card_browser_list_my_searches_save">Guardar procura</string>
-  <string name="card_browser_list_my_searches_title">Escolher uma procura guardada</string>
-  <string name="card_browser_list_my_searches_new_name">Nome para a procura atual</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">Não pode guardar uma procura sem um nome</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Nome já existe</string>
-  <string name="card_browser_list_my_searches_remove_content">Eliminar \"%1$s\"?</string>
-  <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
-  <string name="card_browser_change_display_order_title">Escolher a ordem de exibição</string>
-  <string name="card_browser_change_display_order_reverse">Selecione um campo duas vezes para inverter a ordem</string>
-  <string name="card_details_question">Pergunta</string>
-  <string name="card_details_answer">Resposta</string>
-  <string name="card_details_due">Agendada</string>
-  <string name="card_details_tags">Etiquetas</string>
-  <string name="card_browser_filtering_cards">A filtrar as fichas&#8230;\nPrima voltar para cancelar</string>
-  <string-array name="card_browser_order_labels">
-    <item>Sem ordenação (mais rápido)</item>
-    <item>Por campo de ordenação</item>
-    <item>Por data de criação</item>
-    <item>Por data de edição</item>
-    <item>Por data de modificação</item>
-    <item>Por hora agendada</item>
-    <item>Por intervalo</item>
-    <item>Por grau de facilidade</item>
-    <item>Por revisões</item>
-    <item>Por falhas</item>
-  </string-array>
-  <string name="card_browser_select_all">Select all</string>
-  <string name="card_browser_select_none">Select none</string>
+    <!-- CardBrowser -->
+    <plurals name="card_browser_subtitle">
+        <item quantity="one">%d ficha mostrada</item>
+        <item quantity="other">%d fichas mostradas</item>
+    </plurals>
+    <string name="card_browser_all_decks">Todos os baralhos</string>
+    <string name="card_browser_delete_card">Delete notes</string>
+    <string name="card_browser_suspend_card">Suspend cards</string>
+    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+    <string name="card_browser_change_deck">Change deck</string>
+    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+    <string name="card_browser_mark_card">Mark notes</string>
+    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+    <string name="card_browser_unmark_card">Unmark notes</string>
+    <string name="delete_card_title">Apagar nota?</string>
+    <string name="delete_cards_title">Delete notes?</string>
+    <string name="delete_card_message">Eliminar todas as fichas desta nota? \nCampo de procura: %s</string>
+    <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+    <string name="deleted_message">Notes deleted</string>
+    <string name="changed_deck_message">Moved to %s</string>
+    <string name="card_browser_suspended_cards">(un)suspended cards</string>
+    <string name="card_browser_show_marked">Filtro marcado</string>
+    <string name="card_browser_show_suspended">Filtro suspenso</string>
+    <string name="card_browser_search_by_tag">Filtrar por etiqueta</string>
+    <string name="card_browser_tags_shown">Etiquetas: %1$s</string>
+    <string name="card_browser_list_my_searches">Minhas procuras</string>
+    <string name="card_browser_list_my_searches_save">Guardar procura</string>
+    <string name="card_browser_list_my_searches_title">Escolher uma procura guardada</string>
+    <string name="card_browser_list_my_searches_new_name">Nome para a procura atual</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Não pode guardar uma procura sem um nome</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Nome já existe</string>
+    <string name="card_browser_list_my_searches_remove_content">Eliminar \"%1$s\"?</string>
+    <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
+    <string name="card_browser_change_display_order_title">Escolher a ordem de exibição</string>
+    <string name="card_browser_change_display_order_reverse">Selecione um campo duas vezes para inverter a ordem</string>
+    <string name="card_details_question">Pergunta</string>
+    <string name="card_details_answer">Resposta</string>
+    <string name="card_details_due">Agendada</string>
+    <string name="card_details_tags">Etiquetas</string>
+    <string name="card_browser_filtering_cards">A filtrar as fichas&#8230;\nPrima voltar para cancelar</string>
+    <string-array name="card_browser_order_labels">
+        <item>Sem ordenação (mais rápido)</item>
+        <item>Por campo de ordenação</item>
+        <item>Por data de criação</item>
+        <item>Por data de edição</item>
+        <item>Por data de modificação</item>
+        <item>Por hora agendada</item>
+        <item>Por intervalo</item>
+        <item>Por grau de facilidade</item>
+        <item>Por revisões</item>
+        <item>Por falhas</item>
+    </string-array>
+    <string name="card_browser_select_all">Select all</string>
+    <string name="card_browser_select_none">Select none</string>
 </resources>

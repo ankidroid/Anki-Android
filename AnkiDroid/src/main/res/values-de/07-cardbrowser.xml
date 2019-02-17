@@ -39,58 +39,58 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- CardBrowser -->
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">%d Karte angezeigt</item>
-    <item quantity="other">%d Karten angezeigt</item>
-  </plurals>
-  <string name="card_browser_all_decks">Alle Stapel</string>
-  <string name="card_browser_delete_card">Notizen löschen</string>
-  <string name="card_browser_suspend_card">Karten aussetzen</string>
-  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
-  <string name="card_browser_change_deck">Change deck</string>
-  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-  <string name="card_browser_mark_card">Mark notes</string>
-  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
-  <string name="card_browser_unmark_card">Unmark notes</string>
-  <string name="delete_card_title">Notiz löschen?</string>
-  <string name="delete_cards_title">Notizen löschen?</string>
-  <string name="delete_card_message">Alle Karten dieser Notiz löschen?\nSuchfeld: %s</string>
-  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
-  <string name="deleted_message">Notizen gelöscht</string>
-  <string name="changed_deck_message">Moved to %s</string>
-  <string name="card_browser_suspended_cards">(un)suspended cards</string>
-  <string name="card_browser_show_marked">Markierte herausfiltern</string>
-  <string name="card_browser_show_suspended">Ausgesetzte herausfiltern</string>
-  <string name="card_browser_search_by_tag">Nach Schlagwort filtern</string>
-  <string name="card_browser_tags_shown">Schlagworte: %1$s</string>
-  <string name="card_browser_list_my_searches">Meine Suchen</string>
-  <string name="card_browser_list_my_searches_save">Suche speichern</string>
-  <string name="card_browser_list_my_searches_title">Wählen Sie eine gespeicherte Suche</string>
-  <string name="card_browser_list_my_searches_new_name">Name für die aktuelle Suche</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">Sie können keine unbenannte Suche speichern</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name bereits vorhanden</string>
-  <string name="card_browser_list_my_searches_remove_content">»%1$s« löschen?</string>
-  <string name="card_browser_change_display_order">Anzeigereihenfolge ändern</string>
-  <string name="card_browser_change_display_order_title">Anzeigereihenfolge auswählen</string>
-  <string name="card_browser_change_display_order_reverse">Um die Reihenfolge umzukehren, das Feld nochmals auswählen</string>
-  <string name="card_details_question">Frage</string>
-  <string name="card_details_answer">Antwort</string>
-  <string name="card_details_due">Fällig</string>
-  <string name="card_details_tags">Schlagworte</string>
-  <string name="card_browser_filtering_cards">Filtere Karten&#8230; \nAbbrechen mit »Zurück«</string>
-  <string-array name="card_browser_order_labels">
-    <item>Keine Sortierung (schneller)</item>
-    <item>Nach Sortierfeld</item>
-    <item>Nach Erstellungsdatum</item>
-    <item>Nach Änderungsdatum</item>
-    <item>Nach letzter Veränderung</item>
-    <item>Nach Fälligkeit</item>
-    <item>Nach Intervall</item>
-    <item>Nach Leichtigkeit</item>
-    <item>Nach Wiederholungen</item>
-    <item>Nach Anzahl falscher Antworten</item>
-  </string-array>
-  <string name="card_browser_select_all">Alle auswählen</string>
-  <string name="card_browser_select_none">Keine auswählen</string>
+    <!-- CardBrowser -->
+    <plurals name="card_browser_subtitle">
+        <item quantity="one">%d Karte angezeigt</item>
+        <item quantity="other">%d Karten angezeigt</item>
+    </plurals>
+    <string name="card_browser_all_decks">Alle Stapel</string>
+    <string name="card_browser_delete_card">Notizen löschen</string>
+    <string name="card_browser_suspend_card">Karten aussetzen</string>
+    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+    <string name="card_browser_change_deck">Verschieben</string>
+    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+    <string name="card_browser_mark_card">Notizen markieren</string>
+    <string name="card_browser_toggle_mark_card">(De)markiere Notizen</string>
+    <string name="card_browser_unmark_card">Markierung entfernen</string>
+    <string name="delete_card_title">Notiz löschen?</string>
+    <string name="delete_cards_title">Notizen löschen?</string>
+    <string name="delete_card_message">Alle Karten dieser Notiz löschen?\nSuchfeld: %s</string>
+    <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+    <string name="deleted_message">Notizen gelöscht</string>
+    <string name="changed_deck_message">Verschoben nach %s</string>
+    <string name="card_browser_suspended_cards">(un)suspended cards</string>
+    <string name="card_browser_show_marked">Markierte herausfiltern</string>
+    <string name="card_browser_show_suspended">Ausgesetzte herausfiltern</string>
+    <string name="card_browser_search_by_tag">Nach Schlagwort filtern</string>
+    <string name="card_browser_tags_shown">Schlagworte: %1$s</string>
+    <string name="card_browser_list_my_searches">Meine Suchen</string>
+    <string name="card_browser_list_my_searches_save">Suche speichern</string>
+    <string name="card_browser_list_my_searches_title">Wählen Sie eine gespeicherte Suche</string>
+    <string name="card_browser_list_my_searches_new_name">Name für die aktuelle Suche</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Sie können keine unbenannte Suche speichern</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Name bereits vorhanden</string>
+    <string name="card_browser_list_my_searches_remove_content">»%1$s« löschen?</string>
+    <string name="card_browser_change_display_order">Anzeigereihenfolge ändern</string>
+    <string name="card_browser_change_display_order_title">Anzeigereihenfolge auswählen</string>
+    <string name="card_browser_change_display_order_reverse">Um die Reihenfolge umzukehren, das Feld nochmals auswählen</string>
+    <string name="card_details_question">Frage</string>
+    <string name="card_details_answer">Antwort</string>
+    <string name="card_details_due">Fällig</string>
+    <string name="card_details_tags">Schlagworte</string>
+    <string name="card_browser_filtering_cards">Filtere Karten&#8230; \nAbbrechen mit »Zurück«</string>
+    <string-array name="card_browser_order_labels">
+        <item>Keine Sortierung (schneller)</item>
+        <item>Nach Sortierfeld</item>
+        <item>Nach Erstellungsdatum</item>
+        <item>Nach Änderungsdatum</item>
+        <item>Nach letzter Veränderung</item>
+        <item>Nach Fälligkeit</item>
+        <item>Nach Intervall</item>
+        <item>Nach Leichtigkeit</item>
+        <item>Nach Wiederholungen</item>
+        <item>Nach Anzahl falscher Antworten</item>
+    </string-array>
+    <string name="card_browser_select_all">Alle auswählen</string>
+    <string name="card_browser_select_none">Keine auswählen</string>
 </resources>

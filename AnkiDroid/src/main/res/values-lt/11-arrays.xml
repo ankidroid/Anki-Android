@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Visada pranešti</item>
-    <item>Niekada nepranešti</item>
-    <item>Paklausti</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Nieko nedaryti</item>
-    <item>Parodyti atsakymą</item>
-    <item>Atsakymo mygtukas 1</item>
-    <item>Atsakymo mygtukas 2</item>
-    <item>Atsakymo mygtukas 3</item>
-    <item>Atsakymo mygtukas 4</item>
-    <item>Atsakymas rekomenduojamas (žalias)</item>
-    <item>Atsakyti geriau nei rekomenduojama</item>
-    <item>Atšaukti</item>
-    <item>Redaguoti pastabą</item>
-    <item>Pažymėti pastabą</item>
-    <item>Ieškoti išsireiškimo</item>
-    <item>Paslėpti kortelę</item>
-    <item>Sustabdyti kortelę</item>
-    <item>Šalinti pastabą</item>
-    <item>Leisti mediją</item>
-    <item>Nutraukti mokymąsį</item>
-    <item>Palaidoti pastabą</item>
-    <item>Sustabdyti pastabą</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Sustabdyti kortelę</item>
-    <item>Tik žymos</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Naujos kortelės atsitiktine tvarka</item>
-    <item>Naujos kortelės pridėjimo tvarka</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Pirmiau rodyti senesnes</item>
-    <item>Atsitiktine tvarka</item>
-    <item>Didėjančiais intervalais</item>
-    <item>Mažėjančiais intervalais</item>
-    <item>Dažniausiai užmirštamos</item>
-    <item>Pagal pridėjimo eiliškumą</item>
-    <item>Pagal numatytų eiliškumą</item>
-    <item>Pirmiau rodyti vėliausiai pridėtas</item>
-    <item>Labiausiai pradelstos</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Naudoti dabartinį rinkinį</item>
-    <item>Spręsti pagal užrašo tipą</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Maišyti naujas korteles su peržiūrėtomis</item>
-    <item>Naujos kortelės po peržiūros</item>
-    <item>Naujos kortelės bus pateiktos prieš peržiūrėtas</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Kai kortelėse nenurodytas joks šriftas</item>
-    <item>Visada</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Šviesi</item>
-    <item>Paprastas</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Juodas</item>
-    <item>Tamsi</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Visada pranešti</item>
+        <item>Niekada nepranešti</item>
+        <item>Paklausti</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Nieko nedaryti</item>
+        <item>Parodyti atsakymą</item>
+        <item>Atsakymo mygtukas 1</item>
+        <item>Atsakymo mygtukas 2</item>
+        <item>Atsakymo mygtukas 3</item>
+        <item>Atsakymo mygtukas 4</item>
+        <item>Atsakymas rekomenduojamas (žalias)</item>
+        <item>Atsakyti geriau nei rekomenduojama</item>
+        <item>Atšaukti</item>
+        <item>Redaguoti pastabą</item>
+        <item>Pažymėti pastabą</item>
+        <item>Ieškoti išsireiškimo</item>
+        <item>Paslėpti kortelę</item>
+        <item>Sustabdyti kortelę</item>
+        <item>Šalinti pastabą</item>
+        <item>Leisti mediją</item>
+        <item>Nutraukti mokymąsį</item>
+        <item>Palaidoti pastabą</item>
+        <item>Sustabdyti pastabą</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Sustabdyti kortelę</item>
+        <item>Tik žymos</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Naujos kortelės atsitiktine tvarka</item>
+        <item>Naujos kortelės pridėjimo tvarka</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Pirmiau rodyti senesnes</item>
+        <item>Atsitiktine tvarka</item>
+        <item>Didėjančiais intervalais</item>
+        <item>Mažėjančiais intervalais</item>
+        <item>Dažniausiai užmirštamos</item>
+        <item>Pagal pridėjimo eiliškumą</item>
+        <item>Pagal numatytų eiliškumą</item>
+        <item>Pirmiau rodyti vėliausiai pridėtas</item>
+        <item>Labiausiai pradelstos</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Naudoti dabartinį rinkinį</item>
+        <item>Spręsti pagal užrašo tipą</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Maišyti naujas korteles su peržiūrėtomis</item>
+        <item>Naujos kortelės po peržiūros</item>
+        <item>Naujos kortelės bus pateiktos prieš peržiūrėtas</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Kai kortelėse nenurodytas joks šriftas</item>
+        <item>Visada</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Šviesi</item>
+        <item>Paprastas</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Juodas</item>
+        <item>Tamsi</item>
+    </string-array>
 </resources>

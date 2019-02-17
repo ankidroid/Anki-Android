@@ -39,25 +39,27 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">Những thẻ tới hạn</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
-  <string name="widget_no_cards_due">Không có thẻ tới hạn</string>
-  <string name="widget_loading">Đang tải widget...</string>
-  <plurals name="widget_cards_in_decks_due">
-    <item quantity="other">%1$d cards due in %2$s</item>
-  </plurals>
-  <plurals name="widget_decks">
-    <item quantity="other">%1$d decks</item>
-  </plurals>
-  <string name="widget_small">AnkiDroid nhỏ</string>
-  <string name="widget_small_button">AnkiDroid</string>
-  <plurals name="widget_cards_due">
-    <item quantity="other">%d cards due</item>
-  </plurals>
-  <plurals name="widget_eta">
-    <item quantity="other">%d minutes remaining</item>
-  </plurals>
-  <string name="widget_add_note">Add note</string>
-  <string name="widget_add_note_button">Add new AnkiDroid note</string>
+    <!-- Widget -->
+    <string name="widget_minimum_cards_due_notification_ticker_title">Những thẻ tới hạn</string>
+    <plurals name="widget_minimum_cards_due_notification_ticker_text">
+        <item quantity="other">%d AnkiDroid cards due</item>
+    </plurals>
+    <string name="widget_no_cards_due">Không có thẻ tới hạn</string>
+    <string name="widget_loading">Đang tải widget...</string>
+    <plurals name="widget_cards_in_decks_due">
+        <item quantity="other">%1$d cards due in %2$s</item>
+    </plurals>
+    <plurals name="widget_decks">
+        <item quantity="other">%1$d decks</item>
+    </plurals>
+    <string name="widget_small">AnkiDroid nhỏ</string>
+    <string name="widget_small_button">AnkiDroid</string>
+    <plurals name="widget_cards_due">
+        <item quantity="other">%d cards due</item>
+    </plurals>
+    <plurals name="widget_eta">
+        <item quantity="other">%d minutes remaining</item>
+    </plurals>
+    <string name="widget_add_note">Add note</string>
+    <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

@@ -35,70 +35,70 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="error_reporting_choice_labels">
-    <item>Comunicar sempre</item>
-    <item>Nunca comunicar</item>
-    <item>Perguntar-me</item>
-  </string-array>
-  <string-array name="gestures_labels">
-    <item>Nenhuma ação</item>
-    <item>Mostrar resposta</item>
-    <item>Botão de resposta 1</item>
-    <item>Botão de resposta 2</item>
-    <item>Botão de resposta 3</item>
-    <item>Botão de resposta 4</item>
-    <item>Resposta recomendada (verde)</item>
-    <item>Resposta melhor do que a recomendada</item>
-    <item>Anular</item>
-    <item>Editar nota</item>
-    <item>Marcar nota</item>
-    <item>Procurar expressão</item>
-    <item>Ocultar ficha</item>
-    <item>Suspender ficha</item>
-    <item>Eliminar nota</item>
-    <item>Reproduzir multimédia</item>
-    <item>Abortar aprendizagem</item>
-    <item>Ocultar nota</item>
-    <item>Suspender nota</item>
-  </string-array>
-  <string-array name="leech_action_labels">
-    <item>Suspender ficha</item>
-    <item>Etiquetar somente</item>
-  </string-array>
-  <string-array name="new_order_labels">
-    <item>Novas fichas em ordem aleatória</item>
-    <item>Novas fichas na ordem de adição</item>
-  </string-array>
-  <string-array name="cram_deck_conf_order_labels">
-    <item>Mais antigos primeiro</item>
-    <item>Aleatória</item>
-    <item>Intervalos crescentes</item>
-    <item>Intervalos decrescentes</item>
-    <item>Mais falhadas</item>
-    <item>Ordem de adição</item>
-    <item>Ordem de revisão</item>
-    <item>Primeiro, a última adicionada</item>
-    <item>Atrasos relativos</item>
-  </string-array>
-  <string-array name="add_to_cur_labels">
-    <item>Usar o baralho atual</item>
-    <item>Decidir por tipo de nota</item>
-  </string-array>
-  <string-array name="new_spread_labels">
-    <item>Misturar fichas novas e revisões</item>
-    <item>Fichas novas depois das revisões</item>
-    <item>Fichas novas antes das revisões</item>
-  </string-array>
-  <string-array name="override_font_labels">
-    <item>Quando nenhum tipo de letra especificado nas fichas</item>
-    <item>Sempre</item>
-  </string-array>
-  <string-array name="day_theme_labels">
-    <item>Claro</item>
-    <item>Plain</item>
-  </string-array>
-  <string-array name="night_theme_labels">
-    <item>Negro</item>
-    <item>Escuro</item>
-  </string-array>
+    <string-array name="error_reporting_choice_labels">
+        <item>Comunicar sempre</item>
+        <item>Nunca comunicar</item>
+        <item>Perguntar-me</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Nenhuma ação</item>
+        <item>Mostrar resposta</item>
+        <item>Botão de resposta 1</item>
+        <item>Botão de resposta 2</item>
+        <item>Botão de resposta 3</item>
+        <item>Botão de resposta 4</item>
+        <item>Resposta recomendada (verde)</item>
+        <item>Resposta melhor do que a recomendada</item>
+        <item>Anular</item>
+        <item>Editar nota</item>
+        <item>Marcar nota</item>
+        <item>Procurar expressão</item>
+        <item>Ocultar ficha</item>
+        <item>Suspender ficha</item>
+        <item>Eliminar nota</item>
+        <item>Reproduzir multimédia</item>
+        <item>Abortar aprendizagem</item>
+        <item>Ocultar nota</item>
+        <item>Suspender nota</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Suspender ficha</item>
+        <item>Etiquetar somente</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Novas fichas em ordem aleatória</item>
+        <item>Novas fichas na ordem de adição</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Mais antigos primeiro</item>
+        <item>Aleatória</item>
+        <item>Intervalos crescentes</item>
+        <item>Intervalos decrescentes</item>
+        <item>Mais falhadas</item>
+        <item>Ordem de adição</item>
+        <item>Ordem de revisão</item>
+        <item>Primeiro, a última adicionada</item>
+        <item>Atrasos relativos</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Usar o baralho atual</item>
+        <item>Decidir por tipo de nota</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Misturar fichas novas e revisões</item>
+        <item>Fichas novas depois das revisões</item>
+        <item>Fichas novas antes das revisões</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Quando nenhum tipo de letra especificado nas fichas</item>
+        <item>Sempre</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Claro</item>
+        <item>Plain</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Negro</item>
+        <item>Escuro</item>
+    </string-array>
 </resources>

@@ -39,37 +39,42 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">Kartičky na preskúšanie</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kartičiek na preskúšanie</string>
-  <string name="widget_no_cards_due">Žiadne kartičky na preskúšanie</string>
-  <string name="widget_loading">Načítava sa widget...</string>
-  <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d kartička na preskúšanie v %2$s</item>
-    <item quantity="few">%1$d kartičky na preskúšanie v %2$s</item>
-    <item quantity="many">%1$d cards due in %2$s</item>
-    <item quantity="other">%1$d kartičiek na preskúšanie v %2$s</item>
-  </plurals>
-  <plurals name="widget_decks">
-    <item quantity="one">%1$d balíček</item>
-    <item quantity="few">%1$d balíčky</item>
-    <item quantity="many">%1$d decks</item>
-    <item quantity="other">%1$d balíčkov</item>
-  </plurals>
-  <string name="widget_small">Malý AnkiDroid</string>
-  <string name="widget_small_button">AnkiDroid</string>
-  <plurals name="widget_cards_due">
-    <item quantity="one">%d kartička na preskúšanie</item>
-    <item quantity="few">%d kartičky na preskúšanie</item>
-    <item quantity="many">%d cards due</item>
-    <item quantity="other">%d kartičiek na preskúšanie</item>
-  </plurals>
-  <plurals name="widget_eta">
-    <item quantity="one">zostáva %d minúta</item>
-    <item quantity="few">zostávajú %d minúty</item>
-    <item quantity="many">%d minutes remaining</item>
-    <item quantity="other">zostáva %d minút</item>
-  </plurals>
-  <string name="widget_add_note">Pridať poznámku</string>
-  <string name="widget_add_note_button">Pridať novú poznámku Ankidroid</string>
+    <!-- Widget -->
+    <string name="widget_minimum_cards_due_notification_ticker_title">Kartičky na preskúšanie</string>
+    <plurals name="widget_minimum_cards_due_notification_ticker_text">
+        <item quantity="one">%d AnkiDroid card due</item>
+        <item quantity="few">%d AnkiDroid cards due</item>
+        <item quantity="many">%d AnkiDroid cards due</item>
+        <item quantity="other">%d AnkiDroid cards due</item>
+    </plurals>
+    <string name="widget_no_cards_due">Žiadne kartičky na preskúšanie</string>
+    <string name="widget_loading">Načítava sa widget...</string>
+    <plurals name="widget_cards_in_decks_due">
+        <item quantity="one">%1$d kartička na preskúšanie v %2$s</item>
+        <item quantity="few">%1$d kartičky na preskúšanie v %2$s</item>
+        <item quantity="many">%1$d cards due in %2$s</item>
+        <item quantity="other">%1$d kartičiek na preskúšanie v %2$s</item>
+    </plurals>
+    <plurals name="widget_decks">
+        <item quantity="one">%1$d balíček</item>
+        <item quantity="few">%1$d balíčky</item>
+        <item quantity="many">%1$d decks</item>
+        <item quantity="other">%1$d balíčkov</item>
+    </plurals>
+    <string name="widget_small">Malý AnkiDroid</string>
+    <string name="widget_small_button">AnkiDroid</string>
+    <plurals name="widget_cards_due">
+        <item quantity="one">%d kartička na preskúšanie</item>
+        <item quantity="few">%d kartičky na preskúšanie</item>
+        <item quantity="many">%d cards due</item>
+        <item quantity="other">%d kartičiek na preskúšanie</item>
+    </plurals>
+    <plurals name="widget_eta">
+        <item quantity="one">zostáva %d minúta</item>
+        <item quantity="few">zostávajú %d minúty</item>
+        <item quantity="many">%d minutes remaining</item>
+        <item quantity="other">zostáva %d minút</item>
+    </plurals>
+    <string name="widget_add_note">Pridať poznámku</string>
+    <string name="widget_add_note_button">Pridať novú poznámku Ankidroid</string>
 </resources>
