@@ -710,7 +710,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
             CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
             languageDialogLabels[0] = getResources().getString(R.string.language_system);
-            languageDialogValues[0] = "0";
+            languageDialogValues[0] = "";
             int i = 1;
             for (Map.Entry<String, String> e : items.entrySet()) {
                 languageDialogLabels[i] = e.getKey();
@@ -757,11 +757,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         ListPreference defaultFontPreference = (ListPreference) screen.findPreference("defaultFont");
         if (defaultFontPreference != null) {
             defaultFontPreference.setEntries(getCustomFonts("System default"));
-            defaultFontPreference.setEntryValues(getCustomFonts("0"));
+            defaultFontPreference.setEntryValues(getCustomFonts(""));
         }
         ListPreference browserEditorCustomFontsPreference = (ListPreference) screen.findPreference("browserEditorFont");
         browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
-        browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("0", true));
+        browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
     }
 
 
