@@ -21,7 +21,6 @@ import com.ichi2.anki.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.io.File;
@@ -33,7 +32,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Objects;
 
-@RunWith(RobolectricTestRunner.class)
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+@RunWith(AndroidJUnit4.class)
 @Config(sdk = { 16, 26 })
 public class CompatCopyFileTest {
 
