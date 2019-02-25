@@ -15,11 +15,18 @@ repositories {
     jcenter()
 }
 def homePath = System.properties['user.home']
+
+configurations {
+    all {
+        exclude module: 'httpclient'
+    }
+}
+
 android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.ichi2.anki"
+        applicationId "com.ichi2.ankiM"
         minSdkVersion 15
         targetSdkVersion 28
         testApplicationId "com.ichi2.anki.tests"

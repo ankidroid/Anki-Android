@@ -952,10 +952,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (mAnswerField != null && !mAnswerField.isFocused()) {
 	        if (!sDisplayAnswer) {
-	            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-	                displayCardAnswer();
-	                return true;
-	            }
+                if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER
+                        || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER || keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
+                    displayCardAnswer();
+                    return true;
+                }
 	        }
         }
         return super.onKeyUp(keyCode, event);
