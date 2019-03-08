@@ -853,6 +853,9 @@ public class NoteEditor extends AnkiActivity {
                     menu.findItem(R.id.action_copy_card).setEnabled(false);
                 }
             }
+            if (mEditFields.size() == 2) {
+                menu.findItem(R.id.action_swap_front_back).setEnabled(true);
+            }
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -883,6 +886,17 @@ public class NoteEditor extends AnkiActivity {
                 startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
                 return true;
             }
+            case R.id.action_swap_front_back:
+                // Swap text in first and second field.
+                final FieldEditText first = mEditFields.get(0);
+                final FieldEditText second = mEditFields.get(1);
+                if (first != null && first.getText() != null && second != null && second.getText() != null) {
+                    final String firstText = first.getText().toString();
+                    final String secondText = second.getText().toString();
+                    first.setText(secondText);
+                    second.setText(firstText);
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
 

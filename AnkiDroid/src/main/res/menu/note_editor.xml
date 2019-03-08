@@ -14,4 +14,8 @@
         android:id="@+id/action_copy_card"
         android:enabled="false"
         android:title="@string/card_editor_copy_card"/>
+    <item
+        android:id="@+id/action_swap_front_back"
+        android:title="@string/card_editor_swap_front_back"
+        android:enabled="false"/>
 </menu>
