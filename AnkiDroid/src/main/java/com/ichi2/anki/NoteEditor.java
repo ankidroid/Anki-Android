@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -1691,6 +1692,7 @@ public class NoteEditor extends AnkiActivity {
      * Custom ActionMode.Callback implementation for adding and handling cloze deletion action
      * button in the text selection menu.
      */
+    @TargetApi(23)
     private class ActionModeCallback implements ActionMode.Callback {
         private FieldEditText mTextBox;
         private int mClozeCounter = 1;
