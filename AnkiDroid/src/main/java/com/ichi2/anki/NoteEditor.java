@@ -1692,8 +1692,8 @@ public class NoteEditor extends AnkiActivity {
      * button in the text selection menu.
      */
     private class ActionModeCallback implements ActionMode.Callback {
-        FieldEditText mTextBox;
-        int mClozeCounter = 1;
+        private FieldEditText mTextBox;
+        private int mClozeCounter = 1;
 
         ActionModeCallback(FieldEditText textBox) {
             super();
@@ -1747,6 +1747,8 @@ public class NoteEditor extends AnkiActivity {
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode) { }
+        public void onDestroyActionMode(ActionMode mode) {
+            // Left empty on purpose
+        }
     }
 }
