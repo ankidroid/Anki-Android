@@ -1203,14 +1203,6 @@ public class NoteEditor extends AnkiActivity {
                                 startMultimediaFieldEditor(index, mNote, field);
                                 return true;
                             }
-                            case R.id.menu_multimedia_cloze: {
-                                FieldEditText fieldEditText = mEditFields.get(index);
-                                String text = fieldEditText.getText().toString();
-                                int selectionStart = fieldEditText.getSelectionStart();
-                                int selectionEnd = fieldEditText.getSelectionEnd();
-                                fieldEditText.setText(insertClozeAround(text, selectionStart, selectionEnd));
-                                return true;
-                            }
                             default:
                                 return false;
                         }
@@ -1219,12 +1211,6 @@ public class NoteEditor extends AnkiActivity {
                 }
             }
         });
-    }
-
-    private String insertClozeAround(String text, int selectionStart, int selectionEnd) {
-        int selectionMin = Math.min(selectionStart, selectionEnd);
-        int selectionMax = Math.max(selectionStart, selectionEnd);
-        return text.substring(0, selectionMin) + "{{c1::" + text.substring(selectionMin, selectionMax) + "}}" + text.substring(selectionMax);
     }
 
 
