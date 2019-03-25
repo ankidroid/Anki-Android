@@ -1712,7 +1712,7 @@ public class NoteEditor extends AnkiActivity {
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             // Adding the cloze deletion floating context menu item, but only once.
             if (menu.findItem(mMenuId) == null) {
-                menu.add(Menu.NONE, mMenuId, Menu.NONE, "Cloze deletion");
+                menu.add(Menu.NONE, mMenuId, Menu.NONE, R.string.multimedia_editor_popup_cloze);
                 return true;
             } else {
                 return false;
