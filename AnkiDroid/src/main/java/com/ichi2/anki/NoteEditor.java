@@ -90,6 +90,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
@@ -1695,8 +1697,8 @@ public class NoteEditor extends AnkiActivity {
     @TargetApi(23)
     private class ActionModeCallback implements ActionMode.Callback {
         private FieldEditText mTextBox;
-        private int mClozeCounter = 1;
         private int mMenuId = View.generateViewId();
+        private Pattern mClozeRegexPattern = Pattern.compile("\\{\\{c(\\d+)::");
 
         ActionModeCallback(FieldEditText textBox) {
             super();
@@ -1732,9 +1734,18 @@ public class NoteEditor extends AnkiActivity {
                 String selectedText = text.substring(selectionStart, selectionEnd);
                 String afterText = text.substring(selectionEnd);
 
+                // Find the largest existing cloze deletion id
+                Matcher matcher = mClozeRegexPattern.matcher(text);
+                int highestClozeId = 0;
+                while (matcher.find()) {
+                    int detectedClozeId = Integer.parseInt(matcher.group(1));
+                    if (detectedClozeId > highestClozeId) {
+                        highestClozeId = detectedClozeId;
+                    }
+                }
+
                 // Format the cloze deletion open bracket
-                String clozeOpenBracket = "{{c" + mClozeCounter + "::";
-                mClozeCounter++; // increase counter for next cloze deletion
+                String clozeOpenBracket = "{{c" + (highestClozeId + 1) + "::";
 
                 // Update text field with updated text and selection
                 mTextBox.setText(beforeText + clozeOpenBracket + selectedText + "}}" + afterText);
