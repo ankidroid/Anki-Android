@@ -1,5 +1,7 @@
 ### [Aedict3 Japanese Dictionary](https://play.google.com/store/apps/details?id=sk.baka.aedict3)
 Japanese dictionary with AnkiDroid export feature.
+### [Akebi Japanese Dictionary](https://play.google.com/store/apps/details?id=com.craxic.akebifree)
+Akebi is a free Japanese dictionary app that works offline and without ads. It features independent handwriting recognition and a database with 320k+ example sentences, 200k+ words and 6k+ Kanji. Word lists, Kanji stroke order diagrams, Conjugations and more are available. Words and Kanji can be send to an AnkiDroid deck of your choice, fields and tags can be preset as well.
 ### [AnkiEditor](https://github.com/jkennethcarino/AnkiEditor)
 AnkiEditor is an advanced note editor plug-in for AnkiDroid, a spaced repetition flashcard program for Android. AnkiEditor allows you to create basic notes; use WYSIWYG editor that can format text, set text foreground and background color, insert table/link, etc.
 ### [AnkiReview](https://play.google.com/store/apps/details?id=com.luc.ankireview)
