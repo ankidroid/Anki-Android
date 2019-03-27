@@ -141,7 +141,7 @@
     <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Dil Seç</string>
     <string name="safe_display">Güvenli görüntü modu</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
+    <string name="safe_display_summ">Bütün animasyonları devredışı bırak ve kartları çizmek için daha güvenli yöntem kullan. Bu e-mürekkepli cihazlar için gerekebilir.</string>
     <string name="vertical_centering">Ortaya hizala</string>
     <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
     <string name="pref_backup_max">En fazla yedek sayısı</string>
@@ -159,11 +159,11 @@
     <string name="time_limit_summ">XXX dk</string>
     <string name="day_offset">Sonraki günün başlangıcı</string>
     <string name="day_offset_summ">Geceyarısından XXX saat sonra</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver">Deneysel V2 zamanlayıcı</string>
+    <string name="sched_ver_summ">Deneysel zamanlayıcıyı etkinleştir. Bir sonraki senkronizasyonda değişiklikleri zorla gönderir.</string>
+    <string name="sched_ver_toggle_title">Onayla</string>
+    <string name="sched_ver_2to1">Bu; öğrenimdeki bütün kartları sıfırlayacak, filtrelenmiş desteleri silecek, ve zamanlayıcı sürümünü değiştirecek. Devam edilsin mi?</string>
+    <string name="sched_ver_1to2">Deneysel zamanlayıcı hatalı zamanlamaya yol açabilir. Lütfen önce dokümentasyonu okuduğunuza emin olun. Devam edilsin mi?</string>
     <string name="pref_keep_screen_on">Ekranı açık tut</string>
     <string name="pref_keep_screen_on_summ">Ekran zaman aşımını devredışı bırak</string>
     <string name="convert_fen_text">Satranç gösterimi desteği</string>
@@ -176,10 +176,10 @@
     <string name="custom_buttons_setting_if_room">Yer varsa göster</string>
     <string name="custom_buttons_setting_menu_only">Sadece menüde</string>
     <string name="reset_custom_buttons">Varsayılana döndür</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
+    <string name="thirdparty_apps_title">Üçüncü parti API uygulamaları</string>
+    <string name="thirdparty_apps_summary">AnkiDroid API\'ından faydalanan sözlük, araç gibi uygulamaların bir listesine bakın.</string>
     <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="html_javascript_debugging_summ">WebView bağlantılarını etkinleştir, ve kart HTML\'ini AnkiDroid dizinine kaydet</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">İleri düzey istatistikler</string>
     <string name="enable_advanced_statistics_title">İleri düzey istatistikleri etkinleştir</string>
@@ -194,10 +194,10 @@
     <string name="custom_sync_server_base_url_title">Senkronizasyon Url\'i</string>
     <string name="custom_sync_server_media_url_title">Medya Senkronizasyon Url\'i</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="deck_conf_group_summ">Deste grubu seçeneklerinde yapılan değişiklikler birden fazla desteyi etkiler. Eğer sadece şu anki desteyi değiştirmek istiyorsanız, lütfen önce yeni bir seçenek grubu ekleyin.</string>
     <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_deck_description">Deste tarifi (sadece şu anki deste için)</string>
     <string name="deck_conf_group">Seçenek grubu</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d deste bu grubu kullanıyor</item>
@@ -262,10 +262,10 @@
     <string name="deck_conf_cram_reschedule_summ">Bu destede cevaplarıma göre kartların zamanını değiştir</string>
     <string name="deck_conf_cram_steps">Özel adımlar (dakika cinsinden)</string>
     <string name="deck_conf_cram_steps_summ">Kendi adımlarınızı tanımlayın</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_enabled">Bu deste grubundaki desteler için hatırlatma bildirimlerini etkinleştir</string>
     <string name="deck_conf_reminders_time">Hatırlat</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_dialog_title">AnkiDroid\'in iyileştirilmesine yardım et!</string>
+    <string name="analytics_title">Özellik kullanımını paylaş</string>
+    <string name="analytics_summ">Geliştirme ekibinin insanların hangi özellikleri kullandığını görmesine yardım ederek AnkiDroid\'e katkıda bulunabilirsiniz.</string>
 </resources>

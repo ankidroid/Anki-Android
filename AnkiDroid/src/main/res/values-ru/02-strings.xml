@@ -130,10 +130,10 @@
     <string name="fact_adder_intent_title">Карточка AnkiDroid</string>
     <string name="card_editor_add_card">Добавить запись</string>
     <string name="card_editor_copy_card">Копировать карточку</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
+    <string name="card_editor_card_scheduling">Планирование</string>
     <string name="card_editor_reposition_card">Переместить</string>
     <string name="card_editor_reset_card">Сбросить прогресс</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Перепланировать</string>
     <string name="card_editor_preview_card">Предпросмотр</string>
     <string name="error_insufficient_memory">Операция невозможна из-за нехватки места в хранилище устройства</string>
     <string name="rename">Переименовать</string>
@@ -170,11 +170,11 @@
     <string name="confirm_apkg_export_deck">Экспортировать \"%s\" в файл apkg?</string>
     <string name="export_in_progress">Экспортирование в файл apkg&#8230;</string>
     <string name="export_successful_title">Отправить apkg?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_send_button">Отправить</string>
+    <string name="export_save_button">Сохранить в файл</string>
+    <string name="export_send_no_handlers">Нет приложений для чтения файлов apkg. Сохраняется...</string>
+    <string name="export_save_apkg_successful">Файл apkg сохранён</string>
+    <string name="export_save_apkg_unsuccessful">Не получилось сохранить файл apkg</string>
     <string name="export_successful">Файл «%s» был экспортирован. Вы хотите отправить его с помощью другого приложения?</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
     <string name="export_email_text"><![CDATA[Привет!
@@ -184,7 +184,7 @@
     <string name="export_unsuccessful">Ошибка при экспорте файла apkg</string>
     <string name="import_hint">Чтобы импортировать карточки, поместите файл apkg в папку %s и нажмите ОК</string>
     <string name="upgrade_import_no_file_found">Файл для импорта %1$s не найден</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Параметры</string>
     <string name="select_tts">Язык синтеза речи</string>
     <string name="custom_study">Учить ещё</string>
     <string name="more_options">Ещё</string>
@@ -243,16 +243,16 @@
     <string name="filtered_deck_name">Фильтрованная колода</string>
     <string name="reminder_title">Не забудьте повторить сегодня!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="few">%2$d cards to review in %1$s</item>
-        <item quantity="many">%2$d cards to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d карточка для повторения в %1$s</item>
+        <item quantity="few">%2$d карточки для повторения в %1$s</item>
+        <item quantity="many">%2$d карточек для повторения в %1$s</item>
+        <item quantity="other">%2$d карточек для повторения в %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Ошибка при отправке файла apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">Для импорта этого файла нужно включить планировщик 2-й версии.</string>
+    <string name="import_cannot_with_v2">Планировщик 2-й версии не может импортировать колоды с расписанием 1-й версии.</string>
+    <string name="export_v2_dummy_note">Этот файл требует новой версии Anki.</string>
+    <string name="export_v2_forbidden">Переключитесь на планировщик 1-й версии перед экспортом колоды с расписанием.</string>
 </resources>

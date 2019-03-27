@@ -164,7 +164,7 @@
     <string name="confirm_apkg_export_deck">¿Exportar \"%s\" como archivo apkg?</string>
     <string name="export_in_progress">Exportando archivo apkg&#8230;</string>
     <string name="export_successful_title">¿Enviar apkg?</string>
-    <string name="export_send_button">Send</string>
+    <string name="export_send_button">Enviar</string>
     <string name="export_save_button">Save to file</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved apkg</string>
@@ -179,7 +179,7 @@
     <string name="export_unsuccessful">Error al exportar el archivo apkg</string>
     <string name="import_hint">Coloque el archivo apkg en el directorio \"%s\" y presione \"OK\" para importar las tarjetas</string>
     <string name="upgrade_import_no_file_found">No se encontró archivo importable %1$s</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Opciones</string>
     <string name="select_tts">Establecer idioma TTS</string>
     <string name="custom_study">Estudio personalizado</string>
     <string name="more_options">Más</string>

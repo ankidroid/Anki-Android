@@ -160,11 +160,11 @@
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Začiatok ďalšieho dňa</string>
     <string name="day_offset_summ">Počet hodín po polnoci: XXX</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver">Experimentálny V2 plánovač</string>
+    <string name="sched_ver_summ">Povoliť experimentálny plánovač. Vyžaduje si zmeny v jednom smere pri ďalej synchronizácii</string>
+    <string name="sched_ver_toggle_title">Potvrdiť</string>
+    <string name="sched_ver_2to1">Nasledovné zresetuje kartičky v procese učenia, zmaže filtrované balíčky a zmení verziu plánovača. Pokračovať?</string>
+    <string name="sched_ver_1to2">Experimentálny plánovač by mohol spôsobiť nesprávne plánovanie. Prosím, uistite sa, že ste si prv prečítali dokumentáciu. Pokračovať?</string>
     <string name="pref_keep_screen_on">Nevypínať obrazovku</string>
     <string name="pref_keep_screen_on_summ">Zakázať vypínanie obrazovky</string>
     <string name="convert_fen_text">Podpora šachového zápisu</string>
@@ -177,10 +177,10 @@
     <string name="custom_buttons_setting_if_room">Ukázať, ak je miesto</string>
     <string name="custom_buttons_setting_menu_only">Iba menu</string>
     <string name="reset_custom_buttons">Obnoviť pôvodné nastavenia</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="thirdparty_apps_title">Aplikácie API od tretích strán</string>
+    <string name="thirdparty_apps_summary">Pozrite si zoznam aplikácií, ktoré využívajú Ankidroid API ako sú slovníky, služby.</string>
+    <string name="html_javascript_debugging">Ladenie HTML / Javascript</string>
+    <string name="html_javascript_debugging_summ">Povoliť pripojenia na vzdialené WebView a uložiť kartičku HTML do adresára AnkiDroid</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Pokročilá štatistika</string>
     <string name="enable_advanced_statistics_title">Zapnúť pokročilú štatistiku</string>
@@ -195,10 +195,10 @@
     <string name="custom_sync_server_base_url_title">Sync url</string>
     <string name="custom_sync_server_media_url_title">Media sync url</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="deck_conf_group_summ">Zmeny v nastaveniach balíčkových skupín majú vplyv na viaceré balíčky. Ak si želáte zmeniť len aktuálny balíček, prosím, pridajte najprv novú skupinu v možnostiach</string>
     <string name="studyoptions_limit_select_tags">Zvoliť štítky</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_deck_description">Opis balíčka (ovplyvňuje len aktuálny balíček)</string>
     <string name="deck_conf_group">Skupina nastavení</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d balíček používa túto skupinu</item>
@@ -267,10 +267,10 @@
     <string name="deck_conf_cram_reschedule_summ">Preplánovať kartičky podľa mojich odpovedí v tomto balíčku</string>
     <string name="deck_conf_cram_steps">Vlastný postup (v minútach)</string>
     <string name="deck_conf_cram_steps_summ">Definovať vlastný postup</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_enabled">Povoliť oznámenia pre tieto balíčky v tejto skupine balíčkov</string>
     <string name="deck_conf_reminders_time">Pripomenúť o</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_dialog_title">Pomôžte spraviť AnkiDroid lepším!</string>
+    <string name="analytics_title">Zdieľať používanie prvkov</string>
+    <string name="analytics_summ">Môžete prispieť pre AnkiDroid tak, že umožníte vývojovému tímu sledovať, ktoré prvky sa používajú</string>
 </resources>

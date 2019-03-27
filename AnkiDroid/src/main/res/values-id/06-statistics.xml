@@ -71,7 +71,7 @@
     <string name="stats_answer_type">Jenis jawaban</string>
     <string name="stats_today_again_count">Sekali lagi hitung: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt;benar)</string>
-    <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_type_breakdown">Pelajari: &lt;b&gt;%1$d&lt;/b&gt;, ulasan: &lt;b&gt;%2$d&lt;/b&gt;, belajar kembali: &lt;b&gt;%3$d&lt;/b&gt;, disaring: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Jawaban yang benar pada kartu dewasa: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">Tidak ada kartu dewasa yang dipelajari hari ini</string>
     <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt;total</string>

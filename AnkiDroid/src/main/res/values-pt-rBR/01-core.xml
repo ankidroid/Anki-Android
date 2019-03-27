@@ -87,9 +87,9 @@
     <string name="undo_action_delete">excluir nota</string>
     <string name="undo_action_delete_multi">excluir notas</string>
     <string name="undo_action_change_deck_multi">mudar baralhos</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
+    <string name="undo_action_reschedule_card">reagendar</string>
+    <string name="undo_action_reset_card">redefinir o progresso</string>
+    <string name="undo_action_reposition_card">reposicionar</string>
     <string name="move_all_to_deck">Mover todos para o baralho</string>
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Renomear baralho</string>
@@ -144,7 +144,7 @@
     <string name="studyoptions_congrats_custom">Para estudar fora do agendamento normal, toque no botão \"Estudo personalizado\".</string>
     <string name="studyoptions_no_cards_due">Nenhum cartão está programado por enquanto.</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Editar esta nota e adicionar algumas exclusões cloze. (%1$s)</string>
     <string name="button_sync">Sincronizar</string>
     <string name="cancel_sync_confirm">Você quer cancelar a sincronização?</string>
     <string name="continue_sync">Continuar a sincronização</string>
@@ -167,8 +167,8 @@
     </plurals>
     <string name="invalid_template">Não foi possível gerar um cartão</string>
     <string name="card_template_editor_would_delete_note">Excluir este tipo de cartão resultaria na remoção de uma ou mais notas. Por favor, crie primeiro um novo tipo de cartão.</string>
-    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">O modelo para o cartão atual foi excluído.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever para o banco de dados do AnkiDroid</string>
-    <string name="read_write_permission_description">acessar as notas, cartas, modelos, e baralhos existentes, bem como criar novos</string>
+    <string name="read_write_permission_description">acessar as notas, cartas, modelos e baralhos existentes, bem como criar novos</string>
 </resources>

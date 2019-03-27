@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">Під час наступної синхронізації примусити зміни лише в одному напрямку</string>
     <string name="full_sync_confirmation">Обрана зміна потребує повного перезавантаження бази давних під час наступної синхронізації ваших колекцій. Якщо ви мали перегляди або інші ще не синхронізвані зміни у черзі на інших пристроях, їх буде втрачено. Продовжити?</string>
     <string name="full_sync_confirmation_upgrade">Через помилку у попередній версії, AnkiDroid рекомендовано примусово синхронізувати.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">Потрібна аyтентифікація на проксі-сервері.</string>
     <string name="sync_error_409">Лише один клієнт може мати доступ до AnkiWeb в один і той самий час. Якщо попередня синхронізація не вдалася, будь-ласка, спробуйте знову за кілька хвилин.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">Вашої колекції або мультимедійний файл завеликий для синхронізації.</string>
+    <string name="sync_error_500_unknown">У AnkiWeb сталася помилка. Будь ласка, спробуйте знову за кілька хвилин. Якщо ця проблема повториться, повідомте, будь ласка, про помилку.</string>
     <string name="sync_error_501_upgrade_required">Будь ласка, оновіться до останньої версії AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb знаходиться на обслуговуванні. Будь ласка, спробуйте знову за кілька хвилин.</string>
+    <string name="sync_error_504_gateway_timeout">Отримана помилка 504 gateway timeout.</string>
 </resources>

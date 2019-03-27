@@ -82,12 +82,12 @@
     <string name="undo_action_suspend_card">tangguhkan kartu</string>
     <string name="undo_action_suspend_note">tangguhkan catatan</string>
     <string name="undo_action_delete">hapus catatan</string>
-    <string name="undo_action_delete_multi">delete notes</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_delete_multi">hapus catatan</string>
+    <string name="undo_action_change_deck_multi">ganti deck</string>
+    <string name="undo_action_reschedule_card">penjadwalan ulang</string>
+    <string name="undo_action_reset_card">setel ulang kemajuan saya</string>
+    <string name="undo_action_reposition_card">reposisi</string>
+    <string name="move_all_to_deck">Pindahkan semua ke dek</string>
     <string name="unbury">Angkat</string>
     <string name="rename_deck">Ganti nama susunan</string>
     <string name="menu_add">Tambah</string>
@@ -141,7 +141,7 @@
     <string name="studyoptions_congrats_custom">Untuk belajar di luar jadwal normal, sentuh tombol \"Belajar kustom\"</string>
     <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
     <string name="sd_card_not_mounted">Perangkat penyimpanan tidak terpasang</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Ubah catatan ini dan menambahkan beberapa penghapusan cloze. (%1$s)</string>
     <string name="button_sync">Siknronisasi</string>
     <string name="cancel_sync_confirm">Apakah Anda ingin membatalkan sinkronisasi?</string>
     <string name="continue_sync">Lanjutkan sinkronisasi</string>
@@ -163,7 +163,7 @@
     </plurals>
     <string name="invalid_template">Kartu tidak dapat dibuat</string>
     <string name="card_template_editor_would_delete_note">Menghapus jenis kartu ini akan menyebabkan satu atau lebih catatan terhapus. Silahkan buat dahulu jenis kartu yang baru.</string>
-    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">Template untuk kartu ini sudah terhapus.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Baca dan tulis ke database AnkiDroid</string>
     <string name="read_write_permission_description">mengakses catatan, kartu, jenis catatan, dan susunan, serta membuat yang baru</string>

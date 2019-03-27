@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">Sinkronisasi berikutnya, ubah gaya dalam satu arah</string>
     <string name="full_sync_confirmation">Perubahan yang diminta akan memerlukan upload database secara penuh saat Anda melakukan sinkronisasi berikutnya pada koleksi Anda. Jika Anda memiliki ulasan atau perubahan lainnya yang menunggu di perangkat lain yang belum disinkronkan di sini, mereka akan hilang. Terus?</string>
     <string name="full_sync_confirmation_upgrade">Karena adanya bug pada versi AnkiDroid yang telah terinstal sebelumnya, disarankan untuk memaksa sinkronisasi penuh.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">Otentikasi proxy diperlukan.</string>
     <string name="sync_error_409">Hanya satu klien yang bisa mengakses AnkiWeb sekaligus. Jika sinkronisasi sebelumnya gagal, coba lagi dalam beberapa menit.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">Koleksi Anda atau media file terlalu besar untuk disinkronisasi.</string>
+    <string name="sync_error_500_unknown">AnkiWeb mengalami error. Mohon menunggu beberapa menit, dan jika masalah tetap ada, tolong buatlah laporan bug.</string>
     <string name="sync_error_501_upgrade_required">Silakan upgrade ke versi terbaru AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb berada di bawah pemeliharaan. Harap coba lagi dalam beberapa menit.</string>
+    <string name="sync_error_504_gateway_timeout">error 504 gateway timeout terjadi.</string>
 </resources>

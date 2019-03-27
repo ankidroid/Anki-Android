@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">Pri ďalšej synchronizácii, vynútiť zmeny v jednom smere</string>
     <string name="full_sync_confirmation">Požadované zmeny si vyžadujú úplné nahratie databázy na server pri ďalšej synchronizácii vašej zbierky. Ak máte naplánované skúšanie alebo zmeny na iných zariadeniach, ktoré ešte neboli synchronizované, budú stratené. Chcete pokračovať?</string>
     <string name="full_sync_confirmation_upgrade">Kvôli chybe v predchádzajúcej nainštalovanej verzii AnkiDroid, odporúča sa úplná synchronizácia.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">Vyžaduje sa autentifikácia serverom proxy.</string>
     <string name="sync_error_409">V rovnakom momente môže mať prístup k AnkiWeb iba jeden klient. Ak predchádzajúca synchronizácia zlyhala, prosím, pokúste sa o synchronizáciu o pár minút neskôr.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">Vaša zbierka alebo mediálny súbor je príliš veľký pre synchronizáciu.</string>
+    <string name="sync_error_500_unknown">AnkiWeb narazil na problém. Prosím skúste znova za pár minút. Ak problém pretrváva, prosím, oznámte túto chybu.</string>
     <string name="sync_error_501_upgrade_required">Prosím aktualizujte na najnovšiu verziu AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">Na serveri AnkiWeb prebieha údržba. Prosím, skúste opäť za niekoľko minút.</string>
+    <string name="sync_error_504_gateway_timeout">Vyskytla sa chyba 504 gateway timeout error.</string>
 </resources>

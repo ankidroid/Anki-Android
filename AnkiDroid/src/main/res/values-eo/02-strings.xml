@@ -126,10 +126,10 @@
     <string name="fact_adder_intent_title">AnkiDroid-karto</string>
     <string name="card_editor_add_card">Aldoni noton</string>
     <string name="card_editor_copy_card">Kopii karton</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
+    <string name="card_editor_card_scheduling">Planado</string>
     <string name="card_editor_reposition_card">Repozicii</string>
     <string name="card_editor_reset_card">Nuligi progreson</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Replani</string>
     <string name="card_editor_preview_card">Antaŭrigardi</string>
     <string name="error_insufficient_memory">Ago ne eblas pro nesufiĉa memoro en via aparato</string>
     <string name="rename">Alinomi</string>
@@ -164,11 +164,11 @@
     <string name="confirm_apkg_export_deck">Ĉu elporti “%s” kiel apkg-dosieron?</string>
     <string name="export_in_progress">Elportado de apkg-dosiero&#8230;</string>
     <string name="export_successful_title">Ĉu sendi apkg-dosieron?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_send_button">Sendi</string>
+    <string name="export_save_button">Konservi al dosiero</string>
+    <string name="export_send_no_handlers">Neniu aplikaĵo por pritrakti apkg. Konservado…</string>
+    <string name="export_save_apkg_successful">apkg estas sukcese konservita</string>
+    <string name="export_save_apkg_unsuccessful">Konservo de apkg malsukcesis</string>
     <string name="export_successful">Elportis dosieron “%s”. Ĉu sendi ĝin per alia aplikaĵo?</string>
     <string name="export_email_subject">AnkiDroid elportis fulmokartojn: %s</string>
     <string name="export_email_text"><![CDATA[        Saluton!
@@ -179,7 +179,7 @@
     <string name="export_unsuccessful">Eraro dum elportado de apkg-dosiero</string>
     <string name="import_hint">Enmetu apkg-dosieron en la dosierujo “%s” kaj frapetu “bone” por enporti kartojn</string>
     <string name="upgrade_import_no_file_found">Ne trovis iujn ajn dosierojn por enporti (%1$s)</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Agordoj</string>
     <string name="select_tts">Agordi lingvon por parol-sintezi</string>
     <string name="custom_study">Propra lernado</string>
     <string name="more_options">Pli</string>
@@ -226,14 +226,14 @@
     <string name="filtered_deck_name">Filtrita kartaro</string>
     <string name="reminder_title">Ne forgesu lerni hodiaŭ!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d karto por ripeti en %1$s</item>
+        <item quantity="other">%2$d karto por ripeti en %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Eraro dum kunhavigado de apkg-dosiero</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">Planilo V2 estu aktiva por enporti tiun ĉi dosieron.</string>
+    <string name="import_cannot_with_v2">Planilo V2 ne povas enporti kartarojn V1 kun inkluzivita lern-plano.</string>
+    <string name="export_v2_dummy_note">Ĉi tiu dosiero postulas pli novan version de Anki.</string>
+    <string name="export_v2_forbidden">Bonvolu ŝanĝi al planilo V1 antaŭ elporti unuopan kartaron kun lern-plano.</string>
 </resources>

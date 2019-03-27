@@ -159,9 +159,9 @@
     <string name="time_limit_summ">XXX мин.</string>
     <string name="day_offset">Начало следующего дня</string>
     <string name="day_offset_summ">XXX ч. утра</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
+    <string name="sched_ver">Экспериментальный планировщик — 2</string>
+    <string name="sched_ver_summ">Включает экспериментальный планировщик. При синхронизации изменения будут перезаписаны в одну сторону</string>
+    <string name="sched_ver_toggle_title">Подтвердить</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on">Не выключать экран</string>
@@ -176,7 +176,7 @@
     <string name="custom_buttons_setting_if_room">Если есть место</string>
     <string name="custom_buttons_setting_menu_only">Только меню</string>
     <string name="reset_custom_buttons">Сбросить</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="thirdparty_apps_title">Сторонние приложения</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
@@ -269,7 +269,7 @@
     <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
     <string name="deck_conf_reminders_time">Напомнить в</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
+    <string name="analytics_dialog_title">Помогите сделать AnkiDroid лучше!</string>
+    <string name="analytics_title">Делиться статистикой использования</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
 </resources>

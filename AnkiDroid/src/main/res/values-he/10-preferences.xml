@@ -111,10 +111,10 @@
     <string name="tts_summ">מקריא את השאלה ואת התשובה אם אין קובץ קול</string>
     <string name="sync_fetch_missing_media">הורדת קבצי מדיה בסנכרון</string>
     <string name="sync_fetch_missing_media_summ">הורדה אוטומטית של קבצי מדיה בזמן הסנכרון</string>
-    <string name="sync_account">AnkiWeb account</string>
+    <string name="sync_account">חשבון AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Not logged in</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Automatic synchronization</string>
+    <string name="automatic_sync_choice">סנכרון אוטומטי</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
     <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
@@ -123,7 +123,7 @@
     <string name="fix_hebrew_download_font">Download font</string>
     <string name="day_theme">Day theme</string>
     <string name="night_theme">Night theme</string>
-    <string name="default_font">Default font</string>
+    <string name="default_font">גופן ברירת המחדל</string>
     <string name="override_font">Default font applicability</string>
     <string name="language">שפה</string>
     <string name="language_system">שפת מערכת</string>
@@ -132,7 +132,7 @@
     <string name="never_notify">Never notify</string>
     <string name="notify_when_pending">Pending messages available</string>
     <string name="notification_minimum_cards_due">More than %d cards due</string>
-    <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
+    <string name="notification_minimum_cards_due_vibrate">רטט</string>
     <string name="notification_minimum_cards_due_blink">Blink light</string>
     <string name="timeout_answer_text">Automatic display answer</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>

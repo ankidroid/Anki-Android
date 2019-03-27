@@ -122,7 +122,7 @@
     <string name="full_sync_confirmation_upgrade">因先前安装的AnkiDroid版本中Bug的原因，我们建议强制完全同步一次。</string>
     <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
     <string name="sync_error_409">AnkiWeb 只允许一个客户端同时在线，如果之前的同步失败，请在几分钟后重试。</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
+    <string name="sync_error_413_collection_size">您的收藏或媒体文件过大，无法同步。</string>
     <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
     <string name="sync_error_501_upgrade_required">请升级到最新版本的AnkiDroid</string>
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>

@@ -124,10 +124,10 @@
     <string name="fact_adder_intent_title">Kad AnkiDroid</string>
     <string name="card_editor_add_card">Tambahkan catatan</string>
     <string name="card_editor_copy_card">Salin kad</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="card_editor_card_scheduling">Penjadwalan</string>
+    <string name="card_editor_reposition_card">Reposisi</string>
     <string name="card_editor_reset_card">Set semula aktivitas</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Penjadwalan ulang</string>
     <string name="card_editor_preview_card">Pratinjau</string>
     <string name="error_insufficient_memory">Operasi gagal kerana tahap memori pada peranti anda</string>
     <string name="rename">Ubah nama</string>
@@ -161,11 +161,11 @@
     <string name="confirm_apkg_export_deck">Ekspor \"%s\" sebagai file apkg?</string>
     <string name="export_in_progress">Mengekspor file apkg&#8230;</string>
     <string name="export_successful_title">Kirim apkg?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_send_button">Kirim</string>
+    <string name="export_save_button">Menyimpan ke dalam berkas</string>
+    <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan...</string>
+    <string name="export_save_apkg_successful">apkg berhasil disimpan</string>
+    <string name="export_save_apkg_unsuccessful">Penyimpanan apkg gagal</string>
     <string name="export_successful">File \"%s\" telah diekspor. Apakah Anda ingin mengirimkannya dengan aplikasi lain?</string>
     <string name="export_email_subject">AnkiDroid mengekspor flashcards: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -176,7 +176,7 @@
     <string name="export_unsuccessful">Kesalahan mengekspor file apkg</string>
     <string name="import_hint">Untuk mengimpor kartu, tempatkan file apkg ke dalam direktori %s dan tekan ok</string>
     <string name="upgrade_import_no_file_found">Tidak ada %1$s file yang dapat di impor ditemukan</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Pilihan</string>
     <string name="select_tts">Tetapkan bahasa TTS</string>
     <string name="custom_study">Kajian khusus</string>
     <string name="more_options">Lebih</string>
@@ -217,13 +217,13 @@
     <string name="filtered_deck_name">Disortir Deck</string>
     <string name="reminder_title">Jangan lupa belajar hari ini!</string>
     <plurals name="reminder_text">
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="other">%2$d kartu baru perlu diulas di %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Kesalahan saat berbagi file apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">Penjadwal v2 harus diaktifkan untuk mengimpor file ini.</string>
+    <string name="import_cannot_with_v2">Penjadwal v2 tidak dapat mengimpor deck V1 yang memiliki penjadwalan.</string>
+    <string name="export_v2_dummy_note">File ini memerlukan versi terbaru dari Anki.</string>
+    <string name="export_v2_forbidden">Harap beralih ke V1 scheduler sebelum mengekspor dek tunggal yang miliki informasi penjadwalan.</string>
 </resources>

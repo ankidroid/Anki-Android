@@ -124,10 +124,10 @@
     <string name="fact_adder_intent_title">AnkiDroid カード</string>
     <string name="card_editor_add_card">ノートを追加</string>
     <string name="card_editor_copy_card">カードをコピー</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="card_editor_card_scheduling">スケジュールを編集</string>
+    <string name="card_editor_reposition_card">新規カードの表示順序を変更</string>
     <string name="card_editor_reset_card">学習履歴をリセット</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">スケジュールを変更</string>
     <string name="card_editor_preview_card">プレビュー</string>
     <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
     <string name="rename">名前の変更</string>
@@ -175,7 +175,7 @@
     <string name="export_unsuccessful">Ankiファイルのエクスポートエラー</string>
     <string name="import_hint">取り込みたいデッキまたはコレクション（全デッキ）のファイル（*. apkg）をあらかじめ \"%s\" に保存した後、この画面で「OK」ボタンをタップしてください。</string>
     <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">オプション</string>
     <string name="select_tts">テキスト読み上げ機能の言語設定</string>
     <string name="custom_study">カスタム学習</string>
     <string name="more_options">その他</string>

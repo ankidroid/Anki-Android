@@ -126,10 +126,10 @@
     <string name="fact_adder_intent_title">AnkiDroid Kartı</string>
     <string name="card_editor_add_card">Not ekle</string>
     <string name="card_editor_copy_card">Kartı kopyala</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="card_editor_card_scheduling">Zamanlama</string>
+    <string name="card_editor_reposition_card">Yerini değiştir</string>
     <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Zamanını değiştir</string>
     <string name="card_editor_preview_card">Önizle</string>
     <string name="error_insufficient_memory">Cihazda yetersiz bellek olması nedeniyle işlem gerçekleştirilemiyor</string>
     <string name="rename">Adını değiştir</string>
@@ -164,11 +164,11 @@
     <string name="confirm_apkg_export_deck">\"%s\" apkg dosyası olarak kaydedilsin mi?</string>
     <string name="export_in_progress">apkg dosyası keydediliyor&#8230;</string>
     <string name="export_successful_title">Apkg gönderilsin mi?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_send_button">Gönder</string>
+    <string name="export_save_button">Dosyaya kaydet</string>
+    <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor...</string>
+    <string name="export_save_apkg_successful">Apkg başarıyla kaydedildi</string>
+    <string name="export_save_apkg_unsuccessful">Apkg kaydı başarısız</string>
     <string name="export_successful">Dosya \"%s\" dışarı çıkartıldı. Başka bir uygulama ile göndermek istiyor musunuz?</string>
     <string name="export_email_subject">AnkiDroid hafızakartlarına çıkartıldı: %s</string>
     <string name="export_email_text"><![CDATA[        Selam!
@@ -178,7 +178,7 @@
     <string name="export_unsuccessful">Apkg dosyasını kaydederken hata</string>
     <string name="import_hint">İçeri kart aktarmak için, apkg dosyasını %s dizinine yerleştirip Tamam\'a basın</string>
     <string name="upgrade_import_no_file_found">İçeri aktarılabilir %1$s dosyası bulunmuyor</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Seçenekler</string>
     <string name="select_tts">Metin okuma dilini ayarla</string>
     <string name="custom_study">Kişisel Çalışma</string>
     <string name="more_options">Daha fazlası</string>
@@ -225,14 +225,14 @@
     <string name="filtered_deck_name">Filtreli Deste</string>
     <string name="reminder_title">Bugün çalışmaya unutmayın!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%1$s içinde çalışmak için %2$d kart</item>
+        <item quantity="other">%1$s içinde çalışmak için %2$d kart</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg dosyasını paylaşırken hata</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">Bu dosyayı içeri aktarmak için V2 zamanlayıcının devreye alınması gerekli.</string>
+    <string name="import_cannot_with_v2">V2 zamanlayıcı zamanlamalı V1 destelerini aktaramaz.</string>
+    <string name="export_v2_dummy_note">Bu dosya için Anki\'nin daha yeni bir sürümü gerekli.</string>
+    <string name="export_v2_forbidden">Lütfen zamanlama bilgisi içeren tek bir deste dışarı aktarmadan önce V1 zamanlayıcıya geçin.</string>
 </resources>

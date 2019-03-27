@@ -42,7 +42,7 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="other">%d kartu AnkiDroid yang harus diproses</item>
     </plurals>
     <string name="widget_no_cards_due">No cards due</string>
     <string name="widget_loading">Widget loading&#8230;</string>
