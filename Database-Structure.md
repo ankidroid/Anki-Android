@@ -63,7 +63,7 @@ CREATE TABLE cards (
     ivl             integer not null,
       -- interval (used in SRS algorithm). Negative = seconds, positive = days
     factor          integer not null,
-      -- factor (used in SRS algorithm)
+      -- The ease factor of the card in permille (parts per thousand). If the ease factor is 2500, the card’s interval will be multiplied by 2.5 the next time you press Good.
     reps            integer not null,
       -- number of reviews
     lapses          integer not null,
