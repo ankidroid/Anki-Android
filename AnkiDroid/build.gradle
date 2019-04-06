@@ -28,8 +28,9 @@ android {
 
         // This enables long timeouts required on slow ARM emulators, e.g. Travis
         adbOptions {
-            setLogLevel verbose // let's try to see what is happening
+            setLogLevel "verbose" // let's try to see what is happening
             timeOutInMs 20 * 60 * 1000  // 20 minutes
+            com.android.ddmlib.DdmPreferences.setTimeOut(120000) // apparently if not multidex you do this
         }
     }
     lintOptions {
