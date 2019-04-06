@@ -26,8 +26,8 @@ env:
    - API=25 ABI=x86_64 
    #- API=26 ABI=x86_64 # Fails with unrecognized tests? orchestrator change or something?
    - API=27 ABI=x86_64
-   #- API=28 ABI=x86_64 # Slowness/timing issues / Fails with unresponsive adb command / so unrecognized API for adb
-   #- API=Q ABI=x86_64 # Fails I think because of perf + timeouts. 10 minute wait not enough, fixable
+   - API=28 ABI=x86_64 # Slowness/timing issues / Fails with unresponsive adb command / so unrecognized API for adb
+   - API=Q ABI=x86_64 # Fails I think because of perf + timeouts. 10 minute wait not enough, fixable
 
 # This block currently does not work, but it used to. API=28/Q are probably fixable
 # but we don't need allow_failures to be on in master to work through them
