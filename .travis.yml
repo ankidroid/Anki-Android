@@ -5,7 +5,7 @@ jdk:
 
 env:
   global:
-    - ADB_INSTALL_TIMEOUT=8
+    - ADB_INSTALL_TIMEOUT=10  # 10 minutes, vs the 2 minute default
     - ABI=armeabi-v7a
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
     # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
@@ -68,6 +68,7 @@ install:
   - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" #>/dev/null # install our emulator
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
   - emulator -verbose -avd test -no-accel -no-snapshot -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 2048 &
+  - android-wait-for-emulator || true # This will let us stack two together for 20mins of time
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
