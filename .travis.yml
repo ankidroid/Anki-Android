@@ -69,10 +69,10 @@ install:
   - echo y | sdkmanager "extras;android;m2repository" >/dev/null
   - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" #>/dev/null # install our emulator
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
-  - emulator -avd test -no-accel -no-snapshot-load -no-snapshot-save -screen no-touch -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 3072 &
+  - emulator -avd test -no-accel -no-snapshot-load -no-snapshot-save -screen no-touch -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 2048 &
   - ./tools/ci/android_wait_longer_for_emulator.sh
   - adb shell input keyevent 82 &
-  - adb reconnect # Force an adb restart so our build.gradle gets a chance to set a timeout larger than 5s
+  #- adb reconnect # Force an adb restart so our build.gradle gets a chance to set a timeout larger than 5s
   - adb devices -l
   - adb -e shell getprop
 
