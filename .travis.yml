@@ -18,7 +18,7 @@ env:
    #- API=16 ABI=armeabi-v7a AUDIO=-no-audio
    #- API=17 ABI=armeabi-v7a
    #- API=18 ABI=armeabi-v7a # API18 has started being flaky
-   - API=19 ABI=armeabi-v7a ENGINE="-engine classic" # Kernel/emulator mismatch by default
+   #- API=19 ABI=armeabi-v7a # Kernel/emulator mismatch, and emulator-29+ doesn't support "-engine classic" to fix
    # API 20 was Android Wear only
    #- API=21
    #- API=22
@@ -32,11 +32,11 @@ env:
 
 # This block currently does not work, but it used to. API=28/Q are probably fixable
 # but we don't need allow_failures to be on in master to work through them
-matrix:
-  fast_finish: true # We can report success without waiting for these
-  allow_failures:
-     - env: API=28
-     - env: API=Q
+#matrix:
+#  fast_finish: true # We can report success without waiting for these
+#  allow_failures:
+#     - env: API=28
+#     - env: API=Q
 
 jobs:
   include:
@@ -64,13 +64,13 @@ install:
   - echo y | sdkmanager "build-tools;28.0.3" >/dev/null # Implicit gradle dependency - gradle drives changes
   - echo y | sdkmanager "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
   - echo y | sdkmanager "platforms;android-28" >/dev/null # We need the API of the current compileSdkVersion from gradle.properties
-  - echo y | sdkmanager --channel=4 "emulator" # Experiment with canary, specifying 28.0.3 (prior version) did not work
+  - echo y | sdkmanager --channel=4 "emulator" >/dev/null # Experiment with canary, specifying 28.0.3 (prior version) did not work
   - echo y | sdkmanager "extras;android;m2repository" >/dev/null
   - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" #>/dev/null # install our emulator
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
-  - emulator $ENGINE -debug all -avd test -no-accel -no-snapshot-load -no-snapshot-save -screen no-touch -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 2048 &
+  - emulator -debug all -avd test -no-accel -no-snapshot-load -no-snapshot-save -screen no-touch -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 2048 &
   - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
-  - ./tools/ci/android-wait-longer-for-emulator.sh
+  - ./tools/ci/android_wait_longer_for_emulator.sh
   - kill %1
   - adb shell input keyevent 82 &
   - adb kill-server # Force an adb restart so our build.gradle gets a chance to set a timeout larger than 5s
