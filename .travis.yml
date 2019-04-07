@@ -7,7 +7,7 @@ env:
   global:
     - ADB_INSTALL_TIMEOUT=20  # 20 minutes, vs the 2 minute default
     - ADB_TRACE=all,sockets
-    - ABI=armeabi-v7a
+    - ABI=x86_64
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
     # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
     - ANDROID_HOME=/usr/local/android-sdk
@@ -15,18 +15,18 @@ env:
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
   matrix:
    #- API=15 # only runs locally. Create+Start once from AndroidStudio to init sdcard. Then only from command-line w/-engine classic
-   - API=16 ABI=armeabi-v7a AUDIO=-no-audio
-   - API=17 ABI=armeabi-v7a
-   - API=18 ABI=armeabi-v7a # API18 has started being flaky
+   #- API=16 ABI=armeabi-v7a AUDIO=-no-audio
+   #- API=17 ABI=armeabi-v7a
+   #- API=18 ABI=armeabi-v7a # API18 has started being flaky
    - API=19 ABI=armeabi-v7a ENGINE="-engine classic" # Kernel/emulator mismatch by default
    # API 20 was Android Wear only
-   - API=21
-   - API=22
-   - API=23
-   - API=24
-   - API=25 
+   #- API=21
+   #- API=22
+   #- API=23
+   #- API=24
+   #- API=25 
    #- API=26 ABI=x86_64 # Fails with unrecognized tests? orchestrator change or something?
-   - API=27
+   #- API=27
    - API=28
    - API=Q
 
