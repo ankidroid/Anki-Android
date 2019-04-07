@@ -1,25 +1,46 @@
 #!/bin/bash
 
-# Originally written by Ralf Kistner <ralf@embarkmobile.com>, but placed in the public domain
+android_wait_for_emulator.sh &
 
-set +e
+# Constants
+RED='\033[0;31m'
+minutes=0
+limit=10
 
-bootanim=""
-failcounter=0
-timeout_in_sec=720
+while kill -0 $! >/dev/null 2>&1; do
+  echo -n -e " \b" # never leave evidences!
 
-until [[ "$bootanim" =~ "stopped" ]]; do
-  bootanim=`adb -e shell getprop init.svc.bootanim 2>&1 &`
-  if [[ "$bootanim" =~ "device not found" || "$bootanim" =~ "device offline"
-    || "$bootanim" =~ "running" ]]; then
-    let "failcounter += 1"
-    echo "Waiting for emulator to start (slept $failcounter seconds)"
-    if [[ $failcounter -gt timeout_in_sec ]]; then
-      echo "Timeout ($timeout_in_sec seconds) reached; failed to start emulator"
-      exit 1
-    fi
+  if [ $minutes == $limit ]; then
+    echo -e "\n"
+    echo -e "${RED}Test has reached a ${minutes} minutes timeout limit"
+    exit 1
   fi
-  sleep 1
+
+  minutes=$((minutes+1))
+
+  sleep 60
 done
 
-echo "Emulator is ready"
+android_wait_for_emulator.sh &
+
+# Constants
+RED='\033[0;31m'
+minutes=0
+limit=10
+
+while kill -0 $! >/dev/null 2>&1; do
+  echo -n -e " \b" # never leave evidences!
+
+  if [ $minutes == $limit ]; then
+    echo -e "\n"
+    echo -e "${RED}Test has reached a ${minutes} minutes timeout limit"
+    exit 1
+  fi
+
+  minutes=$((minutes+1))
+
+  sleep 60
+done
+
+exit 0
+
