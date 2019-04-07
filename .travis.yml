@@ -5,7 +5,7 @@ jdk:
 
 env:
   global:
-    - ADB_INSTALL_TIMEOUT=20  # 20 minutes, vs the 2 minute default
+    #- ADB_INSTALL_TIMEOUT=20  # 20 minutes, vs the 2 minute default
     - ANDROID_VERBOSE=init,console,adb
     - ABI=x86_64
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
@@ -74,10 +74,10 @@ install:
   - adb shell input keyevent 82 &
   #- adb reconnect # Force an adb restart so our build.gradle gets a chance to set a timeout larger than 5s
   - adb devices -l
-  - adb -e shell getprop
+  - adb -e shell getprop ro.build.version.sdk
 
 script:
-  - ./gradlew jacocoTestReport
+  - ADB_INSTALL_TIMEOUT=20 ./gradlew jacocoTestReport
 
 # Codacy integration, partials for all APIs, then an optional finalize
 after_success:
