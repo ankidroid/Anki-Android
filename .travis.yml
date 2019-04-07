@@ -69,9 +69,7 @@ install:
   - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" #>/dev/null # install our emulator
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
   - emulator -debug all -avd test -no-accel -no-snapshot-load -no-snapshot-save -screen no-touch -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 2048 &
-  - while sleep 540; do echo "=====[ $SECONDS seconds still running ]====="; done &
-  - ./tools/ci/android_wait_longer_for_emulator.sh
-  - kill %1
+  - travis_wait 20 ./tools/ci/android_wait_longer_for_emulator.sh
   - adb shell input keyevent 82 &
   - adb kill-server # Force an adb restart so our build.gradle gets a chance to set a timeout larger than 5s
 
