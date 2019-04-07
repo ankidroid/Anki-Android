@@ -1,6 +1,6 @@
 #!/bin/bash
 
-android_wait_for_emulator.sh &
+android_wait_for_emulator &
 
 # Constants
 RED='\033[0;31m'
@@ -21,7 +21,7 @@ while kill -0 $! >/dev/null 2>&1; do
   sleep 60
 done
 
-android_wait_for_emulator.sh &
+android_wait_for_emulator &
 
 # Constants
 RED='\033[0;31m'
