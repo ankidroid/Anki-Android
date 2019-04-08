@@ -5,8 +5,7 @@ jdk:
 
 env:
   global:
-    #- ADB_INSTALL_TIMEOUT=20  # 20 minutes, vs the 2 minute default
-    - ANDROID_VERBOSE=init,console,adb
+    - ADB_INSTALL_TIMEOUT=8
     - ABI=x86_64
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
     # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
@@ -15,20 +14,20 @@ env:
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
   matrix:
    #- API=15 # only runs locally. Create+Start once from AndroidStudio to init sdcard. Then only from command-line w/-engine classic
-   #- API=16 ABI=armeabi-v7a AUDIO=-no-audio
-   #- API=17 ABI=armeabi-v7a
-   #- API=18 ABI=armeabi-v7a # API18 has started being flaky
-   #- API=19 ABI=armeabi-v7a # Kernel/emulator mismatch, and emulator-29+ doesn't support "-engine classic" to fix
+   - API=16 ABI=armeabi-v7a AUDIO=-no-audio
+   - API=17 ABI=armeabi-v7a
+   - API=18 ABI=armeabi-v7a # API18 has started being flaky
+   #- API=19 ABI=armeabi-v7a # Fails: kernel/emulator mismatch, and emulator-29+ doesn't support "-engine classic" to fix
    # API 20 was Android Wear only
-   #- API=21
-   #- API=22
-   #- API=23
-   #- API=24
-   #- API=25 
+   - API=21
+   - API=22
+   - API=23
+   - API=24
+   - API=25
    #- API=26 ABI=x86_64 # Fails with unrecognized tests? orchestrator change or something?
-   #- API=27
-   - API=28
-   - API=Q
+   - API=27
+   #- API=28 # Fails on adb 2 second getprop timeout and get API getprop takes 2.2s, so emulator boots but adb won't install on unknown API
+   #- API=Q  # Fails at some point on emulator startup or detecting startup complete
 
 # This block currently does not work, but it used to. API=28/Q are probably fixable
 # but we don't need allow_failures to be on in master to work through them
@@ -58,27 +57,22 @@ licenses:
 
 # Emulator Management: Create, Start and Wait
 install:
-  - cat /proc/meminfo
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid harmless sdkmanager warning
   - echo y | sdkmanager "platform-tools" >/dev/null
   - echo y | sdkmanager "tools" >/dev/null # A second time per Travis docs, gets latest versions
   - echo y | sdkmanager "build-tools;28.0.3" >/dev/null # Implicit gradle dependency - gradle drives changes
   - echo y | sdkmanager "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
   - echo y | sdkmanager "platforms;android-28" >/dev/null # We need the API of the current compileSdkVersion from gradle.properties
-  - echo y | sdkmanager --channel=4 "emulator" >/dev/null # Experiment with canary, specifying 28.0.3 (prior version) did not work
+  - echo y | sdkmanager --channel=4 "emulator" >/dev/null # Use canary channel to get emulator 29.x for x86_64 image support
   - echo y | sdkmanager "extras;android;m2repository" >/dev/null
-  - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" #>/dev/null # install our emulator
+  - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null # install our emulator
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
-  - emulator -avd test -no-accel -no-snapshot-load -no-snapshot-save -screen no-touch -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 2048 &
-  - ./tools/ci/android_wait_longer_for_emulator.sh  # This stops producing output for Q emulator, like the adb getprop command is hanging?
+  - emulator -verbose -avd test -no-accel -no-snapshot -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 2048 &
+  - android-wait-for-emulator
   - adb shell input keyevent 82 &
-  #- adb reconnect # Force an adb restart so our build.gradle gets a chance to set a timeout larger than 5s
-  - adb devices -l
-  - adb -e shell getprop ro.build.version.sdk
-  - adb -e shell getprop ro.build.version.sdk # it is supposed to cache so this may be fast now? to avoid timeouts later?
 
 script:
-  - ADB_INSTALL_TIMEOUT=20 ./gradlew jacocoTestReport # This produces an error while doing the API getprop on API 28...
+  - ./gradlew jacocoTestReport # This produces an error while doing the API getprop on API 28...
 
 # Codacy integration, partials for all APIs, then an optional finalize
 after_success:
