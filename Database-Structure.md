@@ -264,17 +264,16 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
     usn: "usn: Update sequence number: used in same way as other usn vales in db", 
     collapsed: "true when deck is collapsed", 
     browserCollapsed: "true when deck collapsed in browser", 
-    newToday: "two number. First one currently not used. Second is the negation (-)
-               of the number of new cards added today by custom study", 
+    newToday/revToday/lrnToday : two number array.
+                                 First one is currently unused
+                                 The second one is equal to the number of cards seen today in this deck minus the number of new cards in custom study today.
+                                 BEWARE, it's changed in anki.sched(v2).Scheduler._updateStats and anki.sched(v2).Scheduler._updateCutoff.update  but can't be found by grepping 'newToday', because it's instead written as type+"Today" with type which may be new/rev/lrnToday    
     timeToday: "two number array used somehow for custom study. Currently unused in the code", 
     dyn: "1 if dynamic (AKA filtered) deck", 
     extendNew: "extended new card limit (for custom study). 
                 Potentially absent, in this case it's considered to be 10 by aqt.customstudy", 
     conf: "id of option group from dconf in `col` table. Or absent if the deck is dynamic. 
           Its absent in filtere deck", 
-    revToday: "two number. First one currently not used. Second is the negation (-)
-               of the number of review cards added today by custom study", 
-    lrnToday: "two number array used somehow for custom study. Currently unused in the code", 
     id: "deck ID (automatically generated long)", 
     mod: "last modification time", 
     desc: "deck description"
