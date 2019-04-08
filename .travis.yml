@@ -25,7 +25,7 @@ env:
    - API=24
    - API=25
    #- API=26 ABI=x86_64 # Fails with unrecognized tests? orchestrator change or something?
-   - API=27
+   #- API=27 # Same failure as below for API28, but less frequently
    #- API=28 # Fails on adb 2 second getprop timeout and get API getprop takes 2.2s, so emulator boots but adb won't install on unknown API
    #- API=Q  # Fails at some point on emulator startup or detecting startup complete
 
