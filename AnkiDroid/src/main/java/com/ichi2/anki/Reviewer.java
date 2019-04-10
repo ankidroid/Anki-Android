@@ -28,6 +28,9 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
+
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -80,6 +83,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             return R.plurals.reset_cards_dialog_acknowledge;
         }
     };
+    // object that tells Android we want to control media button events
+    private MediaSessionCompat session;
 
     /** We need to listen for and handle repositions / reschedules / resets very similarly */
     abstract class ScheduleDeckTaskListener extends NextCardHandler {
@@ -108,6 +113,27 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         startLoadingCollection();
+
+        // Initialize a fake media session. This is used to allow Anki to consume
+        // media button clicks (e.g. play/pause) without changing audio playback
+        // state in other apps, like Spotify
+        session = new MediaSessionCompat(this, "TAG");
+        session.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS);
+        session.setCallback(new MediaSessionCompat.Callback() {
+            @Override
+            public boolean onMediaButtonEvent(Intent mediaButtonEvent) {
+                return true; // This will disable literally all media buttons during review
+            }
+        });
+        // in order for the session to properly register as the foreground audio session,
+        // we need to set a non-null playback state with appropriate actions that can
+        // be handled by the session
+        session.setPlaybackState(new PlaybackStateCompat.Builder()
+            .setState(PlaybackStateCompat.STATE_PLAYING, 0, 0) // this line makes Android think this session is the foreground audio session
+            .setActions(PlaybackStateCompat.ACTION_PLAY | PlaybackStateCompat.ACTION_PAUSE | PlaybackStateCompat.ACTION_PLAY_PAUSE) // this line tells Android what actions our media session can handle
+            .build());
+        // turn on the session in the eyes of the Android system
+        session.setActive(true);
     }
 
     private void selectDeckFromExtra() {
@@ -808,5 +834,14 @@ public class Reviewer extends AbstractFlashcardViewer {
                     return false;
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        // We have finished reviewing for now.
+        // Go back to letting Spotify handle button clicks
+        session.setActive(false);
+        session.release();
+        super.onDestroy();
     }
 }
