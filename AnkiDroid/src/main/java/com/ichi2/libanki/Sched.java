@@ -112,7 +112,7 @@ public class Sched {
 
     public Sched(Collection col) {
         mCol = col;
-        mQueueLimit = 50;
+        mQueueLimit = 150;
         mReportLimit = 1000;
         mReps = 0;
         mHaveQueues = false;
@@ -1279,9 +1279,13 @@ public class Sched {
                     cur = mCol
                             .getDb()
                             .getDatabase()
-                            .query(
-                                    "SELECT id FROM cards WHERE did = " + did + " AND queue = 2 AND due <= " + mToday
-                                            + " LIMIT " + lim, null);
+                            .query(String.format("SELECT id " +
+                                    "FROM cards " +
+                                    "WHERE did = %s " +
+                                    "AND queue = 2 " +
+                                    "AND due <= %s " +
+                                    "ORDER BY ivl ASC " +
+                                    "LIMIT %s", did, mToday, lim), null);
                     while (cur.moveToNext()) {
                         mRevQueue.add(cur.getLong(0));
                     }
