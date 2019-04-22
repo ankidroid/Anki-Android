@@ -285,8 +285,7 @@ public class Template {
     }
 
     private static String clozeText(String txt, String ord, char type) {
-        Matcher n = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt);
-        if (!n.find()) {
+        if (!Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt).find()) {
             return "";
         }
 
@@ -306,18 +305,12 @@ public class Template {
             } else {
                 buf = m.group(2);
             }
-            StringBuilder replacement = new StringBuilder();
 
             if (m.group(1).equals("c")) {
-                replacement.append("<span class=cloze>");
-                replacement.append(buf);
-                replacement.append("</span>");
-            } else
-            {
-                replacement.append(buf);
+                buf = String.format("<span class=cloze>%s</span>", buf);
             }
 
-            m.appendReplacement(repl, replacement.toString());
+            m.appendReplacement(repl, buf);
         }
         txt = m.appendTail(repl).toString();
         // and display other clozes normally
