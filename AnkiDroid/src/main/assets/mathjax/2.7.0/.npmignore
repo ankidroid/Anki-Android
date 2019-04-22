@@ -1,0 +1,7 @@
+.DS_Store
+docs/build/html-mathjax-site
+config/local/*.js
+!config/local/local.js
+unpacked/config/local/*.js
+!unpacked/config/local/local.js
+fonts/HTML-CSS/TeX/png
