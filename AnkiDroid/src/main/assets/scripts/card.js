@@ -107,4 +107,11 @@ var onPageFinished = function() {
         /* Re-anchor to answer after image resize since the point changes */
         window.location.href = "#answer";
     }
+    if (window.MathJax != null) {
+        var card = document.querySelector('.card');
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub, card]);
+        MathJax.Hub.Queue(function () {
+            card.classList.remove("hidden");
+        });
+    }
 }

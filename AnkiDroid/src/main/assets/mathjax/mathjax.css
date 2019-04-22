@@ -1,0 +1,14 @@
+.hidden {
+ 	opacity: 0;
+}
+
+/*
+
+// This nifty CSS transition says it is supported all the way back to Android 4.4!
+// I think we decided against including it, in order to be as fast as possible showing cards.
+// but this is close to what desktop Anki does.
+
+.card {
+	transition: opacity 100ms ease-in-out;
+}
+*/
