@@ -169,9 +169,9 @@ CREATE TABLE revlog (
        -- review:  1(wrong), 2(hard), 3(ok), 4(easy)
        -- learn/relearn:   1(wrong), 2(ok), 3(easy)
     ivl             integer not null,
-       -- interval
+       -- interval (i.e. as in the card table)
     lastIvl         integer not null,
-       -- last interval
+       -- last interval (i.e. the last value of ivl. Note that this value is not necessarily equal to the actual interval between this review and the preceding review)
     factor          integer not null,
       -- factor
     time            integer not null,
