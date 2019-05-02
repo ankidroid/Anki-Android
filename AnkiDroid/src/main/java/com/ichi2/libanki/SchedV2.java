@@ -39,19 +39,7 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 import timber.log.Timber;
 
@@ -415,8 +403,9 @@ public class SchedV2 extends Sched {
                 }
                 int rlim = _deckRevLimitSingle(deck, plim);
                 int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
+                int minIvl = _minIvlForDeck(deck.getLong("id"), rev);
                 // save to list
-                data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+                data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new, minIvl));
                 // add deck as a parent
                 lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
             }
@@ -504,7 +493,8 @@ public class SchedV2 extends Sched {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
+            int minIvl = _minIvlForDeck(did, rev);
+            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, minIvl, children));
         }
         return tree;
     }
