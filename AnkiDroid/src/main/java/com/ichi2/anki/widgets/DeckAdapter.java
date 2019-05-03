@@ -235,7 +235,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             holder.deckRev.setTextColor((node.revCount == 0) ? mZeroCountColor : mReviewCountColor);
         } else {
             // ViewHolder objects are (potentially) reused, so it's important to
-            // always be explicity about the state that you want. It's not enough to just have
+            // always be explicit about the state that you want. It's not enough to just have
             // the above "if" put the views in the proper state, we need this
             // else as well
             holder.countsLayout.setVisibility(View.INVISIBLE);
@@ -248,7 +248,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         if (showMinimumInterval) {
             holder.minIvlLayout.setVisibility(View.VISIBLE);
             holder.minIvl.setVisibility(View.VISIBLE);
-            int doneReviewingIvl = 14; // if minIvl is 14 days, you are g2g
+            int doneReviewingIvl = 21; // if minIvl is 21 days, all your cards are mature and you
             if (node.minIvl > doneReviewingIvl) {
                 holder.minIvl.setText(HtmlCompat.fromHtml("\uD83D\uDC4D", HtmlCompat.FROM_HTML_MODE_LEGACY)); // thumbs up
             } else {
@@ -260,7 +260,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 holder.deckLearn.setVisibility(View.VISIBLE);
                 holder.deckLearn.setText(String.format("(%d)", node.lrnCount));
                 holder.deckLearn
-                    .setTextColor((node.lrnCount == 0) ? mZeroCountColor : mLearnCountColor);
+                    .setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black));
             }
         } else {
             // only need to update minIvl views here because views for cards in "learn" state
