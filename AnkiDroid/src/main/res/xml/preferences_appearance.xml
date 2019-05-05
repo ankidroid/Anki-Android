@@ -66,4 +66,11 @@
                 app:interval="10"
                 app:min="10" />
         </PreferenceCategory>
+    <PreferenceCategory android:title="Decks">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_show_min_interval"
+            android:summary="@string/show_min_ivl_summary"
+            android:title="@string/show_min_ivl_title" />
+    </PreferenceCategory>
 </PreferenceScreen>

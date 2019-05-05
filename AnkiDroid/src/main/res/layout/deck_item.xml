@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/deckpicker_indent"
-        android:layout_toLeftOf="@+id/counts_layout"
+        android:layout_toLeftOf="@+id/min_ivl_layout"
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageButton
@@ -59,6 +59,29 @@
             android:textSize="20sp"
             android:textStyle="bold"
             tools:text="Deck name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/min_ivl_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_toLeftOf="@+id/counts_layout"
+        android:layout_toStartOf="@+id/counts_layout"
+        android:layout_centerVertical="true"
+        android:showDividers="end"
+        >
+
+      <TextView
+          android:id="@+id/deckpicker_min_ivl"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:paddingRight="5dp"
+          android:paddingEnd="5dp"
+          tools:text="9d"
+          />
+
     </LinearLayout>
 
     <LinearLayout

@@ -38,17 +38,7 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 import timber.log.Timber;
 
@@ -389,7 +379,7 @@ public class Sched {
 
 
     /**
-     * Returns [deckname, did, rev, lrn, new]
+     * Returns [deckname, did, rev, lrn, new, minIvl]
      */
     public List<DeckDueTreeNode> deckDueList() {
         _checkDay();
@@ -433,8 +423,9 @@ public class Sched {
                     rlim = Math.min(rlim, lims.get(p)[1]);
                 }
                 int rev = _revForDeck(deck.getLong("id"), rlim);
+                int minIvl = _minIvlForDeck(deck.getLong("id"), rev);
                 // save to list
-                data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+                data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new, minIvl));
                 // add deck as a parent
                 lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
             }
@@ -507,11 +498,13 @@ public class Sched {
                 }
             }
             children = _groupChildrenMain(children);
+            int childrenMinIvl = Integer.MAX_VALUE; // smallest interval seen in children
             // tally up children counts
             for (DeckDueTreeNode ch : children) {
                 rev +=  ch.revCount;
                 lrn +=  ch.lrnCount;
                 _new += ch.newCount;
+                childrenMinIvl = Math.min(childrenMinIvl, ch.minIvl);
             }
             // limit the counts to the deck's limits
             JSONObject conf = mCol.getDecks().confForDid(did);
@@ -524,7 +517,15 @@ public class Sched {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
+            int mainDeckMinIvl = _minIvlForDeck(did, rev);
+            int minIvl = childrenMinIvl;
+            if (rev > 0 && mainDeckMinIvl > 0) {
+              // you have reviews and some of them are in main deck (thus, mainDeckMinIvl > 0)
+              // so we need to consider smallest interval of cards directly in main deck
+              // against those of children decks
+              minIvl = Math.min(childrenMinIvl, mainDeckMinIvl);
+            }
+            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, minIvl, children));
         }
         return tree;
     }
@@ -1234,6 +1235,15 @@ public class Sched {
     	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
     }
 
+    public int _minIvlForDeck(long did, int revDue) {
+        if (revDue == 0) {
+            return Integer.MAX_VALUE; // if no reviews are due, return an invalid value
+        } else {
+            return mCol.getDb().queryScalar(
+                "SELECT MIN(ivl) FROM cards WHERE did = " + did + " AND queue = 2 AND due <= " +
+                    mToday);
+        }
+    }
 
     private void _resetRevCount() {
         try {
@@ -2527,23 +2537,25 @@ public class Sched {
         public int revCount;
         public int lrnCount;
         public int newCount;
+        public int minIvl;
         public List<DeckDueTreeNode> children = new ArrayList<>();
 
-        public DeckDueTreeNode(String[] names, long did, int revCount, int lrnCount, int newCount) {
+        public DeckDueTreeNode(String[] names, long did, int revCount, int lrnCount, int newCount, int minIvl) {
             this.names = names;
             this.did = did;
             this.revCount = revCount;
             this.lrnCount = lrnCount;
             this.newCount = newCount;
+            this.minIvl = minIvl;
         }
 
-        public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount) {
-            this(new String[]{name}, did, revCount, lrnCount, newCount);
+        public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount, int minIvl) {
+            this(new String[]{name}, did, revCount, lrnCount, newCount, minIvl);
         }
 
-        public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount,
+        public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount, int minIvl,
                                List<DeckDueTreeNode> children) {
-            this(new String[]{name}, did, revCount, lrnCount, newCount);
+            this(new String[]{name}, did, revCount, lrnCount, newCount, minIvl);
             this.children = children;
         }
 

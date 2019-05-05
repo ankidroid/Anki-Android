@@ -61,6 +61,9 @@
     <string name="button_size">Answer button size</string>
     <string name="card_browser_font_size">Card browser font scaling</string>
     <string name="col_path">AnkiDroid directory</string>
+    <string name="pref_show_min_interval" translatable="false">showMinInterval</string>
+    <string name="show_min_ivl_title" translatable="false">Show minimum interval</string>
+    <string name="show_min_ivl_summary" translatable="false">Shows/hides smallest interval for cards in deck</string>
     <string name="fullscreen_review">Fullscreen mode</string>
     <string name="full_screen_off">Off</string>
     <string name="full_screen_system">Hide the system bars</string>
@@ -253,4 +256,4 @@
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-"</resources>
+    "</resources>

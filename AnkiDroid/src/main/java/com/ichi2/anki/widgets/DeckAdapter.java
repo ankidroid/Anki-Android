@@ -21,8 +21,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,15 +29,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
@@ -76,21 +80,25 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         public RelativeLayout deckLayout;
         public LinearLayout countsLayout;
+        public LinearLayout minIvlLayout;
         public ImageButton deckExpander;
         public ImageButton indentView;
         public TextView deckName;
         public TextView deckNew, deckLearn, deckRev;
+        public TextView minIvl;
 
         public ViewHolder(View v) {
             super(v);
             deckLayout = (RelativeLayout) v.findViewById(R.id.DeckPickerHoriz);
             countsLayout = (LinearLayout) v.findViewById(R.id.counts_layout);
+            minIvlLayout = (LinearLayout)v.findViewById(R.id.min_ivl_layout);
             deckExpander = (ImageButton) v.findViewById(R.id.deckpicker_expander);
             indentView = (ImageButton) v.findViewById(R.id.deckpicker_indent);
             deckName = (TextView) v.findViewById(R.id.deckpicker_name);
             deckNew = (TextView) v.findViewById(R.id.deckpicker_new);
             deckLearn = (TextView) v.findViewById(R.id.deckpicker_lrn);
             deckRev = (TextView) v.findViewById(R.id.deckpicker_rev);
+            minIvl = (TextView) v.findViewById(R.id.deckpicker_min_ivl);
         }
     }
 
@@ -198,13 +206,68 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             holder.deckName.setTextColor(mDeckNameDefaultColor);
         }
 
+        // Init vars to determine what metadata to show about decks
+        boolean showRemainingCards;
+        boolean showMinimumInterval;
+        try {
+            showRemainingCards = mCol.getConf().getBoolean("dueCounts");
+            // why isn't what follows another call to mCol.getConf()...?
+            // didn't want to modify anki collection prefs json object at this point
+            // so it must go through Android's preference system, which requires a Context object
+            Context context = holder.itemView.getContext();
+            showMinimumInterval = AnkiDroidApp.getSharedPrefs(context).getBoolean(context.getString(R.string.pref_show_min_interval), false);
+        } catch (JSONException e) {
+            throw new IllegalStateException("Failed to find 'dueCounts' field in collection prefs");
+        }
+
         // Set the card counts and their colors
-        holder.deckNew.setText(String.valueOf(node.newCount));
-        holder.deckNew.setTextColor((node.newCount == 0) ? mZeroCountColor : mNewCountColor);
-        holder.deckLearn.setText(String.valueOf(node.lrnCount));
-        holder.deckLearn.setTextColor((node.lrnCount == 0) ? mZeroCountColor : mLearnCountColor);
-        holder.deckRev.setText(String.valueOf(node.revCount));
-        holder.deckRev.setTextColor((node.revCount == 0) ? mZeroCountColor : mReviewCountColor);
+        if (showRemainingCards) {
+            holder.countsLayout.setVisibility(View.VISIBLE);
+            holder.deckNew.setVisibility(View.VISIBLE);
+            holder.deckLearn.setVisibility(View.VISIBLE);
+            holder.deckRev.setVisibility(View.VISIBLE);
+            holder.deckNew.setText(String.valueOf(node.newCount));
+            holder.deckNew.setTextColor((node.newCount == 0) ? mZeroCountColor : mNewCountColor);
+            holder.deckLearn.setText(String.valueOf(node.lrnCount));
+            holder.deckLearn
+                .setTextColor((node.lrnCount == 0) ? mZeroCountColor : mLearnCountColor);
+            holder.deckRev.setText(String.valueOf(node.revCount));
+            holder.deckRev.setTextColor((node.revCount == 0) ? mZeroCountColor : mReviewCountColor);
+        } else {
+            // ViewHolder objects are (potentially) reused, so it's important to
+            // always be explicit about the state that you want. It's not enough to just have
+            // the above "if" put the views in the proper state, we need this
+            // else as well
+            holder.countsLayout.setVisibility(View.INVISIBLE);
+            holder.deckNew.setVisibility(View.INVISIBLE);
+            holder.deckLearn.setVisibility(View.INVISIBLE);
+            holder.deckRev.setVisibility(View.INVISIBLE);
+        }
+
+        // Show/hide the minimum interval information
+        if (showMinimumInterval) {
+            holder.minIvlLayout.setVisibility(View.VISIBLE);
+            holder.minIvl.setVisibility(View.VISIBLE);
+            int doneReviewingIvl = 21; // if minIvl is 21 days, all your cards are mature and you
+            if (node.minIvl > doneReviewingIvl) {
+                holder.minIvl.setText(HtmlCompat.fromHtml("\uD83D\uDC4D", HtmlCompat.FROM_HTML_MODE_LEGACY)); // thumbs up
+            } else {
+                holder.minIvl.setText(String.format("%dd", node.minIvl));
+            }
+            // also show any cards in learning stage
+            if (node.lrnCount > 0) {
+                holder.countsLayout.setVisibility(View.VISIBLE);
+                holder.deckLearn.setVisibility(View.VISIBLE);
+                holder.deckLearn.setText(String.format("(%d)", node.lrnCount));
+                holder.deckLearn
+                    .setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black));
+            }
+        } else {
+            // only need to update minIvl views here because views for cards in "learn" state
+            // will be properly configured in previous conditionals
+            holder.minIvlLayout.setVisibility(View.INVISIBLE);
+            holder.minIvl.setVisibility(View.INVISIBLE);
+        }
 
         // Store deck ID in layout's tag for easy retrieval in our click listeners
         holder.deckLayout.setTag(node.did);
