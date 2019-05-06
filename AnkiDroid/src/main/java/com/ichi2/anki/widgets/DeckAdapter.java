@@ -91,14 +91,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             super(v);
             deckLayout = (RelativeLayout) v.findViewById(R.id.DeckPickerHoriz);
             countsLayout = (LinearLayout) v.findViewById(R.id.counts_layout);
-            youngRevLayout = (LinearLayout) v.findViewById(R.id.min_ivl_layout);
+            youngRevLayout = (LinearLayout) v.findViewById(R.id.young_rev_layout);
             deckExpander = (ImageButton) v.findViewById(R.id.deckpicker_expander);
             indentView = (ImageButton) v.findViewById(R.id.deckpicker_indent);
             deckName = (TextView) v.findViewById(R.id.deckpicker_name);
             deckNew = (TextView) v.findViewById(R.id.deckpicker_new);
             deckLearn = (TextView) v.findViewById(R.id.deckpicker_lrn);
             deckRev = (TextView) v.findViewById(R.id.deckpicker_rev);
-            youngRevCount = (TextView) v.findViewById(R.id.deckpicker_min_ivl);
+            youngRevCount = (TextView) v.findViewById(R.id.deckpicker_young_rev);
         }
     }
 
