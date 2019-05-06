@@ -1114,7 +1114,7 @@ public class SchedV2 extends Sched {
     private int _startingLeft(Card card) {
         try {
             JSONObject conf;
-        	if (card.getType() == 2) {
+        	if (card.getType() == 3) {
         		conf = _lapseConf(card);
         	} else {
         		conf = _lrnConf(card);
