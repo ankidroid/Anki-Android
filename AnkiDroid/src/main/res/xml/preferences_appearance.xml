@@ -69,8 +69,8 @@
     <PreferenceCategory android:title="Decks">
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="@string/pref_show_min_interval"
-            android:summary="@string/show_min_ivl_summary"
-            android:title="@string/show_min_ivl_title" />
+            android:key="@string/pref_young_cards_due"
+            android:summary="@string/show_young_cards_due_summary"
+            android:title="@string/show_young_cards_due_title" />
     </PreferenceCategory>
 </PreferenceScreen>

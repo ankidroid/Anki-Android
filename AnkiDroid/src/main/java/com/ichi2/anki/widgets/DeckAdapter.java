@@ -80,25 +80,25 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         public RelativeLayout deckLayout;
         public LinearLayout countsLayout;
-        public LinearLayout minIvlLayout;
+        public LinearLayout youngRevLayout;
         public ImageButton deckExpander;
         public ImageButton indentView;
         public TextView deckName;
         public TextView deckNew, deckLearn, deckRev;
-        public TextView minIvl;
+        public TextView youngRevCount;
 
         public ViewHolder(View v) {
             super(v);
             deckLayout = (RelativeLayout) v.findViewById(R.id.DeckPickerHoriz);
             countsLayout = (LinearLayout) v.findViewById(R.id.counts_layout);
-            minIvlLayout = (LinearLayout)v.findViewById(R.id.min_ivl_layout);
+            youngRevLayout = (LinearLayout) v.findViewById(R.id.min_ivl_layout);
             deckExpander = (ImageButton) v.findViewById(R.id.deckpicker_expander);
             indentView = (ImageButton) v.findViewById(R.id.deckpicker_indent);
             deckName = (TextView) v.findViewById(R.id.deckpicker_name);
             deckNew = (TextView) v.findViewById(R.id.deckpicker_new);
             deckLearn = (TextView) v.findViewById(R.id.deckpicker_lrn);
             deckRev = (TextView) v.findViewById(R.id.deckpicker_rev);
-            minIvl = (TextView) v.findViewById(R.id.deckpicker_min_ivl);
+            youngRevCount = (TextView) v.findViewById(R.id.deckpicker_min_ivl);
         }
     }
 
@@ -208,14 +208,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
         // Init vars to determine what metadata to show about decks
         boolean showRemainingCards;
-        boolean showMinimumInterval;
+        boolean showYoungReviewCount;
         try {
             showRemainingCards = mCol.getConf().getBoolean("dueCounts");
             // why isn't what follows another call to mCol.getConf()...?
             // didn't want to modify anki collection prefs json object at this point
             // so it must go through Android's preference system, which requires a Context object
             Context context = holder.itemView.getContext();
-            showMinimumInterval = AnkiDroidApp.getSharedPrefs(context).getBoolean(context.getString(R.string.pref_show_min_interval), false);
+            showYoungReviewCount = AnkiDroidApp.getSharedPrefs(context).getBoolean(context.getString(R.string.pref_young_cards_due), false);
         } catch (JSONException e) {
             throw new IllegalStateException("Failed to find 'dueCounts' field in collection prefs");
         }
@@ -245,14 +245,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
 
         // Show/hide the minimum interval information
-        if (showMinimumInterval) {
-            holder.minIvlLayout.setVisibility(View.VISIBLE);
-            holder.minIvl.setVisibility(View.VISIBLE);
-            int doneReviewingIvl = 21; // if minIvl is 21 days, all your cards are mature and you
-            if (node.minIvl > doneReviewingIvl) {
-                holder.minIvl.setText(HtmlCompat.fromHtml("\uD83D\uDC4D", HtmlCompat.FROM_HTML_MODE_LEGACY)); // thumbs up
+        if (showYoungReviewCount) {
+            holder.youngRevLayout.setVisibility(View.VISIBLE);
+            holder.youngRevCount.setVisibility(View.VISIBLE);
+            int doneReviewingYoungCount = 10; // if the amount of young reviews due is less than (or equal to) 10, we're g2g
+            if (node.youngRevCount <= doneReviewingYoungCount) {
+                holder.youngRevCount.setText(HtmlCompat.fromHtml("\uD83D\uDC4D", HtmlCompat.FROM_HTML_MODE_LEGACY)); // thumbs up
             } else {
-                holder.minIvl.setText(String.format("%dd", node.minIvl));
+                holder.youngRevCount.setText(String.format("%d", node.youngRevCount));
             }
             // also show any cards in learning stage
             if (node.lrnCount > 0) {
@@ -263,10 +263,10 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                     .setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black));
             }
         } else {
-            // only need to update minIvl views here because views for cards in "learn" state
+            // only need to update youngRevCount views here because views for cards in "learn" state
             // will be properly configured in previous conditionals
-            holder.minIvlLayout.setVisibility(View.INVISIBLE);
-            holder.minIvl.setVisibility(View.INVISIBLE);
+            holder.youngRevLayout.setVisibility(View.INVISIBLE);
+            holder.youngRevCount.setVisibility(View.INVISIBLE);
         }
 
         // Store deck ID in layout's tag for easy retrieval in our click listeners
