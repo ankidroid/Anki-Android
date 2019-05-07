@@ -98,8 +98,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -1791,12 +1793,27 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         if (actionBar != null) {
-            try {
-                String[] title = getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
-                actionBar.setTitle(title[title.length - 1]);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+            long currentDeckId = getCol().getDecks().current().optLong("id");
+            List<Long> deckIds = new ArrayList<>(getCol().getDecks().children(currentDeckId).values());
+            deckIds.add(currentDeckId);
+
+            int youngRevCount = 0;
+            int learnRevCount = 0;
+            int newRevCount = 0;
+            Sched sched = getCol().getSched();
+            for (Long did : deckIds) {
+                youngRevCount += sched._youngRevCountForDeck(did);
+                learnRevCount += sched._lrnForDeck(did);
+                newRevCount += sched._newForDeck(did, sched._deckNewLimit(did));
             }
+            int cardsLeft = youngRevCount + learnRevCount + newRevCount;
+            String title = "";
+            if (cardsLeft > 10) {
+                title = String.format("%s non-mature cards left", cardsLeft);
+            } else {
+                title = "\uD83D\uDC4D";
+            }
+            actionBar.setTitle(title);
             if (mPrefShowETA) {
                 int eta = mSched.eta(counts, false);
                 actionBar.setSubtitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
