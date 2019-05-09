@@ -697,7 +697,7 @@ public class Sched {
     }
 
 
-    private int _deckNewLimit(long did) {
+    public int _deckNewLimit(long did) {
         return _deckNewLimit(did, null);
     }
 
@@ -1181,7 +1181,7 @@ public class Sched {
     }
 
 
-    private int _lrnForDeck(long did) {
+    public int _lrnForDeck(long did) {
         try {
             int cnt = mCol.getDb().queryScalar(
                     "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = " + did
