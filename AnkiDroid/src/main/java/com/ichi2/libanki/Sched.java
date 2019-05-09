@@ -102,7 +102,7 @@ public class Sched {
 
     public Sched(Collection col) {
         mCol = col;
-        mQueueLimit = 150;
+        mQueueLimit = 50;
         mReportLimit = 1000;
         mReps = 0;
         mHaveQueues = false;
@@ -1260,6 +1260,25 @@ public class Sched {
     }
 
 
+    private List<Long> getCardIdsWithQuery(String query) {
+        List<Long> toReturn = new LinkedList<>();
+        Cursor cur = null;
+        try {
+            cur = mCol
+                    .getDb()
+                    .getDatabase()
+                    .query(query, null);
+            while (cur.moveToNext()) {
+                toReturn.add(cur.getLong(0));
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        return toReturn;
+    }
+
     private boolean _fillRev() {
         if (!mRevQueue.isEmpty()) {
             return true;
@@ -1270,28 +1289,27 @@ public class Sched {
         while (mRevDids.size() > 0) {
             long did = mRevDids.getFirst();
             int lim = Math.min(mQueueLimit, _deckRevLimit(did));
-            Cursor cur = null;
             if (lim != 0) {
                 mRevQueue.clear();
-                // fill the queue with the current did
-                try {
-                    cur = mCol
-                            .getDb()
-                            .getDatabase()
-                            .query(String.format("SELECT id " +
-                                    "FROM cards " +
-                                    "WHERE did = %s " +
-                                    "AND queue = 2 " +
-                                    "AND due <= %s " +
-                                    "ORDER BY ivl ASC " +
-                                    "LIMIT %s", did, mToday, lim), null);
-                    while (cur.moveToNext()) {
-                        mRevQueue.add(cur.getLong(0));
-                    }
-                } finally {
-                    if (cur != null && !cur.isClosed()) {
-                        cur.close();
-                    }
+                //don't care about any limit with young cards; just want them all mixed
+                List<Long> maybeYoungCards = getCardIdsWithQuery(String.format("SELECT id " +
+                        "FROM cards " +
+                        "WHERE did = %s " +
+                        "AND queue = 2 " +
+                        "AND due <= %s " +
+                        "AND ivl < 21", did, mToday));
+                if (maybeYoungCards.size() > 0) {
+                    mRevQueue.addAll(maybeYoungCards);
+                } else {
+                    //order normal cards by relative overdue-ness
+                    List<Long> normalCards = getCardIdsWithQuery(String.format("SELECT id " +
+                            "FROM cards " +
+                            "WHERE did = %s " +
+                            "AND queue = 2 " +
+                            "AND due <= %s " +
+                            "ORDER BY (%s - due) / ivl desc " +
+                            "LIMIT %s", did, mToday, mToday, lim));
+                    mRevQueue.addAll(normalCards);
                 }
                 if (!mRevQueue.isEmpty()) {
                     // ordering
