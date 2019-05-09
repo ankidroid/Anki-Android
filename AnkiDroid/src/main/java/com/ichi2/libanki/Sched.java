@@ -1264,10 +1264,7 @@ public class Sched {
         List<Long> toReturn = new LinkedList<>();
         Cursor cur = null;
         try {
-            cur = mCol
-                    .getDb()
-                    .getDatabase()
-                    .query(query, null);
+            cur = mCol.getDb().getDatabase().query(query, null);
             while (cur.moveToNext()) {
                 toReturn.add(cur.getLong(0));
             }
