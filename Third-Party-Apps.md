@@ -1,3 +1,5 @@
+### [AnkiDoodle](https://play.google.com/store/apps/details?id=com.mmjang.ankillusion)
+Anki Doodle is an Android app to create Image Occlusion Cards on your smartphone. It allows to take an image or make cards from existing images quickly. 
 ### [Aedict3 Japanese Dictionary](https://play.google.com/store/apps/details?id=sk.baka.aedict3)
 Japanese dictionary with AnkiDroid export feature.
 ### [Akebi Japanese Dictionary](https://play.google.com/store/apps/details?id=com.craxic.akebifree)
