@@ -1,6 +1,6 @@
 plugins {
  // Gradle plugin portal 
- id 'com.github.triplet.play' version '2.1.0'
+ id 'com.github.triplet.play' version '2.2.1'
 }
 
 apply plugin: 'com.android.application'
