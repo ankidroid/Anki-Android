@@ -191,7 +191,7 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'org.jsoup:jsoup:1.11.3'
+    implementation 'org.jsoup:jsoup:1.12.1'
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.4.2'
