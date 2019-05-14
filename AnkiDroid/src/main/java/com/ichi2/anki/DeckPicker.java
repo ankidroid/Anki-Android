@@ -1975,7 +1975,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             time = res.getString(R.string.time_quantity_minutes, eta);
                         }
                         if (getSupportActionBar() != null) {
-                            getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+                            //Don't show cards due
+                            //getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
                         }
                     }
                 } catch (RuntimeException e) {

@@ -403,9 +403,9 @@ public class SchedV2 extends Sched {
                 }
                 int rlim = _deckRevLimitSingle(deck, plim);
                 int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
-                int minIvl = _minIvlForDeck(deck.getLong("id"), rev);
+                int youngRevCountForDeck = _youngRevCountForDeck(deck.getLong("id"));
                 // save to list
-                data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new, minIvl));
+                data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new, youngRevCountForDeck));
                 // add deck as a parent
                 lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
             }
@@ -493,8 +493,8 @@ public class SchedV2 extends Sched {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            int minIvl = _minIvlForDeck(did, rev);
-            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, minIvl, children));
+            int youngRevCountForDeck = _youngRevCountForDeck(did);
+            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, youngRevCountForDeck, children));
         }
         return tree;
     }
@@ -683,7 +683,7 @@ public class SchedV2 extends Sched {
     }
 
 
-    private int _deckNewLimit(long did) {
+    public int _deckNewLimit(long did) {
         return _deckNewLimit(did, null);
     }
 
@@ -1211,7 +1211,7 @@ public class SchedV2 extends Sched {
     }
 
 
-    private int _lrnForDeck(long did) {
+    public int _lrnForDeck(long did) {
         try {
             int cnt = mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = " + did
