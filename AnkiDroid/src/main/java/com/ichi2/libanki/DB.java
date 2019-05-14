@@ -194,6 +194,23 @@ public class DB {
         return scalar;
     }
 
+    public double queryDouble(String query) {
+        Cursor cursor = null;
+        double scalar;
+        try {
+            cursor = mDatabase.query(query);
+            if (!cursor.moveToNext()) {
+                return 0;
+            }
+            scalar = cursor.getDouble(0);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return scalar;
+    }
+
 
     public String queryString(String query) throws SQLException {
         Cursor cursor = null;
