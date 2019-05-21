@@ -78,7 +78,7 @@ CREATE TABLE cards (
     odid            integer not null,
       -- original did: only used when the card is currently in filtered deck
     flags           integer not null,
-      -- currently unused
+      -- a number, representing a "flag", which can be see in browser and while reviewing a note. Red 1, Orange 2, Green 3, Blue 4, no flag: 0
     data            text not null
       -- currently unused
 );
