@@ -83,6 +83,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -167,7 +168,7 @@ public class NoteEditor extends AnkiActivity {
     private ArrayList<Long> mAllModelIds;
     private Map<Integer, Integer> mModelChangeFieldMap;
     private Map<Integer, Integer> mModelChangeCardMap;
-
+    private List<String> mPath;
     /* indicates if a new fact is added or a card is edited */
     private boolean mAddNote;
 
@@ -425,6 +426,7 @@ public class NoteEditor extends AnkiActivity {
         // Note type Selector
         mNoteTypeSpinner = (Spinner) findViewById(R.id.note_type_spinner);
         mAllModelIds = new ArrayList<>();
+        mPath = new ArrayList<>();
         final ArrayList<String> modelNames = new ArrayList<>();
         ArrayList<JSONObject> models = getCol().getModels().all();
         Collections.sort(models, new JSONNameComparator());
@@ -943,6 +945,7 @@ public class NoteEditor extends AnkiActivity {
                 .onPositive((dialog, which) -> {
                     Timber.i("NoteEditor:: OK button pressed to confirm discard changes");
                     closeNoteEditor();
+                    deleteFile();
                 })
                 .build().show();
     }
@@ -1071,6 +1074,7 @@ public class NoteEditor extends AnkiActivity {
                         fieldEditText.getText().append(field.getFormattedValue());
                     }
                     NoteService.saveMedia(col, (MultimediaEditableNote) mNote);
+                    addPath(field);
                     mChanged = true;
                 }
                 break;
@@ -1770,6 +1774,22 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             // Left empty on purpose
+        }
+    }
+
+//Add every resource path into list for deleting with saving
+    private void addPath(IField field) {
+        if (field.getType() == EFieldType.IMAGE) {
+            mPath.add(field.getImagePath());
+        } else if(field.getType() == EFieldType.AUDIO) {
+            mPath.add(field.getAudioPath());
+        }
+    }
+
+    private void deleteFile() {
+        for (String s : mPath) {
+            File file = new File(s);
+            file.delete();
         }
     }
 }

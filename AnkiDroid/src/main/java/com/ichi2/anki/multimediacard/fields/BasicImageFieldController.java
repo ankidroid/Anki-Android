@@ -21,16 +21,18 @@ package com.ichi2.anki.multimediacard.fields;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.provider.MediaStore.MediaColumns;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +41,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.BitmapUtil;
@@ -52,19 +55,29 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import timber.log.Timber;
 
 public class BasicImageFieldController extends FieldControllerBase implements IFieldController {
 
     private static final int ACTIVITY_SELECT_IMAGE = 1;
     private static final int ACTIVITY_TAKE_PICTURE = 2;
+    private static final int ACTIVITY_CROP_PICTURE = 3;
     private static final int IMAGE_SAVE_MAX_WIDTH = 1920;
 
     private ImageView mImagePreview;
+    private LinearLayout mLinearLayout;
 
-    private String mTempCameraImagePath;
+    private String mTempImagePath;
+    private String mTempImagePrePath;//save the last path to prevent crop or take photo action canceled
     private DisplayMetrics mMetrics = null;
 
+    private int showCropButton = 0;
+
+    private static final String sAnkiCacheDirectory = Environment.getExternalStorageDirectory() + "/AnkiDroid/cache";
+
+    private long mTimeStamp;
 
     private int getMaxImageSize() {
         DisplayMetrics metrics = getDisplayMetrics();
@@ -79,7 +92,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     @Override
     public void createUI(Context context, LinearLayout layout) {
         mImagePreview = new ImageView(mActivity);
-
+        mLinearLayout = layout;
         DisplayMetrics metrics = getDisplayMetrics();
 
         int height = metrics.heightPixels;
@@ -97,7 +110,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         Button mBtnGallery = new Button(mActivity);
         mBtnGallery.setText(gtxt(R.string.multimedia_editor_image_field_editing_galery));
         mBtnGallery.setOnClickListener(v -> {
-            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent i = new Intent(Intent.ACTION_PICK);
+            i.setType("image/*");
             mActivity.startActivityForResultWithoutAnimation(i, ACTIVITY_SELECT_IMAGE);
         });
 
@@ -109,18 +123,22 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             File storageDir;
             String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
             try {
-                storageDir = mActivity.getCacheDir();
-                image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
-                mTempCameraImagePath = image.getPath();
-                Uri uriSavedImage = FileProvider.getUriForFile(mActivity,
-                        mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider",
-                        image);
-
+                storageDir = new File(sAnkiCacheDirectory);
+                image = File.createTempFile("img_" + timeStamp, ".png", storageDir);
+                mTempImagePrePath = mTempImagePath;
+                mTempImagePath = image.getPath();
+                Uri uriSavedImage;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    uriSavedImage = FileProvider.getUriForFile(mActivity,
+                            mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider",
+                            image);
+                } else {
+                    uriSavedImage = Uri.fromFile(image);
+                }
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
                 if (cameraIntent.resolveActivity(context.getPackageManager()) != null) {
                     mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
-                }
-                else {
+                } else {
                     Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent");
                 }
             } catch (IOException e) {
@@ -142,6 +160,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mImagePreview, ViewGroup.LayoutParams.MATCH_PARENT, p);
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        mkdirAnkiCacheDir();
+        mTimeStamp = System.currentTimeMillis();
     }
 
 
@@ -163,47 +184,45 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // ignore RESULT_CANCELED but handle image select and take
         if (resultCode == Activity.RESULT_CANCELED) {
+            switch (requestCode) {
+                case ACTIVITY_TAKE_PICTURE:
+                case ACTIVITY_CROP_PICTURE:
+                    if (!TextUtils.isEmpty(mTempImagePrePath)) {
+                        mTempImagePath = mTempImagePrePath;
+                    }
+                    break;
+                default:
+                    break;
+            }
             return;
         }
         if (requestCode == ACTIVITY_SELECT_IMAGE) {
-            Uri selectedImage = data.getData();
-            // Timber.d(selectedImage.toString());
-            String[] filePathColumn = { MediaColumns.DATA };
-
-            Cursor cursor = mActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String filePath = cursor.getString(columnIndex);
-            cursor.close();
-
-            mField.setImagePath(filePath);
+            handleSelectImageResult(data);
         } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
-            String imagePath = rotateAndCompress(mTempCameraImagePath);
-            mField.setImagePath(imagePath);
-            mField.setHasTemporaryMedia(true);
+            handleTakePictureResult();
+        } else if (requestCode == ACTIVITY_CROP_PICTURE) {
+            handleCropResult();
         }
-        setPreviewImage(mField.getImagePath(), getMaxImageSize());
+
+        showCropButton++;
+
+        if (showCropButton == 1) {
+            Button cropBtn = new Button(mActivity);
+            cropBtn.setText(gtxt(R.string.crop_button));
+            cropBtn.setOnClickListener(v -> {
+                Uri uri = getCropUri();
+                photoCrop(uri);
+            });
+            mLinearLayout.addView(cropBtn);
+        }
     }
 
-    @Override
-    public void onFocusLost() {
-        // do nothing
 
-    }
-
-
-    @Override
-    public void onDone() {
-        // do nothing
-    }
-
-
-    private String rotateAndCompress(String inPath) {
+    private void rotateAndCompress() {
         // Set the rotation of the camera image and save as png
-        File f = new File(inPath);
+        File f = new File(mTempImagePath);
         // use same filename but with png extension for output file
-        String outPath = inPath.substring(0, inPath.lastIndexOf(".")) + ".png";
+        String outPath = mTempImagePath;
         // Load into a bitmap with max size of 1920 pixels and rotate if necessary
         Bitmap b = BitmapUtil.decodeFile(f, IMAGE_SAVE_MAX_WIDTH);
         FileOutputStream out = null;
@@ -211,11 +230,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             out = new FileOutputStream(outPath);
             b = ExifUtil.rotateFromCamera(f, b);
             b.compress(Bitmap.CompressFormat.PNG, 90, out);
-            f.delete();
-            return outPath;
         } catch (FileNotFoundException e) {
             Timber.e(e, "Error in BasicImageFieldController.rotateAndCompress()");
-            return inPath;
         } finally {
             try {
                 if (out != null) {
@@ -242,5 +258,167 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     public void onDestroy() {
         ImageView imageView = mImagePreview;
         BitmapUtil.freeImageView(imageView);
+        showCropButton = 0;
+    }
+
+
+    public void photoCrop(Uri uri) {
+        String fileName = mTempImagePath.substring(mTempImagePath.lastIndexOf("/") + 1, mTempImagePath.lastIndexOf(".")) + (mTimeStamp % 1000000);
+        File image = new File(sAnkiCacheDirectory + "/" + fileName + ".png");
+        if (!image.exists()) {
+            try {
+                image.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        mTempImagePrePath = mTempImagePath;
+        mTempImagePath = image.getPath();
+        Uri cropUri = Uri.fromFile(image);
+        mField.setImagePath(mTempImagePath);
+        mField.setHasTemporaryMedia(true);
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, cropUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
+        intent.putExtra("noFaceDetection", true); // no face detection
+        mActivity.startActivityForResultWithoutAnimation(intent, ACTIVITY_CROP_PICTURE);
+    }
+
+
+    private void showCropDialog(Uri uri) {
+        new MaterialDialog.Builder(mActivity)
+                .content(R.string.crop_image)
+                .positiveText(R.string.dialog_ok)
+                .negativeText(R.string.dialog_cancel)
+                .onPositive((dialog, which) -> {
+                    photoCrop(uri);
+                })
+                .build().show();
+    }
+
+
+    private void handleSelectImageResult(Intent data) {
+        Uri selectedImage = getImageUri(mActivity, data);
+        setPreviewImage(mTempImagePath, getMaxImageSize());
+        showCropDialog(selectedImage);
+    }
+
+
+    private void handleTakePictureResult() {
+        rotateAndCompress();
+        mField.setImagePath(mTempImagePath);
+        mField.setHasTemporaryMedia(true);
+        setPreviewImage(mTempImagePath, getMaxImageSize());
+        Uri uri = getCropUri();
+        showCropDialog(uri);
+    }
+
+
+
+
+    private void handleCropResult() {
+        setPreviewImage(mTempImagePath, getMaxImageSize());
+        mField.setImagePath(mTempImagePath);
+        mField.setHasTemporaryMedia(true);
+        rotateAndCompress();//this is a long-running operation.
+    }
+
+    /**
+     * Get Uri based on current image path
+     * @return current image path's uri
+     */
+    private Uri getCropUri() {
+        File file = new File(mTempImagePath);
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(mActivity, mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider", file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        return uri;
+    }
+
+
+    /**
+     * Get image uri that adapts various model
+     * @return image uri
+     */
+    private Uri getImageUri(Context context, Intent data) {
+        String imagePath = null;
+        Uri uri = data.getData();
+        if (Build.VERSION.SDK_INT >= 19) {
+            if (DocumentsContract.isDocumentUri(context, uri)) {
+                String docId = DocumentsContract.getDocumentId(uri);
+                if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+                    String id = docId.split(":")[1];
+                    String selection = MediaStore.Images.Media._ID + "=" + id;
+                    imagePath = getImagePath(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+                } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                    Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
+                    imagePath = getImagePath(context, contentUri, null);
+                }
+            } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+                imagePath = getImagePath(context, uri, null);
+            } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+                imagePath = uri.getPath();
+            }
+        } else {
+            uri = data.getData();
+            imagePath = getImagePath(context, uri, null);
+        }
+        File file = new File(imagePath);
+        mTempImagePath = imagePath;
+        mField.setImagePath(imagePath);
+        mField.setHasTemporaryMedia(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(context,
+                    mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider",
+                    file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+
+        return uri;
+    }
+
+
+    /**
+     * Get image path based on uri and selection args
+     * @return image uri
+     */
+    private String getImagePath(Context context, Uri uri, String selection) {
+        String path = null;
+        Cursor cursor = context.getContentResolver().query(uri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+        }
+        return path;
+    }
+
+
+    /**
+     * Create Cache Directory
+     */
+    public void mkdirAnkiCacheDir() {
+        boolean isSdCardExist = Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED);
+        if (isSdCardExist) {
+            File ankiCropCacheDir = new File(sAnkiCacheDirectory);
+            if (!ankiCropCacheDir.exists()) {
+                try {
+                    ankiCropCacheDir.mkdir();
+                } catch (Exception e) {
+                }
+            }
+        }
     }
 }

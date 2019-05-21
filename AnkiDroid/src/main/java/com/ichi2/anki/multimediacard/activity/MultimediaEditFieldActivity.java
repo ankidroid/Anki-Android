@@ -22,6 +22,7 @@ package com.ichi2.anki.multimediacard.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,12 +34,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.BasicControllerFactory;
+import com.ichi2.anki.multimediacard.fields.BasicImageFieldController;
 import com.ichi2.anki.multimediacard.fields.EFieldType;
 import com.ichi2.anki.multimediacard.fields.IControllerFactory;
 import com.ichi2.anki.multimediacard.fields.IField;
@@ -47,7 +50,12 @@ import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
 
 import java.io.File;
+import java.text.DecimalFormat;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import timber.log.Timber;
 
 public class MultimediaEditFieldActivity extends AnkiActivity
@@ -207,8 +215,6 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         mFieldController.onDone();
 
-        Intent resultData = new Intent();
-
         boolean bChangeToText = false;
 
         if (mField.getType() == EFieldType.IMAGE) {
@@ -220,6 +226,12 @@ public class MultimediaEditFieldActivity extends AnkiActivity
                 File f = new File(mField.getImagePath());
                 if (!f.exists()) {
                     bChangeToText = true;
+                }
+
+                long length = f.length();
+                if (length > 1024 * 1024) {
+                    showCropDialog((float) (1.0 * length / (1024 * 1024)));
+                    return;
                 }
             }
         } else if (mField.getType() == EFieldType.AUDIO_RECORDING) {
@@ -238,13 +250,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         if (bChangeToText) {
             mField = new TextField();
         }
-
-        resultData.putExtra(EXTRA_RESULT_FIELD, mField);
-        resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex);
-
-        setResult(RESULT_OK, resultData);
-
-        finishWithoutAnimation();
+        saveAndExit();
     }
 
 
@@ -325,5 +331,45 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         super.onSaveInstanceState(outState);
         outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);
     }
+
+
+    public void showCropDialog(float length) {
+
+        BasicImageFieldController imageFieldController = (BasicImageFieldController) mFieldController;
+
+        File file = new File(mField.getImagePath());
+        Uri uri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".apkgfileprovider", file);
+
+        DecimalFormat decimalFormat=new DecimalFormat(".00");
+        String size = decimalFormat.format(length);
+
+        String content = getString(R.string.save_dialog_content, size);
+
+        new MaterialDialog.Builder(this)
+                .content(content)
+                .positiveText(R.string.dialog_ok)
+                .negativeText(R.string.dialog_cancel)
+                .onPositive((dialog, which) -> {
+                    imageFieldController.photoCrop(uri);
+                })
+                .onNegative((dialog, which) -> {
+                    saveAndExit();
+                })
+                .build().show();
+    }
+
+
+    private void saveAndExit() {
+
+        Intent resultData = new Intent();
+
+        resultData.putExtra(EXTRA_RESULT_FIELD, mField);
+        resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex);
+
+        setResult(RESULT_OK, resultData);
+
+        finishWithoutAnimation();
+    }
+
 
 }
