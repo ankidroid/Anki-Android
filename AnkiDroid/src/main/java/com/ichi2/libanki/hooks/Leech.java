@@ -33,26 +33,7 @@ public class Leech {
     public class LeechHook extends Hook {
         @Override
         public void runHook(Object... args) {
-            Card card = (Card) args[0];
-            final Activity activity = (Activity) args[1];
-            if (activity != null) {
-                Resources res = activity.getResources();
-                final String leechMessage;
-                if (card.getQueue() < 0) {
-                    leechMessage = res.getString(R.string.leech_suspend_notification);
-                } else {
-                    leechMessage = res.getString(R.string.leech_notification);
-                }
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(activity, leechMessage, Toast.LENGTH_SHORT).show();
-                    }
-                });
 
-            } else {
-                Timber.e("LeechHook :: could not show leech toast as activity was null");
-            }
         }
     }
 
