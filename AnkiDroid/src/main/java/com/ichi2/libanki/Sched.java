@@ -662,6 +662,8 @@ public class Sched {
                     if (mRevCount != 0) {
                         mNewCardModulus = Math.max(2, mNewCardModulus);
                     }
+                    //manually set new cards to show at least every 3-5 reviews
+                    mNewCardModulus = Math.min(3 + new Random().nextInt(3), mNewCardModulus);
                     return;
                 }
             }
