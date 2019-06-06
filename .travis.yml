@@ -75,7 +75,7 @@ script:
   - ./gradlew jacocoTestReport # This produces an error while doing the API getprop on API 28...
 
 after_success:
-  - bash tools/upload-codacy-report.sh
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash tools/upload-codacy-report.sh; fi
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
