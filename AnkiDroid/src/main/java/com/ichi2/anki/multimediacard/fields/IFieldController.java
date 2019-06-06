@@ -63,12 +63,10 @@ public interface IFieldController {
     void onActivityResult(int requestCode, int resultCode, Intent data);
 
     // Called when the controller has stopped showing the field in favor of another one
-    default void onFocusLost(){
-    }
+    void onFocusLost();
 
     // Is called to apply in the field new data from UI.
-    default void onDone(){
-    }
+    void onDone();
 
 
     // Called to free memory

@@ -73,7 +73,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private String mTempImagePrePath;//save the last path to prevent crop or take photo action canceled
     private DisplayMetrics mMetrics = null;
 
-    private int showCropButton = 0;
+    private boolean showCropButton = false;
 
     private static final String sAnkiCacheDirectory = Environment.getExternalStorageDirectory() + "/AnkiDroid/cache";
 
@@ -204,9 +204,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             handleCropResult();
         }
 
-        showCropButton++;
 
-        if (showCropButton == 1) {
+        if (!showCropButton) {
             Button cropBtn = new Button(mActivity);
             cropBtn.setText(gtxt(R.string.crop_button));
             cropBtn.setOnClickListener(v -> {
@@ -214,7 +213,20 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 photoCrop(uri);
             });
             mLinearLayout.addView(cropBtn);
+            showCropButton = true;
         }
+    }
+
+
+    @Override
+    public void onFocusLost() {
+
+    }
+
+
+    @Override
+    public void onDone() {
+
     }
 
 
@@ -258,7 +270,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     public void onDestroy() {
         ImageView imageView = mImagePreview;
         BitmapUtil.freeImageView(imageView);
-        showCropButton = 0;
+        showCropButton = false;
     }
 
 
@@ -352,7 +364,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private Uri getImageUri(Context context, Intent data) {
         String imagePath = null;
         Uri uri = data.getData();
-        if (Build.VERSION.SDK_INT >= 19) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (DocumentsContract.isDocumentUri(context, uri)) {
                 String docId = DocumentsContract.getDocumentId(uri);
                 if ("com.android.providers.media.documents".equals(uri.getAuthority())) {

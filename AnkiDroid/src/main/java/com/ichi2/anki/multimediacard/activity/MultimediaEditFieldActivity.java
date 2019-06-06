@@ -78,6 +78,8 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     private IFieldController mFieldController;
 
+    public static final int sImageLimit = 1024 * 1024;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,8 +231,8 @@ public class MultimediaEditFieldActivity extends AnkiActivity
                 }
 
                 long length = f.length();
-                if (length > 1024 * 1024) {
-                    showCropDialog((float) (1.0 * length / (1024 * 1024)));
+                if (length > sImageLimit) {
+                    showCropDialog((float) (1.0 * length / sImageLimit));
                     return;
                 }
             }

@@ -115,6 +115,6 @@
     <!-- Crop function-->
     <string name="crop_image" translatable="false">Do you want to crop this image?</string>
     <string name="crop_button" translatable="false">Crop image</string>
-    <string name="save_dialog_content" translatable="false">Your current image size is %sMB that is more than default image limit 1MB. Do you want to crop this image?</string>
+    <string name="save_dialog_content" translatable="false">Current image is %sMB. Default image limit is 1MB. Do you want to crop it?</string>
 
 </resources>
