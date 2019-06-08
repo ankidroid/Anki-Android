@@ -197,6 +197,12 @@ public class SchedV2 extends Sched {
         } else {
             throw new RuntimeException("Invalid queue");
         }
+
+        // once a card has been answered once, the original due date
+        // no longer applies
+        if (card.getODue() > 0) {
+            card.setODue(0);
+        }
     }
 
 
@@ -1686,10 +1692,10 @@ public class SchedV2 extends Sched {
             lim = "did = " + did;
         }
         mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where " + lim, 0));
-        // update queue in preview case
+
         mCol.getDb().execute(
                 "update cards set did = odid, " + _restoreQueueSnippet() +
-                ", due = odue, odue = 0, odid = 0, usn = ? where " + lim,
+                ", due = (case when odue>0 then odue else due end), odue = 0, odid = 0, usn = ? where " + lim,
                 new Object[] { mCol.usn() });
     }
 
