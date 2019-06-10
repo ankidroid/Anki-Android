@@ -298,7 +298,7 @@ public class Template {
             String buf;
             if (type == 'q') {
                 if (!TextUtils.isEmpty(m.group(4))) {
-                    buf = "[$4]";
+                    buf = "[" + m.group(4) + "]";
                 } else {
                     buf = "[...]";
                 }
@@ -310,7 +310,7 @@ public class Template {
                 buf = String.format("<span class=cloze>%s</span>", buf);
             }
 
-            m.appendReplacement(repl, buf);
+            m.appendReplacement(repl, Matcher.quoteReplacement(buf));
         }
         txt = m.appendTail(repl).toString();
         // and display other clozes normally
