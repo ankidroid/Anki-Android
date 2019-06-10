@@ -2107,7 +2107,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         content = content.replace("font-weight:600;", "font-weight:700;");
 
         // CSS class for card-specific styling
-        String cardClass = "card card" + (mCurrentCard.getOrd() + 1);
+        String cardClass = "hidden card card" + (mCurrentCard.getOrd() + 1);
 
         if (mPrefCenterVertically) {
             cardClass += " vertically_centered";
