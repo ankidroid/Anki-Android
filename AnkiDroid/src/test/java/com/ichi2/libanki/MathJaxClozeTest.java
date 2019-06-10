@@ -60,4 +60,22 @@ public class MathJaxClozeTest extends RobolectricTest {
         assertTrue(cards.get(3).q().contains("class=cloze"));
         assertTrue(cards.get(4).q().contains("class=cloze"));
     }
+
+    @Test
+    public void verifyMathJaxInCloze() {
+        final Context context = ApplicationProvider.getApplicationContext();
+
+        Collection c = getCol();
+        Note f = c.newNote(c.getModels().byName("Cloze"));
+        f.setItem("Text", "\\(1 \\div 2 =\\){{c1::\\(\\frac{1}{2}\\)}}");
+        c.addNote(f);
+
+        ArrayList<Card> cards = f.cards();
+        Card c2 = cards.get(0);
+        String q = c2.q();
+        String a = c2.a();
+        assertTrue(q.contains("\\(1 \\div 2 =\\)"));
+        assertTrue(a.contains("\\(1 \\div 2 =\\)"));
+        assertTrue(a.contains("<span class=cloze>\\(\\frac{1}{2}\\)</span>"));
+    }
 }
