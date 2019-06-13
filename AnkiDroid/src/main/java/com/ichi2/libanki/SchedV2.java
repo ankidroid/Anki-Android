@@ -114,7 +114,7 @@ public class SchedV2 extends Sched {
         super();
         mCol = col;
         mQueueLimit = 50;
-        mReportLimit = 1000;
+        mReportLimit = 99999;
         mDynReportLimit = 99999;
         mReps = 0;
         mToday = null;
