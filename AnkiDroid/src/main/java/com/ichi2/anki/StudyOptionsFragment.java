@@ -63,7 +63,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     private static final int CONTENT_EMPTY = 2;
 
     // Threshold at which the total number of new cards is truncated by libanki
-    private static final int NEW_CARD_COUNT_TRUNCATE_THRESHOLD = 1000;
+    private static final int NEW_CARD_COUNT_TRUNCATE_THRESHOLD = 99999;
 
     /**
      * Preferences
