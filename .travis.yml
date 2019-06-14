@@ -30,21 +30,23 @@ env:
    #- API=28 # Fails on adb 2 second getprop timeout and get API getprop takes 2.2s, so emulator boots but adb won't install on unknown API
    #- API=Q  # Fails at some point on emulator startup or detecting startup complete
 
-# This block currently does not work, but it used to. API=28/Q are probably fixable
-# but we don't need allow_failures to be on in master to work through them
-#matrix:
-#  fast_finish: true # We can report success without waiting for these
-#  allow_failures:
-#     - env: API=28
-#     - env: API=Q
-
 jobs:
+  fast_finish: true  # We can report success without waiting for jobs that we
+                     # allow / expect to fail.
   include:
+    - jdk: oraclejdk11
+      env: API=24
     # The test stage is implicit, we only need to define a post-test stage for codacy finalization
     - stage: finalize_coverage
       env: FINALIZE_COVERAGE=TRUE API=NONE
       install: skip
       script: echo finalize codacy coverage uploads
+  allow_failures:
+    - jdk: oraclejdk11
+    # API=28/Q are probably fixable but we don't need allow_failures to be on
+    # in master to work through them.
+    #- env: API=28
+    #- env: API=Q
 
 android:
   components:
