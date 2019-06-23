@@ -889,6 +889,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     @VisibleForTesting
+    @SuppressWarnings({"PMD.NPathComplexity","PMD.ExcessiveMethodLength"})
     protected void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
         Timber.d("showStartupScreensAndDialogs()");
 

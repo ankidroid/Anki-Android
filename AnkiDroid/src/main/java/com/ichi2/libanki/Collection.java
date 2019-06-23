@@ -54,9 +54,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import javax.annotation.Nullable;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;

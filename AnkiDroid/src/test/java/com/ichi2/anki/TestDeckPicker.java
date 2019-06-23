@@ -4,13 +4,13 @@ import android.content.SharedPreferences;
 
 // Simple testability overrides and verification toggles
 public class TestDeckPicker extends DeckPicker {
-    boolean startupScreensDisplayed = false;
-    boolean finishedStartup = false;
-    boolean integrityChecked = false;
-    boolean prefsUpgraded = false;
-    boolean activityRestarted = false;
-    int prefCheckVersion = -1;
-    int dbCheckVersion = -1;
+    protected boolean startupScreensDisplayed = false;
+    protected boolean finishedStartup = false;
+    protected boolean integrityChecked = false;
+    protected boolean prefsUpgraded = false;
+    protected boolean activityRestarted = false;
+    protected int prefCheckVersion = -1;
+    protected int dbCheckVersion = -1;
 
     @Override protected void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
         startupScreensDisplayed = true;
