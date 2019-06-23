@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -441,6 +443,19 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     break;
                 }
                 case LANGUAGE:
+
+                    //change language fix
+                    SharedPreferences settings = AnkiDroidApp.getSharedPrefs(getBaseContext());
+                    Configuration config = getBaseContext().getResources().getConfiguration();
+
+                    String lang1 = settings.getString("language","");
+
+                    Locale locale = new Locale(lang1);
+                    Locale.setDefault(locale);
+
+                    config.locale = locale;
+                    getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
                     closePreferences();
                     break;
                 case "convertFenText":
