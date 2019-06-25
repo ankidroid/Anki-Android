@@ -280,7 +280,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
         //this is called when mSectionsPagerAdapter.notifyDataSetChanged() is called, so checkAndUpdate() here

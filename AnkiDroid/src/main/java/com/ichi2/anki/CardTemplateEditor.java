@@ -302,7 +302,7 @@ public class CardTemplateEditor extends AnkiActivity {
     // ----------------------------------------------------------------------------
 
     /**
-     * A {@link androidx.core.app.FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link androidx.fragment.app.FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the tabs.
      */
     public class TemplatePagerAdapter extends FragmentPagerAdapter {
@@ -310,7 +310,7 @@ public class CardTemplateEditor extends AnkiActivity {
         private long baseId = 0;
 
         public TemplatePagerAdapter(FragmentManager fm) {
-            super(fm);
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
         //this is called when notifyDataSetChanged() is called
