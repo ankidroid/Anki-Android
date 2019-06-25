@@ -52,6 +52,12 @@
         android:title="@string/menu_delete_note"
         android:icon="@drawable/ic_delete_white_24dp"/>
     <item
+        android:id="@+id/action_schedule"
+        android:title="@string/card_editor_reschedule_card"
+        android:icon="@drawable/ic_card_reschedule_white">
+        <menu/>
+    </item>
+    <item
         android:id="@+id/action_search_dictionary"
         android:title="@string/menu_select"
         android:visible="false"/>
@@ -66,10 +72,4 @@
         android:id="@+id/action_select_tts"
         android:title="@string/select_tts"
         android:visible="false" />
-    <item
-        android:id="@+id/action_schedule"
-        android:title="@string/card_editor_card_scheduling"
-        android:icon="@drawable/ic_card_reschedule_white">
-        <menu />
-    </item>
 </menu>

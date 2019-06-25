@@ -38,7 +38,7 @@ MENU_DISABLED = 3
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="customButtonScheduleCard"
-            android:title="@string/card_editor_card_scheduling" />
+            android:title="@string/card_editor_reschedule_card" />
         <ListPreference
             android:defaultValue="2"
             android:entries="@array/custom_button_labels"
