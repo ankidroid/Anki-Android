@@ -118,12 +118,15 @@ public abstract class AudioField extends FieldBase implements IField {
 
     @Override
     public String getFormattedValue() {
-        File file = new File(getAudioPath());
-        if (file.exists()) {
-            return String.format("[sound:%s]", file.getName());
-        } else {
-            return "";
+        String formattedValue = "";
+        if (getAudioPath() != null) {
+            File file = new File(getAudioPath());
+            if (file.exists()) {
+                formattedValue = String.format("[sound:%s]", file.getName());
+            }
         }
+
+        return formattedValue;
     }
 
 
