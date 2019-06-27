@@ -185,7 +185,7 @@ dependencies {
     implementation'ch.acra:acra-toast:5.2.1'
     implementation'ch.acra:acra-limiter:5.2.1'
 
-    implementation 'net.mikehardy:google-analytics-java7:2.0.7'
+    implementation 'net.mikehardy:google-analytics-java7:2.0.8'
     implementation 'com.squareup.okhttp3:okhttp:4.0.0'
     implementation 'com.arcao:slf4j-timber:3.1'
 
