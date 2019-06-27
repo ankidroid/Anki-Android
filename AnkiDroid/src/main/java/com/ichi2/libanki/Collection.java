@@ -28,6 +28,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
@@ -1777,20 +1778,19 @@ public class Collection {
      */
 
     /**
-     * Track database corruption problems - AcraLimiter should quench it if it's a torrent
-     * but we will take care to limit possible data usage by limiting count we send regardless
+     * Track database corruption problems and post analytics events for tracking
      *
-     * @param integrityCheckProblems list of problems, the first 10 will be logged and sent via ACRA
+     * @param integrityCheckProblems list of problems, the first 10 will be used
      */
-    private void logProblems(ArrayList integrityCheckProblems) {
+    private void logProblems(ArrayList<String> integrityCheckProblems) {
 
         if (integrityCheckProblems.size() > 0) {
             StringBuffer additionalInfo = new StringBuffer();
             for (int i = 0; ((i < 10) && (integrityCheckProblems.size() > i)); i++) {
                 additionalInfo.append(integrityCheckProblems.get(i)).append("\n");
+                // log analytics event so we can see trends if user allows it
+                UsageAnalytics.sendAnalyticsEvent("DatabaseCorruption", integrityCheckProblems.get(i));
             }
-            AnkiDroidApp.sendExceptionReport(
-                    new Exception("Problem list (limited to first 10)"), "Collection.fixIntegrity()", additionalInfo.toString());
             Timber.i("fixIntegrity() Problem list (limited to first 10):\n%s", additionalInfo);
         } else {
             Timber.i("fixIntegrity() no problems found");
