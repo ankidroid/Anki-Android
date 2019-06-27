@@ -1777,10 +1777,9 @@ public class Collection {
      */
 
     /**
-     * Track database corruption problems - AcraLimiter should quench it if it's a torrent
-     * but we will take care to limit possible data usage by limiting count we send regardless
+     * Log database problems
      *
-     * @param integrityCheckProblems list of problems, the first 10 will be logged and sent via ACRA
+     * @param integrityCheckProblems list of problems, the first 10 will be logged
      */
     private void logProblems(ArrayList integrityCheckProblems) {
 
@@ -1789,8 +1788,6 @@ public class Collection {
             for (int i = 0; ((i < 10) && (integrityCheckProblems.size() > i)); i++) {
                 additionalInfo.append(integrityCheckProblems.get(i)).append("\n");
             }
-            AnkiDroidApp.sendExceptionReport(
-                    new Exception("Problem list (limited to first 10)"), "Collection.fixIntegrity()", additionalInfo.toString());
             Timber.i("fixIntegrity() Problem list (limited to first 10):\n%s", additionalInfo);
         } else {
             Timber.i("fixIntegrity() no problems found");
