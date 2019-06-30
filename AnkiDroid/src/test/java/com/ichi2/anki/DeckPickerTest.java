@@ -230,6 +230,25 @@ public class DeckPickerTest extends RobolectricTest {
     }
 
 
+    @Test
+    public void verifyNoColVersionStableAppVersion() {
+
+        // Issue #5354 - Pretend we are 2.9alpha75, no app upgrade, but we get a collection with no db version
+        prepareUpgrade(null, 20900175, "2.9alpha75", 20900175, "2.9alpha75");
+        deckPickerController.create();
+        assertState(
+                deckPicker.startupScreensDisplayed, // method call should work
+                !deckPicker.mRecommendFullSync,     // unsure about full sync status on that one actually
+                !deckPicker.prefsUpgraded,          // not old enough to upgrade prefs
+                deckPicker.integrityChecked,        // check integrity because there was no version
+                !deckPicker.finishedStartup,        // startup won't finish because of the other work
+                !deckPicker.activityRestarted,      // activity doesn't restart because integrity check hijacks
+                null, shadowDeckPicker.getNextStartedActivity(),       // no intents should start
+                "2.9alpha75",            // we put a lastVersion now
+                20900175);
+    }
+
+
     @SuppressWarnings("PMD.ExcessiveParameterList")
     private void assertState(boolean startupScreens, boolean fullSync, boolean prefsUpgrade, boolean integrity,
                              boolean finished, boolean restart, Class intentWanted, Intent intent, String lastVersion,
