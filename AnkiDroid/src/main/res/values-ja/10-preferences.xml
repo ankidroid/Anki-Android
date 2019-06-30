@@ -202,9 +202,9 @@
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d個のデッキがこのグループを使用しています</item>
     </plurals>
-    <string name="deck_conf_new_cards">基本学習（新しい記憶の固定）</string>
-    <string name="deck_conf_rev_cards">復習（記憶の定着確認・強化）</string>
-    <string name="deck_conf_lps_cards">忘却と再基本学習（記憶の定着失敗と再固定）</string>
+    <string name="deck_conf_new_cards">新規カードと基本学習</string>
+    <string name="deck_conf_rev_cards">復習</string>
+    <string name="deck_conf_lps_cards">忘却と再基本学習</string>
     <string name="deck_conf_general">一般</string>
     <string name="deck_conf_reminders">リマインダー</string>
     <string name="deck_conf_steps">学習ステップ（分）</string>
@@ -212,18 +212,18 @@
     <string name="deck_conf_new_cards_day">一日あたりの新規カード出題枚数の上限</string>
     <string name="deck_conf_graduating_ivl">最終ステップから復習開始までの間隔</string>
     <string name="deck_conf_days">XXX 日</string>
-    <string name="deck_conf_easy_ivl">ただし「簡単」と回答（基本学習の切り上げ）をした場合は</string>
+    <string name="deck_conf_easy_ivl">簡単と回答してから復習開始までの間隔</string>
     <string name="deck_conf_start_ease">復習開始時の「易しさ」（復習間隔の伸び率）</string>
     <string name="deck_conf_max_rev">一日あたりの復習カード出題枚数の上限</string>
     <string name="deck_conf_new_bury">新規の関連カードの学習を延期</string>
     <string name="deck_conf_new_bury_summ">新規の関連カード（同じノートから作られた別のカード。例：裏表反転カード）の学習を翌日まで延期します</string>
     <string name="deck_conf_rev_bury">関連カードの復習を延期</string>
     <string name="deck_conf_rev_bury_summ">関連カード（同じノートから作られた別のカード。例：裏表反転カード）の復習を翌日まで延期します</string>
-    <string name="deck_conf_easy_bonus">「簡単」と答えた時のボーナス（復習間隔の伸び率の割増し）</string>
-    <string name="deck_conf_ivl_fct">復習ペース（復習間隔の伸び率の増えやすさ）の調整</string>
+    <string name="deck_conf_easy_bonus">簡単と答えた時のボーナス（復習間隔の伸び率の割り増し）</string>
+    <string name="deck_conf_ivl_fct">復習間隔の調整</string>
     <string name="deck_conf_max_ivl">復習間隔の上限</string>
-    <string name="deck_conf_new_lps_ivl">再基本学習後に再開される復習の間隔（前回比）</string>
-    <string name="deck_conf_min_ivl">再基本学習後に再開される復習の間隔の下限</string>
+    <string name="deck_conf_new_lps_ivl">新しい復習間隔（前回比）</string>
+    <string name="deck_conf_min_ivl">復習間隔の下限</string>
     <string name="deck_conf_leech_thres">無駄（定着困難）カードと判定する基準</string>
     <string name="deck_conf_fails">XXX 回 忘却（復習カードに「もう一度」と回答）した時</string>
     <string name="deck_conf_leech_action">無駄（定着困難）カードへの処置</string>

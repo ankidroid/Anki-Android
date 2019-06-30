@@ -40,12 +40,12 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">Kaardid tõttu</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d AnkiDroid kaardi tõttu</item>
+        <item quantity="other">%d AnkiDroid kaardi tõttu</item>
     </plurals>
-    <string name="widget_no_cards_due">No cards due</string>
+    <string name="widget_no_cards_due">Kaardid puuduvad</string>
     <string name="widget_loading">Vidina laadimine...</string>
     <plurals name="widget_cards_in_decks_due">
         <item quantity="one">%1$d card due in %2$s</item>
@@ -62,9 +62,9 @@
         <item quantity="other">%d cards due</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="other">%d minutes remaining</item>
+        <item quantity="one">%d minut jäänud</item>
+        <item quantity="other">%d minutit jäänud</item>
     </plurals>
-    <string name="widget_add_note">Add note</string>
+    <string name="widget_add_note">Lisa märkus</string>
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

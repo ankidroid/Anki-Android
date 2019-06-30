@@ -126,10 +126,10 @@
     <string name="fact_adder_intent_title">Carte AnkiDroid</string>
     <string name="card_editor_add_card">Ajouter une note</string>
     <string name="card_editor_copy_card">Copier la carte</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
+    <string name="card_editor_card_scheduling">Planification</string>
     <string name="card_editor_reposition_card">Repositionner</string>
     <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Replanifier</string>
     <string name="card_editor_preview_card">Aperçu</string>
     <string name="error_insufficient_memory">L’opération n’a pas pu être accomplie car votre appareil manque de mémoire disponible</string>
     <string name="rename">Renommer</string>
@@ -164,11 +164,11 @@
     <string name="confirm_apkg_export_deck">Exporter « %s » au format apkg ?</string>
     <string name="export_in_progress">Export du fichier apkg en cours&#8230;</string>
     <string name="export_successful_title">Envoyer apkg ?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_send_button">Envoyer</string>
+    <string name="export_save_button">Enregistrer dans un fichier</string>
+    <string name="export_send_no_handlers">Aucune application disponible pour supporter apkg. Sauvegarde...</string>
+    <string name="export_save_apkg_successful">Apkg sauvegardé avec succès</string>
+    <string name="export_save_apkg_unsuccessful">Échec de l\'enregistrement de l\'apkg</string>
     <string name="export_successful">Le fichier « %s » a été exporté. Voulez-vous le partager à l\'aide d\'une autre app ?</string>
     <string name="export_email_subject">AnkiDroid a exporté %s flashcards</string>
     <string name="export_email_text"><![CDATA[        Salut !
@@ -226,14 +226,14 @@
     <string name="filtered_deck_name">Paquet Filtré</string>
     <string name="reminder_title">N’oubliez pas d’étudier aujourd\'hui !</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d carte à réviser en %1$s</item>
+        <item quantity="other">%2$d cartes à réviser en %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Erreur lors du partage du fichier apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">Le planificateur V2 doit être activé pour importer ce fichier.</string>
+    <string name="import_cannot_with_v2">Le planificateur V2 ne peut pas importer les paquets de cartes V1 avec la planification incluse.</string>
+    <string name="export_v2_dummy_note">Ce fichier nécessite une version plus récente d\'Anki.</string>
+    <string name="export_v2_forbidden">Veuillez passer au planificateur V1 avant d\'exporter un paquet de cartes avec les informations de planification.</string>
 </resources>

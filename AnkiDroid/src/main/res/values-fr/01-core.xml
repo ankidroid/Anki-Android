@@ -87,9 +87,9 @@
     <string name="undo_action_delete">supprimer la note</string>
     <string name="undo_action_delete_multi">supprimer les notes</string>
     <string name="undo_action_change_deck_multi">changer les paquets</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
+    <string name="undo_action_reschedule_card">replanifier</string>
+    <string name="undo_action_reset_card">réinitialiser la progression</string>
+    <string name="undo_action_reposition_card">repositionner</string>
     <string name="move_all_to_deck">Tout déplacer dans le paquet</string>
     <string name="unbury">Déterrer</string>
     <string name="rename_deck">Renommer le paquet</string>
@@ -144,7 +144,7 @@
     <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
     <string name="studyoptions_no_cards_due">Aucune carte due actuellement</string>
     <string name="sd_card_not_mounted">Le dispositif de stockage n\'est pas monté</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Modifier cette note et ajouter quelques textes à trous. (%1$s)</string>
     <string name="button_sync">Synchroniser</string>
     <string name="cancel_sync_confirm">Voulez-vous annuler la synchronisation ?</string>
     <string name="continue_sync">Continuer la synchronisation</string>
@@ -167,7 +167,7 @@
     </plurals>
     <string name="invalid_template">Une carte n\'a pas pu être générée</string>
     <string name="card_template_editor_would_delete_note">Retirer ce type de carte provoquera la suppression d\'une ou de plusieurs notes. Veuillez d\'abord créer un nouveau type de carte.</string>
-    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">Le modèle pour la carte actuelle a été supprimé.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lire et écrire dans la base de données d\'AnkiDroid</string>
     <string name="read_write_permission_description">accéder aux notes, cartes, types de notes et paquets actuels, mais aussi en créer de nouveaux</string>

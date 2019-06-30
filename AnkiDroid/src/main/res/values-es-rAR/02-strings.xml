@@ -126,10 +126,10 @@
     <string name="fact_adder_intent_title">Tarjeta de AnkiDroid</string>
     <string name="card_editor_add_card">Añadir nota</string>
     <string name="card_editor_copy_card">Copiar tarjeta</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
+    <string name="card_editor_card_scheduling">Programación</string>
     <string name="card_editor_reposition_card">Reposicionamiento</string>
     <string name="card_editor_reset_card">Resetear progreso</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Reprogramar</string>
     <string name="card_editor_preview_card">Vista previa</string>
     <string name="error_insufficient_memory">La operación no puede llevarse a cabo debido a memoria insuficiente en su dispositivo</string>
     <string name="rename">Renombrar</string>
@@ -165,10 +165,10 @@
     <string name="export_in_progress">Exportando archivo apkg&#8230;</string>
     <string name="export_successful_title">¿Enviar apkg?</string>
     <string name="export_send_button">Enviar</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_save_button">Guardar en un archivo</string>
+    <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando...</string>
+    <string name="export_save_apkg_successful">Apkg guardado correctamente</string>
+    <string name="export_save_apkg_unsuccessful">Error al guardar apkg</string>
     <string name="export_successful">El archivo \"%s\" fue exportado. ¿Desea enviarlo con otra aplicación?</string>
     <string name="export_email_subject">Tarjetas exportadas por AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        ¡Hola!
@@ -227,7 +227,7 @@
     <string name="reminder_title">¡No se olvide de estudiar hoy!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="other">%2$d nuevas tarjetas para revisar en %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error al compartir archivo apkg</string>

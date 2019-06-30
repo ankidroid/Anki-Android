@@ -91,11 +91,11 @@
     <string name="undo_action_suspend_card">Відкласти картку</string>
     <string name="undo_action_suspend_note">Призупинити примітку</string>
     <string name="undo_action_delete">Видалити примітку</string>
-    <string name="undo_action_delete_multi">видалити нотатки</string>
-    <string name="undo_action_change_deck_multi">змінити колоди</string>
-    <string name="undo_action_reschedule_card">перепланувати</string>
-    <string name="undo_action_reset_card">скинути прогрес</string>
-    <string name="undo_action_reposition_card">переставити</string>
+    <string name="undo_action_delete_multi">Видалити нотатки</string>
+    <string name="undo_action_change_deck_multi">Змінити колоди</string>
+    <string name="undo_action_reschedule_card">Перепланувати</string>
+    <string name="undo_action_reset_card">Скинути прогрес</string>
+    <string name="undo_action_reposition_card">Переставити</string>
     <string name="move_all_to_deck">Перемістити всі колоди</string>
     <string name="unbury">Скасувати зрушення</string>
     <string name="rename_deck">Переназвати колоду</string>

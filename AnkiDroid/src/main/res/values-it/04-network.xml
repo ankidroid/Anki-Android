@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">Alla prossima sincronizzazione, forza le modifiche in una direzione</string>
     <string name="full_sync_confirmation">La modifica richiesta provocherà il caricamento completo del database la prossima volta che sincronizzi la collezione. Se hai delle ripetizioni o degli altri cambiamenti in sospeso su un altro dispositivo che non sono ancora stati sincronizzati qui, andranno persi. Continuare?</string>
     <string name="full_sync_confirmation_upgrade">A causa di un bug nella versione precedentemente installata di AnkiDroid, si consiglia di forzare una sincronizzazione completa.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">Autenticazione proxy richiesta.</string>
     <string name="sync_error_409">Solo un client alla volta può accedere ad AnkiWeb. Se una precedente sincronizzazione è fallita, riprova nuovamente tra pochi minuti.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">La tua collezione o un file multimediale è troppo grande per sincronizzare.</string>
+    <string name="sync_error_500_unknown">AnkiWeb ha riscontrato un errore. Riprova tra qualche minuto e se il problema persiste invia un report di bug.</string>
     <string name="sync_error_501_upgrade_required">Aggiorna all\'ultima versione di AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb è in manutenzione. Riprova tra qualche minuto.</string>
+    <string name="sync_error_504_gateway_timeout">504 errore di timeout gateway ricevuto.</string>
 </resources>

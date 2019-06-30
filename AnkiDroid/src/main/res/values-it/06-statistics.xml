@@ -71,7 +71,7 @@
     <string name="stats_answer_type">Tipo di risposta</string>
     <string name="stats_today_again_count">Carte fallite: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; corrette)</string>
-    <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_type_breakdown">Impara: &lt;b&gt;%1$d&lt;/b&gt;, Ripeti: &lt;b&gt;%2$d&lt;/b&gt;, Reimpara: &lt;b&gt;%3$d&lt;/b&gt;, Filtrate: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Carte mature corrette: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">Oggi non è stata studiata nessuna carta matura.</string>
     <string name="stats_overview_forecast_total">Totale: &lt;b&gt;%1$d&lt;/b&gt; ripetizioni</string>

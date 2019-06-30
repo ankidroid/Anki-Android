@@ -62,7 +62,7 @@
     <string name="pref_cat_advanced_summ">Оптимізація та експериментальні функції</string>
     <string name="pref_cat_performance">Продуктивність</string>
     <string name="pref_cat_workarounds">Обхідні шляхи</string>
-    <string name="pref_cat_plugins">Втулки</string>
+    <string name="pref_cat_plugins">Плагіни</string>
     <string name="about_title">Про AnkiDroid</string>
     <string name="about_version">Версія: </string>
     <!-- preferences.xml entries-->
@@ -70,7 +70,7 @@
     <string name="whiteboard_black">Чорні штрихи</string>
     <string name="whiteboard_black_summ">Використовує менше пам\'яті, якщо не в нічному режимі</string>
     <string name="use_input_tag">Вводіть відповідь на карті</string>
-    <string name="use_input_tag_summ">Використовувати введення тексту для введення відповіді</string>
+    <string name="use_input_tag_summ">Використовувати форму введення тексту для введення відповіді</string>
     <string name="dictionary">Подивитися у словнику</string>
     <string name="reset_languages">Скинути мови</string>
     <string name="reset_languages_summ">Скинути присвоєння мов (для озвучування текстів і словників) для всіх колод</string>
@@ -142,7 +142,7 @@
     <string name="timeout_question_seconds_summ">XXX сек.</string>
     <string name="select_locale_title">Виберіть мову</string>
     <string name="safe_display">Статичний режим екрану</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
+    <string name="safe_display_summ">Вимкнути усю анімацію та використовувати безпечні методи для відображення карток. Це може бути потрібно для E-ink пристроїв</string>
     <string name="vertical_centering">Вирівнювання по центру</string>
     <string name="vertical_centering_summ">Центрувати вміст карт вертикально</string>
     <string name="pref_backup_max">Максимальне число резервних копій</string>
@@ -160,32 +160,32 @@
     <string name="time_limit_summ">XXX хв.</string>
     <string name="day_offset">Початок наступного дня</string>
     <string name="day_offset_summ">XXX г. ранку</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver">Експериментальний планувальник V2</string>
+    <string name="sched_ver_summ">Увімкнути експериментальний планувальник. Примушує зміни в одному напрямку при наступній синхронізації</string>
+    <string name="sched_ver_toggle_title">Підтвердити</string>
+    <string name="sched_ver_2to1">Це призведе до скидання будь-яких карток у процесі навчання, очищення фільтрів та змінення версії планувальника. Продовжити?</string>
+    <string name="sched_ver_1to2">Експериментальний планувальник може спричинити неправильне планування. Переконайтеся, що ви сперше прочитали документацію. Продовжити?</string>
     <string name="pref_keep_screen_on">Не вимикати екран</string>
     <string name="pref_keep_screen_on_summ">Відключити таймаут екрану</string>
     <string name="convert_fen_text">Підтримка шахової нотації</string>
     <string name="convert_fen_text_summ">Намалювати шахову дошку з Нотації Форсайта — Едвардса. Нотацію має бути укладено в [fen][/fen] теґи.</string>
-    <string name="enable_api_title">Включити AnkiDroid API</string>
+    <string name="enable_api_title">Увімкнути AnkiDroid API</string>
     <string name="enable_api_summary">Дозволити іншим додаткам підключатися до AnkiDroid і читати / записувати
     дані без вашого втручання</string>
     <string name="custom_buttons">Панель кнопок додатка</string>
-    <string name="custom_buttons_summary">Настройка кнопок на панелі додатку</string>
+    <string name="custom_buttons_summary">Налаштування кнопок на панелі додатку</string>
     <string name="custom_buttons_setting_always_show">Завжди показувати</string>
     <string name="custom_buttons_setting_if_room">Показувати якщо є</string>
     <string name="custom_buttons_setting_menu_only">Тільки меню</string>
     <string name="reset_custom_buttons">Скидання за замовчуванням</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="thirdparty_apps_title">API додатки сторонніх виробників</string>
+    <string name="thirdparty_apps_summary">Переглянути список програм, які використовують API AnkiDroid, наприклад словники, утиліти</string>
+    <string name="html_javascript_debugging">HTML / Javascript налагодження</string>
+    <string name="html_javascript_debugging_summ">Увімкнути віддалені з\'єднання WebView і зберегти HTML-карту в каталозі AnkiDroid</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Розширена статистика</string>
-    <string name="enable_advanced_statistics_title">Включити розширену статистику</string>
-    <string name="enable_advanced_statistics_summ">    Відображати прогноз статистики, заснований на обчисленнях і моделюванні майбутніх переглядів (включено)
+    <string name="enable_advanced_statistics_title">Увімкнути розширену статистику</string>
+    <string name="enable_advanced_statistics_summ">Відображати прогноз статистики, заснований на обчисленнях і моделюванні майбутніх переглядів (вмикнуто)
     або вже спланованих майбутніх переглядах (вимкнено).</string>
     <string name="advanced_forecast_stats_compute_n_days_title">Обчислювати перші Х дн., імітуючи залишок</string>
     <string name="advanced_forecast_stats_compute_precision_title">Точність обчислень</string>
@@ -198,16 +198,16 @@
     <string name="custom_sync_server_base_url_title">URL для синхронізації</string>
     <string name="custom_sync_server_media_url_title">URL Media-даних</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="deck_conf_group_summ">Зміни опцій групи колоди впливатимуть на кілька колод. Якщо ви бажаєте змінити лише поточну колоду, спочатку додайте нову групу опцій</string>
     <string name="studyoptions_limit_select_tags">Виберіть мітки</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_deck_description">Опис колоди (впливає лише на поточну колоду)</string>
     <string name="deck_conf_group">Конфігурація</string>
     <plurals name="deck_conf_group_summ">
-        <item quantity="one">конфігурація \"%1$s\" використовується %2$d (раз)</item>
-        <item quantity="few">конфігурація \"%1$s\" використовується %2$d (раза)</item>
-        <item quantity="many">%1$s\n%2$d decks use this group</item>
-        <item quantity="other">конфігурація \"%1$s\" використовується %2$d (раз)</item>
+        <item quantity="one">%1$s\n%2$d колода використовує цю групу</item>
+        <item quantity="few">%1$s\n%2$d колод використовують цю групу</item>
+        <item quantity="many">%1$s\n%2$d колод використовують цю групу</item>
+        <item quantity="other">%1$s\n%2$d колод використовують цю групу</item>
     </plurals>
     <string name="deck_conf_new_cards">Нові картки</string>
     <string name="deck_conf_rev_cards">Перегляди</string>
@@ -225,7 +225,7 @@
     <string name="deck_conf_new_bury">Поховати пов\'язані нові карти</string>
     <string name="deck_conf_new_bury_summ">Пов\'язані нові карти заховані до наступного дня</string>
     <string name="deck_conf_rev_bury">Заховати пов’язані перегляди</string>
-    <string name="deck_conf_rev_bury_summ">Пов\'яхані повторення поховані до наступного дня</string>
+    <string name="deck_conf_rev_bury_summ">Пов\'язані повторення поховані до наступного дня</string>
     <string name="deck_conf_easy_bonus">Легкий бонус</string>
     <string name="deck_conf_ivl_fct">Модифікатор інтервалу</string>
     <string name="deck_conf_max_ivl">Максимальний інтервал</string>
@@ -255,7 +255,7 @@
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s підколода використовуватиме конфігурацію</item>
         <item quantity="few">%s підколоди використовуватимуть конфігурацію</item>
-        <item quantity="many">%s subdecks will use this group</item>
+        <item quantity="many">%s підколод використовуватимуть конфігурацію</item>
         <item quantity="other">%s підколод використовуватимуть конфігурацію</item>
     </plurals>
     <string name="deck_conf_set_subdecks_title">Установити для усіх підколод</string>
@@ -270,10 +270,10 @@
     <string name="deck_conf_cram_reschedule_summ">Змінювати розклад для карток, ґрунтуючись на моїх відповідях в цій колоді</string>
     <string name="deck_conf_cram_steps">Користувальницькі кроки (в хвилинах)</string>
     <string name="deck_conf_cram_steps_summ">Визначити користувацькі інтервали</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_enabled">Увімкнути нагадувальне сповіщення для колод у цій групі колод</string>
     <string name="deck_conf_reminders_time">Нагадати в</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_dialog_title">Допоможіть зробити AnkiDroid краще!</string>
+    <string name="analytics_title">Поділитися інформацією про використання функцій</string>
+    <string name="analytics_summ">Ви можете зробити свій внесок до AnkiDroid, допомагаючи команді розробників побачити, які функції використовують люди</string>
 </resources>

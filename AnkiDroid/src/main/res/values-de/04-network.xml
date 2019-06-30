@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">Bei nächster Synchronisation Änderungen in eine Richtung übertragen</string>
     <string name="full_sync_confirmation">Nach dieser Änderung müssen Sie die gesamte Sammlung hochladen. Lernfortschritt  und Änderungen auf anderen Geräten, die noch nicht auf dieses Gerät synchronisiert wurden,  gehen verloren. Fortfahren?</string>
     <string name="full_sync_confirmation_upgrade">Wegen eines Fehlers in einer früheren Version von AnkiDroid sollten Sie eine Vollsynchronisation erzwingen.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">Proxy-Authentifizierung erforderlich.</string>
     <string name="sync_error_409">Es kann immer nur ein Klient gleichzeitig auf AnkiWeb zugreifen. Wenn eine vorherige Synchronisierung fehlgeschlagen ist, probieren Sie es bitte in einigen Minuten noch einmal.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">Die Sammlung oder eine Mediendatei ist zu groß für die Synchronisation.</string>
+    <string name="sync_error_500_unknown">AnkiWeb hat einen Fehler festgestellt. Bitte in ein paar Minuten noch einmal versuchen; falls das Problem weiter besteht, bitte einen Fehlerbericht senden.</string>
     <string name="sync_error_501_upgrade_required">Bitte installieren Sie die neuste AnkiDroid-Version</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb wird gerade gewartet. Bitte später erneut versuchen.</string>
+    <string name="sync_error_504_gateway_timeout">Fehler 504: Zeitüberschreitung.</string>
 </resources>

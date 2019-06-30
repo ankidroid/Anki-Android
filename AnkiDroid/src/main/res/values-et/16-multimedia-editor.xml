@@ -45,7 +45,7 @@
     <string name="multimedia_editor_trans_from">Alates</string>
     <string name="multimedia_editor_trans_to">Kuni</string>
     <!-- imperative for the button title -->
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Tõlgi</string>
     <!-- waiting message -->
     <string name="multimedia_editor_trans_translating_online">Translating online</string>
     <!-- pick the right translation imperative -->
@@ -58,7 +58,7 @@
     <!-- dialog asking to install ColorDict -->
     <string name="multimedia_editor_trans_install_color_dict">Installi kõigepealt ColorDict</string>
     <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Load</string>
+    <string name="multimedia_editor_pron_load">Lae</string>
     <string name="multimedia_editor_pron_looking_up">Otsitakse hääldust</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Pronunciation failed</string>
@@ -75,7 +75,7 @@
     <string name="multimedia_editor_text_field_editing_search_label">Search for:</string>
     <string name="multimedia_editor_text_field_editing_show">Pilt</string>
     <string name="multimedia_editor_text_field_editing_say">Hääldus</string>
-    <string name="multimedia_editor_text_field_editing_clear">Clear</string>
+    <string name="multimedia_editor_text_field_editing_clear">Tühjenda</string>
     <string name="multimedia_editor_text_field_editing_clone">Clone from</string>
     <string name="multimedia_editor_text_field_editing_translate">Tõlge</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
@@ -88,22 +88,22 @@
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
-    <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
-    <string name="multimedia_editor_image_field_editing_photo">Camera</string>
+    <string name="multimedia_editor_image_field_editing_galery">Galerii</string>
+    <string name="multimedia_editor_image_field_editing_photo">Kaamera</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">Downloading</string>
+    <string name="multimedia_editor_general_downloading">Allalaadimine</string>
     <!-- when process finishes -->
-    <string name="multimedia_editor_general_done">Done</string>
+    <string name="multimedia_editor_general_done">Valmis</string>
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">The word was not found</string>
     <!-- failure when contacting glosbe or similar -->
     <string name="multimedia_editor_trans_getting_failure">Getting translation failed</string>
     <string name="multimedia_editor_searching_word">Searching the word</string>
     <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">Wait</string>
+    <string name="multimedia_editor_progress_wait_title">Oodake</string>
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">Something went wrong</string>
+    <string name="multimedia_editor_something_wrong">Midagi läks valesti</string>
     <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
     <string name="multimedia_editor_attach_media">Attach media</string>
     <!-- Audio view -->
@@ -112,8 +112,8 @@
     <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">Editing field</string>
-    <string name="title_activity_translation">Translation</string>
-    <string name="title_activity_load_pronounciation">Pronunciation</string>
+    <string name="title_activity_translation">Tõlge</string>
+    <string name="title_activity_load_pronounciation">Hääldus</string>
     <!-- Network failure -->
-    <string name="network_no_connection">No connection</string>
+    <string name="network_no_connection">Ühendust ei ole</string>
 </resources>

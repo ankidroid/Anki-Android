@@ -64,22 +64,22 @@
     <string name="preview_title">Aperçu</string>
     <string name="reposition_card_dialog_title">Repositionner la nouvelle carte</string>
     <string name="reposition_card_dialog_message">Position de départ:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_not_new_error">Seules les nouvelles cartes peuvent être repositionnées</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d carte repositionnée</item>
+        <item quantity="other">%d cartes repositionnées</item>
     </plurals>
     <string name="reset_card_dialog_title">Réinitialiser les progrès de la carte</string>
     <string name="reset_card_dialog_message">Cette carte sera placée à la fin de la nouvelle file de cartes.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d carte réinitialisée</item>
+        <item quantity="other">%d cartes réinitialisées</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Replanifier la carte</string>
     <string name="reschedule_card_dialog_message">Replanifier pour révision dans x jours :</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d carte replanifiée</item>
+        <item quantity="other">%d cartes replanifiées</item>
     </plurals>
     <string name="answering_error_title">Erreur de la base de données</string>
     <string name="answering_error_message">Il s’est produit une erreur en écrivant dans la collection. Cela est peut-être lié à une base de données corrompue ou à un espace disque insuffisant.\n\nSi cela arrive souvent, vérifiez la base de données, réparez la collection ou restaurez-la à partir d’une sauvegarde, en allant dans les « options ».\n\nCependant, il peut s’agir d’un bug d’AnkiDroid. Signalez-le nous.</string>
@@ -89,8 +89,8 @@
     <string name="intent_add_clear_all">Effacer tout</string>
     <string name="intent_aedict_empty">La catégorie \'default\' est vide</string>
     <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie « default »</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Nouvelles cartes dans le paquet: %d</string>
+    <string name="custom_study_rev_total_rev">Révisions dues dans le paquet: %d</string>
     <string name="custom_study_new_extend">Augmenter la limite de nouvelles cartes pour aujourd\'hui de</string>
     <string name="custom_study_rev_extend">Augmenter la limite de révision pour aujourd\'hui de</string>
     <string name="custom_study_forgotten">Revoir les cartes oubliées dans les x derniers jours :</string>

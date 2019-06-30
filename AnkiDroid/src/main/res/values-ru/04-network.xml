@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">Перезапишет изменения в одном направлении при следующей синхронизации</string>
     <string name="full_sync_confirmation">Последние изменения требуют полную выгрузку базы данных при следующей синхронизации. Если на другом вашем устройстве есть изменения, они будут утеряны. Продолжить?</string>
     <string name="full_sync_confirmation_upgrade">Из-за ошибке в прошлой версии AnkiDroid рекомендуем полную синхронизацию.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">Требуется проверка подлинности прокси.</string>
     <string name="sync_error_409">Только один клиент за раз может быть подключён к AnkiWeb. Если синхронизация не удалась, попробуйте позже.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">Коллекция или медиафайл слишком велики для синхронизации.</string>
+    <string name="sync_error_500_unknown">На AnkiWeb произошла ошибка. Попробуйте ещё раз через несколько минут. Если не исчезнет, пожалуйста, сообщите об ошибке.</string>
     <string name="sync_error_501_upgrade_required">Пожалуйста, установите последнюю версию AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb находится на обслуживании. Повторите ещё раз через несколько минут.</string>
+    <string name="sync_error_504_gateway_timeout">Ошибка 504: шлюз не отвечает</string>
 </resources>

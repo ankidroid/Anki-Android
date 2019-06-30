@@ -226,14 +226,14 @@
     <string name="filtered_deck_name">Baralho filtrado</string>
     <string name="reminder_title">Não se esqueça de estudar hoje!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d novo cartão para rever em %1$s</item>
+        <item quantity="other">%2$d novos cartões para rever em %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Erro ao compartilhar arquivo apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">O agendador V2 deve ser habilitado para importar este arquivo.</string>
+    <string name="import_cannot_with_v2">O agendador V2 não pode importar decks V1 junto com o agendamento.</string>
+    <string name="export_v2_dummy_note">Este arquivo requer uma versão mais recente do Anki.</string>
+    <string name="export_v2_forbidden">Por favor, mude para o agendador V1 antes de exportar um único deck com informações de agendamento.</string>
 </resources>

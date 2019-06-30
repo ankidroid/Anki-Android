@@ -159,11 +159,11 @@
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Inizio del giorno successivo</string>
     <string name="day_offset_summ">XXX ore dopo mezzanotte</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver">Pianificatore sperimentale V2</string>
+    <string name="sched_ver_summ">Abilita la pianificazione sperimentale. Forza le modifiche in una direzione alla prossima sincronizzazione</string>
+    <string name="sched_ver_toggle_title">Conferma</string>
+    <string name="sched_ver_2to1">Questo resetta tutte le carte in apprendimento, cancella i mazzi filtrati e cambia la versione di pianificatore. Procedere?</string>
+    <string name="sched_ver_1to2">Il pianificatore sperimentale potrebbe causare una pianificazione non corretta. Assicurati di aver prima letto la documentazione. Procedere?</string>
     <string name="pref_keep_screen_on">Mantieni schermo acceso</string>
     <string name="pref_keep_screen_on_summ">Disabilita il timeout dello schermo</string>
     <string name="convert_fen_text">Supporto per la notazione scacchistica</string>
@@ -176,9 +176,9 @@
     <string name="custom_buttons_setting_if_room">Mostra se c\'è spazio</string>
     <string name="custom_buttons_setting_menu_only">Solo menu</string>
     <string name="reset_custom_buttons">Ripristina impostazioni predefinite</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="thirdparty_apps_title">Applicazioni API di terze parti</string>
+    <string name="thirdparty_apps_summary">Vedi un elenco di applicazioni che utilizzano l\'API AnkiDroid come dizionari, utilities.</string>
+    <string name="html_javascript_debugging">Debug HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Statistiche avanzate</string>

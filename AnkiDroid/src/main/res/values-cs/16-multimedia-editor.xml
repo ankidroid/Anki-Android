@@ -38,7 +38,7 @@
     <string name="multimedia_editor_popup_image">Přidat obrázek</string>
     <string name="multimedia_editor_popup_audio">Pořídit zvukový záznam</string>
     <string name="multimedia_editor_popup_text">Pokročilý editor</string>
-    <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
+    <string name="multimedia_editor_popup_cloze">Doplňovačka</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Běží na glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->

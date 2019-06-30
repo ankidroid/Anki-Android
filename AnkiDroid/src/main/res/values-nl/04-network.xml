@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">Bij volgende synchronisatie, wijzigingen forceren in één richting</string>
     <string name="full_sync_confirmation">De gevraagde wijziging vergt een volledige upload van de database wanneer u de volgende keer uw collectie synchroniseert. Indien u herhalingen of wijzigingen heeft op een ander apparaat dat nog niet is gesynchroniseerd, dan zullen zij verloren gaan. Wilt u verder gaan?</string>
     <string name="full_sync_confirmation_upgrade">Vanwege een fout in een vorige versie van AnkiDroid, is het aan te raden om een volledige synchronisatie uit te voeren.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">Proxyverificatie vereist.</string>
     <string name="sync_error_409">Slechts één client kan AnkiWeb tegelijk gebruiken. Als een vorige synchronisatie mislukt is, probeer het dan over een paar minuten opnieuw.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">Uw collectie of een mediabestand is te groot om te synchroniseren.</string>
+    <string name="sync_error_500_unknown">AnkiWeb is op een fout gestuit. Probeer het binnen enkele minuten opnieuw, en als het probleem zich blijft voordoen, gelieve een bugrapport in te dienen.</string>
     <string name="sync_error_501_upgrade_required">Gelieve te actualiseren naar de meest recente versie van AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb is momenteel in onderhoud. Probeer opnieuw binnen enkele minuten.</string>
+    <string name="sync_error_504_gateway_timeout">504 gateway timeout foutmelding ontvangen.</string>
 </resources>

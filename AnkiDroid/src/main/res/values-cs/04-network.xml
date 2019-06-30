@@ -122,9 +122,9 @@
     <string name="full_sync_confirmation_upgrade">Kvůli chybě v dříve nainstalované verzi AnkiDroid doporučujeme vynutit úplnou synchronizaci.</string>
     <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
     <string name="sync_error_409">Pouze jeden klient může přistupovat k AnkiWeb v jednu chvíli. Pokud se předchozí synchronizace nezdařila, opakujte akci za několik minut.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">Vaše kolekce nebo multimediální soubor jsou příliš velké, proto je nelze synchronizovat.</string>
+    <string name="sync_error_500_unknown">AnkiWeb zaznamenal chybu. Zkuste to prosím znovu za pár minut a pokud problém přetrvá, vyplňte prosím chybové hlášení.</string>
     <string name="sync_error_501_upgrade_required">Proveďte upgrade na nejnovější verzi AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
+    <string name="sync_error_502_maintenance">Provádí se údržba AnkiWeb. Zkuste to prosím znovu za pár minut.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
 </resources>

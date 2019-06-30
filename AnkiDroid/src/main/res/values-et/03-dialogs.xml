@@ -89,7 +89,7 @@
     <string name="intent_add_clear_all">Kustuta kõik</string>
     <string name="intent_aedict_empty">Category “default” is empty</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_new_total_new">Uusi kaarte kaardipakis: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Increase today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase today’s review limit by</string>
@@ -104,23 +104,23 @@
     <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
     <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
     <string name="import_complete_count">Cards imported: %d</string>
-    <string name="sd_card_full_title">SD card full</string>
+    <string name="sd_card_full_title">SD kaart täis</string>
     <string name="sd_card_almost_full_title">SD card almost full</string>
-    <string name="restore_backup_title">Restore backup?</string>
+    <string name="restore_backup_title">Taastada varundus?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_cancel">Loobu</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_continue">Continue</string>
-    <string name="dialog_positive_create">Create</string>
-    <string name="dialog_positive_delete">Delete</string>
-    <string name="dialog_positive_disable">Disable</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_remove">Remove</string>
-    <string name="dialog_positive_repair">Repair</string>
-    <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_positive_restore">Restore</string>
-    <string name="dialog_positive_set">Set</string>
-    <string name="lookup_button_content">Look up</string>
+    <string name="dialog_continue">Jätka</string>
+    <string name="dialog_positive_create">Loo</string>
+    <string name="dialog_positive_delete">Kustuta</string>
+    <string name="dialog_positive_disable">Keela</string>
+    <string name="dialog_positive_overwrite">Kirjuta üle</string>
+    <string name="dialog_positive_remove">Eemalda</string>
+    <string name="dialog_positive_repair">Paranda</string>
+    <string name="dialog_positive_replace">Asenda</string>
+    <string name="dialog_positive_restore">Taasta</string>
+    <string name="dialog_positive_set">Määra</string>
+    <string name="lookup_button_content">Vaata üles</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
     <string name="check_media_title">Check media?</string>
@@ -134,11 +134,11 @@
     <string name="check_media_no_unused_missing">No unused or missing files found</string>
     <string name="check_media_db_updated">Media database rebuilt</string>
     <string name="check_media_delete_unused">Delete unused</string>
-    <string name="check_media_deleted">Files deleted: %d</string>
+    <string name="check_media_deleted">Kustutatud faile: %d</string>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
-    <string name="tags_dialog_option_due_cards">Due</string>
+    <string name="tags_dialog_option_new_cards">Uus</string>
+    <string name="tags_dialog_option_due_cards">Tähtaeg</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
     <string name="empty_cards_none">No empty cards</string>

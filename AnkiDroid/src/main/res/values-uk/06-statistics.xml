@@ -62,7 +62,7 @@
     <string name="stats_percentage">Відсоток</string>
     <string name="stats_period_month">1 місяць</string>
     <string name="stats_period_year">1 рік</string>
-    <string name="stats_period_lifetime">колода життя</string>
+    <string name="stats_period_lifetime">За весь час</string>
     <string name="stats_deck_collection">колекція</string>
     <string name="stats_time_of_day">Час дня</string>
     <string name="stats_day_of_week">День неділі</string>
@@ -155,7 +155,7 @@
     <plurals name="stats_today_cards">
         <item quantity="one">Переглянуто &lt;b&gt;%1$d карту&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
         <item quantity="few">Переглянуто &lt;b&gt;%1$d карти&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
-        <item quantity="many">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
+        <item quantity="many">Вивчено &lt;b&gt;%1$d карток&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt; сьогодні</item>
         <item quantity="other">Переглянуто &lt;b&gt;%1$d карток&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
     </plurals>
 </resources>

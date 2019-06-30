@@ -111,7 +111,7 @@
     <string name="multimedia_editor_audio_view_recording_failed">Запись не удалась</string>
     <string name="multimedia_editor_audio_view_playing_failed">Не удалось воспроизвести</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text">Редактирование поля</string>
+    <string name="title_activity_edit_text">Поле правки</string>
     <string name="title_activity_translation">Перевод</string>
     <string name="title_activity_load_pronounciation">Произношение</string>
     <!-- Network failure -->

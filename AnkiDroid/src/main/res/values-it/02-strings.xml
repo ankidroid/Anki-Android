@@ -126,10 +126,10 @@
     <string name="fact_adder_intent_title">Carta AnkiDroid</string>
     <string name="card_editor_add_card">Aggiungi nota</string>
     <string name="card_editor_copy_card">Copia carta</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
+    <string name="card_editor_card_scheduling">Programmazione</string>
     <string name="card_editor_reposition_card">Riposiziona</string>
     <string name="card_editor_reset_card">Reimposta progresso</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Ripianifica</string>
     <string name="card_editor_preview_card">Anteprima</string>
     <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo dispositivo</string>
     <string name="rename">Rinomina</string>
@@ -164,11 +164,11 @@
     <string name="confirm_apkg_export_deck">Esporta \"%s\" come file apkg?</string>
     <string name="export_in_progress">Esporto il file apkg&#8230;</string>
     <string name="export_successful_title">Inviare apkg?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_send_button">Invia</string>
+    <string name="export_save_button">Salva su file</string>
+    <string name="export_send_no_handlers">Nessuna applicazione disponibile per gestire apkg. Salvataggio...</string>
+    <string name="export_save_apkg_successful">Salvato con successo apkg</string>
+    <string name="export_save_apkg_unsuccessful">Salvataggio apkg fallito</string>
     <string name="export_successful">Il file \"%s\" è stato esportato. Vuoi inviarlo con un\'altra app?</string>
     <string name="export_email_subject">AnkiDroid ha esportato le carte: %s</string>
     <string name="export_email_text"><![CDATA[        Ciao!
@@ -179,7 +179,7 @@
     <string name="export_unsuccessful">Errore nell\'esportazione del file apkg</string>
     <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
     <string name="upgrade_import_no_file_found">Nessun file importabile %1$s trovato</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Opzioni</string>
     <string name="select_tts">Imposta lingua TTS</string>
     <string name="custom_study">Studio personalizzato</string>
     <string name="more_options">Più</string>
@@ -226,14 +226,14 @@
     <string name="filtered_deck_name">Mazzo filtrato</string>
     <string name="reminder_title">Non dimenticare di studiare oggi!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d carta da studiare in %1$s</item>
+        <item quantity="other">%2$d carte da studiare in %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Errore nella condivisione del file apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">Il pianificatore V2 deve essere abilitato per importare questo file.</string>
+    <string name="import_cannot_with_v2">Il pianificatore V2 non può importare i mazzi V1 con la pianificazione inclusa.</string>
+    <string name="export_v2_dummy_note">Questo file richiede una versione più recente di Anki.</string>
+    <string name="export_v2_forbidden">Passa al pianificatore V1 prima di esportare un singolo mazzo con le informazioni di pianificazione.</string>
 </resources>

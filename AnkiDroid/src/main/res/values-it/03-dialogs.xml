@@ -64,22 +64,22 @@
     <string name="preview_title">Anteprima</string>
     <string name="reposition_card_dialog_title">Riposiziona nuova carta</string>
     <string name="reposition_card_dialog_message">Posizione iniziale:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_not_new_error">Solo le nuove carte possono essere riposizionate</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d carta riposizionata</item>
+        <item quantity="other">%d carte riposizionate</item>
     </plurals>
     <string name="reset_card_dialog_title">Reimposta progresso carta</string>
     <string name="reset_card_dialog_message">Questa scheda sarà posizionata alla fine della \"coda\" delle schede nuove.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d carta resettata</item>
+        <item quantity="other">%d carte resettate</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Rischedula la scheda</string>
     <string name="reschedule_card_dialog_message">Rischedula per review fra x giorni:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d carta ripianificata</item>
+        <item quantity="other">%d carte ripianificate</item>
     </plurals>
     <string name="answering_error_title">Errore database</string>
     <string name="answering_error_message">Si è verificato un errore durante la scrittura della collezione. Potrebbe essere stato causato da un database danneggiato o da spazio su disco insufficiente.\n\nSe accade spesso, prova a controllare il database, riparare la collezione o ripristinare da un backup. Per fare questo clicca su \'opzioni\'.\n\nTuttavia, potrebbe anche trattarsi di un bug di AnkiDroid;per favore segnala l\'errore affinché possiamo verificare.</string>
@@ -89,8 +89,8 @@
     <string name="intent_add_clear_all">Cancella tutto</string>
     <string name="intent_aedict_empty">Categoria \'default\' è vuota</string>
     <string name="intent_aedict_category">Per aggiungere le carte ad AnkiDroid rimuovi tutte le categorie Notepad o aggiungine una chiamata \'default\'</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Carte nuove nel mazzo: %d</string>
+    <string name="custom_study_rev_total_rev">Da ripetere nel mazzo: %d</string>
     <string name="custom_study_new_extend">Aumenta il limite odierno di carte nuove di</string>
     <string name="custom_study_rev_extend">Aumenta il limite odierno di ripetizioni di</string>
     <string name="custom_study_forgotten">Ripeti carte dimenticate negli ultimi x giorni:</string>

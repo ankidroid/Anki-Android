@@ -87,9 +87,9 @@
     <string name="undo_action_delete">حذف یادداشت</string>
     <string name="undo_action_delete_multi">حذف یادداشت‌ها</string>
     <string name="undo_action_change_deck_multi">تغییر دسته ها</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
+    <string name="undo_action_reschedule_card">برنا مه ریزی مجدد</string>
+    <string name="undo_action_reset_card">تنظیم مجدد پیشرفت</string>
+    <string name="undo_action_reposition_card">تغییر مکان</string>
     <string name="move_all_to_deck">انتقال همه به دسته</string>
     <string name="unbury">خروج از حالت مخفی</string>
     <string name="rename_deck">تغییر نام دسته</string>
@@ -144,7 +144,7 @@
     <string name="studyoptions_congrats_custom">جهت مطالعه خارج از برنامه ، بر روی دکمه مطالعه سفارشی زیر کلیک کنید.</string>
     <string name="studyoptions_no_cards_due">هیچ کارتی دریافت نشده است </string>
     <string name="sd_card_not_mounted">هیچ دستگاه ای برای ذخیره سازی نصب نشده است</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">لطفا این یادداشت را ویرایش کنید و برخی کلمات جا افتاده را اضافه کنید. (%1$s)</string>
     <string name="button_sync">همگام سازی</string>
     <string name="cancel_sync_confirm">آیا می خواهید همگام سازی را متوقف کنید؟</string>
     <string name="continue_sync">ادامه همگام سازی</string>
@@ -167,7 +167,7 @@
     </plurals>
     <string name="invalid_template">کارت جدید نمی تواند ساخته شود</string>
     <string name="card_template_editor_would_delete_note">پاکسازی این نوع کارت ممکن است منجر به پاک شدن یک یا تعدادی یادداشت شود.لطفاً در ابتدا یک نوع کارت بسازید. </string>
-    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">قالب برای کارت فعلی حذف شد.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">خواندن و نوشتن داده ها روی AnkiDroid</string>
     <string name="read_write_permission_description">به یادداشتهای موجود، کارت ها، نوع یادداشتها و دسته ها و همچنین ایجاد موارد جدید دسترسی داشته باشید</string>

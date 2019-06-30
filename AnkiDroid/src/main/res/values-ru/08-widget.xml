@@ -42,10 +42,10 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Карточек на сегодня</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="few">%d AnkiDroid cards due</item>
-        <item quantity="many">%d AnkiDroid cards due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d карточка AnkiDroid к просмотру</item>
+        <item quantity="few">%d карточки AnkiDroid к просмотру</item>
+        <item quantity="many">%d карточек AnkiDroid к просмотру</item>
+        <item quantity="other">%d карточек AnkiDroid к просмотру</item>
     </plurals>
     <string name="widget_no_cards_due">На сегодня нет карточек</string>
     <string name="widget_loading">Виджет загружается&#8230;</string>

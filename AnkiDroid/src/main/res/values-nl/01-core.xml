@@ -87,9 +87,9 @@
     <string name="undo_action_delete">memo verwijderen</string>
     <string name="undo_action_delete_multi">notities verwijderen</string>
     <string name="undo_action_change_deck_multi">leersets wijzigen</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
+    <string name="undo_action_reschedule_card">opnieuw inplannen</string>
+    <string name="undo_action_reset_card">leervoortgang herstellen</string>
+    <string name="undo_action_reposition_card">verplaatsen</string>
     <string name="move_all_to_deck">Alles verplaatsen naar leerset</string>
     <string name="unbury">Opgraven</string>
     <string name="rename_deck">Leerset hernoemen</string>
@@ -144,7 +144,7 @@
     <string name="studyoptions_congrats_custom">Om buiten het normale schema te studeren, klik op onderstaande knop Aangepast Studeren.</string>
     <string name="studyoptions_no_cards_due">Nog geen kaarten te doen.</string>
     <string name="sd_card_not_mounted">Apparaatopslag niet aangesloten</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Bewerk deze memo en selecteer woorden die verborgen moeten blijven voor de invuloefening.(%1$s)</string>
     <string name="button_sync">Synchroniseer</string>
     <string name="cancel_sync_confirm">Wilt u de synchronisatie annuleren?</string>
     <string name="continue_sync">Ga verder met synchronisatie</string>
@@ -167,7 +167,7 @@
     </plurals>
     <string name="invalid_template">De kaart kon niet worden aangemaakt</string>
     <string name="card_template_editor_would_delete_note">Het verwijderen van dit kaarttype zou er mogelijk voor zorgen dat een of meer notities worden verwijderd. Gelieve een nieuw kaarttype eerst te maken.</string>
-    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">De sjabloon voor de huidige kaart is verwijderd.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lees en schrijf naar de AnkiDroid database</string>
     <string name="read_write_permission_description">toegang tot bestaande notities, kaarten, notitietypen en dekken (ook nieuwe maken)</string>

@@ -75,6 +75,6 @@
         <item quantity="many">%d minutes remaining</item>
         <item quantity="other">%d minutes remaining</item>
     </plurals>
-    <string name="widget_add_note">Add note</string>
+    <string name="widget_add_note">Přidat poznámku</string>
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

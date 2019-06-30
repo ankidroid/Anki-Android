@@ -89,8 +89,8 @@
     <string name="undo_action_change_deck_multi">Stapel wechseln</string>
     <string name="undo_action_reschedule_card">Neu planen</string>
     <string name="undo_action_reset_card">Fortschritt zurücksetzen</string>
-    <string name="undo_action_reposition_card">reposition</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_reposition_card">Neu anordnen</string>
+    <string name="move_all_to_deck">Alle diesem Stapel hinzufügen</string>
     <string name="unbury">Zurückstellen aufheben</string>
     <string name="rename_deck">Stapel umbenennen</string>
     <string name="menu_add">Hinzufügen</string>
@@ -144,7 +144,7 @@
     <string name="studyoptions_congrats_custom">Tippen Sie unten auf »Benutzerdefiniertes Lernen«, um außerhalb des regulären Lehrplans zu lernen</string>
     <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
     <string name="sd_card_not_mounted">Gerätespeicher nicht eingebunden</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Bitte bearbeiten Sie diese Notiz und fügen Sie einige Lückentext-Streichungen ein. (%1$s)</string>
     <string name="button_sync">Synchronisieren</string>
     <string name="cancel_sync_confirm">Wollen Sie die Synchronisation abbrechen?</string>
     <string name="continue_sync">Synchronisierung fortsetzen</string>

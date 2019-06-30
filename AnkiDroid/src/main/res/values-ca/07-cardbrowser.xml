@@ -45,29 +45,29 @@
         <item quantity="other">%d cartes ensenyades</item>
     </plurals>
     <string name="card_browser_all_decks">Tots els paquets</string>
-    <string name="card_browser_delete_card">Delete notes</string>
-    <string name="card_browser_suspend_card">Suspend cards</string>
+    <string name="card_browser_delete_card">Esborrar nota</string>
+    <string name="card_browser_suspend_card">Suspèn la fitxa</string>
     <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
-    <string name="card_browser_change_deck">Change deck</string>
+    <string name="card_browser_change_deck">Canvia de paquet</string>
     <string name="card_browser_unsuspend_card">Unsuspend cards</string>
     <string name="card_browser_mark_card">Mark notes</string>
     <string name="card_browser_toggle_mark_card">(un)mark notes</string>
     <string name="card_browser_unmark_card">Unmark notes</string>
     <string name="delete_card_title">Suprimeix la nota</string>
-    <string name="delete_cards_title">Delete notes?</string>
+    <string name="delete_cards_title">Esborrar nota?</string>
     <string name="delete_card_message">Segur que voleu suprimir totes les fitxes amb aquesta nota?\nCamp de cerca: %s</string>
     <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
     <string name="deleted_message">Notes deleted</string>
     <string name="changed_deck_message">Moved to %s</string>
     <string name="card_browser_suspended_cards">(un)suspended cards</string>
     <string name="card_browser_show_marked">Filtra les marcades</string>
-    <string name="card_browser_show_suspended">Filtra les suspes</string>
+    <string name="card_browser_show_suspended">Filtra les suspeses</string>
     <string name="card_browser_search_by_tag">Filtrar per la etiqueta</string>
     <string name="card_browser_tags_shown">Etiquetes: %1$s</string>
     <string name="card_browser_list_my_searches">Les meves cerques</string>
     <string name="card_browser_list_my_searches_save">Guardeu cerca</string>
     <string name="card_browser_list_my_searches_title">Trieu un cerca desada</string>
-    <string name="card_browser_list_my_searches_new_name">Nom per a la recerca actual</string>
+    <string name="card_browser_list_my_searches_new_name">Nom per la cerca actual</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">No podeu desar una cerca sense un nom</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">El nom ja existeix</string>
     <string name="card_browser_list_my_searches_remove_content">Voleu suprimir \"%1$s\"?</string>
@@ -91,6 +91,6 @@
         <item>Per revisions</item>
         <item>Per intervals</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
+    <string name="card_browser_select_all">Selecciona-ho tot</string>
     <string name="card_browser_select_none">Select none</string>
 </resources>

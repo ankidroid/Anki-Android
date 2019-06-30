@@ -68,25 +68,25 @@
     <string name="reposition_card_dialog_message">Початкова позиція:</string>
     <string name="reposition_card_not_new_error">Тільки нові картки можуть бути переміщені</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="few">%d cards repositioned</item>
-        <item quantity="many">%d cards repositioned</item>
-        <item quantity="other">%d картки переміщено</item>
+        <item quantity="one">%d картку переміщено</item>
+        <item quantity="few">%d карток переміщено</item>
+        <item quantity="many">%d карток переміщено</item>
+        <item quantity="other">%d карток переміщено</item>
     </plurals>
     <string name="reset_card_dialog_title">Скинути поступ картки</string>
     <string name="reset_card_dialog_message">Ця картка буде переміщена у кінець черги нових карток</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="few">%d cards reset</item>
-        <item quantity="many">%d cards reset</item>
+        <item quantity="one">%d картку скинуто</item>
+        <item quantity="few">%d картки скинуті</item>
+        <item quantity="many">%d картки скинуті</item>
         <item quantity="other">%d картки скинуті</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Перепланувати картки</string>
     <string name="reschedule_card_dialog_message">Запланувати перегляд у наступні x днів:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d картку переплановано</item>
-        <item quantity="few">%d cards rescheduled</item>
-        <item quantity="many">%d cards rescheduled</item>
+        <item quantity="few">%d карток переплановано</item>
+        <item quantity="many">%d карток переплановано</item>
         <item quantity="other">%d картки переплановано</item>
     </plurals>
     <string name="answering_error_title">Помилка бази даних</string>

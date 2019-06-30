@@ -45,10 +45,10 @@
     </plurals>
     <string name="card_browser_all_decks">모든 카드 덱</string>
     <string name="card_browser_delete_card">노트 삭제</string>
-    <string name="card_browser_suspend_card">카드 보류</string>
-    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+    <string name="card_browser_suspend_card">카드 비활성화</string>
+    <string name="card_browser_toggle_suspend_card">카드 (비)활성화</string>
     <string name="card_browser_change_deck">카드 덱</string>
-    <string name="card_browser_unsuspend_card">카드 보류 해제</string>
+    <string name="card_browser_unsuspend_card">카드 활성화</string>
     <string name="card_browser_mark_card">노트 마크하기</string>
     <string name="card_browser_toggle_mark_card">(un)mark notes</string>
     <string name="card_browser_unmark_card">노트 마크 해제하기</string>
@@ -58,9 +58,9 @@
     <string name="delete_card_mult_message">선택된 모든 노트들의 모든 카드를 삭제할까요?\n(선택된 카드 뿐만 아니라 모든 카드가 삭제됩니다.)</string>
     <string name="deleted_message">노트가 삭제되었습니다.</string>
     <string name="changed_deck_message">%s로 이동되었습니다.</string>
-    <string name="card_browser_suspended_cards">(un)suspended cards</string>
+    <string name="card_browser_suspended_cards">(비)활성화된 카드</string>
     <string name="card_browser_show_marked">표시된 카드 필터링</string>
-    <string name="card_browser_show_suspended">보류된 카드 필터링</string>
+    <string name="card_browser_show_suspended">비활성화된 카드 필터링</string>
     <string name="card_browser_search_by_tag">태그별 필터링</string>
     <string name="card_browser_tags_shown">태그: %1$s</string>
     <string name="card_browser_list_my_searches">내가 검색한 항목</string>

@@ -126,10 +126,10 @@
     <string name="fact_adder_intent_title">کارت آنکی دروید</string>
     <string name="card_editor_add_card">افزودن یادداشت</string>
     <string name="card_editor_copy_card">کپی کارت</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
+    <string name="card_editor_card_scheduling">زمان بندی</string>
     <string name="card_editor_reposition_card">تغییر مکان</string>
     <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">برنا مه ریزی مجدد</string>
     <string name="card_editor_preview_card">پیش نمایش</string>
     <string name="error_insufficient_memory">به علت عدم وجود حافظه کافی در دستگاه شما عملیات امکان پذیر نیست</string>
     <string name="rename">تغییر نام</string>
@@ -164,10 +164,10 @@
     <string name="confirm_apkg_export_deck">دسته %s به عنوان یک فایل با پسوند apkg صادر شود؟</string>
     <string name="export_in_progress">در حال صادر کردن فایل apkg&#8230;</string>
     <string name="export_successful_title">فایل apkg ارسال شود؟</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
+    <string name="export_send_button">ارسال</string>
+    <string name="export_save_button">ذخیره در فایل</string>
+    <string name="export_send_no_handlers">هیچ برنامه ای برای apkg در دسترس است. صرفه جویی در...</string>
+    <string name="export_save_apkg_successful">با موفقیت ذخیره شد</string>
     <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
     <string name="export_successful">فایل \"%s\" صادر شد. آیا می خواهید آن را با برنامه دیگری نیز ارسال کنید؟</string>
     <string name="export_email_subject">فلش کارت های صادر شده: %s</string>

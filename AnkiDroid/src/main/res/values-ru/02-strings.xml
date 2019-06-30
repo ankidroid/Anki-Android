@@ -80,7 +80,7 @@
         <item>Тип записи</item>
         <item>Вопрос</item>
         <item>Метки</item>
-        <item>Ошибок</item>
+        <item>Забытых</item>
         <item>Повторения</item>
         <!--
     <item>Changed</item>
@@ -101,7 +101,7 @@
     <string name="custom_study_limit_tags">Отфильтровать по меткам</string>
     <!-- Card editor -->
     <string name="cardeditor_title_add_note">Добавить запись</string>
-    <string name="cardeditor_title_edit_card">Редактировать запись</string>
+    <string name="cardeditor_title_edit_card">Править запись</string>
     <string name="discard_unsaved_changes">Закрыть и отказаться от изменений?</string>
     <string name="factadder_saving_error">Ошибка при сохранении записи</string>
     <string name="saving_facts">Запись сохраняется</string>
@@ -192,8 +192,8 @@
     <string name="steps_error">Шаги должны быть числами больше 0</string>
     <string name="steps_min_error">Требуется по крайней мере один шаг</string>
     <string name="sched_end">(конец)</string>
-    <string name="sched_unbury_action">Чтобы просмотреть их сейчас, выберите \"Вернуть\" в меню</string>
-    <string name="sched_has_buried">Некоторые связанные или отложенные карты были перенесены на завтра</string>
+    <string name="sched_unbury_action">Чтобы просмотреть их сейчас, выберите \"Вернуть\" в меню.</string>
+    <string name="sched_has_buried">Некоторые связанные или отложенные карточки были перенесены на завтра.</string>
     <string name="tag_editor_add_feedback">Выберите “%2$s” чтобы подтвердить добавление “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана существующая метка \"%1$s\"</string>
     <string name="lookup_hint">Скопировав текст, нажмите где-нибудь на карточке, чтобы показать иконку поиска</string>

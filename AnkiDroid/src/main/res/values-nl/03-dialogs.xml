@@ -64,22 +64,22 @@
     <string name="preview_title">Voorbeeld</string>
     <string name="reposition_card_dialog_title">Nieuwe kaart verplaatsen</string>
     <string name="reposition_card_dialog_message">Startpositie:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_not_new_error">Alleen nieuwe kaarten kunnen verplaatst worden</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d kaart verplaatst</item>
+        <item quantity="other">%d kaarten verplaatst</item>
     </plurals>
     <string name="reset_card_dialog_title">Herstel leervoortgang</string>
     <string name="reset_card_dialog_message">Deze kaart zal worden geplaatst aan het einde van de wachtrij voor nieuwe kaarten</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d kaart gereset</item>
+        <item quantity="other">%d kaarten gereset</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Kaart herplannen</string>
     <string name="reschedule_card_dialog_message">Plannen voor herhaling over x dagen:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d kaart opnieuw ingepland</item>
+        <item quantity="other">%d kaarten opnieuw ingepland</item>
     </plurals>
     <string name="answering_error_title">Fout in database</string>
     <string name="answering_error_message">Er is een fout opgetreden tijdens het schrijven naar de collectie. Dit kan wijzen op een corrupte database of op onvoldoende opslagruimte.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn; Meld de fout zodat we dit kunnen controleren.</string>
@@ -89,8 +89,8 @@
     <string name="intent_add_clear_all">Alles legen</string>
     <string name="intent_aedict_empty">Categorie \'standaard\' is leeg</string>
     <string name="intent_aedict_category">Om kaarten aan AnkiDroid toe te voegen verwijder je alle Notepad categorieën of voeg een toe met de naam \'standaard\'</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Nieuwe kaarten in set: %d</string>
+    <string name="custom_study_rev_total_rev">Herhalingen te doen in set: %d</string>
     <string name="custom_study_new_extend">Verhoog de nieuwe kaartenlimiet voor vandaag met</string>
     <string name="custom_study_rev_extend">Verhoog de herhalingenlimiet voor vandaag met</string>
     <string name="custom_study_forgotten">Herhaal kaarten vergeten in de laatste x dagen:</string>

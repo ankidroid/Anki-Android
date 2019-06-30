@@ -48,12 +48,12 @@
     <string name="model_browser_delete">Удалить тип записи</string>
     <string name="model_browser_rename">Переименовать</string>
     <string name="model_browser_options">Параметры</string>
-    <string name="model_browser_template">Редактировать карточки</string>
+    <string name="model_browser_template">Править карточки</string>
     <string name="model_browser_add">Добавить тип записи</string>
     <!--Rename-->
     <string name="rename_model">Переименовать тип</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">Редактировать поля</string>
+    <string name="model_field_editor_title">Править поля</string>
     <string name="model_field_editor_add">Добавить поле</string>
     <string name="model_field_editor_delete">Удалить поле</string>
     <string name="model_field_editor_options">Параметры поля</string>
