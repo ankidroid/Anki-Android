@@ -9,5 +9,5 @@ class BasicModel {
     public static final String[] CARD_NAMES = {"Card 1"};
     // Template for the question of each card
     static final String[] QFMT = {"{{Front}}"};
-    static final String[] AFMT = {"{{FrontSide}}\n\n<hr id=answer>\n\n{{Back}}"};
+    static final String[] AFMT = {"{{FrontSide}}\n\n<hr id=\"answer\">\n\n{{Back}}"};
 }
