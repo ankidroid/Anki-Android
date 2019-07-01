@@ -124,7 +124,6 @@
     <string name="fact_adder_intent_title">AnkiDroid カード</string>
     <string name="card_editor_add_card">ノートを追加</string>
     <string name="card_editor_copy_card">カードをコピー</string>
-    <string name="card_editor_card_scheduling">スケジュールを編集</string>
     <string name="card_editor_reposition_card">新規カードの表示順序を変更</string>
     <string name="card_editor_reset_card">学習履歴をリセット</string>
     <string name="card_editor_reschedule_card">スケジュールを変更</string>

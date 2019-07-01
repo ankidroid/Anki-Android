@@ -126,7 +126,6 @@
     <string name="fact_adder_intent_title">Ankidroid kaart</string>
     <string name="card_editor_add_card">Kaart toevoegen</string>
     <string name="card_editor_copy_card">Kopieer kaart</string>
-    <string name="card_editor_card_scheduling">Planning</string>
     <string name="card_editor_reposition_card">Verplaatsen</string>
     <string name="card_editor_reset_card">Vooruitgang resetten</string>
     <string name="card_editor_reschedule_card">Opnieuw inplannen</string>

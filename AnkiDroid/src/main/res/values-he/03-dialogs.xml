@@ -82,7 +82,7 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <string name="reschedule_card_dialog_title">תזמון קלף מחדש</string>
-    <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+    <string name="reschedule_card_dialog_message">Reschedule for review in x days</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d card rescheduled</item>
         <item quantity="two">%d cards rescheduled</item>

@@ -126,7 +126,6 @@
     <string name="fact_adder_intent_title">Fitxa AnkiDroid</string>
     <string name="card_editor_add_card">Afegeix una nota</string>
     <string name="card_editor_copy_card">Còpia la fitxa</string>
-    <string name="card_editor_card_scheduling">Planificar</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Reinicia</string>
     <string name="card_editor_reschedule_card">Tornar a planificar</string>

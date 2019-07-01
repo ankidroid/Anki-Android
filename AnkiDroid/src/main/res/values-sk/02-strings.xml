@@ -130,7 +130,6 @@
     <string name="fact_adder_intent_title">AnkiDroid kartička</string>
     <string name="card_editor_add_card">Pridať poznámku</string>
     <string name="card_editor_copy_card">Kopírovať kartičku</string>
-    <string name="card_editor_card_scheduling">Plánovanie</string>
     <string name="card_editor_reposition_card">Premiestniť</string>
     <string name="card_editor_reset_card">Vynulovať pokrok</string>
     <string name="card_editor_reschedule_card">Preplánovať</string>

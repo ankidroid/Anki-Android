@@ -126,7 +126,6 @@
     <string name="fact_adder_intent_title">Carte AnkiDroid</string>
     <string name="card_editor_add_card">Ajouter une note</string>
     <string name="card_editor_copy_card">Copier la carte</string>
-    <string name="card_editor_card_scheduling">Planification</string>
     <string name="card_editor_reposition_card">Repositionner</string>
     <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
     <string name="card_editor_reschedule_card">Replanifier</string>

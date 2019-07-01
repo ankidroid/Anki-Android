@@ -130,7 +130,6 @@
     <string name="fact_adder_intent_title">Картка AnkiDroid</string>
     <string name="card_editor_add_card">Додати примітку</string>
     <string name="card_editor_copy_card">Копіювати картку</string>
-    <string name="card_editor_card_scheduling">Планування</string>
     <string name="card_editor_reposition_card">Переставити</string>
     <string name="card_editor_reset_card">Скинути поступ</string>
     <string name="card_editor_reschedule_card">Перепланувати</string>

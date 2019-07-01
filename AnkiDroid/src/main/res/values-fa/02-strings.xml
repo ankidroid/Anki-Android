@@ -126,7 +126,6 @@
     <string name="fact_adder_intent_title">کارت آنکی دروید</string>
     <string name="card_editor_add_card">افزودن یادداشت</string>
     <string name="card_editor_copy_card">کپی کارت</string>
-    <string name="card_editor_card_scheduling">زمان بندی</string>
     <string name="card_editor_reposition_card">تغییر مکان</string>
     <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
     <string name="card_editor_reschedule_card">برنا مه ریزی مجدد</string>

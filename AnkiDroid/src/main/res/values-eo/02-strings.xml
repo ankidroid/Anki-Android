@@ -126,7 +126,6 @@
     <string name="fact_adder_intent_title">AnkiDroid-karto</string>
     <string name="card_editor_add_card">Aldoni noton</string>
     <string name="card_editor_copy_card">Kopii karton</string>
-    <string name="card_editor_card_scheduling">Planado</string>
     <string name="card_editor_reposition_card">Repozicii</string>
     <string name="card_editor_reset_card">Nuligi progreson</string>
     <string name="card_editor_reschedule_card">Replani</string>
