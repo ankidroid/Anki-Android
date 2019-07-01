@@ -123,10 +123,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public static final int DECK_OPTIONS = 1;
 
     /** Constant for class attribute signaling answer */
-    public static final String ANSWER_CLASS = "answer";
+    public static final String ANSWER_CLASS = "\"answer\"";
 
     /** Constant for class attribute signaling question */
-    public static final String QUESTION_CLASS = "question";
+    public static final String QUESTION_CLASS = "\"question\"";
 
     /** Max size of the font for dynamic calculation of font size */
     private static final int DYNAMIC_FONT_MAX_SIZE = 14;
@@ -2329,13 +2329,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      */
     private static String enrichWithQADiv(String content, boolean isAnswer) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<div class=\"");
+        sb.append("<div class=");
         if (isAnswer) {
             sb.append(ANSWER_CLASS);
         } else {
             sb.append(QUESTION_CLASS);
         }
-        sb.append("\" id=\"qa\">");
+        sb.append(" id=\"qa\">");
         sb.append(content);
         sb.append("</div>");
         return sb.toString();
