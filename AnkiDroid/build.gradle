@@ -194,7 +194,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.12.1'
     api project(":api")
 
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.4.2'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.5.0'
     testImplementation 'org.mockito:mockito-core:2.28.2'
     testImplementation 'org.powermock:powermock-core:2.0.2'
     testImplementation 'org.powermock:powermock-module-junit4:2.0.2'
