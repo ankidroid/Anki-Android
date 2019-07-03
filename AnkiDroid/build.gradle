@@ -166,7 +166,7 @@ dependencies {
     annotationProcessor "com.google.auto.service:auto-service:1.0-rc5"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.browser:browser:1.0.0'
@@ -194,7 +194,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.12.1'
     api project(":api")
 
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.4.2'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.5.0'
     testImplementation 'org.mockito:mockito-core:2.28.2'
     testImplementation 'org.powermock:powermock-core:2.0.2'
     testImplementation 'org.powermock:powermock-module-junit4:2.0.2'
