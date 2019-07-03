@@ -179,7 +179,7 @@
     <string name="thirdparty_apps_title">API aplikace třetích stran</string>
     <string name="thirdparty_apps_summary">Zobrazit seznam aplikací, které používají AnkiDroid API, jako jsou slovníky, nástroje.</string>
     <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="html_javascript_debugging_summ">Umožnit vzdálené připojení k WebView a uložit HTML karet do adresáře AnkiDroid</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Pokročilé statistiky</string>
     <string name="enable_advanced_statistics_title">Zapnout pokročilé statistiky</string>

@@ -97,8 +97,8 @@
     <string name="intent_add_clear_all">Wyczyść wszystko</string>
     <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
     <string name="intent_aedict_category">Aby dodać karty AnkiDroid usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'default\'</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Nowe karty w talii: %d</string>
+    <string name="custom_study_rev_total_rev">Oczekujące na przejrzenie karty w talii: %d</string>
     <string name="custom_study_new_extend">Zwiększ dzisiejszy limit nowych kart</string>
     <string name="custom_study_rev_extend">Zwiększ dzisiejszy limit przeglądania</string>
     <string name="custom_study_forgotten">Przejrzyj zapomniane kartę z ostatnich x dni:</string>

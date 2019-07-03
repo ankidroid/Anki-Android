@@ -68,17 +68,17 @@
     <string name="reposition_card_dialog_message">Počáteční pozice:</string>
     <string name="reposition_card_not_new_error">Změnit pořadí lze pouze u nových karet</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d karta změnila pořadí</item>
-        <item quantity="few">%d karty změnily pořadí</item>
-        <item quantity="many">%d cards repositioned</item>
-        <item quantity="other">%d karet změnilo pořadí</item>
+        <item quantity="one">%d karta přesunuta</item>
+        <item quantity="few">%d karty přesunuty</item>
+        <item quantity="many">%d karet přesunuto</item>
+        <item quantity="other">%d karet přesunuto</item>
     </plurals>
     <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
     <string name="reset_card_dialog_message">Tato karta bude umístěna na konec fronty s novými kartami.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d karta obnovena</item>
         <item quantity="few">%d karty obnoveny</item>
-        <item quantity="many">%d cards reset</item>
+        <item quantity="many">%d karet obnoveno</item>
         <item quantity="other">%d karet obnoveno</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Přeplánovat kartu</string>
@@ -86,7 +86,7 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d karta přeplánována</item>
         <item quantity="few">%d karty přeplánovány</item>
-        <item quantity="many">%d cards rescheduled</item>
+        <item quantity="many">%d karet přeplánováno</item>
         <item quantity="other">%d karet přeplánováno</item>
     </plurals>
     <string name="answering_error_title">Chyba databáze</string>

@@ -42,10 +42,10 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Karty do przejrzenia</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="few">%d AnkiDroid cards due</item>
+        <item quantity="one">%d karta do przejrzenia</item>
+        <item quantity="few">%d karty do przejrzenia</item>
         <item quantity="many">%d AnkiDroid cards due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="other">%d kart do przejrzenia</item>
     </plurals>
     <string name="widget_no_cards_due">Brak kart do przejrzenia</string>
     <string name="widget_loading">Ładowanie widżetu...</string>

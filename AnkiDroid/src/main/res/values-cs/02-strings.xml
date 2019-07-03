@@ -245,7 +245,7 @@
     <plurals name="reminder_text">
         <item quantity="one">%2$d karta k zopakování v %1$s</item>
         <item quantity="few">%2$d karty k zopakování v %1$s</item>
-        <item quantity="many">%2$d cards to review in %1$s</item>
+        <item quantity="many">%2$d karet k zopakování v %1$s</item>
         <item quantity="other">%2$d karet k zopakování v %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
