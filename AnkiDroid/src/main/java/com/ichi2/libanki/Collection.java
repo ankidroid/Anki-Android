@@ -55,8 +55,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
@@ -308,33 +306,6 @@ public class Collection {
         }
         return buf.toString();
     }
-
-
-    // NOT in libanki
-    @Nullable
-    public Long getLastAnkiDroidVersion() {
-        try {
-            if (mConf.optLong("AnkiDroidVersion", -1) != -1) {
-                return mConf.getLong("AnkiDroidVersion");
-            }
-        } catch (JSONException e) {
-            Timber.w(e, "Unable to get AnkiDroidVersion from Deck conf");
-        }
-        return null;
-    }
-
-
-    // NOT in libanki
-    public void setLastAnkiDroidVersion(@NonNull Long versionCode) {
-        try {
-            mConf.put("AnkiDroidVersion", versionCode);
-            flush();
-        } catch (JSONException e) {
-            Timber.e(e, "Unable to set AnkiDroidVersion in Deck conf");
-            AnkiDroidApp.sendExceptionReport(e, "Unable to set AnkiDroidVersion in Deck conf");
-        }
-    }
-
 
     /**
      * Mark DB modified. DB operations and the deck/tag/model managers do this automatically, so this is only necessary
