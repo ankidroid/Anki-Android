@@ -1703,7 +1703,7 @@ public class Collection {
                 mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
                 // reviews should have a reasonable due #
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 10000", 0);
+                ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 if (ids.size() > 0) {
                 	problems.add("Reviews had incorrect due date.");
