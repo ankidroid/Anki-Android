@@ -907,8 +907,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
 
         if (skip >= 2 || (preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName()) &&
-                getCol().getLastAnkiDroidVersion() != null &&
-                getCol().getLastAnkiDroidVersion() == VersionUtils.getPkgVersionCode())) {
+            getCol().getLastAnkiDroidVersion() == VersionUtils.getPkgVersionCode())) {
             // This is the main call when there is nothing special required
             onFinishedStartup();
             return;
