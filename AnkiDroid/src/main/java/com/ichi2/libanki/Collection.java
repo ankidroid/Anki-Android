@@ -1698,7 +1698,7 @@ public class Collection {
                 // new cards can't have a due position > 32 bits
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intNow() + ", usn = " + usn()
-                        + " WHERE due > 1000000 AND queue = 0");
+                        + " WHERE due > 1000000 AND type = 0");
                 // new card position
                 mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
                 // reviews should have a reasonable due #
