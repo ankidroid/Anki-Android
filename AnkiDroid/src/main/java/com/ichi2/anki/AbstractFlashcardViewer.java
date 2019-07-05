@@ -694,11 +694,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         StringBuilder sb = new StringBuilder();
         sb.append("<div");
         sb.append("><code id=typeans>");
+
+        // We have to use Matcher.quoteReplacement because the inputs here might have $ or \.
+
         if (!TextUtils.isEmpty(userAnswer)) {
             // The user did type something.
             if (userAnswer.equals(correctAnswer)) {
                 // and it was right.
-                sb.append(DiffEngine.wrapGood(correctAnswer));
+                sb.append(Matcher.quoteReplacement(DiffEngine.wrapGood(correctAnswer)));
                 sb.append("\u2714"); // Heavy check mark
             } else {
                 // Answer not correct.
@@ -706,15 +709,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 // exactly the same as the correct text.
                 String[] diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer);
                 // We know we get back two strings.
-                sb.append(diffedStrings[0]);
+                sb.append(Matcher.quoteReplacement(diffedStrings[0]));
                 sb.append("<br>&darr;<br>");
-                sb.append(diffedStrings[1]);
+                sb.append(Matcher.quoteReplacement(diffedStrings[1]));
             }
         } else {
             if (!mUseInputTag) {
-                sb.append(DiffEngine.wrapMissing(correctAnswer));
+                sb.append(Matcher.quoteReplacement(DiffEngine.wrapMissing(correctAnswer)));
             } else {
-                sb.append(correctAnswer);
+                sb.append(Matcher.quoteReplacement(correctAnswer));
             }
         }
         sb.append("</code></div>");
