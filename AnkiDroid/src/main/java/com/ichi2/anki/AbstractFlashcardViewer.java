@@ -22,6 +22,7 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -59,6 +60,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -1417,11 +1419,22 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Timber.d("Focusable = %s, Focusable in touch mode = %s", webView.isFocusable(), webView.isFocusableInTouchMode());
 
         webView.setWebViewClient(new WebViewClient() {
-            // Filter any links using the custom "playsound" protocol defined in Sound.java.
-            // We play sounds through these links when a user taps the sound icon.
+            @Override
+            @TargetApi(Build.VERSION_CODES.N)
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                return filterUrl(url);
+            }
+
             @Override
             @SuppressWarnings("deprecation") // tracked as #5017 in github
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return filterUrl(url);
+            }
+
+            // Filter any links using the custom "playsound" protocol defined in Sound.java.
+            // We play sounds through these links when a user taps the sound icon.
+            private boolean filterUrl(String url) {
                 if (url.startsWith("playsound:")) {
                     // Send a message that will be handled on the UI thread.
                     Message msg = Message.obtain();
@@ -1435,18 +1448,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 }
                 if (url.startsWith("typeblurtext:")) {
                     // Store the text the javascript has send us…
-                    mTypeInput = URLDecoder.decode(url.replaceFirst("typeblurtext:", ""));
+                    mTypeInput = decodeUrl(url.replaceFirst("typeblurtext:", ""));
                     // … and show the “SHOW ANSWER” button again.
                     mFlipCardLayout.setVisibility(View.VISIBLE);
                     return true;
                 }
                 if (url.startsWith("typeentertext:")) {
                     // Store the text the javascript has send us…
-                    try {
-                        mTypeInput = URLDecoder.decode(url.replaceFirst("typeentertext:", ""), "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        Timber.e(e, "UTF-8 isn't supported as an encoding?");
-                    }
+                    mTypeInput = decodeUrl(url.replaceFirst("typeentertext:", ""));
                     // … and show the answer.
                     mFlipCardLayout.performClick();
                     return true;
@@ -1506,6 +1515,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 return true;
             }
 
+            private String decodeUrl(String url) {
+                try {
+                    return URLDecoder.decode(url, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    Timber.e(e, "UTF-8 isn't supported as an encoding?");
+                }
+                return "";
+            }
 
             // Run any post-load events in javascript that rely on the window being completely loaded.
             @Override
