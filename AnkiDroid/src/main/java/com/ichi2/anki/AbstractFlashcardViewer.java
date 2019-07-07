@@ -1432,18 +1432,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 }
                 if (url.startsWith("typeblurtext:")) {
                     // Store the text the javascript has send us…
-                    mTypeInput = URLDecoder.decode(url.replaceFirst("typeblurtext:", ""));
+                    mTypeInput = decodeUrl(url.replaceFirst("typeblurtext:", ""));
                     // … and show the “SHOW ANSWER” button again.
                     mFlipCardLayout.setVisibility(View.VISIBLE);
                     return true;
                 }
                 if (url.startsWith("typeentertext:")) {
                     // Store the text the javascript has send us…
-                    try {
-                        mTypeInput = URLDecoder.decode(url.replaceFirst("typeentertext:", ""), "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        Timber.e(e, "UTF-8 isn't supported as an encoding?");
-                    }
+                    mTypeInput = decodeUrl(url.replaceFirst("typeentertext:", ""));
                     // … and show the answer.
                     mFlipCardLayout.performClick();
                     return true;
@@ -1503,6 +1499,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 return true;
             }
 
+            private String decodeUrl(String url) {
+                try {
+                    return URLDecoder.decode(url, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    Timber.e(e, "UTF-8 isn't supported as an encoding?");
+                }
+                return "";
+            }
 
             // Run any post-load events in javascript that rely on the window being completely loaded.
             @Override
