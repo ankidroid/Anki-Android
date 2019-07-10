@@ -215,7 +215,7 @@ Here is an annotated description of the JSONObjects in the models field of the `
     id : "model ID, matches notes.mid",
     latexPost : "String added to end of LaTeX expressions (usually \\end{document})",
     latexPre : "preamble for LaTeX expressions",
-    mod : "modification time in milliseconds",
+    mod : "modification time in seconds",
     name : "model name",
     req : [
             "Array of arrays describing, for each template T, which fields are required to generate T.
