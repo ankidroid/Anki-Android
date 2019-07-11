@@ -125,9 +125,9 @@ It's sometimes possible for core and non-core developers to help with troublesho
 
 # Administration
 
-Read ReleaseProcedure for some insight on how AnkiDroid is released.<br>
+Read [Release Procedure](https://github.com/ankidroid/Anki-Android/wiki/Release-procedure) for some insight on how AnkiDroid is released.<br>
 <br>
-LocalizationAdministration describes how Crowdin is managed under the hood.<br>
+[Localization Administration](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#localization-administration) describes how Crowdin is managed under the hood.<br>
 <br>
 <h1>Other open source Android flashcards apps</h1>
 
