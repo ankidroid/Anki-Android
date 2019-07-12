@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat;
 
 import android.os.StatFs;
 import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
@@ -49,6 +50,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
@@ -231,5 +234,18 @@ public class CompatV15 implements Compat {
         }
         target.flush();
         return count;
+    }
+
+    @Override
+    public Object initTtsParams() {
+        return new HashMap<String, String>();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId) {
+        HashMap<String, String> params = (HashMap) ttsParams;
+        params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
+        return tts.speak(text, queueMode, params);
     }
 }
