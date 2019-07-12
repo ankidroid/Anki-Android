@@ -6,11 +6,15 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.Window;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.AnkiDroidApp;
+
+import java.util.HashMap;
 
 import timber.log.Timber;
 
@@ -55,5 +59,15 @@ public class CompatV21 extends CompatV19 implements Compat {
             Timber.e(e, "Unable to enumerate cameras");
         }
         return 0;
+    }
+
+    @Override
+    public Object initTtsParams() {
+        return new Bundle();
+    }
+
+    @Override
+    public int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId) {
+        return tts.speak(text, queueMode, (Bundle) ttsParams, utteranceId);
     }
 }
