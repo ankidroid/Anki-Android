@@ -104,7 +104,7 @@ android {
 play {
     serviceAccountEmail = '294046724212-r3bef6kl46pb9gk0h1pl5rcjmpfrdpjl@developer.gserviceaccount.com'
     serviceAccountCredentials = file("${homePath}/src/583631bdd16d.p12")
-    track = 'alpha'
+    track = 'beta'
 }
 
 // Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
