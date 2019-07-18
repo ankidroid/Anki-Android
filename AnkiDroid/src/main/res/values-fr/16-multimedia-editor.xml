@@ -36,7 +36,7 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Ajouter une image</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
+    <string name="multimedia_editor_popup_audio_clip">Ajouter un extrait audio</string>
     <string name="multimedia_editor_popup_audio">Enregistrer un son</string>
     <string name="multimedia_editor_popup_text">Éditeur avancé</string>
     <string name="multimedia_editor_popup_cloze">Texte à trou</string>
@@ -69,8 +69,8 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text">Texte</string>
     <string name="multimedia_editor_field_editing_image">Image</string>
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio">Enregistrement audio</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Extrait audio</string>
     <string name="multimedia_editor_field_editing_done">Terminé</string>
     <!-- Text field editing -->
     <!-- buttons -->
@@ -92,7 +92,7 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galerie</string>
     <string name="multimedia_editor_image_field_editing_photo">Appareil photo</string>
-    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <string name="multimedia_editor_image_field_editing_library">Bibliothèque</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Téléchargement</string>

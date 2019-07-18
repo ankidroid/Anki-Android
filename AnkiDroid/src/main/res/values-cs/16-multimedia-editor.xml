@@ -70,7 +70,7 @@
     <string name="multimedia_editor_field_editing_text">Text</string>
     <string name="multimedia_editor_field_editing_image">Obrázek</string>
     <string name="multimedia_editor_field_editing_audio">Záznam zvuku</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Zvukový klip</string>
     <string name="multimedia_editor_field_editing_done">Hotovo</string>
     <!-- Text field editing -->
     <!-- buttons -->

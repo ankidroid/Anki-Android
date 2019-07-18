@@ -167,7 +167,7 @@
     <string name="export_save_button">ذخیره در فایل</string>
     <string name="export_send_no_handlers">هیچ برنامه ای برای apkg در دسترس است. صرفه جویی در...</string>
     <string name="export_save_apkg_successful">با موفقیت ذخیره شد</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_save_apkg_unsuccessful">ذخیره پیشنویس ناموفق بود</string>
     <string name="export_successful">فایل \"%s\" صادر شد. آیا می خواهید آن را با برنامه دیگری نیز ارسال کنید؟</string>
     <string name="export_email_subject">فلش کارت های صادر شده: %s</string>
     <string name="export_email_text"><![CDATA[        سلام!
@@ -178,7 +178,7 @@
     <string name="export_unsuccessful">هنگام صادر کردن پرونده apkg خطایی رخ داد</string>
     <string name="import_hint">برای وارد کردن کارتها, فایل apkg را در مسیر \"%s\" قرار داده و دکمه تایید را فشار دهید</string>
     <string name="upgrade_import_no_file_found">فایل %1$s قابل وارد کردن یافت نشد</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">گزینه ها</string>
     <string name="select_tts">تنظیم زبان تبدیل متن به صدا TTS</string>
     <string name="custom_study">مطالعه بر اساس تنظیمات دلخواه</string>
     <string name="more_options">بیشتر</string>
@@ -225,7 +225,7 @@
     <string name="filtered_deck_name">دسته فیلتر شده</string>
     <string name="reminder_title">فراموش نکنید که امروز مطالعه کنید!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
+        <item quantity="one">%2$d کارت جدید برای مرور در %1$s</item>
         <item quantity="other">%2$d cards to review in %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->

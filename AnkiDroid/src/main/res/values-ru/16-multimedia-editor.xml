@@ -36,7 +36,7 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Добавить изображение</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
+    <string name="multimedia_editor_popup_audio_clip">Добавить аудио</string>
     <string name="multimedia_editor_popup_audio">Записать звук</string>
     <string name="multimedia_editor_popup_text">Расширенный редактор</string>
     <string name="multimedia_editor_popup_cloze">Задание с пропусками</string>
