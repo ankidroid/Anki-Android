@@ -111,7 +111,7 @@ var onPageFinished = function() {
         var card = document.querySelector('.card');
         MathJax.Hub.Queue(['Typeset', MathJax.Hub, card]);
         MathJax.Hub.Queue(function () {
-            card.classList.remove("hidden");
+            card.classList.remove("mathjax-hasnt-rendered-yet");
         });
     }
 }
