@@ -172,7 +172,7 @@ dependencies {
     implementation 'androidx.browser:browser:1.0.0'
     implementation 'androidx.exifinterface:exifinterface:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'io.requery:sqlite-android:3.28.0'
+    implementation 'io.requery:sqlite-android:3.29.0'
     implementation 'android.arch.persistence:db-framework:1.1.1'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
