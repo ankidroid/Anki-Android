@@ -137,6 +137,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public static final int RESULT_MEDIA_EJECTED = 202;
     public static final int RESULT_DB_ERROR = 203;
 
+    protected static final String UPGRADE_VERSION_KEY = "lastUpgradeVersion";
 
     /**
      * Available options performed by other activities (request codes for onActivityResult())
@@ -1013,27 +1014,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
             int current = VersionUtils.getPkgVersionCode();
             Timber.i("Current AnkiDroid version: %s", current);
             int previous;
-            if (preferences.contains("lastUpgradeVersion")) {
+            if (preferences.contains(UPGRADE_VERSION_KEY)) {
                 // Upgrading currently installed app
-                try {
-                    previous = preferences.getInt("lastUpgradeVersion", current);
-                    Timber.i("Previous AnkiDroid version: %s", previous);
-                } catch (ClassCastException e) {
-                    // Previous versions stored this as a string.
-                    String s = preferences.getString("lastUpgradeVersion", "");
-                    // The last version of AnkiDroid that stored this as a string was 2.0.2.
-                    // We manually set the version here, but anything older will force a DB check.
-                    if ("2.0.2".equals(s)) {
-                        previous = 40;
-                    } else {
-                        previous = 0;
-                    }
-                }
+                previous = getPreviousVersion(preferences, current);
             } else {
                 // Fresh install
                 previous = current;
             }
-            preferences.edit().putInt("lastUpgradeVersion", current).apply();
+            preferences.edit().putInt(UPGRADE_VERSION_KEY, current).apply();
 
             // New version, clear out old exception report limits
             AnkiDroidApp.deleteACRALimiterData(this);
@@ -1157,6 +1145,24 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    protected int getPreviousVersion(SharedPreferences preferences, int current) {
+        int previous;
+        try {
+            previous = preferences.getInt(UPGRADE_VERSION_KEY, current);
+            Timber.i("Previous AnkiDroid version: %s", previous);
+        } catch (ClassCastException e) {
+            // Previous versions stored this as a string.
+            String s = preferences.getString(UPGRADE_VERSION_KEY, "");
+            // The last version of AnkiDroid that stored this as a string was 2.0.2.
+            // We manually set the version here, but anything older will force a DB check.
+            if ("2.0.2".equals(s)) {
+                previous = 40;
+            } else {
+                previous = 0;
+            }
+        }
+        return previous;
+    }
 
     private void upgradePreferences(long previousVersionCode) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
