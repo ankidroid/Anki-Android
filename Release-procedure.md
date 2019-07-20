@@ -53,7 +53,7 @@ This makes the new build available to Chromebook users that do not have access t
 ## Prepare for next cycle
   * Click http://code.google.com/p/ankidroid/issues/list?q=status%3AFixedInDev then click Select All, unselect the ones that are for a next version, then in "Actions" select "Bulk edit". Set status to "Fixed" and message "Fixed in version 0.6, available on Google Play", "Send email" checked.
 
-## Merging from release or hotfix branch back into develop
+## Merging new changes from master into a release or hotfix branch
 The following procedure can be used to merge commits from master into a release branch
 
 ```bash
