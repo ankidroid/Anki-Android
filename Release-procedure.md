@@ -3,7 +3,7 @@ This page describes how to release AnkiDroid. It can be interesting as an insigh
 # Development lifecycle
 There are three main phases the project alternates between (alpha, beta, stable).
 
-We use a simple branching model where "master" (the default branch) contains the latest (unstable) development code, which is where all merge requests should be submitted. When we move into the "beta" phase of the development cycle, we implement a feature freeze, and a temporary branch "release-N.n" (N.n being the version code) is created which is only for important bug fixes. During this period, important bug fixes are cherry-picked by the development team into "release-N.n". If an urgent bug is discovered shortly after a major release, a special "hotfix-N.n" branch will be created from the tag from the [latest source code](https://github.com/ankidroid/Anki-Android/releases/latest).
+We use a simple branching model where "master" (the default branch) contains the latest (unstable) development code, which is where all merge requests should be submitted. When we move into the "beta" phase of the development cycle, we implement a feature freeze, and a temporary branch "release-N.n" (N.n being the version code) is created which is only for important bug fixes. During this period, important bug fixes are merged by the development team into "release-N.n" (see below). If an urgent bug is discovered shortly after a major release, a special "hotfix-N.n" branch will be created from the tag from the [latest source code](https://github.com/ankidroid/Anki-Android/releases/latest).
 
 # Alpha or beta release procedure
   * Always use this repository: https://github.com/ankidroid/Anki-Android
@@ -48,10 +48,6 @@ This makes the new build available to Chromebook users that do not have access t
   * ` ./release.sh <FULL PATH TO THE APK-TO-CRX SCRIPT>/apk_to_crx.py <FULL PATH TO THE APK>/AnkiDroid-2.8.4.apk`
 * Go to the [Chrome Web Store developer dashboard](https://chrome.google.com/webstore/developer/dashboard)
 * Upload the new crx file and publish it, with any notes that seem necessary
-
-
-## Prepare for next cycle
-  * Click http://code.google.com/p/ankidroid/issues/list?q=status%3AFixedInDev then click Select All, unselect the ones that are for a next version, then in "Actions" select "Bulk edit". Set status to "Fixed" and message "Fixed in version 0.6, available on Google Play", "Send email" checked.
 
 ## Merging new changes from master into a release or hotfix branch
 The following procedure can be used to merge commits from master into a release branch
