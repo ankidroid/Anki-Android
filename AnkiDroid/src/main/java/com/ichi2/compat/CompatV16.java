@@ -3,6 +3,7 @@ package com.ichi2.compat;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.res.TypedArray;
 
 import androidx.annotation.NonNull;
@@ -198,4 +199,9 @@ public class CompatV16 implements Compat {
         return tts.speak(text, queueMode, params);
     }
 
+    @Override
+    @SuppressWarnings("deprecation")
+    public long getVersionCode(PackageInfo pInfo) {
+        return pInfo.versionCode;
+    }
 }

@@ -1009,11 +1009,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // to a version that contains additions to the database integrity check routine that we would
             // like to run on all collections. A missing version number is assumed to be a fresh
             // installation of AnkiDroid and we don't run the check.
-            // FIXME to use new API and change from int to long is very problematic. It's strongly typed in the XML and needs handling
-            // FIXME or it isn't backwards compatible - blows up development and may hurt users
-            int current = VersionUtils.getPkgVersionCode();
+            long current = VersionUtils.getPkgVersionCode();
             Timber.i("Current AnkiDroid version: %s", current);
-            int previous;
+            long previous;
             if (preferences.contains(UPGRADE_VERSION_KEY)) {
                 // Upgrading currently installed app
                 previous = getPreviousVersion(preferences, current);
@@ -1021,7 +1019,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // Fresh install
                 previous = current;
             }
-            preferences.edit().putInt(UPGRADE_VERSION_KEY, current).apply();
+            preferences.edit().putLong(UPGRADE_VERSION_KEY, current).apply();
 
             // New version, clear out old exception report limits
             AnkiDroidApp.deleteACRALimiterData(this);
@@ -1145,22 +1143,30 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    protected int getPreviousVersion(SharedPreferences preferences, int current) {
-        int previous;
+    protected long getPreviousVersion(SharedPreferences preferences, long current) {
+        long previous;
         try {
-            previous = preferences.getInt(UPGRADE_VERSION_KEY, current);
-            Timber.i("Previous AnkiDroid version: %s", previous);
+            previous = preferences.getLong(UPGRADE_VERSION_KEY, current);
         } catch (ClassCastException e) {
-            // Previous versions stored this as a string.
-            String s = preferences.getString(UPGRADE_VERSION_KEY, "");
-            // The last version of AnkiDroid that stored this as a string was 2.0.2.
-            // We manually set the version here, but anything older will force a DB check.
-            if ("2.0.2".equals(s)) {
-                previous = 40;
-            } else {
-                previous = 0;
+            try {
+                // set 20900203 to default value, as it's the latest version that stores integer in shared prefs
+                previous = preferences.getInt(UPGRADE_VERSION_KEY, 20900203);
+            } catch (ClassCastException cce) {
+                // Previous versions stored this as a string.
+                String s = preferences.getString(UPGRADE_VERSION_KEY, "");
+                // The last version of AnkiDroid that stored this as a string was 2.0.2.
+                // We manually set the version here, but anything older will force a DB check.
+                if ("2.0.2".equals(s)) {
+                    previous = 40;
+                } else {
+                    previous = 0;
+                }
             }
+            Timber.d("Updating shared preferences stored key %s type to long", UPGRADE_VERSION_KEY);
+            // Expected Editor.putLong to be called later to update the value in shared prefs
+            preferences.edit().remove(UPGRADE_VERSION_KEY).apply();
         }
+        Timber.i("Previous AnkiDroid version: %s", previous);
         return previous;
     }
 
