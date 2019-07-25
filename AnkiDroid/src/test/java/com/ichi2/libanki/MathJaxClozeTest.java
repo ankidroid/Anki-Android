@@ -78,4 +78,16 @@ public class MathJaxClozeTest extends RobolectricTest {
         assertTrue(a.contains("\\(1 \\div 2 =\\)"));
         assertTrue(a.contains("<span class=cloze>\\(\\frac{1}{2}\\)</span>"));
     }
+
+    @Test
+    public void textContainsMathjax()
+    {
+        assertFalse(Template.textContainsMathjax("Hello world."));
+        assertFalse(Template.textContainsMathjax(""));
+        assertTrue(Template.textContainsMathjax("This is an inline! \\(1 \\div 2 =\\){{c1::\\(\\frac{1}{2}\\)}}"));
+        assertTrue(Template.textContainsMathjax("This is two inlines! \\(1 \\div 2 =\\)\\(1 \\div 2 \\)"));
+        assertTrue(Template.textContainsMathjax("This is an block equation! \\[1 \\div 2 = 1 \\div 2 \\]"));
+        assertFalse(Template.textContainsMathjax("This has mismatched brackets! \\[1 \\div 2 = 1 \\div 2 \\)"));
+        assertFalse(Template.textContainsMathjax("This has mismatched brackets too! \\(1 \\div 2 = 1 \\div 2 \\]"));
+    }
 }
