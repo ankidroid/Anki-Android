@@ -59,7 +59,7 @@ public class ImportUtils {
 
             // Hack to fix bug where ContentResolver not returning filename correctly
             if (filename == null) {
-                if (intent.getType().equals("application/apkg") || ImportUtils.hasValidZipFile(context, intent)) {
+                if (intent.getType() != null && (intent.getType().equals("application/apkg") || ImportUtils.hasValidZipFile(context, intent))) {
                     // Set a dummy filename if MIME type provided or is a valid zip file
                     filename = "unknown_filename.apkg";
                     Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue");
