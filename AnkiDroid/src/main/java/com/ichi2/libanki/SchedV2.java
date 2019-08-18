@@ -2551,8 +2551,18 @@ public class SchedV2 extends Sched {
 
 
     private void _removeAllFromLearning() {
+        _removeAllFromLearning(2);
+    }
+
+    private void _removeAllFromLearning(int schedVer) {
         // remove review cards from relearning
-        mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", Utils.intNow(), mCol.usn()));
+        if (schedVer == 1) {
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", Utils.intNow(), mCol.usn()));
+        } else {
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = %d+ivl, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", mToday, Utils.intNow(), mCol.usn()));
+        }
+
+
         // remove new cards from learning
         forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "select id from cards where queue in (1,3)", 0)));
     }
@@ -2587,7 +2597,7 @@ public class SchedV2 extends Sched {
 
     public void moveToV2() {
         _emptyAllFiltered();
-        _removeAllFromLearning();
+        _removeAllFromLearning(1);
         _remapLearningAnswers("ease=ease+1 where ease in (2,3)");
     }
 
