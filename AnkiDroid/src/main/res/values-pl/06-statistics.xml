@@ -71,7 +71,7 @@
     <string name="stats_answer_type">Typ odpowiedzi</string>
     <string name="stats_today_again_count">Liczba powtórek: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; dobrze)</string>
-    <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_type_breakdown">Uczone: &lt;b&gt;%1$d&lt;/b&gt;, powtórki: &lt;b&gt;%2$d&lt;/b&gt;, uczone ponownie: &lt;b&gt;%3$d&lt;/b&gt;, odfiltrowane: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Poprawnych odpowiedzi w dojrzałych kartach: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">Dojrzałe karty nie były dziś pokazywane.</string>
     <string name="stats_overview_forecast_total">Razem powtórek: &lt;b&gt;%1$d&lt;/b&gt;</string>
@@ -154,7 +154,7 @@
     </string-array>
     <plurals name="stats_today_cards">
         <item quantity="one">Dziś przerobiono &lt;b&gt;%1$d kartę&lt;/b&gt; w &lt;b&gt;%2$s&lt;/b&gt;</item>
-        <item quantity="few">Dziś przerobiono &lt;b&gt;%1$d kart&lt;/b&gt; w &lt;b&gt;%2$s&lt;/b&gt;</item>
+        <item quantity="few">Dziś przerobiono &lt;b&gt;%1$d karty&lt;/b&gt; w &lt;b&gt;%2$s&lt;/b&gt;</item>
         <item quantity="many">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
         <item quantity="other">Dziś przerobiono &lt;b&gt;%1$d kart&lt;/b&gt; w &lt;b&gt;%2$s&lt;/b&gt;</item>
     </plurals>

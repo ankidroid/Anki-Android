@@ -160,8 +160,8 @@
     <string name="confirm_apkg_export_deck">將 \"%s\" 匯出成 apkg 檔案嗎？</string>
     <string name="export_in_progress">正在匯出 apkg 檔案&#8230;</string>
     <string name="export_successful_title">發送apkg文件嗎？</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
+    <string name="export_send_button">發送</string>
+    <string name="export_save_button">儲存到檔案</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved apkg</string>
     <string name="export_save_apkg_unsuccessful">Save apkg failed</string>

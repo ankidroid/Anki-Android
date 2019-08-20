@@ -51,7 +51,7 @@
     <string name="widget_loading">Ładowanie widżetu...</string>
     <plurals name="widget_cards_in_decks_due">
         <item quantity="one">%1$d karta do przejrzenia w %2$s</item>
-        <item quantity="few">%1$d kart do przejrzenia w %2$s</item>
+        <item quantity="few">%1$d karty do przejrzenia w %2$s</item>
         <item quantity="many">%1$d cards due in %2$s</item>
         <item quantity="other">%1$d kart do przejrzenia w %2$s</item>
     </plurals>
@@ -59,7 +59,7 @@
         <item quantity="one">%1$d talia</item>
         <item quantity="few">%1$d talie</item>
         <item quantity="many">%1$d decks</item>
-        <item quantity="other">%1$d talie</item>
+        <item quantity="other">%1$d talii</item>
     </plurals>
     <string name="widget_small">AnkiDroid Mały</string>
     <string name="widget_small_button">AnkiDroid</string>

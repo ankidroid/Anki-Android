@@ -261,7 +261,7 @@
     <string name="deck_conf_cram_reschedule">Remarcar</string>
     <string name="deck_conf_cram_reschedule_summ">Reagendar cartões baseado nas minhas respostas deste deck</string>
     <string name="deck_conf_cram_steps">Passos personalizados (em minutos)</string>
-    <string name="deck_conf_cram_steps_summ">Definir passoss personalizados</string>
+    <string name="deck_conf_cram_steps_summ">Definir passos personalizados</string>
     <string name="deck_conf_reminders_enabled">Habilitar notificações de lembretes para os decks neste grupo</string>
     <string name="deck_conf_reminders_time">Lembrar em</string>
     <!-- analytics options -->
