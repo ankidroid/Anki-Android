@@ -64,22 +64,22 @@
     <string name="preview_title">Pré visualização</string>
     <string name="reposition_card_dialog_title">Reposicionar novo cartão</string>
     <string name="reposition_card_dialog_message">Posição inicial:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_not_new_error">Apenas novos cartões podem ser reposicionados</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d cartão reposicionado</item>
+        <item quantity="other">%d cartões reposicionados</item>
     </plurals>
     <string name="reset_card_dialog_title">Redefinir progresso do cartão</string>
     <string name="reset_card_dialog_message">Este cartão será colocado no final da fila de novos cartões.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d resetar cartão</item>
+        <item quantity="other">%d resetar cartões</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Remarcar cartão</string>
     <string name="reschedule_card_dialog_message">Remarcar para revisão em x dias:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d cartão reagendado</item>
+        <item quantity="other">%d cartões reagendados</item>
     </plurals>
     <string name="answering_error_title">Erro de banco de dados</string>
     <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Isso pode estar relacionado a um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso acontecer mais frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso pode ser um bug do AnkiDroid; relate o erro para que possamos verificar o problema.</string>
@@ -89,8 +89,8 @@
     <string name="intent_add_clear_all">Apagar tudo</string>
     <string name="intent_aedict_empty">Categoria \'padrão\' está vazia</string>
     <string name="intent_aedict_category">Para adicionar cartões ao AnkiDroid remova todas as categorias das notas ou adicione uma com o nome \'default\'</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Novos cartões no deck: %d</string>
+    <string name="custom_study_rev_total_rev">Revisões pendentes no baralho: %d</string>
     <string name="custom_study_new_extend">Aumentar o limite de novos cartões hoje em</string>
     <string name="custom_study_rev_extend">Aumentar o limite de revisões hoje em</string>
     <string name="custom_study_forgotten">Revisar cartões esquecidos nos últimos x dias:</string>

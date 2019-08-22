@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">Dum la sekva semtempigado devigi ŝanĝojn nur al unu direkto</string>
     <string name="full_sync_confirmation">La petita ŝanĝo postulos plenan alŝuton de la datumbazo dum la sekva samtempigado de via kolekto. Se vi havas ripetojn aŭ aliajn ŝanĝojn atendantajn ĉe alia aparato, kiuj jam ne estas samtempigitajn tie ĉi, ili perdiĝos. Ĉu pluigi?</string>
     <string name="full_sync_confirmation_upgrade">Pro la eraro en antaŭe instalita versio de AnkiDroid, estas konsilinde devigi plenan samtempigadon.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">Fiaskis aŭtentigi retperanton.</string>
     <string name="sync_error_409">Nur unu kliento povas atingi AnkiWeb samtempe. Se antaŭa sinkronigo malsukcesis, bonvolu reprovi ĝin en kelkaj minutoj.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">Via kolekto de aŭdvidaĵoj estas tro ampleksa por samtempigi.</string>
+    <string name="sync_error_500_unknown">Eraro okazis ĉe AnkiWeb. Bonvolu provi ĝin denove post kelkaj minutoj, kaj se la problemo daŭros, bonvolu sendi eraro-raporton.</string>
     <string name="sync_error_501_upgrade_required">Bonvolu instali la plej novan version de AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb estas vartata. Bonvolu reprovi ĝin en kelkaj minutoj.</string>
+    <string name="sync_error_504_gateway_timeout">Okazis eraro 504: templimo de konekto atingita.</string>
 </resources>

@@ -1,4 +1,5 @@
 language: android
+dist: trusty
 
 jdk:
   - oraclejdk8
@@ -6,42 +7,46 @@ jdk:
 env:
   global:
     - ADB_INSTALL_TIMEOUT=8
-    - ABI=armeabi-v7a
+    - ABI=x86_64
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
     # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
     - ANDROID_HOME=/usr/local/android-sdk
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
   matrix:
-   #- API=15 # fails consistently but can run locally
-   - API=16 AUDIO=-no-audio
-   - API=17
-   #- API=18 # API18 has started being flaky
-   # API 20 doesn't have an emulator
+   #- API=15 # only runs locally. Create+Start once from AndroidStudio to init sdcard. Then only from command-line w/-engine classic
+   - API=16 ABI=armeabi-v7a AUDIO=-no-audio
+   - API=17 ABI=armeabi-v7a
+   - API=18 ABI=armeabi-v7a # API18 has started being flaky
+   #- API=19 ABI=armeabi-v7a # Fails: kernel/emulator mismatch, and emulator-29+ doesn't support "-engine classic" to fix
+   # API 20 was Android Wear only
    - API=21
    - API=22
-   #- API=23 EMU_FLAVOR=google_apis # fails consistently but can run local
-   #- API=24 #API24 flaky now as well (after API18 started flaking). It is a progressive disease with more tests I think
-   # API16 and API19 are the fastest APIs, Travis runs 5 at a time and we have 6, this is the fastest way to do all 6 APIs
-   - API=19
-   #- API=25 EMU_FLAVOR=google_apis # fails consistently but can run local
-   # API >= 26 don't have arm emulators, and Travis doesn't support x86
-
-# All failing emulators are disabled now, but leaving this in for future work enabling them
-#matrix:
-#  fast_finish: true # We can report success without waiting for these
-#  allow_failures:
-#    - env: API=15 # sometimes emulator hangs, sometimes not - possibly fixable
-#    - env: API=23 EMU_FLAVOR=google_apis # has permission errors
-#    - env: API=25 EMU_FLAVOR=google_apis # has permission errors, emulator timeout
+   - API=23
+   - API=24
+   - API=25
+   #- API=26 ABI=x86_64 # Fails with unrecognized tests? orchestrator change or something?
+   #- API=27 # Same failure as below for API28, but less frequently
+   #- API=28 # Fails on adb 2 second getprop timeout and get API getprop takes 2.2s, so emulator boots but adb won't install on unknown API
+   #- API=Q  # Fails at some point on emulator startup or detecting startup complete
 
 jobs:
+  fast_finish: true  # We can report success without waiting for jobs that we
+                     # allow / expect to fail.
   include:
+    - jdk: oraclejdk11
+      env: API=24
     # The test stage is implicit, we only need to define a post-test stage for codacy finalization
     - stage: finalize_coverage
       env: FINALIZE_COVERAGE=TRUE API=NONE
       install: skip
       script: echo finalize codacy coverage uploads
+  allow_failures:
+    - jdk: oraclejdk11
+    # API=28/Q are probably fixable but we don't need allow_failures to be on
+    # in master to work through them.
+    #- env: API=28
+    #- env: API=Q
 
 android:
   components:
@@ -61,21 +66,19 @@ install:
   - echo y | sdkmanager "build-tools;28.0.3" >/dev/null # Implicit gradle dependency - gradle drives changes
   - echo y | sdkmanager "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
   - echo y | sdkmanager "platforms;android-28" >/dev/null # We need the API of the current compileSdkVersion from gradle.properties
+  - echo y | sdkmanager --channel=4 "emulator" >/dev/null # Use canary channel to get emulator 29.x for x86_64 image support
   - echo y | sdkmanager "extras;android;m2repository" >/dev/null
   - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null # install our emulator
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
-  - emulator -avd test -engine classic -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 1536 &
+  - emulator -verbose -avd test -no-accel -no-snapshot -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 2048 &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
 script:
-  - ./gradlew jacocoTestReport
+  - ./gradlew jacocoTestReport # This produces an error while doing the API getprop on API 28...
 
-# Codacy integration, partials for all APIs, then an optional finalize
 after_success:
-  - wget --progress=dot:giga -O ~/codacy-coverage-reporter-assembly-latest.jar https://oss.sonatype.org/service/local/repositories/releases/content/com/codacy/codacy-coverage-reporter/4.0.2/codacy-coverage-reporter-4.0.2-assembly.jar
-  - if [[ ( "$API" != "NONE" ) ]]; then java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r AnkiDroid/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml --partial; fi
-  - if [[ ( "$FINALIZE_COVERAGE" == "TRUE" ) ]]; then java -jar ~/codacy-coverage-reporter-assembly-latest.jar final; fi
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash tools/upload-codacy-report.sh; fi
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock

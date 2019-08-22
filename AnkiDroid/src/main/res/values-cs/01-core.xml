@@ -91,12 +91,12 @@
     <string name="undo_action_suspend_card">vyřadit kartu</string>
     <string name="undo_action_suspend_note">vyřadit poznámku</string>
     <string name="undo_action_delete">odstranit poznámku</string>
-    <string name="undo_action_delete_multi">delete notes</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_delete_multi">odstranit poznámky</string>
+    <string name="undo_action_change_deck_multi">změnit balíky</string>
+    <string name="undo_action_reschedule_card">přeplánovat</string>
+    <string name="undo_action_reset_card">obnovit proces</string>
+    <string name="undo_action_reposition_card">změnit pořadí</string>
+    <string name="move_all_to_deck">Přemístit vše do balíku</string>
     <string name="unbury">Zruš přeskočení</string>
     <string name="rename_deck">Přejmenovat balíček</string>
     <string name="menu_add">Přidat</string>
@@ -150,7 +150,7 @@
     <string name="studyoptions_congrats_custom">Pro studium mimo normální plán klepněte na tlačítko \'Vlastní učení\'.</string>
     <string name="studyoptions_no_cards_due">Žádné další karty k opakování</string>
     <string name="sd_card_not_mounted">Zařízení úložiště není připojeno</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Upravte tuto poznámku a přidejte nějaké doplňovačky. (%1$s)</string>
     <string name="button_sync">Synchronizovat</string>
     <string name="cancel_sync_confirm">Přejete si přerušit synchronizaci?</string>
     <string name="continue_sync">Pokračovat v synchronizaci</string>
@@ -175,7 +175,7 @@
     </plurals>
     <string name="invalid_template">Karta nemůže být vytvořena</string>
     <string name="card_template_editor_would_delete_note"> Odstraněním tohoto typu karty můžete způsobit, že jedna nebo         více poznámek budou odstraněny. Nejprve vytvořte nový typ karty.</string>
-    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">Šablona současné karty byla odstraněna.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Čtení a zápis do AnkiDroid databáze</string>
     <string name="read_write_permission_description">spravovat stávající poznámky, karty, typy poznámek a balíčky, a také vytvářet nové</string>

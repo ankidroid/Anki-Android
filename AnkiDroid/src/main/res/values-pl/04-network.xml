@@ -123,8 +123,8 @@
     <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
     <string name="sync_error_409">Tylko jeden klient na raz może uzyskać dostęp do AnkiWeb. Jeśli poprzednia synchronizacja nie powiodła się, spróbuj ponownie za kilka minut.</string>
     <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_500_unknown">Nastąpił błąd. Proszę spróbować ponownie za kilka minut, a jeśli problem nie ustąpi, proszę złożyć raport o błędach.</string>
     <string name="sync_error_501_upgrade_required">Proszę zaktualizuj do najnowszej wersji AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb jest chwilowo niedostępny. Proszę spróbować ponownie za kilka minut.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
 </resources>

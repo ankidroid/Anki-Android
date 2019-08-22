@@ -130,10 +130,9 @@
     <string name="fact_adder_intent_title">AnkiDroid kartička</string>
     <string name="card_editor_add_card">Pridať poznámku</string>
     <string name="card_editor_copy_card">Kopírovať kartičku</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
     <string name="card_editor_reposition_card">Premiestniť</string>
     <string name="card_editor_reset_card">Vynulovať pokrok</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Preplánovať</string>
     <string name="card_editor_preview_card">Náhľad</string>
     <string name="error_insufficient_memory">Operáciu nie je možné vykonať pre nedostatok pamäte vo vašom prístroji</string>
     <string name="rename">Premenovať</string>
@@ -170,11 +169,11 @@
     <string name="confirm_apkg_export_deck">Exportovať “%s” ako apkg súbor?</string>
     <string name="export_in_progress">Exportuje sa apkg súbor&#8230;</string>
     <string name="export_successful_title">Odoslať apkg?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_send_button">Odoslať</string>
+    <string name="export_save_button">Uložiť do súboru</string>
+    <string name="export_send_no_handlers">Žiadna aplikácia na spracovanie apkg. Ukladanie...</string>
+    <string name="export_save_apkg_successful">Úspešne uložené apkg</string>
+    <string name="export_save_apkg_unsuccessful">Ukladanie apkg zlyhalo</string>
     <string name="export_successful">Súbor “%s” bol exportovaný. Chcete ho odoslať s ďalšou aplikáciou?</string>
     <string name="export_email_subject">AnkiDroid exportoval kartičky: %s</string>
     <string name="export_email_text"><![CDATA[        Ahoj!
@@ -185,7 +184,7 @@
     <string name="export_unsuccessful">Chyba pri exportovaní apkg súboru</string>
     <string name="import_hint">Ak chcete importovať kartičky, umiestnite súbor apkg do adresára %s a stlačte ok</string>
     <string name="upgrade_import_no_file_found">Žiaden importovateľný %1$s súbor nebol nájdený</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Možnosti</string>
     <string name="select_tts">Nastaviť jazyk TTS (text na reč)</string>
     <string name="custom_study">Vlastné štúdium</string>
     <string name="more_options">Viac</string>
@@ -244,16 +243,16 @@
     <string name="filtered_deck_name">Filtrovaný balíček</string>
     <string name="reminder_title">Nezabudnite dnes študovať!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="few">%2$d cards to review in %1$s</item>
-        <item quantity="many">%2$d cards to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d kartička na zopakovanie v %1$s</item>
+        <item quantity="few">%2$d kartička na zopakovanie v %1$s</item>
+        <item quantity="many">%2$d kartičiek na zopakovanie v %1$s</item>
+        <item quantity="other">%2$d kartičiek na zopakovanie v %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba pri zdieľaní apkg súboru</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">V2 plánovač musí byť povolený pre import tohto súboru.</string>
+    <string name="import_cannot_with_v2">V2 plánovač nedokáže importovať V1 balíčky s uvedeným plánovaním.</string>
+    <string name="export_v2_dummy_note">Tento súbor vyžaduje novšiu verziu Anki.</string>
+    <string name="export_v2_forbidden">Prosím zmeňte na plánovač V1 pred exportom jedného balíčka s informáciami plánovania.</string>
 </resources>

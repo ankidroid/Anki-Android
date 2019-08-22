@@ -130,7 +130,6 @@
     <string name="fact_adder_intent_title">„AnkiDroid“ kortelė</string>
     <string name="card_editor_add_card">Pridėti užrašą</string>
     <string name="card_editor_copy_card">Kopijuoti kortelę</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
     <string name="card_editor_reposition_card">Keisti išdėstymą</string>
     <string name="card_editor_reset_card">Atkurti pažangą</string>
     <string name="card_editor_reschedule_card">Reschedule</string>

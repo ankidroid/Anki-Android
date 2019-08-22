@@ -130,7 +130,6 @@
     <string name="fact_adder_intent_title">Karta AnkiDroida</string>
     <string name="card_editor_add_card">Dodaj notatkę</string>
     <string name="card_editor_copy_card">Kopiuj kartę</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
     <string name="card_editor_reposition_card">Przestawianie</string>
     <string name="card_editor_reset_card">Resetuj postępy</string>
     <string name="card_editor_reschedule_card">Reschedule</string>
@@ -170,11 +169,11 @@
     <string name="confirm_apkg_export_deck">Wyeksportować \"%s\" jako plik .apkg?</string>
     <string name="export_in_progress">Eksportowanie pliku .apkg&#8230;</string>
     <string name="export_successful_title">Wysłać apkg?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_send_button">Wyślij</string>
+    <string name="export_save_button">Zapisz jako plik</string>
+    <string name="export_send_no_handlers">Nie znaleziono aplikacji, która obsługuje apkg. Zapisywanie...</string>
+    <string name="export_save_apkg_successful">Apkg zapisany pomyślnie</string>
+    <string name="export_save_apkg_unsuccessful">Błąd zapisywania</string>
     <string name="export_successful">Plik \"%s\" został wyeksportowany. Czy nadal chcesz wysłać go przez inną aplikację?</string>
     <string name="export_email_subject">AnkiDroid wyeksportował fiszki: %s</string>
     <string name="export_email_text"><![CDATA[        Cześć!
@@ -185,7 +184,7 @@
     <string name="export_unsuccessful">Błąd exportowania pliku apkg</string>
     <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
     <string name="upgrade_import_no_file_found">Nie znaleziono żadnych plików do zaimportowania (%1$s)</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Opcje</string>
     <string name="select_tts">Ustaw język TTS</string>
     <string name="custom_study">Nauka niestandardowa</string>
     <string name="more_options">Więcej</string>
@@ -254,6 +253,6 @@
     <!-- Import and export v2 feedback -->
     <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
     <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
+    <string name="export_v2_dummy_note">Ten plik wymaga nowszej wersji Anki.</string>
     <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
 </resources>

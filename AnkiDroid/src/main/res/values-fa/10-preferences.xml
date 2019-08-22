@@ -161,7 +161,7 @@
     <string name="day_offset_summ">XXX ساعت پس از نیمه شب</string>
     <string name="sched_ver">Experimental V2 scheduler</string>
     <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
+    <string name="sched_ver_toggle_title">تایید</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on">روشن نگه‌داشتن صفحه</string>
@@ -178,7 +178,7 @@
     <string name="reset_custom_buttons">بازگشت به حالت پیش فرض</string>
     <string name="thirdparty_apps_title">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging">دیباگ کردن HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">آمار پیشرفته</string>
@@ -265,7 +265,7 @@
     <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
     <string name="deck_conf_reminders_time">یاد آوری در</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
+    <string name="analytics_dialog_title">کمک به بهتر شدن AnkiDroid!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
 </resources>

@@ -62,7 +62,7 @@
     <string name="stats_percentage">Відсоток</string>
     <string name="stats_period_month">1 місяць</string>
     <string name="stats_period_year">1 рік</string>
-    <string name="stats_period_lifetime">колода життя</string>
+    <string name="stats_period_lifetime">За весь час</string>
     <string name="stats_deck_collection">колекція</string>
     <string name="stats_time_of_day">Час дня</string>
     <string name="stats_day_of_week">День неділі</string>
@@ -71,7 +71,7 @@
     <string name="stats_answer_type">Тип відповіді</string>
     <string name="stats_today_again_count">Кількість повернень: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; правильно)</string>
-    <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_type_breakdown">Вивчаються: &lt;b&gt;%1$d&lt;/b&gt;, переглянуті: &lt;b&gt;%2$d&lt;/b&gt;, у повторенні: &lt;b&gt;%3$d&lt;/b&gt;, відфільтрованих: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Правильних відповідей у розвинених картах: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">Сьогодні не було вивчено жодної розвиненої карти.</string>
     <string name="stats_overview_forecast_total">Загалом: &lt;b&gt;%1$d&lt;/b&gt; переглядів</string>
@@ -155,7 +155,7 @@
     <plurals name="stats_today_cards">
         <item quantity="one">Переглянуто &lt;b&gt;%1$d карту&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
         <item quantity="few">Переглянуто &lt;b&gt;%1$d карти&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
-        <item quantity="many">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
-        <item quantity="other">Переглянуто &lt;b&gt;%1$d карт&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
+        <item quantity="many">Вивчено &lt;b&gt;%1$d карток&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt; сьогодні</item>
+        <item quantity="other">Переглянуто &lt;b&gt;%1$d карток&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
     </plurals>
 </resources>

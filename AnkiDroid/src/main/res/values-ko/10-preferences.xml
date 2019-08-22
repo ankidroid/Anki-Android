@@ -159,9 +159,9 @@
     <string name="time_limit_summ">XXX 분</string>
     <string name="day_offset">다음 날의 시작</string>
     <string name="day_offset_summ">자정으로부터 지난 XXX 시간</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
+    <string name="sched_ver">실험적 V2 스케줄러</string>
     <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
+    <string name="sched_ver_toggle_title">확인</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on">화면을 켜진 상태로 유지</string>
@@ -177,8 +177,8 @@
     <string name="custom_buttons_setting_menu_only">메뉴만</string>
     <string name="reset_custom_buttons">기본값으로 초기화</string>
     <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="thirdparty_apps_summary">Ankidroid API를 사용하는 어플 목록 보기 (사전, 편집기 등)</string>
+    <string name="html_javascript_debugging">HTML 자바스크립트 디버깅</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">고급 통계</string>
@@ -197,7 +197,7 @@
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">태그 선택</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_deck_description">카드 묶음 설명 (이 카드 묶음에만 적용됩니다)</string>
     <string name="deck_conf_group">옵션 그룹</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d 덱이 이 그룹을 사용합니다</item>
@@ -215,10 +215,10 @@
     <string name="deck_conf_easy_ivl">쉬운 간격</string>
     <string name="deck_conf_start_ease">쉽게 시작</string>
     <string name="deck_conf_max_rev">최대의 리뷰 / 일</string>
-    <string name="deck_conf_new_bury">관련된 새 카드를 집어넣기</string>
-    <string name="deck_conf_new_bury_summ">관련된 새 카드는 다음 날이 될 때까지 집어넣어집니다</string>
-    <string name="deck_conf_rev_bury">관련된 복습 카드 집어넣기</string>
-    <string name="deck_conf_rev_bury_summ">관련된 복습 카드는 다음 날이 될 때까지 집어넣어집니다</string>
+    <string name="deck_conf_new_bury">연관된 새 카드를 나중에 보기</string>
+    <string name="deck_conf_new_bury_summ">관련된 새 카드가 다음 날이 될 때까지 나타나지 않습니다.</string>
+    <string name="deck_conf_rev_bury">관련된 복습 카드 나중에 보기</string>
+    <string name="deck_conf_rev_bury_summ">관련된 복습 카드는 다음 날이 될 때까지 나타나지 않습니다.</string>
     <string name="deck_conf_easy_bonus">쉬운 버튼 보너스값</string>
     <string name="deck_conf_ivl_fct">간격 수정자</string>
     <string name="deck_conf_max_ivl">최대 간격</string>
@@ -263,7 +263,7 @@
     <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
     <string name="deck_conf_reminders_time">알림 시간</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
+    <string name="analytics_dialog_title">AnkiDroid를 개선하는데 도움을 주세요!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
 </resources>

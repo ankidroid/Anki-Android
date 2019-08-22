@@ -126,10 +126,9 @@
     <string name="fact_adder_intent_title">Ankidroid kaart</string>
     <string name="card_editor_add_card">Kaart toevoegen</string>
     <string name="card_editor_copy_card">Kopieer kaart</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
     <string name="card_editor_reposition_card">Verplaatsen</string>
     <string name="card_editor_reset_card">Vooruitgang resetten</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Opnieuw inplannen</string>
     <string name="card_editor_preview_card">Voorbeeld</string>
     <string name="error_insufficient_memory">Werking verhinderd vanwege onvoldoende beschikbaar geheugen op uw toestel</string>
     <string name="rename">Naam wijzigen</string>
@@ -164,11 +163,11 @@
     <string name="confirm_apkg_export_deck">\"%s\" als apkg-bestand exporteren?</string>
     <string name="export_in_progress">Apkg-bestand exporteren&#8230;</string>
     <string name="export_successful_title">Apkg versturen?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_send_button">Verzenden</string>
+    <string name="export_save_button">Opslaan in bestand</string>
+    <string name="export_send_no_handlers">Geen applicaties beschikbaar om apkg te verwerken. Opslaan...</string>
+    <string name="export_save_apkg_successful">Apkg met succes opgeslagen</string>
+    <string name="export_save_apkg_unsuccessful">Opslaan van apkg is mislukt</string>
     <string name="export_successful">Bestand \"%s\" is geëxporteerd. Wilt u het met een andere app versturen?</string>
     <string name="export_email_subject">AnkiDroid geëxporteerde flashcards: %s</string>
     <string name="export_email_text"><![CDATA[        Hallo!
@@ -180,7 +179,7 @@
     <string name="export_unsuccessful">Er is een fout opgetreden met het exporteren van de apkg file.</string>
     <string name="import_hint">Om kaarten te importeren, plaats het apkg-bestand in map %s en klik ok</string>
     <string name="upgrade_import_no_file_found">Geen %1$s bestand gevonden om te importeren</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Opties</string>
     <string name="select_tts">TTS-taal instellen</string>
     <string name="custom_study">Aangepast studeren</string>
     <string name="more_options">Meer</string>
@@ -227,14 +226,14 @@
     <string name="filtered_deck_name">Gefilterde Set</string>
     <string name="reminder_title">Vergeet niet om vandaag te studeren!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d kaart in %1$s te herzien</item>
+        <item quantity="other">%2$d kaarten in %1$s te herzien</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fout met het delen van de apkg bestand</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">V2-planner moet ingeschakeld zijn om dit bestand te importeren.</string>
+    <string name="import_cannot_with_v2">V2-planner kan geen V1-sets importeren met inbegrip van planningsinformatie.</string>
+    <string name="export_v2_dummy_note">Dit bestand vereist een nieuwere versie van Anki.</string>
+    <string name="export_v2_forbidden">Gelieve over te schakelen naar de V1-planner voordat u een enkel set met planningsinformatie exporteert.</string>
 </resources>

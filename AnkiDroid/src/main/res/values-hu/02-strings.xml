@@ -126,10 +126,9 @@
     <string name="fact_adder_intent_title">AnkiDroid Kártya</string>
     <string name="card_editor_add_card">Jegyzet hozzáadása</string>
     <string name="card_editor_copy_card">Kártya másolása</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
     <string name="card_editor_reposition_card">Áthelyezés</string>
     <string name="card_editor_reset_card">Reset folyamat</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Átütemezés</string>
     <string name="card_editor_preview_card">Előnézet</string>
     <string name="error_insufficient_memory">A művelet nem végrhajtható:  a készülék nem rendelkezik elég memóriával</string>
     <string name="rename">Átnevezés</string>
@@ -164,8 +163,8 @@
     <string name="confirm_apkg_export_deck">Exportáljon \"%s\"-t apkg-ként?</string>
     <string name="export_in_progress">Apkg exportálása&#8230;</string>
     <string name="export_successful_title">Apkg-t küldeni?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
+    <string name="export_send_button">Küldés</string>
+    <string name="export_save_button">Mentés fájlba</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved apkg</string>
     <string name="export_save_apkg_unsuccessful">Save apkg failed</string>

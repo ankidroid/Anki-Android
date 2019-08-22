@@ -66,28 +66,28 @@
     <string name="preview_title">Náhľad</string>
     <string name="reposition_card_dialog_title">Premiestniť novú kartičku</string>
     <string name="reposition_card_dialog_message">Počiatočná pozícia:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_not_new_error">Len pri nových kartách je možné zmeniť pozíciu (premiestniť)</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="few">%d cards repositioned</item>
-        <item quantity="many">%d cards repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d premiestnená kartička</item>
+        <item quantity="few">%d premiestnené kartičky</item>
+        <item quantity="many">%d premiestnených kartičiek</item>
+        <item quantity="other">%d premiestnených kartičiek</item>
     </plurals>
     <string name="reset_card_dialog_title">Vynulovať zaznamenaný priebeh v učení kartičky</string>
     <string name="reset_card_dialog_message">Táto kartička bude umiestnená na posledné miesto v poradí nových kartičiek</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="few">%d cards reset</item>
-        <item quantity="many">%d cards reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d resetovaná kartička</item>
+        <item quantity="few">%d resetované kartičky</item>
+        <item quantity="many">%d resetovaných kartičiek</item>
+        <item quantity="other">%d resetovaných kartičiek</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Preplánovať kartičku</string>
     <string name="reschedule_card_dialog_message">Preplánovať opakovanie pre x dní:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="few">%d cards rescheduled</item>
-        <item quantity="many">%d cards rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d preplánovaná kartička</item>
+        <item quantity="few">%d preplánované kartičky</item>
+        <item quantity="many">%d preplánovaných kartičiek</item>
+        <item quantity="other">%d preplánovaných kartičiek</item>
     </plurals>
     <string name="answering_error_title">Chyba databázy</string>
     <string name="answering_error_message">Chyba pri zápise do zbierky. Môže to súvisieť s poškodenou databázou alebo nedostatkom miesta na disku.\n\nAk sa to stáva častejšie, skúste skontrolovať databázu, opraviť zbierku alebo obnoviť zo zálohy ťuknutím na \"Možnosti\".\n\Taktiež to môže byť aj chyba AnkiDroid; prosím oznámte chybu, aby sme to mohli skontrolovať.</string>
@@ -97,8 +97,8 @@
     <string name="intent_add_clear_all">Vymazať všetko</string>
     <string name="intent_aedict_empty">Kategória \"predvolený\" je prázdna</string>
     <string name="intent_aedict_category">Ak chcete pridať kartičky do AnkiDroid, odstráňte všetky kategórie poznámkového bloku alebo pridajte jednu s názvom \"predvolený\"</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Nové kartičky v balíčku: %d</string>
+    <string name="custom_study_rev_total_rev">Na zopakovanie v balíčku: %d</string>
     <string name="custom_study_new_extend">Zvýšiť dnešný limit nových kartičiek o</string>
     <string name="custom_study_rev_extend">Zvýšiť dnešný limit opakovaných kartičiek o</string>
     <string name="custom_study_forgotten">Zopakovať si kartičky zabudnuté za posledných x dní:</string>

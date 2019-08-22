@@ -40,10 +40,12 @@ import java.util.regex.Pattern;
  * through it and is thus simplified. Namely, the context is assumed to always be a Map<String, String>,
  * and sections are only ever considered to be String objects. Tests have shown that strings are the
  * only data type used, and thus code that handles anything else has been omitted.
+ *
+ * The AnkiDroid version of this also provides a containsMathjax method.
  */
 @SuppressWarnings({"PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 public class Template {
-    public static final String clozeReg = "(?s)\\{\\{c%s::(.*?)(::(.*?))?\\}\\}";
+    public static final String clozeReg = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
     private static final Pattern fClozeSection = Pattern.compile("c[qa]:(\\d+):(.+)");
 
@@ -58,6 +60,12 @@ public class Template {
 
     // Closing tag delimiter
     private String sCtag = "}}";
+
+    // MathJax opening delimiters
+    private static String sMathJaxOpenings[] = {"\\(", "\\["};
+
+    // MathJax closing delimiters
+    private static String sMathJaxClosings[] = {"\\)", "\\]"};
 
     private String mTemplate;
     private Map<String, String> mContext;
@@ -285,28 +293,109 @@ public class Template {
     }
 
     private static String clozeText(String txt, String ord, char type) {
-        Matcher m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt);
-        if (!m.find()) {
+        if (!Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt).find()) {
             return "";
         }
-        m.reset();
+
+        txt = removeFormattingFromMathjax(txt, ord);
+        Matcher m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt);
+
         StringBuffer repl = new StringBuffer();
         while (m.find()) {
             // replace chosen cloze with type
+            String buf;
             if (type == 'q') {
-                if (!TextUtils.isEmpty(m.group(3))) {
-                    m.appendReplacement(repl, "<span class=cloze>[$3]</span>");
+                if (!TextUtils.isEmpty(m.group(4))) {
+                    buf = "[" + m.group(4) + "]";
                 } else {
-                    m.appendReplacement(repl, "<span class=cloze>[...]</span>");
+                    buf = "[...]";
                 }
             } else {
-                m.appendReplacement(repl, "<span class=cloze>$1</span>");
+                buf = m.group(2);
             }
+
+            if (m.group(1).equals("c")) {
+                buf = String.format("<span class=cloze>%s</span>", buf);
+            }
+
+            m.appendReplacement(repl, Matcher.quoteReplacement(buf));
         }
         txt = m.appendTail(repl).toString();
         // and display other clozes normally
-        return txt.replaceAll(String.format(Locale.US, clozeReg, "\\d+"), "$1");
+        return txt.replaceAll(String.format(Locale.US, clozeReg, "\\d+"), "$2");
     }
+
+    public static boolean textContainsMathjax(String txt) {
+        // Do you have the first opening and then the first closing,
+        // or the second opening and the second closing...?
+
+        //This assumes that the openings and closings are the same length.
+
+        String opening;
+        String closing;
+        for (int i = 0; i < sMathJaxOpenings.length; i++) {
+            opening = sMathJaxOpenings[i];
+            closing = sMathJaxClosings[i];
+
+            //What if there are more than one thing?
+            //Let's look for the first opening, and the last closing, and if they're in the right order,
+            //we are good.
+
+            int first_opening_index = txt.indexOf(opening);
+            int last_closing_index = txt.lastIndexOf(closing);
+
+            if (first_opening_index != -1
+                    && last_closing_index != -1
+                    && first_opening_index < last_closing_index)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String removeFormattingFromMathjax(String txt, String ord) {
+        // look for clozes wrapped in mathjax, and change {{cx to {{Cx
+
+        String creg = clozeReg.replace("(?si)", "");
+        StringBuilder regex = new StringBuilder("(?si)(\\\\[");
+        regex.append(Pattern.quote("(["));
+        regex.append("])(.*?)");
+        regex.append(String.format(Locale.US, creg, ord));
+        regex.append("(.*?)(\\\\[");
+        regex.append(Pattern.quote("])"));
+        regex.append("])");
+
+        Matcher m = Pattern.compile(regex.toString()).matcher(txt);
+
+        StringBuffer repl = new StringBuffer();
+        while (m.find()) {
+            boolean enclosed = true;
+
+            for (String closing : sMathJaxClosings) {
+                if (m.group(1).contains(closing)) {
+                    enclosed = false;
+                }
+            }
+
+            for (String opening : sMathJaxOpenings) {
+                if (m.group(7).contains(opening)) {
+                    enclosed = false;
+                }
+            }
+
+            if (!enclosed) {
+                String f = m.group(0);
+                // appendReplacement has an issue with backslashes, so...
+                m.appendReplacement(repl, Matcher.quoteReplacement(m.group(0)));
+            } else {
+                m.appendReplacement(repl, Matcher.quoteReplacement(m.group(0).replace("{{c", "{{C")));
+            }
+            txt = m.appendTail(repl).toString();
+        }
+        return txt;
+    }
+
 
     /**
      * Changes the Mustache delimiter.

@@ -36,8 +36,8 @@
 -->
 <resources>
     <string-array name="error_reporting_choice_labels">
-        <item>Στείλε πάντα αναφορά</item>
-        <item>Μη στέλνεις ποτέ αναφορά</item>
+        <item>Να στέλνεται πάντα αναφορά</item>
+        <item>Να μη στέλνεται ποτέ αναφορά</item>
         <item>Ρωτήστε με</item>
     </string-array>
     <string-array name="gestures_labels">
@@ -47,13 +47,13 @@
         <item>Κουμπί απάντησης 2</item>
         <item>Κουμπί απάντησης 3</item>
         <item>Κουμπί απάντησης 4</item>
-        <item>Προτεινόμεμη απάμτηση (πράσινη)</item>
+        <item>Προτεινόμεμη απάντηση (πράσινη)</item>
         <item>Απάντηση καλύτερη από την προτεινόμενη</item>
         <item>Αναίρεση</item>
         <item>Επεξεργασία σημείωσης</item>
         <item>Μαρκάρισμα σημείωσης</item>
         <item>Αναζήτηση έκφρασης</item>
-        <item>Θάψιμο κάρτας</item>
+        <item>Κρύψιμο κάρτας</item>
         <item>Αναστολή κάρτας</item>
         <item>Διαγραφή σημείωσης</item>
         <item>Αναπαραγωγή πολυμέσων</item>
@@ -74,11 +74,11 @@
         <item>Τυχαία</item>
         <item>Κατά αυξανόμενα διαστήματα</item>
         <item>Κατά φθίνοντα διαστήματα</item>
-        <item>Aυτές με τις περισσότερες ολισθήσεις</item>
+        <item>Οι πιο εσφαλμένες</item>
         <item>Κατά σειρά προσθήκης</item>
         <item>Κατά σειρά αναμονής</item>
         <item>Κατά σειρά πρόσφατης προσθήκης</item>
-        <item>Relative overdueness</item>
+        <item>Σχετική καθυστέρηση</item>
     </string-array>
     <string-array name="add_to_cur_labels">
         <item>Χρήση προσωρινής τράπουλας</item>
@@ -86,8 +86,8 @@
     </string-array>
     <string-array name="new_spread_labels">
         <item>Ανάμειξη νέων καρτών και επαναλήψεων</item>
-        <item>Οι νέες κάρτες μετά από τις επαναλήψεις</item>
-        <item>Οι νέες κάρτες πριν τις επαναλήψεις</item>
+        <item>Οι νέες κάρτες μετά τις επαναλήψεις</item>
+        <item>Οι νέες κάρτες πριν από τις επαναλήψεις</item>
     </string-array>
     <string-array name="override_font_labels">
         <item>Όταν δε συγκεκριμενοποιείται γραμματοσειρά στις κάρτες</item>

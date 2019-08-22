@@ -45,16 +45,16 @@
         <item quantity="other">%d cards shown</item>
     </plurals>
     <string name="card_browser_all_decks">Kõik kaardipakid</string>
-    <string name="card_browser_delete_card">Delete notes</string>
-    <string name="card_browser_suspend_card">Suspend cards</string>
+    <string name="card_browser_delete_card">Kustuta märkmed</string>
+    <string name="card_browser_suspend_card">Peata kaardid</string>
     <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
     <string name="card_browser_change_deck">Change deck</string>
     <string name="card_browser_unsuspend_card">Unsuspend cards</string>
     <string name="card_browser_mark_card">Mark notes</string>
     <string name="card_browser_toggle_mark_card">(un)mark notes</string>
     <string name="card_browser_unmark_card">Unmark notes</string>
-    <string name="delete_card_title">Delete note?</string>
-    <string name="delete_cards_title">Delete notes?</string>
+    <string name="delete_card_title">Kustuta märge?</string>
+    <string name="delete_cards_title">Kustuta märkmed?</string>
     <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
     <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
     <string name="deleted_message">Notes deleted</string>
@@ -65,7 +65,7 @@
     <string name="card_browser_search_by_tag">Filtreeri sildi järgi</string>
     <string name="card_browser_tags_shown">Sildid: %1$s</string>
     <string name="card_browser_list_my_searches">My searches</string>
-    <string name="card_browser_list_my_searches_save">Save search</string>
+    <string name="card_browser_list_my_searches_save">Salvesta otsing</string>
     <string name="card_browser_list_my_searches_title">Choose a saved search</string>
     <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
@@ -91,6 +91,6 @@
         <item>By reviews</item>
         <item>By lapses</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
-    <string name="card_browser_select_none">Select none</string>
+    <string name="card_browser_select_all">Vali kõik</string>
+    <string name="card_browser_select_none">Valikud maha</string>
 </resources>

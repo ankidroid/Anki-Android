@@ -159,11 +159,11 @@
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Début du jour suivant</string>
     <string name="day_offset_summ">XXX heures après minuit</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver">Planificateur V2 expérimental</string>
+    <string name="sched_ver_summ">Activer le planificateur expérimental. Force les changements dans un sens lors de la prochaine synchronisation</string>
+    <string name="sched_ver_toggle_title">Confirmer</string>
+    <string name="sched_ver_2to1">Cela réinitialisera les cartes en apprentissage, effacera les paquets de cartes filtrés et modifiera la version du planificateur. Continuer ?</string>
+    <string name="sched_ver_1to2">Le planificateur expérimental pourrait causer une planification incorrecte. Veuillez vous assurer d\'avoir lu la documentation au préalable. Continuer ?</string>
     <string name="pref_keep_screen_on">Garder l’écran allumé</string>
     <string name="pref_keep_screen_on_summ">Désactiver l’extinction aromatique de l’écran</string>
     <string name="convert_fen_text">Support de la notation algébrique (échecs)</string>
@@ -176,10 +176,10 @@
     <string name="custom_buttons_setting_if_room">Afficher s’il y a de la place</string>
     <string name="custom_buttons_setting_menu_only">Menu uniquement</string>
     <string name="reset_custom_buttons">Rétablir les paramètres par défaut</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="thirdparty_apps_title">Applications API tierces</string>
+    <string name="thirdparty_apps_summary">Voir la liste des applications qui utilisent l\'API AnkiDroid comme les dictionnaires, les outils.</string>
+    <string name="html_javascript_debugging">Débogage HTML / Javascript</string>
+    <string name="html_javascript_debugging_summ">Activer les connexions WebView distantes et enregistrer la carte HTML dans le répertoire AnkiDroid</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Statistiques avancées</string>
     <string name="enable_advanced_statistics_title">Activer les statistiques avancées</string>
@@ -194,10 +194,10 @@
     <string name="custom_sync_server_base_url_title">Synchroniser l’URL</string>
     <string name="custom_sync_server_media_url_title">Synchroniser l’URL pour les médias</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="deck_conf_group_summ">Les modifications apportées aux options du groupe de paquets affecteront plusieurs paquets de cartes. Si vous souhaitez modifier uniquement le paquet actuel, veuillez d\'abord ajouter un nouveau groupe d\'options</string>
     <string name="studyoptions_limit_select_tags">Sélectionner les étiquettes</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_deck_description">Description du paquet de cartes (affecte uniquement le paquet actuel)</string>
     <string name="deck_conf_group">Groupe d’option</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d paquet utilise ce groupe</item>
@@ -262,10 +262,10 @@
     <string name="deck_conf_cram_reschedule_summ">Replanifier les cartes selon mes réponses dans ce paquet</string>
     <string name="deck_conf_cram_steps">Étapes personnalisées (en minute)</string>
     <string name="deck_conf_cram_steps_summ">Définir le pas personnalisé</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_enabled">Activer les notifications de rappel pour les paquets de cartes dans ce groupe de paquets</string>
     <string name="deck_conf_reminders_time">Rappeler le</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_dialog_title">Aidez à améliorer AnkiDroid !</string>
+    <string name="analytics_title">Partager l\'utilisation de la fonctionnalité</string>
+    <string name="analytics_summ">Vous pouvez contribuer à AnkiDroid en aidant l\'équipe de développement à voir quelles fonctionnalités les gens utilisent</string>
 </resources>

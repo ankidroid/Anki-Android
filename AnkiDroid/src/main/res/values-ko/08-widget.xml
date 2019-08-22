@@ -42,7 +42,7 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">카드 남음</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="other">%d AnkiDroid 카드 예정</item>
     </plurals>
     <string name="widget_no_cards_due">남은 카드 없음</string>
     <string name="widget_loading">위젯 불러오는 중...</string>
@@ -55,7 +55,7 @@
     <string name="widget_small">작은 화면 AnkiDroid</string>
     <string name="widget_small_button">안키드로이드</string>
     <plurals name="widget_cards_due">
-        <item quantity="other">%d cards due</item>
+        <item quantity="other">%d 카드 예정</item>
     </plurals>
     <plurals name="widget_eta">
         <item quantity="other">%d분 남음</item>

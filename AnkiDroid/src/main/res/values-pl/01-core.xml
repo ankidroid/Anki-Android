@@ -94,7 +94,7 @@
     <string name="undo_action_delete_multi">usuń notatki</string>
     <string name="undo_action_change_deck_multi">zmień talie</string>
     <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reset_card">resetuj postęp</string>
     <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Przenieś wszystkie do talii</string>
     <string name="unbury">Odkop</string>
@@ -150,7 +150,7 @@
     <string name="studyoptions_congrats_custom">Aby kontynuować naukę poza zwykłym schematem kliknij przycisk Nauki Niestandardowej poniżej.</string>
     <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
     <string name="sd_card_not_mounted">Urządzenie pamięci masowej nie zostało zamontowane</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Edytuj notatkę i dodaj luki w tekście. (%1$s)</string>
     <string name="button_sync">Synchronizuj</string>
     <string name="cancel_sync_confirm">Chcesz przerwać synchronizację?</string>
     <string name="continue_sync">Kontynuuj synchronizację</string>
@@ -175,7 +175,7 @@
     </plurals>
     <string name="invalid_template">Karta nie mogła zostać wygenerowana</string>
     <string name="card_template_editor_would_delete_note">Usunięcie typu karty może spowodować usunięcie jednej lub większej ilości notatek. Proszę o utworzenie najpierw nowej karty.</string>
-    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">Szablon aktualnej karty został usunięty.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Odczyt i zapis do bazy danych AnkiDroid</string>
     <string name="read_write_permission_description">dostęp do istniejących notatek, kart, typów notatek i talii, a także tworzenia istniejących</string>

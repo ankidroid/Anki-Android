@@ -337,17 +337,17 @@ public class Media {
             StringBuffer buf = new StringBuffer();
             m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(string);
             while (m.find()) {
-                if (!TextUtils.isEmpty(m.group(3))) {
-                    m.appendReplacement(buf, "[$3]");
+                if (!TextUtils.isEmpty(m.group(4))) {
+                    m.appendReplacement(buf, "[$4]");
                 } else {
                     m.appendReplacement(buf, "[...]");
                 }
             }
             m.appendTail(buf);
-            String s = buf.toString().replaceAll(String.format(Locale.US, clozeReg, ".+?"), "$1");
+            String s = buf.toString().replaceAll(String.format(Locale.US, clozeReg, ".+?"), "$2");
             strings.add(s);
         }
-        strings.add(string.replaceAll(String.format(Locale.US, clozeReg, ".+?"), "$1"));
+        strings.add(string.replaceAll(String.format(Locale.US, clozeReg, ".+?"), "$2"));
         return strings;
     }
 

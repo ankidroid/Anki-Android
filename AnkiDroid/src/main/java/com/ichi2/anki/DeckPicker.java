@@ -989,8 +989,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 return;
             }
 
+            // Skip full DB check if the basic check is OK
+            //TODO: remove this variable if we really want to do the full db check on every user
+            boolean skipDbCheck = false;
+            if (previous < upgradeDbVersion && getCol().basicCheck()) {
+                skipDbCheck = true;
+            }
+
             //noinspection ConstantConditions
-            if (previous < upgradeDbVersion || previous < upgradePrefsVersion) {
+            if ((!skipDbCheck && previous < upgradeDbVersion) || previous < upgradePrefsVersion) {
                 if (previous < upgradePrefsVersion) {
                     Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
                     CompatHelper.removeHiddenPreferences(this.getApplicationContext());
@@ -998,7 +1005,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
                 // Integrity check loads asynchronously and then restart deck picker when finished
                 //noinspection ConstantConditions
-                if (previous < upgradeDbVersion) {
+                if (!skipDbCheck && previous < upgradeDbVersion) {
                     Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
                     integrityCheck();
                 } else if (previous < upgradePrefsVersion) {

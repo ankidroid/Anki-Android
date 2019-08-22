@@ -54,7 +54,7 @@
     <string name="card_browser_unsuspend_card">Включить карточки</string>
     <string name="card_browser_mark_card">Отметить записи</string>
     <string name="card_browser_toggle_mark_card">отметить записи</string>
-    <string name="card_browser_unmark_card">Снять пометки</string>
+    <string name="card_browser_unmark_card">Снять отметку</string>
     <string name="delete_card_title">Удалить запись?</string>
     <string name="delete_cards_title">Удалить записи?</string>
     <string name="delete_card_message">Удалить все карты этой записи?\nПоле поиска: %s</string>
@@ -85,7 +85,7 @@
         <item>Без сортировки (быстро)</item>
         <item>По полю сортировки</item>
         <item>По времени создания</item>
-        <item>По времени редактирования</item>
+        <item>По времени правки</item>
         <item>По времени изменения</item>
         <item>По расписанию</item>
         <item>По интервалу</item>

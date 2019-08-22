@@ -171,6 +171,7 @@ public class HttpSyncer {
             } else {
                 buf.close();
                 bos.write(buf.toString().getBytes("UTF-8"));
+                bos.write((bdry + "--\r\n").getBytes("UTF-8"));
             }
             bos.flush();
             bos.close();

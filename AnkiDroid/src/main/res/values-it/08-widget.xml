@@ -42,8 +42,8 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Carte scadute</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d Carta AnkiDroid scaduta</item>
+        <item quantity="other">%d Carte AnkiDroid scadute</item>
     </plurals>
     <string name="widget_no_cards_due">Nessuna carta scaduta</string>
     <string name="widget_loading">Widget caricamento...</string>

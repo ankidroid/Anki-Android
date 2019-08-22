@@ -57,7 +57,7 @@
     <string name="initializing_tts">Запускается синтез речи&#8230;</string>
     <string name="tts_no_tts">Не произносить</string>
     <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Учебные карточки для Android</h2>AnkiDroid — это приложение для повторения карточек, которое полностью совместимо с версией для настольных компьютеров <a href=\"%2$s\"> Anki</a>. Создавайте, загружайте и учите карточки в AnkiDroid или Anki Desktop, и синхронизируйте их через AnkiWeb.]]></item>
+        <item><![CDATA[<h2>%1$s:<br/>Учебные карточки для Android</h2>AnkiDroid — это приложение для повторения карточек, которое полностью совместимо с версией <a href=\"%2$s\"> Anki</a> для настольных компьютеров. Создавайте, загружайте и учите карточки в AnkiDroid или Anki и синхронизируйте их через AnkiWeb.]]></item>
         <item><![CDATA[Чтобы помочь нам сделать AnkiDroid лучше, пожалуйста, сообщайте об ошибках <a href=\"%1$s\">в баг-трекере</a>. Новые идеи также приветствуются. Ищите ответы в <a href=\"%2$s\">вики</a> или начните обсуждение на <a href=\"%3$s\">форуме</a>.]]></item>
         <item><![CDATA[AnkiDroid — это <a href=\"%1$s\">программное обеспечение с открытым исходным кодом<a/>, поэтому любой желающий может <a href=\"%2$s\">внести свой вклад</a> :-)]]></item>
         <item><![CDATA[Неразработчики тоже могут помочь. Например, вы можете <a href=\"%1$s\">помочь с переводом</a> AnkiDroid, обновить вики, предоставить скриншоты или написать в блоге об AnkiDroid.]]></item>
@@ -66,28 +66,28 @@
     <string name="preview_title">Предпросмотр</string>
     <string name="reposition_card_dialog_title">Переместить новую карточку</string>
     <string name="reposition_card_dialog_message">Начальная позиция:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_not_new_error">Можно переместить только новые карточки</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="few">%d cards repositioned</item>
-        <item quantity="many">%d cards repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d карточка перемещена</item>
+        <item quantity="few">%d карточки перемещена</item>
+        <item quantity="many">%d карточек перемещены</item>
+        <item quantity="other">%d карточек перемещены</item>
     </plurals>
     <string name="reset_card_dialog_title">Сбросить состояние карточек</string>
     <string name="reset_card_dialog_message">Эта карточка будет помещена в конец очереди новых карт</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="few">%d cards reset</item>
-        <item quantity="many">%d cards reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d карточка сброшена</item>
+        <item quantity="few">%d карточки сброшены</item>
+        <item quantity="many">%d карточек сброшены</item>
+        <item quantity="other">%d карточек сброшены</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Изменить расписание карточки</string>
     <string name="reschedule_card_dialog_message">Через сколько дней запланировать повторение:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="few">%d cards rescheduled</item>
-        <item quantity="many">%d cards rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d карточка перепланирована</item>
+        <item quantity="few">%d карточки перепланированы</item>
+        <item quantity="many">%d карточек перепланированы</item>
+        <item quantity="other">%d карточек перепланированы</item>
     </plurals>
     <string name="answering_error_title">Ошибка в базе данных</string>
     <string name="answering_error_message">Произошла ошибка при записи в коллекцию. База данных может быть повреждена, или недостаточно места в хранилище.\n\nЕсли это случается часто, попробуйте проверить базу данных, починить коллекцию или восстановить её из резервной копии. Для этого нажмите \"Настройки\".\n\nТем не менее, это может быть ошибка в AnkiDroid. Пожалуйста, сообщите об ошибке, чтобы мы могли проверить это.</string>
@@ -97,8 +97,8 @@
     <string name="intent_add_clear_all">Очистить всё</string>
     <string name="intent_aedict_empty">Категория по умолчанию пуста</string>
     <string name="intent_aedict_category">Чтобы добавить карточки в AnkiDroid, удалите все категории Notepad или создайте категорию \"default\"</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Новых карточек в колоде: %d</string>
+    <string name="custom_study_rev_total_rev">Карточек для повторения: %d</string>
     <string name="custom_study_new_extend">Добавить новых на сегодня</string>
     <string name="custom_study_rev_extend">Добавить повторяемых на сегодня</string>
     <string name="custom_study_forgotten">Забытые за сколько дней повторить:</string>

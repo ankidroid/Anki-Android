@@ -47,19 +47,19 @@
     <string name="cancel">Anul·la</string>
     <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Termes i condicions</a></string>
     <string name="menu_get_shared_decks">Baixeu paquets compartits</string>
-    <string name="connection_error_message">Hi ha hagut un error de la xarxa.</string>
+    <string name="connection_error_message">S\'ha produït un error de xarxa</string>
     <string name="not_logged_in_title">Entra a AnkiWeb</string>
     <string name="login_create_account_message">Cal estar registrat a un compte de tercers per utilitzar el servei de sincronització de núvol. Pods crear-ne uns en el pròxim pas.</string>
     <!-- MyAccount.java -->
     <string name="username">Adreça de correu electrònic</string>
     <string name="username_repeat">Repeteix l\'adreça de correu electrònic</string>
     <string name="password">Contrasenya</string>
-    <string name="password_repeat">Repeteixi la contrasenya</string>
+    <string name="password_repeat">Repeteix la contrasenya</string>
     <string name="log_in">Inicia la sessió</string>
     <string name="sign_up_description">No teniu un compte d\'AnkiWeb? És gratuït!</string>
     <string name="sign_up_not_affiliated">Nota: AnkiWeb no està afiliat amb AnkiDroid</string>
-    <string name="sign_up">Registreu-vos</string>
-    <string name="logged_as">Heu entrat com a</string>
+    <string name="sign_up">Registra\'t</string>
+    <string name="logged_as">Has iniciat sessió com</string>
     <string name="log_out">Desconnecta</string>
     <string name="alert_logging_message">S\'està iniciant la sessió, un moment...</string>
     <string name="invalid_username_password">L\'adreça de correu electrònic o la contrasenya no són vàlides.</string>
@@ -92,7 +92,7 @@
     <string name="sync_too_busy">El servidor està ocupat. Torna-ho a provar més endavant.</string>
     <string name="sync_remote_db_error">La base de dades descarregada era corrupta. Si us plau proveu-ho de nou.</string>
     <string name="sync_overwrite_error">No ha estat possible sobreescriure la vostra col·lecció actual amb l\'arxiu descarregat.</string>
-    <string name="sync_connection_error">S\'agotat el temps d\'espera de la conexió. O la connexió a internet està experimentant problemes o teniu un fitxer molt gran a la seva carpeta de multimèdia.</string>
+    <string name="sync_connection_error">S\'ha esgotat el emps d\'espera de la connexió. O la connexió a internet està experimentant problemes o teniu un fitxer molt gran a la vostra carpeta de multimèdia.</string>
     <string name="sync_write_access_error">No ha estat possible desar l\'arxiu descarregat a la targeta SD. O bé la vostra targeta SD està muntada com a només de lectura o bé no hi ha prou espai.</string>
     <string name="sync_deletions_message">S\'estan sincronitzant les supressions...</string>
     <string name="sync_small_objects_message">S\'estan sincronitzant els petits objectes...</string>
@@ -123,7 +123,7 @@
     <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
     <string name="sync_error_409">Només un client pot accedir a AnkiWeb en un moment. Si una sincronització ha fracassat, si us plau intenti una altra vegada en pocs minuts.</string>
     <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_500_unknown">AnkiWeb ha trobat un error. Si us plau proveu una altra vegada en uns minuts i si el problema persisteix, envieu un informe d\'error.</string>
     <string name="sync_error_501_upgrade_required">Si us plau actualitzeu a la versió de AnkiDroid</string>
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>

@@ -64,22 +64,22 @@
     <string name="preview_title">Antaŭrigardo</string>
     <string name="reposition_card_dialog_title">Repozicii novan karton</string>
     <string name="reposition_card_dialog_message">Komenca pozicio:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_not_new_error">Nur novaj kartoj povas esti repoziciita</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d karto estas repoziciita</item>
+        <item quantity="other">%d kartoj estas repoziciitaj</item>
     </plurals>
     <string name="reset_card_dialog_title">Nuligi progreson de karto</string>
     <string name="reset_card_dialog_message">Tiu ĉi karto estos movita al la fino de vico de novaj kartoj</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d karto estas nuligita</item>
+        <item quantity="other">%d kartoj estas nuligitaj</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Replani karton</string>
     <string name="reschedule_card_dialog_message">Replani ripeton de karton post tiom da tagoj:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d karto estas replanita</item>
+        <item quantity="other">%d kartoj estas replanitaj</item>
     </plurals>
     <string name="answering_error_title">Eraro pri datumbazo</string>
     <string name="answering_error_message">Fiaskis skribi al la kolekto. La datumbazo povas esti difektita aŭ eble mankas spaco en la konservejo.\n\nSe tio ĉi okazos pli ofte, provu kontroli la datumbazon, ripari la kolekton aŭ restarigi ĝin el sekurkopio. Frapetu “agordojn” por fari tion.\nAŭ tio ĉi povas esti eraro en AnkiDroid, do bonvolu raporti ĝin por ke ni povu ĝin ripari.</string>
@@ -89,8 +89,8 @@
     <string name="intent_add_clear_all">Forviŝi ĉiujn</string>
     <string name="intent_aedict_empty">La ĉefa kategorio estas malplena</string>
     <string name="intent_aedict_category">Por aldoni kartojn al AnkiDroid, forigu ĉiujn kategoriojn de kajero kaj aldonu unu nomitan «default»</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Novaj kartoj en kartaro: %d</string>
+    <string name="custom_study_rev_total_rev">Lernendaj ripetoj en kartaro: %d</string>
     <string name="custom_study_new_extend">Pliigi hodiaŭan limigon de novaj kartoj je</string>
     <string name="custom_study_rev_extend">Pliigi hodiaŭan limigon de kartoj por ripeti je</string>
     <string name="custom_study_forgotten">Ripeti kartojn forgesitajn dum tiom da antaŭaj tagoj:</string>

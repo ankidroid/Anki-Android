@@ -102,8 +102,8 @@ public class Sched {
 
     public Sched(Collection col) {
         mCol = col;
-        mQueueLimit = 100;
-        mReportLimit = 1000;
+        mQueueLimit = 50;
+        mReportLimit = 99999;
         mReps = 0;
         mHaveQueues = false;
         _updateCutoff();

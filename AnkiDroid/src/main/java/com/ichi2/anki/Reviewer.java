@@ -36,7 +36,6 @@ import android.widget.FrameLayout;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.IntegerDialog;
-import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -69,19 +68,13 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     };
 
-    private DeckTask.TaskListener mRepositionCardHandler =new ScheduleDeckTaskListener() {
-        protected int getToastResourceId() {
-            return R.plurals.reposition_card_dialog_acknowledge;
-        }
-    };
-
     private DeckTask.TaskListener mResetProgressCardHandler = new ScheduleDeckTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reset_cards_dialog_acknowledge;
         }
     };
 
-    /** We need to listen for and handle repositions / reschedules / resets very similarly */
+    /** We need to listen for and handle reschedules / resets very similarly */
     abstract class ScheduleDeckTaskListener extends NextCardHandler {
 
         abstract protected int getToastResourceId();
@@ -303,33 +296,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         return true;
     }
-
-
-    private void showRepositionCardDialog() {
-
-        // Only new cards may be repositioned
-        if (mCurrentCard.getQueue() != Card.TYPE_NEW) {
-            SimpleMessageDialog dialog = SimpleMessageDialog.newInstance(
-                    getString(R.string.vague_error),
-                    getString(R.string.reposition_card_not_new_error),
-                    false);
-            showDialogFragment(dialog);
-            return;
-        }
-
-        IntegerDialog repositionDialog = new IntegerDialog();
-        repositionDialog.setArgs(
-                getResources().getString(R.string.reposition_card_dialog_title),
-                getResources().getString(R.string.reposition_card_dialog_message),
-                5);
-        repositionDialog.setCallbackRunnable(repositionDialog.new IntRunnable() {
-            public void run() {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
-                        new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.REPOSITION_CARDS, this.getInt()}));                    }
-        });
-        showDialogFragment(repositionDialog);
-    }
-
 
     private void showRescheduleCardDialog() {
         IntegerDialog rescheduleDialog = new IntegerDialog();
@@ -804,9 +770,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.action_reposition_card:
-                    showRepositionCardDialog();
-                    return true;
                 case R.id.action_reschedule_card:
                     showRescheduleCardDialog();
                     return true;

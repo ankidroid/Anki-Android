@@ -159,11 +159,11 @@
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Início do dia seguinte</string>
     <string name="day_offset_summ">XXX horas após a meia-noite</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver">Agendador V2 Experimental</string>
+    <string name="sched_ver_summ">Habilitar o agendador experimental. Força mudanças em uma direção na próxima sincronização</string>
+    <string name="sched_ver_toggle_title">Confirmar</string>
+    <string name="sched_ver_2to1">Isto irá redefinir quaisquer cartões no aprendizado, limpar decks filtrados e alterar a versão do agendador. Continuar?</string>
+    <string name="sched_ver_1to2">O agendador experimental pode causar agendamento incorreto. Por favor, certifique-se que você leu a documentação primeiro. Continuar?</string>
     <string name="pref_keep_screen_on">Manter tela ligada</string>
     <string name="pref_keep_screen_on_summ">Desativar tempo limite da tela</string>
     <string name="convert_fen_text">Suporte para notação de xadrez</string>
@@ -176,10 +176,10 @@
     <string name="custom_buttons_setting_if_room">Mostrar se couber</string>
     <string name="custom_buttons_setting_menu_only">Apenas o menu</string>
     <string name="reset_custom_buttons">Redefinir valores padrão</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
+    <string name="thirdparty_apps_title">Apps de terceiros</string>
+    <string name="thirdparty_apps_summary">Veja uma lista de aplicativos que usam a API do AnkiDroid, como dicionários, ferramentas.</string>
     <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="html_javascript_debugging_summ">Ativar conexões remotas WebView, salvar HTML do cartão para o diretório do AnkiDroid</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Estatísticas avançadas</string>
     <string name="enable_advanced_statistics_title">Habilitar estatísticas avançadas</string>
@@ -194,10 +194,10 @@
     <string name="custom_sync_server_base_url_title">Url de sincronismo</string>
     <string name="custom_sync_server_media_url_title">Url de sincronismo de mídia</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="deck_conf_group_summ">Alterações às opções do grupo de deck afetarão vários decks. Se você deseja alterar apenas o deck atual, por favor, adicione um novo grupo de opções primeiro</string>
     <string name="studyoptions_limit_select_tags">Selecione Tags</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_deck_description">Descrição do deck (afeta somente o deck atual)</string>
     <string name="deck_conf_group">Grupo de opções</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">O baralho %1$s\n%2$d utiliza este grupo</item>
@@ -262,10 +262,10 @@
     <string name="deck_conf_cram_reschedule_summ">Reagendar cartões baseado nas minhas respostas deste deck</string>
     <string name="deck_conf_cram_steps">Passos personalizados (em minutos)</string>
     <string name="deck_conf_cram_steps_summ">Definir passoss personalizados</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_enabled">Habilitar notificações de lembretes para os decks neste grupo</string>
     <string name="deck_conf_reminders_time">Lembrar em</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_dialog_title">Ajude a tornar o AnkiDroid melhor!</string>
+    <string name="analytics_title">Compartilhar funções de uso</string>
+    <string name="analytics_summ">Você pode contribuir para AnkiDroid ajudando a equipe de desenvolvimento a ver quais recursos as pessoas usam</string>
 </resources>

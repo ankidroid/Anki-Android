@@ -42,8 +42,8 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Kaarten te doen</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d AnkiDroid kaart te doen</item>
+        <item quantity="other">%d AnkiDroid kaarten te doen</item>
     </plurals>
     <string name="widget_no_cards_due">Geen kaarten over</string>
     <string name="widget_loading">Widget laden...</string>

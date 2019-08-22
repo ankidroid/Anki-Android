@@ -124,7 +124,6 @@
     <string name="fact_adder_intent_title">AnkiDroid卡片</string>
     <string name="card_editor_add_card">添加笔记</string>
     <string name="card_editor_copy_card">复制卡片</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
     <string name="card_editor_reposition_card">更改位置</string>
     <string name="card_editor_reset_card">重设学习进度</string>
     <string name="card_editor_reschedule_card">Reschedule</string>
@@ -161,8 +160,8 @@
     <string name="confirm_apkg_export_deck">将“%s”导出为akpg文件？</string>
     <string name="export_in_progress">正在导出apkg文件&#8230;</string>
     <string name="export_successful_title">发送apkg文件吗？</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
+    <string name="export_send_button">发送</string>
+    <string name="export_save_button">保存到文件</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved apkg</string>
     <string name="export_save_apkg_unsuccessful">Save apkg failed</string>

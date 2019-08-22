@@ -102,7 +102,7 @@ public class SchedV2 extends Sched {
         super();
         mCol = col;
         mQueueLimit = 50;
-        mReportLimit = 1000;
+        mReportLimit = 99999;
         mDynReportLimit = 99999;
         mReps = 0;
         mToday = null;
@@ -184,6 +184,12 @@ public class SchedV2 extends Sched {
             _updateStats(card, "rev");
         } else {
             throw new RuntimeException("Invalid queue");
+        }
+
+        // once a card has been answered once, the original due date
+        // no longer applies
+        if (card.getODue() > 0) {
+            card.setODue(0);
         }
     }
 
@@ -1104,7 +1110,7 @@ public class SchedV2 extends Sched {
     private int _startingLeft(Card card) {
         try {
             JSONObject conf;
-        	if (card.getType() == 2) {
+        	if (card.getType() == 3) {
         		conf = _lapseConf(card);
         	} else {
         		conf = _lrnConf(card);
@@ -1309,7 +1315,7 @@ public class SchedV2 extends Sched {
                         .getDatabase()
                         .query(
                                 "SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 2 AND due <= " + mToday
-                                        + " ORDER BY due LIMIT " + lim, null);
+                                        + " ORDER BY due, random() LIMIT " + lim, null);
                 while (cur.moveToNext()) {
                     mRevQueue.add(cur.getLong(0));
                 }
@@ -1319,21 +1325,10 @@ public class SchedV2 extends Sched {
                 }
             }
             if (!mRevQueue.isEmpty()) {
-                try {
-                    if (mCol.getDecks().get(mCol.getDecks().selected(), false).getInt("dyn") != 0) {
-                        // dynamic decks need due order preserved
-                        // Note: libanki reverses mRevQueue and returns the last element in _getRevCard().
-                        // AnkiDroid differs by leaving the queue intact and returning the *first* element
-                        // in _getRevCard().
-                    } else {
-                        // fixme: as soon as a card is answered, this is no longer consistent
-                        Random r = new Random();
-                        r.setSeed(mToday);
-                        Collections.shuffle(mRevQueue, r);
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                // preserve order
+                // Note: libanki reverses mRevQueue and returns the last element in _getRevCard().
+                // AnkiDroid differs by leaving the queue intact and returning the *first* element
+                // in _getRevCard().
                 return true;
             }
         }
@@ -1676,10 +1671,10 @@ public class SchedV2 extends Sched {
             lim = "did = " + did;
         }
         mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where " + lim, 0));
-        // update queue in preview case
+
         mCol.getDb().execute(
                 "update cards set did = odid, " + _restoreQueueSnippet() +
-                ", due = odue, odue = 0, odid = 0, usn = ? where " + lim,
+                ", due = (case when odue>0 then odue else due end), odue = 0, odid = 0, usn = ? where " + lim,
                 new Object[] { mCol.usn() });
     }
 
@@ -2535,8 +2530,18 @@ public class SchedV2 extends Sched {
 
 
     private void _removeAllFromLearning() {
+        _removeAllFromLearning(2);
+    }
+
+    private void _removeAllFromLearning(int schedVer) {
         // remove review cards from relearning
-        mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", Utils.intNow(), mCol.usn()));
+        if (schedVer == 1) {
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", Utils.intNow(), mCol.usn()));
+        } else {
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = %d+ivl, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", mToday, Utils.intNow(), mCol.usn()));
+        }
+
+
         // remove new cards from learning
         forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "select id from cards where queue in (1,3)", 0)));
     }
@@ -2571,7 +2576,7 @@ public class SchedV2 extends Sched {
 
     public void moveToV2() {
         _emptyAllFiltered();
-        _removeAllFromLearning();
+        _removeAllFromLearning(1);
         _remapLearningAnswers("ease=ease+1 where ease in (2,3)");
     }
 

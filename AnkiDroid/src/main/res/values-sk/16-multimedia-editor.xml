@@ -36,6 +36,7 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Pridať obrázok</string>
+    <string name="multimedia_editor_popup_audio_clip">Pridať zvukovú stopu</string>
     <string name="multimedia_editor_popup_audio">Nahrať zvuk</string>
     <string name="multimedia_editor_popup_text">Rozšírený editor</string>
     <string name="multimedia_editor_popup_cloze">Doplňovačka</string>
@@ -68,7 +69,8 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text">Text</string>
     <string name="multimedia_editor_field_editing_image">Obrázok</string>
-    <string name="multimedia_editor_field_editing_audio">Audio</string>
+    <string name="multimedia_editor_field_editing_audio">Nahrávanie zvuku</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Zvuková stopa</string>
     <string name="multimedia_editor_field_editing_done">Hotovo</string>
     <!-- Text field editing -->
     <!-- buttons -->
@@ -90,6 +92,7 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galéria</string>
     <string name="multimedia_editor_image_field_editing_photo">Fotoaparát</string>
+    <string name="multimedia_editor_image_field_editing_library">Knižnica</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Sťahovanie</string>

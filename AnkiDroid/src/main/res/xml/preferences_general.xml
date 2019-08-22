@@ -56,7 +56,7 @@
             android:key="language"
             android:title="@string/language" />
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="analyticsOptIn"
             android:summary="@string/analytics_summ"
             android:title="@string/analytics_title" />

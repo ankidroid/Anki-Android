@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
@@ -33,6 +35,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 
 import android.util.Pair;
+import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,7 +58,8 @@ import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
-import com.ichi2.anki.multimediacard.fields.AudioField;
+import com.ichi2.anki.multimediacard.fields.AudioClipField;
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.EFieldType;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
@@ -87,6 +91,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
@@ -308,10 +314,16 @@ public class NoteEditor extends AnkiActivity {
         savedInstanceState.putInt("caller", mCaller);
         savedInstanceState.putBoolean("addFact", mAddNote);
         savedInstanceState.putLong("did", mCurrentDid);
+        if(mSelectedTags == null){
+            mSelectedTags = new ArrayList<>();
+        }
         savedInstanceState.putStringArray("tags", mSelectedTags.toArray(new String[mSelectedTags.size()]));
         Bundle fields = new Bundle();
         // Save the content of all the note fields. We use the field's ord as the key to
         // easily map the fields correctly later.
+        if(mEditFields == null){
+            mEditFields = new LinkedList<>();
+        }
         for (FieldEditText e : mEditFields) {
             fields.putString(Integer.toString(e.getOrd()), e.getText().toString());
         }
@@ -1117,6 +1129,13 @@ public class NoteEditor extends AnkiActivity {
             View editline_view = getLayoutInflater().inflate(R.layout.card_multimedia_editline, null);
             FieldEditText newTextbox = (FieldEditText) editline_view.findViewById(R.id.id_note_editText);
 
+            // Use custom implementation of ActionMode.Callback customize selection and insert menus
+            ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox);
+            newTextbox.setCustomSelectionActionModeCallback(actionModeCallback);
+            if (Build.VERSION.SDK_INT >= 23) {
+                newTextbox.setCustomInsertionActionModeCallback(actionModeCallback);
+            }
+
             initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode);
 
             TextView label = newTextbox.getLabel();
@@ -1171,7 +1190,14 @@ public class NoteEditor extends AnkiActivity {
                         switch (item.getItemId()) {
                             case R.id.menu_multimedia_audio: {
                                 Timber.i("NoteEditor:: Record audio button pressed");
-                                field = new AudioField();
+                                field = new AudioRecordingField();
+                                mNote.setField(index, field);
+                                startMultimediaFieldEditor(index, mNote, field);
+                                return true;
+                            }
+                            case R.id.menu_multimedia_audio_clip: {
+                                Timber.i("NoteEditor:: Add audio clip button pressed");
+                                field = new AudioClipField();
                                 mNote.setField(index, field);
                                 startMultimediaFieldEditor(index, mNote, field);
                                 return true;
@@ -1191,14 +1217,6 @@ public class NoteEditor extends AnkiActivity {
                                 startMultimediaFieldEditor(index, mNote, field);
                                 return true;
                             }
-                            case R.id.menu_multimedia_cloze: {
-                                FieldEditText fieldEditText = mEditFields.get(index);
-                                String text = fieldEditText.getText().toString();
-                                int selectionStart = fieldEditText.getSelectionStart();
-                                int selectionEnd = fieldEditText.getSelectionEnd();
-                                fieldEditText.setText(insertClozeAround(text, selectionStart, selectionEnd));
-                                return true;
-                            }
                             default:
                                 return false;
                         }
@@ -1207,12 +1225,6 @@ public class NoteEditor extends AnkiActivity {
                 }
             }
         });
-    }
-
-    private String insertClozeAround(String text, int selectionStart, int selectionEnd) {
-        int selectionMin = Math.min(selectionStart, selectionEnd);
-        int selectionMax = Math.max(selectionStart, selectionEnd);
-        return text.substring(0, selectionMin) + "{{c1::" + text.substring(selectionMin, selectionMax) + "}}" + text.substring(selectionMax);
     }
 
 
@@ -1675,6 +1687,81 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
             // Do Nothing
+        }
+    }
+
+    /**
+     * Custom ActionMode.Callback implementation for adding and handling cloze deletion action
+     * button in the text selection menu.
+     */
+    @TargetApi(23)
+    private class ActionModeCallback implements ActionMode.Callback {
+        private FieldEditText mTextBox;
+        private int mMenuId = View.generateViewId();
+        private Pattern mClozeRegexPattern = Pattern.compile("\\{\\{c(\\d+)::");
+
+        ActionModeCallback(FieldEditText textBox) {
+            super();
+            mTextBox = textBox;
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            // Adding the cloze deletion floating context menu item, but only once.
+            if (menu.findItem(mMenuId) == null) {
+                menu.add(Menu.NONE, mMenuId, Menu.NONE, R.string.multimedia_editor_popup_cloze);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            if (item.getItemId() == mMenuId) {
+                // get the current text and selection locations
+                int selectionStart = mTextBox.getSelectionStart();
+                int selectionEnd = mTextBox.getSelectionEnd();
+                String text = mTextBox.getText().toString();
+
+                // Split the text in the places where the cloze deletion will be inserted
+                String beforeText = text.substring(0, selectionStart);
+                String selectedText = text.substring(selectionStart, selectionEnd);
+                String afterText = text.substring(selectionEnd);
+
+                // Find the largest existing cloze deletion id
+                Matcher matcher = mClozeRegexPattern.matcher(text);
+                int highestClozeId = 0;
+                while (matcher.find()) {
+                    int detectedClozeId = Integer.parseInt(matcher.group(1));
+                    if (detectedClozeId > highestClozeId) {
+                        highestClozeId = detectedClozeId;
+                    }
+                }
+
+                // Format the cloze deletion open bracket
+                String clozeOpenBracket = "{{c" + (highestClozeId + 1) + "::";
+
+                // Update text field with updated text and selection
+                mTextBox.setText(beforeText + clozeOpenBracket + selectedText + "}}" + afterText);
+                int clozeOpenSize = clozeOpenBracket.length();
+                mTextBox.setSelection(selectionStart+clozeOpenSize, selectionEnd+clozeOpenSize);
+
+                mode.finish();
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            // Left empty on purpose
         }
     }
 }

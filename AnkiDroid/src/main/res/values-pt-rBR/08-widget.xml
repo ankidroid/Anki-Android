@@ -42,8 +42,8 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Cartões devidos</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d Cartão pendente no AnkiDroid</item>
+        <item quantity="other">%d Cartões pendentes no AnkiDroid</item>
     </plurals>
     <string name="widget_no_cards_due">Sem cartões pendentes</string>
     <string name="widget_loading">Carregando widget&#8230;</string>

@@ -103,7 +103,7 @@
     <string name="cardeditor_title_add_note">Afegeix una nota</string>
     <string name="cardeditor_title_edit_card">Edita la nota</string>
     <string name="discard_unsaved_changes">Abandonar i perdre el procés sense guardar?</string>
-    <string name="factadder_saving_error">Hi ha hagurt un error en desar la nota</string>
+    <string name="factadder_saving_error">Error en guardar la nota</string>
     <string name="saving_facts">S\'està desant la nota</string>
     <string name="saving_model">Guardant model</string>
     <string name="add">Afegeix</string>
@@ -126,10 +126,9 @@
     <string name="fact_adder_intent_title">Fitxa AnkiDroid</string>
     <string name="card_editor_add_card">Afegeix una nota</string>
     <string name="card_editor_copy_card">Còpia la fitxa</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Reinicia</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Tornar a planificar</string>
     <string name="card_editor_preview_card">Previsualització</string>
     <string name="error_insufficient_memory">No hi ha suficient memòria al dispositiu per a aquesta operació</string>
     <string name="rename">Canvia el nom</string>
@@ -176,10 +175,10 @@
 		És un mall d\'Anki enviat des de <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
         Intenta obrir-lo utilitzant una de les <a href="http://ankisrs.net/#download">distribucions d\'Anki</a> disponibles i gaudeix d\'un aprenentatge fàcil i eficient!
         ]]></string>
-    <string name="export_unsuccessful">Error al exportar l\'arxiu apkg</string>
+    <string name="export_unsuccessful">Error en exportar l\'arxiu apkg</string>
     <string name="import_hint">Per importar fitxes, poseu l\'arxiu apkg a la carpeta %s i premeu d\'acord</string>
     <string name="upgrade_import_no_file_found">No s\'ha trobat cap fitxer %1$s que es pugui importar</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Opcions d\'estudi</string>
     <string name="select_tts">Selecciona idioma per TTS</string>
     <string name="custom_study">Estudi a mida</string>
     <string name="more_options"> Més</string>
@@ -189,9 +188,9 @@
     <string name="sched_end">(fi)</string>
     <string name="sched_unbury_action">Per veure-les apreti el botó de \"Desenterrar\" al menú.</string>
     <string name="sched_has_buried">Algunes cartes relacionades o enterrades es van retardar fins demà.</string>
-    <string name="tag_editor_add_feedback">Apreti \"%2$s\" per confirmar afegir \"%1$s\"</string>
+    <string name="tag_editor_add_feedback">Prem \"%2$s\" per confirmar afegir \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existent \"%1$s\" seleccionada</string>
-    <string name="lookup_hint">Després de copiar el text, apreti a qualsevol lloc en la carta per mostrar la icona de cerca</string>
+    <string name="lookup_hint">Després de copiar el text, prem a qualsevol lloc en la carta per mostrar la icona de cerca</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s segon</item>
@@ -230,7 +229,7 @@
         <item quantity="other">%2$d cards to review in %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">Error al compartir l\'arxiu apkg</string>
+    <string name="apk_share_error">Error en compartir l\'arxiu apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
     <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>

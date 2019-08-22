@@ -84,8 +84,8 @@
     <string name="undo_action_delete">删除笔记</string>
     <string name="undo_action_delete_multi">删除卡牌记录</string>
     <string name="undo_action_change_deck_multi">更换牌组</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reschedule_card">重新安排学习进度</string>
+    <string name="undo_action_reset_card">重设学习进度</string>
     <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">将所有移动至牌组</string>
     <string name="unbury">取消隐藏</string>

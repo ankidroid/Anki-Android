@@ -28,6 +28,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
@@ -1015,7 +1016,7 @@ public class Collection {
                 // note point to invalid model
                 continue;
             }
-            r.add(new Object[] { Utils.stripHTML(fields[mModels.sortIdx(model)]), Utils.fieldChecksum(fields[0]), o[0] });
+            r.add(new Object[] { Utils.stripHTMLMedia(fields[mModels.sortIdx(model)]), Utils.fieldChecksum(fields[0]), o[0] });
         }
         // apply, relying on calling code to bump usn+mod
         mDb.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r);
@@ -1668,17 +1669,17 @@ public class Collection {
                 // new cards can't have a due position > 32 bits
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intNow() + ", usn = " + usn()
-                        + " WHERE due > 1000000 AND queue = 0");
+                        + " WHERE due > 1000000 AND type = 0");
                 // new card position
                 mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
                 // reviews should have a reasonable due #
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 10000", 0);
+                ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 if (ids.size() > 0) {
                 	problems.add("Reviews had incorrect due date.");
-                    mDb.execute("UPDATE cards SET due = 0, mod = " + Utils.intNow() + ", usn = " + usn()
-                            + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+                    mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intNow() +
+                            ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 }
                 // v2 sched had a bug that could create decimal intervals
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
@@ -1748,20 +1749,19 @@ public class Collection {
      */
 
     /**
-     * Track database corruption problems - AcraLimiter should quench it if it's a torrent
-     * but we will take care to limit possible data usage by limiting count we send regardless
+     * Track database corruption problems and post analytics events for tracking
      *
-     * @param integrityCheckProblems list of problems, the first 10 will be logged and sent via ACRA
+     * @param integrityCheckProblems list of problems, the first 10 will be used
      */
-    private void logProblems(ArrayList integrityCheckProblems) {
+    private void logProblems(ArrayList<String> integrityCheckProblems) {
 
         if (integrityCheckProblems.size() > 0) {
             StringBuffer additionalInfo = new StringBuffer();
             for (int i = 0; ((i < 10) && (integrityCheckProblems.size() > i)); i++) {
                 additionalInfo.append(integrityCheckProblems.get(i)).append("\n");
+                // log analytics event so we can see trends if user allows it
+                UsageAnalytics.sendAnalyticsEvent("DatabaseCorruption", integrityCheckProblems.get(i));
             }
-            AnkiDroidApp.sendExceptionReport(
-                    new Exception("Problem list (limited to first 10)"), "Collection.fixIntegrity()", additionalInfo.toString());
             Timber.i("fixIntegrity() Problem list (limited to first 10):\n%s", additionalInfo);
         } else {
             Timber.i("fixIntegrity() no problems found");

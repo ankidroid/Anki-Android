@@ -61,21 +61,21 @@
         <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
     </string-array>
     <string name="preview_title">Pratinjau</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">Reposisi kartu baru</string>
+    <string name="reposition_card_dialog_message">Posisi Mulai:</string>
+    <string name="reposition_card_not_new_error">Hanya kartu baru dapat direposisikan</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="other">%d kartu direposisikan</item>
     </plurals>
     <string name="reset_card_dialog_title">Set semula rekod kemajuan kad</string>
     <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="other">%d cards reset</item>
+        <item quantity="other">%d kartu diulang</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Kartu penjadwal ulang</string>
     <string name="reschedule_card_dialog_message">Penjadwalan ulang untuk ditinjau dalam x hari:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="other">%d kartu dijadwalkan ulang</item>
     </plurals>
     <string name="answering_error_title">Ralat database</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Databese bisa korup atau mungkin tidak ada cukup ruang kosong pada disk. \ n \ n Jika ini terjadi lebih sering, cobalah memeriksa database, memperbaiki koleksi atau mengembalikannya dari cadangan. Sentuh \"opsi\" untuk itu. \ n \ Atau bisa juga bug AnkiDroid; mohon laporkan kesalahannya sehingga kami bisa mengeceknya.</string>
@@ -85,8 +85,8 @@
     <string name="intent_add_clear_all">Hapus semua</string>
     <string name="intent_aedict_empty">Kategori \'default\' kosong</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Kartu-kartu baru di dek: %d</string>
+    <string name="custom_study_rev_total_rev">Pengulangan yang perlu di deck: %d</string>
     <string name="custom_study_new_extend">Tingkatkan batas kartu baru hari ini</string>
     <string name="custom_study_rev_extend">Tingkatkan batas review hari ini oleh</string>
     <string name="custom_study_forgotten">Mengkaji kartu yang terlupakan dalam x hari terakhir:</string>

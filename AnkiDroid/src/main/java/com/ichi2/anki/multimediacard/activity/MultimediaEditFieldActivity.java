@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.Toolbar;
@@ -35,7 +36,8 @@ import android.widget.LinearLayout;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.fields.AudioField;
+import com.ichi2.anki.multimediacard.fields.AudioClipField;
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.BasicControllerFactory;
 import com.ichi2.anki.multimediacard.fields.EFieldType;
 import com.ichi2.anki.multimediacard.fields.IControllerFactory;
@@ -118,7 +120,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         }
 
         // Request permission to record if audio field
-        if (mField instanceof AudioField && ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) !=
+        if (mField instanceof AudioRecordingField && ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) !=
                 PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
                     REQUEST_AUDIO_PERMISSION);
@@ -152,7 +154,8 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_edit_text, menu);
         menu.findItem(R.id.multimedia_edit_field_to_text).setVisible(mField.getType() != EFieldType.TEXT);
-        menu.findItem(R.id.multimedia_edit_field_to_audio).setVisible(mField.getType() != EFieldType.AUDIO);
+        menu.findItem(R.id.multimedia_edit_field_to_audio).setVisible(mField.getType() != EFieldType.AUDIO_RECORDING);
+        menu.findItem(R.id.multimedia_edit_field_to_audio_clip).setVisible(mField.getType() != EFieldType.AUDIO_CLIP);
         menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(mField.getType() != EFieldType.IMAGE);
         return true;
     }
@@ -176,9 +179,16 @@ public class MultimediaEditFieldActivity extends AnkiActivity
                 return true;
 
             case R.id.multimedia_edit_field_to_audio:
-                Timber.i("To audio button pressed");
+                Timber.i("To audio recording button pressed");
                 mFieldController.onFocusLost();
-                toAudioField();
+                toAudioRecordingField();
+                supportInvalidateOptionsMenu();
+                return true;
+
+            case R.id.multimedia_edit_field_to_audio_clip:
+                Timber.i("To audio clip button pressed");
+                mFieldController.onFocusLost();
+                toAudioClipField();
                 supportInvalidateOptionsMenu();
                 return true;
 
@@ -212,7 +222,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
                     bChangeToText = true;
                 }
             }
-        } else if (mField.getType() == EFieldType.AUDIO) {
+        } else if (mField.getType() == EFieldType.AUDIO_RECORDING) {
             if (mField.getAudioPath() == null) {
                 bChangeToText = true;
             }
@@ -238,9 +248,16 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     }
 
 
-    protected void toAudioField() {
-        if (mField.getType() != EFieldType.AUDIO) {
-            mField = new AudioField();
+    protected void toAudioRecordingField() {
+        if (mField.getType() != EFieldType.AUDIO_RECORDING) {
+            mField = new AudioRecordingField();
+            recreateEditingUi();
+        }
+    }
+
+    protected void toAudioClipField() {
+        if (mField.getType() != EFieldType.AUDIO_CLIP) {
+            mField = new AudioClipField();
             recreateEditingUi();
         }
     }
@@ -275,7 +292,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     }
 
 
-    public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.length == 1) {
             // TODO:  Disable the record button / show some feedback to the user
             recreateEditingUi();

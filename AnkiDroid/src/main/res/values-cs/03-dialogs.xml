@@ -60,34 +60,34 @@
         <item><![CDATA[<h2>%1$s:<br/>Kartičky pro Android</h2>AnkiDroid je kartičková aplikace plně kompatibilní s desktopovou verzí <a href=\"%2$s\">Anki</a>. Můžete vytvářet, stahovat a učit se materiály jak v AnkiDroid tak Anki Desktop a velmi snadno je synchronizovat i s AnkiWeb.]]></item>
         <item><![CDATA[Chcete-li nám pomoci vylepšit AnkiDroid prosím ohlaste chyby ve <a href=\"%1$s\">sledovači chyb</a>; nové myšlenky na funkce jsou také velmi vítány. Mnoho odpovědí naleznete ve <a href=\"%2$s\">wiki</a> nebo začněte diskutovat na <a href=\"%3$s\">foru</a>.]]></item>
         <item><![CDATA[AnkiDroid je <a href=\"%1$s\">open source software<a/>, takže každý se může <a href=\"%2$s\">stát přispěvatelem</a> :-)]]></item>
-        <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
+        <item><![CDATA[Nejenom vývojáři mohou pomoci. Například můžete <a href=\"%1$s\">pomoc s překladem</a> AnkiDroid, aktualizovat wiki, poskytnout náhledy obrazovky nebo blogovat o AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid je vydán pod <a href=\"%1$s\">GNU-GPL v3 licencí</a> a zdrojový kód je dostupný <a href=\"%2$s\">na GitHub</a>.]]></item>
     </string-array>
     <string name="preview_title">Náhled</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">Změnit pořadí nové karty</string>
+    <string name="reposition_card_dialog_message">Počáteční pozice:</string>
+    <string name="reposition_card_not_new_error">Změnit pořadí lze pouze u nových karet</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="few">%d cards repositioned</item>
-        <item quantity="many">%d cards repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d karta přesunuta</item>
+        <item quantity="few">%d karty přesunuty</item>
+        <item quantity="many">%d karet přesunuto</item>
+        <item quantity="other">%d karet přesunuto</item>
     </plurals>
     <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
     <string name="reset_card_dialog_message">Tato karta bude umístěna na konec fronty s novými kartami.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="few">%d cards reset</item>
-        <item quantity="many">%d cards reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d karta obnovena</item>
+        <item quantity="few">%d karty obnoveny</item>
+        <item quantity="many">%d karet obnoveno</item>
+        <item quantity="other">%d karet obnoveno</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Přeplánovat kartu</string>
     <string name="reschedule_card_dialog_message">Přeplánovat zkoušení pro x dní:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="few">%d cards rescheduled</item>
-        <item quantity="many">%d cards rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d karta přeplánována</item>
+        <item quantity="few">%d karty přeplánovány</item>
+        <item quantity="many">%d karet přeplánováno</item>
+        <item quantity="other">%d karet přeplánováno</item>
     </plurals>
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Došlo k chybě při zápisu do kolekce. To by mohlo souviset s poškozenou databází nebo nedostatečným místem na disku.\n\nJestliže se to stává častěji, prosím zkuste zkontrolovat databázi, opravit nebo obnovit kolekci ze zálohy. Klikněte na \'Možnosti\' pro toto.\n\nNicméně, mohla by to být chyba AnkiDroid. Prosím oznamte chybu, abychom to zkontrolovali.</string>
@@ -97,8 +97,8 @@
     <string name="intent_add_clear_all">Vymazat vše</string>
     <string name="intent_aedict_empty">Kategorie \'výchozí\' je prázdná</string>
     <string name="intent_aedict_category">Chcete-li přidat AnkiDroid karty, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem \'default\'</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Nové karty v balíčku: %d</string>
+    <string name="custom_study_rev_total_rev">K opakování v balíčku: %d</string>
     <string name="custom_study_new_extend">Zvýšit dnešní limit nových karet o</string>
     <string name="custom_study_rev_extend">Zvýšit dnešní limit opakovaných karet o</string>
     <string name="custom_study_forgotten">Opakovat zapomenuté karty z posledních x dnů:</string>

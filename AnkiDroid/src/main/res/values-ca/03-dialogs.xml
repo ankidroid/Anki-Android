@@ -90,7 +90,7 @@
     <string name="intent_aedict_empty">La categoria \'per omissió\' és buida</string>
     <string name="intent_aedict_category">Per afegir fitxes d\'AnkiDroid treieu totes les categories del bloc de notes o afegiu-ne una anomenada \'per omissió\'</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_rev_total_rev">Revisions vençudes al paquet: %d</string>
     <string name="custom_study_new_extend">Augmenta el límit de fitxes d\'avui en</string>
     <string name="custom_study_rev_extend">Augmenta el límit de revisió d\'avui en</string>
     <string name="custom_study_forgotten">Revisa les fitxes oblidades en els darrers x dies:</string>
@@ -115,7 +115,7 @@
     <string name="dialog_positive_delete">Eliminar</string>
     <string name="dialog_positive_disable">Desactiva</string>
     <string name="dialog_positive_overwrite">Sobreescriure</string>
-    <string name="dialog_positive_remove">El·liminar</string>
+    <string name="dialog_positive_remove">Eliminar</string>
     <string name="dialog_positive_repair">Repara</string>
     <string name="dialog_positive_replace">Reemplaça</string>
     <string name="dialog_positive_restore">Restaura</string>

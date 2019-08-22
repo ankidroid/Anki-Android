@@ -45,7 +45,7 @@
     <string name="statistics">Estadístiques</string>
     <string name="settings">Configuració</string>
     <string name="help">Ajuda</string>
-    <string name="send_feedback">Enviar feedback</string>
+    <string name="send_feedback">Enviar comentaris</string>
     <string name="studyoptions_title">Visió de conjunt dels paquets</string>
     <string name="studyoptions_due_today">Venç avui:</string>
     <string name="studyoptions_new_total">Total de noves fitxes:</string>
@@ -85,11 +85,11 @@
     <string name="undo_action_suspend_card">Suspèn la fitxa</string>
     <string name="undo_action_suspend_note">suspèn la nota</string>
     <string name="undo_action_delete">Suprimeix la nota</string>
-    <string name="undo_action_delete_multi">delete notes</string>
+    <string name="undo_action_delete_multi">esborrar nota</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
+    <string name="undo_action_reschedule_card">tornar a planificar</string>
+    <string name="undo_action_reset_card">restablir el progrés</string>
+    <string name="undo_action_reposition_card">canviar la posició</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Canvia el nom del paquet</string>
@@ -104,7 +104,7 @@
     <string name="menu_bury">Enterrar</string>
     <string name="menu_suspend">Suspendre</string>
     <string name="menu_delete_note">Suprimeix la nota</string>
-    <string name="delete_note_message">Segur que voleu suprimir aquesta nota i tots les seves fitxes?\n%s</string>
+    <string name="delete_note_message">Segur que voleu suprimir aquesta nota i totes les seves fitxes?\n%s</string>
     <string name="menu_select">Selecciona text</string>
     <string name="menu_search">Cerca-ho a %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>

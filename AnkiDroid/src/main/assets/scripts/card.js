@@ -107,4 +107,26 @@ var onPageFinished = function() {
         /* Re-anchor to answer after image resize since the point changes */
         window.location.href = "#answer";
     }
+    if (window.MathJax != null) {
+        var card = document.querySelector('.card');
+        /* Anki-Android adds mathjax-needs-to-render" as a class to the card when
+           it detects both \( and \) or \[ and \].
+
+           This does not control *loading* MathJax, but rather controls whether or not MathJax
+           renders content.  We hide all the content until MathJax renders, because otherwise
+           the content loads, and has to reflow after MathJax renders, and it's unsightly.
+           However, if we hide all the content every time, folks don't like the repainting after
+           every question or answer.  This is a middleground, where there is no repainting due to
+           MathJax on non-MathJax cards, and on MathJax cards, there is a small flicker, but there's
+           no reflowing because the content only shows after MathJax has rendered. */
+
+        if (card.classList.contains("mathjax-needs-to-render"))
+        {
+            MathJax.Hub.Queue(['Typeset', MathJax.Hub, card]);
+            MathJax.Hub.Queue(function () {
+                card.classList.remove("mathjax-needs-to-render");
+                card.classList.add("mathjax-rendered");
+            });
+        }
+    }
 }

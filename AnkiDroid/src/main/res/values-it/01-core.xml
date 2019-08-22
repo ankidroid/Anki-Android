@@ -87,9 +87,9 @@
     <string name="undo_action_delete">elimina nota</string>
     <string name="undo_action_delete_multi">elimina note</string>
     <string name="undo_action_change_deck_multi">cambia mazzi</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
+    <string name="undo_action_reschedule_card">ripianifica</string>
+    <string name="undo_action_reset_card">ripristinare i progressi</string>
+    <string name="undo_action_reposition_card">riposiziona</string>
     <string name="move_all_to_deck">Sposta tutto nel mazzo</string>
     <string name="unbury">Disseppellisci</string>
     <string name="rename_deck">Rinomina mazzo</string>
@@ -144,7 +144,7 @@
     <string name="studyoptions_congrats_custom">Per studiare al di fuori della programmazione normale, clicca sul pulsante \'Studio Personalizzato\' qui sotto.</string>
     <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
     <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Modifica questa nota e aggiungi alcuni eliminamenti di cloze. (%1$s)</string>
     <string name="button_sync">Sincronizza</string>
     <string name="cancel_sync_confirm">Vuoi annullare la sincronizzazione?</string>
     <string name="continue_sync">Continua la sincronizzazione</string>
@@ -167,7 +167,7 @@
     </plurals>
     <string name="invalid_template">Una carta non può essere generata</string>
     <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
-    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">Il modello per la carta corrente è stato eliminato.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
     <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>

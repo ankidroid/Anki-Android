@@ -59,7 +59,7 @@
     <string name="delete_card_mult_message">Excluir todos os cartões de todas as notas selecionadas?\n(Não apenas os cartões selecionados)</string>
     <string name="deleted_message">Notas excluídas</string>
     <string name="changed_deck_message">Movido para %s</string>
-    <string name="card_browser_suspended_cards">(un)suspended cards</string>
+    <string name="card_browser_suspended_cards">cartas suspensas / não suspensas</string>
     <string name="card_browser_show_marked">Filtrar marcadas</string>
     <string name="card_browser_show_suspended">Filtro suspenso</string>
     <string name="card_browser_search_by_tag">Filtrar por Tag</string>

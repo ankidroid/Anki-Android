@@ -59,8 +59,8 @@
     <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Odpojte USB pro přístup ke svým balíkům.</string>
     <string name="updated_version">Aktualizováno na verzi %s</string>
     <!-- Reviewer.java -->
-    <string name="enable_whiteboard">Povolit Tabuly</string>
-    <string name="disable_whiteboard">Zakázat Tabuly</string>
+    <string name="enable_whiteboard">Povolit tabuli</string>
+    <string name="disable_whiteboard">Zakázat tabuli</string>
     <string name="show_whiteboard">Zobrazit tabuli</string>
     <string name="hide_whiteboard">Skrýt tabuli</string>
     <string name="clear_whiteboard">Smazat tabuli</string>
@@ -130,10 +130,9 @@
     <string name="fact_adder_intent_title">AnkiDroid karta</string>
     <string name="card_editor_add_card">Přidat poznámku</string>
     <string name="card_editor_copy_card">Kopírovat kartu</string>
-    <string name="card_editor_card_scheduling">Scheduling</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="card_editor_reposition_card">Změnit pořadí</string>
     <string name="card_editor_reset_card">Obnovit proces učení</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">Přeplánovat</string>
     <string name="card_editor_preview_card">Náhled</string>
     <string name="error_insufficient_memory">Operace není možná z důvodu nedostatku paměti na zařízení</string>
     <string name="rename">Přejmenovat</string>
@@ -169,23 +168,23 @@
     <string name="confirm_apkg_export">Export kolekce jako apkg soubor?</string>
     <string name="confirm_apkg_export_deck">Export \"%s\" jako apkg soubor?</string>
     <string name="export_in_progress">Exportuji soubor apkg&#8230;</string>
-    <string name="export_successful_title">Send apkg?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
-    <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-    <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_successful_title">Odeslat apkg?</string>
+    <string name="export_send_button">Odeslat</string>
+    <string name="export_save_button">Uložit do souboru</string>
+    <string name="export_send_no_handlers">Nenalezena žádná aplikace pro zpracování apkg. Ukládá se...</string>
+    <string name="export_save_apkg_successful">Apkg úspěšně uloženo</string>
+    <string name="export_save_apkg_unsuccessful">Ukládání apkg selhalo</string>
+    <string name="export_successful">Soubor „%s“ byl exportován. Chcete jej poslat pomocí jiné aplikace?</string>
+    <string name="export_email_subject">AnkiDroid exportované kartičky: %s</string>
+    <string name="export_email_text"><![CDATA[        Ahoj!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        Tohle je balíček kartiček Anki poslaný z <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Zkus ho otevřít pomocí jedné z dostupných <a href="http://ankisrs.net/#download">distribucí Anki</a> a užij si jednoduché a účinné učení!
         ]]></string>
-    <string name="export_unsuccessful">Error exporting apkg file</string>
+    <string name="export_unsuccessful">Chyba při exportu apkg souboru</string>
     <string name="import_hint">Pro import karet umístěte soubor apkg do adresáře %s a stiskněte ok</string>
     <string name="upgrade_import_no_file_found">Iportvatelný soubor %1$s nebyl nenalezen</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Možnosti</string>
     <string name="select_tts">Výběr hlasu pro převod textu na hlas</string>
     <string name="custom_study">Vlastní učení</string>
     <string name="more_options">Více</string>
@@ -242,18 +241,18 @@
     <string name="decks_rename_exists">Balíček již existuje</string>
     <string name="decks_rename_filtered_nosubdecks">Filtrovaný balíček nemůže obsahovat podřízené balíčky</string>
     <string name="filtered_deck_name">Filtrovaný balíček</string>
-    <string name="reminder_title">Do not forget to study today!</string>
+    <string name="reminder_title">Nezapomeňte dnes studovat!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="few">%2$d cards to review in %1$s</item>
-        <item quantity="many">%2$d cards to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d karta k zopakování v %1$s</item>
+        <item quantity="few">%2$d karty k zopakování v %1$s</item>
+        <item quantity="many">%2$d karet k zopakování v %1$s</item>
+        <item quantity="other">%2$d karet k zopakování v %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba sdílení souboru apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">Abyste mohli importovat tento soubor, musí být povolen V2 plánovač.</string>
+    <string name="import_cannot_with_v2">V2 plánovač nemůže importovat V1 balíčky, které obsahují plánování.</string>
+    <string name="export_v2_dummy_note">Tento soubor vyžaduje novější verzi Anki.</string>
+    <string name="export_v2_forbidden">Předtím, než budete exportovat jednotlivý balíček, který obsahuje informace o plánování, přepněte prosím na V1 plánovač.</string>
 </resources>

@@ -47,9 +47,9 @@
     <string name="delete_deck_default_deck">Колода за замовчанням не може бути видалена</string>
     <string name="delete_deck_title">Видалити колоду</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Видалити всі картки в %1$s? Там міститься %2$d картка.</item>
-        <item quantity="few">Видалити всі картки в %1$s? Там міститься %2$d карток.</item>
-        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards.</item>
+        <item quantity="one">Видалити всі картки в %1$s? Він містить %2$d картку.</item>
+        <item quantity="few">Видалити всі карти в %1$s? Він містить %2$d картки.</item>
+        <item quantity="many">Видалити всі карти в %1$s? Він містить %2$d карток.</item>
         <item quantity="other">Видалити всі картки в %1$s? Там міститься %2$d карток.</item>
     </plurals>
     <string name="delete_cram_deck_message">Ви впевнені що хочете відправити всі карти з %s назад до їх початкових колод?</string>
@@ -64,30 +64,30 @@
         <item><![CDATA[AnkiDroid випущений під <a href=\"%1$s\"> ліцензією GNU GPL v3</a>, а програмний код доступний <a href=\"%2$s\"> на GitHub</a>.]]></item>
     </string-array>
     <string name="preview_title">Перегляд</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">Переміщення нової картки</string>
+    <string name="reposition_card_dialog_message">Початкова позиція:</string>
+    <string name="reposition_card_not_new_error">Тільки нові картки можуть бути переміщені</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="few">%d cards repositioned</item>
-        <item quantity="many">%d cards repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d картку переміщено</item>
+        <item quantity="few">%d карток переміщено</item>
+        <item quantity="many">%d карток переміщено</item>
+        <item quantity="other">%d карток переміщено</item>
     </plurals>
     <string name="reset_card_dialog_title">Скинути поступ картки</string>
     <string name="reset_card_dialog_message">Ця картка буде переміщена у кінець черги нових карток</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="few">%d cards reset</item>
-        <item quantity="many">%d cards reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d картку скинуто</item>
+        <item quantity="few">%d картки скинуті</item>
+        <item quantity="many">%d картки скинуті</item>
+        <item quantity="other">%d картки скинуті</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Перепланувати картки</string>
     <string name="reschedule_card_dialog_message">Запланувати перегляд у наступні x днів:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="few">%d cards rescheduled</item>
-        <item quantity="many">%d cards rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d картку переплановано</item>
+        <item quantity="few">%d карток переплановано</item>
+        <item quantity="many">%d карток переплановано</item>
+        <item quantity="other">%d картки переплановано</item>
     </plurals>
     <string name="answering_error_title">Помилка бази даних</string>
     <string name="answering_error_message">Під час запису в колекцію сталася помилка. Причиною може бути пошкоджена база даних або відсутність місця на диску.\n\nЯкщо це трапляється більш часто, будь ласка, спробуйте перевірити базу даних, відремонтувати колекцію, або відновити її з резервної копії. Для цього натисніть на \"опції\".\n\nОднак, це також може бути недолік AnkiDroid; будь ласка, надішліть звіт для перевірки цього.</string>
@@ -97,8 +97,8 @@
     <string name="intent_add_clear_all">Очистити все</string>
     <string name="intent_aedict_empty">Категорія  \'стандартна\'  порожня</string>
     <string name="intent_aedict_category">Щоб додати картки до AnkiDroid видаліть всі категорії Notepad або додайте категорію \'default\'</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Нові картки в колоді: %d</string>
+    <string name="custom_study_rev_total_rev">Повторити сьогодні: %d</string>
     <string name="custom_study_new_extend">Збільшити сьогоднішній ліміт нових карт на</string>
     <string name="custom_study_rev_extend">Збільшити сьогоднішній ліміт повторення на</string>
     <string name="custom_study_forgotten">Повторити карти забуті за останні x днів:</string>
