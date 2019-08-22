@@ -314,10 +314,16 @@ public class NoteEditor extends AnkiActivity {
         savedInstanceState.putInt("caller", mCaller);
         savedInstanceState.putBoolean("addFact", mAddNote);
         savedInstanceState.putLong("did", mCurrentDid);
+        if(mSelectedTags == null){
+            mSelectedTags = new ArrayList<>();
+        }
         savedInstanceState.putStringArray("tags", mSelectedTags.toArray(new String[mSelectedTags.size()]));
         Bundle fields = new Bundle();
         // Save the content of all the note fields. We use the field's ord as the key to
         // easily map the fields correctly later.
+        if(mEditFields == null){
+            mEditFields = new LinkedList<>();
+        }
         for (FieldEditText e : mEditFields) {
             fields.putString(Integer.toString(e.getOrd()), e.getText().toString());
         }
