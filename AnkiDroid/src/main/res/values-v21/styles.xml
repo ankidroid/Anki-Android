@@ -4,13 +4,16 @@
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
     </style>
     <style name="Theme_Plain_Compat" parent="Theme_Light.Plain">
+
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
     </style>
     <style name="Theme_Dark_Compat" parent="Theme_Dark">
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
+        <item name="android:navigationBarColor">@color/black</item>
     </style>
     <style name="Theme_Black_Compat" parent="Theme_Dark.Black">
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
+        <item name="android:navigationBarColor">@color/black</item>
     </style>
 
     <style name="menu_labels_style">
