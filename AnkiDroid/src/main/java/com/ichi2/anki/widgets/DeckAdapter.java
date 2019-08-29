@@ -208,14 +208,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
         // Init vars to determine what metadata to show about decks
         boolean showRemainingCards;
-        boolean showYoungReviewCount;
+        boolean showCriticalReviewCount;
         try {
             showRemainingCards = mCol.getConf().getBoolean("dueCounts");
             // why isn't what follows another call to mCol.getConf()...?
             // didn't want to modify anki collection prefs json object at this point
             // so it must go through Android's preference system, which requires a Context object
             Context context = holder.itemView.getContext();
-            showYoungReviewCount = AnkiDroidApp.getSharedPrefs(context).getBoolean(context.getString(R.string.pref_young_cards_due), false);
+            showCriticalReviewCount = AnkiDroidApp.getSharedPrefs(context).getBoolean(context.getString(R.string.pref_young_cards_due), false);
         } catch (JSONException e) {
             throw new IllegalStateException("Failed to find 'dueCounts' field in collection prefs");
         }
@@ -245,7 +245,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
 
         // Show/hide the critical review
-        if (showYoungReviewCount) {
+        if (showCriticalReviewCount) {
             holder.countsLayout.setVisibility(LinearLayout.GONE);
             holder.youngRevLayout.setVisibility(View.VISIBLE);
             holder.criticalRevCount.setVisibility(View.VISIBLE);
