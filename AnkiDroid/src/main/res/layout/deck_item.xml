@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/deckpicker_indent"
-        android:layout_toLeftOf="@+id/young_rev_layout"
+        android:layout_toLeftOf="@+id/critical_card_layout"
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageButton
@@ -62,7 +62,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/young_rev_layout"
+        android:id="@+id/critical_card_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="right"

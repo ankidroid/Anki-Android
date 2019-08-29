@@ -80,25 +80,25 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         public RelativeLayout deckLayout;
         public LinearLayout countsLayout;
-        public LinearLayout youngRevLayout;
+        public LinearLayout criticalCardLayout;
         public ImageButton deckExpander;
         public ImageButton indentView;
         public TextView deckName;
         public TextView deckNew, deckLearn, deckRev;
-        public TextView criticalRevCount;
+        public TextView criticalCardCount;
 
         public ViewHolder(View v) {
             super(v);
             deckLayout = (RelativeLayout) v.findViewById(R.id.DeckPickerHoriz);
             countsLayout = (LinearLayout) v.findViewById(R.id.counts_layout);
-            youngRevLayout = (LinearLayout) v.findViewById(R.id.young_rev_layout);
+            criticalCardLayout = (LinearLayout) v.findViewById(R.id.critical_card_layout);
             deckExpander = (ImageButton) v.findViewById(R.id.deckpicker_expander);
             indentView = (ImageButton) v.findViewById(R.id.deckpicker_indent);
             deckName = (TextView) v.findViewById(R.id.deckpicker_name);
             deckNew = (TextView) v.findViewById(R.id.deckpicker_new);
             deckLearn = (TextView) v.findViewById(R.id.deckpicker_lrn);
             deckRev = (TextView) v.findViewById(R.id.deckpicker_rev);
-            criticalRevCount = (TextView) v.findViewById(R.id.deckpicker_critical_cards);
+            criticalCardCount = (TextView) v.findViewById(R.id.deckpicker_critical_cards);
         }
     }
 
@@ -244,29 +244,23 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             holder.deckRev.setVisibility(View.INVISIBLE);
         }
 
+        holder.criticalCardLayout.setVisibility(View.INVISIBLE);
+        holder.criticalCardCount.setVisibility(View.INVISIBLE);
         // Show/hide the critical review
         if (showCriticalReviewCount) {
             holder.countsLayout.setVisibility(LinearLayout.GONE);
             if (node.depth == 0) {
-                holder.youngRevLayout.setVisibility(View.VISIBLE);
-                holder.criticalRevCount.setVisibility(View.VISIBLE);
+                holder.criticalCardLayout.setVisibility(View.VISIBLE);
+                holder.criticalCardCount.setVisibility(View.VISIBLE);
                 int criticalRevCount = node.youngRevCount + node.lrnCount + node.newCount;
                 if (criticalRevCount > 10) {
-                    holder.criticalRevCount.setText(String.format("%d", criticalRevCount));
+                    holder.criticalCardCount.setText(String.format("%d", criticalRevCount));
                 } else {
-                    holder.criticalRevCount.setText(HtmlCompat.fromHtml("\uD83D\uDC4D", HtmlCompat.FROM_HTML_MODE_LEGACY));
+                    holder.criticalCardCount.setText(HtmlCompat.fromHtml("\uD83D\uDC4D", HtmlCompat.FROM_HTML_MODE_LEGACY));
                 }
-                holder.criticalRevCount
+                holder.criticalCardCount
                         .setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black));
-            } else {
-                holder.youngRevLayout.setVisibility(View.INVISIBLE);
-                holder.criticalRevCount.setVisibility(View.INVISIBLE);
             }
-        } else {
-            // only need to update criticalRevCount views here because views for cards in "learn" state
-            // will be properly configured in previous conditionals
-            holder.youngRevLayout.setVisibility(View.INVISIBLE);
-            holder.criticalRevCount.setVisibility(View.INVISIBLE);
         }
 
         // Store deck ID in layout's tag for easy retrieval in our click listeners
