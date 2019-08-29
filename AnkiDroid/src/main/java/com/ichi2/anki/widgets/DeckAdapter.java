@@ -85,7 +85,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         public ImageButton indentView;
         public TextView deckName;
         public TextView deckNew, deckLearn, deckRev;
-        public TextView youngRevCount;
+        public TextView criticalRevCount;
 
         public ViewHolder(View v) {
             super(v);
@@ -98,7 +98,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             deckNew = (TextView) v.findViewById(R.id.deckpicker_new);
             deckLearn = (TextView) v.findViewById(R.id.deckpicker_lrn);
             deckRev = (TextView) v.findViewById(R.id.deckpicker_rev);
-            youngRevCount = (TextView) v.findViewById(R.id.deckpicker_young_rev);
+            criticalRevCount = (TextView) v.findViewById(R.id.deckpicker_critical_cards);
         }
     }
 
@@ -208,14 +208,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
         // Init vars to determine what metadata to show about decks
         boolean showRemainingCards;
-        boolean showYoungReviewCount;
+        boolean showCriticalReviewCount;
         try {
             showRemainingCards = mCol.getConf().getBoolean("dueCounts");
             // why isn't what follows another call to mCol.getConf()...?
             // didn't want to modify anki collection prefs json object at this point
             // so it must go through Android's preference system, which requires a Context object
             Context context = holder.itemView.getContext();
-            showYoungReviewCount = AnkiDroidApp.getSharedPrefs(context).getBoolean(context.getString(R.string.pref_young_cards_due), false);
+            showCriticalReviewCount = AnkiDroidApp.getSharedPrefs(context).getBoolean(context.getString(R.string.pref_young_cards_due), false);
         } catch (JSONException e) {
             throw new IllegalStateException("Failed to find 'dueCounts' field in collection prefs");
         }
@@ -244,29 +244,24 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             holder.deckRev.setVisibility(View.INVISIBLE);
         }
 
-        // Show/hide the minimum interval information
-        if (showYoungReviewCount) {
+        // Show/hide the critical review
+        if (showCriticalReviewCount) {
+            holder.countsLayout.setVisibility(LinearLayout.GONE);
             holder.youngRevLayout.setVisibility(View.VISIBLE);
-            holder.youngRevCount.setVisibility(View.VISIBLE);
-            int doneReviewingYoungCount = 10; // if the amount of young reviews due is less than (or equal to) 10, we're g2g
-            if (node.youngRevCount <= doneReviewingYoungCount) {
-                holder.youngRevCount.setText(HtmlCompat.fromHtml("\uD83D\uDC4D", HtmlCompat.FROM_HTML_MODE_LEGACY)); // thumbs up
+            holder.criticalRevCount.setVisibility(View.VISIBLE);
+            int criticalRevCount = node.youngRevCount + node.lrnCount + node.newCount;
+            if (criticalRevCount > 10) {
+                holder.criticalRevCount.setText(String.format("%d", criticalRevCount));
             } else {
-                holder.youngRevCount.setText(String.format("%d", node.youngRevCount));
+                holder.criticalRevCount.setText(HtmlCompat.fromHtml("\uD83D\uDC4D", HtmlCompat.FROM_HTML_MODE_LEGACY));
             }
-            // also show any cards in learning stage
-            if (node.lrnCount > 0) {
-                holder.countsLayout.setVisibility(View.VISIBLE);
-                holder.deckLearn.setVisibility(View.VISIBLE);
-                holder.deckLearn.setText(String.format("(%d)", node.lrnCount));
-                holder.deckLearn
+            holder.criticalRevCount
                     .setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black));
-            }
         } else {
-            // only need to update youngRevCount views here because views for cards in "learn" state
+            // only need to update criticalRevCount views here because views for cards in "learn" state
             // will be properly configured in previous conditionals
             holder.youngRevLayout.setVisibility(View.INVISIBLE);
-            holder.youngRevCount.setVisibility(View.INVISIBLE);
+            holder.criticalRevCount.setVisibility(View.INVISIBLE);
         }
 
         // Store deck ID in layout's tag for easy retrieval in our click listeners
