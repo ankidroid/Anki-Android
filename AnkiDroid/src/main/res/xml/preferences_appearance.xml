@@ -70,7 +70,7 @@
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/pref_young_cards_due"
-            android:summary="@string/show_young_cards_due_summary"
-            android:title="@string/show_young_cards_due_title" />
+            android:summary="@string/show_critical_cards_due_summary"
+            android:title="@string/show_critical_cards_due_title" />
     </PreferenceCategory>
 </PreferenceScreen>

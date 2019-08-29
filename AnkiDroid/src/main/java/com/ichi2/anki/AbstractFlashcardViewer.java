@@ -1835,7 +1835,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             } else {
                 cardsLeftPart = "\uD83D\uDC4D";
             }
-            String title = String.format("%s | %s skew",
+            String title = String.format("%s / %s skew",
                     cardsLeftPart,
                     new DecimalFormat("##.#%").format(sched._getAverageSkew(deckIds)));
             actionBar.setTitle(title);

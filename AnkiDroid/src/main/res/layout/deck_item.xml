@@ -66,14 +66,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="right"
-        android:layout_toLeftOf="@+id/counts_layout"
-        android:layout_toStartOf="@+id/counts_layout"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:showDividers="end"
         >
 
       <TextView
-          android:id="@+id/deckpicker_young_rev"
+          android:id="@+id/deckpicker_critical_cards"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center"

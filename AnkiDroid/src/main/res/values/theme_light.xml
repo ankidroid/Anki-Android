@@ -13,7 +13,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
 -->
 <resources>
     <color name="theme_light_primary">@color/material_light_blue_500</color>
-    <color name="theme_light_primary_dark">@color/material_light_blue_700</color>
+    <color name="theme_light_primary_dark">@color/material_light_blue_500</color>
     <color name="theme_light_primary_light">@color/material_light_blue_100</color>
     <color name="theme_light_accent">@color/material_blue_grey_700</color>
     <color name="theme_light_primary_text">@color/black</color>
