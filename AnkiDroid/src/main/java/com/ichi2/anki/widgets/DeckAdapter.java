@@ -258,6 +258,9 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 }
                 holder.criticalRevCount
                         .setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black));
+            } else {
+                holder.youngRevLayout.setVisibility(View.INVISIBLE);
+                holder.criticalRevCount.setVisibility(View.INVISIBLE);
             }
         } else {
             // only need to update criticalRevCount views here because views for cards in "learn" state
