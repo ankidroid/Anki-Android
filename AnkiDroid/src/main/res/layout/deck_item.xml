@@ -69,6 +69,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:showDividers="end"
+        android:paddingRight="8dp"
         >
 
       <TextView

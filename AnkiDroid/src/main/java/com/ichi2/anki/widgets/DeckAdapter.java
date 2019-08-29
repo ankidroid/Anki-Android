@@ -247,16 +247,18 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         // Show/hide the critical review
         if (showCriticalReviewCount) {
             holder.countsLayout.setVisibility(LinearLayout.GONE);
-            holder.youngRevLayout.setVisibility(View.VISIBLE);
-            holder.criticalRevCount.setVisibility(View.VISIBLE);
-            int criticalRevCount = node.youngRevCount + node.lrnCount + node.newCount;
-            if (criticalRevCount > 10) {
-                holder.criticalRevCount.setText(String.format("%d", criticalRevCount));
-            } else {
-                holder.criticalRevCount.setText(HtmlCompat.fromHtml("\uD83D\uDC4D", HtmlCompat.FROM_HTML_MODE_LEGACY));
+            if (node.depth == 0) {
+                holder.youngRevLayout.setVisibility(View.VISIBLE);
+                holder.criticalRevCount.setVisibility(View.VISIBLE);
+                int criticalRevCount = node.youngRevCount + node.lrnCount + node.newCount;
+                if (criticalRevCount > 10) {
+                    holder.criticalRevCount.setText(String.format("%d", criticalRevCount));
+                } else {
+                    holder.criticalRevCount.setText(HtmlCompat.fromHtml("\uD83D\uDC4D", HtmlCompat.FROM_HTML_MODE_LEGACY));
+                }
+                holder.criticalRevCount
+                        .setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black));
             }
-            holder.criticalRevCount
-                    .setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black));
         } else {
             // only need to update criticalRevCount views here because views for cards in "learn" state
             // will be properly configured in previous conditionals
