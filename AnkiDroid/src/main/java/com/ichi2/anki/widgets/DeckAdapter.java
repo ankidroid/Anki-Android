@@ -215,7 +215,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             // didn't want to modify anki collection prefs json object at this point
             // so it must go through Android's preference system, which requires a Context object
             Context context = holder.itemView.getContext();
-            showCriticalReviewCount = AnkiDroidApp.getSharedPrefs(context).getBoolean(context.getString(R.string.pref_young_cards_due), false);
+            showCriticalReviewCount = AnkiDroidApp.getSharedPrefs(context).getBoolean(context.getString(R.string.pref_young_cards_due), true);
         } catch (JSONException e) {
             throw new IllegalStateException("Failed to find 'dueCounts' field in collection prefs");
         }

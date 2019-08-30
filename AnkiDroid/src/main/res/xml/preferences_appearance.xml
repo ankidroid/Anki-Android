@@ -68,7 +68,7 @@
         </PreferenceCategory>
     <PreferenceCategory android:title="Decks">
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="@string/pref_young_cards_due"
             android:summary="@string/show_critical_cards_due_summary"
             android:title="@string/show_critical_cards_due_title" />
