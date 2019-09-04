@@ -90,7 +90,7 @@
         <item>Οι νέες κάρτες πριν από τις επαναλήψεις</item>
     </string-array>
     <string-array name="override_font_labels">
-        <item>Όταν δε συγκεκριμενοποιείται γραμματοσειρά στις κάρτες</item>
+        <item>Όταν δεν ορίζεται γραμματοσειρά στις κάρτες</item>
         <item>Πάντα</item>
     </string-array>
     <string-array name="day_theme_labels">

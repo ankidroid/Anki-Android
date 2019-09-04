@@ -4,7 +4,7 @@ bg: AnkiDroid Флашкарти
 ca: AnkiDroid fitxes per memoritzar
 cs: AnkiDroid kartičky
 de: AnkiDroid Karteikarten
-el: Κάρτες AnkiDroid
+el: Κάρτες Ανκί-Ντρόιντ
 es-AR: Tarjetas flash AnkiDroid
 es-ES: Tarjetas AnkiDroid
 et: AnkiDroid mälukaardid
