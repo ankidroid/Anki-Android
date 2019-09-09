@@ -91,5 +91,18 @@ public class ClozeTest extends RobolectricTest {
         assertEquals(1, d.addNote(f));
         assertTrue(f.cards().get(0).q().contains("<p>Cloze in html tag with <span class=cloze>[...]</span>"));
         assertTrue(f.cards().get(0).a().contains("<p>Cloze in html tag with <span class=cloze>multi-line\nstring</span>"));
+
+        //make sure multiline cloze things aren't too greedy
+        f.setItem("Text", "<p>Cloze in html tag with {{c1::multi-line\n" +
+                "string}} and then {{c2:another\n" +
+                "one}}</p>");
+        f.flush();
+        assertEquals(1, d.addNote(f));
+        assertTrue(f.cards().get(0).q().contains("<p>Cloze in html tag with <span class=cloze>[...]</span> and then {{c2:another\n" +
+                "one}}</p>"));
+
+        assertTrue(f.cards().get(0).a().contains("<p>Cloze in html tag with <span class=cloze>multi-line\n" +
+                "string</span> and then {{c2:another\n" +
+                "one}}</p>"));
     }
 }
