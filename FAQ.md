@@ -242,6 +242,12 @@ If you must use media references to fields, for example if you have a large numb
 
 Because, by default, Android does not have complete support of the full Unicode character set so it does not know how to display these characters. The part of Unicode that Android supports depends on the specific device and on where that device is distributed. If you would like to add support for some specific language, see the custom fonts section below.
 
+### Why don't I get notifications?
+
+In the 2.8 version of AnkiDroid the reminder notifications are connected to the widget. In order to receive notifications you have to place the widget in your launcher home screen somewhere. After installing the widget, if you configure reminders in the preferences, you should start receiving notifications.
+
+In the 2.9 version notifications should work with or without the widget.
+
 ### How can I use custom fonts?
 See the [AnkiDroid manual](http://ankidroid.org/manual.html#customFonts) for the new method of adding fonts.
 
