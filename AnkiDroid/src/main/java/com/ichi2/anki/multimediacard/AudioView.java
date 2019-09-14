@@ -1,3 +1,4 @@
+
 /****************************************************************************************
  * Copyright (c) 2013 Bibek Shrestha <bibekshrestha@gmail.com>                          *
  * Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>                              *
@@ -29,6 +30,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.ichi2.anki.R;
+
+import java.io.File;
+import java.io.IOException;
 
 import timber.log.Timber;
 
@@ -168,7 +172,7 @@ public class AudioView extends LinearLayout {
             mRecorder.stop();
             mStatus = Status.IDLE;
             if (mOnRecordingFinishEventListener != null) {
-                mOnRecordingFinishEventListener.onRecordingFinish(AudioView.this);
+                mOnRecordingFinishEventListener.onRecordingFinish(AudioView.this , mAudioPath);
             }
         }
         mPlayPause.update();
@@ -337,27 +341,34 @@ public class AudioView extends LinearLayout {
                     case IDLE: // If not already recorded or not already played
                     case STOPPED: // if already recorded or played
                         boolean highSampling = false;
-                        try {
-                            // try high quality AAC @ 44.1kHz / 192kbps first
-                            // can throw IllegalArgumentException if codec isn't supported
-                            mRecorder = initMediaRecorder();
-                            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                            mRecorder.setAudioChannels(2);
-                            mRecorder.setAudioSamplingRate(44100);
-                            mRecorder.setAudioEncodingBitRate(192000);
-                            // this can also throw IOException if output path is invalid
-                            mRecorder.prepare();
-                            mRecorder.start();
-                            highSampling = true;
-                        } catch (Exception e) {
-                            // in all cases, fall back to low sampling
-                        }
+
+                            try {
+                                // try high quality AAC @ 44.1kHz / 192kbps first
+                                // can throw IllegalArgumentException if codec isn't supported
+                                mRecorder = initMediaRecorder();
+                                mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+                                mRecorder.setAudioChannels(2);
+                                mRecorder.setAudioSamplingRate(44100);
+                                mRecorder.setAudioEncodingBitRate(192000);
+                                // this can also throw IOException if output path is invalid
+                                mRecorder.prepare();
+                                mRecorder.start();
+                                highSampling = true;
+
+                            } catch (Exception e) {
+                                // in all cases, fall back to low sampling
+                            }
 
                         if (!highSampling) {
                             // if we are here, either the codec didn't work or output file was invalid
                             // fall back on default
+
+                            //  ( Hopefully Change the Constructor ) , File Name is mAudioPath  & Recorder name is mRecorder
+                            // To DO : CHange the File Extension to 3GPP & Set Outptu format to 3GP
+
                             try {
-                                mRecorder = initMediaRecorder();
+
+                                mRecorder = initMediaRecorder3gp();
                                 mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
                                 mRecorder.prepare();
@@ -392,13 +403,39 @@ public class AudioView extends LinearLayout {
             private MediaRecorder initMediaRecorder() {
                 MediaRecorder mr = new MediaRecorder();
                 mr.setAudioSource(MediaRecorder.AudioSource.MIC);
-                mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                mr.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
                 mStatus = Status.INITIALIZED;
-                mr.setOutputFile(mAudioPath); // audioPath
-                                              // could
-                                              // change
+                mr.setOutputFile(mAudioPath); // audioPath could change
+
                 return mr;
             }
+
+            // Constructor for Recording in 3GP Format ( Creates New File , Sets it to MediaRecorder )
+            private MediaRecorder initMediaRecorder3gp() {
+
+                MediaRecorder mr = new MediaRecorder();
+                mr.setAudioSource(MediaRecorder.AudioSource.MIC);
+                mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                mStatus = Status.INITIALIZED;
+
+                try{
+
+                    File fileMp4 =  new File(mAudioPath);       // Now we are Recording in 3GP format so we need to Delete this File
+                    File f = File.createTempFile("ankidroid_audiorec", ".3gp", (fileMp4).getParentFile());
+                    mAudioPath = f.getAbsolutePath();
+                    fileMp4.delete();
+
+                }catch(IOException e)
+                {
+                    Timber.e(e,"File Creation Error ");
+                }
+
+                mr.setOutputFile(mAudioPath); // audioPath could change
+                return mr;
+            }
+
+
+
         };
 
 
@@ -425,6 +462,6 @@ public class AudioView extends LinearLayout {
     }
 
     public interface OnRecordingFinishEventListener {
-        void onRecordingFinish(View v);
+        void onRecordingFinish(View v,String AudioPath);
     }
 }

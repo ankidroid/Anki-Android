@@ -22,6 +22,7 @@ package com.ichi2.anki.multimediacard.fields;
 import android.content.Context;
 import android.content.Intent;
 
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.CollectionHelper;
@@ -62,7 +63,9 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
             try {
                 Collection col = CollectionHelper.getInstance().getCol(context);
                 File storingDirectory = new File(col.getMedia().dir());
-                tempAudioPath = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).getAbsolutePath();
+                tempAudioPath = File.createTempFile("ankidroid_audiorec", ".mp4", storingDirectory).getAbsolutePath();
+                Timber.i("Name of the File is : " + tempAudioPath);
+
             } catch (IOException e) {
                 Timber.e(e, "Could not create temporary audio file.");
                 tempAudioPath = null;
@@ -71,10 +74,10 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
 
         mAudioView = AudioView.createRecorderInstance(mActivity, R.drawable.av_play, R.drawable.av_pause,
                 R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, tempAudioPath);
-        mAudioView.setOnRecordingFinishEventListener(v -> {
+        mAudioView.setOnRecordingFinishEventListener((View v ,String AudioPath) -> {
             // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
             // FIXME is this okay if it is still null?
-            mField.setAudioPath(tempAudioPath);
+            mField.setAudioPath(AudioPath);
             mField.setHasTemporaryMedia(true);
         });
         layout.addView(mAudioView, LinearLayout.LayoutParams.MATCH_PARENT);
