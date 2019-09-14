@@ -97,6 +97,7 @@
     <!-- Preferences screens -->
     <!-- Legacy action bar  (used in Preferences with no explicit Toolbar) -->
     <style name="LegacyActionBarDark" parent="Theme_Dark">
+        <item name="android:navigationBarColor">@color/black</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
         <item name="android:textColor">@color/prefs_item_dark</item>
