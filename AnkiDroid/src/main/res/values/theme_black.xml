@@ -88,7 +88,6 @@
 
     <!-- Preferences screens -->
     <style name="LegacyActionBarBlack" parent="Theme_Dark.Black">
-        <item name="android:navigationBarColor">@color/black</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
         <item name="android:textColor">@color/prefs_item_dark</item>
