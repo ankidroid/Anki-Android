@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg x="0px" y="0px" width="192px" height="192px" viewBox="0 0 192 192">
+    <g id="background">
+        <path d="M 0,0 H 192 V 192 H 0 Z" id="background_square" style="fill:#434748"/>
+    </g>
+    <g style="opacity:0.7" id="bottom_text" transform="matrix(1.6,0,0,1.1888545,-35.68,-13.671828)">
+        <rect x="35.799999" y="104.2" width="40" height="6" id="b_rect1"/>
+        <rect x="35.799999" y="126.9" width="20" height="6" id="b_rect2"/>
+        <rect x="35.799999" y="148.39999" width="42" height="6" id="b_rect3"/>
+    </g>
+    <g style="opacity:0.6" id="top_text" transform="matrix(1.6,0,0,1.1888545,-35.68,-13.671828)">
+        <rect style="fill:#ffffff" x="35.799999" y="27.9" width="69.5" height="6" id="t_rect1"/>
+        <rect style="fill:#ffffff" x="35.799999" y="48.700001" width="22.4" height="6" id="t_rect2"/>
+        <rect style="fill:#ffffff" x="65.900002" y="48.700001" width="22.4" height="6" id="t_rect3"/>
+        <rect style="fill:#ffffff" x="35.799999" y="70.199997" width="36.799999" height="6" id="t_rect4"/>
+    </g>
+    <g id="light">
+        <g id="l_horizontal" style="opacity:0.1">
+            <linearGradient id="gradient_horizontal" gradientUnits="userSpaceOnUse" x1="22.6" y1="100" x2="142.3" y2="100" gradientTransform="matrix(1,0,0,-1,0,192)">
+                <stop offset="0" style="stop-color:#FFFFFF" id="stop_h_1"/>
+                <stop offset="1" style="stop-color:#000000;stop-opacity:0" id="stop_h_2"/>
+            </linearGradient>
+            <path id="path_horizontal" d="M 0 0 H 192 V 192 H 0 z" style="fill:url(#gradient_horizontal)"/>
+        </g>
+        <g id="l_diagonal" style="opacity:0.1">
+            <linearGradient id="gradient_diagonal" gradientUnits="userSpaceOnUse" x1="15.8" y1="166.64999" x2="149.10001" y2="33.349998" gradientTransform="matrix(1,0,0,-1,0,192)">
+                <stop offset="0" style="stop-color:#FFFFFF" id="stop_d_1"/>
+                <stop offset="1" style="stop-color:#000000;stop-opacity:0" id="stop_d_2"/>
+            </linearGradient>
+            <path id="path_diagonal" d="M 0 0 H 192 V 192 H 0 z" style="fill:url(#gradient_diagonal)"/>
+        </g>
+    </g>
+</svg>
