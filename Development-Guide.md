@@ -37,7 +37,9 @@ On opening the project it should start to build and should eventually prompt you
   * Android Support Repository (latest version)
   * Android Support Library (latest version)
 
-After installing all these dependencies, the project should build successfully.
+As of September 2019, there is an issue using Instant Run in Android Studio.  This may show up as a failed build with an error something like: `org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':AnkiDroid:transformClassesWithInstantRunForDebug'` For now, we need to disable Instant Run. Go into Settings, and in the category "Build, Execution, Deployment", click on the "Instant Run" subcategory.  Uncheck "Enable Instant Run".
+
+After installing all these dependencies and making this settings change, the project should build successfully.
 
 ## Installing an emulator for testing
 Provided you are able to use hardware acceleration for the Android emulators, [setup an emulator](https://developer.android.com/tools/devices/managing-avds.html) is a very effective method for testing code and running the connected android tests. If possible, verify your work periodically against both the newest version of the emulator available and the oldest version we support that you can run (at this time API18 is the oldest emulator easy to run though [it is possible to run all the way down to API15 on linux at least with some effort[(https://issuetracker.google.com/issues/37138030#comment13).
