@@ -74,7 +74,9 @@ CREATE TABLE cards (
       -- b the number of reps left till graduation
       -- a the number of reps left today
     odue            integer not null,
-      -- original due: only used when the card is currently in filtered deck
+      -- original due: In filtered decks, it's the original due date that the card had before moving to filtered.
+                       If the card lapsed in scheduler1, then it's the value before the lapse. (This is used when switching to scheduler 2. At this time, cards in learning becomes due again, with their previous due date)
+                       In any other case it's 0.
     odid            integer not null,
       -- original did: only used when the card is currently in filtered deck
     flags           integer not null,
