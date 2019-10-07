@@ -875,7 +875,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             loadStudyOptionsFragment(false);
         }
         automaticSync();
-        CardBrowser.clearLastDeckId();
     }
 
     private void showCollectionErrorDialog() {
