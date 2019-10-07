@@ -118,7 +118,7 @@ public class BackupManager {
             try {
                 len--;
                 lastBackupDate = df.parse(deckBackups[len].getName().replaceAll(
-                        "^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).apkg$", "$1"));
+                        "^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).colpkg$", "$1"));
             } catch (ParseException e) {
                 lastBackupDate = null;
             }
@@ -131,7 +131,7 @@ public class BackupManager {
         String backupFilename;
         try {
             backupFilename = String.format(Utils.ENGLISH_LOCALE, colFile.getName().replace(".anki2", "")
-                    + "-%s.apkg", df.format(cal.getTime()));
+                    + "-%s.colpkg", df.format(cal.getTime()));
         } catch (UnknownFormatConversionException e) {
             Timber.e(e, "performBackup: error on creating backup filename");
             return false;
@@ -164,7 +164,7 @@ public class BackupManager {
         }
         Timber.i("Launching new thread to backup %s to %s", colPath, backupFile.getPath());
 
-        // Backup collection as apkg in new thread
+        // Backup collection as Anki package in new thread
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -295,8 +295,8 @@ public class BackupManager {
         }
         ArrayList<File> deckBackups = new ArrayList<>();
         for (File aktFile : files) {
-            if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.apkg$", "$1.apkg")
-                    .equals(colFile.getName().replace(".anki2",".apkg"))) {
+            if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.(apkg|colpkg)$", "$1")
+                    .equals(colFile.getName().replace(".anki2",""))) {
                 deckBackups.add(aktFile);
             }
         }
