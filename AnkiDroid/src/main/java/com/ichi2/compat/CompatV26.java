@@ -53,6 +53,11 @@ public class CompatV26 extends CompatV24 implements Compat {
     }
 
     @Override
+    public void copyFile(String source, String target) throws IOException {
+        Files.copy(Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    @Override
     public long copyFile(String source, OutputStream target) throws IOException {
         return Files.copy(Paths.get(source), target);
     }
