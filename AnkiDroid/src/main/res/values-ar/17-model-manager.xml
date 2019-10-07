@@ -50,8 +50,8 @@
     <string name="model_editor_action_add_model">Add note type</string>
     <!--Browser-->
     <string name="model_browser_delete">Delete note type</string>
-    <string name="model_browser_rename">Rename</string>
-    <string name="model_browser_options">Options</string>
+    <string name="model_browser_rename">إعادة التسمية</string>
+    <string name="model_browser_options">الخيارات</string>
     <string name="model_browser_template">Edit cards</string>
     <string name="model_browser_add">Add note type</string>
     <!--Rename-->

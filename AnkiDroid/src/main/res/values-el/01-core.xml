@@ -57,8 +57,8 @@
     <string name="collapse">Collapse</string>
     <string name="study_more">Περισσότερη μελέτη</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">%1$d κάρτα έως (%2$s)</item>
-        <item quantity="other">%1$d κάρτες έως (%2$s)</item>
+        <item quantity="one">%1$d κάρτα σε (%2$s)</item>
+        <item quantity="other">%1$d κάρτες σε (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Απέμεινε %d λεπτό</item>

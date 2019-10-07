@@ -124,12 +124,12 @@
     <string name="sd_card_almost_full_title">SD card almost full</string>
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_continue">Continue</string>
-    <string name="dialog_positive_create">Create</string>
-    <string name="dialog_positive_delete">Delete</string>
-    <string name="dialog_positive_disable">Disable</string>
+    <string name="dialog_cancel">إلغاء</string>
+    <string name="dialog_ok">حسنًا</string>
+    <string name="dialog_continue">استمرار</string>
+    <string name="dialog_positive_create">إنشاء</string>
+    <string name="dialog_positive_delete">احذف</string>
+    <string name="dialog_positive_disable">تعطيل</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
     <string name="dialog_positive_remove">Remove</string>
     <string name="dialog_positive_repair">Repair</string>
@@ -153,7 +153,7 @@
     <string name="check_media_deleted">Files deleted: %d</string>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
+    <string name="tags_dialog_option_new_cards">جديد</string>
     <string name="tags_dialog_option_due_cards">Due</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>

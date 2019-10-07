@@ -60,8 +60,8 @@
     <string name="stats_minutes">دقائق</string>
     <string name="stats_hours">ساعات</string>
     <string name="stats_percentage">Percentage</string>
-    <string name="stats_period_month">1 month</string>
-    <string name="stats_period_year">1 year</string>
+    <string name="stats_period_month">شهر واحد</string>
+    <string name="stats_period_year">سنة واحدة</string>
     <string name="stats_period_lifetime">deck life</string>
     <string name="stats_deck_collection">collection</string>
     <string name="stats_time_of_day">Time of day</string>
@@ -98,7 +98,7 @@
         <item>أسابيع</item>
         <item>شهور</item>
     </string-array>
-    <string name="stats_today">Today</string>
+    <string name="stats_today">اليوم</string>
     <string name="stats_overview">Overview</string>
     <string name="stats_forecast">التوقع</string>
     <string name="stats_review_count">عداد المراجعة</string>
@@ -117,13 +117,13 @@
         <item>3AM</item>
     </string-array>
     <string-array name="stats_week_days">
-        <item>Sun</item>
-        <item>Mon</item>
-        <item>Tue</item>
-        <item>Wed</item>
-        <item>Thu</item>
-        <item>Fri</item>
-        <item>Sat</item>
+        <item>الأحد</item>
+        <item>الإثنين</item>
+        <item>الثلاثاء</item>
+        <item>الأربعاء</item>
+        <item>الخميس</item>
+        <item>الجمعة</item>
+        <item>السبت</item>
     </string-array>
     <string-array name="stats_eases_ticks">
         <item>1</item>

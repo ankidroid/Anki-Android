@@ -205,7 +205,7 @@
     </plurals>
     <string name="deck_conf_new_cards">Nouvelles cartes</string>
     <string name="deck_conf_rev_cards">Révisions</string>
-    <string name="deck_conf_lps_cards">Intervalles</string>
+    <string name="deck_conf_lps_cards">Oublis</string>
     <string name="deck_conf_general">Général</string>
     <string name="deck_conf_reminders">Rappels</string>
     <string name="deck_conf_steps">Intervalle (en minutes)</string>
