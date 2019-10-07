@@ -1129,10 +1129,10 @@ public class NoteEditor extends AnkiActivity {
             View editline_view = getLayoutInflater().inflate(R.layout.card_multimedia_editline, null);
             FieldEditText newTextbox = (FieldEditText) editline_view.findViewById(R.id.id_note_editText);
 
-            // Use custom implementation of ActionMode.Callback customize selection and insert menus
-            ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox);
-            newTextbox.setCustomSelectionActionModeCallback(actionModeCallback);
             if (Build.VERSION.SDK_INT >= 23) {
+                // Use custom implementation of ActionMode.Callback customize selection and insert menus
+                ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox);
+                newTextbox.setCustomSelectionActionModeCallback(actionModeCallback);
                 newTextbox.setCustomInsertionActionModeCallback(actionModeCallback);
             }
 
