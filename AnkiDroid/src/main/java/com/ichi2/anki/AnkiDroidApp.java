@@ -227,6 +227,9 @@ public class AnkiDroidApp extends Application {
         DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledPagingTouchSlop();
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
 
+        // Forget the last deck that was used in the CardBrowser
+        CardBrowser.clearLastDeckId();
+
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
         if (CollectionHelper.hasStorageAccessPermission(this)) {
             try {
