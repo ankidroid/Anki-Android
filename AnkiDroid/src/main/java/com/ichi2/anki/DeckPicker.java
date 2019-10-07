@@ -1711,9 +1711,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
             exportPath = new File(exportDir, "All Decks.apkg");
         } else {
-            // full collection export -- use "collection.apkg"
+            // full collection export -- use "collection.colpkg"
             File colPath = new File(getCol().getPath());
-            exportPath = new File(exportDir, colPath.getName().replace(".anki2", ".apkg"));
+            exportPath = new File(exportDir, colPath.getName().replace(".anki2", ".colpkg"));
         }
         // add input arguments to new generic structure
         Object[] inputArgs = new Object[5];

@@ -70,8 +70,8 @@ public class ImportUtils {
                 }
             }
 
-            if ((filename != null) && !filename.toLowerCase().endsWith(".apkg")) {
-                // Don't import if not apkg file
+            if (!isValidPackageName(filename)) {
+                // Don't import if file doesn't have an Anki package extension
                 errorMessage = context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
             } else if (filename != null) {
                 // Copy to temporary file
@@ -88,7 +88,7 @@ public class ImportUtils {
             // When the VIEW intent is sent as a file, we can open it directly without copying from content provider
             String filename = intent.getData().getPath();
             Timber.d("Importing regular file: %s", filename);
-            if (filename != null && filename.endsWith(".apkg")) {
+            if (isValidPackageName(filename)) {
                 // If file has apkg extension then send message to show Import dialog
                 ImportUtils.sendShowImportFileDialogMsg(filename);
             } else {
@@ -129,7 +129,7 @@ public class ImportUtils {
         Bundle msgData = new Bundle();
         msgData.putString("importPath", path);
         handlerMessage.setData(msgData);
-        if ("collection.apkg".equals(filename)) {
+        if (isCollectionPackage(filename)) {
             // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
             handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG;
         } else {
@@ -138,6 +138,18 @@ public class ImportUtils {
         }
         // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
         DialogHandler.storeMessage(handlerMessage);
+    }
+
+    public static boolean isCollectionPackage(String filename) {
+        return filename != null && (filename.toLowerCase().endsWith(".colpkg") || filename.equals("collection.apkg"));
+    }
+
+    private static boolean isDeckPackage(String filename) {
+        return filename != null && filename.toLowerCase().endsWith(".apkg") && !filename.equals("collection.apkg");
+    }
+
+    public static boolean isValidPackageName(String filename) {
+        return isDeckPackage(filename) || isCollectionPackage(filename);
     }
 
     /**

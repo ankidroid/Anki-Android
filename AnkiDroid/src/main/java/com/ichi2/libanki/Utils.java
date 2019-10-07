@@ -32,6 +32,7 @@ import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.utils.ImportUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -838,7 +839,7 @@ public class Utils {
         int deckCount = 0;
         File[] deckList = null;
         if (dir.exists() && dir.isDirectory()) {
-            deckList = dir.listFiles(pathname -> pathname.isFile() && pathname.getName().endsWith(".apkg"));
+            deckList = dir.listFiles(pathname -> pathname.isFile() && ImportUtils.isValidPackageName(pathname.getName()));
             deckCount = deckList.length;
         }
         List<File> decks = new ArrayList<>();
