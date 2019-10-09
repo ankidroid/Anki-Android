@@ -179,7 +179,7 @@ public class ModelFieldEditor extends AnkiActivity {
                 .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
                     String fieldName = mFieldNameInput.getText().toString()
-                            .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                            .replaceAll("[\'\"\\n\\r\\[\\]]", "");
 
                     if (fieldName.length() == 0) {
                         showToast(getResources().getString(R.string.toast_empty_name));
