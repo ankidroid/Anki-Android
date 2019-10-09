@@ -80,7 +80,7 @@ public class CompatCopyFileTest {
             outputStream.close();
             CompatHelper.getCompat().copyFile(resource.getPath(), outputStream);
             Assert.fail("Should have caught an exception");
-        } catch (IOException e) {
+        } catch (Exception e) {
             // this is expected
         }
 
