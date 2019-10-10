@@ -223,6 +223,7 @@ public class Collection {
         }
         modSchema(true);
         SchedV2 v2Sched = new SchedV2(this);
+        clearUndo();
         if (ver == 1) {
             v2Sched.moveToV1();
         } else {
