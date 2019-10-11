@@ -47,6 +47,10 @@ import timber.log.Timber;
 class Exporter {
     protected Collection mCol;
     protected Long mDid;
+	// mayIncludeHTML = false corresponds to includeHTML = None in Python.
+	protected boolean mayIncludeHTML = false;
+	// includeHTML is used only if mayIncludeHTML is true.
+	protected boolean includeHTML;
 
 
     public Exporter(Collection col) {
@@ -72,6 +76,25 @@ class Exporter {
 			text = "\"" + text.replace("\"", "\"\"") + "\"";
 		}
 		return text;
+	}
+
+	public String processText(String text) {
+		if (!includeHTML){
+			text = stripHTML(text);
+		}
+		text = escapeText(text);
+		return text;
+	}
+
+	public String stripHTML(String text) {
+		// very basic conversion to text
+		String s = text;
+		s = Pattern.compile("(?i)<(br ?/?|div|p)>").matcher(s).replaceAll("");
+		s = Pattern.compile("\\[sound:[^]]+\\]").matcher(s).replaceAll("");
+		s = Utils.stripHTML(s);
+		s = Pattern.compile("[ \n\t]+").matcher(s).replaceAll("");
+		s = s.trim();
+		return s;
 	}
 }
 
