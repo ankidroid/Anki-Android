@@ -1245,31 +1245,38 @@ public class Models {
 
     /**
      * Routines from Stdmodels.py
-     * *
-     * @throws ConfirmModSchemaException **********************************************************************************************
+     * **********************************************************************************************
      */
 
-    public static JSONObject addBasicModel(Collection col) throws ConfirmModSchemaException {
+    public static JSONObject addBasicModel(Collection col){
         return addBasicModel(col, "Basic");
     }
 
 
-    public static JSONObject addBasicModel(Collection col, String name) throws ConfirmModSchemaException {
+    public static JSONObject addBasicModel(Collection col, String name){
         Models mm = col.getModels();
         JSONObject m = mm.newModel(name);
-        JSONObject fm = mm.newField("Front");
-        mm.addField(m, fm);
-        fm = mm.newField("Back");
-        mm.addField(m, fm);
-        JSONObject t = mm.newTemplate("Card 1");
+		try {
+			JSONObject fm = mm.newField("Front");
+			mm.addField(m, fm);
+			fm = mm.newField("Back");
+			mm.addField(m, fm);
+		} catch (ConfirmModSchemaException ignored){
+			// It can't be thrown since those are new fields.
+		}
+		JSONObject t = mm.newTemplate("Card 1");
+		try {
+			t.put("qfmt", "{{Front}}");
+			t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Back}}");
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
         try {
-            t.put("qfmt", "{{Front}}");
-            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Back}}");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        mm.addTemplate(m, t);
-        mm.add(m);
+			mm.addTemplate(m, t);
+		} catch (ConfirmModSchemaException ignored){
+			// It can't be thrown since those are new fields.
+		}
+		mm.add(m);
         return m;
     }
 
