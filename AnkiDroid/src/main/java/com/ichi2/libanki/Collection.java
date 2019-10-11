@@ -1874,6 +1874,15 @@ public class Collection {
     }
 
     /**
+     * Card Flags *****************************************************************************************************
+     */
+    public void setUserFlag(int flag, long[] cids)  {
+        assert (0<= flag && flag <= 7);
+        mDb.execute("update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(cids),
+                    new Object[]{0b111, flag, usn(), Utils.intTime()});
+    }
+
+    /**
      * Getters/Setters ********************************************************** *************************************
      */
 
