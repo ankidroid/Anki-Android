@@ -38,6 +38,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -58,6 +59,20 @@ class Exporter {
         mCol = col;
         mDid = did;
     }
+
+	/**"Escape newlines, tabs, CSS and quotechar."*/
+	public String escapeText(String text){
+		// fixme: we should probably quote fields with newlines
+		// instead of converting them to spaces
+		text = text.replace("\n", " ");
+		text = text.replace("\t", "        ");
+		text = Pattern.compile("(?i)<style>.*?</style>").matcher(text).replaceAll("");
+		text = Pattern.compile("\\[\\[type:[^]]+\\]\\]").matcher(text).replaceAll("");
+		if (text.contains("\"")) {
+			text = "\"" + text.replace("\"", "\"\"") + "\"";
+		}
+		return text;
+	}
 }
 
 
