@@ -849,25 +849,44 @@ public class Collection {
      * Create a new card.
      */
     private Card _newCard(Note note, JSONObject template, int due) {
-        return _newCard(note, template, due, true);
+        boolean flush = true;
+        return _newCard(note, template, due, flush);
     }
 
+    private Card _newCard(Note note, JSONObject template, int due, int did) {
+        boolean flush = true;
+        return _newCard(note, template, due, did, flush);
+    }
 
     private Card _newCard(Note note, JSONObject template, int due, boolean flush) {
+        int did = 0;
+        return _newCard(note, template, due, did, flush);
+    }
+
+    private Card _newCard(Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         Card card = new Card(this);
-        card.setNid(note.getId());
+        long nid = note.getId();
+        int ord = -1;
+        long did;
+        card.setNid(nid);
         try {
-            card.setOrd(template.getInt("ord"));
+            ord = template.getInt("ord");
+            card.setOrd(ord);
         } catch (JSONException e) {
             new RuntimeException(e);
         }
-        // Use template did (deck override) if valid, otherwise model did
-        long did = template.optLong("did", 0);
-        if (did > 0 && mDecks.getDecks().containsKey(did)) {
-            card.setDid(did);
-        } else {
-            card.setDid(note.model().optLong("did", 0));
+        did = mDb.queryScalar("select did from cards where nid = " + nid + " and ord = " + ord);
+        // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
+        if (did == 0) {
+            did = template.optLong("did", 0);
+            if (did > 0 && mDecks.getDecks().containsKey(did)) {
+            } else if (parameterDid != 0) {
+                did = parameterDid;
+            } else {
+                did = note.model().optLong("did", 0);
+            }
         }
+        card.setDid(did);
         try {
             // if invalid did, use default instead
             JSONObject deck = mDecks.get(card.getDid());
