@@ -1715,6 +1715,10 @@ public class Collection {
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return -1;
         }
+		// models
+        if (mModels.ensureNotEmpty()) {
+            problems.add("Added missing note type.");
+        }
         // and finally, optimize
         optimize(progressCallback, currentTask, totalTasks);
         file = new File(mPath);
