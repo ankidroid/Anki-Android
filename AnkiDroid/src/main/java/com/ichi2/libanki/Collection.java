@@ -814,6 +814,11 @@ public class Collection {
      * @return list of cards
 	 */
 	public List<Card> previewCards(Note note, int type) {
+        int did = 0;
+        return previewCards(note, type, did);
+    }
+
+    public List<Card> previewCards(Note note, int type, int did) {
 	    ArrayList<JSONObject> cms = null;
 	    if (type == 0) {
 	        cms = findTemplates(note);
@@ -838,7 +843,7 @@ public class Collection {
 	    }
 	    List<Card> cards = new ArrayList<>();
 	    for (JSONObject template : cms) {
-	        cards.add(_newCard(note, template, 1, false));
+	        cards.add(_newCard(note, template, 1, did, false));
 	    }
 	    return cards;
 	}
