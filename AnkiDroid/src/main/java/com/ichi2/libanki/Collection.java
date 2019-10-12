@@ -1063,7 +1063,7 @@ public class Collection {
 
 
     public HashMap<String, String> _renderQA(Object[] data, String qfmt, String afmt) {
-        // data is [cid, nid, mid, did, ord, tags, flds]
+        // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
         String[] flist = Utils.splitFields((String) data[6]);
         Map<String, String> fields = new HashMap<>();
@@ -1079,6 +1079,7 @@ public class Collection {
             fields.put("Deck", mDecks.name((Long) data[3]));
             String[] parents = fields.get("Deck").split("::", -1);
             fields.put("Subdeck", parents[parents.length-1]);
+            fields.put("CardFlag", _flagNameFromCardFlags((Integer) data[7]));
             JSONObject template;
             if (model.getInt("type") == Consts.MODEL_STD) {
                 template = model.getJSONArray("tmpls").getJSONObject((Integer) data[4]);
@@ -1123,7 +1124,7 @@ public class Collection {
 
 
     /**
-     * Return [cid, nid, mid, did, ord, tags, flds] db query
+     * Return [cid, nid, mid, did, ord, tags, flds, flags] db query
      */
     public ArrayList<Object[]> _qaData() {
         return _qaData("");
@@ -1136,10 +1137,10 @@ public class Collection {
         try {
             cur = mDb.getDatabase().query(
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
-                            + "n.tags, n.flds FROM cards c, notes n WHERE c.nid == n.id " + where, null);
+                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where, null);
             while (cur.moveToNext()) {
                 data.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getLong(2), cur.getLong(3), cur.getInt(4),
-                        cur.getString(5), cur.getString(6) });
+                        cur.getString(5), cur.getString(6), cur.getInt(7)});
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -1149,6 +1150,13 @@ public class Collection {
         return data;
     }
 
+	public String _flagNameFromCardFlags(int flags){
+		int flag = flags & 0b111;
+		if (flag == 0) {
+			return "";
+		}
+		return "flag"+flag;
+	}
 
     /**
      * Finding cards ************************************************************ ***********************************

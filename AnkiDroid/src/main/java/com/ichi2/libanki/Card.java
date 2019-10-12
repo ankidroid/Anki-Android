@@ -293,7 +293,7 @@ public class Card implements Cloneable {
             Object[] data;
             try {
                 data = new Object[] { mId, f.getId(), m.getLong("id"), mODid != 0L ? mODid : mDid, mOrd,
-                        f.stringTags(), f.joinedFields() };
+                        f.stringTags(), f.joinedFields(), mFlags};
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
