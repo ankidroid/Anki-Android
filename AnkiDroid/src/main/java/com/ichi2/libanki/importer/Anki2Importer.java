@@ -184,9 +184,8 @@ public class Anki2Importer extends Importer {
         // we may need to rewrite the guid if the model schemas don't match,
         // so we need to keep track of the changes for the card import stage
         mChangedGuids = new HashMap<>();
-        // apart from upgrading from anki1 decks, we ignore updates to changed
-        // schemas. we need to note the ignored guids, so we avoid importing
-        // invalid cards
+        // we ignore updates to changed schemas. we need to note the ignored
+        // guids, so we avoid importing invalid cards
         mIgnoredGuids = new HashMap<>();
         // iterate over source collection
         ArrayList<Object[]> add = new ArrayList<>();
@@ -303,23 +302,9 @@ public class Anki2Importer extends Importer {
         if (!mNotes.containsKey(origGuid)) {
             return true;
         }
-        // as the schemas differ and we already have a note with a different
-        // note type, this note needs a new guid
-        if (!mDupeOnSchemaChange) {
-            return false;
-        }
-        while (true) {
-            note[GUID] = Utils.incGuid((String) note[GUID]);
-            mChangedGuids.put(origGuid, (String) note[GUID]);
-            // if we don't have an existing guid, we can add
-            if (!mNotes.containsKey(note[GUID])) {
-                return true;
-            }
-            // if the existing guid shares the same mid, we can reuse
-            if (dstMid == (Long) mNotes.get(note[GUID])[MID]) {
-                return false;
-            }
-        }
+		// schema changed; don't import
+		mIgnoredGuids.put(origGuid, true);
+		return false;
     }
 
 
