@@ -855,7 +855,7 @@ public class Finder {
                     JSONArray flds = m.getJSONArray("flds");
                     for (int fi = 0; fi < flds.length(); ++fi) {
                         JSONObject f = flds.getJSONObject(fi);
-                        if (f.getString("name").equals(field)) {
+                        if (f.getString("name").equalsIgnoreCase(field)) {
                             mmap.put(m.getLong("id"), f.getInt("ord"));
                         }
                     }
