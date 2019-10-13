@@ -47,6 +47,8 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
+import static java.util.Collections.*;
+
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 public class Finder {
 
@@ -112,7 +114,7 @@ public class Finder {
             }
         }
         if (rev) {
-            Collections.reverse(res);
+            reverse(res);
         }
         return res;
     }
@@ -940,30 +942,28 @@ public class Finder {
 
     public List<String> fieldNames(Collection col, boolean downcase) {
         Set<String> fields = new HashSet<>();
-        List<String> names = new ArrayList<>();
         try {
             for (JSONObject m : col.getModels().all()) {
                 JSONArray flds = m.getJSONArray("flds");
                 for (int fi = 0; fi < flds.length(); ++fi) {
                     JSONObject f = flds.getJSONObject(fi);
-                    if (!fields.contains(f.getString("name").toLowerCase(Locale.US))) {
-                        names.add(f.getString("name"));
-                        fields.add(f.getString("name").toLowerCase(Locale.US));
+					String name = f.getString("name");
+					if (downcase) {
+						name = name.toLowerCase(Locale.US);
+					}
+                    if (!fields.contains(name)) {
+                        fields.add(name);
                     }
                 }
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        if (downcase) {
-            return new ArrayList<>(fields);
-        }
-        return names;
+		return new ArrayList<>(fields);
     }
 
 	public List<String> fieldNamesForNotes(long[] nids) {
-        Set<String> downcasedNames = new HashSet<>();
-        List<String> origNames = new ArrayList<>();
+        Set<String> fields = new HashSet<>();
 		ArrayList<Long> mids = mCol.getDb().queryColumn(Long.class, "select distinct mid from notes where id in " + Utils.ids2str(nids), 0);
         try {
 			for (Long mid: mids) {
@@ -971,17 +971,18 @@ public class Finder {
 				JSONArray flds = model.getJSONArray("flds");
 				for (int fi = 0; fi < flds.length(); ++fi) {
 					JSONObject f = flds.getJSONObject(fi);
-					if (!downcasedNames.contains(f.getString("name").toLowerCase(Locale.US))) {
-						origNames.add(f.getString("name"));
-						downcasedNames.add(f.getString("name").toLowerCase(Locale.US));
+					String name = f.getString("name");
+					if (!fields.contains(name)) {
+						fields.add(f.getString("name").toLowerCase(Locale.US));
 					}
 				}
 			}
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-		Collections.sort(origNames);
-		return origNames;
+        List<String> listFields = new ArrayList<>(fields);
+		Collections.sort(listFields);
+		return listFields;
 	}
 
     /**
@@ -1124,7 +1125,7 @@ public class Finder {
             }
         }
         if (rev) {
-            Collections.reverse(res);
+            reverse(res);
         }
         return res;
     }
