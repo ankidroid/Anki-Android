@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.libanki.template.Template;
+import com.ichi2.utils.Assert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +40,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -56,6 +58,8 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 import timber.log.Timber;
+
+import static java.lang.Math.min;
 
 /**
  * Media manager - handles the addition and removal of media files from the media directory (collection.media) and
@@ -236,8 +240,8 @@ public class Media {
         String fname = ofile.getName();
         // make sure we write it in NFC form and return an NFC-encoded reference
         fname = Utils.nfcNormalized(fname);
-        // remove any dangerous characters
-        String base = stripIllegal(fname);
+        // ensure it's a valid finename
+        String base = cleanFilename(fname);
         String[] split = Utils.splitFilename(base);
         String root = split[0];
         String ext = split[1];
@@ -529,7 +533,7 @@ public class Media {
     }
 
     /**
-     * Illegal characters
+     * Illegal characters and paths
      * ***********************************************************
      */
 
@@ -544,6 +548,54 @@ public class Media {
         return m.find();
     }
 
+    public String cleanFilename(String fname) {
+        fname = stripIllegal(fname);
+        fname = _cleanWin32Filename(fname);
+        fname = _cleanLongFilename(fname);
+        if ("".equals(fname)) {
+            fname = "renamed";
+        }
+
+        return fname;
+    }
+
+    /** This method only change things on windows. So it's the
+     * identity here. */
+    private String _cleanWin32Filename(String fname) {
+        return fname;
+    }
+
+    private String _cleanLongFilename(String fname) {
+        /** a fairly safe limit that should work on typical windows
+         paths and on eCryptfs partitions, even with a duplicate
+         suffix appended */
+        int namemax = 136;
+        int pathmax = 1024; // 240 for windows
+
+        // cap namemax based on absolute path
+        int dirlen = Paths.get(fname).normalize().toString().length();
+        int remaining = pathmax - dirlen;
+        namemax = min(remaining, namemax);
+        Assert.that(namemax>0, "The media directory is maximally long. There is no more length available for file name.");
+
+        if (fname.length() > namemax) {
+            int lastSlash = fname.indexOf("/");
+            int lastDot = fname.indexOf(".");
+            if (lastDot == -1 || lastDot < lastSlash) {
+                // no dot, or before last slash
+                fname = fname.substring(0, namemax);
+            } else {
+                String ext = fname.substring(lastDot+1);
+                String head = fname.substring(0, lastDot);
+                int headmax = namemax - ext.length();
+                head = head.substring(0, headmax);
+                fname = head + ext;
+                Assert.that (fname.length() <= namemax, "The length of the file is greater than the maximal name value.");
+            }
+        }
+
+        return fname;
+    }
 
     /**
      * Tracking changes
