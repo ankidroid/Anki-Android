@@ -46,6 +46,7 @@ import timber.log.Timber;
 class Exporter {
     protected Collection mCol;
     protected Long mDid;
+    protected int mCount;
 
 
     public Exporter(Collection col) {
@@ -58,6 +59,18 @@ class Exporter {
         mCol = col;
         mDid = did;
     }
+
+    /** card ids of cards in deck self.did if it is set, all ids otherwise. */
+    public Long[] cardIds() {
+        Long[] cids;
+        if (mDid == null) {
+            cids = Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards", 0));
+        } else {
+            cids = mCol.getDecks().cids(mDid, true);
+        }
+        mCount = cids.length;
+        return cids;
+    }
 }
 
 
@@ -69,7 +82,6 @@ class AnkiExporter extends Exporter {
     protected boolean mIncludeMedia;
     private Collection mSrc;
     String mMediaDir;
-    int mCount;
     ArrayList<String> mMediaFiles = new ArrayList<>();
     boolean _v2sched;
 
