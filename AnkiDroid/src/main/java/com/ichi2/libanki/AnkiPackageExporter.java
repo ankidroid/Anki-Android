@@ -109,12 +109,7 @@ class AnkiExporter extends Exporter {
         Collection dst = Storage.Collection(context, path);
         mSrc = mCol;
         // find cards
-        Long[] cids;
-        if (mDid == null) {
-            cids = Utils.list2ObjectArray(mSrc.getDb().queryColumn(Long.class, "SELECT id FROM cards", 0));
-        } else {
-            cids = mSrc.getDecks().cids(mDid, true);
-        }
+        Long[] cids = cardIds();
         // attach dst to src so we can copy data between them. This isn't done in original libanki as Python more
         // flexible
         dst.close();
