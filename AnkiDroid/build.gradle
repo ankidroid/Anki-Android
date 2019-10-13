@@ -1,6 +1,6 @@
 plugins {
  // Gradle plugin portal 
- id 'com.github.triplet.play' version '2.2.1'
+ id 'com.github.triplet.play' version '2.4.2'
 }
 
 apply plugin: 'com.android.application'
@@ -173,7 +173,7 @@ dependencies {
     annotationProcessor "com.google.auto.service:auto-service:1.0-rc6"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.browser:browser:1.0.0'
@@ -194,16 +194,16 @@ dependencies {
     implementation'ch.acra:acra-limiter:5.2.1'
 
     implementation 'net.mikehardy:google-analytics-java7:2.0.10'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.3'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.6'
     implementation 'com.arcao:slf4j-timber:3.1'
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.jsoup:jsoup:1.12.1'
     api project(":api")
 
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.5.1'
-    testImplementation 'org.mockito:mockito-core:3.0.0'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.5.2'
+    testImplementation 'org.mockito:mockito-core:3.1.0'
     testImplementation 'org.powermock:powermock-core:2.0.2'
     testImplementation 'org.powermock:powermock-module-junit4:2.0.2'
     testImplementation 'org.powermock:powermock-api-mockito2:2.0.2'

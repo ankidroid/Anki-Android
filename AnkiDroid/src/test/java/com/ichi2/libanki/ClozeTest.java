@@ -75,5 +75,34 @@ public class ClozeTest extends RobolectricTest {
         f.setItem("Text", "{{c0::zero}} {{c-1:foo}}");
         f.flush();
         assertEquals(2, f.cards().size());
+        //Try a multiline cloze
+        f.setItem("Text", "Cloze with {{c1::multi-line\n" +
+                "string}}");
+        f.flush();
+        assertEquals(1, d.addNote(f));
+        String a = f.cards().get(0).q();
+        String b = f.cards().get(0).a();
+        assertTrue(f.cards().get(0).q().contains("Cloze with <span class=cloze>[...]</span>"));
+        assertTrue(f.cards().get(0).a().contains("Cloze with <span class=cloze>multi-line\nstring</span>"));
+        //try a multiline cloze in p tag
+        f.setItem("Text", "<p>Cloze in html tag with {{c1::multi-line\n" +
+                "string}}</p>");
+        f.flush();
+        assertEquals(1, d.addNote(f));
+        assertTrue(f.cards().get(0).q().contains("<p>Cloze in html tag with <span class=cloze>[...]</span>"));
+        assertTrue(f.cards().get(0).a().contains("<p>Cloze in html tag with <span class=cloze>multi-line\nstring</span>"));
+
+        //make sure multiline cloze things aren't too greedy
+        f.setItem("Text", "<p>Cloze in html tag with {{c1::multi-line\n" +
+                "string}} and then {{c2:another\n" +
+                "one}}</p>");
+        f.flush();
+        assertEquals(1, d.addNote(f));
+        assertTrue(f.cards().get(0).q().contains("<p>Cloze in html tag with <span class=cloze>[...]</span> and then {{c2:another\n" +
+                "one}}</p>"));
+
+        assertTrue(f.cards().get(0).a().contains("<p>Cloze in html tag with <span class=cloze>multi-line\n" +
+                "string</span> and then {{c2:another\n" +
+                "one}}</p>"));
     }
 }

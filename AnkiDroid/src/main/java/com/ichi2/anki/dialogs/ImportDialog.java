@@ -10,6 +10,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.ImportUtils;
 
 import java.io.File;
 import java.util.List;
@@ -77,15 +78,15 @@ public class ImportDialog extends AnalyticsDialogFragment {
                     String[] tts = new String[fileList.size()];
                     final String[] importValues = new String[fileList.size()];
                     for (int i = 0; i < tts.length; i++) {
-                        tts[i] = fileList.get(i).getName().replace(".apkg", "");
+                        tts[i] = fileList.get(i).getName();
                         importValues[i] = fileList.get(i).getAbsolutePath();
                     }
                     return builder.title(res.getString(R.string.import_select_title))
                             .items(tts)
                             .itemsCallback((materialDialog, view, i, charSequence) -> {
                                 String importPath = importValues[i];
-                                // If the apkg file is called "collection.apkg", we assume the collection will be replaced
-                                if (filenameFromPath(importPath).equals("collection.apkg")) {
+                                // If collection package, we assume the collection will be replaced
+                                if (ImportUtils.isCollectionPackage(filenameFromPath(importPath))) {
                                     ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_REPLACE_CONFIRM, importPath);
                                     // Otherwise we add the file since exported decks / shared decks can't be imported via replace anyway
                                 } else {

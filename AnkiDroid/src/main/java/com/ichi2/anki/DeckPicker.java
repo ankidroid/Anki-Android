@@ -111,6 +111,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -874,7 +875,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             loadStudyOptionsFragment(false);
         }
         automaticSync();
-        CardBrowser.clearLastDeckId();
     }
 
     private void showCollectionErrorDialog() {
@@ -1711,9 +1711,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
             exportPath = new File(exportDir, "All Decks.apkg");
         } else {
-            // full collection export -- use "collection.apkg"
+            // full collection export -- use "collection.colpkg"
             File colPath = new File(getCol().getPath());
-            exportPath = new File(exportDir, colPath.getName().replace(".anki2", ".apkg"));
+            exportPath = new File(exportDir, colPath.getName().replace(".anki2", ".colpkg"));
         }
         // add input arguments to new generic structure
         Object[] inputArgs = new Object[5];
@@ -1769,6 +1769,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return;
         }
         if (CompatHelper.getSdkVersion() >= 19) {
+            // Let the user choose where to export the file on API19+
             mExportFileName = path;
             Intent saveIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
             saveIntent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -1778,9 +1779,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
             saveIntent.putExtra("android.content.extra.FANCY", true);
             saveIntent.putExtra("android.content.extra.SHOW_FILESIZE", true);
             startActivityForResultWithoutAnimation(saveIntent, PICK_EXPORT_FILE);
+
         } else {
-            Timber.e("Could not find appropriate application to share apkg with");
-            UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
+            // Otherwise just export to AnkiDroid directory
+            File exportPath = new File(CollectionHelper.getCurrentAnkiDroidDirectory(this), new File(path).getName());
+            try {
+                CompatHelper.getCompat().copyFile(path, exportPath.getAbsolutePath());
+                UIUtils.showThemedToast(this, getString(R.string.export_save_apkg_successful), false);
+            } catch (IOException e) {
+                UIUtils.showThemedToast(this, getString(R.string.export_save_apkg_unsuccessful), false);
+            }
         }
     }
 

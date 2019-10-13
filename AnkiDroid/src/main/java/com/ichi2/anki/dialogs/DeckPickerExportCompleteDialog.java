@@ -32,25 +32,17 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
                 .content(getNotificationMessage())
                 .iconAttr(R.attr.dialogSendIcon)
                 .positiveText(R.string.export_send_button)
-                .negativeText(R.string.dialog_cancel)
+                .negativeText(R.string.export_save_button)
                 .onPositive((dialog, which) -> {
                     ((DeckPicker) getActivity()).dismissAllDialogFragments();
                     ((DeckPicker) getActivity()).emailFile(exportPath);
                 })
-                .onNegative((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments());
-
-        // If they have the system storage framework, allow for a save option
-        if (CompatHelper.getSdkVersion() >= 19) {
-            dialogBuilder
-                    .neutralText(R.string.dialog_cancel)
-                    .onNeutral((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments())
-                    .negativeText(R.string.export_save_button)
-                    .onNegative((dialog, which) -> {
-                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                        ((DeckPicker) getActivity()).saveExportFile(exportPath);
-                    });
-        }
-
+                .onNegative((dialog, which) -> {
+                    ((DeckPicker) getActivity()).dismissAllDialogFragments();
+                    ((DeckPicker) getActivity()).saveExportFile(exportPath);
+                })
+                .neutralText(R.string.dialog_cancel)
+                .onNeutral((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments());
         return dialogBuilder.show();
     }
     

@@ -87,6 +87,7 @@ public interface Compat {
     int getMinute(TimePicker picker);
     int getCameraCount();
     void vibrate(Context context, long durationMillis);
+    void copyFile(String source, String target) throws IOException;
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
 
