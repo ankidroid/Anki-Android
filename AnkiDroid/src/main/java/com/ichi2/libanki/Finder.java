@@ -30,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -583,7 +584,9 @@ public class Finder {
         LinkedList<Long> ids = new LinkedList<>();
         try {
             for (JSONObject m : mCol.getModels().all()) {
-                if (m.getString("name").equalsIgnoreCase(val)) {
+				String modelName = m.getString("name");
+				modelName = Normalizer.normalize(modelName, Normalizer.Form.NFC);
+                if (modelName.equalsIgnoreCase(val)) {
                     ids.add(m.getLong("id"));
                 }
             }
@@ -628,7 +631,9 @@ public class Finder {
                 val = val.replace("*", ".*");
                 val = val.replace("+", "\\+");
                 for (JSONObject d : mCol.getDecks().all()) {
-                    if (d.getString("name").matches("(?i)" + val)) {
+					String deckName = d.getString("name");
+					deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
+                    if (deckName.matches("(?i)" + val)) {
                         for (long id : dids(d.getLong("id"))) {
                             if (!ids.contains(id)) {
                                 ids.add(id);
@@ -666,7 +671,9 @@ public class Finder {
                 JSONArray tmpls = m.getJSONArray("tmpls");
                 for (int ti = 0; ti < tmpls.length(); ++ti) {
                     JSONObject t = tmpls.getJSONObject(ti);
-                    if (t.getString("name").equalsIgnoreCase(val)) {
+					String templateName = t.getString("name");
+					Normalizer.normalize(templateName, Normalizer.Form.NFC);
+                    if (templateName.equalsIgnoreCase(val)) {
                         if (m.getInt("type") == Consts.MODEL_CLOZE) {
                             // if the user has asked for a cloze card, we want
                             // to give all ordinals, so we just limit to the
@@ -715,7 +722,9 @@ public class Finder {
                 JSONArray flds = m.getJSONArray("flds");
                 for (int fi = 0; fi < flds.length(); ++fi) {
                     JSONObject f = flds.getJSONObject(fi);
-                    if (f.getString("name").equalsIgnoreCase(field)) {
+					String fieldName = f.getString("name");
+					fieldName = Normalizer.normalize(fieldName, Normalizer.Form.NFC);
+                    if (fieldName.equalsIgnoreCase(field)) {
                         mods.put(m.getLong("id"), new Object[] { m, f.getInt("ord") });
                     }
                 }
