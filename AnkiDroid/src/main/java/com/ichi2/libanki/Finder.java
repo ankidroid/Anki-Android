@@ -953,6 +953,28 @@ public class Finder {
         return names;
     }
 
+    public List<String> fieldNamesForNotes(long[] nids) {
+        Set<String> downcasedNames = new HashSet<>();
+        List<String> origNames = new ArrayList<>();
+        ArrayList<Long> mids = mCol.getDb().queryColumn(Long.class, "select distinct mid from notes where id in " + Utils.ids2str(nids), 0);
+        try {
+            for (Long mid: mids) {
+                JSONObject model = mCol.getModels().get((long) mid);
+                JSONArray flds = model.getJSONArray("flds");
+                for (int fi = 0; fi < flds.length(); ++fi) {
+                    JSONObject f = flds.getJSONObject(fi);
+                    if (!downcasedNames.contains(f.getString("name").toLowerCase(Locale.US))) {
+                        origNames.add(f.getString("name"));
+                        downcasedNames.add(f.getString("name").toLowerCase(Locale.US));
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        Collections.sort(origNames);
+        return origNames;
+    }
 
     /**
      * Find duplicates
