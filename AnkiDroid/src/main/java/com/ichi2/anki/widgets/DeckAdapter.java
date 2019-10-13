@@ -252,7 +252,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             if (node.depth == 0) {
                 holder.criticalCardLayout.setVisibility(View.VISIBLE);
                 holder.criticalCardCount.setVisibility(View.VISIBLE);
-                int criticalRevCount = node.youngRevCount + node.lrnCount + node.newCount;
+                int criticalRevCount = node.youngRevCount + node.lrnCount + node.newCount * 2;
                 if (criticalRevCount > 10) {
                     holder.criticalCardCount.setText(String.format("%d", criticalRevCount));
                 } else {

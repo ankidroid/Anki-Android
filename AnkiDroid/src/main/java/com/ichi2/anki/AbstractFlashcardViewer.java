@@ -1828,7 +1828,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 learnRevCount += sched._lrnForDeck(did);
                 newRevCount += sched._newForDeck(did, sched._deckNewLimit(did));
             }
-            int cardsLeft = youngRevCount + learnRevCount + newRevCount;
+            int cardsLeft = youngRevCount + learnRevCount + newRevCount * 2;
             String cardsLeftPart;
             if (cardsLeft > 10) {
                 cardsLeftPart = String.format("%s critical", cardsLeft);
