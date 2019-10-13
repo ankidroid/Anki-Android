@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -51,17 +52,21 @@ class Exporter {
 	protected boolean mayIncludeHTML = false;
 	// includeHTML is used only if mayIncludeHTML is true.
 	protected boolean includeHTML;
+	protected long[] mCids;
+	protected int mCount;
 
 
     public Exporter(Collection col) {
         mCol = col;
         mDid = null;
+        mCids = null;
     }
 
 
     public Exporter(Collection col, Long did) {
         mCol = col;
         mDid = did;
+        mCids = null;
     }
 
 	/**"Escape newlines, tabs, CSS and quotechar."*/
@@ -96,6 +101,18 @@ class Exporter {
 		s = s.trim();
 		return s;
 	}
+
+	/** card ids of cards in deck self.did if it is set, all ids otherwise. */
+	public Long[] cardIds() {
+		Long[] cids;
+		if (mDid < 0) {
+			cids = Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards", 0));
+		} else {
+			cids = mCol.getDecks().cids(mDid, true);
+		}
+		mCount = cids.length;
+		return cids;
+	}
 }
 
 
@@ -107,7 +124,6 @@ class AnkiExporter extends Exporter {
     protected boolean mIncludeMedia;
     private Collection mSrc;
     String mMediaDir;
-    int mCount;
     ArrayList<String> mMediaFiles = new ArrayList<>();
     boolean _v2sched;
 
