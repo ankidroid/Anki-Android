@@ -207,11 +207,18 @@ class AnkiExporter extends Exporter {
                     "select flds from notes where id in " + strnids, 0);
             for (int idx = 0; idx < mid.size(); idx++) {
                 for (String file : mSrc.getMedia().filesInStr(mid.get(idx), flds.get(idx))) {
+                    // skip files in subdirs
+                    if (file.contains(File.separator)) {
+                        continue;
+                    }
                     media.put(file, true);
                 }
             }
             if (mMediaDir != null) {
                 for (File f : new File(mMediaDir).listFiles()) {
+                    if (f.isDirectory()) {
+                        continue;
+                    }
                     String fname = f.getName();
                     if (fname.startsWith("_")) {
                         // Loop through every model that will be exported, and check if it contains a reference to f
