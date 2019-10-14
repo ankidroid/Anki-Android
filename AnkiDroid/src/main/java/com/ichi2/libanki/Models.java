@@ -788,14 +788,11 @@ public class Models {
         return t;
     }
 
-
-    /** Note: should col.genCards() afterwards. 
-     * @throws ConfirmModSchemaException */
-    public void addTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
+    /** Note: should col.genCards() afterwards. */
+    private void _addTemplate(JSONObject m, JSONObject template) {
+        // do the actual work of addTemplate. Do not consider whether
+        // model is new or not.
         try {
-            if (!isModelNew(m)) {
-                mCol.modSchema(true);
-            }
             JSONArray ja = m.getJSONArray("tmpls");
             ja.put(template);
             m.put("tmpls", ja);
@@ -806,6 +803,28 @@ public class Models {
         }
     }
 
+    /** @throws ConfirmModSchemaException */
+    public void addTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
+        //That is Anki's addTemplate method
+        if (!isModelNew(m)) {
+            mCol.modSchema(true);
+        }
+        _addTemplate(m, template);
+    }
+
+    public void addTemplateInNewModel(JSONObject m, JSONObject template)  {
+        // similar to addTemplate, but doesn't throw exception;
+        // asserting the model is new.
+        Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
+        _addTemplate(m, template);
+    }
+
+    public void addTemplateModChanged(JSONObject m, JSONObject template)  {
+        // similar to addTemplate, but doesn't throw exception;
+        // asserting the model is new.
+        Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
+        _addTemplate(m, template);
+    }
 
     /**
      * Removing a template
