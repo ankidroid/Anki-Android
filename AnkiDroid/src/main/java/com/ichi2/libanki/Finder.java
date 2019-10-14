@@ -440,11 +440,11 @@ public class Finder {
         if (!val.startsWith("%")) {
             val = "% " + val;
         }
-        if (!val.endsWith("%")) {
+        if (!val.endsWith("%") || val.endsWith("\\%")) {
             val += " %";
         }
         args.add(val);
-        return "n.tags like ?";
+        return "n.tags like ? escape '\\'";
     }
 
 
