@@ -905,7 +905,7 @@ public class Finder {
                 if (!flds.equals(origFlds)) {
                     long nid = cur.getLong(0);
                     nids.add(nid);
-                    d.add(new Object[] { flds, Utils.intNow(), col.usn(), nid }); // order based on query below
+                    d.add(new Object[] { flds, Utils.intTime(), col.usn(), nid }); // order based on query below
                 }
             }
         } finally {
