@@ -83,7 +83,7 @@ import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
  * <p/>
  * Note that unlike Android's contact providers:
  * <ul>
-  * <li>it's not possible to access cards of more than one note at a time</li>
+ * <li>it's not possible to access cards of more than one note at a time</li>
  * <li>it's not possible to access cards of a note without providing the note's ID</li>
  * </ul>
  */
