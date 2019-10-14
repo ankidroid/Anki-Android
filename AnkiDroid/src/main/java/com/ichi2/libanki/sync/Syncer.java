@@ -250,7 +250,7 @@ public class Syncer {
         j.put("mod", mCol.getMod());
         j.put("scm", mCol.getScm());
         j.put("usn", mCol.getUsnForSync());
-        j.put("ts", Utils.intNow());
+        j.put("ts", Utils.intTime());
         j.put("musn", 0);
         j.put("msg", "");
         j.put("cont", true);
@@ -427,7 +427,7 @@ public class Syncer {
     private long finish(long mod) {
         if (mod == 0) {
             // server side; we decide new mod time
-            mod = Utils.intNow(1000);
+            mod = Utils.intTime(1000);
         }
         mCol.setLs(mod);
         mCol.setUsnAfterSync(mMaxUsn + 1);

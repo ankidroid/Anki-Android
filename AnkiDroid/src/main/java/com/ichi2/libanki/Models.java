@@ -98,8 +98,8 @@ public class Models {
     // BEGIN SQL table entries
     private int mId;
     private String mName = "";
-    //private long mCrt = Utils.intNow();
-    //private long mMod = Utils.intNow();
+    //private long mCrt = Utils.intTime();
+    //private long mMod = Utils.intTime();
     //private JSONObject mConf;
     //private String mCss = "";
     //private JSONArray mFields;
@@ -183,7 +183,7 @@ public class Models {
     public void save(JSONObject m, boolean templates) {
         if (m != null && m.has("id")) {
             try {
-                m.put("mod", Utils.intNow());
+                m.put("mod", Utils.intTime());
                 m.put("usn", mCol.usn());
                 // TODO: fix empty id problem on _updaterequired (needed for model adding)
                 if (m.getLong("id") != 0) {
@@ -311,7 +311,7 @@ public class Models {
         try {
             m = new JSONObject(defaultModel);
             m.put("name", name);
-            m.put("mod", Utils.intNow());
+            m.put("mod", Utils.intTime());
             m.put("flds", new JSONArray());
             m.put("tmpls", new JSONArray());
             m.put("tags", new JSONArray());
@@ -367,9 +367,9 @@ public class Models {
 
 
     private void _setID(JSONObject m) {
-        long id = Utils.intNow(1000);
+        long id = Utils.intTime(1000);
         while (mModels.containsKey(id)) {
-            id = Utils.intNow(1000);
+            id = Utils.intTime(1000);
         }
         try {
             m.put("id", id);
@@ -725,7 +725,7 @@ public class Models {
                 while (cur.moveToNext()) {
                     r.add(new Object[] {
                             Utils.joinFields(fn.transform(Utils.splitFields(cur.getString(1)))),
-                            Utils.intNow(), mCol.usn(), cur.getLong(0) });
+                            Utils.intTime(), mCol.usn(), cur.getLong(0) });
                 }
             } finally {
                 if (cur != null) {
@@ -807,7 +807,7 @@ public class Models {
             mCol.getDb()
                     .execute(
                             "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
-                            new Object[] { mCol.usn(), Utils.intNow(), m.getLong("id"), ord });
+                            new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id"), ord });
             JSONArray tmpls = m.getJSONArray("tmpls");
             JSONArray ja2 = new JSONArray();
             for (int i = 0; i < tmpls.length(); ++i) {
@@ -875,7 +875,7 @@ public class Models {
             save(m);
             mCol.getDb().execute("update cards set ord = (case " + sb.toString() +
             		" end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
-                    new Object[] { mCol.usn(), Utils.intNow(), m.getLong("id") });
+                    new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id") });
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -947,7 +947,7 @@ public class Models {
                     }
                 }
                 String joinedFlds = Utils.joinFields(flds2.toArray(new String[flds2.size()]));
-                d.add(new Object[] { joinedFlds, mid, Utils.intNow(), mCol.usn(), nid });
+                d.add(new Object[] { joinedFlds, mid, Utils.intTime(), mCol.usn(), nid });
             }
         } finally {
             if (cur != null) {
@@ -995,7 +995,7 @@ public class Models {
                     newOrd = map.get(ord);
                 }
                 if (newOrd != null) {
-                    d.add(new Object[] { newOrd, mCol.usn(), Utils.intNow(), cid });
+                    d.add(new Object[] { newOrd, mCol.usn(), Utils.intTime(), cid });
                 } else {
                     deleted.add(cid);
                 }
