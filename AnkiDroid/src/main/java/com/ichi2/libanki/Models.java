@@ -305,6 +305,8 @@ public class Models {
 
 
     /** Create a new model, save it in the registry, and return it. */
+	// Called `new` in Anki's code. New is a reserved word in java,
+	// not in python. Thus the method has to be renamed.
     public JSONObject newModel(String name) {
         // caller should call save() after modifying
         JSONObject m;
