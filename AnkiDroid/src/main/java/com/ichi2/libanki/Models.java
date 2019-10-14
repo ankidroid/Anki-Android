@@ -186,7 +186,7 @@ public class Models {
                 m.put("mod", Utils.intTime());
                 m.put("usn", mCol.usn());
                 // TODO: fix empty id problem on _updaterequired (needed for model adding)
-                if (m.getLong("id") != 0) {
+                if (!isModelNew(m)) {
                     _updateRequired(m);
                 }
                 if (templates) {
@@ -324,6 +324,14 @@ public class Models {
         return m;
     }
 
+    // not in anki
+    public static boolean isModelNew(JSONObject m) {
+        try {
+            return m.getLong("id") == 0;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /** Delete model, and all its cards/notes. 
      * @throws ConfirmModSchemaException */
@@ -530,7 +538,7 @@ public class Models {
     public void addField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
         // only mod schema if model isn't new
         try {
-            if (m.getLong("id") != 0) {
+            if (!isModelNew(m)) {
                 mCol.modSchema(true);
             }
             JSONArray ja = m.getJSONArray("flds");
@@ -715,7 +723,7 @@ public class Models {
     public void _transformFields(JSONObject m, TransformFieldVisitor fn) {
         // model hasn't been added yet?
         try {
-            if (m.getLong("id") == 0) {
+            if (isModelNew(m)) {
                 return;
             }
             ArrayList<Object[]> r = new ArrayList<>();
@@ -761,7 +769,7 @@ public class Models {
      * @throws ConfirmModSchemaException */
     public void addTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
         try {
-            if (m.getLong("id") != 0) {
+            if (!isModelNew(m)) {
                 mCol.modSchema(true);
             }
             JSONArray ja = m.getJSONArray("tmpls");
