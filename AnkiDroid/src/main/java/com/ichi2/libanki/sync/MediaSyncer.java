@@ -17,6 +17,7 @@
 
 package com.ichi2.libanki.sync;
 
+import android.database.SQLException;
 import android.text.TextUtils;
 import android.util.Pair;
 
@@ -89,7 +90,11 @@ public class MediaSyncer {
             if (mCol.getMedia().needScan()) {
                 mCon.publishProgress(R.string.sync_media_find);
                 mCol.log("findChanges");
-                mCol.getMedia().findChanges();
+				try {
+					mCol.getMedia().findChanges();
+				} catch (SQLException ignored) {
+					return "corruptMediaDB";
+				}
             }
 
             // begin session and check if in sync
