@@ -63,7 +63,7 @@ import android.net.Uri;
  * The AnkiDroid Flashcard content provider supports the following operation on it's URIs:
  * <p></p>
  * <table class="memberSummary" border="">
- * <caption><span>URIs and operations andsupported by CardContentProvider</span><span class="tabEnd">&nbsp;</span></caption>
+ * <caption><span>URIs and operations supported by CardContentProvider</span><span class="tabEnd">&nbsp;</span></caption>
  * <tr>
  * <th class="colFirst" scope="col">URI</th>
  * <th class="colLast" scope="col">Description</th>
