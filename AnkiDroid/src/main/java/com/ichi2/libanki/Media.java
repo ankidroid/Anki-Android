@@ -203,6 +203,12 @@ public class Media {
         mDb = null;
     }
 
+    private void _deleteDB() {
+        String path = mDb.getPath();
+        close();
+        (new File(path)).delete();
+        connect();
+    }
 
     public String dir() {
         return mDir;
@@ -496,6 +502,12 @@ public class Media {
             if (!x.startsWith("_")) {
                 nohave.add(x);
             }
+        }
+        // make sure the media DB is valid
+        try {
+            findChanges();
+        } catch (SQLException ignored) {
+            _deleteDB();
         }
         List<List<String>> result = new ArrayList<>();
         result.add(nohave);
