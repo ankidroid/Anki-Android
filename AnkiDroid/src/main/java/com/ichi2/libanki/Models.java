@@ -1302,18 +1302,18 @@ public class Models {
      * @throws ConfirmModSchemaException **********************************************************************************************
      */
 
-    private static JSONObject _newBasicModel(Collection col) throws ConfirmModSchemaException {
+    private static JSONObject _newBasicModel(Collection col) {
         return _newBasicModel(col, "Basic");
     }
 
 
-    private static JSONObject _newBasicModel(Collection col, String name) throws ConfirmModSchemaException {
+    private static JSONObject _newBasicModel(Collection col, String name) {
         Models mm = col.getModels();
         JSONObject m = mm.newModel(name);
         JSONObject fm = mm.newField("Front");
-        mm.addField(m, fm);
+        mm.addFieldInNewModel(m, fm);
         fm = mm.newField("Back");
-        mm.addField(m, fm);
+        mm.addFieldInNewModel(m, fm);
         JSONObject t = mm.newTemplate("Card 1");
         try {
             t.put("qfmt", "{{Front}}");
@@ -1321,7 +1321,7 @@ public class Models {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        mm.addTemplate(m, t);
+        mm.addTemplateInNewModel(m, t);
         return m;
     }
 
@@ -1337,7 +1337,7 @@ public class Models {
 
     /* Forward & Reverse */
 
-    public static JSONObject addForwardReverse(Collection col) throws ConfirmModSchemaException {
+    public static JSONObject addForwardReverse(Collection col) {
     	String name = "Basic (and reversed card)";
         Models mm = col.getModels();
         JSONObject m = _newBasicModel(col);
@@ -1346,7 +1346,7 @@ public class Models {
             JSONObject t = mm.newTemplate("Card 2");
             t.put("qfmt", "{{Back}}");
             t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Front}}");
-            mm.addTemplate(m, t);
+            mm.addTemplateInNewModel(m, t);
             mm.add(m);
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -1357,18 +1357,18 @@ public class Models {
 
     /* Forward & Optional Reverse */
 
-    public static JSONObject addForwardOptionalReverse(Collection col) throws ConfirmModSchemaException {
+    public static JSONObject addForwardOptionalReverse(Collection col) {
     	String name = "Basic (optional reversed card)";
         Models mm = col.getModels();
         JSONObject m = _newBasicModel(col);
         try {
             m.put("name", name);
             JSONObject fm = mm.newField("Add Reverse");
-            mm.addField(m, fm);
+            mm.addFieldInNewModel(m, fm);
             JSONObject t = mm.newTemplate("Card 2");
             t.put("qfmt", "{{#Add Reverse}}{{Back}}{{/Add Reverse}}");
             t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Front}}");
-            mm.addTemplate(m, t);
+            mm.addTemplateInNewModel(m, t);
             mm.add(m);
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -1377,22 +1377,22 @@ public class Models {
     }
 
 
-    public static JSONObject addClozeModel(Collection col) throws ConfirmModSchemaException {
+    public static JSONObject addClozeModel(Collection col) {
         Models mm = col.getModels();
         JSONObject m = mm.newModel("Cloze");
         try {
             m.put("type", Consts.MODEL_CLOZE);
             String txt = "Text";
             JSONObject fm = mm.newField(txt);
-            mm.addField(m, fm);
+            mm.addFieldInNewModel(m, fm);
             fm = mm.newField("Extra");
-            mm.addField(m, fm);
+            mm.addFieldInNewModel(m, fm);
             JSONObject t = mm.newTemplate("Cloze");
             String fmt = "{{cloze:" + txt + "}}";
             m.put("css", m.getString("css") + ".cloze {" + "font-weight: bold;" + "color: blue;" + "}");
             t.put("qfmt", fmt);
             t.put("afmt", fmt + "<br>\n{{Extra}}");
-            mm.addTemplate(m, t);
+            mm.addTemplateInNewModel(m, t);
             mm.add(m);
         } catch (JSONException e) {
             throw new RuntimeException(e);

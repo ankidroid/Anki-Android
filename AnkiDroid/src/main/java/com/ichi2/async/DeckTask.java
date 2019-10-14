@@ -1271,19 +1271,16 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      * Add a new card template
      */
     private TaskData doInBackgroundAddTemplate(TaskData... params) {
+        // mod should have been changed by addNewTemplateWithCheck in
+        // main/java/com/ichi2/anki/CardTemplateEditor
         Timber.d("doInBackgroundAddTemplate");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object [] args = params[0].getObjArray();
         JSONObject model = (JSONObject) args[0];
         JSONObject template = (JSONObject) args[1];
         // add the new template
-        try {
-            col.getModels().addTemplate(model, template);
-            col.save();
-        } catch (ConfirmModSchemaException e) {
-            Timber.e("doInBackgroundAddTemplate :: ConfirmModSchemaException");
-            return new TaskData(false);
-        }
+        col.getModels().addTemplateModChanged(model, template);
+        col.save();
         return new TaskData(true);
     }
 
@@ -1439,13 +1436,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         String fieldName = (String) objects[1];
 
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        try {
-            col.getModels().addField(model, col.getModels().newField(fieldName));
-            col.save();
-        } catch (ConfirmModSchemaException e) {
-            //Should never be reached
-            return new TaskData(false);
-        }
+        col.getModels().addFieldModChanged(model, col.getModels().newField(fieldName));
+        col.save();
         return new TaskData(true);
     }
 
