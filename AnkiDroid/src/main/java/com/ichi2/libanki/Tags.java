@@ -263,12 +263,12 @@ public class Tags {
             if (add) {
                 while (cur.moveToNext()) {
                     nids.add(cur.getLong(0));
-                    res.add(new Object[] { addToStr(tags, cur.getString(1)), Utils.intNow(), mCol.usn(), cur.getLong(0) });
+                    res.add(new Object[] { addToStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(), cur.getLong(0) });
                 }
             } else {
                 while (cur.moveToNext()) {
                     nids.add(cur.getLong(0));
-                    res.add(new Object[] { remFromStr(tags, cur.getString(1)), Utils.intNow(), mCol.usn(),
+                    res.add(new Object[] { remFromStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(),
                             cur.getLong(0) });
                 }
             }

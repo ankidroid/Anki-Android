@@ -113,10 +113,10 @@ public class Utils {
 
 
     /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
-    public static long intNow() {
-        return intNow(1);
+    public static long intTime() {
+        return intTime(1);
     }
-    public static long intNow(int scale) {
+    public static long intTime(int scale) {
         return (long) (now() * scale);
     }
 
@@ -355,7 +355,7 @@ public class Utils {
     public static long timestampID(DB db, String table) {
         // be careful not to create multiple objects without flushing them, or they
         // may share an ID.
-        long t = intNow(1000);
+        long t = intTime(1000);
         while (db.queryScalar("SELECT id FROM " + table + " WHERE id = " + t) != 0) {
             t += 1;
         }
@@ -365,7 +365,7 @@ public class Utils {
 
     /** Return the first safe ID to use. */
     public static long maxID(DB db) {
-        long now = intNow(1000);
+        long now = intTime(1000);
         now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
         now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
         return now + 1;

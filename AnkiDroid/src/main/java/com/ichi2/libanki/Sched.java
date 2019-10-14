@@ -192,7 +192,7 @@ public class Sched {
             throw new RuntimeException("Invalid queue");
         }
         _updateStats(card, "time", card.timeTaken());
-        card.setMod(Utils.intNow());
+        card.setMod(Utils.intTime());
         card.setUsn(mCol.usn());
         card.flushSched();
     }
@@ -286,7 +286,7 @@ public class Sched {
         String sids = Utils.ids2str(allDecks);
         mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = -2 and did in " + sids, 0));
         mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = -2 and did in " + sids,
-                new Object[] { Utils.intNow(), mCol.usn() });
+                new Object[] { Utils.intTime(), mCol.usn() });
     }
 
     /**
@@ -1050,7 +1050,7 @@ public class Sched {
 
     private int _leftToday(JSONArray delays, int left, long now) {
         if (now == 0) {
-            now = Utils.intNow();
+            now = Utils.intTime();
         }
         int ok = 0;
         int offset = Math.min(left, delays.length());
@@ -1158,7 +1158,7 @@ public class Sched {
         }
         // review cards in relearning
         mCol.getDb().execute(
-                "update cards set due = odue, queue = 2, mod = " + Utils.intNow() +
+                "update cards set due = odue, queue = 2, mod = " + Utils.intTime() +
                 ", usn = " + mCol.usn() + ", odue = 0 where queue IN (1,3) and type = 2 " + extra);
         // new cards in learning
         forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE queue IN (1,3) " + extra, 0)));
@@ -1169,7 +1169,7 @@ public class Sched {
         try {
             int cnt = mCol.getDb().queryScalar(
                     "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = " + did
-                            + " AND queue = 1 AND due < " + (Utils.intNow() + mCol.getConf().getInt("collapseTime"))
+                            + " AND queue = 1 AND due < " + (Utils.intTime() + mCol.getConf().getInt("collapseTime"))
                             + " LIMIT " + mReportLimit + ")");
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did
@@ -1647,7 +1647,7 @@ public class Sched {
 
     private void _moveToDyn(long did, List<Long> ids) {
         ArrayList<Object[]> data = new ArrayList<>();
-        //long t = Utils.intNow(); // unused variable present (and unused) upstream
+        //long t = Utils.intTime(); // unused variable present (and unused) upstream
         int u = mCol.usn();
         for (long c = 0; c < ids.size(); c++) {
             // start at -100000 so that reviews are all due
@@ -2059,7 +2059,7 @@ public class Sched {
         remFromDyn(ids);
         removeLrn(ids);
         mCol.getDb().execute(
-                "UPDATE cards SET queue = -1, mod = " + Utils.intNow() + ", usn = " + mCol.usn() + " WHERE id IN "
+                "UPDATE cards SET queue = -1, mod = " + Utils.intTime() + ", usn = " + mCol.usn() + " WHERE id IN "
                         + Utils.ids2str(ids));
     }
 
@@ -2070,7 +2070,7 @@ public class Sched {
     public void unsuspendCards(long[] ids) {
         mCol.log(ids);
         mCol.getDb().execute(
-                "UPDATE cards SET queue = type, mod = " + Utils.intNow() + ", usn = " + mCol.usn()
+                "UPDATE cards SET queue = type, mod = " + Utils.intTime() + ", usn = " + mCol.usn()
                         + " WHERE queue = -1 AND id IN " + Utils.ids2str(ids));
     }
 
@@ -2168,7 +2168,7 @@ public class Sched {
     public void reschedCards(long[] ids, int imin, int imax) {
         ArrayList<Object[]> d = new ArrayList<>();
         int t = mToday;
-        long mod = Utils.intNow();
+        long mod = Utils.intTime();
         Random rnd = new Random();
         for (long id : ids) {
             int r = rnd.nextInt(imax - imin + 1) + imin;
@@ -2206,7 +2206,7 @@ public class Sched {
 
     public void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift) {
         String scids = Utils.ids2str(cids);
-        long now = Utils.intNow();
+        long now = Utils.intTime();
         ArrayList<Long> nids = new ArrayList<>();
         for (long id : cids) {
         	long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = " + id);

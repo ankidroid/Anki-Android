@@ -182,7 +182,7 @@ public class Decks {
     public void save(JSONObject g) {
         if (g != null) {
             try {
-                g.put("mod", Utils.intNow());
+                g.put("mod", Utils.intTime());
                 g.put("usn", mCol.usn());
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -258,7 +258,7 @@ public class Decks {
             g = new JSONObject(type);
             g.put("name", name);
             while (true) {
-                id = Utils.intNow(1000);
+                id = Utils.intTime(1000);
                 if (!mDecks.containsKey(id)) {
                     break;
                 }
@@ -693,7 +693,7 @@ public class Decks {
         try {
             c = new JSONObject(cloneFrom);
             while (true) {
-                id = Utils.intNow(1000);
+                id = Utils.intTime(1000);
                 if (!mDconf.containsKey(id)) {
                     break;
                 }
@@ -816,7 +816,7 @@ public class Decks {
 
     public void setDeck(long[] cids, long did) {
         mCol.getDb().execute("update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-                new Object[] { did, mCol.usn(), Utils.intNow() });
+                new Object[] { did, mCol.usn(), Utils.intTime() });
     }
 
 

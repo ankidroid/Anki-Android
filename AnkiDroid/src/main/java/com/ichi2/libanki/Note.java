@@ -147,7 +147,7 @@ public class Note implements Cloneable {
             return;
         }
         long csum = Utils.fieldChecksum(mFields[0]);
-        mMod = mod != null ? mod : Utils.intNow();
+        mMod = mod != null ? mod : Utils.intTime();
         mCol.getDb().execute("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
                 new Object[] { mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData });
         mCol.getTags().register(mTags);

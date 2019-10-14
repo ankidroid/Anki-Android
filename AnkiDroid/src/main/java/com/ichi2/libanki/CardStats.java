@@ -34,7 +34,7 @@ public class CardStats {
                 next = 0;
             } else {
                 if (c.getQueue() == 2 || c.getQueue() == 3) {
-                    next = Utils.intNow(1000) + ((c.getDue() - col.getSched().getToday()) * 86400000);
+                    next = Utils.intTime(1000) + ((c.getDue() - col.getSched().getToday()) * 86400000);
                 } else {
                     next = c.getDue();
                 }

@@ -327,7 +327,7 @@ public class Collection {
      */
     public void flush(long mod) {
         Timber.i("flush - Saving information to DB...");
-        mMod = (mod == 0 ? Utils.intNow(1000) : mod);
+        mMod = (mod == 0 ? Utils.intTime(1000) : mod);
         ContentValues values = new ContentValues();
         values.put("crt", mCrt);
         values.put("mod", mMod);
@@ -470,7 +470,7 @@ public class Collection {
                 throw new ConfirmModSchemaException();
             }
         }
-        mScm = Utils.intNow(1000);
+        mScm = Utils.intTime(1000);
         setMod();
     }
 
@@ -743,7 +743,7 @@ public class Collection {
         // build cards for each note
         ArrayList<Object[]> data = new ArrayList<>();
         long ts = Utils.maxID(mDb);
-        long now = Utils.intNow();
+        long now = Utils.intTime();
         ArrayList<Long> rem = new ArrayList<>();
         int usn = usn();
         cur = null;
@@ -1309,7 +1309,7 @@ public class Collection {
                 mDb.execute("DELETE FROM revlog WHERE id = " + last);
                 // restore any siblings
                 mDb.execute("update cards set queue=type,mod=?,usn=? where queue=-2 and nid=?",
-                        new Object[]{Utils.intNow(), usn(), c.getNid()});
+                        new Object[]{Utils.intTime(), usn(), c.getNid()});
                 // and finally, update daily count
                 int n = c.getQueue() == 3 ? 1 : c.getQueue();
                 String type = (new String[]{"new", "lrn", "rev"})[n];
@@ -1669,7 +1669,7 @@ public class Collection {
                 }
                 // new cards can't have a due position > 32 bits
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intNow() + ", usn = " + usn()
+                mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
                         + " WHERE due > 1000000 AND type = 0");
                 // new card position
                 mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
@@ -1679,7 +1679,7 @@ public class Collection {
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 if (ids.size() > 0) {
                 	problems.add("Reviews had incorrect due date.");
-                    mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intNow() +
+                    mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
                             ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 }
                 // v2 sched had a bug that could create decimal intervals
@@ -1780,7 +1780,7 @@ public class Collection {
                 args[i] = Arrays.toString((long []) args[i]);
             }
         }
-        String s = String.format("[%s] %s:%s(): %s", Utils.intNow(), trace.getFileName(), trace.getMethodName(),
+        String s = String.format("[%s] %s:%s(): %s", Utils.intTime(), trace.getFileName(), trace.getMethodName(),
                 TextUtils.join(",  ", args));
         mLogHnd.println(s);
         Timber.d(s);
