@@ -236,7 +236,9 @@ public class Tags {
             return;
         }
         // cache tag names
-        register(newTags);
+        if (add) {
+            register(newTags);
+        }
         // find notes missing the tags
         String l;
         if (add) {
