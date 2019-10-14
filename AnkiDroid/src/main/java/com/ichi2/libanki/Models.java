@@ -24,6 +24,8 @@ import android.database.Cursor;
 import android.util.Pair;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.utils.Assert;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -535,12 +537,10 @@ public class Models {
     }
 
 
-    public void addField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
-        // only mod schema if model isn't new
+    private void _addField(JSONObject m, JSONObject field) {
+        // do the actual work of addField. Do not check whether model
+        // is not new.
         try {
-            if (!isModelNew(m)) {
-                mCol.modSchema(true);
-            }
             JSONArray ja = m.getJSONArray("flds");
             ja.put(field);
             m.put("flds", ja);
@@ -550,7 +550,31 @@ public class Models {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public void addField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
+        // only mod schema if model isn't new
+        // this is Anki's addField.
+        if (!isModelNew(m)) {
+            mCol.modSchema(true);
+        }
+        _addField(m, field);
+    }
+
+    public void addFieldInNewModel(JSONObject m, JSONObject field) {
+        // similar to Anki's addField; but thanks to assumption that
+        // model is new, it never has to throw
+        // ConfirmModSchemaException.
+        Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
+        _addField(m, field);
+    }
+
+    public void addFieldModChanged(JSONObject m, JSONObject field) {
+        // similar to Anki's addField; but thanks to assumption that
+        // mod is already changed, it never has to throw
+        // ConfirmModSchemaException.
+        Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
+        _addField(m, field);
     }
 
     class TransformFieldAdd implements TransformFieldVisitor {
