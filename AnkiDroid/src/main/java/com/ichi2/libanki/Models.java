@@ -313,7 +313,9 @@ public class Models {
     }
 
 
-    /** Create a new model, save it in the registry, and return it. */
+    /** Create a new model, save it in the registry, and return it.
+	 called new in Anki. This is a reserved word in java and thus has
+	 been renamed.*/
     public JSONObject newModel(String name) {
         // caller should call save() after modifying
         JSONObject m;
@@ -1288,6 +1290,37 @@ public class Models {
 		mm.add(m);
         return m;
     }
+
+    /* Basic w/ typing */
+
+	public static JSONObject addBasicTypingModel(Collection col) {
+	    //addField and addTemplate can't actually throw an exception, since we add new field/template.
+		Models mm = col.getModels();
+		JSONObject m = mm.newModel("Basic (type in the answer)");
+		JSONObject fm = mm.newField("Front");
+        try {
+    		mm.addField(m, fm);
+        } catch (ConfirmModSchemaException ignored) {
+        }
+        fm = mm.newField("Back");
+        try {
+            mm.addField(m, fm);
+        } catch (ConfirmModSchemaException ignored) {
+        }
+        JSONObject t = mm.newTemplate("Card 1");
+        try {
+            t.put("qfmt", "{{"+"Front"+"}}\n\n{{type:"+"Back"+"}}");
+            t.put("afmt", "{{"+"Front"+"}}\n\n<hr id=answer>\n\n{{type:"+"Back"+"}}");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+    		mm.addTemplate(m, t);
+        } catch (ConfirmModSchemaException ignored) {
+        }
+		mm.add(m);
+		return m;
+	}
 
     /* Forward & Reverse */
 

@@ -70,6 +70,7 @@ public class Storage {
                 try {
                     // add in reverse order so basic is default
                     Models.addClozeModel(col);
+					Models.addBasicTypingModel(col);
                     Models.addForwardOptionalReverse(col);
                     Models.addForwardReverse(col);
                     Models.addBasicModel(col);
