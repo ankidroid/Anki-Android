@@ -160,6 +160,9 @@ public class Anki2Importer extends Importer {
      * Notes
      * ***********************************************************
      */
+    private void _logNoteRow(String action, Object[] noteRow) {
+        mLog.add(String.format("[%s] %s", action, ((String) noteRow[6]).replace("\\x1f", ", ")));
+    }
 
     private void _importNotes() {
         // build guid -> (id,mod,mid) hash & map of existing note ids
@@ -184,7 +187,6 @@ public class Anki2Importer extends Importer {
         // we may need to rewrite the guid if the model schemas don't match,
         // so we need to keep track of the changes for the card import stage
         mChangedGuids = new HashMap<>();
-        // apart from upgrading from anki1 decks, we ignore updates to changed
         // schemas. we need to note the ignored guids, so we avoid importing
         // invalid cards
         mIgnoredGuids = new HashMap<>();
@@ -193,10 +195,9 @@ public class Anki2Importer extends Importer {
         ArrayList<Object[]> update = new ArrayList<>();
         ArrayList<Long> dirty = new ArrayList<>();
         int usn = mDst.usn();
-        int dupes = 0;
-        ArrayList<String> dupesIgnored = new ArrayList<>();
+        List<Object[]> dupesIdentical = new ArrayList<>();
+        ArrayList<Object[]> dupesIgnored = new ArrayList<>();
         int total = 0;
-        try {
             cur = mSrc.getDb().getDatabase().query("select * from notes", null);
 
             // Counters for progress updates
@@ -227,7 +228,6 @@ public class Anki2Importer extends Importer {
                     mNotes.put((String) note[GUID], new Object[]{note[0], note[3], note[MID]});
                 } else {
                     // a duplicate or changed schema - safe to update?
-                    dupes += 1;
                     if (mAllowUpdate) {
                         Object[] n = mNotes.get(note[GUID]);
                         long oldNid = (Long) n[0];
@@ -244,12 +244,12 @@ public class Anki2Importer extends Importer {
                                 update.add(note);
                                 dirty.add((Long) note[0]);
                             } else {
-                                dupesIgnored.add(String.format("%s: %s",
-                                        mCol.getModels().get(oldMid).getString("name"),
-                                        ((String) note[6]).replace("\u001f", ",")));
+                                dupesIgnored.add(note);
                                 mIgnoredGuids.put((String) note[GUID], true);
                             }
                         }
+                    } else {
+                        dupesIdentical.add(note);
                     }
                 }
                 if (numberOfNotesInSource != 0 && (!largeCollection || total % onePercent == 0)) {
@@ -258,25 +258,46 @@ public class Anki2Importer extends Importer {
                 }
             }
             publishProgress(100, 0, 0);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (cur != null) {
-                cur.close();
+        mLog.add(String.format("Notes found in file: %d", total));
+
+        if (!dupesIdentical.isEmpty()) {
+            mLog.add(String.format("Notes that could not be imported as note type has changed: %d", dupesIgnored.size()));
+        }
+        if (!update.isEmpty()) {
+            mLog.add(String.format("Notes updated, as file had newer version: %d", update.size()));
+        }
+        if (!add.isEmpty()) {
+            mLog.add(String.format("Notes added from file: %d", add.size()));
+        }
+        if (!dupesIdentical.isEmpty()) {
+            mLog.add(String.format("Notes skipped, as they're already in your collection: %d", dupesIdentical.size()));
+        }
+
+        mLog.add("");
+
+        if (!dupesIgnored.isEmpty()) {
+            for (Object[] row: dupesIdentical) {
+                _logNoteRow("Skipped", row);
             }
         }
-        if (dupes > 0) {
-            //int up = update.size(); // unused upstream as well, leaving for upstream comparison only
-            mLog.add(getRes().getString(R.string.import_update_details, update.size(), dupes));
-            if (dupesIgnored.size() > 0) {
-                mLog.add(getRes().getString(R.string.import_update_ignored));
-                // TODO: uncomment this and fix above string if we implement a detailed
-                // log viewer dialog type.
-                //mLog.addAll(dupesIgnored);
+        if (!update.isEmpty()) {
+            for (Object[] row: update) {
+                _logNoteRow("Updated", row);
             }
         }
+        if (!add.isEmpty()) {
+            for (Object[] row: add) {
+                _logNoteRow("Added", row);
+            }
+        }
+        if (!dupesIdentical.isEmpty()) {
+            for (Object[] row: dupesIdentical) {
+                _logNoteRow("Identical", row);
+            }
+        }
+
         // export info for calling code
-        mDupes = dupes;
+        mDupes = dupesIdentical.size();
         mAdded = add.size();
         mUpdated = update.size();
         // add to col
