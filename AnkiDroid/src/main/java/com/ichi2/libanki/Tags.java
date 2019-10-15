@@ -251,6 +251,7 @@ public class Tags {
             if (lim.length() != 0) {
                 lim.append(" or ");
             }
+            t = t.replace("*", "%");
             lim.append(l).append("like '% ").append(t).append(" %'");
         }
         Cursor cur = null;
@@ -328,14 +329,19 @@ public class Tags {
         return join(canonify(currentTags));
     }
 
+    // submethod of remFromStr in anki
+    public boolean wildcard(String pat, String str) {
+        return (pat.contains("*") &&
+                Pattern.compile(pat.replace("*", ".*"), Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CASE).matcher(str).matches());
+    }
 
-    /** Delete tags if they don't exist. */
+    /** Delete tags if they exist. */
     public String remFromStr(String deltags, String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(deltags)) {
             List<String> remove = new ArrayList<>();
             for (String tx: currentTags) {
-                if (tag.equalsIgnoreCase(tx)) {
+                if (tag.equalsIgnoreCase(tx) || wildcard(tag, tx)) {
                     remove.add(tx);
                 }
             }
