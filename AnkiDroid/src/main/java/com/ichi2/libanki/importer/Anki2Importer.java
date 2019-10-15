@@ -195,6 +195,7 @@ public class Anki2Importer extends Importer {
         int usn = mDst.usn();
         int dupes = 0;
         ArrayList<String> dupesIgnored = new ArrayList<>();
+        int total = 0;
         try {
             cur = mSrc.getDb().getDatabase().query("select * from notes", null);
 
@@ -202,9 +203,9 @@ public class Anki2Importer extends Importer {
             int numberOfNotesInSource = cur.getCount();
             boolean largeCollection = numberOfNotesInSource > 200;
             int onePercent = numberOfNotesInSource/100;
-            int total = 0;
 
             while (cur.moveToNext()) {
+                total++;
                 // turn the db result into a mutable list
                 Object[] note = new Object[]{cur.getLong(0), cur.getString(1), cur.getLong(2),
                         cur.getLong(3), cur.getInt(4), cur.getString(5), cur.getString(6),
@@ -251,7 +252,6 @@ public class Anki2Importer extends Importer {
                         }
                     }
                 }
-                total++;
                 if (numberOfNotesInSource != 0 && (!largeCollection || total % onePercent == 0)) {
                     // Calls to publishProgress are reasonably expensive due to res.getString()
                     publishProgress(total * 100 / numberOfNotesInSource, 0, 0);
