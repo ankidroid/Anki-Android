@@ -199,9 +199,9 @@ public class Anki2Importer extends Importer {
             cur = mSrc.getDb().getDatabase().query("select * from notes", null);
 
             // Counters for progress updates
-            int total = cur.getCount();
-            boolean largeCollection = total > 200;
-            int onePercent = total/100;
+            int numberOfNotesInSource = cur.getCount();
+            boolean largeCollection = numberOfNotesInSource > 200;
+            int onePercent = numberOfNotesInSource/100;
             int i = 0;
 
             while (cur.moveToNext()) {
@@ -252,9 +252,9 @@ public class Anki2Importer extends Importer {
                     }
                 }
                 i++;
-                if (total != 0 && (!largeCollection || i % onePercent == 0)) {
+                if (numberOfNotesInSource != 0 && (!largeCollection || i % onePercent == 0)) {
                     // Calls to publishProgress are reasonably expensive due to res.getString()
-                    publishProgress(i * 100 / total, 0, 0);
+                    publishProgress(i * 100 / numberOfNotesInSource, 0, 0);
                 }
             }
             publishProgress(100, 0, 0);
