@@ -202,7 +202,7 @@ public class Anki2Importer extends Importer {
             int numberOfNotesInSource = cur.getCount();
             boolean largeCollection = numberOfNotesInSource > 200;
             int onePercent = numberOfNotesInSource/100;
-            int i = 0;
+            int total = 0;
 
             while (cur.moveToNext()) {
                 // turn the db result into a mutable list
@@ -251,10 +251,10 @@ public class Anki2Importer extends Importer {
                         }
                     }
                 }
-                i++;
-                if (numberOfNotesInSource != 0 && (!largeCollection || i % onePercent == 0)) {
+                total++;
+                if (numberOfNotesInSource != 0 && (!largeCollection || total % onePercent == 0)) {
                     // Calls to publishProgress are reasonably expensive due to res.getString()
-                    publishProgress(i * 100 / numberOfNotesInSource, 0, 0);
+                    publishProgress(total * 100 / numberOfNotesInSource, 0, 0);
                 }
             }
             publishProgress(100, 0, 0);
