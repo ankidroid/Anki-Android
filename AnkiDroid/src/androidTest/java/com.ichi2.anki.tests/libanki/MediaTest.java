@@ -184,8 +184,8 @@ public class MediaTest {
     public void testChanges() throws IOException {
         Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         assertNotNull(d.getMedia()._changed());
-        assertEquals(added(d).size(), 0);
-        assertEquals(removed(d).size(), 0);
+        assertEquals(0, added(d).size());
+        assertEquals(0, removed(d).size());
         // add a file
         File dir = Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext());
         File path = new File(dir, "foo.jpg");
@@ -197,26 +197,26 @@ public class MediaTest {
         // should have been logged
         d.getMedia().findChanges();
         assertTrue(added(d).size() > 0);
-        assertEquals(removed(d).size(), 0);
+        assertEquals(0, removed(d).size());
         // if we modify it, the cache won't notice
         os = new FileOutputStream(path, true);
         os.write("world".getBytes());
         os.close();
-        assertEquals(added(d).size(), 1);
-        assertEquals(removed(d).size(), 0);
+        assertEquals(1, added(d).size());
+        assertEquals(0, removed(d).size());
         // but if we add another file, it will
         path = new File(path.getAbsolutePath()+"2");
         os = new FileOutputStream(path, true);
         os.write("yo".getBytes());
         os.close();
         d.getMedia().findChanges(true);
-        assertEquals(added(d).size(), 2);
-        assertEquals(removed(d).size(), 0);
+        assertEquals(2, added(d).size());
+        assertEquals(0, removed(d).size());
         // deletions should get noticed too
         assertTrue(path.delete());
         d.getMedia().findChanges(true);
-        assertEquals(added(d).size(), 1);
-        assertEquals(removed(d).size(), 1);
+        assertEquals(1, added(d).size());
+        assertEquals(1, removed(d).size());
     }
 
 
@@ -225,14 +225,14 @@ public class MediaTest {
         Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         String aString = "a:b|cd\\e/f\0g*h";
         String good = "abcdefgh";
-        assertEquals(d.getMedia().stripIllegal(aString), good);
+        assertEquals(good, d.getMedia().stripIllegal(aString));
         for (int i = 0; i < aString.length(); i++) {
             char c = aString.charAt(i);
             boolean bad = d.getMedia().hasIllegal("something" + c + "morestring");
             if (bad) {
-                assertEquals(good.indexOf(c), -1);
+                assertEquals(-1, good.indexOf(c));
             } else {
-                assertNotEquals(good.indexOf(c), -1);
+                assertNotEquals(-1, good.indexOf(c));
             }
         }
     }

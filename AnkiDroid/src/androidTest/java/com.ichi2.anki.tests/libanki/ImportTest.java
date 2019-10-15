@@ -153,7 +153,7 @@ public class ImportTest {
         expected = Collections.singletonList("foo.wav");
         actual = Arrays.asList(new File(tmp.getMedia().dir()).list());
         actual.retainAll(expected);
-        assertEquals(actual.size(), expected.size());
+        assertEquals(expected.size(), actual.size());
         // but if the local file has different data, it will rename
         tmp.remCards(Utils.arrayList2array(tmp.getDb().queryColumn(Long.class, "select id from cards", 0)));
         FileOutputStream os;
@@ -162,7 +162,7 @@ public class ImportTest {
         os.close();
         imp = new AnkiPackageImporter(tmp, apkg);
         imp.run();
-        assertEquals(new File(tmp.getMedia().dir()).list().length, 2);
+        assertEquals(2, new File(tmp.getMedia().dir()).list().length);
     }
 
     @Test
@@ -187,16 +187,16 @@ public class ImportTest {
         imp.run();
         int after = dst.noteCount();
         // as the model schemas differ, should have been imported as new model
-        assertEquals(after, before + 1);
+        assertEquals(before + 1, after);
         // and the new model should have both cards
-        assertEquals(dst.cardCount(), 3);
+        assertEquals(3, dst.cardCount());
         // repeating the process should do nothing
         imp = new AnkiPackageImporter(dst, tmp);
         imp.setDupeOnSchemaChange(true);
         imp.run();
         after = dst.noteCount();
-        assertEquals(after, before + 1);
-        assertEquals(dst.cardCount(), 3);
+        assertEquals(before + 1, after);
+        assertEquals(3, dst.cardCount());
     }
 
     @Test
@@ -215,7 +215,7 @@ public class ImportTest {
         imp.setDupeOnSchemaChange(true);
         imp.run();
         // collection should contain the note we imported
-        assertEquals(dst.noteCount(), 1);
+        assertEquals(1, dst.noteCount());
         // the front template should contain the text added in the 2nd package
         Long tcid = dst.findCards("").get(0);
         Note tnote = dst.getCard(tcid).note();
@@ -229,24 +229,24 @@ public class ImportTest {
         String tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "update1.apkg");
         AnkiPackageImporter imp = new AnkiPackageImporter(dst, tmp);
         imp.run();
-        assertEquals(imp.getDupes(), 0);
-        assertEquals(imp.getAdded(), 1);
-        assertEquals(imp.getUpdated(), 0);
+        assertEquals(0, imp.getDupes());
+        assertEquals(1, imp.getAdded());
+        assertEquals(0, imp.getUpdated());
         // importing again should be idempotent
         imp = new AnkiPackageImporter(dst, tmp);
         imp.run();
-        assertEquals(imp.getDupes(), 1);
-        assertEquals(imp.getAdded(), 0);
-        assertEquals(imp.getUpdated(), 0);
+        assertEquals(1, imp.getDupes());
+        assertEquals(0, imp.getAdded());
+        assertEquals(0, imp.getUpdated());
         // importing a newer note should update
-        assertEquals(dst.noteCount(), 1);
+        assertEquals(1, dst.noteCount());
         assertTrue(dst.getDb().queryString("select flds from notes").startsWith("hello"));
         tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "update2.apkg");
         imp = new AnkiPackageImporter(dst, tmp);
         imp.run();
-        assertEquals(imp.getDupes(), 1);
-        assertEquals(imp.getAdded(), 0);
-        assertEquals(imp.getUpdated(), 1);
+        assertEquals(1, imp.getDupes());
+        assertEquals(0, imp.getAdded());
+        assertEquals(1, imp.getUpdated());
         assertTrue(dst.getDb().queryString("select flds from notes").startsWith("goodbye"));
     }
 
@@ -328,8 +328,8 @@ public class ImportTest {
         imp = new AnkiPackageImporter(dst, tmp);
         imp.run();
         // there is a dupe, but it was ignored
-        assertEquals(imp.getDupes(), 1);
-        assertEquals(imp.getAdded(), 0);
-        assertEquals(imp.getUpdated(), 0);
+        assertEquals(1, imp.getDupes());
+        assertEquals(0, imp.getAdded());
+        assertEquals(0, imp.getUpdated());
     }
 }
