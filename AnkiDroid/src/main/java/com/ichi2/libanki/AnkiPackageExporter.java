@@ -342,22 +342,39 @@ public final class AnkiPackageExporter extends AnkiExporter {
 
         mCol.reopen();
         // copy all media
-        JSONObject media = new JSONObject();
         if (!mIncludeMedia) {
-            return media;
+            return new JSONObject();
         }
         File mdir = new File(mCol.getMedia().dir());
         if (mdir.exists() && mdir.isDirectory()) {
             File[] mediaFiles = mdir.listFiles();
-            int c = 0;
-            for (File f : mediaFiles) {
-                z.write(f.getPath(), Integer.toString(c));
-                try {
-                    media.put(Integer.toString(c), f.getName());
-                    c++;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            return _exportMedia(z, mediaFiles);
+        } else {
+            return new JSONObject();
+        }
+    }
+
+    private JSONObject _exportMedia(ZipFile z, ArrayList<String> fileNames, String mdir) throws IOException {
+        int size = fileNames.size();
+        int i = 0;
+        File[] files = new File[size];
+        for (String fileName: fileNames){
+            files[i++] = new File(mdir, fileName);
+        }
+        return _exportMedia(z, files);
+    }
+
+    private JSONObject _exportMedia(ZipFile z, File[] files) throws IOException {
+        int c = 0;
+        JSONObject media = new JSONObject();
+        for (File file : files) {
+            // todo: deflate SVG files, as in dae/anki@a5b0852360b132c0d04094f5ca8f1933f64d7c7e
+            z.write(file.getPath(), Integer.toString(c));
+            try {
+                media.put(Integer.toString(c), file.getName());
+                c++;
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
         return media;
@@ -376,23 +393,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         z.write(colfile, "collection.anki2");
         // and media
         prepareMedia();
-        JSONObject media = new JSONObject();
-        File mdir = new File(mCol.getMedia().dir());
-        if (mdir.exists() && mdir.isDirectory()) {
-            int c = 0;
-            for (String file : mMediaFiles) {
-                File mpath = new File(mdir,file);
-                if (mpath.exists()) {
-                    z.write(mpath.getPath(), Integer.toString(c));
-                }
-                try {
-                    media.put(Integer.toString(c), file);
-                    c++;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+    	JSONObject media = _exportMedia(z, mMediaFiles, mCol.getMedia().dir());
         // tidy up intermediate files
         CompatHelper.getCompat().deleteDatabase(new File(colfile));
         CompatHelper.getCompat().deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));
