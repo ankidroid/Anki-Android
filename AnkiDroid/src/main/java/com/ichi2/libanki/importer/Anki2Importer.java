@@ -198,66 +198,66 @@ public class Anki2Importer extends Importer {
         List<Object[]> dupesIdentical = new ArrayList<>();
         ArrayList<Object[]> dupesIgnored = new ArrayList<>();
         int total = 0;
-            cur = mSrc.getDb().getDatabase().query("select * from notes", null);
+        cur = mSrc.getDb().getDatabase().query("select * from notes", null);
 
-            // Counters for progress updates
-            int numberOfNotesInSource = cur.getCount();
-            boolean largeCollection = numberOfNotesInSource > 200;
-            int onePercent = numberOfNotesInSource/100;
+        // Counters for progress updates
+        int numberOfNotesInSource = cur.getCount();
+        boolean largeCollection = numberOfNotesInSource > 200;
+        int onePercent = numberOfNotesInSource/100;
 
-            while (cur.moveToNext()) {
-                total++;
-                // turn the db result into a mutable list
-                Object[] note = new Object[]{cur.getLong(0), cur.getString(1), cur.getLong(2),
-                        cur.getLong(3), cur.getInt(4), cur.getString(5), cur.getString(6),
-                        cur.getString(7), cur.getLong(8), cur.getInt(9), cur.getString(10)};
-                boolean shouldAdd = _uniquifyNote(note);
-                if (shouldAdd) {
-                    // ensure id is unique
-                    while (existing.containsKey(note[0])) {
-                        note[0] = ((Long) note[0]) + 999;
-                    }
-                    existing.put((Long) note[0], true);
-                    // bump usn
-                    note[4] = usn;
-                    // update media references in case of dupes
-                    note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
-                    add.add(note);
-                    dirty.add((Long) note[0]);
-                    // note we have the added guid
-                    mNotes.put((String) note[GUID], new Object[]{note[0], note[3], note[MID]});
-                } else {
-                    // a duplicate or changed schema - safe to update?
-                    if (mAllowUpdate) {
-                        Object[] n = mNotes.get(note[GUID]);
-                        long oldNid = (Long) n[0];
-                        long oldMod = (Long) n[1];
-                        long oldMid = (Long) n[2];
-                        // will update if incoming note more recent
-                        if (oldMod < (Long) note[MOD]) {
-                            // safe if note types identical
-                            if (oldMid == (Long) note[MID]) {
-                                // incoming note should use existing id
-                                note[0] = oldNid;
-                                note[4] = usn;
-                                note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
-                                update.add(note);
-                                dirty.add((Long) note[0]);
-                            } else {
-                                dupesIgnored.add(note);
-                                mIgnoredGuids.put((String) note[GUID], true);
-                            }
-                        }
-                    } else {
-                        dupesIdentical.add(note);
-                    }
+        while (cur.moveToNext()) {
+            total++;
+            // turn the db result into a mutable list
+            Object[] note = new Object[]{cur.getLong(0), cur.getString(1), cur.getLong(2),
+                    cur.getLong(3), cur.getInt(4), cur.getString(5), cur.getString(6),
+                    cur.getString(7), cur.getLong(8), cur.getInt(9), cur.getString(10)};
+            boolean shouldAdd = _uniquifyNote(note);
+            if (shouldAdd) {
+                // ensure id is unique
+                while (existing.containsKey(note[0])) {
+                    note[0] = ((Long) note[0]) + 999;
                 }
-                if (numberOfNotesInSource != 0 && (!largeCollection || total % onePercent == 0)) {
-                    // Calls to publishProgress are reasonably expensive due to res.getString()
-                    publishProgress(total * 100 / numberOfNotesInSource, 0, 0);
+                existing.put((Long) note[0], true);
+                // bump usn
+                note[4] = usn;
+                // update media references in case of dupes
+                note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
+                add.add(note);
+                dirty.add((Long) note[0]);
+                // note we have the added guid
+                mNotes.put((String) note[GUID], new Object[]{note[0], note[3], note[MID]});
+            } else {
+                // a duplicate or changed schema - safe to update?
+                if (mAllowUpdate) {
+                    Object[] n = mNotes.get(note[GUID]);
+                    long oldNid = (Long) n[0];
+                    long oldMod = (Long) n[1];
+                    long oldMid = (Long) n[2];
+                    // will update if incoming note more recent
+                    if (oldMod < (Long) note[MOD]) {
+                        // safe if note types identical
+                        if (oldMid == (Long) note[MID]) {
+                            // incoming note should use existing id
+                            note[0] = oldNid;
+                            note[4] = usn;
+                            note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
+                            update.add(note);
+                            dirty.add((Long) note[0]);
+                        } else {
+                            dupesIgnored.add(note);
+                            mIgnoredGuids.put((String) note[GUID], true);
+                        }
+                    }
+                } else {
+                    dupesIdentical.add(note);
                 }
             }
-            publishProgress(100, 0, 0);
+            if (numberOfNotesInSource != 0 && (!largeCollection || total % onePercent == 0)) {
+                // Calls to publishProgress are reasonably expensive due to res.getString()
+                publishProgress(total * 100 / numberOfNotesInSource, 0, 0);
+            }
+        }
+        publishProgress(100, 0, 0);
         mLog.add(String.format("Notes found in file: %d", total));
 
         if (!dupesIdentical.isEmpty()) {
