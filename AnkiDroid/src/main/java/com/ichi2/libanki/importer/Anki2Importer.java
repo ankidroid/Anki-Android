@@ -347,12 +347,14 @@ public class Anki2Importer extends Importer {
             JSONObject dstModel = mDst.getModels().get(mid);
             String dstScm = mDst.getModels().scmhash(dstModel);
             if (srcScm.equals(dstScm)) {
-                // they do; we can reuse this mid
-                JSONObject model = srcModel.deepClone();
-                model.put("id", mid);
-                model.put("mod", Utils.intTime());
-                model.put("usn", mCol.usn());
-                mDst.getModels().update(model);
+                // copy styling changes over if newer
+                if (srcModel.getLong("mod") > dstModel.getLong("mod")) {
+                    JSONObject model = srcModel.deepClone();
+                    model.put("id", mid);
+                    model.put("mod", Utils.intTime());
+                    model.put("usn", mCol.usn());
+                    mDst.getModels().update(model);
+                }
                 break;
             }
             // as they don't match, try next id

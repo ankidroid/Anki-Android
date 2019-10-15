@@ -30,6 +30,7 @@ import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.importer.Importer;
 
 import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -187,6 +188,10 @@ public class ImportTest {
         AnkiPackageImporter imp = new AnkiPackageImporter(testCol, tmp);
         imp.setDupeOnSchemaChange(true);
         imp.run();
+        JSONObject importedDeck = testCol.getDecks().get(1403973847422L);
+        importedDeck.put("mod", 1403978820L);
+        //During importation, the mod date is set to now. For the next test, we need the mod date to be older than the one in diffmodeltemplates-2. So we set it back to its previous value
+        testCol.getDecks().save(importedDeck);
         // then the version with updated template
         tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "diffmodeltemplates-2.apkg");
         imp = new AnkiPackageImporter(testCol, tmp);
