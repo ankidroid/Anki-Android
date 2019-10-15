@@ -331,8 +331,9 @@ public class Tags {
 
     // submethod of remFromStr in anki
     public boolean wildcard(String pat, String str) {
-        return (pat.contains("*") &&
-                Pattern.compile(pat.replace("*", ".*"), Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CASE).matcher(str).matches());
+        String pat_replaced = Pattern.quote(pat).replace("\\*", ".*");
+        return (pat_replaced.contains("*") &&
+                Pattern.compile(pat_replaced, Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CASE).matcher(str).matches());
     }
 
     /** Delete tags if they exist. */
