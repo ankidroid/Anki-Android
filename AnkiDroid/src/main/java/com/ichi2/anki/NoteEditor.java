@@ -461,8 +461,7 @@ public class NoteEditor extends AnkiActivity {
             try {
                 // add current deck and all other non-filtered decks to deck list
                 long thisDid = d.getLong("id");
-                long currentDid = getCol().getDecks().current().getLong("id");
-                if (d.getInt("dyn") == 0 || (!mAddNote && thisDid == currentDid)) {
+                if (d.getInt("dyn") == 0 || (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() == thisDid)) {
                     deckNames.add(d.getString("name"));
                     mAllDeckIds.add(thisDid);
                 }
