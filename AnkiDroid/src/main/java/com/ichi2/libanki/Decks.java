@@ -93,7 +93,7 @@ public class Decks {
                 + "'new': {"
                     + "'delays': [1, 10],"
                     + "'ints': [1, 4, 7]," // 7 is not currently used
-                    + "'initialFactor': 2500,"
+                    + "'initialFactor': "+Consts.STARTING_FACTOR+","
                     + "'separate': True,"
                     + "'order': " + Consts.NEW_CARDS_DUE + ","
                     + "'perDay': 20,"
