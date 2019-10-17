@@ -57,6 +57,8 @@ public class Consts {
     public static final int MODEL_STD = 0;
     public static final int MODEL_CLOZE = 1;
 
+    public static final int STARTING_FACTOR = 2500;
+
     // deck schema & syncing vars
     public static final int SCHEMA_VERSION = 11;
     public static final int SYNC_ZIP_SIZE = (int)(2.5*1024*1024);

@@ -26,6 +26,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Stats;
 
@@ -1083,7 +1084,7 @@ public class AdvancedStatistics extends Hook  {
          * @return Factor which will be used if it cannot be read from Deck settings.
          */
         public int getInitialFactor() {
-            return 2500;
+            return Consts.STARTING_FACTOR;
         }
 
         public long getNow() {
