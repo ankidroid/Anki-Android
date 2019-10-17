@@ -1716,7 +1716,7 @@ public class NoteEditor extends AnkiActivity {
             boolean isClozeType, itemExists;
             int noteModelType;
             try {
-                noteModelType = getCol().getModels().current().getInt("type");
+                noteModelType = getCurrentlySelectedModel().getInt("type");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
