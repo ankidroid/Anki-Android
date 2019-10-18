@@ -7,7 +7,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "$rootProject.ext.jacocoVersion"
+    toolVersion = jacocoVersion
 
 }
 repositories {
@@ -70,7 +70,7 @@ android {
     }
 
     jacoco {
-        version = "$rootProject.ext.jacocoVersion"
+        version = jacocoVersion
     }
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
