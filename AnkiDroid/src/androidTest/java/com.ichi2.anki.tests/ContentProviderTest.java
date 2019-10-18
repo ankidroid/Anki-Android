@@ -105,7 +105,8 @@ public class ContentProviderTest {
         mCreatedNotes = new ArrayList<>();
         final Collection col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        JSONObject model = Models.addBasicModel(col, BASIC_MODEL_NAME);
+        JSONObject model = Models.addBasicModel(col);
+        model.put("name", BASIC_MODEL_NAME);
         mModelId = model.getLong("id");
         ArrayList<String> flds = col.getModels().fieldNames(model);
         // Use the names of the fields as test values for the notes which will be added
@@ -217,7 +218,8 @@ public class ContentProviderTest {
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Collection col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        JSONObject model = Models.addBasicModel(col, BASIC_MODEL_NAME);
+        JSONObject model = Models.addBasicModel(col);
+        model.put("name", BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
         // Add the note
         Uri modelUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId);
@@ -252,7 +254,9 @@ public class ContentProviderTest {
         // Get required objects for test
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Collection col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
-        JSONObject model = Models.addBasicModel(col, BASIC_MODEL_NAME);
+        JSONObject model = Models.addBasicModel(col);
+        model.put("name", BASIC_MODEL_NAME);
+
         long modelId = model.getLong("id");
         JSONArray initialFldsArr = model.getJSONArray("flds");
         int initialFieldCount = initialFldsArr.length();
