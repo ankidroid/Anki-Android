@@ -707,19 +707,25 @@ public class Collection {
         String snids = Utils.ids2str(nids);
         HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>();
         HashMap<Long, Long> dids = new HashMap<>();
+        HashMap<Long, Long> dues = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().query("select id, nid, ord, did, odid from cards where nid in " + snids, null);
+            cur = mDb.getDatabase().query("select id, nid, ord, did, due, odue, odid, type from cards where nid in " + snids, null);
             while (cur.moveToNext()) {
+                long id = cur.getLong(0);
                 long nid = cur.getLong(1);
+                int ord = cur.getInt(2);
                 long did = cur.getLong(3);
-                long odid = cur.getLong(4);
+                long due = cur.getLong(4);
+                long odue = cur.getLong(5);
+                long odid = cur.getLong(6);
+                long type = cur.getLong(7);
 
                 // existing cards
                 if (!have.containsKey(nid)) {
                     have.put(nid, new HashMap<Integer, Long>());
                 }
-                have.get(nid).put(cur.getInt(2), cur.getLong(0));
+                have.get(nid).put(ord, id);
                 // if in a filtered deck, add new cards to original deck
                 if (odid != 0) {
                     did = odid;
@@ -733,6 +739,13 @@ public class Collection {
                 } else {
                     // first card or multiple cards in same deck
                     dids.put(nid, did);
+                }
+                // save due
+                if (odid != 0) {
+                    due = odue;
+                }
+                if (!dues.containsKey(nid)) {
+                    dues.put(nid, due);
                 }
             }
         } finally {
@@ -750,13 +763,17 @@ public class Collection {
         try {
             cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
             while (cur.moveToNext()) {
-                JSONObject model = mModels.get(cur.getLong(1));
-                ArrayList<Integer> avail = mModels.availOrds(model, cur.getString(2));
                 long nid = cur.getLong(0);
+                long mid = cur.getLong(1);
+                String flds = cur.getString(2);
+                JSONObject model = mModels.get(mid);
+                ArrayList<Integer> avail = mModels.availOrds(model, flds);
                 long did = dids.get(nid);
+                long due = dues.get(nid);
                 if (did == 0) {
                     did = model.getLong("did");
                 }
+                due = dues.get(nid);
                 // add any missing cards
                 for (JSONObject t : _tmplsFromOrds(model, avail)) {
                     int tord = t.getInt("ord");
@@ -777,9 +794,12 @@ public class Collection {
                         }
                         // if the deck doesn't exist, use default instead
                         did = mDecks.get(did).getLong("id");
-                        // we'd like to use the same due# as sibling cards, but we can't retrieve that quickly, so we
+                        // use sibling due if there is one, else use a new id
+                        if (due == 0) {
+                            due = nextID("pos");
+                        }
                         // give it a new id instead
-                        data.add(new Object[] { ts, nid, did, tord, now, usn, nextID("pos") });
+                        data.add(new Object[] { ts, nid, did, tord, now, usn, due});
                         ts += 1;
                     }
                 }
