@@ -120,7 +120,7 @@
         <item quantity="many">Per %2$s išmokote %1$d kortelių</item>
         <item quantity="other">Per %2$s išmokote %1$d kort.</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="one">%1$d minutę</item>
         <item quantity="few">%1$d minutes</item>
         <item quantity="many">%1$d minučių</item>

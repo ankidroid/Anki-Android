@@ -117,7 +117,7 @@
     <plurals name="timebox_reached">
         <item quantity="other">Đã học %1$d thẻ trong %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="other">%1$d phút</item>
     </plurals>
     <string name="studyoptions_welcome_title">Chào mừng đến với AnkiDroid</string>

@@ -118,7 +118,7 @@
         <item quantity="one">%1$d carta estudiada en %2$s</item>
         <item quantity="other">%1$d cartes estudiades en %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="one">%1$d minut</item>
         <item quantity="other">%1$d minuts</item>
     </plurals>
