@@ -246,7 +246,12 @@ Because, by default, Android does not have complete support of the full Unicode 
 
 In the 2.8 version of AnkiDroid the reminder notifications are connected to the widget. In order to receive notifications you have to place the widget in your launcher home screen somewhere. After installing the widget, if you configure reminders in the preferences, you should start receiving notifications.
 
-In the 2.9 version notifications should work with or without the widget.
+In the 2.9 version notifications should work with or without the widget. However, you may need to configure "per deck group" notifications to receive them in 2.9
+
+1. Open the deck list
+1. Long-press on the deck you want notifications for
+1. Choose "deck options" from the popup menu for that deck
+1. Configure notifications as you like
 
 ### How can I use custom fonts?
 See the [AnkiDroid manual](http://ankidroid.org/manual.html#customFonts) for the new method of adding fonts.
@@ -273,6 +278,16 @@ If you tried all of the above and still couldn't get it to work, then please pos
 0. A sample deck (.apkg file) exported from Anki Desktop including *one card* that reproduces the issue you're having
 0. The name and a link to the font that you are trying to use
 0. The result of each step in the above process, preferably with some screenshots
+
+### TTS / Text-to-speech is not speaking!
+
+In AnkiDroid 2.9 we migrated AnkiDroid to the new Android System APIs for text-to-speech. Some users have found that with this change their text to speech is no longer speaking. This is a problem with the general system TTS on the device, not with AnkiDroid
+
+Make sure it is working in general first: System Preferences -> Languages & Input -> Text-to-speech output -> Play (to run a test)
+
+Some users have found that uninstalling updates to the TTS engine can work: System Preferences -> Apps & Notifications -> Google Text-to-speech Engine -> options menu -> Uninstall updates
+
+Some users have found that re-downloading the TTS packages for their language works for them: System Preferences -> System -> Languages & Input -> Text-to-speech output -> Preferred engine settings -> install voice data -> choose the affected voice -> delete it, re-download it
 
 # Advanced formatting tips
 The [formatting wiki page](https://github.com/ankidroid/Anki-Android/wiki/Advanced-formatting) gives examples of how to achieve advanced flashcard formatting such as:
