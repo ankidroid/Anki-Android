@@ -744,7 +744,7 @@ public class Collection {
                 if (odid != 0) {
                     due = odue;
                 }
-                if (!dues.containsKey(nid)) {
+                if (!dues.containsKey(nid) && type == 0) {
                     dues.put(nid, due);
                 }
             }
