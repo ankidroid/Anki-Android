@@ -870,6 +870,7 @@ public class Finder {
         // find and gather replacements
         if (!isRegex) {
             src = Pattern.quote(src);
+            dst = dst.replace("\\", "\\\\");
         }
         if (fold) {
             src = "(?i)" + src;
