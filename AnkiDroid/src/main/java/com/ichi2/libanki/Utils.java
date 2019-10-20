@@ -124,6 +124,9 @@ public class Utils {
     /**
      * Return a string representing a time quantity
      *
+     * Equivalent to Anki's anki/utils.py's shortTimeFmt, applied to a number.
+     * I.e. equivalent to Anki's anki/utils.py's fmtTimeSpan, with the parameter short=True.
+     *
      * @param context The application's environment.
      * @param time_s The time to format, in seconds
      * @return The time quantity string. Something like "3 s" or "1.7 yr".
@@ -154,6 +157,7 @@ public class Utils {
      * @param context The application's environment.
      * @param time_s The time to format, in seconds
      * @return The formatted, localized time string. The time is always an integer.
+     *  e.g. something like "3 seconds" or "1 year".
      */
     public static String timeSpan(Context context, long time_s) {
         int time_x;  // Time in unit x
@@ -181,6 +185,8 @@ public class Utils {
 
     /**
      * Return a proper string for a time value in seconds
+     *
+     * Similar to Anki anki/utils.py's fmtTimeSpan.
      *
      * @param context The application's environment.
      * @param time_s The time to format, in seconds
