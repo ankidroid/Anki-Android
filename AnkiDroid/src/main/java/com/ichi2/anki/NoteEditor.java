@@ -1713,15 +1713,13 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             // Adding the cloze deletion floating context menu item, but only once.
-            boolean isClozeType, itemExists;
-            int noteModelType;
             try {
-                noteModelType = getCurrentlySelectedModel().getInt("type");
+                int noteModelType = getCurrentlySelectedModel().getInt("type");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            isClozeType = noteModelType == Consts.MODEL_CLOZE;
-            itemExists = menu.findItem(mMenuId) != null;
+            boolean isClozeType = noteModelType == Consts.MODEL_CLOZE;
+            boolean itemExists = menu.findItem(mMenuId) != null;
             if (isClozeType && !itemExists) {
                 menu.add(Menu.NONE, mMenuId, 0, R.string.multimedia_editor_popup_cloze);
                 return true;
