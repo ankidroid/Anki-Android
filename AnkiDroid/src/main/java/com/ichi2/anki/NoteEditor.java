@@ -1713,8 +1713,9 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             // Adding the cloze deletion floating context menu item, but only once.
+			int noteModelType;
             try {
-                int noteModelType = getCurrentlySelectedModel().getInt("type");
+                noteModelType = getCurrentlySelectedModel().getInt("type");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
