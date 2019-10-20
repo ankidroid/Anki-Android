@@ -95,10 +95,10 @@ public class Utils {
     private Utils() { }
 
     // Regex pattern used in removing tags from text before diff
-    private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
-    private static final Pattern scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>");
+    private static final Pattern stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>");
+    private static final Pattern scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
-    private static final Pattern imgPattern = Pattern.compile("<img src=[\\\"']?([^\\\"'>]+)[\\\"']? ?/?>");
+    private static final Pattern imgPattern = Pattern.compile("(?i)<img src=[\\\"']?([^\\\"'>]+)[\\\"']? ?/?>");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
 
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
