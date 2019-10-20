@@ -33,6 +33,11 @@ public class BootService extends BroadcastReceiver {
         if (!CollectionHelper.hasStorageAccessPermission(context)) {
             return;
         }
+        // There are cases where the app is installed, and we have access, but nothing exist yet
+        if (CollectionHelper.getInstance().getCol(context) == null
+                || CollectionHelper.getInstance().getCol(context).getDecks() == null) {
+            return;
+        }
 
         scheduleDeckReminder(context);
         scheduleNotification(context);
