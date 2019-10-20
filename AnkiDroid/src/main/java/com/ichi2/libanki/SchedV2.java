@@ -1764,7 +1764,7 @@ public class SchedV2 extends Sched {
 
         mCol.getDb().executeMany(
                 "UPDATE cards SET odid = did, " +
-                        "odue = due, did = ?, due = ?, usn = ? " + queue + " WHERE id = ?", data);
+                        "odue = due, did = ?, due = (case when due <= 0 then due else ? end), usn = ? " + queue + " WHERE id = ?", data);
     }
 
 
