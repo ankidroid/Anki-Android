@@ -1307,8 +1307,7 @@ public class Models {
 
     /**
      * Routines from Stdmodels.py
-     * *
-     * @throws ConfirmModSchemaException **********************************************************************************************
+     **********************************************************************************************
      */
 
     private static JSONObject _newBasicModel(Collection col) {

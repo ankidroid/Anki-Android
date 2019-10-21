@@ -67,16 +67,11 @@ public class Storage {
             } else if (ver > Consts.SCHEMA_VERSION) {
                 throw new RuntimeException("This file requires a newer version of Anki.");
             } else if (create) {
-                try {
-                    // add in reverse order so basic is default
-                    Models.addClozeModel(col);
-                    Models.addForwardOptionalReverse(col);
-                    Models.addForwardReverse(col);
-                    Models.addBasicModel(col);
-                } catch (ConfirmModSchemaException e) {
-                    // This should never reached as we've just created a new database
-                    throw new RuntimeException(e);
-                }
+                // add in reverse order so basic is default
+                Models.addClozeModel(col);
+                Models.addForwardOptionalReverse(col);
+                Models.addForwardReverse(col);
+                Models.addBasicModel(col);
                 col.save();
             }
             return col;
