@@ -179,11 +179,7 @@ public class Collection {
         mStartTime = 0;
         _loadScheduler();
         if (!mConf.optBoolean("newBury", false)) {
-            try {
-                mConf.put("newBury", true);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            mConf.put("newBury", true);
             setMod();
         }
     }
@@ -235,11 +231,7 @@ public class Collection {
         } else {
             v2Sched.moveToV2();
         }
-        try {
-            mConf.put("schedVer", ver);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        mConf.put("schedVer", ver);
         setMod();
         _loadScheduler();
     }
@@ -266,11 +258,7 @@ public class Collection {
             mDty = cursor.getInt(3) == 1; // No longer used
             mUsn = cursor.getInt(4);
             mLs = cursor.getLong(5);
-            try {
-                mConf = new JSONObject(cursor.getString(6));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            mConf = new JSONObject(cursor.getString(6));
             deckConf = cursor.getString(7);
             mTags.load(cursor.getString(8));
         } finally {
@@ -544,11 +532,7 @@ public class Collection {
         } catch (JSONException e) {
             id = 1;
         }
-        try {
-            mConf.put(type, id + 1);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        mConf.put(type, id + 1);
         return id;
     }
 
@@ -678,25 +662,21 @@ public class Collection {
     private ArrayList<JSONObject> _tmplsFromOrds(JSONObject model, ArrayList<Integer> avail) {
         ArrayList<JSONObject> ok = new ArrayList<>();
         JSONArray tmpls;
-        try {
-            if (model.getInt("type") == Consts.MODEL_STD) {
-                tmpls = model.getJSONArray("tmpls");
-                for (int i = 0; i < tmpls.length(); i++) {
-                    JSONObject t = tmpls.getJSONObject(i);
-                    if (avail.contains(t.getInt("ord"))) {
-                        ok.add(t);
-                    }
-                }
-            } else {
-                // cloze - generate temporary templates from first
-                for (int ord : avail) {
-                    JSONObject t = new JSONObject(model.getJSONArray("tmpls").getString(0));
-                    t.put("ord", ord);
+        if (model.getInt("type") == Consts.MODEL_STD) {
+            tmpls = model.getJSONArray("tmpls");
+            for (int i = 0; i < tmpls.length(); i++) {
+                JSONObject t = tmpls.getJSONObject(i);
+                if (avail.contains(t.getInt("ord"))) {
                     ok.add(t);
                 }
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } else {
+            // cloze - generate temporary templates from first
+            for (int ord : avail) {
+                JSONObject t = new JSONObject(model.getJSONArray("tmpls").getString(0));
+                t.put("ord", ord);
+                ok.add(t);
+            }
         }
         return ok;
     }
@@ -819,8 +799,6 @@ public class Collection {
                     }
                 }
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -856,13 +834,9 @@ public class Collection {
 	        }
 	    } else {
 	        cms = new ArrayList<>();
-	        try {
-                JSONArray ja = note.model().getJSONArray("tmpls");
-                for (int i = 0; i < ja.length(); ++i) {
-                    cms.add(ja.getJSONObject(i));
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+            JSONArray ja = note.model().getJSONArray("tmpls");
+            for (int i = 0; i < ja.length(); ++i) {
+                cms.add(ja.getJSONObject(i));
             }
 	    }
 	    if (cms.isEmpty()) {
@@ -902,12 +876,8 @@ public class Collection {
         int ord = -1;
         long did;
         card.setNid(nid);
-        try {
-            ord = template.getInt("ord");
-            card.setOrd(ord);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        ord = template.getInt("ord");
+        card.setOrd(ord);
         did = mDb.queryScalar("select did from cards where nid = " + nid + " and ord = " + ord);
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
@@ -920,17 +890,13 @@ public class Collection {
             }
         }
         card.setDid(did);
-        try {
-            // if invalid did, use default instead
-            JSONObject deck = mDecks.get(card.getDid());
-            if (deck.getInt("dyn") == 1) {
-            	// must not be a filtered deck
-            	card.setDid(1);
-            } else {
-                card.setDid(deck.getLong("id"));
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        // if invalid did, use default instead
+        JSONObject deck = mDecks.get(card.getDid());
+        if (deck.getInt("dyn") == 1) {
+            // must not be a filtered deck
+            card.setDid(1);
+        } else {
+            card.setDid(deck.getLong("id"));
         }
         card.setDue(_dueForDid(card.getDid(), due));
         if (flush) {
@@ -943,18 +909,14 @@ public class Collection {
     public int _dueForDid(long did, int due) {
         JSONObject conf = mDecks.confForDid(did);
         // in order due?
-        try {
-            if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_DUE) {
-                return due;
-            } else {
-                // random mode; seed with note ts so all cards of this note get
-                // the same random number
-                Random r = new Random();
-                r.setSeed(due);
-                return r.nextInt(Math.max(due, 1000) - 1) + 1;
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_DUE) {
+            return due;
+        } else {
+            // random mode; seed with note ts so all cards of this note get
+            // the same random number
+            Random r = new Random();
+            r.setSeed(due);
+            return r.nextInt(Math.max(due, 1000) - 1) + 1;
         }
     }
 
@@ -1123,54 +1085,50 @@ public class Collection {
         for (String name : fmap.keySet()) {
             fields.put(name, flist[fmap.get(name).first]);
         }
-        try {
-            int cardNum = ((Integer) data[4]) + 1;
-            fields.put("Tags", ((String) data[5]).trim());
-            fields.put("Type", (String) model.get("name"));
-            fields.put("Deck", mDecks.name((Long) data[3]));
-            String[] parents = fields.get("Deck").split("::", -1);
-            fields.put("Subdeck", parents[parents.length-1]);
-            fields.put("CardFlag", _flagNameFromCardFlags((Integer) data[7]));
-            JSONObject template;
-            if (model.getInt("type") == Consts.MODEL_STD) {
-                template = model.getJSONArray("tmpls").getJSONObject((Integer) data[4]);
-            } else {
-                template = model.getJSONArray("tmpls").getJSONObject(0);
-            }
-            fields.put("Card", template.getString("name"));
-            fields.put(String.format(Locale.US, "c%d", cardNum), "1");
-            // render q & a
-            HashMap<String, String> d = new HashMap<>();
-            d.put("id", Long.toString((Long) data[0]));
-            qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
-            afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
-            for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>("a", afmt)}) {
-                String type = p.first;
-                String format = p.second;
-                if ("q".equals(type)) {
-                    format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
-                    format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
-                } else {
-                    format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
-                    format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
-                    // the following line differs from libanki // TODO: why?
-                    fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
-                }
-                fields = (Map<String, String>) Hooks.runFilter("mungeFields", fields, model, data, this);
-                String html = new Template(format, fields).render();
-                d.put(type, (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this));
-                // empty cloze?
-                if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
-                    if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
-                        String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
-                        d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
-                    }
-                }
-            }
-            return d;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        int cardNum = ((Integer) data[4]) + 1;
+        fields.put("Tags", ((String) data[5]).trim());
+        fields.put("Type", (String) model.get("name"));
+        fields.put("Deck", mDecks.name((Long) data[3]));
+        String[] parents = fields.get("Deck").split("::", -1);
+        fields.put("Subdeck", parents[parents.length-1]);
+        fields.put("CardFlag", _flagNameFromCardFlags((Integer) data[7]));
+        JSONObject template;
+        if (model.getInt("type") == Consts.MODEL_STD) {
+            template = model.getJSONArray("tmpls").getJSONObject((Integer) data[4]);
+        } else {
+            template = model.getJSONArray("tmpls").getJSONObject(0);
         }
+        fields.put("Card", template.getString("name"));
+        fields.put(String.format(Locale.US, "c%d", cardNum), "1");
+        // render q & a
+        HashMap<String, String> d = new HashMap<>();
+        d.put("id", Long.toString((Long) data[0]));
+        qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
+        afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
+        for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>("a", afmt)}) {
+            String type = p.first;
+            String format = p.second;
+            if ("q".equals(type)) {
+                format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
+                format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
+            } else {
+                format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
+                format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
+                // the following line differs from libanki // TODO: why?
+                fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+            }
+            fields = (Map<String, String>) Hooks.runFilter("mungeFields", fields, model, data, this);
+            String html = new Template(format, fields).render();
+            d.put(type, (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this));
+            // empty cloze?
+            if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
+                if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
+                    String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
+                    d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
+                }
+            }
+        }
+        return d;
     }
 
 
@@ -1278,21 +1236,13 @@ public class Collection {
      */
 
     public void setTimeLimit(long seconds) {
-        try {
-            mConf.put("timeLim", seconds);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        mConf.put("timeLim", seconds);
     }
 
 
     public long getTimeLimit() {
         long timebox = 0;
-        try {
-            timebox = mConf.getLong("timeLim");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        timebox = mConf.getLong("timeLim");
         return timebox;
     }
 
@@ -1305,17 +1255,13 @@ public class Collection {
 
     /* Return (elapsedTime, reps) if timebox reached, or null. */
     public Long[] timeboxReached() {
-        try {
-            if (mConf.getLong("timeLim") == 0) {
-                // timeboxing disabled
-                return null;
-            }
-            double elapsed = Utils.now() - mStartTime;
-            if (elapsed > mConf.getLong("timeLim")) {
-                return new Long[] { mConf.getLong("timeLim"), (long) (mSched.getReps() - mStartReps) };
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (mConf.getLong("timeLim") == 0) {
+            // timeboxing disabled
+            return null;
+        }
+        double elapsed = Utils.now() - mStartTime;
+        if (elapsed > mConf.getLong("timeLim")) {
+            return new Long[] { mConf.getLong("timeLim"), (long) (mSched.getReps() - mStartReps) };
         }
         return null;
     }
@@ -1575,30 +1521,26 @@ public class Collection {
         if (badNotes) {
             return false;
         }
-        try {
-            // invalid ords
-            for (JSONObject m : mModels.all()) {
-                // ignore clozes
-                if (m.getInt("type") != Consts.MODEL_STD) {
-                    continue;
-                }
-                // Make a list of valid ords for this model
-                JSONArray tmpls = m.getJSONArray("tmpls");
-                int[] ords = new int[tmpls.length()];
-                for (int t = 0; t < tmpls.length(); t++) {
-                    ords[t] = tmpls.getJSONObject(t).getInt("ord");
-                }
-
-                boolean badOrd = mDb.queryScalar(String.format(Locale.US,
-                        "select 1 from cards where ord not in %s and nid in ( " +
-                        "select id from notes where mid = %d) limit 1",
-                        Utils.ids2str(ords), m.getLong("id"))) > 0;
-                if (badOrd) {
-                    return false;
-                }
+        // invalid ords
+        for (JSONObject m : mModels.all()) {
+            // ignore clozes
+            if (m.getInt("type") != Consts.MODEL_STD) {
+                continue;
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            // Make a list of valid ords for this model
+            JSONArray tmpls = m.getJSONArray("tmpls");
+            int[] ords = new int[tmpls.length()];
+            for (int t = 0; t < tmpls.length(); t++) {
+                ords[t] = tmpls.getJSONObject(t).getInt("ord");
+            }
+
+            boolean badOrd = mDb.queryScalar(String.format(Locale.US,
+                                                           "select 1 from cards where ord not in %s and nid in ( " +
+                                                           "select id from notes where mid = %d) limit 1",
+                                                           Utils.ids2str(ords), m.getLong("id"))) > 0;
+            if (badOrd) {
+                return false;
+            }
         }
         return true;
     }

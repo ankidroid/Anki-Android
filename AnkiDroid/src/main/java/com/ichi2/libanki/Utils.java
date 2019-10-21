@@ -505,11 +505,7 @@ public class Utils {
     public static Object[] jsonArray2Objects(JSONArray array) {
         Object[] o = new Object[array.length()];
         for (int i = 0; i < array.length(); i++) {
-            try {
-                o[i] = array.get(i);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            o[i] = array.get(i);
         }
         return o;
     }

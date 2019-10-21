@@ -267,11 +267,7 @@ public class Card implements Cloneable {
 
 
     public String css() {
-        try {
-            return String.format(Locale.US, "<style>%s</style>", model().get("css"));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        return String.format(Locale.US, "<style>%s</style>", model().get("css"));
     }
 
 
@@ -291,21 +287,13 @@ public class Card implements Cloneable {
             JSONObject m = model();
             JSONObject t = template();
             Object[] data;
-            try {
-                data = new Object[] { mId, f.getId(), m.getLong("id"), mODid != 0L ? mODid : mDid, mOrd,
-                        f.stringTags(), f.joinedFields(), mFlags};
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            data = new Object[] { mId, f.getId(), m.getLong("id"), mODid != 0L ? mODid : mDid, mOrd,
+                                  f.stringTags(), f.joinedFields(), mFlags};
 
             if (browser) {
-                try {
-                    String bqfmt = t.getString("bqfmt");
-                    String bafmt = t.getString("bafmt");
-                    mQA = mCol._renderQA(data, bqfmt, bafmt);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                String bqfmt = t.getString("bqfmt");
+                String bafmt = t.getString("bafmt");
+                mQA = mCol._renderQA(data, bqfmt, bafmt);
             } else {
                 mQA = mCol._renderQA(data);
             }
@@ -334,14 +322,10 @@ public class Card implements Cloneable {
 
     public JSONObject template() {
         JSONObject m = model();
-        try {
-            if (m.getInt("type") == Consts.MODEL_STD) {
-                return m.getJSONArray("tmpls").getJSONObject(mOrd);
-            } else {
-                return model().getJSONArray("tmpls").getJSONObject(0);
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (m.getInt("type") == Consts.MODEL_STD) {
+            return m.getJSONArray("tmpls").getJSONObject(mOrd);
+        } else {
+            return model().getJSONArray("tmpls").getJSONObject(0);
         }
     }
 
@@ -356,20 +340,12 @@ public class Card implements Cloneable {
      */
     public int timeLimit() {
         JSONObject conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
-        try {
-            return conf.getInt("maxTaken") * 1000;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        return conf.getInt("maxTaken") * 1000;
     }
 
 
     public boolean shouldShowTimer() {
-        try {
-            return mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid).getInt("timer") != 0;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        return mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid).getInt("timer") != 0;
     }
 
 

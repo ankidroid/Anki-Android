@@ -441,7 +441,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         case "schedVer":
                             ((CheckBoxPreference)pref).setChecked(conf.optInt("schedVer", 1) == 2);
                     }
-                } catch (JSONException | NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     throw new RuntimeException(e);
                 }
             } else {
@@ -648,7 +648,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             updateSummary(pref);
         } catch (BadTokenException e) {
             Timber.e(e, "Preferences: BadTokenException on showDialog");
-        } catch (NumberFormatException | JSONException e) {
+        } catch (NumberFormatException e) {
             throw new RuntimeException(e);
         }
     }

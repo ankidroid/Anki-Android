@@ -673,23 +673,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             fld = fld.split(":")[1];
         }
         // loop through fields for a match
-        try {
-            JSONArray ja = mCurrentCard.model().getJSONArray("flds");
-            for (int i = 0; i < ja.length(); i++) {
-                String name = (String) (ja.getJSONObject(i).get("name"));
-                if (name.equals(fld)) {
-                    mTypeCorrect = mCurrentCard.note().getItem(name);
-                    if (clozeIdx != 0) {
-                        // narrow to cloze
-                        mTypeCorrect = contentForCloze(mTypeCorrect, clozeIdx);
-                    }
-                    mTypeFont = (String) (ja.getJSONObject(i).get("font"));
-                    mTypeSize = (int) (ja.getJSONObject(i).get("size"));
-                    break;
+        JSONArray ja = mCurrentCard.model().getJSONArray("flds");
+        for (int i = 0; i < ja.length(); i++) {
+            String name = (String) (ja.getJSONObject(i).get("name"));
+            if (name.equals(fld)) {
+                mTypeCorrect = mCurrentCard.note().getItem(name);
+                if (clozeIdx != 0) {
+                    // narrow to cloze
+                    mTypeCorrect = contentForCloze(mTypeCorrect, clozeIdx);
                 }
+                mTypeFont = (String) (ja.getJSONObject(i).get("font"));
+                mTypeSize = (int) (ja.getJSONObject(i).get("size"));
+                break;
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
         if (mTypeCorrect == null) {
             if (clozeIdx != 0) {
@@ -2020,12 +2016,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         if (actionBar != null) {
-            try {
-                String[] title = getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
-                actionBar.setTitle(title[title.length - 1]);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            String[] title = getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
+            actionBar.setTitle(title[title.length - 1]);
             if (mPrefShowETA) {
                 int eta = mSched.eta(counts, false);
                 actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));
@@ -2295,19 +2287,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * getAnswerFormat returns the answer part of this card's template as entered by user, without any parsing
      */
     public String getAnswerFormat() {
-        try {
-            JSONObject model = mCurrentCard.model();
-            JSONObject template;
-            if (model.getInt("type") == Consts.MODEL_STD) {
-                template = model.getJSONArray("tmpls").getJSONObject(mCurrentCard.getOrd());
-            } else {
-                template = model.getJSONArray("tmpls").getJSONObject(0);
-            }
-
-            return template.getString("afmt");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        JSONObject model = mCurrentCard.model();
+        JSONObject template;
+        if (model.getInt("type") == Consts.MODEL_STD) {
+            template = model.getJSONArray("tmpls").getJSONObject(mCurrentCard.getOrd());
+        } else {
+            template = model.getJSONArray("tmpls").getJSONObject(0);
         }
+
+        return template.getString("afmt");
     }
 
     private void addAnswerSounds(String answer) {

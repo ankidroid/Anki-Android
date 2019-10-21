@@ -148,14 +148,10 @@ public class ModelFieldEditor extends AnkiActivity {
         mMod = mCol.getModels().get(noteTypeID);
 
         mFieldLabels = new ArrayList<>();
-        try {
-            mNoteFields = mMod.getJSONArray("flds");
-            for (int i = 0; i < mNoteFields.length(); i++) {
-                JSONObject o = mNoteFields.getJSONObject(i);
-                mFieldLabels.add(o.getString("name"));
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        mNoteFields = mMod.getJSONArray("flds");
+        for (int i = 0; i < mNoteFields.length(); i++) {
+            JSONObject o = mNoteFields.getJSONObject(i);
+            mFieldLabels.add(o.getString("name"));
         }
     }
 
@@ -253,12 +249,8 @@ public class ModelFieldEditor extends AnkiActivity {
     }
 
     private void deleteField() {
-        try {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_FIELD, mChangeFieldHandler,
-                    new DeckTask.TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_FIELD, mChangeFieldHandler,
+                                new DeckTask.TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
     }
 
 
@@ -364,8 +356,6 @@ public class ModelFieldEditor extends AnkiActivity {
                                 c.setConfirm(confirm);
                                 c.setCancel(mConfirmDialogCancel);
                                 ModelFieldEditor.this.showDialogFragment(c);
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
                             }
                         }
                     })
@@ -402,16 +392,12 @@ public class ModelFieldEditor extends AnkiActivity {
      * Renames the current field
      */
     private void renameField() throws ConfirmModSchemaException {
-        try {
-            String fieldLabel = mFieldNameInput.getText().toString()
-                    .replaceAll("[\\n\\r]", "");
-            JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
-            mCol.getModels().renameField(mMod, field, fieldLabel);
-            mCol.getModels().save();
-            fullRefreshList();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        String fieldLabel = mFieldNameInput.getText().toString()
+                .replaceAll("[\\n\\r]", "");
+        JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
+        mCol.getModels().renameField(mMod, field, fieldLabel);
+        mCol.getModels().save();
+        fullRefreshList();
     }
 
 

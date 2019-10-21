@@ -962,14 +962,10 @@ public class CardContentProvider extends ContentProvider {
                 String bafmt = values.getAsString(CardTemplate.BROWSER_ANSWER_FORMAT);
                 try {
                     JSONObject t = models.newTemplate(name);
-                    try {
-                        t.put("qfmt", qfmt);
-                        t.put("afmt", afmt);
-                        t.put("bqfmt", bqfmt);
-                        t.put("bafmt", bafmt);
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
+                    t.put("qfmt", qfmt);
+                    t.put("afmt", afmt);
+                    t.put("bqfmt", bqfmt);
+                    t.put("bafmt", bafmt);
                     models.addTemplate(existingModel, t);
                     models.save(existingModel);
                     col.save();

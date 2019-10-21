@@ -82,7 +82,7 @@ public class RemoteMediaServer extends HttpSyncer {
             JSONObject ret = _dataOnly(jresp, JSONObject.class);
             mSKey = ret.getString("sk");
             return ret;
-        } catch (JSONException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -98,7 +98,7 @@ public class RemoteMediaServer extends HttpSyncer {
                     HttpSyncer.getInputStream(Utils.jsonToString(new JSONObject().put("lastUsn", lastUsn))));
             JSONObject jresp = new JSONObject(resp.body().string());
             return _dataOnly(jresp, JSONArray.class);
-        } catch (JSONException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -119,8 +119,6 @@ public class RemoteMediaServer extends HttpSyncer {
             // retrieve contents and save to file on disk:
             super.writeToFile(resp.body().byteStream(), zipPath);
             return new ZipFile(new File(zipPath), ZipFile.OPEN_READ | ZipFile.OPEN_DELETE);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         } catch (IOException | NullPointerException e) {
             Timber.e(e, "Failed to download requested media files");
             throw new RuntimeException(e);
@@ -138,7 +136,7 @@ public class RemoteMediaServer extends HttpSyncer {
             Response resp = super.req("uploadChanges", new FileInputStream(zip), 0);
             JSONObject jresp = new JSONObject(resp.body().string());
             return _dataOnly(jresp, JSONArray.class);
-        } catch (JSONException | IOException | NullPointerException e) {
+        } catch (IOException | NullPointerException e) {
             throw new RuntimeException(e);
         }
     }
@@ -151,7 +149,7 @@ public class RemoteMediaServer extends HttpSyncer {
                     HttpSyncer.getInputStream(Utils.jsonToString(new JSONObject().put("local", lcnt))));
             JSONObject jresp = new JSONObject(resp.body().string());
             return _dataOnly(jresp, String.class);
-        } catch (JSONException | IOException | NullPointerException e) {
+        } catch (IOException | NullPointerException e) {
             throw new RuntimeException(e);
         }
     }
@@ -173,22 +171,18 @@ public class RemoteMediaServer extends HttpSyncer {
      */
     @SuppressWarnings("unchecked")
     private <T> T _dataOnly(JSONObject resp, Class<T> returnType) throws MediaSyncException {
-        try {
-            if (!TextUtils.isEmpty(resp.optString("err"))) {
-                String err = resp.getString("err");
-                mCol.log("error returned: " + err);
-                throw new MediaSyncException("SyncError:" + err);
-            }
-            if (returnType == String.class) {
-                return (T) resp.getString("data");
-            } else if (returnType == JSONObject.class) {
-                return (T) resp.getJSONObject("data");
-            } else if (returnType == JSONArray.class) {
-                return (T) resp.getJSONArray("data");
-            }
-            throw new RuntimeException("Did not specify a valid type for the 'data' element in resopnse");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (!TextUtils.isEmpty(resp.optString("err"))) {
+            String err = resp.getString("err");
+            mCol.log("error returned: " + err);
+            throw new MediaSyncException("SyncError:" + err);
         }
+        if (returnType == String.class) {
+            return (T) resp.getString("data");
+        } else if (returnType == JSONObject.class) {
+            return (T) resp.getJSONObject("data");
+        } else if (returnType == JSONArray.class) {
+            return (T) resp.getJSONArray("data");
+        }
+        throw new RuntimeException("Did not specify a valid type for the 'data' element in resopnse");
     }
 }

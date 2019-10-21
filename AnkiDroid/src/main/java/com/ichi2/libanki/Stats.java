@@ -110,11 +110,7 @@ public class Stats {
         if (mWholeCollection) {
             title = AnkiDroidApp.getInstance().getResources().getString(R.string.card_browser_all_decks);
         } else {
-            try {
-                title = mCol.getDecks().get(mDeckId).getString("name");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            title = mCol.getDecks().get(mDeckId).getString("name");
         }
         return new Object[] {/*0*/ mType, /*1*/mTitle, /*2*/mBackwards, /*3*/mValueLabels, /*4*/mColors,
          /*5*/mAxisTitles, /*6*/title, /*7*/mMaxCards, /*8*/mMaxElements, /*9*/mFirstElement, /*10*/mLastElement,
@@ -1233,11 +1229,7 @@ public class Stats {
             // All decks
             ArrayList<Long> ids = new ArrayList<>();
             for (JSONObject d : col.getDecks().all()) {
-                try {
-                    ids.add(d.getLong("id"));
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                ids.add(d.getLong("id"));
             }
             return Utils.ids2str(Utils.arrayList2array(ids));
         } else {
