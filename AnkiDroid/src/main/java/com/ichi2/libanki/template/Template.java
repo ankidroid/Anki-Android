@@ -391,8 +391,8 @@ public class Template {
             } else {
                 m.appendReplacement(repl, Matcher.quoteReplacement(m.group(0).replace("{{c", "{{C")));
             }
-            txt = m.appendTail(repl).toString();
         }
+        txt = m.appendTail(repl).toString();
         return txt;
     }
 
