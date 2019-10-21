@@ -124,7 +124,7 @@
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid\'e Hoşgeldiniz</string>
     <string name="fact_adder_intent_title">AnkiDroid Kartı</string>
-    <string name="card_editor_add_card">Not ekle</string>
+    <string name="note_editor_add_note">Not ekle</string>
     <string name="card_editor_copy_card">Kartı kopyala</string>
     <string name="card_editor_reposition_card">Yerini değiştir</string>
     <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>

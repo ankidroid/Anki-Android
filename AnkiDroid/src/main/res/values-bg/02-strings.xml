@@ -124,7 +124,7 @@
     </plurals>
     <string name="studyoptions_welcome_title">Добре дошли в AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid карта</string>
-    <string name="card_editor_add_card">Нова бележка</string>
+    <string name="note_editor_add_note">Нова бележка</string>
     <string name="card_editor_copy_card">копиране на карта</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Начално състояние на напредъка</string>

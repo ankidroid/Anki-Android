@@ -128,7 +128,7 @@
     </plurals>
     <string name="studyoptions_welcome_title">Sveiki apsilankę „AnkiDroid“ programoje</string>
     <string name="fact_adder_intent_title">„AnkiDroid“ kortelė</string>
-    <string name="card_editor_add_card">Pridėti užrašą</string>
+    <string name="note_editor_add_note">Pridėti užrašą</string>
     <string name="card_editor_copy_card">Kopijuoti kortelę</string>
     <string name="card_editor_reposition_card">Keisti išdėstymą</string>
     <string name="card_editor_reset_card">Atkurti pažangą</string>

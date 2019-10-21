@@ -124,7 +124,7 @@
     </plurals>
     <string name="studyoptions_welcome_title">به آنکی دروید خوش آمدید</string>
     <string name="fact_adder_intent_title">کارت آنکی دروید</string>
-    <string name="card_editor_add_card">افزودن یادداشت</string>
+    <string name="note_editor_add_note">افزودن یادداشت</string>
     <string name="card_editor_copy_card">کپی کارت</string>
     <string name="card_editor_reposition_card">تغییر مکان</string>
     <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>

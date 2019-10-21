@@ -124,7 +124,7 @@
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid में आपका स्वागत है</string>
     <string name="fact_adder_intent_title">AnkiDroid कार्ड</string>
-    <string name="card_editor_add_card">नोट जोड़ें</string>
+    <string name="note_editor_add_note">नोट जोड़ें</string>
     <string name="card_editor_copy_card">प्रति कार्ड</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">प्रगति को रीसेट</string>

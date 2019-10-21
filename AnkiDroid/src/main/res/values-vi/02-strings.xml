@@ -122,7 +122,7 @@
     </plurals>
     <string name="studyoptions_welcome_title">Chào mừng đến với AnkiDroid</string>
     <string name="fact_adder_intent_title">Thẻ AnkiDroid</string>
-    <string name="card_editor_add_card">Thêm ghi chú</string>
+    <string name="note_editor_add_note">Thêm ghi chú</string>
     <string name="card_editor_copy_card">Sao chép thẻ</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>

@@ -124,7 +124,7 @@
     </plurals>
     <string name="studyoptions_welcome_title">Benvingut a l\'AnkiDroid</string>
     <string name="fact_adder_intent_title">Fitxa AnkiDroid</string>
-    <string name="card_editor_add_card">Afegeix una nota</string>
+    <string name="note_editor_add_note">Afegeix una nota</string>
     <string name="card_editor_copy_card">Còpia la fitxa</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Reinicia</string>

@@ -124,7 +124,7 @@
     </plurals>
     <string name="studyoptions_welcome_title">Tere tulemast AnkiDroidi</string>
     <string name="fact_adder_intent_title">AnkiDroid kaart</string>
-    <string name="card_editor_add_card">Lisa märkus</string>
+    <string name="note_editor_add_note">Lisa märkus</string>
     <string name="card_editor_copy_card">Kopeeri kaart</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Lähtestamise progress</string>

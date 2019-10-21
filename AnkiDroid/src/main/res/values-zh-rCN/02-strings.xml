@@ -122,7 +122,7 @@
     </plurals>
     <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid卡片</string>
-    <string name="card_editor_add_card">添加笔记</string>
+    <string name="note_editor_add_note">添加笔记</string>
     <string name="card_editor_copy_card">复制卡片</string>
     <string name="card_editor_reposition_card">更改位置</string>
     <string name="card_editor_reset_card">重设学习进度</string>

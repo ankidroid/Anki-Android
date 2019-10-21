@@ -122,7 +122,7 @@
     </plurals>
     <string name="studyoptions_welcome_title">Selamat Datang ke AnkiDroid</string>
     <string name="fact_adder_intent_title">Kad AnkiDroid</string>
-    <string name="card_editor_add_card">Tambahkan catatan</string>
+    <string name="note_editor_add_note">Tambahkan catatan</string>
     <string name="card_editor_copy_card">Salin kad</string>
     <string name="card_editor_reposition_card">Reposisi</string>
     <string name="card_editor_reset_card">Set semula aktivitas</string>

@@ -124,7 +124,7 @@
     </plurals>
     <string name="studyoptions_welcome_title">Üdv az AnkiDroidban!</string>
     <string name="fact_adder_intent_title">AnkiDroid Kártya</string>
-    <string name="card_editor_add_card">Jegyzet hozzáadása</string>
+    <string name="note_editor_add_note">Jegyzet hozzáadása</string>
     <string name="card_editor_copy_card">Kártya másolása</string>
     <string name="card_editor_reposition_card">Áthelyezés</string>
     <string name="card_editor_reset_card">Reset folyamat</string>

@@ -2,9 +2,9 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/action_add_card_from_card_browser"
+        android:id="@+id/action_add_note_from_card_browser"
         android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/card_editor_add_card"
+        android:title="@string/note_editor_add_note"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_search"
