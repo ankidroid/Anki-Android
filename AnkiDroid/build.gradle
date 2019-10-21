@@ -1,3 +1,5 @@
+import com.android.ddmlib.DdmPreferences
+
 plugins {
  // Gradle plugin portal 
  id 'com.github.triplet.play' version '2.4.2'
@@ -21,6 +23,7 @@ android {
     defaultConfig {
         applicationId "com.ichi2.anki"
         minSdkVersion 15
+        //noinspection OldTargetApi
         targetSdkVersion 28
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
@@ -30,7 +33,7 @@ android {
         adbOptions {
             //logLevel verbose // let's try to see what is happening
             timeOutInMs 20 * 60 * 1000  // 20 minutes
-            com.android.ddmlib.DdmPreferences.setTimeOut(120000) // apparently if not multidex you do this
+            DdmPreferences.setTimeOut(120000) // apparently if not multidex you do this
         }
     }
     lintOptions {
@@ -166,6 +169,7 @@ dependencies {
     annotationProcessor "com.google.auto.service:auto-service:1.0-rc6"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleDependency
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.0.0'
@@ -186,6 +190,7 @@ dependencies {
     implementation'ch.acra:acra-limiter:5.2.1'
 
     implementation 'net.mikehardy:google-analytics-java7:2.0.10'
+    //noinspection GradleDependency
     implementation 'com.squareup.okhttp3:okhttp:3.12.6'
     implementation 'com.arcao:slf4j-timber:3.1'
 
