@@ -31,9 +31,9 @@ import android.text.style.StyleSpan;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.hooks.Hooks;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;

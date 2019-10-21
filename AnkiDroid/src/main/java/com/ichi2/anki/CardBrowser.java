@@ -81,8 +81,8 @@ import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.widget.WidgetStatus;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
