@@ -380,6 +380,13 @@ function main() {
   git_is_branch "$from" || fatal "Invalid branch: $from"
   git_is_branch "$into" || fatal "Invalid branch: $into"
 
+  local current_branch=$(git branch | grep \* | cut -d ' ' -f2)
+
+  if [ "$current_branch" != "$into" ]; then
+    echo "Not on branch: $into"
+    return 1
+  fi
+
   # Find the first commit to be integrated, i.e., the oldest one.
   first_commit=$(git_commits_not_in "$from" "$into" | tail -1)
   if [ "$first_commit" = "" ]; then
