@@ -298,16 +298,12 @@ public class Media {
         List<String> l = new ArrayList<>();
         JSONObject model = mCol.getModels().get(mid);
         List<String> strings = new ArrayList<>();
-        try {
-            if (model.getInt("type") == Consts.MODEL_CLOZE && string.contains("{{c")) {
-                // if the field has clozes in it, we'll need to expand the
-                // possibilities so we can render latex
-                strings = _expandClozes(string);
-            } else {
-                strings.add(string);
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (model.getInt("type") == Consts.MODEL_CLOZE && string.contains("{{c")) {
+            // if the field has clozes in it, we'll need to expand the
+            // possibilities so we can render latex
+            strings = _expandClozes(string);
+        } else {
+            strings.add(string);
         }
 
         for (String s : strings) {
@@ -942,7 +938,7 @@ public class Media {
      * This method closes the file before it returns.
      */
     public int addFilesFromZip(ZipFile z) throws IOException {
-        try {
+    try {
             List<Object[]> media = new ArrayList<>();
             // get meta info first
             JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
@@ -969,8 +965,6 @@ public class Media {
                 mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
             }
             return cnt;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         } finally {
             z.close();
         }

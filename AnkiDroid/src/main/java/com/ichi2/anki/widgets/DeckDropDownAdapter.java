@@ -80,12 +80,8 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
         } else {
             JSONObject deck = decks.get(position - 1);
-            try {
-                String deckName = deck.getString("name");
-                deckNameView.setText(deckName);
-            } catch (JSONException e) {
-                new RuntimeException(e);
-            }
+            String deckName = deck.getString("name");
+            deckNameView.setText(deckName);
         }
         deckCountsView.setText(((SubtitleListener) context).getSubtitleText());
         return convertView;
@@ -106,12 +102,8 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
         } else {
             JSONObject deck = decks.get(position - 1);
-            try {
-                String deckName = deck.getString("name");
-                deckNameView.setText(deckName);
-            } catch (JSONException e) {
-                new RuntimeException(e);
-            }
+            String deckName = deck.getString("name");
+            deckNameView.setText(deckName);
         }
         return convertView;
     }
