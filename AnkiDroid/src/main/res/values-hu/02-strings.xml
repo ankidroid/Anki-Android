@@ -118,7 +118,7 @@
         <item quantity="one">%1$d kártyát tanultál %2$s alatt</item>
         <item quantity="other">%1$d kártyát tanultál %2$s alatt</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="one">%1$d perc</item>
         <item quantity="other">%1$d perc</item>
     </plurals>

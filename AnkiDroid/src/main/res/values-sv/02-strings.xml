@@ -118,7 +118,7 @@
         <item quantity="one">Studera %1$d kort i %2$s</item>
         <item quantity="other">Studera %1$d kort i %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="one">%1$d minut</item>
         <item quantity="other">%1$d minuter</item>
     </plurals>

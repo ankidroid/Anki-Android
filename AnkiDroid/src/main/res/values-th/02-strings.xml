@@ -117,7 +117,7 @@
     <plurals name="timebox_reached">
         <item quantity="other">%1$d cards studied in %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>

@@ -120,7 +120,7 @@
         <item quantity="many">%1$d כרטסיות נלמדו ב%2$s</item>
         <item quantity="other">%1$d כרטסיות נלמדו ב%2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="one">%1$d דקה</item>
         <item quantity="two">%1$d דקה</item>
         <item quantity="many">%1$d דקה</item>

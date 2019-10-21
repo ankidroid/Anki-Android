@@ -118,7 +118,7 @@
         <item quantity="one">%1$d कार्ड में अध्ययन किया %2$s</item>
         <item quantity="other">%1$d कार्ड में अध्ययन किया %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="one">%1$d मिनट</item>
         <item quantity="other">%1$d मिनट</item>
     </plurals>

@@ -105,7 +105,8 @@
         <item quantity="one">%1$d card studied in %2$s</item>
         <item quantity="other">%1$d cards studied in %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <!-- minutes used in '[studied in] x minutes' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>

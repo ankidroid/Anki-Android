@@ -118,7 +118,7 @@
         <item quantity="one">%2$s %1$d kart çalışıldı</item>
         <item quantity="other">%2$s %1$d kart çalışıldı</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="one">%1$d dakikada</item>
         <item quantity="other">%1$d dakikada</item>
     </plurals>
