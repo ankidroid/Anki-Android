@@ -14,7 +14,7 @@ buildscript {
 
 ext {
 
-    jacocoVersion = "0.8.4"
+    jacocoVersion = "0.8.5"
 
     travisBuild = System.getenv("TRAVIS") == "true"
     // allows for -Dpre-dex=false to be set
