@@ -31,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -241,8 +242,11 @@ public class Decks {
     public Long id(String name, boolean create, String type) {
         try {
             name = name.replace("\"", "");
+            name = Normalizer.normalize(name, Normalizer.Form.NFC);
             for (Map.Entry<Long, JSONObject> g : mDecks.entrySet()) {
-                if (g.getValue().getString("name").equalsIgnoreCase(name)) {
+                String deckName = g.getValue().getString("name");
+                deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
+                if (deckName.equalsIgnoreCase(name)) {
                     return g.getKey();
                 }
             }
