@@ -418,8 +418,6 @@ public class ModelBrowser extends AnkiActivity {
             } else {
                 showToast(getResources().getString(R.string.toast_empty_name));
             }
-        } catch (ConfirmModSchemaException e) {
-            //We should never get here since we're only modifying new mModels
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
