@@ -42,8 +42,8 @@ import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
 import com.ichi2.utils.Permissions;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
 

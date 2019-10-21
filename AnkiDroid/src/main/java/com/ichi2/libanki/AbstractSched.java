@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

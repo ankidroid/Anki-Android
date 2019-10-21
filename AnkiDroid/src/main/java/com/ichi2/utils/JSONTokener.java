@@ -1,7 +1,7 @@
 package com.ichi2.utils;
 
 
-import org.json.JSONException;
+import com.ichi2.utils.JSONException;
 
 public class JSONTokener extends org.json.JSONTokener {
     public JSONTokener(String s) {

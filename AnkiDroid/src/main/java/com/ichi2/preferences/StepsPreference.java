@@ -26,8 +26,8 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
 
 public class StepsPreference extends EditTextPreference {
 
