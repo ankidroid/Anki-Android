@@ -118,7 +118,7 @@
         <item quantity="one">%1$d карта изучена за %2$s</item>
         <item quantity="other">%1$d карти изучени за %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="one">%1$d минута</item>
         <item quantity="other">%1$d минути</item>
     </plurals>

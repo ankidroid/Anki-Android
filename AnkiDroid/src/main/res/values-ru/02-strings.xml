@@ -120,7 +120,7 @@
         <item quantity="many">%1$d карточек изучено за %2$s</item>
         <item quantity="other">%1$d карточек изучено за %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="one">%1$d минута</item>
         <item quantity="few">%1$d минуты</item>
         <item quantity="many">%1$d минут</item>

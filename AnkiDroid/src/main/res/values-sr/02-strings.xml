@@ -119,7 +119,7 @@
         <item quantity="few">%1$d карата проучено у %2$s</item>
         <item quantity="other">%1$d cards studied in %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <plurals name="in_minutes">
         <item quantity="one">%1$d минут</item>
         <item quantity="few">%1$d минута</item>
         <item quantity="other">%1$d minutes</item>
