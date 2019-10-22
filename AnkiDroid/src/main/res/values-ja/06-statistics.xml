@@ -71,7 +71,7 @@
     <string name="stats_answer_type">回答の種類</string>
     <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>
-    <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_type_breakdown">学習: &lt;b&gt;%1$d&lt;/b&gt;枚、復習: &lt;b&gt;%2$d&lt;/b&gt;枚、再学習: &lt;b&gt;%3$d&lt;/b&gt;枚、フィルター学習: &lt;b&gt;%4$d&lt;/b&gt;枚</string>
     <string name="stats_today_mature_cards">復習(熟知)の正解率: %3$.1f%% (%1$d/%2$d)</string>
     <string name="stats_today_no_mature_cards">復習(熟知)の正解率: -- (未復習)</string>
     <string name="stats_overview_forecast_total">合計: &lt;b&gt;%1$d&lt;/b&gt;枚</string>
@@ -139,18 +139,18 @@
         <item>簡</item>
     </string-array>
     <string-array name="stats_eases_ticks_schedv2">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
+        <item>再</item>
+        <item>普</item>
+        <item>普</item>
+        <item>簡</item>
+        <item>再</item>
+        <item>普</item>
+        <item>普</item>
+        <item>簡</item>
+        <item>再</item>
+        <item>普</item>
+        <item>普</item>
+        <item>簡</item>
     </string-array>
     <plurals name="stats_today_cards">
         <item quantity="other">今日は&lt;b&gt;%1$d枚&lt;/b&gt;のカードを&lt;b&gt;%2$s&lt;/b&gt;で学習しています</item>

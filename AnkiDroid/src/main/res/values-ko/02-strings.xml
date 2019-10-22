@@ -117,7 +117,7 @@
     <plurals name="timebox_reached">
         <item quantity="other">%1$d 카드가 %2$s에 학습됨</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="other">%1$d분</item>
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid에 오신 것을 환영합니다</string>

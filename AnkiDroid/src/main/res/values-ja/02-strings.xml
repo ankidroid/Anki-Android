@@ -117,7 +117,7 @@
     <plurals name="timebox_reached">
         <item quantity="other">%1$d枚のカードを%2$sで学習しました</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="other">%1$d分</item>
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroidへようこそ</string>
@@ -160,10 +160,10 @@
     <string name="confirm_apkg_export_deck">デッキ \"%s\" のデータが入ったAnki用ファイル（*.apkg）を作成します。よろしいですか？</string>
     <string name="export_in_progress">apkgファイルをエクスポートしています...</string>
     <string name="export_successful_title">このファイルを送信しますか？</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
+    <string name="export_send_button">送信</string>
+    <string name="export_save_button">ファイルへ保存</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
+    <string name="export_save_apkg_successful">apkgを正常に保存されました。</string>
     <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
     <string name="export_successful">デッキのファイルが保存されました。（%s）　このファイルを他のアプリで送信しますか？</string>
     <string name="export_email_subject">[AnkiDroid] %s</string>
@@ -215,13 +215,13 @@
     <string name="filtered_deck_name">フィルターデッキ</string>
     <string name="reminder_title">今日も学習しましょう！</string>
     <plurals name="reminder_text">
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="other">課題: %2$d枚 （%1$s）</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Anki用ファイル（*.apkg）の送信がキャンセルされました</string>
     <!-- Import and export v2 feedback -->
     <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
     <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
+    <string name="export_v2_dummy_note">このファイルはAnkiの新しいバーショーンが必要です。</string>
     <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
 </resources>

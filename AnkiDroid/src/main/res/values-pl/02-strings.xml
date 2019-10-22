@@ -120,9 +120,9 @@
         <item quantity="many">%1$d cards studied in %2$s</item>
         <item quantity="other">%1$d kart przerobione w %2$s</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="one">%1$d minutę</item>
-        <item quantity="few">%1$d minut</item>
+        <item quantity="few">%1$d minuty</item>
         <item quantity="many">%1$d minutes</item>
         <item quantity="other">%1$d minut</item>
     </plurals>

@@ -120,7 +120,7 @@
         <item quantity="few">%1$d kartice preučene v %2$s</item>
         <item quantity="other">%1$d kartic preučenih v %2$s</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="one">%1$d minuta</item>
         <item quantity="two">%1$d minuti</item>
         <item quantity="few">%1$d minute</item>

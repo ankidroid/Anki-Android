@@ -122,7 +122,7 @@
         <item quantity="many">%1$d cards studied in %2$s</item>
         <item quantity="other">%1$d cards studied in %2$s</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="zero">%1$d دقيقة</item>
         <item quantity="one">%1$d دقيقة</item>
         <item quantity="two">%1$d دقيقتان</item>

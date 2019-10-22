@@ -117,7 +117,7 @@
     <plurals name="timebox_reached">
         <item quantity="other">使用 %2$s 學習共 %1$d 張卡片</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="other">%1$d 分鐘</item>
     </plurals>
     <string name="studyoptions_welcome_title">歡迎使用 AnkiDroid</string>

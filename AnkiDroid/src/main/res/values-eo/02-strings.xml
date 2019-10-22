@@ -118,7 +118,7 @@
         <item quantity="one">Lernis %1$d karton dum %2$s</item>
         <item quantity="other">Lernis %1$d kartojn dum %2$s</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="one">%1$d minuto</item>
         <item quantity="other">%1$d minutoj</item>
     </plurals>
