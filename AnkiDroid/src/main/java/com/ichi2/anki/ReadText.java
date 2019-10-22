@@ -293,8 +293,14 @@ public class ReadText {
                         }
                         @Override
                         @Deprecated
-                        public void onError(String arg0) {
-                            // do nothing
+                        public void onError(String utteranceId) {
+                            Timber.v("Andoid TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
+                            new Handler(mReviewer.get().getMainLooper()).post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(mReviewer.get(), "TTS failed. Check Android settings.", Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
                         @Override
                         public void onStart(String arg0) {
