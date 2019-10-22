@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Limit für neue Karten für heute erhöhen</string>
@@ -118,9 +118,10 @@
         <item quantity="one">%1$d Karte gelernt in %2$s</item>
         <item quantity="other">%1$d Karten gelernt in %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d Minute</item>
-        <item quantity="other">%1$d Minuten</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">Willkommen bei AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid Karte</string>
@@ -153,21 +154,21 @@
     <string name="import_message_add">Hinzufügen</string>
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
     <string name="import_message_add_confirm">»%s« zu Ihrer Sammlung hinzufügen? Das kann lange dauern</string>
-    <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
-    <string name="import_error_not_apkg_extension">Dateiname »%s« hat keine .apkg-Endung</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
     <string name="import_replacing">Ersetze Sammlung&#8230;</string>
     <string name="export_include_schedule">Zeitabstände einbeziehen</string>
     <string name="export_include_media">Medien einbeziehen</string>
-    <string name="confirm_apkg_export">Sammlung als apkg-Datei exportieren?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">»%s« als apkg-Datei exportieren?</string>
-    <string name="export_in_progress">Exportiere apkg-Datei&#8230;</string>
-    <string name="export_successful_title">Apkg senden?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Senden</string>
     <string name="export_save_button">In Datei speichern</string>
     <string name="export_send_no_handlers">Keine Anwendungen verfügbar, um apkg zu öffnen. Speichern...</string>
-    <string name="export_save_apkg_successful">Apkg erfolgreich gespeichert</string>
-    <string name="export_save_apkg_unsuccessful">Apkg speichern fehlgeschlagen</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">Datei \"%s\" wurde exportiert. Möchten Sie sie mit einer anderen App senden?</string>
     <string name="export_email_subject">AnkiDroid exportierte Karteikarten: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!

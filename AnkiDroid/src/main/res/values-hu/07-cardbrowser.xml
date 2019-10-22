@@ -93,4 +93,6 @@
     </string-array>
     <string name="card_browser_select_all">Összes kijelölése</string>
     <string name="card_browser_select_none">Nincs kijelölve semmi</string>
+    <string name="card_browser_interval_new_card">(new)</string>
+    <string name="card_browser_interval_learning_card">(learning)</string>
 </resources>

@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Augmenta el límit de fitxes d\'avui</string>
@@ -118,9 +118,10 @@
         <item quantity="one">%1$d carta estudiada en %2$s</item>
         <item quantity="other">%1$d cartes estudiades en %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d minut</item>
-        <item quantity="other">%1$d minuts</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">Benvingut a l\'AnkiDroid</string>
     <string name="fact_adder_intent_title">Fitxa AnkiDroid</string>
@@ -153,21 +154,21 @@
     <string name="import_message_add">Afegeix</string>
     <string name="import_message_replace_confirm">Això suprimirà la vostra col·lecció actual i la reemplaçarà amb les dades del fitxer %s. Esteu segur que ho voleu?</string>
     <string name="import_message_add_confirm">Afegeix \"%s\" a la col·lecció? Això pot trigar molt de temps</string>
-    <string name="import_log_no_apkg">Això fitxer apkg no és vàlid</string>
-    <string name="import_error_not_apkg_extension">El nom del fitxer \"%s\" no té l\'extensió .apkg</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">El fitxer seleccionat no s\'ha importat automàticament per AnkiDroid. Consulteu el manual d\'usuari per com importar arxius anki manualment: \n%s</string>
     <string name="import_replacing">Substituint la col·lecció&#8230;</string>
     <string name="export_include_schedule">Incloueu la planificació</string>
     <string name="export_include_media">Incloure multimèdia</string>
-    <string name="confirm_apkg_export">Exportar col·lecció com a fitxer apkg?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Exportar \"%s\" com a arxiu apkg?</string>
-    <string name="export_in_progress">S\'està important l\'arxiu apkg&#8230;</string>
-    <string name="export_successful_title">Enviar apkg?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Send</string>
     <string name="export_save_button">Save to file</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">L\'arxiu \"%s\" ha estat importat. Vols enviar-lo amb una altra applicació?</string>
     <string name="export_email_subject">Notes exportades a AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Hola!

@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>
@@ -117,8 +117,9 @@
     <plurals name="timebox_reached">
         <item quantity="other">%1$d 카드가 %2$s에 학습됨</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="other">%1$d분</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid에 오신 것을 환영합니다</string>
     <string name="fact_adder_intent_title">AnkiDroid 카드</string>
@@ -150,21 +151,21 @@
     <string name="import_message_add">추가</string>
     <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
     <string name="import_message_add_confirm">\"%s\"를 컬렉션에 추가하시겠습니까? 시간이 오래 걸릴 수 있습니다.</string>
-    <string name="import_log_no_apkg">유효하지 않은 apkg 파일입니다</string>
-    <string name="import_error_not_apkg_extension">파일명 %s는 .apkg 확장자를 가지고 있지 않습니다.</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
     <string name="import_replacing">컬렉션을 대체하는 중...</string>
     <string name="export_include_schedule">일정 포함</string>
     <string name="export_include_media">미디어 포함</string>
-    <string name="confirm_apkg_export">컬렉션을 apkg 파일로 내보낼까요?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">\"%s\"를 apkg 파일로 내보낼까요?</string>
-    <string name="export_in_progress">apkg 파일 내보내는 중...</string>
-    <string name="export_successful_title">Apkg 보내기?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">공유</string>
     <string name="export_save_button">파일로 저장</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">apkg 파일 저장 성공</string>
-    <string name="export_save_apkg_unsuccessful">apkg 파일 저장 실패</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">파일 \"%s\" 는 보내졌습니다. 다른 앱으로 보내고 싶으십니까?</string>
     <string name="export_email_subject">AnkiDroid로 보내진 플래시 카드: %s</string>
     <string name="export_email_text"><![CDATA[        안녕하세요!
