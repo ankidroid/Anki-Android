@@ -49,7 +49,6 @@ import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.widget.WidgetStatus;
 
-import com.ichi2.utils.JSONException;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

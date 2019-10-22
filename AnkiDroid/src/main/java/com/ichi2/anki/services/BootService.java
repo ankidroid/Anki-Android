@@ -13,7 +13,6 @@ import com.ichi2.anki.Preferences;
 import com.ichi2.libanki.Collection;
 import com.ichi2.utils.Permissions;
 
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.Calendar;

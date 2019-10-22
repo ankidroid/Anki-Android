@@ -31,7 +31,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
 
 import org.apache.http.entity.AbstractHttpEntity;
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;

@@ -21,7 +21,6 @@ import android.database.Cursor;
 
 import android.util.Pair;
 
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;

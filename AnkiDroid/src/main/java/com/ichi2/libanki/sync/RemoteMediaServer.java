@@ -31,7 +31,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.io.File;

@@ -27,9 +27,6 @@ import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;

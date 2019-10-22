@@ -68,7 +68,6 @@ import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.VersionUtils;
 
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.sql.Timestamp;

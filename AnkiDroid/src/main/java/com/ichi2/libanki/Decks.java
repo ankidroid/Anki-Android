@@ -29,7 +29,6 @@ import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 
 import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.text.Normalizer;
