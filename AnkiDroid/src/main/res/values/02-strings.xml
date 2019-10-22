@@ -91,7 +91,7 @@
     <string name="discard_unsaved_changes">Close and lose current input?</string>
     <string name="factadder_saving_error">Error saving note</string>
     <string name="saving_facts">Saving note</string>
-    <string name="saving_model">Saving model</string>
+    <string name="saving_model">Saving note type</string>
     <string name="add">Add</string>
     <string name="save">Save</string>
     <string name="close">Close</string>
