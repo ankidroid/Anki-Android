@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 
@@ -295,12 +297,13 @@ public class ReadText {
                         @Deprecated
                         public void onError(String utteranceId) {
                             Timber.v("Andoid TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
-                            new Handler(mReviewer.get().getMainLooper()).post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(mReviewer.get(), "TTS failed. Check Android settings.", Toast.LENGTH_LONG).show();
-                                }
-                            });
+
+                            final Uri helpUrl = Uri.parse(mReviewer.get().getString(R.string.link_faq_tts));
+                            final AnkiActivity ankiActivity = (AnkiActivity) mReviewer.get();
+                            ankiActivity.mayOpenUrl(helpUrl);
+                            UIUtils.showSnackbar(ankiActivity, R.string.no_tts_available_message, false, R.string.help,
+                                    v -> ankiActivity.openUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
+                                    new Snackbar.Callback());
                         }
                         @Override
                         public void onStart(String arg0) {
