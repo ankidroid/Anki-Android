@@ -852,17 +852,17 @@ public class NoteEditor extends AnkiActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.note_editor, menu);
         if (mAddNote) {
-            menu.findItem(R.id.action_copy_card).setVisible(false);
+            menu.findItem(R.id.action_copy_note).setVisible(false);
         } else {
-            menu.findItem(R.id.action_add_card_from_card_editor).setVisible(true);
+            menu.findItem(R.id.action_add_note_from_note_editor).setVisible(true);
         }
         if (mEditFields != null) {
             for (int i = 0; i < mEditFields.size(); i++) {
                 if (mEditFields.get(i).getText().length() > 0) {
-                    menu.findItem(R.id.action_copy_card).setEnabled(true);
+                    menu.findItem(R.id.action_copy_note).setEnabled(true);
                     break;
                 } else if (i == mEditFields.size() - 1) {
-                    menu.findItem(R.id.action_copy_card).setEnabled(false);
+                    menu.findItem(R.id.action_copy_note).setEnabled(false);
                 }
             }
         }
@@ -883,13 +883,13 @@ public class NoteEditor extends AnkiActivity {
                 saveNote();
                 return true;
 
-            case R.id.action_add_card_from_card_editor:
-            case R.id.action_copy_card: {
+            case R.id.action_add_note_from_note_editor:
+            case R.id.action_copy_note: {
                 Timber.i("NoteEditor:: Copy or add card button pressed");
                 Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
                 intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
                 // intent.putExtra(EXTRA_DECKPATH, mDeckPath);
-                if (item.getItemId() == R.id.action_copy_card) {
+                if (item.getItemId() == R.id.action_copy_note) {
                     intent.putExtra(EXTRA_CONTENTS, getFieldsText());
                 }
                 startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
