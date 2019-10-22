@@ -41,10 +41,10 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d karta wyświetlana</item>
-        <item quantity="few">%d kart wyświetlanych</item>
+        <item quantity="one">%d karta pokazana</item>
+        <item quantity="few">%d karty pokazane</item>
         <item quantity="many">%d cards shown</item>
-        <item quantity="other">%d kart wyświetlanych</item>
+        <item quantity="other">%d kart pokazanych</item>
     </plurals>
     <string name="card_browser_all_decks">Wszystkie talie</string>
     <string name="card_browser_delete_card">Usuń notatki</string>

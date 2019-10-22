@@ -176,7 +176,7 @@
     <string name="custom_buttons_setting_always_show">Always show</string>
     <string name="custom_buttons_setting_if_room">Show if room</string>
     <string name="custom_buttons_setting_menu_only">Menu only</string>
-    <string name="reset_custom_buttons">Reset to default</string>
+    <string name="reset_custom_buttons">Επαναφορά στις προεπιλογές</string>
     <string name="thirdparty_apps_title">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
@@ -238,8 +238,8 @@
     <string name="deck_conf_manage">Group management</string>
     <string name="deck_conf_current_group">Current group</string>
     <string name="deck_conf_rename">Rename</string>
-    <string name="deck_conf_reset">Restore defaults</string>
-    <string name="deck_conf_reset_title">Restore defaults</string>
+    <string name="deck_conf_reset">Επαναφορά προεπιλογών</string>
+    <string name="deck_conf_reset_title">Επαναφορά προεπιλογών</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
     <string name="deck_conf_add">Προσθήκη ρυθμίσεων</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>

@@ -45,14 +45,14 @@
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
     <string name="CardEditorLaterMessage">Αποθήκευση πληροφοριών για αργότερα</string>
-    <string name="CardEditorCardDeck">Card deck:</string>
-    <string name="CardEditorNoteDeck">Deck:</string>
-    <string name="CardEditorModel">Type:</string>
+    <string name="CardEditorCardDeck">Τράπουλα κάρτας:</string>
+    <string name="CardEditorNoteDeck">Τράπουλα:</string>
+    <string name="CardEditorModel">Τύπος:</string>
     <string name="CardEditorTags">Ετικέτες:%1$s</string>
-    <string name="CardEditorCards">Cards: %1$s</string>
-    <string name="tag_name">Tag name</string>
+    <string name="CardEditorCards">Κάρτες %1$s</string>
+    <string name="tag_name">Όνομα ετικέτας</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
-    <string name="add_tag">Add tag</string>
+    <string name="add_tag">Προσθήκη ετικέτας</string>
     <string name="check_all_tags">Check/uncheck all tags</string>
     <string name="filter_tags">Filter tags</string>
     <string name="no_tags">You haven’t added any tags yet</string>
@@ -118,12 +118,12 @@
         <item quantity="one">%1$d card studied in %2$s</item>
         <item quantity="other">%1$d cards studied in %2$s</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Καλώς ήρθατε στο AnkiDroid</string>
-    <string name="fact_adder_intent_title">Κάρτα AnkiDroid</string>
+    <string name="studyoptions_welcome_title">Καλώς ήρθατε στο Ανκί-Ντρόιντ</string>
+    <string name="fact_adder_intent_title">Κάρτα Ανκί-Ντρόιντ</string>
     <string name="card_editor_add_card">Προσθήκη σημείωσης</string>
     <string name="card_editor_copy_card">Αντιγραφή κάρτας</string>
     <string name="card_editor_reposition_card">Reposition</string>
@@ -146,8 +146,8 @@
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
     <string name="delete_deck">Διαγραφή τράπουλας...\nΠαρακαλούμε περιμένετε.</string>
     <string name="show_hint">Show %s</string>
-    <string name="info_rate">Αξιολογείστε το AnkiDroid</string>
-    <string name="col_load_failed">Η φόρτωση της συλλογής απέτυχε.\nΠιέστε πίσω, για να κλείσετε το AnkiDroid.</string>
+    <string name="info_rate">Αξιολογείστε το Ανκί-Ντρόιντ</string>
+    <string name="col_load_failed">Η φόρτωση της συλλογής απέτυχε.\nΠιέστε πίσω, για να κλείσετε το Ανκί-Ντρόιντ.</string>
     <string name="import_title">Importing</string>
     <string name="import_select_title">Choose a file to import</string>
     <string name="import_message_add">Προσθήκη</string>

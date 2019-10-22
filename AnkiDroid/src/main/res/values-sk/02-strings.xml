@@ -120,7 +120,7 @@
         <item quantity="many">%1$d preštudovaných kartičiek za %2$s</item>
         <item quantity="other">%1$d preštudovaných kartičiek za %2$s</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="one">%1$d minútu</item>
         <item quantity="few">%1$d minúty</item>
         <item quantity="many">%1$d minút</item>

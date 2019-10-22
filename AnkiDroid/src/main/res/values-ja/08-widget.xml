@@ -42,7 +42,7 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">課題</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="other">あと%d枚</item>
     </plurals>
     <string name="widget_no_cards_due">学習予定日時に達したカードはありません</string>
     <string name="widget_loading">ウィジェットをロード中...</string>

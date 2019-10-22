@@ -118,7 +118,7 @@
         <item quantity="one">%1$d korttia opiskeltu ajassa %2$s</item>
         <item quantity="other">%1$d korttia opiskeltu ajassa %2$s</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="one">%1$d minuutti</item>
         <item quantity="other">%1$d minuuttia</item>
     </plurals>

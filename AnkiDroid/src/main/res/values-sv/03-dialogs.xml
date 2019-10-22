@@ -62,24 +62,24 @@
         <item><![CDATA[AnkiDroid är släppt under <a href=\"%1$s\">GNU-GPL v3 licensen</a> och all källkod finns tillgänglig <a href=\"%2$s\">på GitHub</a>.]]></item>
     </string-array>
     <string name="preview_title">Förhandsgranskning</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">Ompositionera nytt kort</string>
+    <string name="reposition_card_dialog_message">Startposition:</string>
+    <string name="reposition_card_not_new_error">Endast nya kort kan ompositioneras</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d kort ompositionerat</item>
+        <item quantity="other">%d kort ompositionerade</item>
     </plurals>
     <string name="reset_card_dialog_title">Nollställ inlärningsdata för kort</string>
     <string name="reset_card_dialog_message">Detta kort kommer att placeras sist i kön för nya kort.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d kort återställt</item>
+        <item quantity="other">%d kort återställda</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Schemalägg kort</string>
     <string name="reschedule_card_dialog_message">Schemalägg för repetition om x dagar:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d kort schemalagt</item>
+        <item quantity="other">%d kort schemalagda</item>
     </plurals>
     <string name="answering_error_title">Databasfel</string>
     <string name="answering_error_message">Ett fel uppstod när data skrevs till din samling. Detta kan bero på en korrupt databas eller otillräckligt diskutrymme.\n\nOm detta händer flera gånger, vänligen kontrollera databasen, reparera samlingen eller återställ från en säkerhetskopia. Klicka på \'alternativ\' för det.\n\nHur som helst kan detta också bero på en bug i AnkiDroid; vänligen rapportera felet så vi kan kontrollera detta.</string>
@@ -89,8 +89,8 @@
     <string name="intent_add_clear_all">Rensa allt</string>
     <string name="intent_aedict_empty">Kategori \'default\' är tom</string>
     <string name="intent_aedict_category">För att lägga till kort till AnkiDroid, ta bort alla Notepadkategorier eller lägg till en som heter \'default\'</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Nya kort i kortlek: %d</string>
+    <string name="custom_study_rev_total_rev">Repetitioner i kö i kortlek: %d</string>
     <string name="custom_study_new_extend">Öka dagens gräns för nya kort med</string>
     <string name="custom_study_rev_extend">Öka dagens repetitionsgräns med</string>
     <string name="custom_study_forgotten">Repetera kort som är glömda under de senaste x dagarna:</string>

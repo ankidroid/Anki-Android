@@ -47,24 +47,24 @@
     <string name="pref_cat_general_summ">اعدادات عامة</string>
     <string name="pref_cat_reviewing">مراجعة</string>
     <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
-    <string name="pref_cat_reviewer_behaviour">Behavior</string>
-    <string name="pref_cat_flashcard">Display</string>
+    <string name="pref_cat_reviewer_behaviour">السلوك</string>
+    <string name="pref_cat_flashcard">الشاشة</string>
     <string name="pref_cat_whiteboard">السبورة</string>
     <string name="pref_cat_automatic_display">Automatic display answer</string>
-    <string name="pref_cat_appearance">Appearance</string>
+    <string name="pref_cat_appearance">المظهر</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
-    <string name="pref_cat_themes">Themes</string>
+    <string name="pref_cat_themes">السمات</string>
     <string name="pref_cat_fonts">الخطوط</string>
-    <string name="pref_cat_gestures">Gestures</string>
+    <string name="pref_cat_gestures">الحركات</string>
     <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
     <string name="pref_cat_actions">الإجراءات</string>
-    <string name="pref_cat_advanced">Advanced</string>
+    <string name="pref_cat_advanced">خيارات متقدمة</string>
     <string name="pref_cat_advanced_summ">Optimization and experimental features</string>
     <string name="pref_cat_performance">الأداء</string>
     <string name="pref_cat_workarounds">Workarounds</string>
-    <string name="pref_cat_plugins">Plugins</string>
+    <string name="pref_cat_plugins">الإضافات</string>
     <string name="about_title">About AnkiDroid</string>
-    <string name="about_version">Version: </string>
+    <string name="about_version">الإصدار: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Stroke width</string>
     <string name="whiteboard_black">Black strokes</string>
@@ -88,10 +88,10 @@
     <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
     <string name="answer_buttons_position">Answer buttons position</string>
     <string-array name="answer_buttons_position_labels">
-        <item>Top</item>
-        <item>Bottom</item>
+        <item>في الأعلى</item>
+        <item>في الأسفل</item>
     </string-array>
-    <string name="gestures">Enable gestures</string>
+    <string name="gestures">تفعيل الإيماءات</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
     <string name="gestures_swipe_up">السحب للأعلى</string>
     <string name="gestures_swipe_down">السحب للإسفل</string>
@@ -107,7 +107,7 @@
     <string name="double_scrolling_gap">تسريع التحريك</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
     <string name="swipe_sensitivity">Swipe sensitivity</string>
-    <string name="tts">Text to speech</string>
+    <string name="tts">نص إلى كلام</string>
     <string name="tts_summ">اقرأ السؤال والإجابة إذا لم يضمن ملف صوتي</string>
     <string name="sync_fetch_missing_media">اجلب الوسائط أثناء المزامنة</string>
     <string name="sync_fetch_missing_media_summ">جلب الوسائط المفقودة تلقائياً عند المزامنة.</string>

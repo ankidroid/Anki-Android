@@ -122,7 +122,7 @@
         <item quantity="many">%1$d cards studied in %2$s</item>
         <item quantity="other">%1$d cards studied in %2$s</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="zero">%1$d دقيقة</item>
         <item quantity="one">%1$d دقيقة</item>
         <item quantity="two">%1$d دقيقتان</item>
@@ -190,7 +190,7 @@
     <string name="export_unsuccessful">Error exporting apkg file</string>
     <string name="import_hint">لاستيراد البطاقات، ضع الملف apkg في الدليل %s ثم اضغط موافق</string>
     <string name="upgrade_import_no_file_found">لا يوجد غير قابلة للاستيراد %1$s غير موجود</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">الخيارات</string>
     <string name="select_tts">تعيين اللّغة</string>
     <string name="custom_study">دراسة مخصصة</string>
     <string name="more_options">المزيد</string>

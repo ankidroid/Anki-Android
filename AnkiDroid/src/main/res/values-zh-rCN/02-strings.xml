@@ -117,7 +117,7 @@
     <plurals name="timebox_reached">
         <item quantity="other">在%2$s内学习了%1$d张卡片</item>
     </plurals>
-    <plurals name="in_minutes">
+    <plurals name="timebox_reached_minutes">
         <item quantity="other">%1$d分钟</item>
     </plurals>
     <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
@@ -126,7 +126,7 @@
     <string name="card_editor_copy_card">复制卡片</string>
     <string name="card_editor_reposition_card">更改位置</string>
     <string name="card_editor_reset_card">重设学习进度</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">重新安排</string>
     <string name="card_editor_preview_card">预览</string>
     <string name="error_insufficient_memory">由于设备内存不足导致操作无法完成。</string>
     <string name="rename">重命名</string>
@@ -162,9 +162,9 @@
     <string name="export_successful_title">发送apkg文件吗？</string>
     <string name="export_send_button">发送</string>
     <string name="export_save_button">保存到文件</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>
+    <string name="export_save_apkg_successful">已成功保存 apkg</string>
+    <string name="export_save_apkg_unsuccessful">保存 apkg 失败</string>
     <string name="export_successful">文件 “%s” 导出完毕，您想用其他 app 发送它吗？</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
     <string name="export_email_text"><![CDATA[        嗨！
@@ -175,7 +175,7 @@
     <string name="export_unsuccessful">导出apkg文件时出错</string>
     <string name="import_hint">请把apkg文件放在%s目录中，然后按确定。</string>
     <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">选项</string>
     <string name="select_tts">设置 TTS 语言</string>
     <string name="custom_study">自定义学习</string>
     <string name="more_options">更多</string>
@@ -216,13 +216,13 @@
     <string name="filtered_deck_name">筛选牌组</string>
     <string name="reminder_title">不要忘记今天去学习 ！</string>
     <plurals name="reminder_text">
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="other">%2$d 张卡牌在 %1$s 中待复习</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">共享 apkg 文件时出错</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">必须启用 V2 调度器以导入此文件。</string>
+    <string name="import_cannot_with_v2">V2 调度器无法导入包含进度的 V1 牌组。</string>
+    <string name="export_v2_dummy_note">此文件需要更新版本的 Anki。</string>
+    <string name="export_v2_forbidden">在导出带有进度信息的单个牌组前，请切换到 V1 调度器。</string>
 </resources>

@@ -42,7 +42,7 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">卡片到期</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="other">%d 张卡片需要复习</item>
     </plurals>
     <string name="widget_no_cards_due">没有卡片待复习</string>
     <string name="widget_loading">载入桌面小部件中&#8230;</string>

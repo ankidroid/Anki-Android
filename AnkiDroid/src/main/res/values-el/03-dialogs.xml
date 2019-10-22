@@ -82,13 +82,13 @@
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
     <string name="answering_error_title">Σφάλμα βάσης δεδομένων</string>
-    <string name="answering_error_message">Παρουσιάστηκε σφάλμα κατά την εγγραφή στη συλλογή. Αυτό θα μπορεί να σχετίζεται με κατεστραμμένη βάση δεδομένων ή ανεπαρκή αποθηκευτικό χώρο.\n\nΑν συμβαίνει συχνά, προσπαθήστε να ελέγξετε τη βάση δεδομένων, να επιδιορθώσετε τη συλλογή ή να την επαναφέρετε από ένα αντίγραφο. Κάντε κλικ στις σχετικές «επιλογές».\n\nΕκτός αυτού, μπορεί να είναι και AnkiDroid· σφάλμα παρακαλούμε αναφέρετε το σφάλμα ώστε να το ελέγξουμε.</string>
+    <string name="answering_error_message">Παρουσιάστηκε σφάλμα κατά την εγγραφή στη συλλογή. Αυτό θα μπορεί να σχετίζεται με κατεστραμμένη βάση δεδομένων ή ανεπαρκή αποθηκευτικό χώρο.\n\nΑν συμβαίνει συχνά, προσπαθήστε να ελέγξετε τη βάση δεδομένων, να επιδιορθώσετε τη συλλογή ή να την επαναφέρετε από ένα αντίγραφο. Κάντε κλικ στις σχετικές «επιλογές».\n\nΕκτός αυτού, μπορεί να είναι και σφάλμα τού Ανκί-Ντρόιντ· παρακαλούμε αναφέρετε το σφάλμα ώστε να το ελέγξουμε.</string>
     <string name="answering_error_report">Αναφορά σφάλματος</string>
     <string name="repair_deck_dialog">Είστε βέβαιοι ότι θέλετε να επιδιορθώσετε τη βάση δεδομένων;\n\nΠριν να ξεκινήσει η απόπειρα, θα δημιουργηθεί ένα αντίγραφο στον υποφάκελο \'%s\'.</string>
     <string name="intent_add_saved_information">Αποθηκευμένα δεδομένα</string>
     <string name="intent_add_clear_all">Καθαρισμός όλων</string>
-    <string name="intent_aedict_empty">Η κατηγορία \"default\" είναι κενή</string>
-    <string name="intent_aedict_category">Για να προσθέσετε κάρτες στο AnkiDroid αφαιρέστε όλες τις κατηγορίες Notepad ή προσθέστε μία με όνομα \"default\"</string>
+    <string name="intent_aedict_empty">Η κατηγορία «προεπιλεγμένο» είναι κενή</string>
+    <string name="intent_aedict_category">Για να προσθέσετε κάρτες στο Ανκί-Ντρόιντ αφαιρέστε όλες τις κατηγορίες Notepad ή προσθέστε μία με όνομα «προεπιλεγμένο»</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Αύξηση σημερινού ορίου νέων καρτών κατά</string>

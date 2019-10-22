@@ -65,8 +65,8 @@
     </string-array>
     <string name="preview_title">תצוגה מקדימה</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_message">מיקום התחלתי:</string>
+    <string name="reposition_card_not_new_error">ניתן לשנות מיקום לקלפים חדשים בלבד</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d card repositioned</item>
         <item quantity="two">%d cards repositioned</item>
@@ -82,9 +82,9 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <string name="reschedule_card_dialog_title">תזמון קלף מחדש</string>
-    <string name="reschedule_card_dialog_message">Reschedule for review in x days</string>
+    <string name="reschedule_card_dialog_message">תזמן לשינון מחדש בעוד x ימים</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
+        <item quantity="one">%d קלף תוזמן מחדש</item>
         <item quantity="two">%d cards rescheduled</item>
         <item quantity="many">%d cards rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
@@ -146,7 +146,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">כל הקלפים</string>
     <string name="tags_dialog_option_new_cards">חדש</string>
-    <string name="tags_dialog_option_due_cards">Due</string>
+    <string name="tags_dialog_option_due_cards">מיועד</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">מתבצע איתור קלפים ריקים&#8230;</string>
     <string name="empty_cards_none">אין קלפים ריקים</string>

@@ -36,7 +36,7 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">画像を追加</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
+    <string name="multimedia_editor_popup_audio_clip">音声ファイルの追加</string>
     <string name="multimedia_editor_popup_audio">音声の録音</string>
     <string name="multimedia_editor_popup_text">高度な編集</string>
     <string name="multimedia_editor_popup_cloze">穴埋め問題</string>
@@ -69,8 +69,8 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text">テキスト</string>
     <string name="multimedia_editor_field_editing_image">画像</string>
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio">音声録音</string>
+    <string name="multimedia_editor_field_editing_audio_clip">音声クリップ</string>
     <string name="multimedia_editor_field_editing_done">完了</string>
     <!-- Text field editing -->
     <!-- buttons -->

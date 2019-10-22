@@ -42,9 +42,9 @@
     <!-- Navigation drawer items-->
     <string name="decks">مجاميع</string>
     <string name="card_browser">متصفح البطاقات</string>
-    <string name="statistics">إحصائيات</string>
+    <string name="statistics">الإحصائيات</string>
     <string name="settings">إعدادات</string>
-    <string name="help">مساعدة</string>
+    <string name="help">المساعدة</string>
     <string name="send_feedback">ارسل رأيك</string>
     <string name="studyoptions_title">نظرة إجمالية على المجموعة</string>
     <string name="studyoptions_due_today">المستحق اليوم:</string>
@@ -65,12 +65,12 @@
         <item quantity="other">%1$d بطاقة مستحقة (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="zero">%d دقيقة متبقية</item>
-        <item quantity="one">%d دقائق متبقية</item>
+        <item quantity="zero">لا دقيقة متبقية</item>
+        <item quantity="one">دقيقة واحدة متبقية</item>
         <item quantity="two">%d minutes left</item>
-        <item quantity="few">%d minutes left</item>
-        <item quantity="many">%d minutes left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="few">%d دقائق متبقية</item>
+        <item quantity="many">%d دقائق متبقية</item>
+        <item quantity="other">%d دقائق متبقية</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -100,7 +100,7 @@
     <string name="undo_action_delete_multi">حذف الملاحظات</string>
     <string name="undo_action_change_deck_multi">تغيير المجاميع</string>
     <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reset_card">إعادة تعيين التقدم</string>
     <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">نقل الكل إلى المجاميع</string>
     <string name="unbury">إلغِ الدفن</string>
