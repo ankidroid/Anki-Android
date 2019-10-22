@@ -879,7 +879,7 @@ public class Collection {
             ord = template.getInt("ord");
             card.setOrd(ord);
         } catch (JSONException e) {
-            new RuntimeException(e);
+            throw new RuntimeException(e);
         }
         did = mDb.queryScalar("select did from cards where nid = " + nid + " and ord = " + ord);
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
