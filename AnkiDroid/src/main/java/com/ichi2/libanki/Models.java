@@ -1344,46 +1344,53 @@ public class Models {
     }
 
     /* Forward & Reverse */
+    private static JSONObject _newForwardReverse(Collection col) {
+        return _newForwardReverse(col, "Basic (and reversed card)");
+    }
 
-    public static JSONObject addForwardReverse(Collection col) {
-    	String name = "Basic (and reversed card)";
+    private static JSONObject _newForwardReverse(Collection col, String name) {
         Models mm = col.getModels();
-        JSONObject m = _newBasicModel(col);
+        JSONObject m = _newBasicModel(col, name);
         try {
-            m.put("name", name);
             JSONObject t = mm.newTemplate("Card 2");
             t.put("qfmt", "{{Back}}");
             t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Front}}");
             mm.addTemplateInNewModel(m, t);
-            mm.add(m);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
         return m;
     }
 
+    public static JSONObject addForwardReverse(Collection col) {
+        JSONObject m = _newForwardReverse(col);
+        col.getModels().add(m);
+        return m;
+    }
 
     /* Forward & Optional Reverse */
 
-    public static JSONObject addForwardOptionalReverse(Collection col) {
+    private static JSONObject _newForwardOptionalReverse(Collection col) {
     	String name = "Basic (optional reversed card)";
         Models mm = col.getModels();
-        JSONObject m = _newBasicModel(col);
+        JSONObject m = _newForwardReverse(col, name);
         try {
-            m.put("name", name);
-            JSONObject fm = mm.newField("Add Reverse");
+            String av = "Add Reverse";
+            JSONObject fm = mm.newField(av);
             mm.addFieldInNewModel(m, fm);
-            JSONObject t = mm.newTemplate("Card 2");
-            t.put("qfmt", "{{#Add Reverse}}{{Back}}{{/Add Reverse}}");
-            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Front}}");
-            mm.addTemplateInNewModel(m, t);
-            mm.add(m);
+            JSONObject t = m.getJSONArray("tmpls").getJSONObject(1);
+            t.put("qfmt", "{{#" + av +"}}" + t.get("qfmt") + "{{/" + av +"}}");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
         return m;
     }
 
+    public static JSONObject addForwardOptionalReverse(Collection col) {
+        JSONObject m = _newForwardOptionalReverse(col);
+        col.getModels().add(m);
+        return m;
+    }
 
     public static JSONObject addClozeModel(Collection col) {
         Models mm = col.getModels();
