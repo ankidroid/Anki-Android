@@ -119,7 +119,8 @@
 
     <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid card</string>
-    <string name="card_editor_add_card">Add note</string>
+    <string name="note_editor_add_note">Add note</string>
+    <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">Copy card</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Reset progress</string>

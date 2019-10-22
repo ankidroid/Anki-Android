@@ -791,7 +791,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case android.R.id.home:
                 endMultiSelectMode();
                 return true;
-            case R.id.action_add_card_from_card_browser: {
+            case R.id.action_add_note_from_card_browser: {
                 Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
                 intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
                 startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
