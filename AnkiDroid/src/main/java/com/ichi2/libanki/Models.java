@@ -209,6 +209,7 @@ public class Models {
      */
     public void flush() {
         if (mChanged) {
+            ensureNotEmpty();
             JSONObject array = new JSONObject();
             try {
                 for (Map.Entry<Long, JSONObject> o : mModels.entrySet()) {
@@ -224,6 +225,14 @@ public class Models {
         }
     }
 
+    public boolean ensureNotEmpty() {
+        if (mModels.isEmpty()) {
+            addBasicModel(mCol);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Retrieving and creating models
