@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">增加今天的新卡片数量</string>
@@ -117,8 +117,9 @@
     <plurals name="timebox_reached">
         <item quantity="other">在%2$s内学习了%1$d张卡片</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="other">%1$d分钟</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid卡片</string>
@@ -150,21 +151,21 @@
     <string name="import_message_add">添加</string>
     <string name="import_message_replace_confirm">这将删除你当前的所有记忆库，并用文件%s中的内容加以替换。你确定吗？</string>
     <string name="import_message_add_confirm">要添加 \"%s\" 到记忆库吗？</string>
-    <string name="import_log_no_apkg">这不是一个有效的 apkg 文件</string>
-    <string name="import_error_not_apkg_extension">\"%s\"并不是具有 .apkg 扩展名的文件</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
     <string name="import_replacing">正在导入牌组集合&#8230;</string>
     <string name="export_include_schedule">包括学习进度</string>
     <string name="export_include_media">包括媒体文件</string>
-    <string name="confirm_apkg_export">要将记忆库集合导出为apkg文件吗？</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">将“%s”导出为akpg文件？</string>
-    <string name="export_in_progress">正在导出apkg文件&#8230;</string>
-    <string name="export_successful_title">发送apkg文件吗？</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">发送</string>
     <string name="export_save_button">保存到文件</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>
-    <string name="export_save_apkg_successful">已成功保存 apkg</string>
-    <string name="export_save_apkg_unsuccessful">保存 apkg 失败</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">文件 “%s” 导出完毕，您想用其他 app 发送它吗？</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
     <string name="export_email_text"><![CDATA[        嗨！

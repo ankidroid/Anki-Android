@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Augmenter la limite de nouvelles cartes pour aujourd\'hui</string>
@@ -118,7 +118,8 @@
         <item quantity="one">%1$d carte étudiée en %2$s</item>
         <item quantity="other">%1$d cartes étudiées en %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
@@ -153,21 +154,21 @@
     <string name="import_message_add">Ajouter</string>
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
     <string name="import_message_add_confirm">Ajouter « %s » à la collection ? Ceci peut prendre un long moment</string>
-    <string name="import_log_no_apkg">Ce n\'est pas un fichier apkg valide</string>
-    <string name="import_error_not_apkg_extension">Le nom de fichier %s n’a pas l’extension .apkg</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
     <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
     <string name="export_include_schedule">Inclure la planification</string>
     <string name="export_include_media">Inclure les médias</string>
-    <string name="confirm_apkg_export">Exporter la collection au format apkg ?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Exporter « %s » au format apkg ?</string>
-    <string name="export_in_progress">Export du fichier apkg en cours&#8230;</string>
-    <string name="export_successful_title">Envoyer apkg ?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Envoyer</string>
     <string name="export_save_button">Enregistrer dans un fichier</string>
     <string name="export_send_no_handlers">Aucune application disponible pour supporter apkg. Sauvegarde...</string>
-    <string name="export_save_apkg_successful">Apkg sauvegardé avec succès</string>
-    <string name="export_save_apkg_unsuccessful">Échec de l\'enregistrement de l\'apkg</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">Le fichier « %s » a été exporté. Voulez-vous le partager à l\'aide d\'une autre app ?</string>
     <string name="export_email_subject">AnkiDroid a exporté %s flashcards</string>
     <string name="export_email_text"><![CDATA[        Salut !

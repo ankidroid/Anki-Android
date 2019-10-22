@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Увећај данашњи лимит нових картица</string>
@@ -119,9 +119,10 @@
         <item quantity="few">%1$d карата проучено у %2$s</item>
         <item quantity="other">%1$d cards studied in %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d минут</item>
-        <item quantity="few">%1$d минута</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="few">%1$d minutes</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">Добро дошли у AnkiDroid</string>
@@ -156,21 +157,21 @@
     <string name="import_message_add">Додај</string>
     <string name="import_message_replace_confirm">Избрисати вашу постојећу колекцију и заменити је подацима из датотеке %s. Да ли сте сигурни?</string>
     <string name="import_message_add_confirm">Додај „%s“ у колекцију. Ово може да протраје неко време.</string>
-    <string name="import_log_no_apkg">Ово је неодговарајућа apkg датотека</string>
-    <string name="import_error_not_apkg_extension">Датотека %s треба да има проширење .apkg</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">Ова датотека не може да се увезе аутоматски. Погледајте у упуству како се ручно увози anki датотека: \n %s</string>
     <string name="import_replacing">Replacing collection&#8230;</string>
     <string name="export_include_schedule">Укључујући заказивање</string>
     <string name="export_include_media">Обухватај медијске датотеке</string>
-    <string name="confirm_apkg_export">Извози колекцију као apkg датотеку?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Извози „%s“ као apkg датотеку?</string>
-    <string name="export_in_progress">Извозивање apkg датотеке у току&#8230;</string>
-    <string name="export_successful_title">Send apkg?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Send</string>
     <string name="export_save_button">Save to file</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
     <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!

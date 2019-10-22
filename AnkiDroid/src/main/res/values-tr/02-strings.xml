@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını yükselt</string>
@@ -118,9 +118,10 @@
         <item quantity="one">%2$s %1$d kart çalışıldı</item>
         <item quantity="other">%2$s %1$d kart çalışıldı</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d dakikada</item>
-        <item quantity="other">%1$d dakikada</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid\'e Hoşgeldiniz</string>
     <string name="fact_adder_intent_title">AnkiDroid Kartı</string>
@@ -153,21 +154,21 @@
     <string name="import_message_add">Ekle</string>
     <string name="import_message_replace_confirm">Bu, varolan koleksiyonu silerek %s dosyasının verileriyle değiştirir. Emin misiniz?</string>
     <string name="import_message_add_confirm">\"%s\" koleksiyona eklensin mi? Bu uzun sürebilir.</string>
-    <string name="import_log_no_apkg">Bu geçerli bir apkg dosyası değil</string>
-    <string name="import_error_not_apkg_extension">%s dosyasının .apkg uzantısı yok</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
     <string name="import_replacing">Koleksiyon değiştiriliyor&#8230;</string>
     <string name="export_include_schedule">Zamanlama dâhil</string>
     <string name="export_include_media">Medya dâhil</string>
-    <string name="confirm_apkg_export">Koleksiyon apkg dosyası olarak kaydedilsin mi?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">\"%s\" apkg dosyası olarak kaydedilsin mi?</string>
-    <string name="export_in_progress">apkg dosyası keydediliyor&#8230;</string>
-    <string name="export_successful_title">Apkg gönderilsin mi?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Gönder</string>
     <string name="export_save_button">Dosyaya kaydet</string>
     <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor...</string>
-    <string name="export_save_apkg_successful">Apkg başarıyla kaydedildi</string>
-    <string name="export_save_apkg_unsuccessful">Apkg kaydı başarısız</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">Dosya \"%s\" dışarı çıkartıldı. Başka bir uygulama ile göndermek istiyor musunuz?</string>
     <string name="export_email_subject">AnkiDroid hafızakartlarına çıkartıldı: %s</string>
     <string name="export_email_text"><![CDATA[        Selam!

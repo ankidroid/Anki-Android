@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">आज के नये कार्ड की सीमा बढ़ाएं</string>
@@ -118,9 +118,10 @@
         <item quantity="one">%1$d कार्ड में अध्ययन किया %2$s</item>
         <item quantity="other">%1$d कार्ड में अध्ययन किया %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d मिनट</item>
-        <item quantity="other">%1$d मिनट</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid में आपका स्वागत है</string>
     <string name="fact_adder_intent_title">AnkiDroid कार्ड</string>
@@ -153,21 +154,21 @@
     <string name="import_message_add">जोड़ें</string>
     <string name="import_message_replace_confirm">यह अपने मौजूदा संग्रह को हटाने और यह फ़ाइल %s का डेटा के साथ बदलना होगा। क्या आपको यकीन है?</string>
     <string name="import_message_add_confirm">\"%s\" को संग्रह में जोड़ें? यह एक लंबा समय लग सकता है</string>
-    <string name="import_log_no_apkg">यह एक मान्य apkg फ़ाइल नहीं है</string>
-    <string name="import_error_not_apkg_extension">\"%s\" फ़ाइल का नाम नहीं है । apkg विस्तार</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
     <string name="import_replacing">संग्रह की जगह.. ।</string>
     <string name="export_include_schedule">शेड्यूलिंग शामिल करें</string>
     <string name="export_include_media">मीडिया शामिल करें</string>
-    <string name="confirm_apkg_export">Apkg फ़ाइल के रूप में निर्यात संग्रह?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">निर्यात \"%s\" apkg फ़ाइल के रूप में?</string>
-    <string name="export_in_progress">Apkg फ़ाइल निर्यात कर रहा है.. ।</string>
-    <string name="export_successful_title">Apkg भेजें?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Send</string>
     <string name="export_save_button">Save to file</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">फ़ाइल \"%s\" निर्यात किया गया था । क्या आप इसे किसी अंय अनुप्रयोग के साथ भेजना चाहते हैं?</string>
     <string name="export_email_subject">AnkiDroid निर्यात किए गए स्पैनिश: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!

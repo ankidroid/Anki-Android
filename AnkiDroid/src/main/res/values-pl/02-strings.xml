@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Zwiększ dzisiejszy limit nowych kart</string>
@@ -120,11 +120,12 @@
         <item quantity="many">%1$d cards studied in %2$s</item>
         <item quantity="other">%1$d kart przerobione w %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d minutę</item>
-        <item quantity="few">%1$d minuty</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="few">%1$d minutes</item>
         <item quantity="many">%1$d minutes</item>
-        <item quantity="other">%1$d minut</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">Witamy w AnkiDroidzie</string>
     <string name="fact_adder_intent_title">Karta AnkiDroida</string>
@@ -159,21 +160,21 @@
     <string name="import_message_add">Dodaj</string>
     <string name="import_message_replace_confirm">Istniejąca kolekcja zostanie usunięta i zastąpiona danymi z pliku %s. Czy na pewno?</string>
     <string name="import_message_add_confirm">Dodać \"%s\" do kolekcji? To może trwać bardzo długo</string>
-    <string name="import_log_no_apkg">To nie jst prawidłowy plik apkg</string>
-    <string name="import_error_not_apkg_extension">Nazwa pliku \"%s\" nie ma rozszerzenia .apkg</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
     <string name="import_replacing">Zamiana kolekcji&#8230;</string>
     <string name="export_include_schedule">Włącznie z zaplanowanymi powtórkami</string>
     <string name="export_include_media">Włącznie z plikami mediów</string>
-    <string name="confirm_apkg_export">Wyeksportować kolekcję jako plik .apkg?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Wyeksportować \"%s\" jako plik .apkg?</string>
-    <string name="export_in_progress">Eksportowanie pliku .apkg&#8230;</string>
-    <string name="export_successful_title">Wysłać apkg?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Wyślij</string>
     <string name="export_save_button">Zapisz jako plik</string>
     <string name="export_send_no_handlers">Nie znaleziono aplikacji, która obsługuje apkg. Zapisywanie...</string>
-    <string name="export_save_apkg_successful">Apkg zapisany pomyślnie</string>
-    <string name="export_save_apkg_unsuccessful">Błąd zapisywania</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">Plik \"%s\" został wyeksportowany. Czy nadal chcesz wysłać go przez inną aplikację?</string>
     <string name="export_email_subject">AnkiDroid wyeksportował fiszki: %s</string>
     <string name="export_email_text"><![CDATA[        Cześć!

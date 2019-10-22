@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Tingkatkan batas kartu baru hari ini</string>
@@ -117,8 +117,9 @@
     <plurals name="timebox_reached">
         <item quantity="other">%1$d kartu dipelajari di%2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="other">%1$d menit</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">Selamat Datang ke AnkiDroid</string>
     <string name="fact_adder_intent_title">Kad AnkiDroid</string>
@@ -150,21 +151,21 @@
     <string name="import_message_add">Tambahkan</string>
     <string name="import_message_replace_confirm">Ini akan menghapus koleksi Anda yang ada dan menggantinya dengan data dari file %s. Apakah Anda yakin?</string>
     <string name="import_message_add_confirm">Tambahkan \"%s\" ke koleksi? Ini mungkin memakan waktu lama</string>
-    <string name="import_log_no_apkg">Bukan file apkg yang sah</string>
-    <string name="import_error_not_apkg_extension">Nama file \" %s \" tidak memiliki ekstensi .apkg</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">File yang dipilih tidak bisa diimpor secara otomatis oleh AnkiDroid. Silakan lihat manual pengguna tentang cara mengimpor file anki secara manual: \n%s</string>
     <string name="import_replacing">Mengganti koleksi&#8230;</string>
     <string name="export_include_schedule">Sertakan penjadwalan</string>
     <string name="export_include_media">Sertakan media</string>
-    <string name="confirm_apkg_export">Koleksi ekspor sebagai file apkg?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Ekspor \"%s\" sebagai file apkg?</string>
-    <string name="export_in_progress">Mengekspor file apkg&#8230;</string>
-    <string name="export_successful_title">Kirim apkg?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Kirim</string>
     <string name="export_save_button">Menyimpan ke dalam berkas</string>
     <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan...</string>
-    <string name="export_save_apkg_successful">apkg berhasil disimpan</string>
-    <string name="export_save_apkg_unsuccessful">Penyimpanan apkg gagal</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">File \"%s\" telah diekspor. Apakah Anda ingin mengirimkannya dengan aplikasi lain?</string>
     <string name="export_email_subject">AnkiDroid mengekspor flashcards: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
