@@ -189,6 +189,7 @@ public class AnkiDroidApp extends Application {
      */
     @Override
     public void onCreate() {
+        sInstance = this;
         super.onCreate();
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
@@ -212,7 +213,6 @@ public class AnkiDroidApp extends Application {
             UsageAnalytics.setDryRun(true);
         }
 
-        sInstance = this;
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         NotificationChannels.setup(getApplicationContext());
 
