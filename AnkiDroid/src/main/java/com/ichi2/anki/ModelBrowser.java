@@ -49,7 +49,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.widget.WidgetStatus;
 
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
