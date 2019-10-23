@@ -300,10 +300,10 @@ public class ModelBrowser extends AnkiActivity {
         String clone = getResources().getString(R.string.model_browser_add_clone);
 
         // AnkiDroid doesn't have stdmodels class or model name localization, this could be much cleaner if implemented
-        final String basicName = "Basic";
-        final String addForwardReverseName = "Basic (and reversed card)";
-        final String addForwardOptionalReverseName = "Basic (optional reversed card)";
-        final String addClozeModelName = "Cloze";
+        final String basicName = getResources().getString(R.string.basic_model_name);
+        final String addForwardReverseName = getResources().getString(R.string.forward_reverse_model_name);
+        final String addForwardOptionalReverseName = getResources().getString(R.string.forward_optional_reverse_model_name);
+        final String addClozeModelName = getResources().getString(R.string.cloze_model_name);
 
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
         mNewModelLabels = new ArrayList<>();
