@@ -23,6 +23,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Pair;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.Assert;
 
@@ -1311,21 +1313,25 @@ public class Models {
      */
 
     private static JSONObject _newBasicModel(Collection col) {
-        return _newBasicModel(col, "Basic");
+        String name = AnkiDroidApp.getAppResources().getString(R.string.basic_model_name);
+        return _newBasicModel(col, name);
     }
 
 
     private static JSONObject _newBasicModel(Collection col, String name) {
         Models mm = col.getModels();
         JSONObject m = mm.newModel(name);
-        JSONObject fm = mm.newField("Front");
+        String frontName = AnkiDroidApp.getAppResources().getString(R.string.front_field_name);
+        JSONObject fm = mm.newField(frontName);
         mm.addFieldInNewModel(m, fm);
-        fm = mm.newField("Back");
+        String backName = AnkiDroidApp.getAppResources().getString(R.string.back_field_name);
+        fm = mm.newField(backName);
         mm.addFieldInNewModel(m, fm);
-        JSONObject t = mm.newTemplate("Card 1");
+        String cardOneName = AnkiDroidApp.getAppResources().getString(R.string.card_one_name);
+        JSONObject t = mm.newTemplate(cardOneName);
         try {
-            t.put("qfmt", "{{Front}}");
-            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Back}}");
+            t.put("qfmt", "{{"+frontName+"}}");
+            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{" + backName + "}}");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1334,7 +1340,8 @@ public class Models {
     }
 
     public static JSONObject addBasicModel(Collection col) {
-        return addBasicModel(col, "Basic");
+        String name = AnkiDroidApp.getAppResources().getString(R.string.basic_model_name);
+        return addBasicModel(col, name);
     }
 
     public static JSONObject addBasicModel(Collection col, String name) {
@@ -1345,16 +1352,20 @@ public class Models {
 
     /* Forward & Reverse */
     private static JSONObject _newForwardReverse(Collection col) {
-        return _newForwardReverse(col, "Basic (and reversed card)");
+        String name = AnkiDroidApp.getAppResources().getString(R.string.forward_reverse_model_name);
+        return _newForwardReverse(col, name);
     }
 
     private static JSONObject _newForwardReverse(Collection col, String name) {
         Models mm = col.getModels();
         JSONObject m = _newBasicModel(col, name);
         try {
-            JSONObject t = mm.newTemplate("Card 2");
-            t.put("qfmt", "{{Back}}");
-            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Front}}");
+            String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
+            String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
+            String cardTwoName = AnkiDroidApp.getAppResources().getString(R.string.card_two_name);
+            JSONObject t = mm.newTemplate(cardTwoName);
+            t.put("qfmt", "{{" + backName + "}}");
+            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{"+frontName+"}}");
             mm.addTemplateInNewModel(m, t);
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -1371,11 +1382,11 @@ public class Models {
     /* Forward & Optional Reverse */
 
     private static JSONObject _newForwardOptionalReverse(Collection col) {
-    	String name = "Basic (optional reversed card)";
+        String name = AnkiDroidApp.getAppResources().getString(R.string.forward_optional_reverse_model_name);
         Models mm = col.getModels();
         JSONObject m = _newForwardReverse(col, name);
         try {
-            String av = "Add Reverse";
+            String av = AnkiDroidApp.getAppResources().getString(R.string.field_to_ask_front_name);
             JSONObject fm = mm.newField(av);
             mm.addFieldInNewModel(m, fm);
             JSONObject t = m.getJSONArray("tmpls").getJSONObject(1);
@@ -1394,19 +1405,22 @@ public class Models {
 
     public static JSONObject addClozeModel(Collection col) {
         Models mm = col.getModels();
-        JSONObject m = mm.newModel("Cloze");
+        String name = AnkiDroidApp.getAppResources().getString(R.string.cloze_model_name);
+        JSONObject m = mm.newModel(name);
         try {
             m.put("type", Consts.MODEL_CLOZE);
-            String txt = "Text";
+            String txt = AnkiDroidApp.getAppResources().getString(R.string.text_field_name);
             JSONObject fm = mm.newField(txt);
             mm.addFieldInNewModel(m, fm);
-            fm = mm.newField("Extra");
+            String fieldExtraName = AnkiDroidApp.getAppResources().getString(R.string.extra_field_name);
+            fm = mm.newField(fieldExtraName);
             mm.addFieldInNewModel(m, fm);
-            JSONObject t = mm.newTemplate("Cloze");
+            String cardTypeClozeName = AnkiDroidApp.getAppResources().getString(R.string.card_cloze_name);
+            JSONObject t = mm.newTemplate(cardTypeClozeName);
             String fmt = "{{cloze:" + txt + "}}";
             m.put("css", m.getString("css") + ".cloze {" + "font-weight: bold;" + "color: blue;" + "}");
             t.put("qfmt", fmt);
-            t.put("afmt", fmt + "<br>\n{{Extra}}");
+            t.put("afmt", fmt + "<br>\n{{" + fieldExtraName + "}}");
             mm.addTemplateInNewModel(m, t);
             mm.add(m);
         } catch (JSONException e) {
