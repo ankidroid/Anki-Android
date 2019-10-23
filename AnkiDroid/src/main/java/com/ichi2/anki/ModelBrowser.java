@@ -307,6 +307,7 @@ public class ModelBrowser extends AnkiActivity {
 
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
         mNewModelLabels = new ArrayList<>();
+        ArrayList<String> existingModelsNames = new ArrayList<>();
 
         //Used to fetch model names
         mNewModelNames = new ArrayList<>();
@@ -325,8 +326,10 @@ public class ModelBrowser extends AnkiActivity {
         if (mModels != null) {
             for (JSONObject model : mModels) {
                 try {
-                    mNewModelLabels.add(String.format(clone, model.getString("name")));
-                    mNewModelNames.add(model.getString("name"));
+                    String name = model.getString("name");
+                    mNewModelLabels.add(String.format(clone, name));
+                    mNewModelNames.add(name);
+                    existingModelsNames.add(name);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -345,15 +348,18 @@ public class ModelBrowser extends AnkiActivity {
                 .onPositive((dialog, which) -> {
                         mModelNameInput = new EditText(ModelBrowser.this);
                         mModelNameInput.setSingleLine();
-
-                        //Temporary workaround - Lack of stdmodels class
-                        if (addSelectionSpinner.getSelectedItemPosition() < numStdModels) {
-                            mModelNameInput.setText(randomizeName(mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition())));
-                        } else {
-                            mModelNameInput.setText(mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition()) +
-                                    " " + getResources().getString(R.string.model_clone_suffix));
+                        final boolean isStdModel = addSelectionSpinner.getSelectedItemPosition() < numStdModels;
+                        // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
+                        String suggestedName = mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition());
+                        if (!isStdModel) {
+                            suggestedName += " " + getResources().getString(R.string.model_clone_suffix);
                         }
 
+                        if (existingModelsNames.contains(suggestedName)) {
+                            suggestedName = randomizeName(suggestedName);
+                        }
+                        //Temporary workaround - Lack of stdmodels class
+                        mModelNameInput.setText(suggestedName);
                         mModelNameInput.setSelection(mModelNameInput.getText().length());
 
                         //Create textbox to name new model
