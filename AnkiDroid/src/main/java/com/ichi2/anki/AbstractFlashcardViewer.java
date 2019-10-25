@@ -2846,6 +2846,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         refreshActionBar();
     }
 
+    protected void onFlag(Card card, int flag) {
+        card.setUserFlag(flag);
+        card.flush();
+        refreshActionBar();
+        /* Following code would allow to update value of {{cardFlag}}.
+           Anki does not update this value when a flag is changed, so
+           currently this code would do something that anki itself
+           does not do. I hope in the future Anki will correct that
+           and this code may becomes useful.
+
+        card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
+        if (sDisplayAnswer) {
+            displayCardAnswer();
+        } else {
+            displayCardQuestion();
+            } */
+    }
+
     protected void dismiss(Collection.DismissType type) {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mDismissCardHandler,
                 new DeckTask.TaskData(new Object[]{mCurrentCard, type}));
