@@ -1426,7 +1426,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     }
 
     /**
-     * Adds a field of with name in given model
+     * Adds a field with name in given model
      */
     private TaskData doInBackGroundAddField(TaskData... params){
         Timber.d("doInBackgroundRepositionField");
