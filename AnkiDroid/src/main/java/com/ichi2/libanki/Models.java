@@ -331,6 +331,7 @@ public class Models {
             m.put("tmpls", new JSONArray());
             m.put("tags", new JSONArray());
             m.put("id", 0);
+            m.put("usn", mCol.usn());
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -479,6 +480,7 @@ public class Models {
         try {
             m2 = new JSONObject(Utils.jsonToString(m));
             m2.put("name", name);
+            m2.put("usn", mCol.usn());
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
