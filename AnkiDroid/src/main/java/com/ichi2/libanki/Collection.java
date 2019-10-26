@@ -434,12 +434,8 @@ public class Collection {
      * This is a convenience method which doesn't throw ConfirmModSchemaException
      */
     public void modSchemaNoCheck() {
-        try {
-            modSchema(false);
-        } catch (ConfirmModSchemaException e) {
-            // This will never be reached as we disable confirmation via the "false" argument
-            throw new RuntimeException(e);
-        }
+        mScm = Utils.intTime(1000);
+        setMod();
     }
 
     /** Mark schema modified to force a full sync.
@@ -470,8 +466,7 @@ public class Collection {
                 throw new ConfirmModSchemaException();
             }
         }
-        mScm = Utils.intTime(1000);
-        setMod();
+        modSchemaNoCheck();
     }
 
 
