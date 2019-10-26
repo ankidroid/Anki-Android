@@ -438,11 +438,7 @@ public class ModelBrowser extends AnkiActivity {
                 @Override
                 public void run() {
                     col.modSchemaNoCheck();
-                    try {
-                        deleteModel();
-                    } catch (ConfirmModSchemaException e) {
-                        //This should never be reached because modSchema() didn't throw an exception
-                    }
+                    deleteModel();
                     dismissContextMenu();
                 }
             };
@@ -557,7 +553,7 @@ public class ModelBrowser extends AnkiActivity {
     /*
      * Deletes the currently selected model
      */
-    private void deleteModel() throws ConfirmModSchemaException {
+    private void deleteModel() {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
                 new DeckTask.TaskData(mCurrentID));
         mModels.remove(mModelListPosition);
