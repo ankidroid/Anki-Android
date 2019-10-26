@@ -1085,6 +1085,17 @@ public class Models {
         mCol.remCards(Utils.toPrimitive(deleted));
     }
 
+    /**
+        Mod the schema only if it's required
+     */
+    public void _modSchemaIfRequired(JSONObject m) throws ConfirmModSchemaException {
+        // ideally it would be private. But ModelFieldEditor needs to access it
+        // because it wants to mod the schema before it add fields in it.
+        if (isModSchemaRequired(m)) {
+                mCol.modSchema();
+        }
+    }
+
     /** checks whether a mod of schema is required when m is edited.*/
     private boolean isModSchemaRequired(JSONObject m) {
         try {
