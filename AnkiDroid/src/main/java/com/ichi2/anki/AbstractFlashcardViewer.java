@@ -1745,6 +1745,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mCustomButtons.put(R.id.action_open_deck_options, Integer.parseInt(preferences.getString("customButtonDeckOptions", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
         mCustomButtons.put(R.id.action_bury, Integer.parseInt(preferences.getString("customButtonBury", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
         mCustomButtons.put(R.id.action_suspend, Integer.parseInt(preferences.getString("customButtonSuspend", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
+        mCustomButtons.put(R.id.action_flag, Integer.parseInt(preferences.getString("customButtonFlag", Integer.toString(MenuItem.SHOW_AS_ACTION_IF_ROOM))));
         mCustomButtons.put(R.id.action_delete, Integer.parseInt(preferences.getString("customButtonDelete", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
 
         if (preferences.getBoolean("keepScreenOn", false)) {
