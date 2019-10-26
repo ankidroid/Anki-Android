@@ -350,7 +350,7 @@ public class Models {
     /** Delete model, and all its cards/notes. 
      * @throws ConfirmModSchemaException */
     public void rem(JSONObject m) throws ConfirmModSchemaException {
-        _modSchemaIfRequired(m);
+                _modSchemaIfRequired(m);
         try {
             long id = m.getLong("id");
             boolean current = current().getLong("id") == id;
@@ -623,7 +623,7 @@ public class Models {
                 // need to rebuild
                 mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
             }
-            renameField(m, field, null);
+            renameFieldNoSchemaChangeRequired(m, field, null);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -709,7 +709,21 @@ public class Models {
 
 
     public void renameField(JSONObject m, JSONObject field, String newName) throws ConfirmModSchemaException {
-        _modSchemaIfRequired();
+		// this method is not called anywhere. Still here only to remain consistent with Anki's code
+        _modSchemaIfRequired(m);
+        _renameField(m, field, newName);
+    }
+
+    /**
+        similar to _renameField, but does not throw an exception, by
+        asserting that it is useless.
+     */
+    public void renameFieldNoSchemaChangeRequired(JSONObject m, JSONObject field, String newName) {
+        assert(!isModSchemaRequired(m));
+        _renameField(m, field, newName);
+    }
+
+    private void _renameField(JSONObject m, JSONObject field, String newName) {
         try {
             String pat = String.format("\\{\\{([^{}]*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
                     Pattern.quote(field.getString("name")));
