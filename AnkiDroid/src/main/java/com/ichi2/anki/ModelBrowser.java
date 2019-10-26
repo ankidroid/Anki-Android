@@ -394,29 +394,28 @@ public class ModelBrowser extends AnkiActivity {
                 switch (position) {
                     //Basic Model
                     case (0):
-                        model = Models.addBasicModel(col);
+                        model = Models.addBasicModel(col, modelName);
                         break;
                     //Add forward reverse model
                     case (1):
-                        model = Models.addForwardReverse(col);
+                        model = Models.addForwardReverse(col, modelName);
                         break;
                     //Add forward optional reverse model
                     case (2):
-                        model = Models.addForwardOptionalReverse(col);
+                        model = Models.addForwardOptionalReverse(col, modelName);
                         break;
                     //Close model
                     case (3):
-                        model = Models.addClozeModel(col);
+                        model = Models.addClozeModel(col, modelName);
                         break;
                     default:
                         //New model
                         //Model that is being cloned
                         JSONObject oldModel = new JSONObject(mModels.get(position - 4).toString());
-                        model = col.getModels().copy(oldModel);
+                        model = col.getModels().copy(oldModel, modelName);
                         break;
 
                 }
-                model.put("name", modelName);
                 col.getModels().update(model);
                 fullRefresh();
             } else {
