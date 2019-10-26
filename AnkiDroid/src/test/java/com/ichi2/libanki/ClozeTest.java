@@ -6,6 +6,7 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.template.Template;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -17,6 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
@@ -27,7 +29,9 @@ public class ClozeTest extends RobolectricTest {
         final Context context = ApplicationProvider.getApplicationContext();
 
         Collection d = getCol();
-        Note f = d.newNote(d.getModels().byName("Cloze"));
+		JSONObject m = d.getModels().byName("Cloze");
+		assertNotNull(m);
+        Note f = d.newNote(m);
 
         try {
             String name = f.model().getString("name");
