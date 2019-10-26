@@ -437,8 +437,8 @@ public class ModelBrowser extends AnkiActivity {
             Runnable confirm = new Runnable() {
                 @Override
                 public void run() {
+                    col.modSchemaNoCheck();
                     try {
-                        col.modSchema(false);
                         deleteModel();
                     } catch (ConfirmModSchemaException e) {
                         //This should never be reached because modSchema() didn't throw an exception

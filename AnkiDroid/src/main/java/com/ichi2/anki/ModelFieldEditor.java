@@ -224,12 +224,8 @@ public class ModelFieldEditor extends AnkiActivity {
      */
     private void deleteFieldDialog() {
         Runnable confirm = () -> {
-            try {
-                mCol.modSchema(false);
-                deleteField();
-            } catch (ConfirmModSchemaException e) {
-                //This should never be reached because modSchema() didn't throw an exception
-            }
+            mCol.modSchemaNoCheck();
+            deleteField();
             dismissContextMenu();
         };
 
@@ -295,8 +291,8 @@ public class ModelFieldEditor extends AnkiActivity {
                                 ConfirmationDialog c = new ConfirmationDialog();
                                 c.setArgs(getResources().getString(R.string.full_sync_confirmation));
                                 Runnable confirm = () -> {
+                                    mCol.modSchemaNoCheck();
                                     try {
-                                        mCol.modSchema(false);
                                         renameField();
                                     } catch (ConfirmModSchemaException e1) {
                                         //This should never be thrown
