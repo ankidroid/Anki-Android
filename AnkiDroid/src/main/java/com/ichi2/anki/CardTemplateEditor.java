@@ -658,12 +658,13 @@ public class CardTemplateEditor extends AnkiActivity {
 
         /**
          * Launch background task to delete tmpl from model
+         *
+         * Assuming schema is already modified if necessary
          * @param tmpl template to remove
          * @param model model to remove from
          */
         private void deleteTemplate(JSONObject tmpl, JSONObject model) {
             CardTemplateEditor activity = ((CardTemplateEditor) getActivity());
-            activity.getCol().modSchemaNoCheck();
             Object [] args = new Object[] {model, tmpl};
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REMOVE_TEMPLATE,
                     activity.mAddRemoveTemplateHandler,  new DeckTask.TaskData(args));
@@ -696,11 +697,13 @@ public class CardTemplateEditor extends AnkiActivity {
 
         /**
          * Launch background task to add new template to model
+         *
+         * assume schema is already changed if necessary.
+         *
          * @param model model to add new template to
          */
         private void addNewTemplate(JSONObject model) {
             CardTemplateEditor activity = ((CardTemplateEditor) getActivity());
-            activity.getCol().modSchemaNoCheck();
             Models mm = activity.getCol().getModels();
             // Build new template
             JSONObject newTemplate;

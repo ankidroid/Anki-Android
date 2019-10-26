@@ -224,7 +224,6 @@ public class ModelFieldEditor extends AnkiActivity {
      */
     private void deleteFieldDialog() {
         Runnable confirm = () -> {
-            mCol.modSchemaNoCheck();
             deleteField();
             dismissContextMenu();
         };
