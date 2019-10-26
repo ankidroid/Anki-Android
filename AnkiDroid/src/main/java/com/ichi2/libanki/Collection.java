@@ -457,6 +457,12 @@ public class Collection {
      * @throws ConfirmModSchemaException
      */
     public void modSchema(boolean check) throws ConfirmModSchemaException {
+        // modSchema(false) is equivalent to modSchemaNoCheck.
+        // modSchema is never called with a variable in parameter in
+        // the code currently.  the only reason to use a parameter in
+        // modSchema is to follow Anki's code.  in this code, there is
+        // no static type indicating that exceptions are potentially
+        // thrown, so modSchemaNoCheck is useless.
         if (!schemaChanged()) {
             if (check) {
                 /* In Android we can't show a dialog which blocks the main UI thread
