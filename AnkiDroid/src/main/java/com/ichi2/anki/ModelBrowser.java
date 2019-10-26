@@ -68,6 +68,7 @@ public class ModelBrowser extends AnkiActivity {
     // Of the currently selected model
     private long mCurrentID;
     private int mModelListPosition;
+    private JSONObject mMod;
 
     //Used exclusively to display model name
     private ArrayList<JSONObject> mModels;
@@ -272,6 +273,7 @@ public class ModelBrowser extends AnkiActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String cardName = mModelDisplayList.get(position).getName();
                 mCurrentID = mModelIds.get(position);
+                mMod = mModels.get(position);
                 mModelListPosition = position;
                 mContextMenu = ModelBrowserContextMenu.newInstance(cardName, mContextMenuListener);
                 showDialogFragment(mContextMenu);
