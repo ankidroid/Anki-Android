@@ -466,9 +466,11 @@ public class Models {
     /** Copy, save and return. */
     public JSONObject copy(JSONObject m) {
         JSONObject m2 = null;
+        String clone = AnkiDroidApp.getAppResources().getString(R.string.model_browser_add_clone);
         try {
+            String name = String.format(clone, m2.getString("name"));
             m2 = new JSONObject(Utils.jsonToString(m));
-            m2.put("name", m2.getString("name") + " copy");
+            m2.put("name", name);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
