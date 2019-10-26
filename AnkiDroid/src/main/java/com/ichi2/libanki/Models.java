@@ -1340,8 +1340,9 @@ public class Models {
     }
 
     public static JSONObject addBasicModel(Collection col) {
-        String name = AnkiDroidApp.getAppResources().getString(R.string.basic_model_name);
-        return addBasicModel(col, name);
+        JSONObject m = _newBasicModel(col);
+        col.getModels().add(m);
+        return m;
     }
 
     public static JSONObject addBasicModel(Collection col, String name) {
@@ -1379,10 +1380,20 @@ public class Models {
         return m;
     }
 
+    public static JSONObject addForwardReverse(Collection col, String name) {
+        JSONObject m = _newForwardReverse(col, name);
+        col.getModels().add(m);
+        return m;
+    }
+
     /* Forward & Optional Reverse */
 
     private static JSONObject _newForwardOptionalReverse(Collection col) {
         String name = AnkiDroidApp.getAppResources().getString(R.string.forward_optional_reverse_model_name);
+        return _newForwardOptionalReverse(col, name);
+    }
+
+    private static JSONObject _newForwardOptionalReverse(Collection col, String name) {
         Models mm = col.getModels();
         JSONObject m = _newForwardReverse(col, name);
         try {
@@ -1403,9 +1414,19 @@ public class Models {
         return m;
     }
 
-    public static JSONObject addClozeModel(Collection col) {
-        Models mm = col.getModels();
+    public static JSONObject addForwardOptionalReverse(Collection col, String name) {
+        JSONObject m = _newForwardOptionalReverse(col, name);
+        col.getModels().add(m);
+        return m;
+    }
+
+    private static JSONObject _newClozeModel(Collection col) {
         String name = AnkiDroidApp.getAppResources().getString(R.string.cloze_model_name);
+        return _newClozeModel(col, name);
+    }
+
+    private static JSONObject _newClozeModel(Collection col, String name) {
+        Models mm = col.getModels();
         JSONObject m = mm.newModel(name);
         try {
             m.put("type", Consts.MODEL_CLOZE);
@@ -1422,10 +1443,21 @@ public class Models {
             t.put("qfmt", fmt);
             t.put("afmt", fmt + "<br>\n{{" + fieldExtraName + "}}");
             mm.addTemplateInNewModel(m, t);
-            mm.add(m);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+        return m;
+    }
+
+    public static JSONObject addClozeModel(Collection col) {
+        JSONObject m = _newClozeModel(col);
+        col.getModels().add(m);
+        return m;
+    }
+
+    public static JSONObject addClozeModel(Collection col, String name) {
+        JSONObject m = _newClozeModel(col, name);
+        col.getModels().add(m);
         return m;
     }
 
