@@ -584,19 +584,11 @@ public class Models {
         _addField(m, field);
     }
 
-    public void addFieldInNewModel(JSONObject m, JSONObject field) {
-        // similar to Anki's addField; but thanks to assumption that
-        // model is new, it never has to throw
-        // ConfirmModSchemaException.
-        Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
-        _addField(m, field);
-    }
-
-    public void addFieldModChanged(JSONObject m, JSONObject field) {
+    public void addFieldNoSchemaChangeRequired(JSONObject m, JSONObject field) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
         // ConfirmModSchemaException.
-        Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
+        Assert.that(!isModSchemaRequired(m), "Can't add a field in a model without requiring full sync. But we believed it was not required to ask it.");
         _addField(m, field);
     }
 
@@ -835,17 +827,9 @@ public class Models {
         _addTemplate(m, template);
     }
 
-    public void addTemplateInNewModel(JSONObject m, JSONObject template)  {
+    public void addTemplateNoSchemaChangeRequired(JSONObject m, JSONObject template)  {
         // similar to addTemplate, but doesn't throw exception;
-        // asserting the model is new.
-        Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
-        _addTemplate(m, template);
-    }
-
-    public void addTemplateModChanged(JSONObject m, JSONObject template)  {
-        // similar to addTemplate, but doesn't throw exception;
-        // asserting the model is new.
-        Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
+        Assert.that(!isModSchemaRequired(m), "Can't add a template in a model without requiring full sync. But we believed it was not required to ask it.");
         _addTemplate(m, template);
     }
 
@@ -1359,10 +1343,10 @@ public class Models {
         JSONObject m = mm.newModel(name);
         String frontName = AnkiDroidApp.getAppResources().getString(R.string.front_field_name);
         JSONObject fm = mm.newField(frontName);
-        mm.addFieldInNewModel(m, fm);
+        mm.addFieldNoSchemaChangeRequired(m, fm);
         String backName = AnkiDroidApp.getAppResources().getString(R.string.back_field_name);
         fm = mm.newField(backName);
-        mm.addFieldInNewModel(m, fm);
+        mm.addFieldNoSchemaChangeRequired(m, fm);
         String cardOneName = AnkiDroidApp.getAppResources().getString(R.string.card_one_name);
         JSONObject t = mm.newTemplate(cardOneName);
         try {
@@ -1371,7 +1355,7 @@ public class Models {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        mm.addTemplateInNewModel(m, t);
+        mm.addTemplateNoSchemaChangeRequired(m, t);
         return m;
     }
 
@@ -1403,7 +1387,7 @@ public class Models {
             JSONObject t = mm.newTemplate(cardTwoName);
             t.put("qfmt", "{{" + backName + "}}");
             t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{"+frontName+"}}");
-            mm.addTemplateInNewModel(m, t);
+            mm.addTemplateNoSchemaChangeRequired(m, t);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1435,7 +1419,7 @@ public class Models {
         try {
             String av = AnkiDroidApp.getAppResources().getString(R.string.field_to_ask_front_name);
             JSONObject fm = mm.newField(av);
-            mm.addFieldInNewModel(m, fm);
+            mm.addFieldNoSchemaChangeRequired(m, fm);
             JSONObject t = m.getJSONArray("tmpls").getJSONObject(1);
             t.put("qfmt", "{{#" + av +"}}" + t.get("qfmt") + "{{/" + av +"}}");
         } catch (JSONException e) {
@@ -1468,17 +1452,17 @@ public class Models {
             m.put("type", Consts.MODEL_CLOZE);
             String txt = AnkiDroidApp.getAppResources().getString(R.string.text_field_name);
             JSONObject fm = mm.newField(txt);
-            mm.addFieldInNewModel(m, fm);
+            mm.addFieldNoSchemaChangeRequired(m, fm);
             String fieldExtraName = AnkiDroidApp.getAppResources().getString(R.string.extra_field_name);
             fm = mm.newField(fieldExtraName);
-            mm.addFieldInNewModel(m, fm);
+            mm.addFieldNoSchemaChangeRequired(m, fm);
             String cardTypeClozeName = AnkiDroidApp.getAppResources().getString(R.string.card_cloze_name);
             JSONObject t = mm.newTemplate(cardTypeClozeName);
             String fmt = "{{cloze:" + txt + "}}";
             m.put("css", m.getString("css") + ".cloze {" + "font-weight: bold;" + "color: blue;" + "}");
             t.put("qfmt", fmt);
             t.put("afmt", fmt + "<br>\n{{" + fieldExtraName + "}}");
-            mm.addTemplateInNewModel(m, t);
+            mm.addTemplateNoSchemaChangeRequired(m, t);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

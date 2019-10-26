@@ -1279,7 +1279,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         JSONObject model = (JSONObject) args[0];
         JSONObject template = (JSONObject) args[1];
         // add the new template
-        col.getModels().addTemplateModChanged(model, template);
+        col.getModels().addTemplateNoSchemaChangeRequired(model, template);
         col.save();
         return new TaskData(true);
     }
@@ -1436,7 +1436,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         String fieldName = (String) objects[1];
 
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        col.getModels().addFieldModChanged(model, col.getModels().newField(fieldName));
+        col.getModels().addFieldNoSchemaChangeRequired(model, col.getModels().newField(fieldName));
         col.save();
         return new TaskData(true);
     }

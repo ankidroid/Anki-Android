@@ -901,7 +901,7 @@ public class CardContentProvider extends ContentProvider {
                     // Add the fields
                     String[] allFields = Utils.splitFields(fieldNames);
                     for (String f: allFields) {
-                        mm.addFieldInNewModel(newModel, mm.newField(f));
+                        mm.addFieldNoSchemaChangeRequired(newModel, mm.newField(f));
                     }
                     // Add some empty card templates
                     for (int idx = 0; idx < numCards; idx++) {
@@ -912,7 +912,7 @@ public class CardContentProvider extends ContentProvider {
                             answerField = allFields[1];
                         }
                         t.put("afmt",String.format("{{FrontSide}}\\n\\n<hr id=answer>\\n\\n{{%s}}", answerField));
-                        mm.addTemplateInNewModel(newModel, t);
+                        mm.addTemplateNoSchemaChangeRequired(newModel, t);
                     }
                     // Add the CSS if specified
                     if (css != null) {
