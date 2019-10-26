@@ -1085,6 +1085,19 @@ public class Models {
         mCol.remCards(Utils.toPrimitive(deleted));
     }
 
+    /** checks whether a mod of schema is required when m is edited.*/
+    private boolean isModSchemaRequired(JSONObject m) {
+        try {
+            // usn is -1 either if th model is new or if the schema was already mared as modified.
+            // in the first case, no need to mark schema as modified
+            // in the second, modified schema was already accepted.
+            // in both case, no mark a modification anymore.
+            return !isModelNew(m) && m.getInt("usn") != -1 && !mCol.schemaChanged();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Schema hash ***********************************************************************************************
      */
