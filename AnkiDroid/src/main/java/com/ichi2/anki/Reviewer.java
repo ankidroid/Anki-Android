@@ -381,6 +381,26 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_outline_white_24dp);
         }
 
+        if (mCurrentCard != null) {
+            switch (mCurrentCard.getUserFlag()) {
+            case 1:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_red);
+                break;
+            case 2:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_orange);
+                break;
+            case 3:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_green);
+                break;
+            case 4:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_blue);
+                break;
+            default:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_transparent);
+                break;
+            }
+        }
+
         if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.undoSize() > 0) {
             // Whiteboard undo queue non-empty. Switch the undo icon to a whiteboard specific one.
             menu.findItem(R.id.action_undo).setIcon(R.drawable.ic_eraser_variant_white_24dp);
