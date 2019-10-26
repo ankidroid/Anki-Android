@@ -283,6 +283,7 @@ public class ModelFieldEditor extends AnkiActivity {
                         } else {
                             //Field is valid, now rename
                             try {
+                                mCol.getModels()._modSchemaIfRequired(mMod);
                                 renameField();
                             } catch (ConfirmModSchemaException e) {
 
@@ -291,11 +292,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                 c.setArgs(getResources().getString(R.string.full_sync_confirmation));
                                 Runnable confirm = () -> {
                                     mCol.modSchemaNoCheck();
-                                    try {
-                                        renameField();
-                                    } catch (ConfirmModSchemaException e1) {
-                                        //This should never be thrown
-                                    }
+                                    renameField();
                                     dismissContextMenu();
                                 };
                                 c.setConfirm(confirm);
@@ -395,15 +392,17 @@ public class ModelFieldEditor extends AnkiActivity {
     }
 
 
-    /*
+    /**
      * Renames the current field
+     *
+     * assume no need to change schema for the current model.
      */
-    private void renameField() throws ConfirmModSchemaException {
+    private void renameField() {
         try {
             String fieldLabel = mFieldNameInput.getText().toString()
                     .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
             JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
-            mCol.getModels().renameField(mMod, field, fieldLabel);
+            mCol.getModels().renameFieldNoSchemaChangeRequired(mMod, field, fieldLabel);
             mCol.getModels().save();
             fullRefreshList();
         } catch (JSONException e) {
