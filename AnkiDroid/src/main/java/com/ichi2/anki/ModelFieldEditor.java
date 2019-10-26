@@ -188,7 +188,7 @@ public class ModelFieldEditor extends AnkiActivity {
                     } else {
                         //Name is valid, now field is added
                         try {
-                            mCol.modSchema();
+                            mCol.getModels()._modSchemaIfRequired(mMod);
                             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FIELD, mChangeFieldHandler,
                                     new DeckTask.TaskData(new Object[]{mMod, fieldName}));
                         } catch (ConfirmModSchemaException e) {
@@ -238,7 +238,7 @@ public class ModelFieldEditor extends AnkiActivity {
             showToast(getResources().getString(R.string.toast_last_field));
         } else {
             try {
-                mCol.modSchema();
+                mCol.getModels()._modSchemaIfRequired(mMod);
                 ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.field_delete_warning));
                 d.setConfirm(confirm);
@@ -341,7 +341,7 @@ public class ModelFieldEditor extends AnkiActivity {
                         } else {
                             // Input is valid, now attempt to modify
                             try {
-                                mCol.modSchema();
+                                mCol.getModels()._modSchemaIfRequired(mMod);
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPOSITION_FIELD, mChangeFieldHandler,
                                         new DeckTask.TaskData(new Object[]{mMod,
                                                 mNoteFields.getJSONObject(mCurrentPos), pos - 1}));
@@ -422,7 +422,7 @@ public class ModelFieldEditor extends AnkiActivity {
      */
     private void sortByField() {
         try {
-            mCol.modSchema();
+            mCol.getModels()._modSchemaIfRequired(mMod);
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHANGE_SORT_FIELD, mChangeFieldHandler,
                     new DeckTask.TaskData(new Object[]{mMod, mCurrentPos}));
         } catch (ConfirmModSchemaException e) {

@@ -454,7 +454,7 @@ public class ModelBrowser extends AnkiActivity {
             };
 
             try {
-                col.modSchema();
+                col.getModels()._modSchemaIfRequired(mMod);
                 ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.model_delete_warning));
                 d.setConfirm(confirm);
