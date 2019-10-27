@@ -294,30 +294,17 @@ public class ModelBrowser extends AnkiActivity {
         String add = getResources().getString(R.string.model_browser_add_add);
         String clone = getResources().getString(R.string.model_browser_add_clone);
 
-        // AnkiDroid doesn't have stdmodels class or model name localization, this could be much cleaner if implemented
-        final String basicName = getResources().getString(R.string.basic_model_name);
-        final String addForwardReverseName = getResources().getString(R.string.forward_reverse_model_name);
-        final String addForwardOptionalReverseName = getResources().getString(R.string.forward_optional_reverse_model_name);
-        final String addTypingName = getResources().getString(R.string.basic_typing_model_name);
-        final String addClozeModelName = getResources().getString(R.string.cloze_model_name);
-
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
         mNewModelLabels = new ArrayList<>();
         ArrayList<String> existingModelsNames = new ArrayList<>();
 
         //Used to fetch model names
         mNewModelNames = new ArrayList<>();
-        mNewModelLabels.add(String.format(add, basicName));
-        mNewModelLabels.add(String.format(add, addForwardReverseName));
-        mNewModelLabels.add(String.format(add, addForwardOptionalReverseName));
-        mNewModelLabels.add(String.format(add, addTypingName));
-        mNewModelLabels.add(String.format(add, addClozeModelName));
-
-        mNewModelNames.add(basicName);
-        mNewModelNames.add(addForwardReverseName);
-        mNewModelNames.add(addForwardOptionalReverseName);
-        mNewModelNames.add(addTypingName);
-        mNewModelNames.add(addClozeModelName);
+        for (StdModels StdModels: StdModels.stdModels) {
+            String defaultName = StdModels.getDefaultName();
+            mNewModelLabels.add(String.format(add, defaultName));
+            mNewModelNames.add(defaultName);
+        }
 
         final int numStdModels = mNewModelLabels.size();
 
@@ -352,7 +339,6 @@ public class ModelBrowser extends AnkiActivity {
                         if (existingModelsNames.contains(suggestedName)) {
                             suggestedName = randomizeName(suggestedName);
                         }
-                        //Temporary workaround - Lack of stdmodels class
                         mModelNameInput.setText(suggestedName);
                         mModelNameInput.setSelection(mModelNameInput.getText().length());
 
@@ -380,40 +366,19 @@ public class ModelBrowser extends AnkiActivity {
      * @param position position in dialog the user selected to add / clone the model type from
      */
     private void addNewNoteType(String modelName, int position) {
-        //Temporary workaround - Lack of stdmodels class, so can only handle 4 default English mModels
-        //like Ankidroid but unlike desktop Anki
         JSONObject model;
         if (modelName.length() > 0) {
-            switch (position) {
-                //Basic Model
-                case (0):
-                    model = StdModel.basicModel.add(col);
-                    break;
-                //Add forward reverse model
-                case (1):
-                    model = StdModel.basicTypingModel.add(col);
-                    break;
-                //Add forward reverse model
-                case (2):
-                    model = StdModel.forwardReverseModel.add(col);
-                    break;
-                //Add forward optional reverse model
-                case (3):
-                    model = StdModel.forwardOptionalReverseModel.add(col);
-                    break;
-                //Close model
-                case (4):
-                    model = StdModel.clozeModel.add(col);
-                    break;
-                default:
-                    //New model
-                    //Model that is being cloned
-                    JSONObject oldModel = new JSONObject(mModels.get(position - 5).toString());
-                    JSONObject newModel = StdModel.basicModel.add(col);
-                    oldModel.put("id", newModel.get("id"));
-                    model = oldModel;
-                    break;
-             }
+            int nbStdModels = StdModels.stdModels.length;
+            if (position < nbStdModels) {
+                model = StdModels.stdModels[position].add(col);
+            } else {
+                //New model
+                //Model that is being cloned
+                JSONObject oldModel = new JSONObject(mModels.get(position - nbStdModels).toString());
+                JSONObject newModel = StdModels.basicModel.add(col);
+                oldModel.put("id", newModel.get("id"));
+                model = oldModel;
+            }
             model.put("name", modelName);
             col.getModels().update(model);
             fullRefresh();
