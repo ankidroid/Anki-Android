@@ -814,6 +814,7 @@ public class ContentProviderTest {
         values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
         int updateCount = cr.update(reviewInfoUri, values, null, null);
         assertEquals("Check if update returns 1", 1, updateCount);
+        try { Thread.currentThread().wait(500); } catch (Exception e) {/* do nothing */}
         col.getSched().reset();
         Card newCard = col.getSched().getCard();
         if(newCard != null){
