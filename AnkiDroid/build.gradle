@@ -202,7 +202,7 @@ dependencies {
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.5.2'
     testImplementation 'org.mockito:mockito-core:3.1.0'
     testImplementation 'org.powermock:powermock-core:2.0.2'
-    testImplementation 'org.powermock:powermock-module-junit4:2.0.2'
+    testImplementation 'org.powermock:powermock-module-junit4:2.0.4'
     testImplementation 'org.powermock:powermock-api-mockito2:2.0.4'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
