@@ -2178,9 +2178,9 @@ public class SchedV2 extends Sched {
                 // review
                 boolean early = card.getODid() != 0 && (card.getODue() > mToday);
                 if (early) {
-                    return _earlyReviewIvl(card, ease) * 86400;
+                    return _earlyReviewIvl(card, ease) * 86400L;
                 } else {
-                    return _nextRevIvl(card, ease, false) * 86400;
+                    return _nextRevIvl(card, ease, false) * 86400L;
                 }
             }
         } catch (JSONException e) {
@@ -2202,7 +2202,7 @@ public class SchedV2 extends Sched {
             } else if (ease == 2) {
                 return _delayForRepeatingGrade(conf, card.getLeft());
             } else if (ease == 4) {
-                return _graduatingIvl(card, conf, true, false) * 86400;
+                return _graduatingIvl(card, conf, true, false) * 86400L;
             } else { // ease == 3
                 int left = card.getLeft() % 1000 - 1;
                 if (left <= 0) {
