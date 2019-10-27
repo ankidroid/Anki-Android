@@ -1992,7 +1992,7 @@ public class SchedV2 extends Sched {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
 
-        return (int) ((new Date().getTime() - c.getTimeInMillis()) / 1000) / 86400L;
+        return (int) ((new Date().getTime() - c.getTimeInMillis()) / 1000) / 86400;
     }
 
 
