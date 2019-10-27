@@ -390,6 +390,7 @@ public class Anki2Importer extends Importer {
 
     /** Given did in src col, return local id. */
     private long _did(long did) {
+        JSONObject deck;
         try {
             // already converted?
             if (mDecks.containsKey(did)) {
@@ -418,6 +419,11 @@ public class Anki2Importer extends Importer {
                 long idInSrc = mSrc.getDecks().id(head);
                 _did(idInSrc);
             }
+            // if target is a filtered deck, we'll need a new deck name
+            deck = mDst.getDecks().byName(name);
+            if (deck != null && deck.getBoolean("dyn")) {
+                name = String.format("%s %d", name, Utils.intTime());
+            }
             // create in local
             long newid = mDst.getDecks().id(name);
             // pull conf over
@@ -430,7 +436,7 @@ public class Anki2Importer extends Importer {
                 mDst.getDecks().save(g2);
             }
             // save desc
-            JSONObject deck = mDst.getDecks().get(newid);
+            deck = mDst.getDecks().get(newid);
             deck.put("desc", g.getString("desc"));
             mDst.getDecks().save(deck);
             // add to deck map and return
