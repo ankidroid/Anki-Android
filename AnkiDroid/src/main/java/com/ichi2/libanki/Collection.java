@@ -860,7 +860,7 @@ public class Collection {
         try {
             card.setOrd(template.getInt("ord"));
         } catch (JSONException e) {
-            new RuntimeException(e);
+            throw new RuntimeException(e);
         }
         // Use template did (deck override) if valid, otherwise model did
         long did = template.optLong("did", 0);
