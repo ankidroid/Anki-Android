@@ -141,11 +141,11 @@ public class ImportUtils {
     }
 
     public static boolean isCollectionPackage(String filename) {
-        return filename != null && (filename.toLowerCase().endsWith(".colpkg") || filename.equals("collection.apkg"));
+        return filename != null && (filename.toLowerCase().endsWith(".colpkg") || filename.toLowerCase().endsWith(".colpkg.zip") || (filename.equals("collection.apkg") || filename.equals("collection.apkg.zip")));
     }
 
     private static boolean isDeckPackage(String filename) {
-        return filename != null && filename.toLowerCase().endsWith(".apkg") && !filename.equals("collection.apkg");
+        return filename != null && (filename.toLowerCase().endsWith(".apkg") || filename.toLowerCase().endsWith(".apkg.zip")) && !(filename.equals("collection.apkg") || filename.equals("collection.apkg.zip"));
     }
 
     public static boolean isValidPackageName(String filename) {
