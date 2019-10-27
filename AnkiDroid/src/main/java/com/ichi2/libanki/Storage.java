@@ -68,11 +68,11 @@ public class Storage {
                 throw new RuntimeException("This file requires a newer version of Anki.");
             } else if (create) {
                 // add in reverse order so basic is default
-                Models.addClozeModel(col);
-                Models.addBasicTypingModel(col);
-                Models.addForwardOptionalReverse(col);
-                Models.addForwardReverse(col);
-                Models.addBasicModel(col);
+                StdModel.clozeModel.add(col);
+                StdModel.basicTypingModel.add(col);
+                StdModel.forwardOptionalReverseModel.add(col);
+                StdModel.forwardReverseModel.add(col);
+                StdModel.basicModel.add(col);
                 col.save();
             }
             return col;

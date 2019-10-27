@@ -46,7 +46,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Models;
+import com.ichi2.libanki.StdModels;
 import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONObject;
@@ -387,28 +387,29 @@ public class ModelBrowser extends AnkiActivity {
             switch (position) {
                 //Basic Model
                 case (0):
-                    model = Models.addBasicModel(col);
+                    model = StdModel.basicModel.add(col);
                     break;
                 //Add forward reverse model
                 case (1):
-                    model = Models.addForwardReverse(col);
+                    model = StdModel.basicTypingModel.add(col);
+                    break;
+                //Add forward reverse model
+                case (2):
+                    model = StdModel.forwardReverseModel.add(col);
                     break;
                 //Add forward optional reverse model
-                case (2):
-                    model = Models.addForwardOptionalReverse(col);
-                    break;
                 case (3):
-                    model = Models.addBasicTypingModel(col);
+                    model = StdModel.forwardOptionalReverseModel.add(col);
                     break;
                 //Close model
                 case (4):
-                    model = Models.addClozeModel(col);
+                    model = StdModel.clozeModel.add(col);
                     break;
                 default:
                     //New model
                     //Model that is being cloned
                     JSONObject oldModel = new JSONObject(mModels.get(position - 5).toString());
-                    JSONObject newModel = Models.addBasicModel(col);
+                    JSONObject newModel = StdModel.basicModel.add(col);
                     oldModel.put("id", newModel.get("id"));
                     model = oldModel;
                     break;
