@@ -40,7 +40,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -573,7 +572,7 @@ public class Media {
         int pathmax = 1024; // 240 for windows
 
         // cap namemax based on absolute path
-        int dirlen = Paths.get(fname).normalize().toString().length();
+        int dirlen = fname.length();// ideally, name should be normalized. Without access to nio.Paths library, it's hard to do it really correctly. This is still a better approximation than nothing.
         int remaining = pathmax - dirlen;
         namemax = min(remaining, namemax);
         Assert.that(namemax>0, "The media directory is maximally long. There is no more length available for file name.");
