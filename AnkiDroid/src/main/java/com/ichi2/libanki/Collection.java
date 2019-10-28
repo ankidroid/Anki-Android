@@ -769,11 +769,16 @@ public class Collection {
                 JSONObject model = mModels.get(mid);
                 ArrayList<Integer> avail = mModels.availOrds(model, flds);
                 long did = dids.get(nid);
-                long due = dues.get(nid);
+                // use sibling due if there is one, else use a new id
+                long due;
+                if (dues.containsKey(nid)) {
+                    due = dues.get(nid);
+                } else {
+                    due = nextID("pos");
+                }
                 if (did == 0) {
                     did = model.getLong("did");
                 }
-                due = dues.get(nid);
                 // add any missing cards
                 for (JSONObject t : _tmplsFromOrds(model, avail)) {
                     int tord = t.getInt("ord");
@@ -794,10 +799,6 @@ public class Collection {
                         }
                         // if the deck doesn't exist, use default instead
                         did = mDecks.get(did).getLong("id");
-                        // use sibling due if there is one, else use a new id
-                        if (due == 0) {
-                            due = nextID("pos");
-                        }
                         // give it a new id instead
                         data.add(new Object[] { ts, nid, did, tord, now, usn, due});
                         ts += 1;
