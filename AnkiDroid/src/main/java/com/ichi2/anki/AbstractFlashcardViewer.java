@@ -1090,7 +1090,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
-                        new DeckTask.TaskData(mCurrentCard, true));
+                        new DeckTask.TaskData(sEditorCard, true));
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard();
