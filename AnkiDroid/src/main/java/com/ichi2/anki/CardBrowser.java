@@ -81,6 +81,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -1393,26 +1394,26 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * Removes cards from view. Doesn't delete them in model (database).
      */
     private void removeNotesView(Card[] cards) {
-        List<Integer> posList = new ArrayList<>();
         long reviewerCardId = getReviewerCardId();
-        Map<Long, Integer> idToPos = getPositionMap(getCards());
+        List<Map<String, String>> oldMCards = getCards();
+        Map<Long, Integer> idToPos = getPositionMap(oldMCards);
+        Set<Long> idToRemove = new HashSet<Long>();
         for (Card card : cards) {
-            int pos = idToPos.containsKey(card.getId()) ? idToPos.get(card.getId()) : -1;
             if (card.getId() == reviewerCardId) {
                 mReloadRequired = true;
             }
-            if (pos >= 0 && pos < getCards().size()) {
-                posList.add(pos);
+            if (idToPos.containsKey(card.getId())) {
+                idToRemove.add(card.getId());
             }
         }
 
-        // sort in descending order so we can delete all
-        Collections.sort(posList, Collections.reverseOrder());
-
-        for (int delPos : posList) {
-            getCards().remove(delPos);
+        List<Map<String, String>> newMCards = new ArrayList<Map<String, String>>();
+        for (Map<String, String> card: oldMCards) {
+            if (! idToRemove.contains(Long.parseLong(card.get("id")))) {
+                newMCards.add(card);
+            }
         }
-
+        mCards = newMCards;
         updateList();
     }
 
