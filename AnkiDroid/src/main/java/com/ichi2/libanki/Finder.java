@@ -1069,7 +1069,7 @@ public class Finder {
                 // cancel if the launching task was cancelled. 
                 if (task.isCancelled()){
                     Timber.i("_findCardsForCardBrowser() cancelled...");
-                    return null;
+                    return new ArrayList<>();
                 }                
                 Map<String, String> map = new HashMap<>();
                 map.put("id", cur.getString(0));
