@@ -1087,6 +1087,14 @@ public class Decks {
     * ***********************************************************
     */
 
+	public static String parent(String deckName) {
+		// method parent, from sched's method deckDueList in python
+		int index = deckName.lastIndexOf("::");
+		if (index == -1) {
+			return null;
+		}
+		return deckName.substring(0, index);
+	}
 
     public String getActualDescription() {
     	return current().optString("desc","");
