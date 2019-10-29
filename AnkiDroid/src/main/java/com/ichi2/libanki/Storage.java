@@ -61,7 +61,7 @@ public class Storage {
             }
             db.execute("PRAGMA temp_store = memory");
             // add db to col and do any remaining upgrades
-        Collection col = new Collection(context, db, path, server, log);
+            Collection col = new Collection(context, db, path, server, log);
             if (ver < Consts.SCHEMA_VERSION) {
                 _upgrade(col, ver);
             } else if (ver > Consts.SCHEMA_VERSION) {
