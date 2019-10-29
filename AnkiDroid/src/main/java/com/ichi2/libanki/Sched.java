@@ -393,30 +393,15 @@ public class Sched {
      */
     public List<DeckDueTreeNode> deckDueList() {
         _checkDay();
-        mCol.getDecks().recoverOrphans();
+        mCol.getDecks().checkIntegrity();
         ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> data = new ArrayList<>();
         try {
             for (JSONObject deck : decks) {
-                // if we've already seen the exact same deck name, remove the
-                // invalid duplicate and reload
-                if (lims.containsKey(deck.getString("name"))) {
-                    Timber.i("deckDueList() removing duplicate deck %s", deck.getString("name"));
-                    mCol.getDecks().rem(deck.getLong("id"), false, true);
-                    return deckDueList();
-                }
                 String p = Decks.parent(deck.getString("name"));
                 // new
                 int nlim = _deckNewLimitSingle(deck);
-                if (!TextUtils.isEmpty(p)) {
-                    if (!lims.containsKey(p)) {
-                        // if parent was missing, this deck is invalid, and we need to reload the deck list
-                        mCol.getDecks().rem(deck.getLong("id"), false, true);
-                        return deckDueList();
-                    }
-                    nlim = Math.min(nlim, lims.get(p)[0]);
-                }
                 int _new = _newForDeck(deck.getLong("id"), nlim);
                 // learning
                 int lrn = _lrnForDeck(deck.getLong("id"));
