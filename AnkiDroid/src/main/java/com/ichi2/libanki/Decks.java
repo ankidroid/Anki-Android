@@ -36,14 +36,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
+import timber.log.Timber;
 
 // fixmes:
 // - make sure users can't set grad interval < 1
@@ -846,12 +849,53 @@ public class Decks {
                 "select id from cards where did in " + Utils.ids2str(Utils.arrayList2array(dids)), 0));
     }
 
-
-    public void recoverOrphans() {
+    private void _recoverOrphans() {
         Long[] dids = allIds();
         boolean mod = mCol.getDb().getMod();
         mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(dids));
         mCol.getDb().setMod(mod);
+    }
+
+    private void _checkDeckTree() {
+        ArrayList<JSONObject> decks = allSorted();
+        Set<String> names = new HashSet<String>();
+
+        for (JSONObject deck: decks) {
+            // two decks with the same name?
+            String deckName = null;
+            try {
+                deckName = deck.getString("name");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            if (names.contains(deckName)) {
+                Timber.i("fix duplicate deck name %s", deckName);
+                deckName += Utils.intTime(1000);
+                save(deck);
+            }
+
+            // ensure no sections are blank
+            if (deckName.indexOf("::::") != -1) {
+                Timber.i("fix deck with missing sections %s", deckName);
+                deckName = "recovered"+Utils.intTime(1000);
+                save(deck);
+            }
+
+            // immediate parent must exist
+            String immediateParent = parent(deckName);
+            if (immediateParent != null) {
+                if (!names.contains(immediateParent)) {
+                    Timber.i("fix deck with missing parent %s", deckName);
+                    _ensureParents(deckName);
+                    names.add(immediateParent);
+                }
+            }
+        }
+    }
+
+    public void checkIntegrity() {
+        _recoverOrphans();
+        _checkDeckTree();
     }
 
 
