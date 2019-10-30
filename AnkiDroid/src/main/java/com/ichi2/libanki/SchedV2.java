@@ -391,14 +391,7 @@ public class SchedV2 extends Sched {
                     mCol.getDecks().rem(deck.getLong("id"), false, true);
                     return deckDueList();
                 }
-                String p;
-                List<String> parts = Arrays.asList(deck.getString("name").split("::", -1));
-                if (parts.size() < 2) {
-                    p = null;
-                } else {
-                    parts = parts.subList(0, parts.size() - 1);
-                    p = TextUtils.join("::", parts);
-                }
+                String p = Decks.parent(deck.getString("name"));
                 // new
                 int nlim = _deckNewLimitSingle(deck);
                 if (!TextUtils.isEmpty(p)) {
