@@ -897,7 +897,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // No space left
             showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance());
             preferences.edit().remove("noSpaceLeft").apply();
-        } else if (preferences.getString("lastVersion", "").equals("")) {
+        } else if ("".equals(preferences.getString("lastVersion", ""))) {
             // Fresh install
             preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
             onFinishedStartup();

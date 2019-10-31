@@ -50,7 +50,7 @@ import com.ichi2.anki.R;
             Resources res = getActivity().getResources();
             String title = getArguments().getString("title");
             return new MaterialDialog.Builder(getActivity())
-                    .title(title.equals("") ? res.getString(R.string.app_name) : title)
+                .title("".equals(title) ? res.getString(R.string.app_name) : title)
                     .content(getArguments().getString("message"))
                     .positiveText(res.getString(R.string.dialog_ok))
                     .negativeText(res.getString(R.string.dialog_cancel))

@@ -123,7 +123,7 @@ public class ReadText {
                                 speak(mTextToSpeak, locale, TextToSpeech.QUEUE_FLUSH);
                             }
                             String language = getLanguage(mDid, mOrd, mQuestionAnswer);
-                            if (language.equals("")) { // No language stored
+                            if ("".equals(language)) { // No language stored
                                 MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
                             } else {
                                 MetaDB.updateLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);

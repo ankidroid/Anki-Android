@@ -1714,7 +1714,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mPrefShowETA = preferences.getBoolean("showETA", true);
         mUseInputTag = preferences.getBoolean("useInputTag", false);
         // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
-        mDisableClipboard = preferences.getString("dictionary", "0").equals("0");
+        mDisableClipboard = "0".equals(preferences.getString("dictionary", "0"));
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
         mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0"));
@@ -1997,7 +1997,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
      */
     protected String cleanCorrectAnswer(String answer) {
-        if (answer == null || answer.equals("")) {
+        if (answer == null || "".equals(answer)) {
             return "";
         }
         Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer.trim()));
@@ -2017,7 +2017,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @return The typed answer text, cleaned up.
      */
     protected String cleanTypedAnswer(String answer) {
-        if (answer == null || answer.equals("")) {
+        if (answer == null || "".equals(answer)) {
             return "";
         }
         return Utils.nfcNormalized(answer.trim());

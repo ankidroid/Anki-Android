@@ -949,7 +949,7 @@ public class Media {
             // then loop through all files
             int cnt = 0;
             for (ZipEntry i : Collections.list(z.entries())) {
-                if (i.getName().equals("_meta")) {
+                if ("_meta".equals(i.getName())) {
                     // ignore previously-retrieved meta
                     continue;
                 } else {

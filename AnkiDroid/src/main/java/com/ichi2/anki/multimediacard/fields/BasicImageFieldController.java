@@ -243,7 +243,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     private void setPreviewImage(String imagePath, int maxsize) {
-        if (imagePath != null && !imagePath.equals("")) {
+        if (imagePath != null && !"".equals(imagePath)) {
             File f = new File(imagePath);
             Bitmap b = BitmapUtil.decodeFile(f, maxsize);
             b = ExifUtil.rotateFromCamera(f, b);

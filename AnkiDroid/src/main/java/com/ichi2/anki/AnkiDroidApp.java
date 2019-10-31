@@ -440,7 +440,7 @@ public class AnkiDroidApp extends Application {
      */
     private static boolean isCurrentLanguage(String l) {
         String pref = getSharedPrefs(sInstance).getString(Preferences.LANGUAGE, "");
-        return pref.equals(l) || pref.equals("") && Locale.getDefault().getLanguage().equals(l);
+        return pref.equals(l) || "".equals(pref) && Locale.getDefault().getLanguage().equals(l);
     }
 
     /**

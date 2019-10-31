@@ -181,7 +181,7 @@ class AnkiExporter extends Exporter {
         }
         JSONObject dconfs = new JSONObject();
         for (JSONObject d : mSrc.getDecks().all()) {
-            if (d.getString("id").equals("1")) {
+            if ("1".equals(d.getString("id"))) {
                 continue;
             }
             if (mDid != null && !dids.contains(d.getLong("id"))) {

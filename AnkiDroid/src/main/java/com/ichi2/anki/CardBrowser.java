@@ -201,7 +201,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                                 .commit();
                     }
                     // default to descending for non-text fields
-                    if (fSortTypes[mOrder].equals("noteFld")) {
+                    if ("noteFld".equals(fSortTypes[mOrder])) {
                         mOrderAsc = true;
                     }
                     getCol().getConf().put("sortBackwards", mOrderAsc);
@@ -470,7 +470,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             //conf saved may still have this bug.
             mOrderAsc = Upgrade.upgradeJSONIfNecessary(getCol(), getCol().getConf(), "sortBackwards", false);
             // default to descending for non-text fields
-            if (fSortTypes[mOrder].equals("noteFld")) {
+            if ("noteFld".equals(fSortTypes[mOrder])) {
                 mOrderAsc = !mOrderAsc;
             }
         } catch (JSONException e) {
@@ -1338,12 +1338,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // render question and answer
         Map<String, String> qa = c._getQA(true, true);
         // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
-        if (qa.get("q").equals("") || qa.get("a").equals("")) {
+        if ("".equals(qa.get("q")) || "".equals(qa.get("a"))) {
             HashMap<String, String> qaFull = c._getQA(true, false);
-            if (qa.get("q").equals("")) {
+            if ("".equals(qa.get("q"))) {
                 qa.put("q", qaFull.get("q"));
             }
-            if (qa.get("a").equals("")) {
+            if ("".equals(qa.get("a"))) {
                 qa.put("a", qaFull.get("a"));
             }
         }
