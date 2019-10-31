@@ -117,7 +117,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
         if (mOverrideFontStyle == null) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
             AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
-            boolean overrideFont = preferences.getString("overrideFontBehavior", "0").equals("1");
+            boolean overrideFont = "1".equals(preferences.getString("overrideFontBehavior", "0"));
             if (defaultFont != null && overrideFont) {
                 mOverrideFontStyle = "BODY, .card, * { " + defaultFont.getCSS(true) + " }\n";
             } else {

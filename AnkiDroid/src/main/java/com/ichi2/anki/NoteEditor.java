@@ -411,7 +411,7 @@ public class NoteEditor extends AnkiActivity {
                     finishWithoutAnimation();
                     return;
                 }
-                if (mSourceText[0].equals("Aedict Notepad") && addFromAedict(mSourceText[1])) {
+                if ("Aedict Notepad".equals(mSourceText[0]) && addFromAedict(mSourceText[1])) {
                     finishWithoutAnimation();
                     return;
                 }

@@ -316,7 +316,7 @@ public class Template {
                 buf = m.group(2);
             }
 
-            if (m.group(1).equals("c")) {
+            if ("c".equals(m.group(1))) {
                 buf = String.format("<span class=cloze>%s</span>", buf);
             }
 

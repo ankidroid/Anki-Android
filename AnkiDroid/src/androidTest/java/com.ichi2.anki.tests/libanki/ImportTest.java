@@ -281,9 +281,9 @@ public class ImportTest {
 //        i.initMapping();
 //        i.run();
 //        n.load();
-//        assertTrue(n.getItem("Front").equals("1"));
-//        assertTrue(n.getItem("Back").equals("x"));
-//        assertTrue(n.getItem("Three").equals("3"));
+//        assertTrue("1".equals(n.getItem("Front")));
+//        assertTrue("x".equals(n.getItem("Back")));
+//        assertTrue("3".equals(n.getItem("Three")));
 //    }
 
     /**

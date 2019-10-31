@@ -277,7 +277,7 @@ public class Sound {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
         Uri soundUri = Uri.parse(soundPath);
 
-        if (soundPath.substring(0, 3).equals("tts")) {
+        if ("tts".equals(soundPath.substring(0, 3))) {
             // TODO: give information about did
 //            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
 //                    Integer.parseInt(soundPath.substring(3, 4)));
