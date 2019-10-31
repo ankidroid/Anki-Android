@@ -34,6 +34,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.template.Template;
+import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.VersionUtils;
 
 import org.json.JSONArray;
@@ -1908,6 +1909,14 @@ public class Collection {
 
 
     public void setConf(JSONObject conf) {
+        // Anki sometimes set sortBackward to 0/1 instead of
+        // False/True. This should be repaired before setting mConf;
+        // otherwise this may save a faulty value in mConf, and if
+        // it's done just before the value is read, this may lead to
+        // bug #5523. This bug should occur only for people using anki
+        // prior to version 2.16 and has been corrected with
+        // dae/anki#347
+        Upgrade.upgradeJSONIfNecessary(this, conf, "sortBackwards", false);
         mConf = conf;
     }
 
