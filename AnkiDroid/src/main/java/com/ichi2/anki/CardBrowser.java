@@ -464,6 +464,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (mOrder == 1 && preferences.getBoolean("cardBrowserNoSorting", false)) {
                 mOrder = 0;
             }
+            //This upgrade should already have been done during
+            //setConf. However older version of AnkiDroid didn't call
+            //upgradeJSONIfNecessary during setConf, which means the
+            //conf saved may still have this bug.
             mOrderAsc = Upgrade.upgradeJSONIfNecessary(getCol(), getCol().getConf(), "sortBackwards", false);
             // default to descending for non-text fields
             if (fSortTypes[mOrder].equals("noteFld")) {
