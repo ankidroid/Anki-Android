@@ -19,6 +19,8 @@ import android.text.TextUtils;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Preferences;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**

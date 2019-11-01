@@ -69,11 +69,9 @@
         <item>Interval</item>
         <item>Ease</item>
         <item>Due</item>
-        <!--
-    <item>Changed</item>
-    <item>Created</item>
-    <item>Edited</item>
-        -->
+        <item>Changed</item>
+        <item>Created</item>
+        <item>Edited</item>
     </string-array>
 
     <!-- Custom study options -->

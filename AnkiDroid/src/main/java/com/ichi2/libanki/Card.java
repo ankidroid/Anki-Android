@@ -452,6 +452,10 @@ public class Card implements Cloneable {
         mMod = mod;
     }
 
+    public long getMod() {
+        return mMod ;
+    }
+
 
     public void setUsn(int usn) {
         mUsn = usn;
