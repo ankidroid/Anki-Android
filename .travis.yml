@@ -36,10 +36,10 @@ env:
    - API=23
    - API=24
    - API=25
-   #- API=26 ABI=x86_64 # Fails with unrecognized tests? orchestrator change or something?
-   #- API=27 # Same failure as below for API28, but less frequently
-   #- API=28 # Fails on adb 2 second getprop timeout and get API getprop takes 2.2s, so emulator boots but adb won't install on unknown API
-   #- API=Q  # Fails at some point on emulator startup or detecting startup complete
+   #- API=26 # Fails with unrecognized tests? orchestrator change or something?
+   - API=27
+   - API=28
+   - API=29
 
 jobs:
   fast_finish: true  # We can report success without waiting for jobs that we
@@ -53,10 +53,6 @@ jobs:
       script: echo finalize codacy coverage uploads
   allow_failures:
     - env: API=24 JDK="1.11"
-    # API=28/Q are probably fixable but we don't need allow_failures to be on
-    # in master to work through them.
-    #- env: API=28
-    #- env: API=Q
 
 before_install:
   # Set up KVM
