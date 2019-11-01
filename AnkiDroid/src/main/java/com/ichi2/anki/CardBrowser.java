@@ -151,10 +151,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "lapses",
         "reviews",
         "interval",
+        "ease",
         "changed",
         "created",
         "due",
-        "ease",
         "edited",
     };
     private long mLastRenderStart = 0;
@@ -1362,7 +1362,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // item.put("changed",strftime("%Y-%m-%d", localtime(c.getMod())));
         // item.put("created",strftime("%Y-%m-%d", localtime(c.note().getId()/1000)));
         // item.put("due",getDueString(c));
-        // item.put("ease","");
+        if (c.getType() == 0) {
+            item.put("ease", context.getString(R.string.card_browser_ease_new_card));
+        } else {
+            item.put("ease", (c.getFactor()/10)+"%");
+        }
         // item.put("edited",strftime("%Y-%m-%d", localtime(c.note().getMod())));
         // interval
         int type = c.getType();
