@@ -66,14 +66,14 @@
         <item>Tags</item>
         <item>Lapses</item>
         <item>Reviews</item>
+        <item>Interval</item>
         <item>Ease</item>
+        <item>Due</item>
         <!--
     <item>Changed</item>
     <item>Created</item>
-    <item>Due</item>
     <item>Edited</item>
         -->
-        <item>Interval</item>
     </string-array>
 
     <!-- Custom study options -->

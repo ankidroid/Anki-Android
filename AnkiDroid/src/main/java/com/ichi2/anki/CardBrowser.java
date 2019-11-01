@@ -152,9 +152,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "reviews",
         "interval",
         "ease",
+        "due",
         "changed",
         "created",
-        "due",
         "edited",
     };
     private long mLastRenderStart = 0;
@@ -1334,7 +1334,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-
     public static void updateSearchItemQA(Context context, Map<String, String> item, Card c) {
         // render question and answer
         Map<String, String> qa = c._getQA(true, true);
@@ -1361,7 +1360,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put("card", c.template().optString("name"));
         // item.put("changed",strftime("%Y-%m-%d", localtime(c.getMod())));
         // item.put("created",strftime("%Y-%m-%d", localtime(c.note().getId()/1000)));
-        // item.put("due",getDueString(c));
+        item.put("due", c.getDueString());
         if (c.getType() == 0) {
             item.put("ease", context.getString(R.string.card_browser_ease_new_card));
         } else {

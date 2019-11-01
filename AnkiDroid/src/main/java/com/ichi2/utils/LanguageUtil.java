@@ -70,4 +70,8 @@ public class LanguageUtil {
         return locale;
     }
 
+    public static String getShortDateFormatFromMs(long ms) {
+        return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(ms));
+    }
+
 }
