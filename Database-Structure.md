@@ -131,7 +131,7 @@ CREATE TABLE graves (
 -- according to the models
 CREATE TABLE notes (
     id              integer primary key,
-      -- epoch seconds of when the note was created
+      -- epoch miliseconds of when the note was created
     guid            text not null,
       -- globally unique id, almost certainly used for syncing
     mid             integer not null,
