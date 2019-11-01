@@ -178,7 +178,12 @@ public class Syncer {
                 JSONObject rchg = mServer.applyChanges(sch);
                 throwExceptionIfCancelled(con);
                 Timber.i("Sync: merging small changes");
-                mergeChanges(lchg, rchg);
+                try {
+                    mergeChanges(lchg, rchg);
+                } catch (UnexpectedSchemaChange e) {
+                    mServer.abort();
+                    _forceFullSync();
+                }
                 // step 3: stream large tables from server
                 publishProgress(con, R.string.sync_download_chunk);
                 while (true) {
@@ -212,7 +217,7 @@ public class Syncer {
                 JSONObject sanity = mServer.sanityCheck2(c);
                 if (sanity == null || !"ok".equals(sanity.optString("status", "bad"))) {
                     mCol.log("sanity check failed", c, sanity);
-                    return new Object[] { "sanityCheckError", null };
+                    return _forceFullSync();
                 }
                 // finalize
                 publishProgress(con, R.string.sync_finish_message);
@@ -241,6 +246,12 @@ public class Syncer {
         return new Object[] { "success" };
     }
 
+    private Object[] _forceFullSync() {
+        // roll back and force full sync
+        mCol.modSchemaNoCheck();
+        mCol.save();
+        return new Object[] { "sanityCheckError", null };
+    }
 
     private void publishProgress(Connection con, int id) {
         if (con != null) {
@@ -276,7 +287,7 @@ public class Syncer {
     }
 
 
-    public JSONObject applyChanges(JSONObject changes) {
+    public JSONObject applyChanges(JSONObject changes) throws UnexpectedSchemaChange {
         mRChg = changes;
         JSONObject lchg = changes();
         // merge our side before returning
@@ -285,7 +296,7 @@ public class Syncer {
     }
 
 
-    public void mergeChanges(JSONObject lchg, JSONObject rchg) {
+    public void mergeChanges(JSONObject lchg, JSONObject rchg) throws UnexpectedSchemaChange {
         // then the other objects
         mergeModels(rchg.getJSONArray("models"));
         mergeDecks(rchg.getJSONArray("decks"));
@@ -663,13 +674,23 @@ public class Syncer {
     }
 
 
-    private void mergeModels(JSONArray rchg) {
+    private void mergeModels(JSONArray rchg) throws UnexpectedSchemaChange {
         for (int i = 0; i < rchg.length(); i++) {
             JSONObject r = rchg.getJSONObject(i);
-            JSONObject l;
-            l = mCol.getModels().get(r.getLong("id"));
+            JSONObject l = mCol.getModels().get(r.getLong("id"));
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
+                // This is a hack to detect when the note type has been altered
+                // in an import without a full sync being forced. A future
+                // syncing algorithm should handle this in a better way.
+                if (l != null) {
+                    if (l.getJSONArray("flds").length() != r.getJSONArray("flds").length()) {
+                        throw new UnexpectedSchemaChange();
+                    }
+                    if (l.getJSONArray("tmpls").length() != r.getJSONArray("tmpls").length()) {
+                        throw new UnexpectedSchemaChange();
+                    }
+                }
                 mCol.getModels().update(r);
             }
         }
@@ -875,6 +896,9 @@ public class Syncer {
             }
             throw new RuntimeException("UserAbortedSync");
         }
+    }
+
+    private class UnexpectedSchemaChange extends Exception {
     }
 
 }
