@@ -84,4 +84,31 @@ public class UtilsTest {
         Utils.copyFile(new File(resource.getFile()), copy);
         Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
     }
+
+    @Test
+    public void testFieldChecksum() {
+        String en_e = "e";
+        String e_diacritics = "é";
+        String ru_e = "е";
+        String ru_e_diacritics = "ё";
+
+        Assert.assertEquals(Utils.fieldChecksum(en_e), Utils.fieldChecksum(e_diacritics));
+        Assert.assertEquals(Utils.fieldChecksum(ru_e), Utils.fieldChecksum(ru_e_diacritics));
+        
+        Assert.assertNotEquals(Utils.fieldChecksum(ru_e), Utils.fieldChecksum(en_e));
+
+        String a = "a";
+        String a_diacritics = "á";
+        Assert.assertEquals(Utils.fieldChecksum(a), Utils.fieldChecksum(a_diacritics));
+    }
+
+
+    @Test
+    public void testEqualFields() {
+        Assert.assertTrue(Utils.equalIgnoreAccent("a", "á"));
+        Assert.assertTrue(Utils.equalIgnoreAccent("е", "ё"));
+        Assert.assertTrue(Utils.equalIgnoreAccent("и", "й"));
+        Assert.assertFalse(Utils.equalIgnoreAccent("Е", "ё"));
+    }
+
 }

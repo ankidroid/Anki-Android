@@ -465,6 +465,12 @@ public class Utils {
         return fields.split("\\x1f", -1);
     }
 
+
+    /** Accents indifferent comparision. Case sensitive */
+    public static boolean equalIgnoreAccent(String one, String two) {
+        return removeAccent(one).equals(removeAccent(two));
+    }
+
     /**
      * Checksums
      * ***********************************************************************************************
@@ -513,7 +519,13 @@ public class Utils {
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
     public static long fieldChecksum(String data) {
-        return Long.valueOf(checksum(stripHTMLMedia(data)).substring(0, 8), 16);
+        String noHtmlNoAccent = stripHTMLMedia(removeAccent(data));
+        return Long.valueOf(checksum(noHtmlNoAccent).substring(0, 8), 16);
+    }
+
+    private static String removeAccent(String string) {
+        return Normalizer.normalize(string, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
     /**
