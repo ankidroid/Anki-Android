@@ -67,7 +67,6 @@ public class SchedV2 extends Sched {
 
     private String mName = "std";
     private boolean mHaveCustomStudy = true;
-    private boolean mBurySiblingsOnAnswer = true;
 
     private Collection mCol;
     private int mQueueLimit;
@@ -135,9 +134,6 @@ public class SchedV2 extends Sched {
         Card card = _getCard();
         if (card != null) {
             mCol.log(card);
-            if (!mBurySiblingsOnAnswer) {
-                _burySiblings(card);
-            }
             mReps += 1;
             card.startTimer();
             return card;
@@ -158,9 +154,7 @@ public class SchedV2 extends Sched {
     public void answerCard(Card card, int ease) {
         mCol.log();
         mCol.markReview(card);
-        if (mBurySiblingsOnAnswer) {
-            _burySiblings(card);
-        }
+        _burySiblings(card);
 
         _answerCard(card, ease);
 

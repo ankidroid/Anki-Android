@@ -65,7 +65,6 @@ public class Sched {
     private String mName = "std";
     private boolean mHaveCustomStudy = true;
     private boolean mSpreadRev = true;
-    private boolean mBurySiblingsOnAnswer = true;
 
     private Collection mCol;
     private int mQueueLimit;
@@ -131,9 +130,6 @@ public class Sched {
         Card card = _getCard();
         if (card != null) {
             mCol.log(card);
-            if (!mBurySiblingsOnAnswer) {
-                _burySiblings(card);
-            }
             mReps += 1;
             card.startTimer();
             return card;
@@ -154,9 +150,7 @@ public class Sched {
     public void answerCard(Card card, int ease) {
         mCol.log();
         mCol.markReview(card);
-        if (mBurySiblingsOnAnswer) {
-            _burySiblings(card);
-        }
+        _burySiblings(card);
         card.setReps(card.getReps() + 1);
         // former is for logging new cards, latter also covers filt. decks
         card.setWasNew((card.getType() == 0));
