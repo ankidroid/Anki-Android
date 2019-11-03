@@ -1199,6 +1199,30 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+    private abstract class ListenerWithProgressBarCloseOnFalse extends ListenerWithProgressBar {
+        private String timber = null;
+
+        public ListenerWithProgressBarCloseOnFalse(String timber) {
+            this.timber = timber;
+        }
+
+        public ListenerWithProgressBarCloseOnFalse() {
+		}
+		
+        public void onPostExecute(DeckTask.TaskData result) {
+            if (timber != null) {
+                Timber.d(timber);
+            }
+            if (result.getBoolean()) {
+                actualPostExecute(result);
+            } else {
+                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+            }
+        }
+
+        protected abstract void actualPostExecute(DeckTask.TaskData result);
+    }
+
     /**
      * @param cards Cards that were changed
      * @param updatedCardTags Mapping note id -> updated tags
@@ -1238,47 +1262,36 @@ public class CardBrowser extends NavigationDrawerActivity implements
         updateList();
     }
 
-    private DeckTask.TaskListener mUpdateCardHandler = new ListenerWithProgressBar() {
+    private DeckTask.TaskListener mUpdateCardHandler = new ListenerWithProgressBarCloseOnFalse("Card Browser - mUpdateCardHandler.onPostExecute()"){
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             updateCardInList(values[0].getCard(), values[0].getString());
         }
 
-
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Card Browser - mUpdateCardHandler.onPostExecute()");
-            if (result.getBoolean()) {
-                hideProgressBar();
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
+        protected void actualPostExecute(DeckTask.TaskData result) {
+            hideProgressBar();
         }
     };
 
-    private DeckTask.TaskListener mChangeDeckHandler = new ListenerWithProgressBar() {
+    private DeckTask.TaskListener mChangeDeckHandler = new ListenerWithProgressBarCloseOnFalse("Card Browser - mChangeDeckHandler.onPostExecute()") {
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Card Browser - mChangeDeckHandler.onPostExecute()");
-            if (result.getBoolean()) {
-                hideProgressBar();
+        protected void actualPostExecute(DeckTask.TaskData result) {
+            hideProgressBar();
 
-                searchCards();
-                endMultiSelectMode();
-                mCardsAdapter.notifyDataSetChanged();
-                invalidateOptionsMenu();    // maybe the availability of undo changed
+            searchCards();
+            endMultiSelectMode();
+            mCardsAdapter.notifyDataSetChanged();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
 
-                // snackbar to offer undo
-                String deckName = getCol().getDecks().name(mNewDid);
-                mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
-                    }
-                }, mCardsListView, null);
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
+            // snackbar to offer undo
+            String deckName = getCol().getDecks().name(mNewDid);
+            mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
+                }
+            }, mCardsListView, null);
         }
     };
 
@@ -1369,42 +1382,29 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private DeckTask.TaskListener mSuspendCardHandler = new ListenerWithProgressBar() {
+    private DeckTask.TaskListener mSuspendCardHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (result.getBoolean()) {
-                Card[] cards = (Card[]) result.getObjArray();
-                updateCardsInList(Arrays.asList(cards), null);
-                updateMultiselectMenu();
-                hideProgressBar();
-                invalidateOptionsMenu();    // maybe the availability of undo changed
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
+        protected void actualPostExecute(DeckTask.TaskData result) {
+            Card[] cards = (Card[]) result.getObjArray();
+            updateCardsInList(Arrays.asList(cards), null);
+            updateMultiselectMenu();
+            hideProgressBar();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
         }
     };
 
-    private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
+    private DeckTask.TaskListener mMarkCardHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (result.getBoolean()) {
-                Card[] cards = (Card[]) result.getObjArray();
-                updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards))), null);
-                updateMultiselectMenu();
-                hideProgressBar();
-                invalidateOptionsMenu();    // maybe the availability of undo changed
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
+        protected void actualPostExecute(DeckTask.TaskData result) {
+            Card[] cards = (Card[]) result.getObjArray();
+            updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards))), null);
+            updateMultiselectMenu();
+            hideProgressBar();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
         }
     };
 
-    private DeckTask.TaskListener mDeleteNoteHandler = new ListenerWithProgressBar() {
+    private DeckTask.TaskListener mDeleteNoteHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             Card[] cards = (Card[]) values[0].getObjArray();
@@ -1413,39 +1413,31 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (result.getBoolean()) {
-                hideProgressBar();
-                mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
-                invalidateOptionsMenu();    // maybe the availability of undo changed
-                // snackbar to offer undo
-                mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, getString(R.string.deleted_message), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
-                    }
-                }, mCardsListView, null);
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
+        protected void actualPostExecute(DeckTask.TaskData result) {
+            hideProgressBar();
+            mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
+            invalidateOptionsMenu();    // maybe the availability of undo changed
+            // snackbar to offer undo
+            mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, getString(R.string.deleted_message), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
+                }
+            }, mCardsListView, null);
         }
     };
 
-    private DeckTask.TaskListener mUndoHandler = new ListenerWithProgressBar() {
+    private DeckTask.TaskListener mUndoHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
+        public void actualPostExecute(DeckTask.TaskData result) {
             Timber.d("Card Browser - mUndoHandler.onPostExecute()");
-            if (result.getBoolean()) {
-                hideProgressBar();
-                // reload whole view
-                searchCards();
-                endMultiSelectMode();
-                mCardsAdapter.notifyDataSetChanged();
-                updatePreviewMenuItem();
-                invalidateOptionsMenu();    // maybe the availability of undo changed
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
+            hideProgressBar();
+            // reload whole view
+            searchCards();
+            endMultiSelectMode();
+            mCardsAdapter.notifyDataSetChanged();
+            updatePreviewMenuItem();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
         }
     };
 
