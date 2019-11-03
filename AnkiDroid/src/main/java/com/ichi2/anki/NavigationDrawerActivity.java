@@ -36,6 +36,8 @@ import android.view.View;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.IntentTop;
+import com.ichi2.utils.IntentTopNewTask;
 
 import timber.log.Timber;
 
@@ -278,8 +280,8 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             // Take action if a different item selected
             switch (item.getItemId()) {
                 case R.id.nav_decks: {
-                    Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
-                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
+                    Intent deckPicker = new IntentTopNewTask(NavigationDrawerActivity.this, DeckPicker.class);
+                    // opening DeckPicker should clear back history
                     startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.RIGHT);
                     break;
                 }
@@ -287,7 +289,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                     openCardBrowser();
                     break;
                 case R.id.nav_stats: {
-                    Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
+                    Intent intent = new IntentTop(NavigationDrawerActivity.this, Statistics.class);
                     startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, ActivityTransitionAnimation.LEFT);
                     break;
                 }
@@ -298,7 +300,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                     mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
                     // Remember the theme we started with so we can restart the Activity if it changes
                     mOldTheme = Themes.getCurrentTheme(getApplicationContext());
-                    startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
+                    startActivityForResultWithAnimation(new IntentTop(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
                     break;
                 case R.id.nav_help:
                     openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
@@ -316,7 +318,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
     protected void openCardBrowser() {
-        Intent intent = new Intent(NavigationDrawerActivity.this, CardBrowser.class);
+        Intent intent = new IntentTop(NavigationDrawerActivity.this, CardBrowser.class);
         Long currentCardId = getCurrentCardId();
         if (currentCardId != null) {
             intent.putExtra("currentCard", currentCardId);

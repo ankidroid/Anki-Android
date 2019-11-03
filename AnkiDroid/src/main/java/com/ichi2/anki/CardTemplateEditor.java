@@ -48,6 +48,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.ui.SlidingTabLayout;
+import com.ichi2.utils.IntentTop;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -488,7 +489,7 @@ public class CardTemplateEditor extends AnkiActivity {
                         col.getModels().save(model, false);
                     }
                     // Create intent for the previewer and add some arguments
-                    Intent i = new Intent(getActivity(), Previewer.class);
+                    Intent i = new IntentTop(getActivity(), Previewer.class);
                     int pos = getArguments().getInt("position");
                     long cid;
                     if (getArguments().getLong("noteId") != -1L && pos <
