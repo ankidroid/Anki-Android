@@ -866,33 +866,32 @@ public class Decks {
 
         for (JSONObject deck: decks) {
             // two decks with the same name?
-            String deckName = null;
-            try {
-                deckName = deck.getString("name");
+             try {
+                if (names.contains(deck.getString("name"))) {
+                    Timber.i("fix duplicate deck name %s", deck.getString("name"));
+                    deck.put("name", deck.getString("name") + Utils.intTime(1000));
+                    save(deck);
+                }
+
+                // ensure no sections are blank
+                if (deck.getString("name").indexOf("::::") != -1) {
+                    Timber.i("fix deck with missing sections %s", deck.getString("name"));
+                    deck.put("name", "recovered"+Utils.intTime(1000));
+                    save(deck);
+                }
+
+                // immediate parent must exist
+                String immediateParent = parent(deck.getString("name"));
+                if (immediateParent != null) {
+                    if (!names.contains(immediateParent)) {
+                        Timber.i("fix deck with missing parent %s", deck.getString("name"));
+                        _ensureParents(deck.getString("name"));
+                        names.add(immediateParent);
+                    }
+                }
+            names.add(deck.getString("name"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
-            }
-            if (names.contains(deckName)) {
-                Timber.i("fix duplicate deck name %s", deckName);
-                deckName += Utils.intTime(1000);
-                save(deck);
-            }
-
-            // ensure no sections are blank
-            if (deckName.indexOf("::::") != -1) {
-                Timber.i("fix deck with missing sections %s", deckName);
-                deckName = "recovered"+Utils.intTime(1000);
-                save(deck);
-            }
-
-            // immediate parent must exist
-            String immediateParent = parent(deckName);
-            if (immediateParent != null) {
-                if (!names.contains(immediateParent)) {
-                    Timber.i("fix deck with missing parent %s", deckName);
-                    _ensureParents(deckName);
-                    names.add(immediateParent);
-                }
             }
             names.add(deckName);
         }
