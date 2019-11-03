@@ -223,7 +223,7 @@ public class Collection {
         if (!fSupportedSchedulerVersions.contains(ver)) {
             throw new RuntimeException("Unsupported scheduler version");
         }
-        modSchema(true);
+        modSchema();
         SchedV2 v2Sched = new SchedV2(this);
         clearUndo();
         if (ver == 1) {
@@ -423,9 +423,11 @@ public class Collection {
     }
 
 
-    /** Note: not in libanki.
-     * Mark schema modified to force a full sync, but with the confirmation checking function disabled
-     * This is a convenience method which doesn't throw ConfirmModSchemaException
+    /** Note: not in libanki.  Mark schema modified to force a full
+     * sync, but with the confirmation checking function disabled This
+     * is equivalent to `modSchema(False)` in Anki. A distinct method
+     * is used so that the type does not states that an exception is
+     * thrown when in fact it is never thrown.
      */
     public void modSchemaNoCheck() {
         mScm = Utils.intTime(1000);
@@ -439,32 +441,12 @@ public class Collection {
      *
      * @throws ConfirmModSchemaException */
     public void modSchema() throws ConfirmModSchemaException {
-        modSchema(true);
-    }
-
-    /** Mark schema modified to force a full sync.
-     * If check==true and the schema has not already been marked modified then ConfirmModSchemaException will be thrown.
-     * If the user chooses to confirm then modSchemaNoCheck should be called, after which the exception can
-     * be safely ignored, and the outer code called again.
-     *
-     * @param check
-     * @throws ConfirmModSchemaException
-     */
-    public void modSchema(boolean check) throws ConfirmModSchemaException {
-        // modSchema(false) is equivalent to modSchemaNoCheck.
-        // modSchema is never called with a variable in parameter in
-        // the code currently.  the only reason to use a parameter in
-        // modSchema is to follow Anki's code.  in this code, there is
-        // no static type indicating that exceptions are potentially
-        // thrown, so modSchemaNoCheck is useless.
         if (!schemaChanged()) {
-            if (check) {
-                /* In Android we can't show a dialog which blocks the main UI thread
-                 Therefore we can't wait for the user to confirm if they want to do
-                 a full sync here, and we instead throw an exception asking the outer
-                 code to handle the user's choice */
-                throw new ConfirmModSchemaException();
-            }
+            /* In Android we can't show a dialog which blocks the main UI thread
+             Therefore we can't wait for the user to confirm if they want to do
+             a full sync here, and we instead throw an exception asking the outer
+             code to handle the user's choice */
+            throw new ConfirmModSchemaException();
         }
         modSchemaNoCheck();
     }

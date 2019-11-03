@@ -27,7 +27,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
@@ -314,17 +313,13 @@ public class Models {
 
     // not in anki
     public static boolean isModelNew(JSONObject m) {
-        try {
-            return m.getLong("id") == 0;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        return m.getLong("id") == 0;
     }
 
     /** Delete model, and all its cards/notes. 
      * @throws ConfirmModSchemaException */
     public void rem(JSONObject m) throws ConfirmModSchemaException {
-        mCol.modSchema(true);
+        mCol.modSchema();
         long id = m.getLong("id");
         boolean current = current().getLong("id") == id;
         // delete notes/cards
@@ -468,7 +463,7 @@ public class Models {
 
 
     public void setSortIdx(JSONObject m, int idx) throws ConfirmModSchemaException{
-        mCol.modSchema(true);
+        mCol.modSchema();
         m.put("sortf", idx);
         mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
         save(m);
@@ -490,7 +485,7 @@ public class Models {
         // only mod schema if model isn't new
         // this is Anki's addField.
         if (!isModelNew(m)) {
-            mCol.modSchema(true);
+            mCol.modSchema();
         }
         _addField(m, field);
     }
@@ -523,7 +518,7 @@ public class Models {
 
 
     public void remField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
-        mCol.modSchema(true);
+        mCol.modSchema();
         JSONArray ja = m.getJSONArray("flds");
         JSONArray ja2 = new JSONArray();
         int idx = -1;
@@ -568,7 +563,7 @@ public class Models {
 
 
     public void moveField(JSONObject m, JSONObject field, int idx) throws ConfirmModSchemaException {
-        mCol.modSchema(true);
+        mCol.modSchema();
         JSONArray ja = m.getJSONArray("flds");
         ArrayList<JSONObject> l = new ArrayList<>();
         int oldidx = -1;
@@ -624,7 +619,7 @@ public class Models {
 
 
     public void renameField(JSONObject m, JSONObject field, String newName) throws ConfirmModSchemaException {
-        mCol.modSchema(true);
+        mCol.modSchema();
         String pat = String.format("\\{\\{([^{}]*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
                                    Pattern.quote(field.getString("name")));
         if (newName == null) {
@@ -714,7 +709,7 @@ public class Models {
     public void addTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
         //That is Anki's addTemplate method
         if (!isModelNew(m)) {
-            mCol.modSchema(true);
+            mCol.modSchema();
         }
         _addTemplate(m, template);
     }
@@ -760,7 +755,7 @@ public class Models {
             return false;
         }
         // ok to proceed; remove cards
-        mCol.modSchema(true);
+        mCol.modSchema();
         mCol.remCards(cids);
         // shift ordinals
         mCol.getDb()
@@ -849,7 +844,7 @@ public class Models {
      * @throws ConfirmModSchemaException 
      */
     public void change(JSONObject m, long[] nids, JSONObject newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
-        mCol.modSchema(true);
+        mCol.modSchema();
         assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
         if (fmap != null) {
             _changeNotes(nids, newModel, fmap);
