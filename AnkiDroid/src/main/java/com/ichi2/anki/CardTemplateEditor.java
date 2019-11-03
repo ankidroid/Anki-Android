@@ -620,7 +620,7 @@ public class CardTemplateEditor extends AnkiActivity {
          */
         private void deleteTemplateWithCheck(final JSONObject tmpl, final JSONObject model) {
             try {
-                ((CardTemplateEditor) getActivity()).getCol().modSchema(true);
+                ((CardTemplateEditor) getActivity()).getCol().modSchema();
                 deleteTemplate(tmpl, model);
             } catch (ConfirmModSchemaException e) {
                 ConfirmationDialog d = new ConfirmationDialog();
@@ -657,7 +657,7 @@ public class CardTemplateEditor extends AnkiActivity {
          */
         private void addNewTemplateWithCheck(final JSONObject model) {
             try {
-                ((CardTemplateEditor) getActivity()).getCol().modSchema(true);
+                ((CardTemplateEditor) getActivity()).getCol().modSchema();
                 addNewTemplate(model);
             } catch (ConfirmModSchemaException e) {
                 ConfirmationDialog d = new ConfirmationDialog();

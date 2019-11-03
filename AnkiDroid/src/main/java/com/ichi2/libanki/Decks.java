@@ -652,7 +652,7 @@ public class Decks {
      */
     public void remConf(long id) throws ConfirmModSchemaException {
         assert id != 1;
-        mCol.modSchema(true);
+        mCol.modSchema();
         mDconf.remove(id);
         for (JSONObject g : all()) {
             // ignore cram decks
