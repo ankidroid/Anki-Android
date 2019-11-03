@@ -1192,6 +1192,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+    private abstract class ListenerWithProgressBar extends DeckTask.TaskListener {
+        @Override
+        public void onPreExecute() {
+            showProgressBar();
+        }
+    }
+
     /**
      * @param cards Cards that were changed
      * @param updatedCardTags Mapping note id -> updated tags
@@ -1231,13 +1238,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         updateList();
     }
 
-    private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
+    private DeckTask.TaskListener mUpdateCardHandler = new ListenerWithProgressBar() {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             updateCardInList(values[0].getCard(), values[0].getString());
@@ -1255,13 +1256,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private DeckTask.TaskListener mChangeDeckHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
+    private DeckTask.TaskListener mChangeDeckHandler = new ListenerWithProgressBar() {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             Timber.d("Card Browser - mChangeDeckHandler.onPostExecute()");
@@ -1374,13 +1369,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private DeckTask.TaskListener mSuspendCardHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
+    private DeckTask.TaskListener mSuspendCardHandler = new ListenerWithProgressBar() {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result.getBoolean()) {
@@ -1401,7 +1390,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             showProgressBar();
         }
 
-
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result.getBoolean()) {
@@ -1416,13 +1404,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private DeckTask.TaskListener mDeleteNoteHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
+    private DeckTask.TaskListener mDeleteNoteHandler = new ListenerWithProgressBar() {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             Card[] cards = (Card[]) values[0].getObjArray();
@@ -1449,13 +1431,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private DeckTask.TaskListener mUndoHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
+    private DeckTask.TaskListener mUndoHandler = new ListenerWithProgressBar() {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             Timber.d("Card Browser - mUndoHandler.onPostExecute()");
@@ -1473,19 +1449,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private DeckTask.TaskListener mSearchCardsHandler = new DeckTask.TaskListener() {
+    private DeckTask.TaskListener mSearchCardsHandler = new ListenerWithProgressBar() {
         @Override
         public void onProgressUpdate(TaskData... values) {
             if (values[0] != null) {
                 mCards = values[0].getCards();
                 updateList();
             }
-        }
-
-
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
         }
 
 
@@ -1537,13 +1507,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private DeckTask.TaskListener mCheckSelectedCardsHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
+    private DeckTask.TaskListener mCheckSelectedCardsHandler = new ListenerWithProgressBar() {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             hideProgressBar();
