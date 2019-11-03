@@ -90,6 +90,8 @@ import com.ichi2.libanki.template.Template;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
+import com.ichi2.utils.IntentTop;
+import com.ichi2.utils.IntentTopNewTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1136,7 +1138,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected boolean editCard() {
-        Intent editCard = new Intent(AbstractFlashcardViewer.this, NoteEditor.class);
+        Intent editCard = new IntentTop(AbstractFlashcardViewer.this, NoteEditor.class);
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
         sEditorCard = mCurrentCard;
         startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, ActivityTransitionAnimation.LEFT);
@@ -1789,9 +1791,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             throw new RuntimeException(e);
         } catch (NullPointerException npe) {
             // NPE on collection only happens if the Collection is broken, follow AnkiActivity example
-            Intent deckPicker = new Intent(this, DeckPicker.class);
+            Intent deckPicker = new IntentTopNewTask(this, DeckPicker.class);
             deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
-            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
         }
     }

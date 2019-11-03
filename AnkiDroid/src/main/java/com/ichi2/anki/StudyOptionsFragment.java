@@ -43,6 +43,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.utils.IntentTop;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -152,7 +153,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      *                      set of values.
      */
     private void openFilteredDeckOptions(boolean defaultConfig) {
-        Intent i = new Intent(getActivity(), FilteredDeckOptions.class);
+        Intent i = new IntentTop(getActivity(), FilteredDeckOptions.class);
         i.putExtra("defaultConfig", defaultConfig);
         getActivity().startActivityForResult(i, DECK_OPTIONS);
         ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
@@ -230,7 +231,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
     private void openReviewer() {
-        Intent reviewer = new Intent(getActivity(), Reviewer.class);
+        Intent reviewer = new IntentTop(getActivity(), Reviewer.class);
         if (mFragmented) {
             getActivity().startActivityForResult(reviewer, AnkiActivity.REQUEST_REVIEW);
         } else {
@@ -301,7 +302,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 if (getCol().getDecks().isDyn(getCol().getDecks().selected())) {
                     openFilteredDeckOptions();
                 } else {
-                    Intent i = new Intent(getActivity(), DeckOptions.class);
+                    Intent i = new IntentTop(getActivity(), DeckOptions.class);
                     getActivity().startActivityForResult(i, DECK_OPTIONS);
                     ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
                 }

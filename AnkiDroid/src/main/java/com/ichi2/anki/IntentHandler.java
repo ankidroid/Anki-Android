@@ -8,6 +8,7 @@ import android.os.Message;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.utils.ImportUtils;
+import com.ichi2.utils.IntentTop;
 
 import timber.log.Timber;
 
@@ -27,7 +28,7 @@ public class IntentHandler extends Activity {
         setContentView(R.layout.progress_bar);
         Intent intent = getIntent();
         Timber.v(intent.toString());
-        Intent reloadIntent = new Intent(this, DeckPicker.class);
+        Intent reloadIntent = new IntentTop(this, DeckPicker.class);
         reloadIntent.setDataAndType(getIntent().getData(), getIntent().getType());
         String action = intent.getAction();
         if (Intent.ACTION_VIEW.equals(action)) {
@@ -52,6 +53,9 @@ public class IntentHandler extends Activity {
             startActivity(reloadIntent);
             AnkiActivity.finishActivityWithFade(this);
         } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
+            // Intent and not IntentTop, because you may want to
+            // actually review the remainded deck and then go back to
+            // current deck.
             final Intent reviewIntent = new Intent(this, Reviewer.class);
 
             CollectionHelper.getInstance().getCol(this).getDecks().select(intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0));

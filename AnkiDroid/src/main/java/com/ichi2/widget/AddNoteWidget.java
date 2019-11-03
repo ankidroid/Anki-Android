@@ -24,6 +24,7 @@ import android.widget.RemoteViews;
 import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.utils.IntentTop;
 
 import timber.log.Timber;
 
@@ -50,7 +51,7 @@ public class AddNoteWidget extends AppWidgetProvider {
         Timber.d("onUpdate");
 
         final RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_add_note);
-        final Intent intent = new Intent(context, NoteEditor.class);
+        final Intent intent = new IntentTop(context, NoteEditor.class);
 
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
 
