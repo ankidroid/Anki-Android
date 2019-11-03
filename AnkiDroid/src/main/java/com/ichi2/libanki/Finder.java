@@ -1077,12 +1077,12 @@ public class Finder {
                 card.put("deck", deckNames.get(cur.getString(2)));
                 int queue = cur.getInt(3);
                 String tags = cur.getString(4);
-                card.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.matches(".*[Mm]arked.*") ? 2 : 0)));
                 card.put("tags", tags);
                 res.add(card);
                 // add placeholder for question and answer
                 card.put("question", "");
                 card.put("answer", "");
+                card.put("suspended", queue == Card.QUEUE_SUSP ? "True": "False");
             }
         } catch (SQLException e) {
             // invalid grouping

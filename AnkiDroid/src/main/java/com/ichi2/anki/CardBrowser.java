@@ -542,7 +542,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 R.layout.card_item_browser,
                 new String[] {COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]},
                 new int[] {R.id.card_sfld, R.id.card_column2},
-                "flags",
                 sflRelativeFontSize,
                 sflCustomFont);
         // link the adapter to the main mCardsListView
@@ -1230,8 +1229,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             card.put("deck", deckName);
             // update flags (marked / suspended / etc) which determine color
-            String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
-            card.put("flags", flags);
+            card.put("suspended", c.getQueue() == Card.QUEUE_SUSP ? "True": "False");
         }
 
         updateList();
@@ -1631,18 +1629,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private final int mResource;
         private String[] mFromKeys;
         private final int[] mToIds;
-        private final String mColorFlagKey;
         private float mOriginalTextSize = -1.0f;
         private final int mFontSizeScalePcent;
         private Typeface mCustomTypeface = null;
         private LayoutInflater mInflater;
 
-        public MultiColumnListAdapter(Context context, int resource, String[] from, int[] to, String colorFlagKey,
+        public MultiColumnListAdapter(Context context, int resource, String[] from, int[] to,
                                       int fontSizeScalePcent, String customFont) {
             mResource = resource;
             mFromKeys = from;
             mToIds = to;
-            mColorFlagKey = colorFlagKey;
             mFontSizeScalePcent = fontSizeScalePcent;
             if (!"".equals(customFont)) {
                 mCustomTypeface = AnkiFont.getTypeface(context, customFont);
@@ -1674,7 +1670,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // Draw the content in the columns
             View[] columns = (View[]) v.getTag();
             final Map<String, String> card = getCards().get(position);
-            final int colorIdx = getColor(card.get(mColorFlagKey));
+            final int colorIdx = getColor(card);
             int[] colors = Themes.getColorFromAttr(CardBrowser.this, new int[]{android.R.attr.colorBackground,
                     R.attr.markedColor, R.attr.suspendedColor, R.attr.markedColor});
             for (int i = 0; i < mToIds.length; i++) {
@@ -1731,22 +1727,24 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         /**
          * Get the index that specifies the background color of items in the card list based on the String tag
-         * @param flag a string flag
+         * @param card -- a card object to color
          * @return index into TypedArray specifying the background color
          */
-        private int getColor(String flag) {
-            if (flag == null) {
-                return BACKGROUND_NORMAL;
-            }
-            switch (flag) {
-                case "1":
+        private int getColor(Map<String, String> card) {
+            boolean suspended = "True".equals(card.get("suspended"));
+            boolean marked = card.get("tags").matches(".*[Mm]arked.*");
+            if (marked) {
+                if (suspended) {
+                    return BACKGROUND_MARKED_SUSPENDED;
+                } else {
+                    return BACKGROUND_MARKED;
+                }
+            } else {
+                if (suspended) {
                     return BACKGROUND_SUSPENDED;
-                case "2":
-                    return  BACKGROUND_MARKED;
-                case "3":
-                    return  BACKGROUND_MARKED_SUSPENDED;
-                default:
+                } else {
                     return BACKGROUND_NORMAL;
+                }
             }
         }
 
