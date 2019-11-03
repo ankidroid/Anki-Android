@@ -178,8 +178,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:theme="@style/Theme_Dark_Compat.Launcher"
             android:name="com.ichi2.anki.DeckPicker"
+            android:theme="@style/Theme_Dark_Compat.Launcher"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:label="@string/app_name">
@@ -318,8 +318,8 @@
                 />
         </activity>
         <activity
-            android:exported="false"
             android:name="com.ichi2.anki.Previewer"
+            android:exported="false"
             android:configChanges="locale"
             android:label="@string/preview_title"
             />
@@ -393,29 +393,29 @@
         </receiver>
 
         <activity
-            android:exported="false"
             android:name=".multimediacard.activity.MultimediaEditFieldActivity"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_edit_text"
             >
         </activity>
         <activity
-            android:exported="false"
             android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_translation"
             >
         </activity>
         <activity
-            android:exported="false"
             android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_load_pronounciation"
             >
         </activity>
         <activity
-            android:exported="false"
             android:name="com.ichi2.anki.CardTemplateEditor"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_template_editor"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
