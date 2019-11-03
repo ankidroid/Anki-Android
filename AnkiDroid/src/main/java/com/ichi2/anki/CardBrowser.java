@@ -1211,15 +1211,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (pos < 0 || pos >= getCards().size()) {
                 continue;
             }
+            Map<String, String> card = getCards().get(pos);
             // update tags
             if (updatedCardTags != null) {
-                getCards().get(pos).put("tags", updatedCardTags.get(c.getNid()));
+                card.put("tags", updatedCardTags.get(c.getNid()));
             }
             // update sfld
             String sfld = note.getSFld();
-            getCards().get(pos).put("sfld", sfld);
+            card.put("sfld", sfld);
             // update Q & A etc
-            updateSearchItemQA(getBaseContext(), getCards().get(pos), c);
+            updateSearchItemQA(getBaseContext(), card, c);
             // update deck
             String deckName;
             try {
@@ -1227,10 +1228,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            getCards().get(pos).put("deck", deckName);
+            card.put("deck", deckName);
             // update flags (marked / suspended / etc) which determine color
             String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
-            getCards().get(pos).put("flags", flags);
+            card.put("flags", flags);
         }
 
         updateList();
@@ -1672,8 +1673,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private void bindView(final int position, final View v) {
             // Draw the content in the columns
             View[] columns = (View[]) v.getTag();
-            final Map<String, String> dataSet = getCards().get(position);
-            final int colorIdx = getColor(dataSet.get(mColorFlagKey));
+            final Map<String, String> card = getCards().get(position);
+            final int colorIdx = getColor(card.get(mColorFlagKey));
             int[] colors = Themes.getColorFromAttr(CardBrowser.this, new int[]{android.R.attr.colorBackground,
                     R.attr.markedColor, R.attr.suspendedColor, R.attr.markedColor});
             for (int i = 0; i < mToIds.length; i++) {
@@ -1681,7 +1682,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // set font for column
                 setFont(col);
                 // set text for column
-                col.setText(dataSet.get(mFromKeys[i]));
+                col.setText(card.get(mFromKeys[i]));
             }
             // set card's background color
             final int backgroundColor = colors[colorIdx];

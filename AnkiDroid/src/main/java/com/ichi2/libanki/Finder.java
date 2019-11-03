@@ -1071,18 +1071,18 @@ public class Finder {
                     Timber.i("_findCardsForCardBrowser() cancelled...");
                     return new ArrayList<>();
                 }                
-                Map<String, String> map = new HashMap<>();
-                map.put("id", cur.getString(0));
-                map.put("sfld", cur.getString(1));
-                map.put("deck", deckNames.get(cur.getString(2)));
+                Map<String, String> card = new HashMap<>();
+                card.put("id", cur.getString(0));
+                card.put("sfld", cur.getString(1));
+                card.put("deck", deckNames.get(cur.getString(2)));
                 int queue = cur.getInt(3);
                 String tags = cur.getString(4);
-                map.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.matches(".*[Mm]arked.*") ? 2 : 0)));
-                map.put("tags", tags);
-                res.add(map);
+                card.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.matches(".*[Mm]arked.*") ? 2 : 0)));
+                card.put("tags", tags);
+                res.add(card);
                 // add placeholder for question and answer
-                map.put("question", "");
-                map.put("answer", "");
+                card.put("question", "");
+                card.put("answer", "");
             }
         } catch (SQLException e) {
             // invalid grouping
