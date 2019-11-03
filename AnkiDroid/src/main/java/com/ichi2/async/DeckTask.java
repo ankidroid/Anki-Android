@@ -675,6 +675,15 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         break;
                     }
 
+                    case FLAG: {
+                        int flag = (Integer) data[2];
+                        col.setUserFlag(flag, cardIds);
+                        for (Card c : cards) {
+                            c.load();
+                        }
+                        break;
+                    }
+
                     case MARK_NOTE_MULTI: {
                         Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
                         // collect undo information

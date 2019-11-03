@@ -763,6 +763,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+    private void flagTask (int flag) {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
+                                mFlagCardHandler,
+                                new DeckTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, new Integer (flag)}));
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -829,6 +834,26 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_search_by_tag:
                 showTagsDialog();
+                return true;
+
+            case R.id.action_flag_zero:
+                flagTask(0);
+                return true;
+
+            case R.id.action_flag_one:
+                flagTask(1);
+                return true;
+
+            case R.id.action_flag_two:
+                flagTask(2);
+                return true;
+
+            case R.id.action_flag_three:
+                flagTask(3);
+                return true;
+
+            case R.id.action_flag_four:
+                flagTask(4);
                 return true;
 
             case R.id.action_delete_card:
@@ -1208,7 +1233,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         public ListenerWithProgressBarCloseOnFalse() {
 		}
-		
+
         public void onPostExecute(DeckTask.TaskData result) {
             if (timber != null) {
                 Timber.d(timber);
@@ -1392,6 +1417,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             invalidateOptionsMenu();    // maybe the availability of undo changed
         }
     };
+    private DeckTask.TaskListener mFlagCardHandler = mSuspendCardHandler;
 
     private DeckTask.TaskListener mMarkCardHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
