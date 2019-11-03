@@ -33,7 +33,7 @@ import java.util.Map;
 import timber.log.Timber;
 
 
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes", "PMD.MethodNamingConventions"})
 public class Note implements Cloneable {
 
     private Collection mCol;
@@ -52,7 +52,7 @@ public class Note implements Cloneable {
     private long mMod;
     private boolean mNewlyAdded;
 
-    
+
     public Note(Collection col, Long id) {
         this(col, null, id);
     }
@@ -116,6 +116,7 @@ public class Note implements Cloneable {
         }
     }
 
+
     public void reloadModel() {
         mModel = mCol.getModels().get(mMid);
     }
@@ -125,12 +126,14 @@ public class Note implements Cloneable {
      * If fields or tags have changed, write changes to disk.
      */
     public void flush() {
-    	flush(null);
+        flush(null);
     }
+
 
     public void flush(Long mod) {
         flush(mod, true);
     }
+
 
     public void flush(Long mod, boolean changeUsn) {
         assert mScm == mCol.getScm();
@@ -143,13 +146,13 @@ public class Note implements Cloneable {
         String fields = joinedFields();
         if (mod == null && mCol.getDb().queryScalar(
                 "select 1 from notes where id = ? and tags = ? and flds = ?",
-                new String[]{Long.toString(mId), tags, fields}) > 0) {
+                new String[] {Long.toString(mId), tags, fields}) > 0) {
             return;
         }
         long csum = Utils.fieldChecksum(mFields[0]);
         mMod = mod != null ? mod : Utils.intTime();
         mCol.getDb().execute("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
-                new Object[] { mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData });
+                new Object[] {mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData});
         mCol.getTags().register(mTags);
         _postFlush();
     }
@@ -189,7 +192,7 @@ public class Note implements Cloneable {
      */
 
     public String[] keys() {
-        return (String[])mFMap.keySet().toArray();
+        return (String[]) mFMap.keySet().toArray();
     }
 
 
@@ -224,9 +227,10 @@ public class Note implements Cloneable {
     public void setItem(String key, String value) {
         mFields[_fieldOrd(key)] = value;
     }
-    
+
+
     public boolean contains(String key) {
-    	return mFMap.containsKey(key);
+        return mFMap.containsKey(key);
     }
 
 
@@ -277,7 +281,6 @@ public class Note implements Cloneable {
      */
 
     /**
-     * 
      * @return 1 if first is empty; 2 if first is a duplicate, null otherwise.
      */
     public Integer dupeOrEmpty() {
@@ -289,7 +292,7 @@ public class Note implements Cloneable {
         // find any matching csums and compare
         for (String flds : mCol.getDb().queryColumn(
                 String.class,
-                "SELECT flds FROM notes WHERE csum = " + csum + " AND id != " + (mId != 0 ? mId : 0) + " AND mid = "
+                "SELECT flds FROM notes WHERE csum = " + csum + " AND id != " + mId + " AND mid = "
                         + mMid, 0)) {
             String enteredText = Utils.stripHTMLMedia(mFields[0]);
             String matchFound = Utils.stripHTMLMedia(Utils.splitFields(flds)[0]);
@@ -319,7 +322,7 @@ public class Note implements Cloneable {
      */
     private void _postFlush() {
         if (!mNewlyAdded) {
-            mCol.genCards(new long[] { mId });
+            mCol.genCards(new long[] {mId});
         }
     }
 
@@ -328,6 +331,7 @@ public class Note implements Cloneable {
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
+
 
     public long getMid() {
         return mMid;
@@ -370,7 +374,7 @@ public class Note implements Cloneable {
 
     public Note clone() {
         try {
-            return (Note)super.clone();
+            return (Note) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
@@ -381,15 +385,21 @@ public class Note implements Cloneable {
         return mTags;
     }
 
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Note note = (Note) o;
 
         return mId == note.mId;
     }
+
 
     @Override
     public int hashCode() {
