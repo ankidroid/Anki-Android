@@ -199,10 +199,10 @@
             </intent-filter>
         </activity>
         <activity
-        android:name=".ModelBrowser"
-        android:exported="false"
-        android:configChanges="keyboardHidden|orientation|locale|screenSize"
-        android:label="@string/model_browser_label" />
+            android:name=".ModelBrowser"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:label="@string/model_browser_label" />
         <activity
             android:name=".ModelFieldEditor"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
@@ -270,7 +270,8 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name="com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"
+        <activity
+            android:name="com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"
             android:theme="@style/Theme.CrashReportDialog"
             android:process=":acra"
             android:launchMode="singleInstance"
