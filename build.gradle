@@ -14,13 +14,12 @@ buildscript {
 
 ext {
 
-    jacocoVersion = "0.8.5"
-
     travisBuild = System.getenv("TRAVIS") == "true"
     // allows for -Dpre-dex=false to be set
     preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
 
-    // Travis may report host CPU counts vs guest, everyone else gets 50% of cores
+    // Travis may report host CPU counts vs guest, but runs 2 cores everywhere
+    // everyone else gets 50% of cores to account for SMT which doesn't help this workload
     gradleTestMaxParallelForks = 1
     if (!travisBuild) {
         gradleTestMaxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1

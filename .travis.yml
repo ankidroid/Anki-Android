@@ -1,16 +1,14 @@
 sudo: true
-language: generic
+language: bash
+# ignored on non-linux platforms, but bionic is required for nested virtualization
 dist: bionic
 
-addons:
-  apt:
-    packages:
-      - bridge-utils
-      - libpulse0
-      - libvirt-bin
-      - qemu-kvm
-      - virtinst
-      - ubuntu-vm-builder
+stages:
+  - install
+  - unit_test # custom stage defined in jobs::include section
+  - test
+  - finalize_coverage # custom stage defined in jobs::include section
+  - cache
 
 env:
   global:
@@ -24,12 +22,14 @@ env:
     - TOOLS=${ANDROID_HOME}/tools
     # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
+    - UNIT_TEST=FALSE # by default we don't run the unit tests, they are run only in specific builds
+    - FINALIZE_COVERAGE=FALSE # by default we don't finalize coverage, it is done in one specific build
   matrix:
    #- API=15 # only runs locally. Create+Start once from AndroidStudio to init sdcard. Then only from command-line w/-engine classic
    - API=16 ABI=x86 AUDIO=-no-audio
    - API=17 ABI=x86
-   - API=18 ABI=x86 # API18 has started being flaky
-   #- API=19 ABI=armeabi-v7a # Fails: kernel/emulator mismatch, and emulator-29+ doesn't support "-engine classic" to fix
+   #- API=18 ABI=x86 # frequently flaky: test run failed: 'Instrumentation run failed due to 'java.lang.SecurityException''
+   - API=19 ABI=x86
    # API 20 was Android Wear only
    - API=21
    - API=22
@@ -40,53 +40,66 @@ env:
    - API=27
    - API=28
    - API=29
+   - API=24 JDK="1.11" # make sure we work in the future
 
 jobs:
-  fast_finish: true  # We can report success without waiting for jobs that we
-                     # allow / expect to fail.
+  fast_finish: true  # Report success without waiting for jobs that allowed to fail.
   include:
-    - env: API=24 JDK="1.11"
-    # The test stage is implicit, we only need to define a post-test stage for codacy finalization
+    # The "test" stage is implicit and gets the main matrix. This adds extra stages/jobs
+    - stage: unit_test
+      env: UNIT_TEST=TRUE API=NONE
+      install: skip
+      os: windows
+    - stage: unit_test
+      env: UNIT_TEST=TRUE API=NONE
+      install: skip
+      os: osx
+    - stage: unit_test
+      env: UNIT_TEST=TRUE API=NONE
+      install: skip
+      os: linux
     - stage: finalize_coverage
       env: FINALIZE_COVERAGE=TRUE API=NONE
       install: skip
       script: echo finalize codacy coverage uploads
   allow_failures:
-    - env: API=24 JDK="1.11"
+    - env: API=24 JDK="1.11" # non-default JDKs should not hold up success reporting
+    - env: FINALIZE_COVERAGE=TRUE API=NONE # finalizing coverage should not hold up success reporting
 
 before_install:
-  # Set up KVM
-  - sudo adduser $USER libvirt
-  - sudo adduser $USER kvm
+  # This section may run on all platforms, and may run for unit tests or for coverage finalization
+  # It should not make assumptions about os platform or desired tool installation
 
-  # Set up JDK 8 for Android SDK
+  # Set up JDK 8 for Android SDK - Java is universally needed: codacy, unit tests, emulators
   - curl "${GRAVIS}.install-jdk-travis.sh" --output ~/.install-jdk-travis.sh
   - export TARGET_JDK="${JDK}"
   - JDK="1.8"
   - source ~/.install-jdk-travis.sh
 
-  # Set up Android SDK
-  - wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip
-  - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
-  - rm android-sdk-tools.zip
-  
-  # Avoid harmless sdkmanager warning  
-  - mkdir ~/.android
-  - echo 'count=0' > ~/.android/repositories.cfg
-
-  # Accept all Android license agreements
-  - yes | sdkmanager --licenses
+  # Set up Android SDK - this is needed everywhere but coverage finalization, so toggle on that
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip; fi
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}; fi
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then rm android-sdk-tools.zip; fi
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then mkdir ~/.android; fi # avoid harmless sdkmanager warning
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo 'count=0' > ~/.android/repositories.cfg; fi # avoid harmless sdkmanager warning
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then yes | sdkmanager --licenses >/dev/null; fi # accept all sdkmanager warnings
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager "platform-tools" >/dev/null; fi
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager "tools" >/dev/null; fi # A second time per Travis docs, gets latest versions
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager "build-tools;28.0.3" >/dev/null; fi # Implicit gradle dependency - gradle drives changes
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager "platforms;android-28" >/dev/null; fi # We need the API of the current compileSdkVersion from gradle.properties
 
 install:
-  # Download SDK tools
-  - echo y | sdkmanager "platform-tools" >/dev/null
-  - echo y | sdkmanager "tools" >/dev/null # A second time per Travis docs, gets latest versions
-  - echo y | sdkmanager "build-tools;28.0.3" >/dev/null # Implicit gradle dependency - gradle drives changes
+  # In our setup, install only runs on matrix entries we want full emulator tests on
+  # That only happens currently on linux, so this section can assume linux + emulator is desired
+  # Download required emulator tools
   - echo y | sdkmanager "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
-  - echo y | sdkmanager "platforms;android-28" >/dev/null # We need the API of the current compileSdkVersion from gradle.properties
   - echo y | sdkmanager "emulator" >/dev/null
-  - echo y | sdkmanager "extras;android;m2repository" >/dev/null
   - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null # install our emulator
+
+  # Set up KVM on linux for hardware acceleration. Manually here so it only happens for emulator tests, takes ~30s
+  - sudo -E apt-get -yq --no-install-suggests --no-install-recommends install bridge-utils libpulse0 libvirt-bin qemu-kvm virtinst ubuntu-vm-builder
+  - sudo adduser $USER libvirt
+  - sudo adduser $USER kvm
 
   # Create an Android emulator
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
@@ -110,7 +123,8 @@ install:
   - source ~/.install-jdk-travis.sh
 
 script:
-  - ./gradlew jacocoTestReport # This produces an error while doing the API getprop on API 28...
+  - if [ "$UNIT_TEST" = "TRUE" ]; then ./gradlew jacocoUnitTestReport; fi
+  - if [ "$API" != "NONE" ]; then ./gradlew jacocoAndroidTestReport; fi
 
 after_success:
   - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash tools/upload-codacy-report.sh; fi
@@ -118,7 +132,7 @@ after_success:
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
   - curl "${GRAVIS}.clean_gradle_cache.sh" --output ~/.clean_gradle_cache.sh
-  - bash ~/.clean_gradle_cache.sh
+  - bash ~/.clean_gradle_cache.sh > /dev/null
 
 cache:
   directories:
@@ -127,5 +141,5 @@ cache:
 
 notifications:
   email:
-    - flerda+ankidroid-continuous@gmail.com
+    - github@mikehardy.net
 
