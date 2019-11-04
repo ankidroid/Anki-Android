@@ -1725,16 +1725,27 @@ public class CardBrowser extends NavigationDrawerActivity implements
          */
         private int getColor(Map<String, String> card) {
             boolean suspended = "True".equals(card.get("suspended"));
-			int flag = new Integer(card.get("flags"));
+            int flag = new Integer(card.get("flags"));
             boolean marked = card.get("tags").matches(".*[Mm]arked.*");
-            if (marked) {
-                return R.attr.markedColor;
-            } else {
-                if (suspended) {
-                    return R.attr.suspendedColor;
-                } else {
-                    return android.R.attr.colorBackground;
-                }
+            switch (flag) {
+                case 1:
+                   return R.attr.flagRed;
+                case 2:
+                   return R.attr.flagOrange;
+                case 3:
+                  return R.attr.flagGreen;
+                case 4:
+                   return R.attr.flagBlue;
+                default:
+                    if (marked) {
+                        return R.attr.markedColor;
+                    } else {
+                        if (suspended) {
+                            return R.attr.suspendedColor;
+                        } else {
+                            return android.R.attr.colorBackground;
+                        }
+                    }
             }
         }
 
