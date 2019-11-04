@@ -121,11 +121,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private long mNewDid;   // for change_deck
 
-    private static final int BACKGROUND_NORMAL = 0;
-    private static final int BACKGROUND_MARKED = 1;
-    private static final int BACKGROUND_SUSPENDED = 2;
-    private static final int BACKGROUND_MARKED_SUSPENDED = 3;
-
     private static final int EDIT_CARD = 0;
     private static final int ADD_NOTE = 1;
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
@@ -1670,9 +1665,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // Draw the content in the columns
             View[] columns = (View[]) v.getTag();
             final Map<String, String> card = getCards().get(position);
-            final int colorIdx = getColor(card);
-            int[] colors = Themes.getColorFromAttr(CardBrowser.this, new int[]{android.R.attr.colorBackground,
-                    R.attr.markedColor, R.attr.suspendedColor, R.attr.markedColor});
             for (int i = 0; i < mToIds.length; i++) {
                 TextView col = (TextView) columns[i];
                 // set font for column
@@ -1681,7 +1673,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 col.setText(card.get(mFromKeys[i]));
             }
             // set card's background color
-            final int backgroundColor = colors[colorIdx];
+            final int backgroundColor = Themes.getColorFromAttr(CardBrowser.this, getColor(card));
             v.setBackgroundColor(backgroundColor);
             // setup checkbox to change color in multi-select mode
             final CheckBox checkBox = (CheckBox) v.findViewById(R.id.card_checkbox);
@@ -1726,24 +1718,21 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         /**
-         * Get the index that specifies the background color of items in the card list based on the String tag
+         * Get the background color of items in the card list based on the Card
          * @param card -- a card object to color
          * @return index into TypedArray specifying the background color
          */
         private int getColor(Map<String, String> card) {
             boolean suspended = "True".equals(card.get("suspended"));
+			int flag = new Integer(card.get("flags"));
             boolean marked = card.get("tags").matches(".*[Mm]arked.*");
             if (marked) {
-                if (suspended) {
-                    return BACKGROUND_MARKED_SUSPENDED;
-                } else {
-                    return BACKGROUND_MARKED;
-                }
+                return R.attr.markedColor;
             } else {
                 if (suspended) {
-                    return BACKGROUND_SUSPENDED;
+                    return R.attr.suspendedColor;
                 } else {
-                    return BACKGROUND_NORMAL;
+                    return android.R.attr.colorBackground;
                 }
             }
         }
