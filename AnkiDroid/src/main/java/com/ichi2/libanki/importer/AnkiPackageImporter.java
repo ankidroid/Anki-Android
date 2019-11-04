@@ -89,6 +89,8 @@ public class AnkiPackageImporter extends Anki2Importer {
             // number to use during the import
             File mediaMapFile = new File(tempDir, "media");
             mNameToNum = new HashMap<>();
+            String dirPath = tmpCol.getMedia().dir();
+            File dir = new File(dirPath);
             // We need the opposite mapping in AnkiDroid since our extraction method requires it.
             Map<String, String> numToName = new HashMap<>();
             try {
@@ -99,6 +101,10 @@ public class AnkiPackageImporter extends Anki2Importer {
                 while (jr.hasNext()) {
                     num = jr.nextName();
                     name = jr.nextString();
+                    File file= new File(dir, name);
+                    if (!Utils.isInside(file, dir)) {
+                        throw (new RuntimeException("Invalid file"));
+                    }
                     mNameToNum.put(name, num);
                     numToName.put(num, name);
                 }
