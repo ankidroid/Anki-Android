@@ -105,6 +105,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                     if (!Utils.isInside(file, dir)) {
                         throw (new RuntimeException("Invalid file"));
                     }
+                    Utils.nfcNormalized(num);
                     mNameToNum.put(name, num);
                     numToName.put(num, name);
                 }
