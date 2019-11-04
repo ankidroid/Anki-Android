@@ -1225,6 +1225,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             card.put("deck", deckName);
             // update flags (marked / suspended / etc) which determine color
             card.put("suspended", c.getQueue() == Card.QUEUE_SUSP ? "True": "False");
+            card.put("flags", (new Integer(c.getUserFlag())).toString());
         }
 
         updateList();
