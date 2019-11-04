@@ -1340,7 +1340,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private static String formatQA(String txt) {
         /* Strips all formatting from the string txt for use in displaying question/answer in browser */
-        String s = txt.replace("<br>", " ");
+        String s = txt;
+        s = s.replaceAll("<!--.*?-->", "");
+        s = s.replace("<br>", " ");
         s = s.replace("<br />", " ");
         s = s.replace("<div>", " ");
         s = s.replace("\n", " ");
