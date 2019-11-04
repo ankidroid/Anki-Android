@@ -83,18 +83,18 @@ before_install:
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then mkdir ~/.android; fi # avoid harmless sdkmanager warning
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo 'count=0' > ~/.android/repositories.cfg; fi # avoid harmless sdkmanager warning
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then yes | sdkmanager --licenses >/dev/null; fi # accept all sdkmanager warnings
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager "platform-tools" >/dev/null; fi
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager "tools" >/dev/null; fi # A second time per Travis docs, gets latest versions
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager "build-tools;28.0.3" >/dev/null; fi # Implicit gradle dependency - gradle drives changes
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager "platforms;android-28" >/dev/null; fi # We need the API of the current compileSdkVersion from gradle.properties
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager --no_https "platform-tools" >/dev/null; fi
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager --no_https "tools" >/dev/null; fi # A second time per Travis docs, gets latest versions
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager --no_https "build-tools;28.0.3" >/dev/null; fi # Implicit gradle dependency - gradle drives changes
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager --no_https "platforms;android-28" >/dev/null; fi # We need the API of the current compileSdkVersion from gradle.properties
 
 install:
   # In our setup, install only runs on matrix entries we want full emulator tests on
   # That only happens currently on linux, so this section can assume linux + emulator is desired
   # Download required emulator tools
-  - echo y | sdkmanager "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
-  - echo y | sdkmanager "emulator" >/dev/null
-  - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null # install our emulator
+  - echo y | sdkmanager --no_https "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
+  - echo y | sdkmanager --no_https "emulator" >/dev/null
+  - echo y | sdkmanager --no_https "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null # install our emulator
 
   # Set up KVM on linux for hardware acceleration. Manually here so it only happens for emulator tests, takes ~30s
   - sudo -E apt-get -yq --no-install-suggests --no-install-recommends install bridge-utils libpulse0 libvirt-bin qemu-kvm virtinst ubuntu-vm-builder
