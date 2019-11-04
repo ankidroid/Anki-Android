@@ -30,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -40,29 +41,31 @@ public class CompatCopyFileTest {
 
     @Test
     public void testCopyFileToStream() throws Exception {
-        URL resource = Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip");
+        String resourcePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip").toURI()).toString();
         File copy = File.createTempFile("testCopyFileToStream", ".zip");
         copy.deleteOnExit();
         FileOutputStream outputStream = new FileOutputStream(copy.getCanonicalPath());
-        CompatHelper.getCompat().copyFile(resource.getPath(), outputStream);
+        CompatHelper.getCompat().copyFile(resourcePath, outputStream);
         outputStream.close();
-        Assert.assertEquals(TestUtils.getMD5(resource.getPath()), TestUtils.getMD5(copy.getCanonicalPath()));
+        Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
     }
 
 
     @Test
     public void testCopyStreamToFile() throws Exception {
         URL resource = Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip");
+        String resourcePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip").toURI()).toString();
         File copy = File.createTempFile("testCopyStreamToFile", ".zip");
         copy.deleteOnExit();
         CompatHelper.getCompat().copyFile(resource.openStream(), copy.getCanonicalPath());
-        Assert.assertEquals(TestUtils.getMD5(resource.getPath()), TestUtils.getMD5(copy.getCanonicalPath()));
+        Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
     }
 
 
     @Test
     public void testCopyErrors() throws Exception {
         URL resource = Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip");
+        String resourcePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip").toURI()).toString();
         File copy = File.createTempFile("testCopyStreamToFile", ".zip");
         copy.deleteOnExit();
 
@@ -78,7 +81,7 @@ public class CompatCopyFileTest {
         try {
             FileOutputStream outputStream = new FileOutputStream(copy.getCanonicalPath());
             outputStream.close();
-            CompatHelper.getCompat().copyFile(resource.getPath(), outputStream);
+            CompatHelper.getCompat().copyFile(resourcePath, outputStream);
             Assert.fail("Should have caught an exception");
         } catch (IOException e) {
             // this is expected
