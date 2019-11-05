@@ -179,7 +179,7 @@ public class ModelFieldEditor extends AnkiActivity {
                 .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
                     String fieldName = mFieldNameInput.getText().toString()
-                            .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                            .replaceAll("[\\n\\r]", "");
 
                     if (fieldName.length() == 0) {
                         showToast(getResources().getString(R.string.toast_empty_name));
@@ -199,7 +199,7 @@ public class ModelFieldEditor extends AnkiActivity {
                             Runnable confirm = () -> {
                                 mCol.modSchemaNoCheck();
                                 String fieldName1 = mFieldNameInput.getText().toString()
-                                        .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                        .replaceAll("[\\n\\r]", "");
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FIELD, mChangeFieldHandler,
                                         new DeckTask.TaskData(new Object[]{mMod, fieldName1}));
                                 dismissContextMenu();
@@ -280,7 +280,7 @@ public class ModelFieldEditor extends AnkiActivity {
                 .onPositive((dialog, which) -> {
 
                         String fieldLabel = mFieldNameInput.getText().toString()
-                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                .replaceAll("[\\n\\r]", "");
                         if (fieldLabel.length() == 0) {
                             showToast(getResources().getString(R.string.toast_empty_name));
                         } else if (containsField(fieldLabel)) {
@@ -406,7 +406,7 @@ public class ModelFieldEditor extends AnkiActivity {
     private void renameField() throws ConfirmModSchemaException {
         try {
             String fieldLabel = mFieldNameInput.getText().toString()
-                    .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                    .replaceAll("[\\n\\r]", "");
             JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
             mCol.getModels().renameField(mMod, field, fieldLabel);
             mCol.getModels().save();
