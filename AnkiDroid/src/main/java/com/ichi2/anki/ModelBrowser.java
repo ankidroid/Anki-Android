@@ -494,7 +494,8 @@ public class ModelBrowser extends AnkiActivity {
                                 .onPositive((dialog, which) -> {
                                         JSONObject model = mModels.get(mModelListPosition);
                                         String deckName = mModelNameInput.getText().toString()
-                                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                                // Anki desktop doesn't allow double quote characters in deck names
+                                                .replaceAll("[\"\\n\\r]", "");
                                         getCol().getDecks().id(deckName, false);
                                         if (deckName.length() > 0) {
                                             try {
