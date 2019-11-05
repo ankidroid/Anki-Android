@@ -166,8 +166,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
     /*
-    * Creates a dialog to rename the currently selected field, short loading ti
-    * Processing time scales with number of items
+    * Creates a dialog to create a field
     */
     private void addFieldDialog() {
         mFieldNameInput = new EditText(this);
@@ -219,8 +218,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
     /*
-     * Creates a dialog to rename the currently selected field, short loading ti
-     * Processing time scales with number of items
+     * Creates a dialog to delete the currently selected field
      */
     private void deleteFieldDialog() {
         Runnable confirm = () -> {
@@ -265,7 +263,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
     /*
-     * Creates a dialog to rename the currently selected field, short loading ti
+     * Creates a dialog to rename the currently selected field
      * Processing time is constant
      */
     private void renameFieldDialog() {
