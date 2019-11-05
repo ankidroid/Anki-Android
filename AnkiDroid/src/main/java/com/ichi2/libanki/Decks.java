@@ -1135,17 +1135,19 @@ public class Decks {
     * ***********************************************************
     */
 
-	public static String parent(String deckName) {
-		// method parent, from sched's method deckDueList in python
-		int index = deckName.lastIndexOf("::");
-		if (index == -1) {
-			return null;
-		}
-		return deckName.substring(0, index);
-	}
+    public static String parent(String deckName) {
+        // method parent, from sched's method deckDueList in python
+        List<String> parts = Arrays.asList(deckName.split("::", -1));
+        if (parts.size() < 2) {
+            return null;
+        } else {
+            parts = parts.subList(0, parts.size() - 1);
+            return TextUtils.join("::", parts);
+        }
+    }
 
     public String getActualDescription() {
-    	return current().optString("desc","");
+        return current().optString("desc","");
     }
 
 
