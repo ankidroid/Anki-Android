@@ -189,8 +189,8 @@ public class AnkiDroidApp extends Application {
      */
     @Override
     public void onCreate() {
-        sInstance = this;
         super.onCreate();
+        sInstance = this;
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
 
