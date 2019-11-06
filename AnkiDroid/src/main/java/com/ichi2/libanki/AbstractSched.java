@@ -3,7 +3,6 @@ package com.ichi2.libanki;
 import android.app.Activity;
 import android.content.Context;
 
-import com.ichi2.libanki.Card;
 
 import org.json.JSONObject;
 

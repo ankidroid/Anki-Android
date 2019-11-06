@@ -65,7 +65,7 @@ public class SchedV2 extends AbstractSched {
     // Not in libanki
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
 
-    private String mName = "std";
+    private String mName = "std2";
     private boolean mHaveCustomStudy = true;
     private boolean mBurySiblingsOnAnswer = true;
 
