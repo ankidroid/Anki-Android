@@ -1143,7 +1143,7 @@ public class Sched {
     }
 
 
-    public void removeLrn() {
+    private void removeLrn() {
     	removeLrn(null);
     }
 
@@ -1207,7 +1207,7 @@ public class Sched {
     }
 
 
-    public int _revForDeck(long did, int lim) {
+    private int _revForDeck(long did, int lim) {
     	lim = Math.min(lim, mReportLimit);
     	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
     }

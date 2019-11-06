@@ -1265,7 +1265,7 @@ public class SchedV2 extends Sched {
     }
 
 
-    public int _revForDeck(long did, int lim, HashMap<Long, HashMap> childMap) {
+    private int _revForDeck(long did, int lim, HashMap<Long, HashMap> childMap) {
         List<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);
