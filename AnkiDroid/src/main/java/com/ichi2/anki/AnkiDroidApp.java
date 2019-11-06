@@ -156,6 +156,11 @@ public class AnkiDroidApp extends Application {
     public static final int CHECK_DB_AT_VERSION = 20900148;
 
     /**
+     * The package version when algorithm of calculating checksum in notes table has been changed (starts to ignore accent)
+     */
+    public static final int NOTES_TABLE_TO_UPDATE = 21000116;
+
+    /**
      * The latest package version number that included changes to the preferences that requires handling. All
      * collections being upgraded to (or after) this version must update preferences.
      */

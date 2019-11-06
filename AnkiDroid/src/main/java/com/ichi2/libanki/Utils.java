@@ -62,6 +62,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -289,6 +290,10 @@ public class Utils {
         }
         sb.append(")");
         return sb.toString();
+    }
+
+    public static String ids2str(Set<Long> ids) {
+        return ids2str(ids.toArray(new Long[0]));
     }
 
     /** Given a list of integers, return a string '(int1,int2,...)'. */

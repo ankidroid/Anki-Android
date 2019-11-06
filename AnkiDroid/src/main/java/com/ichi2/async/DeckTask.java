@@ -78,6 +78,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_DISMISS = 11;
     public static final int TASK_TYPE_DISMISS_MULTI = 12;
     public static final int TASK_TYPE_CHECK_DATABASE = 14;
+    public static final int TASK_TYPE_RECALCULATE_NOTES_CHECKSUM = 16;
     public static final int TASK_TYPE_REPAIR_DECK = 20;
     public static final int TASK_TYPE_LOAD_DECK_COUNTS = 22;
     public static final int TASK_TYPE_UPDATE_VALUES_FROM_DECK = 23;
@@ -270,6 +271,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_CHECK_DATABASE:
                 return doInBackgroundCheckDatabase(params);
+
+            case TASK_TYPE_RECALCULATE_NOTES_CHECKSUM:
+                return doInBackGroundRecalculateNotesChecksum();
 
             case TASK_TYPE_REPAIR_DECK:
                 return doInBackgroundRepairDeck(params);
@@ -907,6 +911,24 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
 
         long result = col.fixIntegrity(new ProgressCallback(this, AnkiDroidApp.getAppResources()));
+        if (result == -1) {
+            return new TaskData(false);
+        } else {
+            // Close the collection and we restart the app to reload
+            CollectionHelper.getInstance().closeCollection(true);
+            return new TaskData(0, result, true);
+        }
+    }
+
+    private TaskData doInBackGroundRecalculateNotesChecksum() {
+        Timber.d("doInBackGroundRecalculateNotesChecksum");
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        if (col == null) {
+            Timber.e("doInBackGroundRecalculateNotesChecksum :: supplied collection was null");
+            return new TaskData(false);
+        }
+
+        long result = col.recalculateNotesChecksum();
         if (result == -1) {
             return new TaskData(false);
         } else {

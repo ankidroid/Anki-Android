@@ -1853,6 +1853,37 @@ public class Collection {
     }
 
 
+    public long recalculateNotesChecksum() {
+        Cursor cur = null;
+        Map<Long, String> idToField = new HashMap<>();
+        try {
+            cur = mDb.getDatabase().query("select id, sfld from notes", null);
+            while (cur.moveToNext()) {
+                Long id = cur.getLong(0);
+                String sflds = cur.getString(1);
+                idToField.put(id, sflds);
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        StringBuilder update = new StringBuilder("UPDATE notes\nSET csum = CASE id\n");
+        for (Map.Entry<Long, String> row : idToField.entrySet()) {
+            long newChecksum = Utils.fieldChecksum(row.getValue());
+            update.append("WHEN ")
+                    .append(row.getKey())
+                    .append(" THEN ")
+                    .append(newChecksum)
+                    .append("\n");
+        }
+        update.append("END\n")
+        .append("WHERE id IN ").append(Utils.ids2str(idToField.keySet()));
+        mDb.getDatabase().execSQL(update.toString());
+        return 0;
+    }
+
+
     private void fixIntegrityProgress(DeckTask.ProgressCallback progressCallback, int current, int total) {
         progressCallback.publishProgress(new DeckTask.TaskData(
                 progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total));

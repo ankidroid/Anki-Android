@@ -119,6 +119,8 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.AnkiDroidApp.NOTES_TABLE_TO_UPDATE;
+
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
@@ -989,6 +991,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 return;
             }
 
+            if (previous < NOTES_TABLE_TO_UPDATE) {
+                updateNotesChecksum();
+            }
+
             // Skip full DB check if the basic check is OK
             //TODO: remove this variable if we really want to do the full db check on every user
             boolean skipDbCheck = false;
@@ -1265,6 +1271,25 @@ public class DeckPicker extends NavigationDrawerActivity implements
             @Override
             public void onProgressUpdate(DeckTask.TaskData... values) {
                 mProgressDialog.setContent(values[0].getString());
+            }
+        });
+    }
+
+    // Callback method to handle notes table update
+    public void updateNotesChecksum() {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RECALCULATE_NOTES_CHECKSUM, new DeckTask.TaskListener() {
+            @Override
+            public void onPreExecute() {
+                Timber.d("updateNotesChecksum(): started updating notes table checksum");
+            }
+
+
+            @Override
+            public void onPostExecute(TaskData result) {
+                if (result == null || !result.getBoolean()) {
+                    handleDbError();
+                }
+                Timber.d("updateNotesChecksum(): finished updating notes table checksum");
             }
         });
     }
