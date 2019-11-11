@@ -1708,7 +1708,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             // do nothing when pref is 100% and apply scaling only once
             if (mFontSizeScalePcent != 100 && Math.abs(mOriginalTextSize - currentSize) < 0.1) {
-                v.setTextSize(TypedValue.COMPLEX_UNIT_SP, mOriginalTextSize * (mFontSizeScalePcent / 100.0f));
+                // getTextSize returns value in absolute PX so use that in the setter
+                v.setTextSize(TypedValue.COMPLEX_UNIT_PX, mOriginalTextSize * (mFontSizeScalePcent / 100.0f));
             }
 
             if (mCustomTypeface != null) {
