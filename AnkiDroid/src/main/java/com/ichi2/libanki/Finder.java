@@ -306,6 +306,8 @@ public class Finder {
                     s.add(_findTemplate(val));
                 } else if ("deck".equals(cmd)) {
                     s.add(_findDeck(val));
+                } else if ("flag".equals(cmd)) {
+                    s.add(_findFlag(val));
                 } else if ("mid".equals(cmd)) {
                     s.add(_findMid(val));
                 } else if ("nid".equals(cmd)) {
@@ -472,6 +474,30 @@ public class Finder {
         }
     }
 
+    private String _findFlag(String val) {
+        int flag;
+        switch (val) {
+        case "0":
+            flag = 0;
+            break;
+        case "1":
+            flag = 1;
+            break;
+        case "2":
+            flag = 2;
+            break;
+        case "3":
+            flag = 3;
+            break;
+        case "4":
+            flag = 4;
+            break;
+        default:
+            return null;
+        }
+        int mask = 0b111; // 2**3 -1 in Anki
+        return "(c.flags & "+mask+") == " + flag;
+    }
 
     private String _findRated(String val) {
         // days(:optional_ease)
