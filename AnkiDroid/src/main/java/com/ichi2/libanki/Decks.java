@@ -1127,6 +1127,20 @@ public class Decks {
         }
     }
 
+    /*
+     * ******************************
+     * utils methods
+     * **************************************
+     */
+    public static String normalizeName(String name) {
+        name = Normalizer.normalize(name, Normalizer.Form.NFC);
+        name = name.toLowerCase();
+        return name;
+    }
+
+    public static boolean equalName(String name1, String name2) {
+        return normalizeName(name1).equals(normalizeName(name2));
+    }
 
     /*
     * ***********************************************************
