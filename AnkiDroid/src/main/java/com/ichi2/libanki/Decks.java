@@ -243,12 +243,9 @@ public class Decks {
         try {
             name = name.replace("\"", "");
             name = Normalizer.normalize(name, Normalizer.Form.NFC);
-            for (Map.Entry<Long, JSONObject> g : mDecks.entrySet()) {
-                String deckName = g.getValue().getString("name");
-                deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
-                if (deckName.equalsIgnoreCase(name)) {
-                    return g.getKey();
-                }
+            JSONObject deck = byName(name);
+            if (deck != null) {
+                return deck.getLong("id");
             }
             if (!create) {
                 return null;
