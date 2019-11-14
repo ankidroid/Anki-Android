@@ -132,7 +132,8 @@ public class Utils {
      *
      * @param context The application's environment.
      * @param time_s The time to format, in seconds
-     * @return The time quantity string. Something like "3 s" or "1.7 yr".
+     * @return The time quantity string. Something like "3 s" or "1.7
+     * yr". Only months and year have a number after the decimal.
      */
     public static String timeQuantity(Context context, long time_s) {
         Resources res = context.getResources();
