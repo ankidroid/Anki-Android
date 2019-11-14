@@ -863,8 +863,8 @@ public class Decks {
 
         for (JSONObject deck: decks) {
             // two decks with the same name?
-             try {
-                if (names.contains(deck.getString("name"))) {
+            try {
+                if (names.contains(normalizeName(deck.getString("name")))) {
                     Timber.i("fix duplicate deck name %s", deck.getString("name"));
                     deck.put("name", deck.getString("name") + Utils.intTime(1000));
                     save(deck);
@@ -879,14 +879,12 @@ public class Decks {
 
                 // immediate parent must exist
                 String immediateParent = parent(deck.getString("name"));
-                if (immediateParent != null) {
-                    if (!names.contains(immediateParent)) {
-                        Timber.i("fix deck with missing parent %s", deck.getString("name"));
-                        _ensureParents(deck.getString("name"));
-                        names.add(immediateParent);
-                    }
+                if (immediateParent != null && !names.contains(normalizeName(immediateParent))) {
+                    Timber.i("fix deck with missing parent %s", deck.getString("name"));
+                    _ensureParents(deck.getString("name"));
+                    names.add(normalizeName(immediateParent));
                 }
-                names.add(deck.getString("name"));
+                names.add(normalizeName(deck.getString("name")));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
