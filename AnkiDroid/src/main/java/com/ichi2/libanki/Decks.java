@@ -499,7 +499,7 @@ public class Decks {
      */
     public void rename(JSONObject g, String newName) throws DeckRenameException {
         // make sure target node doesn't already exist
-        if (allNames().contains(newName)) {
+        if (byName(newName) != null) {
             throw new DeckRenameException(DeckRenameException.ALREADY_EXISTS);
         }
         try {
