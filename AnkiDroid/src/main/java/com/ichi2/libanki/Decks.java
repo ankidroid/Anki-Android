@@ -466,19 +466,19 @@ public class Decks {
 
 
     /**
-     * Get deck with NAME.
+     * Get deck with NAME, ignoring case.
      */
     public JSONObject byName(String name) {
-		try {
-			for (JSONObject m : mDecks.values()) {
-				if (m.get("name").equals(name)) {
-					return m;
-				}
-			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-		return null;
+	try {
+            for (JSONObject m : mDecks.values()) {
+                if (equalName(m.getString("name"),name)) {
+                    return m;
+                }
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
 
