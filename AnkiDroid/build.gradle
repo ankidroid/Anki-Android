@@ -126,7 +126,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.browser:browser:1.0.0'
     implementation 'androidx.exifinterface:exifinterface:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'io.requery:sqlite-android:3.30.1'
     implementation 'android.arch.persistence:db-framework:1.1.1'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
