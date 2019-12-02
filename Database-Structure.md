@@ -52,7 +52,10 @@ CREATE TABLE cards (
     type            integer not null,
       -- 0=new, 1=learning, 2=due, 3=filtered
     queue           integer not null,
-      -- -3=sched buried, -2=user buried, -1=suspended,
+      -- -3=user buried(In scheduler 2),
+      -- -2=sched buried (In scheduler 2), 
+      -- -2=buried(In scheduler 1),
+      -- -1=suspended,
       -- 0=new, 1=learning, 2=due (as for type)
       -- 3=in learning, next rev in at least a day after the previous review
     due             integer not null,
