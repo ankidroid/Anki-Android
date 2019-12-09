@@ -335,7 +335,7 @@ played when the question is shown"
 }
 ```
 
-# configuration JSONObjcets
+# configuration JSONObjects
 Here is an annotated description of the JSONObjects in the decks field of the `col` table when the collection is started. More values may be added to it by any add-on.
 ```java
 {
