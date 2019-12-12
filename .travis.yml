@@ -65,7 +65,6 @@ jobs:
       script: echo finalize codacy coverage uploads
   allow_failures:
     - env: API=24 JDK="1.11" # non-default JDKs should not hold up success reporting
-    - env: API=15 ABI=x86 EMU_CHANNEL="--channel=4" # API15 worked with 29.2.7 but 29.2.8 fails again?
     - env: FINALIZE_COVERAGE=TRUE API=NONE # finalizing coverage should not hold up success reporting
 
 before_install:
