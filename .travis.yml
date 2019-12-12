@@ -17,7 +17,6 @@ env:
     - ANDROID_HOME=${HOME}/android-sdk
     - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
-    - EMU_CHANNEL="" # use default / stable emulator channel normally
     - GRAVIS="https://raw.githubusercontent.com/DanySK/Gravis-CI/master/"
     - JDK="1.8"
     - TOOLS=${ANDROID_HOME}/tools
@@ -26,7 +25,7 @@ env:
     - UNIT_TEST=FALSE # by default we don't run the unit tests, they are run only in specific builds
     - FINALIZE_COVERAGE=FALSE # by default we don't finalize coverage, it is done in one specific build
   matrix:
-   - API=15 ABI=x86 EMU_CHANNEL="--channel=4" # Canaries of API15 are working again, google fixed their issues
+   #- API=15 # only runs locally. Create+Start once from AndroidStudio to init sdcard. Then only from command-line w/-engine classic
    - API=16 ABI=x86 AUDIO=-no-audio
    - API=17 ABI=x86
    #- API=18 ABI=x86 # frequently flaky: test run failed: 'Instrumentation run failed due to 'java.lang.SecurityException''
@@ -94,7 +93,7 @@ install:
   # That only happens currently on linux, so this section can assume linux + emulator is desired
   # Download required emulator tools
   - echo y | sdkmanager --no_https "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
-  - echo y | sdkmanager --no_https $EMU_CHANNEL "emulator" >/dev/null
+  - echo y | sdkmanager --no_https "emulator" >/dev/null
   - echo y | sdkmanager --no_https "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null # install our emulator
 
   # Set up KVM on linux for hardware acceleration. Manually here so it only happens for emulator tests, takes ~30s
@@ -108,12 +107,7 @@ install:
     EMU_PARAMS="-verbose -no-snapshot -no-window -camera-back none -camera-front none -selinux permissive -qemu -m 2048"
     EMU_COMMAND="emulator"
     if [[ $ABI =~ "x86" ]]; then
-      if [ $API != "15" ]; then
-        # API15 is using the canary channel right now, and emulator-headless is command not found?
-        # this may break in the future when the current canaries are promoted but until now it works
-        # for all but API15 on the canary channel
-        EMU_COMMAND="emulator-headless"
-      fi
+      EMU_COMMAND="emulator-headless"
     fi
     # This double "sudo" monstrosity is used to have Travis execute the
     # emulator with its new group permissions and help preserve the rule
