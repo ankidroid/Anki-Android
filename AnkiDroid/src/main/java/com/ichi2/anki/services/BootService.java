@@ -89,7 +89,7 @@ public class BootService extends BroadcastReceiver {
     public static void scheduleNotification(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        if (Integer.parseInt(sp.getString("minimumCardsDueForNotification", "1000001")) <= 1000000) {
+        if (Integer.parseInt(sp.getString("minimumCardsDueForNotification", "1000001")) >= 1000000) {
             return;
         }
 
