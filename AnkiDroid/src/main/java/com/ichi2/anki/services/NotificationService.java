@@ -37,6 +37,8 @@ public class NotificationService extends BroadcastReceiver {
     /** The id of the notification for due cards. */
     private static final int WIDGET_NOTIFY_ID = 1;
 
+    public static final String INTENT_ACTION = "com.ichi2.anki.intent.action.SHOW_NOTIFICATION";
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Timber.i("NotificationService: OnStartCommand");
