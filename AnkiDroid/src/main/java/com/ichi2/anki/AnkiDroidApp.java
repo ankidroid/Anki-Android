@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -29,6 +30,8 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.util.Log;
 import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
@@ -36,6 +39,7 @@ import android.webkit.CookieManager;
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
+import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -245,6 +249,11 @@ public class AnkiDroidApp extends Application {
             }
         }
         new BootService().onReceive(this, new Intent(this, BootService.class));
+
+        // Register BroadcastReceiver NotificationService
+        NotificationService ns = new NotificationService();
+        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
+        lbm.registerReceiver(ns, new IntentFilter(NotificationService.INTENT_ACTION));
     }
 
 

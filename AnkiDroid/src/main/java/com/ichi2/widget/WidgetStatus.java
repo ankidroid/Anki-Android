@@ -20,9 +20,12 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Pair;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.MetaDB;
+import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
@@ -108,6 +111,9 @@ public final class WidgetStatus {
             if (sSmallWidgetEnabled) {
                 new AnkiDroidWidgetSmall.UpdateService().doUpdate(context);
             }
+            Intent intent = new Intent(NotificationService.INTENT_ACTION);
+            Context appContext = context.getApplicationContext();
+            LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent);
         }
 
 
