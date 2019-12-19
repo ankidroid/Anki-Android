@@ -21,6 +21,7 @@ package com.ichi2.anki;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
@@ -85,13 +86,19 @@ public class Info extends AnkiActivity {
         Button marketButton = findViewById(R.id.market);
         marketButton.setOnClickListener(arg0 -> {
             if (mType == TYPE_ABOUT) {
+                final String intentUri;
                 if (CompatHelper.isKindle()) {
-                    Intent intent = new Intent("android.intent.action.VIEW",
-                            Uri.parse("http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki"));
+                    intentUri = "http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki";
+                } else {
+                    intentUri = "market://details?id=com.ichi2.anki";
+                }
+                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(intentUri));
+                final PackageManager packageManager = getPackageManager();
+                if (intent.resolveActivity(packageManager) != null) {
                     startActivityWithoutAnimation(intent);
                 } else {
-                    Info.this.startActivityWithoutAnimation(new Intent(Intent.ACTION_VIEW, Uri
-                            .parse("market://details?id=com.ichi2.anki")));
+                    final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
+                    UIUtils.showThemedToast(Info.this, errorMsg, true);
                 }
                 return;
             }
