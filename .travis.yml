@@ -26,7 +26,6 @@ env:
     - LINT=FALSE # by default we don't lint, they are run only in specific builds
     - FINALIZE_COVERAGE=FALSE # by default we don't finalize coverage, it is done in one specific build
   matrix:
-   #- API=15 # only runs locally. Create+Start once from AndroidStudio to init sdcard. Then only from command-line w/-engine classic
    - API=16 ABI=x86 AUDIO=-no-audio
    - API=17 ABI=x86
    #- API=18 ABI=x86 # frequently flaky: test run failed: 'Instrumentation run failed due to 'java.lang.SecurityException''

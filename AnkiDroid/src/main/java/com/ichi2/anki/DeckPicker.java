@@ -48,6 +48,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.app.ShareCompat;
@@ -1857,7 +1858,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Get a URI for the file to be shared via the FileProvider API
         Uri uri;
         try {
-            uri = CompatHelper.getCompat().getExportUri(DeckPicker.this, attachment);
+            uri = FileProvider.getUriForFile(DeckPicker.this, "com.ichi2.anki.apkgfileprovider", attachment);
         } catch (IllegalArgumentException e) {
             Timber.e("Could not generate a valid URI for the apkg file");
             UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);

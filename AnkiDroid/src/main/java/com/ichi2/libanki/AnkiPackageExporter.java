@@ -17,6 +17,7 @@
 package com.ichi2.libanki;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
@@ -414,8 +415,8 @@ public final class AnkiPackageExporter extends AnkiExporter {
         prepareMedia();
     	JSONObject media = _exportMedia(z, mMediaFiles, mCol.getMedia().dir());
         // tidy up intermediate files
-        CompatHelper.getCompat().deleteDatabase(new File(colfile));
-        CompatHelper.getCompat().deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));
+        SQLiteDatabase.deleteDatabase(new File(colfile));
+        SQLiteDatabase.deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));
         String tempPath = path.replace(".apkg", ".media");
         File file = new File(tempPath);
         if (file.exists()) {

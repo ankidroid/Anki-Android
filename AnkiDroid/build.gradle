@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.ichi2.anki"
-        minSdkVersion 15
+        minSdkVersion 16
         //noinspection OldTargetApi
         targetSdkVersion 28
         testApplicationId "com.ichi2.anki.tests"
