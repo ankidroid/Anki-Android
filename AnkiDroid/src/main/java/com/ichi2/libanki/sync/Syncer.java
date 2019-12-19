@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import okhttp3.Response;
 import timber.log.Timber;
 
 @SuppressWarnings({"deprecation", // tracking HTTP transport change in github already
@@ -84,17 +85,16 @@ public class Syncer {
     }
 
 
-    @SuppressWarnings("deprecation") // tracking HTTP transport change in github already
     public Object[] sync(Connection con) throws UnknownHttpResponseException {
         mSyncMsg = "";
         // if the deck has any pending changes, flush them first and bump mod time
         mCol.save();
         // step 1: login & metadata
-        org.apache.http.HttpResponse ret = mServer.meta();
+        Response ret = mServer.meta();
         if (ret == null) {
             return null;
         }
-        int returntype = ret.getStatusLine().getStatusCode();
+        int returntype = ret.code();
         if (returntype == 403) {
             return new Object[] { "badAuth" };
         }
@@ -102,7 +102,7 @@ public class Syncer {
             mCol.getDb().getDatabase().beginTransaction();
             try {
                 Timber.i("Sync: getting meta data from server");
-                JSONObject rMeta = new JSONObject(mServer.stream2String(ret.getEntity().getContent()));
+                JSONObject rMeta = new JSONObject(ret.body().string());
                 mCol.log("rmeta", rMeta);
                 mSyncMsg = rMeta.getString("msg");
                 if (!rMeta.getBoolean("cont")) {
