@@ -133,18 +133,19 @@ dependencies {
     annotationProcessor "com.google.auto.service:auto-service:1.0-rc6"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //noinspection GradleDependency
-    implementation 'androidx.appcompat:appcompat:1.2.0-beta01'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0-beta01'
+    implementation 'androidx.browser:browser:1.2.0'
     implementation 'androidx.exifinterface:exifinterface:1.2.0'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.sqlite:sqlite-framework:2.1.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation 'io.requery:sqlite-android:3.31.0'
-    implementation 'android.arch.persistence:db-framework:1.1.1'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
-    implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
 
     // May need a resolution strategy for support libs to our versions
