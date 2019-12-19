@@ -382,7 +382,7 @@ public class Collection {
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
             }
             if (!mServer) {
-                CompatHelper.getCompat().disableDatabaseWriteAheadLogging(mDb.getDatabase());
+                mDb.getDatabase().disableWriteAheadLogging();
             }
             mDb.close();
             mDb = null;

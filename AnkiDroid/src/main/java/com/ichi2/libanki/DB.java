@@ -70,9 +70,7 @@ public class DB {
                 .build();
         SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory().create(configuration);
         mDatabase = helper.getWritableDatabase();
-
-        // TODO: remove this once everyone has stopped using old AnkiDroid clients with WAL (API >= 16)
-        CompatHelper.getCompat().disableDatabaseWriteAheadLogging(mDatabase);
+        mDatabase.disableWriteAheadLogging();
         mDatabase.query("PRAGMA synchronous = 2", null);
         mMod = false;
     }

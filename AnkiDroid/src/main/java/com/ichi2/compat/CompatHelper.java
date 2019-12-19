@@ -30,9 +30,7 @@ public class CompatHelper {
 
     private CompatHelper() {
 
-        if (isNookHdOrHdPlus() && getSdkVersion() == 15) {
-            mCompat = new CompatV15NookHdOrHdPlus();
-        } else if (getSdkVersion() >= 26) {
+        if (getSdkVersion() >= 26) {
             mCompat = new CompatV26();
         } else if (getSdkVersion() >= 24) {
             mCompat = new CompatV24();
@@ -46,10 +44,8 @@ public class CompatHelper {
             mCompat = new CompatV18();
         } else if (getSdkVersion() >= 17) {
             mCompat = new CompatV17();
-        } else if (getSdkVersion() >= 16) {
-            mCompat = new CompatV16();
         } else {
-            mCompat = new CompatV15();
+            mCompat = new CompatV16();
         }
     }
 
@@ -79,19 +75,6 @@ public class CompatHelper {
             sInstance = new CompatHelper();
         }
         return sInstance;
-    }
-
-    private boolean isNookHdOrHdPlus() {
-        return isNookHd() || isNookHdPlus();
-    }
-
-    private boolean isNookHdPlus() {
-        return "NOOK".equals(Build.BRAND) && "HDplus".equals(Build.PRODUCT)
-            && "ovation".equals(android.os.Build.DEVICE);
-    }
-
-    private boolean isNookHd () {
-        return "bntv400".equalsIgnoreCase(Build.MODEL) && "NOOK".equals(Build.BRAND);
     }
 
     public static boolean isChromebook() {
