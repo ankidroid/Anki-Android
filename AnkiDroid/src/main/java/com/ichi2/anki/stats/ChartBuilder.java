@@ -93,6 +93,9 @@ public class ChartBuilder {
             case CARDS_TYPES:
                 stats.calculateCardTypes(type);
                 break;
+            case PROGRESS:
+                stats.calculateProgress(type);
+                break;
         }
         mCumulative = stats.getCumulative();
         mSeriesList = stats.getSeriesList();

@@ -95,6 +95,7 @@
     <string name="stats_weekly_breakdown">Weekly breakdown</string>
     <string name="stats_answer_buttons">Answer buttons</string>
     <string name="stats_cards_types">Card types</string>
+    <string name="stats_progress">Progress</string>
 
     <string-array name="stats_day_time_strings">
         <item>4AM</item>

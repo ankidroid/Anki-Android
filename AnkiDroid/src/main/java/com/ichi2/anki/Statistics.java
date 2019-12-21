@@ -58,7 +58,7 @@ import timber.log.Timber;
 
 public class Statistics extends NavigationDrawerActivity implements DeckDropDownAdapter.SubtitleListener {
 
-    public static final int TODAYS_STATS_TAB_POSITION = 0;
+    public static final int TODAYS_STATS_TAB_POSITION = 9;
     public static final int FORECAST_TAB_POSITION = 1;
     public static final int REVIEW_COUNT_TAB_POSITION = 2;
     public static final int REVIEW_TIME_TAB_POSITION = 3;
@@ -67,6 +67,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     public static final int WEEKLY_BREAKDOWN_TAB_POSITION = 6;
     public static final int ANSWER_BUTTONS_TAB_POSITION = 7;
     public static final int CARDS_TYPES_TAB_POSITION = 8;
+    public static final int PROGRESS_TAB_POSITION = 0;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -329,6 +330,9 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                     return getString(R.string.stats_answer_buttons).toUpperCase(l);
                 case CARDS_TYPES_TAB_POSITION:
                     return getString(R.string.stats_cards_types).toUpperCase(l);
+                case PROGRESS_TAB_POSITION:
+                    return getString(R.string.stats_progress).toUpperCase(l);
+
             }
             return null;
         }
@@ -364,6 +368,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 case WEEKLY_BREAKDOWN_TAB_POSITION:
                 case ANSWER_BUTTONS_TAB_POSITION:
                 case CARDS_TYPES_TAB_POSITION:
+                case PROGRESS_TAB_POSITION:
                     fragment = new ChartFragment();
                     args = new Bundle();
                     args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -506,6 +511,10 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 case CARDS_TYPES_TAB_POSITION:
                     mCreateChartTask = (((Statistics) getActivity()).getTaskHandler()).createChart(
                             Stats.ChartType.CARDS_TYPES, mChart, mProgressBar);
+                    break;
+                case PROGRESS_TAB_POSITION:
+                    mCreateChartTask = (((Statistics) getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.PROGRESS, mChart, mProgressBar);
                     break;
             }
         }

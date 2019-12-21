@@ -59,7 +59,7 @@ public class Stats {
     }
 
     public enum ChartType {FORECAST, REVIEW_COUNT, REVIEW_TIME,
-        INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES, OTHER}
+        INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES, PROGRESS, OTHER}
 
     private Collection mCol;
     private boolean mWholeCollection;
@@ -1210,6 +1210,21 @@ public class Stats {
             mMaxCards = 10;
         }
         return list.size() > 0;
+    }
+
+    /**
+     * Progress Graph
+     */
+    public boolean calculateProgress(AxisType type) {
+        mTitle = R.string.stats_progress;
+        mBackwards = false;
+        mAxisTitles = new int[] { type.ordinal(), R.string.stats_percentage };
+        mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended_and_buried};
+        mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended_and_buried };
+        mType = type;
+        mSeriesList = new double[2][10];
+
+        return true;
     }
 
     /**
