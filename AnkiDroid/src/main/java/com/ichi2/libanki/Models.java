@@ -23,7 +23,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Pair;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.utils.Assert;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,8 +102,8 @@ public class Models {
     // BEGIN SQL table entries
     private int mId;
     private String mName = "";
-    //private long mCrt = Utils.intNow();
-    //private long mMod = Utils.intNow();
+    //private long mCrt = Utils.intTime();
+    //private long mMod = Utils.intTime();
     //private JSONObject mConf;
     //private String mCss = "";
     //private JSONArray mFields;
@@ -183,10 +187,10 @@ public class Models {
     public void save(JSONObject m, boolean templates) {
         if (m != null && m.has("id")) {
             try {
-                m.put("mod", Utils.intNow());
+                m.put("mod", Utils.intTime());
                 m.put("usn", mCol.usn());
                 // TODO: fix empty id problem on _updaterequired (needed for model adding)
-                if (m.getLong("id") != 0) {
+                if (!isModelNew(m)) {
                     _updateRequired(m);
                 }
                 if (templates) {
@@ -207,6 +211,7 @@ public class Models {
      */
     public void flush() {
         if (mChanged) {
+            ensureNotEmpty();
             JSONObject array = new JSONObject();
             try {
                 for (Map.Entry<Long, JSONObject> o : mModels.entrySet()) {
@@ -222,6 +227,14 @@ public class Models {
         }
     }
 
+    public boolean ensureNotEmpty() {
+        if (mModels.isEmpty()) {
+            addBasicModel(mCol);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Retrieving and creating models
@@ -305,13 +318,15 @@ public class Models {
 
 
     /** Create a new model, save it in the registry, and return it. */
+	// Called `new` in Anki's code. New is a reserved word in java,
+	// not in python. Thus the method has to be renamed.
     public JSONObject newModel(String name) {
         // caller should call save() after modifying
         JSONObject m;
         try {
             m = new JSONObject(defaultModel);
             m.put("name", name);
-            m.put("mod", Utils.intNow());
+            m.put("mod", Utils.intTime());
             m.put("flds", new JSONArray());
             m.put("tmpls", new JSONArray());
             m.put("tags", new JSONArray());
@@ -322,6 +337,14 @@ public class Models {
         return m;
     }
 
+    // not in anki
+    public static boolean isModelNew(JSONObject m) {
+        try {
+            return m.getLong("id") == 0;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /** Delete model, and all its cards/notes. 
      * @throws ConfirmModSchemaException */
@@ -367,9 +390,9 @@ public class Models {
 
 
     private void _setID(JSONObject m) {
-        long id = Utils.intNow(1000);
+        long id = Utils.intTime(1000);
         while (mModels.containsKey(id)) {
-            id = Utils.intNow(1000);
+            id = Utils.intTime(1000);
         }
         try {
             m.put("id", id);
@@ -525,12 +548,10 @@ public class Models {
     }
 
 
-    public void addField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
-        // only mod schema if model isn't new
+    private void _addField(JSONObject m, JSONObject field) {
+        // do the actual work of addField. Do not check whether model
+        // is not new.
         try {
-            if (m.getLong("id") != 0) {
-                mCol.modSchema(true);
-            }
             JSONArray ja = m.getJSONArray("flds");
             ja.put(field);
             m.put("flds", ja);
@@ -540,7 +561,31 @@ public class Models {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public void addField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
+        // only mod schema if model isn't new
+        // this is Anki's addField.
+        if (!isModelNew(m)) {
+            mCol.modSchema(true);
+        }
+        _addField(m, field);
+    }
+
+    public void addFieldInNewModel(JSONObject m, JSONObject field) {
+        // similar to Anki's addField; but thanks to assumption that
+        // model is new, it never has to throw
+        // ConfirmModSchemaException.
+        Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
+        _addField(m, field);
+    }
+
+    public void addFieldModChanged(JSONObject m, JSONObject field) {
+        // similar to Anki's addField; but thanks to assumption that
+        // mod is already changed, it never has to throw
+        // ConfirmModSchemaException.
+        Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
+        _addField(m, field);
     }
 
     class TransformFieldAdd implements TransformFieldVisitor {
@@ -713,7 +758,7 @@ public class Models {
     public void _transformFields(JSONObject m, TransformFieldVisitor fn) {
         // model hasn't been added yet?
         try {
-            if (m.getLong("id") == 0) {
+            if (isModelNew(m)) {
                 return;
             }
             ArrayList<Object[]> r = new ArrayList<>();
@@ -725,7 +770,7 @@ public class Models {
                 while (cur.moveToNext()) {
                     r.add(new Object[] {
                             Utils.joinFields(fn.transform(Utils.splitFields(cur.getString(1)))),
-                            Utils.intNow(), mCol.usn(), cur.getLong(0) });
+                            Utils.intTime(), mCol.usn(), cur.getLong(0) });
                 }
             } finally {
                 if (cur != null) {
@@ -754,14 +799,11 @@ public class Models {
         return t;
     }
 
-
-    /** Note: should col.genCards() afterwards. 
-     * @throws ConfirmModSchemaException */
-    public void addTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
+    /** Note: should col.genCards() afterwards. */
+    private void _addTemplate(JSONObject m, JSONObject template) {
+        // do the actual work of addTemplate. Do not consider whether
+        // model is new or not.
         try {
-            if (m.getLong("id") != 0) {
-                mCol.modSchema(true);
-            }
             JSONArray ja = m.getJSONArray("tmpls");
             ja.put(template);
             m.put("tmpls", ja);
@@ -772,6 +814,28 @@ public class Models {
         }
     }
 
+    /** @throws ConfirmModSchemaException */
+    public void addTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
+        //That is Anki's addTemplate method
+        if (!isModelNew(m)) {
+            mCol.modSchema(true);
+        }
+        _addTemplate(m, template);
+    }
+
+    public void addTemplateInNewModel(JSONObject m, JSONObject template)  {
+        // similar to addTemplate, but doesn't throw exception;
+        // asserting the model is new.
+        Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
+        _addTemplate(m, template);
+    }
+
+    public void addTemplateModChanged(JSONObject m, JSONObject template)  {
+        // similar to addTemplate, but doesn't throw exception;
+        // asserting the model is new.
+        Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
+        _addTemplate(m, template);
+    }
 
     /**
      * Removing a template
@@ -807,7 +871,7 @@ public class Models {
             mCol.getDb()
                     .execute(
                             "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
-                            new Object[] { mCol.usn(), Utils.intNow(), m.getLong("id"), ord });
+                            new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id"), ord });
             JSONArray tmpls = m.getJSONArray("tmpls");
             JSONArray ja2 = new JSONArray();
             for (int i = 0; i < tmpls.length(); ++i) {
@@ -875,7 +939,7 @@ public class Models {
             save(m);
             mCol.getDb().execute("update cards set ord = (case " + sb.toString() +
             		" end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
-                    new Object[] { mCol.usn(), Utils.intNow(), m.getLong("id") });
+                    new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id") });
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -947,7 +1011,7 @@ public class Models {
                     }
                 }
                 String joinedFlds = Utils.joinFields(flds2.toArray(new String[flds2.size()]));
-                d.add(new Object[] { joinedFlds, mid, Utils.intNow(), mCol.usn(), nid });
+                d.add(new Object[] { joinedFlds, mid, Utils.intTime(), mCol.usn(), nid });
             }
         } finally {
             if (cur != null) {
@@ -995,7 +1059,7 @@ public class Models {
                     newOrd = map.get(ord);
                 }
                 if (newOrd != null) {
-                    d.add(new Object[] { newOrd, mCol.usn(), Utils.intNow(), cid });
+                    d.add(new Object[] { newOrd, mCol.usn(), Utils.intTime(), cid });
                 } else {
                     deleted.add(cid);
                 }
@@ -1078,10 +1142,10 @@ public class Models {
             }
             Object[] data;
             data = new Object[] {1L, 1L, m.getLong("id"), 1L, t.getInt("ord"), "",
-                    Utils.joinFields(a.toArray(new String[a.size()])) };
+                    Utils.joinFields(a.toArray(new String[a.size()])), 0};
             String full = mCol._renderQA(data).get("q");
             data = new Object[] {1L, 1L, m.getLong("id"), 1L, t.getInt("ord"), "",
-                    Utils.joinFields(b.toArray(new String[b.size()])) };
+                    Utils.joinFields(b.toArray(new String[b.size()])), 0};
             String empty = mCol._renderQA(data).get("q");
             // if full and empty are the same, the template is invalid and there is no way to satisfy it
             if (full.equals(empty)) {
@@ -1245,90 +1309,119 @@ public class Models {
 
     /**
      * Routines from Stdmodels.py
-     * *
-     * @throws ConfirmModSchemaException **********************************************************************************************
+     **********************************************************************************************
      */
 
-    public static JSONObject addBasicModel(Collection col) throws ConfirmModSchemaException {
-        return addBasicModel(col, "Basic");
+    private static JSONObject _newBasicModel(Collection col) {
+        String name = AnkiDroidApp.getAppResources().getString(R.string.basic_model_name);
+        return _newBasicModel(col, name);
     }
 
 
-    public static JSONObject addBasicModel(Collection col, String name) throws ConfirmModSchemaException {
+    private static JSONObject _newBasicModel(Collection col, String name) {
         Models mm = col.getModels();
         JSONObject m = mm.newModel(name);
-        JSONObject fm = mm.newField("Front");
-        mm.addField(m, fm);
-        fm = mm.newField("Back");
-        mm.addField(m, fm);
-        JSONObject t = mm.newTemplate("Card 1");
+        String frontName = AnkiDroidApp.getAppResources().getString(R.string.front_field_name);
+        JSONObject fm = mm.newField(frontName);
+        mm.addFieldInNewModel(m, fm);
+        String backName = AnkiDroidApp.getAppResources().getString(R.string.back_field_name);
+        fm = mm.newField(backName);
+        mm.addFieldInNewModel(m, fm);
+        String cardOneName = AnkiDroidApp.getAppResources().getString(R.string.card_one_name);
+        JSONObject t = mm.newTemplate(cardOneName);
         try {
-            t.put("qfmt", "{{Front}}");
-            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Back}}");
+            t.put("qfmt", "{{"+frontName+"}}");
+            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{" + backName + "}}");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        mm.addTemplate(m, t);
-        mm.add(m);
+        mm.addTemplateInNewModel(m, t);
+        return m;
+    }
+
+    public static JSONObject addBasicModel(Collection col) {
+        String name = AnkiDroidApp.getAppResources().getString(R.string.basic_model_name);
+        return addBasicModel(col, name);
+    }
+
+    public static JSONObject addBasicModel(Collection col, String name) {
+        JSONObject m = _newBasicModel(col, name);
+        col.getModels().add(m);
         return m;
     }
 
     /* Forward & Reverse */
+    private static JSONObject _newForwardReverse(Collection col) {
+        String name = AnkiDroidApp.getAppResources().getString(R.string.forward_reverse_model_name);
+        return _newForwardReverse(col, name);
+    }
 
-    public static JSONObject addForwardReverse(Collection col) throws ConfirmModSchemaException {
-    	String name = "Basic (and reversed card)";
+    private static JSONObject _newForwardReverse(Collection col, String name) {
         Models mm = col.getModels();
-        JSONObject m = addBasicModel(col);
+        JSONObject m = _newBasicModel(col, name);
         try {
-            m.put("name", name);
-            JSONObject t = mm.newTemplate("Card 2");
-            t.put("qfmt", "{{Back}}");
-            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Front}}");
-            mm.addTemplate(m, t);
+            String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
+            String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
+            String cardTwoName = AnkiDroidApp.getAppResources().getString(R.string.card_two_name);
+            JSONObject t = mm.newTemplate(cardTwoName);
+            t.put("qfmt", "{{" + backName + "}}");
+            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{"+frontName+"}}");
+            mm.addTemplateInNewModel(m, t);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
         return m;
     }
 
+    public static JSONObject addForwardReverse(Collection col) {
+        JSONObject m = _newForwardReverse(col);
+        col.getModels().add(m);
+        return m;
+    }
 
     /* Forward & Optional Reverse */
 
-    public static JSONObject addForwardOptionalReverse(Collection col) throws ConfirmModSchemaException {
-    	String name = "Basic (optional reversed card)";
+    private static JSONObject _newForwardOptionalReverse(Collection col) {
+        String name = AnkiDroidApp.getAppResources().getString(R.string.forward_optional_reverse_model_name);
         Models mm = col.getModels();
-        JSONObject m = addBasicModel(col);
+        JSONObject m = _newForwardReverse(col, name);
         try {
-            m.put("name", name);
-            JSONObject fm = mm.newField("Add Reverse");
-            mm.addField(m, fm);
-            JSONObject t = mm.newTemplate("Card 2");
-            t.put("qfmt", "{{#Add Reverse}}{{Back}}{{/Add Reverse}}");
-            t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{Front}}");
-            mm.addTemplate(m, t);
+            String av = AnkiDroidApp.getAppResources().getString(R.string.field_to_ask_front_name);
+            JSONObject fm = mm.newField(av);
+            mm.addFieldInNewModel(m, fm);
+            JSONObject t = m.getJSONArray("tmpls").getJSONObject(1);
+            t.put("qfmt", "{{#" + av +"}}" + t.get("qfmt") + "{{/" + av +"}}");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
         return m;
     }
 
+    public static JSONObject addForwardOptionalReverse(Collection col) {
+        JSONObject m = _newForwardOptionalReverse(col);
+        col.getModels().add(m);
+        return m;
+    }
 
-    public static JSONObject addClozeModel(Collection col) throws ConfirmModSchemaException {
+    public static JSONObject addClozeModel(Collection col) {
         Models mm = col.getModels();
-        JSONObject m = mm.newModel("Cloze");
+        String name = AnkiDroidApp.getAppResources().getString(R.string.cloze_model_name);
+        JSONObject m = mm.newModel(name);
         try {
             m.put("type", Consts.MODEL_CLOZE);
-            String txt = "Text";
+            String txt = AnkiDroidApp.getAppResources().getString(R.string.text_field_name);
             JSONObject fm = mm.newField(txt);
-            mm.addField(m, fm);
-            fm = mm.newField("Extra");
-            mm.addField(m, fm);
-            JSONObject t = mm.newTemplate("Cloze");
+            mm.addFieldInNewModel(m, fm);
+            String fieldExtraName = AnkiDroidApp.getAppResources().getString(R.string.extra_field_name);
+            fm = mm.newField(fieldExtraName);
+            mm.addFieldInNewModel(m, fm);
+            String cardTypeClozeName = AnkiDroidApp.getAppResources().getString(R.string.card_cloze_name);
+            JSONObject t = mm.newTemplate(cardTypeClozeName);
             String fmt = "{{cloze:" + txt + "}}";
             m.put("css", m.getString("css") + ".cloze {" + "font-weight: bold;" + "color: blue;" + "}");
             t.put("qfmt", fmt);
-            t.put("afmt", fmt + "<br>\n{{Extra}}");
-            mm.addTemplate(m, t);
+            t.put("afmt", fmt + "<br>\n{{" + fieldExtraName + "}}");
+            mm.addTemplateInNewModel(m, t);
             mm.add(m);
         } catch (JSONException e) {
             throw new RuntimeException(e);

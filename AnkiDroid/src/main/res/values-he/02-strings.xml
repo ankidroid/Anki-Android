@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">הגדלת הגבלת הכרטסיות של היום</string>
@@ -120,11 +120,12 @@
         <item quantity="many">%1$d כרטסיות נלמדו ב%2$s</item>
         <item quantity="other">%1$d כרטסיות נלמדו ב%2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d דקה</item>
-        <item quantity="two">%1$d דקה</item>
-        <item quantity="many">%1$d דקה</item>
-        <item quantity="other">%1$d דקה</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="two">%1$d minutes</item>
+        <item quantity="many">%1$d minutes</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">ברוך בואך ל־AnkiDroid</string>
     <string name="fact_adder_intent_title">קלף AnkiDroid</string>
@@ -132,7 +133,7 @@
     <string name="card_editor_copy_card">העתקת קלף</string>
     <string name="card_editor_reposition_card">מיקום מחדש</string>
     <string name="card_editor_reset_card">איפוס התקדמות</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
+    <string name="card_editor_reschedule_card">תזמן מחדש</string>
     <string name="card_editor_preview_card">תצוגה מקדימה</string>
     <string name="error_insufficient_memory">הפעולה אינה אפשרית עקב מחסור בזיכרון בהתקן</string>
     <string name="rename">שינוי שם</string>
@@ -159,21 +160,21 @@
     <string name="import_message_add">הוספה</string>
     <string name="import_message_replace_confirm">אפשרות זאת תמחק את האוסף הנוכחי שלך ותחליפו במידע מקובץ %s</string>
     <string name="import_message_add_confirm">הוסף את \"%s\" לאוסף. פעולה זו עלולה להמשך זמן רב</string>
-    <string name="import_log_no_apkg">קובץ זה אינו קובץ apkg תקין</string>
-    <string name="import_error_not_apkg_extension">לקובץ \"%s\" אין סיומת .apkg</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
     <string name="import_replacing">האוסף מוחלף&#8230;</string>
     <string name="export_include_schedule">כולל תזמון</string>
     <string name="export_include_media">כולל מדיה</string>
-    <string name="confirm_apkg_export">יצא אוסף כקובץ apkg?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">יצא \"%s\" כקובץ apkg?</string>
-    <string name="export_in_progress">מייצא קובץ apkg&#8230;</string>
-    <string name="export_successful_title">לשלוח apkg?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
+    <string name="export_send_button">שלח</string>
+    <string name="export_save_button">שמירה לקובץ</string>
+    <string name="export_send_no_handlers">לא נמצא יישום התומך ב- apkg. שומר...</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">הקובץ %s יוּצא. לשלוח אותו בעזרת אפליקציה אחרת?</string>
     <string name="export_email_subject">AnkiDroid יצא כרטיסים: %s</string>
     <string name="export_email_text"><![CDATA[        היי!
@@ -184,7 +185,7 @@
     <string name="export_unsuccessful">שגיאה בייצוא קובץ apkg</string>
     <string name="import_hint">מקם את קובץ הapkg בתקייה %s ולחץ על \"אשר\" ליבוא הכרטסיות</string>
     <string name="upgrade_import_no_file_found">לא נמצא קובץ %1$s הניתן ליבוא</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">אפשרויות</string>
     <string name="select_tts">הגדר שפת TTS</string>
     <string name="custom_study">אימון נוסף</string>
     <string name="more_options">עוד</string>
@@ -243,10 +244,10 @@
     <string name="filtered_deck_name">חפיסה מסוננת</string>
     <string name="reminder_title">לא לשכוח ללמוד היום!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
+        <item quantity="one">קלף אחד לשינון בעוד</item>
         <item quantity="two">%2$d cards to review in %1$s</item>
         <item quantity="many">%2$d cards to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="other">%2$d קלפים לשינון בעוד %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">שגיאה בשיתוף קובץ apkg</string>

@@ -182,7 +182,7 @@ public class Card implements Cloneable {
 
     public void flush(boolean changeModUsn) {
         if (changeModUsn) {
-            mMod = Utils.intNow();
+            mMod = Utils.intTime();
             mUsn = mCol.usn();
         }
         // bug check
@@ -218,7 +218,7 @@ public class Card implements Cloneable {
 
 
     public void flushSched() {
-        mMod = Utils.intNow();
+        mMod = Utils.intTime();
         mUsn = mCol.usn();
         // bug check
         //if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
@@ -293,7 +293,7 @@ public class Card implements Cloneable {
             Object[] data;
             try {
                 data = new Object[] { mId, f.getId(), m.getLong("id"), mODid != 0L ? mODid : mDid, mOrd,
-                        f.stringTags(), f.joinedFields() };
+                        f.stringTags(), f.joinedFields(), mFlags};
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }

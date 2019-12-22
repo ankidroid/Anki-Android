@@ -794,7 +794,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         String hkey = preferences.getString("hkey", "");
         long lastSyncTime = preferences.getLong("lastSyncTime", 0);
         if (hkey.length() != 0 && preferences.getBoolean("automaticSyncMode", false) &&
-                Connection.isOnline() && Utils.intNow(1000) - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
+                Connection.isOnline() && Utils.intTime(1000) - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
             sync();
         }
     }

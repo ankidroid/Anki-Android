@@ -46,20 +46,20 @@
     </plurals>
     <string name="card_browser_all_decks">Alla kortlekar</string>
     <string name="card_browser_delete_card">Ta bort not</string>
-    <string name="card_browser_suspend_card">Suspend cards</string>
-    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+    <string name="card_browser_suspend_card">Uteslut kort</string>
+    <string name="card_browser_toggle_suspend_card">(åter-)aktivera kort</string>
     <string name="card_browser_change_deck">Byt kortlek</string>
-    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-    <string name="card_browser_mark_card">Mark notes</string>
-    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
-    <string name="card_browser_unmark_card">Unmark notes</string>
+    <string name="card_browser_unsuspend_card">Återaktivera kort</string>
+    <string name="card_browser_mark_card">Markera not</string>
+    <string name="card_browser_toggle_mark_card">(av)markera not</string>
+    <string name="card_browser_unmark_card">Avmarkera not</string>
     <string name="delete_card_title">Radera not</string>
-    <string name="delete_cards_title">Delete notes?</string>
+    <string name="delete_cards_title">Ta bort not?</string>
     <string name="delete_card_message">Vill du verkligen radera samtliga kort från denna not?\nSökfält: %s</string>
-    <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
-    <string name="deleted_message">Notes deleted</string>
-    <string name="changed_deck_message">Moved to %s</string>
-    <string name="card_browser_suspended_cards">(un)suspended cards</string>
+    <string name="delete_card_mult_message">Ta bort alla kort för alla markerade noter?\n(Inte enbart markerade kort)</string>
+    <string name="deleted_message">Not borttagen</string>
+    <string name="changed_deck_message">Flyttad till %s</string>
+    <string name="card_browser_suspended_cards">(åter-)aktiverade kort</string>
     <string name="card_browser_show_marked">Filtrera markerade</string>
     <string name="card_browser_show_suspended">Filtrera åsidosatta</string>
     <string name="card_browser_search_by_tag">Filtrera efter etikett</string>
@@ -91,6 +91,8 @@
         <item>Efter repetitioner</item>
         <item>Efter antal felsvar</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
-    <string name="card_browser_select_none">Select none</string>
+    <string name="card_browser_select_all">Markera alla</string>
+    <string name="card_browser_select_none">Avmarkera alla</string>
+    <string name="card_browser_interval_new_card">(new)</string>
+    <string name="card_browser_interval_learning_card">(learning)</string>
 </resources>

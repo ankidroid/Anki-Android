@@ -45,8 +45,8 @@
     <!-- preferences.xml categories-->
     <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Общие настроки</string>
-    <string name="pref_cat_reviewing">Повторение</string>
-    <string name="pref_cat_reviewing_summ">Настройки повторения, не зависящие от колоды</string>
+    <string name="pref_cat_reviewing">Обучение</string>
+    <string name="pref_cat_reviewing_summ">Настройки обучения, не зависящие от колоды</string>
     <string name="pref_cat_reviewer_behaviour">Поведение</string>
     <string name="pref_cat_flashcard">Экран</string>
     <string name="pref_cat_whiteboard">Доска</string>

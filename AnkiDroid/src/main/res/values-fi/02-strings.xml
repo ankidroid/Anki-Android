@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Lisää tämän päivän uusien korttien rajoitusta</string>
@@ -118,9 +118,10 @@
         <item quantity="one">%1$d korttia opiskeltu ajassa %2$s</item>
         <item quantity="other">%1$d korttia opiskeltu ajassa %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d minuutti</item>
-        <item quantity="other">%1$d minuuttia</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">Tervetuloa AnkiDroidiin</string>
     <string name="fact_adder_intent_title">AnkiDroid-kortti</string>
@@ -153,21 +154,21 @@
     <string name="import_message_add">Lisää</string>
     <string name="import_message_replace_confirm">Poistetaan nykyinen kokoelma ja korvataan se tiedoston %s tiedoilla. Haluatko varmasti jatkaa?</string>
     <string name="import_message_add_confirm">Lisää \"%s\" kokoelmaan? Se voi kestää pitkään</string>
-    <string name="import_log_no_apkg">Tämä ei ole validi apkg-tiedosto</string>
-    <string name="import_error_not_apkg_extension">Tiedostolla \"%s\" ei ole .apkg -päätettä</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">Valittua tiedostoa ei voitu tuoda automaattisesti AnkiDroidiin. Katso käyttöohjeesta, kuinka tuoda manuaalisesti anki-tiedostoja: \n%s</string>
     <string name="import_replacing">Korvataan kokoelmaa&#8230;</string>
     <string name="export_include_schedule">Myös ajoitukset</string>
     <string name="export_include_media">Myös media</string>
-    <string name="confirm_apkg_export">Tallenna kokoelma apkg-tiedostona?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Tallenna \"%s\" apkg-tiedostona?</string>
-    <string name="export_in_progress">Tallennetaan apkg-tiedostoa&#8230;</string>
-    <string name="export_successful_title">Send apkg?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Send</string>
     <string name="export_save_button">Save to file</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
     <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
     <string name="export_email_text"><![CDATA[        Hei!

@@ -59,13 +59,13 @@
     <plurals name="deckpicker_title">
         <item quantity="one">Oczekuje %1$d karta (%2$s)</item>
         <item quantity="few">Oczekują %1$d karty (%2$s)</item>
-        <item quantity="many">%1$d cards due (%2$s)</item>
+        <item quantity="many">Oczekuje %1$d kart (%2$s)</item>
         <item quantity="other">Oczekuje %1$d kart (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Została %d minuta</item>
         <item quantity="few">Zostały %d minuty</item>
-        <item quantity="many">%d minutes left</item>
+        <item quantity="many">Zostało %d minut</item>
         <item quantity="other">Zostało %d minut</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -93,9 +93,9 @@
     <string name="undo_action_delete">usunięcie notatki</string>
     <string name="undo_action_delete_multi">usuń notatki</string>
     <string name="undo_action_change_deck_multi">zmień talie</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reschedule_card">zaplanuj ponownie</string>
     <string name="undo_action_reset_card">resetuj postęp</string>
-    <string name="undo_action_reposition_card">reposition</string>
+    <string name="undo_action_reposition_card">przestaw</string>
     <string name="move_all_to_deck">Przenieś wszystkie do talii</string>
     <string name="unbury">Odkop</string>
     <string name="rename_deck">Zmień nazwę talii</string>

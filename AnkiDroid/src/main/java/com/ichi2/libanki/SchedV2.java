@@ -153,7 +153,7 @@ public class SchedV2 extends Sched {
         _answerCard(card, ease);
 
         _updateStats(card, "time", card.timeTaken());
-        card.setMod(Utils.intNow());
+        card.setMod(Utils.intTime());
         card.setUsn(mCol.usn());
         card.flushSched();
     }
@@ -198,7 +198,7 @@ public class SchedV2 extends Sched {
         if (ease == 1) {
             // Repeat after delay
             card.setQueue(4);
-            card.setDue(Utils.intNow() + _previewDelay(card));
+            card.setDue(Utils.intTime() + _previewDelay(card));
             mLrnCount += 1;
         } else if (ease == 2) {
             // Restore original card state and remove from filtered deck
@@ -365,38 +365,16 @@ public class SchedV2 extends Sched {
      */
     public List<DeckDueTreeNode> deckDueList() {
         _checkDay();
-        mCol.getDecks().recoverOrphans();
+        mCol.getDecks().checkIntegrity();
         ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> data = new ArrayList<>();
         HashMap<Long, HashMap> childMap = mCol.getDecks().childMap();
         try {
             for (JSONObject deck : decks) {
-                // if we've already seen the exact same deck name, remove the
-                // invalid duplicate and reload
-                if (lims.containsKey(deck.getString("name"))) {
-                    Timber.i("deckDueList() removing duplicate deck %s", deck.getString("name"));
-                    mCol.getDecks().rem(deck.getLong("id"), false, true);
-                    return deckDueList();
-                }
-                String p;
-                List<String> parts = Arrays.asList(deck.getString("name").split("::", -1));
-                if (parts.size() < 2) {
-                    p = null;
-                } else {
-                    parts = parts.subList(0, parts.size() - 1);
-                    p = TextUtils.join("::", parts);
-                }
+                String p = Decks.parent(deck.getString("name"));
                 // new
                 int nlim = _deckNewLimitSingle(deck);
-                if (!TextUtils.isEmpty(p)) {
-                    if (!lims.containsKey(p)) {
-                        // if parent was missing, this deck is invalid, and we need to reload the deck list
-                        mCol.getDecks().rem(deck.getLong("id"), false, true);
-                        return deckDueList();
-                    }
-                    nlim = Math.min(nlim, lims.get(p)[0]);
-                }
                 int _new = _newForDeck(deck.getLong("id"), nlim);
                 // learning
                 int lrn = _lrnForDeck(deck.getLong("id"));
@@ -605,7 +583,7 @@ public class SchedV2 extends Sched {
                     cur = mCol
                             .getDb()
                             .getDatabase()
-                            .query("SELECT id FROM cards WHERE did = " + did + " AND queue = 0 order by due LIMIT " + lim,
+                            .query("SELECT id FROM cards WHERE did = " + did + " AND queue = 0 order by due, ord LIMIT " + lim,
                                     null);
                     while (cur.moveToNext()) {
                         mNewQueue.add(cur.getLong(0));
@@ -752,7 +730,7 @@ public class SchedV2 extends Sched {
 
     private boolean _updateLrnCutoff(boolean force) {
         try {
-            long nextCutoff = Utils.intNow() + mCol.getConf().getInt("collapseTime");
+            long nextCutoff = Utils.intTime() + mCol.getConf().getInt("collapseTime");
             if (nextCutoff - mLrnCutoff > 60 || force) {
                 mLrnCutoff = nextCutoff;
                 return true;
@@ -806,7 +784,7 @@ public class SchedV2 extends Sched {
         }
         long cutoff = 0;
         try {
-            cutoff = Utils.intNow() + mCol.getConf().getLong("collapseTime");
+            cutoff = Utils.intTime() + mCol.getConf().getLong("collapseTime");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1003,7 +981,7 @@ public class SchedV2 extends Sched {
         if (delay == null) {
             delay = _delayForGrade(conf, card.getLeft());
         }
-        card.setDue(Utils.intNow() + delay);
+        card.setDue(Utils.intTime() + delay);
 
         // due today?
         if (card.getDue() < mDayCutoff) {
@@ -1013,7 +991,7 @@ public class SchedV2 extends Sched {
             card.setDue(Math.min(mDayCutoff - 1, card.getDue() + fuzz));
             card.setQueue(1);
             try {
-                if (card.getDue() < (Utils.intNow() + mCol.getConf().getInt("collapseTime"))) {
+                if (card.getDue() < (Utils.intTime() + mCol.getConf().getInt("collapseTime"))) {
                     mLrnCount += 1;
                     // if the queue is not empty and there's nothing else to do, make
                     // sure we don't put it at the head of the queue and end up showing
@@ -1132,7 +1110,7 @@ public class SchedV2 extends Sched {
 
     private int _leftToday(JSONArray delays, int left, long now) {
         if (now == 0) {
-            now = Utils.intNow();
+            now = Utils.intTime();
         }
         int ok = 0;
         int offset = Math.min(left, delays.length());
@@ -1221,7 +1199,7 @@ public class SchedV2 extends Sched {
         try {
             int cnt = mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = " + did
-                            + " AND queue = 1 AND due < " + (Utils.intNow() + mCol.getConf().getInt("collapseTime"))
+                            + " AND queue = 1 AND due < " + (Utils.intTime() + mCol.getConf().getInt("collapseTime"))
                             + " LIMIT " + mReportLimit + ")");
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = " + did
@@ -1754,7 +1732,7 @@ public class SchedV2 extends Sched {
 
         mCol.getDb().executeMany(
                 "UPDATE cards SET odid = did, " +
-                        "odue = due, did = ?, due = ?, usn = ? " + queue + " WHERE id = ?", data);
+                        "odue = due, did = ?, due = (case when due <= 0 then due else ? end), usn = ? " + queue + " WHERE id = ?", data);
     }
 
 
@@ -2168,9 +2146,9 @@ public class SchedV2 extends Sched {
                 // review
                 boolean early = card.getODid() != 0 && (card.getODue() > mToday);
                 if (early) {
-                    return _earlyReviewIvl(card, ease) * 86400;
+                    return _earlyReviewIvl(card, ease) * 86400L;
                 } else {
-                    return _nextRevIvl(card, ease, false) * 86400;
+                    return _nextRevIvl(card, ease, false) * 86400L;
                 }
             }
         } catch (JSONException e) {
@@ -2192,7 +2170,7 @@ public class SchedV2 extends Sched {
             } else if (ease == 2) {
                 return _delayForRepeatingGrade(conf, card.getLeft());
             } else if (ease == 4) {
-                return _graduatingIvl(card, conf, true, false) * 86400;
+                return _graduatingIvl(card, conf, true, false) * 86400L;
             } else { // ease == 3
                 int left = card.getLeft() % 1000 - 1;
                 if (left <= 0) {
@@ -2230,7 +2208,7 @@ public class SchedV2 extends Sched {
     public void suspendCards(long[] ids) {
         mCol.log(ids);
         mCol.getDb().execute(
-                "UPDATE cards SET queue = -1, mod = " + Utils.intNow() + ", usn = " + mCol.usn() + " WHERE id IN "
+                "UPDATE cards SET queue = -1, mod = " + Utils.intTime() + ", usn = " + mCol.usn() + " WHERE id IN "
                         + Utils.ids2str(ids));
     }
 
@@ -2241,7 +2219,7 @@ public class SchedV2 extends Sched {
     public void unsuspendCards(long[] ids) {
         mCol.log(ids);
         mCol.getDb().execute(
-                "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = " + Utils.intNow() + ", usn = " + mCol.usn()
+                "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = " + Utils.intTime() + ", usn = " + mCol.usn()
                         + " WHERE queue = -1 AND id IN " + Utils.ids2str(ids));
     }
 
@@ -2293,7 +2271,7 @@ public class SchedV2 extends Sched {
 
         mCol.log(mCol.getDb().queryColumn(Long.class,"select id from cards where " + queue + " and did in " + sids, 0));
         mCol.getDb().execute("update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + " and did in " + sids,
-                new Object[]{Utils.intNow(), mCol.usn()});
+                new Object[]{Utils.intTime(), mCol.usn()});
     }
 
 
@@ -2360,7 +2338,7 @@ public class SchedV2 extends Sched {
     /** Put cards at the end of the new queue. */
     public void forgetCards(long[] ids) {
         remFromDyn(ids);
-        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,odue=0,factor=2500" +
+        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,odue=0,factor="+Consts.STARTING_FACTOR +
                 " where id in " + Utils.ids2str(ids));
         int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0");
         // takes care of mod + usn
@@ -2379,11 +2357,11 @@ public class SchedV2 extends Sched {
     public void reschedCards(long[] ids, int imin, int imax) {
         ArrayList<Object[]> d = new ArrayList<>();
         int t = mToday;
-        long mod = Utils.intNow();
+        long mod = Utils.intTime();
         Random rnd = new Random();
         for (long id : ids) {
             int r = rnd.nextInt(imax - imin + 1) + imin;
-            d.add(new Object[] { Math.max(1, r), r + t, mCol.usn(), mod, 2500, id });
+            d.add(new Object[] { Math.max(1, r), r + t, mCol.usn(), mod, Consts.STARTING_FACTOR, id });
         }
         remFromDyn(ids);
         mCol.getDb().executeMany(
@@ -2417,7 +2395,7 @@ public class SchedV2 extends Sched {
 
     public void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift) {
         String scids = Utils.ids2str(cids);
-        long now = Utils.intNow();
+        long now = Utils.intTime();
         ArrayList<Long> nids = new ArrayList<>();
         for (long id : cids) {
         	long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = " + id);
@@ -2536,9 +2514,9 @@ public class SchedV2 extends Sched {
     private void _removeAllFromLearning(int schedVer) {
         // remove review cards from relearning
         if (schedVer == 1) {
-            mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", Utils.intNow(), mCol.usn()));
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", Utils.intTime(), mCol.usn()));
         } else {
-            mCol.getDb().execute(String.format(Locale.US,"update cards set due = %d+ivl, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", mToday, Utils.intNow(), mCol.usn()));
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = %d+ivl, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", mToday, Utils.intTime(), mCol.usn()));
         }
 
 
@@ -2549,13 +2527,13 @@ public class SchedV2 extends Sched {
 
     // v1 doesn't support buried/suspended (re)learning cards
     private void _resetSuspendedLearning() {
-        mCol.getDb().execute(String.format(Locale.US,"update cards set type = (case when type = 1 then 0 when type in (2, 3) then 2 else type end), due = (case when odue then odue else due end), odue = 0, mod = %d, usn = %d where queue < 0", Utils.intNow(), mCol.usn()));
+        mCol.getDb().execute(String.format(Locale.US,"update cards set type = (case when type = 1 then 0 when type in (2, 3) then 2 else type end), due = (case when odue then odue else due end), odue = 0, mod = %d, usn = %d where queue < 0", Utils.intTime(), mCol.usn()));
     }
 
 
     // no 'manually buried' queue in v1
     private void _moveManuallyBuried() {
-        mCol.getDb().execute(String.format(Locale.US, "update cards set queue=-2, mod=%d where queue=-3", Utils.intNow()));
+        mCol.getDb().execute(String.format(Locale.US, "update cards set queue=-2, mod=%d where queue=-3", Utils.intTime()));
     }
 
     // adding 'hard' in v2 scheduler means old ease entries need shifting

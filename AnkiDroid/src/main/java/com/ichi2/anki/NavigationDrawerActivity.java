@@ -351,7 +351,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
     /**
-     * Restart the activity and discard old backstack, creating it new from the heirarchy in the manifest
+     * Restart the activity and discard old backstack, creating it new from the hierarchy in the manifest
      */
     protected void restartActivityInvalidateBackstack(AnkiActivity activity) {
         Timber.i("AnkiActivity -- restartActivityInvalidateBackstack()");

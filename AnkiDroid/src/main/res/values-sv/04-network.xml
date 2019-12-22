@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">Vid nästa synkroniseringstillfälle, framtvinga förändringar i en riktning</string>
     <string name="full_sync_confirmation">Den önskade förändringen kommer att kräva en full uppladdning av databasen vid nästa synkronisering av din samling. Om du har recensioner eller andra förändringar som väntar på en annan enhet som inte har synkroniserats här ännu, så kommer de att förloras. Vill du fortsätta?</string>
     <string name="full_sync_confirmation_upgrade">På grund av en bugg i den tidigare installerade versionen av AnkiDroid är det rekommenderat att tvinga en fullständig synkronisering.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">Proxy-autentisering krävs.</string>
     <string name="sync_error_409">Endast en klient åt gången kan använda AnkiWeb. Om en tidigare synkronisering misslyckades, vänligen försök igen.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">Din samling eller en lokal mediafil är för stor för att synkronisera.</string>
+    <string name="sync_error_500_unknown">AnkiWeb anträffade ett fel. Försök igen om ett par minuter och om problemet kvarstår skicka en felrapport.</string>
     <string name="sync_error_501_upgrade_required">Vänligen uppgradera till senaste versionen av AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb är i underhållsläge. Försök igen om ett par minuter.</string>
+    <string name="sync_error_504_gateway_timeout">504 tidsgränsfel för gateway erhållet.</string>
 </resources>

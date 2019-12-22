@@ -31,19 +31,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
+import timber.log.Timber;
 
 // fixmes:
 // - make sure users can't set grad interval < 1
@@ -93,7 +97,7 @@ public class Decks {
                 + "'new': {"
                     + "'delays': [1, 10],"
                     + "'ints': [1, 4, 7]," // 7 is not currently used
-                    + "'initialFactor': 2500,"
+                    + "'initialFactor': "+Consts.STARTING_FACTOR+","
                     + "'separate': True,"
                     + "'order': " + Consts.NEW_CARDS_DUE + ","
                     + "'perDay': 20,"
@@ -179,7 +183,7 @@ public class Decks {
     public void save(JSONObject g) {
         if (g != null) {
             try {
-                g.put("mod", Utils.intNow());
+                g.put("mod", Utils.intTime());
                 g.put("usn", mCol.usn());
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -238,8 +242,11 @@ public class Decks {
     public Long id(String name, boolean create, String type) {
         try {
             name = name.replace("\"", "");
+            name = Normalizer.normalize(name, Normalizer.Form.NFC);
             for (Map.Entry<Long, JSONObject> g : mDecks.entrySet()) {
-                if (g.getValue().getString("name").equalsIgnoreCase(name)) {
+                String deckName = g.getValue().getString("name");
+                deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
+                if (deckName.equalsIgnoreCase(name)) {
                     return g.getKey();
                 }
             }
@@ -255,7 +262,7 @@ public class Decks {
             g = new JSONObject(type);
             g.put("name", name);
             while (true) {
-                id = Utils.intNow(1000);
+                id = Utils.intTime(1000);
                 if (!mDecks.containsKey(id)) {
                     break;
                 }
@@ -690,7 +697,7 @@ public class Decks {
         try {
             c = new JSONObject(cloneFrom);
             while (true) {
-                id = Utils.intNow(1000);
+                id = Utils.intTime(1000);
                 if (!mDconf.containsKey(id)) {
                     break;
                 }
@@ -813,7 +820,7 @@ public class Decks {
 
     public void setDeck(long[] cids, long did) {
         mCol.getDb().execute("update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-                new Object[] { did, mCol.usn(), Utils.intNow() });
+                new Object[] { did, mCol.usn(), Utils.intTime() });
     }
 
 
@@ -846,12 +853,53 @@ public class Decks {
                 "select id from cards where did in " + Utils.ids2str(Utils.arrayList2array(dids)), 0));
     }
 
-
-    public void recoverOrphans() {
+    private void _recoverOrphans() {
         Long[] dids = allIds();
         boolean mod = mCol.getDb().getMod();
         mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(dids));
         mCol.getDb().setMod(mod);
+    }
+
+    private void _checkDeckTree() {
+        ArrayList<JSONObject> decks = allSorted();
+        Set<String> names = new HashSet<String>();
+
+        for (JSONObject deck: decks) {
+            // two decks with the same name?
+            String deckName = null;
+            try {
+                deckName = deck.getString("name");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            if (names.contains(deckName)) {
+                Timber.i("fix duplicate deck name %s", deckName);
+                deckName += Utils.intTime(1000);
+                save(deck);
+            }
+
+            // ensure no sections are blank
+            if (deckName.indexOf("::::") != -1) {
+                Timber.i("fix deck with missing sections %s", deckName);
+                deckName = "recovered"+Utils.intTime(1000);
+                save(deck);
+            }
+
+            // immediate parent must exist
+            String immediateParent = parent(deckName);
+            if (immediateParent != null) {
+                if (!names.contains(immediateParent)) {
+                    Timber.i("fix deck with missing parent %s", deckName);
+                    _ensureParents(deckName);
+                    names.add(immediateParent);
+                }
+            }
+        }
+    }
+
+    public void checkIntegrity() {
+        _recoverOrphans();
+        _checkDeckTree();
     }
 
 
@@ -1087,9 +1135,19 @@ public class Decks {
     * ***********************************************************
     */
 
+    public static String parent(String deckName) {
+        // method parent, from sched's method deckDueList in python
+        List<String> parts = Arrays.asList(deckName.split("::", -1));
+        if (parts.size() < 2) {
+            return null;
+        } else {
+            parts = parts.subList(0, parts.size() - 1);
+            return TextUtils.join("::", parts);
+        }
+    }
 
     public String getActualDescription() {
-    	return current().optString("desc","");
+        return current().optString("desc","");
     }
 
 

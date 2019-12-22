@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Pliigi hodiaŭan limigon de novaj kartoj</string>
@@ -118,9 +118,10 @@
         <item quantity="one">Lernis %1$d karton dum %2$s</item>
         <item quantity="other">Lernis %1$d kartojn dum %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d minuto</item>
-        <item quantity="other">%1$d minutoj</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">Bonvenon al AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid-karto</string>
@@ -153,21 +154,21 @@
     <string name="import_message_add">Aldoni</string>
     <string name="import_message_replace_confirm">Tio ĉi forigos vian ekzistan kolekton kaj anstataŭigos ĝin per datumoj de dosiero %s</string>
     <string name="import_message_add_confirm">Ĉu aldoni “%s” al kolekto? Tio ĉi povas okupi multan tempon</string>
-    <string name="import_log_no_apkg">Tio ĉi ne estas ĝusta apkg-dosiero</string>
-    <string name="import_error_not_apkg_extension">Dosiernomo “%s” ne havas sufikson .apkg</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti anki-dosierojn:\n%s</string>
     <string name="import_replacing">Anstataŭigado de kolekto&#8230;</string>
     <string name="export_include_schedule">Inkluzivi lern-planon</string>
     <string name="export_include_media">Inkluzivi aŭdvidaĵojn</string>
-    <string name="confirm_apkg_export">Ĉu elporti kolekton kiel apkg-dosieron?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Ĉu elporti “%s” kiel apkg-dosieron?</string>
-    <string name="export_in_progress">Elportado de apkg-dosiero&#8230;</string>
-    <string name="export_successful_title">Ĉu sendi apkg-dosieron?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Sendi</string>
     <string name="export_save_button">Konservi al dosiero</string>
     <string name="export_send_no_handlers">Neniu aplikaĵo por pritrakti apkg. Konservado…</string>
-    <string name="export_save_apkg_successful">apkg estas sukcese konservita</string>
-    <string name="export_save_apkg_unsuccessful">Konservo de apkg malsukcesis</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">Elportis dosieron “%s”. Ĉu sendi ĝin per alia aplikaĵo?</string>
     <string name="export_email_subject">AnkiDroid elportis fulmokartojn: %s</string>
     <string name="export_email_text"><![CDATA[        Saluton!

@@ -83,7 +83,7 @@ import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
  * <p/>
  * Note that unlike Android's contact providers:
  * <ul>
-  * <li>it's not possible to access cards of more than one note at a time</li>
+ * <li>it's not possible to access cards of more than one note at a time</li>
  * <li>it's not possible to access cards of a note without providing the note's ID</li>
  * </ul>
  */
@@ -901,7 +901,7 @@ public class CardContentProvider extends ContentProvider {
                     // Add the fields
                     String[] allFields = Utils.splitFields(fieldNames);
                     for (String f: allFields) {
-                        mm.addField(newModel, mm.newField(f));
+                        mm.addFieldInNewModel(newModel, mm.newField(f));
                     }
                     // Add some empty card templates
                     for (int idx = 0; idx < numCards; idx++) {
@@ -912,7 +912,7 @@ public class CardContentProvider extends ContentProvider {
                             answerField = allFields[1];
                         }
                         t.put("afmt",String.format("{{FrontSide}}\\n\\n<hr id=answer>\\n\\n{{%s}}", answerField));
-                        mm.addTemplate(newModel, t);
+                        mm.addTemplateInNewModel(newModel, t);
                     }
                     // Add the CSS if specified
                     if (css != null) {
@@ -940,10 +940,6 @@ public class CardContentProvider extends ContentProvider {
                     // Get the mid and return a URI
                     String mid = Long.toString(newModel.getLong("id"));
                     return Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, mid);
-                } catch (ConfirmModSchemaException e) {
-                    // This exception should never be thrown when inserting new models
-                    Timber.e(e, "Unexpected ConfirmModSchema exception adding new model %s", modelName);
-                    throw new IllegalArgumentException("ConfirmModSchema exception adding new model " + modelName);
                 } catch (JSONException e) {
                     Timber.e(e, "Could not set a field of new model %s", modelName);
                     return null;

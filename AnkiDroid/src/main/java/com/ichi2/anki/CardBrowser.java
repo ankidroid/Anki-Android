@@ -142,9 +142,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "cardEase",
         "cardReps",
         "cardLapses"};
+    private static final String[] COLUMN1_KEYS = {"question", "sfld"};
     // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
     // Note: the last 6 are currently hidden
-    private static final String[] COLUMN1_KEYS = {"question", "sfld"};
     private static final String[] COLUMN2_KEYS = {"answer",
         "card",
         "deck",
@@ -153,12 +153,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "tags",
         "lapses",
         "reviews",
+        "interval",
         "changed",
         "created",
         "due",
         "ease",
         "edited",
-        "interval"};
+    };
     private long mLastRenderStart = 0;
     private DeckDropDownAdapter mDropDownAdapter;
     private Spinner mActionBarSpinner;
@@ -1218,7 +1219,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             String sfld = note.getSFld();
             getCards().get(pos).put("sfld", sfld);
             // update Q & A etc
-            updateSearchItemQA(getCards().get(pos), c);
+            updateSearchItemQA(getBaseContext(), getCards().get(pos), c);
             // update deck
             String deckName;
             try {
@@ -1292,7 +1293,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     };
 
 
-    public static void updateSearchItemQA(Map<String, String> item, Card c) {
+    public static void updateSearchItemQA(Context context, Map<String, String> item, Card c) {
         // render question and answer
         Map<String, String> qa = c._getQA(true, true);
         // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
@@ -1321,7 +1322,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // item.put("due",getDueString(c));
         // item.put("ease","");
         // item.put("edited",strftime("%Y-%m-%d", localtime(c.note().getMod())));
-        // item.put("interval","");
+        // interval
+        int type = c.getType();
+        if (type == 0) {
+            item.put("interval", context.getString(R.string.card_browser_interval_new_card));
+        } else if (type == 1) {
+            item.put("interval", context.getString(R.string.card_browser_interval_learning_card));
+        } else {
+            item.put("interval", Utils.timeSpan(context, c.getIvl()*86400));
+        }
         item.put("lapses", Integer.toString(c.getLapses()));
         item.put("note", c.model().optString("name"));
         item.put("question", formatQA(q));
@@ -1331,7 +1340,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private static String formatQA(String txt) {
         /* Strips all formatting from the string txt for use in displaying question/answer in browser */
-        String s = txt.replace("<br>", " ");
+        String s = txt;
+        s = s.replaceAll("<!--.*?-->", "");
+        s = s.replace("<br>", " ");
         s = s.replace("<br />", " ");
         s = s.replace("<div>", " ");
         s = s.replace("\n", " ");

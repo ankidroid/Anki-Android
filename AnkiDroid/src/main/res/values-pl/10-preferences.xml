@@ -159,11 +159,11 @@
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Początek kolejnego dnia</string>
     <string name="day_offset_summ">XXX godzin po północy</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_ver">Eksperymentalny program planujący V2</string>
+    <string name="sched_ver_summ">Włącz eksperymentalny program planujący. Wymusza zmiany w jednym kierunku przy następnej synchronizacji</string>
     <string name="sched_ver_toggle_title">Potwierdź</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver_2to1">To zresetuje wszystkie karty uczone, wyczyści filtrowane talie i zmieni wersję programu planującego. Kontynuować?</string>
+    <string name="sched_ver_1to2">Eksperymentalny program planujący może powodować nieprawidłowe planowanie. Upewnij się, że przeczytałeś wcześniej dokumentację. Kontynuować?</string>
     <string name="pref_keep_screen_on">Utrzymuj włączony ekran</string>
     <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
     <string name="convert_fen_text">Obsługa notacji szachowej</string>
@@ -176,10 +176,10 @@
     <string name="custom_buttons_setting_if_room">Pokaż jeśli jest miejsce</string>
     <string name="custom_buttons_setting_menu_only">Tylko w menu</string>
     <string name="reset_custom_buttons">Resetuj do domyślnych</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="thirdparty_apps_title">API aplikacji stron trzecich</string>
+    <string name="thirdparty_apps_summary">Zobacz listę aplikacji, które używają API AnkiDroid takie jak słowniki, narzędzia.</string>
+    <string name="html_javascript_debugging">Debugowanie HTML / Javascript</string>
+    <string name="html_javascript_debugging_summ">Włącz zdalne połączenia WebView i zapisz kartę HTML do katalogu AnkiDroid</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Zaawansowane statystyki</string>
     <string name="enable_advanced_statistics_title">Włącz zaawansowane statystyki</string>
@@ -194,16 +194,16 @@
     <string name="custom_sync_server_base_url_title">Adres url synchronizacji</string>
     <string name="custom_sync_server_media_url_title">Adres url synchronizacji mediów</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="deck_conf_group_summ">Zmiany opcji grup talii będzie mieć wpływ na wiele talii. Jeśli chcesz zmienić tylko obecną talię, najpierw dodaj nowe ustawienie talii</string>
     <string name="studyoptions_limit_select_tags">Wybierz etykiety</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_deck_description">Opis talii (ma wpływ tylko na obecną talię)</string>
     <string name="deck_conf_group">Grupa opcji</string>
     <plurals name="deck_conf_group_summ">
-        <item quantity="one">Tej grupy używa %1$s\n%2$d talia</item>
-        <item quantity="few">Tej grupy używa(ją) %1$s\n%2$d talia(e)</item>
+        <item quantity="one">%1$s\n%2$d talia używa tej grupy</item>
+        <item quantity="few">%1$s\n%2$d talie używają tej grupy</item>
         <item quantity="many">%1$s\n%2$d decks use this group</item>
-        <item quantity="other">Tej grupy używają %1$s\n%2$d talie</item>
+        <item quantity="other">%1$s\n%2$d talii używa tej grupy</item>
     </plurals>
     <string name="deck_conf_new_cards">Nowe karty</string>
     <string name="deck_conf_rev_cards">Powtórki</string>
@@ -249,10 +249,10 @@
     <string name="deck_conf_remove_message">Usunąć bieżące ustawienia grupy?</string>
     <string name="deck_conf_set_subdecks">Ustaw dla wszystkich sub-talii</string>
     <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">Tej grupy używa Sub-talia %s</item>
-        <item quantity="few">Tej grupy używa(ją) Sub-talia(e) %s</item>
+        <item quantity="one">%s sub-talia używa tej grupy</item>
+        <item quantity="few">%s sub-talie używają tej grupy</item>
         <item quantity="many">%s subdecks will use this group</item>
-        <item quantity="other">Tej grupy używają Sub-talie %s</item>
+        <item quantity="other">%s sub-talii używa tej grupy</item>
     </plurals>
     <string name="deck_conf_set_subdecks_title">Ustaw dla wszystkich sub-talii</string>
     <string name="deck_conf_set_subdecks_message">Zastosować bieżące ustawienia grupy dla wszystkich sub-talii tej talii?</string>
@@ -266,10 +266,10 @@
     <string name="deck_conf_cram_reschedule_summ">Kolejkuj karty ponownie bazując na moich odpowiedziach w tej talii</string>
     <string name="deck_conf_cram_steps">Własne kroki (w minutach)</string>
     <string name="deck_conf_cram_steps_summ">Zdefiniuj własne kroki</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_enabled">Włącz powiadomienia dla talii w tej grupie talii</string>
     <string name="deck_conf_reminders_time">Przypomnij o</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_dialog_title">Pomóż ulepszyć AnkiDroid!</string>
+    <string name="analytics_title">Udostępnij użycie aplikacji</string>
+    <string name="analytics_summ">Możesz ulepszyć AnkiDroid, pomagając zespołowi programistów zobaczyć jakie funkcje są najczęściej używane</string>
 </resources>

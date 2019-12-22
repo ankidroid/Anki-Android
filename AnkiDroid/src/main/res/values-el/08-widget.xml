@@ -55,7 +55,7 @@
         <item quantity="one">%1$d deck</item>
         <item quantity="other">%1$d decks</item>
     </plurals>
-    <string name="widget_small">AnkiDroid Μικρό</string>
+    <string name="widget_small">Ανκί-Ντρόιντ Μικρό</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d card due</item>

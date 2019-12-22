@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">בסנכרון הבא, כפה שינויים בצד אחד</string>
     <string name="full_sync_confirmation">השינוי שביקשת לבצע יחייב העלאה של כל מסד הנתונים בסנכרון הבא של אוסף החפיסות. אם יש שינונים או שינויים אחרים במכשיר אחר שלא סונכרנו עדיין, הם יאבדו. להמשיך?</string>
     <string name="full_sync_confirmation_upgrade">עקב באג בגרסת AnkiDroid קודמת שהותקנה מומלץ לבצע סינכרון מלא.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">נדרש אימות proxy.</string>
     <string name="sync_error_409">רק תוכנת לקוח אחת יכולה להתחבר ל־AnkiWeb בזמן נתון. אם הסנכרון הקודם כשל, יש לחכות מספר דקות ולנסות שנית.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">האוסף שלך או קובץ מדיה גדול מדי לסנכרון.</string>
+    <string name="sync_error_500_unknown">AnkiWeb נתקל בשגיאה. אנא נסו שוב בעוד מספר דקות, ואם הבעיה חוזרת על עצמה, אנא שלחו דיווח על באג.</string>
     <string name="sync_error_501_upgrade_required">אנא עדכנו את AnkiDroid לגרסה האחרונה</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb בתחזוקה כרגע. אנא נסו שוב בעוד מספר דקות.</string>
+    <string name="sync_error_504_gateway_timeout">התקבלה שגיאת 504 gateway timeout.</string>
 </resources>

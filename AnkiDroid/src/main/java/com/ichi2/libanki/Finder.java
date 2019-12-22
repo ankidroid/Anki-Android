@@ -30,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -408,7 +409,7 @@ public class Finder {
                 } else if (type.startsWith("cardDue")) {
                     sort = "c.type, c.due";
                 } else if (type.startsWith("cardEase")) {
-                    sort = "c.factor";
+                    sort = "c.type == 0, c.factor";
                 } else if (type.startsWith("cardLapses")) {
                     sort = "c.lapses";
                 } else if (type.startsWith("cardIvl")) {
@@ -440,11 +441,11 @@ public class Finder {
         if (!val.startsWith("%")) {
             val = "% " + val;
         }
-        if (!val.endsWith("%")) {
+        if (!val.endsWith("%") || val.endsWith("\\%")) {
             val += " %";
         }
         args.add(val);
-        return "n.tags like ?";
+        return "n.tags like ? escape '\\'";
     }
 
 
@@ -583,7 +584,9 @@ public class Finder {
         LinkedList<Long> ids = new LinkedList<>();
         try {
             for (JSONObject m : mCol.getModels().all()) {
-                if (m.getString("name").equalsIgnoreCase(val)) {
+                String modelName = m.getString("name");
+                modelName = Normalizer.normalize(modelName, Normalizer.Form.NFC);
+                if (modelName.equalsIgnoreCase(val)) {
                     ids.add(m.getLong("id"));
                 }
             }
@@ -628,7 +631,9 @@ public class Finder {
                 val = val.replace("*", ".*");
                 val = val.replace("+", "\\+");
                 for (JSONObject d : mCol.getDecks().all()) {
-                    if (d.getString("name").matches("(?i)" + val)) {
+                    String deckName = d.getString("name");
+                    deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
+                    if (deckName.matches("(?i)" + val)) {
                         for (long id : dids(d.getLong("id"))) {
                             if (!ids.contains(id)) {
                                 ids.add(id);
@@ -666,7 +671,9 @@ public class Finder {
                 JSONArray tmpls = m.getJSONArray("tmpls");
                 for (int ti = 0; ti < tmpls.length(); ++ti) {
                     JSONObject t = tmpls.getJSONObject(ti);
-                    if (t.getString("name").equalsIgnoreCase(val)) {
+                    String templateName = t.getString("name");
+                    Normalizer.normalize(templateName, Normalizer.Form.NFC);
+                    if (templateName.equalsIgnoreCase(val)) {
                         if (m.getInt("type") == Consts.MODEL_CLOZE) {
                             // if the user has asked for a cloze card, we want
                             // to give all ordinals, so we just limit to the
@@ -715,7 +722,9 @@ public class Finder {
                 JSONArray flds = m.getJSONArray("flds");
                 for (int fi = 0; fi < flds.length(); ++fi) {
                     JSONObject f = flds.getJSONObject(fi);
-                    if (f.getString("name").equalsIgnoreCase(field)) {
+                    String fieldName = f.getString("name");
+                    fieldName = Normalizer.normalize(fieldName, Normalizer.Form.NFC);
+                    if (fieldName.equalsIgnoreCase(field)) {
                         mods.put(m.getLong("id"), new Object[] { m, f.getInt("ord") });
                     }
                 }
@@ -855,7 +864,7 @@ public class Finder {
                     JSONArray flds = m.getJSONArray("flds");
                     for (int fi = 0; fi < flds.length(); ++fi) {
                         JSONObject f = flds.getJSONObject(fi);
-                        if (f.getString("name").equals(field)) {
+                        if (f.getString("name").equalsIgnoreCase(field)) {
                             mmap.put(m.getLong("id"), f.getInt("ord"));
                         }
                     }
@@ -870,6 +879,7 @@ public class Finder {
         // find and gather replacements
         if (!isRegex) {
             src = Pattern.quote(src);
+            dst = dst.replace("\\", "\\\\");
         }
         if (fold) {
             src = "(?i)" + src;
@@ -905,7 +915,7 @@ public class Finder {
                 if (!flds.equals(origFlds)) {
                     long nid = cur.getLong(0);
                     nids.add(nid);
-                    d.add(new Object[] { flds, Utils.intNow(), col.usn(), nid }); // order based on query below
+                    d.add(new Object[] { flds, Utils.intTime(), col.usn(), nid }); // order based on query below
                 }
             }
         } finally {
@@ -1068,7 +1078,7 @@ public class Finder {
                 // cancel if the launching task was cancelled. 
                 if (task.isCancelled()){
                     Timber.i("_findCardsForCardBrowser() cancelled...");
-                    return null;
+                    return new ArrayList<>();
                 }                
                 Map<String, String> map = new HashMap<>();
                 map.put("id", cur.getString(0));

@@ -80,6 +80,24 @@ public class MathJaxClozeTest extends RobolectricTest {
     }
 
     @Test
+    public void verifyComplicatedMathJaxCloze() {
+        final Context context = ApplicationProvider.getApplicationContext();
+
+        Collection c = getCol();
+        Note f = c.newNote(c.getModels().byName("Cloze"));
+        f.setItem("Text", "the \\((\\){{c1::\\(x\\)}}\\()\\) is {{c2::\\(y\\)}} but not {{c1::\\(z\\)}} or {{c2::\\(\\lambda\\)}}");
+
+        c.addNote(f);
+
+        ArrayList<Card> cards = f.cards();
+        Card c2 = cards.get(0);
+        String q = c2.q();
+        String a = c2.a();
+        assertTrue(q.endsWith("</style>the \\((\\)<span class=cloze>[...]</span>\\()\\) is \\(y\\) but not <span class=cloze>[...]</span> or \\(\\lambda\\)"));
+        assertTrue(a.endsWith("</style>the \\((\\)<span class=cloze>\\(x\\)</span>\\()\\) is \\(y\\) but not <span class=cloze>\\(z\\)</span> or \\(\\lambda\\)<br>\n"));
+    }
+
+    @Test
     public void textContainsMathjax()
     {
         assertFalse(Template.textContainsMathjax("Hello world."));

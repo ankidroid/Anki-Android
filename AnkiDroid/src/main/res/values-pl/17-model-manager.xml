@@ -32,7 +32,7 @@
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d typ notatki dostępny</item>
-        <item quantity="few">%d typów notatek dostępnych</item>
+        <item quantity="few">%d typy notatek dostępne</item>
         <item quantity="many">%d note types available</item>
         <item quantity="other">%d typów notatek dostępnych</item>
     </plurals>
@@ -40,7 +40,7 @@
         <item quantity="one">%d notatka</item>
         <item quantity="few">%d notatki</item>
         <item quantity="many">%d notes</item>
-        <item quantity="other">%d notatki</item>
+        <item quantity="other">%d notatek</item>
     </plurals>
     <!--Button Values-->
     <string name="model_editor_action_add_model">Dodaj typ notatki</string>

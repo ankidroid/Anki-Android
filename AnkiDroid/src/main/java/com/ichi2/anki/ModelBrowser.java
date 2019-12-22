@@ -300,13 +300,14 @@ public class ModelBrowser extends AnkiActivity {
         String clone = getResources().getString(R.string.model_browser_add_clone);
 
         // AnkiDroid doesn't have stdmodels class or model name localization, this could be much cleaner if implemented
-        final String basicName = "Basic";
-        final String addForwardReverseName = "Basic (and reversed card)";
-        final String addForwardOptionalReverseName = "Basic (optional reversed card)";
-        final String addClozeModelName = "Cloze";
+        final String basicName = getResources().getString(R.string.basic_model_name);
+        final String addForwardReverseName = getResources().getString(R.string.forward_reverse_model_name);
+        final String addForwardOptionalReverseName = getResources().getString(R.string.forward_optional_reverse_model_name);
+        final String addClozeModelName = getResources().getString(R.string.cloze_model_name);
 
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
         mNewModelLabels = new ArrayList<>();
+        ArrayList<String> existingModelsNames = new ArrayList<>();
 
         //Used to fetch model names
         mNewModelNames = new ArrayList<>();
@@ -325,8 +326,10 @@ public class ModelBrowser extends AnkiActivity {
         if (mModels != null) {
             for (JSONObject model : mModels) {
                 try {
-                    mNewModelLabels.add(String.format(clone, model.getString("name")));
-                    mNewModelNames.add(model.getString("name"));
+                    String name = model.getString("name");
+                    mNewModelLabels.add(String.format(clone, name));
+                    mNewModelNames.add(name);
+                    existingModelsNames.add(name);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -345,15 +348,18 @@ public class ModelBrowser extends AnkiActivity {
                 .onPositive((dialog, which) -> {
                         mModelNameInput = new EditText(ModelBrowser.this);
                         mModelNameInput.setSingleLine();
-
-                        //Temporary workaround - Lack of stdmodels class
-                        if (addSelectionSpinner.getSelectedItemPosition() < numStdModels) {
-                            mModelNameInput.setText(randomizeName(mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition())));
-                        } else {
-                            mModelNameInput.setText(mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition()) +
-                                    " " + getResources().getString(R.string.model_clone_suffix));
+                        final boolean isStdModel = addSelectionSpinner.getSelectedItemPosition() < numStdModels;
+                        // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
+                        String suggestedName = mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition());
+                        if (!isStdModel) {
+                            suggestedName += " " + getResources().getString(R.string.model_clone_suffix);
                         }
 
+                        if (existingModelsNames.contains(suggestedName)) {
+                            suggestedName = randomizeName(suggestedName);
+                        }
+                        //Temporary workaround - Lack of stdmodels class
+                        mModelNameInput.setText(suggestedName);
                         mModelNameInput.setSelection(mModelNameInput.getText().length());
 
                         //Create textbox to name new model
@@ -418,8 +424,6 @@ public class ModelBrowser extends AnkiActivity {
             } else {
                 showToast(getResources().getString(R.string.toast_empty_name));
             }
-        } catch (ConfirmModSchemaException e) {
-            //We should never get here since we're only modifying new mModels
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

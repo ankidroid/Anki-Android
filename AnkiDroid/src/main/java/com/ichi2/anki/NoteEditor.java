@@ -71,6 +71,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
@@ -461,8 +462,7 @@ public class NoteEditor extends AnkiActivity {
             try {
                 // add current deck and all other non-filtered decks to deck list
                 long thisDid = d.getLong("id");
-                long currentDid = getCol().getDecks().current().getLong("id");
-                if (d.getInt("dyn") == 0 || (!mAddNote && thisDid == currentDid)) {
+                if (d.getInt("dyn") == 0 || (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() == thisDid)) {
                     deckNames.add(d.getString("name"));
                     mAllDeckIds.add(thisDid);
                 }
@@ -1713,8 +1713,16 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             // Adding the cloze deletion floating context menu item, but only once.
-            if (menu.findItem(mMenuId) == null) {
-                menu.add(Menu.NONE, mMenuId, Menu.NONE, R.string.multimedia_editor_popup_cloze);
+            int noteModelType;
+            try {
+                noteModelType = getCurrentlySelectedModel().getInt("type");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            boolean isClozeType = noteModelType == Consts.MODEL_CLOZE;
+            boolean itemExists = menu.findItem(mMenuId) != null;
+            if (isClozeType && !itemExists) {
+                menu.add(Menu.NONE, mMenuId, 0, R.string.multimedia_editor_popup_cloze);
                 return true;
             } else {
                 return false;

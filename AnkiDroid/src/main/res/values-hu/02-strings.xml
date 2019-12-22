@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ma még több új kártyát tanulok</string>
@@ -118,9 +118,10 @@
         <item quantity="one">%1$d kártyát tanultál %2$s alatt</item>
         <item quantity="other">%1$d kártyát tanultál %2$s alatt</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d perc</item>
-        <item quantity="other">%1$d perc</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">Üdv az AnkiDroidban!</string>
     <string name="fact_adder_intent_title">AnkiDroid Kártya</string>
@@ -153,21 +154,21 @@
     <string name="import_message_add">Hozzáadás</string>
     <string name="import_message_replace_confirm">Ez a művelet törölni fogja a már meglévő gyűjteményed és lecseréli a %s fájl tartalmával. Biztos vagy benne?</string>
     <string name="import_message_add_confirm">\"%s\"-t felvenni a gyűjteménybe hosszú ideig tarthat</string>
-    <string name="import_log_no_apkg">Ez egy érvénytelen apkg fájl</string>
-    <string name="import_error_not_apkg_extension">“%s” fájlnév nem rendelkezik .apkg kiterjesztéssel</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">A kiválasztott fájl nem importálható automatikusan. Olvasd el a felhasználói kézikönyvet, hogy megtudd, hogyan importálhatsz manuálisan anki fájlokat:\n%s</string>
     <string name="import_replacing">A gyűjtemény cseréje&#8230;</string>
     <string name="export_include_schedule">Ütemezéssel együtt</string>
     <string name="export_include_media">Médiával együtt</string>
-    <string name="confirm_apkg_export">Exportálja a gyűjteményt apkg-ként?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Exportáljon \"%s\"-t apkg-ként?</string>
-    <string name="export_in_progress">Apkg exportálása&#8230;</string>
-    <string name="export_successful_title">Apkg-t küldeni?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Küldés</string>
     <string name="export_save_button">Mentés fájlba</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">A (z) “%s” fájl exportálása megtörtént. Szeretnéd elküldeni egy másik alkalmazással?</string>
     <string name="export_email_subject">AnkiDroid exportált index kártyák: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!

@@ -50,7 +50,7 @@ public class AnkiPackageImporter extends Anki2Importer {
     public void run() throws ImportExportException {
         publishProgress(0, 0, 0);
         File tempDir = new File(new File(mCol.getPath()).getParent(), "tmpzip");
-        Collection tmpCol;
+        Collection tmpCol; //self.col into Anki.
         try {
             // We extract the zip contents into a temporary directory and do a little more
             // validation than the desktop client to ensure the extracted collection is an apkg.
@@ -89,16 +89,23 @@ public class AnkiPackageImporter extends Anki2Importer {
             // number to use during the import
             File mediaMapFile = new File(tempDir, "media");
             mNameToNum = new HashMap<>();
+            String dirPath = tmpCol.getMedia().dir();
+            File dir = new File(dirPath);
             // We need the opposite mapping in AnkiDroid since our extraction method requires it.
             Map<String, String> numToName = new HashMap<>();
             try {
                 JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
                 jr.beginObject();
-                String name;
-                String num;
+                String name; // v in anki
+                String num; // k in anki
                 while (jr.hasNext()) {
                     num = jr.nextName();
                     name = jr.nextString();
+                    File file= new File(dir, name);
+                    if (!Utils.isInside(file, dir)) {
+                        throw (new RuntimeException("Invalid file"));
+                    }
+                    Utils.nfcNormalized(num);
                     mNameToNum.put(name, num);
                     numToName.put(num, name);
                 }

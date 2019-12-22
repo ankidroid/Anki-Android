@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Povečaj današnjo omejitev novih kartic</string>
@@ -120,11 +120,12 @@
         <item quantity="few">%1$d kartice preučene v %2$s</item>
         <item quantity="other">%1$d kartic preučenih v %2$s</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d minuta</item>
-        <item quantity="two">%1$d minuti</item>
-        <item quantity="few">%1$d minute</item>
-        <item quantity="other">%1$d minut</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="two">%1$d minutes</item>
+        <item quantity="few">%1$d minutes</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">Dobrodošli v AnkiDroid</string>
     <string name="fact_adder_intent_title">Kartica AnkiDroid</string>
@@ -159,21 +160,21 @@
     <string name="import_message_add">Dodaj</string>
     <string name="import_message_replace_confirm">To bo izbrisalo vašo obstoječo zbirko in jo nadomestilo s podatki datoteke %s</string>
     <string name="import_message_add_confirm">Dodaj \"%s\" v zbirko? To lahko traja dolgo časa</string>
-    <string name="import_log_no_apkg">To ni veljavna datoteka apkg</string>
-    <string name="import_error_not_apkg_extension">Ime datoteke \"%s\" nima končnice .apkg</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">Izbrane datoteke AnkiDroid ni mogel samodejno uvoziti. Oglejte si uporabniški priročnik o načinu ročnega uvoza datotek anki: \n%s</string>
     <string name="import_replacing">Nadomeščanje zbirke &#8230;</string>
     <string name="export_include_schedule">Vključi urnik</string>
     <string name="export_include_media">Vključi predstavnost</string>
-    <string name="confirm_apkg_export">Izvozi zbirko kot datoteko apkg?</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">Izvozi \"%s\" kot datoteko apkg?</string>
-    <string name="export_in_progress">Izvažanje datoteke apkg &#8230;</string>
-    <string name="export_successful_title">Pošlji apkg?</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">Send</string>
     <string name="export_save_button">Save to file</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved apkg</string>
-    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">Datoteka \"%s\" je bila izvožena. Ali jo želite poslati z drugim programom?</string>
     <string name="export_email_subject">Izvožene pomnilne kartice AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!

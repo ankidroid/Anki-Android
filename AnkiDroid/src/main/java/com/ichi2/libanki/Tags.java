@@ -236,7 +236,9 @@ public class Tags {
             return;
         }
         // cache tag names
-        register(newTags);
+        if (add) {
+            register(newTags);
+        }
         // find notes missing the tags
         String l;
         if (add) {
@@ -249,6 +251,7 @@ public class Tags {
             if (lim.length() != 0) {
                 lim.append(" or ");
             }
+            t = t.replace("*", "%");
             lim.append(l).append("like '% ").append(t).append(" %'");
         }
         Cursor cur = null;
@@ -263,12 +266,12 @@ public class Tags {
             if (add) {
                 while (cur.moveToNext()) {
                     nids.add(cur.getLong(0));
-                    res.add(new Object[] { addToStr(tags, cur.getString(1)), Utils.intNow(), mCol.usn(), cur.getLong(0) });
+                    res.add(new Object[] { addToStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(), cur.getLong(0) });
                 }
             } else {
                 while (cur.moveToNext()) {
                     nids.add(cur.getLong(0));
-                    res.add(new Object[] { remFromStr(tags, cur.getString(1)), Utils.intNow(), mCol.usn(),
+                    res.add(new Object[] { remFromStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(),
                             cur.getLong(0) });
                 }
             }
@@ -326,14 +329,19 @@ public class Tags {
         return join(canonify(currentTags));
     }
 
+    // submethod of remFromStr in anki
+    public boolean wildcard(String pat, String str) {
+        String pat_replaced = Pattern.quote(pat).replace("\\*", ".*");
+        return Pattern.compile(pat_replaced, Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CASE).matcher(str).matches();
+    }
 
-    /** Delete tags if they don't exist. */
+    /** Delete tags if they exist. */
     public String remFromStr(String deltags, String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(deltags)) {
             List<String> remove = new ArrayList<>();
             for (String tx: currentTags) {
-                if (tag.equalsIgnoreCase(tx)) {
+                if (tag.equalsIgnoreCase(tx) || wildcard(tag, tx)) {
                     remove.add(tx);
                 }
             }

@@ -88,8 +88,8 @@
     <item>Due</item>
     <item>Ease</item>
     <item>Edited</item>
-    <item>Interval</item>
         -->
+        <item>Interval</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">افزایش محدوده کارتهای جدید امروز</string>
@@ -118,9 +118,10 @@
         <item quantity="one">%1$d کارت در %2$s مطالعه شد</item>
         <item quantity="other">%1$d کارت در %2$s مطالعه شد</item>
     </plurals>
-    <plurals name="timebox_reached_minutes">
-        <item quantity="one">%1$d دقیقه</item>
-        <item quantity="other">%1$d دقیقه</item>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">به آنکی دروید خوش آمدید</string>
     <string name="fact_adder_intent_title">کارت آنکی دروید</string>
@@ -153,21 +154,21 @@
     <string name="import_message_add">اضافه کردن</string>
     <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد. آیا مطمئنید؟</string>
     <string name="import_message_add_confirm">آیا می خواهید \"%s\" را به مجموعه اضافه کنید ؟ ممکن است زمان زیادی طول بکشد</string>
-    <string name="import_log_no_apkg">این فایل، یک فایل معتبر apkg نیست.</string>
-    <string name="import_error_not_apkg_extension">نام این فایل %s داراى پسوند apkg. نیست</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">فایل انتخاب شده به صورت خودکار توسط ankidroid نمی تواند وارد شود. لطفا راهنمای کاربر را ببینید که چگونه به صورت دستی بتوان فایل anki را وارد کرد:\n%s</string>
     <string name="import_replacing">در حال جایگزین کردن مجموعه&#8230;</string>
     <string name="export_include_schedule">به همراه زمانبندی</string>
     <string name="export_include_media">به همراه رسانه</string>
-    <string name="confirm_apkg_export">مجموعه فلش کارت ها با پسوند apkg صادر شوند؟</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">دسته %s به عنوان یک فایل با پسوند apkg صادر شود؟</string>
-    <string name="export_in_progress">در حال صادر کردن فایل apkg&#8230;</string>
-    <string name="export_successful_title">فایل apkg ارسال شود؟</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">ارسال</string>
     <string name="export_save_button">ذخیره در فایل</string>
     <string name="export_send_no_handlers">هیچ برنامه ای برای apkg در دسترس است. صرفه جویی در...</string>
-    <string name="export_save_apkg_successful">با موفقیت ذخیره شد</string>
-    <string name="export_save_apkg_unsuccessful">ذخیره پیشنویس ناموفق بود</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">فایل \"%s\" صادر شد. آیا می خواهید آن را با برنامه دیگری نیز ارسال کنید؟</string>
     <string name="export_email_subject">فلش کارت های صادر شده: %s</string>
     <string name="export_email_text"><![CDATA[        سلام!

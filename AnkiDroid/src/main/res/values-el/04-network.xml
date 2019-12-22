@@ -68,7 +68,7 @@
     <string name="downloaddeck_search">Αναζήτηση</string>
     <string name="preferences_title">Προτιμήσεις</string>
     <string name="deckpreferences_title">Options for XXX</string>
-    <string name="sync_conflict_message">Οι τράπουλές σας εδώ και στο AnkiWeb διαφέρουν κατά τέτοιο τρόπο που δε μπορούν να συγχωνευτούν, για αυτό πρέπει να αντικαταστήσετε τις τράπουλες της μίας τοποθεσίας με τις τράπουλες της άλλης.\n\nΘέλετε να στείλετε τις τράπουλες από εδώ, ή να λάβετε τις τράπουλες από το AnkiWeb;</string>
+    <string name="sync_conflict_message">Πρέπει είτε να ανεβάσετε αυτή τη συλλογή ή να την καταφορτώσετε από το AnkiWeb, καθώς δεν μπορούν να συγχωνευτούν. Μια απ\' τις δυο συλλογές θα αντικατασταθεί.</string>
     <string name="sync_conflict_local">Αποστολή</string>
     <string name="sync_conflict_remote">Λήψη</string>
     <string name="sync_conflict_remote_confirm">Είστε βέβαιοι ότι θέλετε να κατεβάσετε τη συλλογή του διακομιστή; Να γνωρίζετε ότι αυτό θα αντικαταστήσει την τοπική συλλογή σας.</string>

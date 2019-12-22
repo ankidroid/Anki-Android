@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">Przy następnej synchronizacji wymuś zmiany tylko w jednym kierunku</string>
     <string name="full_sync_confirmation">Żądana zmiana wymagać będzie pełnego wysłania bazy danych przy następnej synchronizacji Twojej kolekcji. Jeżeli posiadasz powtórki lub inne oczekujące zmiany na innym urządzeniu, które nie zostały jeszcze zsynchronizowane, zostaną one utracone. Czy kontynuować?</string>
     <string name="full_sync_confirmation_upgrade">Z powodu błędu w poprzednio zainstalowanej wersji AnkiDroid zalecane jest wymuszenie pełnej synchronizacji.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">Wymagane uwierzytelnienie serwera proxy.</string>
     <string name="sync_error_409">Tylko jeden klient na raz może uzyskać dostęp do AnkiWeb. Jeśli poprzednia synchronizacja nie powiodła się, spróbuj ponownie za kilka minut.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
+    <string name="sync_error_413_collection_size">Twoja kolekcja, albo plik media jest za duży, żeby zsynchronizować.</string>
     <string name="sync_error_500_unknown">Nastąpił błąd. Proszę spróbować ponownie za kilka minut, a jeśli problem nie ustąpi, proszę złożyć raport o błędach.</string>
     <string name="sync_error_501_upgrade_required">Proszę zaktualizuj do najnowszej wersji AnkiDroid</string>
     <string name="sync_error_502_maintenance">AnkiWeb jest chwilowo niedostępny. Proszę spróbować ponownie za kilka minut.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_504_gateway_timeout">504 otrzymano błąd gateway timeout.</string>
 </resources>

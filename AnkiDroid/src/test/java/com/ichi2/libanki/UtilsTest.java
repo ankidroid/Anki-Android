@@ -24,6 +24,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -76,10 +77,11 @@ public class UtilsTest {
 
     @Test
     public void testCopyFile() throws Exception {
+        String resourcePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip").toURI()).toString();
         URL resource = Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip");
         File copy = File.createTempFile("testCopyFileToStream", ".zip");
         copy.deleteOnExit();
         Utils.copyFile(new File(resource.getFile()), copy);
-        Assert.assertEquals(TestUtils.getMD5(resource.getPath()), TestUtils.getMD5(copy.getCanonicalPath()));
+        Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
     }
 }

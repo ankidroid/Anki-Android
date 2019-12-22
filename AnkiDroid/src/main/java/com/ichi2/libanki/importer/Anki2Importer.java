@@ -354,7 +354,7 @@ public class Anki2Importer extends Importer {
                     // copy it over
                     JSONObject model = new JSONObject(Utils.jsonToString(srcModel));
                     model.put("id", mid);
-                    model.put("mod", Utils.intNow());
+                    model.put("mod", Utils.intTime());
                     model.put("usn", mCol.usn());
                     mDst.getModels().update(model);
                     break;
@@ -366,7 +366,7 @@ public class Anki2Importer extends Importer {
                     // they do; we can reuse this mid
                     JSONObject model = new JSONObject(Utils.jsonToString(srcModel));
                     model.put("id", mid);
-                    model.put("mod", Utils.intNow());
+                    model.put("mod", Utils.intTime());
                     model.put("usn", mCol.usn());
                     mDst.getModels().update(model);
                     break;
@@ -528,11 +528,15 @@ public class Anki2Importer extends Importer {
                 // update cid, nid, etc
                 card[1] = mNotes.get(guid)[0];
                 card[2] = _did((Long) card[2]);
-                card[4] = Utils.intNow();
+                card[4] = Utils.intTime();
                 card[5] = usn;
                 // review cards have a due date relative to collection
                 if ((Integer) card[7] == 2 || (Integer) card[7] == 3 || (Integer) card[6] == 2) {
                     card[8] = (Long) card[8] - aheadBy;
+                }
+                // odue needs updating too
+                if (((Long) card[14]).longValue() != 0) {
+                    card[14] = (Long) card[14] - aheadBy;
                 }
                 // if odid true, convert card from filtered to normal
                 if ((Long) card[15] != 0) {

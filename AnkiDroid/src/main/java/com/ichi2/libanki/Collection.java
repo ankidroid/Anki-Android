@@ -223,6 +223,7 @@ public class Collection {
         }
         modSchema(true);
         SchedV2 v2Sched = new SchedV2(this);
+        clearUndo();
         if (ver == 1) {
             v2Sched.moveToV1();
         } else {
@@ -326,7 +327,7 @@ public class Collection {
      */
     public void flush(long mod) {
         Timber.i("flush - Saving information to DB...");
-        mMod = (mod == 0 ? Utils.intNow(1000) : mod);
+        mMod = (mod == 0 ? Utils.intTime(1000) : mod);
         ContentValues values = new ContentValues();
         values.put("crt", mCrt);
         values.put("mod", mMod);
@@ -469,7 +470,7 @@ public class Collection {
                 throw new ConfirmModSchemaException();
             }
         }
-        mScm = Utils.intNow(1000);
+        mScm = Utils.intTime(1000);
         setMod();
     }
 
@@ -706,19 +707,25 @@ public class Collection {
         String snids = Utils.ids2str(nids);
         HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>();
         HashMap<Long, Long> dids = new HashMap<>();
+        HashMap<Long, Long> dues = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().query("select id, nid, ord, did, odid from cards where nid in " + snids, null);
+            cur = mDb.getDatabase().query("select id, nid, ord, did, due, odue, odid, type from cards where nid in " + snids, null);
             while (cur.moveToNext()) {
+                long id = cur.getLong(0);
                 long nid = cur.getLong(1);
+                int ord = cur.getInt(2);
                 long did = cur.getLong(3);
-                long odid = cur.getLong(4);
+                long due = cur.getLong(4);
+                long odue = cur.getLong(5);
+                long odid = cur.getLong(6);
+                long type = cur.getLong(7);
 
                 // existing cards
                 if (!have.containsKey(nid)) {
                     have.put(nid, new HashMap<Integer, Long>());
                 }
-                have.get(nid).put(cur.getInt(2), cur.getLong(0));
+                have.get(nid).put(ord, id);
                 // if in a filtered deck, add new cards to original deck
                 if (odid != 0) {
                     did = odid;
@@ -733,6 +740,13 @@ public class Collection {
                     // first card or multiple cards in same deck
                     dids.put(nid, did);
                 }
+                // save due
+                if (odid != 0) {
+                    due = odue;
+                }
+                if (!dues.containsKey(nid) && type == 0) {
+                    dues.put(nid, due);
+                }
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -742,17 +756,26 @@ public class Collection {
         // build cards for each note
         ArrayList<Object[]> data = new ArrayList<>();
         long ts = Utils.maxID(mDb);
-        long now = Utils.intNow();
+        long now = Utils.intTime();
         ArrayList<Long> rem = new ArrayList<>();
         int usn = usn();
         cur = null;
         try {
             cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
             while (cur.moveToNext()) {
-                JSONObject model = mModels.get(cur.getLong(1));
-                ArrayList<Integer> avail = mModels.availOrds(model, cur.getString(2));
                 long nid = cur.getLong(0);
+                long mid = cur.getLong(1);
+                String flds = cur.getString(2);
+                JSONObject model = mModels.get(mid);
+                ArrayList<Integer> avail = mModels.availOrds(model, flds);
                 long did = dids.get(nid);
+                // use sibling due if there is one, else use a new id
+                long due;
+                if (dues.containsKey(nid)) {
+                    due = dues.get(nid);
+                } else {
+                    due = nextID("pos");
+                }
                 if (did == 0) {
                     did = model.getLong("did");
                 }
@@ -776,9 +799,8 @@ public class Collection {
                         }
                         // if the deck doesn't exist, use default instead
                         did = mDecks.get(did).getLong("id");
-                        // we'd like to use the same due# as sibling cards, but we can't retrieve that quickly, so we
                         // give it a new id instead
-                        data.add(new Object[] { ts, nid, did, tord, now, usn, nextID("pos") });
+                        data.add(new Object[] { ts, nid, did, tord, now, usn, due});
                         ts += 1;
                     }
                 }
@@ -813,6 +835,11 @@ public class Collection {
      * @return list of cards
 	 */
 	public List<Card> previewCards(Note note, int type) {
+        int did = 0;
+        return previewCards(note, type, did);
+    }
+
+    public List<Card> previewCards(Note note, int type, int did) {
 	    ArrayList<JSONObject> cms = null;
 	    if (type == 0) {
 	        cms = findTemplates(note);
@@ -837,7 +864,7 @@ public class Collection {
 	    }
 	    List<Card> cards = new ArrayList<>();
 	    for (JSONObject template : cms) {
-	        cards.add(_newCard(note, template, 1, false));
+	        cards.add(_newCard(note, template, 1, did, false));
 	    }
 	    return cards;
 	}
@@ -849,25 +876,44 @@ public class Collection {
      * Create a new card.
      */
     private Card _newCard(Note note, JSONObject template, int due) {
-        return _newCard(note, template, due, true);
+        boolean flush = true;
+        return _newCard(note, template, due, flush);
     }
 
+    private Card _newCard(Note note, JSONObject template, int due, int did) {
+        boolean flush = true;
+        return _newCard(note, template, due, did, flush);
+    }
 
     private Card _newCard(Note note, JSONObject template, int due, boolean flush) {
+        int did = 0;
+        return _newCard(note, template, due, did, flush);
+    }
+
+    private Card _newCard(Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         Card card = new Card(this);
-        card.setNid(note.getId());
+        long nid = note.getId();
+        int ord = -1;
+        long did;
+        card.setNid(nid);
         try {
-            card.setOrd(template.getInt("ord"));
+            ord = template.getInt("ord");
+            card.setOrd(ord);
         } catch (JSONException e) {
-            new RuntimeException(e);
+            throw new RuntimeException(e);
         }
-        // Use template did (deck override) if valid, otherwise model did
-        long did = template.optLong("did", 0);
-        if (did > 0 && mDecks.getDecks().containsKey(did)) {
-            card.setDid(did);
-        } else {
-            card.setDid(note.model().optLong("did", 0));
+        did = mDb.queryScalar("select did from cards where nid = " + nid + " and ord = " + ord);
+        // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
+        if (did == 0) {
+            did = template.optLong("did", 0);
+            if (did > 0 && mDecks.getDecks().containsKey(did)) {
+            } else if (parameterDid != 0) {
+                did = parameterDid;
+            } else {
+                did = note.model().optLong("did", 0);
+            }
         }
+        card.setDid(did);
         try {
             // if invalid did, use default instead
             JSONObject deck = mDecks.get(card.getDid());
@@ -1062,7 +1108,7 @@ public class Collection {
 
 
     public HashMap<String, String> _renderQA(Object[] data, String qfmt, String afmt) {
-        // data is [cid, nid, mid, did, ord, tags, flds]
+        // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
         String[] flist = Utils.splitFields((String) data[6]);
         Map<String, String> fields = new HashMap<>();
@@ -1078,6 +1124,7 @@ public class Collection {
             fields.put("Deck", mDecks.name((Long) data[3]));
             String[] parents = fields.get("Deck").split("::", -1);
             fields.put("Subdeck", parents[parents.length-1]);
+            fields.put("CardFlag", _flagNameFromCardFlags((Integer) data[7]));
             JSONObject template;
             if (model.getInt("type") == Consts.MODEL_STD) {
                 template = model.getJSONArray("tmpls").getJSONObject((Integer) data[4]);
@@ -1122,7 +1169,7 @@ public class Collection {
 
 
     /**
-     * Return [cid, nid, mid, did, ord, tags, flds] db query
+     * Return [cid, nid, mid, did, ord, tags, flds, flags] db query
      */
     public ArrayList<Object[]> _qaData() {
         return _qaData("");
@@ -1135,10 +1182,10 @@ public class Collection {
         try {
             cur = mDb.getDatabase().query(
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
-                            + "n.tags, n.flds FROM cards c, notes n WHERE c.nid == n.id " + where, null);
+                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where, null);
             while (cur.moveToNext()) {
                 data.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getLong(2), cur.getLong(3), cur.getInt(4),
-                        cur.getString(5), cur.getString(6) });
+                        cur.getString(5), cur.getString(6), cur.getInt(7)});
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -1148,6 +1195,13 @@ public class Collection {
         return data;
     }
 
+	public String _flagNameFromCardFlags(int flags){
+		int flag = flags & 0b111;
+		if (flag == 0) {
+			return "";
+		}
+		return "flag"+flag;
+	}
 
     /**
      * Finding cards ************************************************************ ***********************************
@@ -1308,7 +1362,7 @@ public class Collection {
                 mDb.execute("DELETE FROM revlog WHERE id = " + last);
                 // restore any siblings
                 mDb.execute("update cards set queue=type,mod=?,usn=? where queue=-2 and nid=?",
-                        new Object[]{Utils.intNow(), usn(), c.getNid()});
+                        new Object[]{Utils.intTime(), usn(), c.getNid()});
                 // and finally, update daily count
                 int n = c.getQueue() == 3 ? 1 : c.getQueue();
                 String type = (new String[]{"new", "lrn", "rev"})[n];
@@ -1668,7 +1722,7 @@ public class Collection {
                 }
                 // new cards can't have a due position > 32 bits
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intNow() + ", usn = " + usn()
+                mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
                         + " WHERE due > 1000000 AND type = 0");
                 // new card position
                 mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
@@ -1678,7 +1732,7 @@ public class Collection {
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
                 if (ids.size() > 0) {
                 	problems.add("Reviews had incorrect due date.");
-                    mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intNow() +
+                    mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
                             ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 }
                 // v2 sched had a bug that could create decimal intervals
@@ -1713,6 +1767,10 @@ public class Collection {
             Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return -1;
+        }
+        // models
+        if (mModels.ensureNotEmpty()) {
+            problems.add("Added missing note type.");
         }
         // and finally, optimize
         optimize(progressCallback, currentTask, totalTasks);
@@ -1779,7 +1837,7 @@ public class Collection {
                 args[i] = Arrays.toString((long []) args[i]);
             }
         }
-        String s = String.format("[%s] %s:%s(): %s", Utils.intNow(), trace.getFileName(), trace.getMethodName(),
+        String s = String.format("[%s] %s:%s(): %s", Utils.intTime(), trace.getFileName(), trace.getMethodName(),
                 TextUtils.join(",  ", args));
         mLogHnd.println(s);
         Timber.d(s);

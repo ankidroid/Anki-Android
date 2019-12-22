@@ -71,7 +71,7 @@
     <string name="stats_answer_type">回答类型</string>
     <string name="stats_today_again_count">重来数量：&lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">（正确率：&lt;b&gt;%.1f%%&lt;/b&gt; ）</string>
-    <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_type_breakdown">学习：&lt;b&gt;%1$d&lt;/b&gt;，复习：&lt;b&gt;%2$d&lt;/b&gt;，重新学习：&lt;b&gt;%3$d&lt;/b&gt;，已过滤：&lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">熟悉卡片回答正确率：%1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">今天未学习熟悉的卡片</string>
     <string name="stats_overview_forecast_total">全部： &lt;b&gt;%1$d&lt;/b&gt; 张卡片待复习</string>

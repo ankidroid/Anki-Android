@@ -141,7 +141,7 @@
     <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
     <string name="button_sync">同期</string>
     <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
     <string name="continue_sync">同期を続行</string>
@@ -163,7 +163,7 @@
     </plurals>
     <string name="invalid_template">カードを作成できませんでした</string>
     <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１つ以上のノートが削除されます。まずは新しいカードタイプを追加してください。</string>
-    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">現在のカードのテンプレートが削除された。</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid データベースの読み書き</string>
     <string name="read_write_permission_description">ノート、カード、ノートタイプ、デッキへのアクセスや、それらの新規作成を行います。</string>

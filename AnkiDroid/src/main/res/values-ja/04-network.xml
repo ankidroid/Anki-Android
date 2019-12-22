@@ -120,7 +120,7 @@
     <string name="force_full_sync_summary">次回の同期で、一方向の変更を強制実行します</string>
     <string name="full_sync_confirmation">要求した変更を行うには、次回のコレクションの同期の際にデータベースの完全なアップロードが必要です。他の端末で復習やその他の変更を行ってまだ同期が済んでいない場合、それらの変更は失われます。処理を続けますか？</string>
     <string name="full_sync_confirmation_upgrade">以前のバージョンのバグの修正を反映させるため、完全な同期をお勧めします。</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">プロキシ認証が必要です</string>
     <string name="sync_error_409">AnkiWebとの間の同期は、同時に複数の端末で実行できません。時間を置いて再び試してください。</string>
     <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
     <string name="sync_error_500_unknown">AnkiWebでエラーが発生しました。数分後にもう一度お試しください。問題が解決しない場合は、バグレポートをお寄せください。</string>

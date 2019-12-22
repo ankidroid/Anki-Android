@@ -92,4 +92,6 @@
     </string-array>
     <string name="card_browser_select_all">모두 선택</string>
     <string name="card_browser_select_none">모두 선택 안함</string>
+    <string name="card_browser_interval_new_card">(new)</string>
+    <string name="card_browser_interval_learning_card">(learning)</string>
 </resources>

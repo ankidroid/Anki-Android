@@ -85,8 +85,8 @@
     <string name="intent_add_clear_all">全て消去</string>
     <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
     <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">デッキの中の新規カードの枚数: %d</string>
+    <string name="custom_study_rev_total_rev">予定日時に達した復習カード数: %d</string>
     <string name="custom_study_new_extend">今日の新規カードの上限をあと x 枚上げる</string>
     <string name="custom_study_rev_extend">今日の復習カードの上限をあと x 枚上げる</string>
     <string name="custom_study_forgotten">過去 x 日以内に忘却したカードを復習する</string>

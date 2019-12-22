@@ -120,11 +120,11 @@
     <string name="force_full_sync_summary">在下一次同步时, 强制单方向的改变.</string>
     <string name="full_sync_confirmation">请求的改变需要在下次同步你的集合时上传整个数据库. 如果你还有在其他设备上未同步的复习或者其他改变, 他们将会丢失, 是否继续?</string>
     <string name="full_sync_confirmation_upgrade">因先前安装的AnkiDroid版本中Bug的原因，我们建议强制完全同步一次。</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">需要代理身份验证。</string>
     <string name="sync_error_409">AnkiWeb 只允许一个客户端同时在线，如果之前的同步失败，请在几分钟后重试。</string>
     <string name="sync_error_413_collection_size">您的收藏或媒体文件过大，无法同步。</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_500_unknown">AnkiWeb 遇到了一个错误。请几分钟后再试，如果问题仍然存在，请提交错误报告。</string>
     <string name="sync_error_501_upgrade_required">请升级到最新版本的AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb 正在维护中。请稍后再试。</string>
+    <string name="sync_error_504_gateway_timeout">收到了 504 网关超时错误。</string>
 </resources>

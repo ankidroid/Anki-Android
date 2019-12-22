@@ -425,7 +425,7 @@ public class ContentProviderTest {
             assertEquals("Check field length", TEST_MODEL_FIELDS.length, model.getJSONArray("flds").length());
             JSONArray flds = model.getJSONArray("flds");
             for (int i = 0; i < flds.length(); i++) {
-                assertEquals("Check name of fields", flds.getJSONObject(i).getString("name"), TEST_MODEL_FIELDS[i]);
+                assertEquals("Check name of fields", TEST_MODEL_FIELDS[i], flds.getJSONObject(i).getString("name"));
             }
             // Test updating the model CSS (to test updating MODELS_ID Uri)
             cv = new ContentValues();
@@ -814,6 +814,7 @@ public class ContentProviderTest {
         values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
         int updateCount = cr.update(reviewInfoUri, values, null, null);
         assertEquals("Check if update returns 1", 1, updateCount);
+        try { Thread.currentThread().wait(500); } catch (Exception e) {/* do nothing */}
         col.getSched().reset();
         Card newCard = col.getSched().getCard();
         if(newCard != null){
