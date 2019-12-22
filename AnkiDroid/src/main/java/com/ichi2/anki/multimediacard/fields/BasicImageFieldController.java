@@ -29,7 +29,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -69,13 +68,13 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private ImageView mImagePreview;
     private LinearLayout mLinearLayout;
 
-    private String mTempImagePath;
-    private String mTempImagePrePath;//save the last path to prevent crop or take photo action canceled
+    private String mImagePath;
+    private String mLatestImagePath; //save the latest path to prevent from cropping or taking photo action canceled
     private DisplayMetrics mMetrics = null;
 
     private boolean showCropButton = false;
 
-    private static final String sAnkiCacheDirectory = Environment.getExternalStorageDirectory() + "/AnkiDroid/cache";
+    private String ankiCacheDirectory = ""; //external cache directory
 
     private long mTimeStamp;
 
@@ -97,7 +96,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         int height = metrics.heightPixels;
         int width = metrics.widthPixels;
-
+        File externalCacheDir = context.getExternalCacheDir();
+        if (externalCacheDir != null) {
+            ankiCacheDirectory = externalCacheDir.getAbsolutePath();
+        }
         LinearLayout.LayoutParams p = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         setPreviewImage(mField.getImagePath(), getMaxImageSize());
@@ -123,10 +125,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             File storageDir;
             String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
             try {
-                storageDir = new File(sAnkiCacheDirectory);
+                storageDir = new File(ankiCacheDirectory);
                 image = File.createTempFile("img_" + timeStamp, ".png", storageDir);
-                mTempImagePrePath = mTempImagePath;
-                mTempImagePath = image.getPath();
+                mLatestImagePath = mImagePath;
+                mImagePath = image.getPath();
                 Uri uriSavedImage;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     uriSavedImage = FileProvider.getUriForFile(mActivity,
@@ -161,7 +163,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
 
-        mkdirAnkiCacheDir();
         mTimeStamp = System.currentTimeMillis();
     }
 
@@ -182,13 +183,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // ignore RESULT_CANCELED but handle image select and take
         if (resultCode == Activity.RESULT_CANCELED) {
             switch (requestCode) {
                 case ACTIVITY_TAKE_PICTURE:
                 case ACTIVITY_CROP_PICTURE:
-                    if (!TextUtils.isEmpty(mTempImagePrePath)) {
-                        mTempImagePath = mTempImagePrePath;
+                    if (!TextUtils.isEmpty(mLatestImagePath)) {
+                        mImagePath = mLatestImagePath;
                     }
                     break;
                 default:
@@ -232,9 +232,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private void rotateAndCompress() {
         // Set the rotation of the camera image and save as png
-        File f = new File(mTempImagePath);
+        File f = new File(mImagePath);
         // use same filename but with png extension for output file
-        String outPath = mTempImagePath;
+        String outPath = mImagePath;
         // Load into a bitmap with max size of 1920 pixels and rotate if necessary
         Bitmap b = BitmapUtil.decodeFile(f, IMAGE_SAVE_MAX_WIDTH);
         FileOutputStream out = null;
@@ -274,9 +274,13 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
+    /**
+     * Invoke system crop function
+     * @param uri image's uri
+     */
     public void photoCrop(Uri uri) {
-        String fileName = mTempImagePath.substring(mTempImagePath.lastIndexOf("/") + 1, mTempImagePath.lastIndexOf(".")) + (mTimeStamp % 1000000);
-        File image = new File(sAnkiCacheDirectory + "/" + fileName + ".png");
+        String fileName = mImagePath.substring(mImagePath.lastIndexOf("/") + 1, mImagePath.lastIndexOf(".")) + (mTimeStamp % 1000000);
+        File image = new File(ankiCacheDirectory + "/" + fileName + ".png");
         if (!image.exists()) {
             try {
                 image.createNewFile();
@@ -284,10 +288,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 e.printStackTrace();
             }
         }
-        mTempImagePrePath = mTempImagePath;
-        mTempImagePath = image.getPath();
+        mLatestImagePath = mImagePath;
+        mImagePath = image.getPath();
         Uri cropUri = Uri.fromFile(image);
-        mField.setImagePath(mTempImagePath);
+        mField.setImagePath(mImagePath);
         mField.setHasTemporaryMedia(true);
 
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -308,25 +312,23 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 .content(R.string.crop_image)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_cancel)
-                .onPositive((dialog, which) -> {
-                    photoCrop(uri);
-                })
+                .onPositive((dialog, which) -> photoCrop(uri))
                 .build().show();
     }
 
 
     private void handleSelectImageResult(Intent data) {
         Uri selectedImage = getImageUri(mActivity, data);
-        setPreviewImage(mTempImagePath, getMaxImageSize());
+        setPreviewImage(mImagePath, getMaxImageSize());
         showCropDialog(selectedImage);
     }
 
 
     private void handleTakePictureResult() {
         rotateAndCompress();
-        mField.setImagePath(mTempImagePath);
+        mField.setImagePath(mImagePath);
         mField.setHasTemporaryMedia(true);
-        setPreviewImage(mTempImagePath, getMaxImageSize());
+        setPreviewImage(mImagePath, getMaxImageSize());
         Uri uri = getCropUri();
         showCropDialog(uri);
     }
@@ -335,8 +337,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     private void handleCropResult() {
-        setPreviewImage(mTempImagePath, getMaxImageSize());
-        mField.setImagePath(mTempImagePath);
+        setPreviewImage(mImagePath, getMaxImageSize());
+        mField.setImagePath(mImagePath);
         mField.setHasTemporaryMedia(true);
         rotateAndCompress();//this is a long-running operation.
     }
@@ -346,7 +348,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      * @return current image path's uri
      */
     private Uri getCropUri() {
-        File file = new File(mTempImagePath);
+        File file = new File(mImagePath);
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             uri = FileProvider.getUriForFile(mActivity, mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider", file);
@@ -375,9 +377,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                     Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
                     imagePath = getImagePath(context, contentUri, null);
                 }
-            } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            } else if ("content".equalsIgnoreCase(uri != null ? uri.getScheme() : null)) {
                 imagePath = getImagePath(context, uri, null);
-            } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            } else if ("file".equalsIgnoreCase(uri != null ? uri.getScheme() : null)) {
                 imagePath = uri.getPath();
             }
         } else {
@@ -385,7 +387,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             imagePath = getImagePath(context, uri, null);
         }
         File file = new File(imagePath);
-        mTempImagePath = imagePath;
+        mImagePath = imagePath;
         mField.setImagePath(imagePath);
         mField.setHasTemporaryMedia(false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -414,23 +416,5 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             cursor.close();
         }
         return path;
-    }
-
-
-    /**
-     * Create Cache Directory
-     */
-    public void mkdirAnkiCacheDir() {
-        boolean isSdCardExist = Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED);
-        if (isSdCardExist) {
-            File ankiCropCacheDir = new File(sAnkiCacheDirectory);
-            if (!ankiCropCacheDir.exists()) {
-                try {
-                    ankiCropCacheDir.mkdir();
-                } catch (Exception e) {
-                }
-            }
-        }
     }
 }
