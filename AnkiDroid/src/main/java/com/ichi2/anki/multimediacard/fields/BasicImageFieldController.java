@@ -126,7 +126,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
             try {
                 storageDir = new File(ankiCacheDirectory);
-                image = File.createTempFile("img_" + timeStamp, ".png", storageDir);
+                image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
                 mLatestImagePath = mImagePath;
                 mImagePath = image.getPath();
                 Uri uriSavedImage;
@@ -234,7 +234,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         // Set the rotation of the camera image and save as png
         File f = new File(mImagePath);
         // use same filename but with png extension for output file
-        String outPath = mImagePath;
+        String outPath = mImagePath.substring(0, mImagePath.lastIndexOf(".")) + ".png";;
         // Load into a bitmap with max size of 1920 pixels and rotate if necessary
         Bitmap b = BitmapUtil.decodeFile(f, IMAGE_SAVE_MAX_WIDTH);
         FileOutputStream out = null;
@@ -242,6 +242,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             out = new FileOutputStream(outPath);
             b = ExifUtil.rotateFromCamera(f, b);
             b.compress(Bitmap.CompressFormat.PNG, 90, out);
+            f.delete();
+            mImagePath = outPath;
         } catch (FileNotFoundException e) {
             Timber.e(e, "Error in BasicImageFieldController.rotateAndCompress()");
         } finally {
