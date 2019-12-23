@@ -86,12 +86,8 @@ public class Info extends AnkiActivity {
         Button marketButton = findViewById(R.id.market);
         marketButton.setOnClickListener(arg0 -> {
             if (mType == TYPE_ABOUT) {
-                final String intentUri;
-                if (CompatHelper.isKindle()) {
-                    intentUri = "http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki";
-                } else {
-                    intentUri = "market://details?id=com.ichi2.anki";
-                }
+                final String intentUri = getString(
+                        CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
                 final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(intentUri));
                 final PackageManager packageManager = getPackageManager();
                 if (intent.resolveActivity(packageManager) != null) {
