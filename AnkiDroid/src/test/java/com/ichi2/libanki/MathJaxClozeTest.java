@@ -36,7 +36,7 @@ public class MathJaxClozeTest extends RobolectricTest {
         assertEquals(original_s, Template.removeFormattingFromMathjax(original_s, "4"));
         assertEquals(original_s, Template.removeFormattingFromMathjax(original_s, "5"));
 
-        final String escaped_s = "{{c1::ok}} \\(2^2\\) {{C2::not ok}} \\(2^{{C3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}";
+        final String escaped_s = "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{C3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}";
         assertEquals(escaped_s, Template.removeFormattingFromMathjax(original_s, "3"));
 
         final String original_s2 = "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]";

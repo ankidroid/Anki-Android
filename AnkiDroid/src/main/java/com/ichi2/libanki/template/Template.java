@@ -411,8 +411,8 @@ public class Template {
                     m.appendReplacement(
                         repl,
                         m.quoteReplacement(
-                            m.group(0).replaceAll(
-                                "{{" + ord + "::", "{{C" + ord + "::")));
+                            m.group(0).replace(
+                                "{{c" + ord + "::", "{{C" + ord + "::")));
                     continue;
                 }
             } else {
