@@ -121,11 +121,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private long mNewDid;   // for change_deck
 
-    private static final int BACKGROUND_NORMAL = 0;
-    private static final int BACKGROUND_MARKED = 1;
-    private static final int BACKGROUND_SUSPENDED = 2;
-    private static final int BACKGROUND_MARKED_SUSPENDED = 3;
-
     private static final int EDIT_CARD = 0;
     private static final int ADD_NOTE = 1;
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
@@ -542,7 +537,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 R.layout.card_item_browser,
                 new String[] {COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]},
                 new int[] {R.id.card_sfld, R.id.card_column2},
-                "flags",
                 sflRelativeFontSize,
                 sflCustomFont);
         // link the adapter to the main mCardsListView
@@ -769,6 +763,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+    private void flagTask (int flag) {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
+                                mFlagCardHandler,
+                                new DeckTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, new Integer (flag)}));
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -835,6 +834,26 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_search_by_tag:
                 showTagsDialog();
+                return true;
+
+            case R.id.action_flag_zero:
+                flagTask(0);
+                return true;
+
+            case R.id.action_flag_one:
+                flagTask(1);
+                return true;
+
+            case R.id.action_flag_two:
+                flagTask(2);
+                return true;
+
+            case R.id.action_flag_three:
+                flagTask(3);
+                return true;
+
+            case R.id.action_flag_four:
+                flagTask(4);
                 return true;
 
             case R.id.action_delete_card:
@@ -1198,6 +1217,37 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+    private abstract class ListenerWithProgressBar extends DeckTask.TaskListener {
+        @Override
+        public void onPreExecute() {
+            showProgressBar();
+        }
+    }
+
+    private abstract class ListenerWithProgressBarCloseOnFalse extends ListenerWithProgressBar {
+        private String timber = null;
+
+        public ListenerWithProgressBarCloseOnFalse(String timber) {
+            this.timber = timber;
+        }
+
+        public ListenerWithProgressBarCloseOnFalse() {
+		}
+
+        public void onPostExecute(DeckTask.TaskData result) {
+            if (timber != null) {
+                Timber.d(timber);
+            }
+            if (result.getBoolean()) {
+                actualPostExecute(result);
+            } else {
+                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+            }
+        }
+
+        protected abstract void actualPostExecute(DeckTask.TaskData result);
+    }
+
     /**
      * @param cards Cards that were changed
      * @param updatedCardTags Mapping note id -> updated tags
@@ -1211,15 +1261,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (pos < 0 || pos >= getCards().size()) {
                 continue;
             }
+            Map<String, String> card = getCards().get(pos);
             // update tags
             if (updatedCardTags != null) {
-                getCards().get(pos).put("tags", updatedCardTags.get(c.getNid()));
+                card.put("tags", updatedCardTags.get(c.getNid()));
             }
             // update sfld
             String sfld = note.getSFld();
-            getCards().get(pos).put("sfld", sfld);
+            card.put("sfld", sfld);
             // update Q & A etc
-            updateSearchItemQA(getBaseContext(), getCards().get(pos), c);
+            updateSearchItemQA(getBaseContext(), card, c);
             // update deck
             String deckName;
             try {
@@ -1227,68 +1278,45 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            getCards().get(pos).put("deck", deckName);
+            card.put("deck", deckName);
             // update flags (marked / suspended / etc) which determine color
-            String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
-            getCards().get(pos).put("flags", flags);
+            card.put("suspended", c.getQueue() == Card.QUEUE_SUSP ? "True": "False");
+            card.put("flags", (new Integer(c.getUserFlag())).toString());
         }
 
         updateList();
     }
 
-    private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
+    private DeckTask.TaskListener mUpdateCardHandler = new ListenerWithProgressBarCloseOnFalse("Card Browser - mUpdateCardHandler.onPostExecute()"){
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             updateCardInList(values[0].getCard(), values[0].getString());
         }
 
-
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Card Browser - mUpdateCardHandler.onPostExecute()");
-            if (result.getBoolean()) {
-                hideProgressBar();
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
+        protected void actualPostExecute(DeckTask.TaskData result) {
+            hideProgressBar();
         }
     };
 
-    private DeckTask.TaskListener mChangeDeckHandler = new DeckTask.TaskListener() {
+    private DeckTask.TaskListener mChangeDeckHandler = new ListenerWithProgressBarCloseOnFalse("Card Browser - mChangeDeckHandler.onPostExecute()") {
         @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
+        protected void actualPostExecute(DeckTask.TaskData result) {
+            hideProgressBar();
 
+            searchCards();
+            endMultiSelectMode();
+            mCardsAdapter.notifyDataSetChanged();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
 
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Card Browser - mChangeDeckHandler.onPostExecute()");
-            if (result.getBoolean()) {
-                hideProgressBar();
-
-                searchCards();
-                endMultiSelectMode();
-                mCardsAdapter.notifyDataSetChanged();
-                invalidateOptionsMenu();    // maybe the availability of undo changed
-
-                // snackbar to offer undo
-                String deckName = getCol().getDecks().name(mNewDid);
-                mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
-                    }
-                }, mCardsListView, null);
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
+            // snackbar to offer undo
+            String deckName = getCol().getDecks().name(mNewDid);
+            mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
+                }
+            }, mCardsListView, null);
         }
     };
 
@@ -1381,55 +1409,30 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private DeckTask.TaskListener mSuspendCardHandler = new DeckTask.TaskListener() {
+    private DeckTask.TaskListener mSuspendCardHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
-        public void onPreExecute() {
-            showProgressBar();
+        protected void actualPostExecute(DeckTask.TaskData result) {
+            Card[] cards = (Card[]) result.getObjArray();
+            updateCardsInList(Arrays.asList(cards), null);
+            updateMultiselectMenu();
+            hideProgressBar();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
         }
+    };
+    private DeckTask.TaskListener mFlagCardHandler = mSuspendCardHandler;
 
-
+    private DeckTask.TaskListener mMarkCardHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (result.getBoolean()) {
-                Card[] cards = (Card[]) result.getObjArray();
-                updateCardsInList(Arrays.asList(cards), null);
-                updateMultiselectMenu();
-                hideProgressBar();
-                invalidateOptionsMenu();    // maybe the availability of undo changed
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
+        protected void actualPostExecute(DeckTask.TaskData result) {
+            Card[] cards = (Card[]) result.getObjArray();
+            updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards))), null);
+            updateMultiselectMenu();
+            hideProgressBar();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
         }
     };
 
-    private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (result.getBoolean()) {
-                Card[] cards = (Card[]) result.getObjArray();
-                updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards))), null);
-                updateMultiselectMenu();
-                hideProgressBar();
-                invalidateOptionsMenu();    // maybe the availability of undo changed
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
-        }
-    };
-
-    private DeckTask.TaskListener mDeleteNoteHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
+    private DeckTask.TaskListener mDeleteNoteHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             Card[] cards = (Card[]) values[0].getObjArray();
@@ -1438,61 +1441,41 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (result.getBoolean()) {
-                hideProgressBar();
-                mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
-                invalidateOptionsMenu();    // maybe the availability of undo changed
-                // snackbar to offer undo
-                mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, getString(R.string.deleted_message), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
-                    }
-                }, mCardsListView, null);
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
+        protected void actualPostExecute(DeckTask.TaskData result) {
+            hideProgressBar();
+            mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
+            invalidateOptionsMenu();    // maybe the availability of undo changed
+            // snackbar to offer undo
+            mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, getString(R.string.deleted_message), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
+                }
+            }, mCardsListView, null);
         }
     };
 
-    private DeckTask.TaskListener mUndoHandler = new DeckTask.TaskListener() {
+    private DeckTask.TaskListener mUndoHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
+        public void actualPostExecute(DeckTask.TaskData result) {
             Timber.d("Card Browser - mUndoHandler.onPostExecute()");
-            if (result.getBoolean()) {
-                hideProgressBar();
-                // reload whole view
-                searchCards();
-                endMultiSelectMode();
-                mCardsAdapter.notifyDataSetChanged();
-                updatePreviewMenuItem();
-                invalidateOptionsMenu();    // maybe the availability of undo changed
-            } else {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
+            hideProgressBar();
+            // reload whole view
+            searchCards();
+            endMultiSelectMode();
+            mCardsAdapter.notifyDataSetChanged();
+            updatePreviewMenuItem();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
         }
     };
 
-    private DeckTask.TaskListener mSearchCardsHandler = new DeckTask.TaskListener() {
+    private DeckTask.TaskListener mSearchCardsHandler = new ListenerWithProgressBar() {
         @Override
         public void onProgressUpdate(TaskData... values) {
             if (values[0] != null) {
                 mCards = values[0].getCards();
                 updateList();
             }
-        }
-
-
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
         }
 
 
@@ -1544,13 +1527,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private DeckTask.TaskListener mCheckSelectedCardsHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
+    private DeckTask.TaskListener mCheckSelectedCardsHandler = new ListenerWithProgressBar() {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             hideProgressBar();
@@ -1632,18 +1609,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private final int mResource;
         private String[] mFromKeys;
         private final int[] mToIds;
-        private final String mColorFlagKey;
         private float mOriginalTextSize = -1.0f;
         private final int mFontSizeScalePcent;
         private Typeface mCustomTypeface = null;
         private LayoutInflater mInflater;
 
-        public MultiColumnListAdapter(Context context, int resource, String[] from, int[] to, String colorFlagKey,
+        public MultiColumnListAdapter(Context context, int resource, String[] from, int[] to,
                                       int fontSizeScalePcent, String customFont) {
             mResource = resource;
             mFromKeys = from;
             mToIds = to;
-            mColorFlagKey = colorFlagKey;
             mFontSizeScalePcent = fontSizeScalePcent;
             if (!"".equals(customFont)) {
                 mCustomTypeface = AnkiFont.getTypeface(context, customFont);
@@ -1674,19 +1649,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private void bindView(final int position, final View v) {
             // Draw the content in the columns
             View[] columns = (View[]) v.getTag();
-            final Map<String, String> dataSet = getCards().get(position);
-            final int colorIdx = getColor(dataSet.get(mColorFlagKey));
-            int[] colors = Themes.getColorFromAttr(CardBrowser.this, new int[]{android.R.attr.colorBackground,
-                    R.attr.markedColor, R.attr.suspendedColor, R.attr.markedColor});
+            final Map<String, String> card = getCards().get(position);
             for (int i = 0; i < mToIds.length; i++) {
                 TextView col = (TextView) columns[i];
                 // set font for column
                 setFont(col);
                 // set text for column
-                col.setText(dataSet.get(mFromKeys[i]));
+                col.setText(card.get(mFromKeys[i]));
             }
             // set card's background color
-            final int backgroundColor = colors[colorIdx];
+            final int backgroundColor = Themes.getColorFromAttr(CardBrowser.this, getColor(card));
             v.setBackgroundColor(backgroundColor);
             // setup checkbox to change color in multi-select mode
             final CheckBox checkBox = (CheckBox) v.findViewById(R.id.card_checkbox);
@@ -1731,23 +1703,33 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         /**
-         * Get the index that specifies the background color of items in the card list based on the String tag
-         * @param flag a string flag
+         * Get the background color of items in the card list based on the Card
+         * @param card -- a card object to color
          * @return index into TypedArray specifying the background color
          */
-        private int getColor(String flag) {
-            if (flag == null) {
-                return BACKGROUND_NORMAL;
-            }
+        private int getColor(Map<String, String> card) {
+            boolean suspended = "True".equals(card.get("suspended"));
+            int flag = new Integer(card.get("flags"));
+            boolean marked = card.get("tags").matches(".*[Mm]arked.*");
             switch (flag) {
-                case "1":
-                    return BACKGROUND_SUSPENDED;
-                case "2":
-                    return  BACKGROUND_MARKED;
-                case "3":
-                    return  BACKGROUND_MARKED_SUSPENDED;
+                case 1:
+                   return R.attr.flagRed;
+                case 2:
+                   return R.attr.flagOrange;
+                case 3:
+                  return R.attr.flagGreen;
+                case 4:
+                   return R.attr.flagBlue;
                 default:
-                    return BACKGROUND_NORMAL;
+                    if (marked) {
+                        return R.attr.markedColor;
+                    } else {
+                        if (suspended) {
+                            return R.attr.suspendedColor;
+                        } else {
+                            return android.R.attr.colorBackground;
+                        }
+                    }
             }
         }
 

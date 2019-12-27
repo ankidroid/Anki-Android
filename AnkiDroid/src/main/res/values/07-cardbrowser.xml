@@ -32,6 +32,7 @@
     <string name="card_browser_change_deck">Change deck</string>
     <string name="card_browser_unsuspend_card">Unsuspend cards</string>
     <string name="card_browser_mark_card">Mark notes</string>
+    <string name="card_browser_flag">Flag</string>
     <string name="card_browser_toggle_mark_card">(un)mark notes</string>
     <string name="card_browser_unmark_card">Unmark notes</string>
     <string name="delete_card_title">Delete note?</string>

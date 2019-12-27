@@ -95,4 +95,9 @@
     <color name="material_deep_purple_400">#ff7E57C2</color>
 
     <color name="material_theme_grey">#303030</color>
+
+    <color name="flag_red">#ff0000</color>
+    <color name="flag_orange">#FF9800</color>
+    <color name="flag_green">#00ff00</color>
+    <color name="flag_blue">#0000ff</color>
 </resources>

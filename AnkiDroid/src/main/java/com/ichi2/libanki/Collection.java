@@ -130,6 +130,7 @@ public class Collection {
         DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
         CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
         MARK_NOTE_MULTI(R.string.card_browser_toggle_mark_card),
+        FLAG(R.string.card_browser_flag),
         REPOSITION_CARDS(R.string.undo_action_reposition_card),
         RESCHEDULE_CARDS(R.string.undo_action_reschedule_card),
         RESET_CARDS(R.string.undo_action_reset_card);
@@ -1871,6 +1872,15 @@ public class Collection {
             mLogHnd.close();
             mLogHnd = null;
         }
+    }
+
+    /**
+     * Card Flags *****************************************************************************************************
+     */
+    public void setUserFlag(int flag, long[] cids)  {
+        assert (0<= flag && flag <= 7);
+        mDb.execute("update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(cids),
+                    new Object[]{0b111, flag, usn(), Utils.intTime()});
     }
 
     /**

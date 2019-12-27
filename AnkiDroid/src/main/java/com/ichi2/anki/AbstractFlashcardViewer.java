@@ -1745,6 +1745,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mCustomButtons.put(R.id.action_open_deck_options, Integer.parseInt(preferences.getString("customButtonDeckOptions", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
         mCustomButtons.put(R.id.action_bury, Integer.parseInt(preferences.getString("customButtonBury", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
         mCustomButtons.put(R.id.action_suspend, Integer.parseInt(preferences.getString("customButtonSuspend", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
+        mCustomButtons.put(R.id.action_flag, Integer.parseInt(preferences.getString("customButtonFlag", Integer.toString(MenuItem.SHOW_AS_ACTION_IF_ROOM))));
         mCustomButtons.put(R.id.action_delete, Integer.parseInt(preferences.getString("customButtonDelete", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
 
         if (preferences.getBoolean("keepScreenOn", false)) {
@@ -2844,6 +2845,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         note.flush();
         refreshActionBar();
+    }
+
+    protected void onFlag(Card card, int flag) {
+        card.setUserFlag(flag);
+        card.flush();
+        refreshActionBar();
+        /* Following code would allow to update value of {{cardFlag}}.
+           Anki does not update this value when a flag is changed, so
+           currently this code would do something that anki itself
+           does not do. I hope in the future Anki will correct that
+           and this code may becomes useful.
+
+        card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
+        if (sDisplayAnswer) {
+            displayCardAnswer();
+        } else {
+            displayCardQuestion();
+            } */
     }
 
     protected void dismiss(Collection.DismissType type) {

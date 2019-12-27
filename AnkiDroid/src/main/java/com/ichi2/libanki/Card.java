@@ -22,6 +22,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.ichi2.utils.Assert;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -661,5 +663,28 @@ public class Card implements Cloneable {
     public int hashCode() {
         // Map a long to an int. For API>=24 you would just do `Long.hashCode(this.getId())`
         return (int)(this.getId()^(this.getId()>>>32));
+    }
+
+    public static int intToFlag(int flags) {
+        // setting all bits to 0, except the three first one.
+        // equivalent to `mFlags % 8`. Used this way to copy Anki.
+        return flags & 0b111;
+    }
+
+    public int getUserFlag() {
+        return Card.intToFlag(mFlags);
+    }
+
+    public static int setFlagInInt(int mFlags, int flag) {
+        Assert.that(0 <= flag, "flag to set is negative");
+        Assert.that(flag <= 7, "flag to set is greater than 7.");
+        // Setting the 3 firsts bits to 0, keeping the remaining.
+        int extraData = (mFlags & ~0b111);
+        // flag in 3 fist bits, same data as in mFlags everywhere else
+        return extraData | flag;
+    }
+
+    public void setUserFlag(int flag) {
+        mFlags = setFlagInInt(mFlags, flag);
     }
 }

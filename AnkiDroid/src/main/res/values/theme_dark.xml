@@ -74,6 +74,10 @@
         <!-- Browser colors -->
         <item name="suspendedColor">@color/material_grey_700</item>
         <item name="markedColor">@color/material_deep_purple_400</item>
+        <item name="flagRed">@color/flag_red</item>
+        <item name="flagOrange">@color/flag_orange</item>
+        <item name="flagGreen">@color/flag_green</item>
+        <item name="flagBlue">@color/flag_blue</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#855</item>
         <!-- FAB -->

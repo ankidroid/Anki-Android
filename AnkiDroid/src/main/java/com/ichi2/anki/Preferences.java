@@ -243,6 +243,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     edit.remove("customButtonDeckOptions");
                     edit.remove("customButtonBury");
                     edit.remove("customButtonSuspend");
+                    edit.remove("customButtonFlag");
                     edit.remove("customButtonDelete");
                     edit.remove("customButtonClearWhiteboard");
                     edit.remove("customButtonShowHideWhiteboard");
