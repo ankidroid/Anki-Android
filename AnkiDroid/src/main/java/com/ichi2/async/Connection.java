@@ -45,6 +45,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import okhttp3.Response;
 import timber.log.Timber;
 
 public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
@@ -199,12 +200,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
-    @SuppressWarnings("deprecation") // tracking HTTP transport change in github already
     private Payload doInBackgroundLogin(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
         HttpSyncer server = new RemoteServer(this, null);
-        org.apache.http.HttpResponse ret;
+        Response ret;
         try {
             ret = server.hostKey(username, password);
         } catch (UnknownHttpResponseException e) {
@@ -223,16 +223,16 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String hostkey = null;
         boolean valid = false;
         if (ret != null) {
-            data.returnType = ret.getStatusLine().getStatusCode();
-            Timber.d("doInBackgroundLogin - response from server: %d, (%s)", data.returnType, ret.getStatusLine().getReasonPhrase());
+            data.returnType = ret.code();
+            Timber.d("doInBackgroundLogin - response from server: %d, (%s)", data.returnType, ret.message());
             if (data.returnType == 200) {
                 try {
-                    JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
+                    JSONObject jo = (new JSONObject(ret.body().string()));
                     hostkey = jo.getString("key");
                     valid = (hostkey != null) && (hostkey.length() > 0);
                 } catch (JSONException e) {
                     valid = false;
-                } catch (IllegalStateException | IOException e) {
+                } catch (IllegalStateException | IOException | NullPointerException e) {
                     throw new RuntimeException(e);
                 }
             }
