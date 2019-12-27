@@ -28,6 +28,7 @@ The tools/release.sh script can perform some of those steps effortlessly.
   * Build a signed APK using `./gradlew clean assembleRelease`. Rename it from bin/AnkiDroid-release.apk to AnkiDroid-0.6.apk for instance
   * Go to https://github.com/ankidroid/Anki-Android/tags click "Edit release notes" drop APK over drop zone, press "Update release".
 Running `./tools/release.sh public` can perform some of those steps effortlessly.
+The release script makes use of the [github-release](https://github.com/aktau/github-release) tool
 
 ## Google Play
 Upload the APK to Google Play. Archive the previous APK from the "Active" section, then publish.
