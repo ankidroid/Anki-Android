@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NotificationChannels;
+import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.widget.WidgetStatus;
 
@@ -45,7 +46,7 @@ public class NotificationService extends BroadcastReceiver {
         NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-        int minCardsDue = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25"));
+        int minCardsDue = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY)));
         int dueCardsCount = WidgetStatus.fetchDue(context);
         if (dueCardsCount >= minCardsDue) {
             // Build basic notification
