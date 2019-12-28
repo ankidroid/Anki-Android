@@ -91,10 +91,10 @@
     <string name="menu_flag">Flag</string>
     <string name="menu_flag_card">Flag card</string>
     <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Flag red</string>
-    <string name="menu_flag_card_two">Flag orange</string>
-    <string name="menu_flag_card_three">Flag green</string>
-    <string name="menu_flag_card_four">Flag blue</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
     <string name="menu_select">Select text</string>
     <string name="menu_search">Lookup in %1$s</string>
