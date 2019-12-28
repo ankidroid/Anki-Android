@@ -96,6 +96,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     /** Key of the language preference */
     public static final String LANGUAGE = "language";
 
+    /* Only enable AnkiDroid notifications unrelated to due reminders */
+    public static final int PENDING_NOTIFICATIONS_ONLY = 1000000;
+
     // Other variables
     private final HashMap<String, String> mOriginalSumarries = new HashMap<>();
     private static final String [] sCollectionPreferences = {"showEstimates", "showProgress",
@@ -505,7 +508,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     ListPreference listpref = (ListPreference) screen.findPreference("minimumCardsDueForNotification");
                     if (listpref != null) {
                         updateNotificationPreference(listpref);
-                        if (Integer.valueOf(listpref.getValue()) < 1000000) {
+                        if (Integer.valueOf(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
                             BootService.scheduleNotification(this);
                         } else {
                             PendingIntent intent = PendingIntent.getBroadcast(this, 0,

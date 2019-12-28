@@ -400,8 +400,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     public void showSimpleNotification(String title, String message, NotificationChannels.Channel channel) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
-        // Don't show notification if disabled in preferences
-        if (Integer.parseInt(prefs.getString("minimumCardsDueForNotification", "0")) <= 1000000) {
+        // Show a notification unless all notifications have been totally disabled
+        if (Integer.parseInt(prefs.getString("minimumCardsDueForNotification", "0")) <= Preferences.PENDING_NOTIFICATIONS_ONLY) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
             String ticker = title;
             if (title.equals(getResources().getString(R.string.app_name))) {
