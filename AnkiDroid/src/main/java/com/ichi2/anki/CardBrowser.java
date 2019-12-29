@@ -1263,6 +1263,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             Map<String, String> card = getCards().get(pos);
             // update tags
+            card.put("marked", (c.note().hasTag("marked"))?"marked": null);
             if (updatedCardTags != null) {
                 card.put("tags", updatedCardTags.get(c.getNid()));
             }
@@ -1710,7 +1711,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private int getColor(Map<String, String> card) {
             boolean suspended = "True".equals(card.get("suspended"));
             int flag = new Integer(card.get("flags"));
-            boolean marked = card.get("tags").matches(".*[Mm]arked.*");
+            boolean marked = card.get("marked") != null ;
             switch (flag) {
                 case 1:
                    return R.attr.flagRed;
