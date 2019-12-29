@@ -76,8 +76,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private String ankiCacheDirectory = ""; //external cache directory
 
-    private long mTimeStamp;
-
     private int getMaxImageSize() {
         DisplayMetrics metrics = getDisplayMetrics();
 
@@ -163,7 +161,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
 
-        mTimeStamp = System.currentTimeMillis();
     }
 
 
@@ -234,16 +231,13 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         // Set the rotation of the camera image and save as png
         File f = new File(mImagePath);
         // use same filename but with png extension for output file
-        String outPath = mImagePath.substring(0, mImagePath.lastIndexOf(".")) + ".png";;
         // Load into a bitmap with max size of 1920 pixels and rotate if necessary
         Bitmap b = BitmapUtil.decodeFile(f, IMAGE_SAVE_MAX_WIDTH);
         FileOutputStream out = null;
         try {
-            out = new FileOutputStream(outPath);
+            out = new FileOutputStream(mImagePath);
             b = ExifUtil.rotateFromCamera(f, b);
             b.compress(Bitmap.CompressFormat.PNG, 90, out);
-            f.delete();
-            mImagePath = outPath;
         } catch (FileNotFoundException e) {
             Timber.e(e, "Error in BasicImageFieldController.rotateAndCompress()");
         } finally {
@@ -281,12 +275,13 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      * @param uri image's uri
      */
     public void photoCrop(Uri uri) {
-        String fileName = mImagePath.substring(mImagePath.lastIndexOf("/") + 1, mImagePath.lastIndexOf(".")) + (mTimeStamp % 1000000);
+        String fileName = mImagePath.substring(mImagePath.lastIndexOf("/") + 1, mImagePath.lastIndexOf("."));
         File image = new File(ankiCacheDirectory + "/" + fileName + ".png");
         if (!image.exists()) {
             try {
                 image.createNewFile();
             } catch (IOException e) {
+                Timber.e("Create cropped file failed: %s", e.getMessage());
                 e.printStackTrace();
             }
         }
