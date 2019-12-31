@@ -39,12 +39,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
+
+import org.acra.util.ToastSender;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -120,11 +123,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mBtnCamera.setOnClickListener(v -> {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             File image;
-            File storageDir;
-            String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
             try {
-                storageDir = new File(ankiCacheDirectory);
-                image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
+                image = createNewFile();
                 mLatestImagePath = mImagePath;
                 mImagePath = image.getPath();
                 Uri uriSavedImage;
@@ -161,6 +161,16 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
 
+    }
+
+
+    private File createNewFile() throws IOException {
+        File storageDir;
+        File image;
+        String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
+        storageDir = new File(ankiCacheDirectory);
+        image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
+        return image;
     }
 
 
@@ -227,7 +237,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private void rotateAndCompress() {
+    private Bitmap rotateAndCompress() {
         // Set the rotation of the camera image and save as png
         File f = new File(mImagePath);
         // use same filename but with png extension for output file
@@ -235,11 +245,16 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         Bitmap b = BitmapUtil.decodeFile(f, IMAGE_SAVE_MAX_WIDTH);
         FileOutputStream out = null;
         try {
-            out = new FileOutputStream(mImagePath);
+            File outFile = createNewFile();
+            out = new FileOutputStream(outFile);
             b = ExifUtil.rotateFromCamera(f, b);
             b.compress(Bitmap.CompressFormat.PNG, 90, out);
+            f.delete();
+            mImagePath = outFile.getAbsolutePath();
         } catch (FileNotFoundException e) {
-            Timber.e(e, "Error in BasicImageFieldController.rotateAndCompress()");
+            Timber.e(e, "Find file failed");
+        } catch (IOException e) {
+            Timber.e(e, "Create file failed");
         } finally {
             try {
                 if (out != null) {
@@ -249,6 +264,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 e.printStackTrace();
             }
         }
+        return b;
     }
 
 
@@ -305,6 +321,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     private void showCropDialog(Uri uri) {
+        if (uri == null) {
+            return;
+        }
         new MaterialDialog.Builder(mActivity)
                 .content(R.string.crop_image)
                 .positiveText(R.string.dialog_ok)
@@ -322,10 +341,13 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     private void handleTakePictureResult() {
-        rotateAndCompress();
+        Bitmap bitmap = rotateAndCompress();
+        if (bitmap != null) {
+            //Invoke setImageBitmap directly instead of setPreviewImage that would load bitmap again
+            mImagePreview.setImageBitmap(bitmap);
+        }
         mField.setImagePath(mImagePath);
         mField.setHasTemporaryMedia(true);
-        setPreviewImage(mImagePath, getMaxImageSize());
         Uri uri = getCropUri();
         showCropDialog(uri);
     }
@@ -363,6 +385,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private Uri getImageUri(Context context, Intent data) {
         String imagePath = null;
         Uri uri = data.getData();
+        if (uri == null) {
+            ToastSender.sendToast(context, context.getString(R.string.select_image_failed), Toast.LENGTH_LONG);
+            return null;
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (DocumentsContract.isDocumentUri(context, uri)) {
                 String docId = DocumentsContract.getDocumentId(uri);
@@ -374,9 +400,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                     Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
                     imagePath = getImagePath(context, contentUri, null);
                 }
-            } else if ("content".equalsIgnoreCase(uri != null ? uri.getScheme() : null)) {
+            } else if ("content".equalsIgnoreCase(uri.getScheme())) {
                 imagePath = getImagePath(context, uri, null);
-            } else if ("file".equalsIgnoreCase(uri != null ? uri.getScheme() : null)) {
+            } else if ("file".equalsIgnoreCase(uri.getScheme())) {
                 imagePath = uri.getPath();
             }
         } else {
