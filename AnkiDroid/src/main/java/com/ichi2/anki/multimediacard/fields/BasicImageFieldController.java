@@ -79,6 +79,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private String ankiCacheDirectory = ""; //external cache directory
 
+
     private int getMaxImageSize() {
         DisplayMetrics metrics = getDisplayMetrics();
 
@@ -288,6 +289,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     /**
      * Invoke system crop function
+     *
      * @param uri image's uri
      */
     public void photoCrop(Uri uri) {
@@ -353,8 +355,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-
-
     private void handleCropResult() {
         setPreviewImage(mImagePath, getMaxImageSize());
         mField.setImagePath(mImagePath);
@@ -362,8 +362,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         rotateAndCompress();//this is a long-running operation.
     }
 
+
     /**
      * Get Uri based on current image path
+     *
      * @return current image path's uri
      */
     private Uri getCropUri() {
@@ -380,6 +382,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     /**
      * Get image uri that adapts various model
+     *
      * @return image uri
      */
     private Uri getImageUri(Context context, Intent data) {
@@ -427,6 +430,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     /**
      * Get image path based on uri and selection args
+     *
      * @return image uri
      */
     private String getImagePath(Context context, Uri uri, String selection) {
