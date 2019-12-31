@@ -357,9 +357,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private void handleCropResult() {
         setPreviewImage(mImagePath, getMaxImageSize());
+        rotateAndCompress();//this is a long-running operation.
         mField.setImagePath(mImagePath);
         mField.setHasTemporaryMedia(true);
-        rotateAndCompress();//this is a long-running operation.
     }
 
 
