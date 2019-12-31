@@ -31,6 +31,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -57,8 +60,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import timber.log.Timber;
 
 public class BasicImageFieldController extends FieldControllerBase implements IFieldController {
@@ -228,13 +229,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     @Override
     public void onFocusLost() {
+        // do nothing
 
     }
 
 
     @Override
     public void onDone() {
-
+        // do nothing
     }
 
 
