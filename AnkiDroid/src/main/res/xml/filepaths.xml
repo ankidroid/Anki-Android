@@ -3,6 +3,4 @@
     <external-cache-path path="export/" name="export-directory" />
     <cache-path path="/" name="cache-directory" />
     <external-path path="." name="photos" />
-    <external-path path="AnkiDroid/cache" name="Anki" />
-
 </paths>
