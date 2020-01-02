@@ -857,22 +857,19 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundSearchCards(TaskData... params) {
         Timber.d("doInBackgroundSearchCards");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Map<String, String> deckNames = (HashMap<String, String>) params[0].getObjArray()[0];
-        String query = (String) params[0].getObjArray()[1];
-        Boolean order = (Boolean) params[0].getObjArray()[2];
-        int numCardsToRender = (int) params[0].getObjArray()[3];
-        List<Map<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);
-        // Render the first few items
-        for (int i = 0; i < Math.min(numCardsToRender, searchResult.size()); i++) {
-            Card c = col.getCard(Long.parseLong(searchResult.get(i).get("id"), 10));
-            CardBrowser.updateSearchItemQA(mContext, searchResult.get(i), c);
+        String query = (String) params[0].getObjArray()[0];
+        boolean order = (Boolean) params[0].getObjArray()[1];
+        List<Long> searchResult = col.findCards(query, order);
+        List<Card> cards = new ArrayList<>();
+        for (Long cid : searchResult) {
+            cards.add(col.getCard(cid, false));
         }
         // Finish off the task
         if (isCancelled()) {
             Timber.d("doInBackgroundSearchCards was cancelled so return null");
             return null;
         } else {
-            publishProgress(new TaskData(searchResult));
+            publishProgress(new TaskData(cards));
         }
         return new TaskData(col.cardCount(col.getDecks().allIds()));
     }
@@ -881,17 +878,16 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundRenderBrowserQA(TaskData... params) {
         Timber.d("doInBackgroundRenderBrowserQA");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        List<Map<String, String>> items = (List<Map<String, String>>) params[0].getObjArray()[0];
+        List<Card> items = (List<Card>) params[0].getObjArray()[0];
         Integer startPos = (Integer) params[0].getObjArray()[1];
         Integer n = (Integer) params[0].getObjArray()[2];
 
         // for each specified card in the browser list
         for (int i = startPos; i < startPos + n; i++) {
-            if (i >= 0 && i < items.size() && items.get(i).get("answer").equals("")) {
-                // Extract card item
-                Card c = col.getCard(Long.parseLong(items.get(i).get("id"), 10));
-                // Update item
-                CardBrowser.updateSearchItemQA(mContext, items.get(i), c);
+            if (i >= 0 && i < items.size()) {
+                Card c = items.get(i);
+                c.loadIfRequired();
+                c._getQA(false, true);
                 // Stop if cancelled
                 if (isCancelled()) {
                     Timber.d("doInBackgroundRenderBrowserQA was aborted");
@@ -1485,12 +1481,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object[] objects = params[0].getObjArray();
         Set<Integer> checkedCardPositions = (Set<Integer>) objects[0];
-        List<Map<String, String>> cards = (List<Map<String, String>>) objects[1];
+        List<Card> cards = (List<Card>) objects[1];
 
         boolean hasUnsuspended = false;
         boolean hasUnmarked = false;
         for (int cardPosition : checkedCardPositions) {
-            Card card = col.getCard(Long.parseLong(cards.get(cardPosition).get("id")));
+            Card card = col.getCard(cards.get(cardPosition).getId());
+            card.loadIfRequired();
             hasUnsuspended = hasUnsuspended || card.getQueue() != -1;
             hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
             if (hasUnsuspended && hasUnmarked)
@@ -1630,7 +1627,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         private int mInteger;
         private String mMsg;
         private boolean mBool = false;
-        private List<Map<String, String>> mCards;
+        private List<Card> mCards;
         private long mLong;
         private Context mContext;
         private int mType;
@@ -1687,14 +1684,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
 
 
-        public TaskData(List<Map<String, String>> cards) {
+        public TaskData(List<Card> cards) {
             mCards = cards;
-        }
-
-
-        public TaskData(List<Map<String, String>> cards, Comparator comparator) {
-            mCards = cards;
-            mComparator = comparator;
         }
 
 
@@ -1764,16 +1755,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
 
 
-        public List<Map<String, String>> getCards() {
-            return mCards;
-        }
-
-
-        public void setCards(List<Map<String, String>> cards) {
-            mCards = cards;
-        }
-
-
         public Comparator getComparator() {
             return mComparator;
         }
@@ -1816,6 +1797,11 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
         public int getType() {
             return mType;
+        }
+
+
+        public List<Card> getCards() {
+            return mCards;
         }
 
 

@@ -276,7 +276,7 @@ public class Finder {
     }
 
 
-    public Pair<String, String[]> _where(String[] tokens) {
+    private Pair<String, String[]> _where(String[] tokens) {
         // state and query
         SearchState s = new SearchState();
         List<String> args = new ArrayList<>();
@@ -1038,93 +1038,5 @@ public class Finder {
             }
         }
         return dupes;
-    }
-
-    /*
-     * ***********************************************************
-     * The methods below are not in LibAnki.
-     * ***********************************************************
-     */
-
-    public List<Map<String, String>> findCardsForCardBrowser(String query, boolean _order, Map<String, String> deckNames) {
-        return _findCardsForCardBrowser(query, _order, deckNames);
-    }
-
-
-    public List<Map<String, String>> findCardsForCardBrowser(String query, String _order, Map<String, String> deckNames) {
-        return _findCardsForCardBrowser(query, _order, deckNames);
-    }
-
-
-    /** Return a list of card ids for QUERY */
-    private List<Map<String, String>> _findCardsForCardBrowser(String query, Object _order, Map<String, String> deckNames) {
-        String[] tokens = _tokenize(query);
-        Pair<String, String[]> res1 = _where(tokens);
-        String preds = res1.first;
-        String[] args = res1.second;
-        List<Map<String, String>> res = new ArrayList<>();
-        if (preds == null) {
-            return res;
-        }
-        Pair<String, Boolean> res2 = _order instanceof Boolean ? _order((Boolean) _order) : _order((String) _order);
-        String order = res2.first;
-        boolean rev = res2.second;
-        String sql = _queryForCardBrowser(preds, order);
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase().query(sql, args);
-            DeckTask task = DeckTask.getInstance();
-            while (cur.moveToNext()) {
-                // cancel if the launching task was cancelled. 
-                if (task.isCancelled()){
-                    Timber.i("_findCardsForCardBrowser() cancelled...");
-                    return new ArrayList<>();
-                }                
-                Map<String, String> card = new HashMap<>();
-                card.put("id", cur.getString(0));
-                card.put("sfld", cur.getString(1));
-                card.put("deck", deckNames.get(cur.getString(2)));
-                int queue = cur.getInt(3);
-                String tags = cur.getString(4);
-                card.put("tags", tags);
-                res.add(card);
-                // add placeholder for question and answer
-                card.put("question", "");
-                card.put("answer", "");
-                card.put("flags", (new Integer(Card.intToFlag(cur.getInt(5)))).toString());
-                card.put("suspended", queue == Card.QUEUE_SUSP ? "True": "False");
-                card.put("marked", (tags.matches(".*[Mm]arked.*"))?"marked": null);
-            }
-        } catch (SQLException e) {
-            // invalid grouping
-            Timber.e("Invalid grouping, sql: " + sql);
-            return new ArrayList<>();
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
-        }
-        if (rev) {
-            Collections.reverse(res);
-        }
-        return res;
-    }
-    
-    /**
-     * A copy of _query() with a custom SQL query specific to the AnkiDroid card browser.
-     */
-    private String _queryForCardBrowser(String preds, String order) {
-        String sql = "select c.id, n.sfld, c.did, c.queue, n.tags, c.flags from cards c, notes n where c.nid=n.id and ";
-        // combine with preds
-        if (!TextUtils.isEmpty(preds)) {
-            sql += "(" + preds + ")";
-        } else {
-            sql += "1";
-        }
-        // order
-        if (!TextUtils.isEmpty(order)) {
-            sql += " " + order;
-        }
-        return sql;
     }
 }

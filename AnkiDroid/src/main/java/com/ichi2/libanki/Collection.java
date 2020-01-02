@@ -522,6 +522,11 @@ public class Collection {
     }
 
 
+    public Card getCard(long id, boolean load) {
+        return new Card(this, id, load);
+    }
+
+
     public Note getNote(long id) {
         return new Note(this, id);
     }
@@ -1220,8 +1225,9 @@ public class Collection {
     }
 
 
-    public List<Map<String, String>> findCardsForCardBrowser(String search, boolean order, Map<String, String> deckNames) {
-        return new Finder(this).findCardsForCardBrowser(search, order, deckNames);
+    /** Return a list of card ids */
+    public List<Long> findCards(String search, boolean order) {
+        return new Finder(this).findCards(search, order);
     }
 
 

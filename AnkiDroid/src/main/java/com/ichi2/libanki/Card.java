@@ -100,6 +100,7 @@ public class Card implements Cloneable {
     private String mData;
     // END SQL table entries
 
+    private boolean loaded;
     private HashMap<String, String> mQA;
     private Note mNote;
 
@@ -116,13 +117,24 @@ public class Card implements Cloneable {
 
 
     public Card(Collection col, Long id) {
+        this(col, id, true);
+    }
+
+
+    public Card(Collection col, Long id, boolean load) {
+        // We may decide not to load to be quicker. In which case,
+        // user must load before accessing the card value.
         mCol = col;
         mTimerStarted = Double.NaN;
         mQA = null;
         mNote = null;
         if (id != null) {
             mId = id;
-            load();
+            if (load){
+                this.load();
+            } else {
+                loaded = false;
+            }
         } else {
             // to flush, set nid, ord, and due
             mId = Utils.timestampID(mCol.getDb(), "cards");
@@ -138,9 +150,19 @@ public class Card implements Cloneable {
             mODid = 0;
             mFlags = 0;
             mData = "";
+            loaded = true;
         }
     }
 
+    public void loadIfRequired() {
+        if (!loaded){
+            load();
+        }
+    }
+
+    public void unload() {
+        loaded = false;
+    }
 
     public void load() {
         Cursor cursor = null;
@@ -174,6 +196,7 @@ public class Card implements Cloneable {
         }
         mQA = null;
         mNote = null;
+        loaded = true;
     }
 
 
