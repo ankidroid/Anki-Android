@@ -894,6 +894,7 @@ public class Decks {
                     names.add(immediateParent);
                 }
             }
+            names.add(deckName);
         }
     }
 
