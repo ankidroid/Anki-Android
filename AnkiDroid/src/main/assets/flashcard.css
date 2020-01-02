@@ -118,3 +118,24 @@ scale up, but not down.  */
 .night_mode .replaybutton svg {
   fill: white;
 }
+
+#_mark_flag {
+  top: 0;
+  font-size: 30px;
+  display: block;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  margin: 10px;
+}
+
+#_flag {
+  right: 10px;
+  float:right;
+}
+
+#_mark {
+  left: 10px;
+  float:left;
+  color: yellow;
+}
+

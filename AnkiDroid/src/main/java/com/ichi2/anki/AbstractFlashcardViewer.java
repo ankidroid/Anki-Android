@@ -1530,6 +1530,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 Timber.d("onPageFinished triggered");
+                drawFlag();
+                drawMark();
                 view.loadUrl("javascript:onPageFinished();");
             }
         });
@@ -2836,6 +2838,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     }
 
+    private void drawMark() {
+        mCard.loadUrl("javascript:_drawMark("+mCurrentCard.note().hasTag("marked")+");");
+    }
+
     protected void onMark(Card card) {
         Note note = card.note();
         if (note.hasTag("marked")) {
@@ -2845,12 +2851,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         note.flush();
         refreshActionBar();
+        drawMark();
+    }
+
+    private void drawFlag() {
+        mCard.loadUrl("javascript:_drawFlag("+mCurrentCard.getUserFlag()+");");
     }
 
     protected void onFlag(Card card, int flag) {
         card.setUserFlag(flag);
         card.flush();
         refreshActionBar();
+        drawFlag();
         /* Following code would allow to update value of {{cardFlag}}.
            Anki does not update this value when a flag is changed, so
            currently this code would do something that anki itself
