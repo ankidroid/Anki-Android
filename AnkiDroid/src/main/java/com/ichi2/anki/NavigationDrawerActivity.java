@@ -56,6 +56,10 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     private NavigationView mNavigationView;
     private ActionBarDrawerToggle mDrawerToggle;
     private SwitchCompat mNightModeSwitch;
+    /**
+     * Current system-level night mode.
+     */
+    private int mSystemNightMode;
     // Intent request codes
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
@@ -67,6 +71,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
      * runnable that will be executed after the drawer has been closed.
      */
     private Runnable pendingRunnable;
+
 
     // Navigation drawer initialisation
     protected void initNavigationDrawer(View mainView) {
@@ -90,6 +95,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             // Decide which action to take when the navigation button is tapped.
             toolbar.setNavigationOnClickListener(v -> onNavigationPressed());
         }
+        mSystemNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         // Configure night-mode switch
         final SharedPreferences preferences = getPreferences();
         View actionLayout = mNavigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
@@ -180,6 +186,40 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
     }
 
+    /**
+     * Handles Android system-level night mode changes.
+     * @param newNightMode new night mode, as a UI_MODE_NIGHT_* integer.
+     */
+    private void updateNightMode(int newNightMode) {
+        if (newNightMode == mSystemNightMode) {
+            // Nothing to do, system-level night mode did not change.
+            return;
+        }
+        mSystemNightMode = newNightMode;
+        // User switched either from system-level night mode to day mode, or from day mode to night mode.
+        final SharedPreferences preferences = getPreferences();
+        boolean setToNightMode;
+        switch (newNightMode) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                setToNightMode = true;
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                setToNightMode = false;
+                break;
+            default:
+                log.e("Unexpected new night mode value: %d", newNightMode);
+                return;
+        }
+        if (preferences.getBoolean(NIGHT_MODE_PREFERENCE, false) == setToNightMode) {
+            // Nothing to do - user switched the system-level night mode the same settings that AnkiDroid is currently
+            // in.
+            log.i("System night mode changed to %b, which matches AnkiDroid.", setToNightMode);
+            return;
+        }
+        log.i("System night mode changed to %b, switching AnkiDroid's night mode to match.", setToNightMode);
+        applyNightMode(setToNightMode);
+    }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -187,6 +227,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         if (mDrawerToggle != null) {
             mDrawerToggle.onConfigurationChanged(newConfig);
         }
+        updateNightMode(newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK);
     }
 
 
