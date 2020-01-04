@@ -189,7 +189,7 @@ public class ImportTest {
         imp.setDupeOnSchemaChange(true);
         imp.run();
         JSONObject importedDeck = testCol.getDecks().get(1403973847422L);
-        importedDeck.put("mod", 1403978820L);
+        importedDeck.put("mod", 140320L);
         //During importation, the mod date is set to now. For the next test, we need the mod date to be older than the one in diffmodeltemplates-2. So we set it back to its previous value
         testCol.getDecks().save(importedDeck);
         // then the version with updated template
