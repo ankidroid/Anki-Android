@@ -1,6 +1,7 @@
 body {
   margin: 0px;
   padding: 0px;
+  margin-bottom: 30px;
 }
 
 body.night_mode {
@@ -120,22 +121,26 @@ scale up, but not down.  */
 }
 
 #_mark_flag {
-  top: 0;
+  position: absolute;
+  bottom: 0;
   font-size: 30px;
   display: block;
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;
   margin: 10px;
+  bottom: 23px;
 }
 
 #_flag {
-  display: none;
+  position: fixed;
+  display: block;
   right: 10px;
   float:right;
 }
 
 #_mark {
-  display: none;
+  position: fixed;
+  display: block;
   left: 10px;
   float:left;
   color: yellow;
