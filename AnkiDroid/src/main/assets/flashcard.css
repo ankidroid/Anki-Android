@@ -129,11 +129,13 @@ scale up, but not down.  */
 }
 
 #_flag {
+  display: none;
   right: 10px;
   float:right;
 }
 
 #_mark {
+  display: none;
   left: 10px;
   float:left;
   color: yellow;
