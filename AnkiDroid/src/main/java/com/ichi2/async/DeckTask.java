@@ -885,7 +885,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 return null;
             }
 
-            if (i >= 0 && i < items.size() && items.get(i).get("answer").equals("")) {
+            if (i >= 0 && i < items.size() && items.get(i).get("answer") == null) {
                 // Extract card item
                 Card c = col.getCard(Long.parseLong(items.get(i).get("id"), 10));
                 // Update item

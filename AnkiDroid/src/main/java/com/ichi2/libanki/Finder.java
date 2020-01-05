@@ -1081,8 +1081,8 @@ public class Finder {
                 map.put("tags", tags);
                 res.add(map);
                 // add placeholder for question and answer
-                map.put("question", "");
-                map.put("answer", "");
+                map.put("question", null);
+                map.put("answer", null);
             }
         } catch (SQLException e) {
             // invalid grouping
