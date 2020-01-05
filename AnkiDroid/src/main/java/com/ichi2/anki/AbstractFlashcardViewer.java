@@ -2843,6 +2843,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
     protected void onMark(Card card) {
+        if (card == null) {
+            return;
+        }
         Note note = card.note();
         if (note.hasTag("marked")) {
             note.delTag("marked");
@@ -2859,6 +2862,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
     protected void onFlag(Card card, int flag) {
+        if (card == null) {
+            return;
+        }
         card.setUserFlag(flag);
         card.flush();
         refreshActionBar();
