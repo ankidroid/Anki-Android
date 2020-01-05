@@ -519,6 +519,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                             .putInt("cardBrowserColumn2", mColumn2Index).commit();
                     String[] fromMap = mCardsAdapter.getFromMapping();
                     fromMap[1] = COLUMN2_KEYS[mColumn2Index];
+                    if (fromMap[1] == null) {
+                        fromMap[1] = "";
+                    }
                     mCardsAdapter.setFromMapping(fromMap);
                 }
             }
@@ -531,11 +534,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // get the font and font size from the preferences
         int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
         String sflCustomFont = preferences.getString("browserEditorFont", "");
+        String[] columnsContent = {COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]};
+        if (columnsContent[1] == null) {
+            columnsContent[1] = "";
+        }
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         mCardsAdapter = new MultiColumnListAdapter(
                 this,
                 R.layout.card_item_browser,
-                new String[] {COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]},
+                columnsContent,
                 new int[] {R.id.card_sfld, R.id.card_column2},
                 sflRelativeFontSize,
                 sflCustomFont);
@@ -1579,7 +1586,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 String firstAns = getCards().get(firstVisibleItem).get("answer");
                 // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
                 String lastAns = getCards().get(lastVisibleItem - 1).get("answer");
-                if ("".equals(firstAns) || "".equals(lastAns)) {
+                if (firstAns == null || lastAns == null) {
                     showProgressBar();
                     // Also start rendering the items on the screen every 300ms while scrolling
                     long currentTime = SystemClock.elapsedRealtime ();

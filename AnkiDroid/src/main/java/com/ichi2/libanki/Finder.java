@@ -1115,8 +1115,8 @@ public class Finder {
                 card.put("tags", tags);
                 res.add(card);
                 // add placeholder for question and answer
-                card.put("question", "");
-                card.put("answer", "");
+                card.put("question", null);
+                card.put("answer", null);
                 card.put("flags", (new Integer(Card.intToFlag(cur.getInt(5)))).toString());
                 card.put("suspended", queue == Card.QUEUE_SUSP ? "True": "False");
                 card.put("marked", (tags.matches(".*[Mm]arked.*"))?"marked": null);
