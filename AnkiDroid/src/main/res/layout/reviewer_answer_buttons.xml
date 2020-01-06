@@ -20,6 +20,31 @@
          original AOSP soft keyboard, so don't.
     -->
 
+    <LinearLayout
+        android:id="@+id/preview_progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:visibility="gone"
+        android:layout_marginEnd="4dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <SeekBar
+            android:id="@+id/preview_progress_seek_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="75"
+            />
+        <TextView
+            android:id="@+id/preview_progress_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="25"
+            android:gravity="center"/>
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/preview_buttons_layout"
         android:layout_width="match_parent"
