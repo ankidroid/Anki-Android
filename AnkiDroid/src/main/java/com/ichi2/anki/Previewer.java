@@ -24,6 +24,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.ichi2.anki.cardviewer.PreviewLayout;
 import com.ichi2.anki.cardviewer.ViewerCommand;
@@ -46,6 +49,8 @@ public class Previewer extends AbstractFlashcardViewer {
     private long[] mCardList;
     private int mIndex;
     private boolean mShowingAnswer;
+    private SeekBar mProgressSeekBar;
+    private TextView mProgressText;
 
     /** Communication with Browser */
     private boolean mReloadRequired;
@@ -74,7 +79,7 @@ public class Previewer extends AbstractFlashcardViewer {
         mCardList = getIntent().getLongArrayExtra("cardList");
         mIndex = getIntent().getIntExtra("index", -1);
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             mIndex = savedInstanceState.getInt("index", mIndex);
             mShowingAnswer = savedInstanceState.getBoolean("showingAnswer", mShowingAnswer);
             mReloadRequired = savedInstanceState.getBoolean("reloadRequired");
@@ -90,6 +95,49 @@ public class Previewer extends AbstractFlashcardViewer {
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
         startLoadingCollection();
+        initPreviewProgress();
+    }
+
+    private void initPreviewProgress() {
+        mProgressSeekBar = findViewById(R.id.preview_progress_seek_bar);
+        mProgressText = findViewById(R.id.preview_progress_text);
+        LinearLayout progressLayout = findViewById(R.id.preview_progress_layout);
+
+        //Show layout only when the cardList is bigger than 1
+        if (mCardList.length > 1) {
+            progressLayout.setVisibility(View.VISIBLE);
+            mProgressSeekBar.setMax(mCardList.length - 1);
+            setSeekBarListener();
+            updateProgress();
+        }
+    }
+
+    private void setSeekBarListener() {
+        mProgressSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    mIndex = progress;
+                    updateProgress();
+                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                    displayCardQuestion();
+
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Mandatory override, but unused
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (mIndex >= 0 && mIndex < mCardList.length) {
+                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                    displayCardQuestion();
+                }
+            }
+        });
     }
 
     @Override
@@ -250,6 +298,7 @@ public class Previewer extends AbstractFlashcardViewer {
         mIndex = nextCard ? mIndex + 1 : mIndex - 1;
         mCurrentCard = getCol().getCard(mCardList[mIndex]);
         displayCardQuestion();
+        updateProgress();
     }
 
 
@@ -276,6 +325,15 @@ public class Previewer extends AbstractFlashcardViewer {
 
         mPreviewLayout.setPrevButtonEnabled(mIndex > 0);
         mPreviewLayout.setNextButtonEnabled(mIndex < mCardList.length - 1);
+    }
+
+    private void updateProgress() {
+        if (mProgressSeekBar.getProgress() != mIndex) {
+            mProgressSeekBar.setProgress(mIndex);
+        }
+
+        String progress = getString(R.string.preview_progress_bar_text, mIndex + 1, mCardList.length);
+        mProgressText.setText(progress);
     }
 
     @NonNull
