@@ -40,6 +40,8 @@ public class Previewer extends AbstractFlashcardViewer {
     private boolean mShowingAnswer;
     private SeekBar progressSeekBar;
     private TextView progressText;
+    private boolean mEnableLiveSeek = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,39 +70,48 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     private void initPreviewProgress() {
-        LinearLayout progressLayout = findViewById(R.id.preview_progress_layout);
         progressSeekBar = findViewById(R.id.preview_progress_seek_bar);
         progressText = findViewById(R.id.preview_progress_text);
-        progressLayout.setVisibility(View.VISIBLE);
-        setSeekBar();
-        updateProgress();
+        LinearLayout progressLayout = findViewById(R.id.preview_progress_layout);
+
+        //Show layout only when the cardList is bigger than 1
+        if (mCardList.length > 1) {
+            progressLayout.setVisibility(View.VISIBLE);
+            progressSeekBar.setMax(mCardList.length - 1);
+            setSeekBarListener();
+            updateProgress();
+        }
     }
 
 
-    private void setSeekBar() {
-        progressSeekBar.setMax(mCardList.length - 1);
-
+    private void setSeekBarListener() {
         progressSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
                     mIndex = progress;
                     updateProgress();
+                    if (mEnableLiveSeek) {
+                        mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                        displayCardQuestion();
+                    }
                 }
             }
 
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                // Mandatory override, but unused
             }
 
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if (mIndex >= 0) {
-                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
-                    displayCardQuestion();
-                    updateProgress();
+                if (!mEnableLiveSeek) {
+                    if (mIndex >= 0 && mIndex < mCardList.length) {
+                        mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                        displayCardQuestion();
+                    }
                 }
             }
         });
@@ -111,7 +122,7 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         mCurrentCard = col.getCard(mCardList[mIndex]);
-        if (mShowingAnswer){
+        if (mShowingAnswer) {
             displayCardQuestion();
             displayCardAnswer();
         } else {
@@ -168,6 +179,7 @@ public class Previewer extends AbstractFlashcardViewer {
     @Override
     protected void executeCommand(int which) { /* do nothing */ }
 
+
     private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -194,12 +206,11 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     private void updateProgress() {
-        int correctIndex = mIndex + 1;
-        if (correctIndex > mCardList.length) {
-            correctIndex = mIndex;
+        if (progressSeekBar.getProgress() != mIndex) {
+            progressSeekBar.setProgress(mIndex);
         }
-        progressSeekBar.setProgress(correctIndex);
-        String progress = correctIndex + "/" + mCardList.length;
+
+        String progress = (mIndex + 1) + "/" + mCardList.length;
         progressText.setText(progress);
     }
 
@@ -224,8 +235,8 @@ public class Previewer extends AbstractFlashcardViewer {
         mEase3Layout.setVisibility(View.GONE);
         mEase4Layout.setVisibility(View.GONE);
 
-        final int[] background = Themes.getResFromAttr(this, new int[]{R.attr.hardButtonRef});
-        final int[] textColor = Themes.getColorFromAttr(this, new int[]{R.attr.hardButtonTextColor});
+        final int[] background = Themes.getResFromAttr(this, new int[] {R.attr.hardButtonRef});
+        final int[] textColor = Themes.getColorFromAttr(this, new int[] {R.attr.hardButtonTextColor});
 
         mNext1.setTextSize(30);
         mEase1.setVisibility(View.GONE);
