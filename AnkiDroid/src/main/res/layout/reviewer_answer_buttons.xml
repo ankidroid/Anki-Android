@@ -20,6 +20,33 @@
     -->
 
     <LinearLayout
+        android:id="@+id/preview_progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:visibility="visible"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <SeekBar
+            android:id="@+id/preview_progress_seek_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="75"
+            />
+        <TextView
+            android:id="@+id/preview_progress_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="25"
+            android:gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/answer_options_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">

@@ -20,6 +20,9 @@ package com.ichi2.anki;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
@@ -35,6 +38,8 @@ public class Previewer extends AbstractFlashcardViewer {
     private long[] mCardList;
     private int mIndex;
     private boolean mShowingAnswer;
+    private SeekBar progressSeekBar;
+    private TextView progressText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +63,49 @@ public class Previewer extends AbstractFlashcardViewer {
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
         startLoadingCollection();
+        initPreviewProgress();
     }
+
+
+    private void initPreviewProgress() {
+        LinearLayout progressLayout = findViewById(R.id.preview_progress_layout);
+        progressSeekBar = findViewById(R.id.preview_progress_seek_bar);
+        progressText = findViewById(R.id.preview_progress_text);
+        progressLayout.setVisibility(View.VISIBLE);
+        setSeekBar();
+        updateProgress();
+    }
+
+
+    private void setSeekBar() {
+        progressSeekBar.setMax(mCardList.length - 1);
+
+        progressSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    mIndex = progress;
+                    updateProgress();
+                }
+            }
+
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (mIndex >= 0) {
+                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                    displayCardQuestion();
+                    updateProgress();
+                }
+            }
+        });
+    }
+
 
     @Override
     protected void onCollectionLoaded(Collection col) {
@@ -132,6 +179,7 @@ public class Previewer extends AbstractFlashcardViewer {
                     mCurrentCard = getCol().getCard(mCardList[mIndex]);
                 }
                 displayCardQuestion();
+                updateProgress();
             } else {
                 // If we are showing the question, any click will show an answer...
                 if (view.getId() == R.id.flashcard_layout_ease1) {
@@ -143,6 +191,18 @@ public class Previewer extends AbstractFlashcardViewer {
             }
         }
     };
+
+
+    private void updateProgress() {
+        int correctIndex = mIndex + 1;
+        if (correctIndex > mCardList.length) {
+            correctIndex = mIndex;
+        }
+        progressSeekBar.setProgress(correctIndex);
+        String progress = correctIndex + "/" + mCardList.length;
+        progressText.setText(progress);
+    }
+
 
     private void updateButtonState() {
         // If we are in single-card mode, we show the "Show Answer" button on the question side
