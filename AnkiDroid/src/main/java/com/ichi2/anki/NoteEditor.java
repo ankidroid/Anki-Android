@@ -878,6 +878,17 @@ public class NoteEditor extends AnkiActivity {
                 closeCardEditorWithCheck();
                 return true;
 
+            case R.id.action_preview:
+                Intent previewer = new Intent(NoteEditor.this, Previewer.class);
+                long[] cids = {mCurrentEditedCard.getId()};
+
+                previewer.putExtra("index", 0);
+                previewer.putExtra("cardList", cids);
+
+                startActivityWithoutAnimation(previewer);
+
+                return true;
+
             case R.id.action_save:
                 Timber.i("NoteEditor:: Save note button pressed");
                 saveNote();
