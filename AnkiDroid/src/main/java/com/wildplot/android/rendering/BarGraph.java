@@ -153,11 +153,11 @@ public class BarGraph implements Drawable, Legendable {
 
 
     /**
-     * returns true if this BarGraph can draw on the outer frame of plot (normally not)
-     */
-    public boolean isOnFrame() {
-        return false;
-    }
+	 * returns true if this BarGraph can draw on the outer frame of plot (normally not)
+	 */
+	public static boolean isOnFrame() {
+		return false;
+	}
 
 
     @Override
