@@ -88,6 +88,10 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="suspendedColor">#FFFFB2</item>
         <item name="selectedColor">#FFFFBB99</item>
         <item name="markedColor">#D9B2E9</item>
+        <item name="flagRed">@color/flag_red</item>
+        <item name="flagOrange">@color/flag_orange</item>
+        <item name="flagGreen">@color/flag_green</item>
+        <item name="flagBlue">@color/flag_blue</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#fcc</item>
         <!-- FAB -->

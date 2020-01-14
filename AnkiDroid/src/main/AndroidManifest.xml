@@ -22,8 +22,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.ichi2.anki"
           android:installLocation="auto"
-          android:versionCode="21000117"
-          android:versionName="2.10alpha17">
+          android:versionCode="21000130"
+          android:versionName="2.10alpha30">
 
     <!--
         The version number is of the form:
@@ -381,9 +381,6 @@
         <!-- stuff for Samsung Multi-Window -->
         <uses-library
             android:name="com.sec.android.app.multiwindow"
-            android:required="false" />
-        <uses-library
-            android:name="org.apache.http.legacy"
             android:required="false" />
 
         <meta-data

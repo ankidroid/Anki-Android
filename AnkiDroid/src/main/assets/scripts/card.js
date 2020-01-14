@@ -130,3 +130,29 @@ var onPageFinished = function() {
         }
     }
 }
+
+function _drawMark(mark) {
+    var elem = document.getElementById("_mark");
+    if (!mark) {
+        elem.style.display = "none";
+    } else {
+        elem.style.display = "inline";
+    }
+}
+
+function _drawFlag(flag) {
+    var elem = document.getElementById("_flag");
+
+    var _flagColours = [
+        "#ff6666",
+        "#ff9900",
+        "#77ff77",
+        "#77aaff"];
+
+    if (flag === 0) {
+        elem.style.display = "none";
+        return;
+    }
+    elem.style.display = "inline";
+    elem.style.color = _flagColours[flag-1];
+}

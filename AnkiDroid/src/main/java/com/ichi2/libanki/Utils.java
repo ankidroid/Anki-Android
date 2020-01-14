@@ -26,6 +26,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.text.Spanned;
+
 import androidx.annotation.NonNull;
 
 import com.ichi2.anki.AnkiFont;
@@ -99,7 +101,7 @@ public class Utils {
     private static final Pattern stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
-    private static final Pattern imgPattern = Pattern.compile("(?i)<img src=[\\\"']?([^\\\"'>]+)[\\\"']? ?/?>");
+    private static final Pattern imgPattern = Pattern.compile("(?i)<img[^>]+src=[\\\"']?([^\\\"'>]+)[\\\"']?[^>]*>");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
 
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -255,7 +257,9 @@ public class Utils {
         Matcher htmlEntities = htmlEntitiesPattern.matcher(html);
         StringBuffer sb = new StringBuffer();
         while (htmlEntities.find()) {
-            htmlEntities.appendReplacement(sb, CompatHelper.getCompat().fromHtml(htmlEntities.group()).toString());
+            final Spanned spanned = CompatHelper.getCompat().fromHtml(htmlEntities.group());
+            final String replacement = Matcher.quoteReplacement(spanned.toString());
+            htmlEntities.appendReplacement(sb, replacement);
         }
         htmlEntities.appendTail(sb);
         return sb.toString();

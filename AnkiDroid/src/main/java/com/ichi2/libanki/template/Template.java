@@ -17,6 +17,7 @@
 package com.ichi2.libanki.template;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.Hooks;
@@ -48,6 +49,7 @@ public class Template {
     public static final String clozeReg = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
     private static final Pattern fClozeSection = Pattern.compile("c[qa]:(\\d+):(.+)");
+    private static final String TAG = Template.class.getName();
 
     // The regular expression used to find a #section
     private Pattern sSection_re = null;
@@ -354,46 +356,72 @@ public class Template {
         return false;
     }
 
+    /**
+     * Marks all clozes within MathJax to prevent formatting them.
+     *
+     * Active Cloze deletions within MathJax should not be wrapped inside
+     * a Cloze <span>, as that would interfere with MathJax. This method finds
+     * all Cloze deletions number `ord` in `txt` which are inside MathJax inline
+     * or display formulas, and replaces their opening '{{c123' with a '{{C123'.
+     * The clozeText method interprets the upper-case C as "don't wrap this
+     * Cloze in a <span>".
+     */
     public static String removeFormattingFromMathjax(String txt, String ord) {
-        // look for clozes wrapped in mathjax, and change {{cx to {{Cx
-
         String creg = clozeReg.replace("(?si)", "");
-        StringBuilder regex = new StringBuilder("(?si)(\\\\[");
-        regex.append(Pattern.quote("(["));
-        regex.append("])(.*?)");
-        regex.append(String.format(Locale.US, creg, ord));
-        regex.append("(.*?)(\\\\[");
-        regex.append(Pattern.quote("])"));
-        regex.append("])");
+        // Scan the string left to right.
+        // After a MathJax opening - \( or \[ - flip in_mathjax to True.
+        // After a MathJax closing - \) or \] - flip in_mathjax to False.
+        // When a Cloze pattern number `ord` is found and we are in MathJax,
+        // replace its '{{c' with '{{C'.
+        //
+        // TODO: Report mismatching opens/closes - e.g. '\(\]'
+        // TODO: Report errors in this method better than printing to stdout.
+        // flags in middle of expression deprecated
+        boolean in_mathjax = false;
 
-        Matcher m = Pattern.compile(regex.toString()).matcher(txt);
+        // The following regex matches one of:
+        //  -  MathJax opening
+        //  -  MathJax close
+        //  -  Cloze deletion number `ord`
+        String regex = new StringBuilder("(?si)")
+            .append("(?<mathjaxopen>\\\\[(\\[])|")
+            .append("(?<mathjaxclose>\\\\[\\])])|")
+            .append("(?<cloze>")
+            .append(String.format(Locale.US, creg, ord))
+            .append(")")
+            .toString();
+
+        Matcher m = Pattern.compile(regex).matcher(txt);
 
         StringBuffer repl = new StringBuffer();
         while (m.find()) {
-            boolean enclosed = true;
-
-            for (String closing : sMathJaxClosings) {
-                if (m.group(1).contains(closing)) {
-                    enclosed = false;
+            if (m.group("mathjaxopen") != null) {
+                if (in_mathjax) {
+                    Log.d(TAG, "MathJax opening found while already in MathJax");
                 }
-            }
-
-            for (String opening : sMathJaxOpenings) {
-                if (m.group(7).contains(opening)) {
-                    enclosed = false;
+                in_mathjax = true;
+            } else if (m.group("mathjaxclose") != null) {
+                if (!in_mathjax) {
+                    Log.d(TAG, "MathJax close found while not in MathJax");
                 }
-            }
-
-            if (!enclosed) {
-                String f = m.group(0);
-                // appendReplacement has an issue with backslashes, so...
-                m.appendReplacement(repl, Matcher.quoteReplacement(m.group(0)));
+                in_mathjax = false;
+            } else if (m.group("cloze") != null) {
+                if (in_mathjax) {
+                    // appendReplacement has an issue with backslashes, so...
+                    m.appendReplacement(
+                        repl,
+                        m.quoteReplacement(
+                            m.group(0).replace(
+                                "{{c" + ord + "::", "{{C" + ord + "::")));
+                    continue;
+                }
             } else {
-                m.appendReplacement(repl, Matcher.quoteReplacement(m.group(0).replace("{{c", "{{C")));
+                Log.d(TAG, "Unexpected: no expected capture group is present");
             }
+            // appendReplacement has an issue with backslashes, so...
+            m.appendReplacement(repl, Matcher.quoteReplacement(m.group(0)));
         }
-        txt = m.appendTail(repl).toString();
-        return txt;
+        return m.appendTail(repl).toString();
     }
 
 

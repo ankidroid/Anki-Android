@@ -306,6 +306,8 @@ public class Finder {
                     s.add(_findTemplate(val));
                 } else if ("deck".equals(cmd)) {
                     s.add(_findDeck(val));
+                } else if ("flag".equals(cmd)) {
+                    s.add(_findFlag(val));
                 } else if ("mid".equals(cmd)) {
                     s.add(_findMid(val));
                 } else if ("nid".equals(cmd)) {
@@ -472,6 +474,30 @@ public class Finder {
         }
     }
 
+    private String _findFlag(String val) {
+        int flag;
+        switch (val) {
+        case "0":
+            flag = 0;
+            break;
+        case "1":
+            flag = 1;
+            break;
+        case "2":
+            flag = 2;
+            break;
+        case "3":
+            flag = 3;
+            break;
+        case "4":
+            flag = 4;
+            break;
+        default:
+            return null;
+        }
+        int mask = 0b111; // 2**3 -1 in Anki
+        return "(c.flags & "+mask+") == " + flag;
+    }
 
     private String _findRated(String val) {
         // days(:optional_ease)
@@ -1080,18 +1106,20 @@ public class Finder {
                     Timber.i("_findCardsForCardBrowser() cancelled...");
                     return new ArrayList<>();
                 }                
-                Map<String, String> map = new HashMap<>();
-                map.put("id", cur.getString(0));
-                map.put("sfld", cur.getString(1));
-                map.put("deck", deckNames.get(cur.getString(2)));
+                Map<String, String> card = new HashMap<>();
+                card.put("id", cur.getString(0));
+                card.put("sfld", cur.getString(1));
+                card.put("deck", deckNames.get(cur.getString(2)));
                 int queue = cur.getInt(3);
                 String tags = cur.getString(4);
-                map.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.matches(".*[Mm]arked.*") ? 2 : 0)));
-                map.put("tags", tags);
-                res.add(map);
+                card.put("tags", tags);
+                res.add(card);
                 // add placeholder for question and answer
-                map.put("question", "");
-                map.put("answer", "");
+                card.put("question", "");
+                card.put("answer", "");
+                card.put("flags", (new Integer(Card.intToFlag(cur.getInt(5)))).toString());
+                card.put("suspended", queue == Card.QUEUE_SUSP ? "True": "False");
+                card.put("marked", (tags.matches(".*[Mm]arked.*"))?"marked": null);
             }
         } catch (SQLException e) {
             // invalid grouping
@@ -1112,7 +1140,7 @@ public class Finder {
      * A copy of _query() with a custom SQL query specific to the AnkiDroid card browser.
      */
     private String _queryForCardBrowser(String preds, String order) {
-        String sql = "select c.id, n.sfld, c.did, c.queue, n.tags from cards c, notes n where c.nid=n.id and ";
+        String sql = "select c.id, n.sfld, c.did, c.queue, n.tags, c.flags from cards c, notes n where c.nid=n.id and ";
         // combine with preds
         if (!TextUtils.isEmpty(preds)) {
             sql += "(" + preds + ")";

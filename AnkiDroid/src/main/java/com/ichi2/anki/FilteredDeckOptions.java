@@ -434,7 +434,11 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     private void closeDeckOptions() {
         if (mPrefChanged) {
             // Rebuild the filtered deck if a setting has changed
-            mCol.getSched().rebuildDyn(mCol.getDecks().selected());
+            try {
+                mCol.getSched().rebuildDyn(mDeck.getLong("id"));
+            } catch (JSONException e) {
+                Timber.e(e);
+            }
         }
         finish();
         ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);

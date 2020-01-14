@@ -70,6 +70,10 @@
         <item name="suspendedColor">#A8A634</item>
         <item name="selectedColor">#a86634</item>
         <item name="markedColor">#391080</item>
+        <item name="flagRed">@color/flag_red</item>
+        <item name="flagOrange">@color/flag_orange</item>
+        <item name="flagGreen">@color/flag_green</item>
+        <item name="flagBlue">@color/flag_blue</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#855</item>
         <!-- FAB -->

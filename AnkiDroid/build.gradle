@@ -64,7 +64,6 @@ android {
             buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         }
     }
-    useLibrary 'org.apache.http.legacy'
 
     testOptions {
         animationsDisabled true

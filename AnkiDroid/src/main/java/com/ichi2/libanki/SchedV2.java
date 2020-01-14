@@ -1243,7 +1243,7 @@ public class SchedV2 extends Sched {
             } else if (!d.getString("name").contains("::")) {
                 return lim;
             } else {
-                for (JSONObject parent : mCol.getDecks().parents(d.getInt("id"))) {
+                for (JSONObject parent : mCol.getDecks().parents(d.getLong("id"))) {
                     // pass in dummy parentLimit so we don't do parent lookup again
                     lim = Math.min(lim, _deckRevLimitSingle(parent, lim));
                 }

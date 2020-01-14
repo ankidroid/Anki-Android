@@ -291,6 +291,26 @@ public class Reviewer extends AbstractFlashcardViewer {
                 addNote();
                 break;
 
+            case R.id.action_flag_zero:
+                Timber.i("Reviewer:: No flag");
+                onFlag(mCurrentCard, 0);
+                break;
+            case R.id.action_flag_one:
+                Timber.i("Reviewer:: Flag one");
+                onFlag(mCurrentCard, 1);
+                break;
+            case R.id.action_flag_two:
+                Timber.i("Reviewer:: Flag two");
+                onFlag(mCurrentCard, 2);
+                break;
+            case R.id.action_flag_three:
+                Timber.i("Reviewer:: Flag three");
+                onFlag(mCurrentCard, 3);
+                break;
+            case R.id.action_flag_four:
+                Timber.i("Reviewer:: Flag four");
+                onFlag(mCurrentCard, 4);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -359,6 +379,26 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
         } else {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_outline_white_24dp);
+        }
+
+        if (mCurrentCard != null) {
+            switch (mCurrentCard.getUserFlag()) {
+            case 1:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_red);
+                break;
+            case 2:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_orange);
+                break;
+            case 3:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_green);
+                break;
+            case 4:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_blue);
+                break;
+            default:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_transparent);
+                break;
+            }
         }
 
         if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.undoSize() > 0) {

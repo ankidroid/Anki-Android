@@ -46,6 +46,7 @@ import timber.log.Timber;
 class Exporter {
     protected Collection mCol;
     protected Long mDid;
+    protected int mCount;
 
 
     public Exporter(Collection col) {
@@ -58,6 +59,18 @@ class Exporter {
         mCol = col;
         mDid = did;
     }
+
+    /** card ids of cards in deck self.did if it is set, all ids otherwise. */
+    public Long[] cardIds() {
+        Long[] cids;
+        if (mDid == null) {
+            cids = Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards", 0));
+        } else {
+            cids = mCol.getDecks().cids(mDid, true);
+        }
+        mCount = cids.length;
+        return cids;
+    }
 }
 
 
@@ -69,7 +82,6 @@ class AnkiExporter extends Exporter {
     protected boolean mIncludeMedia;
     private Collection mSrc;
     String mMediaDir;
-    int mCount;
     ArrayList<String> mMediaFiles = new ArrayList<>();
     boolean _v2sched;
 
@@ -97,12 +109,7 @@ class AnkiExporter extends Exporter {
         Collection dst = Storage.Collection(context, path);
         mSrc = mCol;
         // find cards
-        Long[] cids;
-        if (mDid == null) {
-            cids = Utils.list2ObjectArray(mSrc.getDb().queryColumn(Long.class, "SELECT id FROM cards", 0));
-        } else {
-            cids = mSrc.getDecks().cids(mDid, true);
-        }
+        Long[] cids = cardIds();
         // attach dst to src so we can copy data between them. This isn't done in original libanki as Python more
         // flexible
         dst.close();
@@ -112,6 +119,8 @@ class AnkiExporter extends Exporter {
         Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
                 .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
+        mSrc.getDb().getDatabase()
+                .execSQL("UPDATE DST_DB.cards SET flags = 0 where id in " + Utils.ids2str(cids));
         Set<Long> nids = new HashSet<>(mSrc.getDb().queryColumn(Long.class,
                 "select nid from cards where id in " + Utils.ids2str(cids), 0));
         // notes
