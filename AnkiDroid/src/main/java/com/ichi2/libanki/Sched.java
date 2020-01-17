@@ -2264,7 +2264,7 @@ public class Sched {
 
 
     public void orderCards(long did) {
-        List<Long> cids = mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE did = " + did + " ORDER BY id", 0);
+        List<Long> cids = mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE did = " + did + " ORDER BY nid", 0);
         sortCards(Utils.toPrimitive(cids), 1, 1, false, false);
     }
 
