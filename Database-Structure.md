@@ -41,8 +41,9 @@ CREATE TABLE cards (
     did             integer not null,
       -- deck id (available in col table)
     ord             integer not null,
-      -- ordinal : identifies which of the card templates it corresponds to 
-      --   valid values are from 0 to num templates - 1
+      -- ordinal : identifies which of the card templates or cloze deletions it corresponds to 
+      --   for card templates, valid values are from 0 to num templates - 1
+      --   for cloze deletions, valid values are from 0 to max cloze index - 1 (they're 0 indexed despite the first being called `c1`)
     mod             integer not null,
       -- modificaton time as epoch seconds
     usn             integer not null,
