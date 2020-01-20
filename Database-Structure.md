@@ -235,7 +235,7 @@ Here is an annotated description of the JSONObjects in the models field of the `
              - if the string is 'any', then the card is generated if any of the field of the list is filled.
 
              The algorithm to decide how to compute req from the template is explained on: 
-             https://github.com/Arthur-Milchior/anki/blob/master/documentation/templates_generation_rules.md"
+             https://github.com/Arthur-Milchior/anki/blob/commented/documentation//templates_generation_rules.md"
           ],    sortf : "Integer specifying which field is used for sorting in the browser",
     tags : "Anki saves the tags of the last added note to the current model, use an empty array []",
     tmpls : [
