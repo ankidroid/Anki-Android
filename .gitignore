@@ -43,6 +43,7 @@ Thumbs.db
 *.ipr
 *.iws
 /.idea/*
+/captures
 
 # IDEA/Android Studio Ignore exceptions - this lets you share things you specifically want all team members to use
 !/.idea/codeStyles/
