@@ -26,7 +26,7 @@
         android:layout_gravity="center"
         android:id="@+id/flashcard"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />S
+        android:layout_height="fill_parent" />
     <FrameLayout
         android:layout_gravity="center"
         android:id="@+id/touch_layer"
