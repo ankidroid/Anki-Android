@@ -396,7 +396,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_blue);
                 break;
             default:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_transparent);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_white);
                 break;
             }
         }

@@ -54,7 +54,7 @@
     <item
         android:id="@+id/action_flag"
         android:title="@string/menu_flag_card"
-        android:icon="@drawable/flag_transparent">
+        android:icon="@drawable/flag_white">
       <menu>
         <item
             android:id="@+id/action_flag_zero"
