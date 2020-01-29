@@ -253,8 +253,8 @@ public class Sound {
                 try {
                     metaRetriever.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
                     length += Long.parseLong(metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-                } catch (IllegalArgumentException iae) {
-                    Timber.e(iae, "metaRetriever - Error setting Data Source for mediaRetriever (media doesn't exist).");
+                } catch (Exception e) {
+                    Timber.e(e, "metaRetriever - Error setting Data Source for mediaRetriever (media doesn't exist or forbidden?).");
                 }
             }
         }
