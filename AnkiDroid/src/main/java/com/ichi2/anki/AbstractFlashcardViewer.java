@@ -1728,7 +1728,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mSpeakText = preferences.getBoolean("tts", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
-        mPrefWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 6);
+        mPrefWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
         mPrefWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
@@ -1778,11 +1778,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mShowNextReviewTime = getCol().getConf().getBoolean("estTimes");
             mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
 
+            // Get the review options for this group
             JSONObject revOptions = getCol().getDecks().confForDid(getCol().getDecks().current().getLong("id")).getJSONObject("rev");
 
             mOptUseGeneralTimerSettings = revOptions.optBoolean("useGeneralTimeoutSettings", true);
             mOptUseTimer = revOptions.optBoolean("timeoutAnswer", false);
-            mOptWaitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 6);
+            mOptWaitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20);
             mOptWaitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60);
         } catch (JSONException e) {
             throw new RuntimeException();
