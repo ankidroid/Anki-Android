@@ -135,6 +135,33 @@
                 android:key="revBury"
                 android:summary="@string/deck_conf_rev_bury_summ"
                 android:title="@string/deck_conf_rev_bury" />
+
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:disableDependentsState="true"
+                android:key="revUseGeneralTimeoutSettings"
+                android:title="Use general 'Automatic display answer' settings" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:disableDependentsState="false"
+                android:dependency="revUseGeneralTimeoutSettings"
+                android:key="revTimeoutAnswer"
+                android:summary="@string/timeout_answer_summ"
+                android:title="@string/timeout_answer_text" />
+            <com.ichi2.ui.SeekBarPreference
+                android:defaultValue="6"
+                android:dependency="revTimeoutAnswer"
+                android:key="revTimeoutAnswerSeconds"
+                android:max="30"
+                android:summary="@string/timeout_answer_seconds_summ"
+                android:title="@string/timeout_answer_seconds" />
+            <com.ichi2.ui.SeekBarPreference
+                android:defaultValue="60"
+                android:dependency="revTimeoutAnswer"
+                android:key="revTimeoutQuestionSeconds"
+                android:max="60"
+                android:summary="@string/timeout_question_seconds_summ"
+                android:title="@string/timeout_question_seconds" />
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/deck_conf_lps_cards" >
             <com.ichi2.preferences.StepsPreference

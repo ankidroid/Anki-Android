@@ -124,6 +124,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("revIvlFct", Integer.toString((int) (revOptions.getDouble("ivlFct") * 100)));
                 mValues.put("revMaxIvl", revOptions.getString("maxIvl"));
                 mValues.put("revBury", Boolean.toString(revOptions.optBoolean("bury", true)));
+
+                mValues.put("revUseGeneralTimeoutSettings", Boolean.toString(revOptions.optBoolean("useGeneralTimeoutSettings", true)));
+                mValues.put("revTimeoutAnswer", Boolean.toString(revOptions.optBoolean("timeoutAnswer", false)));
+                mValues.put("revTimeoutAnswerSeconds", Integer.toString(revOptions.optInt("timeoutAnswerSeconds", 6)));
+                mValues.put("revTimeoutQuestionSeconds", Integer.toString(revOptions.optInt("timeoutQuestionSeconds", 60)));
+
                 // lapse
                 JSONObject lapOptions = mOptions.getJSONObject("lapse");
                 mValues.put("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")));
@@ -227,6 +233,18 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "revBury":
                                 mOptions.getJSONObject("rev").put("bury", value);
+                                break;
+                            case "revUseGeneralTimeoutSettings":
+                                mOptions.getJSONObject("rev").put("useGeneralTimeoutSettings", value);
+                                break;
+                            case "revTimeoutAnswer":
+                                mOptions.getJSONObject("rev").put("timeoutAnswer", value);
+                                break;
+                            case "revTimeoutAnswerSeconds":
+                                mOptions.getJSONObject("rev").put("timeoutAnswerSeconds", value);
+                                break;
+                            case "revTimeoutQuestionSeconds":
+                                mOptions.getJSONObject("rev").put("timeoutQuestionSeconds", value);
                                 break;
                             case "lapMinIvl":
                                 mOptions.getJSONObject("lapse").put("minInt", value);
