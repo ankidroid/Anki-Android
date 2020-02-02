@@ -1967,11 +1967,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         hideEaseButtons();
 
         // Check if it should use the general 'Timeout settings' or the ones specific to this deck
-        if (mOptUseGeneralTimerSettings){
+        if (mOptUseGeneralTimerSettings) {
             mUseTimer = mPrefUseTimer;
             mWaitAnswerSecond = mPrefWaitAnswerSecond;
             mWaitQuestionSecond = mPrefWaitQuestionSecond;
-        }else{
+        } else {
             mUseTimer = mOptUseTimer;
             mWaitAnswerSecond = mOptWaitAnswerSecond;
             mWaitQuestionSecond = mOptWaitQuestionSecond;
