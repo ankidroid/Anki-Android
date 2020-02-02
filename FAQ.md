@@ -289,6 +289,15 @@ Some users have found that uninstalling updates to the TTS engine can work: Syst
 
 Some users have found that re-downloading the TTS packages for their language works for them: System Preferences -> System -> Languages & Input -> Text-to-speech output -> Preferred engine settings -> install voice data -> choose the affected voice -> delete it, re-download it
 
+### Sync is not working
+
+There are few reasons this can happen.
+
+* Make absolutely sure you do not have firewalls blocking the ports between you and AnkiWeb (or your sync server). Some users in some nations have national firewalls for instance, and they can block the connection
+* Make sure you can log in to your AnkiWeb account directly at https://ankiweb.net/account/login
+* Try on a network you know is reliable (your home, your office, but not a public wifi point)
+* If your device is using Android 4.x or 5.x, you must be using a version of AnkiDroid that works well with [AnkiWeb's February requirement to use encryption of TLS1.2 or higher](https://github.com/ankidroid/Anki-Android/issues/5623). Currently AnkiDroid 2.9.2beta5 or newer, or 2.10alpha23 or higher [contains support](https://github.com/ankidroid/Anki-Android/pull/5658). Note that Android 4.0.x (API15) does not contain support for TLS1.2 at all and can no longer sync with AnkiWeb, though you may be able to use [a custom sync server](https://github.com/tsudoko/anki-sync-server) if you cannot use a newer device.
+
 # Advanced formatting tips
 The [formatting wiki page](https://github.com/ankidroid/Anki-Android/wiki/Advanced-formatting) gives examples of how to achieve advanced flashcard formatting such as:
 
