@@ -19,6 +19,7 @@
 package com.ichi2.async;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -122,6 +123,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     /*
      * Runs on GUI thread
      */
+    @SuppressLint("WakelockTimeout")
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -213,7 +215,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             return data;
         } catch (Exception e2) {
             // Ask user to report all bugs which aren't timeout errors
-            if (!timeoutOccured(e2)) {
+            if (!timeoutOccurred(e2)) {
                 AnkiDroidApp.sendExceptionReport(e2, "doInBackgroundLogin");
             }
             data.success = false;
@@ -249,7 +251,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
-    private boolean timeoutOccured(Exception e) {
+    private boolean timeoutOccurred(Exception e) {
         String msg = e.getMessage();
         return msg.contains("UnknownHostException") ||
                 msg.contains("HttpHostConnectException") ||
@@ -366,7 +368,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     data.result = new Object[] { "OutOfMemoryError" };
                     return data;
                 } catch (RuntimeException e) {
-                    if (timeoutOccured(e)) {
+                    if (timeoutOccurred(e)) {
                         data.result = new Object[] {"connectionError" };
                     } else if (e.getMessage().equals("UserAbortedSync")) {
                         data.result = new Object[] {"UserAbortedSync" };
@@ -411,7 +413,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         }
                     }
                 } catch (RuntimeException e) {
-                    if (timeoutOccured(e)) {
+                    if (timeoutOccurred(e)) {
                         data.result = new Object[] {"connectionError" };
                     } else if (e.getMessage().equals("UserAbortedSync")) {
                         data.result = new Object[] {"UserAbortedSync" };
@@ -438,7 +440,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Timber.e("doInBackgroundSync -- unknown response code error");
             e.printStackTrace();
             data.success = false;
-            Integer code = e.getResponseCode();
+            int code = e.getResponseCode();
             String msg = e.getLocalizedMessage();
             data.result = new Object[] { "error", code , msg };
             return data;
@@ -448,7 +450,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Timber.e("doInBackgroundSync error");
             e.printStackTrace();
             data.success = false;
-            if (timeoutOccured(e)) {
+            if (timeoutOccurred(e)) {
                 data.result = new Object[]{"connectionError"};
             } else if (e.getMessage().equals("UserAbortedSync")) {
                 data.result = new Object[] {"UserAbortedSync" };
@@ -510,7 +512,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
     public static class Payload {
-        public int taskType;
+        private int taskType;
         public Object[] data;
         public Object result;
         public boolean success;
