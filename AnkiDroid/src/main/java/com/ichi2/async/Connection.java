@@ -260,6 +260,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 msg.contains("ClientProtocolException") ||
                 msg.contains("deadline reached") ||
                 msg.contains("interrupted") ||
+                msg.contains("Failed to connect") ||
                 msg.contains("TimeoutException");
     }
 
