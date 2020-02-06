@@ -25,7 +25,7 @@ For each grey bullet, translate the English text to your language.
 
 **Tip:**
 
-Many terms such as "note" or "leech" and some other messages should be consistent with Anki Desktop. You can copy the translations from Anki Desktop via it's [Launchpad page](http://bazaar.launchpad.net/~resolve/anki/master/files/head:/anki/). Click on a _language code_.po file (e.g. "ja.po" for Japanese) to view a single language, or click "view revision"->"download tarball" to download all the languages at once.
+Many terms such as "note" or "leech" and some other messages should be consistent with Anki Desktop. You can copy the translations from Anki Desktop via it's [github translation folder](https://github.com/ankitects/anki/tree/master/qt/i18n/translations/anki.pot). Click on a _language code_ file (e.g. "ja_JP" for Japanese) to view a single language, and use your browser's search feature to search for the word or sentence you are looking for. 
 
 ## Logic of the separation in different files
 
