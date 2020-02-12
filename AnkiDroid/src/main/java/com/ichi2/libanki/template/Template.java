@@ -379,14 +379,11 @@ public class Template {
         // flags in middle of expression deprecated
         boolean in_mathjax = false;
 
-        // The following regex matches one of:
-        //  -  MathJax opening
-        //  -  MathJax close
-        //  -  Cloze deletion number `ord`
+        // The following regex matches one of 3 things, noted below:
         String regex = new StringBuilder("(?si)")
-            .append("(?<mathjaxopen>\\\\[(\\[])|")
-            .append("(?<mathjaxclose>\\\\[\\])])|")
-            .append("(?<cloze>")
+            .append("(\\\\[(\\[])|")  // group 1, MathJax opening
+            .append("(\\\\[\\])])|")  // group 2, MathJax close
+            .append("(")              // group 3, Cloze deletion number `ord`
             .append(String.format(Locale.US, creg, ord))
             .append(")")
             .toString();
@@ -395,17 +392,17 @@ public class Template {
 
         StringBuffer repl = new StringBuffer();
         while (m.find()) {
-            if (m.group("mathjaxopen") != null) {
+            if (m.group(1) != null) {
                 if (in_mathjax) {
                     Log.d(TAG, "MathJax opening found while already in MathJax");
                 }
                 in_mathjax = true;
-            } else if (m.group("mathjaxclose") != null) {
+            } else if (m.group(2) != null) {
                 if (!in_mathjax) {
                     Log.d(TAG, "MathJax close found while not in MathJax");
                 }
                 in_mathjax = false;
-            } else if (m.group("cloze") != null) {
+            } else if (m.group(3) != null) {
                 if (in_mathjax) {
                     // appendReplacement has an issue with backslashes, so...
                     m.appendReplacement(
