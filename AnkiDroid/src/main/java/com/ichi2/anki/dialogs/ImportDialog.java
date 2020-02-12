@@ -14,7 +14,7 @@ import com.ichi2.libanki.Utils;
 import java.io.File;
 import java.util.List;
 
-public class ImportDialog extends AnalyticsDialogFragment {
+public class ImportDialog extends AsyncDialogFragment {
 
     public static final int DIALOG_IMPORT_HINT = 0;
     public static final int DIALOG_IMPORT_SELECT = 1;
@@ -120,6 +120,16 @@ public class ImportDialog extends AnalyticsDialogFragment {
             default:
                 return null;
         }
+    }
+
+    @Override
+    public String getNotificationMessage() {
+        return getResources().getString(R.string.import_interrupted);
+    }
+
+    @Override
+    public String getNotificationTitle() {
+        return getResources().getString(R.string.import_title);
     }
     
     public void dismissAllDialogFragments() {
