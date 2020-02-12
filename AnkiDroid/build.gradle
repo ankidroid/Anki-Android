@@ -93,6 +93,10 @@ android {
             manifest.srcFile 'src/test/AndroidManifest.xml'
         }
     }
+    lintOptions {
+        check 'NewApi'
+        abortOnError true
+    }
 }
 
 play {
