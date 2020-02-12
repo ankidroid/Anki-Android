@@ -1180,8 +1180,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 || (id == ImportDialog.DIALOG_IMPORT_ADD_CONFIRM)
                 || (id == ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM)) {
             Timber.d("showImportDialog() delegating to ImportDialog");
-            DialogFragment newFragment = ImportDialog.newInstance(id, message);
-            showDialogFragment(newFragment);
+            AsyncDialogFragment newFragment = ImportDialog.newInstance(id, message);
+            showAsyncDialogFragment(newFragment);
         } else {
             Timber.d("showImportDialog() delegating to file picker intent");
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
