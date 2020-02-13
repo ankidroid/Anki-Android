@@ -150,7 +150,7 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'org.jsoup:jsoup:1.12.1'
+    implementation 'org.jsoup:jsoup:1.12.2'
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.6.0'
