@@ -3,32 +3,32 @@ This page describes how to release AnkiDroid. It can be interesting as an insigh
 # Development lifecycle
 There are three main phases the project alternates between (alpha, beta, stable).
 
-We use a simple branching model where "master" (the default branch) contains the latest (unstable) development code, which is where all merge requests should be submitted. When we move into the "beta" phase of the development cycle, we implement a feature freeze, and a temporary branch "release-N.n" (N.n being the version code) is created which is only for important bug fixes. During this period, important bug fixes are merged by the development team into "release-N.n" (see below). If an urgent bug is discovered shortly after a major release, a special "hotfix-N.n" branch will be created from the tag from the [latest source code](https://github.com/ankidroid/Anki-Android/releases/latest).
+We use a simple branching model where "master" (the default branch) contains the latest (unstable) development code, which is where all merge requests should be submitted. Alphas a released from master during this phase.
+
+When we move into the "beta" phase of the development cycle, we implement a feature freeze, and a temporary branch "release-N.n" (N.n being the version code) is created which is only for important bug fixes. During this period, important bug fixes are merged by the development team into "release-N.n" (see below). 
+
+If an urgent bug is discovered shortly after a major release, a special "hotfix-N.n" branch will be created from the tag from the [latest stable release code found here](https://github.com/ankidroid/Anki-Android/releases/latest).
 
 # Alpha or beta release procedure
   * Always use this repository: https://github.com/ankidroid/Anki-Android
-  * Checkout the branch to release ("develop" for an alpha, or for instance "release-0.6" for a beta)
-  * In AndroidManifest.xml change android:versionName from 0.6beta11 to 0.6beta12 (for instance), and change android:versionCode accordingly.
-  * Build an APK using `./gradlew assembleRelease` or Android Studio
-  * Upload the APK to github
-  * Upload the APK to Google Play alpha or beta
-  * Commit and push
-The tools/release.sh script can perform some of those steps effortlessly.
+  * Checkout the branch to release ("master" for an alpha, or for instance "release-2.9" or maybe "hotfix-2.9.4" for a beta)
+  * In AndroidManifest.xml change android:versionName from 2.9beta11 to 2.9beta12 (for instance), and change android:versionCode accordingly.
+    * As a special case, when creating a new hotfix branch (e.g., hotfix-2.9.4, you will start by calling your first beta hotfix-2.9.4beta0 with release version code ending 00 - the release script will bump those 0's to 1's for the first beta of the hotfix)
+  * The tools/release.sh script will bump the versions, compile and upload to Google Play + Github and tag and push
+    * The release script makes use of the [github-release](https://github.com/aktau/github-release) tool and gawk
+    * As a special case, when creating a new release or hotfix branch, will have to set the branch (`git push --set-upstream origin hotfix-2.9.4` for example) and then run `git push --tags` to get the new branch contents correct in github
+
+
 
 # Stable release procedure
 
 ## Build
+  * Update the changelog and/or the manual (in the docs repository) with notable changes
   * Always use this repository: https://github.com/ankidroid/Anki-Android
-  * Switch to the branch to release, for instance "release-0.6"
-  * Change icons to blue by reverting the first icon commit of this version ( tools/change-icons-to-blue.sh )
-  * In AndroidManifest.xml change android:versionName from 0.6beta13 to 0.6 (for instance) and change android:versionCode accordingly.
-  * Commit, push.
-  * Tag the version: git tag v0.6
-  * Push: git push --tags
-  * Build a signed APK using `./gradlew clean assembleRelease`. Rename it from bin/AnkiDroid-release.apk to AnkiDroid-0.6.apk for instance
-  * Go to https://github.com/ankidroid/Anki-Android/tags click "Edit release notes" drop APK over drop zone, press "Update release".
-Running `./tools/release.sh public` can perform some of those steps effortlessly.
-The release script makes use of the [github-release](https://github.com/aktau/github-release) tool
+  * Switch to the branch to release, for instance "release-2.10" or "hotfix-2.9.4"
+  * Run `./tools/release.sh public` to compile/upload/tag and push to github and Play Console
+    * The release script makes use of the [github-release](https://github.com/aktau/github-release) tool and gawk
+  * After the release script is finished, the stable build will be in the beta channel. Manually promote it to production using the web interface of the Play Console
 
 ## Google Play
 Upload the APK to Google Play. Archive the previous APK from the "Active" section, then publish.
@@ -41,6 +41,8 @@ Title and Description for each language:
 Send an email to the mailing list announcing the new version, link to APK, new features, localizations, and thanking the developers, translators, testers.
 
 ## Chrome Web Store
+
+The following instructions are left for posterity, but after the 2.9alpha commit that converted AnkiDroid to AndroidX, Chrome Web Store uploads no longer seem possible.
 
 This makes the new build available to Chromebook users that do not have access to the Play Store. You must be a member of the google group "AnkiDroid Web Store Publishers".
 * Download the release (e.g., "AnkiDroid-2.8.4.apk") from the [Releases page](https://github.com/ankidroid/Anki-Android/releases)
