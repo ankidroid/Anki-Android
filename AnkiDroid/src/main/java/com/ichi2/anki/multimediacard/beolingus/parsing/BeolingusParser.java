@@ -41,11 +41,12 @@ public class BeolingusParser {
     public static String getPronunciationAddressFromTranslation(String html, String wordToSearchFor) {
         Matcher m = PRONUNC_PATTERN.matcher(html);
         while (m.find()) {
-            if (m.group(2).equals(wordToSearchFor)) {
+            if (m.group(2).contains(wordToSearchFor)) {
                 Timber.d("pronunciation URL is https://dict.tu-chemnitz.de%s", m.group(1));
                 return "https://dict.tu-chemnitz.de" + m.group(1);
             }
         }
+        Timber.d("Unable to find pronunciation URL");
         return "no";
     }
 
@@ -61,6 +62,7 @@ public class BeolingusParser {
             Timber.d("MP3 address is https://dict.tu-chemnitz.de%s", m.group(1));
             return "https://dict.tu-chemnitz.de" + m.group(1);
         }
+        Timber.d("Unable to find MP3 file address");
         return "no";
     }
 
