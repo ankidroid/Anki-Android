@@ -192,7 +192,21 @@ public class Utils {
      *
      * @param context The application's environment.
      * @param time_s The time to format, in seconds
-     * @return The formatted, localized time string. The time is always a float.
+     * @return The formatted, localized time string. The time is always a float. E.g. "27.0 days"
+     */
+    public static String roundedTimeSpanUnformatted(Context context, long time_s) {
+        // As roundedTimeSpan, but without tags; for place where you don't use HTML
+        return roundedTimeSpan(context, time_s).replace("<b>", "").replace("</b>", "");
+    }
+
+    /**
+     * Return a proper string for a time value in seconds
+     *
+     * Similar to Anki anki/utils.py's fmtTimeSpan.
+     *
+     * @param context The application's environment.
+     * @param time_s The time to format, in seconds
+     * @return The formatted, localized time string. The time is always a float. E.g. "<b>27.0</b> days"
      */
     public static String roundedTimeSpan(Context context, long time_s) {
         if (Math.abs(time_s) < TIME_DAY) {

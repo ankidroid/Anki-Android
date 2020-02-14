@@ -1365,7 +1365,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } else if (type == 1) {
             item.put("interval", context.getString(R.string.card_browser_interval_learning_card));
         } else {
-            item.put("interval", Utils.timeSpan(context, c.getIvl()*86400));
+            item.put("interval", Utils.roundedTimeSpanUnformatted(context, c.getIvl()*86400));
         }
         item.put("lapses", Integer.toString(c.getLapses()));
         item.put("note", c.model().optString("name"));
