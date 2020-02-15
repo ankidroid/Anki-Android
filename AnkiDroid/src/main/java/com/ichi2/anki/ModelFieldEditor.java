@@ -182,9 +182,9 @@ public class ModelFieldEditor extends AnkiActivity {
                             .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
 
                     if (fieldName.length() == 0) {
-                        showToast(getResources().getString(R.string.toast_empty_name));
+                        UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
                     } else if (containsField(fieldName)) {
-                        showToast(getResources().getString(R.string.toast_duplicate_field));
+                        UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
                     } else {
                         //Name is valid, now field is added
                         try {
@@ -235,7 +235,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
         if (mFieldLabels.size() < 2) {
-            showToast(getResources().getString(R.string.toast_last_field));
+            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_last_field), true);
         } else {
             try {
                 mCol.modSchema();
@@ -282,9 +282,9 @@ public class ModelFieldEditor extends AnkiActivity {
                         String fieldLabel = mFieldNameInput.getText().toString()
                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
                         if (fieldLabel.length() == 0) {
-                            showToast(getResources().getString(R.string.toast_empty_name));
+                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
                         } else if (containsField(fieldLabel)) {
-                            showToast(getResources().getString(R.string.toast_duplicate_field));
+                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
                         } else {
                             //Field is valid, now rename
                             try {
@@ -332,12 +332,12 @@ public class ModelFieldEditor extends AnkiActivity {
                         try {
                             pos = Integer.parseInt(newPosition);
                         } catch (NumberFormatException n) {
-                            showToast(getResources().getString(R.string.toast_out_of_range));
+                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
                             return;
                         }
 
                         if (pos < 1 || pos > mFieldLabels.size()) {
-                            showToast(getResources().getString(R.string.toast_out_of_range));
+                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
                         } else {
                             // Input is valid, now attempt to modify
                             try {
@@ -461,13 +461,6 @@ public class ModelFieldEditor extends AnkiActivity {
             }
         }
         return false;
-    }
-
-
-    private void showToast(CharSequence text) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
     }
 
 
