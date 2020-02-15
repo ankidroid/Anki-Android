@@ -341,51 +341,74 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
     public void configureToolbar() {
-        mToolbar.setOnMenuItemClickListener(this);
-        Menu menu = mToolbar.getMenu();
-        // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
-        if (getCol().getDecks().isDyn(getCol().getDecks().selected())) {
-            menu.findItem(R.id.action_rebuild).setVisible(true);
-            menu.findItem(R.id.action_empty).setVisible(true);
-            menu.findItem(R.id.action_custom_study).setVisible(false);
-        } else {
-            menu.findItem(R.id.action_rebuild).setVisible(false);
-            menu.findItem(R.id.action_empty).setVisible(false);
-            menu.findItem(R.id.action_custom_study).setVisible(true);
-        }
-        // Don't show custom study icon if congrats shown
-        if (mCurrentContentView == CONTENT_CONGRATS) {
-            menu.findItem(R.id.action_custom_study).setVisible(false);
-        }
-        // Switch on rename / delete / export if tablet layout
-        if (mFragmented) {
-            menu.findItem(R.id.action_rename).setVisible(true);
-            menu.findItem(R.id.action_delete).setVisible(true);
-            menu.findItem(R.id.action_export).setVisible(true);
-        } else {
-            menu.findItem(R.id.action_rename).setVisible(false);
-            menu.findItem(R.id.action_delete).setVisible(false);
-            menu.findItem(R.id.action_export).setVisible(false);
-        }
-        // Switch on or off unbury depending on if there are cards to unbury
-        menu.findItem(R.id.action_unbury).setVisible(getCol().getSched().haveBuried());
-        // Switch on or off undo depending on whether undo is available
-        if (!getCol().undoAvailable()) {
-            menu.findItem(R.id.action_undo).setVisible(false);
-        } else {
-            menu.findItem(R.id.action_undo).setVisible(true);
-            Resources res = AnkiDroidApp.getAppResources();
-            menu.findItem(R.id.action_undo).setTitle(res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res)));
-        }
-        // Set the back button listener
-        if (!mFragmented) {
-            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        configureToolbarInternal(true);
+    }
+
+    // This will allow a maximum of one recur in order to workaround database closes
+    // caused by sync on startup where this might be running then have the collection close
+    private void configureToolbarInternal(boolean recur) {
+        try {
+            mToolbar.setOnMenuItemClickListener(this);
+            Menu menu = mToolbar.getMenu();
+            // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
+            if (getCol().getDecks().isDyn(getCol().getDecks().selected())) {
+                menu.findItem(R.id.action_rebuild).setVisible(true);
+                menu.findItem(R.id.action_empty).setVisible(true);
+                menu.findItem(R.id.action_custom_study).setVisible(false);
+            } else {
+                menu.findItem(R.id.action_rebuild).setVisible(false);
+                menu.findItem(R.id.action_empty).setVisible(false);
+                menu.findItem(R.id.action_custom_study).setVisible(true);
+            }
+            // Don't show custom study icon if congrats shown
+            if (mCurrentContentView == CONTENT_CONGRATS) {
+                menu.findItem(R.id.action_custom_study).setVisible(false);
+            }
+            // Switch on rename / delete / export if tablet layout
+            if (mFragmented) {
+                menu.findItem(R.id.action_rename).setVisible(true);
+                menu.findItem(R.id.action_delete).setVisible(true);
+                menu.findItem(R.id.action_export).setVisible(true);
+            } else {
+                menu.findItem(R.id.action_rename).setVisible(false);
+                menu.findItem(R.id.action_delete).setVisible(false);
+                menu.findItem(R.id.action_export).setVisible(false);
+            }
+            // Switch on or off unbury depending on if there are cards to unbury
+            menu.findItem(R.id.action_unbury).setVisible(getCol().getSched().haveBuried());
+            // Switch on or off undo depending on whether undo is available
+            if (!getCol().undoAvailable()) {
+                menu.findItem(R.id.action_undo).setVisible(false);
+            } else {
+                menu.findItem(R.id.action_undo).setVisible(true);
+                Resources res = AnkiDroidApp.getAppResources();
+                menu.findItem(R.id.action_undo).setTitle(res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res)));
+            }
+            // Set the back button listener
+            if (!mFragmented) {
+                mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+                mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+                    }
+                });
+            }
+        } catch (IllegalStateException e) {
+            if (!CollectionHelper.getInstance().colIsOpen()) {
+                if (recur) {
+                    Timber.i(e, "Database closed while working. Probably auto-sync. Will re-try after sleep.");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Timber.i(ex, "Thread interrupted while waiting to retry. Likely unimportant.");
+                        Thread.currentThread().interrupt();
+                    }
+                    configureToolbarInternal(false);
+                } else {
+                    Timber.w(e, "Database closed while working. No re-tries left.");
                 }
-            });
+            }
         }
     }
 
