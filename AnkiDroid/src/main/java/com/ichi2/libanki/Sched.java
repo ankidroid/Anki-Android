@@ -402,6 +402,9 @@ public class Sched {
                 String p = Decks.parent(deck.getString("name"));
                 // new
                 int nlim = _deckNewLimitSingle(deck);
+                if (!TextUtils.isEmpty(p)) {
+                    nlim = Math.min(nlim, lims.get(p)[0]);
+                }
                 int _new = _newForDeck(deck.getLong("id"), nlim);
                 // learning
                 int lrn = _lrnForDeck(deck.getLong("id"));
