@@ -87,15 +87,31 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
         if ((resultCode != Activity.RESULT_CANCELED) && (requestCode == ACTIVITY_SELECT_AUDIO_CLIP)) {
 
             Uri selectedClip = data.getData();
-            Timber.d(selectedClip.toString());
 
             // Get information about the selected document
-            String[] queryColumns = { MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.SIZE };
+            String[] queryColumns = { MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.MIME_TYPE };
             Cursor cursor = mActivity.getContentResolver().query(selectedClip, queryColumns, null, null, null);
+
+            if (cursor == null) {
+                 UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
+                         AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
+                return;
+            }
+
             cursor.moveToFirst();
+            Timber.d("got name/size/type: %s/%s/%s", cursor.getString(0), cursor.getLong(1), cursor.getString(2));
             String audioClipFullName = cursor.getString(0);
-            // Note this could be unsafe, null name, or name without standard extension etc, go off mime types instead?
             String[] audioClipFullNameParts = audioClipFullName.split("\\.");
+            if (audioClipFullNameParts.length < 2) {
+                try {
+                    Timber.d("Audio clip name does not have extension, using second half of mime type");
+                    audioClipFullNameParts = new String[] {audioClipFullName, cursor.getString(2).split("\\/")[1]};
+                } catch (Exception e) {
+                    UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
+                            AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
+                    return;
+                }
+            }
             cursor.close();
 
             // We may receive documents we can't access directly, we have to copy to a temp file
