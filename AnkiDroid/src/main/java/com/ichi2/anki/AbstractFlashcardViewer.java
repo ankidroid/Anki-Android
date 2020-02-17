@@ -193,7 +193,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
     protected boolean mNightMode = false;
+
+    protected boolean mOptUseGeneralTimerSettings;
+
+    protected boolean mUseTimer;
+    protected int mWaitAnswerSecond;
+    protected int mWaitQuestionSecond;
+
     protected boolean mPrefUseTimer;
+
+    protected boolean mOptUseTimer;
+    protected int mOptWaitAnswerSecond;
+    protected int mOptWaitQuestionSecond;
+
     private boolean mPrefCenterVertically;
     protected boolean mUseInputTag;
 
@@ -776,8 +788,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     };
 
-    protected int mWaitAnswerSecond;
-    protected int mWaitQuestionSecond;
+    protected int mPrefWaitAnswerSecond;
+    protected int mPrefWaitQuestionSecond;
 
     protected int getDefaultEase() {
         if (getCol().getSched().answerButtons(mCurrentCard) == 4) {
@@ -1706,6 +1718,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefShowETA = preferences.getBoolean("showETA", true);
         mUseInputTag = preferences.getBoolean("useInputTag", false);
@@ -1719,8 +1732,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mSpeakText = preferences.getBoolean("tts", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
-        mWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
-        mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
+        mPrefWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
+        mPrefWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefCenterVertically = preferences.getBoolean("centerVertically", false);
@@ -1768,6 +1781,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         try {
             mShowNextReviewTime = getCol().getConf().getBoolean("estTimes");
             mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
+
+            // Get the review options for this group
+            JSONObject revOptions = getCol().getDecks().confForDid(getCol().getDecks().current().getLong("id")).getJSONObject("rev");
+
+            mOptUseGeneralTimerSettings = revOptions.optBoolean("useGeneralTimeoutSettings", true);
+            mOptUseTimer = revOptions.optBoolean("timeoutAnswer", false);
+            mOptWaitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20);
+            mOptWaitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60);
         } catch (JSONException e) {
             throw new RuntimeException();
         } catch (NullPointerException npe) {
@@ -1967,8 +1988,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         updateCard(displayString);
         hideEaseButtons();
 
+        // Check if it should use the general 'Timeout settings' or the ones specific to this deck
+        if (mOptUseGeneralTimerSettings) {
+            mUseTimer = mPrefUseTimer;
+            mWaitAnswerSecond = mPrefWaitAnswerSecond;
+            mWaitQuestionSecond = mPrefWaitQuestionSecond;
+        } else {
+            mUseTimer = mOptUseTimer;
+            mWaitAnswerSecond = mOptWaitAnswerSecond;
+            mWaitQuestionSecond = mOptWaitQuestionSecond;
+        }
+
         // If the user wants to show the answer automatically
-        if (mPrefUseTimer) {
+        if (mUseTimer) {
             long delay = mWaitAnswerSecond * 1000 + mUseTimerDynamicMS;
             if (delay > 0) {
                 mTimeoutHandler.removeCallbacks(mShowAnswerTask);
@@ -2054,7 +2086,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         updateCard(enrichWithQADiv(answer, true));
         showEaseButtons();
         // If the user wants to show the next question automatically
-        if (mPrefUseTimer) {
+        if (mUseTimer) {
             long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
             if (delay > 0) {
                 mTimeoutHandler.removeCallbacks(mShowQuestionTask);
@@ -2142,7 +2174,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
             mSoundPlayer.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
-            if (mPrefUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
+            if (mUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
                 addAnswerSounds(mCurrentCard.a());
             }
         }
@@ -2264,13 +2296,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     mSoundPlayer.playSounds(Sound.SOUNDS_QUESTION_AND_ANSWER);
                 } else if (sDisplayAnswer) {
                     mSoundPlayer.playSounds(Sound.SOUNDS_ANSWER);
-                    if (mPrefUseTimer) {
+                    if (mUseTimer) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(Sound.SOUNDS_ANSWER);
                     }
                 } else { // question is displayed
                     mSoundPlayer.playSounds(Sound.SOUNDS_QUESTION);
                     // If the user wants to show the answer automatically
-                    if (mPrefUseTimer) {
+                    if (mUseTimer) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(Sound.SOUNDS_QUESTION_AND_ANSWER);
                     }
                 }
@@ -2837,7 +2869,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             Matcher audioReferences = Sound.sSoundPattern.matcher(frontSideFormat);
             // remove the first instance of audio contained in "{{FrontSide}}"
             while (audioReferences.find()) {
-                newAnswerContent = answerContent.replaceFirst(Pattern.quote(audioReferences.group()), "");
+                newAnswerContent = newAnswerContent.replaceFirst(Pattern.quote(audioReferences.group()), "");
             }
         }
         return newAnswerContent;

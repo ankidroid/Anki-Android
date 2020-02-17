@@ -151,9 +151,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         switch (fullscreenMode) {
             case 1:
-                return R.layout.reviewer_fullscreen_1;
+                return R.layout.reviewer_fullscreen;
             case 2:
-                return R.layout.reviewer_fullscreen_2;
+                return R.layout.reviewer_fullscreen_noanswers;
             default:
                 return R.layout.reviewer;
         }

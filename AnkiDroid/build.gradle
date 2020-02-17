@@ -2,7 +2,7 @@ import com.android.ddmlib.DdmPreferences
 
 plugins {
  // Gradle plugin portal 
- id 'com.github.triplet.play' version '2.6.1'
+ id 'com.github.triplet.play' version '2.6.2'
 }
 
 apply plugin: 'com.android.application'
@@ -100,6 +100,10 @@ android {
             manifest.srcFile 'src/test/AndroidManifest.xml'
         }
     }
+    lintOptions {
+        check 'NewApi'
+        abortOnError true
+    }
 }
 
 play {
@@ -147,9 +151,9 @@ dependencies {
     implementation'ch.acra:acra-toast:5.2.1'
     implementation'ch.acra:acra-limiter:5.2.1'
 
-    implementation 'net.mikehardy:google-analytics-java7:2.0.10'
+    implementation 'net.mikehardy:google-analytics-java7:2.0.12'
     //noinspection GradleDependency
-    implementation 'com.squareup.okhttp3:okhttp:3.12.6'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.8'
     implementation 'com.arcao:slf4j-timber:3.1'
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -157,8 +161,8 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.12.1'
     api project(":api")
 
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.5.2'
-    testImplementation 'org.mockito:mockito-core:3.2.0'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.6.0'
+    testImplementation 'org.mockito:mockito-core:3.2.4'
     testImplementation 'org.powermock:powermock-core:2.0.4'
     testImplementation 'org.powermock:powermock-module-junit4:2.0.4'
     testImplementation 'org.powermock:powermock-api-mockito2:2.0.4'

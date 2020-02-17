@@ -23,6 +23,7 @@ import android.content.Intent;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import timber.log.Timber;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.IntentHandler;
@@ -52,14 +53,7 @@ public class ReminderService extends BroadcastReceiver {
             alarmManager.cancel(reminderIntent);
         }
 
-        Sched.DeckDueTreeNode deckDue = null;
-
-        for (Sched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree()) {
-            if (node.did == deckId) {
-                deckDue = node;
-                break;
-            }
-        }
+        Sched.DeckDueTreeNode deckDue = getDeckDue(context, deckId, true);
 
         if (null == deckDue) {
             return;
@@ -97,5 +91,33 @@ public class ReminderService extends BroadcastReceiver {
                     .build();
             notificationManager.notify((int) deckId, notification);
         }
+    }
+
+    // getDeckDue information, will recur one time to workaround collection close if recur is true
+    private Sched.DeckDueTreeNode getDeckDue(Context context, long deckId, boolean recur) {
+        try {
+            for (Sched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree()) {
+                if (node.did == deckId) {
+                    return node;
+                }
+            }
+        } catch (IllegalStateException e) {
+            if (!CollectionHelper.getInstance().colIsOpen()) {
+                if (recur) {
+                    Timber.i(e, "Database closed while working. Probably auto-sync. Will re-try after sleep.");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Timber.i(ex, "Thread interrupted while waiting to retry. Likely unimportant.");
+                        Thread.currentThread().interrupt();
+                    }
+                    return getDeckDue(context, deckId, false);
+                } else {
+                    Timber.w(e, "Database closed while working. No re-tries left.");
+                }
+            }
+        }
+
+        return null;
     }
 }
