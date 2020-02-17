@@ -1232,6 +1232,19 @@ public class Sched {
         );
     }
 
+    public double _getLastNMatureRetention(Long n) {
+        return mCol.getDb().queryDouble(String.format(
+                "WITH last_n_reviews AS (\n" +
+                        "SELECT CASE WHEN ease >= 2 THEN 1 ELSE 0 END AS correct\n" +
+                        "FROM revlog\n" +
+                        "WHERE lastIvl >= 21\n" +
+                        "ORDER BY id DESC\n" +
+                        "LIMIT %s)\n" +
+                        "SELECT AVG(correct)\n" +
+                        "FROM last_n_reviews", n)
+        );
+    }
+
     private void _resetRevCount() {
         try {
             mRevCount = _walkingCount(Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class),

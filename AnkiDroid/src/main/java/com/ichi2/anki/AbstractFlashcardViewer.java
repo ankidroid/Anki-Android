@@ -1856,13 +1856,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             int cardsLeft = youngRevCount + learnRevCount + newRevCount * 2;
             String cardsLeftPart;
             if (cardsLeft > 10) {
-                cardsLeftPart = String.format("%s critical", cardsLeft);
+                cardsLeftPart = String.format("%s crit", cardsLeft);
             } else {
                 cardsLeftPart = "\uD83D\uDC4D";
             }
-            String title = String.format("%s / %s skew",
+            String title = String.format("%s / %s mret",
                     cardsLeftPart,
-                    new DecimalFormat("##.#%").format(sched._getAverageSkew(deckIds)));
+                    new DecimalFormat("##.#%").format(sched._getLastNMatureRetention(1000L)));
             actionBar.setTitle(title);
             if (mPrefShowETA) {
                 int eta = mSched.eta(counts, false);
