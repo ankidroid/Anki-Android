@@ -124,12 +124,12 @@ public class ImportDialog extends AsyncDialogFragment {
 
     @Override
     public String getNotificationMessage() {
-        return getResources().getString(R.string.import_interrupted);
+        return res().getString(R.string.import_interrupted);
     }
 
     @Override
     public String getNotificationTitle() {
-        return getResources().getString(R.string.import_title);
+        return res().getString(R.string.import_title);
     }
     
     public void dismissAllDialogFragments() {
