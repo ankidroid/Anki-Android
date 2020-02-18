@@ -1064,12 +1064,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     // Get the did of the parent deck (ignoring any subdecks)
     protected long getParentDid() {
-        long deckID;
-        try {
-            deckID = getCol().getDecks().current().getLong("id");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        long deckID = getCol().getDecks().selected();
         return deckID;
     }
 
@@ -1779,7 +1774,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
 
             // Get the review options for this group
-            JSONObject revOptions = getCol().getDecks().confForDid(getCol().getDecks().current().getLong("id")).getJSONObject("rev");
+            JSONObject revOptions = getCol().getDecks().confForDid(getCol().getDecks().selected()).getJSONObject("rev");
 
             mOptUseGeneralTimerSettings = revOptions.optBoolean("useGeneralTimeoutSettings", true);
             mOptUseTimer = revOptions.optBoolean("timeoutAnswer", false);
