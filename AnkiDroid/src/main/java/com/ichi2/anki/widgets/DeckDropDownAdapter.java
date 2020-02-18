@@ -83,8 +83,8 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             try {
                 String deckName = deck.getString("name");
                 deckNameView.setText(deckName);
-            } catch (JSONException ex) {
-                new RuntimeException();
+            } catch (JSONException e) {
+                new RuntimeException(e);
             }
         }
         deckCountsView.setText(((SubtitleListener) context).getSubtitleText());
@@ -109,8 +109,8 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             try {
                 String deckName = deck.getString("name");
                 deckNameView.setText(deckName);
-            } catch (JSONException ex) {
-                new RuntimeException();
+            } catch (JSONException e) {
+                new RuntimeException(e);
             }
         }
         return convertView;

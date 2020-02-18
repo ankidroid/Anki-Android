@@ -242,7 +242,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                     return true;
                 }
             } catch (JSONException e) {
-                throw new RuntimeException();
+                throw new RuntimeException(e);
             }
         }
         return false;

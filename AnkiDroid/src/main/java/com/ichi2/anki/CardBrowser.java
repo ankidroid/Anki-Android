@@ -1122,7 +1122,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mRestrictOnDeck = "deck:\"" + deck.getString("name") + "\" ";
                 saveLastDeckId(deck.getLong("id"));
             } catch (JSONException e) {
-                throw new RuntimeException();
+                throw new RuntimeException(e);
             }
         }
         searchCards();
@@ -1205,7 +1205,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     return true;
                 }
             } catch (JSONException e) {
-                throw new RuntimeException();
+                throw new RuntimeException(e);
             }
         }
         return false;

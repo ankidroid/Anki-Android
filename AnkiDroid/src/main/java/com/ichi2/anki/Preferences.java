@@ -405,7 +405,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             ((CheckBoxPreference)pref).setChecked(conf.optInt("schedVer", 1) == 2);
                     }
                 } catch (JSONException | NumberFormatException e) {
-                    throw new RuntimeException();
+                    throw new RuntimeException(e);
                 }
             } else {
                 // Disable Col preferences if Collection closed
@@ -612,7 +612,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         } catch (BadTokenException e) {
             Timber.e(e, "Preferences: BadTokenException on showDialog");
         } catch (NumberFormatException | JSONException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 

@@ -412,7 +412,7 @@ public class ModelFieldEditor extends AnkiActivity {
             mCol.getModels().save();
             fullRefreshList();
         } catch (JSONException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 

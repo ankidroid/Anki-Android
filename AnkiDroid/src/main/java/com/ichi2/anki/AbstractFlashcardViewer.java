@@ -1786,7 +1786,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mOptWaitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20);
             mOptWaitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60);
         } catch (JSONException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         } catch (NullPointerException npe) {
             // NPE on collection only happens if the Collection is broken, follow AnkiActivity example
             Intent deckPicker = new Intent(this, DeckPicker.class);
