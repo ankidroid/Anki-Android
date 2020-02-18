@@ -1773,14 +1773,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mShowNextReviewTime = getCol().getConf().getBoolean("estTimes");
             mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
 
-            // Get the review options for this group
-            JSONObject revOptions = getCol().getDecks().confForDid(getCol().getDecks().selected()).getJSONObject("rev");
+            // Dynamic don't have review options; attempt to get deck-specific auto-advance options
+            // but be prepared to go with all default if it's a dynamic deck
+            JSONObject revOptions = new JSONObject();
+            if (!getCol().getDecks().isDyn(getCol().getDecks().current().getLong("id"))) {
+                revOptions = getCol().getDecks().confForDid(getCol().getDecks().current().getLong("id")).getJSONObject("rev");
+            }
 
             mOptUseGeneralTimerSettings = revOptions.optBoolean("useGeneralTimeoutSettings", true);
             mOptUseTimer = revOptions.optBoolean("timeoutAnswer", false);
             mOptWaitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20);
             mOptWaitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60);
         } catch (JSONException e) {
+            Timber.e(e, "Unable to restoreCollectionPreferences");
             throw new RuntimeException(e);
         } catch (NullPointerException npe) {
             // NPE on collection only happens if the Collection is broken, follow AnkiActivity example
