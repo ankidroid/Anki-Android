@@ -99,14 +99,17 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
             }
 
             cursor.moveToFirst();
-            Timber.d("got name/size/type: %s/%s/%s", cursor.getString(0), cursor.getLong(1), cursor.getString(2));
             String audioClipFullName = cursor.getString(0);
             String[] audioClipFullNameParts = audioClipFullName.split("\\.");
             if (audioClipFullNameParts.length < 2) {
                 try {
-                    Timber.d("Audio clip name does not have extension, using second half of mime type");
+                    Timber.i("Audio clip name does not have extension, using second half of mime type");
                     audioClipFullNameParts = new String[] {audioClipFullName, cursor.getString(2).split("\\/")[1]};
                 } catch (Exception e) {
+                    // This code is difficult to stabilize - it is not clear how to handle files with no extension
+                    // and apparently we may fail to get MIME_TYPE information - in that case we will gather information
+                    // about what people are experiencing in the real world and decide later, but without crashing at least
+                    AnkiDroidApp.sendExceptionReport(e, "Audio Clip addition failed. Name " + audioClipFullName + " / cursor mime type column type " + cursor.getType(2));
                     UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
                             AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
                     return;
