@@ -647,7 +647,7 @@ public class Finder {
         // current deck?
         try {
             if ("current".equalsIgnoreCase(val)) {
-                ids = dids(mCol.getDecks().current().getLong("id"));
+                ids = dids(mCol.getDecks().selected());
             } else if (!val.contains("*")) {
                 // single deck
                 ids = dids(mCol.getDecks().id(val, false));
