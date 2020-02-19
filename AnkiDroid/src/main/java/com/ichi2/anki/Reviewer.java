@@ -384,19 +384,19 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mCurrentCard != null) {
             switch (mCurrentCard.getUserFlag()) {
             case 1:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_red);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_red);
                 break;
             case 2:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_orange);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_orange);
                 break;
             case 3:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_green);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_green);
                 break;
             case 4:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_blue);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_blue);
                 break;
             default:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_transparent);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_transparent);
                 break;
             }
         }
