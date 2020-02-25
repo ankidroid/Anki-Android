@@ -71,7 +71,6 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mShowWhiteboard = true;
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
-    private AudioView mMicToolBar;
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
 

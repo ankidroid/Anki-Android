@@ -86,6 +86,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
@@ -321,6 +322,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private long mUseTimerDynamicMS;
 
     /** File of the temporary mic record **/
+    protected AudioView mMicToolBar;
     protected String tempAudioPath;
 
     /**
@@ -2580,6 +2582,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void closeReviewer(int result, boolean saveDeck) {
+        // Stop the mic recording if still pending
+        if( mMicToolBar != null ) {
+            mMicToolBar.notifyStopRecord();
+        }
         // Remove the temporary audio file
         if( tempAudioPath != null ) {
             File tempAudioPathToDelete = new File(tempAudioPath);
