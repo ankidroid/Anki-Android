@@ -19,8 +19,10 @@
 
 package com.ichi2.anki.multimediacard;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 
@@ -28,10 +30,17 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
+import com.ichi2.libanki.Collection;
 import com.ichi2.anki.UIUtils;
+import java.io.File;
+import java.io.IOException;
 import com.ichi2.utils.Permissions;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 // Not designed for visual editing
@@ -70,6 +79,19 @@ public class AudioView extends LinearLayout {
     public static AudioView createRecorderInstance(Context context, int resPlay, int resPause, int resStop,
             int resRecord, int resRecordStop, String audioPath) {
         return new AudioView(context, resPlay, resPause, resStop, resRecord, resRecordStop, audioPath);
+    }
+
+    public static String generateTempAudioFile(Context context) {
+        String tempAudioPath;
+        try {
+            Collection col = CollectionHelper.getInstance().getCol(context);
+            File storingDirectory = new File(col.getMedia().dir());
+            tempAudioPath = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).getAbsolutePath();
+        } catch (IOException e) {
+            Timber.e(e, "Could not create temporary audio file.");
+            tempAudioPath = null;
+        }
+        return tempAudioPath;
     }
 
 

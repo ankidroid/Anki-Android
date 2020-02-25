@@ -59,14 +59,7 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
         }
 
         if (!bExist) {
-            try {
-                Collection col = CollectionHelper.getInstance().getCol(context);
-                File storingDirectory = new File(col.getMedia().dir());
-                tempAudioPath = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).getAbsolutePath();
-            } catch (IOException e) {
-                Timber.e(e, "Could not create temporary audio file.");
-                tempAudioPath = null;
-            }
+            tempAudioPath = AudioView.generateTempAudioFile(mActivity);
         }
 
         mAudioView = AudioView.createRecorderInstance(mActivity, R.drawable.av_play, R.drawable.av_pause,
