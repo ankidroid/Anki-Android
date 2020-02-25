@@ -66,7 +66,7 @@ An apk file signed with a standard "debug" key will be generated named `"AnkiDro
  * `%root/res/drawable-****/` contains the icons used throughout the app at [various resolutions](https://www.google.com/design/spec/style/icons.html).
 
 ## Issues to get started with
-If you are a new developer looking to contribute something to AnkiDroid, but you don't know what work to get started with, please take a look and see if there's anything that you'd like to work on in the issue tracker. In particular, [issues with the label "HelpWanted"](https://github.com/ankidroid/Anki-Android/labels/HelpWanted) or are tasks that have been specially highlighted as work that we'd really like to have done, but don't have time to do ourselves, and the similar "Good First Issue" label has been added to any tasks that seem like a good way to get started working with the codebase.
+If you are a new developer looking to contribute something to AnkiDroid, but you don't know what work to get started with, please take a look and see if there's anything that you'd like to work on in the issue tracker. In particular, [issues with the label "Help Wanted"](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+label%3A%22Help+Wanted%22) or are tasks that have been specially highlighted as work that we'd really like to have done, but don't have time to do ourselves, and the similar "Good First Issue" label has been added to any tasks that seem like a good way to get started working with the codebase.
 
 If it's unclear exactly what needs to be done, or how to do it, please don't hesitate to ask for clarification or help!
 
