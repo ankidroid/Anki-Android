@@ -320,6 +320,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private long mUseTimerDynamicMS;
 
+    /** File of the temporary mic record **/
+    protected String tempAudioPath;
+
     /**
      * Last card that the WebView Renderer crashed on.
      * If we get 2 crashes on the same card, then we likely have an infinite loop and want to exit gracefully.
@@ -1452,13 +1455,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         switch (answerButtonsPosition) {
             case "top":
                 cardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout);
-                answerAreaParams.addRule(RelativeLayout.BELOW, R.id.top_bar);
+                answerAreaParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer);
                 answerArea.removeView(mAnswerField);
                 answerArea.addView(mAnswerField, 1);
                 break;
             case "bottom":
                 cardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout);
-                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.top_bar);
+                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer);
                 answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 break;
             default:
@@ -2577,6 +2580,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void closeReviewer(int result, boolean saveDeck) {
+        // Remove the temporary audio file
+        if( tempAudioPath != null ) {
+            File tempAudioPathToDelete = new File(tempAudioPath);
+            if (tempAudioPathToDelete.exists()) tempAudioPathToDelete.delete();
+        }
+
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
         mTimeoutHandler.removeCallbacks(mShowQuestionTask);
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
