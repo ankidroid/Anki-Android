@@ -42,7 +42,9 @@ import timber.log.Timber;
 
 public abstract class NavigationDrawerActivity extends AnkiActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    /** Navigation Drawer */
+    /**
+     * Navigation Drawer
+     */
     protected CharSequence mTitle;
     protected Boolean mFragmented = false;
     private boolean mNavButtonGoesBack = false;
@@ -54,15 +56,22 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     private NavigationView mNavigationView;
     private ActionBarDrawerToggle mDrawerToggle;
     private SwitchCompat mNightModeSwitch;
+    /**
+     * Current system-level night mode.
+     */
+    private int mSystemNightMode;
     // Intent request codes
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
     public static final int REQUEST_STATISTICS = 102;
+    private static final String NIGHT_MODE_PREFERENCE = "invertedColors";
+    private static final Timber.Tree log = Timber.tag(NavigationDrawerActivity.class.getName());
 
     /**
      * runnable that will be executed after the drawer has been closed.
      */
     private Runnable pendingRunnable;
+
 
     // Navigation drawer initialisation
     protected void initNavigationDrawer(View mainView) {
@@ -86,21 +95,13 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             // Decide which action to take when the navigation button is tapped.
             toolbar.setNavigationOnClickListener(v -> onNavigationPressed());
         }
+        mSystemNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         // Configure night-mode switch
-        final SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(NavigationDrawerActivity.this);
+        final SharedPreferences preferences = getPreferences();
         View actionLayout = mNavigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
         mNightModeSwitch = actionLayout.findViewById(R.id.switch_compat);
-        mNightModeSwitch.setChecked(preferences.getBoolean("invertedColors", false));
-        mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                Timber.i("StudyOptionsFragment:: Night mode was enabled");
-                preferences.edit().putBoolean("invertedColors", true).apply();
-            } else {
-                Timber.i("StudyOptionsFragment:: Night mode was disabled");
-                preferences.edit().putBoolean("invertedColors", false).apply();
-            }
-            restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
-        });
+        mNightModeSwitch.setChecked(preferences.getBoolean(NIGHT_MODE_PREFERENCE, false));
+        mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> { applyNightMode(isChecked); });
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0) {
@@ -109,7 +110,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 super.onDrawerClosed(drawerView);
                 supportInvalidateOptionsMenu();
 
-                if(pendingRunnable != null) {
+                if (pendingRunnable != null) {
                     new Handler().post(pendingRunnable);
                     pendingRunnable = null;
                 }
@@ -127,11 +128,12 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
 
-
-    /** Sets selected navigation drawer item */
+    /**
+     * Sets selected navigation drawer item
+     */
     protected void selectNavigationItem(int itemId) {
         if (mNavigationView == null) {
-            Timber.e("Could not select item in navigation drawer as NavigationView null");
+            log.e("Could not select item in navigation drawer as NavigationView null");
             return;
         }
         Menu menu = mNavigationView.getMenu();
@@ -144,11 +146,10 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             if (item != null) {
                 item.setChecked(true);
             } else {
-                Timber.e("Could not find item %d", itemId);
+                log.e("Could not find item %d", itemId);
             }
         }
     }
-
 
 
     @Override
@@ -158,6 +159,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             getSupportActionBar().setTitle(mTitle);
         }
     }
+
 
     /**
      * When using the ActionBarDrawerToggle, you must call it during
@@ -173,6 +175,50 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         }
     }
 
+    private SharedPreferences getPreferences() {
+        return AnkiDroidApp.getSharedPrefs(NavigationDrawerActivity.this);
+    }
+
+    private void applyNightMode(boolean setToNightMode) {
+        final SharedPreferences preferences = getPreferences();
+        log.i("Night mode was %s", setToNightMode ? "enabled" : "disabled");
+        preferences.edit().putBoolean(NIGHT_MODE_PREFERENCE, setToNightMode).apply();
+        restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
+    }
+
+    /**
+     * Handles Android system-level night mode changes.
+     * @param newNightMode new night mode, as a UI_MODE_NIGHT_* integer.
+     */
+    private void updateNightMode(int newNightMode) {
+        if (newNightMode == mSystemNightMode) {
+            // Nothing to do, system-level night mode did not change.
+            return;
+        }
+        mSystemNightMode = newNightMode;
+        // User switched either from system-level night mode to day mode, or from day mode to night mode.
+        final SharedPreferences preferences = getPreferences();
+        boolean setToNightMode;
+        switch (newNightMode) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                setToNightMode = true;
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                setToNightMode = false;
+                break;
+            default:
+                log.e("Unexpected new night mode value: %d", newNightMode);
+                return;
+        }
+        if (preferences.getBoolean(NIGHT_MODE_PREFERENCE, false) == setToNightMode) {
+            // Nothing to do - user switched the system-level night mode the same settings that AnkiDroid is currently
+            // in.
+            log.i("System night mode changed to %b, which matches AnkiDroid.", setToNightMode);
+            return;
+        }
+        log.i("System night mode changed to %b, switching AnkiDroid's night mode to match.", setToNightMode);
+        applyNightMode(setToNightMode);
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -181,6 +227,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         if (mDrawerToggle != null) {
             mDrawerToggle.onConfigurationChanged(newConfig);
         }
+        updateNightMode(newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK);
     }
 
 
@@ -212,7 +259,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+        final SharedPreferences preferences = getPreferences();
         // Update language
         AnkiDroidApp.setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         NotificationChannels.setup(getApplicationContext());
@@ -244,7 +291,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     @Override
     public void onBackPressed() {
         if (isDrawerOpen()) {
-            Timber.i("Back key pressed");
+            log.i("Back key pressed");
             mDrawerLayout.closeDrawers();
         } else {
             super.onBackPressed();
@@ -354,7 +401,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
      * Restart the activity and discard old backstack, creating it new from the hierarchy in the manifest
      */
     protected void restartActivityInvalidateBackstack(AnkiActivity activity) {
-        Timber.i("AnkiActivity -- restartActivityInvalidateBackstack()");
+        log.i("restartActivityInvalidateBackstack()");
         Intent intent = new Intent();
         intent.setClass(activity, activity.getClass());
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(activity);
