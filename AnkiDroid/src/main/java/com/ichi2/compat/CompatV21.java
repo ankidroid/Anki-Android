@@ -1,6 +1,7 @@
 
 package com.ichi2.compat;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,8 +14,6 @@ import android.view.Window;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.AnkiDroidApp;
-
-import java.util.HashMap;
 
 import timber.log.Timber;
 
@@ -48,6 +47,7 @@ public class CompatV21 extends CompatV19 implements Compat {
     }
 
     @Override
+    @SuppressLint("NewApi")
     public int getCameraCount() {
         CameraManager cameraManager = (CameraManager)AnkiDroidApp.getInstance().getApplicationContext()
                 .getSystemService(Context.CAMERA_SERVICE);
