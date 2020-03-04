@@ -298,6 +298,14 @@ There are few reasons this can happen.
 * Try on a network you know is reliable (your home, your office, but not a public wifi point)
 * If your device is using Android 4.x or 5.x, you must be using a version of AnkiDroid that works well with [AnkiWeb's February requirement to use encryption of TLS1.2 or higher](https://github.com/ankidroid/Anki-Android/issues/5623). Currently AnkiDroid 2.9.2 or newer, or 2.10alpha23 or higher [contains support](https://github.com/ankidroid/Anki-Android/pull/5658). The stable version is generally available as of February 3rd 2020, or you may get the alpha following [the beta testing instructions here](https://docs.ankidroid.org/manual.html#betaTesting). Note that Android 4.0.x (API15) from the year 2011 does not contain support for TLS1.2 at all and can no longer sync with AnkiWeb, though you may be able to use [a custom sync server](https://github.com/tsudoko/anki-sync-server) if you cannot use a newer version of Android.
 
+### How do I create sub-decks or folders?
+
+AnkiDroid supports sub-decks / folders very well except creating them is a little bit of a trick.
+
+What you do is use a special naming style for the child deck name, like this 'Parent::Child'.
+
+As a specific example, if you have what folders to learn 'English', you would create a deck named 'English', then you could have 'English::Verbs', 'English::Nouns', and so on. And you would see 'Verbs' and 'Nouns' as child decks of the English parent deck.
+
 # Advanced formatting tips
 The [formatting wiki page](https://github.com/ankidroid/Anki-Android/wiki/Advanced-formatting) gives examples of how to achieve advanced flashcard formatting such as:
 
