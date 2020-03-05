@@ -887,19 +887,18 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
         // for each specified card in the browser list
         for (int i = startPos; i < startPos + n; i++) {
+            // Stop if cancelled
+            if (isCancelled()) {
+                Timber.d("doInBackgroundRenderBrowserQA was aborted");
+                return null;
+            }
             if (i >= 0 && i < items.size() && items.get(i).get("answer") == null) {
                 // Extract card item
                 Card c = col.getCard(Long.parseLong(items.get(i).get("id"), 10));
                 // Update item
                 CardBrowser.updateSearchItemQA(mContext, items.get(i), c);
-                // Stop if cancelled
-                if (isCancelled()) {
-                    Timber.d("doInBackgroundRenderBrowserQA was aborted");
-                    return null;
-                } else {
-                    float progress = (float) i / n * 100;
-                    publishProgress(new TaskData((int) progress));
-                }
+                float progress = (float) i / n * 100;
+                publishProgress(new TaskData((int) progress));
             }
         }
         return new TaskData(items);
