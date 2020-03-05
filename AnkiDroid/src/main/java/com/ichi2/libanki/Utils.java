@@ -641,6 +641,7 @@ public class Utils {
                 success = true;
             } catch (IOException e) {
                 if (retryCnt == retries) {
+                    Timber.e("IOException while writing to file, out of retries.");
                     throw e;
                 } else {
                     Timber.e("IOException while writing to file, retrying...");
