@@ -76,7 +76,7 @@ public class ImportUtils {
             } else if (filename != null) {
                 // Copy to temporary file
                 String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
-                errorMessage = ImportUtils.copyFileToCache(context, intent, tempOutDir) ? null : "copyFileToCache() failed";
+                errorMessage = ImportUtils.copyFileToCache(context, intent, tempOutDir) ? null : "copyFileToCache() failed (possibly out of storage space)";
                 // Show import dialog
                 if (errorMessage == null) {
                     ImportUtils.sendShowImportFileDialogMsg(tempOutDir);
