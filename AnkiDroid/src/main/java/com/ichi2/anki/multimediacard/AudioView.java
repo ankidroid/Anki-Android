@@ -27,8 +27,9 @@ import android.media.MediaRecorder;
 import androidx.appcompat.widget.AppCompatImageButton;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 
 import timber.log.Timber;
 
@@ -88,13 +89,6 @@ public class AudioView extends LinearLayout {
 
         mStop = new StopButton(context);
         addView(mStop, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-    }
-
-
-    private void showToast(String msg) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(mContext, msg, duration);
-        toast.show();
     }
 
 
@@ -165,7 +159,12 @@ public class AudioView extends LinearLayout {
 
     public void notifyStopRecord() {
         if (mRecorder != null && mStatus == Status.RECORDING) {
-            mRecorder.stop();
+            try {
+                mRecorder.stop();
+            } catch (RuntimeException e) {
+                Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start");
+                UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
+            }
             mStatus = Status.IDLE;
             if (mOnRecordingFinishEventListener != null) {
                 mOnRecordingFinishEventListener.onRecordingFinish(AudioView.this);
@@ -210,7 +209,7 @@ public class AudioView extends LinearLayout {
                             notifyPlay();
                         } catch (Exception e) {
                             Timber.e(e);
-                            showToast(gtxt(R.string.multimedia_editor_audio_view_playing_failed));
+                            UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_playing_failed), true);
                             mStatus = Status.IDLE;
                         }
                         break;
@@ -366,7 +365,7 @@ public class AudioView extends LinearLayout {
                             } catch (Exception e) {
                                 // either output file failed or codec didn't work, in any case fail out
                                 Timber.e("RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
-                                showToast(gtxt(R.string.multimedia_editor_audio_view_recording_failed));
+                                UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
                                 mStatus = Status.STOPPED;
                                 break;
                             }
