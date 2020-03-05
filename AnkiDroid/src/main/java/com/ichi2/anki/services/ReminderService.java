@@ -95,6 +95,13 @@ public class ReminderService extends BroadcastReceiver {
 
     // getDeckDue information, will recur one time to workaround collection close if recur is true
     private Sched.DeckDueTreeNode getDeckDue(Context context, long deckId, boolean recur) {
+
+        // Avoid crashes if the deck is deleted while we are working
+        if (CollectionHelper.getInstance().getCol(context).getDecks().get(deckId, false) == null) {
+            Timber.d("Deck %s deleted while ReminderService was working. Ignoring", deckId);
+            return null;
+        }
+
         try {
             for (Sched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree()) {
                 if (node.did == deckId) {
