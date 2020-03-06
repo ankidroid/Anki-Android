@@ -881,7 +881,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundRenderBrowserQA(TaskData... params) {
         Timber.d("doInBackgroundRenderBrowserQA");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        List<Map<String, String>> items = (List<Map<String, String>>) params[0].getObjArray()[0];
+        List<Map<String, String>> cards = (List<Map<String, String>>) params[0].getObjArray()[0];
         Integer startPos = (Integer) params[0].getObjArray()[1];
         Integer n = (Integer) params[0].getObjArray()[2];
 
@@ -892,8 +892,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 Timber.d("doInBackgroundRenderBrowserQA was aborted");
                 return null;
             }
-            if (i >= 0 && i < items.size()) {
-                Map<String, String> card = items.get(i);
+            if (i >= 0 && i < cards.size()) {
+                Map<String, String> card = cards.get(i);
                 if (card.get("answer") == null) {
                     // Extract card item
                     Card c = col.getCard(Long.parseLong(card.get("id"), 10));
@@ -904,7 +904,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 }
             }
         }
-        return new TaskData(items);
+        return new TaskData(cards);
     }
 
 
