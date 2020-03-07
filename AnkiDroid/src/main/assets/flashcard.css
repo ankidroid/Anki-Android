@@ -123,21 +123,20 @@ scale up, but not down.  */
   top: 0;
   font-size: 30px;
   display: block;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: black;
+  -webkit-text-stroke: 1px black;
   margin: 10px;
 }
 
 #_flag {
   display: none;
   right: 10px;
-  float:right;
+  float: right;
 }
 
 #_mark {
   display: none;
   left: 10px;
-  float:left;
+  float: left;
   color: yellow;
 }
 
