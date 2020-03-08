@@ -836,14 +836,11 @@ public class Utils {
     public static List<File> getImportableDecks(Context context) {
         String deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context);
         File dir = new File(deckPath);
-        int deckCount = 0;
-        File[] deckList = null;
-        if (dir.exists() && dir.isDirectory()) {
-            deckList = dir.listFiles(pathname -> pathname.isFile() && pathname.getName().endsWith(".apkg"));
-            deckCount = deckList.length;
-        }
         List<File> decks = new ArrayList<>();
-        decks.addAll(Arrays.asList(deckList).subList(0, deckCount));
+        if (dir.exists() && dir.isDirectory()) {
+            File[] deckList = dir.listFiles(pathname -> pathname.isFile() && pathname.getName().endsWith(".apkg"));
+            decks.addAll(Arrays.asList(deckList).subList(0, deckList.length));
+        }
         return decks;
     }
 
