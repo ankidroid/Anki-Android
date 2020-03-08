@@ -108,20 +108,18 @@ public class ReminderService extends BroadcastReceiver {
                     return node;
                 }
             }
-        } catch (IllegalStateException e) {
-            if (!CollectionHelper.getInstance().colIsOpen()) {
-                if (recur) {
-                    Timber.i(e, "Database closed while working. Probably auto-sync. Will re-try after sleep.");
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ex) {
-                        Timber.i(ex, "Thread interrupted while waiting to retry. Likely unimportant.");
-                        Thread.currentThread().interrupt();
-                    }
-                    return getDeckDue(context, deckId, false);
-                } else {
-                    Timber.w(e, "Database closed while working. No re-tries left.");
+        } catch (Exception e) {
+            if (recur) {
+                Timber.i(e, "getDeckDue exception - likely database re-initialization from auto-sync. Will re-try after sleep.");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Timber.i(ex, "Thread interrupted while waiting to retry. Likely unimportant.");
+                    Thread.currentThread().interrupt();
                 }
+                return getDeckDue(context, deckId, false);
+            } else {
+                Timber.w(e, "Database unavailable while working. No re-tries left.");
             }
         }
 
