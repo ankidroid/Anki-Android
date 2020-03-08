@@ -4,6 +4,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -171,20 +172,24 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     @Deprecated
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
+        try {
+            super.startActivityForResult(intent, requestCode);
+        } catch (ActivityNotFoundException e) {
+            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed,true);
+        }
     }
 
 
     public void startActivityForResultWithoutAnimation(Intent intent, int requestCode) {
         disableIntentAnimation(intent);
-        super.startActivityForResult(intent, requestCode);
+        startActivityForResult(intent, requestCode);
         disableActivityAnimation();
     }
 
 
     public void startActivityForResultWithAnimation(Intent intent, int requestCode, int animation) {
         enableIntentAnimation(intent);
-        super.startActivityForResult(intent, requestCode);
+        startActivityForResult(intent, requestCode);
         enableActivityAnimation(animation);
     }
 
