@@ -233,4 +233,6 @@
     <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+
+    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
 </resources>
