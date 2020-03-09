@@ -219,7 +219,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 AnkiDroidApp.sendExceptionReport(e2, "doInBackgroundLogin");
             }
             data.success = false;
-            data.result = new Object[] {"connectionError" };
+            data.result = new Object[] {"connectionError", e2};
             return data;
         }
         String hostkey = null;
@@ -264,6 +264,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 msg.contains("InterruptedIOException") ||
                 msg.contains("stream was reset") ||
                 msg.contains("ConnectionShutdownException") ||
+                msg.contains("CLEARTEXT communication") ||
                 msg.contains("TimeoutException");
     }
 
@@ -373,12 +374,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     return data;
                 } catch (RuntimeException e) {
                     if (timeoutOccurred(e)) {
-                        data.result = new Object[] {"connectionError" };
+                        data.result = new Object[] {"connectionError", e};
                     } else if (e.getMessage().equals("UserAbortedSync")) {
-                        data.result = new Object[] {"UserAbortedSync" };
+                        data.result = new Object[] {"UserAbortedSync", e};
                     } else {
                         AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
-                        data.result = new Object[] { "IOException" };
+                        data.result = new Object[] {"IOException", e};
                     }
                     data.success = false;
                     return data;
@@ -418,9 +419,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     }
                 } catch (RuntimeException e) {
                     if (timeoutOccurred(e)) {
-                        data.result = new Object[] {"connectionError" };
+                        data.result = new Object[] {"connectionError", e};
                     } else if (e.getMessage().equals("UserAbortedSync")) {
-                        data.result = new Object[] {"UserAbortedSync" };
+                        data.result = new Object[] {"UserAbortedSync", e};
                     }
                     mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage();
                 }
@@ -437,12 +438,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         } catch (MediaSyncException e) {
             Timber.e("Media sync rejected by server");
             data.success = false;
-            data.result = new Object[] {"mediaSyncServerError"};
+            data.result = new Object[] {"mediaSyncServerError", e};
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
             return data;
         } catch (UnknownHttpResponseException e) {
-            Timber.e("doInBackgroundSync -- unknown response code error");
-            e.printStackTrace();
+            Timber.e(e, "doInBackgroundSync -- unknown response code error");
             data.success = false;
             int code = e.getResponseCode();
             String msg = e.getLocalizedMessage();
@@ -451,16 +451,15 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         } catch (Exception e) {
             // Global error catcher.
             // Try to give a human readable error, otherwise print the raw error message
-            Timber.e("doInBackgroundSync error");
-            e.printStackTrace();
+            Timber.e(e, "doInBackgroundSync error");
             data.success = false;
             if (timeoutOccurred(e)) {
-                data.result = new Object[]{"connectionError"};
+                data.result = new Object[]{"connectionError", e};
             } else if (e.getMessage().equals("UserAbortedSync")) {
-                data.result = new Object[] {"UserAbortedSync" };
+                data.result = new Object[] {"UserAbortedSync", e};
             } else {
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
-                data.result = new Object[] {e.getLocalizedMessage()};
+                data.result = new Object[] {e.getLocalizedMessage(), e};
             }
             return data;
         } finally {
