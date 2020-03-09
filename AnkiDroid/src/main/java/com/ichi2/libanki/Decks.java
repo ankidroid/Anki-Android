@@ -889,11 +889,10 @@ public class Decks {
                         names.add(immediateParent);
                     }
                 }
-            names.add(deck.getString("name"));
+                names.add(deck.getString("name"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            names.add(deckName);
         }
     }
 
