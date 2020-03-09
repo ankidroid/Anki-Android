@@ -1542,6 +1542,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if ("connectionError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_connection_error);
+                        if (result.length >= 1 && result[1] instanceof Exception) {
+                            dialogMessage += "\n\n" + ((Exception)result[1]).getLocalizedMessage();
+                        }
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if ("IOException".equals(resultType)) {
                         handleDbError();

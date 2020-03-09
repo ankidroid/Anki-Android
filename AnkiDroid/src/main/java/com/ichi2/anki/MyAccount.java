@@ -200,11 +200,17 @@ public class MyAccount extends AnkiActivity {
                     switchToState(STATE_LOGGED_IN);
                 }
             } else {
-                Timber.e("Login failed, error code %d",data.returnType);
+                Timber.e("Login failed, error code %d", data.returnType);
                 if (data.returnType == 403) {
                     UIUtils.showSimpleSnackbar(MyAccount.this, R.string.invalid_username_password, true);
                 } else {
-                    UIUtils.showSimpleSnackbar(MyAccount.this, R.string.connection_error_message, true);
+                    String message = getResources().getString(R.string.connection_error_message);
+                    Object[] result = (Object [])data.result;
+                    if (result.length > 1 && result[1] instanceof Exception) {
+                        showSimpleMessageDialog(message, ((Exception)result[1]).getLocalizedMessage(), false);
+                    } else {
+                        UIUtils.showSimpleSnackbar(MyAccount.this, message, false);
+                    }
                 }
             }
         }
