@@ -2871,6 +2871,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
     private void drawMark() {
+        if (mCurrentCard == null) {
+            return;
+        }
         mCard.loadUrl("javascript:_drawMark("+mCurrentCard.note().hasTag("marked")+");");
     }
 
@@ -2890,6 +2893,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
     private void drawFlag() {
+        if (mCurrentCard == null) {
+            return;
+        }
         mCard.loadUrl("javascript:_drawFlag("+mCurrentCard.getUserFlag()+");");
     }
 
