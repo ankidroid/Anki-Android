@@ -61,6 +61,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -1363,9 +1364,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private Connection.TaskListener mSyncListener = new Connection.CancellableTaskListener() {
-        String currentMessage;
-        long countUp;
-        long countDown;
+        private String currentMessage;
+        private long countUp;
+        private long countDown;
+        private boolean dialogDisplayFailure = false;
 
         @Override
         public void onDisconnected() {
@@ -1374,28 +1376,36 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void onCancelled() {
-            mProgressDialog.dismiss();
             showSyncLogMessage(R.string.sync_cancelled, "");
-            // update deck list in case sync was cancelled during media sync and main sync was actually successful
-            updateDeckList();
+            if (!dialogDisplayFailure) {
+                mProgressDialog.dismiss();
+                // update deck list in case sync was cancelled during media sync and main sync was actually successful
+                updateDeckList();
+            }
+            // reset our display failure fate, just in case it is re-used
+            dialogDisplayFailure = false;
         }
 
         @Override
         public void onPreExecute() {
             countUp = 0;
             countDown = 0;
-            // Store the current time so that we don't bother the user with a sync prompt for another 10 minutes
-            // Note: getLs() in Libanki doesn't take into account the case when no changes were found, or sync cancelled
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
             final long syncStartTime = System.currentTimeMillis();
-            preferences.edit().putLong("lastSyncTime", syncStartTime).apply();
 
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = StyledProgressDialog
-                        .show(DeckPicker.this, getResources().getString(R.string.sync_title),
-                                getResources().getString(R.string.sync_title) + "\n"
-                                        + getResources().getString(R.string.sync_up_down_size, countUp, countDown),
-                                false);
+                try {
+                    mProgressDialog = StyledProgressDialog
+                            .show(DeckPicker.this, getResources().getString(R.string.sync_title),
+                                    getResources().getString(R.string.sync_title) + "\n"
+                                            + getResources().getString(R.string.sync_up_down_size, countUp, countDown),
+                                    false);
+                } catch (WindowManager.BadTokenException e) {
+                    // If we could not show the progress dialog to start even, bail out - user will get a message
+                    Timber.w(e, "Unable to display Sync progress dialog, Activity not valid?");
+                    dialogDisplayFailure = true;
+                    Connection.cancel();
+                    return;
+                }
 
                 // Override the back key so that the user can cancel a sync which is in progress
                 mProgressDialog.setOnKeyListener((dialog, keyCode, event) -> {
@@ -1429,6 +1439,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     }
                 });
             }
+
+            // Store the current time so that we don't bother the user with a sync prompt for another 10 minutes
+            // Note: getLs() in Libanki doesn't take into account the case when no changes were found, or sync cancelled
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            preferences.edit().putLong("lastSyncTime", syncStartTime).apply();
         }
 
 
