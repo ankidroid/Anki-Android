@@ -23,6 +23,7 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
 
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -136,7 +137,11 @@ public class ReadText {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                builder.build().show();
+                try {
+                    builder.build().show();
+                } catch (WindowManager.BadTokenException e) {
+                    Timber.w("Activity invalidated before TTS language dialog could display");
+                }
             }
         }, delay);
     }
