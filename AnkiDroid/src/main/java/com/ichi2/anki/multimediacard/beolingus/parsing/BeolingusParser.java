@@ -41,7 +41,10 @@ public class BeolingusParser {
     public static String getPronunciationAddressFromTranslation(String html, String wordToSearchFor) {
         Matcher m = PRONUNC_PATTERN.matcher(html);
         while (m.find()) {
-            if (m.group(2).contains(wordToSearchFor)) {
+            //Perform .contains() due to #5376 (a "%20{noun}" suffix).
+            //Perform .toLowerCase() due to #5810 ("hello" should match "Hello").
+            //See #5810 for discussion on Locale complexities. Currently unhandled.
+            if (m.group(2).toLowerCase().contains(wordToSearchFor.toLowerCase())) {
                 Timber.d("pronunciation URL is https://dict.tu-chemnitz.de%s", m.group(1));
                 return "https://dict.tu-chemnitz.de" + m.group(1);
             }
