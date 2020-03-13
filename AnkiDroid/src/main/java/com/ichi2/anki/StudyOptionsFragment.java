@@ -20,6 +20,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+
+import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
 
@@ -688,11 +690,12 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         };
     }
 
+    @VisibleForTesting()
     static Spanned formatDescription(String desc) {
         //#5715: In deck description, ignore what is in style and script tag
         //Since we don't currently execute the JS/CSS, it's not worth displaying.
-        desc = Utils.stripHTMLScriptAndStyleTags(desc);
-        return CompatHelper.getCompat().fromHtml(desc);
+        String withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc);
+        return CompatHelper.getCompat().fromHtml(withStrippedTags);
     }
 
     private Collection getCol() {
