@@ -223,13 +223,22 @@ public class Utils {
      * @return The text without the aforementioned tags.
      */
     public static String stripHTML(String s) {
+        s = stripHTMLScriptAndStyleTags(s);
+        Matcher htmlMatcher = tagPattern.matcher(s);
+        s = htmlMatcher.replaceAll("");
+        return entsToTxt(s);
+    }
+
+    /**
+     * Strips <style>...</style> and <script>...</script> HTML tags and content from a string.
+     * @param s The HTML text to be cleaned.
+     * @return The text without the aforementioned tags.
+     */
+    public static String stripHTMLScriptAndStyleTags(String s) {
         Matcher htmlMatcher = stylePattern.matcher(s);
         s = htmlMatcher.replaceAll("");
         htmlMatcher = scriptPattern.matcher(s);
-        s = htmlMatcher.replaceAll("");
-        htmlMatcher = tagPattern.matcher(s);
-        s = htmlMatcher.replaceAll("");
-        return entsToTxt(s);
+        return htmlMatcher.replaceAll("");
     }
 
 
