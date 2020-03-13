@@ -22,6 +22,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
+
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -618,7 +620,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                         desc = getCol().getDecks().getActualDescription();
                     }
                     if (desc.length() > 0) {
-                        mTextDeckDescription.setText(CompatHelper.getCompat().fromHtml(desc));
+                        mTextDeckDescription.setText(formatDescription(desc));
                         mTextDeckDescription.setVisibility(View.VISIBLE);
                     } else {
                         mTextDeckDescription.setVisibility(View.GONE);
@@ -684,6 +686,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 }
             }
         };
+    }
+
+    static Spanned formatDescription(String desc) {
+        //#5715: In deck description, ignore what is in style and script tag
+        //Since we don't currently execute the JS/CSS, it's not worth displaying.
+        desc = Utils.stripHTMLScriptAndStyleTags(desc);
+        return CompatHelper.getCompat().fromHtml(desc);
     }
 
     private Collection getCol() {
