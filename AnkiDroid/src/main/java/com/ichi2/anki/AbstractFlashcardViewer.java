@@ -1484,46 +1484,48 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     mFlipCardLayout.performClick();
                     return true;
                 }
-                if ("signal:typefocus".equals(url)) {
-                    // Hide the “SHOW ANSWER” button when the input has focus. The soft keyboard takes up enough space
-                    // by itself.
-                    mFlipCardLayout.setVisibility(View.GONE);
-                    return true;
-                }
-                /**
-                 *  Call displayCardAnswer() and answerCard() from anki deck template using javascript
-                 *  See card.js in assets/scripts folder
-                 */
-                if ("signal:show_answer".equals(url)) {
-                    // display answer when showAnswer() called from card.js
-                    if (!sDisplayAnswer) {
-                        displayCardAnswer();
-                    }
-                    return true;
-                }
-                if (url.contains("signal:answer_ease")) {
-                    if (!sDisplayAnswer) {
-                        displayCardAnswer();
+                int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
+                switch (signalOrdinal) {
+                    case WebViewSignalParserUtils.SIGNAL_UNHANDLED:
+                        break; //continue parsing
+                    case WebViewSignalParserUtils.SIGNAL_NOOP:
                         return true;
-                    } else {
-                        switch (url) {
-                            case "signal:answer_ease1":
-                                answerCard(EASE_1);
-                                break;
-                            case "signal:answer_ease2":
-                                answerCard(EASE_2);
-                                break;
-                            case "signal:answer_ease3":
-                                answerCard(EASE_3);
-                                break;
-                            case "signal:answer_ease4":
-                                answerCard(EASE_4);
-                                break;
-                            default:
-                                break;
+                    case WebViewSignalParserUtils.TYPE_FOCUS:
+                        // Hide the “SHOW ANSWER” button when the input has focus. The soft keyboard takes up enough
+                        // space by itself.
+                        mFlipCardLayout.setVisibility(View.GONE);
+                        return true;
+                    case WebViewSignalParserUtils.RELINQUISH_FOCUS:
+                        //#5811 - The WebView could be focused via mouse. Allow components to return focus to Android.
+                        focusAnswerCompletionField();
+                        return true;
+                    /**
+                     *  Call displayCardAnswer() and answerCard() from anki deck template using javascript
+                     *  See card.js in assets/scripts folder
+                     */
+                    case WebViewSignalParserUtils.SHOW_ANSWER:
+                        // display answer when showAnswer() called from card.js
+                        if (!sDisplayAnswer) {
+                            displayCardAnswer();
                         }
                         return true;
-                    }
+                    case WebViewSignalParserUtils.ANSWER_ORDINAL_1:
+                        flipOrAnswerCard(EASE_1);
+                        return true;
+                    case WebViewSignalParserUtils.ANSWER_ORDINAL_2:
+                        flipOrAnswerCard(EASE_2);
+                        return true;
+                    case WebViewSignalParserUtils.ANSWER_ORDINAL_3:
+                        flipOrAnswerCard(EASE_3);
+                        return true;
+                    case WebViewSignalParserUtils.ANSWER_ORDINAL_4:
+                        flipOrAnswerCard(EASE_4);
+                        return true;
+                    default:
+                        //We know it was a signal, but forgot a case in the case statement.
+                        //This is not the same as SIGNAL_UNHANDLED, where it isn't a known signal.
+                        Timber.w("Unhandled signal case: %d", signalOrdinal);
+                        return true;
                 }
                 Intent intent = null;
                 try {
@@ -1679,6 +1681,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         return webView;
     }
 
+    /** If a card is displaying the question, flip it, otherwise answer it */
+    private void flipOrAnswerCard(int cardOrdinal) {
+        if (!sDisplayAnswer) {
+           displayCardAnswer();
+           return;
+        }
+        answerCard(cardOrdinal);
+    }
+
     private boolean webViewRendererLastCrashedOnCard(long cardId) {
         return lastCrashingCardId != null && lastCrashingCardId == cardId;
     }
@@ -1815,6 +1826,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mEase3Layout.setVisibility(View.GONE);
         mEase4Layout.setVisibility(View.GONE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
+        focusAnswerCompletionField();
+    }
+
+    /**
+     * Focuses the appropriate field for an answer
+     * And allows keyboard shortcuts to go to the default handlers.
+     * */
+    private void focusAnswerCompletionField() {
+        // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
+        // In this case, the user can use touch to focus the field if necessary.
         if (typeAnswer()) {
             mAnswerField.requestFocus();
         } else {
@@ -3091,5 +3112,45 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void dismiss(Collection.DismissType type) {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mDismissCardHandler,
                 new DeckTask.TaskData(new Object[]{mCurrentCard, type}));
+    }
+
+    /** Signals from a WebView represent actions with no parameters */
+    @VisibleForTesting
+    static class WebViewSignalParserUtils {
+        /** A signal which we did not know how to handle */
+        public static final int SIGNAL_UNHANDLED = 0;
+        /** A known signal which should perform a noop */
+        public static final int SIGNAL_NOOP = 1;
+
+        public static final int TYPE_FOCUS = 2;
+        /** Tell the app that we no longer want to focus the WebView and should instead return keyboard focus to a
+         * native answer input method. */
+        public static final int RELINQUISH_FOCUS = 3;
+
+        public static final int SHOW_ANSWER = 4;
+        public static final int ANSWER_ORDINAL_1 = 5;
+        public static final int ANSWER_ORDINAL_2 = 6;
+        public static final int ANSWER_ORDINAL_3 = 7;
+        public static final int ANSWER_ORDINAL_4 = 8;
+
+        public static int getSignalFromUrl(String url) {
+            switch (url) {
+                case "signal:typefocus": return TYPE_FOCUS;
+                case "signal:relinquishFocus": return RELINQUISH_FOCUS;
+                case "signal:show_answer": return SHOW_ANSWER;
+                case "signal:answer_ease1": return ANSWER_ORDINAL_1;
+                case "signal:answer_ease2": return ANSWER_ORDINAL_2;
+                case "signal:answer_ease3": return ANSWER_ORDINAL_3;
+                case "signal:answer_ease4": return ANSWER_ORDINAL_4;
+                default: break;
+            }
+
+            if (url.startsWith("signal:answer_ease")) {
+                Timber.w("Unhandled signal: ease value: %s", url);
+                return SIGNAL_NOOP;
+            }
+
+            return SIGNAL_UNHANDLED; //unknown, or not a signal.
+        }
     }
 }
