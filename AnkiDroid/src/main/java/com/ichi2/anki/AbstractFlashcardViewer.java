@@ -58,6 +58,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -1422,6 +1423,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
+
+        // Javascript interface for calling Ankidroid function displayCardAnswer(); in Ankidroid webview
+        webView.addJavascriptInterface(new JavaScriptFunction(), "AnkidroidJS");
+
         // Problems with focus and input tags is the reason we keep the old type answer mechanism for old Androids.
         webView.setFocusableInTouchMode(mUseInputTag);
         webView.setScrollbarFadingEnabled(true);
@@ -2924,5 +2929,75 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void dismiss(Collection.DismissType type) {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mDismissCardHandler,
                 new DeckTask.TaskData(new Object[]{mCurrentCard, type}));
+    }
+
+    /*
+     Javascript Interface class for calling Java function from ankidroid webview
+     showAnswer() function will be called from javascript
+     */
+    public class JavaScriptFunction {
+        @JavascriptInterface
+        public void showAnswer() {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    if (!sDisplayAnswer) {
+                        displayCardAnswer();
+                    }
+                }
+            });
+            Timber.i("JavaScriptFunction:: Show answer function called");
+        }
+
+        @JavascriptInterface
+        public void showEase1Answer(){
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    if (sDisplayAnswer) {
+                        answerCard(EASE_1);
+                    } else {
+                        displayCardAnswer();
+                    }
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void showEase2Answer(){
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    if (sDisplayAnswer) {
+                        answerCard(EASE_2);
+                    } else {
+                        displayCardAnswer();
+                    }
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void showEase3Answer(){
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    if (sDisplayAnswer) {
+                        answerCard(EASE_3);
+                    } else {
+                        displayCardAnswer();
+                    }
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void showEase4Answer(){
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    if (sDisplayAnswer) {
+                        answerCard(EASE_4);
+                    } else {
+                        displayCardAnswer();
+                    }
+                }
+            });
+        }
     }
 }
