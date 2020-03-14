@@ -1561,9 +1561,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
 
                 if (mCard == null || !mCard.equals(view)) {
-                    //A view crashed that wasn't ours. Unexpected.
-                    Timber.wtf("Unexpected WebView Renderer terminated. Crashed: %b",  detail.didCrash());
-                    return false;
+                    //A view crashed that wasn't ours.
+                    //We have nothing to handle. Returning false is a desire to crash, so return true.
+                    Timber.i("Unrelated WebView Renderer terminated. Crashed: %b",  detail.didCrash());
+                    return true;
                 }
 
                 Timber.e("WebView Renderer process terminated. Crashed: %b",  detail.didCrash());
