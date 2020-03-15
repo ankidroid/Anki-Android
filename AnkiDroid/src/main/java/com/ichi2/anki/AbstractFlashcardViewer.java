@@ -676,7 +676,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
             // shouldOverrideUrlLoading() in createWebView() in this file.
             sb.append("<center>\n<input type=text name=typed id=typeans onfocus=\"taFocus();\" " +
-                      "onblur=\"taBlur(this);\" onKeyPress=\"return taKey(this, event)\" autocomplete=\"off\" ");
+                    "onblur=\"taBlur(this);\" onKeyPress=\"return taKey(this, event)\" autocomplete=\"off\" ");
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
             if (mTypeFont != null && !TextUtils.isEmpty(mTypeFont) && mTypeSize > 0) {
@@ -969,12 +969,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (mAnswerField != null && !mAnswerField.isFocused()) {
-	        if (!sDisplayAnswer) {
-	            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-	                displayCardAnswer();
-	                return true;
-	            }
-	        }
+            if (!sDisplayAnswer) {
+                if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+                    displayCardAnswer();
+                    return true;
+                }
+            }
         }
         return super.onKeyUp(keyCode, event);
     }
@@ -1475,44 +1475,39 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     mFlipCardLayout.setVisibility(View.GONE);
                     return true;
                 }
-                /*show answer using js functions*/
-                if("signal:show_answer".equals(url)){
+
+                 /**
+                  *  Call displayCardAnswer() and answerCard() from anki deck template using javascript
+                  *  See card.js in assets/scripts folder
+                  */
+                if ("signal:show_answer".equals(url)) {
+                    // display answer when showAnswer() called from card.js
                     if (!sDisplayAnswer) {
                         displayCardAnswer();
                     }
                     return true;
                 }
-                if("signal:answer_ease1".equals(url)){
-                    if (sDisplayAnswer) {
-                        answerCard(EASE_1);
-                    } else {
+                if (url.contains("signal:answer_ease")) {
+                    if (!sDisplayAnswer) {
                         displayCardAnswer();
-                    }
-                    return true;
-                }
-                if("signal:answer_ease2".equals(url)){
-                    if (sDisplayAnswer) {
-                        answerCard(EASE_2);
+                        return true;
                     } else {
-                        displayCardAnswer();
+                        switch (url) {
+                            case "signal:answer_ease1":
+                                answerCard(EASE_1);
+                                break;
+                            case "signal:answer_ease2":
+                                answerCard(EASE_2);
+                                break;
+                            case "signal:answer_ease3":
+                                answerCard(EASE_3);
+                                break;
+                            case "signal:answer_ease4":
+                                answerCard(EASE_4);
+                                break;
+                        }
+                        return true;
                     }
-                    return true;
-                }
-                if("signal:answer_ease3".equals(url)){
-                    if (sDisplayAnswer) {
-                        answerCard(EASE_3);
-                    } else {
-                        displayCardAnswer();
-                    }
-                    return true;
-                }
-                if("signal:answer_ease4".equals(url)){
-                    if (sDisplayAnswer) {
-                        answerCard(EASE_4);
-                    } else {
-                        displayCardAnswer();
-                    }
-                    return true;
                 }
 
                 Intent intent = null;
@@ -1998,8 +1993,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             displayString = enrichWithQADiv(question, false);
 
             //if (mSpeakText) {
-                // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
-                // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
+            // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
+            // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
             //}
         }
 
