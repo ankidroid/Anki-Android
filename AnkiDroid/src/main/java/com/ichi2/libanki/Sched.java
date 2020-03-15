@@ -1500,8 +1500,16 @@ public class Sched {
 
 
     private void _updateRevIvl(Card card, int ease) {
-        int idealIvl = _nextRevIvl(card, ease);
-        card.setIvl(_adjRevIvl(card, idealIvl));
+        try{
+            int idealIvl = _nextRevIvl(card, ease);
+            JSONObject conf = _revConf(card);
+            card.setIvl(Math.min(
+                    Math.max(_adjRevIvl(card, idealIvl), card.getIvl() + 1),
+                    conf.getInt("maxIvl")));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @SuppressWarnings("PMD.UnusedFormalParameter") // it's unused upstream as well
