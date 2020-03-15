@@ -1475,11 +1475,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     mFlipCardLayout.setVisibility(View.GONE);
                     return true;
                 }
-
-                 /**
-                  *  Call displayCardAnswer() and answerCard() from anki deck template using javascript
-                  *  See card.js in assets/scripts folder
-                  */
+                /**
+                 *  Call displayCardAnswer() and answerCard() from anki deck template using javascript
+                 *  See card.js in assets/scripts folder
+                 */
                 if ("signal:show_answer".equals(url)) {
                     // display answer when showAnswer() called from card.js
                     if (!sDisplayAnswer) {
@@ -1505,11 +1504,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                             case "signal:answer_ease4":
                                 answerCard(EASE_4);
                                 break;
+                            default:
+                                break;
                         }
                         return true;
                     }
                 }
-
                 Intent intent = null;
                 try {
                     if (url.startsWith("intent:")) {
