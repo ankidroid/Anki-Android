@@ -1500,7 +1500,7 @@ public class Sched {
 
 
     private void _updateRevIvl(Card card, int ease) {
-        try{
+        try {
             int idealIvl = _nextRevIvl(card, ease);
             JSONObject conf = _revConf(card);
             card.setIvl(Math.min(
