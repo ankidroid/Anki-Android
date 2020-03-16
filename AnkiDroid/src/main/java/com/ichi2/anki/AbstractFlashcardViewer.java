@@ -1845,7 +1845,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
             if (mPrefShowETA) {
                 int eta = mSched.eta(counts, false);
-                actionBar.setSubtitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));
             }
         }
 

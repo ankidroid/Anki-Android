@@ -2006,7 +2006,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     if (getCol().cardCount() != -1) {
                         String time = "-";
                         if (eta != -1) {
-                            time = res.getString(R.string.time_quantity_minutes, eta);
+                            time = Utils.timeQuantity(AnkiDroidApp.getInstance(), eta*60);
                         }
                         if (getSupportActionBar() != null) {
                             getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
