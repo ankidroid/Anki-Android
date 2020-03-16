@@ -81,6 +81,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     /**
      * UI elements for "Study Options" view
      */
+    @Nullable
     private View mStudyOptionsView;
     private View mDeckInfoLayout;
     private Button mButtonStart;
@@ -188,16 +189,17 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             // Currently in a layout without a container, so no reason to create our view.
             return null;
         }
-        mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
+        View studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
+        mStudyOptionsView = studyOptionsView;
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
-        initAllContentViews(mStudyOptionsView);
-        mToolbar = (Toolbar) mStudyOptionsView.findViewById(R.id.studyOptionsToolbar);
+        initAllContentViews(studyOptionsView);
+        mToolbar = (Toolbar) studyOptionsView.findViewById(R.id.studyOptionsToolbar);
         mToolbar.inflateMenu(R.menu.study_options_fragment);
         if (mToolbar != null) {
             configureToolbar();
         }
         refreshInterface(true);
-        return mStudyOptionsView;
+        return studyOptionsView;
     }
 
 
