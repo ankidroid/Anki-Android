@@ -1594,11 +1594,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
                 if (webViewRendererLastCrashedOnCard(mCurrentCard.getId())) {
                     Timber.e("Web Renderer crash loop on card: %d", mCurrentCard.getId());
-                    String cardInformation = Long.toString(mCurrentCard.getId());
-                    String errorMessage = getResources().getString(
-                            R.string.webview_crash_loop, cardInformation, errorCauseString);
-                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, errorMessage, false);
-                    finishWithoutAnimation();
+                    displayRenderLoopDialog(mCurrentCard, detail);
                     return true;
                 } else {
                     // This logic may need to be better defined. The card could have changed by the time we get here.
@@ -1617,6 +1613,23 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
                 //We handled the crash and can continue.
                 return true;
+            }
+
+
+            @TargetApi(Build.VERSION_CODES.O)
+            private void displayRenderLoopDialog(Card mCurrentCard, RenderProcessGoneDetail detail) {
+                String cardInformation = Long.toString(mCurrentCard.getId());
+                Resources res = getResources();
+
+                String errorDetails = detail.didCrash()
+                        ? res.getString(R.string.webview_crash_unknwon_detailed)
+                        : res.getString(R.string.webview_crash_oom_details);
+                new MaterialDialog.Builder(AbstractFlashcardViewer.this)
+                        .title(res.getString(R.string.webview_crash_loop_dialog_title))
+                        .content(res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
+                        .positiveText(R.string.dialog_ok)
+                        .onPositive((materialDialog, dialogAction) -> finishWithoutAnimation())
+                        .show();
             }
         });
         // Set transparent color to prevent flashing white when night mode enabled
