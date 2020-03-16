@@ -1581,7 +1581,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 //I'll keep this line unless I see another crash, which would point to another underlying issue.
                 System.gc();
 
-                //We only want to show one toast message per branch.
+                //We only want to show one message per branch.
 
                 //It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
                 int errorCauseId = detail.didCrash() ? R.string.webview_crash_unknown : R.string.webview_crash_oom;
@@ -2155,6 +2155,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected void displayCardAnswer() {
         Timber.d("displayCardAnswer()");
+        crashWebViewRenderer();
 
         // prevent answering (by e.g. gestures) before card is loaded
         if (mCurrentCard == null) {
