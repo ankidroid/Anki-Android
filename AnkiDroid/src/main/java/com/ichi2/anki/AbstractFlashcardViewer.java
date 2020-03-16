@@ -1599,10 +1599,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     Timber.e("Web Renderer crash loop on card: %d", mCurrentCard.getId());
                     displayRenderLoopDialog(mCurrentCard, detail);
                     return true;
-                } else {
-                    // This logic may need to be better defined. The card could have changed by the time we get here.
-                    lastCrashingCardId = mCurrentCard.getId();
                 }
+
+                // If we get here, the error is non-fatal and we should re-render the WebView
+                // This logic may need to be better defined. The card could have changed by the time we get here.
+                lastCrashingCardId = mCurrentCard.getId();
+
 
                 String nonFatalError = getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, nonFatalError, false);
