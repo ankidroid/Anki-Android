@@ -17,7 +17,6 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -181,7 +180,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             // Currently in a layout without a container, so no reason to create our view.
             return null;
         }
-        restorePreferences();
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
         initAllContentViews();
@@ -487,13 +485,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             }
         }
     }
-
-
-    public SharedPreferences restorePreferences() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext());
-        return preferences;
-    }
-
 
     private void refreshInterfaceAndDecklist(boolean resetSched) {
         refreshInterface(resetSched, true);
