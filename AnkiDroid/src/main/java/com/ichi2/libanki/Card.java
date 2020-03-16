@@ -22,6 +22,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
+import com.ichi2.utils.LanguageUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -447,6 +451,10 @@ public class Card implements Cloneable {
         mMod = mod;
     }
 
+    public long getMod() {
+        return mMod ;
+    }
+
 
     public void setUsn(int usn) {
         mUsn = usn;
@@ -661,5 +669,35 @@ public class Card implements Cloneable {
     public int hashCode() {
         // Map a long to an int. For API>=24 you would just do `Long.hashCode(this.getId())`
         return (int)(this.getId()^(this.getId()>>>32));
+    }
+
+    // not in Anki.
+    public String getDueString() {
+        String t = nextDue();
+        if (getQueue() < 0) {
+            t = "(" + t + ")";
+        }
+        return t;
+    }
+
+    // as in Anki aqt/browser.py
+    private String nextDue() {
+        long date;
+        long due = getDue();
+        if (getODid() != 0) {
+            return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card);
+        }
+        else if (getQueue() == 1) {
+            date = due;
+        } else if (getQueue() == 0 || getType() == 0) {
+            return (new Long(due)).toString();
+        } else if (getQueue() == 2 || getQueue() == 3 || (getType() == 2 && getQueue() <0)) {
+            long time = System.currentTimeMillis();
+            long nbDaySinceCreation = (due - getCol().getSched().getToday());
+            date = time + (nbDaySinceCreation * 86400L * 1000L);
+        } else {
+            return "";
+        }
+        return LanguageUtil.getShortDateFormatFromMs(date);
     }
 }
