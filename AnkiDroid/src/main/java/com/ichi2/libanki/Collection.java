@@ -32,6 +32,7 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.upgrade.Upgrade;
@@ -1606,7 +1607,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         long oldSize = file.length();
         int currentTask = 1;
-        int totalTasks = (mModels.all().size() * 4) + 20; // 4 things are in all-models loops, 20 things are one-offs
+        int totalTasks = (mModels.all().size() * 4) + 21; // 4 things are in all-models loops, 20 things are one-offs
         try {
             mDb.getDatabase().beginTransaction();
             try {
@@ -1713,6 +1714,25 @@ public class Collection {
                 if (ids.size() != 0) {
                     problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
                     mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
+                }
+                {
+                    //#5708 - a dynamic deck should not have "Deck Options"
+                    fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                    int fixCount = 0;
+                    for (long id : mDecks.allDynamicDeckIds()) {
+                        try {
+                            if (mDecks.hasDeckOptions(id)) {
+                                mDecks.removeDeckOptions(id);
+                                fixCount++;
+                            }
+                        } catch (NoSuchDeckException e) {
+                            Timber.e("Unable to find dynamic deck %d", id);
+                        }
+                    }
+                    if (fixCount > 0) {
+                        mDecks.save();
+                        problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
+                    }
                 }
                 // tags
                 fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
