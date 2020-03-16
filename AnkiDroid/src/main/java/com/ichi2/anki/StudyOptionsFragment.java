@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
@@ -187,7 +188,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
-        initAllContentViews();
+        initAllContentViews(mStudyOptionsView);
         mToolbar = (Toolbar) mStudyOptionsView.findViewById(R.id.studyOptionsToolbar);
         mToolbar.inflateMenu(R.menu.study_options_fragment);
         if (mToolbar != null) {
@@ -250,24 +251,24 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
 
-    private void initAllContentViews() {
+    private void initAllContentViews(@NonNull View studyOptionsView) {
         if (mFragmented) {
-            mStudyOptionsView.findViewById(R.id.studyoptions_gradient).setVisibility(View.VISIBLE);
+            studyOptionsView.findViewById(R.id.studyoptions_gradient).setVisibility(View.VISIBLE);
         }
-        mDeckInfoLayout = mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
-        mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
-        mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
+        mDeckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckinformation);
+        mTextDeckName = (TextView) studyOptionsView.findViewById(R.id.studyoptions_deck_name);
+        mTextDeckDescription = (TextView) studyOptionsView.findViewById(R.id.studyoptions_deck_description);
         // make links clickable
         mTextDeckDescription.setMovementMethod(LinkMovementMethod.getInstance());
-        mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
-        mTextCongratsMessage = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_congrats_message);
+        mButtonStart = (Button) studyOptionsView.findViewById(R.id.studyoptions_start);
+        mTextCongratsMessage = (TextView) studyOptionsView.findViewById(R.id.studyoptions_congrats_message);
         // Code common to both fragmented and non-fragmented view
-        mTextTodayNew = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new);
-        mTextTodayLrn = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_lrn);
-        mTextTodayRev = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_rev);
-        mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total_new);
-        mTextTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total);
-        mTextETA = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_eta);
+        mTextTodayNew = (TextView) studyOptionsView.findViewById(R.id.studyoptions_new);
+        mTextTodayLrn = (TextView) studyOptionsView.findViewById(R.id.studyoptions_lrn);
+        mTextTodayRev = (TextView) studyOptionsView.findViewById(R.id.studyoptions_rev);
+        mTextNewTotal = (TextView) studyOptionsView.findViewById(R.id.studyoptions_total_new);
+        mTextTotal = (TextView) studyOptionsView.findViewById(R.id.studyoptions_total);
+        mTextETA = (TextView) studyOptionsView.findViewById(R.id.studyoptions_eta);
         mButtonStart.setOnClickListener(mButtonClickListener);
     }
 
@@ -548,7 +549,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                         return;
                     }
                     // Reinitialize controls incase changed to filtered deck
-                    initAllContentViews();
+                    initAllContentViews(mStudyOptionsView);
                     // Set the deck name
                     String fullName;
                     JSONObject deck = getCol().getDecks().current();
