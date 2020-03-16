@@ -73,6 +73,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.IntentTop;
+import com.ichi2.utils.LanguageUtil;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
@@ -151,10 +152,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "lapses",
         "reviews",
         "interval",
+        "ease",
+        "due",
         "changed",
         "created",
-        "due",
-        "ease",
         "edited",
     };
     private long mLastRenderStart = 0;
@@ -1334,7 +1335,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-
     public static void updateSearchItemQA(Context context, Map<String, String> item, Card c) {
         // render question and answer
         Map<String, String> qa = c._getQA(true, true);
@@ -1359,11 +1359,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // database
         item.put("answer", formatQA(a));
         item.put("card", c.template().optString("name"));
-        // item.put("changed",strftime("%Y-%m-%d", localtime(c.getMod())));
-        // item.put("created",strftime("%Y-%m-%d", localtime(c.note().getId()/1000)));
-        // item.put("due",getDueString(c));
-        // item.put("ease","");
-        // item.put("edited",strftime("%Y-%m-%d", localtime(c.note().getMod())));
+        item.put("due", c.getDueString());
+        if (c.getType() == 0) {
+            item.put("ease", context.getString(R.string.card_browser_ease_new_card));
+        } else {
+            item.put("ease", (c.getFactor()/10)+"%");
+        }
+
+        item.put("changed", LanguageUtil.getShortDateFormatFromMs(c.getMod() * 1000L));
+        item.put("created", LanguageUtil.getShortDateFormatFromMs(c.note().getId()));
+        item.put("edited", LanguageUtil.getShortDateFormatFromMs(c.note().getMod() * 1000L));
         // interval
         int type = c.getType();
         if (type == 0) {
