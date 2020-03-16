@@ -64,6 +64,25 @@ function taFocus() {
     window.location.href = "signal:typefocus";
 }
 
+/*  Call displayCardAnswer() and answerCard() from anki deck template using javascript
+ *  See also AbstractFlashcardViewer.
+ */
+function showAnswer() {
+    window.location.href = "signal:show_answer";
+}
+function buttonAnswerEase1() {
+    window.location.href = "signal:answer_ease1";
+}
+function buttonAnswerEase2() {
+    window.location.href = "signal:answer_ease2";
+}
+function buttonAnswerEase3() {
+    window.location.href = "signal:answer_ease3";
+}
+function buttonAnswerEase4() {
+    window.location.href = "signal:answer_ease4";
+}
+
 /* Tell the app the text in the input box when it loses focus */
 function taBlur(itag) {
     window.location.href = "typeblurtext:" + itag.value;
