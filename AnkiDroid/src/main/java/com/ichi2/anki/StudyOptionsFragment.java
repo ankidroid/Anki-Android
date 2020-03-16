@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
@@ -172,6 +173,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         return f;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mLoadWithDeckOptions = getArguments().getBoolean("withDeckOptions");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -182,9 +190,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
         initAllContentViews();
-        if (getArguments() != null) {
-            mLoadWithDeckOptions = getArguments().getBoolean("withDeckOptions");
-        }
         mToolbar = (Toolbar) mStudyOptionsView.findViewById(R.id.studyOptionsToolbar);
         mToolbar.inflateMenu(R.menu.study_options_fragment);
         if (mToolbar != null) {
