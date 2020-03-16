@@ -39,6 +39,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
@@ -50,6 +54,7 @@ import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,6 +64,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
+import android.webkit.RenderProcessGoneDetail;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -332,6 +338,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private Sound mSoundPlayer = new Sound();
 
     private long mUseTimerDynamicMS;
+
+    /**
+     * Last card that the WebView Renderer crashed on.
+     * If we get 2 crashes on the same card, then we likely have an infinite loop and want to exit gracefully.
+     */
+    @Nullable
+    private Long lastCrashingCardId = null;
 
     // private int zEase;
 
@@ -1578,10 +1591,124 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 drawMark();
                 view.loadUrl("javascript:onPageFinished();");
             }
+
+            /** Fix: #5780 - WebView Renderer OOM crashes reviewer */
+            @Override
+            @TargetApi(Build.VERSION_CODES.O)
+            public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
+
+                if (mCard == null || !mCard.equals(view)) {
+                    //A view crashed that wasn't ours.
+                    //We have nothing to handle. Returning false is a desire to crash, so return true.
+                    Timber.i("Unrelated WebView Renderer terminated. Crashed: %b",  detail.didCrash());
+                    return true;
+                }
+
+                Timber.e("WebView Renderer process terminated. Crashed: %b",  detail.didCrash());
+
+                //Destroy the current WebView (to ensure WebView is GCed).
+                //Otherwise, we get the following error:
+                //"crash wasn't handled by all associated webviews, triggering application crash"
+                destroyWebView(mCard);
+                ViewGroup parent = (ViewGroup) mCardFrame.getParent();
+                parent.removeView(mCardFrame);
+                mCard = null;
+                mCardFrame = null;
+                //Even with the above, I occasionally saw the above error. Manually trigger the GC.
+                //I'll keep this line unless I see another crash, which would point to another underlying issue.
+                System.gc();
+
+                //We only want to show one message per branch.
+
+                //It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
+                int errorCauseId = detail.didCrash() ? R.string.webview_crash_unknown : R.string.webview_crash_oom;
+                String errorCauseString = getResources().getString(errorCauseId);
+
+                if (!canRecoverFromWebViewRendererCrash()) {
+                    Timber.e("Unrecoverable WebView Render crash");
+                    String errorMessage = getResources().getString(R.string.webview_crash_fatal, errorCauseString);
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, errorMessage, false);
+                    finishWithoutAnimation();
+                    return true;
+                }
+
+                if (webViewRendererLastCrashedOnCard(mCurrentCard.getId())) {
+                    Timber.e("Web Renderer crash loop on card: %d", mCurrentCard.getId());
+                    displayRenderLoopDialog(mCurrentCard, detail);
+                    return true;
+                }
+
+                // If we get here, the error is non-fatal and we should re-render the WebView
+                // This logic may need to be better defined. The card could have changed by the time we get here.
+                lastCrashingCardId = mCurrentCard.getId();
+
+
+                String nonFatalError = getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, nonFatalError, false);
+
+                //inflate a new instance of mCardFrame
+                mCardFrame = inflateNewView(R.id.flashcard);
+                parent.addView(mCardFrame);
+
+                recreateWebView();
+                displayCardQuestion();
+
+                //We handled the crash and can continue.
+                return true;
+            }
+
+
+            @TargetApi(Build.VERSION_CODES.O)
+            private void displayRenderLoopDialog(Card mCurrentCard, RenderProcessGoneDetail detail) {
+                String cardInformation = Long.toString(mCurrentCard.getId());
+                Resources res = getResources();
+
+                String errorDetails = detail.didCrash()
+                        ? res.getString(R.string.webview_crash_unknwon_detailed)
+                        : res.getString(R.string.webview_crash_oom_details);
+                new MaterialDialog.Builder(AbstractFlashcardViewer.this)
+                        .title(res.getString(R.string.webview_crash_loop_dialog_title))
+                        .content(res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
+                        .positiveText(R.string.dialog_ok)
+                        .onPositive((materialDialog, dialogAction) -> finishWithoutAnimation())
+                        .show();
+            }
         });
         // Set transparent color to prevent flashing white when night mode enabled
         webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
         return webView;
+    }
+
+    private boolean webViewRendererLastCrashedOnCard(long cardId) {
+        return lastCrashingCardId != null && lastCrashingCardId == cardId;
+    }
+
+
+    private boolean canRecoverFromWebViewRendererCrash() {
+        // DEFECT
+        // If we don't have a card to render, we're in a bad state. The class doesn't currently track state
+        // well enough to be able to know exactly where we are in the initialisation pipeline.
+        // so it's best to mark the crash as non-recoverable.
+        // We should fix this, but it's very unlikely that we'll ever get here. Logs will tell
+
+        // Revisit webViewCrashedOnCard() if changing this. Logic currently assumes we have a card.
+        return mCurrentCard != null;
+    }
+
+    //#5780 - Users could OOM the WebView Renderer. This triggers the same symptoms
+    @VisibleForTesting()
+    @SuppressWarnings("unused")
+    public void crashWebViewRenderer() {
+        mCard.loadUrl("chrome://crash");
+    }
+
+    private <T extends View> T inflateNewView(@IdRes int id) {
+        int layoutId = getContentViewAttr(mPrefFullscreenReview);
+        ViewGroup content = (ViewGroup) LayoutInflater.from(AbstractFlashcardViewer.this).inflate(layoutId, null, false);
+        T ret = content.findViewById(id);
+        ((ViewGroup) ret.getParent()).removeView(ret); //detach the view from its parent
+        content.removeAllViews();
+        return ret;
     }
 
     private void destroyWebView(WebView webView) {
@@ -1837,6 +1964,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCurrentCard == null) {
             return;
         }
+        recreateWebView();
+    }
+
+    private void recreateWebView() {
         if (mCard == null) {
             mCard = createWebView();
             // On your desktop use chrome://inspect to connect to emulator WebViews
