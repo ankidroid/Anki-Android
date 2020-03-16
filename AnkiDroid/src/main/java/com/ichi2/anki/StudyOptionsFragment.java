@@ -551,6 +551,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                         Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh");
                         return;
                     }
+
+                    //#5506 If we have no view, short circuit all UI logic
+                    if (mStudyOptionsView == null) {
+                        tryOpenCramDeckOptions();
+                        return;
+                    }
+
                     // Reinitialize controls incase changed to filtered deck
                     initAllContentViews(mStudyOptionsView);
                     // Set the deck name
@@ -579,12 +586,10 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                         throw new RuntimeException(e);
                     }
 
-                    // open cram deck option if deck is opened for the first time
-                    if (mLoadWithDeckOptions) {
-                        openFilteredDeckOptions(mLoadWithDeckOptions);
-                        mLoadWithDeckOptions = false;
+                    if (tryOpenCramDeckOptions()) {
                         return;
                     }
+
                     // Switch between the empty view, the ordinary view, and the "congratulations" view
                     boolean isDynamic = deck.optInt("dyn", 0) != 0;
                     if (totalCards == 0 && !isDynamic) {
@@ -686,6 +691,18 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 }
             }
         };
+    }
+
+    /** Open cram deck option if deck is opened for the first time
+     * @return Whether we opened the deck options */
+    private boolean tryOpenCramDeckOptions() {
+        if (!mLoadWithDeckOptions) {
+            return false;
+        }
+
+        openFilteredDeckOptions(true);
+        mLoadWithDeckOptions = false;
+        return true;
     }
 
     @VisibleForTesting()
