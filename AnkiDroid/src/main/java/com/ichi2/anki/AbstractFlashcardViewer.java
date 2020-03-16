@@ -1577,6 +1577,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 parent.removeView(mCardFrame);
                 mCard = null;
                 mCardFrame = null;
+                //Even with the above, I occasionally saw the above error. Manually trigger the GC.
+                //I'll keep this line unless I see another crash, which would point to another underlying issue.
+                System.gc();
 
                 //We only want to show one toast message per branch.
 
