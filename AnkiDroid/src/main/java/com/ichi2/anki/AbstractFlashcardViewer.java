@@ -2155,7 +2155,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected void displayCardAnswer() {
         Timber.d("displayCardAnswer()");
-        crashWebViewRenderer();
 
         // prevent answering (by e.g. gestures) before card is loaded
         if (mCurrentCard == null) {
