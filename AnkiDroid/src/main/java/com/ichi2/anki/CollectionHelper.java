@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
+import com.ichi2.preferences.PreferenceExtensions;
 
 import java.io.File;
 import java.io.IOException;
@@ -209,7 +210,10 @@ public class CollectionHelper {
      */
     public static String getCurrentAnkiDroidDirectory(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-        return preferences.getString("deckPath", getDefaultAnkiDroidDirectory());
+        return PreferenceExtensions.getOrSetString(
+                preferences,
+                "deckPath",
+                CollectionHelper::getDefaultAnkiDroidDirectory);
     }
 
     /**
