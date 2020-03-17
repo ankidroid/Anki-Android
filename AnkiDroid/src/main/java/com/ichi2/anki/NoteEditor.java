@@ -77,6 +77,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
+import com.ichi2.utils.IntentTop;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONArray;
@@ -886,6 +887,8 @@ public class NoteEditor extends AnkiActivity {
             case R.id.action_add_card_from_card_editor:
             case R.id.action_copy_card: {
                 Timber.i("NoteEditor:: Copy or add card button pressed");
+                // Intent and not IntentTop, because we want to return here after the copy.
+                // This open an "add note" window, but still use NoteEditor
                 Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
                 intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
                 // intent.putExtra(EXTRA_DECKPATH, mDeckPath);
@@ -1011,7 +1014,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
     private void showCardTemplateEditor() {
-        Intent intent = new Intent(this, CardTemplateEditor.class);
+        Intent intent = new IntentTop(this, CardTemplateEditor.class);
         // Pass the model ID
         try {
             intent.putExtra("modelId", getCurrentlySelectedModel().getLong("id"));
@@ -1272,7 +1275,7 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void startMultimediaFieldEditor(final int index, IMultimediaEditableNote mNote, IField field) {
-        Intent editCard = new Intent(NoteEditor.this, MultimediaEditFieldActivity.class);
+        Intent editCard = new IntentTop(NoteEditor.this, MultimediaEditFieldActivity.class);
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, index);
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field);
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, mNote);

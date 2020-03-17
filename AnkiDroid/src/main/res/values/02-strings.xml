@@ -51,6 +51,14 @@
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="corrupt_font">Corrupt font file %s</string>
+    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
+    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
+    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
+    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%s\'.\n %s</string>
 
     <!-- Browser -->
     <string-array name="browser_column1_headings">
@@ -66,14 +74,12 @@
         <item>Tags</item>
         <item>Lapses</item>
         <item>Reviews</item>
-        <!--
-    <item>Changed</item>
-    <item>Created</item>
-    <item>Due</item>
-    <item>Ease</item>
-    <item>Edited</item>
-        -->
         <item>Interval</item>
+        <item>Ease</item>
+        <item>Due</item>
+        <item>Changed</item>
+        <item>Created</item>
+        <item>Edited</item>
     </string-array>
 
     <!-- Custom study options -->

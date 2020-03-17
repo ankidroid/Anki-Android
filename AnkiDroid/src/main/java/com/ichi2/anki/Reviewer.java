@@ -45,6 +45,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.IntentTop;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
@@ -277,7 +278,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 break;
 
             case R.id.action_open_deck_options:
-                Intent i = new Intent(this, DeckOptions.class);
+                Intent i = new IntentTop(this, DeckOptions.class);
                 startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.FADE);
                 break;
 
@@ -352,7 +353,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private void addNote() {
-        Intent intent = new Intent(this, NoteEditor.class);
+        Intent intent = new IntentTop(this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD);
         startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
     }

@@ -72,6 +72,8 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
+import com.ichi2.utils.IntentTop;
+import com.ichi2.utils.LanguageUtil;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
@@ -150,10 +152,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "lapses",
         "reviews",
         "interval",
+        "ease",
+        "due",
         "changed",
         "created",
-        "due",
-        "ease",
         "edited",
     };
     private long mLastRenderStart = 0;
@@ -573,7 +575,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     mCurrentCardId = Long.parseLong(getCards().get(position).get("id"));
                     sCardBrowserCard = getCol().getCard(mCurrentCardId);
                     // start note editor using the card we just loaded
-                    Intent editCard = new Intent(CardBrowser.this, NoteEditor.class);
+                    Intent editCard = new IntentTop(CardBrowser.this, NoteEditor.class);
                     editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
                     editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
                     startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
@@ -797,7 +799,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 endMultiSelectMode();
                 return true;
             case R.id.action_add_card_from_card_browser: {
-                Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
+                Intent intent = new IntentTop(CardBrowser.this, NoteEditor.class);
                 intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
                 startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
                 return true;
@@ -936,7 +938,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_preview: {
-                Intent previewer = new Intent(CardBrowser.this, Previewer.class);
+                Intent previewer = new IntentTop(CardBrowser.this, Previewer.class);
                 if (mInMultiSelectMode && mCheckedCardPositions.size() > 1) {
                     // Multiple cards have been explicitly selected, so preview only those cards
                     previewer.putExtra("index", 0);
@@ -1333,7 +1335,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-
     public static void updateSearchItemQA(Context context, Map<String, String> item, Card c) {
         // render question and answer
         Map<String, String> qa = c._getQA(true, true);
@@ -1358,11 +1359,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // database
         item.put("answer", formatQA(a));
         item.put("card", c.template().optString("name"));
-        // item.put("changed",strftime("%Y-%m-%d", localtime(c.getMod())));
-        // item.put("created",strftime("%Y-%m-%d", localtime(c.note().getId()/1000)));
-        // item.put("due",getDueString(c));
-        // item.put("ease","");
-        // item.put("edited",strftime("%Y-%m-%d", localtime(c.note().getMod())));
+        item.put("due", c.getDueString());
+        if (c.getType() == 0) {
+            item.put("ease", context.getString(R.string.card_browser_ease_new_card));
+        } else {
+            item.put("ease", (c.getFactor()/10)+"%");
+        }
+
+        item.put("changed", LanguageUtil.getShortDateFormatFromMs(c.getMod() * 1000L));
+        item.put("created", LanguageUtil.getShortDateFormatFromMs(c.note().getId()));
+        item.put("edited", LanguageUtil.getShortDateFormatFromMs(c.note().getMod() * 1000L));
         // interval
         int type = c.getType();
         if (type == 0) {
@@ -1387,7 +1393,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         s = s.replace("<br />", " ");
         s = s.replace("<div>", " ");
         s = s.replace("\n", " ");
-        s = s.replaceAll("\\[sound:[^]]+\\]", "");
+        s = Utils.stripSoundMedia(s);
         s = s.replaceAll("\\[\\[type:[^]]+\\]\\]", "");
         s = Utils.stripHTMLMedia(s);
         s = s.trim();
@@ -1707,7 +1713,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             // do nothing when pref is 100% and apply scaling only once
             if (mFontSizeScalePcent != 100 && Math.abs(mOriginalTextSize - currentSize) < 0.1) {
-                v.setTextSize(TypedValue.COMPLEX_UNIT_SP, mOriginalTextSize * (mFontSizeScalePcent / 100.0f));
+                // getTextSize returns value in absolute PX so use that in the setter
+                v.setTextSize(TypedValue.COMPLEX_UNIT_PX, mOriginalTextSize * (mFontSizeScalePcent / 100.0f));
             }
 
             if (mCustomTypeface != null) {
