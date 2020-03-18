@@ -1366,9 +1366,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             item.put("ease", (c.getFactor()/10)+"%");
         }
 
-        item.put("changed", LanguageUtil.getShortDateFormatFromMs(c.getMod() * 1000L));
+        item.put("changed", LanguageUtil.getShortDateFormatFromS(c.getMod()));
         item.put("created", LanguageUtil.getShortDateFormatFromMs(c.note().getId()));
-        item.put("edited", LanguageUtil.getShortDateFormatFromMs(c.note().getMod() * 1000L));
+        item.put("edited", LanguageUtil.getShortDateFormatFromS(c.note().getMod()));
         // interval
         int type = c.getType();
         if (type == 0) {
