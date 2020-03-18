@@ -710,18 +710,17 @@ public class Card implements Cloneable {
         long due = getDue();
         if (getODid() != 0) {
             return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card);
-        }
-        else if (getQueue() == 1) {
+        } else if (getQueue() == 1) {
             date = due;
         } else if (getQueue() == 0 || getType() == 0) {
             return (new Long(due)).toString();
-        } else if (getQueue() == 2 || getQueue() == 3 || (getType() == 2 && getQueue() <0)) {
+        } else if (getQueue() == 2 || getQueue() == 3 || (getType() == 2 && getQueue() < 0)) {
             long time = System.currentTimeMillis();
             long nbDaySinceCreation = (due - getCol().getSched().getToday());
-            date = time + (nbDaySinceCreation * 86400L * 1000L);
+            date = time + (nbDaySinceCreation * 86400L);
         } else {
             return "";
         }
-        return LanguageUtil.getShortDateFormatFromMs(date);
+        return LanguageUtil.getShortDateFormatFromS(date);
     }
 }
