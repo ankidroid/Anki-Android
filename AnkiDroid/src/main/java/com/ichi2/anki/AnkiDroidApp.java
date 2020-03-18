@@ -153,7 +153,7 @@ public class AnkiDroidApp extends Application {
      * collections being upgraded to (or after) this version must run an integrity check as it will contain fixes that
      * all collections should have.
      */
-    public static final int CHECK_DB_AT_VERSION = 21000150;
+    public static final int CHECK_DB_AT_VERSION = 21000151;
 
     /**
      * The latest package version number that included changes to the preferences that requires handling. All
