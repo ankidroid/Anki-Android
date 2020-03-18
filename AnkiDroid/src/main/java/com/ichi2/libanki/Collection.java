@@ -1607,7 +1607,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         long oldSize = file.length();
         int currentTask = 1;
-        int totalTasks = (mModels.all().size() * 4) + 21; // 4 things are in all-models loops, 20 things are one-offs
+        int totalTasks = (mModels.all().size() * 4) + 21; // a few fixes are in all-models loops, the rest are one-offs
         try {
             mDb.getDatabase().beginTransaction();
             try {
