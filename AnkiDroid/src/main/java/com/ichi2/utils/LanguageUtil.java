@@ -76,4 +76,8 @@ public class LanguageUtil {
         return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(ms));
     }
 
+    public static String getShortDateFormatFromS(long s) {
+        return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(s * 1000L));
+    }
+
 }
