@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
+import static com.ichi2.utils.FunctionalInterfaces.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -19,8 +20,8 @@ import static org.mockito.ArgumentMatchers.eq;
 @RunWith(PowerMockRunner.class)
 public class PreferenceExtensionsTest {
 
-    private static PreferenceExtensions.Supplier<String> UNUSED_SUPPLIER = () -> { throw new UnexpectedException();};
-    private static PreferenceExtensions.Supplier<String> EXCEPTION_SUPPLIER = () -> { throw new ExpectedException();};
+    private static Supplier<String> UNUSED_SUPPLIER = () -> { throw new UnexpectedException();};
+    private static Supplier<String> EXCEPTION_SUPPLIER = () -> { throw new ExpectedException();};
 
     private static final String VALID_KEY = "VALID";
     private static final String VALID_RESULT = "WAS VALID KEY";
@@ -33,7 +34,7 @@ public class PreferenceExtensionsTest {
     @Mock
     private SharedPreferences.Editor mockEditor;
 
-    private String getOrSetString(String key, PreferenceExtensions.Supplier<String> supplier) {
+    private String getOrSetString(String key, Supplier<String> supplier) {
         return PreferenceExtensions.getOrSetString(mMockReferences, key, supplier);
     }
 

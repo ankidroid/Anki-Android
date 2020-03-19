@@ -2,6 +2,8 @@ package com.ichi2.preferences;
 
 import android.content.SharedPreferences;
 
+import com.ichi2.utils.FunctionalInterfaces.*;
+
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 
@@ -22,11 +24,5 @@ public class PreferenceExtensions {
         String supplied = supplier.get();
         target.edit().putString(key, supplied).apply();
         return supplied;
-    }
-
-    /** TODO: Move this to Supplier in API 24 */
-    @FunctionalInterface
-    public interface Supplier<T> {
-        T get();
     }
 }
