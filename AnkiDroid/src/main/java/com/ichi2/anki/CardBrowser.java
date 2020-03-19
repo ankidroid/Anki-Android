@@ -57,6 +57,7 @@ import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.IntegerDialog;
+import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
@@ -972,30 +973,23 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             case R.id.action_reschedule_cards: {
                 Timber.i("CardBrowser:: Reschedule button pressed");
-                IntegerDialog rescheduleDialog = new IntegerDialog();
 
-                String content = null;
-                if (getSelectedCardIds().length == 1) {
-                    long cardId = getSelectedCardIds()[0];
-                    Card selectedCard = getCol().getCard(cardId);
-                    if (selectedCard.isReview() && !selectedCard.isDynamic()) {
-                        //#5595 - Help a user reschedule cards by showing them the current interval.
-                        //DEFECT: We should be able to calculate this for all card types.
-                        content = getResources().getString(R.string.reschedule_card_dialog_interval, selectedCard.getIvl());
-                    }
-                }
-
-                rescheduleDialog.setArgs(
-                        getString(R.string.reschedule_card_dialog_title),
-                        getString(R.string.reschedule_card_dialog_message),
-                        4,
-                        content);
-                rescheduleDialog.setCallbackRunnable(rescheduleDialog.new IntRunnable() {
+                long[] selectedCardIds = getSelectedCardIds();
+                IntegerDialog.IntRunnable runnable = new IntegerDialog.IntRunnable() {
                     public void run() {
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
-                                new DeckTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
+                                new DeckTask.TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
                     }
-                });
+                };
+
+                RescheduleDialog rescheduleDialog;
+                if (selectedCardIds.length == 1) {
+                    long cardId = selectedCardIds[0];
+                    Card selected = getCol().getCard(cardId);
+                    rescheduleDialog = RescheduleDialog.rescheduleSingleCard(getResources(), selected, runnable);
+                } else {
+                    rescheduleDialog = RescheduleDialog.rescheduleMultipleCards(getResources(), runnable);
+                }
                 showDialogFragment(rescheduleDialog);
                 return true;
             }
@@ -1020,7 +1014,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         getString(R.string.reposition_card_dialog_title),
                         getString(R.string.reposition_card_dialog_message),
                         5);
-                repositionDialog.setCallbackRunnable(repositionDialog.new IntRunnable() {
+                repositionDialog.setCallbackRunnable(new IntegerDialog.IntRunnable() {
                     public void run() {
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
                                 new DeckTask.TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, this.getInt()}));

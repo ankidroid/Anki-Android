@@ -15,7 +15,8 @@ public class IntegerDialog extends AnalyticsDialogFragment {
 
     private IntRunnable callbackRunnable;
 
-    public abstract class IntRunnable implements Runnable {
+    //TODO: Why isn't this a consumer accepting an int?
+    public static abstract class IntRunnable implements Runnable {
         private int mInt;
         public void setInt(int intArg) {
             mInt = intArg;

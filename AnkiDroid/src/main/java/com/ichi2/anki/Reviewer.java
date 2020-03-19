@@ -39,6 +39,7 @@ import android.widget.FrameLayout;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.IntegerDialog;
+import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -319,28 +320,15 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     private void showRescheduleCardDialog() {
-        IntegerDialog rescheduleDialog = new IntegerDialog();
-
-        String content = null;
-        if (mCurrentCard.isReview() && !mCurrentCard.isDynamic()) {
-            //#5595 - Help a user reschedule cards by showing them the current interval.
-            //DEFECT: We should be able to calculate this for all card types.
-            content = getResources().getString(R.string.reschedule_card_dialog_interval, mCurrentCard.getIvl());
-        }
-
-        rescheduleDialog.setArgs(
-                getResources().getString(R.string.reschedule_card_dialog_title),
-                getResources().getString(R.string.reschedule_card_dialog_message),
-                4,
-                content);
-
-        rescheduleDialog.setCallbackRunnable(rescheduleDialog.new IntRunnable() {
+        IntegerDialog.IntRunnable runnable = new IntegerDialog.IntRunnable() {
             public void run() {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
                         new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
             }
-        });
-        showDialogFragment(rescheduleDialog);
+        };
+        RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
+
+        showDialogFragment(dialog);
     }
 
 
