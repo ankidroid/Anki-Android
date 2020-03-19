@@ -723,4 +723,15 @@ public class Card implements Cloneable {
         }
         return LanguageUtil.getShortDateFormatFromS(date);
     }
+
+    /** Non libAnki */
+    public boolean isDynamic() {
+        //I have cards in my collection with oDue <> 0 and oDid = 0.
+        //These are not marked as dynamic.
+        return this.getODid() != 0;
+    }
+
+    public boolean isReview() {
+        return this.getType() == 2 && this.getQueue() == 2;
+    }
 }
