@@ -25,7 +25,7 @@ public class RescheduleDialog extends IntegerDialog {
         String content = getContentString(resources, currentCard);
 
         rescheduleDialog.setArgs(
-                resources.getString(R.string.reschedule_card_dialog_title),
+                resources.getQuantityString(R.plurals.reschedule_cards_dialog_title, 1),
                 resources.getString(R.string.reschedule_card_dialog_message),
                 4,
                 content);
@@ -39,11 +39,11 @@ public class RescheduleDialog extends IntegerDialog {
 
     @NotNull
     @CheckResult
-    public static RescheduleDialog rescheduleMultipleCards(Resources resources, Consumer<Integer> consumer) {
+    public static RescheduleDialog rescheduleMultipleCards(Resources resources, Consumer<Integer> consumer, int cardCount) {
         RescheduleDialog rescheduleDialog = new RescheduleDialog();
 
         rescheduleDialog.setArgs(
-                resources.getString(R.string.reschedule_card_dialog_title),
+                resources.getQuantityString(R.plurals.reschedule_cards_dialog_title, cardCount),
                 resources.getString(R.string.reschedule_card_dialog_message),
                 4);
 

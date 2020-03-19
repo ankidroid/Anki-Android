@@ -987,7 +987,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     Card selected = getCol().getCard(cardId);
                     rescheduleDialog = RescheduleDialog.rescheduleSingleCard(getResources(), selected, consumer);
                 } else {
-                    rescheduleDialog = RescheduleDialog.rescheduleMultipleCards(getResources(), consumer);
+                    rescheduleDialog = RescheduleDialog.rescheduleMultipleCards(getResources(),
+                            consumer,
+                            selectedCardIds.length);
                 }
                 showDialogFragment(rescheduleDialog);
                 return true;
