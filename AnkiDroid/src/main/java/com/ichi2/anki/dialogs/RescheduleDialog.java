@@ -62,7 +62,7 @@ public class RescheduleDialog extends IntegerDialog {
             return null;
         }
 
-        return resources.getString(R.string.reschedule_card_dialog_interval, currentCard.getIvl());
+        return resources.getQuantityString(R.plurals.reschedule_card_dialog_interval, currentCard.getIvl(), currentCard.getIvl());
     }
 
 }
