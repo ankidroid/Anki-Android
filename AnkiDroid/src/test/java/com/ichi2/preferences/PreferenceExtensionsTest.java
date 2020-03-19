@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
-import static com.ichi2.utils.FunctionalInterfaces.*;
+import static com.ichi2.utils.FunctionalInterfaces.Supplier;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
