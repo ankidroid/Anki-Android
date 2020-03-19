@@ -7,28 +7,17 @@ import android.text.InputType;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.utils.FunctionalInterfaces.Consumer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class IntegerDialog extends AnalyticsDialogFragment {
 
-    private IntRunnable callbackRunnable;
+    private Consumer<Integer> consumer;
 
-    //TODO: Why isn't this a consumer accepting an int?
-    public static abstract class IntRunnable implements Runnable {
-        private int mInt;
-        public void setInt(int intArg) {
-            mInt = intArg;
-        }
-        public int getInt() {
-            return mInt;
-        }
-        public abstract void run();
-    }
-
-    public void setCallbackRunnable(IntRunnable callbackRunnable) {
-        this.callbackRunnable = callbackRunnable;
+    public void setCallbackRunnable(Consumer<Integer> consumer) {
+        this.consumer = consumer;
     }
 
     public void setArgs(String title, String prompt, int digits) {
@@ -53,10 +42,8 @@ public class IntegerDialog extends AnalyticsDialogFragment {
                 .negativeText(R.string.cancel)
                 .inputType(InputType.TYPE_CLASS_NUMBER)
                 .inputRange(1, getArguments().getInt("digits"))
-                .input(getArguments().getString("prompt"), "", (dialog, text) -> {
-                    callbackRunnable.setInt(Integer.parseInt(text.toString()));
-                    callbackRunnable.run();
-                });
+                .input(getArguments().getString("prompt"), "",
+                        (dialog, text) -> consumer.consume(Integer.parseInt(text.toString())));
         //content is marked as @NotNull
         //We can't use "" as that creates padding, and want to respect the contract, so only set if not null
         String content = getArguments().getString("content");
