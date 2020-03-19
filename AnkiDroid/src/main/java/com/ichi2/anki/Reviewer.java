@@ -320,10 +320,20 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void showRescheduleCardDialog() {
         IntegerDialog rescheduleDialog = new IntegerDialog();
+
+        String content = null;
+        if (mCurrentCard.isReview() && !mCurrentCard.isDynamic()) {
+            //#5595 - Help a user reschedule cards by showing them the current interval.
+            //DEFECT: We should be able to calculate this for all card types.
+            content = getResources().getString(R.string.reschedule_card_dialog_interval, mCurrentCard.getIvl());
+        }
+
         rescheduleDialog.setArgs(
                 getResources().getString(R.string.reschedule_card_dialog_title),
                 getResources().getString(R.string.reschedule_card_dialog_message),
-                4);
+                4,
+                content);
+
         rescheduleDialog.setCallbackRunnable(rescheduleDialog.new IntRunnable() {
             public void run() {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,

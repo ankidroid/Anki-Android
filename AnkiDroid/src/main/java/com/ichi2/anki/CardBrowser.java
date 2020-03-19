@@ -973,10 +973,23 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case R.id.action_reschedule_cards: {
                 Timber.i("CardBrowser:: Reschedule button pressed");
                 IntegerDialog rescheduleDialog = new IntegerDialog();
+
+                String content = null;
+                if (getSelectedCardIds().length == 1) {
+                    long cardId = getSelectedCardIds()[0];
+                    Card selectedCard = getCol().getCard(cardId);
+                    if (selectedCard.isReview() && !selectedCard.isDynamic()) {
+                        //#5595 - Help a user reschedule cards by showing them the current interval.
+                        //DEFECT: We should be able to calculate this for all card types.
+                        content = getResources().getString(R.string.reschedule_card_dialog_interval, selectedCard.getIvl());
+                    }
+                }
+
                 rescheduleDialog.setArgs(
                         getString(R.string.reschedule_card_dialog_title),
                         getString(R.string.reschedule_card_dialog_message),
-                        4);
+                        4,
+                        content);
                 rescheduleDialog.setCallbackRunnable(rescheduleDialog.new IntRunnable() {
                     public void run() {
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
