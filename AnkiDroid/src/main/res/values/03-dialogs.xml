@@ -58,7 +58,10 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Reschedule card</string>
-    <string name="reschedule_card_dialog_interval">Current interval: %d days</string>
+    <plurals name="reschedule_card_dialog_interval">
+        <item quantity="one">Current interval: %d day</item>
+        <item quantity="other">Current interval: %d days</item>
+    </plurals>
     <string name="reschedule_card_dialog_message">Reschedule for review in x days</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d card rescheduled</item>
