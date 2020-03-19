@@ -73,6 +73,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
+import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.IntentTop;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.widget.WidgetStatus;
@@ -975,20 +976,18 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 Timber.i("CardBrowser:: Reschedule button pressed");
 
                 long[] selectedCardIds = getSelectedCardIds();
-                IntegerDialog.IntRunnable runnable = new IntegerDialog.IntRunnable() {
-                    public void run() {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
-                                new DeckTask.TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
-                    }
-                };
+                FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
+                        mRescheduleCardHandler,
+                        new TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays}));
 
                 RescheduleDialog rescheduleDialog;
                 if (selectedCardIds.length == 1) {
                     long cardId = selectedCardIds[0];
                     Card selected = getCol().getCard(cardId);
-                    rescheduleDialog = RescheduleDialog.rescheduleSingleCard(getResources(), selected, runnable);
+                    rescheduleDialog = RescheduleDialog.rescheduleSingleCard(getResources(), selected, consumer);
                 } else {
-                    rescheduleDialog = RescheduleDialog.rescheduleMultipleCards(getResources(), runnable);
+                    rescheduleDialog = RescheduleDialog.rescheduleMultipleCards(getResources(), consumer);
                 }
                 showDialogFragment(rescheduleDialog);
                 return true;
@@ -1014,12 +1013,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         getString(R.string.reposition_card_dialog_title),
                         getString(R.string.reposition_card_dialog_message),
                         5);
-                repositionDialog.setCallbackRunnable(new IntegerDialog.IntRunnable() {
-                    public void run() {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
-                                new DeckTask.TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, this.getInt()}));
-                    }
-                });
+                repositionDialog.setCallbackRunnable(days ->
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
+                        new DeckTask.TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, days}))
+                );
                 showDialogFragment(repositionDialog);
                 return true;
             }

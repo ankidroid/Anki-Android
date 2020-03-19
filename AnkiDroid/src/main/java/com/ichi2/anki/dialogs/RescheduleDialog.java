@@ -4,6 +4,7 @@ import android.content.res.Resources;
 
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
+import com.ichi2.utils.FunctionalInterfaces.Consumer;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +18,8 @@ public class RescheduleDialog extends IntegerDialog {
 
     @NotNull
     @CheckResult
-    public static RescheduleDialog rescheduleSingleCard(Resources resources, Card currentCard, IntRunnable callbackRunnable) {
+    public static RescheduleDialog rescheduleSingleCard(Resources resources, Card currentCard,
+                                                        Consumer<Integer> consumer) {
         RescheduleDialog rescheduleDialog = new RescheduleDialog();
 
         String content = getContentString(resources, currentCard);
@@ -28,8 +30,8 @@ public class RescheduleDialog extends IntegerDialog {
                 4,
                 content);
 
-        if (callbackRunnable != null) {
-            rescheduleDialog.setCallbackRunnable(callbackRunnable);
+        if (consumer != null) {
+            rescheduleDialog.setCallbackRunnable(consumer);
         }
 
         return rescheduleDialog;
@@ -37,7 +39,7 @@ public class RescheduleDialog extends IntegerDialog {
 
     @NotNull
     @CheckResult
-    public static RescheduleDialog rescheduleMultipleCards(Resources resources, IntRunnable callbackRunnable) {
+    public static RescheduleDialog rescheduleMultipleCards(Resources resources, Consumer<Integer> consumer) {
         RescheduleDialog rescheduleDialog = new RescheduleDialog();
 
         rescheduleDialog.setArgs(
@@ -45,8 +47,8 @@ public class RescheduleDialog extends IntegerDialog {
                 resources.getString(R.string.reschedule_card_dialog_message),
                 4);
 
-        if (callbackRunnable != null) {
-            rescheduleDialog.setCallbackRunnable(callbackRunnable);
+        if (consumer != null) {
+            rescheduleDialog.setCallbackRunnable(consumer);
         }
 
         return rescheduleDialog;

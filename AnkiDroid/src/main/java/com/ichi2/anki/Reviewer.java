@@ -38,7 +38,6 @@ import android.widget.FrameLayout;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
@@ -46,6 +45,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.IntentTop;
 import com.ichi2.widget.WidgetStatus;
 
@@ -320,12 +320,11 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     private void showRescheduleCardDialog() {
-        IntegerDialog.IntRunnable runnable = new IntegerDialog.IntRunnable() {
-            public void run() {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
-                        new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
-            }
-        };
+        Consumer<Integer> runnable = days ->
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
+                    new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()},
+                    Collection.DismissType.RESCHEDULE_CARDS, days})
+            );
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
 
         showDialogFragment(dialog);
