@@ -231,8 +231,8 @@ class AnkiExporter extends Exporter {
                     String fname = f.getName();
                     if (fname.startsWith("_")) {
                         // Loop through every model that will be exported, and check if it contains a reference to f
-                        for (int idx = 0; idx < mid.size(); idx++) {
-                            if (_modelHasMedia(mSrc.getModels().get(idx), fname)) {
+                        for (JSONObject model : mSrc.getModels().all()) {
+                            if (_modelHasMedia(model, fname)) {
                                 media.put(fname, true);
                                 break;
                             }
