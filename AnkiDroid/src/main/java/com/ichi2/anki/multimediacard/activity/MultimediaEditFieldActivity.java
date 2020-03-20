@@ -125,6 +125,14 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         return false;
     }
 
+    /** Sets various properties required for IFieldController to be in a valid state */
+    private void setupUIController(IFieldController fieldController) {
+        fieldController.setField(mField);
+        fieldController.setFieldIndex(mFieldIndex);
+        fieldController.setNote(mNote);
+        fieldController.setEditingActivity(this);
+    }
+
     private void recreateEditingUi() {
         Timber.d("recreateEditingUi()");
 
@@ -141,10 +149,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return;
         }
 
-        mFieldController.setField(mField);
-        mFieldController.setFieldIndex(mFieldIndex);
-        mFieldController.setNote(mNote);
-        mFieldController.setEditingActivity(this);
+        setupUIController(mFieldController);
 
         LinearLayout linearLayout = findViewById(R.id.LinearLayoutInScrollViewFieldEdit);
 
