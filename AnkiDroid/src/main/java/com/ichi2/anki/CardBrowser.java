@@ -74,7 +74,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
-import com.ichi2.utils.IntentTop;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.widget.WidgetStatus;
 
@@ -577,7 +576,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     mCurrentCardId = Long.parseLong(getCards().get(position).get("id"));
                     sCardBrowserCard = getCol().getCard(mCurrentCardId);
                     // start note editor using the card we just loaded
-                    Intent editCard = new IntentTop(CardBrowser.this, NoteEditor.class);
+                    Intent editCard = new Intent(CardBrowser.this, NoteEditor.class);
                     editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
                     editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
                     startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
@@ -801,7 +800,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 endMultiSelectMode();
                 return true;
             case R.id.action_add_card_from_card_browser: {
-                Intent intent = new IntentTop(CardBrowser.this, NoteEditor.class);
+                Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
                 intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
                 startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
                 return true;
@@ -940,7 +939,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_preview: {
-                Intent previewer = new IntentTop(CardBrowser.this, Previewer.class);
+                Intent previewer = new Intent(CardBrowser.this, Previewer.class);
                 if (mInMultiSelectMode && mCheckedCardPositions.size() > 1) {
                     // Multiple cards have been explicitly selected, so preview only those cards
                     previewer.putExtra("index", 0);

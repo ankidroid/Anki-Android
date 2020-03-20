@@ -35,8 +35,6 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
-import com.ichi2.utils.IntentTop;
-import com.ichi2.utils.IntentTopNewTask;
 
 import timber.log.Timber;
 
@@ -274,8 +272,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             if (col != null) {
                 onCollectionLoaded(col);
             } else {
-                Intent deckPicker = new IntentTopNewTask(this, DeckPicker.class);
+                Intent deckPicker = new Intent(this, DeckPicker.class);
                 deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
+                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
             }
         });
@@ -431,8 +430,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
                 builder.setLights(Color.BLUE, 1000, 1000);
             }
             // Creates an explicit intent for an Activity in your app
-            Intent resultIntent = new IntentTopNewTask(this, DeckPicker.class);
-            resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            Intent resultIntent = new Intent(this, DeckPicker.class);
+            resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(resultPendingIntent);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -451,7 +450,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     public void dismissSimpleMessageDialog(boolean reload) {
         dismissAllDialogFragments();
         if (reload) {
-            Intent deckPicker = new IntentTopNewTask(this, DeckPicker.class);
+            Intent deckPicker = new Intent(this, DeckPicker.class);
+            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivityWithoutAnimation(deckPicker);
         }
     }
@@ -466,7 +466,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     // Restart the activity
     public void restartActivity() {
         Timber.i("AnkiActivity -- restartActivity()");
-        Intent intent = new IntentTop();
+        Intent intent = new Intent();
         intent.setClass(this, this.getClass());
         intent.putExtras(new Bundle());
         this.startActivityWithoutAnimation(intent);

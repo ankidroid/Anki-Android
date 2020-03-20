@@ -62,7 +62,6 @@ import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.ui.ConfirmationPreference;
 import com.ichi2.ui.SeekBarPreference;
-import com.ichi2.utils.IntentTop;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.VersionUtils;
@@ -178,7 +177,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // ----------------------------------------------------------------------------
 
     public static Intent getPreferenceSubscreenIntent(Context context, String subscreen) {
-        Intent i = new IntentTop(context, Preferences.class);
+        Intent i = new Intent(context, Preferences.class);
         i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, "com.ichi2.anki.Preferences$SettingsFragment");
         Bundle extras = new Bundle();
         extras.putString("subscreen", subscreen);

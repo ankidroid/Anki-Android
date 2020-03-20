@@ -104,7 +104,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.ImportUtils;
-import com.ichi2.utils.IntentTop;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
@@ -595,7 +594,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             case R.id.action_model_browser_open: {
                 Timber.i("DeckPicker:: Model browser button pressed");
-                Intent noteTypeBrowser = new IntentTop(this, ModelBrowser.class);
+                Intent noteTypeBrowser = new Intent(this, ModelBrowser.class);
                 startActivityForResultWithAnimation(noteTypeBrowser, 0, ActivityTransitionAnimation.LEFT);
                 return true;
             }
@@ -884,7 +883,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void addNote() {
-        Intent intent = new IntentTop(DeckPicker.this, NoteEditor.class);
+        Intent intent = new Intent(DeckPicker.this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
         startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
     }
@@ -1019,7 +1018,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // If no changes are required we go to the new features activity
                 // There the "lastVersion" is set, so that this code is not reached again
                 if (VersionUtils.isReleaseVersion()) {
-                    Intent infoIntent = new IntentTop(this, Info.class);
+                    Intent infoIntent = new Intent(this, Info.class);
                     infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
 
                     if (skip != 0) {
@@ -1689,7 +1688,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void loginToSyncServer() {
-        Intent myAccount = new IntentTop(this, MyAccount.class);
+        Intent myAccount = new Intent(this, MyAccount.class);
         myAccount.putExtra("notLoggedIn", true);
         startActivityForResultWithAnimation(myAccount, LOG_IN_FOR_SYNC, ActivityTransitionAnimation.FADE);
     }
@@ -1868,7 +1867,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions);
         } else {
-            Intent intent = new IntentTop();
+            Intent intent = new Intent();
             intent.putExtra("withDeckOptions", withDeckOptions);
             intent.setClass(this, StudyOptionsActivity.class);
             startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, ActivityTransitionAnimation.LEFT);
@@ -2034,12 +2033,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // open deck options
         if (getCol().getDecks().isDyn(mContextMenuDid)) {
             // open cram options if filtered deck
-            Intent i = new IntentTop(DeckPicker.this, FilteredDeckOptions.class);
+            Intent i = new Intent(DeckPicker.this, FilteredDeckOptions.class);
             i.putExtra("did", mContextMenuDid);
             startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
         } else {
             // otherwise open regular options
-            Intent i = new IntentTop(DeckPicker.this, DeckOptions.class);
+            Intent i = new Intent(DeckPicker.this, DeckOptions.class);
             i.putExtra("did", mContextMenuDid);
             startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
         }
@@ -2243,7 +2242,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void openReviewer() {
-        Intent reviewer = new IntentTop(this, Reviewer.class);
+        Intent reviewer = new Intent(this, Reviewer.class);
         startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
         getCol().startTimebox();
     }

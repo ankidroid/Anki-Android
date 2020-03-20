@@ -47,7 +47,6 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
-import com.ichi2.utils.IntentTop;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
@@ -262,7 +261,7 @@ public class ModelBrowser extends AnkiActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 long noteTypeID = mModelIds.get(position);
                 mModelListPosition = position;
-                Intent noteOpenIntent = new IntentTop(ModelBrowser.this, ModelFieldEditor.class);
+                Intent noteOpenIntent = new Intent(ModelBrowser.this, ModelFieldEditor.class);
                 noteOpenIntent.putExtra("title", mModelDisplayList.get(position).getName());
                 noteOpenIntent.putExtra("noteTypeID", noteTypeID);
                 startActivityForResultWithAnimation(noteOpenIntent, 0, ActivityTransitionAnimation.LEFT);
@@ -532,7 +531,7 @@ public class ModelBrowser extends AnkiActivity {
      * the user to edit the current note's templates.
      */
     private void openTemplateEditor() {
-        Intent intent = new IntentTop(this, CardTemplateEditor.class);
+        Intent intent = new Intent(this, CardTemplateEditor.class);
         intent.putExtra("modelId", mCurrentID);
         startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
     }

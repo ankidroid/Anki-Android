@@ -37,7 +37,6 @@ import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.utils.IntentTop;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -121,7 +120,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 return;
             }
 
-            Intent intent = new IntentTop(mActivity, LoadPronounciationActivity.class);
+            Intent intent = new Intent(mActivity, LoadPronounciationActivity.class);
             intent.putExtra(LoadPronounciationActivity.EXTRA_SOURCE, source);
             mActivity.startActivityForResultWithoutAnimation(intent, REQUEST_CODE_PRONOUNCIATION);
         });
@@ -369,7 +368,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     private void startTranslationWithGlosbe() {
         String source = mEditText.getText().toString();
 
-        Intent intent = new IntentTop(mActivity, TranslationActivity.class);
+        Intent intent = new Intent(mActivity, TranslationActivity.class);
         intent.putExtra(TranslationActivity.EXTRA_SOURCE, source);
         mActivity.startActivityForResultWithoutAnimation(intent, REQUEST_CODE_TRANSLATE_GLOSBE);
     }

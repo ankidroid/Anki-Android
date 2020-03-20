@@ -41,7 +41,6 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.utils.IntentTop;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -126,7 +125,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                         switch (view.getId()) {
                             case DECK_OPTIONS: {
                                 // User asked to permanently change the deck options
-                                Intent i = new IntentTop(activity, DeckOptions.class);
+                                Intent i = new Intent(activity, DeckOptions.class);
                                 i.putExtra("did", getArguments().getLong("did"));
                                 getActivity().startActivity(i);
                                 break;
@@ -493,7 +492,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     private void onLimitsExtended(boolean jumpToReviewer) {
         AnkiActivity activity = (AnkiActivity) getActivity();
         if (jumpToReviewer) {
-            activity.startActivityForResultWithoutAnimation(new IntentTop(activity, Reviewer.class), AnkiActivity.REQUEST_REVIEW);
+            activity.startActivityForResultWithoutAnimation(new Intent(activity, Reviewer.class), AnkiActivity.REQUEST_REVIEW);
             CollectionHelper.getInstance().getCol(activity).startTimebox();
         } else {
             ((CustomStudyListener) activity).onExtendStudyLimits();
