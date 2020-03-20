@@ -70,7 +70,11 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     private int mFieldIndex;
 
     private IFieldController mFieldController;
-
+    /**
+     * Cached copy of the current request to change a field
+     * Used to access past state from OnRequestPermissionsResultCallback
+     * */
+    private ChangeUIRequest mCurrentChangeRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +101,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         mFieldIndex = this.getIntent().getIntExtra(EXTRA_FIELD_INDEX, 0);
 
-        recreateEditingUi();
+        recreateEditingUi(ChangeUIRequest.init(mField));
     }
 
 
@@ -133,8 +137,15 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         fieldController.setEditingActivity(this);
     }
 
-    private void recreateEditingUi() {
+    private void recreateEditingUi(ChangeUIRequest newUI) {
         Timber.d("recreateEditingUi()");
+
+        //Permissions are checked async, save our current state to allow continuation
+        mCurrentChangeRequest = newUI;
+
+        if (performPermissionRequest(newUI.getField())) {
+            return;
+        }
 
         IControllerFactory controllerFactory = BasicControllerFactory.getInstance();
 
@@ -148,6 +159,8 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         if (performPermissionRequest(mField)) {
             return;
         }
+
+        mField = newUI.getField();
 
         setupUIController(mFieldController);
 
@@ -262,23 +275,23 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     protected void toAudioRecordingField() {
         if (mField.getType() != EFieldType.AUDIO_RECORDING) {
-            mField = new AudioRecordingField();
-            recreateEditingUi();
+            ChangeUIRequest request = ChangeUIRequest.uiChange(new AudioRecordingField());
+            recreateEditingUi(request);
         }
     }
 
     protected void toAudioClipField() {
         if (mField.getType() != EFieldType.AUDIO_CLIP) {
-            mField = new AudioClipField();
-            recreateEditingUi();
+            ChangeUIRequest request = ChangeUIRequest.uiChange(new AudioClipField());
+            recreateEditingUi(request);
         }
     }
 
 
     protected void toImageField() {
         if (mField.getType() != EFieldType.IMAGE) {
-            mField = new ImageField();
-            recreateEditingUi();
+            ChangeUIRequest request = ChangeUIRequest.uiChange(new ImageField());
+            recreateEditingUi(request);
         }
 
     }
@@ -286,8 +299,8 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     protected void toTextField() {
         if (mField.getType() != EFieldType.TEXT) {
-            mField = new TextField();
-            recreateEditingUi();
+            ChangeUIRequest request = ChangeUIRequest.uiChange(new TextField());
+            recreateEditingUi(request);
         }
     }
 
@@ -305,19 +318,21 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
 
     public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (mCurrentChangeRequest == null) {
+            throw new IllegalStateException("mCurrentChangeRequest should be set before using cached request");
+        }
         if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.length == 1) {
             // TODO:  Disable the record button / show some feedback to the user
-            recreateEditingUi();
+            recreateEditingUi(mCurrentChangeRequest);
         }
         if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.length == 1) {
             // We check permissions to set visibility on the camera button, just recreate
-            recreateEditingUi();
+            recreateEditingUi(mCurrentChangeRequest);
         }
     }
 
     public void handleFieldChanged(IField newField) {
-        mField = newField;
-        recreateEditingUi();
+        recreateEditingUi(ChangeUIRequest.fieldChange(newField));
     }
 
 
@@ -338,4 +353,41 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);
     }
 
+    /** Intermediate class to hold state for the onRequestPermissionsResult callback */
+    private final static class ChangeUIRequest {
+        private final IField newField;
+        private final int state;
+
+        /** Initial request when activity is created */
+        static final int ACTIVITY_LOAD = 0;
+        /** A change in UI via the menu options. Cancellable */
+        static final int UI_CHANGE = 1;
+        /** A change in UI via access to the activity. Not (yet) cancellable */
+        static final int EXTERNAL_FIELD_CHANGE = 2;
+
+        private ChangeUIRequest(IField field, int state) {
+            this.newField = field;
+            this.state = state;
+        }
+
+        public IField getField() {
+            return newField;
+        }
+
+        static ChangeUIRequest init(IField field) {
+            return new ChangeUIRequest(field, ACTIVITY_LOAD);
+        }
+
+        static ChangeUIRequest uiChange(IField field) {
+            return new ChangeUIRequest(field, UI_CHANGE);
+        }
+
+        static ChangeUIRequest fieldChange(IField field) {
+            return new ChangeUIRequest(field, EXTERNAL_FIELD_CHANGE);
+        }
+
+        int getState() {
+            return state;
+        }
+    }
 }
