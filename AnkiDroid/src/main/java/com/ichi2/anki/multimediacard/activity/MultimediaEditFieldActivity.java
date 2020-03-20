@@ -26,7 +26,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +34,7 @@ import android.widget.LinearLayout;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
@@ -317,17 +317,41 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     }
 
 
-    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    private void recreateEditingUIUsingCachedRequest() {
         if (mCurrentChangeRequest == null) {
             throw new IllegalStateException("mCurrentChangeRequest should be set before using cached request");
         }
+        recreateEditingUi(mCurrentChangeRequest);
+    }
+
+    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (mCurrentChangeRequest == null) {
+            throw new IllegalStateException("mCurrentChangeRequest should be set before requesting permissions");
+        }
+
         if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.length == 1) {
-            // TODO:  Disable the record button / show some feedback to the user
-            recreateEditingUi(mCurrentChangeRequest);
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                recreateEditingUIUsingCachedRequest();
+                return;
+            }
+
+            UIUtils.showThemedToast(this,
+                    getResources().getString(R.string.multimedia_editor_audio_permission_refused),
+                    true);
+
+            UIRecreationLogic.onRequiredPermissionDenied(mCurrentChangeRequest, this);
+
         }
         if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.length == 1) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                UIUtils.showThemedToast(this,
+                        getResources().getString(R.string.multimedia_editor_camera_permission_refused),
+                        true);
+            }
+
             // We check permissions to set visibility on the camera button, just recreate
-            recreateEditingUi(mCurrentChangeRequest);
+            recreateEditingUIUsingCachedRequest();
         }
     }
 
@@ -388,6 +412,31 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         int getState() {
             return state;
+        }
+    }
+
+    /**
+     * Class to contain logic relating to decisions made when recreating a UI.
+     * Can later be converted to a non-static class to allow testing of the logic.
+     * */
+    private static final class UIRecreationLogic {
+
+        static void onRequiredPermissionDenied(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
+            switch (request.state)
+            {
+                case ChangeUIRequest.ACTIVITY_LOAD:
+                    activity.finishCancel();
+                    break;
+                case ChangeUIRequest.UI_CHANGE:
+                    return;
+                case ChangeUIRequest.EXTERNAL_FIELD_CHANGE:
+                    activity.recreateEditingUIUsingCachedRequest();
+                    break;
+                default:
+                    Timber.e("onRequiredPermissionDenied: Unhandled state: %s", request.getState());
+                    activity.finishCancel();
+                    break;
+            }
         }
     }
 }
