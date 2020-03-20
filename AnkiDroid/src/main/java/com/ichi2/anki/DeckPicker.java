@@ -992,9 +992,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // Skip full DB check if the basic check is OK
             //TODO: remove this variable if we really want to do the full db check on every user
             boolean skipDbCheck = false;
-            if (previous < upgradeDbVersion && getCol().basicCheck()) {
-                skipDbCheck = true;
-            }
+            //if (previous < upgradeDbVersion && getCol().basicCheck()) {
+            //    skipDbCheck = true;
+            //}
 
             //noinspection ConstantConditions
             if ((!skipDbCheck && previous < upgradeDbVersion) || previous < upgradePrefsVersion) {
