@@ -106,6 +106,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
 
     private void finishCancel() {
+        Timber.d("Completing activity via finishCancel()");
         Intent resultData = new Intent();
         setResult(RESULT_CANCELED, resultData);
         finishWithoutAnimation();
@@ -152,17 +153,17 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         IControllerFactory controllerFactory = BasicControllerFactory.getInstance();
 
-        mFieldController = controllerFactory.createControllerForField(mField);
+        IFieldController fieldController = controllerFactory.createControllerForField(newUI.getField());
 
-        if (mFieldController == null) {
+        if (fieldController == null) {
             Timber.d("Field controller creation failed");
+            UIRecreationLogic.onControllerCreationFailed(newUI, this);
             return;
         }
 
-        if (performPermissionRequest(mField)) {
-            return;
-        }
+        UIRecreationLogic.onPreFieldControllerReplacement(mFieldController);
 
+        mFieldController = fieldController;
         mField = newUI.getField();
 
         setupUIController(mFieldController);
@@ -173,6 +174,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         mFieldController.createUI(this, linearLayout);
 
+        UIRecreationLogic.onPostUICreation(newUI, this);
     }
 
 
@@ -194,30 +196,22 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         switch (item.getItemId()) {
             case R.id.multimedia_edit_field_to_text:
                 Timber.i("To text field button pressed");
-                mFieldController.onFocusLost();
                 toTextField();
-                supportInvalidateOptionsMenu();
                 return true;
 
             case R.id.multimedia_edit_field_to_image:
                 Timber.i("To image button pressed");
-                mFieldController.onFocusLost();
                 toImageField();
-                supportInvalidateOptionsMenu();
                 return true;
 
             case R.id.multimedia_edit_field_to_audio:
                 Timber.i("To audio recording button pressed");
-                mFieldController.onFocusLost();
                 toAudioRecordingField();
-                supportInvalidateOptionsMenu();
                 return true;
 
             case R.id.multimedia_edit_field_to_audio_clip:
                 Timber.i("To audio clip button pressed");
-                mFieldController.onFocusLost();
                 toAudioClipField();
-                supportInvalidateOptionsMenu();
                 return true;
 
             case R.id.multimedia_edit_field_done:
@@ -432,6 +426,50 @@ public class MultimediaEditFieldActivity extends AnkiActivity
      * Can later be converted to a non-static class to allow testing of the logic.
      * */
     private static final class UIRecreationLogic {
+
+        /** Raised just before the field controller is replaced */
+        static void onPreFieldControllerReplacement(IFieldController previousFieldController) {
+            //on init, we don't need to do anything
+            if (previousFieldController == null) {
+                return;
+            }
+
+            //Otherwise, clean up the previous screen.
+            previousFieldController.onFocusLost();
+        }
+
+        /**
+         * Raised when we were supplied with a field that could not generate a UI controller
+         * Currently: We used a field for which we didn't know how to generate the UI
+         * */
+        static void onControllerCreationFailed(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
+            switch (request.getState()) {
+                case ChangeUIRequest.ACTIVITY_LOAD:
+                case ChangeUIRequest.EXTERNAL_FIELD_CHANGE:
+                    //TODO: (Optional) change in functionality. Previously we'd be left with a menu, but no UI.
+                    activity.finishCancel();
+                    break;
+                case ChangeUIRequest.UI_CHANGE:
+                    break;
+                default:
+                    Timber.e("onControllerCreationFailed: Unhandled state: %s", request.getState());
+                    break;
+            }
+        }
+
+        static void onPostUICreation(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
+            switch (request.getState()) {
+                case ChangeUIRequest.UI_CHANGE:
+                case ChangeUIRequest.EXTERNAL_FIELD_CHANGE:
+                    activity.supportInvalidateOptionsMenu();
+                    break;
+                case ChangeUIRequest.ACTIVITY_LOAD:
+                    break;
+                default:
+                    Timber.e("onPostUICreation: Unhandled state: %s", request.getState());
+                    break;
+            }
+        }
 
         static void onRequiredPermissionDenied(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
             switch (request.state)
