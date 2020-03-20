@@ -107,6 +107,23 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         finishWithoutAnimation();
     }
 
+    private boolean performPermissionRequest(IField field) {
+        // Request permission to record if audio field
+        if (field instanceof AudioRecordingField && !Permissions.canRecordAudio(this)) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.RECORD_AUDIO},
+                    REQUEST_AUDIO_PERMISSION);
+            return true;
+        }
+
+        // Request permission to use the camera if image field
+        if (field instanceof ImageField && !Permissions.canUseCamera(this)) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
+                    REQUEST_CAMERA_PERMISSION);
+            return true;
+        }
+
+        return false;
+    }
 
     private void recreateEditingUi() {
         Timber.d("recreateEditingUi()");
@@ -120,19 +137,10 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return;
         }
 
-        // Request permission to record if audio field
-        if (mField instanceof AudioRecordingField && !Permissions.canRecordAudio(this)) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
-                    REQUEST_AUDIO_PERMISSION);
+        if (performPermissionRequest(mField)) {
             return;
         }
 
-        // Request permission to use the camera if image field
-        if (mField instanceof ImageField && !Permissions.canUseCamera(this)) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
-                    REQUEST_CAMERA_PERMISSION);
-            return;
-        }
         mFieldController.setField(mField);
         mFieldController.setFieldIndex(mFieldIndex);
         mFieldController.setNote(mNote);
