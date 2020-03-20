@@ -45,6 +45,7 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.IFieldController;
 import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
+import com.ichi2.anki.multimediacard.utils.Permissions;
 
 import java.io.File;
 
@@ -120,16 +121,14 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         }
 
         // Request permission to record if audio field
-        if (mField instanceof AudioRecordingField && ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) !=
-                PackageManager.PERMISSION_GRANTED) {
+        if (mField instanceof AudioRecordingField && !Permissions.canRecordAudio(this)) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
                     REQUEST_AUDIO_PERMISSION);
             return;
         }
 
         // Request permission to use the camera if image field
-        if (mField instanceof ImageField && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
-                PackageManager.PERMISSION_GRANTED) {
+        if (mField instanceof ImageField && !Permissions.canUseCamera(this)) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
                     REQUEST_CAMERA_PERMISSION);
             return;
