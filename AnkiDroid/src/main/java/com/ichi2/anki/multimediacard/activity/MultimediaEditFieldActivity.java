@@ -157,11 +157,11 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         if (fieldController == null) {
             Timber.d("Field controller creation failed");
-            UIRecreationLogic.onControllerCreationFailed(newUI, this);
+            UIRecreationHandler.onControllerCreationFailed(newUI, this);
             return;
         }
 
-        UIRecreationLogic.onPreFieldControllerReplacement(mFieldController);
+        UIRecreationHandler.onPreFieldControllerReplacement(mFieldController);
 
         mFieldController = fieldController;
         mField = newUI.getField();
@@ -174,7 +174,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         mFieldController.createUI(this, linearLayout);
 
-        UIRecreationLogic.onPostUICreation(newUI, this);
+        UIRecreationHandler.onPostUICreation(newUI, this);
     }
 
 
@@ -337,7 +337,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
                     getResources().getString(R.string.multimedia_editor_audio_permission_refused),
                     true);
 
-            UIRecreationLogic.onRequiredPermissionDenied(mCurrentChangeRequest, this);
+            UIRecreationHandler.onRequiredPermissionDenied(mCurrentChangeRequest, this);
 
         }
         if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.length == 1) {
@@ -425,7 +425,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
      * Class to contain logic relating to decisions made when recreating a UI.
      * Can later be converted to a non-static class to allow testing of the logic.
      * */
-    private static final class UIRecreationLogic {
+    private static final class UIRecreationHandler {
 
         /** Raised just before the field controller is replaced */
         private static void onPreFieldControllerReplacement(IFieldController previousFieldController) {
