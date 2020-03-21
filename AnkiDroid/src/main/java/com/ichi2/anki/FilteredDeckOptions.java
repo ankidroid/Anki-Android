@@ -129,21 +129,21 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                 try {
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
                         Timber.i("Change value for key '" + entry.getKey() + "': " + entry.getValue());
-                        if (entry.getKey().equals("search")) {
+                        if ("search".equals(entry.getKey())) {
                             JSONArray ar = mDeck.getJSONArray("terms");
                             ar.getJSONArray(0).put(0, entry.getValue());
                             mDeck.put("terms", ar);
-                        } else if (entry.getKey().equals("limit")) {
+                        } else if ("limit".equals(entry.getKey())) {
                             JSONArray ar = mDeck.getJSONArray("terms");
                             ar.getJSONArray(0).put(1, entry.getValue());
                             mDeck.put("terms", ar);
-                        } else if (entry.getKey().equals("order")) {
+                        } else if ("order".equals(entry.getKey())) {
                             JSONArray ar = mDeck.getJSONArray("terms");
                             ar.getJSONArray(0).put(2, Integer.parseInt((String) entry.getValue()));
                             mDeck.put("terms", ar);
-                        } else if (entry.getKey().equals("resched")) {
+                        } else if ("resched".equals(entry.getKey())) {
                             mDeck.put("resched", entry.getValue());
-                        } else if (entry.getKey().equals("stepsOn")) {
+                        } else if ("stepsOn".equals(entry.getKey())) {
                             boolean on = (Boolean) entry.getValue();
                             if (on) {
                                 JSONArray steps =  StepsPreference.convertToJSON(mValues.get("steps"));
@@ -153,19 +153,19 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                             } else {
                                 mDeck.put("delays", JSONObject.NULL);
                             }
-                        } else if (entry.getKey().equals("steps")) {
+                        } else if ("steps".equals(entry.getKey())) {
                             mDeck.put("delays", StepsPreference.convertToJSON((String) entry.getValue()));
-                        } else if (entry.getKey().equals("preset")) {
+                        } else if ("preset".equals(entry.getKey())) {
                             int i = Integer.parseInt((String) entry.getValue());
                             if (i > 0) {
                                 JSONObject presetValues = new JSONObject(dynExamples[i]);
                                 JSONArray ar = presetValues.names();
                                 for (int j = 0; j < ar.length(); j++) {
                                     String name = ar.getString(j);
-                                    if (name.equals("steps")) {
+                                    if ("steps".equals(name)) {
                                         mUpdate.put("stepsOn", true);
                                     }
-                                    if (name.equals("resched")) {
+                                    if ("resched".equals(name)) {
                                         mUpdate.put(name, presetValues.getBoolean(name));
                                         mValues.put(name, Boolean.toString(presetValues.getBoolean(name)));
                                     } else {
@@ -434,7 +434,11 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     private void closeDeckOptions() {
         if (mPrefChanged) {
             // Rebuild the filtered deck if a setting has changed
-            mCol.getSched().rebuildDyn(mCol.getDecks().selected());
+            try {
+                mCol.getSched().rebuildDyn(mDeck.getLong("id"));
+            } catch (JSONException e) {
+                Timber.e(e);
+            }
         }
         finish();
         ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);

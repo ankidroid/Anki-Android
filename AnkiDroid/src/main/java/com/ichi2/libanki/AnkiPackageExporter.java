@@ -46,6 +46,7 @@ import timber.log.Timber;
 class Exporter {
     protected Collection mCol;
     protected Long mDid;
+    protected int mCount;
 
 
     public Exporter(Collection col) {
@@ -58,6 +59,18 @@ class Exporter {
         mCol = col;
         mDid = did;
     }
+
+    /** card ids of cards in deck self.did if it is set, all ids otherwise. */
+    public Long[] cardIds() {
+        Long[] cids;
+        if (mDid == null) {
+            cids = Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards", 0));
+        } else {
+            cids = mCol.getDecks().cids(mDid, true);
+        }
+        mCount = cids.length;
+        return cids;
+    }
 }
 
 
@@ -69,7 +82,6 @@ class AnkiExporter extends Exporter {
     protected boolean mIncludeMedia;
     private Collection mSrc;
     String mMediaDir;
-    int mCount;
     ArrayList<String> mMediaFiles = new ArrayList<>();
     boolean _v2sched;
 
@@ -97,12 +109,7 @@ class AnkiExporter extends Exporter {
         Collection dst = Storage.Collection(context, path);
         mSrc = mCol;
         // find cards
-        Long[] cids;
-        if (mDid == null) {
-            cids = Utils.list2ObjectArray(mSrc.getDb().queryColumn(Long.class, "SELECT id FROM cards", 0));
-        } else {
-            cids = mSrc.getDecks().cids(mDid, true);
-        }
+        Long[] cids = cardIds();
         // attach dst to src so we can copy data between them. This isn't done in original libanki as Python more
         // flexible
         dst.close();
@@ -112,6 +119,8 @@ class AnkiExporter extends Exporter {
         Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
                 .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
+        mSrc.getDb().getDatabase()
+                .execSQL("UPDATE DST_DB.cards SET flags = 0 where id in " + Utils.ids2str(cids));
         Set<Long> nids = new HashSet<>(mSrc.getDb().queryColumn(Long.class,
                 "select nid from cards where id in " + Utils.ids2str(cids), 0));
         // notes
@@ -172,7 +181,7 @@ class AnkiExporter extends Exporter {
         }
         JSONObject dconfs = new JSONObject();
         for (JSONObject d : mSrc.getDecks().all()) {
-            if (d.getString("id").equals("1")) {
+            if ("1".equals(d.getString("id"))) {
                 continue;
             }
             if (mDid != null && !dids.contains(d.getLong("id"))) {
@@ -183,11 +192,13 @@ class AnkiExporter extends Exporter {
                     dconfs.put(Long.toString(d.getLong("conf")), true);
                 }
             }
+
+            JSONObject destinationDeck = JSONObjectUtils.slowDeepClone(d);
             if (!mIncludeSched) {
                 // scheduling not included, so reset deck settings to default
-                d.put("conf", 1);
+                destinationDeck.put("conf", 1);
             }
-            dst.getDecks().update(d);
+            dst.getDecks().update(destinationDeck);
         }
         // copy used deck confs
         Timber.d("Copy deck options");
@@ -222,8 +233,8 @@ class AnkiExporter extends Exporter {
                     String fname = f.getName();
                     if (fname.startsWith("_")) {
                         // Loop through every model that will be exported, and check if it contains a reference to f
-                        for (int idx = 0; idx < mid.size(); idx++) {
-                            if (_modelHasMedia(mSrc.getModels().get(idx), fname)) {
+                        for (JSONObject model : mSrc.getModels().all()) {
+                            if (_modelHasMedia(model, fname)) {
                                 media.put(fname, true);
                                 break;
                             }
@@ -303,6 +314,17 @@ class AnkiExporter extends Exporter {
 
     public void setDid(Long did) {
         mDid = did;
+    }
+
+    private static class JSONObjectUtils {
+        private JSONObjectUtils() {
+
+        }
+
+        /** Defect: Inefficient deep clone. We should find or write a faster method */
+        private static JSONObject slowDeepClone(JSONObject object) throws JSONException {
+            return new JSONObject(object.toString());
+        }
     }
 }
 

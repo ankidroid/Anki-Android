@@ -881,28 +881,30 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundRenderBrowserQA(TaskData... params) {
         Timber.d("doInBackgroundRenderBrowserQA");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        List<Map<String, String>> items = (List<Map<String, String>>) params[0].getObjArray()[0];
+        List<Map<String, String>> cards = (List<Map<String, String>>) params[0].getObjArray()[0];
         Integer startPos = (Integer) params[0].getObjArray()[1];
         Integer n = (Integer) params[0].getObjArray()[2];
 
         // for each specified card in the browser list
         for (int i = startPos; i < startPos + n; i++) {
-            if (i >= 0 && i < items.size() && items.get(i).get("answer").equals("")) {
-                // Extract card item
-                Card c = col.getCard(Long.parseLong(items.get(i).get("id"), 10));
-                // Update item
-                CardBrowser.updateSearchItemQA(mContext, items.get(i), c);
-                // Stop if cancelled
-                if (isCancelled()) {
-                    Timber.d("doInBackgroundRenderBrowserQA was aborted");
-                    return null;
-                } else {
+            // Stop if cancelled
+            if (isCancelled()) {
+                Timber.d("doInBackgroundRenderBrowserQA was aborted");
+                return null;
+            }
+            if (i >= 0 && i < cards.size()) {
+                Map<String, String> card = cards.get(i);
+                if (card.get("answer") == null) {
+                    // Extract card item
+                    Card c = col.getCard(Long.parseLong(card.get("id"), 10));
+                    // Update item
+                    CardBrowser.updateSearchItemQA(mContext, card, c);
                     float progress = (float) i / n * 100;
                     publishProgress(new TaskData((int) progress));
                 }
             }
         }
-        return new TaskData(items);
+        return new TaskData(cards);
     }
 
 

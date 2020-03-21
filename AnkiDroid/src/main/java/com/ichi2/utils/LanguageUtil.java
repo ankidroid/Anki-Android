@@ -19,6 +19,8 @@ import android.text.TextUtils;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Preferences;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -68,6 +70,14 @@ public class LanguageUtil {
             locale = new Locale(localeCode);
         }
         return locale;
+    }
+
+    public static String getShortDateFormatFromMs(long ms) {
+        return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(ms));
+    }
+
+    public static String getShortDateFormatFromS(long s) {
+        return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(s * 1000L));
     }
 
 }

@@ -26,6 +26,7 @@ import android.text.TextUtils;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
+import com.ichi2.libanki.exception.NoSuchDeckException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -448,7 +449,7 @@ public class Decks {
         return mDecks.size();
     }
 
-
+    /** Obtains the deck from the DeckID, or default if the deck was not found */
     public @NonNull JSONObject get(long did) {
         return get(did, true);
     }
@@ -866,33 +867,32 @@ public class Decks {
 
         for (JSONObject deck: decks) {
             // two decks with the same name?
-            String deckName = null;
-            try {
-                deckName = deck.getString("name");
+             try {
+                if (names.contains(deck.getString("name"))) {
+                    Timber.i("fix duplicate deck name %s", deck.getString("name"));
+                    deck.put("name", deck.getString("name") + Utils.intTime(1000));
+                    save(deck);
+                }
+
+                // ensure no sections are blank
+                if (deck.getString("name").indexOf("::::") != -1) {
+                    Timber.i("fix deck with missing sections %s", deck.getString("name"));
+                    deck.put("name", "recovered"+Utils.intTime(1000));
+                    save(deck);
+                }
+
+                // immediate parent must exist
+                String immediateParent = parent(deck.getString("name"));
+                if (immediateParent != null) {
+                    if (!names.contains(immediateParent)) {
+                        Timber.i("fix deck with missing parent %s", deck.getString("name"));
+                        _ensureParents(deck.getString("name"));
+                        names.add(immediateParent);
+                    }
+                }
+                names.add(deck.getString("name"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
-            }
-            if (names.contains(deckName)) {
-                Timber.i("fix duplicate deck name %s", deckName);
-                deckName += Utils.intTime(1000);
-                save(deck);
-            }
-
-            // ensure no sections are blank
-            if (deckName.indexOf("::::") != -1) {
-                Timber.i("fix deck with missing sections %s", deckName);
-                deckName = "recovered"+Utils.intTime(1000);
-                save(deck);
-            }
-
-            // immediate parent must exist
-            String immediateParent = parent(deckName);
-            if (immediateParent != null) {
-                if (!names.contains(immediateParent)) {
-                    Timber.i("fix deck with missing parent %s", deckName);
-                    _ensureParents(deckName);
-                    names.add(immediateParent);
-                }
             }
         }
     }
@@ -1153,5 +1153,32 @@ public class Decks {
 
     public HashMap<Long, JSONObject> getDecks() {
         return mDecks;
+    }
+
+    public Long[] allDynamicDeckIds() {
+        ArrayList<Long> validValues = new ArrayList<>();
+        for (Long did : allIds()) {
+            if (isDyn(did)) {
+                validValues.add(did);
+            }
+        }
+        return validValues.toArray(new Long[0]);
+    }
+
+    private JSONObject getDeckOrFail(long deckId) throws NoSuchDeckException {
+        JSONObject deck = get(deckId, false);
+        if (deck == null) {
+            throw new NoSuchDeckException(deckId);
+        }
+        return deck;
+    }
+
+    public boolean hasDeckOptions(long deckId) throws NoSuchDeckException {
+        return getDeckOrFail(deckId).has("conf");
+    }
+
+
+    public void removeDeckOptions(long deckId) throws NoSuchDeckException {
+        getDeckOrFail(deckId).remove("conf");
     }
 }

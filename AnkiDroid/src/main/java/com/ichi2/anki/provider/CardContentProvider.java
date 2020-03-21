@@ -328,11 +328,11 @@ public class CardContentProvider extends ContentProvider {
                         String[] keyAndValue = arg.split("="); //split arguments into key ("limit") and value ("?")
                         try {
                             //check if value is a placeholder ("?"), if so replace with the next value of selectionArgs
-                            String value = keyAndValue[1].trim().equals("?") ? selectionArgs[selectionArgIndex++] :
+                            String value = "?".equals(keyAndValue[1].trim()) ? selectionArgs[selectionArgIndex++] :
                                     keyAndValue[1];
-                            if (keyAndValue[0].trim().equals("limit")) {
+                            if ("limit".equals(keyAndValue[0].trim())) {
                                 limit = Integer.valueOf(value);
-                            } else if (keyAndValue[0].trim().equals("deckID")) {
+                            } else if ("deckID".equals(keyAndValue[0].trim())) {
                                 deckIdOfTemporarilySelectedDeck = Long.valueOf(value);
                                 if(!selectDeckWithCheck(col, deckIdOfTemporarilySelectedDeck)){
                                     return rv; //if the provided deckID is wrong, return empty cursor.

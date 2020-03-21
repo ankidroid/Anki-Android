@@ -203,7 +203,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         screen.findPreference("fullscreenMode");
                 fullscreenPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                     SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(Preferences.this);
-                    if (prefs.getBoolean("gestures", false) || !newValue.equals("2")) {
+                    if (prefs.getBoolean("gestures", false) || !"2".equals(newValue)) {
                         return true;
                     } else {
                         Toast.makeText(getApplicationContext(),
@@ -405,7 +405,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             ((CheckBoxPreference)pref).setChecked(conf.optInt("schedVer", 1) == 2);
                     }
                 } catch (JSONException | NumberFormatException e) {
-                    throw new RuntimeException();
+                    throw new RuntimeException(e);
                 }
             } else {
                 // Disable Col preferences if Collection closed
@@ -490,7 +490,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().setMod();
                     break;
                 case "useCurrent":
-                    getCol().getConf().put("addToCur", ((ListPreference) pref).getValue().equals("0"));
+                    getCol().getConf().put("addToCur", "0".equals(((ListPreference) pref).getValue()));
                     getCol().setMod();
                     break;
                 case "dayOffset": {
@@ -612,7 +612,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         } catch (BadTokenException e) {
             Timber.e(e, "Preferences: BadTokenException on showDialog");
         } catch (NumberFormatException | JSONException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -673,11 +673,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         // Get summary text
         String oldSummary = mOriginalSumarries.get(pref.getKey());
         // Replace summary text with value according to some rules
-        if (oldSummary.equals("")) {
+        if ("".equals(oldSummary)) {
             pref.setSummary(value);
-        } else if (value.equals("")) {
+        } else if ("".equals(value)) {
             pref.setSummary(oldSummary);
-        } else if (pref.getKey().equals("minimumCardsDueForNotification")) {
+        } else if ("minimumCardsDueForNotification".equals(pref.getKey())) {
             pref.setSummary(replaceStringIfNumeric(oldSummary, value));
         } else {
             pref.setSummary(replaceString(oldSummary, value));

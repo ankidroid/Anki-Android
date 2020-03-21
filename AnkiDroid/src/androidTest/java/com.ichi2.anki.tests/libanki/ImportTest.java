@@ -178,40 +178,7 @@ public class ImportTest {
         assertEquals(2, new File(testCol.getMedia().dir()).list().length);
     }
 
-    @Test
-    public void testAnki2Diffmodels() throws IOException, ImportExportException {
-        // create a new empty deck
-        // import the 1 card version of the model
-        String tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "diffmodels2-1.apkg");
-        AnkiPackageImporter imp = new AnkiPackageImporter(testCol, tmp);
-        imp.setDupeOnSchemaChange(true);
-        imp.run();
-        int before = testCol.noteCount();
-        // repeating the process should do nothing
-        imp = new AnkiPackageImporter(testCol, tmp);
-        imp.setDupeOnSchemaChange(true);
-        imp.run();
-        assertEquals(before, testCol.noteCount());
-        // then the 2 card version
-        tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "diffmodels2-2.apkg");
-        imp = new AnkiPackageImporter(testCol, tmp);
-        imp.setDupeOnSchemaChange(true);
-        imp.run();
-        int after = testCol.noteCount();
-        // as the model schemas differ, should have been imported as new model
-        assertEquals(before + 1, after);
-        // and the new model should have both cards
-        assertEquals(3, testCol.cardCount());
-        // repeating the process should do nothing
-        imp = new AnkiPackageImporter(testCol, tmp);
-        imp.setDupeOnSchemaChange(true);
-        imp.run();
-        after = testCol.noteCount();
-        assertEquals(before + 1, after);
-        assertEquals(3, testCol.cardCount());
-    }
-
-    @Test
+    @Test		
     public void testAnki2DiffmodelTemplates() throws IOException, JSONException, ImportExportException {
         // different from the above as this one tests only the template text being
         // changed, not the number of cards/fields
@@ -314,9 +281,9 @@ public class ImportTest {
 //        i.initMapping();
 //        i.run();
 //        n.load();
-//        assertTrue(n.getItem("Front").equals("1"));
-//        assertTrue(n.getItem("Back").equals("x"));
-//        assertTrue(n.getItem("Three").equals("3"));
+//        assertTrue("1".equals(n.getItem("Front")));
+//        assertTrue("x".equals(n.getItem("Back")));
+//        assertTrue("3".equals(n.getItem("Three")));
 //    }
 
     /**

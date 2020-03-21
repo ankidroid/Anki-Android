@@ -80,6 +80,9 @@ public class Utils {
 
     public static final int CHUNK_SIZE = 32768;
 
+    private static final long TIME_MINUTE_LONG = 60;  // seconds
+    private static final long TIME_HOUR_LONG = 60 * TIME_MINUTE_LONG;
+    private static final long TIME_DAY_LONG = 24 * TIME_HOUR_LONG;
     // These are doubles on purpose because we want a rounded, not integer result later.
     private static final double TIME_MINUTE = 60.0;  // seconds
     private static final double TIME_HOUR = 60 * TIME_MINUTE;
@@ -102,6 +105,7 @@ public class Utils {
     private static final Pattern scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
     private static final Pattern imgPattern = Pattern.compile("(?i)<img[^>]+src=[\\\"']?([^\\\"'>]+)[\\\"']?[^>]*>");
+    private static final Pattern soundPattern = Pattern.compile("(?i)\\[sound:([^]]+)\\]");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
 
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -131,7 +135,8 @@ public class Utils {
      *
      * @param context The application's environment.
      * @param time_s The time to format, in seconds
-     * @return The time quantity string. Something like "3 s" or "1.7 yr".
+     * @return The time quantity string. Something like "3 s" or "1.7
+     * yr". Only months and year have a number after the decimal.
      */
     public static String timeQuantity(Context context, long time_s) {
         Resources res = context.getResources();
@@ -149,6 +154,37 @@ public class Utils {
             return res.getString(R.string.time_quantity_months, time_s/TIME_MONTH);
         } else {
             return res.getString(R.string.time_quantity_years, time_s/TIME_YEAR);
+        }
+    }
+
+    /**
+     * Return a string representing how much time remains
+     *
+     * @param context The application's environment.
+     * @param time_s The time to format, in seconds
+     * @return The time quantity string. Something like "3 minutes left" or "2 hours left".
+     */
+    public static String remainingTime(Context context, long time_s) {
+        int time_x;  // Time in unit x
+        int remaining_seconds; // Time not counted in the number in unit x
+        int remaining; // Time in the unit smaller than x
+        Resources res = context.getResources();
+        if (time_s < TIME_HOUR_LONG) {
+            time_x = (int) Math.round(time_s / TIME_MINUTE);
+            return res.getQuantityString(R.plurals.reviewer_window_title, time_x, time_x);
+            //It used to be minutes only. So the word "minutes" is not
+            //explicitly written in the ressource name.
+        } else if (time_s < TIME_DAY_LONG) {
+            time_x = (int) (time_s / TIME_HOUR_LONG);
+            remaining_seconds = (int) (time_s % TIME_HOUR_LONG);
+            remaining = (int) Math.round((float) remaining_seconds / TIME_MINUTE);
+            return res.getQuantityString(R.plurals.reviewer_window_title_hours, time_x, time_x, remaining);
+
+        } else {
+            time_x = (int) (time_s / TIME_DAY_LONG);
+            remaining_seconds = (int) ((float) time_s % TIME_DAY_LONG);
+            remaining = (int) Math.round(remaining_seconds / TIME_HOUR);
+            return res.getQuantityString(R.plurals.reviewer_window_title_days, time_x, time_x, remaining);
         }
     }
 
@@ -223,13 +259,22 @@ public class Utils {
      * @return The text without the aforementioned tags.
      */
     public static String stripHTML(String s) {
+        s = stripHTMLScriptAndStyleTags(s);
+        Matcher htmlMatcher = tagPattern.matcher(s);
+        s = htmlMatcher.replaceAll("");
+        return entsToTxt(s);
+    }
+
+    /**
+     * Strips <style>...</style> and <script>...</script> HTML tags and content from a string.
+     * @param s The HTML text to be cleaned.
+     * @return The text without the aforementioned tags.
+     */
+    public static String stripHTMLScriptAndStyleTags(String s) {
         Matcher htmlMatcher = stylePattern.matcher(s);
         s = htmlMatcher.replaceAll("");
         htmlMatcher = scriptPattern.matcher(s);
-        s = htmlMatcher.replaceAll("");
-        htmlMatcher = tagPattern.matcher(s);
-        s = htmlMatcher.replaceAll("");
-        return entsToTxt(s);
+        return htmlMatcher.replaceAll("");
     }
 
 
@@ -239,6 +284,14 @@ public class Utils {
     public static String stripHTMLMedia(String s) {
         Matcher imgMatcher = imgPattern.matcher(s);
         return stripHTML(imgMatcher.replaceAll(" $1 "));
+    }
+
+    /**
+     * Strip sound but keep media filenames
+     */
+    public static String stripSoundMedia(String s) {
+        Matcher soundMatcher = soundPattern.matcher(s);
+        return soundMatcher.replaceAll(" $1 ");
     }
 
 
@@ -652,6 +705,7 @@ public class Utils {
                 success = true;
             } catch (IOException e) {
                 if (retryCnt == retries) {
+                    Timber.e("IOException while writing to file, out of retries.");
                     throw e;
                 } else {
                     Timber.e("IOException while writing to file, retrying...");
@@ -846,14 +900,11 @@ public class Utils {
     public static List<File> getImportableDecks(Context context) {
         String deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context);
         File dir = new File(deckPath);
-        int deckCount = 0;
-        File[] deckList = null;
-        if (dir.exists() && dir.isDirectory()) {
-            deckList = dir.listFiles(pathname -> pathname.isFile() && ImportUtils.isValidPackageName(pathname.getName()));
-            deckCount = deckList.length;
-        }
         List<File> decks = new ArrayList<>();
-        decks.addAll(Arrays.asList(deckList).subList(0, deckCount));
+        if (dir.exists() && dir.isDirectory()) {
+            File[] deckList = dir.listFiles(pathname -> pathname.isFile() && ImportUtils.isValidPackageName(pathname.getName()));
+            decks.addAll(Arrays.asList(deckList).subList(0, deckList.length));
+        }
         return decks;
     }
 

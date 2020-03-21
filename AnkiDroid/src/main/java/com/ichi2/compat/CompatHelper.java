@@ -87,7 +87,7 @@ public class CompatHelper {
 
     private boolean isNookHdPlus() {
         return "NOOK".equals(Build.BRAND) && "HDplus".equals(Build.PRODUCT)
-                && android.os.Build.DEVICE.equals("ovation");
+            && "ovation".equals(android.os.Build.DEVICE);
     }
 
     private boolean isNookHd () {

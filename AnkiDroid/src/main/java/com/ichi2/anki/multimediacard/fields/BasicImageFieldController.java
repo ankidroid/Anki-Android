@@ -20,13 +20,16 @@
 package com.ichi2.anki.multimediacard.fields;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import androidx.core.content.ContextCompat;
@@ -75,7 +78,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         return (int) Math.min(height * 0.4, width * 0.6);
     }
 
-
+    // The NewApi deprecation should be removed with API21. UnsupportedChromeOsCameraSystemFeature can be fixed in API16
+    @SuppressLint( {"UnsupportedChromeOsCameraSystemFeature", "NewApi"})
     @Override
     public void createUI(Context context, LinearLayout layout) {
         mImagePreview = new ImageView(mActivity);
@@ -117,6 +121,16 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                         image);
 
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+
+                // Until Android API21 (maybe 22) you must manually handle permissions for image capture w/FileProvider
+                // It does not exist on API15 so they will still crash sadly. This can be removed once minSDK is >= 22
+                // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
+                if (CompatHelper.getSdkVersion() <= Build.VERSION_CODES.LOLLIPOP &&
+                    CompatHelper.getSdkVersion() >= Build.VERSION_CODES.JELLY_BEAN) {
+                    cameraIntent.setClipData(ClipData.newRawUri("", uriSavedImage));
+                    cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                }
+
                 if (cameraIntent.resolveActivity(context.getPackageManager()) != null) {
                     mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
                 }
@@ -229,7 +243,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     private void setPreviewImage(String imagePath, int maxsize) {
-        if (imagePath != null && !imagePath.equals("")) {
+        if (imagePath != null && !"".equals(imagePath)) {
             File f = new File(imagePath);
             Bitmap b = BitmapUtil.decodeFile(f, maxsize);
             b = ExifUtil.rotateFromCamera(f, b);

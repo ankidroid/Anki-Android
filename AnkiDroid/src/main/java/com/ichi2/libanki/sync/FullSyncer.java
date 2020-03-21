@@ -106,7 +106,7 @@ public class FullSyncer extends HttpSyncer {
         try {
             super.writeToFile(cont, tpath);
             FileInputStream fis = new FileInputStream(tpath);
-            if (super.stream2String(fis, 15).equals("upgradeRequired")) {
+            if ("upgradeRequired".equals(super.stream2String(fis, 15))) {
                 return new Object[]{"upgradeRequired"};
             }
         } catch (FileNotFoundException e) {

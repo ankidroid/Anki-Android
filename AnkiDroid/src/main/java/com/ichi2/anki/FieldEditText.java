@@ -3,6 +3,7 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -31,6 +32,14 @@ public class FieldEditText extends AppCompatEditText {
 
     public FieldEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        // content text has been saved in NoteEditor.java, restore twice caused issue#5660
+        super.onSaveInstanceState();
+        return null;
     }
 
 

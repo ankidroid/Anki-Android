@@ -71,7 +71,7 @@ public class ContentProviderTest {
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
             GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    com.ichi2.anki.Manifest.permission.READ_WRITE_DATABASE);
+                    FlashCardsContract.READ_WRITE_PERMISSION);
 
 
 

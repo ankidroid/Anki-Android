@@ -42,7 +42,7 @@ public class ImportUtils {
         Timber.i("IntentHandler/ User requested to view a file");
         String errorMessage = null;
         // If the file is being sent from a content provider we need to read the content before we can open the file
-        if (intent.getData().getScheme().equals("content")) {
+        if ("content".equals(intent.getData().getScheme())) {
             // Get the original filename from the content provider URI
             String filename = null;
             Cursor cursor = null;
@@ -59,7 +59,7 @@ public class ImportUtils {
 
             // Hack to fix bug where ContentResolver not returning filename correctly
             if (filename == null) {
-                if (intent.getType() != null && (intent.getType().equals("application/apkg") || ImportUtils.hasValidZipFile(context, intent))) {
+                if (intent.getType() != null && ("application/apkg".equals(intent.getType()) || ImportUtils.hasValidZipFile(context, intent))) {
                     // Set a dummy filename if MIME type provided or is a valid zip file
                     filename = "unknown_filename.apkg";
                     Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue");
@@ -76,7 +76,7 @@ public class ImportUtils {
             } else if (filename != null) {
                 // Copy to temporary file
                 String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
-                errorMessage = ImportUtils.copyFileToCache(context, intent, tempOutDir) ? null : "copyFileToCache() failed";
+                errorMessage = ImportUtils.copyFileToCache(context, intent, tempOutDir) ? null : "copyFileToCache() failed (possibly out of storage space)";
                 // Show import dialog
                 if (errorMessage == null) {
                     ImportUtils.sendShowImportFileDialogMsg(tempOutDir);
@@ -84,7 +84,7 @@ public class ImportUtils {
                     AnkiDroidApp.sendExceptionReport(new RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed");
                 }
             }
-        } else if (intent.getData().getScheme().equals("file")) {
+        } else if ("file".equals(intent.getData().getScheme())) {
             // When the VIEW intent is sent as a file, we can open it directly without copying from content provider
             String filename = intent.getData().getPath();
             Timber.d("Importing regular file: %s", filename);
@@ -141,11 +141,11 @@ public class ImportUtils {
     }
 
     public static boolean isCollectionPackage(String filename) {
-        return filename != null && (filename.toLowerCase().endsWith(".colpkg") || filename.equals("collection.apkg"));
+        return filename != null && (filename.toLowerCase().endsWith(".colpkg") || "collection.apkg".equals(filename));
     }
 
     private static boolean isDeckPackage(String filename) {
-        return filename != null && filename.toLowerCase().endsWith(".apkg") && !filename.equals("collection.apkg");
+        return filename != null && filename.toLowerCase().endsWith(".apkg") && !"collection.apkg".equals(filename);
     }
 
     public static boolean isValidPackageName(String filename) {

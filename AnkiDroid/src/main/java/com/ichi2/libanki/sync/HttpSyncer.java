@@ -229,7 +229,7 @@ public class HttpSyncer {
                 return httpResponse;
             } catch (SSLException e) {
                 Timber.e(e, "SSLException while building HttpClient");
-                throw new RuntimeException("SSLException while building HttpClient");
+                throw new RuntimeException("SSLException while building HttpClient", e);
             }
         } catch (UnsupportedEncodingException | JSONException e) {
             throw new RuntimeException(e);

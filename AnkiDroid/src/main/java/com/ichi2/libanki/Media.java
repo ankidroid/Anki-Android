@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.libanki.template.Template;
+import com.ichi2.utils.Assert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +57,8 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 import timber.log.Timber;
+
+import static java.lang.Math.min;
 
 /**
  * Media manager - handles the addition and removal of media files from the media directory (collection.media) and
@@ -203,6 +206,12 @@ public class Media {
         mDb = null;
     }
 
+    private void _deleteDB() {
+        String path = mDb.getPath();
+        close();
+        (new File(path)).delete();
+        connect();
+    }
 
     public String dir() {
         return mDir;
@@ -236,8 +245,8 @@ public class Media {
         String fname = ofile.getName();
         // make sure we write it in NFC form and return an NFC-encoded reference
         fname = Utils.nfcNormalized(fname);
-        // remove any dangerous characters
-        String base = stripIllegal(fname);
+        // ensure it's a valid finename
+        String base = cleanFilename(fname);
         String[] split = Utils.splitFilename(base);
         String root = split[0];
         String ext = split[1];
@@ -497,6 +506,12 @@ public class Media {
                 nohave.add(x);
             }
         }
+        // make sure the media DB is valid
+        try {
+            findChanges();
+        } catch (SQLException ignored) {
+            _deleteDB();
+        }
         List<List<String>> result = new ArrayList<>();
         result.add(nohave);
         result.add(unused);
@@ -529,7 +544,7 @@ public class Media {
     }
 
     /**
-     * Illegal characters
+     * Illegal characters and paths
      * ***********************************************************
      */
 
@@ -544,6 +559,54 @@ public class Media {
         return m.find();
     }
 
+    public String cleanFilename(String fname) {
+        fname = stripIllegal(fname);
+        fname = _cleanWin32Filename(fname);
+        fname = _cleanLongFilename(fname);
+        if ("".equals(fname)) {
+            fname = "renamed";
+        }
+
+        return fname;
+    }
+
+    /** This method only change things on windows. So it's the
+     * identity here. */
+    private String _cleanWin32Filename(String fname) {
+        return fname;
+    }
+
+    private String _cleanLongFilename(String fname) {
+        /** a fairly safe limit that should work on typical windows
+         paths and on eCryptfs partitions, even with a duplicate
+         suffix appended */
+        int namemax = 136;
+        int pathmax = 1024; // 240 for windows
+
+        // cap namemax based on absolute path
+        int dirlen = fname.length();// ideally, name should be normalized. Without access to nio.Paths library, it's hard to do it really correctly. This is still a better approximation than nothing.
+        int remaining = pathmax - dirlen;
+        namemax = min(remaining, namemax);
+        Assert.that(namemax>0, "The media directory is maximally long. There is no more length available for file name.");
+
+        if (fname.length() > namemax) {
+            int lastSlash = fname.indexOf("/");
+            int lastDot = fname.indexOf(".");
+            if (lastDot == -1 || lastDot < lastSlash) {
+                // no dot, or before last slash
+                fname = fname.substring(0, namemax);
+            } else {
+                String ext = fname.substring(lastDot+1);
+                String head = fname.substring(0, lastDot);
+                int headmax = namemax - ext.length();
+                head = head.substring(0, headmax);
+                fname = head + ext;
+                Assert.that (fname.length() <= namemax, "The length of the file is greater than the maximal name value.");
+            }
+        }
+
+        return fname;
+    }
 
     /**
      * Tracking changes
@@ -886,7 +949,7 @@ public class Media {
             // then loop through all files
             int cnt = 0;
             for (ZipEntry i : Collections.list(z.entries())) {
-                if (i.getName().equals("_meta")) {
+                if ("_meta".equals(i.getName())) {
                     // ignore previously-retrieved meta
                     continue;
                 } else {

@@ -23,6 +23,7 @@ env:
     # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
     - UNIT_TEST=FALSE # by default we don't run the unit tests, they are run only in specific builds
+    - LINT=FALSE # by default we don't lint, they are run only in specific builds
     - FINALIZE_COVERAGE=FALSE # by default we don't finalize coverage, it is done in one specific build
   matrix:
    #- API=15 # only runs locally. Create+Start once from AndroidStudio to init sdcard. Then only from command-line w/-engine classic
@@ -56,6 +57,10 @@ jobs:
       os: osx
     - stage: unit_test
       env: UNIT_TEST=TRUE API=NONE
+      install: skip
+      os: linux
+    - stage: unit_test
+      env: LINT=TRUE API=NONE
       install: skip
       os: linux
     - stage: finalize_coverage
@@ -121,6 +126,7 @@ install:
 
 script:
   - if [ "$UNIT_TEST" = "TRUE" ]; then ./gradlew jacocoUnitTestReport; fi
+  - if [ "$LINT" = "TRUE" ]; then ./gradlew lint; fi
   - if [ "$API" != "NONE" ]; then ./gradlew jacocoAndroidTestReport; fi
 
 after_success:

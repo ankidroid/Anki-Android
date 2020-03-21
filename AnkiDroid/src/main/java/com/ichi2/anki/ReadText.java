@@ -24,6 +24,7 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
 
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -123,7 +124,7 @@ public class ReadText {
                                 speak(mTextToSpeak, locale, TextToSpeech.QUEUE_FLUSH);
                             }
                             String language = getLanguage(mDid, mOrd, mQuestionAnswer);
-                            if (language.equals("")) { // No language stored
+                            if ("".equals(language)) { // No language stored
                                 MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
                             } else {
                                 MetaDB.updateLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
@@ -138,7 +139,11 @@ public class ReadText {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                builder.build().show();
+                try {
+                    builder.build().show();
+                } catch (WindowManager.BadTokenException e) {
+                    Timber.w("Activity invalidated before TTS language dialog could display");
+                }
             }
         }, delay);
     }

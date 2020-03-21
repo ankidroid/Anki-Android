@@ -38,13 +38,14 @@ import android.widget.FrameLayout;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.dialogs.IntegerDialog;
+import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
@@ -151,9 +152,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         switch (fullscreenMode) {
             case 1:
-                return R.layout.reviewer_fullscreen_1;
+                return R.layout.reviewer_fullscreen;
             case 2:
-                return R.layout.reviewer_fullscreen_2;
+                return R.layout.reviewer_fullscreen_noanswers;
             default:
                 return R.layout.reviewer;
         }
@@ -318,18 +319,14 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     private void showRescheduleCardDialog() {
-        IntegerDialog rescheduleDialog = new IntegerDialog();
-        rescheduleDialog.setArgs(
-                getResources().getString(R.string.reschedule_card_dialog_title),
-                getResources().getString(R.string.reschedule_card_dialog_message),
-                4);
-        rescheduleDialog.setCallbackRunnable(rescheduleDialog.new IntRunnable() {
-            public void run() {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
-                        new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
-            }
-        });
-        showDialogFragment(rescheduleDialog);
+        Consumer<Integer> runnable = days ->
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
+                    new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()},
+                    Collection.DismissType.RESCHEDULE_CARDS, days})
+            );
+        RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
+
+        showDialogFragment(dialog);
     }
 
 
@@ -384,19 +381,19 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mCurrentCard != null) {
             switch (mCurrentCard.getUserFlag()) {
             case 1:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_red);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_red);
                 break;
             case 2:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_orange);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_orange);
                 break;
             case 3:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_green);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_green);
                 break;
             case 4:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_blue);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_blue);
                 break;
             default:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_transparent);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_transparent);
                 break;
             }
         }
