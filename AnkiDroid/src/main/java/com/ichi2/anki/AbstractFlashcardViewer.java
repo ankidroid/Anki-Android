@@ -1732,7 +1732,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    protected void showEaseButtons() {
+    protected void displayAnswerBottomBar() {
         // hide flipcard button
         mFlipCardLayout.setVisibility(View.GONE);
 
@@ -2250,7 +2250,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mIsSelecting = false;
         updateCard(enrichWithQADiv(answer, true));
-        showEaseButtons();
+        displayAnswerBottomBar();
         // If the user wants to show the next question automatically
         if (mUseTimer) {
             long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
