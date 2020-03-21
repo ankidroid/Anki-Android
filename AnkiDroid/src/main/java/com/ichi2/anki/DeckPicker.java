@@ -41,12 +41,13 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.provider.Settings;
+
+import com.afollestad.materialdialogs.GravityEnum;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.app.ShareCompat;
@@ -194,6 +195,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
      */
     private long mFocusedDeck;
 
+    /** If we have accepted the "We will show you permissions" dialog, don't show it again on activity rebirth */
+    private boolean mClosedWelcomeMessage;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -363,6 +366,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Timber.d("onCreate()");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        //we need to restore here, as we need it before super.onCreate() is called.
+        restoreWelcomeMessage(savedInstanceState);
         // Open Collection on UI thread while splash screen is showing
         boolean colOpen = firstCollectionOpen();
 
@@ -453,10 +459,27 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (CollectionHelper.hasStorageAccessPermission(this)) {
             // Show error dialog if collection could not be opened
             return CollectionHelper.getInstance().getColSafe(this) != null;
-        } else {
-            // Request storage permission if we don't have it (e.g. on Android 6.0+)
+        } else if (mClosedWelcomeMessage) {
+            // DEFECT #5847: This fails if the activity is killed.
+            //Even if the dialog is showing, we want to show it again.
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_STORAGE_PERMISSION);
+            return false;
+        } else {
+            // Request storage permission if we don't have it (e.g. on Android 6.0+)
+            new MaterialDialog.Builder(this)
+                    .title(R.string.collection_load_welcome_request_permissions_title)
+                    .titleGravity(GravityEnum.CENTER)
+                    .content(R.string.collection_load_welcome_request_permissions_details)
+                    .positiveText(R.string.dialog_ok)
+                    .onPositive((innerDialog, innerWhich) -> {
+                        this.mClosedWelcomeMessage = true;
+                        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                REQUEST_STORAGE_PERMISSION);
+                    })
+                    .cancelable(false)
+                    .canceledOnTouchOutside(false)
+                    .show();
             return false;
         }
     }
@@ -746,6 +769,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putLong("mContextMenuDid", mContextMenuDid);
+        savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage);
     }
 
 
@@ -842,6 +866,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
 
+    private void restoreWelcomeMessage(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            return;
+        }
+        mClosedWelcomeMessage = savedInstanceState.getBoolean("mClosedWelcomeMessage");
+    }
 
     /**
      * Perform the following tasks:
