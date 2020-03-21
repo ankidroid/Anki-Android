@@ -381,42 +381,42 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         private boolean requiresPermissionCheck = true;
 
         /** Initial request when activity is created */
-        static final int ACTIVITY_LOAD = 0;
+        public static final int ACTIVITY_LOAD = 0;
         /** A change in UI via the menu options. Cancellable */
-        static final int UI_CHANGE = 1;
+        public static final int UI_CHANGE = 1;
         /** A change in UI via access to the activity. Not (yet) cancellable */
-        static final int EXTERNAL_FIELD_CHANGE = 2;
+        public static final int EXTERNAL_FIELD_CHANGE = 2;
 
         private ChangeUIRequest(IField field, int state) {
             this.newField = field;
             this.state = state;
         }
 
-        public IField getField() {
+        private IField getField() {
             return newField;
         }
 
-        static ChangeUIRequest init(IField field) {
+        private static ChangeUIRequest init(IField field) {
             return new ChangeUIRequest(field, ACTIVITY_LOAD);
         }
 
-        static ChangeUIRequest uiChange(IField field) {
+        private static ChangeUIRequest uiChange(IField field) {
             return new ChangeUIRequest(field, UI_CHANGE);
         }
 
-        static ChangeUIRequest fieldChange(IField field) {
+        private static ChangeUIRequest fieldChange(IField field) {
             return new ChangeUIRequest(field, EXTERNAL_FIELD_CHANGE);
         }
 
-        boolean doesRequirePermissionCheck() {
+        private boolean doesRequirePermissionCheck() {
             return requiresPermissionCheck;
         }
 
-        void markAsPermissionRequested() {
+        private void markAsPermissionRequested() {
             requiresPermissionCheck = false;
         }
 
-        int getState() {
+        private int getState() {
             return state;
         }
     }
@@ -428,7 +428,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     private static final class UIRecreationLogic {
 
         /** Raised just before the field controller is replaced */
-        static void onPreFieldControllerReplacement(IFieldController previousFieldController) {
+        private static void onPreFieldControllerReplacement(IFieldController previousFieldController) {
             //on init, we don't need to do anything
             if (previousFieldController == null) {
                 return;
@@ -442,7 +442,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
          * Raised when we were supplied with a field that could not generate a UI controller
          * Currently: We used a field for which we didn't know how to generate the UI
          * */
-        static void onControllerCreationFailed(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
+        private static void onControllerCreationFailed(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
             switch (request.getState()) {
                 case ChangeUIRequest.ACTIVITY_LOAD:
                 case ChangeUIRequest.EXTERNAL_FIELD_CHANGE:
@@ -457,7 +457,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             }
         }
 
-        static void onPostUICreation(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
+        private static void onPostUICreation(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
             switch (request.getState()) {
                 case ChangeUIRequest.UI_CHANGE:
                 case ChangeUIRequest.EXTERNAL_FIELD_CHANGE:
@@ -471,7 +471,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             }
         }
 
-        static void onRequiredPermissionDenied(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
+        private static void onRequiredPermissionDenied(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
             switch (request.state)
             {
                 case ChangeUIRequest.ACTIVITY_LOAD:
