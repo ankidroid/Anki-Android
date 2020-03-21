@@ -41,9 +41,15 @@ public class BitmapUtil {
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
 
-            FileInputStream fis = new FileInputStream(theFile);
-            BitmapFactory.decodeStream(fis, null, o);
-            fis.close();
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(theFile);
+                BitmapFactory.decodeStream(fis, null, o);
+            } finally {
+                if (fis != null) {
+                    fis.close();
+                }
+            }
 
             int scale = 1;
             if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
@@ -56,10 +62,14 @@ public class BitmapUtil {
             // Decode with inSampleSize
             BitmapFactory.Options o2 = new BitmapFactory.Options();
             o2.inSampleSize = scale;
-            fis = new FileInputStream(theFile);
-            bmp = BitmapFactory.decodeStream(fis, null, o2);
 
-            fis.close();
+            try {
+                fis = new FileInputStream(theFile);
+                bmp = BitmapFactory.decodeStream(fis, null, o2);
+            } finally {
+                fis.close(); //don't need a null check, as we reuse the variable.
+            }
+
         } catch (IOException e) {
             // do nothing
         }
