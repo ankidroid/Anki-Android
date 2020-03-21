@@ -472,8 +472,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         }
 
         private static void onRequiredPermissionDenied(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
-            switch (request.state)
-            {
+            switch (request.state) {
                 case ChangeUIRequest.ACTIVITY_LOAD:
                     activity.finishCancel();
                     break;
