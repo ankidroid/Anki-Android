@@ -32,4 +32,9 @@ public class Permissions {
         return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED;
     }
+
+
+    public static boolean canUseWakeLock(Context context) {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.WAKE_LOCK) == PackageManager.PERMISSION_GRANTED;
+    }
 }
