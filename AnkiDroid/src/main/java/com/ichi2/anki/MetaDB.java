@@ -87,7 +87,14 @@ public class MetaDB {
                 + "did INTEGER NOT NULL, " + "dictionary INTEGER)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "due INTEGER NOT NULL, eta INTEGER NOT NULL)");
-        // Use pragma to get info about widgetStatus.
+        updateWidgetStatus(mMetaDb);
+        mMetaDb.setVersion(databaseVersion);
+        Timber.i("MetaDB:: Upgrading Internal Database finished. New version: %d", databaseVersion);
+        return mMetaDb;
+    }
+
+
+    private static void updateWidgetStatus(SQLiteDatabase mMetaDb) {
         int columnCount = DatabaseUtil.getTableColumnCount(mMetaDb, "widgetStatus");
         if (columnCount > 0) {
             if (columnCount < 7) {
@@ -99,10 +106,8 @@ public class MetaDB {
                     + "deckName TEXT NOT NULL, " + "newCards INTEGER NOT NULL, " + "lrnCards INTEGER NOT NULL, "
                     + "dueCards INTEGER NOT NULL, " + "progress INTEGER NOT NULL, " + "eta INTEGER NOT NULL)");
         }
-        mMetaDb.setVersion(databaseVersion);
-        Timber.i("MetaDB:: Upgrading Internal Database finished. New version: %d", databaseVersion);
-        return mMetaDb;
     }
+
 
     /** Open the meta-db but only if it currently closed. */
     private static void openDBIfClosed(Context context) {
