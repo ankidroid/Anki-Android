@@ -146,7 +146,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         //If we went through the permission check once, we don't need to do it again.
         //As we only get here a second time if we have the required permissions
-        if (newUI.doesRequirePermissionCheck() && performPermissionRequest(newUI.getField())) {
+        if (newUI.getRequiresPermissionCheck() && performPermissionRequest(newUI.getField())) {
             newUI.markAsPermissionRequested();
             return;
         }
@@ -378,7 +378,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     private final static class ChangeUIRequest {
         private final IField newField;
         private final int state;
-        private boolean requiresPermissionCheck = true;
+        private boolean mRequiresPermissionCheck = true;
 
         /** Initial request when activity is created */
         public static final int ACTIVITY_LOAD = 0;
@@ -408,12 +408,12 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return new ChangeUIRequest(field, EXTERNAL_FIELD_CHANGE);
         }
 
-        private boolean doesRequirePermissionCheck() {
-            return requiresPermissionCheck;
+        private boolean getRequiresPermissionCheck() {
+            return mRequiresPermissionCheck;
         }
 
         private void markAsPermissionRequested() {
-            requiresPermissionCheck = false;
+            mRequiresPermissionCheck = false;
         }
 
         private int getState() {
