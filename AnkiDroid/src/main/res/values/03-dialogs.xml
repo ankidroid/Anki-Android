@@ -141,7 +141,7 @@
     <string name="empty_cards_deleted">Cards deleted: %d</string>
 
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain permission to record audio.</string>
+    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
     <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
 
     <!-- Multimedia - Audio View -->
