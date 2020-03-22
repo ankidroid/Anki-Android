@@ -1617,15 +1617,8 @@ public class Collection {
                 if (!"ok".equals(mDb.queryString("PRAGMA integrity_check"))) {
                     return -1;
                 }
-                // note types with a missing model
-                notifyProgress.run();
-                ArrayList<Long> ids = mDb.queryColumn(Long.class,
-                        "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
-                notifyProgress.run();
-                if (ids.size() != 0) {
-                	problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
-	                _remNotes(Utils.arrayList2array(ids));
-                }
+                deleteNotesWithMissingModel(problems, notifyProgress);
+                ArrayList<Long> ids;
                 // for each model
                 for (JSONObject m : mModels.all()) {
                     // cards with invalid ordinal
@@ -1805,6 +1798,19 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void deleteNotesWithMissingModel(ArrayList<String> problems, Runnable notifyProgress) {
+        // note types with a missing model
+        notifyProgress.run();
+        ArrayList<Long> ids = mDb.queryColumn(Long.class,
+                "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
+            _remNotes(Utils.arrayList2array(ids));
+        }
     }
 
 
