@@ -1627,21 +1627,7 @@ public class Collection {
                 deleteNotesWithMissingCards(problems, notifyProgress);
                 deleteCardsWithMissingNotes(problems, notifyProgress);
                 removeOriginalDuePropertyWhereInvalid(problems, notifyProgress);
-                // cards with odid set when not in a dyn deck
-                ArrayList<Long> dids = new ArrayList<>();
-                for (long id : mDecks.allIds()) {
-                    if (!mDecks.isDyn(id)) {
-                        dids.add(id);
-                    }
-                }
-                notifyProgress.run();
-                ids = mDb.queryColumn(Long.class,
-                        "select id from cards where odid > 0 and did in " + Utils.ids2str(dids), 0);
-                notifyProgress.run();
-                if (ids.size() != 0) {
-                    problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
-                    mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
-                }
+                removeDynamicPropertyFromNonDynamicDecks(problems, notifyProgress);
                 {
                     //#5708 - a dynamic deck should not have "Deck Options"
                     notifyProgress.run();
@@ -1731,6 +1717,25 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void removeDynamicPropertyFromNonDynamicDecks(ArrayList<String> problems, Runnable notifyProgress) {
+        ArrayList<Long> ids;// cards with odid set when not in a dyn deck
+        ArrayList<Long> dids = new ArrayList<>();
+        for (long id : mDecks.allIds()) {
+            if (!mDecks.isDyn(id)) {
+                dids.add(id);
+            }
+        }
+        notifyProgress.run();
+        ids = mDb.queryColumn(Long.class,
+                "select id from cards where odid > 0 and did in " + Utils.ids2str(dids), 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
+            mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
+        }
     }
 
 
