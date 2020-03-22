@@ -115,6 +115,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     private boolean performPermissionRequest(IField field) {
         // Request permission to record if audio field
         if (field instanceof AudioRecordingField && !Permissions.canRecordAudio(this)) {
+            Timber.d("Requesting Audio Permissions");
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.RECORD_AUDIO},
                     REQUEST_AUDIO_PERMISSION);
             return true;
@@ -122,6 +123,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         // Request permission to use the camera if image field
         if (field instanceof ImageField && !Permissions.canUseCamera(this)) {
+            Timber.d("Requesting Camera Permissions");
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
                     REQUEST_CAMERA_PERMISSION);
             return true;
@@ -315,6 +317,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
 
     private void recreateEditingUIUsingCachedRequest() {
+        Timber.d("recreateEditingUIUsingCachedRequest()");
         if (mCurrentChangeRequest == null) {
             throw new IllegalStateException("mCurrentChangeRequest should be set before using cached request");
         }
@@ -326,6 +329,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             throw new IllegalStateException("mCurrentChangeRequest should be set before requesting permissions");
         }
 
+        Timber.d("onRequestPermissionsResult. Code: %d", requestCode);
         if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.length == 1) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -429,6 +433,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         /** Raised just before the field controller is replaced */
         private static void onPreFieldControllerReplacement(IFieldController previousFieldController) {
+            Timber.d("onPreFieldControllerReplacement");
             //on init, we don't need to do anything
             if (previousFieldController == null) {
                 return;
@@ -443,6 +448,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
          * Currently: We used a field for which we didn't know how to generate the UI
          * */
         private static void onControllerCreationFailed(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
+            Timber.d("onControllerCreationFailed. State: %d", request.getState());
             switch (request.getState()) {
                 case ChangeUIRequest.ACTIVITY_LOAD:
                 case ChangeUIRequest.EXTERNAL_FIELD_CHANGE:
@@ -458,6 +464,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         }
 
         private static void onPostUICreation(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
+            Timber.d("onPostUICreation. State: %d", request.getState());
             switch (request.getState()) {
                 case ChangeUIRequest.UI_CHANGE:
                 case ChangeUIRequest.EXTERNAL_FIELD_CHANGE:
@@ -472,6 +479,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         }
 
         private static void onRequiredPermissionDenied(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
+            Timber.d("onRequiredPermissionDenied. State: %d", request.getState());
             switch (request.state) {
                 case ChangeUIRequest.ACTIVITY_LOAD:
                     activity.finishCancel();
