@@ -277,11 +277,7 @@ public class MetaDB {
         Cursor cur = null;
         try {
             cur = mMetaDb.rawQuery("SELECT state FROM whiteboardState" + " WHERE did = " + did, null);
-            if (cur.moveToNext()) {
-                return cur.getInt(0) > 0;
-            } else {
-                return false;
-            }
+            return DatabaseUtil.getScalarBoolean(cur);
         } catch (Exception e) {
             Timber.e(e, "Error retrieving whiteboard state from MetaDB ");
             return false;
@@ -446,6 +442,14 @@ public class MetaDB {
     }
 
     private static class DatabaseUtil {
+        private static boolean getScalarBoolean(Cursor cur) {
+            if (cur.moveToNext()) {
+                return cur.getInt(0) > 0;
+            } else {
+                return false;
+            }
+        }
+
         @SuppressWarnings("TryFinallyCanBeTryWithResources") //API LEVEL
         private static int getTableColumnCount(SQLiteDatabase mMetaDb, String tableName) {
             Cursor c = null;
