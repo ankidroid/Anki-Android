@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.utils.Permissions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +31,7 @@ public class BootService extends BroadcastReceiver {
         if (sWasRun) {
             return;
         }
-        if (!CollectionHelper.hasStorageAccessPermission(context)) {
+        if (!Permissions.hasStorageAccessPermission(context)) {
             return;
         }
         // There are cases where the app is installed, and we have access, but nothing exist yet

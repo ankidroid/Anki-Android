@@ -131,4 +131,16 @@
     <string name="empty_cards_none">No empty cards</string>
     <string name="empty_cards_count">Cards to delete: %d</string>
     <string name="empty_cards_deleted">Cards deleted: %d</string>
+
+    <!-- Multimedia - Edit Field Activity -->
+    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
+    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+
+    <!-- Multimedia - Audio View -->
+    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+
+    <!-- Initial collection load -->
+    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
+    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
 </resources>

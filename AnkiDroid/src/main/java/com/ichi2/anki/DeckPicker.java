@@ -104,6 +104,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.ImportUtils;
+import com.ichi2.utils.Permissions;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
@@ -428,7 +429,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             showStartupScreensAndDialogs(preferences, 0);
         } else {
             // Show error dialogs
-            if (CollectionHelper.hasStorageAccessPermission(this)) {
+            if (Permissions.hasStorageAccessPermission(this)) {
                 if (!AnkiDroidApp.isSdCardMounted()) {
                     // SD card not mounted
                     onSdCardNotMounted();
@@ -449,7 +450,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * @return whether or not we were successful
      */
     private boolean firstCollectionOpen() {
-        if (CollectionHelper.hasStorageAccessPermission(this)) {
+        if (Permissions.hasStorageAccessPermission(this)) {
             // Show error dialog if collection could not be opened
             return CollectionHelper.getInstance().getColSafe(this) != null;
         } else {

@@ -39,6 +39,7 @@ import com.ichi2.libanki.sync.MediaSyncer;
 import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
+import com.ichi2.utils.Permissions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -126,8 +127,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     protected void onPreExecute() {
         super.onPreExecute();
         // Acquire the wake lock before syncing to ensure CPU remains on until the sync completes.
-        if (ContextCompat.checkSelfPermission(AnkiDroidApp.getInstance().getApplicationContext(),
-                Manifest.permission.WAKE_LOCK) == PackageManager.PERMISSION_GRANTED) {
+        if (Permissions.canUseWakeLock(AnkiDroidApp.getInstance().getApplicationContext())) {
             mWakeLock.acquire();
         }
         if (mListener != null) {
