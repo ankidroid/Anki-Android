@@ -1624,15 +1624,7 @@ public class Collection {
                     deleteCardsWithInvalidModelOrdinals(problems, notifyProgress, m);
                     deleteNotesWithWrongFieldCounts(problems, notifyProgress, m);
                 }
-                notifyProgress.run();
-                // delete any notes with missing cards
-                ids = mDb.queryColumn(Long.class,
-                        "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
-                notifyProgress.run();
-                if (ids.size() != 0) {
-                	problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
-	                _remNotes(Utils.arrayList2array(ids));
-                }
+                deleteNotesWithMissingCards(problems, notifyProgress);
                 // cards with missing notes
                 notifyProgress.run();
                 ids = mDb.queryColumn(Long.class,
@@ -1755,6 +1747,20 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void deleteNotesWithMissingCards(ArrayList<String> problems, Runnable notifyProgress) {
+        ArrayList<Long> ids;
+        notifyProgress.run();
+        // delete any notes with missing cards
+        ids = mDb.queryColumn(Long.class,
+                "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
+            _remNotes(Utils.arrayList2array(ids));
+        }
     }
 
 
