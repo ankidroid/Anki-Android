@@ -1617,25 +1617,25 @@ public class Collection {
                 if (!"ok".equals(mDb.queryString("PRAGMA integrity_check"))) {
                     return -1;
                 }
-                deleteNotesWithMissingModel(problems, notifyProgress);
+                problems.addAll(deleteNotesWithMissingModel(notifyProgress));
                 // for each model
                 for (JSONObject m : mModels.all()) {
-                    deleteCardsWithInvalidModelOrdinals(problems, notifyProgress, m);
-                    deleteNotesWithWrongFieldCounts(problems, notifyProgress, m);
+                    problems.addAll(deleteCardsWithInvalidModelOrdinals(notifyProgress, m));
+                    problems.addAll(deleteNotesWithWrongFieldCounts(notifyProgress, m));
                 }
-                deleteNotesWithMissingCards(problems, notifyProgress);
-                deleteCardsWithMissingNotes(problems, notifyProgress);
-                removeOriginalDuePropertyWhereInvalid(problems, notifyProgress);
-                removeDynamicPropertyFromNonDynamicDecks(problems, notifyProgress);
-                removeDeckOptionsFromDynamicDecks(problems, notifyProgress);
+                problems.addAll(deleteNotesWithMissingCards(notifyProgress));
+                problems.addAll(deleteCardsWithMissingNotes(notifyProgress));
+                problems.addAll(removeOriginalDuePropertyWhereInvalid(notifyProgress));
+                problems.addAll(removeDynamicPropertyFromNonDynamicDecks(notifyProgress));
+                problems.addAll(removeDeckOptionsFromDynamicDecks(notifyProgress));
                 rebuildTags(notifyProgress);
                 updateFieldCache(notifyProgress);
                 fixNewCardDuePositionOverflow(notifyProgress);
                 resetNewCardInsertionPosition();
-                fixExcessiveReviewDueDates(problems, notifyProgress);
-                fixDecimalIntervals(problems, notifyProgress);
+                problems.addAll(fixExcessiveReviewDueDates(notifyProgress));
+                problems.addAll(fixDecimalIntervals(notifyProgress));
                 mDb.getDatabase().setTransactionSuccessful();
-                restoreMissingDatabaseIndices(problems, notifyProgress);
+                problems.addAll(restoreMissingDatabaseIndices(notifyProgress));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             } finally {
@@ -1646,7 +1646,7 @@ public class Collection {
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return -1;
         }
-        ensureModelsAreNotEmpty(problems);
+        problems.addAll(ensureModelsAreNotEmpty());
         // and finally, optimize
         optimize(notifyProgress);
         file = new File(mPath);
@@ -1660,14 +1660,17 @@ public class Collection {
     }
 
 
-    private void ensureModelsAreNotEmpty(ArrayList<String> problems) {
+    private ArrayList<String> ensureModelsAreNotEmpty() {
+        ArrayList<String> problems = new ArrayList<>();
         if (mModels.ensureNotEmpty()) {
             problems.add("Added missing note type.");
         }
+        return problems;
     }
 
 
-    private void restoreMissingDatabaseIndices(ArrayList<String> problems, Runnable notifyProgress) {
+    private ArrayList<String> restoreMissingDatabaseIndices(Runnable notifyProgress) {
+        ArrayList<String> problems = new ArrayList<>();
         // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
         notifyProgress.run();
         int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
@@ -1675,10 +1678,12 @@ public class Collection {
             problems.add("Indices were missing.");
             Storage.addIndices(mDb);
         }
+        return problems;
     }
 
 
-    private void fixDecimalIntervals(ArrayList<String> problems, Runnable notifyProgress) {
+    private ArrayList<String> fixDecimalIntervals(Runnable notifyProgress) {
+        ArrayList<String> problems = new ArrayList<>();
         // v2 sched had a bug that could create decimal intervals
         notifyProgress.run();
         SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
@@ -1694,10 +1699,12 @@ public class Collection {
         if (rowCount > 0) {
             problems.add("Fixed " + rowCount + " review history entries with v2 scheduler bug.");
         }
+        return problems;
     }
 
 
-    private void fixExcessiveReviewDueDates(ArrayList<String> problems, Runnable notifyProgress) {
+    private ArrayList<String> fixExcessiveReviewDueDates(Runnable notifyProgress) {
+        ArrayList<String> problems = new ArrayList<>();
         ArrayList<Long> ids;// reviews should have a reasonable due #
         notifyProgress.run();
         ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
@@ -1707,6 +1714,7 @@ public class Collection {
             mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
                     ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
         }
+        return problems;
     }
 
 
@@ -1741,7 +1749,8 @@ public class Collection {
     }
 
 
-    private void removeDeckOptionsFromDynamicDecks(ArrayList<String> problems, Runnable notifyProgress) {
+    private ArrayList<String> removeDeckOptionsFromDynamicDecks(Runnable notifyProgress) {
+        ArrayList<String> problems = new ArrayList<>();
         //#5708 - a dynamic deck should not have "Deck Options"
         notifyProgress.run();
         int fixCount = 0;
@@ -1759,10 +1768,12 @@ public class Collection {
             mDecks.save();
             problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
         }
+        return problems;
     }
 
 
-    private void removeDynamicPropertyFromNonDynamicDecks(ArrayList<String> problems, Runnable notifyProgress) {
+    private ArrayList<String> removeDynamicPropertyFromNonDynamicDecks(Runnable notifyProgress) {
+        ArrayList<String> problems = new ArrayList<>();
         ArrayList<Long> ids;// cards with odid set when not in a dyn deck
         ArrayList<Long> dids = new ArrayList<>();
         for (long id : mDecks.allIds()) {
@@ -1778,10 +1789,12 @@ public class Collection {
             problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
             mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
         }
+        return problems;
     }
 
 
-    private void removeOriginalDuePropertyWhereInvalid(ArrayList<String> problems, Runnable notifyProgress) {
+    private ArrayList<String> removeOriginalDuePropertyWhereInvalid(Runnable notifyProgress) {
+        ArrayList<String> problems = new ArrayList<>();
         ArrayList<Long> ids;// cards with odue set when it shouldn't be
         notifyProgress.run();
         ids = mDb.queryColumn(Long.class,
@@ -1791,10 +1804,12 @@ public class Collection {
             problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
             mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
         }
+        return problems;
     }
 
 
-    private void deleteCardsWithMissingNotes(ArrayList<String> problems, Runnable notifyProgress) {
+    private ArrayList<String> deleteCardsWithMissingNotes(Runnable notifyProgress) {
+        ArrayList<String> problems = new ArrayList<>();
         ArrayList<Long> ids;// cards with missing notes
         notifyProgress.run();
         ids = mDb.queryColumn(Long.class,
@@ -1804,10 +1819,12 @@ public class Collection {
             problems.add("Deleted " + ids.size() + " card(s) with missing note.");
             remCards(Utils.arrayList2array(ids));
         }
+        return problems;
     }
 
 
-    private void deleteNotesWithMissingCards(ArrayList<String> problems, Runnable notifyProgress) {
+    private ArrayList<String> deleteNotesWithMissingCards(Runnable notifyProgress) {
+        ArrayList<String> problems = new ArrayList<>();
         ArrayList<Long> ids;
         notifyProgress.run();
         // delete any notes with missing cards
@@ -1818,10 +1835,12 @@ public class Collection {
             problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
             _remNotes(Utils.arrayList2array(ids));
         }
+        return problems;
     }
 
 
-    private void deleteNotesWithWrongFieldCounts(ArrayList<String> problems, Runnable notifyProgress, JSONObject m) throws JSONException {
+    private ArrayList<String> deleteNotesWithWrongFieldCounts(Runnable notifyProgress, JSONObject m) throws JSONException {
+        ArrayList<String> problems = new ArrayList<>();
         ArrayList<Long> ids;// notes with invalid field counts
         ids = new ArrayList<>();
         Cursor cur = null;
@@ -1851,10 +1870,12 @@ public class Collection {
                 cur.close();
             }
         }
+        return problems;
     }
 
 
-    private void deleteCardsWithInvalidModelOrdinals(ArrayList<String> problems, Runnable notifyProgress, JSONObject m) throws JSONException {
+    private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, JSONObject m) throws JSONException {
+        ArrayList<String> problems = new ArrayList<>();
         ArrayList<Long> ids;// cards with invalid ordinal
         notifyProgress.run();
         if (m.getInt("type") == Consts.MODEL_STD) {
@@ -1871,10 +1892,12 @@ public class Collection {
                 remCards(Utils.arrayList2array(ids));
             }
         }
+        return problems;
     }
 
 
-    private void deleteNotesWithMissingModel(ArrayList<String> problems, Runnable notifyProgress) {
+    private ArrayList<String> deleteNotesWithMissingModel(Runnable notifyProgress) {
+        ArrayList<String> problems = new ArrayList<>();
         // note types with a missing model
         notifyProgress.run();
         ArrayList<Long> ids = mDb.queryColumn(Long.class,
@@ -1884,6 +1907,7 @@ public class Collection {
             problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
             _remNotes(Utils.arrayList2array(ids));
         }
+        return problems;
     }
 
 
