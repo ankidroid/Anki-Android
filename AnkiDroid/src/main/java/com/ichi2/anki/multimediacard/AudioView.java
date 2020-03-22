@@ -30,7 +30,7 @@ import android.widget.LinearLayout;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.multimediacard.utils.Permissions;
+import com.ichi2.utils.Permissions;
 
 import timber.log.Timber;
 

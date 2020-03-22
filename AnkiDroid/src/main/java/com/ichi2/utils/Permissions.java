@@ -1,4 +1,4 @@
-package com.ichi2.anki.multimediacard.utils;
+package com.ichi2.utils;
 
 import android.Manifest;
 import android.content.Context;
