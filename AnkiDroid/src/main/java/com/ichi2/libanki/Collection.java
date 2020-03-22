@@ -1606,21 +1606,22 @@ public class Collection {
         File file = new File(mPath);
         ArrayList<String> problems = new ArrayList<>();
         long oldSize = file.length();
-        int currentTask = 1;
+        final int[] currentTask = {1};
         int totalTasks = (mModels.all().size() * 4) + 21; // a few fixes are in all-models loops, the rest are one-offs
+        Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
         try {
             mDb.getDatabase().beginTransaction();
             try {
                 save();
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 if (!"ok".equals(mDb.queryString("PRAGMA integrity_check"))) {
                     return -1;
                 }
                 // note types with a missing model
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 ArrayList<Long> ids = mDb.queryColumn(Long.class,
                         "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 if (ids.size() != 0) {
                 	problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
 	                _remNotes(Utils.arrayList2array(ids));
@@ -1628,7 +1629,7 @@ public class Collection {
                 // for each model
                 for (JSONObject m : mModels.all()) {
                     // cards with invalid ordinal
-                    fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                    notifyProgress.run();
                     if (m.getInt("type") == Consts.MODEL_STD) {
                         ArrayList<Integer> ords = new ArrayList<>();
                         JSONArray tmpls = m.getJSONArray("tmpls");
@@ -1647,7 +1648,7 @@ public class Collection {
                     ids = new ArrayList<>();
                     Cursor cur = null;
                     try {
-                        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                        notifyProgress.run();
                         cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
                         while (cur.moveToNext()) {
                             String flds = cur.getString(1);
@@ -1662,7 +1663,7 @@ public class Collection {
                                 ids.add(id);
                             }
                         }
-                        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                        notifyProgress.run();
                         if (ids.size() > 0) {
                             problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
                             _remNotes(Utils.arrayList2array(ids));
@@ -1673,29 +1674,29 @@ public class Collection {
                         }
                     }
                 }
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 // delete any notes with missing cards
                 ids = mDb.queryColumn(Long.class,
                         "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 if (ids.size() != 0) {
                 	problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
 	                _remNotes(Utils.arrayList2array(ids));
                 }
                 // cards with missing notes
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 ids = mDb.queryColumn(Long.class,
                         "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 if (ids.size() != 0) {
                     problems.add("Deleted " + ids.size() + " card(s) with missing note.");
                     remCards(Utils.arrayList2array(ids));
                 }
                 // cards with odue set when it shouldn't be
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 ids = mDb.queryColumn(Long.class,
                         "select id from cards where odue > 0 and (type=1 or queue=2) and not odid", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 if (ids.size() != 0) {
                     problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
                     mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
@@ -1707,17 +1708,17 @@ public class Collection {
                         dids.add(id);
                     }
                 }
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 ids = mDb.queryColumn(Long.class,
                         "select id from cards where odid > 0 and did in " + Utils.ids2str(dids), 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 if (ids.size() != 0) {
                     problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
                     mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
                 }
                 {
                     //#5708 - a dynamic deck should not have "Deck Options"
-                    fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                    notifyProgress.run();
                     int fixCount = 0;
                     for (long id : mDecks.allDynamicDeckIds()) {
                         try {
@@ -1735,37 +1736,37 @@ public class Collection {
                     }
                 }
                 // tags
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 mTags.registerNotes();
                 // field cache
                 for (JSONObject m : mModels.all()) {
-                    fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                    notifyProgress.run();
                     updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
                 }
                 // new cards can't have a due position > 32 bits
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
                         + " WHERE due > 1000000 AND type = 0");
                 // new card position
                 mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
                 // reviews should have a reasonable due #
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 if (ids.size() > 0) {
                 	problems.add("Reviews had incorrect due date.");
                     mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
                             ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 }
                 // v2 sched had a bug that could create decimal intervals
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
                         "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
                 int rowCount = s.executeUpdateDelete();
                 if (rowCount > 0) {
                     problems.add("Fixed " + rowCount + " cards with v2 scheduler bug.");
                 }
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 s = mDb.getDatabase().compileStatement(
                         "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
                 rowCount = s.executeUpdateDelete();
@@ -1774,7 +1775,7 @@ public class Collection {
                 }
                 mDb.getDatabase().setTransactionSuccessful();
                 // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+                notifyProgress.run();
                 int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
                 if (ixs < 7) {
                     problems.add("Indices were missing.");
@@ -1795,7 +1796,7 @@ public class Collection {
             problems.add("Added missing note type.");
         }
         // and finally, optimize
-        optimize(progressCallback, currentTask, totalTasks);
+        optimize(notifyProgress);
         file = new File(mPath);
         long newSize = file.length();
         // if any problems were found, force a full sync
@@ -1807,12 +1808,12 @@ public class Collection {
     }
 
 
-    public void optimize(DeckTask.ProgressCallback progressCallback, int currentTask, int totalTasks) {
+    public void optimize(Runnable progressCallback) {
         Timber.i("executing VACUUM statement");
-        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+        progressCallback.run();
         mDb.execute("VACUUM");
         Timber.i("executing ANALYZE statement");
-        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+        progressCallback.run();
         mDb.execute("ANALYZE");
     }
 
