@@ -1629,9 +1629,7 @@ public class Collection {
                 removeOriginalDuePropertyWhereInvalid(problems, notifyProgress);
                 removeDynamicPropertyFromNonDynamicDecks(problems, notifyProgress);
                 removeDeckOptionsFromDynamicDecks(problems, notifyProgress);
-                // tags
-                notifyProgress.run();
-                mTags.registerNotes();
+                rebuildTags(notifyProgress);
                 // field cache
                 for (JSONObject m : mModels.all()) {
                     notifyProgress.run();
@@ -1699,6 +1697,13 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void rebuildTags(Runnable notifyProgress) {
+        // tags
+        notifyProgress.run();
+        mTags.registerNotes();
     }
 
 
