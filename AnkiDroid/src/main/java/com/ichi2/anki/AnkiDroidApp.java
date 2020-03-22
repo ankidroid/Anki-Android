@@ -43,6 +43,7 @@ import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.utils.Permissions;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
@@ -235,7 +236,7 @@ public class AnkiDroidApp extends Application {
         CardBrowser.clearLastDeckId();
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
-        if (CollectionHelper.hasStorageAccessPermission(this)) {
+        if (Permissions.hasStorageAccessPermission(this)) {
             try {
                 String dir = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                 CollectionHelper.initializeAnkiDroidDirectory(dir);

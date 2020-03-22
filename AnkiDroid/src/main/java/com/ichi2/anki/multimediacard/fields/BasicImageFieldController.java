@@ -19,7 +19,6 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
@@ -33,7 +32,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.text.format.Formatter;
@@ -52,6 +50,7 @@ import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
+import com.ichi2.utils.Permissions;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -168,7 +167,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
         });
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (!Permissions.canUseCamera(context)) {
             mBtnCamera.setVisibility(View.INVISIBLE);
         }
 
