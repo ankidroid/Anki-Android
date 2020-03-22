@@ -1630,11 +1630,7 @@ public class Collection {
                 removeDynamicPropertyFromNonDynamicDecks(problems, notifyProgress);
                 removeDeckOptionsFromDynamicDecks(problems, notifyProgress);
                 rebuildTags(notifyProgress);
-                // field cache
-                for (JSONObject m : mModels.all()) {
-                    notifyProgress.run();
-                    updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
-                }
+                updateFieldCache(notifyProgress);
                 // new cards can't have a due position > 32 bits
                 notifyProgress.run();
                 mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
@@ -1697,6 +1693,15 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void updateFieldCache(Runnable notifyProgress) {
+        // field cache
+        for (JSONObject m : mModels.all()) {
+            notifyProgress.run();
+            updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
+        }
     }
 
 
