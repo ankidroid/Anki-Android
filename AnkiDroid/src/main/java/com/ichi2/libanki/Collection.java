@@ -1611,10 +1611,14 @@ public class Collection {
         final int[] currentTask = {1};
         int totalTasks = (mModels.all().size() * 4) + 21; // a few fixes are in all-models loops, the rest are one-offs
         Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
-        FunctionalInterfaces.Consumer<FunctionalInterfaces.Function<Runnable, List<String>>> executeIntegrityTask =
-                (FunctionalInterfaces.Function<Runnable, List<String>> function) -> {
-            problems.addAll(function.apply(notifyProgress));
-        };
+        FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
+                (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
+                    try {
+                        problems.addAll(function.apply(notifyProgress));
+                    } catch (Exception e) {
+                        Timber.e(e, "Failed to execute integrity check");
+                    }
+                };
         try {
             mDb.getDatabase().beginTransaction();
             try {
@@ -1626,8 +1630,8 @@ public class Collection {
                 executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
                 // for each model
                 for (JSONObject m : mModels.all()) {
-                    problems.addAll(deleteCardsWithInvalidModelOrdinals(notifyProgress, m));
-                    problems.addAll(deleteNotesWithWrongFieldCounts(notifyProgress, m));
+                    executeIntegrityTask.consume((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
+                    executeIntegrityTask.consume((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
                 }
                 executeIntegrityTask.consume(this::deleteNotesWithMissingCards);
                 executeIntegrityTask.consume(this::deleteCardsWithMissingNotes);
@@ -1637,13 +1641,11 @@ public class Collection {
                 executeIntegrityTask.consume(this::rebuildTags);
                 executeIntegrityTask.consume(this::updateFieldCache);
                 executeIntegrityTask.consume(this::fixNewCardDuePositionOverflow);
-                resetNewCardInsertionPosition();
+                executeIntegrityTask.consume((callback) -> resetNewCardInsertionPosition());
                 executeIntegrityTask.consume(this::fixExcessiveReviewDueDates);
                 executeIntegrityTask.consume(this::fixDecimalIntervals);
                 mDb.getDatabase().setTransactionSuccessful();
                 executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
             } finally {
                 mDb.getDatabase().endTransaction();
             }
@@ -1724,10 +1726,11 @@ public class Collection {
     }
 
 
-    private void resetNewCardInsertionPosition() throws JSONException {
+    private List<String> resetNewCardInsertionPosition() throws JSONException {
         // TODO: we should probably do a progress callback here
         // new card position
         mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
+        return Collections.emptyList();
     }
 
 
