@@ -1636,13 +1636,7 @@ public class Collection {
                 fixExcessiveReviewDueDates(problems, notifyProgress);
                 fixDecimalIntervals(problems, notifyProgress);
                 mDb.getDatabase().setTransactionSuccessful();
-                // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
-                notifyProgress.run();
-                int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
-                if (ixs < 7) {
-                    problems.add("Indices were missing.");
-                    Storage.addIndices(mDb);
-                }
+                restoreMissingDatabaseIndices(problems, notifyProgress);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             } finally {
@@ -1667,6 +1661,17 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void restoreMissingDatabaseIndices(ArrayList<String> problems, Runnable notifyProgress) {
+        // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
+        notifyProgress.run();
+        int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
+        if (ixs < 7) {
+            problems.add("Indices were missing.");
+            Storage.addIndices(mDb);
+        }
     }
 
 
