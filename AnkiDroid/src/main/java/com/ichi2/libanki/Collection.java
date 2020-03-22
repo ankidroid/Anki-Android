@@ -1628,25 +1628,7 @@ public class Collection {
                 deleteCardsWithMissingNotes(problems, notifyProgress);
                 removeOriginalDuePropertyWhereInvalid(problems, notifyProgress);
                 removeDynamicPropertyFromNonDynamicDecks(problems, notifyProgress);
-                {
-                    //#5708 - a dynamic deck should not have "Deck Options"
-                    notifyProgress.run();
-                    int fixCount = 0;
-                    for (long id : mDecks.allDynamicDeckIds()) {
-                        try {
-                            if (mDecks.hasDeckOptions(id)) {
-                                mDecks.removeDeckOptions(id);
-                                fixCount++;
-                            }
-                        } catch (NoSuchDeckException e) {
-                            Timber.e("Unable to find dynamic deck %d", id);
-                        }
-                    }
-                    if (fixCount > 0) {
-                        mDecks.save();
-                        problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
-                    }
-                }
+                removeDeckOptionsFromDynamicDecks(problems, notifyProgress);
                 // tags
                 notifyProgress.run();
                 mTags.registerNotes();
@@ -1717,6 +1699,27 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void removeDeckOptionsFromDynamicDecks(ArrayList<String> problems, Runnable notifyProgress) {
+        //#5708 - a dynamic deck should not have "Deck Options"
+        notifyProgress.run();
+        int fixCount = 0;
+        for (long id : mDecks.allDynamicDeckIds()) {
+            try {
+                if (mDecks.hasDeckOptions(id)) {
+                    mDecks.removeDeckOptions(id);
+                    fixCount++;
+                }
+            } catch (NoSuchDeckException e) {
+                Timber.e("Unable to find dynamic deck %d", id);
+            }
+        }
+        if (fixCount > 0) {
+            mDecks.save();
+            problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
+        }
     }
 
 
