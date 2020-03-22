@@ -88,30 +88,21 @@ public class MetaDB {
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "due INTEGER NOT NULL, eta INTEGER NOT NULL)");
         // Use pragma to get info about widgetStatus.
-        Cursor c = null;
-        try {
-             c = mMetaDb.rawQuery("PRAGMA table_info(widgetStatus)", null);
-            int columnNumber = c.getCount();
-            if (columnNumber > 0) {
-                if (columnNumber < 7) {
-                    mMetaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN eta INTEGER NOT NULL DEFAULT '0'");
-                    mMetaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN time INTEGER NOT NULL DEFAULT '0'");
-                }
-            } else {
-                mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS widgetStatus (" + "deckId INTEGER NOT NULL PRIMARY KEY, "
-                        + "deckName TEXT NOT NULL, " + "newCards INTEGER NOT NULL, " + "lrnCards INTEGER NOT NULL, "
-                        + "dueCards INTEGER NOT NULL, " + "progress INTEGER NOT NULL, " + "eta INTEGER NOT NULL)");
+        int columnCount = DatabaseUtil.getTableColumnCount(mMetaDb, "widgetStatus");
+        if (columnCount > 0) {
+            if (columnCount < 7) {
+                mMetaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN eta INTEGER NOT NULL DEFAULT '0'");
+                mMetaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN time INTEGER NOT NULL DEFAULT '0'");
             }
-            mMetaDb.setVersion(databaseVersion);
-            Timber.i("MetaDB:: Upgrading Internal Database finished. New version: %d", databaseVersion);
-            return mMetaDb;
-        } finally {
-            if (c != null) {
-                c.close();
-            }
+        } else {
+            mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS widgetStatus (" + "deckId INTEGER NOT NULL PRIMARY KEY, "
+                    + "deckName TEXT NOT NULL, " + "newCards INTEGER NOT NULL, " + "lrnCards INTEGER NOT NULL, "
+                    + "dueCards INTEGER NOT NULL, " + "progress INTEGER NOT NULL, " + "eta INTEGER NOT NULL)");
         }
+        mMetaDb.setVersion(databaseVersion);
+        Timber.i("MetaDB:: Upgrading Internal Database finished. New version: %d", databaseVersion);
+        return mMetaDb;
     }
-
 
     /** Open the meta-db but only if it currently closed. */
     private static void openDBIfClosed(Context context) {
@@ -451,6 +442,21 @@ public class MetaDB {
             Timber.e(e, "MetaDB.storeSmallWidgetStatus: failed");
             closeDB();
             Timber.i("MetaDB:: Trying to reset Widget: " + resetWidget(context));
+        }
+    }
+
+    private static class DatabaseUtil {
+        @SuppressWarnings("TryFinallyCanBeTryWithResources") //API LEVEL
+        private static int getTableColumnCount(SQLiteDatabase mMetaDb, String tableName) {
+            Cursor c = null;
+            try {
+                c = mMetaDb.rawQuery("PRAGMA table_info(" + tableName + ")", null);
+                return c.getCount();
+            } finally {
+                if (c != null) {
+                    c.close();
+                }
+            }
         }
     }
 }
