@@ -319,14 +319,16 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     private void recreateEditingUIUsingCachedRequest() {
         Timber.d("recreateEditingUIUsingCachedRequest()");
         if (mCurrentChangeRequest == null) {
-            throw new IllegalStateException("mCurrentChangeRequest should be set before using cached request");
+            cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before using cached request");
+            return;
         }
         recreateEditingUi(mCurrentChangeRequest);
     }
 
     public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (mCurrentChangeRequest == null) {
-            throw new IllegalStateException("mCurrentChangeRequest should be set before requesting permissions");
+            cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before requesting permissions");
+            return;
         }
 
         Timber.d("onRequestPermissionsResult. Code: %d", requestCode);
@@ -355,6 +357,14 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             recreateEditingUIUsingCachedRequest();
         }
     }
+
+
+    private void cancelActivityWithAssertionFailure(String logMessage) {
+        Timber.wtf(logMessage);
+        UIUtils.showThemedToast(this, getString(R.string.mutimedia_editor_assertion_failed), false);
+        finishCancel();
+    }
+
 
     public void handleFieldChanged(IField newField) {
         recreateEditingUi(ChangeUIRequest.fieldChange(newField));
