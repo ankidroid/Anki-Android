@@ -1631,10 +1631,7 @@ public class Collection {
                 removeDeckOptionsFromDynamicDecks(problems, notifyProgress);
                 rebuildTags(notifyProgress);
                 updateFieldCache(notifyProgress);
-                // new cards can't have a due position > 32 bits
-                notifyProgress.run();
-                mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
-                        + " WHERE due > 1000000 AND type = 0");
+                fixNewCardDuePositionOverflow(notifyProgress);
                 // new card position
                 mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
                 // reviews should have a reasonable due #
@@ -1693,6 +1690,14 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void fixNewCardDuePositionOverflow(Runnable notifyProgress) {
+        // new cards can't have a due position > 32 bits
+        notifyProgress.run();
+        mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
+                + " WHERE due > 1000000 AND type = 0");
     }
 
 
