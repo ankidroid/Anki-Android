@@ -242,4 +242,5 @@
     <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
 
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
 </resources>
