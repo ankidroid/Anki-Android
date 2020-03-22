@@ -1632,8 +1632,7 @@ public class Collection {
                 rebuildTags(notifyProgress);
                 updateFieldCache(notifyProgress);
                 fixNewCardDuePositionOverflow(notifyProgress);
-                // new card position
-                mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
+                resetNewCardInsertionPosition();
                 // reviews should have a reasonable due #
                 notifyProgress.run();
                 ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
@@ -1690,6 +1689,13 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void resetNewCardInsertionPosition() throws JSONException {
+        // TODO: we should probably do a progress callback here
+        // new card position
+        mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
     }
 
 
