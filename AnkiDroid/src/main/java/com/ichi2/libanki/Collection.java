@@ -1634,21 +1634,7 @@ public class Collection {
                 fixNewCardDuePositionOverflow(notifyProgress);
                 resetNewCardInsertionPosition();
                 fixExcessiveReviewDueDates(problems, notifyProgress);
-                // v2 sched had a bug that could create decimal intervals
-                notifyProgress.run();
-                SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
-                        "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
-                int rowCount = s.executeUpdateDelete();
-                if (rowCount > 0) {
-                    problems.add("Fixed " + rowCount + " cards with v2 scheduler bug.");
-                }
-                notifyProgress.run();
-                s = mDb.getDatabase().compileStatement(
-                        "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
-                rowCount = s.executeUpdateDelete();
-                if (rowCount > 0) {
-                    problems.add("Fixed " + rowCount + " review history entries with v2 scheduler bug.");
-                }
+                fixDecimalIntervals(problems, notifyProgress);
                 mDb.getDatabase().setTransactionSuccessful();
                 // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
                 notifyProgress.run();
@@ -1681,6 +1667,25 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void fixDecimalIntervals(ArrayList<String> problems, Runnable notifyProgress) {
+        // v2 sched had a bug that could create decimal intervals
+        notifyProgress.run();
+        SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
+                "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
+        int rowCount = s.executeUpdateDelete();
+        if (rowCount > 0) {
+            problems.add("Fixed " + rowCount + " cards with v2 scheduler bug.");
+        }
+        notifyProgress.run();
+        s = mDb.getDatabase().compileStatement(
+                "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
+        rowCount = s.executeUpdateDelete();
+        if (rowCount > 0) {
+            problems.add("Fixed " + rowCount + " review history entries with v2 scheduler bug.");
+        }
     }
 
 
