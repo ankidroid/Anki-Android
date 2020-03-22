@@ -69,6 +69,7 @@ jobs:
       script: echo finalize codacy coverage uploads
   allow_failures:
     - env: API=24 JDK="1.11" # non-default JDKs should not hold up success reporting
+    - os: osx # Until macos is stable we must ignore https://travis-ci.community/t/macos-build-an-error-occurred-while-generating-the-build-script/7684/15
     - env: FINALIZE_COVERAGE=TRUE API=NONE # finalizing coverage should not hold up success reporting
 
 before_install:
