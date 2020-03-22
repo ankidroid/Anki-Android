@@ -1621,22 +1621,7 @@ public class Collection {
                 ArrayList<Long> ids;
                 // for each model
                 for (JSONObject m : mModels.all()) {
-                    // cards with invalid ordinal
-                    notifyProgress.run();
-                    if (m.getInt("type") == Consts.MODEL_STD) {
-                        ArrayList<Integer> ords = new ArrayList<>();
-                        JSONArray tmpls = m.getJSONArray("tmpls");
-                        for (int t = 0; t < tmpls.length(); t++) {
-                            ords.add(tmpls.getJSONObject(t).getInt("ord"));
-                        }
-                        ids = mDb.queryColumn(Long.class,
-                                "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
-                                "SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
-                        if (ids.size() > 0) {
-                            problems.add("Deleted " + ids.size() + " card(s) with missing template.");
-                            remCards(Utils.arrayList2array(ids));
-                        }
-                    }
+                    deleteCardsWithInvalidModelOrdinals(problems, notifyProgress, m);
                     // notes with invalid field counts
                     ids = new ArrayList<>();
                     Cursor cur = null;
@@ -1798,6 +1783,26 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void deleteCardsWithInvalidModelOrdinals(ArrayList<String> problems, Runnable notifyProgress, JSONObject m) throws JSONException {
+        ArrayList<Long> ids;// cards with invalid ordinal
+        notifyProgress.run();
+        if (m.getInt("type") == Consts.MODEL_STD) {
+            ArrayList<Integer> ords = new ArrayList<>();
+            JSONArray tmpls = m.getJSONArray("tmpls");
+            for (int t = 0; t < tmpls.length(); t++) {
+                ords.add(tmpls.getJSONObject(t).getInt("ord"));
+            }
+            ids = mDb.queryColumn(Long.class,
+                    "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
+                    "SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
+            if (ids.size() > 0) {
+                problems.add("Deleted " + ids.size() + " card(s) with missing template.");
+                remCards(Utils.arrayList2array(ids));
+            }
+        }
     }
 
 
