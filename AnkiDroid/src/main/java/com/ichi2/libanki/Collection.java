@@ -1618,7 +1618,6 @@ public class Collection {
                     return -1;
                 }
                 deleteNotesWithMissingModel(problems, notifyProgress);
-                ArrayList<Long> ids;
                 // for each model
                 for (JSONObject m : mModels.all()) {
                     deleteCardsWithInvalidModelOrdinals(problems, notifyProgress, m);
