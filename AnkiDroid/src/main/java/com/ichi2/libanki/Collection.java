@@ -1625,15 +1625,7 @@ public class Collection {
                     deleteNotesWithWrongFieldCounts(problems, notifyProgress, m);
                 }
                 deleteNotesWithMissingCards(problems, notifyProgress);
-                // cards with missing notes
-                notifyProgress.run();
-                ids = mDb.queryColumn(Long.class,
-                        "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)", 0);
-                notifyProgress.run();
-                if (ids.size() != 0) {
-                    problems.add("Deleted " + ids.size() + " card(s) with missing note.");
-                    remCards(Utils.arrayList2array(ids));
-                }
+                deleteCardsWithMissingNotes(problems, notifyProgress);
                 // cards with odue set when it shouldn't be
                 notifyProgress.run();
                 ids = mDb.queryColumn(Long.class,
@@ -1747,6 +1739,19 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void deleteCardsWithMissingNotes(ArrayList<String> problems, Runnable notifyProgress) {
+        ArrayList<Long> ids;// cards with missing notes
+        notifyProgress.run();
+        ids = mDb.queryColumn(Long.class,
+                "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)", 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Deleted " + ids.size() + " card(s) with missing note.");
+            remCards(Utils.arrayList2array(ids));
+        }
     }
 
 
