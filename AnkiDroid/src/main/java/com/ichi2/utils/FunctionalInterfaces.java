@@ -13,4 +13,9 @@ public final class FunctionalInterfaces {
     public interface Consumer<T> {
         void consume(T item);
     }
+
+    @FunctionalInterface
+    public interface Function<TIn, TOut> {
+        TOut apply(TIn item);
+    }
 }

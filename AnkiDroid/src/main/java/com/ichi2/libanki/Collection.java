@@ -36,6 +36,7 @@ import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.upgrade.Upgrade;
+import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
 
 import org.json.JSONArray;
@@ -1609,6 +1610,10 @@ public class Collection {
         final int[] currentTask = {1};
         int totalTasks = (mModels.all().size() * 4) + 21; // a few fixes are in all-models loops, the rest are one-offs
         Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
+        FunctionalInterfaces.Consumer<FunctionalInterfaces.Function<Runnable, List<String>>> executeIntegrityTask =
+                (FunctionalInterfaces.Function<Runnable, List<String>> function) -> {
+            problems.addAll(function.apply(notifyProgress));
+        };
         try {
             mDb.getDatabase().beginTransaction();
             try {
@@ -1617,25 +1622,25 @@ public class Collection {
                 if (!"ok".equals(mDb.queryString("PRAGMA integrity_check"))) {
                     return -1;
                 }
-                problems.addAll(deleteNotesWithMissingModel(notifyProgress));
+                executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
                 // for each model
                 for (JSONObject m : mModels.all()) {
                     problems.addAll(deleteCardsWithInvalidModelOrdinals(notifyProgress, m));
                     problems.addAll(deleteNotesWithWrongFieldCounts(notifyProgress, m));
                 }
-                problems.addAll(deleteNotesWithMissingCards(notifyProgress));
-                problems.addAll(deleteCardsWithMissingNotes(notifyProgress));
-                problems.addAll(removeOriginalDuePropertyWhereInvalid(notifyProgress));
-                problems.addAll(removeDynamicPropertyFromNonDynamicDecks(notifyProgress));
-                problems.addAll(removeDeckOptionsFromDynamicDecks(notifyProgress));
+                executeIntegrityTask.consume(this::deleteNotesWithMissingCards);
+                executeIntegrityTask.consume(this::deleteCardsWithMissingNotes);
+                executeIntegrityTask.consume(this::removeOriginalDuePropertyWhereInvalid);
+                executeIntegrityTask.consume(this::removeDynamicPropertyFromNonDynamicDecks);
+                executeIntegrityTask.consume(this::removeDeckOptionsFromDynamicDecks);
                 rebuildTags(notifyProgress);
                 updateFieldCache(notifyProgress);
                 fixNewCardDuePositionOverflow(notifyProgress);
                 resetNewCardInsertionPosition();
-                problems.addAll(fixExcessiveReviewDueDates(notifyProgress));
-                problems.addAll(fixDecimalIntervals(notifyProgress));
+                executeIntegrityTask.consume(this::fixExcessiveReviewDueDates);
+                executeIntegrityTask.consume(this::fixDecimalIntervals);
                 mDb.getDatabase().setTransactionSuccessful();
-                problems.addAll(restoreMissingDatabaseIndices(notifyProgress));
+                executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             } finally {
