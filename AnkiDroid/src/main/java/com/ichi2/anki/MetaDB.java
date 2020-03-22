@@ -27,7 +27,7 @@ public class MetaDB {
     private static final String DATABASE_NAME = "ankidroid.db";
 
     /** The Database Version, increase if you want updates to happen on next upgrade. */
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     // Possible values for the qa column of the languages table.
     /** The language refers to the question. */
@@ -81,16 +81,32 @@ public class MetaDB {
         // Create tables if not exist
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS languages (" + " _id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "did INTEGER NOT NULL, ord INTEGER, " + "qa INTEGER, " + "language TEXT)");
-        mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS whiteboardState (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "did INTEGER NOT NULL, " + "state INTEGER)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS customDictionary (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "did INTEGER NOT NULL, " + "dictionary INTEGER)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "due INTEGER NOT NULL, eta INTEGER NOT NULL)");
         updateWidgetStatus(mMetaDb);
+        updateWhiteboardState(mMetaDb);
         mMetaDb.setVersion(databaseVersion);
         Timber.i("MetaDB:: Upgrading Internal Database finished. New version: %d", databaseVersion);
         return mMetaDb;
+    }
+
+
+    private static void updateWhiteboardState(SQLiteDatabase mMetaDb) {
+        int columnCount  = DatabaseUtil.getTableColumnCount(mMetaDb, "whiteboardState");
+
+        if (columnCount <= 0) {
+            mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS whiteboardState (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "did INTEGER NOT NULL, state INTEGER, visible INTEGER)");
+            return;
+        }
+
+        if (columnCount < 4) {
+            //Default to 1
+            mMetaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN visible INTEGER NOT NULL DEFAULT '1'");
+            Timber.i("Added 'visible' column to whiteboardState");
+        }
     }
 
 
@@ -323,6 +339,55 @@ public class MetaDB {
         }
     }
 
+    /**
+     * Returns the state of the whiteboard for the given deck.
+     *
+     * @return 1 if the whiteboard should be shown, 0 otherwise
+     */
+    public static boolean getWhiteboardVisibility(Context context, long did) {
+        openDBIfClosed(context);
+        Cursor cur = null;
+        try {
+            cur = mMetaDb.rawQuery("SELECT visible FROM whiteboardState" + " WHERE did = " + did, null);
+            return DatabaseUtil.getScalarBoolean(cur);
+        } catch (Exception e) {
+            Timber.e(e, "Error retrieving whiteboard state from MetaDB ");
+            return false;
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+    }
+
+    /**
+     * Stores the state of the whiteboard for a given deck.
+     *
+     * @param did deck id to store whiteboard state for
+     * @param isVisible 1 if the whiteboard should be shown, 0 otherwise
+     */
+    public static void storeWhiteboardVisibility(Context context, long did, boolean isVisible) {
+        int isVisibleState = (isVisible) ? 1 : 0;
+        openDBIfClosed(context);
+        Cursor cur = null;
+        try {
+            cur = mMetaDb.rawQuery("SELECT _id FROM whiteboardState" + " WHERE did  = " + did, null);
+            if (cur.moveToNext()) {
+                mMetaDb.execSQL("UPDATE whiteboardState " + "SET did = " + did + ", " + "visible="
+                        + Integer.toString(isVisibleState) + " " + "WHERE _id=" + cur.getString(0) + ";");
+                Timber.d("Store whiteboard visibility (%d) for deck %d", isVisibleState, did);
+            } else {
+                mMetaDb.execSQL("INSERT INTO whiteboardState (did, visible) VALUES (?, ?)", new Object[] { did, isVisibleState });
+                Timber.d("Store whiteboard visibility (%d) for deck %d", isVisibleState, did);
+            }
+        } catch (Exception e) {
+            Timber.e(e,"Error storing whiteboard visibility in MetaDB ");
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+    }
 
     /**
      * Returns a custom dictionary associated to a deck
