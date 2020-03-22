@@ -169,8 +169,10 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         mPrefWhiteboard = MetaDB.getWhiteboardState(this, getParentDid());
         if (mPrefWhiteboard) {
+            //DEFECT: Slight inefficiency here, as we set the database using these methods
+            boolean whiteboardVisibility = MetaDB.getWhiteboardVisibility(this, getParentDid());
             setWhiteboardEnabledState(true);
-            setWhiteboardVisibility(true);
+            setWhiteboardVisibility(whiteboardVisibility);
         }
 
         col.getSched().reset();     // Reset schedule incase card had previous been loaded
@@ -267,6 +269,8 @@ public class Reviewer extends AbstractFlashcardViewer {
                 // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
                 mPrefWhiteboard = ! mPrefWhiteboard;
                 Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
+                //Even though the visibility is now stored in its own setting, we want it to be dependent
+                //on the enabled status
                 setWhiteboardEnabledState(mPrefWhiteboard);
                 setWhiteboardVisibility(mPrefWhiteboard);
                 refreshActionBar();
@@ -696,6 +700,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     // Show or hide the whiteboard
     private void setWhiteboardVisibility(boolean state) {
         mShowWhiteboard = state;
+        MetaDB.storeWhiteboardVisibility(this, getParentDid(), state);
         if (state) {
             mWhiteboard.setVisibility(View.VISIBLE);
             disableDrawerSwipe();
