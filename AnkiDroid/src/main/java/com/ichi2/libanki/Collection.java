@@ -1633,15 +1633,7 @@ public class Collection {
                 updateFieldCache(notifyProgress);
                 fixNewCardDuePositionOverflow(notifyProgress);
                 resetNewCardInsertionPosition();
-                // reviews should have a reasonable due #
-                notifyProgress.run();
-                ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
-                notifyProgress.run();
-                if (ids.size() > 0) {
-                	problems.add("Reviews had incorrect due date.");
-                    mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
-                            ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
-                }
+                fixExcessiveReviewDueDates(problems, notifyProgress);
                 // v2 sched had a bug that could create decimal intervals
                 notifyProgress.run();
                 SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
@@ -1689,6 +1681,19 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void fixExcessiveReviewDueDates(ArrayList<String> problems, Runnable notifyProgress) {
+        ArrayList<Long> ids;// reviews should have a reasonable due #
+        notifyProgress.run();
+        ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
+        notifyProgress.run();
+        if (ids.size() > 0) {
+            problems.add("Reviews had incorrect due date.");
+            mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
+                    ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+        }
     }
 
 
