@@ -1622,35 +1622,7 @@ public class Collection {
                 // for each model
                 for (JSONObject m : mModels.all()) {
                     deleteCardsWithInvalidModelOrdinals(problems, notifyProgress, m);
-                    // notes with invalid field counts
-                    ids = new ArrayList<>();
-                    Cursor cur = null;
-                    try {
-                        notifyProgress.run();
-                        cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
-                        while (cur.moveToNext()) {
-                            String flds = cur.getString(1);
-                            long id = cur.getLong(0);
-                            int fldsCount = 0;
-                            for (int i = 0; i < flds.length(); i++) {
-                                if (flds.charAt(i) == 0x1f) {
-                                    fldsCount++;
-                                }
-                            }
-                            if (fldsCount + 1 != m.getJSONArray("flds").length()) {
-                                ids.add(id);
-                            }
-                        }
-                        notifyProgress.run();
-                        if (ids.size() > 0) {
-                            problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
-                            _remNotes(Utils.arrayList2array(ids));
-                        }
-                    } finally {
-                        if (cur != null && !cur.isClosed()) {
-                            cur.close();
-                        }
-                    }
+                    deleteNotesWithWrongFieldCounts(problems, notifyProgress, m);
                 }
                 notifyProgress.run();
                 // delete any notes with missing cards
@@ -1783,6 +1755,39 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void deleteNotesWithWrongFieldCounts(ArrayList<String> problems, Runnable notifyProgress, JSONObject m) throws JSONException {
+        ArrayList<Long> ids;// notes with invalid field counts
+        ids = new ArrayList<>();
+        Cursor cur = null;
+        try {
+            notifyProgress.run();
+            cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
+            while (cur.moveToNext()) {
+                String flds = cur.getString(1);
+                long id = cur.getLong(0);
+                int fldsCount = 0;
+                for (int i = 0; i < flds.length(); i++) {
+                    if (flds.charAt(i) == 0x1f) {
+                        fldsCount++;
+                    }
+                }
+                if (fldsCount + 1 != m.getJSONArray("flds").length()) {
+                    ids.add(id);
+                }
+            }
+            notifyProgress.run();
+            if (ids.size() > 0) {
+                problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
+                _remNotes(Utils.arrayList2array(ids));
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
     }
 
 
