@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -1633,9 +1634,9 @@ public class Collection {
                 executeIntegrityTask.consume(this::removeOriginalDuePropertyWhereInvalid);
                 executeIntegrityTask.consume(this::removeDynamicPropertyFromNonDynamicDecks);
                 executeIntegrityTask.consume(this::removeDeckOptionsFromDynamicDecks);
-                rebuildTags(notifyProgress);
-                updateFieldCache(notifyProgress);
-                fixNewCardDuePositionOverflow(notifyProgress);
+                executeIntegrityTask.consume(this::rebuildTags);
+                executeIntegrityTask.consume(this::updateFieldCache);
+                executeIntegrityTask.consume(this::fixNewCardDuePositionOverflow);
                 resetNewCardInsertionPosition();
                 executeIntegrityTask.consume(this::fixExcessiveReviewDueDates);
                 executeIntegrityTask.consume(this::fixDecimalIntervals);
@@ -1730,27 +1731,30 @@ public class Collection {
     }
 
 
-    private void fixNewCardDuePositionOverflow(Runnable notifyProgress) {
+    private List<String> fixNewCardDuePositionOverflow(Runnable notifyProgress) {
         // new cards can't have a due position > 32 bits
         notifyProgress.run();
         mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
                 + " WHERE due > 1000000 AND type = 0");
+        return Collections.emptyList();
     }
 
 
-    private void updateFieldCache(Runnable notifyProgress) {
+    private List<String> updateFieldCache(Runnable notifyProgress) {
         // field cache
         for (JSONObject m : mModels.all()) {
             notifyProgress.run();
             updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
         }
+        return Collections.emptyList();
     }
 
 
-    private void rebuildTags(Runnable notifyProgress) {
+    private List<String> rebuildTags(Runnable notifyProgress) {
         // tags
         notifyProgress.run();
         mTags.registerNotes();
+        return Collections.emptyList();
     }
 
 
