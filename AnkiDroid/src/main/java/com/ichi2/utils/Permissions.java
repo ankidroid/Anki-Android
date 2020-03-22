@@ -29,12 +29,11 @@ public class Permissions {
      * @return
      */
     public static boolean hasStorageAccessPermission(Context context) {
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED;
+        return hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
 
     public static boolean canUseWakeLock(Context context) {
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.WAKE_LOCK) == PackageManager.PERMISSION_GRANTED;
+        return hasPermission(context, Manifest.permission.WAKE_LOCK);
     }
 }
