@@ -1626,15 +1626,7 @@ public class Collection {
                 }
                 deleteNotesWithMissingCards(problems, notifyProgress);
                 deleteCardsWithMissingNotes(problems, notifyProgress);
-                // cards with odue set when it shouldn't be
-                notifyProgress.run();
-                ids = mDb.queryColumn(Long.class,
-                        "select id from cards where odue > 0 and (type=1 or queue=2) and not odid", 0);
-                notifyProgress.run();
-                if (ids.size() != 0) {
-                    problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
-                    mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
-                }
+                removeOriginalDuePropertyWhereInvalid(problems, notifyProgress);
                 // cards with odid set when not in a dyn deck
                 ArrayList<Long> dids = new ArrayList<>();
                 for (long id : mDecks.allIds()) {
@@ -1739,6 +1731,19 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void removeOriginalDuePropertyWhereInvalid(ArrayList<String> problems, Runnable notifyProgress) {
+        ArrayList<Long> ids;// cards with odue set when it shouldn't be
+        notifyProgress.run();
+        ids = mDb.queryColumn(Long.class,
+                "select id from cards where odue > 0 and (type=1 or queue=2) and not odid", 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
+            mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
+        }
     }
 
 
