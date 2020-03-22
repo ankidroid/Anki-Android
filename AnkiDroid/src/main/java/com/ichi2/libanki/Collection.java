@@ -1647,10 +1647,7 @@ public class Collection {
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return -1;
         }
-        // models
-        if (mModels.ensureNotEmpty()) {
-            problems.add("Added missing note type.");
-        }
+        ensureModelsAreNotEmpty(problems);
         // and finally, optimize
         optimize(notifyProgress);
         file = new File(mPath);
@@ -1661,6 +1658,13 @@ public class Collection {
         }
         logProblems(problems);
         return (oldSize - newSize) / 1024;
+    }
+
+
+    private void ensureModelsAreNotEmpty(ArrayList<String> problems) {
+        if (mModels.ensureNotEmpty()) {
+            problems.add("Added missing note type.");
+        }
     }
 
 

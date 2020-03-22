@@ -229,6 +229,7 @@ public class Models {
 
     public boolean ensureNotEmpty() {
         if (mModels.isEmpty()) {
+            // TODO: Maybe we want to restore all models if we don't have any
             addBasicModel(mCol);
             return true;
         } else {
