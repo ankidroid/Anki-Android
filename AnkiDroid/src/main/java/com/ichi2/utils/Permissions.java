@@ -21,4 +21,15 @@ public class Permissions {
     private static boolean hasPermission(@NonNull Context context, @NonNull String permission) {
         return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
     }
+
+
+    /**
+     * Check if we have permission to access the external storage
+     * @param context
+     * @return
+     */
+    public static boolean hasStorageAccessPermission(Context context) {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED;
+    }
 }

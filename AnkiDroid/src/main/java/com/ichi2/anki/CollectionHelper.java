@@ -225,13 +225,4 @@ public class CollectionHelper {
         return new File(path).getParentFile().getAbsolutePath();
     }
 
-    /**
-     * Check if we have permission to access the external storage
-     * @param context
-     * @return
-     */
-    public static boolean hasStorageAccessPermission(Context context) {
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED;
-    }
 }
