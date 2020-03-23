@@ -1860,16 +1860,21 @@ public class Collection {
             notifyProgress.run();
             cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
             while (cur.moveToNext()) {
-                String flds = cur.getString(1);
-                long id = cur.getLong(0);
-                int fldsCount = 0;
-                for (int i = 0; i < flds.length(); i++) {
-                    if (flds.charAt(i) == 0x1f) {
-                        fldsCount++;
+                try {
+                    String flds = cur.getString(1);
+                    long id = cur.getLong(0);
+                    int fldsCount = 0;
+                    for (int i = 0; i < flds.length(); i++) {
+                        if (flds.charAt(i) == 0x1f) {
+                            fldsCount++;
+                        }
                     }
-                }
-                if (fldsCount + 1 != m.getJSONArray("flds").length()) {
-                    ids.add(id);
+                    if (fldsCount + 1 != m.getJSONArray("flds").length()) {
+                        ids.add(id);
+                    }
+                } catch (IllegalStateException ex) {
+                    // DEFECT: Theory that is this an OOM is discussed in #5852
+                    AnkiDroidApp.sendExceptionReport(ex, "deleteNotesWithWrongFieldCounts");
                 }
             }
             notifyProgress.run();
