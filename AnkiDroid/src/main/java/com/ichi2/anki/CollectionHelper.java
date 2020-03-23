@@ -239,7 +239,12 @@ public class CollectionHelper {
         return new File(path).getParentFile().getAbsolutePath();
     }
 
-    /** Union: (required space * free space) | Error */
+    /**
+     * This currently stores either:
+     * An error message stating the reason that a storage check must be performed
+     * OR
+     * The current storage requirements, and the current available storage.
+     */
     public static class CollectionIntegrityStorageCheck {
 
         @Nullable
