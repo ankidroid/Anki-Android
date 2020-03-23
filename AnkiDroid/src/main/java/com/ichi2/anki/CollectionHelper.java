@@ -240,7 +240,7 @@ public class CollectionHelper {
     }
 
     /** Union: (required space * free space) | Error */
-    public static class CollectionIntegrityCheckStatus {
+    public static class CollectionIntegrityStorageCheck {
 
         @Nullable
         private final String mErrorMessage;
@@ -251,23 +251,23 @@ public class CollectionHelper {
         @Nullable
         private final Long mFreeSpace;
 
-        private CollectionIntegrityCheckStatus(long requiredSpace, long freeSpace) {
+        private CollectionIntegrityStorageCheck(long requiredSpace, long freeSpace) {
             this.mFreeSpace = freeSpace;
             this.mRequiredSpace = requiredSpace;
             this.mErrorMessage = null;
         }
 
-        private CollectionIntegrityCheckStatus(@NonNull String errorMessage) {
+        private CollectionIntegrityStorageCheck(@NonNull String errorMessage) {
             this.mRequiredSpace = null;
             this.mFreeSpace = null;
             this.mErrorMessage = errorMessage;
         }
 
-        private static CollectionIntegrityCheckStatus fromError(String errorMessage) {
-            return new CollectionIntegrityCheckStatus(errorMessage);
+        private static CollectionIntegrityStorageCheck fromError(String errorMessage) {
+            return new CollectionIntegrityStorageCheck(errorMessage);
         }
 
-        public static CollectionIntegrityCheckStatus createInstance(Context context) {
+        public static CollectionIntegrityStorageCheck createInstance(Context context) {
 
             Long maybeCurrentCollectionSizeInBytes = getCollectionSize(context);
             if (maybeCurrentCollectionSizeInBytes == null) {
@@ -287,7 +287,7 @@ public class CollectionHelper {
                 return fromError(context.getResources().getString(R.string.integrity_check_error_remaining_filesystem_size_failed, readableFileSize));
             }
 
-            return new CollectionIntegrityCheckStatus(requiredSpaceInBytes, freeSpace);
+            return new CollectionIntegrityStorageCheck(requiredSpaceInBytes, freeSpace);
         }
 
         public boolean shouldWarnOnIntegrityCheck() {
