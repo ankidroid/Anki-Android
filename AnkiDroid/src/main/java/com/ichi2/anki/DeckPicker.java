@@ -1283,6 +1283,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         //display a dialog box if we don't have the space
         CollectionIntegrityStorageCheck status = CollectionIntegrityStorageCheck.createInstance(this);
         if (status.shouldWarnOnIntegrityCheck()) {
+            Timber.d("Displaying File Size confirmation");
             new MaterialDialog.Builder(this)
                     .title(R.string.check_db_title)
                     .content(status.getWarningDetails(this))
@@ -1297,6 +1298,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void performIntegrityCheck() {
+        Timber.d("performIntegrityCheck()");
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_DATABASE, new DeckTask.TaskListener() {
             @Override
             public void onPreExecute() {

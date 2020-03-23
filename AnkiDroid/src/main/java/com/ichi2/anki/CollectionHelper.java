@@ -281,6 +281,7 @@ public class CollectionHelper {
 
             Long maybeCurrentCollectionSizeInBytes = getCollectionSize(context);
             if (maybeCurrentCollectionSizeInBytes == null) {
+                Timber.w("Error obtaining collection file size.");
                 String requiredFreeSpace = defaultRequiredFreeSpace(context);
                 return fromError(context.getResources().getString(R.string.integrity_check_insufficient_space, requiredFreeSpace));
             }
@@ -294,6 +295,7 @@ public class CollectionHelper {
             long freeSpace = FileUtil.getFreeDiskSpace(collectionFile, -1);
 
             if (freeSpace == -1) {
+                Timber.w("Error obtaining free space for '%s'", collectionFile.getPath());
                 String readableFileSize  = Formatter.formatFileSize(context, requiredSpaceInBytes);
                 return fromError(context.getResources().getString(R.string.integrity_check_insufficient_space, readableFileSize));
             }
@@ -311,6 +313,7 @@ public class CollectionHelper {
                 Timber.e("fileSystemDoesNotHaveSpaceForBackup called in invalid state.");
                 return true;
             }
+            Timber.d("Required Free Space: %d. Current: %d", mRequiredSpace, mFreeSpace);
             return mRequiredSpace > mFreeSpace;
         }
 
