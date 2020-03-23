@@ -98,7 +98,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         LinearLayout.LayoutParams p = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-        setPreviewImage(mField.getImagePath(), getMaxImageSize());
         mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         mImagePreview.setAdjustViewBounds(true);
 
@@ -122,6 +121,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mImageFileSizeWarning.setVisibility(View.GONE);
         mImageFileSizeWarning.setBackground(null);
         mImageFileSizeWarning.setText(R.string.multimedia_editor_image_compression_failed);
+        
+        setPreviewImage(mField.getImagePath(), getMaxImageSize());
 
         Button mBtnGallery = new Button(mActivity);
         mBtnGallery.setText(gtxt(R.string.multimedia_editor_image_field_editing_galery));
