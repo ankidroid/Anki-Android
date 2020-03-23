@@ -89,39 +89,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     @SuppressLint( {"UnsupportedChromeOsCameraSystemFeature", "NewApi"})
     @Override
     public void createUI(Context context, LinearLayout layout) {
-        mImagePreview = new ImageView(mActivity);
-
-        DisplayMetrics metrics = getDisplayMetrics();
-
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
-
         LinearLayout.LayoutParams p = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-        mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        mImagePreview.setAdjustViewBounds(true);
 
-        mImagePreview.setMaxHeight((int) Math.round(height * 0.4));
-        mImagePreview.setMaxWidth((int) Math.round(width * 0.6));
+        drawUIComponents(context);
 
-        mImageFileSize = new EditText(context);
-        mImageFileSize.setMaxWidth((int) Math.round(width * 0.6));
-        mImageFileSize.setEnabled(false);
-        mImageFileSize.setGravity(Gravity.CENTER_HORIZONTAL);
-        mImageFileSize.setBackground(null);
-        mImageFileSize.setVisibility(View.GONE);
-
-        //#5513 - Image compression failed, but we'll confuse most users if we tell them that. Instead, just imply that
-        //there's an action that they can take.
-        mImageFileSizeWarning = new EditText(context);
-        mImageFileSizeWarning.setMaxWidth((int) Math.round(width * 0.6));
-        mImageFileSizeWarning.setEnabled(false);
-        mImageFileSizeWarning.setTextColor(Color.parseColor("#FF4500")); //Orange-Red
-        mImageFileSizeWarning.setGravity(Gravity.CENTER_HORIZONTAL);
-        mImageFileSizeWarning.setVisibility(View.GONE);
-        mImageFileSizeWarning.setBackground(null);
-        mImageFileSizeWarning.setText(R.string.multimedia_editor_image_compression_failed);
-        
         setPreviewImage(mField.getImagePath(), getMaxImageSize());
 
         Button mBtnGallery = new Button(mActivity);
@@ -184,6 +156,46 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mImageFileSizeWarning, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+
+    @SuppressLint("NewApi") //Conditionally called anything which requires API 16+.
+    private void drawUIComponents(Context context) {
+        mImagePreview = new ImageView(mActivity);
+
+        DisplayMetrics metrics = getDisplayMetrics();
+
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+
+
+        mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        mImagePreview.setAdjustViewBounds(true);
+
+        mImagePreview.setMaxHeight((int) Math.round(height * 0.4));
+        mImagePreview.setMaxWidth((int) Math.round(width * 0.6));
+
+        mImageFileSize = new EditText(context);
+        mImageFileSize.setMaxWidth((int) Math.round(width * 0.6));
+        mImageFileSize.setEnabled(false);
+        mImageFileSize.setGravity(Gravity.CENTER_HORIZONTAL);
+        if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.JELLY_BEAN) {
+            mImageFileSize.setBackground(null);
+        }
+        mImageFileSize.setVisibility(View.GONE);
+
+        //#5513 - Image compression failed, but we'll confuse most users if we tell them that. Instead, just imply that
+        //there's an action that they can take.
+        mImageFileSizeWarning = new EditText(context);
+        mImageFileSizeWarning.setMaxWidth((int) Math.round(width * 0.6));
+        mImageFileSizeWarning.setEnabled(false);
+        mImageFileSizeWarning.setTextColor(Color.parseColor("#FF4500")); //Orange-Red
+        mImageFileSizeWarning.setGravity(Gravity.CENTER_HORIZONTAL);
+        mImageFileSizeWarning.setVisibility(View.GONE);
+        if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.JELLY_BEAN) {
+            mImageFileSize.setBackground(null);
+        }
+        mImageFileSizeWarning.setText(R.string.multimedia_editor_image_compression_failed);
     }
 
 
