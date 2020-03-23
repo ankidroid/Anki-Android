@@ -1264,6 +1264,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback method to handle database integrity check
     public void integrityCheck() {
+        performIntegrityCheck();
+    }
+
+
+    private void performIntegrityCheck() {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_DATABASE, new DeckTask.TaskListener() {
             @Override
             public void onPreExecute() {
@@ -1295,7 +1300,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
             @Override
-            public void onProgressUpdate(DeckTask.TaskData... values) {
+            public void onProgressUpdate(TaskData... values) {
                 mProgressDialog.setContent(values[0].getString());
             }
         });
