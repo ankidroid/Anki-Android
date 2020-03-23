@@ -1040,7 +1040,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 //noinspection ConstantConditions
                 if (!skipDbCheck && previous < upgradeDbVersion) {
                     Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
-                    integrityCheck();
+                    //#5852 - since we may have a warning about disk space, we don't want to force a check database
+                    //and show a warning before the user knows what is happening.
+                    new MaterialDialog.Builder(this)
+                            .title(R.string.integrity_check_startup_title)
+                            .content(R.string.integrity_check_startup_content)
+                            .positiveText(R.string.integrity_check_positive)
+                            .negativeText(R.string.close)
+                            .onPositive((materialDialog, dialogAction) -> integrityCheck())
+                            .onNeutral((materialDialog, dialogAction) -> restartActivity())
+                            .onNegative((materialDialog, dialogAction) ->  restartActivity())
+                            .canceledOnTouchOutside(false)
+                            .cancelable(false)
+                            .build()
+                            .show();
+
                 } else if (previous < upgradePrefsVersion) {
                     // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
                     // proceed
