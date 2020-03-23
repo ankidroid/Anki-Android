@@ -282,7 +282,7 @@ public class CollectionHelper {
             Long maybeCurrentCollectionSizeInBytes = getCollectionSize(context);
             if (maybeCurrentCollectionSizeInBytes == null) {
                 String requiredFreeSpace = defaultRequiredFreeSpace(context);
-                return fromError(context.getResources().getString(R.string.integrity_check_maybe_insufficient_space, requiredFreeSpace));
+                return fromError(context.getResources().getString(R.string.integrity_check_insufficient_space, requiredFreeSpace));
             }
 
             // This means that when VACUUMing a database, as much as twice the size of the original database file is
@@ -295,7 +295,7 @@ public class CollectionHelper {
 
             if (freeSpace == -1) {
                 String readableFileSize  = Formatter.formatFileSize(context, requiredSpaceInBytes);
-                return fromError(context.getResources().getString(R.string.integrity_check_maybe_insufficient_space, readableFileSize));
+                return fromError(context.getResources().getString(R.string.integrity_check_insufficient_space, readableFileSize));
             }
 
             return new CollectionIntegrityStorageCheck(requiredSpaceInBytes, freeSpace);
@@ -322,11 +322,18 @@ public class CollectionHelper {
             if (mFreeSpace == null || mRequiredSpace == null) {
                 Timber.e("CollectionIntegrityCheckStatus in an invalid state");
                 String defaultRequiredFreeSpace = defaultRequiredFreeSpace(context);
-                return context.getResources().getString(R.string.integrity_check_maybe_insufficient_space, defaultRequiredFreeSpace);
+                return context.getResources().getString(R.string.integrity_check_insufficient_space, defaultRequiredFreeSpace);
             }
+
             String required = Formatter.formatShortFileSize(context, mRequiredSpace);
+            String insufficientSpace = context.getResources().getString(
+                    R.string.integrity_check_insufficient_space, required);
+
+            //Also concat in the extra content showing the current free space.
             String currentFree = Formatter.formatShortFileSize(context, mFreeSpace);
-            return context.getResources().getString(R.string.integrity_check_insufficient_space, required, currentFree);
+            String insufficientSpaceCurrentFree = context.getResources().getString(
+                    R.string.integrity_check_insufficient_space_extra_content, currentFree);
+            return insufficientSpace + insufficientSpaceCurrentFree;
         }
     }
 }
