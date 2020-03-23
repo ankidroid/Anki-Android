@@ -1852,6 +1852,7 @@ public class Collection {
 
 
     private ArrayList<String> deleteNotesWithWrongFieldCounts(Runnable notifyProgress, JSONObject m) throws JSONException {
+        Timber.d("deleteNotesWithWrongFieldCounts");
         ArrayList<String> problems = new ArrayList<>();
         ArrayList<Long> ids;// notes with invalid field counts
         ids = new ArrayList<>();
@@ -1859,8 +1860,11 @@ public class Collection {
         try {
             notifyProgress.run();
             cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
+            Timber.d("cursor size: %d", cur.getCount());
+            int rowCount = 0;
             while (cur.moveToNext()) {
                 try {
+                    Timber.d("Handling row: %d. Columns: %d", rowCount, cur.getColumnCount());
                     String flds = cur.getString(1);
                     long id = cur.getLong(0);
                     int fldsCount = 0;
@@ -1876,6 +1880,7 @@ public class Collection {
                     // DEFECT: Theory that is this an OOM is discussed in #5852
                     AnkiDroidApp.sendExceptionReport(ex, "deleteNotesWithWrongFieldCounts");
                 }
+                rowCount++;
             }
             notifyProgress.run();
             if (ids.size() > 0) {
