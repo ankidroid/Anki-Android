@@ -302,7 +302,7 @@ public class CollectionHelper {
         private boolean fileSystemDoesNotHaveSpaceForBackup() {
             //only to be called when mErrorMessage == null
             if (mFreeSpace == null || mRequiredSpace == null) {
-                Timber.wtf("fileSystemDoesNotHaveSpaceForBackup called in invalid state.");
+                Timber.e("fileSystemDoesNotHaveSpaceForBackup called in invalid state.");
                 return true;
             }
             return mRequiredSpace > mFreeSpace;
@@ -314,7 +314,7 @@ public class CollectionHelper {
                 return mErrorMessage;
             }
             if (mFreeSpace == null || mRequiredSpace == null) {
-                Timber.wtf("CollectionIntegrityCheckStatus in an invalid state");
+                Timber.e("CollectionIntegrityCheckStatus in an invalid state");
                 return context.getResources().getString(R.string.integrity_check_error_unknown_error);
             }
             String required = Formatter.formatShortFileSize(context, mRequiredSpace);
