@@ -1656,7 +1656,7 @@ public class Collection {
         }
         problems.addAll(ensureModelsAreNotEmpty());
         // and finally, optimize
-        optimize(notifyProgress);
+        executeIntegrityTask.consume(this::optimize);
         file = new File(mPath);
         long newSize = file.length();
         // if any problems were found, force a full sync
@@ -1933,13 +1933,14 @@ public class Collection {
     }
 
 
-    public void optimize(Runnable progressCallback) {
+    public List<String> optimize(Runnable progressCallback) {
         Timber.i("executing VACUUM statement");
         progressCallback.run();
         mDb.execute("VACUUM");
         Timber.i("executing ANALYZE statement");
         progressCallback.run();
         mDb.execute("ANALYZE");
+        return Collections.emptyList();
     }
 
 
