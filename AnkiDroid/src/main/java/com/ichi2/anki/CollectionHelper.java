@@ -16,18 +16,20 @@
 
 package com.ichi2.anki;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import androidx.core.content.ContextCompat;
+import android.text.format.Formatter;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.preferences.PreferenceExtensions;
+import com.ichi2.utils.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,6 +54,18 @@ public class CollectionHelper {
      * <p>Accessed only from synchronized methods.
      */
     private boolean mCollectionLocked;
+
+    @Nullable
+    public static Long getCollectionSize(Context context) {
+        try {
+            String path = getCollectionPath(context);
+            return new File(path).length();
+        } catch (Exception e) {
+            Timber.e(e, "Error getting collection Length");
+            return null;
+        }
+    }
+
     public synchronized void lockCollection() {
         mCollectionLocked = true;
     }
@@ -225,4 +239,82 @@ public class CollectionHelper {
         return new File(path).getParentFile().getAbsolutePath();
     }
 
+    /** Union: (required space * free space) | Error */
+    public static class CollectionIntegrityCheckStatus {
+
+        @Nullable
+        private final String mErrorMessage;
+
+        //OR:
+        @Nullable
+        private final Long mRequiredSpace;
+        @Nullable
+        private final Long mFreeSpace;
+
+        private CollectionIntegrityCheckStatus(long requiredSpace, long freeSpace) {
+            this.mFreeSpace = freeSpace;
+            this.mRequiredSpace = requiredSpace;
+            this.mErrorMessage = null;
+        }
+
+        private CollectionIntegrityCheckStatus(@NonNull String errorMessage) {
+            this.mRequiredSpace = null;
+            this.mFreeSpace = null;
+            this.mErrorMessage = errorMessage;
+        }
+
+        private static CollectionIntegrityCheckStatus fromError(String errorMessage) {
+            return new CollectionIntegrityCheckStatus(errorMessage);
+        }
+
+        public static CollectionIntegrityCheckStatus createInstance(Context context) {
+
+            Long maybeCurrentCollectionSizeInBytes = getCollectionSize(context);
+            if (maybeCurrentCollectionSizeInBytes == null) {
+                return fromError(context.getResources().getString(R.string.integrity_check_error_colection_load_failed));
+            }
+
+            // This means that when VACUUMing a database, as much as twice the size of the original database file is
+            // required in free disk space. - https://www.sqlite.org/lang_vacuum.html
+            long requiredSpaceInBytes = maybeCurrentCollectionSizeInBytes * 2;
+
+            // We currently use the same directory as the collection for VACUUM/ANALYZE due to the SQLite APIs
+            File collectionFile = new File(getCollectionPath(context));
+            long freeSpace = FileUtil.getFreeDiskSpace(collectionFile, -1);
+
+            if (freeSpace == -1) {
+                String readableFileSize  = Formatter.formatFileSize(context, requiredSpaceInBytes);
+                return fromError(context.getResources().getString(R.string.integrity_check_error_remaining_filesystem_size_failed, readableFileSize));
+            }
+
+            return new CollectionIntegrityCheckStatus(requiredSpaceInBytes, freeSpace);
+        }
+
+        public boolean shouldWarnOnIntegrityCheck() {
+            return this.mErrorMessage != null || fileSystemDoesNotHaveSpaceForBackup();
+        }
+
+        private boolean fileSystemDoesNotHaveSpaceForBackup() {
+            //only to be called when mErrorMessage == null
+            if (mFreeSpace == null || mRequiredSpace == null) {
+                Timber.wtf("fileSystemDoesNotHaveSpaceForBackup called in invalid state.");
+                return true;
+            }
+            return mRequiredSpace > mFreeSpace;
+        }
+
+
+        public String getWarningDetails(Context context) {
+            if (mErrorMessage != null) {
+                return mErrorMessage;
+            }
+            if (mFreeSpace == null || mRequiredSpace == null) {
+                Timber.wtf("CollectionIntegrityCheckStatus in an invalid state");
+                return context.getResources().getString(R.string.integrity_check_error_unknown_error);
+            }
+            String required = Formatter.formatShortFileSize(context, mRequiredSpace);
+            String currentFree = Formatter.formatShortFileSize(context, mFreeSpace);
+            return context.getResources().getString(R.string.integrity_check_insufficient_space, required, currentFree);
+        }
+    }
 }

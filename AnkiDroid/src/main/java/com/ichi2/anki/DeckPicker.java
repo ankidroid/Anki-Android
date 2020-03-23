@@ -71,6 +71,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.CollectionHelper.CollectionIntegrityCheckStatus;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
@@ -1264,7 +1265,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback method to handle database integrity check
     public void integrityCheck() {
-        performIntegrityCheck();
+        //#5852 - We were having issues with integrity checks where the users had run out of space.
+        //display a dialog box if we don't have the space
+        CollectionIntegrityCheckStatus status = CollectionIntegrityCheckStatus.createInstance(this);
+        if (status.shouldWarnOnIntegrityCheck()) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.check_db_title)
+                    .content(status.getWarningDetails(this))
+                    .positiveText(R.string.integrity_check_continue_anyway)
+                    .onPositive((dialog, which) -> performIntegrityCheck())
+                    .negativeText(R.string.dialog_cancel)
+                    .show();
+        } else {
+            performIntegrityCheck();
+        }
     }
 
 
