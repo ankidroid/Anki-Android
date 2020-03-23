@@ -272,11 +272,17 @@ public class CollectionHelper {
             return new CollectionIntegrityStorageCheck(errorMessage);
         }
 
+        private static String defaultRequiredFreeSpace(Context context) {
+            long oneHundredFiftyMB = 150 * 1000 * 1000; //tested, 1024 displays 157MB. 1000 displays 150
+            return Formatter.formatShortFileSize(context, oneHundredFiftyMB);
+        }
+
         public static CollectionIntegrityStorageCheck createInstance(Context context) {
 
             Long maybeCurrentCollectionSizeInBytes = getCollectionSize(context);
             if (maybeCurrentCollectionSizeInBytes == null) {
-                return fromError(context.getResources().getString(R.string.integrity_check_error_colection_load_failed));
+                String requiredFreeSpace = defaultRequiredFreeSpace(context);
+                return fromError(context.getResources().getString(R.string.integrity_check_maybe_insufficient_space, requiredFreeSpace));
             }
 
             // This means that when VACUUMing a database, as much as twice the size of the original database file is
@@ -289,7 +295,7 @@ public class CollectionHelper {
 
             if (freeSpace == -1) {
                 String readableFileSize  = Formatter.formatFileSize(context, requiredSpaceInBytes);
-                return fromError(context.getResources().getString(R.string.integrity_check_error_remaining_filesystem_size_failed, readableFileSize));
+                return fromError(context.getResources().getString(R.string.integrity_check_maybe_insufficient_space, readableFileSize));
             }
 
             return new CollectionIntegrityStorageCheck(requiredSpaceInBytes, freeSpace);
@@ -315,7 +321,8 @@ public class CollectionHelper {
             }
             if (mFreeSpace == null || mRequiredSpace == null) {
                 Timber.e("CollectionIntegrityCheckStatus in an invalid state");
-                return context.getResources().getString(R.string.integrity_check_error_unknown_error);
+                String defaultRequiredFreeSpace = defaultRequiredFreeSpace(context);
+                return context.getResources().getString(R.string.integrity_check_maybe_insufficient_space, defaultRequiredFreeSpace);
             }
             String required = Formatter.formatShortFileSize(context, mRequiredSpace);
             String currentFree = Formatter.formatShortFileSize(context, mFreeSpace);
