@@ -1657,8 +1657,13 @@ public class Collection {
         executeIntegrityTask.consume(this::fixDecimalRevLogData);
         executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
         executeIntegrityTask.consume((callback) -> ensureModelsAreNotEmpty());
-        // and finally, optimize
-        executeIntegrityTask.consume(this::optimize);
+        // and finally, optimize (unable to be done inside transaction).
+        try {
+            optimize(notifyProgress);
+        } catch (Exception e) {
+            Timber.e(e, "optimize");
+            AnkiDroidApp.sendExceptionReport(e, "fixIntegrity - optimize");
+        }
         file = new File(mPath);
         long newSize = file.length();
         // if any problems were found, force a full sync
@@ -1944,14 +1949,13 @@ public class Collection {
     }
 
 
-    public List<String> optimize(Runnable progressCallback) {
+    public void optimize(Runnable progressCallback) {
         Timber.i("executing VACUUM statement");
         progressCallback.run();
         mDb.execute("VACUUM");
         Timber.i("executing ANALYZE statement");
         progressCallback.run();
         mDb.execute("ANALYZE");
-        return Collections.emptyList();
     }
 
 
