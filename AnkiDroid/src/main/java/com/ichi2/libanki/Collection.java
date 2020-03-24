@@ -36,6 +36,7 @@ import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.upgrade.Upgrade;
+import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
 
 import org.json.JSONArray;
@@ -49,6 +50,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,6 +59,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import androidx.annotation.Nullable;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
@@ -1552,192 +1555,72 @@ public class Collection {
         File file = new File(mPath);
         ArrayList<String> problems = new ArrayList<>();
         long oldSize = file.length();
-        int currentTask = 1;
-        int totalTasks = (mModels.all().size() * 4) + 21; // a few fixes are in all-models loops, the rest are one-offs
+        final int[] currentTask = {1};
+        int totalTasks = (mModels.all().size() * 4) + 23; // a few fixes are in all-models loops, the rest are one-offs
+        Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
+        FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
+                (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
+                    //DEFECT: notifyProgress will lag if an exception is thrown.
+                    try {
+                        mDb.getDatabase().beginTransaction();
+                        problems.addAll(function.apply(notifyProgress));
+                        mDb.getDatabase().setTransactionSuccessful();
+                    } catch (Exception e) {
+                        Timber.e(e, "Failed to execute integrity check");
+                        AnkiDroidApp.sendExceptionReport(e, "fixIntegrity");
+                    } finally {
+                        try {
+                            mDb.getDatabase().endTransaction();
+                        } catch (Exception e) {
+                            Timber.e(e, "Failed to end integrity check transaction");
+                            AnkiDroidApp.sendExceptionReport(e, "fixIntegrity - endTransaction");
+                        }
+                    }
+                };
         try {
             mDb.getDatabase().beginTransaction();
-            try {
-                save();
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (!"ok".equals(mDb.queryString("PRAGMA integrity_check"))) {
-                    return -1;
-                }
-                // note types with a missing model
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ArrayList<Long> ids = mDb.queryColumn(Long.class,
-                        "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() != 0) {
-                	problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
-	                _remNotes(Utils.arrayList2array(ids));
-                }
-                // for each model
-                for (JSONObject m : mModels.all()) {
-                    // cards with invalid ordinal
-                    fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                    if (m.getInt("type") == Consts.MODEL_STD) {
-                        ArrayList<Integer> ords = new ArrayList<>();
-                        JSONArray tmpls = m.getJSONArray("tmpls");
-                        for (int t = 0; t < tmpls.length(); t++) {
-                            ords.add(tmpls.getJSONObject(t).getInt("ord"));
-                        }
-                        ids = mDb.queryColumn(Long.class,
-                                "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
-                                "SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
-                        if (ids.size() > 0) {
-                            problems.add("Deleted " + ids.size() + " card(s) with missing template.");
-                            remCards(Utils.arrayList2array(ids));
-                        }
-                    }
-                    // notes with invalid field counts
-                    ids = new ArrayList<>();
-                    Cursor cur = null;
-                    try {
-                        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                        cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
-                        while (cur.moveToNext()) {
-                            String flds = cur.getString(1);
-                            long id = cur.getLong(0);
-                            int fldsCount = 0;
-                            for (int i = 0; i < flds.length(); i++) {
-                                if (flds.charAt(i) == 0x1f) {
-                                    fldsCount++;
-                                }
-                            }
-                            if (fldsCount + 1 != m.getJSONArray("flds").length()) {
-                                ids.add(id);
-                            }
-                        }
-                        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                        if (ids.size() > 0) {
-                            problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
-                            _remNotes(Utils.arrayList2array(ids));
-                        }
-                    } finally {
-                        if (cur != null && !cur.isClosed()) {
-                            cur.close();
-                        }
-                    }
-                }
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                // delete any notes with missing cards
-                ids = mDb.queryColumn(Long.class,
-                        "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() != 0) {
-                	problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
-	                _remNotes(Utils.arrayList2array(ids));
-                }
-                // cards with missing notes
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ids = mDb.queryColumn(Long.class,
-                        "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() != 0) {
-                    problems.add("Deleted " + ids.size() + " card(s) with missing note.");
-                    remCards(Utils.arrayList2array(ids));
-                }
-                // cards with odue set when it shouldn't be
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ids = mDb.queryColumn(Long.class,
-                        "select id from cards where odue > 0 and (type=1 or queue=2) and not odid", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() != 0) {
-                    problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
-                    mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
-                }
-                // cards with odid set when not in a dyn deck
-                ArrayList<Long> dids = new ArrayList<>();
-                for (long id : mDecks.allIds()) {
-                    if (!mDecks.isDyn(id)) {
-                        dids.add(id);
-                    }
-                }
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ids = mDb.queryColumn(Long.class,
-                        "select id from cards where odid > 0 and did in " + Utils.ids2str(dids), 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() != 0) {
-                    problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
-                    mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
-                }
-                {
-                    //#5708 - a dynamic deck should not have "Deck Options"
-                    fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                    int fixCount = 0;
-                    for (long id : mDecks.allDynamicDeckIds()) {
-                        try {
-                            if (mDecks.hasDeckOptions(id)) {
-                                mDecks.removeDeckOptions(id);
-                                fixCount++;
-                            }
-                        } catch (NoSuchDeckException e) {
-                            Timber.e("Unable to find dynamic deck %d", id);
-                        }
-                    }
-                    if (fixCount > 0) {
-                        mDecks.save();
-                        problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
-                    }
-                }
-                // tags
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                mTags.registerNotes();
-                // field cache
-                for (JSONObject m : mModels.all()) {
-                    fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                    updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
-                }
-                // new cards can't have a due position > 32 bits
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
-                        + " WHERE due > 1000000 AND type = 0");
-                // new card position
-                mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
-                // reviews should have a reasonable due #
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() > 0) {
-                	problems.add("Reviews had incorrect due date.");
-                    mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
-                            ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
-                }
-                // v2 sched had a bug that could create decimal intervals
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
-                        "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
-                int rowCount = s.executeUpdateDelete();
-                if (rowCount > 0) {
-                    problems.add("Fixed " + rowCount + " cards with v2 scheduler bug.");
-                }
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                s = mDb.getDatabase().compileStatement(
-                        "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
-                rowCount = s.executeUpdateDelete();
-                if (rowCount > 0) {
-                    problems.add("Fixed " + rowCount + " review history entries with v2 scheduler bug.");
-                }
-                mDb.getDatabase().setTransactionSuccessful();
-                // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
-                if (ixs < 7) {
-                    problems.add("Indices were missing.");
-                    Storage.addIndices(mDb);
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            } finally {
-                mDb.getDatabase().endTransaction();
+            save();
+            notifyProgress.run();
+
+            if (!mDb.getDatabase().isDatabaseIntegrityOk()) {
+                return -1;
             }
+            mDb.getDatabase().setTransactionSuccessful();
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return -1;
+        } finally {
+            mDb.getDatabase().endTransaction();
         }
-        // and finally, optimize
-        optimize(progressCallback, currentTask, totalTasks);
+
+        executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
+        // for each model
+        for (JSONObject m : mModels.all()) {
+            executeIntegrityTask.consume((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
+            executeIntegrityTask.consume((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
+        }
+        executeIntegrityTask.consume(this::deleteNotesWithMissingCards);
+        executeIntegrityTask.consume(this::deleteCardsWithMissingNotes);
+        executeIntegrityTask.consume(this::removeOriginalDuePropertyWhereInvalid);
+        executeIntegrityTask.consume(this::removeDynamicPropertyFromNonDynamicDecks);
+        executeIntegrityTask.consume(this::removeDeckOptionsFromDynamicDecks);
+        executeIntegrityTask.consume(this::rebuildTags);
+        executeIntegrityTask.consume(this::updateFieldCache);
+        executeIntegrityTask.consume(this::fixNewCardDuePositionOverflow);
+        executeIntegrityTask.consume(this::resetNewCardInsertionPosition);
+        executeIntegrityTask.consume(this::fixExcessiveReviewDueDates);
+        // v2 sched had a bug that could create decimal intervals
+        executeIntegrityTask.consume(this::fixDecimalCardsData);
+        executeIntegrityTask.consume(this::fixDecimalRevLogData);
+        executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
+        // and finally, optimize (unable to be done inside transaction).
+        try {
+            optimize(notifyProgress);
+        } catch (Exception e) {
+            Timber.e(e, "optimize");
+            AnkiDroidApp.sendExceptionReport(e, "fixIntegrity - optimize");
+        }
         file = new File(mPath);
         long newSize = file.length();
         // if any problems were found, force a full sync
@@ -1749,12 +1632,298 @@ public class Collection {
     }
 
 
-    public void optimize(DeckTask.ProgressCallback progressCallback, int currentTask, int totalTasks) {
+    private ArrayList<String> restoreMissingDatabaseIndices(Runnable notifyProgress) {
+        Timber.d("restoreMissingDatabaseIndices");
+        ArrayList<String> problems = new ArrayList<>();
+        // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
+        notifyProgress.run();
+        int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
+        if (ixs < 7) {
+            problems.add("Indices were missing.");
+            Storage.addIndices(mDb);
+        }
+        return problems;
+    }
+
+    private ArrayList<String> fixDecimalCardsData(Runnable notifyProgress) {
+        Timber.d("fixDecimalCardsData");
+        ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
+        SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
+                "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
+        int rowCount = s.executeUpdateDelete();
+        if (rowCount > 0) {
+            problems.add("Fixed " + rowCount + " cards with v2 scheduler bug.");
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> fixDecimalRevLogData(Runnable notifyProgress) {
+        Timber.d("fixDecimalRevLogData()");
+        ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
+        SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
+                "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
+        int rowCount = s.executeUpdateDelete();
+        if (rowCount > 0) {
+            problems.add("Fixed " + rowCount + " review history entries with v2 scheduler bug.");
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> fixExcessiveReviewDueDates(Runnable notifyProgress) {
+        Timber.d("fixExcessiveReviewDueDates()");
+        ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
+        // reviews should have a reasonable due #
+        ArrayList<Long> ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
+        notifyProgress.run();
+        if (ids.size() > 0) {
+            problems.add("Reviews had incorrect due date.");
+            mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
+                    ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+        }
+        return problems;
+    }
+
+
+    private List<String> resetNewCardInsertionPosition(Runnable notifyProgress) throws JSONException {
+        Timber.d("resetNewCardInsertionPosition");
+        notifyProgress.run();
+        // new card position
+        mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
+        return Collections.emptyList();
+    }
+
+
+    private List<String> fixNewCardDuePositionOverflow(Runnable notifyProgress) {
+        Timber.d("fixNewCardDuePositionOverflow");
+        // new cards can't have a due position > 32 bits
+        notifyProgress.run();
+        mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
+                + " WHERE due > 1000000 AND type = 0");
+        return Collections.emptyList();
+    }
+
+
+    private List<String> updateFieldCache(Runnable notifyProgress) {
+        Timber.d("updateFieldCache");
+        // field cache
+        for (JSONObject m : mModels.all()) {
+            notifyProgress.run();
+            updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
+        }
+        return Collections.emptyList();
+    }
+
+
+    private List<String> rebuildTags(Runnable notifyProgress) {
+        Timber.d("rebuildTags");
+        // tags
+        notifyProgress.run();
+        mTags.registerNotes();
+        return Collections.emptyList();
+    }
+
+
+    private ArrayList<String> removeDeckOptionsFromDynamicDecks(Runnable notifyProgress) {
+        Timber.d("removeDeckOptionsFromDynamicDecks()");
+        ArrayList<String> problems = new ArrayList<>();
+        //#5708 - a dynamic deck should not have "Deck Options"
+        notifyProgress.run();
+        int fixCount = 0;
+        for (long id : mDecks.allDynamicDeckIds()) {
+            try {
+                if (mDecks.hasDeckOptions(id)) {
+                    mDecks.removeDeckOptions(id);
+                    fixCount++;
+                }
+            } catch (NoSuchDeckException e) {
+                Timber.e("Unable to find dynamic deck %d", id);
+            }
+        }
+        if (fixCount > 0) {
+            mDecks.save();
+            problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> removeDynamicPropertyFromNonDynamicDecks(Runnable notifyProgress) {
+        Timber.d("removeDynamicPropertyFromNonDynamicDecks()");
+        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<Long> dids = new ArrayList<>();
+        for (long id : mDecks.allIds()) {
+            if (!mDecks.isDyn(id)) {
+                dids.add(id);
+            }
+        }
+        notifyProgress.run();
+        // cards with odid set when not in a dyn deck
+        ArrayList<Long> ids = mDb.queryColumn(Long.class,
+                "select id from cards where odid > 0 and did in " + Utils.ids2str(dids), 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
+            mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> removeOriginalDuePropertyWhereInvalid(Runnable notifyProgress) {
+        Timber.d("removeOriginalDuePropertyWhereInvalid()");
+        ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
+        // cards with odue set when it shouldn't be
+        ArrayList<Long> ids = mDb.queryColumn(Long.class,
+                "select id from cards where odue > 0 and (type=1 or queue=2) and not odid", 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
+            mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> deleteCardsWithMissingNotes(Runnable notifyProgress) {
+        Timber.d("deleteCardsWithMissingNotes()");
+        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<Long> ids;// cards with missing notes
+        notifyProgress.run();
+        ids = mDb.queryColumn(Long.class,
+                "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)", 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Deleted " + ids.size() + " card(s) with missing note.");
+            remCards(Utils.arrayList2array(ids));
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> deleteNotesWithMissingCards(Runnable notifyProgress) {
+        Timber.d("deleteNotesWithMissingCards()");
+        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<Long> ids;
+        notifyProgress.run();
+        // delete any notes with missing cards
+        ids = mDb.queryColumn(Long.class,
+                "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
+            _remNotes(Utils.arrayList2array(ids));
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> deleteNotesWithWrongFieldCounts(Runnable notifyProgress, JSONObject m) throws JSONException {
+        Timber.d("deleteNotesWithWrongFieldCounts");
+        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<Long> ids;// notes with invalid field counts
+        ids = new ArrayList<>();
+        Cursor cur = null;
+        try {
+            notifyProgress.run();
+            cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
+            Timber.i("cursor size: %d", cur.getCount());
+            int currentRow = 0;
+
+            //Since we loop through all rows, we only want one exception
+            @Nullable Exception firstException = null;
+            while (cur.moveToNext()) {
+                try {
+                    String flds = cur.getString(1);
+                    long id = cur.getLong(0);
+                    int fldsCount = 0;
+                    for (int i = 0; i < flds.length(); i++) {
+                        if (flds.charAt(i) == 0x1f) {
+                            fldsCount++;
+                        }
+                    }
+                    if (fldsCount + 1 != m.getJSONArray("flds").length()) {
+                        ids.add(id);
+                    }
+                } catch (IllegalStateException ex) {
+                    // DEFECT: Theory that is this an OOM is discussed in #5852
+                    // We store one exception to stop excessive logging
+                    Timber.i(ex,  "deleteNotesWithWrongFieldCounts - Exception on row %d. Columns: %d", currentRow, cur.getColumnCount());
+                    if (firstException == null) {
+                        String details = String.format(Locale.ROOT, "deleteNotesWithWrongFieldCounts row: %d col: %d",
+                                currentRow,
+                                cur.getColumnCount());
+                        AnkiDroidApp.sendExceptionReport(ex, details);
+                        firstException = ex;
+                    }
+                }
+                currentRow++;
+            }
+            Timber.i("deleteNotesWithWrongFieldCounts - completed successfully");
+            notifyProgress.run();
+            if (ids.size() > 0) {
+                problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
+                _remNotes(Utils.arrayList2array(ids));
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, JSONObject m) throws JSONException {
+        Timber.d("deleteCardsWithInvalidModelOrdinals()");
+        ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
+        if (m.getInt("type") == Consts.MODEL_STD) {
+            ArrayList<Integer> ords = new ArrayList<>();
+            JSONArray tmpls = m.getJSONArray("tmpls");
+            for (int t = 0; t < tmpls.length(); t++) {
+                ords.add(tmpls.getJSONObject(t).getInt("ord"));
+            }
+            // cards with invalid ordinal
+            ArrayList<Long> ids = mDb.queryColumn(Long.class,
+                    "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
+                            "SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
+            if (ids.size() > 0) {
+                problems.add("Deleted " + ids.size() + " card(s) with missing template.");
+                remCards(Utils.arrayList2array(ids));
+            }
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> deleteNotesWithMissingModel(Runnable notifyProgress) {
+        Timber.d("deleteNotesWithMissingModel()");
+        ArrayList<String> problems = new ArrayList<>();
+        // note types with a missing model
+        notifyProgress.run();
+        ArrayList<Long> ids = mDb.queryColumn(Long.class,
+                "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
+            _remNotes(Utils.arrayList2array(ids));
+        }
+        return problems;
+    }
+
+
+    public void optimize(Runnable progressCallback) {
         Timber.i("executing VACUUM statement");
-        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+        progressCallback.run();
         mDb.execute("VACUUM");
         Timber.i("executing ANALYZE statement");
-        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+        progressCallback.run();
         mDb.execute("ANALYZE");
     }
 
