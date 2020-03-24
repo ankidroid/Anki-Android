@@ -1617,6 +1617,7 @@ public class Collection {
                         problems.addAll(function.apply(notifyProgress));
                     } catch (Exception e) {
                         Timber.e(e, "Failed to execute integrity check");
+                        AnkiDroidApp.sendExceptionReport(e, "fixIntegrity");
                     }
                 };
         try {
