@@ -1686,6 +1686,7 @@ public class Collection {
 
 
     private ArrayList<String> ensureModelsAreNotEmpty() {
+        Timber.d("ensureModelsAreNotEmpty()");
         ArrayList<String> problems = new ArrayList<>();
         if (mModels.ensureNotEmpty()) {
             problems.add("Added missing note type.");
@@ -1695,6 +1696,7 @@ public class Collection {
 
 
     private ArrayList<String> restoreMissingDatabaseIndices(Runnable notifyProgress) {
+        Timber.d("restoreMissingDatabaseIndices");
         ArrayList<String> problems = new ArrayList<>();
         // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
         notifyProgress.run();
@@ -1707,6 +1709,7 @@ public class Collection {
     }
 
     private ArrayList<String> fixDecimalCardsData(Runnable notifyProgress) {
+        Timber.d("fixDecimalCardsData");
         ArrayList<String> problems = new ArrayList<>();
         notifyProgress.run();
         SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
@@ -1720,6 +1723,7 @@ public class Collection {
 
 
     private ArrayList<String> fixDecimalRevLogData(Runnable notifyProgress) {
+        Timber.d("fixDecimalRevLogData()");
         ArrayList<String> problems = new ArrayList<>();
         notifyProgress.run();
         SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
@@ -1733,10 +1737,11 @@ public class Collection {
 
 
     private ArrayList<String> fixExcessiveReviewDueDates(Runnable notifyProgress) {
+        Timber.d("fixExcessiveReviewDueDates()");
         ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> ids;// reviews should have a reasonable due #
         notifyProgress.run();
-        ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
+        // reviews should have a reasonable due #
+        ArrayList<Long> ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
         notifyProgress.run();
         if (ids.size() > 0) {
             problems.add("Reviews had incorrect due date.");
@@ -1748,6 +1753,7 @@ public class Collection {
 
 
     private List<String> resetNewCardInsertionPosition() throws JSONException {
+        Timber.d("resetNewCardInsertionPosition");
         // TODO: we should probably do a progress callback here
         // new card position
         mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
@@ -1756,6 +1762,7 @@ public class Collection {
 
 
     private List<String> fixNewCardDuePositionOverflow(Runnable notifyProgress) {
+        Timber.d("fixNewCardDuePositionOverflow");
         // new cards can't have a due position > 32 bits
         notifyProgress.run();
         mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
@@ -1765,6 +1772,7 @@ public class Collection {
 
 
     private List<String> updateFieldCache(Runnable notifyProgress) {
+        Timber.d("updateFieldCache");
         // field cache
         for (JSONObject m : mModels.all()) {
             notifyProgress.run();
@@ -1775,6 +1783,7 @@ public class Collection {
 
 
     private List<String> rebuildTags(Runnable notifyProgress) {
+        Timber.d("rebuildTags");
         // tags
         notifyProgress.run();
         mTags.registerNotes();
@@ -1783,6 +1792,7 @@ public class Collection {
 
 
     private ArrayList<String> removeDeckOptionsFromDynamicDecks(Runnable notifyProgress) {
+        Timber.d("removeDeckOptionsFromDynamicDecks()");
         ArrayList<String> problems = new ArrayList<>();
         //#5708 - a dynamic deck should not have "Deck Options"
         notifyProgress.run();
@@ -1806,8 +1816,8 @@ public class Collection {
 
 
     private ArrayList<String> removeDynamicPropertyFromNonDynamicDecks(Runnable notifyProgress) {
+        Timber.d("removeDynamicPropertyFromNonDynamicDecks()");
         ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> ids;// cards with odid set when not in a dyn deck
         ArrayList<Long> dids = new ArrayList<>();
         for (long id : mDecks.allIds()) {
             if (!mDecks.isDyn(id)) {
@@ -1815,7 +1825,8 @@ public class Collection {
             }
         }
         notifyProgress.run();
-        ids = mDb.queryColumn(Long.class,
+        // cards with odid set when not in a dyn deck
+        ArrayList<Long> ids = mDb.queryColumn(Long.class,
                 "select id from cards where odid > 0 and did in " + Utils.ids2str(dids), 0);
         notifyProgress.run();
         if (ids.size() != 0) {
@@ -1827,10 +1838,11 @@ public class Collection {
 
 
     private ArrayList<String> removeOriginalDuePropertyWhereInvalid(Runnable notifyProgress) {
+        Timber.d("removeOriginalDuePropertyWhereInvalid()");
         ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> ids;// cards with odue set when it shouldn't be
         notifyProgress.run();
-        ids = mDb.queryColumn(Long.class,
+        // cards with odue set when it shouldn't be
+        ArrayList<Long> ids = mDb.queryColumn(Long.class,
                 "select id from cards where odue > 0 and (type=1 or queue=2) and not odid", 0);
         notifyProgress.run();
         if (ids.size() != 0) {
@@ -1842,6 +1854,7 @@ public class Collection {
 
 
     private ArrayList<String> deleteCardsWithMissingNotes(Runnable notifyProgress) {
+        Timber.d("deleteCardsWithMissingNotes()");
         ArrayList<String> problems = new ArrayList<>();
         ArrayList<Long> ids;// cards with missing notes
         notifyProgress.run();
@@ -1857,6 +1870,7 @@ public class Collection {
 
 
     private ArrayList<String> deleteNotesWithMissingCards(Runnable notifyProgress) {
+        Timber.d("deleteNotesWithMissingCards()");
         ArrayList<String> problems = new ArrayList<>();
         ArrayList<Long> ids;
         notifyProgress.run();
@@ -1929,8 +1943,8 @@ public class Collection {
 
 
     private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, JSONObject m) throws JSONException {
+        Timber.d("deleteCardsWithInvalidModelOrdinals()");
         ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> ids;// cards with invalid ordinal
         notifyProgress.run();
         if (m.getInt("type") == Consts.MODEL_STD) {
             ArrayList<Integer> ords = new ArrayList<>();
@@ -1938,9 +1952,10 @@ public class Collection {
             for (int t = 0; t < tmpls.length(); t++) {
                 ords.add(tmpls.getJSONObject(t).getInt("ord"));
             }
-            ids = mDb.queryColumn(Long.class,
+            // cards with invalid ordinal
+            ArrayList<Long> ids = mDb.queryColumn(Long.class,
                     "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
-                    "SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
+                            "SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
             if (ids.size() > 0) {
                 problems.add("Deleted " + ids.size() + " card(s) with missing template.");
                 remCards(Utils.arrayList2array(ids));
@@ -1951,6 +1966,7 @@ public class Collection {
 
 
     private ArrayList<String> deleteNotesWithMissingModel(Runnable notifyProgress) {
+        Timber.d("deleteNotesWithMissingModel()");
         ArrayList<String> problems = new ArrayList<>();
         // note types with a missing model
         notifyProgress.run();
