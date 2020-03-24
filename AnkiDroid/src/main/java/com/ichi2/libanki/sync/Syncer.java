@@ -27,6 +27,7 @@ import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 
 import org.json.JSONArray;
@@ -56,6 +57,9 @@ public class Syncer {
     public static final int TYPE_FLOAT = 2;
     public static final int TYPE_STRING = 3;
     public static final int TYPE_BLOB = 4;
+
+    /** The libAnki value of `sched.mReportLimit` */
+    private static final int SYNC_SCHEDULER_REPORT_LIMIT = 1000;
 
     private Collection mCol;
     private HttpSyncer mServer;
@@ -377,7 +381,11 @@ public class Syncer {
             // return summary of deck
             JSONArray ja = new JSONArray();
             JSONArray sa = new JSONArray();
-            for (int c : mCol.getSched().counts()) {
+
+            //#5666 - not in libAnki
+            //We modified mReportLimit inside the scheduler, and this causes issues syncing dynamic decks.
+            Sched syncScheduler = mCol.createScheduler(SYNC_SCHEDULER_REPORT_LIMIT);
+            for (int c : syncScheduler.recalculateCounts()) {
                 sa.put(c);
             }
             ja.put(sa);

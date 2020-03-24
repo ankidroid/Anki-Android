@@ -2538,6 +2538,20 @@ public class Sched {
         }
     }
 
+    /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
+    public int[] recalculateCounts() {
+        _resetLrnCount();
+        _resetNewCount();
+        _resetRevCount();
+        return new int[] { mNewCount, mLrnCount, mRevCount };
+    }
+
+    public void setReportLimit(int reportLimit) {
+        this.mReportLimit = reportLimit;
+    }
+
+    /** End #5666 */
+
 
     public void setContext(WeakReference<Activity> contextReference) {
         mContextReference = contextReference;
