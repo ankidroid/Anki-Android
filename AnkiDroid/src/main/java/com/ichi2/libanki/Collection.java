@@ -1634,7 +1634,8 @@ public class Collection {
             mDb.getDatabase().beginTransaction();
             save();
             notifyProgress.run();
-            if (!"ok".equals(mDb.queryString("PRAGMA integrity_check"))) {
+
+            if (!mDb.getDatabase().isDatabaseIntegrityOk()) {
                 return -1;
             }
             mDb.getDatabase().setTransactionSuccessful();
