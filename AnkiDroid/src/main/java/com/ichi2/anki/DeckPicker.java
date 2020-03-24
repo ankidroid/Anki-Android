@@ -70,6 +70,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
@@ -1008,7 +1009,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 //noinspection ConstantConditions
                 if (!skipDbCheck && previous < upgradeDbVersion) {
                     Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
-                    integrityCheck();
+                    //#5852 - since we may have a warning about disk space, we don't want to force a check database
+                    //and show a warning before the user knows what is happening.
+                    new MaterialDialog.Builder(this)
+                            .title(R.string.integrity_check_startup_title)
+                            .content(R.string.integrity_check_startup_content)
+                            .positiveText(R.string.integrity_check_positive)
+                            .negativeText(R.string.close)
+                            .onPositive((materialDialog, dialogAction) -> integrityCheck())
+                            .onNeutral((materialDialog, dialogAction) -> restartActivity())
+                            .onNegative((materialDialog, dialogAction) ->  restartActivity())
+                            .canceledOnTouchOutside(false)
+                            .cancelable(false)
+                            .build()
+                            .show();
+
                 } else if (previous < upgradePrefsVersion) {
                     // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
                     // proceed
@@ -1233,6 +1248,26 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback method to handle database integrity check
     public void integrityCheck() {
+        //#5852 - We were having issues with integrity checks where the users had run out of space.
+        //display a dialog box if we don't have the space
+        CollectionIntegrityStorageCheck status = CollectionIntegrityStorageCheck.createInstance(this);
+        if (status.shouldWarnOnIntegrityCheck()) {
+            Timber.d("Displaying File Size confirmation");
+            new MaterialDialog.Builder(this)
+                    .title(R.string.check_db_title)
+                    .content(status.getWarningDetails(this))
+                    .positiveText(R.string.integrity_check_continue_anyway)
+                    .onPositive((dialog, which) -> performIntegrityCheck())
+                    .negativeText(R.string.dialog_cancel)
+                    .show();
+        } else {
+            performIntegrityCheck();
+        }
+    }
+
+
+    private void performIntegrityCheck() {
+        Timber.d("performIntegrityCheck()");
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_DATABASE, new DeckTask.TaskListener() {
             @Override
             public void onPreExecute() {
@@ -1264,7 +1299,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
             @Override
-            public void onProgressUpdate(DeckTask.TaskData... values) {
+            public void onProgressUpdate(TaskData... values) {
                 mProgressDialog.setContent(values[0].getString());
             }
         });
