@@ -1622,41 +1622,40 @@ public class Collection {
                 };
         try {
             mDb.getDatabase().beginTransaction();
-            try {
-                save();
-                notifyProgress.run();
-                if (!"ok".equals(mDb.queryString("PRAGMA integrity_check"))) {
-                    return -1;
-                }
-                mDb.getDatabase().setTransactionSuccessful();
-            } finally {
-                mDb.getDatabase().endTransaction();
+            save();
+            notifyProgress.run();
+            if (!"ok".equals(mDb.queryString("PRAGMA integrity_check"))) {
+                return -1;
             }
-            executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
-            // for each model
-            for (JSONObject m : mModels.all()) {
-                executeIntegrityTask.consume((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
-                executeIntegrityTask.consume((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
-            }
-            executeIntegrityTask.consume(this::deleteNotesWithMissingCards);
-            executeIntegrityTask.consume(this::deleteCardsWithMissingNotes);
-            executeIntegrityTask.consume(this::removeOriginalDuePropertyWhereInvalid);
-            executeIntegrityTask.consume(this::removeDynamicPropertyFromNonDynamicDecks);
-            executeIntegrityTask.consume(this::removeDeckOptionsFromDynamicDecks);
-            executeIntegrityTask.consume(this::rebuildTags);
-            executeIntegrityTask.consume(this::updateFieldCache);
-            executeIntegrityTask.consume(this::fixNewCardDuePositionOverflow);
-            executeIntegrityTask.consume((callback) -> resetNewCardInsertionPosition());
-            executeIntegrityTask.consume(this::fixExcessiveReviewDueDates);
-            // v2 sched had a bug that could create decimal intervals
-            executeIntegrityTask.consume(this::fixDecimalCardsData);
-            executeIntegrityTask.consume(this::fixDecimalRevLogData);
-            executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
+            mDb.getDatabase().setTransactionSuccessful();
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return -1;
+        } finally {
+            mDb.getDatabase().endTransaction();
         }
+
+        executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
+        // for each model
+        for (JSONObject m : mModels.all()) {
+            executeIntegrityTask.consume((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
+            executeIntegrityTask.consume((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
+        }
+        executeIntegrityTask.consume(this::deleteNotesWithMissingCards);
+        executeIntegrityTask.consume(this::deleteCardsWithMissingNotes);
+        executeIntegrityTask.consume(this::removeOriginalDuePropertyWhereInvalid);
+        executeIntegrityTask.consume(this::removeDynamicPropertyFromNonDynamicDecks);
+        executeIntegrityTask.consume(this::removeDeckOptionsFromDynamicDecks);
+        executeIntegrityTask.consume(this::rebuildTags);
+        executeIntegrityTask.consume(this::updateFieldCache);
+        executeIntegrityTask.consume(this::fixNewCardDuePositionOverflow);
+        executeIntegrityTask.consume((callback) -> resetNewCardInsertionPosition());
+        executeIntegrityTask.consume(this::fixExcessiveReviewDueDates);
+        // v2 sched had a bug that could create decimal intervals
+        executeIntegrityTask.consume(this::fixDecimalCardsData);
+        executeIntegrityTask.consume(this::fixDecimalRevLogData);
+        executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
         executeIntegrityTask.consume((callback) -> ensureModelsAreNotEmpty());
         // and finally, optimize
         executeIntegrityTask.consume(this::optimize);
