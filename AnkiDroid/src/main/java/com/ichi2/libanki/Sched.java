@@ -2538,6 +2538,19 @@ public class Sched {
         }
     }
 
+    //not in libAnki. Added due to #5666 (
+    public int[] recalculateCounts() {
+        _resetLrnCount();
+        _resetNewCount();
+        _resetRevCount();
+        return new int[] { mNewCount, mLrnCount, mRevCount };
+    }
+
+    //not in libAnki. Added due to #5666 (
+    public void setReportLimit(int reportLimit) {
+        this.mReportLimit = reportLimit;
+    }
+
 
     public void setContext(WeakReference<Activity> contextReference) {
         mContextReference = contextReference;
