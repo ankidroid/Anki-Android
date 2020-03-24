@@ -1614,10 +1614,19 @@ public class Collection {
         FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
                 (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
                     try {
+                        mDb.getDatabase().beginTransaction();
                         problems.addAll(function.apply(notifyProgress));
+                        mDb.getDatabase().setTransactionSuccessful();
                     } catch (Exception e) {
                         Timber.e(e, "Failed to execute integrity check");
                         AnkiDroidApp.sendExceptionReport(e, "fixIntegrity");
+                    } finally {
+                        try {
+                            mDb.getDatabase().endTransaction();
+                        } catch (Exception e) {
+                            Timber.e(e, "Failed to end integrity check transaction");
+                            AnkiDroidApp.sendExceptionReport(e, "fixIntegrity - endTransaction");
+                        }
                     }
                 };
         try {
