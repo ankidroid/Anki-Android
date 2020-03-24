@@ -1657,7 +1657,7 @@ public class Collection {
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return -1;
         }
-        problems.addAll(ensureModelsAreNotEmpty());
+        executeIntegrityTask.consume((callback) -> ensureModelsAreNotEmpty());
         // and finally, optimize
         executeIntegrityTask.consume(this::optimize);
         file = new File(mPath);
