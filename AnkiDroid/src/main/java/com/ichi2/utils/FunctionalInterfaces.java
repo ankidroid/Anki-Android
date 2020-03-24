@@ -13,4 +13,14 @@ public final class FunctionalInterfaces {
     public interface Consumer<T> {
         void consume(T item);
     }
+
+    @FunctionalInterface
+    public interface Function<TIn, TOut> {
+        TOut apply(TIn item);
+    }
+
+    @FunctionalInterface
+    public interface FunctionThrowable<TIn, TOut, TEx extends Throwable> {
+        TOut apply(TIn item) throws TEx;
+    }
 }
