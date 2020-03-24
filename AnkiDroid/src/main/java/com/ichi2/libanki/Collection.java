@@ -1643,7 +1643,9 @@ public class Collection {
                 executeIntegrityTask.consume(this::fixNewCardDuePositionOverflow);
                 executeIntegrityTask.consume((callback) -> resetNewCardInsertionPosition());
                 executeIntegrityTask.consume(this::fixExcessiveReviewDueDates);
-                executeIntegrityTask.consume(this::fixDecimalIntervals);
+                // v2 sched had a bug that could create decimal intervals
+                executeIntegrityTask.consume(this::fixDecimalCardsData);
+                executeIntegrityTask.consume(this::fixDecimalRevLogData);
                 mDb.getDatabase().setTransactionSuccessful();
                 executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
             } finally {
@@ -1689,10 +1691,8 @@ public class Collection {
         return problems;
     }
 
-
-    private ArrayList<String> fixDecimalIntervals(Runnable notifyProgress) {
+    private ArrayList<String> fixDecimalCardsData(Runnable notifyProgress) {
         ArrayList<String> problems = new ArrayList<>();
-        // v2 sched had a bug that could create decimal intervals
         notifyProgress.run();
         SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
                 "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
@@ -1700,10 +1700,16 @@ public class Collection {
         if (rowCount > 0) {
             problems.add("Fixed " + rowCount + " cards with v2 scheduler bug.");
         }
+        return problems;
+    }
+
+
+    private ArrayList<String> fixDecimalRevLogData(Runnable notifyProgress) {
+        ArrayList<String> problems = new ArrayList<>();
         notifyProgress.run();
-        s = mDb.getDatabase().compileStatement(
+        SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
                 "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
-        rowCount = s.executeUpdateDelete();
+        int rowCount = s.executeUpdateDelete();
         if (rowCount > 0) {
             problems.add("Fixed " + rowCount + " review history entries with v2 scheduler bug.");
         }
