@@ -2124,4 +2124,17 @@ public class Collection {
         return mContext;
     }
 
+    /** Not in libAnki */
+
+    //This duplicates _loadScheduler (but returns the value and sets the report limit).
+    public Sched createScheduler(int reportLimit) {
+        int ver = schedVer();
+        if (ver == 1) {
+            mSched = new Sched(this);
+        } else if (ver == 2) {
+            mSched = new SchedV2(this);
+        }
+        mSched.setReportLimit(reportLimit);
+        return mSched;
+    }
 }
