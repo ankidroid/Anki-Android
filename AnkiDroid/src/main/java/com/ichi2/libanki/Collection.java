@@ -59,6 +59,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import androidx.annotation.Nullable;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
@@ -1880,11 +1881,13 @@ public class Collection {
         try {
             notifyProgress.run();
             cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
-            Timber.d("cursor size: %d", cur.getCount());
-            int rowCount = 0;
+            Timber.i("cursor size: %d", cur.getCount());
+            int currentRow = 0;
+
+            //Since we loop through all rows, we only want one exception
+            @Nullable Exception firstException = null;
             while (cur.moveToNext()) {
                 try {
-                    Timber.d("Handling row: %d. Columns: %d", rowCount, cur.getColumnCount());
                     String flds = cur.getString(1);
                     long id = cur.getLong(0);
                     int fldsCount = 0;
@@ -1898,15 +1901,19 @@ public class Collection {
                     }
                 } catch (IllegalStateException ex) {
                     // DEFECT: Theory that is this an OOM is discussed in #5852
-                    // We might not deduplicate if details are different, but we should hopefully be able to
-                    // track this down before the full release is out.
-                    String details = String.format(Locale.ROOT, "deleteNotesWithWrongFieldCounts row: %d col: %d",
-                                    rowCount,
-                            cur.getColumnCount());
-                    AnkiDroidApp.sendExceptionReport(ex, details);
+                    // We store one exception to stop excessive logging
+                    Timber.i(ex,  "deleteNotesWithWrongFieldCounts - Exception on row %d. Columns: %d", currentRow, cur.getColumnCount());
+                    if (firstException == null) {
+                        String details = String.format(Locale.ROOT, "deleteNotesWithWrongFieldCounts row: %d col: %d",
+                                currentRow,
+                                cur.getColumnCount());
+                        AnkiDroidApp.sendExceptionReport(ex, details);
+                        firstException = ex;
+                    }
                 }
-                rowCount++;
+                currentRow++;
             }
+            Timber.i("deleteNotesWithWrongFieldCounts - completed successfully");
             notifyProgress.run();
             if (ids.size() > 0) {
                 problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
