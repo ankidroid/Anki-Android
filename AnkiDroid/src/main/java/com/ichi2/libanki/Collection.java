@@ -1884,7 +1884,12 @@ public class Collection {
                     }
                 } catch (IllegalStateException ex) {
                     // DEFECT: Theory that is this an OOM is discussed in #5852
-                    AnkiDroidApp.sendExceptionReport(ex, "deleteNotesWithWrongFieldCounts");
+                    // We might not deduplicate if details are different, but we should hopefully be able to
+                    // track this down before the full release is out.
+                    String details = String.format(Locale.ROOT, "deleteNotesWithWrongFieldCounts row: %d col: %d",
+                                    rowCount,
+                            cur.getColumnCount());
+                    AnkiDroidApp.sendExceptionReport(ex, details);
                 }
                 rowCount++;
             }
