@@ -1610,7 +1610,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         long oldSize = file.length();
         final int[] currentTask = {1};
-        int totalTasks = (mModels.all().size() * 4) + 21; // a few fixes are in all-models loops, the rest are one-offs
+        int totalTasks = (mModels.all().size() * 4) + 23; // a few fixes are in all-models loops, the rest are one-offs
         Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
         FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
                 (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
@@ -1662,13 +1662,13 @@ public class Collection {
         executeIntegrityTask.consume(this::rebuildTags);
         executeIntegrityTask.consume(this::updateFieldCache);
         executeIntegrityTask.consume(this::fixNewCardDuePositionOverflow);
-        executeIntegrityTask.consume((callback) -> resetNewCardInsertionPosition());
+        executeIntegrityTask.consume(this::resetNewCardInsertionPosition);
         executeIntegrityTask.consume(this::fixExcessiveReviewDueDates);
         // v2 sched had a bug that could create decimal intervals
         executeIntegrityTask.consume(this::fixDecimalCardsData);
         executeIntegrityTask.consume(this::fixDecimalRevLogData);
         executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
-        executeIntegrityTask.consume((callback) -> ensureModelsAreNotEmpty());
+        executeIntegrityTask.consume(this::ensureModelsAreNotEmpty);
         // and finally, optimize (unable to be done inside transaction).
         try {
             optimize(notifyProgress);
@@ -1687,9 +1687,10 @@ public class Collection {
     }
 
 
-    private ArrayList<String> ensureModelsAreNotEmpty() {
+    private ArrayList<String> ensureModelsAreNotEmpty(Runnable notifyProgress) {
         Timber.d("ensureModelsAreNotEmpty()");
         ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
         if (mModels.ensureNotEmpty()) {
             problems.add("Added missing note type.");
         }
@@ -1754,9 +1755,9 @@ public class Collection {
     }
 
 
-    private List<String> resetNewCardInsertionPosition() throws JSONException {
+    private List<String> resetNewCardInsertionPosition(Runnable notifyProgress) throws JSONException {
         Timber.d("resetNewCardInsertionPosition");
-        // TODO: we should probably do a progress callback here
+        notifyProgress.run();
         // new card position
         mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
         return Collections.emptyList();
