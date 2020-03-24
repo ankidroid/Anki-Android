@@ -25,6 +25,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
@@ -505,5 +506,10 @@ public class MultimediaEditFieldActivity extends AnkiActivity
                     break;
             }
         }
+    }
+
+    @VisibleForTesting
+    IFieldController getFieldController() {
+        return mFieldController;
     }
 }
