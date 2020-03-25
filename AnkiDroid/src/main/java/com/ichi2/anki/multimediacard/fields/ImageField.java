@@ -25,6 +25,9 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+
 /**
  * Field with an image.
  */
@@ -132,8 +135,15 @@ public class ImageField extends FieldBase implements IField {
     @Override
     public String getFormattedValue() {
         File file = new File(getImagePath());
+        return formatImageFileName(file);
+    }
+
+
+    @NonNull
+    @VisibleForTesting
+    static String formatImageFileName(@NonNull File file) {
         if (file.exists()) {
-            return String.format("<img src='%s'/>", file.getName());
+            return String.format("<img src=\"%s\">", file.getName());
         } else {
             return "";
         }
