@@ -22,6 +22,7 @@ package com.ichi2.anki;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -325,6 +326,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 });
                 // Workaround preferences
                 removeUnnecessaryAdvancedPrefs(screen);
+                addThirdPartyAppsListener(screen);
                 break;
             case "com.ichi2.anki.prefs.custom_sync_server":
                 getSupportActionBar().setTitle(R.string.custom_sync_server_title);
@@ -335,6 +337,25 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 listener.addPreferencesFromResource(R.xml.preferences_advanced_statistics);
                 break;
         }
+    }
+
+
+    private void addThirdPartyAppsListener(PreferenceScreen screen) {
+        //#5864 - some people don't have a browser so we can't use <intent>
+        //and need to handle the keypress ourself.
+        Preference showThirdParty = screen.findPreference("thirdpartyapps_link");
+        final String githubThirdPartyAppsUrl = "https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps";
+        showThirdParty.setOnPreferenceClickListener((preference) -> {
+            try {
+                Intent openThirdPartyAppsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(githubThirdPartyAppsUrl));
+                super.startActivity(openThirdPartyAppsIntent);
+            } catch (ActivityNotFoundException e) {
+                //We use a different message here. We have limited space in the snackbar
+                String error = getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl);
+                UIUtils.showSimpleSnackbar(this, error, false);
+            }
+            return true;
+        });
     }
 
 
