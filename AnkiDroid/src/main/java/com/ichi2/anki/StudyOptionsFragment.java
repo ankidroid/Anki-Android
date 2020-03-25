@@ -44,6 +44,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.utils.HtmlUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -711,7 +712,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         //#5715: In deck description, ignore what is in style and script tag
         //Since we don't currently execute the JS/CSS, it's not worth displaying.
         String withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc);
-        return CompatHelper.getCompat().fromHtml(withStrippedTags);
+        //#5188 - fromHtml displays newlines as " "
+        String withFixedNewlines = HtmlUtils.convertNewlinesToHtml(withStrippedTags);
+        return CompatHelper.getCompat().fromHtml(withFixedNewlines);
     }
 
     private Collection getCol() {
