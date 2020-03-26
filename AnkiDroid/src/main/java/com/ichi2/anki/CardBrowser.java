@@ -774,13 +774,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     new DeckTask.TaskData(new Object[]{mCheckedCardPositions, getCards()}));
         }
 
-        if (!hasSelectedAllCards()) {
-            mActionBarMenu.findItem(R.id.action_select_all).setTitle(R.string.card_browser_select_all);
-        } else {
-            mActionBarMenu.findItem(R.id.action_select_all).setTitle(R.string.card_browser_select_none);
-        }
+        mActionBarMenu.findItem(R.id.action_select_all).setVisible(!hasSelectedAllCards());
+        //Note: Theoretically should not happen, as this should kick us back to the menu
+        mActionBarMenu.findItem(R.id.action_select_none).setVisible(hasSelectedCards());
     }
 
+
+    private boolean hasSelectedCards() {
+        return mCheckedCardPositions.size() > 0;
+    }
 
     private boolean hasSelectedAllCards() {
         return mCheckedCardPositions.size() >= getCards().size();
@@ -943,8 +945,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
                 }
                 return true;
+            case R.id.action_select_none:
+                onSelectNone();
+                return true;
             case R.id.action_select_all:
-                onCheckAll();
+                onSelectAll();
                 return true;
 
             case R.id.action_preview: {
@@ -1825,19 +1830,24 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private void onCheckAll() {
-        boolean all = mCheckedCardPositions.size() < getCards().size();
-        if (all) {
-            for (int i = 0; i < mCards.size(); i++) {
-                mCheckedCardPositions.add(i);
-            }
-        } else {
-            mCheckedCardPositions.clear();
+    private void onSelectAll() {
+        for (int i = 0; i < mCards.size(); i++) {
+            mCheckedCardPositions.add(i);
         }
+        onSelectionChanged();
+    }
+
+    private void onSelectNone() {
+        mCheckedCardPositions.clear();
+        onSelectionChanged();
+    }
+
+    private void onSelectionChanged() {
         updateMultiselectMenu();
         mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
         mCardsAdapter.notifyDataSetChanged();
     }
+
 
     private List<Map<String, String>> getCards() {
         if (mCards == null) {
