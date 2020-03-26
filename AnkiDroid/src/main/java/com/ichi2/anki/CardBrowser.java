@@ -774,12 +774,18 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     new DeckTask.TaskData(new Object[]{mCheckedCardPositions, getCards()}));
         }
 
-        if (mCheckedCardPositions.size() < getCards().size()) {
+        if (!hasSelectedAllCards()) {
             mActionBarMenu.findItem(R.id.action_select_all).setTitle(R.string.card_browser_select_all);
         } else {
             mActionBarMenu.findItem(R.id.action_select_all).setTitle(R.string.card_browser_select_none);
         }
     }
+
+
+    private boolean hasSelectedAllCards() {
+        return mCheckedCardPositions.size() >= getCards().size();
+    }
+
 
     private void flagTask (int flag) {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
