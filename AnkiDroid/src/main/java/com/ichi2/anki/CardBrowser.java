@@ -31,6 +31,8 @@ import android.os.Handler;
 import android.os.SystemClock;
 import androidx.annotation.NonNull;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import android.text.TextUtils;
@@ -1921,5 +1923,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         supportInvalidateOptionsMenu();
         mActionBarSpinner.setVisibility(View.VISIBLE);
         mActionBarTitle.setVisibility(View.GONE);
+    }
+
+    @VisibleForTesting
+    boolean isInMultiSelectMode() {
+        return mInMultiSelectMode;
     }
 }
