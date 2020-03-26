@@ -445,7 +445,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mActionBarSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectDropDownItem(position);
+                deckDropDownItemChanged(position);
             }
 
             @Override
@@ -1126,6 +1126,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     public void selectDropDownItem(int position) {
         mActionBarSpinner.setSelection(position);
+        deckDropDownItemChanged(position);
+    }
+
+    /**
+     * Performs changes relating to the Deck DropDown Item changing
+     * Exists as mActionBarSpinner.setSelection() caused a loop in roboelectirc (calling onItemSelected())
+     */
+    private void deckDropDownItemChanged(int position) {
         if (position == 0) {
             mRestrictOnDeck = "";
             saveLastDeckId(ALL_DECKS_ID);
