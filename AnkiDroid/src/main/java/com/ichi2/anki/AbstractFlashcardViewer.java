@@ -716,7 +716,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mUseInputTag) {
             // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
             // shouldOverrideUrlLoading() in createWebView() in this file.
-            sb.append("<center>\n<input type=text name=typed id=typeans onfocus=\"taFocus();\" " +
+            sb.append("<center>\n<input type=\"text\" name=\"typed\" id=\"typeans\" onfocus=\"taFocus();\" " +
                     "onblur=\"taBlur(this);\" onKeyPress=\"return taKey(this, event)\" autocomplete=\"off\" ");
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
@@ -726,7 +726,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
             sb.append(">\n</center>\n");
         } else {
-            sb.append("<span id=typeans class=\"typePrompt");
+            sb.append("<span id=\"typeans\" class=\"typePrompt");
             if (mUseInputTag) {
                 sb.append(" typeOff");
             }
@@ -748,8 +748,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Matcher m = sTypeAnsPat.matcher(buf);
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
-        sb.append("<div");
-        sb.append("><code id=typeans>");
+        sb.append("<div><code id=\"typeans\">");
 
         // We have to use Matcher.quoteReplacement because the inputs here might have $ or \.
 
@@ -758,7 +757,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (userAnswer.equals(correctAnswer)) {
                 // and it was right.
                 sb.append(Matcher.quoteReplacement(DiffEngine.wrapGood(correctAnswer)));
-                sb.append("\u2714"); // Heavy check mark
+                sb.append("<span id=\"typecheckmark\">\u2714</span>"); // Heavy check mark
             } else {
                 // Answer not correct.
                 // Only use the complex diff code when needed, that is when we have some typed text that is not
@@ -766,7 +765,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 String[] diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer);
                 // We know we get back two strings.
                 sb.append(Matcher.quoteReplacement(diffedStrings[0]));
-                sb.append("<br>&darr;<br>");
+                sb.append("<br><span id=\"typearrow\">&darr;</span><br>");
                 sb.append(Matcher.quoteReplacement(diffedStrings[1]));
             }
         } else {
