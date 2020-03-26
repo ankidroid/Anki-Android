@@ -721,7 +721,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // multi-select mode
             getMenuInflater().inflate(R.menu.card_browser_multiselect, menu);
             showBackIcon();
-            updateMultiselectMenu();
         }
 
         if (mActionBarMenu != null && mActionBarMenu.findItem(R.id.action_undo) != null) {
@@ -744,6 +743,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         mPreviewItem = menu.findItem(R.id.action_preview);
+        onSelectionChanged();
         updatePreviewMenuItem();
         return super.onCreateOptionsMenu(menu);
     }
@@ -787,7 +787,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private boolean hasSelectedAllCards() {
-        return mCheckedCardPositions.size() >= getCards().size();
+        return mCheckedCardPositions.size() >= getCards().size(); //must handle 0.
     }
 
 
@@ -1212,6 +1212,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void updateList() {
         mCardsAdapter.notifyDataSetChanged();
         mDropDownAdapter.notifyDataSetChanged();
+        onSelectionChanged();
         updatePreviewMenuItem();
     }
 
@@ -1462,7 +1463,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         protected void actualPostExecute(DeckTask.TaskData result) {
             Card[] cards = (Card[]) result.getObjArray();
             updateCardsInList(Arrays.asList(cards), null);
-            updateMultiselectMenu();
             hideProgressBar();
             invalidateOptionsMenu();    // maybe the availability of undo changed
         }
@@ -1474,7 +1474,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         protected void actualPostExecute(DeckTask.TaskData result) {
             Card[] cards = (Card[]) result.getObjArray();
             updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards))), null);
-            updateMultiselectMenu();
             hideProgressBar();
             invalidateOptionsMenu();    // maybe the availability of undo changed
         }
@@ -1822,14 +1821,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCheckedCardPositions.remove(position);
         }
 
-        updateMultiselectMenu();
-
-        if (mCheckedCardPositions.isEmpty()) {
-            // when 0 are selected: end selection mode
-            endMultiSelectMode();
-        } else {
-            mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
-        }
+       onSelectionChanged();
     }
 
     private void onSelectAll() {
@@ -1845,11 +1837,32 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void onSelectionChanged() {
-        updateMultiselectMenu();
-        mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
-        mCardsAdapter.notifyDataSetChanged();
-    }
+        Timber.d("onSelectionChanged()");
+        try {
+            if (!mInMultiSelectMode && !mCheckedCardPositions.isEmpty()) {
+                //If we have selected cards, load multiselect
+                loadMultiSelectMode();
+            } else if (mInMultiSelectMode && mCheckedCardPositions.isEmpty()) {
+                //If we don't have cards, unload multiselect
+                endMultiSelectMode();
+            }
 
+            //If we're not in mutliselect, we can select cards if there are cards to select
+            if (!mInMultiSelectMode && this.mActionBarMenu != null) {
+                MenuItem selectAll = mActionBarMenu.findItem(R.id.action_select_all);
+                selectAll.setVisible(mCards != null && cardCount() != 0);
+            }
+
+            if (!mInMultiSelectMode) {
+                return;
+            }
+
+            updateMultiselectMenu();
+            mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
+        } finally {
+            mCardsAdapter.notifyDataSetChanged();
+        }
+    }
 
     private List<Map<String, String>> getCards() {
         if (mCards == null) {
@@ -1946,5 +1959,22 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting
     boolean isInMultiSelectMode() {
         return mInMultiSelectMode;
+    }
+
+    @VisibleForTesting
+    long cardCount() {
+        return mCards.size();
+    }
+
+    @VisibleForTesting
+     boolean isShowingSelectAll() {
+        return mActionBarMenu != null && mActionBarMenu.findItem(R.id.action_select_all).isVisible();
+    }
+
+    @VisibleForTesting
+    boolean isShowingSelectNone() {
+        return mActionBarMenu != null &&
+                mActionBarMenu.findItem(R.id.action_select_none) != null && //
+                mActionBarMenu.findItem(R.id.action_select_none).isVisible();
     }
 }
