@@ -761,6 +761,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void updateMultiselectMenu() {
+        Timber.d("updateMultiselectMenu()");
         if (mActionBarMenu == null || mActionBarMenu.findItem(R.id.action_suspend_card) == null) {
             return;
         }
@@ -1883,6 +1884,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (mInMultiSelectMode) {
             return;
         }
+        Timber.d("loadMultiSelectMode()");
         // set in multi-select mode
         mInMultiSelectMode = true;
         // show title and hide spinner
@@ -1897,6 +1899,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * Turn off Multi-Select Mode and return to normal state
      */
     private void endMultiSelectMode() {
+        Timber.d("endMultiSelectMode()");
         mCheckedCardPositions.clear();
         mInMultiSelectMode = false;
         // If view which was originally selected when entering multi-select is visible then maintain its position
