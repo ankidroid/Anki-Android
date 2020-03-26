@@ -32,6 +32,7 @@ import android.os.SystemClock;
 import androidx.annotation.NonNull;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
@@ -169,6 +170,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private boolean mInMultiSelectMode = false;
     private Set<Integer> mCheckedCardPositions = new LinkedHashSet<>();
     private int mLastSelectedPosition;
+    @Nullable
     private Menu mActionBarMenu;
 
     private static final int SNACKBAR_DURATION = 8000;
