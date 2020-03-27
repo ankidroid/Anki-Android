@@ -2826,9 +2826,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
     class MyGestureDetector extends SimpleOnGestureListener {
+        //Android design spec for the size of the status bar.
+        private final int NO_GESTURE_BORDER_DIP = 24;
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Timber.d("onFling");
+
+            //#5741 - A swipe from the top caused delayedHide to be triggered,
+            //accepting a gesture and quickly disabling the status bar, which wasn't ideal.
+            //it would be lovely to use e1.getEdgeFlags(), but alas, it doesn't work.
+            if (isTouchingEdge(e1)) {
+                Timber.d("ignoring edge fling");
+                return false;
+            }
+
             // Go back to immersive mode if the user had temporarily exited it (and then execute swipe gesture)
             if (mPrefFullscreenReview > 0 &&
                     CompatHelper.getCompat().isImmersiveSystemUiVisible(AbstractFlashcardViewer.this)) {
@@ -2872,6 +2884,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
             return false;
         }
+
+
+        private boolean isTouchingEdge(MotionEvent e1) {
+            int height = mTouchLayer.getHeight();
+            int width = mTouchLayer.getWidth();
+            float margin = NO_GESTURE_BORDER_DIP * getResources().getDisplayMetrics().density + 0.5f;
+            return e1.getX() < margin || e1.getY() < margin || height - e1.getY() < margin || width - e1.getX() < margin;
+        }
+
 
 
         @Override
