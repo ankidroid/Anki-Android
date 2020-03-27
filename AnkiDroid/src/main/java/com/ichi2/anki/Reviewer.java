@@ -686,8 +686,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         fl.addView(mWhiteboard);
 
         mWhiteboard.setOnTouchListener((v, event) -> {
-            if (!mShowWhiteboard || (mPrefFullscreenReview
-                    && CompatHelper.getCompat().isImmersiveSystemUiVisible(Reviewer.this))) {
+            //If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
+            if (!mWhiteboard.isCurrentlyDrawing() && (!mShowWhiteboard || (mPrefFullscreenReview
+                    && CompatHelper.getCompat().isImmersiveSystemUiVisible(Reviewer.this)))) {
                 // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended
                 v.performClick();
                 return getGestureDetector().onTouchEvent(event);

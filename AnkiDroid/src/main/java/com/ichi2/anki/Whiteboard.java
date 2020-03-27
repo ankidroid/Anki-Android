@@ -403,4 +403,8 @@ public class Whiteboard extends View {
             invalidate();
         }
     }
+
+    public boolean isCurrentlyDrawing() {
+        return mCurrentlyDrawing;
+    }
 }
