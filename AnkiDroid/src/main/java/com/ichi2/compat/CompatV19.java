@@ -6,6 +6,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import androidx.appcompat.widget.Toolbar;
+import timber.log.Timber;
+
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -52,6 +54,7 @@ public class CompatV19 extends CompatV18 implements Compat {
                         // Note that system bars will only be "visible" if none of the
                         // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
                         boolean visible = (flags & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+                        Timber.d("System UI visibility change. Visible: %b", visible);
                         if (visible) {
                             showViewWithAnimation(toolbar);
                             if (fullscreenMode >= FULLSCREEN_ALL_GONE) {

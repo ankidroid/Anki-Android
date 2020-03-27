@@ -2839,6 +2839,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     };
 
     protected void delayedHide(int delayMillis) {
+        Timber.d("Fullscreen delayed hide in %dms", delayMillis);
         mFullScreenHandler.removeMessages(0);
         mFullScreenHandler.sendEmptyMessageDelayed(0, delayMillis);
     }
