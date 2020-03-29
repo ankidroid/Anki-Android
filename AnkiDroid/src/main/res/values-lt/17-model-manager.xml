@@ -23,7 +23,7 @@
     <string name="model_browser_label">Tvarkyti užrašų tipus</string>
     <string name="model_editor_label">Tvarkyti laukelius</string>
     <!--Toasts-->
-    <string name="toast_last_model">Negalite ištrinti paskutinio savo modelio</string>
+    <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Užrašų tipai privalo turėti bent po vieną laukelį</string>
     <string name="toast_empty_name">Turite įvesti pavadinimą</string>
     <string name="toast_duplicate_field">Toks laukelio vardas jau naudojamas</string>
@@ -50,7 +50,7 @@
     <string name="model_browser_template">Redaguoti korteles</string>
     <string name="model_browser_add">Pridėti užrašo tipą</string>
     <!--Rename-->
-    <string name="rename_model">Pervardinti modelį</string>
+    <string name="rename_model">Rename note type</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Redaguoti laukelius</string>
     <string name="model_field_editor_add">Pridėti laukelį</string>
@@ -63,7 +63,7 @@
     <string name="model_field_editor_sort_field">Rūšiuoti pagal šį lauką</string>
     <string name="model_clone_suffix">kopijuoti</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Ar tikrai norite ištrinti šį modelį?</string>
+    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Ar tikrai norite ištrinti šį laukelį?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Pridėti: %1$s </string>

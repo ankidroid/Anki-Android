@@ -49,6 +49,7 @@
     <string name="card_browser_change_deck">更换牌组</string>
     <string name="card_browser_unsuspend_card">取消擱置卡片</string>
     <string name="card_browser_mark_card">标记笔记</string>
+    <string name="card_browser_flag">Flag</string>
     <string name="card_browser_toggle_mark_card">(未标)记的笔记</string>
     <string name="card_browser_unmark_card">未标记的笔记</string>
     <string name="delete_card_title">确认删除笔记？</string>
@@ -92,5 +93,7 @@
     <string name="card_browser_select_all">全选</string>
     <string name="card_browser_select_none">取消全选</string>
     <string name="card_browser_interval_new_card">（新卡片）</string>
+    <string name="card_browser_ease_new_card">(new)</string>
+    <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">（学习中的卡片）</string>
 </resources>

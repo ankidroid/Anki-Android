@@ -63,6 +63,14 @@
         <item quantity="one">Resta %d minuto</item>
         <item quantity="other">Restano %d minuti</item>
     </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Oggi hai studiato %1$d carta in %2$s</item>
@@ -103,6 +111,13 @@
     <string name="menu_bury">Seppellisci</string>
     <string name="menu_suspend">Sospendi</string>
     <string name="menu_delete_note">Elimina nota</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
     <string name="delete_note_message">Vuoi veramente eliminare questa nota e tutte le sue carte?\n%s</string>
     <string name="menu_select">Seleziona testo</string>
     <string name="menu_search">Ricerca in %1$s</string>
@@ -166,7 +181,7 @@
     </plurals>
     <string name="invalid_template">Una carta non può essere generata</string>
     <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
-    <string name="template_for_current_card_deleted">Il modello per la carta corrente è stato eliminato.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
     <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>

@@ -61,6 +61,12 @@
     <plurals name="reviewer_window_title">
         <item quantity="other">còn %d phút</item>
     </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="other">%d days %d left</item>
+    </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">Đã học %1$d thẻ trong %2$s hôm nay</item>
@@ -100,6 +106,13 @@
     <string name="menu_bury">Chôn</string>
     <string name="menu_suspend">Tạm hoãn</string>
     <string name="menu_delete_note">Xoá ghi chú</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
     <string name="delete_note_message">Bạn thực sự muốn xoá ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
     <string name="menu_select">Chọn văn bản</string>
     <string name="menu_search">Tra cứu trong %1$s</string>
@@ -162,7 +175,7 @@
     </plurals>
     <string name="invalid_template">Không thể tạo thẻ</string>
     <string name="card_template_editor_would_delete_note">Xoá bỏ loại thẻ này có thể dẫn đến việc một hay nhiều ghi chú bị xoá. Xin tạo loại thẻ mới trước đã.</string>
-    <string name="template_for_current_card_deleted">Mẫu định dạng của thẻ hiện tại đã bị xóa.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Đọc và ghi vào cơ sở dữ liệu AnkiDroid</string>
     <string name="read_write_permission_description">truy cập các ghi chú, thẻ, loại ghi chú và các bộ thẻ đang tồn tại, cũng như tạo mới chúng</string>

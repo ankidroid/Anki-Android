@@ -67,6 +67,18 @@
         <item quantity="many">Триватиме ще %d хвилин</item>
         <item quantity="other">Триватиме ще %d хвилини</item>
     </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="few">%d hours %d left</item>
+        <item quantity="many">%d hours %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="few">%d days %d left</item>
+        <item quantity="many">%d days %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Днесь вивчено %1$d картку з %2$s</item>
@@ -109,6 +121,13 @@
     <string name="menu_bury">Приховати</string>
     <string name="menu_suspend">Призупинити</string>
     <string name="menu_delete_note">Видалити картку</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
     <string name="delete_note_message">Дійсно знищити цю примітку разом з усіма її картками?\n%s</string>
     <string name="menu_select">Виділити текст</string>
     <string name="menu_search">Пошук у %1$s</string>
@@ -174,7 +193,7 @@
     </plurals>
     <string name="invalid_template">Картка не може бути створена</string>
     <string name="card_template_editor_would_delete_note">Видалення цього типу картки зумовить знищення однієї чи декількох приміток. Будь ласка, створіть спочатку новий тип карток.</string>
-    <string name="template_for_current_card_deleted">Шаблон цієї картки було видалено.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читати і записувати в базу даних AnkiDroid</string>
     <string name="read_write_permission_description">доступ до існуючих приміток, карток, типів приміток та колод, а також створення нових</string>

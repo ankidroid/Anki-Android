@@ -23,7 +23,7 @@
     <string name="model_browser_label">Manage note types</string>
     <string name="model_editor_label">Manage fields</string>
     <!--Toasts-->
-    <string name="toast_last_model">Du kan ikke slette siste modellen din</string>
+    <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Notattyper må ha minst ett felt</string>
     <string name="toast_empty_name">Du må angi et navn</string>
     <string name="toast_duplicate_field">Feltnavn allerede brukt</string>
@@ -46,7 +46,7 @@
     <string name="model_browser_template">Rediger kort</string>
     <string name="model_browser_add">Legg til notattype</string>
     <!--Rename-->
-    <string name="rename_model">Rename model</string>
+    <string name="rename_model">Rename note type</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Rediger felt</string>
     <string name="model_field_editor_add">Legg til felt</string>
@@ -59,7 +59,7 @@
     <string name="model_field_editor_sort_field">Sort by this field</string>
     <string name="model_clone_suffix">kopier</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this model?</string>
+    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Legg til: %1$s </string>

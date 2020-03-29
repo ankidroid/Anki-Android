@@ -49,4 +49,5 @@
     <string name="feedback_copy_debug">Sao chép thông tin gỡ lỗi</string>
     <string name="feedback_report">Báo cáo</string>
     <string name="feedback_report_automatically">Tự động gửi báo cáo lỗi</string>
+    <string name="feedback_no_suitable_app_found">No suitable app found</string>
 </resources>

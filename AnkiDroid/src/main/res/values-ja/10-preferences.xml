@@ -218,6 +218,8 @@
     <string name="deck_conf_new_bury_summ">新規の関連カード（同じノートから作られた別のカード。例：裏表反転カード）の学習を翌日まで延期します</string>
     <string name="deck_conf_rev_bury">関連カードの復習を延期</string>
     <string name="deck_conf_rev_bury_summ">関連カード（同じノートから作られた別のカード。例：裏表反転カード）の復習を翌日まで延期します</string>
+    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">簡単と答えた時のボーナス（復習間隔の伸び率の割り増し）</string>
     <string name="deck_conf_ivl_fct">復習間隔の調整</string>
     <string name="deck_conf_max_ivl">復習間隔の上限</string>

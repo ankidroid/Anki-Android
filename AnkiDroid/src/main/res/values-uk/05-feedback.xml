@@ -49,4 +49,5 @@
     <string name="feedback_copy_debug">Копіювати дані відлагодження</string>
     <string name="feedback_report">Звіт</string>
     <string name="feedback_report_automatically">Відправляти звіти про помилки автоматично</string>
+    <string name="feedback_no_suitable_app_found">No suitable app found</string>
 </resources>

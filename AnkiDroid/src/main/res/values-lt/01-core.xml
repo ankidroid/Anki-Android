@@ -67,6 +67,18 @@
         <item quantity="many">Liko %d minučių</item>
         <item quantity="other">Liko %d min.</item>
     </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="few">%d hours %d left</item>
+        <item quantity="many">%d hours %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="few">%d days %d left</item>
+        <item quantity="many">%d days %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Šiandien išmokote %1$d kortelę per %2$s</item>
@@ -109,6 +121,13 @@
     <string name="menu_bury">Slėpti</string>
     <string name="menu_suspend">Atidėti</string>
     <string name="menu_delete_note">Ištrinti užrašą</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
     <string name="delete_note_message">Ar tikrai norite ištrinti šį užrašą ir visas su juo susijusias korteles?\n%s</string>
     <string name="menu_select">Žymėti tekstą</string>
     <string name="menu_search">Ieškoti: %1$s</string>
@@ -174,7 +193,7 @@
     </plurals>
     <string name="invalid_template">Kortelės sukurti nepavyko</string>
     <string name="card_template_editor_would_delete_note">Ištrynus šį kortelių tipą, kartu bus ištrintas vienas ar keli užrašai. Prašome pirmiausiai sukurti naują kortelių tipą.</string>
-    <string name="template_for_current_card_deleted">Esamos kortelės šablonas buvo ištrintas.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Skaitykite ir rašykite į „AnkiDroid“ duomenų bazę</string>
     <string name="read_write_permission_description">prisijunkite prie turimų užrašų, kortelių, užrašų tipų ir rinkinių bei kurkite naujus</string>

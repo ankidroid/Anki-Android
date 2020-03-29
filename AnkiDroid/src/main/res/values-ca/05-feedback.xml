@@ -49,4 +49,5 @@
     <string name="feedback_copy_debug">Copiar informació de depuració</string>
     <string name="feedback_report">Informa</string>
     <string name="feedback_report_automatically">Enviar automàticament informes d\'error</string>
+    <string name="feedback_no_suitable_app_found">No suitable app found</string>
 </resources>

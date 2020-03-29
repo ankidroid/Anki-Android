@@ -49,4 +49,5 @@
     <string name="feedback_copy_debug">Копиране на данните за дебъг</string>
     <string name="feedback_report">Доклад</string>
     <string name="feedback_report_automatically">Автоматично изплащане на докладите за грешки</string>
+    <string name="feedback_no_suitable_app_found">No suitable app found</string>
 </resources>

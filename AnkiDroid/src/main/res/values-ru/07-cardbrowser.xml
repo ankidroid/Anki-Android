@@ -52,6 +52,7 @@
     <string name="card_browser_change_deck">Сменить колоду</string>
     <string name="card_browser_unsuspend_card">Включить карточки</string>
     <string name="card_browser_mark_card">Отметить записи</string>
+    <string name="card_browser_flag">Flag</string>
     <string name="card_browser_toggle_mark_card">отметить записи</string>
     <string name="card_browser_unmark_card">Снять отметку</string>
     <string name="delete_card_title">Удалить запись?</string>
@@ -95,5 +96,7 @@
     <string name="card_browser_select_all">Выбрать все</string>
     <string name="card_browser_select_none">Снять выделение</string>
     <string name="card_browser_interval_new_card">(новые)</string>
+    <string name="card_browser_ease_new_card">(new)</string>
+    <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(изучаемые)</string>
 </resources>
