@@ -71,6 +71,22 @@
         <item quantity="many">%d دقيقة متبقية</item>
         <item quantity="other">%d دقيقة متبقية</item>
     </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="zero">%d hours %d left</item>
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="two">%d hours %d left</item>
+        <item quantity="few">%d hours %d left</item>
+        <item quantity="many">%d hours %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="zero">%d days %d left</item>
+        <item quantity="one">%d day %d left</item>
+        <item quantity="two">%d days %d left</item>
+        <item quantity="few">%d days %d left</item>
+        <item quantity="many">%d days %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="zero">تم دراسة %1$d بطاقة خلال %2$s اليوم</item>
@@ -115,6 +131,13 @@
     <string name="menu_bury">ادفن</string>
     <string name="menu_suspend">عَطِّل</string>
     <string name="menu_delete_note">ملاحظة الحذف</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
     <string name="delete_note_message">هل تريد حقا حذف هذه الملاحظة و جميع بطاقاتها؟\n%s</string>
     <string name="menu_select">حدد نصا</string>
     <string name="menu_search">البحث في %1$s</string>
@@ -182,7 +205,7 @@
     </plurals>
     <string name="invalid_template">لا يمكن إنشاء بطاقة</string>
     <string name="card_template_editor_would_delete_note">سوف يسبب حذف نوع هذه البطاقة حذف ملاحظة أو أكثر. الرجاء انشاء نوع بطاقة جديدة أولاً.</string>
-    <string name="template_for_current_card_deleted">قالب البطاقة الحالية قد حُذف.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة البيانات أنكيدرويد</string>
     <string name="read_write_permission_description">حصل على ملاحظات، وبطاقات، وأنواع الملاحظات، ورزما وأنشأ جديدة</string>

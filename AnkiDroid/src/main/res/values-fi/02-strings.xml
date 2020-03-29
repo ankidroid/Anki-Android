@@ -67,6 +67,14 @@
     <string name="leech_suspend_notification">Kortti on merkitty vaikeaksi ja jäädytetty</string>
     <string name="leech_notification">Kortti on merkitty vaikeaksi</string>
     <string name="corrupt_font">Vioittunut kirjasintiedosto %s</string>
+    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
+    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
+    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
+    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%s\'.\n %s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Kysymys</item>
@@ -81,14 +89,12 @@
         <item>Tunnisteet</item>
         <item>Virheet</item>
         <item>Kertaukset</item>
-        <!--
-    <item>Changed</item>
-    <item>Created</item>
-    <item>Due</item>
-    <item>Ease</item>
-    <item>Edited</item>
-        -->
         <item>Kertausväli</item>
+        <item>Ease</item>
+        <item>Due</item>
+        <item>Changed</item>
+        <item>Created</item>
+        <item>Edited</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Lisää tämän päivän uusien korttien rajoitusta</string>
@@ -104,7 +110,7 @@
     <string name="discard_unsaved_changes">Sulje ja menetä muutokset?</string>
     <string name="factadder_saving_error">Virhe tallennettaessa merkintää</string>
     <string name="saving_facts">Tallennetaan merkintää</string>
-    <string name="saving_model">Tallennetaan mallia</string>
+    <string name="saving_model">Saving note type</string>
     <string name="add">Lisää</string>
     <string name="save">Tallenna</string>
     <string name="close">Sulje</string>
@@ -157,6 +163,7 @@
     <string name="import_error_not_apkg_extension">Tiedostolla \"%s\" ei ole .apkg tai .colpkg päätettä</string>
     <string name="import_error_content_provider">Valittua tiedostoa ei voitu tuoda automaattisesti AnkiDroidiin. Katso käyttöohjeesta, kuinka tuoda manuaalisesti anki-tiedostoja: \n%s</string>
     <string name="import_replacing">Korvataan kokoelmaa&#8230;</string>
+    <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">Myös ajoitukset</string>
     <string name="export_include_media">Myös media</string>
     <string name="confirm_apkg_export">Tuo kokoelma Anki-tiedostona?</string>
@@ -235,4 +242,8 @@
     <string name="import_cannot_with_v2">V2 ajastin ei voi tuoda V1 pakkoja ajastuksen kanssa.</string>
     <string name="export_v2_dummy_note">Tiedosto vaatii uudemman Anki version.</string>
     <string name="export_v2_forbidden">Vaihda V1 ajastimeen ennen ajastustiedollisen yksittäisen pakan tuomista.</string>
+    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
+    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
+    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
 </resources>

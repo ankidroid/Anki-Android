@@ -49,4 +49,5 @@
     <string name="feedback_copy_debug">Debug&#173;in&#173;for&#173;ma&#173;tio&#173;nen kopieren</string>
     <string name="feedback_report">Berichten</string>
     <string name="feedback_report_automatically">Fehlerberichte automatisch senden</string>
+    <string name="feedback_no_suitable_app_found">No suitable app found</string>
 </resources>

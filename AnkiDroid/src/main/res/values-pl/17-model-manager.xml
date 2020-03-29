@@ -23,7 +23,7 @@
     <string name="model_browser_label">Zarządzaj typami notatek</string>
     <string name="model_editor_label">Zarządzaj polami</string>
     <!--Toasts-->
-    <string name="toast_last_model">Nie możesz usunąć ostatniego modelu</string>
+    <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Typy notatek muszą mieć co najmniej jedno pole</string>
     <string name="toast_empty_name">Musisz wprowadzić nazwę</string>
     <string name="toast_duplicate_field">Nazwa pola już zajęta</string>
@@ -50,7 +50,7 @@
     <string name="model_browser_template">Edytuj karty</string>
     <string name="model_browser_add">Dodaj typ notatki</string>
     <!--Rename-->
-    <string name="rename_model">Zmień nazwę modelu</string>
+    <string name="rename_model">Rename note type</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Edytuj pola</string>
     <string name="model_field_editor_add">Dodaj pole</string>
@@ -63,7 +63,7 @@
     <string name="model_field_editor_sort_field">Sortuj według tego pola</string>
     <string name="model_clone_suffix">kopia</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Czy na pewno chcesz usunąć ten model?</string>
+    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Czy na pewno chcesz usunąć to pole?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Dodaj: %1$s </string>

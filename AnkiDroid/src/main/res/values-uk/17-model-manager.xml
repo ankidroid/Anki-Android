@@ -23,7 +23,7 @@
     <string name="model_browser_label">Керування типами нотаток</string>
     <string name="model_editor_label">Керувати полями</string>
     <!--Toasts-->
-    <string name="toast_last_model">Ви не можете видалити останній тип</string>
+    <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Має бути принаймні одне поле даних</string>
     <string name="toast_empty_name">Ви повинні ввести ім\'я</string>
     <string name="toast_duplicate_field">Ім\'я поля вже використовується</string>
@@ -50,7 +50,7 @@
     <string name="model_browser_template">Редагувати картки</string>
     <string name="model_browser_add">Додати тип нотатки</string>
     <!--Rename-->
-    <string name="rename_model">Перейменувати</string>
+    <string name="rename_model">Rename note type</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Редагувати поля</string>
     <string name="model_field_editor_add">Додати поле</string>
@@ -63,7 +63,7 @@
     <string name="model_field_editor_sort_field">Сортувати по цьому полю</string>
     <string name="model_clone_suffix">Копіювати</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Ви впевнені, що хочете видалити цей тип?</string>
+    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Ви впевнені, що хочете видалити це поле?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Додати: %1$s </string>

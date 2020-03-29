@@ -63,6 +63,14 @@
         <item quantity="one">%d minut kvar</item>
         <item quantity="other">%d minuter kvar</item>
     </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">%1$d kort studerade i %2$s idag</item>
@@ -103,6 +111,13 @@
     <string name="menu_bury">Dölj</string>
     <string name="menu_suspend">Lås</string>
     <string name="menu_delete_note">Ta bort not</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
     <string name="delete_note_message">Vill du verkligen ta bort den här noten och alla dess kort?\n%s</string>
     <string name="menu_select">Markera text</string>
     <string name="menu_search">Sökning i %1$s</string>
@@ -166,7 +181,7 @@
     </plurals>
     <string name="invalid_template">Ett kort kunde inte genereras</string>
     <string name="card_template_editor_would_delete_note">Att ta bort den här korttypen skulle göra att en eller flera noter tas bort. Vänligen skapa en ny korttyp först.</string>
-    <string name="template_for_current_card_deleted">Mallen för det aktuella kortet togs bort.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Läs och skriv till AnkiDroid-databasen</string>
     <string name="read_write_permission_description">åtkomst till befintliga noter, kort, nottyper och kortlekar, samt att skapa nya</string>

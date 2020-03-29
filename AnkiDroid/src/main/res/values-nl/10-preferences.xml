@@ -219,6 +219,8 @@
     <string name="deck_conf_new_bury_summ">Gerelateerde nieuwe kaarten worden geblokkeerd tot de volgende dag</string>
     <string name="deck_conf_rev_bury">Blokkeer gerelateerde overhooropdracht</string>
     <string name="deck_conf_rev_bury_summ">Gerelateerde overhooropdrachten worden geblokkeerd tot de volgende dag</string>
+    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Bonus bij gemakkelijk</string>
     <string name="deck_conf_ivl_fct">Intervalsfactor</string>
     <string name="deck_conf_max_ivl">Grootste interval</string>

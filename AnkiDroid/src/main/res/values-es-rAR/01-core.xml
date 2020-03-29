@@ -63,6 +63,14 @@
         <item quantity="one">%d minuto restante</item>
         <item quantity="other">%d minutos restantes</item>
     </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">%1$d tarjeta estudiada en %2$s hoy</item>
@@ -103,6 +111,13 @@
     <string name="menu_bury">Enterrar</string>
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Eliminar nota</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
     <string name="delete_note_message">¿Realmente eliminar esta nota y todas sus tarjetas?\n%s</string>
     <string name="menu_select">Seleccione el texto</string>
     <string name="menu_search">Revisión en %1$s</string>
@@ -166,7 +181,7 @@
     </plurals>
     <string name="invalid_template">Una tarjeta no pudo ser generada</string>
     <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta podría causar la eliminación de una o más notas. Por favor, cree primero un nuevo tipo de tarjeta.</string>
-    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
     <string name="read_write_permission_description">acceder a las notas existentes, tarjetas, tipos de nota y mazos, así como crear nuevos</string>

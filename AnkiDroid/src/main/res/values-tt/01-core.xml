@@ -61,6 +61,12 @@
     <plurals name="reviewer_window_title">
         <item quantity="other">%d minutes left</item>
     </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="other">%d days %d left</item>
+    </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">Studied %1$d cards in %2$s today</item>
@@ -100,6 +106,13 @@
     <string name="menu_bury">Bury</string>
     <string name="menu_suspend">Suspend</string>
     <string name="menu_delete_note">Delete note</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
     <string name="menu_select">Select text</string>
     <string name="menu_search">Lookup in %1$s</string>
@@ -162,7 +175,7 @@
     </plurals>
     <string name="invalid_template">A card could not be generated</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
-    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
