@@ -30,15 +30,20 @@ import com.ichi2.anki.AnkiDroidApp;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public class BitmapUtil {
 
+    @Nullable
     public static Bitmap decodeFile(File theFile, int IMAGE_MAX_SIZE) {
         Bitmap bmp = null;
         try {
+            if (!theFile.exists()) {
+                Timber.i("not displaying preview - image does not exist: '%s'", theFile.getPath());
+                return null;
+            }
             // Decode image size
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
@@ -71,8 +76,7 @@ public class BitmapUtil {
             } finally {
                 fis.close(); //don't need a null check, as we reuse the variable.
             }
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             //#5513 - We don't know the reason for the crash, let's find out.
             AnkiDroidApp.sendExceptionReport(e, "BitmapUtil decodeFile");
         }

@@ -32,6 +32,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
+
+import androidx.annotation.VisibleForTesting;
 import androidx.core.content.FileProvider;
 
 import android.text.format.Formatter;
@@ -293,12 +295,21 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private void setPreviewImage(String imagePath, int maxsize) {
         if (imagePath != null && !imagePath.equals("")) {
             File f = new File(imagePath);
-            Bitmap b = BitmapUtil.decodeFile(f, maxsize);
-            b = ExifUtil.rotateFromCamera(f, b);
-            mImagePreview.setImageBitmap(b);
-            mImageFileSize.setVisibility(View.VISIBLE);
-            mImageFileSize.setText(Formatter.formatFileSize(mActivity, f.length()));
+            setImagePreview(f, maxsize);
         }
+    }
+
+    @VisibleForTesting
+    void setImagePreview(File f, int maxsize) {
+        Bitmap b = BitmapUtil.decodeFile(f, maxsize);
+        if (b == null) {
+            Timber.i("Not displaying preview: Could not process image %s", f.getPath());
+            return;
+        }
+        b = ExifUtil.rotateFromCamera(f, b);
+        mImagePreview.setImageBitmap(b);
+        mImageFileSize.setVisibility(View.VISIBLE);
+        mImageFileSize.setText(Formatter.formatFileSize(mActivity, f.length()));
     }
 
 
@@ -306,5 +317,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     public void onDestroy() {
         ImageView imageView = mImagePreview;
         BitmapUtil.freeImageView(imageView);
+    }
+
+    public boolean isShowingPreview() {
+        return mImageFileSize.getVisibility() == View.VISIBLE;
     }
 }
