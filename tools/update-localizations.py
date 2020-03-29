@@ -21,7 +21,7 @@
 # Below is the list of official AnkiDroid localizations.
 # Add a language if 01-core.xml is translated
 # Do not remove languages.
-# When you add a language, please also add it to mAppLanguages in Preferences.java
+# When you add a language, please also add it to mAppLanguages in LanguageUtil.java
 
 languages = ['ar', 'bg', 'ca', 'cs', 'de', 'el', 'eo', 'es-AR', 'es-ES', 'et', 'fa', 'fi', 'fr', 'gl', 'got', 'he', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'nl', 'nn-NO', 'no', 'pl', 'pt-PT', 'pt-BR', 'ro', 'ru', 'sk', 'sl', 'sr', 'sv-SE', 'th', 'tr', 'tt-RU', 'uk', 'vi', 'zh-CN', 'zh-TW'];
 # languages which are localized for more than one region
