@@ -4,10 +4,17 @@ import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityTestBas
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
+
+import java.io.File;
+
+import androidx.annotation.CheckResult;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
 
 
 @RunWith(RobolectricTestRunner.class)
@@ -15,10 +22,7 @@ public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTe
 
     @Test
     public void constructionWithoutDataGivesNoError() {
-        grantCameraPermission();
-
-        IFieldController controller = getControllerForField(emptyImageField(), getEmptyNote(), 0);
-
+        IFieldController controller = getValidControllerNoImage();
         assertThat(controller, instanceOf(BasicImageFieldController.class));
     }
 
@@ -30,6 +34,44 @@ public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTe
 
         assertThat(controller, instanceOf(BasicImageFieldController.class));
     }
+
+    @Test
+    public void nonExistingFileDoesNotDisplayPreview() {
+        BasicImageFieldController controller = getValidControllerNoImage();
+        assertThat(controller.isShowingPreview(), is(false));
+
+        File f =  Mockito.mock(File.class);
+        when(f.exists()).thenReturn(false);
+
+        controller.setImagePreview(f, 100);
+
+        assertThat("A non existing file should not display a preview",
+                controller.isShowingPreview(),
+                is(false));
+    }
+
+    @Test
+    public void erroringFileDoesNotDisplayPreview() {
+        BasicImageFieldController controller = getValidControllerNoImage();
+        assertThat(controller.isShowingPreview(), is(false));
+
+        File f =  Mockito.mock(File.class);
+        when(f.exists()).thenReturn(true); //true, but it'll throw due to being a mock.
+
+        controller.setImagePreview(f, 100);
+
+        assertThat("A broken existing file should not display a preview",
+                controller.isShowingPreview(),
+                is(false));
+    }
+
+    @CheckResult
+    protected BasicImageFieldController getValidControllerNoImage() {
+        grantCameraPermission();
+
+        return (BasicImageFieldController) getControllerForField(emptyImageField(), getEmptyNote(), 0);
+    }
+
 
     private static IField emptyImageField() {
         return new ImageField();
