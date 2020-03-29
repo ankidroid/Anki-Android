@@ -159,8 +159,11 @@ public class ImageField extends FieldBase implements IField {
 
     @NonNull
     @VisibleForTesting
-    String getImageFullPath(Collection col, String value) {
+    static String getImageFullPath(Collection col, String value) {
         String path = parseImageSrcFromHtml(value);
+        if ("".equals(path)) {
+            return "";
+        }
         String mediaDir = col.getMedia().dir() + "/";
         return mediaDir + path;
     }
