@@ -49,4 +49,5 @@
     <string name="feedback_copy_debug">Zkopírovat ladící informace</string>
     <string name="feedback_report">Nahlásit</string>
     <string name="feedback_report_automatically">Automaticky odesílat zprávy o chybách</string>
+    <string name="feedback_no_suitable_app_found">No suitable app found</string>
 </resources>

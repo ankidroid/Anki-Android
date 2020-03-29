@@ -221,6 +221,8 @@
     <string name="deck_conf_new_bury_summ">Связанные новые карточки отложены на завтра</string>
     <string name="deck_conf_rev_bury">Отложить связанные повторения</string>
     <string name="deck_conf_rev_bury_summ">Связанные повторения отложены до завтра</string>
+    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Множитель для \"Легко\"</string>
     <string name="deck_conf_ivl_fct">Множитель интервалов</string>
     <string name="deck_conf_max_ivl">Максимальный интервал</string>

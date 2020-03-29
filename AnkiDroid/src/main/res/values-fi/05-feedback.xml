@@ -49,4 +49,5 @@
     <string name="feedback_copy_debug">Kopioi virheenkorjaustiedot</string>
     <string name="feedback_report">Ilmoita</string>
     <string name="feedback_report_automatically">Lähetä virheraportteja automaattisesti</string>
+    <string name="feedback_no_suitable_app_found">No suitable app found</string>
 </resources>

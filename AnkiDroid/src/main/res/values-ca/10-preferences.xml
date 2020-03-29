@@ -219,6 +219,8 @@
     <string name="deck_conf_new_bury_summ">Les noves targetes relacionades seran enterrades fins al dia següent</string>
     <string name="deck_conf_rev_bury">Enterra revisions relacionades</string>
     <string name="deck_conf_rev_bury_summ">Les revisions relacionades estan enterrades fins al dia següent</string>
+    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Bonus de facilitat</string>
     <string name="deck_conf_ivl_fct">Modificador de l\'interval</string>
     <string name="deck_conf_max_ivl">Interval màxim</string>

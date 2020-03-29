@@ -81,6 +81,18 @@
         <item quantity="other">%d карточек сброшены</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Изменить расписание карточки</string>
+    <plurals name="reschedule_cards_dialog_title">
+        <item quantity="one">Reschedule card</item>
+        <item quantity="few">Reschedule cards</item>
+        <item quantity="many">Reschedule cards</item>
+        <item quantity="other">Reschedule cards</item>
+    </plurals>
+    <plurals name="reschedule_card_dialog_interval">
+        <item quantity="one">Current interval: %d day</item>
+        <item quantity="few">Current interval: %d days</item>
+        <item quantity="many">Current interval: %d days</item>
+        <item quantity="other">Current interval: %d days</item>
+    </plurals>
     <string name="reschedule_card_dialog_message">Через сколько дней запланировать повторение:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d карточка перепланирована</item>
@@ -151,4 +163,20 @@
     <string name="empty_cards_none">Нет пустых карт</string>
     <string name="empty_cards_count">Карточек к удалению: %d</string>
     <string name="empty_cards_deleted">Удалено карточек: %d</string>
+    <!-- Multimedia - Edit Field Activity -->
+    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
+    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <!-- Multimedia - Audio View -->
+    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <!-- Initial collection load -->
+    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
+    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <!-- Database Integrity Check -->
+    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
+    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
+    <string name="integrity_check_positive">Check Database</string>
+    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
 </resources>

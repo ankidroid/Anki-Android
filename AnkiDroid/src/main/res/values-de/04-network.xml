@@ -111,6 +111,7 @@
     <string name="sync_media_downloaded_count">%d Multimedia-Dateien heruntergeladen</string>
     <string name="sync_sanity_failed">Nach dem Synchronisieren war Ihre Sammlung in einem widersprüchlichen Zustand. Um dieses Problem zu beheben wird AnkiDroid eine vollständige Synchronisierung erzwingen. Bitte wählen Sie die Seite, die Sie behalten wollen oder brechen Sie ab, falls Sie später synchronisieren wollen.</string>
     <string name="sync_media_sanity_failed">Die Multimedia-Synchronisierung wurde abgeschlossen, aber die Medienanzahl stimmt nicht mit der auf dem Server überein. Die nächste Medien-Synchronisierung wird die Medien voll synchronisieren, um den Fehler zu beheben.</string>
+    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
     <string name="sync_media_error">Fehler beim Synchronisieren der Multimedia-Dateien.</string>
     <string name="sync_media_error_check">Fehler beim Synchronisieren der Multimedia-Dateien. Eine Überprüfung der Medien wird empfohlen.</string>
     <string name="sync_sanity_local">Lokal</string>

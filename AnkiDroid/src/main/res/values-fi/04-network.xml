@@ -111,6 +111,7 @@
     <string name="sync_media_downloaded_count">%d mediatiedostoa ladattu</string>
     <string name="sync_sanity_failed">Kokoelma oli epäyhtenäisessä tilassa synkronoinnin jälkeen. AnkiDroid tekee täyden synkronoinnin ongelman korjaamiseksi. Valitse kumman puolen tiedot haluat pitää.</string>
     <string name="sync_media_sanity_failed">Median synkronointi valmistui, mutta median lukumäärä ei vastaa serverillä olevaa arvoa. Seuraavalla kerralla tehdään täysi median synkronointi, jotta ongelma korjaantuisi.</string>
+    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
     <string name="sync_media_error">Virhe median synkronoinnissa</string>
     <string name="sync_media_error_check">Virhe mediaa synkronoitaessa. Median tarkistaminen on suositeltavaa.</string>
     <string name="sync_sanity_local">Paikallinen</string>

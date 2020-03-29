@@ -23,7 +23,7 @@
     <string name="model_browser_label">Administreu els tipus de notes</string>
     <string name="model_editor_label">Administreu els camps</string>
     <!--Toasts-->
-    <string name="toast_last_model">No podeu suprimir el vostre darrer model</string>
+    <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Els tipus de notes han de tenir almenys un camp</string>
     <string name="toast_empty_name">Heu d\'introduir un nom</string>
     <string name="toast_duplicate_field">El nom del camp ja existeix</string>
@@ -46,7 +46,7 @@
     <string name="model_browser_template">Edita les targetes</string>
     <string name="model_browser_add">Afegeix el tipus de nota</string>
     <!--Rename-->
-    <string name="rename_model">Canviar el nom de model</string>
+    <string name="rename_model">Rename note type</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Edita els camps</string>
     <string name="model_field_editor_add">Afegeix el camp</string>
@@ -59,7 +59,7 @@
     <string name="model_field_editor_sort_field">Ordena per aquest camp</string>
     <string name="model_clone_suffix">còpia</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Esteu segur que voleu suprimir aquest model?</string>
+    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Esteu segur que voleu suprimir aquest camp?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Afegeix: %1$s </string>

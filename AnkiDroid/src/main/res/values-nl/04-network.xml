@@ -111,6 +111,7 @@
     <string name="sync_media_downloaded_count">%d mediabestanden gedownload</string>
     <string name="sync_sanity_failed">Na synchronisatie was de collectie in een inconsistente staat. Om dit probleem op te lossen zal AnkiDroid een volledige synchronisatie uitvoeren. Gelieve te kiezen welke zijde u wenst te behouden, of de operatie te onderbreken indien u liever later synchroniseert.</string>
     <string name="sync_media_sanity_failed">Synchronisatie van de media voltooid, maar het aantal mediabestanden komt niet overeen met dat op de server. De volgende keer zal een volledige synchronisatie van de media worden uitgevoerd om fouten te corrigeren.</string>
+    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
     <string name="sync_media_error">Fout tijdens het synchroniseren van mediagegevens.</string>
     <string name="sync_media_error_check">Fout tijdens het synchroniseren van media. Een controle van de media wordt aanbevolen.</string>
     <string name="sync_sanity_local">Lokaal</string>

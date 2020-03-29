@@ -222,6 +222,8 @@
     <string name="deck_conf_new_bury_summ">Susijusios naujos kortelės bus paslėptos iki kitos dienos</string>
     <string name="deck_conf_rev_bury">Slėpti susijusias peržiūras</string>
     <string name="deck_conf_rev_bury_summ">Susijusios peržiūros bus paslėptos iki kitos dienos</string>
+    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Lengvumo premija</string>
     <string name="deck_conf_ivl_fct">Intervalo keitiklis</string>
     <string name="deck_conf_max_ivl">Didžiausias intervalas</string>

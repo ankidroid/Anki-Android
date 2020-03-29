@@ -23,7 +23,7 @@
     <string name="model_browser_label">Not türlerini belirle</string>
     <string name="model_editor_label">Alanları belirle</string>
     <!--Toasts-->
-    <string name="toast_last_model">Son modelinizi silemezsiniz</string>
+    <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Not türlerinin en az bir alanı olmak zorundadır</string>
     <string name="toast_empty_name">İsim girmeniz gerekiyor</string>
     <string name="toast_duplicate_field">Alan ismi zaten kullanılıyor</string>
@@ -46,7 +46,7 @@
     <string name="model_browser_template">Kartları düzenle</string>
     <string name="model_browser_add">Not türü ekle</string>
     <!--Rename-->
-    <string name="rename_model">Modelin adını değiştir</string>
+    <string name="rename_model">Rename note type</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Alanları düzenle</string>
     <string name="model_field_editor_add">Alan ekle</string>
@@ -59,7 +59,7 @@
     <string name="model_field_editor_sort_field">Bu alana göre sırala</string>
     <string name="model_clone_suffix">kopyası</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Bu modeli silmek istediğinize emin misiniz?</string>
+    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Bu alanı silmek istediğinize emin misiniz?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Ekle: %1$s </string>
