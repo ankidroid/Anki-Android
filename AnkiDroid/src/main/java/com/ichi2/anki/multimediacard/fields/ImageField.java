@@ -153,10 +153,18 @@ public class ImageField extends FieldBase implements IField {
 
     @Override
     public void setFormattedString(Collection col, String value) {
+        setImagePath(getImageFullPath(col, value));
+    }
+
+
+    @NonNull
+    @VisibleForTesting
+    String getImageFullPath(Collection col, String value) {
         String path = parseImageSrcFromHtml(value);
         String mediaDir = col.getMedia().dir() + "/";
-        setImagePath(mediaDir + path);
+        return mediaDir + path;
     }
+
 
     @VisibleForTesting
     @CheckResult
