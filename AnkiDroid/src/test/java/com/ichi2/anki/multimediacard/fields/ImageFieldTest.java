@@ -32,4 +32,40 @@ public class ImageFieldTest {
         String expected = "<img src=\"paste-abc.jpg\">";
         assertThat(actual, equalTo(expected));
     }
+
+    @Test
+    public void validImageParses() {
+        String goodImage = "<img src='img_202003291657428441724378214970132.png'/>";
+        String imageSrc = ImageField.parseImageSrcFromHtml(goodImage);
+        assertThat(imageSrc, equalTo("img_202003291657428441724378214970132.png"));
+    }
+
+    @Test
+    public void testImageSubstringParsing() {
+        //5874 - previously failed
+        String previouslyBadImage = "<img src='img_202003291657428441724378214970132.png'/>aaaa'/>";
+        String imageSrc = ImageField.parseImageSrcFromHtml(previouslyBadImage);
+        assertThat(imageSrc, equalTo("img_202003291657428441724378214970132.png"));
+    }
+
+    @Test
+    public void firstImageIsSelected() {
+        String goodImage = "<img src='1.png'/>aa<img src='2.png'/>";
+        String imageSrc = ImageField.parseImageSrcFromHtml(goodImage);
+        assertThat(imageSrc, equalTo("1.png"));
+    }
+
+    @Test
+    public void testNoImage() {
+        String knownBadImage = "<br />";
+        String imageSrc = ImageField.parseImageSrcFromHtml(knownBadImage);
+        assertThat(imageSrc, equalTo(""));
+    }
+
+    @Test
+    public void testEmptyImage() {
+        String knownBadImage = "<img />";
+        String imageSrc = ImageField.parseImageSrcFromHtml(knownBadImage);
+        assertThat(imageSrc, equalTo(""));
+    }
 }
