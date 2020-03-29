@@ -1,15 +1,21 @@
 package com.ichi2.anki.multimediacard.fields;
 
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Media;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import java.io.File;
 
+import androidx.annotation.CheckResult;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
 public class ImageFieldTest {
@@ -67,5 +73,35 @@ public class ImageFieldTest {
         String knownBadImage = "<img />";
         String imageSrc = ImageField.parseImageSrcFromHtml(knownBadImage);
         assertThat(imageSrc, equalTo(""));
+    }
+
+    @Test
+    public void testNoImagePathIsNothing() {
+        String knownBadImage = "<br />";
+        Collection col = collectionWithMediaFolder("media");
+
+        String imageSrc = ImageField.getImageFullPath(col, knownBadImage);
+
+        assertThat("no media should return no paths", imageSrc, equalTo(""));
+    }
+
+    @Test
+    public void testNoImagePathConcat() {
+        String goodImage = "<img src='1.png'/>";
+        Collection col = collectionWithMediaFolder("media");
+
+        String imageSrc = ImageField.getImageFullPath(col, goodImage);
+
+        assertThat("Valid media should have path", imageSrc, equalTo("media/1.png"));
+    }
+
+    @CheckResult
+    protected Collection collectionWithMediaFolder(String dir) {
+        Media media = mock(Media.class);
+        when(media.dir()).thenReturn(dir);
+
+        Collection collectionMock = mock(Collection.class);
+        when(collectionMock.getMedia()).thenReturn(media);
+        return collectionMock;
     }
 }
