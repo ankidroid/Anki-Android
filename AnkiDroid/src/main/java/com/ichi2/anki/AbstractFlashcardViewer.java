@@ -40,6 +40,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -96,6 +97,8 @@ import com.ichi2.libanki.template.Template;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
+import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.FunctionalInterfaces.Function;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,6 +114,9 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -335,6 +341,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /** Reference to the parent of the cardFrame to allow regeneration of the cardFrame in case of crash */
     private ViewGroup mCardFrameParent;
 
+    /** Lock to allow thread-safe regeneration of mCard */
+    private ReadWriteLock mCardLock = new ReentrantReadWriteLock();
+
     // private int zEase;
 
     // ----------------------------------------------------------------------------
@@ -445,16 +454,33 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         break;
                 }
             }
-            try {
-                if (event != null) {
-                    mCard.dispatchTouchEvent(event);
-                }
-            } catch (NullPointerException e) {
-                Timber.e(e, "Error on dispatching touch event");
-            }
+            //Gesture listener is added before mCard is set
+            processCardAction(card -> {
+                if (card == null) return;
+                card.dispatchTouchEvent(event);
+            });
             return false;
         }
     };
+
+    @SuppressLint("CheckResult")
+    private void processCardAction(Consumer<WebView> cardConsumer) {
+        processCardFunction(card -> {
+            cardConsumer.consume(card);
+            return true;
+        });
+    }
+
+    @CheckResult
+    private <T> T processCardFunction(Function<WebView, T> cardFunction) {
+        Lock readLock = mCardLock.readLock();
+        try {
+            readLock.lock();
+            return cardFunction.apply(mCard);
+        } finally {
+            readLock.unlock();
+        }
+    }
 
 
     protected DeckTask.TaskListener mDismissCardHandler = new NextCardHandler() { /* superclass is sufficient */ };
@@ -921,7 +947,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCardFrame != null) {
             mCardFrame.removeAllViews();
         }
-        destroyWebView(mCard);
+        destroyWebView(mCard); //OK to do without a lock
     }
 
 
@@ -937,7 +963,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return processHardwareButtonScroll(keyCode, mCard) || super.onKeyDown(keyCode, event);
+        if (processCardFunction(card -> processHardwareButtonScroll(keyCode, card))) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -1558,62 +1587,70 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             @Override
             @TargetApi(Build.VERSION_CODES.O)
             public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
+                Timber.i("Obtaining write lock for card");
+                Lock writeLock = mCardLock.writeLock();
+                Timber.i("Obtained write lock for card");
+                try {
+                    writeLock.lock();
+                    if (mCard == null || !mCard.equals(view)) {
+                        //A view crashed that wasn't ours.
+                        //We have nothing to handle. Returning false is a desire to crash, so return true.
+                        Timber.i("Unrelated WebView Renderer terminated. Crashed: %b",  detail.didCrash());
+                        return true;
+                    }
 
-                if (mCard == null || !mCard.equals(view)) {
-                    //A view crashed that wasn't ours.
-                    //We have nothing to handle. Returning false is a desire to crash, so return true.
-                    Timber.i("Unrelated WebView Renderer terminated. Crashed: %b",  detail.didCrash());
-                    return true;
+                    Timber.e("WebView Renderer process terminated. Crashed: %b",  detail.didCrash());
+
+                    //Destroy the current WebView (to ensure WebView is GCed).
+                    //Otherwise, we get the following error:
+                    //"crash wasn't handled by all associated webviews, triggering application crash"
+                    mCardFrame.removeAllViews();
+                    mCardFrameParent.removeView(mCardFrame);
+                    //destroy after removal from the view - produces logcat warnings otherwise
+                    destroyWebView(mCard);
+                    mCard = null;
+                    //inflate a new instance of mCardFrame
+                    mCardFrame = inflateNewView(R.id.flashcard);
+                    //Even with the above, I occasionally saw the above error. Manually trigger the GC.
+                    //I'll keep this line unless I see another crash, which would point to another underlying issue.
+                    System.gc();
+
+                    //We only want to show one message per branch.
+
+                    //It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
+                    int errorCauseId = detail.didCrash() ? R.string.webview_crash_unknown : R.string.webview_crash_oom;
+                    String errorCauseString = getResources().getString(errorCauseId);
+
+                    if (!canRecoverFromWebViewRendererCrash()) {
+                        Timber.e("Unrecoverable WebView Render crash");
+                        String errorMessage = getResources().getString(R.string.webview_crash_fatal, errorCauseString);
+                        UIUtils.showThemedToast(AbstractFlashcardViewer.this, errorMessage, false);
+                        finishWithoutAnimation();
+                        return true;
+                    }
+
+                    if (webViewRendererLastCrashedOnCard(mCurrentCard.getId())) {
+                        Timber.e("Web Renderer crash loop on card: %d", mCurrentCard.getId());
+                        displayRenderLoopDialog(mCurrentCard, detail);
+                        return true;
+                    }
+
+                    // If we get here, the error is non-fatal and we should re-render the WebView
+                    // This logic may need to be better defined. The card could have changed by the time we get here.
+                    lastCrashingCardId = mCurrentCard.getId();
+
+
+                    String nonFatalError = getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, nonFatalError, false);
+
+                    //we need to add at index 0 so gestures still go through.
+                    mCardFrameParent.addView(mCardFrame, 0);
+
+                    recreateWebView();
+                } finally {
+                    writeLock.unlock();
+                    Timber.d("Relinquished writeLock");
                 }
-
-                Timber.e("WebView Renderer process terminated. Crashed: %b",  detail.didCrash());
-
-                //Destroy the current WebView (to ensure WebView is GCed).
-                //Otherwise, we get the following error:
-                //"crash wasn't handled by all associated webviews, triggering application crash"
-                mCardFrame.removeAllViews();
-                mCardFrameParent.removeView(mCardFrame);
-                //destroy after removal from the view - produces logcat warnings otherwise
-                destroyWebView(mCard);
-                mCard = null;
-                //inflate a new instance of mCardFrame
-                mCardFrame = inflateNewView(R.id.flashcard);
-                //Even with the above, I occasionally saw the above error. Manually trigger the GC.
-                //I'll keep this line unless I see another crash, which would point to another underlying issue.
-                System.gc();
-
-                //We only want to show one message per branch.
-
-                //It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
-                int errorCauseId = detail.didCrash() ? R.string.webview_crash_unknown : R.string.webview_crash_oom;
-                String errorCauseString = getResources().getString(errorCauseId);
-
-                if (!canRecoverFromWebViewRendererCrash()) {
-                    Timber.e("Unrecoverable WebView Render crash");
-                    String errorMessage = getResources().getString(R.string.webview_crash_fatal, errorCauseString);
-                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, errorMessage, false);
-                    finishWithoutAnimation();
-                    return true;
-                }
-
-                if (webViewRendererLastCrashedOnCard(mCurrentCard.getId())) {
-                    Timber.e("Web Renderer crash loop on card: %d", mCurrentCard.getId());
-                    displayRenderLoopDialog(mCurrentCard, detail);
-                    return true;
-                }
-
-                // If we get here, the error is non-fatal and we should re-render the WebView
-                // This logic may need to be better defined. The card could have changed by the time we get here.
-                lastCrashingCardId = mCurrentCard.getId();
-
-
-                String nonFatalError = getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);
-                UIUtils.showThemedToast(AbstractFlashcardViewer.this, nonFatalError, false);
-
-                //we need to add at index 0 so gestures still go through.
-                mCardFrameParent.addView(mCardFrame, 0);
-
-                recreateWebView();
                 displayCardQuestion();
 
                 //We handled the crash and can continue.
@@ -1670,7 +1707,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /** Used to set the "javascript:" URIs for IPC */
     private void loadUrlInViewer(final String url) {
-        mCard.loadUrl(url);
+        processCardAction(card -> card.loadUrl(url));
     }
 
     private <T extends View> T inflateNewView(@IdRes int id) {
@@ -2117,9 +2154,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @param dy amount to be scrolled
      */
     public void scrollCurrentCardBy(int dy) {
-        if (dy != 0 && mCard.canScrollVertically(dy)) {
-            mCard.scrollBy(0, dy);
-        }
+        processCardAction(card -> {
+            if (dy != 0 && card.canScrollVertically(dy)) {
+                card.scrollBy(0, dy);
+            }
+        });
     }
 
 
@@ -2133,12 +2172,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         MotionEvent eDown = MotionEvent.obtain(SystemClock.uptimeMillis(),
                 SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, x, y,
                 1, 1, 0, 1, 1, 0, 0);
-        mCard.dispatchTouchEvent(eDown);
+        processCardAction(card -> card.dispatchTouchEvent(eDown));
 
         MotionEvent eUp = MotionEvent.obtain(eDown.getDownTime(),
                 SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, x, y,
                 1, 1, 0, 1, 1, 0, 0);
-        mCard.dispatchTouchEvent(eUp);
+        processCardAction(card -> card.dispatchTouchEvent(eUp));
+
     }
 
 
@@ -2172,30 +2212,30 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private void updateCard(String content) {
+    private void updateCard(final String newContent) {
         Timber.d("updateCard()");
 
         mUseTimerDynamicMS = 0;
 
         // Add CSS for font color and font size
         if (mCurrentCard == null) {
-            mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
+            processCardAction(card -> card.getSettings().setDefaultFontSize(calculateDynamicFontSize(newContent)));
         }
 
         if (sDisplayAnswer) {
-            addAnswerSounds(content);
+            addAnswerSounds(newContent);
         } else {
             // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
             // leaving the card (such as when edited)
             mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
-            mSoundPlayer.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
+            mSoundPlayer.addSounds(mBaseUrl, newContent, Sound.SOUNDS_QUESTION);
             if (mPrefUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
                 addAnswerSounds(mCurrentCard.a());
             }
         }
 
-        content = Sound.expandSounds(mBaseUrl, content);
+        String content = Sound.expandSounds(mBaseUrl, newContent);
 
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
@@ -2400,7 +2440,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public void fillFlashcard() {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
-        loadContentIntoCard(mCard, mCardContent.toString());
+        final String cardContent = mCardContent.toString();
+        processCardAction(card -> loadContentIntoCard(card, cardContent));
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
             switchTopBarVisibility(View.VISIBLE);
         }
@@ -2586,7 +2627,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private void selectAndCopyText() {
         try {
             KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
-            shiftPressEvent.dispatch(mCard);
+            processCardAction(shiftPressEvent::dispatch);
             shiftPressEvent.isShiftPressed();
             mIsSelecting = true;
         } catch (Exception e) {
