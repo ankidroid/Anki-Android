@@ -168,7 +168,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private TextView mActionBarTitle;
     private boolean mReloadRequired = false;
     private boolean mInMultiSelectMode = false;
-    private Set<Integer> mCheckedCardPositions = new LinkedHashSet<>();
+    private Set<Integer> mCheckedCardPositions = Collections.synchronizedSet(new LinkedHashSet<>());
     private int mLastSelectedPosition;
     @Nullable
     private Menu mActionBarMenu;
