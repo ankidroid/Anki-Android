@@ -1617,9 +1617,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 //Destroy the current WebView (to ensure WebView is GCed).
                 //Otherwise, we get the following error:
                 //"crash wasn't handled by all associated webviews, triggering application crash"
-                destroyWebView(mCard);
                 mCardFrame.removeAllViews();
                 mCardFrameParent.removeView(mCardFrame);
+                //destroy after removal from the view - produces logcat warnings otherwise
+                destroyWebView(mCard);
                 mCard = null;
                 //inflate a new instance of mCardFrame
                 mCardFrame = inflateNewView(R.id.flashcard);
