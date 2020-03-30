@@ -2392,15 +2392,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public void fillFlashcard() {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
-        if (mCard != null) {
-            CompatHelper.getCompat().setHTML5MediaAutoPlay(mCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
-            mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
-        }
+        loadContentIntoCard(mCard, mCardContent.toString());
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
             switchTopBarVisibility(View.VISIBLE);
         }
         if (!sDisplayAnswer) {
             updateForNewCard();
+        }
+    }
+
+
+    private void loadContentIntoCard(WebView card, String content) {
+        if (card != null) {
+            CompatHelper.getCompat().setHTML5MediaAutoPlay(card.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
+            card.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", content, "text/html", "utf-8", null);
         }
     }
 
