@@ -1717,7 +1717,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     @VisibleForTesting()
     @SuppressWarnings("unused")
     public void crashWebViewRenderer() {
-        mCard.loadUrl("chrome://crash");
+        loadUrlInViewer("chrome://crash");
+    }
+
+
+    /** Used to set the "javascript:" URIs for IPC */
+    private void loadUrlInViewer(final String url) {
+        mCard.loadUrl(url);
     }
 
     private <T extends View> T inflateNewView(@IdRes int id) {
@@ -3000,7 +3006,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCurrentCard == null) {
             return;
         }
-        mCard.loadUrl("javascript:_drawMark("+mCurrentCard.note().hasTag("marked")+");");
+        loadUrlInViewer("javascript:_drawMark("+mCurrentCard.note().hasTag("marked")+");");
     }
 
     protected void onMark(Card card) {
@@ -3022,7 +3028,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCurrentCard == null) {
             return;
         }
-        mCard.loadUrl("javascript:_drawFlag("+mCurrentCard.getUserFlag()+");");
+        loadUrlInViewer("javascript:_drawFlag("+mCurrentCard.getUserFlag()+");");
     }
 
     protected void onFlag(Card card, int flag) {
