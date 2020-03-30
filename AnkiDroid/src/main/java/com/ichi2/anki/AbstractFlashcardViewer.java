@@ -332,6 +332,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     @Nullable
     private Long lastCrashingCardId = null;
 
+    /** Reference to the parent of the cardFrame to allow regeneration of the cardFrame in case of crash */
+    private ViewGroup mCardFrameParent;
+
     // private int zEase;
 
     // ----------------------------------------------------------------------------
@@ -1291,6 +1294,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mTopBarLayout = (RelativeLayout) findViewById(R.id.top_bar);
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
+        mCardFrameParent = (ViewGroup) mCardFrame.getParent();
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
         if (!mDisableClipboard) {
@@ -1564,8 +1568,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 //Otherwise, we get the following error:
                 //"crash wasn't handled by all associated webviews, triggering application crash"
                 destroyWebView(mCard);
-                ViewGroup parent = (ViewGroup) mCardFrame.getParent();
-                parent.removeView(mCardFrame);
+                mCardFrameParent.removeView(mCardFrame);
                 mCard = null;
                 //inflate a new instance of mCardFrame
                 mCardFrame = inflateNewView(R.id.flashcard);
@@ -1601,7 +1604,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 String nonFatalError = getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, nonFatalError, false);
 
-                parent.addView(mCardFrame);
+                mCardFrameParent.addView(mCardFrame);
 
                 recreateWebView();
                 displayCardQuestion();
