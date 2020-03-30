@@ -1618,6 +1618,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 //Otherwise, we get the following error:
                 //"crash wasn't handled by all associated webviews, triggering application crash"
                 destroyWebView(mCard);
+                mCardFrame.removeAllViews();
                 mCardFrameParent.removeView(mCardFrame);
                 mCard = null;
                 //inflate a new instance of mCardFrame
