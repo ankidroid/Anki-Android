@@ -937,36 +937,36 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return handleHardwareScrollButtons(keyCode) || super.onKeyDown(keyCode, event);
+        return processHardwareButtonScroll(keyCode, mCard) || super.onKeyDown(keyCode, event);
     }
 
 
-    private boolean handleHardwareScrollButtons(int keyCode) {
+    private boolean processHardwareButtonScroll(int keyCode, WebView card) {
         if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
-            mCard.pageUp(false);
+            card.pageUp(false);
             if (mDoubleScrolling) {
-                mCard.pageUp(false);
+                card.pageUp(false);
             }
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_PAGE_DOWN) {
-            mCard.pageDown(false);
+            card.pageDown(false);
             if (mDoubleScrolling) {
-                mCard.pageDown(false);
+                card.pageDown(false);
             }
             return true;
         }
         if (mScrollingButtons && keyCode == KeyEvent.KEYCODE_PICTSYMBOLS) {
-            mCard.pageUp(false);
+            card.pageUp(false);
             if (mDoubleScrolling) {
-                mCard.pageUp(false);
+                card.pageUp(false);
             }
             return true;
         }
         if (mScrollingButtons && keyCode == KeyEvent.KEYCODE_SWITCH_CHARSET) {
-            mCard.pageDown(false);
+            card.pageDown(false);
             if (mDoubleScrolling) {
-                mCard.pageDown(false);
+                card.pageDown(false);
             }
             return true;
         }
