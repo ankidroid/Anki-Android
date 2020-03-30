@@ -1631,6 +1631,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         .title(res.getString(R.string.webview_crash_loop_dialog_title))
                         .content(res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
                         .positiveText(R.string.dialog_ok)
+                        .cancelable(false)
+                        .canceledOnTouchOutside(false)
                         .onPositive((materialDialog, dialogAction) -> finishWithoutAnimation())
                         .show();
             }
