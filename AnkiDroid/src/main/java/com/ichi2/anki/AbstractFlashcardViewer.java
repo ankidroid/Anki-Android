@@ -937,7 +937,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // Hardware buttons for scrolling
+        return handleHardwareScrollButtons(keyCode) || super.onKeyDown(keyCode, event);
+    }
+
+
+    private boolean handleHardwareScrollButtons(int keyCode) {
         if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
             mCard.pageUp(false);
             if (mDoubleScrolling) {
@@ -966,7 +970,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
             return true;
         }
-        return super.onKeyDown(keyCode, event);
+        return false;
     }
 
 
