@@ -1656,7 +1656,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 String nonFatalError = getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, nonFatalError, false);
 
-                mCardFrameParent.addView(mCardFrame);
+                //we need to add at index 0 so gestures still go through.
+                mCardFrameParent.addView(mCardFrame, 0);
 
                 recreateWebView();
                 displayCardQuestion();
