@@ -1567,7 +1567,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 ViewGroup parent = (ViewGroup) mCardFrame.getParent();
                 parent.removeView(mCardFrame);
                 mCard = null;
-                mCardFrame = null;
+                //inflate a new instance of mCardFrame
+                mCardFrame = inflateNewView(R.id.flashcard);
                 //Even with the above, I occasionally saw the above error. Manually trigger the GC.
                 //I'll keep this line unless I see another crash, which would point to another underlying issue.
                 System.gc();
@@ -1600,8 +1601,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 String nonFatalError = getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, nonFatalError, false);
 
-                //inflate a new instance of mCardFrame
-                mCardFrame = inflateNewView(R.id.flashcard);
                 parent.addView(mCardFrame);
 
                 recreateWebView();
