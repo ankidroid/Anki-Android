@@ -1675,11 +1675,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
     private void destroyWebView(WebView webView) {
-        if (webView != null) {
-            webView.stopLoading();
-            webView.setWebChromeClient(null);
-            webView.setWebViewClient(null);
-            webView.destroy();
+        try {
+            if (webView != null) {
+                webView.stopLoading();
+                webView.setWebChromeClient(null);
+                webView.setWebViewClient(null);
+                webView.destroy();
+            }
+        } catch (NullPointerException npe) {
+            Timber.e(npe, "WebView became null on destruction");
         }
     }
 
