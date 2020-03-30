@@ -1662,7 +1662,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     @VisibleForTesting()
     @SuppressWarnings("unused")
     public void crashWebViewRenderer() {
-        mCard.loadUrl("chrome://crash");
+        loadUrlInViewer("chrome://crash");
+    }
+
+
+    /** Used to set the "javascript:" URIs for IPC */
+    private void loadUrlInViewer(final String url) {
+        mCard.loadUrl(url);
     }
 
     private <T extends View> T inflateNewView(@IdRes int id) {
