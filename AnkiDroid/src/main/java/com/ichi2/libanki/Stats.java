@@ -138,7 +138,7 @@ public class Stats {
                 "sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end), "+ /* learning */
                 "sum(case when type = Consts.CARD_TYPE_LRN then 1 else 0 end), "+ /* review */
                 "sum(case when type = " + Consts.CARD_TYPE_REV + " then 1 else 0 end), "+ /* relearn */
-                "sum(case when type = 3 then 1 else 0 end) "+ /* filter */
+                "sum(case when type = " + Consts.CARD_TYPE_RELEARNING + " then 1 else 0 end) "+ /* filter */
                 "from revlog where id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query: %s", query);
 
@@ -544,7 +544,7 @@ public class Stats {
                 + "sum(CASE WHEN type = Consts.CARD_TYPE_LRN AND lastIvl >= 21 THEN " + ti + " ELSE 0 END)" + tf
                 + ", " // mtr
                 + "sum(CASE WHEN type = 2 THEN " + ti + " ELSE 0 END)" + tf + ", " // lapse
-                + "sum(CASE WHEN type = 3 THEN " + ti + " ELSE 0 END)" + tf // cram
+                + "sum(CASE WHEN type = " + Consts.CARD_TYPE_RELEARNING + " THEN " + ti + " ELSE 0 END)" + tf // cram
                 + " FROM revlog " + lim + " GROUP BY day ORDER BY day";
 
         Timber.d("ReviewCount query: %s", query);
