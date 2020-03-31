@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.OpenableColumns;
@@ -47,12 +48,24 @@ public class ImportUtils {
         String errorMessage = null;
 
         if (intent.getData() == null) {
-            return context.getString(R.string.import_error_unhandled_request);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN || intent.getClipData() == null) {
+                return context.getString(R.string.import_error_unhandled_request);
+            }
+            try {
+                Uri clipUri = intent.getClipData().getItemAt(0).getUri();
+                return handleContentProviderFile(context, intent, clipUri);
+            } catch (Exception e) {
+                return context.getString(R.string.import_error_exception, e.getLocalizedMessage());
+            }
         }
 
         // If the file is being sent from a content provider we need to read the content before we can open the file
         if ("content".equals(intent.getData().getScheme())) {
-            return handleContentProviderFile(context, intent, intent.getData());
+            try {
+                return handleContentProviderFile(context, intent, intent.getData());
+            } catch (Exception e) {
+                return context.getString(R.string.import_error_exception, e.getLocalizedMessage());
+            }
         } else if ("file".equals(intent.getData().getScheme())) {
             // When the VIEW intent is sent as a file, we can open it directly without copying from content provider
             String filename = intent.getData().getPath();
