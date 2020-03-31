@@ -69,7 +69,6 @@ import java.util.Set;
                     "PMD.MethodNamingConventions"})
 public class Card implements Cloneable {
 
-    public static final int TYPE_NEW = 0;
     public static final int TYPE_LRN = 1;
     public static final int TYPE_REV = 2;
 
@@ -127,7 +126,7 @@ public class Card implements Cloneable {
             // to flush, set nid, ord, and due
             mId = Utils.timestampID(mCol.getDb(), "cards");
             mDid = 1;
-            mType = 0;
+            mType = Consts.CARD_TYPE_NEW;
             mQueue = Consts.QUEUE_TYPE_NEW;
             mIvl = 0;
             mFactor = 0;
@@ -709,7 +708,7 @@ public class Card implements Cloneable {
             return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card);
         } else if (getQueue() == Consts.QUEUE_TYPE_LRN) {
             date = due;
-        } else if (getQueue() == Consts.QUEUE_TYPE_NEW || getType() == 0) {
+        } else if (getQueue() == Consts.QUEUE_TYPE_NEW || getType() == Consts.CARD_TYPE_NEW) {
             return (new Long(due)).toString();
         } else if (getQueue() == Consts.QUEUE_TYPE_REV || getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || (getType() == 2 && getQueue() < 0)) {
             long time = System.currentTimeMillis() / 1000L;

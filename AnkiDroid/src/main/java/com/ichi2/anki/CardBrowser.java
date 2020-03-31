@@ -1018,7 +1018,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // Only new cards may be repositioned
                 long[] cardIds = getSelectedCardIds();
                 for (int i = 0; i < cardIds.length; i++) {
-                    if (getCol().getCard(cardIds[i]).getQueue() != Card.TYPE_NEW) {
+                    if (getCol().getCard(cardIds[i]).getQueue() != Consts.CARD_TYPE_NEW) {
                         SimpleMessageDialog dialog = SimpleMessageDialog.newInstance(
                                 getString(R.string.vague_error),
                                 getString(R.string.reposition_card_not_new_error),
@@ -1393,7 +1393,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put("answer", formatQA(a));
         item.put("card", c.template().optString("name"));
         item.put("due", c.getDueString());
-        if (c.getType() == 0) {
+        if (c.getType() == Consts.CARD_TYPE_NEW) {
             item.put("ease", context.getString(R.string.card_browser_ease_new_card));
         } else {
             item.put("ease", (c.getFactor()/10)+"%");
@@ -1404,7 +1404,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put("edited", LanguageUtil.getShortDateFormatFromS(c.note().getMod()));
         // interval
         int type = c.getType();
-        if (type == 0) {
+        if (type == Consts.CARD_TYPE_NEW) {
             item.put("interval", context.getString(R.string.card_browser_interval_new_card));
         } else if (type == 1) {
             item.put("interval", context.getString(R.string.card_browser_interval_learning_card));

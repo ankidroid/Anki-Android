@@ -153,13 +153,13 @@ public class Sched {
         _burySiblings(card);
         card.setReps(card.getReps() + 1);
         // former is for logging new cards, latter also covers filt. decks
-        card.setWasNew((card.getType() == 0));
+        card.setWasNew((card.getType() == Consts.CARD_TYPE_NEW));
         boolean wasNewQ = (card.getQueue() == Consts.QUEUE_TYPE_NEW);
         if (wasNewQ) {
             // came from the new queue, move to learning
             card.setQueue(Consts.QUEUE_TYPE_LRN);
             // if it was a new card, it's now a learning card
-            if (card.getType() == 0) {
+            if (card.getType() == Consts.CARD_TYPE_NEW) {
                 card.setType(Consts.QUEUE_TYPE_LRN);
             }
             // init reps to graduation
@@ -241,7 +241,7 @@ public class Sched {
             }
             JSONObject conf = _lrnConf(card);
             try {
-                if (card.getType() == 0 || card.getType() == 1 || conf.getJSONArray("delays").length() > 1) {
+                if (card.getType() == Consts.CARD_TYPE_NEW || card.getType() == 1 || conf.getJSONArray("delays").length() > 1) {
                     return 3;
                 }
             } catch (JSONException e) {
@@ -888,7 +888,7 @@ public class Sched {
         } else if (card.getType() == 2) {
             type = 2;
         } else {
-            type = 0;
+            type = Consts.CARD_TYPE_NEW;
         }
         boolean leaving = false;
         // lrnCount was decremented once when card was fetched
@@ -1014,7 +1014,7 @@ public class Sched {
             card.setODid(0);
             // if rescheduling is off, it needs to be set back to a new card
             if (!resched && !lapse) {
-                card.setType(0);
+                card.setType(Consts.CARD_TYPE_NEW);
                 card.setQueue(card.getType());
                 card.setDue(mCol.nextID("pos"));
             }
@@ -1591,7 +1591,7 @@ public class Sched {
         // move out of cram queue
         mCol.getDb().execute(
                 "update cards set did = odid, queue = (case when type = 1 then " + Consts.QUEUE_TYPE_NEW + " " +
-                "else type end), type = (case when type = 1 then 0 else type end), " +
+                "else type end), type = (case when type = 1 then " + Consts.CARD_TYPE_NEW + " else type end), " +
                 "due = odue, odue = 0, odid = 0, usn = ? where " + lim,
                 new Object[] { mCol.usn() });
     }
@@ -2154,9 +2154,9 @@ public class Sched {
     /** Put cards at the end of the new queue. */
     public void forgetCards(long[] ids) {
         remFromDyn(ids);
-        mCol.getDb().execute("update cards set type=0,queue=" + Consts.QUEUE_TYPE_NEW + ",ivl=0,due=0,odue=0,factor=" + Consts.STARTING_FACTOR +
+        mCol.getDb().execute("update cards set type=" + Consts.CARD_TYPE_NEW + ",queue=" + Consts.QUEUE_TYPE_NEW + ",ivl=0,due=0,odue=0,factor=" + Consts.STARTING_FACTOR +
                 " where id in " + Utils.ids2str(ids));
-        int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0");
+        int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=" + Consts.CARD_TYPE_NEW + "");
         // takes care of mod + usn
         sortCards(ids, pmax + 1);
         mCol.log(ids);
@@ -2192,7 +2192,7 @@ public class Sched {
      */
     public void resetCards(Long[] ids) {
         long[] nonNew = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, String.format(Locale.US,
-                "select id from cards where id in %s and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != 0)", Utils.ids2str(ids)), 0));
+                "select id from cards where id in %s and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")", Utils.ids2str(ids)), 0));
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
         mCol.log((Object[]) ids);
@@ -2235,7 +2235,7 @@ public class Sched {
         // shift?
         if (shift) {
             int low = mCol.getDb().queryScalar(
-                    "SELECT min(due) FROM cards WHERE due >= " + start + " AND type = 0 AND id NOT IN " + scids);
+                    "SELECT min(due) FROM cards WHERE due >= " + start + " AND type = " + Consts.CARD_TYPE_NEW + " AND id NOT IN " + scids);
             if (low != 0) {
                 int shiftby = high - low + 1;
                 mCol.getDb().execute(
@@ -2248,7 +2248,7 @@ public class Sched {
         Cursor cur = null;
         try {
             cur = mCol.getDb().getDatabase()
-                    .query("SELECT id, nid FROM cards WHERE type = 0 AND id IN " + scids, null);
+                    .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids, null);
             while (cur.moveToNext()) {
                 long nid = cur.getLong(1);
                 d.add(new Object[] { due.get(nid), now, mCol.usn(), cur.getLong(0) });
@@ -2408,7 +2408,7 @@ public class Sched {
                         .getDb()
                         .getDatabase()
                         .query("select "
-                                + "avg(case when type = 0 then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = 0 then time else null end) as newTime, "
+                                + "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, "
                                 + "avg(case when type in (1, 3) then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (1, 3) then time else null end) as revTime, "
                                 + "avg(case when type = 2 then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = 2 then time else null end) as relrnTime "
                                 + "from revlog where id > "

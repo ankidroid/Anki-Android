@@ -799,7 +799,7 @@ public class ContentProviderTest {
         long cardId = card.getId();
 
         // the card starts out being new
-        assertEquals("card is initial new", Card.TYPE_NEW, card.getQueue());
+        assertEquals("card is initial new", Consts.CARD_TYPE_NEW, card.getQueue());
 
         ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;

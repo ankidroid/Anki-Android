@@ -38,6 +38,7 @@ public class Consts {
     public static final int QUEUE_TYPE_PREVIEW = 4;
 
     // Card types
+    public static final int CARD_TYPE_NEW = 0;
 
     // removal types
     public static final int REM_CARD = 0;

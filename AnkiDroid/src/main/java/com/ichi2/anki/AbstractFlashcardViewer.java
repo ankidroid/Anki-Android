@@ -2022,7 +2022,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         switch (mSched.countIdx(mCurrentCard)) {
-            case Card.TYPE_NEW:
+            case Consts.CARD_TYPE_NEW:
                 newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
                 break;
             case Card.TYPE_LRN:

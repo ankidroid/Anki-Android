@@ -411,7 +411,7 @@ public class Finder {
                 } else if (type.startsWith("cardDue")) {
                     sort = "c.type, c.due";
                 } else if (type.startsWith("cardEase")) {
-                    sort = "c.type == 0, c.factor";
+                    sort = "c.type == " + Consts.CARD_TYPE_NEW + ", c.factor";
                 } else if (type.startsWith("cardLapses")) {
                     sort = "c.lapses";
                 } else if (type.startsWith("cardIvl")) {

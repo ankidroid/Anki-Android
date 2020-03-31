@@ -750,7 +750,7 @@ public class Collection {
                 if (odid != 0) {
                     due = odue;
                 }
-                if (!dues.containsKey(nid) && type == 0) {
+                if (!dues.containsKey(nid) && type == Consts.CARD_TYPE_NEW) {
                     dues.put(nid, due);
                 }
             }
@@ -847,7 +847,7 @@ public class Collection {
 
     public List<Card> previewCards(Note note, int type, int did) {
 	    ArrayList<JSONObject> cms = null;
-	    if (type == 0) {
+	    if (type == Consts.CARD_TYPE_NEW) {
 	        cms = findTemplates(note);
 	    } else if (type == 1) {
 	        cms = new ArrayList<>();
@@ -1759,7 +1759,7 @@ public class Collection {
         Timber.d("resetNewCardInsertionPosition");
         notifyProgress.run();
         // new card position
-        mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
+        mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = Consts.CARD_TYPE_NEW"));
         return Collections.emptyList();
     }
 
@@ -1769,7 +1769,7 @@ public class Collection {
         // new cards can't have a due position > 32 bits
         notifyProgress.run();
         mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
-                + " WHERE due > 1000000 AND type = 0");
+                + " WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW);
         return Collections.emptyList();
     }
 

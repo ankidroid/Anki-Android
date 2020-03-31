@@ -707,7 +707,7 @@ public class Anki2Importer extends Importer {
             }
             // make sure new position is correct
             mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar(
-                    "select max(due)+1 from cards where type = 0"));
+                    "select max(due)+1 from cards where type = " + Consts.CARD_TYPE_NEW));
             mDst.save();
         } catch (JSONException e) {
             throw new RuntimeException(e);
