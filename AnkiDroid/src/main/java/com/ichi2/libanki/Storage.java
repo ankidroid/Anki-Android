@@ -177,7 +177,7 @@ public class Storage {
                 col.getDb().execute("UPDATE col SET ver = 9");
             }
             if (ver < 10) {
-                col.getDb().execute("UPDATE cards SET left = left + left * 1000 WHERE queue = 1");
+                col.getDb().execute("UPDATE cards SET left = left + left * 1000 WHERE queue = " + Consts.QUEUE_TYPE_LRN);
                 col.getDb().execute("UPDATE col SET ver = 10");
             }
             if (ver < 11) {

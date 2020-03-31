@@ -157,10 +157,10 @@ public class Sched {
         boolean wasNewQ = (card.getQueue() == Consts.QUEUE_TYPE_NEW);
         if (wasNewQ) {
             // came from the new queue, move to learning
-            card.setQueue(1);
+            card.setQueue(Consts.QUEUE_TYPE_LRN);
             // if it was a new card, it's now a learning card
             if (card.getType() == 0) {
-                card.setType(1);
+                card.setType(Consts.QUEUE_TYPE_LRN);
             }
             // init reps to graduation
             card.setLeft(_startingLeft(card));
@@ -174,7 +174,7 @@ public class Sched {
             }
             _updateStats(card, "new");
         }
-        if (card.getQueue() == 1 || card.getQueue() == 3) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == 3) {
             _answerLrnCard(card, ease);
             if (!wasNewQ) {
                 _updateStats(card, "lrn");
@@ -743,7 +743,7 @@ public class Sched {
         // sub-day
         mLrnCount = mCol.getDb().queryScalar(
                 "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did IN " + _deckLimit()
-                + " AND queue = 1 AND due < " + mDayCutoff + " LIMIT " + mReportLimit + ")");
+                + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < " + mDayCutoff + " LIMIT " + mReportLimit + ")");
 
         // day
         mLrnCount += mCol.getDb().queryScalar(
@@ -775,7 +775,7 @@ public class Sched {
                     .getDb()
                     .getDatabase()
                     .query(
-                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = 1 AND due < "
+                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < "
                                     + mDayCutoff + " LIMIT " + mReportLimit, null);
             while (cur.moveToNext()) {
                 mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
@@ -943,7 +943,7 @@ public class Sched {
                 // if the queue is not empty and there's nothing else to do, make
                 // sure we don't put it at the head of the queue and end up showing
                 // it twice in a row
-                card.setQueue(1);
+                card.setQueue(Consts.QUEUE_TYPE_LRN);
                 if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
                     long smallestDue = mLrnQueue.getFirst()[0];
                     card.setDue(Math.max(card.getDue(), smallestDue + 1));
@@ -1156,9 +1156,9 @@ public class Sched {
         // review cards in relearning
         mCol.getDb().execute(
                 "update cards set due = odue, queue = 2, mod = " + Utils.intTime() +
-                ", usn = " + mCol.usn() + ", odue = 0 where queue IN (1,3) and type = 2 " + extra);
+                ", usn = " + mCol.usn() + ", odue = 0 where queue IN (" + Consts.QUEUE_TYPE_LRN + ",3) and type = 2 " + extra);
         // new cards in learning
-        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE queue IN (1,3) " + extra, 0)));
+        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE queue IN (" + Consts.QUEUE_TYPE_LRN + ",3) " + extra, 0)));
     }
 
 
@@ -1166,7 +1166,7 @@ public class Sched {
         try {
             int cnt = mCol.getDb().queryScalar(
                     "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = " + did
-                            + " AND queue = 1 AND due < " + (Utils.intTime() + mCol.getConf().getInt("collapseTime"))
+                            + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < " + (Utils.intTime() + mCol.getConf().getInt("collapseTime"))
                             + " LIMIT " + mReportLimit + ")");
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did
@@ -1369,7 +1369,7 @@ public class Sched {
             // queue 1
             if (card.getDue() < mDayCutoff) {
                 mLrnCount += card.getLeft() / 1000;
-                card.setQueue(1);
+                card.setQueue(Consts.QUEUE_TYPE_LRN);
                 _sortIntoLrn(card.getDue(), card.getId());
             } else {
                 // day learn queue
@@ -1999,7 +1999,7 @@ public class Sched {
      */
     public long nextIvl(Card card, int ease) {
         try {
-            if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == 1 || card.getQueue() == 3) {
+            if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == 3) {
                 return _nextLrnIvl(card, ease);
             } else if (ease == 1) {
                 // lapsed
@@ -2498,7 +2498,7 @@ public class Sched {
         case Consts.QUEUE_TYPE_NEW:
             mNewCount--;
             break;
-        case 1:
+        case Consts.QUEUE_TYPE_LRN:
             mLrnCount -= card.getLeft() / 1000;
             break;
         case 2:

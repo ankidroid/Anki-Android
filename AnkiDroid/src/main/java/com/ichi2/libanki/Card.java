@@ -707,7 +707,7 @@ public class Card implements Cloneable {
         long due = getDue();
         if (getODid() != 0) {
             return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card);
-        } else if (getQueue() == 1) {
+        } else if (getQueue() == Consts.QUEUE_TYPE_LRN) {
             date = due;
         } else if (getQueue() == Consts.QUEUE_TYPE_NEW || getType() == 0) {
             return (new Long(due)).toString();
