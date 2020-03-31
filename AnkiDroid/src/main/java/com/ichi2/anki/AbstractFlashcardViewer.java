@@ -2028,7 +2028,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             case Consts.CARD_TYPE_LRN:
                 lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
                 break;
-            case Card.TYPE_REV:
+            case Consts.CARD_TYPE_REV:
                 revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
                 break;
             default:

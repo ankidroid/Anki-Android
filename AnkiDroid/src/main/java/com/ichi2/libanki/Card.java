@@ -709,7 +709,7 @@ public class Card implements Cloneable {
             date = due;
         } else if (getQueue() == Consts.QUEUE_TYPE_NEW || getType() == Consts.CARD_TYPE_NEW) {
             return (new Long(due)).toString();
-        } else if (getQueue() == Consts.QUEUE_TYPE_REV || getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || (getType() == 2 && getQueue() < 0)) {
+        } else if (getQueue() == Consts.QUEUE_TYPE_REV || getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || (getType() == Consts.CARD_TYPE_REV && getQueue() < 0)) {
             long time = System.currentTimeMillis() / 1000L;
             long nbDaySinceCreation = (due - getCol().getSched().getToday());
             date = time + (nbDaySinceCreation * 86400L);
@@ -727,6 +727,6 @@ public class Card implements Cloneable {
     }
 
     public boolean isReview() {
-        return this.getType() == 2 && this.getQueue() == Consts.QUEUE_TYPE_REV;
+        return this.getType() == Consts.CARD_TYPE_REV && this.getQueue() == Consts.QUEUE_TYPE_REV;
     }
 }

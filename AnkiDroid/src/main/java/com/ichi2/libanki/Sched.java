@@ -165,7 +165,7 @@ public class Sched {
             // init reps to graduation
             card.setLeft(_startingLeft(card));
             // dynamic?
-            if (card.getODid() != 0 && card.getType() == 2) {
+            if (card.getODid() != 0 && card.getType() == Consts.CARD_TYPE_REV) {
                 if (_resched(card)) {
                     // reviews get their ivl boosted on first sight
                     card.setIvl(_dynIvlBoost(card));
@@ -885,8 +885,8 @@ public class Sched {
         int type;
         if (card.getODid() != 0 && !card.getWasNew()) {
             type = 3;
-        } else if (card.getType() == 2) {
-            type = 2;
+        } else if (card.getType() == Consts.CARD_TYPE_REV) {
+            type = Consts.CARD_TYPE_REV;
         } else {
             type = Consts.CARD_TYPE_NEW;
         }
@@ -984,7 +984,7 @@ public class Sched {
 
 
     private JSONObject _lrnConf(Card card) {
-        if (card.getType() == 2) {
+        if (card.getType() == Consts.CARD_TYPE_REV) {
             return _lapseConf(card);
         } else {
             return _newConf(card);
@@ -993,7 +993,7 @@ public class Sched {
 
 
     private void _rescheduleAsRev(Card card, JSONObject conf, boolean early) {
-        boolean lapse = (card.getType() == 2);
+        boolean lapse = (card.getType() == Consts.CARD_TYPE_REV);
         if (lapse) {
             if (_resched(card)) {
                 card.setDue(Math.max(mToday + 1, card.getODue()));
@@ -1005,7 +1005,7 @@ public class Sched {
             _rescheduleNew(card, conf, early);
         }
         card.setQueue(Consts.QUEUE_TYPE_REV);
-        card.setType(2);
+        card.setType(Consts.CARD_TYPE_REV);
         // if we were dynamic, graduating means moving back to the old deck
         boolean resched = _resched(card);
         if (card.getODid() != 0) {
@@ -1025,7 +1025,7 @@ public class Sched {
     private int _startingLeft(Card card) {
         try {
             JSONObject conf;
-        	if (card.getType() == 2) {
+        	if (card.getType() == Consts.CARD_TYPE_REV) {
         		conf = _lapseConf(card);
         	} else {
         		conf = _lrnConf(card);
@@ -1072,7 +1072,7 @@ public class Sched {
 
 
     private int _graduatingIvl(Card card, JSONObject conf, boolean early, boolean adj) {
-        if (card.getType() == 2) {
+        if (card.getType() == Consts.CARD_TYPE_REV) {
             // lapsed card being relearnt
             if (card.getODid() != 0) {
                 try {
@@ -1156,7 +1156,7 @@ public class Sched {
         // review cards in relearning
         mCol.getDb().execute(
                 "update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", mod = " + Utils.intTime() +
-                ", usn = " + mCol.usn() + ", odue = 0 where queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type = 2 " + extra);
+                ", usn = " + mCol.usn() + ", odue = 0 where queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type = " + Consts.CARD_TYPE_REV + " " + extra);
         // new cards in learning
         forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " + extra, 0)));
     }
@@ -1659,7 +1659,7 @@ public class Sched {
             data.add(new Object[] { did, -100000 + c, u, ids.get((int) c) });
         }
         // due reviews stay in the review queue. careful: can't use "odid or did", as sqlite converts to boolean
-        String queue = "(CASE WHEN type = 2 AND (CASE WHEN odue THEN odue <= " + mToday +
+        String queue = "(CASE WHEN type = " + Consts.CARD_TYPE_REV + " AND (CASE WHEN odue THEN odue <= " + mToday +
                 " ELSE due <= " + mToday + " END) THEN " + Consts.QUEUE_TYPE_REV + " ELSE " + Consts.QUEUE_TYPE_NEW + " END)";
         mCol.getDb().executeMany(
                 "UPDATE cards SET odid = (CASE WHEN odid THEN odid ELSE did END), " +
@@ -1669,7 +1669,7 @@ public class Sched {
 
 
     private int _dynIvlBoost(Card card) {
-        if (card.getODid() == 0 || card.getType() != 2 || card.getFactor() == 0) {
+        if (card.getODid() == 0 || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
             Timber.e("error: deck is not a filtered deck");
             return 0;
         }
@@ -2181,7 +2181,7 @@ public class Sched {
         }
         remFromDyn(ids);
         mCol.getDb().executeMany(
-                "update cards set type=2,queue=" + Consts.QUEUE_TYPE_REV + ",ivl=?,due=?,odue=0, " +
+                "update cards set type=" + Consts.CARD_TYPE_REV + ",queue=" + Consts.QUEUE_TYPE_REV + ",ivl=?,due=?,odue=0, " +
                         "usn=?,mod=?,factor=? where id=?", d);
         mCol.log(ids);
     }
@@ -2410,7 +2410,7 @@ public class Sched {
                         .query("select "
                                 + "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, "
                                 + "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", 3) then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (1, 3) then time else null end) as revTime, "
-                                + "avg(case when type = 2 then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = 2 then time else null end) as relrnTime "
+                                + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
                                 + "from revlog where id > "
                                 + ((mCol.getSched().getDayCutoff() - (10 * 86400)) * 1000), null);
                 if (!cur.moveToFirst()) {
