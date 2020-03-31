@@ -360,9 +360,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private long[] getSelectedCardIds() {
-        long[] ids = new long[mCheckedCardPositions.size()];
+        //copy to array to ensure threadsafe iteration
+        Integer[] checkedPositions = mCheckedCardPositions.toArray(new Integer[0]);
+        long[] ids = new long[checkedPositions.length];
         int count = 0;
-        for (int cardPosition : mCheckedCardPositions) {
+        for (int cardPosition : checkedPositions) {
             ids[count++] = Long.valueOf(mCards.get(cardPosition).get("id"));
         }
         return ids;
