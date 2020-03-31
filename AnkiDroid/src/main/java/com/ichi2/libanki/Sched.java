@@ -1015,7 +1015,7 @@ public class Sched {
             // if rescheduling is off, it needs to be set back to a new card
             if (!resched && !lapse) {
                 card.setType(Consts.CARD_TYPE_NEW);
-                card.setQueue(card.getType());
+                card.setQueue(Consts.QUEUE_TYPE_NEW);
                 card.setDue(mCol.nextID("pos"));
             }
         }
