@@ -262,12 +262,12 @@ public class Sched {
     public void unburyCards() {
         try {
             mCol.getConf().put("lastUnburied", mToday);
-            mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = -2", 0));
+            mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = "+ Consts.QUEUE_TYPE_SIBLING_BURIED , 0));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
 
-        mCol.getDb().execute("update cards set queue=type where queue = -2");
+        mCol.getDb().execute("update cards set queue=type where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED);
     }
 
 
@@ -278,8 +278,8 @@ public class Sched {
     private void unburyCardsForDeck(List<Long> allDecks) {
         // Refactored to allow unburying an arbitrary deck
         String sids = Utils.ids2str(allDecks);
-        mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = -2 and did in " + sids, 0));
-        mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = -2 and did in " + sids,
+        mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids, 0));
+        mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids,
                 new Object[] { Utils.intTime(), mCol.usn() });
     }
 
@@ -1955,7 +1955,7 @@ public class Sched {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
         int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
-                "select 1 from cards where queue = -2 and did in %s limit 1", sdids));
+                "select 1 from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in %s limit 1", sdids));
         return cnt != 0;
     }
 
@@ -2084,7 +2084,7 @@ public class Sched {
         mCol.log(cids);
         remFromDyn(cids);
         removeLrn(cids);
-        mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(cids),
+        mCol.getDb().execute("update cards set queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + ",mod=?,usn=? where id in " + Utils.ids2str(cids),
                 new Object[]{Utils.now(), mCol.usn()});
     }
 
@@ -2140,7 +2140,7 @@ public class Sched {
         }
         // then bury
         if (toBury.size() > 0) {
-            mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(toBury),
+            mCol.getDb().execute("update cards set queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + ",mod=?,usn=? where id in " + Utils.ids2str(toBury),
                     new Object[] { Utils.now(), mCol.usn() });
             mCol.log(toBury);
         }

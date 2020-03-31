@@ -765,7 +765,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             if(type == DismissType.SUSPEND_NOTE && queue != Card.QUEUE_SUSP) {
                 return true;
             } else if (type == DismissType.BURY_NOTE &&
-                    queue != Card.QUEUE_SUSP && queue != Card.QUEUE_USER_BRD && queue != Consts.QUEUE_TYPE_MANUALLY_BURIED) {
+                    queue != Card.QUEUE_SUSP && queue != Consts.QUEUE_TYPE_SIBLING_BURIED && queue != Consts.QUEUE_TYPE_MANUALLY_BURIED) {
                 return true;
             }
         }

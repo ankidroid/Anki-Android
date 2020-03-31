@@ -465,7 +465,7 @@ public class Finder {
         } else if ("suspended".equals(val)) {
             return "c.queue = -1";
         } else if ("buried".equals(val)) {
-            return "c.queue = -2";
+            return "c.queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
         } else if ("due".equals(val)) {
             return "(c.queue in (2,3) and c.due <= " + mCol.getSched().getToday() +
                     ") or (c.queue = 1 and c.due <= " + mCol.getSched().getDayCutoff() + ")";

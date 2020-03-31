@@ -2069,7 +2069,7 @@ public class SchedV2 extends Sched {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
         int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
-                "select 1 from cards where queue = -2 and did in %s limit 1", sdids));
+                "select 1 from cards where queue = Consts.QUEUE_TYPE_SIBLING_BURIED and did in %s limit 1", sdids));
         return cnt != 0;
     }
 
@@ -2237,7 +2237,7 @@ public class SchedV2 extends Sched {
 
 
     public void buryCards(long[] cids, boolean manual) {
-        int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : -2;
+        int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : Consts.QUEUE_TYPE_SIBLING_BURIED;
         mCol.log(cids);
         mCol.getDb().execute("update cards set queue=?,mod=?,usn=? where id in " + Utils.ids2str(cids),
                 new Object[]{queue, Utils.now(), mCol.usn()});
@@ -2248,8 +2248,8 @@ public class SchedV2 extends Sched {
      * Unbury all buried cards in all decks
      */
     public void unburyCards() {
-        mCol.log(mCol.getDb().queryColumn( Long.class,"select id from cards where queue in (-2, " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")", 0));
-        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where queue in (-2, " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")");
+        mCol.log(mCol.getDb().queryColumn( Long.class,"select id from cards where queue in (Consts.QUEUE_TYPE_SIBLING_BURIED, " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")", 0));
+        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where queue in (Consts.QUEUE_TYPE_SIBLING_BURIED, " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")");
     }
 
 
@@ -2265,11 +2265,11 @@ public class SchedV2 extends Sched {
     public void unburyCardsForDeck(String type, List<Long> allDecks) {
         String queue;
         if ("all".equals(type)) {
-            queue = "queue in (-2, " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")";
+            queue = "queue in (Consts.QUEUE_TYPE_SIBLING_BURIED, " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")";
         } else if ("manual".equals(type)) {
             queue = "queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED + "";
         } else if ("siblings".equals(type)) {
-            queue = "queue = -2";
+            queue = "queue = Consts.QUEUE_TYPE_SIBLING_BURIED";
         } else {
             throw new RuntimeException("unknown type");
         }
@@ -2540,7 +2540,7 @@ public class SchedV2 extends Sched {
 
     // no 'manually buried' queue in v1
     private void _moveManuallyBuried() {
-        mCol.getDb().execute(String.format(Locale.US, "update cards set queue=-2, mod=%d where queue=" + Consts.QUEUE_TYPE_MANUALLY_BURIED , Utils.intTime()));
+        mCol.getDb().execute(String.format(Locale.US, "update cards set queue=Consts.QUEUE_TYPE_SIBLING_BURIED, mod=%d where queue=" + Consts.QUEUE_TYPE_MANUALLY_BURIED , Utils.intTime()));
     }
 
     // adding 'hard' in v2 scheduler means old ease entries need shifting

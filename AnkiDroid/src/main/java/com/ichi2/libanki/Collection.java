@@ -1367,7 +1367,7 @@ public class Collection {
                 long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
                 mDb.execute("DELETE FROM revlog WHERE id = " + last);
                 // restore any siblings
-                mDb.execute("update cards set queue=type,mod=?,usn=? where queue=-2 and nid=?",
+                mDb.execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
                         new Object[]{Utils.intTime(), usn(), c.getNid()});
                 // and finally, update daily count
                 int n = c.getQueue() == 3 ? 1 : c.getQueue();

@@ -36,6 +36,7 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
@@ -844,7 +845,7 @@ public class ContentProviderTest {
         Card card = col.getSched().getCard();
 
         // verify that the card is not already user-buried
-        Assert.assertNotEquals("Card is not user-buried before test", Card.QUEUE_USER_BRD, card.getQueue());
+        Assert.assertNotEquals("Card is not user-buried before test", Consts.QUEUE_TYPE_SIBLING_BURIED, card.getQueue());
 
         // retain the card id, we will lookup the card after the update
         long cardId = card.getId();
@@ -869,7 +870,7 @@ public class ContentProviderTest {
         // -----------------------------
 
         Card cardAfterUpdate = col.getCard(cardId);
-        assertEquals("Card is user-buried", Card.QUEUE_USER_BRD, cardAfterUpdate.getQueue());
+        assertEquals("Card is user-buried", Consts.QUEUE_TYPE_SIBLING_BURIED, cardAfterUpdate.getQueue());
 
         // cleanup, unbury cards
         // ---------------------
