@@ -2546,7 +2546,7 @@ public class SchedV2 extends Sched {
     // adding 'hard' in v2 scheduler means old ease entries need shifting
     // up or down
     private void _remapLearningAnswers(String sql) {
-        mCol.getDb().execute("update revlog set " + sql + " and type in (0,2)");
+        mCol.getDb().execute("update revlog set " + sql + " and type in (" + Consts.REVLOG_LRN + ",2)");
     }
 
     public void moveToV1() {
