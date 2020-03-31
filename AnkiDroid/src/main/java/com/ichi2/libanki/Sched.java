@@ -1704,7 +1704,7 @@ public class Sched {
                 n.addTag("leech");
                 n.flush();
                 // handle
-                if (conf.getInt("leechAction") == 0) {
+                if (conf.getInt("leechAction") == Consts.LEECH_SUSPEND) {
                     // if it has an old due, remove it from cram/relearning
                     if (card.getODue() != 0) {
                         card.setDue(card.getODue());
@@ -2532,7 +2532,7 @@ public class Sched {
         JSONObject conf;
         try {
             conf = _cardConf(card).getJSONObject("lapse");
-            return conf.getInt("leechAction") == 0;
+            return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

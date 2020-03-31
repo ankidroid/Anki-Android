@@ -86,6 +86,7 @@ public class Consts {
     public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
 
     // Leech actions
+    public static final int LEECH_SUSPEND = 0;
 
     // Buttons
 

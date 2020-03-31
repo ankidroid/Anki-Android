@@ -111,7 +111,7 @@ public class Decks {
                     + "'minInt': 1,"
                     + "'leechFails': 8,"
                     // type 0=suspend, 1=tagonly
-                    + "'leechAction': 0"
+                    + "'leechAction': " + Consts.LEECH_SUSPEND
                 + "},"
                 + "'rev': {"
                     + "'perDay': 100,"
