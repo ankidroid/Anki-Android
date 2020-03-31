@@ -1439,7 +1439,7 @@ public class Sched {
                 interval = ivl2;
             } else if (ease == 3) {
                 interval = ivl3;
-            } else if (ease == 4) {
+            } else if (ease == Consts.BUTTON_FOUR) {
             	interval = ivl4;
             }
             // interval capped?

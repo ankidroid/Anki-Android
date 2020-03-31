@@ -619,7 +619,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 mNext3.setText(mSched.nextIvlStr(this, mCurrentCard, 3));
             }
             if (buttonCount > 3) {
-                mNext4.setText(mSched.nextIvlStr(this, mCurrentCard, 4));
+                mNext4.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_FOUR));
             }
         }
     }

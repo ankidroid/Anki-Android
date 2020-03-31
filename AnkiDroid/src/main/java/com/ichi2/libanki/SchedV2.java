@@ -919,7 +919,7 @@ public class SchedV2 extends Sched {
         boolean leaving = false;
 
         // immediate graduate?
-        if (ease == 4) {
+        if (ease == Consts.BUTTON_FOUR) {
             _rescheduleAsRev(card, conf, true);
             leaving = true;
         // next step?
@@ -2176,7 +2176,7 @@ public class SchedV2 extends Sched {
                 return _delayForGrade(conf, conf.getJSONArray("delays").length());
             } else if (ease == 2) {
                 return _delayForRepeatingGrade(conf, card.getLeft());
-            } else if (ease == 4) {
+            } else if (ease == Consts.BUTTON_FOUR) {
                 return _graduatingIvl(card, conf, true, false) * 86400L;
             } else { // ease == 3
                 int left = card.getLeft() % 1000 - 1;
@@ -2555,7 +2555,7 @@ public class SchedV2 extends Sched {
 
         _moveManuallyBuried();
         _resetSuspendedLearning();
-        _remapLearningAnswers("ease=ease-1 where ease in (3,4)");
+        _remapLearningAnswers("ease=ease-1 where ease in (3," + Consts.BUTTON_FOUR + ")");
     }
 
 

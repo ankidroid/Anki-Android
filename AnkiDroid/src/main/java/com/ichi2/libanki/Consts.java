@@ -90,6 +90,7 @@ public class Consts {
     public static final int LEECH_TAGONLY = 1;
 
     // Buttons
+    public static final int BUTTON_FOUR = 4;
 
     // Revlog types
     public static final int REVLOG_LRN = 0;
