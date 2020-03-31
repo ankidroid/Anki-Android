@@ -87,6 +87,7 @@ public class Consts {
 
     // Leech actions
     public static final int LEECH_SUSPEND = 0;
+    public static final int LEECH_TAGONLY = 1;
 
     // Buttons
 
