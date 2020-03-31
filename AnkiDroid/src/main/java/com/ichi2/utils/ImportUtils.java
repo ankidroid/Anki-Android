@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
@@ -40,6 +41,9 @@ public class ImportUtils {
         // This intent is used for opening apkg package files
         // We want to go immediately to DeckPicker, clearing any history in the process
         Timber.i("IntentHandler/ User requested to view a file");
+        String extras = intent.getExtras() == null ? "none" : TextUtils.join(", ", intent.getExtras().keySet());
+        Timber.i("Intent: %s. Data: %s", intent, extras);
+
         String errorMessage = null;
         // If the file is being sent from a content provider we need to read the content before we can open the file
         if ("content".equals(intent.getData().getScheme())) {
