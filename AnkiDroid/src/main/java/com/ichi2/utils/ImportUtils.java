@@ -49,6 +49,7 @@ public class ImportUtils {
             return handleFileImportInternal(context, intent);
         } catch (Exception e) {
             AnkiDroidApp.sendExceptionReport(e, "handleFileImport");
+            Timber.e(e, "failed to handle import intent");
             return context.getString(R.string.import_error_exception, e.getLocalizedMessage());
         }
     }
