@@ -27,6 +27,10 @@ public class Consts {
     public static final int NEW_CARDS_RANDOM = 0;
     public static final int NEW_CARDS_DUE = 1;
 
+    // Queue types
+
+    // Card types
+
     // removal types
     public static final int REM_CARD = 0;
     public static final int REM_NOTE = 1;
@@ -68,6 +72,12 @@ public class Consts {
     public static final int SYNC_VER = 9;
 
     public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
+
+    // Leech actions
+
+    // Buttons
+
+    // Revlog types
 
     // The labels defined in consts.py are in AnkiDroid's resources files.
 }
