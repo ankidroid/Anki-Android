@@ -90,6 +90,7 @@ public class Consts {
     public static final int LEECH_TAGONLY = 1;
 
     // Buttons
+    public static final int BUTTON_TWO = 2;
     public static final int BUTTON_THREE = 3;
     public static final int BUTTON_FOUR = 4;
 

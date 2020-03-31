@@ -898,12 +898,12 @@ public class Sched {
             _rescheduleAsRev(card, conf, true);
             leaving = true;
             // graduation time?
-        } else if (ease == 2 && (card.getLeft() % 1000) - 1 <= 0) {
+        } else if (ease == Consts.BUTTON_TWO && (card.getLeft() % 1000) - 1 <= 0) {
             _rescheduleAsRev(card, conf, false);
             leaving = true;
         } else {
             // one step towards graduation
-            if (ease == 2) {
+            if (ease == Consts.BUTTON_TWO) {
                 // decrement real left count and recalculate left today
                 int left = (card.getLeft() % 1000) - 1;
                 try {
@@ -1435,7 +1435,7 @@ public class Sched {
             int ivl2 = _constrainedIvl((int)((card.getIvl() + delay/4) * 1.2), conf, card.getIvl());
             int ivl3 = _constrainedIvl((int)((card.getIvl() + delay/2) * fct), conf, ivl2);
             int ivl4 = _constrainedIvl((int)((card.getIvl() + delay) * fct * conf.getDouble("ease4")), conf, ivl3);
-            if (ease == 2) {
+            if (ease == Consts.BUTTON_TWO) {
                 interval = ivl2;
             } else if (ease == Consts.BUTTON_THREE) {
                 interval = ivl3;

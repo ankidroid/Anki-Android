@@ -206,7 +206,7 @@ public class SchedV2 extends Sched {
             card.setQueue(Consts.QUEUE_TYPE_PREVIEW);
             card.setDue(Utils.intTime() + _previewDelay(card));
             mLrnCount += 1;
-        } else if (ease == 2) {
+        } else if (ease == Consts.BUTTON_TWO) {
             // Restore original card state and remove from filtered deck
             _restorePreviewCard(card);
             _removeFromFiltered(card);
@@ -931,7 +931,7 @@ public class SchedV2 extends Sched {
             } else {
                 _moveToNextStep(card, conf);
             }
-        } else if (ease == 2) {
+        } else if (ease == Consts.BUTTON_TWO) {
             _repeatStep(card, conf);
         } else {
             // move back to first step
@@ -1448,7 +1448,7 @@ public class SchedV2 extends Sched {
         }
 
         int ivl2 = _constrainedIvl(card.getIvl() * hardFactor, conf, hardMin, fuzz);
-        if (ease == 2) {
+        if (ease == Consts.BUTTON_TWO) {
             return ivl2;
         }
 
@@ -1547,7 +1547,7 @@ public class SchedV2 extends Sched {
         double minNewIvl = 1;
 
         double factor;
-        if (ease == 2)  {
+        if (ease == Consts.BUTTON_TWO)  {
             factor = conf.optDouble("hardFactor", 1.2);
             // hard cards shouldn't have their interval decreased by more than 50%
             // of the normal factor
@@ -2174,7 +2174,7 @@ public class SchedV2 extends Sched {
             if (ease == 1) {
                 // fail
                 return _delayForGrade(conf, conf.getJSONArray("delays").length());
-            } else if (ease == 2) {
+            } else if (ease == Consts.BUTTON_TWO) {
                 return _delayForRepeatingGrade(conf, card.getLeft());
             } else if (ease == Consts.BUTTON_FOUR) {
                 return _graduatingIvl(card, conf, true, false) * 86400L;
@@ -2562,7 +2562,7 @@ public class SchedV2 extends Sched {
     public void moveToV2() {
         _emptyAllFiltered();
         _removeAllFromLearning(1);
-        _remapLearningAnswers("ease=ease+1 where ease in (2," + Consts.BUTTON_THREE + ")");
+        _remapLearningAnswers("ease=ease+1 where ease in (" + Consts.BUTTON_TWO + "," + Consts.BUTTON_THREE + ")");
     }
 
 
