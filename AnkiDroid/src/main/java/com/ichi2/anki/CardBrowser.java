@@ -1403,13 +1403,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put("created", LanguageUtil.getShortDateFormatFromMs(c.note().getId()));
         item.put("edited", LanguageUtil.getShortDateFormatFromS(c.note().getMod()));
         // interval
-        int type = c.getType();
-        if (type == Consts.CARD_TYPE_NEW) {
-            item.put("interval", context.getString(R.string.card_browser_interval_new_card));
-        } else if (type == Consts.CARD_TYPE_LRN) {
-            item.put("interval", context.getString(R.string.card_browser_interval_learning_card));
-        } else {
-            item.put("interval", Utils.timeSpan(context, c.getIvl()*86400));
+        switch (c.getType()) {
+            case Consts.CARD_TYPE_NEW:
+                item.put("interval", context.getString(R.string.card_browser_interval_new_card));
+                break;
+            case Consts.CARD_TYPE_LRN :
+                item.put("interval", context.getString(R.string.card_browser_interval_learning_card));
+                break;
+            default:
+                item.put("interval", Utils.timeSpan(context, c.getIvl()*86400));
+                break;
         }
         item.put("lapses", Integer.toString(c.getLapses()));
         item.put("note", c.model().optString("name"));
