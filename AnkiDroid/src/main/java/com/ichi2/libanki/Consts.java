@@ -80,6 +80,7 @@ public class Consts {
     // Revlog types
     public static final int REVLOG_LRN = 0;
     public static final int REVLOG_REV = 1;
+    public static final int REVLOG_RELRN = 2;
 
     // The labels defined in consts.py are in AnkiDroid's resources files.
 }
