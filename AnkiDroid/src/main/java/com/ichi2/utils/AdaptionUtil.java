@@ -18,9 +18,6 @@ public class AdaptionUtil {
     }
 
     public static boolean hasReducedPreferences(){
-        if(Build.MANUFACTURER.equalsIgnoreCase("Xiaomi") && (Build.PRODUCT.equalsIgnoreCase("Archytas")||Build.PRODUCT.equalsIgnoreCase("Archimedes"))){
-            return true;
-        }
-        return false;
+        return Build.MANUFACTURER.equalsIgnoreCase("Xiaomi") && (Build.PRODUCT.equalsIgnoreCase("Archytas")||Build.PRODUCT.equalsIgnoreCase("Archimedes"));
     }
 }
