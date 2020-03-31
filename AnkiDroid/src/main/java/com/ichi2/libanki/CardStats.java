@@ -33,7 +33,7 @@ public class CardStats {
             if (c.getODid() != 0 || c.getQueue() < 0) {
                 next = 0;
             } else {
-                if (c.getQueue() == 2 || c.getQueue() == 3) {
+                if (c.getQueue() == Consts.QUEUE_TYPE_REV || c.getQueue() == 3) {
                     next = Utils.intTime(1000) + ((c.getDue() - col.getSched().getToday()) * 86400000);
                 } else {
                     next = c.getDue();

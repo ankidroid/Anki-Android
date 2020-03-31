@@ -1744,7 +1744,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         notifyProgress.run();
         // reviews should have a reasonable due #
-        ArrayList<Long> ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
+        ArrayList<Long> ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000", 0);
         notifyProgress.run();
         if (ids.size() > 0) {
             problems.add("Reviews had incorrect due date.");
@@ -1846,7 +1846,7 @@ public class Collection {
         notifyProgress.run();
         // cards with odue set when it shouldn't be
         ArrayList<Long> ids = mDb.queryColumn(Long.class,
-                "select id from cards where odue > 0 and (type=1 or queue=2) and not odid", 0);
+                "select id from cards where odue > 0 and (type=1 or queue=" + Consts.QUEUE_TYPE_REV + ") and not odid", 0);
         notifyProgress.run();
         if (ids.size() != 0) {
             problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");

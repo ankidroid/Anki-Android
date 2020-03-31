@@ -467,7 +467,7 @@ public class Finder {
         } else if ("buried".equals(val)) {
             return "c.queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
         } else if ("due".equals(val)) {
-            return "(c.queue in (2,3) and c.due <= " + mCol.getSched().getToday() +
+            return "(c.queue in (" + Consts.QUEUE_TYPE_REV + ",3) and c.due <= " + mCol.getSched().getToday() +
                     ") or (c.queue = " + Consts.QUEUE_TYPE_LRN + " and c.due <= " + mCol.getSched().getDayCutoff() + ")";
         } else {
             return null;
@@ -564,7 +564,7 @@ public class Finder {
         if ("due".equals(prop)) {
             val += mCol.getSched().getToday();
             // only valid for review/daily learning
-            q = "(c.queue in (2,3)) and ";
+            q = "(c.queue in (" + Consts.QUEUE_TYPE_REV + ",3)) and ";
         } else if ("ease".equals(prop)) {
             prop = "factor";
             // already done: val = int(val*1000)

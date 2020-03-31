@@ -184,7 +184,7 @@ public class SchedV2 extends Sched {
         }
         if (card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == 3) {
             _answerLrnCard(card, ease);
-        } else if (card.getQueue() == 2) {
+        } else if (card.getQueue() == Consts.QUEUE_TYPE_REV) {
             _answerRevCard(card, ease);
             // Update daily limit
             _updateStats(card, "rev");
@@ -1087,7 +1087,7 @@ public class SchedV2 extends Sched {
 
     private void _rescheduleGraduatingLapse(Card card) {
         card.setDue(mToday + card.getIvl());
-        card.setQueue(2);
+        card.setQueue(Consts.QUEUE_TYPE_REV);
         card.setType(2);
     }
 
@@ -1176,7 +1176,7 @@ public class SchedV2 extends Sched {
             throw new RuntimeException(e);
         }
         card.setType(2);
-        card.setQueue(2);
+        card.setQueue(Consts.QUEUE_TYPE_REV);
     }
 
 
@@ -1266,13 +1266,13 @@ public class SchedV2 extends Sched {
         List<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);
-        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(dids) + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
+        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(dids) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday + " LIMIT " + lim + ")");
     }
 
 
     private void _resetRevCount() {
         int lim = _currentRevLimit();
-        mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
+        mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday + " LIMIT " + lim + ")");
     }
 
 
@@ -1299,7 +1299,7 @@ public class SchedV2 extends Sched {
                         .getDb()
                         .getDatabase()
                         .query(
-                                "SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 2 AND due <= " + mToday
+                                "SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday
                                         + " ORDER BY due, random() LIMIT " + lim, null);
                 while (cur.moveToNext()) {
                     mRevQueue.add(cur.getLong(0));
@@ -1340,7 +1340,7 @@ public class SchedV2 extends Sched {
 
     public int totalRevForCurrentDeck() {
         return mCol.getDb().queryScalar(String.format(Locale.US,
-        		"SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN %s AND queue = 2 AND due <= %d LIMIT %s)",
+        		"SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN %s AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= %d LIMIT %s)",
         		Utils.ids2str(mCol.getDecks().active()), mToday, mReportLimit));
     }
 
@@ -1705,7 +1705,7 @@ public class SchedV2 extends Sched {
                 break;
             case Consts.DYN_DUEPRIORITY:
                 t = String.format(Locale.US,
-                        "(case when queue=2 and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 100000+due end)",
+                        "(case when queue=" + Consts.QUEUE_TYPE_REV + " and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 100000+due end)",
                         mToday, mToday);
                 break;
             default:
@@ -1731,7 +1731,7 @@ public class SchedV2 extends Sched {
         String queue = "";
         try {
             if (!deck.getBoolean("resched")) {
-                queue = ", queue = 2";
+                queue = ", queue = " + Consts.QUEUE_TYPE_REV + "";
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -2049,7 +2049,7 @@ public class SchedV2 extends Sched {
     public boolean revDue() {
         return mCol.getDb()
                 .queryScalar(
-                        "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = 2 AND due <= " + mToday
+                        "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday
                                 + " LIMIT 1") != 0;
     }
 
@@ -2308,11 +2308,11 @@ public class SchedV2 extends Sched {
         try {
             cur = mCol.getDb().getDatabase().query(String.format(Locale.US,
                     "select id, queue from cards where nid=%d and id!=%d "+
-                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=2 and due<=%d))", card.getNid(), card.getId(), mToday), null);
+                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=" + Consts.QUEUE_TYPE_REV + " and due<=%d))", card.getNid(), card.getId(), mToday), null);
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
-                if (queue == 2) {
+                if (queue == Consts.QUEUE_TYPE_REV) {
                     if (buryRev) {
                         toBury.add(cid);
                     }
@@ -2372,7 +2372,7 @@ public class SchedV2 extends Sched {
         }
         remFromDyn(ids);
         mCol.getDb().executeMany(
-                "update cards set type=2,queue=2,ivl=?,due=?,odue=0, " +
+                "update cards set type=2,queue=" + Consts.QUEUE_TYPE_REV + ",ivl=?,due=?,odue=0, " +
                         "usn=?,mod=?,factor=? where id=?", d);
         mCol.log(ids);
     }
@@ -2510,7 +2510,7 @@ public class SchedV2 extends Sched {
      */
 
     private void _emptyAllFiltered() {
-        mCol.getDb().execute(String.format(Locale.US,"update cards set did = odid, queue = (case when type = 1 then " + Consts.QUEUE_TYPE_NEW + " when type = 3 then 2 else type end), type = (case when type = 1 then 0 when type = 3 then 2 else type end), due = odue, odue = 0, odid = 0, usn = %d where odid != 0", mCol.usn()));
+        mCol.getDb().execute(String.format(Locale.US,"update cards set did = odid, queue = (case when type = 1 then " + Consts.QUEUE_TYPE_NEW + " when type = 3 then " + Consts.QUEUE_TYPE_REV + " else type end), type = (case when type = 1 then 0 when type = 3 then 2 else type end), due = odue, odue = 0, odid = 0, usn = %d where odid != 0", mCol.usn()));
     }
 
 
@@ -2521,9 +2521,9 @@ public class SchedV2 extends Sched {
     private void _removeAllFromLearning(int schedVer) {
         // remove review cards from relearning
         if (schedVer == 1) {
-            mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + ",3) and type in (2,3)", Utils.intTime(), mCol.usn()));
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", type = 2, mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + ",3) and type in (2,3)", Utils.intTime(), mCol.usn()));
         } else {
-            mCol.getDb().execute(String.format(Locale.US,"update cards set due = %d+ivl, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + ",3) and type in (2,3)", mToday, Utils.intTime(), mCol.usn()));
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = %d+ivl, queue = " + Consts.QUEUE_TYPE_REV + ", type = 2, mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + ",3) and type in (2,3)", mToday, Utils.intTime(), mCol.usn()));
         }
 
 
@@ -2754,7 +2754,7 @@ public class SchedV2 extends Sched {
         case Consts.QUEUE_TYPE_LRN:
             mLrnCount -= card.getLeft() / 1000;
             break;
-        case 2:
+        case Consts.QUEUE_TYPE_REV:
             mRevCount--;
             break;
         case 3:

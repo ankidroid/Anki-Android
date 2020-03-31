@@ -188,7 +188,7 @@ public class Card implements Cloneable {
             mUsn = mCol.usn();
         }
         // bug check
-        //if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
+        //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
         //}
         assert (mDue < Long.valueOf("4294967296"));
@@ -223,7 +223,7 @@ public class Card implements Cloneable {
         mMod = Utils.intTime();
         mUsn = mCol.usn();
         // bug check
-        //if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
+        //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
         //}
         assert (mDue < Long.valueOf("4294967296"));
@@ -711,7 +711,7 @@ public class Card implements Cloneable {
             date = due;
         } else if (getQueue() == Consts.QUEUE_TYPE_NEW || getType() == 0) {
             return (new Long(due)).toString();
-        } else if (getQueue() == 2 || getQueue() == 3 || (getType() == 2 && getQueue() < 0)) {
+        } else if (getQueue() == Consts.QUEUE_TYPE_REV || getQueue() == 3 || (getType() == 2 && getQueue() < 0)) {
             long time = System.currentTimeMillis() / 1000L;
             long nbDaySinceCreation = (due - getCol().getSched().getToday());
             date = time + (nbDaySinceCreation * 86400L);
@@ -729,6 +729,6 @@ public class Card implements Cloneable {
     }
 
     public boolean isReview() {
-        return this.getType() == 2 && this.getQueue() == 2;
+        return this.getType() == 2 && this.getQueue() == Consts.QUEUE_TYPE_REV;
     }
 }

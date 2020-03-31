@@ -33,6 +33,7 @@ public class Consts {
     public static final int QUEUE_TYPE_SUSPENDED = -1;
     public static final int QUEUE_TYPE_NEW = 0;
     public static final int QUEUE_TYPE_LRN = 1;
+    public static final int QUEUE_TYPE_REV = 2;
 
     // Card types
 

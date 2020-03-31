@@ -288,7 +288,7 @@ public class Stats {
 
         try {
             cur = mCol.getDb().getDatabase().query(
-                    "select avg(ivl), max(ivl) from cards where did in " +_limit() + " and queue = 2", null);
+                    "select avg(ivl), max(ivl) from cards where did in " +_limit() + " and queue = " + Consts.QUEUE_TYPE_REV + "", null);
             cur.moveToFirst();
             oStats.averageInterval = cur.getDouble(0);
             oStats.longestInterval = cur.getDouble(1);
@@ -378,7 +378,7 @@ public class Stats {
                     + " AS day, " // day
                     + "count(), " // all cards
                     + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                    + "FROM cards WHERE did IN " + _limit() + " AND queue IN (2,3)" + lim
+                    + "FROM cards WHERE did IN " + _limit() + " AND queue IN (" + Consts.QUEUE_TYPE_REV + ",3)" + lim
                     + " GROUP BY day ORDER BY day";
             Timber.d("Forecast query: %s", query);
             cur = mCol
@@ -701,7 +701,7 @@ public class Stats {
                     .getDatabase()
                     .query(
                             "select ivl / " + chunk + " as grp, count() from cards " +
-                                    "where did in "+ _limit() +" and queue = 2 " + lim + " " +
+                                    "where did in "+ _limit() +" and queue = " + Consts.QUEUE_TYPE_REV + " " + lim + " " +
                                     "group by grp " +
                                     "order by grp", null);
             while (cur.moveToNext()) {
@@ -713,7 +713,7 @@ public class Stats {
                     .getDatabase()
                     .query(
                             "select count(), avg(ivl), max(ivl) from cards where did in " +_limit() +
-                                    " and queue = 2", null);
+                                    " and queue = " + Consts.QUEUE_TYPE_REV + "", null);
             cur.moveToFirst();
             all = cur.getDouble(0);
             avg = cur.getDouble(1);
@@ -1166,8 +1166,8 @@ public class Stats {
         double[] pieData;
         Cursor cur = null;
         String query = "select " +
-                "sum(case when queue=2 and ivl >= 21 then 1 else 0 end), -- mtr\n" +
-                "sum(case when queue in (" + Consts.QUEUE_TYPE_LRN + ",3) or (queue=2 and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
+                "sum(case when queue=" + Consts.QUEUE_TYPE_REV + " and ivl >= 21 then 1 else 0 end), -- mtr\n" +
+                "sum(case when queue in (" + Consts.QUEUE_TYPE_LRN + ",3) or (queue=" + Consts.QUEUE_TYPE_REV + " and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
                 "sum(case when queue=" + Consts.QUEUE_TYPE_NEW + " then 1 else 0 end), -- new\n" +
                 "sum(case when queue<0 then 1 else 0 end) -- susp\n" +
                 "from cards where did in " + _limit();
