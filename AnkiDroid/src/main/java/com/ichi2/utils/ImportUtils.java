@@ -59,7 +59,9 @@ public class ImportUtils {
 
         if (intent.getData() == null) {
             Timber.i("No intent data. Attempting to read clip data.");
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN || intent.getClipData() == null) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN
+                    || intent.getClipData() == null
+                    || intent.getClipData().getItemCount() == 0) {
                 return context.getString(R.string.import_error_unhandled_request);
             }
             Uri clipUri = intent.getClipData().getItemAt(0).getUri();
