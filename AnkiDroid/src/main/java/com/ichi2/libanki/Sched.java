@@ -894,7 +894,7 @@ public class Sched {
         // lrnCount was decremented once when card was fetched
         int lastLeft = card.getLeft();
         // immediate graduate?
-        if (ease == 3) {
+        if (ease == Consts.BUTTON_THREE) {
             _rescheduleAsRev(card, conf, true);
             leaving = true;
             // graduation time?
@@ -1437,7 +1437,7 @@ public class Sched {
             int ivl4 = _constrainedIvl((int)((card.getIvl() + delay) * fct * conf.getDouble("ease4")), conf, ivl3);
             if (ease == 2) {
                 interval = ivl2;
-            } else if (ease == 3) {
+            } else if (ease == Consts.BUTTON_THREE) {
                 interval = ivl3;
             } else if (ease == Consts.BUTTON_FOUR) {
             	interval = ivl4;
@@ -2028,7 +2028,7 @@ public class Sched {
             if (ease == 1) {
                 // fail
                 return _delayForGrade(conf, conf.getJSONArray("delays").length());
-            } else if (ease == 3) {
+            } else if (ease == Consts.BUTTON_THREE) {
                 // early removal
                 if (!_resched(card)) {
                     return 0;

@@ -923,7 +923,7 @@ public class SchedV2 extends Sched {
             _rescheduleAsRev(card, conf, true);
             leaving = true;
         // next step?
-        } else if (ease == 3) {
+        } else if (ease == Consts.BUTTON_THREE) {
             // graduation time?
             if ((card.getLeft() % 1000) - 1 <= 0) {
                 _rescheduleAsRev(card, conf, false);
@@ -1453,7 +1453,7 @@ public class SchedV2 extends Sched {
         }
 
         int ivl3 = _constrainedIvl((card.getIvl() + delay / 2) * fct, conf, ivl2, fuzz);
-        if (ease == 3) {
+        if (ease == Consts.BUTTON_THREE) {
             return ivl3;
         }
 
@@ -2555,14 +2555,14 @@ public class SchedV2 extends Sched {
 
         _moveManuallyBuried();
         _resetSuspendedLearning();
-        _remapLearningAnswers("ease=ease-1 where ease in (3," + Consts.BUTTON_FOUR + ")");
+        _remapLearningAnswers("ease=ease-1 where ease in (" + Consts.BUTTON_THREE + "," + Consts.BUTTON_FOUR + ")");
     }
 
 
     public void moveToV2() {
         _emptyAllFiltered();
         _removeAllFromLearning(1);
-        _remapLearningAnswers("ease=ease+1 where ease in (2,3)");
+        _remapLearningAnswers("ease=ease+1 where ease in (2," + Consts.BUTTON_THREE + ")");
     }
 
 
