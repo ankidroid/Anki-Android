@@ -35,6 +35,7 @@ public class Consts {
     public static final int QUEUE_TYPE_LRN = 1;
     public static final int QUEUE_TYPE_REV = 2;
     public static final int QUEUE_TYPE_DAY_LEARN_RELEARN = 3;
+    public static final int QUEUE_TYPE_PREVIEW = 4;
 
     // Card types
 

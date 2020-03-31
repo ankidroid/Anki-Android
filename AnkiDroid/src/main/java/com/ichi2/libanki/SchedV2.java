@@ -203,7 +203,7 @@ public class SchedV2 extends Sched {
     public void _answerCardPreview(Card card, int ease) {
         if (ease == 1) {
             // Repeat after delay
-            card.setQueue(4);
+            card.setQueue(Consts.QUEUE_TYPE_PREVIEW);
             card.setDue(Utils.intTime() + _previewDelay(card));
             mLrnCount += 1;
         } else if (ease == 2) {
@@ -247,7 +247,7 @@ public class SchedV2 extends Sched {
 
 
     public int countIdx(Card card) {
-        if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.getQueue() == 4) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.getQueue() == Consts.QUEUE_TYPE_PREVIEW) {
             return 1;
         }
         return card.getQueue();
@@ -768,7 +768,7 @@ public class SchedV2 extends Sched {
 
         // previews
         mLrnCount += mCol.getDb().queryScalar(
-                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = 4");
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_PREVIEW + "");
     }
 
 
@@ -802,7 +802,7 @@ public class SchedV2 extends Sched {
                     .getDb()
                     .getDatabase()
                     .query(
-                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", 4) AND due < "
+                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < "
                                     + cutoff + " LIMIT " + mReportLimit, null);
             while (cur.moveToNext()) {
                 mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
