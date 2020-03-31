@@ -136,7 +136,7 @@ public class Stats {
         String query = "select count(), sum(time)/1000, "+
                 "sum(case when ease = 1 then 1 else 0 end), "+ /* failed */
                 "sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end), "+ /* learning */
-                "sum(case when type = 1 then 1 else 0 end), "+ /* review */
+                "sum(case when type = Consts.CARD_TYPE_LRN then 1 else 0 end), "+ /* review */
                 "sum(case when type = 2 then 1 else 0 end), "+ /* relearn */
                 "sum(case when type = 3 then 1 else 0 end) "+ /* filter */
                 "from revlog where id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
@@ -539,9 +539,9 @@ public class Stats {
                 + chunk + " AS day, " + "sum(CASE WHEN type = " + Consts.CARD_TYPE_NEW + " THEN " + ti + " ELSE 0 END)"
                 + tf
                 + ", " // lrn
-                + "sum(CASE WHEN type = 1 AND lastIvl < 21 THEN " + ti + " ELSE 0 END)" + tf
+                + "sum(CASE WHEN type = Consts.CARD_TYPE_LRN AND lastIvl < 21 THEN " + ti + " ELSE 0 END)" + tf
                 + ", " // yng
-                + "sum(CASE WHEN type = 1 AND lastIvl >= 21 THEN " + ti + " ELSE 0 END)" + tf
+                + "sum(CASE WHEN type = Consts.CARD_TYPE_LRN AND lastIvl >= 21 THEN " + ti + " ELSE 0 END)" + tf
                 + ", " // mtr
                 + "sum(CASE WHEN type = 2 THEN " + ti + " ELSE 0 END)" + tf + ", " // lapse
                 + "sum(CASE WHEN type = 3 THEN " + ti + " ELSE 0 END)" + tf // cram
@@ -823,7 +823,7 @@ public class Stats {
                 "sum(case when ease = 1 then 0 else 1 end) / " +
                 "cast(count() as float) * 100, " +
                 "count() " +
-                "from revlog where type in (" + Consts.CARD_TYPE_NEW + ",1,2) " + lim +" " +
+                "from revlog where type in (" + Consts.CARD_TYPE_NEW + ",Consts.CARD_TYPE_LRN,2) " + lim +" " +
                 "group by hour having count() > 30 order by hour";
         Timber.d(rolloverHour + " : " +cutoff + " breakdown query: %s", query);
         try {
@@ -1129,7 +1129,7 @@ public class Stats {
             double ease = data[1];
             double cnt = data[2];
 
-            if (currentType == 1) {
+            if (currentType == Consts.CARD_TYPE_LRN) {
                 ease += 5;
             } else if (currentType == 2) {
                 ease += 10;

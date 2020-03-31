@@ -165,7 +165,7 @@ public class Storage {
             }
             if (ver < 7) {
                 col.modSchemaNoCheck();
-                col.getDb().execute("UPDATE cards SET odue = 0 WHERE (type = 1 OR queue = 2) AND NOT odid");
+                col.getDb().execute("UPDATE cards SET odue = 0 WHERE (type = " + Consts.CARD_TYPE_LRN + " OR queue = 2) AND NOT odid");
                 col.getDb().execute("UPDATE col SET ver = 7");
             }
             if (ver < 8) {

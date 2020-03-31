@@ -39,6 +39,7 @@ public class Consts {
 
     // Card types
     public static final int CARD_TYPE_NEW = 0;
+    public static final int CARD_TYPE_LRN = 1;
 
     // removal types
     public static final int REM_CARD = 0;

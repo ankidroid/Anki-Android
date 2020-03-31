@@ -849,7 +849,7 @@ public class Collection {
 	    ArrayList<JSONObject> cms = null;
 	    if (type == Consts.CARD_TYPE_NEW) {
 	        cms = findTemplates(note);
-	    } else if (type == 1) {
+	    } else if (type == Consts.CARD_TYPE_LRN) {
 	        cms = new ArrayList<>();
 	        for (Card c : note.cards()) {
 	            cms.add(c.template());
@@ -1846,7 +1846,7 @@ public class Collection {
         notifyProgress.run();
         // cards with odue set when it shouldn't be
         ArrayList<Long> ids = mDb.queryColumn(Long.class,
-                "select id from cards where odue > 0 and (type=1 or queue=" + Consts.QUEUE_TYPE_REV + ") and not odid", 0);
+                "select id from cards where odue > 0 and (type=Consts.CARD_TYPE_LRN or queue=" + Consts.QUEUE_TYPE_REV + ") and not odid", 0);
         notifyProgress.run();
         if (ids.size() != 0) {
             problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");

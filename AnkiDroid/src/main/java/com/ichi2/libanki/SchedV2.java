@@ -176,7 +176,7 @@ public class SchedV2 extends Sched {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             // came from the new queue, move to learning
             card.setQueue(Consts.QUEUE_TYPE_LRN);
-            card.setType(1);
+            card.setType(Consts.CARD_TYPE_LRN);
             // init reps to graduation
             card.setLeft(_startingLeft(card));
             // update daily limit
@@ -1761,7 +1761,7 @@ public class SchedV2 extends Sched {
 
         // learning and relearning cards may be seconds-based or day-based;
         // other types map directly to queues
-        if (card.getType() == 1 || card.getType() == 3) {
+        if (card.getType() == Consts.CARD_TYPE_LRN || card.getType() == 3) {
             if (card.getODue() > 1000000000) {
                 card.setQueue(Consts.QUEUE_TYPE_LRN);
             } else {
@@ -2510,7 +2510,7 @@ public class SchedV2 extends Sched {
      */
 
     private void _emptyAllFiltered() {
-        mCol.getDb().execute(String.format(Locale.US,"update cards set did = odid, queue = (case when type = 1 then " + Consts.QUEUE_TYPE_NEW + " when type = 3 then " + Consts.QUEUE_TYPE_REV + " else type end), type = (case when type = 1 then " + Consts.CARD_TYPE_NEW + " when type = 3 then 2 else type end), due = odue, odue = 0, odid = 0, usn = %d where odid != 0", mCol.usn()));
+        mCol.getDb().execute(String.format(Locale.US,"update cards set did = odid, queue = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.QUEUE_TYPE_NEW + " when type = 3 then " + Consts.QUEUE_TYPE_REV + " else type end), type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " when type = 3 then 2 else type end), due = odue, odue = 0, odid = 0, usn = %d where odid != 0", mCol.usn()));
     }
 
 
@@ -2534,7 +2534,7 @@ public class SchedV2 extends Sched {
 
     // v1 doesn't support buried/suspended (re)learning cards
     private void _resetSuspendedLearning() {
-        mCol.getDb().execute(String.format(Locale.US,"update cards set type = (case when type = 1 then " + Consts.CARD_TYPE_NEW + " when type in (2, 3) then 2 else type end), due = (case when odue then odue else due end), odue = 0, mod = %d, usn = %d where queue < 0", Utils.intTime(), mCol.usn()));
+        mCol.getDb().execute(String.format(Locale.US,"update cards set type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " when type in (2, 3) then 2 else type end), due = (case when odue then odue else due end), odue = 0, mod = %d, usn = %d where queue < 0", Utils.intTime(), mCol.usn()));
     }
 
 
@@ -2662,7 +2662,7 @@ public class SchedV2 extends Sched {
                         .getDatabase()
                         .query("select "
                                 + "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, "
-                                + "avg(case when type in (1, 3) then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (1, 3) then time else null end) as revTime, "
+                                + "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", 3) then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (1, 3) then time else null end) as revTime, "
                                 + "avg(case when type = 2 then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = 2 then time else null end) as relrnTime "
                                 + "from revlog where id > "
                                 + ((mCol.getSched().getDayCutoff() - (10 * 86400)) * 1000), null);

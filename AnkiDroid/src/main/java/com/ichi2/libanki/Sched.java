@@ -241,7 +241,7 @@ public class Sched {
             }
             JSONObject conf = _lrnConf(card);
             try {
-                if (card.getType() == Consts.CARD_TYPE_NEW || card.getType() == 1 || conf.getJSONArray("delays").length() > 1) {
+                if (card.getType() == Consts.CARD_TYPE_NEW || card.getType() == Consts.CARD_TYPE_LRN || conf.getJSONArray("delays").length() > 1) {
                     return 3;
                 }
             } catch (JSONException e) {
@@ -1590,8 +1590,8 @@ public class Sched {
         mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where " + lim, 0));
         // move out of cram queue
         mCol.getDb().execute(
-                "update cards set did = odid, queue = (case when type = 1 then " + Consts.QUEUE_TYPE_NEW + " " +
-                "else type end), type = (case when type = 1 then " + Consts.CARD_TYPE_NEW + " else type end), " +
+                "update cards set did = odid, queue = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.QUEUE_TYPE_NEW + " " +
+                "else type end), type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " else type end), " +
                 "due = odue, odue = 0, odid = 0, usn = ? where " + lim,
                 new Object[] { mCol.usn() });
     }
@@ -2409,7 +2409,7 @@ public class Sched {
                         .getDatabase()
                         .query("select "
                                 + "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, "
-                                + "avg(case when type in (1, 3) then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (1, 3) then time else null end) as revTime, "
+                                + "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", 3) then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (1, 3) then time else null end) as revTime, "
                                 + "avg(case when type = 2 then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = 2 then time else null end) as relrnTime "
                                 + "from revlog where id > "
                                 + ((mCol.getSched().getDayCutoff() - (10 * 86400)) * 1000), null);

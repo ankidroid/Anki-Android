@@ -1406,7 +1406,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         int type = c.getType();
         if (type == Consts.CARD_TYPE_NEW) {
             item.put("interval", context.getString(R.string.card_browser_interval_new_card));
-        } else if (type == 1) {
+        } else if (type == Consts.CARD_TYPE_LRN) {
             item.put("interval", context.getString(R.string.card_browser_interval_learning_card));
         } else {
             item.put("interval", Utils.timeSpan(context, c.getIvl()*86400));

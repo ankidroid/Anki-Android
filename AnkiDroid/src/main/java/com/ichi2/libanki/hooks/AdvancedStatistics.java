@@ -667,11 +667,11 @@ public class AdvancedStatistics extends Hook  {
 
         private final String queryYoung =
                 queryBaseYoungMature
-                        + "where type=1 and lastIvl < 21;";
+                        + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl < 21;";
 
         private final String queryMature =
                 queryBaseYoungMature
-                        + "where type=1 and lastIvl >= 21;";
+                        + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl >= 21;";
 
         public EaseClassifier(SupportSQLiteDatabase db) {
             this.db = db;

@@ -69,7 +69,6 @@ import java.util.Set;
                     "PMD.MethodNamingConventions"})
 public class Card implements Cloneable {
 
-    public static final int TYPE_LRN = 1;
     public static final int TYPE_REV = 2;
 
     private Collection mCol;
