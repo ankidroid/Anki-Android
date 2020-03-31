@@ -45,6 +45,11 @@ public class ImportUtils {
         Timber.i("Intent: %s. Data: %s", intent, extras);
 
         String errorMessage = null;
+
+        if (intent.getData() == null) {
+            return context.getString(R.string.import_error_unhandled_request);
+        }
+
         // If the file is being sent from a content provider we need to read the content before we can open the file
         if ("content".equals(intent.getData().getScheme())) {
             return handleContentProviderFile(context, intent, intent.getData());
