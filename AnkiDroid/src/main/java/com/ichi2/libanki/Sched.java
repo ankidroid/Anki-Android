@@ -1352,7 +1352,7 @@ public class Sched {
             }
             // if suspended as a leech, nothing to do
             int delay = 0;
-            if (_checkLeech(card, conf) && card.getQueue() == -1) {
+            if (_checkLeech(card, conf) && card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
                 return delay;
             }
             // if no relearning steps, nothing to do
@@ -1714,7 +1714,7 @@ public class Sched {
                     }
                     card.setODue(0);
                     card.setODid(0);
-                    card.setQueue(-1);
+                    card.setQueue(Consts.QUEUE_TYPE_SUSPENDED);
                 }
                 // notify UI
                 if (mContextReference != null) {
@@ -2064,7 +2064,7 @@ public class Sched {
         remFromDyn(ids);
         removeLrn(ids);
         mCol.getDb().execute(
-                "UPDATE cards SET queue = -1, mod = " + Utils.intTime() + ", usn = " + mCol.usn() + " WHERE id IN "
+                "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = " + Utils.intTime() + ", usn = " + mCol.usn() + " WHERE id IN "
                         + Utils.ids2str(ids));
     }
 
@@ -2076,7 +2076,7 @@ public class Sched {
         mCol.log(ids);
         mCol.getDb().execute(
                 "UPDATE cards SET queue = type, mod = " + Utils.intTime() + ", usn = " + mCol.usn()
-                        + " WHERE queue = -1 AND id IN " + Utils.ids2str(ids));
+                        + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids));
     }
 
 

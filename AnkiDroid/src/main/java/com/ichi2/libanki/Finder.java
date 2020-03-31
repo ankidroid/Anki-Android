@@ -463,7 +463,7 @@ public class Finder {
             }
             return "type = " + n;
         } else if ("suspended".equals(val)) {
-            return "c.queue = -1";
+            return "c.queue = " + Consts.QUEUE_TYPE_SUSPENDED;
         } else if ("buried".equals(val)) {
             return "c.queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
         } else if ("due".equals(val)) {
@@ -1118,7 +1118,7 @@ public class Finder {
                 card.put("question", null);
                 card.put("answer", null);
                 card.put("flags", (new Integer(Card.intToFlag(cur.getInt(5)))).toString());
-                card.put("suspended", queue == Card.QUEUE_SUSP ? "True": "False");
+                card.put("suspended", queue == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
                 card.put("marked", (tags.matches(".*[Mm]arked.*"))?"marked": null);
             }
         } catch (SQLException e) {

@@ -762,10 +762,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         for(Card card : cards) {
             if (card.getId() == mCurrentCard.getId()) continue;
             int queue = card.getQueue();
-            if(type == DismissType.SUSPEND_NOTE && queue != Card.QUEUE_SUSP) {
+            if(type == DismissType.SUSPEND_NOTE && queue != Consts.QUEUE_TYPE_SUSPENDED) {
                 return true;
             } else if (type == DismissType.BURY_NOTE &&
-                    queue != Card.QUEUE_SUSP && queue != Consts.QUEUE_TYPE_SIBLING_BURIED && queue != Consts.QUEUE_TYPE_MANUALLY_BURIED) {
+                    queue != Consts.QUEUE_TYPE_SUSPENDED && queue != Consts.QUEUE_TYPE_SIBLING_BURIED && queue != Consts.QUEUE_TYPE_MANUALLY_BURIED) {
                 return true;
             }
         }

@@ -588,7 +588,7 @@ public class AdvancedStatistics extends Hook  {
             query = "SELECT id, due, ivl, factor, type, reps " +
                     "FROM cards " +
                     "WHERE did IN (" + did + ") " +
-                    "AND queue != -1 " +   // ignore suspended cards
+                    "AND queue != " + Consts.QUEUE_TYPE_SUSPENDED + " " +   // ignore suspended cards
                     "order by id;";
             Timber.d("Forecast query: %s", query);
             cur = db.query(query, null);

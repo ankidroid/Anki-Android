@@ -1371,7 +1371,7 @@ public class SchedV2 extends Sched {
             card.setFactor(Math.max(1300, card.getFactor() - 200));
             int delay;
 
-            boolean suspended = _checkLeech(card, conf) && card.getQueue() == -1;
+            boolean suspended = _checkLeech(card, conf) && card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED;
             if (conf.getJSONArray("delays").length() != 0 && !suspended) {
                 card.setType(3);
                 delay = _moveToFirstStep(card, conf);
@@ -1381,7 +1381,7 @@ public class SchedV2 extends Sched {
                 _rescheduleAsRev(card, conf, false);
                 // need to reset the queue after rescheduling
                 if (suspended) {
-                    card.setQueue(-1);
+                    card.setQueue(Consts.QUEUE_TYPE_SUSPENDED);
                 }
                 delay = 0;
             }
@@ -1793,7 +1793,7 @@ public class SchedV2 extends Sched {
                 n.flush();
                 // handle
                 if (conf.getInt("leechAction") == 0) {
-                    card.setQueue(-1);
+                    card.setQueue(Consts.QUEUE_TYPE_SUSPENDED);
                 }
                 // notify UI
                 if (mContextReference != null) {
@@ -2215,7 +2215,7 @@ public class SchedV2 extends Sched {
     public void suspendCards(long[] ids) {
         mCol.log(ids);
         mCol.getDb().execute(
-                "UPDATE cards SET queue = -1, mod = " + Utils.intTime() + ", usn = " + mCol.usn() + " WHERE id IN "
+                "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = " + Utils.intTime() + ", usn = " + mCol.usn() + " WHERE id IN "
                         + Utils.ids2str(ids));
     }
 
@@ -2227,7 +2227,7 @@ public class SchedV2 extends Sched {
         mCol.log(ids);
         mCol.getDb().execute(
                 "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = " + Utils.intTime() + ", usn = " + mCol.usn()
-                        + " WHERE queue = -1 AND id IN " + Utils.ids2str(ids));
+                        + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids));
     }
 
 

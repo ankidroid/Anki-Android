@@ -893,7 +893,7 @@ public class ContentProviderTest {
         Card card = col.getSched().getCard();
 
         // verify that the card is not already suspended
-        Assert.assertNotEquals("Card is not suspended before test", Card.QUEUE_SUSP, card.getQueue());
+        Assert.assertNotEquals("Card is not suspended before test", Consts.QUEUE_TYPE_SUSPENDED, card.getQueue());
 
         // retain the card id, we will lookup the card after the update
         long cardId = card.getId();
@@ -918,7 +918,7 @@ public class ContentProviderTest {
         // --------------------------------
 
         Card cardAfterUpdate = col.getCard(cardId);
-        assertEquals("Card is suspended", Card.QUEUE_SUSP, cardAfterUpdate.getQueue());
+        assertEquals("Card is suspended", Consts.QUEUE_TYPE_SUSPENDED, cardAfterUpdate.getQueue());
 
         // cleanup, unsuspend card and reschedule
         // --------------------------------------

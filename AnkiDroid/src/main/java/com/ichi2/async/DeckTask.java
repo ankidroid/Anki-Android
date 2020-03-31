@@ -34,6 +34,7 @@ import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
@@ -580,7 +581,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         // collect undo information
                         col.markUndo(type, new Object[] { card });
                         // suspend card
-                        if (card.getQueue() == -1) {
+                        if (card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
                             sched.unsuspendCards(new long[] { card.getId() });
                         } else {
                             sched.suspendCards(new long[] { card.getId() });
@@ -647,7 +648,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         for (int i = 0; i < cards.length; i++) {
                             Card card = cards[i];
                             cids[i] = card.getId();
-                            if (card.getQueue() != -1) {
+                            if (card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED) {
                                 hasUnsuspended = true;
                                 originalSuspended[i] = false;
                             } else {
@@ -1493,7 +1494,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         boolean hasUnmarked = false;
         for (int cardPosition : checkedCardPositions) {
             Card card = col.getCard(Long.parseLong(cards.get(cardPosition).get("id")));
-            hasUnsuspended = hasUnsuspended || card.getQueue() != -1;
+            hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
             hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
             if (hasUnsuspended && hasUnmarked)
                 break;

@@ -72,6 +72,7 @@ import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
@@ -1327,7 +1328,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             card.put("deck", deckName);
             // update flags (marked / suspended / etc) which determine color
-            card.put("suspended", c.getQueue() == Card.QUEUE_SUSP ? "True": "False");
+            card.put("suspended", c.getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
             card.put("flags", (new Integer(c.getUserFlag())).toString());
         }
 
