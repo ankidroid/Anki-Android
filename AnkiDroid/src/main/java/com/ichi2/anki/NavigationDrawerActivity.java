@@ -36,6 +36,7 @@ import android.view.View;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.AdaptionUtil;
 
 import timber.log.Timber;
 
@@ -306,10 +307,18 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                     startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
                     break;
                 case R.id.nav_help:
-                    openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
+                    if(AdaptionUtil.hasWebBrowser(this)) {
+                        openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
+                    }else{
+                        UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification)+AnkiDroidApp.getManualUrl(), false);
+                    }
                     break;
                 case R.id.nav_feedback:
-                    openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
+                    if(AdaptionUtil.hasWebBrowser(this)) {
+                        openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
+                    }else{
+                        UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification)+AnkiDroidApp.getFeedbackUrl(), false);
+                    }
                     break;
                 default:
                     break;

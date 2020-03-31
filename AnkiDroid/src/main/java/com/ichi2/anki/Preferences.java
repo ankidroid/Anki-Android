@@ -30,6 +30,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -62,6 +63,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.ui.ConfirmationPreference;
 import com.ichi2.ui.SeekBarPreference;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.VersionUtils;
@@ -125,7 +127,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     @Override
     public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.preference_headers, target);
+        if(AdaptionUtil.hasReducedPreferences()) {
+            loadHeadersFromResource(R.xml.preference_headers_without_advanced, target);
+        }else {
+            loadHeadersFromResource(R.xml.preference_headers, target);
+        }
     }
 
 
@@ -185,13 +191,20 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         i.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
         return i;
     }
-
     private void initSubscreen(String action, PreferenceContext listener) {
         PreferenceScreen screen;
         switch (action) {
             case "com.ichi2.anki.prefs.general":
                 listener.addPreferencesFromResource(R.xml.preferences_general);
                 screen = listener.getPreferenceScreen();
+                if(AdaptionUtil.hasReducedPreferences()) {
+                    CheckBoxPreference mCheckBoxPref_Vibrate = (CheckBoxPreference) screen.findPreference("widgetVibrate");
+                    CheckBoxPreference mCheckBoxPref_Blink = (CheckBoxPreference) screen.findPreference("widgetBlink");
+                    PreferenceCategory mCategory = (PreferenceCategory) screen.findPreference("category_general_notification_pref");
+                    mCategory.removePreference(mCheckBoxPref_Vibrate);
+                    mCategory.removePreference(mCheckBoxPref_Blink);
+                }
+
                 // Build languages
                 initializeLanguageDialog(screen);
                 break;
