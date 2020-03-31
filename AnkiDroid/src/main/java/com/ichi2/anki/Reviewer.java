@@ -44,6 +44,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
+import com.ichi2.libanki.Consts;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.widget.WidgetStatus;
@@ -764,7 +765,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             if(type == DismissType.SUSPEND_NOTE && queue != Card.QUEUE_SUSP) {
                 return true;
             } else if (type == DismissType.BURY_NOTE &&
-                    queue != Card.QUEUE_SUSP && queue != Card.QUEUE_USER_BRD && queue != Card.QUEUE_SCHED_BRD) {
+                    queue != Card.QUEUE_SUSP && queue != Card.QUEUE_USER_BRD && queue != Consts.QUEUE_TYPE_MANUALLY_BURIED) {
                 return true;
             }
         }

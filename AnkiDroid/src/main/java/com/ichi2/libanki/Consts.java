@@ -28,6 +28,7 @@ public class Consts {
     public static final int NEW_CARDS_DUE = 1;
 
     // Queue types
+    public static final int QUEUE_TYPE_MANUALLY_BURIED = -3;
 
     // Card types
 

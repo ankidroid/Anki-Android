@@ -74,7 +74,6 @@ public class Card implements Cloneable {
     public static final int TYPE_REV = 2;
     public static final int QUEUE_SUSP = -1;
     public static final int QUEUE_USER_BRD = -2;
-    public static final int QUEUE_SCHED_BRD = -3;
 
     private Collection mCol;
     private double mTimerStarted;
