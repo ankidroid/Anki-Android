@@ -1326,7 +1326,7 @@ public class Sched {
 
     private void _answerRevCard(Card card, int ease) {
         int delay = 0;
-        if (ease == 1) {
+        if (ease == Consts.BUTTON_ONE) {
             delay = _rescheduleLapse(card);
         } else {
             _rescheduleRev(card, ease);
@@ -2001,7 +2001,7 @@ public class Sched {
         try {
             if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
                 return _nextLrnIvl(card, ease);
-            } else if (ease == 1) {
+            } else if (ease == Consts.BUTTON_ONE) {
                 // lapsed
                 JSONObject conf = _lapseConf(card);
                 if (conf.getJSONArray("delays").length() > 0) {
@@ -2025,7 +2025,7 @@ public class Sched {
         }
         JSONObject conf = _lrnConf(card);
         try {
-            if (ease == 1) {
+            if (ease == Consts.BUTTON_ONE) {
                 // fail
                 return _delayForGrade(conf, conf.getJSONArray("delays").length());
             } else if (ease == Consts.BUTTON_THREE) {

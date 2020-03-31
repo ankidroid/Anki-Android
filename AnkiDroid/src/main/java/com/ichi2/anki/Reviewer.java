@@ -613,7 +613,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            mNext1.setText(mSched.nextIvlStr(this, mCurrentCard, 1));
+            mNext1.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_ONE));
             mNext2.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_TWO));
             if (buttonCount > 2) {
                 mNext3.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_THREE));

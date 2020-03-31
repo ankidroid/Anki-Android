@@ -201,7 +201,7 @@ public class SchedV2 extends Sched {
 
 
     public void _answerCardPreview(Card card, int ease) {
-        if (ease == 1) {
+        if (ease == Consts.BUTTON_ONE) {
             // Repeat after delay
             card.setQueue(Consts.QUEUE_TYPE_PREVIEW);
             card.setDue(Utils.intTime() + _previewDelay(card));
@@ -1354,7 +1354,7 @@ public class SchedV2 extends Sched {
         int delay = 0;
         boolean early = card.getODid() != 0 && (card.getODue() > mToday);
         int type = early ? 3 : 1;
-        if (ease == 1) {
+        if (ease == Consts.BUTTON_ONE) {
             delay = _rescheduleLapse(card);
         } else {
             _rescheduleRev(card, ease, early);
@@ -2133,7 +2133,7 @@ public class SchedV2 extends Sched {
     public long nextIvl(Card card, int ease) {
         // preview mode?
         if (_previewingCard(card)) {
-            if (ease == 1) {
+            if (ease == Consts.BUTTON_ONE) {
                 return _previewDelay(card);
             }
             return 0;
@@ -2142,7 +2142,7 @@ public class SchedV2 extends Sched {
             // (re)learning?
             if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
                 return _nextLrnIvl(card, ease);
-            } else if (ease == 1) {
+            } else if (ease == Consts.BUTTON_ONE) {
                 // lapse
                 JSONObject conf = _lapseConf(card);
                 if (conf.getJSONArray("delays").length() > 0) {
@@ -2171,7 +2171,7 @@ public class SchedV2 extends Sched {
         }
         JSONObject conf = _lrnConf(card);
         try {
-            if (ease == 1) {
+            if (ease == Consts.BUTTON_ONE) {
                 // fail
                 return _delayForGrade(conf, conf.getJSONArray("delays").length());
             } else if (ease == Consts.BUTTON_TWO) {
