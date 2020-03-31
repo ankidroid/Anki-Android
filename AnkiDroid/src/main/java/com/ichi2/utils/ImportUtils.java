@@ -45,6 +45,15 @@ public class ImportUtils {
         String extras = intent.getExtras() == null ? "none" : TextUtils.join(", ", intent.getExtras().keySet());
         Timber.i("Intent: %s. Data: %s", intent, extras);
 
+        try {
+            return handleFileImportInternal(context, intent);
+        } catch (Exception e) {
+            return context.getString(R.string.import_error_exception, e.getLocalizedMessage());
+        }
+    }
+
+    //Added to remove exception handlers
+    private static String handleFileImportInternal(Context context, Intent intent) {
         String errorMessage = null;
 
         if (intent.getData() == null) {
@@ -52,22 +61,14 @@ public class ImportUtils {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN || intent.getClipData() == null) {
                 return context.getString(R.string.import_error_unhandled_request);
             }
-            try {
-                Uri clipUri = intent.getClipData().getItemAt(0).getUri();
-                return handleContentProviderFile(context, intent, clipUri);
-            } catch (Exception e) {
-                return context.getString(R.string.import_error_exception, e.getLocalizedMessage());
-            }
+            Uri clipUri = intent.getClipData().getItemAt(0).getUri();
+            return handleContentProviderFile(context, intent, clipUri);
         }
 
         // If the file is being sent from a content provider we need to read the content before we can open the file
         if ("content".equals(intent.getData().getScheme())) {
             Timber.i("Attempting to read content from intent.");
-            try {
-                return handleContentProviderFile(context, intent, intent.getData());
-            } catch (Exception e) {
-                return context.getString(R.string.import_error_exception, e.getLocalizedMessage());
-            }
+            return handleContentProviderFile(context, intent, intent.getData());
         } else if ("file".equals(intent.getData().getScheme())) {
             Timber.i("Attempting to read file from intent.");
             // When the VIEW intent is sent as a file, we can open it directly without copying from content provider
