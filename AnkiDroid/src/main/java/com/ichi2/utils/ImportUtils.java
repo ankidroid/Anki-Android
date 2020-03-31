@@ -47,7 +47,7 @@ public class ImportUtils {
         String errorMessage = null;
         // If the file is being sent from a content provider we need to read the content before we can open the file
         if ("content".equals(intent.getData().getScheme())) {
-            return handleContentProviderFile(context, intent);
+            return handleContentProviderFile(context, intent, intent.getData());
         } else if ("file".equals(intent.getData().getScheme())) {
             // When the VIEW intent is sent as a file, we can open it directly without copying from content provider
             String filename = intent.getData().getPath();
@@ -63,13 +63,13 @@ public class ImportUtils {
     }
 
 
-    private static String handleContentProviderFile(Context context, Intent intent) {
+    private static String handleContentProviderFile(Context context, Intent intent, Uri data) {
         // Get the original filename from the content provider URI
         String errorMessage = null;
         String filename = null;
         Cursor cursor = null;
         try {
-            cursor = context.getContentResolver().query(intent.getData(), new String[]{OpenableColumns.DISPLAY_NAME}, null, null, null);
+            cursor = context.getContentResolver().query(data, new String[]{OpenableColumns.DISPLAY_NAME}, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
                 filename = cursor.getString(0);
                 Timber.d("handleFileImport() Importing from content provider: %s", filename);
