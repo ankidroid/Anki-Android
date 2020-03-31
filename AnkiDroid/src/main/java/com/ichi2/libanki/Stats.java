@@ -1168,7 +1168,7 @@ public class Stats {
         String query = "select " +
                 "sum(case when queue=2 and ivl >= 21 then 1 else 0 end), -- mtr\n" +
                 "sum(case when queue in (1,3) or (queue=2 and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
-                "sum(case when queue=0 then 1 else 0 end), -- new\n" +
+                "sum(case when queue=" + Consts.QUEUE_TYPE_NEW + " then 1 else 0 end), -- new\n" +
                 "sum(case when queue<0 then 1 else 0 end) -- susp\n" +
                 "from cards where did in " + _limit();
         Timber.d("CardsTypes query: %s", query);

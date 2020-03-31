@@ -173,7 +173,7 @@ public class SchedV2 extends Sched {
 
         card.setReps(card.getReps() + 1);
 
-        if (card.getQueue() == 0) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             // came from the new queue, move to learning
             card.setQueue(1);
             card.setType(1);
@@ -560,7 +560,7 @@ public class SchedV2 extends Sched {
     @SuppressWarnings("unused")
     private int _cntFnNew(long did, int lim) {
         return mCol.getDb().queryScalar(
-                "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim + ")");
+                "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + lim + ")");
     }
 
 
@@ -590,7 +590,7 @@ public class SchedV2 extends Sched {
                     cur = mCol
                             .getDb()
                             .getDatabase()
-                            .query("SELECT id FROM cards WHERE did = " + did + " AND queue = 0 order by due, ord LIMIT " + lim,
+                            .query("SELECT id FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_NEW + " order by due, ord LIMIT " + lim,
                                     null);
                     while (cur.moveToNext()) {
                         mNewQueue.add(cur.getLong(0));
@@ -710,7 +710,7 @@ public class SchedV2 extends Sched {
     		return 0;
     	}
     	lim = Math.min(lim, mReportLimit);
-    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim + ")");
+    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + lim + ")");
     }
 
 
@@ -728,7 +728,7 @@ public class SchedV2 extends Sched {
     }
 
     public int totalNewForCurrentDeck() {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 0 LIMIT " + mReportLimit + ")");
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + mReportLimit + ")");
     }
 
     /**
@@ -2056,7 +2056,7 @@ public class SchedV2 extends Sched {
 
     /** true if there are any new cards due. */
     public boolean newDue() {
-        return mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = 0 LIMIT 1") != 0;
+        return mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0;
     }
 
 
@@ -2140,7 +2140,7 @@ public class SchedV2 extends Sched {
         }
         try {
             // (re)learning?
-            if (card.getQueue() == 0 || card.getQueue() == 1 || card.getQueue() == 3) {
+            if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == 1 || card.getQueue() == 3) {
                 return _nextLrnIvl(card, ease);
             } else if (ease == 1) {
                 // lapse
@@ -2166,7 +2166,7 @@ public class SchedV2 extends Sched {
 
     // this isn't easily extracted from the learn code
     private long _nextLrnIvl(Card card, int ease) {
-        if (card.getQueue() == 0) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             card.setLeft(_startingLeft(card));
         }
         JSONObject conf = _lrnConf(card);
@@ -2308,7 +2308,7 @@ public class SchedV2 extends Sched {
         try {
             cur = mCol.getDb().getDatabase().query(String.format(Locale.US,
                     "select id, queue from cards where nid=%d and id!=%d "+
-                    "and (queue=0 or (queue=2 and due<=%d))", card.getNid(), card.getId(), mToday), null);
+                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=2 and due<=%d))", card.getNid(), card.getId(), mToday), null);
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
@@ -2345,7 +2345,7 @@ public class SchedV2 extends Sched {
     /** Put cards at the end of the new queue. */
     public void forgetCards(long[] ids) {
         remFromDyn(ids);
-        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,odue=0,factor="+Consts.STARTING_FACTOR +
+        mCol.getDb().execute("update cards set type=0,queue=" + Consts.QUEUE_TYPE_NEW + ",ivl=0,due=0,odue=0,factor="+Consts.STARTING_FACTOR +
                 " where id in " + Utils.ids2str(ids));
         int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0");
         // takes care of mod + usn
@@ -2383,7 +2383,7 @@ public class SchedV2 extends Sched {
      */
     public void resetCards(Long[] ids) {
         long[] nonNew = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, String.format(Locale.US,
-                "select id from cards where id in %s and (queue != 0 or type != 0)", Utils.ids2str(ids)), 0));
+                "select id from cards where id in %s and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != 0)", Utils.ids2str(ids)), 0));
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
         mCol.log((Object[]) ids);
@@ -2431,7 +2431,7 @@ public class SchedV2 extends Sched {
                 int shiftby = high - low + 1;
                 mCol.getDb().execute(
                         "UPDATE cards SET mod = " + now + ", usn = " + mCol.usn() + ", due = due + " + shiftby
-                                + " WHERE id NOT IN " + scids + " AND due >= " + low + " AND queue = 0");
+                                + " WHERE id NOT IN " + scids + " AND due >= " + low + " AND queue = " + Consts.QUEUE_TYPE_NEW);
             }
         }
         // reorder cards
@@ -2510,7 +2510,7 @@ public class SchedV2 extends Sched {
      */
 
     private void _emptyAllFiltered() {
-        mCol.getDb().execute(String.format(Locale.US,"update cards set did = odid, queue = (case when type = 1 then 0 when type = 3 then 2 else type end), type = (case when type = 1 then 0 when type = 3 then 2 else type end), due = odue, odue = 0, odid = 0, usn = %d where odid != 0", mCol.usn()));
+        mCol.getDb().execute(String.format(Locale.US,"update cards set did = odid, queue = (case when type = 1 then " + Consts.QUEUE_TYPE_NEW + " when type = 3 then 2 else type end), type = (case when type = 1 then 0 when type = 3 then 2 else type end), due = odue, odue = 0, odid = 0, usn = %d where odid != 0", mCol.usn()));
     }
 
 
@@ -2748,7 +2748,7 @@ public class SchedV2 extends Sched {
     public void decrementCounts(Card card) {
         int type = card.getQueue();
         switch (type) {
-        case 0:
+        case Consts.QUEUE_TYPE_NEW:
             mNewCount--;
             break;
         case 1:

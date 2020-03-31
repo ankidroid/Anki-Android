@@ -128,7 +128,7 @@ public class Card implements Cloneable {
             mId = Utils.timestampID(mCol.getDb(), "cards");
             mDid = 1;
             mType = 0;
-            mQueue = 0;
+            mQueue = Consts.QUEUE_TYPE_NEW;
             mIvl = 0;
             mFactor = 0;
             mReps = 0;
@@ -709,7 +709,7 @@ public class Card implements Cloneable {
             return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card);
         } else if (getQueue() == 1) {
             date = due;
-        } else if (getQueue() == 0 || getType() == 0) {
+        } else if (getQueue() == Consts.QUEUE_TYPE_NEW || getType() == 0) {
             return (new Long(due)).toString();
         } else if (getQueue() == 2 || getQueue() == 3 || (getType() == 2 && getQueue() < 0)) {
             long time = System.currentTimeMillis() / 1000L;

@@ -31,6 +31,7 @@ public class Consts {
     public static final int QUEUE_TYPE_MANUALLY_BURIED = -3;
     public static final int QUEUE_TYPE_SIBLING_BURIED = -2;
     public static final int QUEUE_TYPE_SUSPENDED = -1;
+    public static final int QUEUE_TYPE_NEW = 0;
 
     // Card types
 
