@@ -174,7 +174,7 @@ public class Sched {
             }
             _updateStats(card, "new");
         }
-        if (card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == 3) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
             _answerLrnCard(card, ease);
             if (!wasNewQ) {
                 _updateStats(card, "lrn");
@@ -226,7 +226,7 @@ public class Sched {
 
 
     public int countIdx(Card card) {
-        if (card.getQueue() == 3) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
             return 1;
         }
         return card.getQueue();
@@ -747,7 +747,7 @@ public class Sched {
 
         // day
         mLrnCount += mCol.getDb().queryScalar(
-                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = 3 AND due <= " + mToday
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday
                         + " LIMIT " + mReportLimit);
     }
 
@@ -840,7 +840,7 @@ public class Sched {
                         .getDb()
                         .getDatabase()
                         .query(
-                                "SELECT id FROM cards WHERE did = " + did + " AND queue = 3 AND due <= " + mToday
+                                "SELECT id FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday
                                         + " LIMIT " + mQueueLimit, null);
                 while (cur.moveToNext()) {
                     mLrnDayQueue.add(cur.getLong(0));
@@ -953,7 +953,7 @@ public class Sched {
                 // the card is due in one or more days, so we need to use the day learn queue
                 long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
                 card.setDue(mToday + ahead);
-                card.setQueue(3);
+                card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
             }
         }
         _logLrn(card, ease, conf, leaving, type, lastLeft);
@@ -1156,9 +1156,9 @@ public class Sched {
         // review cards in relearning
         mCol.getDb().execute(
                 "update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", mod = " + Utils.intTime() +
-                ", usn = " + mCol.usn() + ", odue = 0 where queue IN (" + Consts.QUEUE_TYPE_LRN + ",3) and type = 2 " + extra);
+                ", usn = " + mCol.usn() + ", odue = 0 where queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type = 2 " + extra);
         // new cards in learning
-        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE queue IN (" + Consts.QUEUE_TYPE_LRN + ",3) " + extra, 0)));
+        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " + extra, 0)));
     }
 
 
@@ -1170,7 +1170,7 @@ public class Sched {
                             + " LIMIT " + mReportLimit + ")");
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did
-                            + " AND queue = 3 AND due <= " + mToday
+                            + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday
                             + " LIMIT " + mReportLimit + ")");
         } catch (SQLException | JSONException e) {
             throw new RuntimeException(e);
@@ -1375,7 +1375,7 @@ public class Sched {
                 // day learn queue
                 long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
                 card.setDue(mToday + ahead);
-                card.setQueue(3);
+                card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
             }
             return delay;
         } catch (JSONException e) {
@@ -1999,7 +1999,7 @@ public class Sched {
      */
     public long nextIvl(Card card, int ease) {
         try {
-            if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == 3) {
+            if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
                 return _nextLrnIvl(card, ease);
             } else if (ease == 1) {
                 // lapsed
@@ -2504,7 +2504,7 @@ public class Sched {
         case Consts.QUEUE_TYPE_REV:
             mRevCount--;
             break;
-        case 3:
+        case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
             mLrnCount--;
             break;
         }

@@ -378,7 +378,7 @@ public class Stats {
                     + " AS day, " // day
                     + "count(), " // all cards
                     + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                    + "FROM cards WHERE did IN " + _limit() + " AND queue IN (" + Consts.QUEUE_TYPE_REV + ",3)" + lim
+                    + "FROM cards WHERE did IN " + _limit() + " AND queue IN (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")" + lim
                     + " GROUP BY day ORDER BY day";
             Timber.d("Forecast query: %s", query);
             cur = mCol
@@ -1167,7 +1167,7 @@ public class Stats {
         Cursor cur = null;
         String query = "select " +
                 "sum(case when queue=" + Consts.QUEUE_TYPE_REV + " and ivl >= 21 then 1 else 0 end), -- mtr\n" +
-                "sum(case when queue in (" + Consts.QUEUE_TYPE_LRN + ",3) or (queue=" + Consts.QUEUE_TYPE_REV + " and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
+                "sum(case when queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") or (queue=" + Consts.QUEUE_TYPE_REV + " and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
                 "sum(case when queue=" + Consts.QUEUE_TYPE_NEW + " then 1 else 0 end), -- new\n" +
                 "sum(case when queue<0 then 1 else 0 end) -- susp\n" +
                 "from cards where did in " + _limit();

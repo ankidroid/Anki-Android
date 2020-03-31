@@ -182,7 +182,7 @@ public class SchedV2 extends Sched {
             // update daily limit
             _updateStats(card, "new");
         }
-        if (card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == 3) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
             _answerLrnCard(card, ease);
         } else if (card.getQueue() == Consts.QUEUE_TYPE_REV) {
             _answerRevCard(card, ease);
@@ -247,7 +247,7 @@ public class SchedV2 extends Sched {
 
 
     public int countIdx(Card card) {
-        if (card.getQueue() == 3 || card.getQueue() == 4) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.getQueue() == 4) {
             return 1;
         }
         return card.getQueue();
@@ -764,7 +764,7 @@ public class SchedV2 extends Sched {
 
         // day
         mLrnCount += mCol.getDb().queryScalar(
-                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = 3 AND due <= " + mToday);
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday);
 
         // previews
         mLrnCount += mCol.getDb().queryScalar(
@@ -868,7 +868,7 @@ public class SchedV2 extends Sched {
                         .getDb()
                         .getDatabase()
                         .query(
-                                "SELECT id FROM cards WHERE did = " + did + " AND queue = 3 AND due <= " + mToday
+                                "SELECT id FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday
                                         + " LIMIT " + mQueueLimit, null);
                 while (cur.moveToNext()) {
                     mLrnDayQueue.add(cur.getLong(0));
@@ -1016,7 +1016,7 @@ public class SchedV2 extends Sched {
             // the card is due in one or more days, so we need to use the day learn queue
             long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
             card.setDue(mToday + ahead);
-            card.setQueue(3);
+            card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
         }
         return delay;
     }
@@ -1210,7 +1210,7 @@ public class SchedV2 extends Sched {
                             + " LIMIT " + mReportLimit + ")");
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = " + did
-                            + " AND queue = 3 AND due <= " + mToday
+                            + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday
                             + " LIMIT " + mReportLimit + ")");
         } catch (SQLException | JSONException e) {
             throw new RuntimeException(e);
@@ -1765,7 +1765,7 @@ public class SchedV2 extends Sched {
             if (card.getODue() > 1000000000) {
                 card.setQueue(Consts.QUEUE_TYPE_LRN);
             } else {
-                card.setQueue(3);
+                card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
             }
         } else {
             card.setQueue(card.getType());
@@ -2140,7 +2140,7 @@ public class SchedV2 extends Sched {
         }
         try {
             // (re)learning?
-            if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == 3) {
+            if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
                 return _nextLrnIvl(card, ease);
             } else if (ease == 1) {
                 // lapse
@@ -2203,7 +2203,7 @@ public class SchedV2 extends Sched {
      */
     private String _restoreQueueSnippet() {
         return "queue = (case when type in (" + Consts.QUEUE_TYPE_LRN + ",3) then\n" +
-                "  (case when (case when odue then odue else due end) > 1000000000 then 1 else 3 end)\n" +
+                "  (case when (case when odue then odue else due end) > 1000000000 then 1 else " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " end)\n" +
                 "else\n" +
                 "  type\n" +
                 "end)  ";
@@ -2521,14 +2521,14 @@ public class SchedV2 extends Sched {
     private void _removeAllFromLearning(int schedVer) {
         // remove review cards from relearning
         if (schedVer == 1) {
-            mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", type = 2, mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + ",3) and type in (2,3)", Utils.intTime(), mCol.usn()));
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", type = 2, mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (2,3)", Utils.intTime(), mCol.usn()));
         } else {
-            mCol.getDb().execute(String.format(Locale.US,"update cards set due = %d+ivl, queue = " + Consts.QUEUE_TYPE_REV + ", type = 2, mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + ",3) and type in (2,3)", mToday, Utils.intTime(), mCol.usn()));
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = %d+ivl, queue = " + Consts.QUEUE_TYPE_REV + ", type = 2, mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (2,3)", mToday, Utils.intTime(), mCol.usn()));
         }
 
 
         // remove new cards from learning
-        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "select id from cards where queue in (" + Consts.QUEUE_TYPE_LRN + ",3)", 0)));
+        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "select id from cards where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")", 0)));
     }
 
 
@@ -2757,7 +2757,7 @@ public class SchedV2 extends Sched {
         case Consts.QUEUE_TYPE_REV:
             mRevCount--;
             break;
-        case 3:
+        case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
             mLrnCount--;
             break;
         }
