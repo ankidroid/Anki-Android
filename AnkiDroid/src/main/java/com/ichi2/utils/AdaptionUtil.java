@@ -23,7 +23,8 @@ public class AdaptionUtil {
         List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         if (list.size() == 0) {
             sHasWebBrowser = false;
-        ]
+        }
+        sHasRunWebBrowserCheck = true;
         return sHasWebBrowser;
     }
 

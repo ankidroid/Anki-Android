@@ -226,8 +226,4 @@
     <string name="import_cannot_with_v2">V2 调度器无法导入包含进度的 V1 牌组。</string>
     <string name="export_v2_dummy_note">此文件需要更新版本的 Anki。</string>
     <string name="export_v2_forbidden">在导出带有进度信息的单个牌组前，请切换到 V1 调度器。</string>
-
-    <string name="activity_start_failed">没有找到执行这个请求的应用</string>
-    <string name="no_browser_notification">没有检测到浏览器，请使用pc或手机登录网页: </string>
-    <string name="no_outgoing_link_in_cardbrowser">该设备暂不支持闪卡中外部网页的访问</string>
 </resources>

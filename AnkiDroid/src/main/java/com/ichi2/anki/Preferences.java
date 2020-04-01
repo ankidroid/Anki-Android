@@ -75,6 +75,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -126,10 +127,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     @Override
     public void onBuildHeaders(List<Header> target) {
-        if (AdaptionUtil.hasReducedPreferences()) {
-            loadHeadersFromResource(R.xml.preference_headers_without_advanced, target);
-        } else {
-            loadHeadersFromResource(R.xml.preference_headers, target);
+        loadHeadersFromResource(R.xml.preference_headers, target);
+        Iterator iterator = target.iterator();
+        while (iterator.hasNext()) {
+            Header header = (Header)iterator.next();
+            if ((header.titleRes == R.string.pref_cat_advanced) && AdaptionUtil.hasReducedPreferences()){
+                iterator.remove();
+            }
         }
     }
 
