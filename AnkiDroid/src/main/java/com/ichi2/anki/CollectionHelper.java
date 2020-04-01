@@ -135,8 +135,8 @@ public class CollectionHelper {
      * Close the {@link Collection}, optionally saving
      * @param save whether or not save before closing
      */
-    public synchronized void closeCollection(boolean save) {
-        Timber.i("closeCollection");
+    public synchronized void closeCollection(boolean save, String reason) {
+        Timber.i("closeCollection: %s", reason);
         if (mCollection != null) {
             mCollection.close(save);
         }

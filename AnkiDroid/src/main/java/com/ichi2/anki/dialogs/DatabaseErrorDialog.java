@@ -229,7 +229,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         .positiveText(res.getString(R.string.dialog_positive_create))
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .onPositive((inner_dialog, which) -> {
-                            CollectionHelper.getInstance().closeCollection(false);
+                            CollectionHelper.getInstance().closeCollection(false, "DatabaseErrorDialog: Before Create New Collection");
                             String path1 = CollectionHelper.getCollectionPath(getActivity());
                             if (BackupManager.moveDatabaseToBrokenFolder(path1, false)) {
                                 ((DeckPicker) getActivity()).restartActivity();
