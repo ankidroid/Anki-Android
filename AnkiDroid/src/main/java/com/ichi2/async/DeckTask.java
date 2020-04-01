@@ -879,6 +879,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundRenderBrowserQA(TaskData... params) {
+        //TODO: Convert this to accept the following to make thread-safe:
+        //(Range<Position>, Function<Position, BrowserCard>)
         Timber.d("doInBackgroundRenderBrowserQA");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         List<Map<String, String>> cards = (List<Map<String, String>>) params[0].getObjArray()[0];
