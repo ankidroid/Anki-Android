@@ -897,7 +897,16 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             if (i < 0 || i >= cards.size()) {
                 continue;
             }
-            Map<String, String> card = cards.get(i);
+            Map<String, String> card;
+            try {
+                card = cards.get(i);
+            }
+            catch (IndexOutOfBoundsException e) {
+                //even though we test against card.size() above, there's still a race condition
+                //We might be able to optimise this to return here. Logically if we're past the end of the collection,
+                //we won't reach any more cards.
+                continue;
+            }
             if (card.get("answer") == null) {
                 // Extract card item
                 Card c;
