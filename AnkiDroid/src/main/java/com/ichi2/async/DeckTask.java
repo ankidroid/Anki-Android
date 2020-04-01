@@ -898,7 +898,15 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             Map<String, String> card = cards.get(i);
             if (card.get("answer") == null) {
                 // Extract card item
-                Card c = col.getCard(Long.parseLong(card.get("id")));
+                Card c;
+                try {
+                    c = col.getCard(Long.parseLong(card.get("id")));
+                } catch (Exception e) {
+                    //#5891 - card can be inconsistent between the deck browser screen and the collection.
+                    //Realistically, we can skip any exception as it's a rendering task which should not kill the
+                    //process
+                    continue;
+                }
                 // Update item
                 CardBrowser.updateSearchItemQA(mContext, card, c);
                 float progress = (float) i / n * 100;
