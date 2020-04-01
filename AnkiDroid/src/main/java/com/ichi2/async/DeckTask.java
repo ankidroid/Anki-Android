@@ -892,16 +892,17 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 Timber.d("doInBackgroundRenderBrowserQA was aborted");
                 return null;
             }
-            if (i >= 0 && i < cards.size()) {
-                Map<String, String> card = cards.get(i);
-                if (card.get("answer") == null) {
-                    // Extract card item
-                    Card c = col.getCard(Long.parseLong(card.get("id"), 10));
-                    // Update item
-                    CardBrowser.updateSearchItemQA(mContext, card, c);
-                    float progress = (float) i / n * 100;
-                    publishProgress(new TaskData((int) progress));
-                }
+            if (i < 0 || i >= cards.size()) {
+                continue;
+            }
+            Map<String, String> card = cards.get(i);
+            if (card.get("answer") == null) {
+                // Extract card item
+                Card c = col.getCard(Long.parseLong(card.get("id"), 10));
+                // Update item
+                CardBrowser.updateSearchItemQA(mContext, card, c);
+                float progress = (float) i / n * 100;
+                publishProgress(new TaskData((int) progress));
             }
         }
         return new TaskData(cards);
