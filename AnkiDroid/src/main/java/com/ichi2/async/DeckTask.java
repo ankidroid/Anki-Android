@@ -864,7 +864,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         List<Map<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);
         // Render the first few items
         for (int i = 0; i < Math.min(numCardsToRender, searchResult.size()); i++) {
-            Card c = col.getCard(Long.parseLong(searchResult.get(i).get("id"), 10));
+            Card c = col.getCard(Long.parseLong(searchResult.get(i).get("id")));
             CardBrowser.updateSearchItemQA(mContext, searchResult.get(i), c);
         }
         // Finish off the task
@@ -898,7 +898,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             Map<String, String> card = cards.get(i);
             if (card.get("answer") == null) {
                 // Extract card item
-                Card c = col.getCard(Long.parseLong(card.get("id"), 10));
+                Card c = col.getCard(Long.parseLong(card.get("id")));
                 // Update item
                 CardBrowser.updateSearchItemQA(mContext, card, c);
                 float progress = (float) i / n * 100;
