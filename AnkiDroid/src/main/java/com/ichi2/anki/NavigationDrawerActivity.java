@@ -232,7 +232,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 }
             } else {
                 // collection path has changed so kick the user back to the DeckPicker
-                CollectionHelper.getInstance().closeCollection(true);
+                CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed");
                 restartActivityInvalidateBackstack(this);
             }
         } else {

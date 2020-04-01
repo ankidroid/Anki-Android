@@ -936,7 +936,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(false);
         } else {
             // Close the collection and we restart the app to reload
-            CollectionHelper.getInstance().closeCollection(true);
+            CollectionHelper.getInstance().closeCollection(true, "Check Database Completed");
             return new TaskData(0, result, true);
         }
     }
@@ -1077,7 +1077,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         publishProgress(new TaskData(res.getString(R.string.importing_collection)));
         if (col != null) {
             // unload collection and trigger a backup
-            CollectionHelper.getInstance().closeCollection(true);
+            CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
             CollectionHelper.getInstance().lockCollection();
             BackupManager.performBackupInBackground(colPath, true);
         }

@@ -975,7 +975,7 @@ public class ContentProviderTest {
     }
 
     private Collection reopenCol() {
-        CollectionHelper.getInstance().closeCollection(false);
+        CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
         return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
     }
 
