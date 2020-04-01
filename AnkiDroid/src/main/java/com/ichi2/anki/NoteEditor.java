@@ -1222,7 +1222,7 @@ public class NoteEditor extends AnkiActivity {
                                 return false;
                         }
                     });
-                    if(AdaptionUtil.hasReducedPreferences()) {
+                    if (AdaptionUtil.hasReducedPreferences()) {
                         popup.getMenu().findItem(R.id.menu_multimedia_photo).setVisible(false);
                         popup.getMenu().findItem(R.id.menu_multimedia_text).setVisible(false);
                     }

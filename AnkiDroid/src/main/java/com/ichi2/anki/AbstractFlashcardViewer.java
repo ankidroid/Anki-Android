@@ -1454,8 +1454,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             @Override
             @TargetApi(Build.VERSION_CODES.N)
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                WebResourceResponse webResourceResponse=null;
-                if(AdaptionUtil.hasReducedPreferences()) {
+                WebResourceResponse webResourceResponse = null;
+                if (AdaptionUtil.hasWebBrowser()) {
                     String scheme = request.getUrl().getScheme().trim();
                     if (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https")) {
                         String response = getResources().getString(R.string.no_outgoing_link_in_cardbrowser);

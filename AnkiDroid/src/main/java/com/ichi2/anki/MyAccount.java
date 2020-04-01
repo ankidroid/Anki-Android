@@ -133,12 +133,12 @@ public class MyAccount extends AnkiActivity {
 
 
     private void resetPassword() {
-        if(AdaptionUtil.hasWebBrowser(this)) {
+        if (AdaptionUtil.hasWebBrowser(this)) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(getResources().getString(R.string.resetpw_url)));
             startActivityWithoutAnimation(intent);
-        }else {
-            UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification)+getResources().getString(R.string.resetpw_url), false);
+        } else {
+            UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + getResources().getString(R.string.resetpw_url), false);
         }
     }
 
@@ -155,10 +155,10 @@ public class MyAccount extends AnkiActivity {
         resetPWButton.setOnClickListener(v -> resetPassword());
 
         Button signUpButton = mLoginToMyAccountView.findViewById(R.id.sign_up_button);
-        if(AdaptionUtil.hasWebBrowser(this)) {
+        if (AdaptionUtil.hasWebBrowser(this)) {
             signUpButton.setOnClickListener(v -> openUrl(Uri.parse(getResources().getString(R.string.register_url))));
-        }else{
-            signUpButton.setOnClickListener(v -> UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification)+getResources().getString(R.string.register_url), false));
+        } else {
+            signUpButton.setOnClickListener(v -> UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + getResources().getString(R.string.register_url), false));
         }
 
         mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);

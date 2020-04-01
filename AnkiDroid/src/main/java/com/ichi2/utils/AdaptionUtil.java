@@ -10,14 +10,24 @@ import android.os.Build;
 import java.util.List;
 
 public class AdaptionUtil {
-    public static boolean hasWebBrowser(Context context){
+    private static boolean sHasRunWebBrowserCheck = false;
+    private static boolean sHasWebBrowser = true;
+
+    public static boolean hasWebBrowser(Context context) {
+        if (sHasRunWebBrowserCheck) {
+            return sHasWebBrowser;
+        }
+        
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
         PackageManager pm = context.getPackageManager();
         List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        return list.size()==0 ? false : true;
+        if (list.size() == 0) {
+            sHasWebBrowser = false;
+        ]
+        return sHasWebBrowser;
     }
 
     public static boolean hasReducedPreferences(){
-        return Build.MANUFACTURER.equalsIgnoreCase("Xiaomi") && (Build.PRODUCT.equalsIgnoreCase("Archytas")||Build.PRODUCT.equalsIgnoreCase("Archimedes"));
+        return Build.MANUFACTURER.equalsIgnoreCase("Xiaomi") && (Build.PRODUCT.equalsIgnoreCase("Archytas") || Build.PRODUCT.equalsIgnoreCase("Archimedes"));
     }
 }

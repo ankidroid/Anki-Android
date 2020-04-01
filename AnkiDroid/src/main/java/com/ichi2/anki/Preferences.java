@@ -126,9 +126,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     @Override
     public void onBuildHeaders(List<Header> target) {
-        if(AdaptionUtil.hasReducedPreferences()) {
+        if (AdaptionUtil.hasReducedPreferences()) {
             loadHeadersFromResource(R.xml.preference_headers_without_advanced, target);
-        }else {
+        } else {
             loadHeadersFromResource(R.xml.preference_headers, target);
         }
     }
@@ -196,7 +196,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             case "com.ichi2.anki.prefs.general":
                 listener.addPreferencesFromResource(R.xml.preferences_general);
                 screen = listener.getPreferenceScreen();
-                if(AdaptionUtil.hasReducedPreferences()) {
+                if (AdaptionUtil.hasReducedPreferences()) {
                     CheckBoxPreference mCheckBoxPref_Vibrate = (CheckBoxPreference) screen.findPreference("widgetVibrate");
                     CheckBoxPreference mCheckBoxPref_Blink = (CheckBoxPreference) screen.findPreference("widgetBlink");
                     PreferenceCategory mCategory = (PreferenceCategory) screen.findPreference("category_general_notification_pref");

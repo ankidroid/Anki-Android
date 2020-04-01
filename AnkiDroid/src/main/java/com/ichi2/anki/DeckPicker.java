@@ -1925,10 +1925,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     public void addSharedDeck() {
-        if(AdaptionUtil.hasWebBrowser(DeckPicker.this)) {
+        if (AdaptionUtil.hasWebBrowser(DeckPicker.this)) {
             openUrl(Uri.parse(getResources().getString(R.string.shared_decks_url)));
-        }else {
-            UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.no_browser_notification)+ getResources().getString(R.string.shared_decks_url), false);
+        } else {
+            UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.no_browser_notification) + getResources().getString(R.string.shared_decks_url), false);
         }
     }
 
