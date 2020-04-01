@@ -1375,7 +1375,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     public void exit() {
-        CollectionHelper.getInstance().closeCollection(false);
+        CollectionHelper.getInstance().closeCollection(false, "DeckPicker:exit()");
         finishWithoutAnimation();
     }
 
