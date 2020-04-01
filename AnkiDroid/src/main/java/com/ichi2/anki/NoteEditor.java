@@ -77,6 +77,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONArray;
@@ -1221,6 +1222,10 @@ public class NoteEditor extends AnkiActivity {
                                 return false;
                         }
                     });
+                    if (AdaptionUtil.hasReducedPreferences()) {
+                        popup.getMenu().findItem(R.id.menu_multimedia_photo).setVisible(false);
+                        popup.getMenu().findItem(R.id.menu_multimedia_text).setVisible(false);
+                    }
                     popup.show();
                 }
             }

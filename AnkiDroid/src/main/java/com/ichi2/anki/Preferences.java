@@ -63,6 +63,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.ui.ConfirmationPreference;
 import com.ichi2.ui.SeekBarPreference;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.VersionUtils;
@@ -75,6 +76,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -127,6 +129,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preference_headers, target);
+        Iterator iterator = target.iterator();
+        while (iterator.hasNext()) {
+            Header header = (Header)iterator.next();
+            if ((header.titleRes == R.string.pref_cat_advanced) && AdaptionUtil.hasReducedPreferences()){
+                iterator.remove();
+            }
+        }
     }
 
 
@@ -186,13 +195,20 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         i.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
         return i;
     }
-
     private void initSubscreen(String action, PreferenceContext listener) {
         PreferenceScreen screen;
         switch (action) {
             case "com.ichi2.anki.prefs.general":
                 listener.addPreferencesFromResource(R.xml.preferences_general);
                 screen = listener.getPreferenceScreen();
+                if (AdaptionUtil.hasReducedPreferences()) {
+                    CheckBoxPreference mCheckBoxPref_Vibrate = (CheckBoxPreference) screen.findPreference("widgetVibrate");
+                    CheckBoxPreference mCheckBoxPref_Blink = (CheckBoxPreference) screen.findPreference("widgetBlink");
+                    PreferenceCategory mCategory = (PreferenceCategory) screen.findPreference("category_general_notification_pref");
+                    mCategory.removePreference(mCheckBoxPref_Vibrate);
+                    mCategory.removePreference(mCheckBoxPref_Blink);
+                }
+
                 // Build languages
                 initializeLanguageDialog(screen);
                 break;

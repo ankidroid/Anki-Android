@@ -68,6 +68,7 @@ import android.webkit.JsResult;
 import android.webkit.RenderProcessGoneDetail;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -96,6 +97,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
@@ -104,6 +106,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -1483,6 +1486,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();
                 return filterUrl(url);
+            }
+
+            @Override
+            @TargetApi(Build.VERSION_CODES.N)
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                WebResourceResponse webResourceResponse = null;
+                if (!AdaptionUtil.hasWebBrowser(getBaseContext())) {
+                    String scheme = request.getUrl().getScheme().trim();
+                    if (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https")) {
+                        String response = getResources().getString(R.string.no_outgoing_link_in_cardbrowser);
+                        webResourceResponse = new WebResourceResponse("text/html", "utf-8", new ByteArrayInputStream(response.getBytes()));
+                    }
+                }
+                return webResourceResponse;
             }
 
             @Override
