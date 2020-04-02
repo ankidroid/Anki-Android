@@ -915,12 +915,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
             // Extract card item
             Card c;
+            String cardId = card.get("id");
             try {
-                c = col.getCard(Long.parseLong(card.get("id")));
+                c = col.getCard(Long.parseLong(cardId));
             } catch (Exception e) {
                 //#5891 - card can be inconsistent between the deck browser screen and the collection.
                 //Realistically, we can skip any exception as it's a rendering task which should not kill the
                 //process
+                Timber.e(e, "Could not process card '%s' - skipping", cardId);
                 continue;
             }
             // Update item
