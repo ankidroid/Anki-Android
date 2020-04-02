@@ -105,7 +105,6 @@ import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.VersionUtils;
@@ -1925,11 +1924,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     public void addSharedDeck() {
-        if (AdaptionUtil.hasWebBrowser(DeckPicker.this)) {
-            openUrl(Uri.parse(getResources().getString(R.string.shared_decks_url)));
-        } else {
-            UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.no_browser_notification) + getResources().getString(R.string.shared_decks_url), false);
-        }
+        openUrl(Uri.parse(getResources().getString(R.string.shared_decks_url)));
     }
 
 
@@ -2001,7 +1996,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_manual_getting_started));
             mayOpenUrl(helpUrl);
             UIUtils.showSnackbar(this, R.string.empty_deck, false, R.string.help,
-                    v -> openUrl(helpUrl), findViewById(R.id.root_layout), mSnackbarShowHideCallback);
+                    v -> openHelpUrl(helpUrl), findViewById(R.id.root_layout), mSnackbarShowHideCallback);
             if (mFragmented) {
                 openStudyOptions(false);
             } else {
@@ -2021,6 +2016,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 updateDeckList();
             }
         }
+    }
+
+
+    private void openHelpUrl(Uri helpUrl) {
+        openUrl(helpUrl);
     }
 
 

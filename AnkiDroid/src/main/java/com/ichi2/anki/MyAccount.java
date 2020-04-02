@@ -155,11 +155,8 @@ public class MyAccount extends AnkiActivity {
         resetPWButton.setOnClickListener(v -> resetPassword());
 
         Button signUpButton = mLoginToMyAccountView.findViewById(R.id.sign_up_button);
-        if (AdaptionUtil.hasWebBrowser(this)) {
-            signUpButton.setOnClickListener(v -> openUrl(Uri.parse(getResources().getString(R.string.register_url))));
-        } else {
-            signUpButton.setOnClickListener(v -> UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + getResources().getString(R.string.register_url), false));
-        }
+        Uri url = Uri.parse(getResources().getString(R.string.register_url));
+        signUpButton.setOnClickListener(v -> openUrl(url));
 
         mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);
         mUsernameLoggedIn = mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);
