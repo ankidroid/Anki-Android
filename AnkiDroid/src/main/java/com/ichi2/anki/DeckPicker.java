@@ -105,7 +105,6 @@ import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.VersionUtils;
@@ -1925,11 +1924,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     public void addSharedDeck() {
-        if (AdaptionUtil.hasWebBrowser(DeckPicker.this)) {
-            openUrl(Uri.parse(getResources().getString(R.string.shared_decks_url)));
-        } else {
-            UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.no_browser_notification) + getResources().getString(R.string.shared_decks_url), false);
-        }
+        openUrl(Uri.parse(getResources().getString(R.string.shared_decks_url)));
     }
 
 
@@ -2025,11 +2020,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void openHelpUrl(Uri helpUrl) {
-        if (AdaptionUtil.hasWebBrowser(this)) {
-            openUrl(helpUrl);
-        } else {
-            UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + helpUrl, false);
-        }
+        openUrl(helpUrl);
     }
 
 

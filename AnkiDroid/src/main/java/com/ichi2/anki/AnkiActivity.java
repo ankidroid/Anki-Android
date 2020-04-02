@@ -35,6 +35,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.AdaptionUtil;
 
 import timber.log.Timber;
 
@@ -304,7 +305,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
     protected void openUrl(Uri url) {
-        CompatHelper.getCompat().openUrl(this, url);
+        //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
+        //display the toast
+        if (AdaptionUtil.hasWebBrowser(this)) {
+            CompatHelper.getCompat().openUrl(this, url);
+        } else {
+            UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + url, false);
+        }
     }
 
     public CustomTabActivityHelper getCustomTabActivityHelper() {

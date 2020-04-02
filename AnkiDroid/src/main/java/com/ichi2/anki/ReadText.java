@@ -31,7 +31,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.utils.AdaptionUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -329,11 +328,7 @@ public class ReadText {
 
     private static void openTtsHelpUrl(Uri helpUrl) {
         AnkiActivity activity =  (AnkiActivity) mReviewer.get();
-        if (AdaptionUtil.hasWebBrowser(activity)) {
-            activity.openUrl(helpUrl);
-        } else {
-            UIUtils.showThemedToast(activity, activity.getResources().getString(R.string.no_browser_notification) + helpUrl, false);
-        }
+        activity.openUrl(helpUrl);
     }
 
 
