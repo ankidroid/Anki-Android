@@ -72,6 +72,7 @@ import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
@@ -1017,7 +1018,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // Only new cards may be repositioned
                 long[] cardIds = getSelectedCardIds();
                 for (int i = 0; i < cardIds.length; i++) {
-                    if (getCol().getCard(cardIds[i]).getQueue() != Card.TYPE_NEW) {
+                    if (getCol().getCard(cardIds[i]).getQueue() != Consts.CARD_TYPE_NEW) {
                         SimpleMessageDialog dialog = SimpleMessageDialog.newInstance(
                                 getString(R.string.vague_error),
                                 getString(R.string.reposition_card_not_new_error),
@@ -1327,7 +1328,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             card.put("deck", deckName);
             // update flags (marked / suspended / etc) which determine color
-            card.put("suspended", c.getQueue() == Card.QUEUE_SUSP ? "True": "False");
+            card.put("suspended", c.getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
             card.put("flags", (new Integer(c.getUserFlag())).toString());
         }
 
@@ -1392,7 +1393,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put("answer", formatQA(a));
         item.put("card", c.template().optString("name"));
         item.put("due", c.getDueString());
-        if (c.getType() == 0) {
+        if (c.getType() == Consts.CARD_TYPE_NEW) {
             item.put("ease", context.getString(R.string.card_browser_ease_new_card));
         } else {
             item.put("ease", (c.getFactor()/10)+"%");
@@ -1402,13 +1403,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put("created", LanguageUtil.getShortDateFormatFromMs(c.note().getId()));
         item.put("edited", LanguageUtil.getShortDateFormatFromS(c.note().getMod()));
         // interval
-        int type = c.getType();
-        if (type == 0) {
-            item.put("interval", context.getString(R.string.card_browser_interval_new_card));
-        } else if (type == 1) {
-            item.put("interval", context.getString(R.string.card_browser_interval_learning_card));
-        } else {
-            item.put("interval", Utils.timeSpan(context, c.getIvl()*86400));
+        switch (c.getType()) {
+            case Consts.CARD_TYPE_NEW:
+                item.put("interval", context.getString(R.string.card_browser_interval_new_card));
+                break;
+            case Consts.CARD_TYPE_LRN :
+                item.put("interval", context.getString(R.string.card_browser_interval_learning_card));
+                break;
+            default:
+                item.put("interval", Utils.timeSpan(context, c.getIvl()*86400));
+                break;
         }
         item.put("lapses", Integer.toString(c.getLapses()));
         item.put("note", c.model().optString("name"));

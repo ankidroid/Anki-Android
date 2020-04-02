@@ -69,12 +69,7 @@ import java.util.Set;
                     "PMD.MethodNamingConventions"})
 public class Card implements Cloneable {
 
-    public static final int TYPE_NEW = 0;
-    public static final int TYPE_LRN = 1;
     public static final int TYPE_REV = 2;
-    public static final int QUEUE_SUSP = -1;
-    public static final int QUEUE_USER_BRD = -2;
-    public static final int QUEUE_SCHED_BRD = -3;
 
     private Collection mCol;
     private double mTimerStarted;
@@ -130,8 +125,8 @@ public class Card implements Cloneable {
             // to flush, set nid, ord, and due
             mId = Utils.timestampID(mCol.getDb(), "cards");
             mDid = 1;
-            mType = 0;
-            mQueue = 0;
+            mType = Consts.CARD_TYPE_NEW;
+            mQueue = Consts.QUEUE_TYPE_NEW;
             mIvl = 0;
             mFactor = 0;
             mReps = 0;
@@ -191,7 +186,7 @@ public class Card implements Cloneable {
             mUsn = mCol.usn();
         }
         // bug check
-        //if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
+        //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
         //}
         assert (mDue < Long.valueOf("4294967296"));
@@ -226,7 +221,7 @@ public class Card implements Cloneable {
         mMod = Utils.intTime();
         mUsn = mCol.usn();
         // bug check
-        //if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
+        //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
         //}
         assert (mDue < Long.valueOf("4294967296"));
@@ -710,11 +705,11 @@ public class Card implements Cloneable {
         long due = getDue();
         if (getODid() != 0) {
             return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card);
-        } else if (getQueue() == 1) {
+        } else if (getQueue() == Consts.QUEUE_TYPE_LRN) {
             date = due;
-        } else if (getQueue() == 0 || getType() == 0) {
+        } else if (getQueue() == Consts.QUEUE_TYPE_NEW || getType() == Consts.CARD_TYPE_NEW) {
             return (new Long(due)).toString();
-        } else if (getQueue() == 2 || getQueue() == 3 || (getType() == 2 && getQueue() < 0)) {
+        } else if (getQueue() == Consts.QUEUE_TYPE_REV || getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || (getType() == Consts.CARD_TYPE_REV && getQueue() < 0)) {
             long time = System.currentTimeMillis() / 1000L;
             long nbDaySinceCreation = (due - getCol().getSched().getToday());
             date = time + (nbDaySinceCreation * 86400L);
@@ -732,6 +727,6 @@ public class Card implements Cloneable {
     }
 
     public boolean isReview() {
-        return this.getType() == 2 && this.getQueue() == 2;
+        return this.getType() == Consts.CARD_TYPE_REV && this.getQueue() == Consts.QUEUE_TYPE_REV;
     }
 }

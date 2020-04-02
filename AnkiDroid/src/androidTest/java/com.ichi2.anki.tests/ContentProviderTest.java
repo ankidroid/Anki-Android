@@ -36,6 +36,7 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
@@ -798,7 +799,7 @@ public class ContentProviderTest {
         long cardId = card.getId();
 
         // the card starts out being new
-        assertEquals("card is initial new", Card.TYPE_NEW, card.getQueue());
+        assertEquals("card is initial new", Consts.CARD_TYPE_NEW, card.getQueue());
 
         ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
@@ -844,7 +845,7 @@ public class ContentProviderTest {
         Card card = col.getSched().getCard();
 
         // verify that the card is not already user-buried
-        Assert.assertNotEquals("Card is not user-buried before test", Card.QUEUE_USER_BRD, card.getQueue());
+        Assert.assertNotEquals("Card is not user-buried before test", Consts.QUEUE_TYPE_SIBLING_BURIED, card.getQueue());
 
         // retain the card id, we will lookup the card after the update
         long cardId = card.getId();
@@ -869,7 +870,7 @@ public class ContentProviderTest {
         // -----------------------------
 
         Card cardAfterUpdate = col.getCard(cardId);
-        assertEquals("Card is user-buried", Card.QUEUE_USER_BRD, cardAfterUpdate.getQueue());
+        assertEquals("Card is user-buried", Consts.QUEUE_TYPE_SIBLING_BURIED, cardAfterUpdate.getQueue());
 
         // cleanup, unbury cards
         // ---------------------
@@ -892,7 +893,7 @@ public class ContentProviderTest {
         Card card = col.getSched().getCard();
 
         // verify that the card is not already suspended
-        Assert.assertNotEquals("Card is not suspended before test", Card.QUEUE_SUSP, card.getQueue());
+        Assert.assertNotEquals("Card is not suspended before test", Consts.QUEUE_TYPE_SUSPENDED, card.getQueue());
 
         // retain the card id, we will lookup the card after the update
         long cardId = card.getId();
@@ -917,7 +918,7 @@ public class ContentProviderTest {
         // --------------------------------
 
         Card cardAfterUpdate = col.getCard(cardId);
-        assertEquals("Card is suspended", Card.QUEUE_SUSP, cardAfterUpdate.getQueue());
+        assertEquals("Card is suspended", Consts.QUEUE_TYPE_SUSPENDED, cardAfterUpdate.getQueue());
 
         // cleanup, unsuspend card and reschedule
         // --------------------------------------

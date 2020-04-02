@@ -750,7 +750,7 @@ public class Collection {
                 if (odid != 0) {
                     due = odue;
                 }
-                if (!dues.containsKey(nid) && type == 0) {
+                if (!dues.containsKey(nid) && type == Consts.CARD_TYPE_NEW) {
                     dues.put(nid, due);
                 }
             }
@@ -847,9 +847,9 @@ public class Collection {
 
     public List<Card> previewCards(Note note, int type, int did) {
 	    ArrayList<JSONObject> cms = null;
-	    if (type == 0) {
+	    if (type == Consts.CARD_TYPE_NEW) {
 	        cms = findTemplates(note);
-	    } else if (type == 1) {
+	    } else if (type == Consts.CARD_TYPE_LRN) {
 	        cms = new ArrayList<>();
 	        for (Card c : note.cards()) {
 	            cms.add(c.template());
@@ -1367,10 +1367,10 @@ public class Collection {
                 long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
                 mDb.execute("DELETE FROM revlog WHERE id = " + last);
                 // restore any siblings
-                mDb.execute("update cards set queue=type,mod=?,usn=? where queue=-2 and nid=?",
+                mDb.execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
                         new Object[]{Utils.intTime(), usn(), c.getNid()});
                 // and finally, update daily count
-                int n = c.getQueue() == 3 ? 1 : c.getQueue();
+                int n = c.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : c.getQueue();
                 String type = (new String[]{"new", "lrn", "rev"})[n];
                 mSched._updateStats(c, type, -1);
                 mSched.setReps(mSched.getReps() - 1);
@@ -1744,7 +1744,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         notifyProgress.run();
         // reviews should have a reasonable due #
-        ArrayList<Long> ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
+        ArrayList<Long> ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000", 0);
         notifyProgress.run();
         if (ids.size() > 0) {
             problems.add("Reviews had incorrect due date.");
@@ -1759,7 +1759,7 @@ public class Collection {
         Timber.d("resetNewCardInsertionPosition");
         notifyProgress.run();
         // new card position
-        mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
+        mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = Consts.CARD_TYPE_NEW"));
         return Collections.emptyList();
     }
 
@@ -1769,7 +1769,7 @@ public class Collection {
         // new cards can't have a due position > 32 bits
         notifyProgress.run();
         mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
-                + " WHERE due > 1000000 AND type = 0");
+                + " WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW);
         return Collections.emptyList();
     }
 
@@ -1846,7 +1846,7 @@ public class Collection {
         notifyProgress.run();
         // cards with odue set when it shouldn't be
         ArrayList<Long> ids = mDb.queryColumn(Long.class,
-                "select id from cards where odue > 0 and (type=1 or queue=2) and not odid", 0);
+                "select id from cards where odue > 0 and (type=Consts.CARD_TYPE_LRN or queue=" + Consts.QUEUE_TYPE_REV + ") and not odid", 0);
         notifyProgress.run();
         if (ids.size() != 0) {
             problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");

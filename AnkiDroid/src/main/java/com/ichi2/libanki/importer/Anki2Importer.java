@@ -24,6 +24,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
@@ -117,7 +118,7 @@ public class Anki2Importer extends Importer {
         mSrc = Storage.Collection(mContext, mFile);
 
         if (!importingV2 && mCol.schedVer() != 1) {
-            if (mSrc.getDb().queryScalar("select 1 from cards where queue != 0 limit 1") > 0) {
+            if (mSrc.getDb().queryScalar("select 1 from cards where queue != " + Consts.QUEUE_TYPE_NEW + " limit 1") > 0) {
                 mSrc.close(false);
                 throw new ImportExportException(mContext.getString(R.string.import_cannot_with_v2));
             }
@@ -706,7 +707,7 @@ public class Anki2Importer extends Importer {
             }
             // make sure new position is correct
             mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar(
-                    "select max(due)+1 from cards where type = 0"));
+                    "select max(due)+1 from cards where type = " + Consts.CARD_TYPE_NEW));
             mDst.save();
         } catch (JSONException e) {
             throw new RuntimeException(e);

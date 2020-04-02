@@ -42,6 +42,7 @@ import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.HtmlUtils;
@@ -657,7 +658,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                                 StringBuilder sbQuery = new StringBuilder();
                                 sbQuery.append("SELECT count(*) FROM cards WHERE did IN ");
                                 sbQuery.append(Utils.ids2str(collection.getDecks().active()));
-                                sbQuery.append(" AND queue = 0");
+                                sbQuery.append(" AND queue = " + Consts.QUEUE_TYPE_NEW);
                                 final int fullNewCount = collection.getDb().queryScalar(sbQuery.toString());
                                 if (fullNewCount > 0) {
                                     Runnable setNewTotalText = new Runnable() {
