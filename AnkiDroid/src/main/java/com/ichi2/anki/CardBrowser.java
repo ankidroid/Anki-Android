@@ -1440,16 +1440,27 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * Removes cards from view. Doesn't delete them in model (database).
      */
     private void removeNotesView(Card[] cards) {
+        List<Long> cardIds = new ArrayList<>(cards.length);
+        for (Card c : cards) {
+            cardIds.add(c.getId());
+        }
+        removeNotesView(cardIds);
+    }
+
+    /**
+     * Removes cards from view. Doesn't delete them in model (database).
+     */
+    private void removeNotesView(java.util.Collection<Long> cardsIds) {
         long reviewerCardId = getReviewerCardId();
         List<Map<String, String>> oldMCards = getCards();
         Map<Long, Integer> idToPos = getPositionMap(oldMCards);
         Set<Long> idToRemove = new HashSet<Long>();
-        for (Card card : cards) {
-            if (card.getId() == reviewerCardId) {
+        for (Long cardId : cardsIds) {
+            if (cardId == reviewerCardId) {
                 mReloadRequired = true;
             }
-            if (idToPos.containsKey(card.getId())) {
-                idToRemove.add(card.getId());
+            if (idToPos.containsKey(cardId)) {
+                idToRemove.add(cardId);
             }
         }
 
@@ -1462,7 +1473,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCards = newMCards;
         updateList();
     }
-
 
     private DeckTask.TaskListener mSuspendCardHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
