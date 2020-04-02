@@ -303,6 +303,7 @@ public class ModelBrowser extends AnkiActivity {
         final String basicName = getResources().getString(R.string.basic_model_name);
         final String addForwardReverseName = getResources().getString(R.string.forward_reverse_model_name);
         final String addForwardOptionalReverseName = getResources().getString(R.string.forward_optional_reverse_model_name);
+        final String addTypingName = getResources().getString(R.string.basic_typing_model_name);
         final String addClozeModelName = getResources().getString(R.string.cloze_model_name);
 
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
@@ -314,11 +315,13 @@ public class ModelBrowser extends AnkiActivity {
         mNewModelLabels.add(String.format(add, basicName));
         mNewModelLabels.add(String.format(add, addForwardReverseName));
         mNewModelLabels.add(String.format(add, addForwardOptionalReverseName));
+        mNewModelLabels.add(String.format(add, addTypingName));
         mNewModelLabels.add(String.format(add, addClozeModelName));
 
         mNewModelNames.add(basicName);
         mNewModelNames.add(addForwardReverseName);
         mNewModelNames.add(addForwardOptionalReverseName);
+        mNewModelNames.add(addTypingName);
         mNewModelNames.add(addClozeModelName);
 
         final int numStdModels = mNewModelLabels.size();
@@ -404,14 +407,17 @@ public class ModelBrowser extends AnkiActivity {
                     case (2):
                         model = Models.addForwardOptionalReverse(col);
                         break;
-                    //Close model
                     case (3):
+                        model = Models.addBasicTypingModel(col);
+                        break;
+                    //Close model
+                    case (4):
                         model = Models.addClozeModel(col);
                         break;
                     default:
                         //New model
                         //Model that is being cloned
-                        JSONObject oldModel = new JSONObject(mModels.get(position - 4).toString());
+                        JSONObject oldModel = new JSONObject(mModels.get(position - 5).toString());
                         JSONObject newModel = Models.addBasicModel(col);
                         oldModel.put("id", newModel.get("id"));
                         model = oldModel;
