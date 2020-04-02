@@ -959,7 +959,7 @@ public class Stats {
                 "cast(count() as float) * 100, " +
                 "count() " +
                 "from revlog " +
-                "where type in (" + Consts.CARD_TYPE_NEW + ",1," + Consts.CARD_TYPE_REV + ") " + lim +" " +
+                "where type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_LRN + "," + Consts.CARD_TYPE_REV + ") " + lim +" " +
                 "group by wd " +
                 "order by wd";
         Timber.d(sd.get(Calendar.HOUR_OF_DAY) + " : " +cutoff + " weekly breakdown query: %s", query);
