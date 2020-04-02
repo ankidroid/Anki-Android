@@ -76,6 +76,8 @@ public abstract class AbstractSched {
     public abstract void decrementCounts(Card card);
     public abstract boolean leechActionSuspend(Card card);
     public abstract void setContext(WeakReference<Activity> contextReference);
+    public abstract int[] recalculateCounts();
+    public abstract void setReportLimit(int reportLimit);
 
 
     /**

@@ -25,9 +25,9 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.AbstractSched;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 
 import org.json.JSONArray;
@@ -384,7 +384,7 @@ public class Syncer {
 
             //#5666 - not in libAnki
             //We modified mReportLimit inside the scheduler, and this causes issues syncing dynamic decks.
-            Sched syncScheduler = mCol.createScheduler(SYNC_SCHEDULER_REPORT_LIMIT);
+            AbstractSched syncScheduler = mCol.createScheduler(SYNC_SCHEDULER_REPORT_LIMIT);
             for (int c : syncScheduler.recalculateCounts()) {
                 sa.put(c);
             }
