@@ -411,7 +411,7 @@ public class Finder {
                 } else if (type.startsWith("cardDue")) {
                     sort = "c.type, c.due";
                 } else if (type.startsWith("cardEase")) {
-                    sort = "c.type == 0, c.factor";
+                    sort = "c.type == " + Consts.CARD_TYPE_NEW + ", c.factor";
                 } else if (type.startsWith("cardLapses")) {
                     sort = "c.lapses";
                 } else if (type.startsWith("cardIvl")) {
@@ -459,16 +459,16 @@ public class Finder {
             } else if ("new".equals(val)) {
                 n = 0;
             } else {
-                return "queue IN (1, 3)";
+                return "queue IN (1, " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")";
             }
             return "type = " + n;
         } else if ("suspended".equals(val)) {
-            return "c.queue = -1";
+            return "c.queue = " + Consts.QUEUE_TYPE_SUSPENDED;
         } else if ("buried".equals(val)) {
-            return "c.queue = -2";
+            return "c.queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
         } else if ("due".equals(val)) {
-            return "(c.queue in (2,3) and c.due <= " + mCol.getSched().getToday() +
-                    ") or (c.queue = 1 and c.due <= " + mCol.getSched().getDayCutoff() + ")";
+            return "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and c.due <= " + mCol.getSched().getToday() +
+                    ") or (c.queue = " + Consts.QUEUE_TYPE_LRN + " and c.due <= " + mCol.getSched().getDayCutoff() + ")";
         } else {
             return null;
         }
@@ -564,7 +564,7 @@ public class Finder {
         if ("due".equals(prop)) {
             val += mCol.getSched().getToday();
             // only valid for review/daily learning
-            q = "(c.queue in (2,3)) and ";
+            q = "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")) and ";
         } else if ("ease".equals(prop)) {
             prop = "factor";
             // already done: val = int(val*1000)
@@ -647,7 +647,7 @@ public class Finder {
         // current deck?
         try {
             if ("current".equalsIgnoreCase(val)) {
-                ids = dids(mCol.getDecks().current().getLong("id"));
+                ids = dids(mCol.getDecks().selected());
             } else if (!val.contains("*")) {
                 // single deck
                 ids = dids(mCol.getDecks().id(val, false));
@@ -1118,7 +1118,7 @@ public class Finder {
                 card.put("question", null);
                 card.put("answer", null);
                 card.put("flags", (new Integer(Card.intToFlag(cur.getInt(5)))).toString());
-                card.put("suspended", queue == Card.QUEUE_SUSP ? "True": "False");
+                card.put("suspended", queue == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
                 card.put("marked", (tags.matches(".*[Mm]arked.*"))?"marked": null);
             }
         } catch (SQLException e) {

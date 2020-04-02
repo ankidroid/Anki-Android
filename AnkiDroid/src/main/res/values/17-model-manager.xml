@@ -7,7 +7,7 @@
 
 
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last model</string>
+    <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Note types must have at least one field</string>
     <string name="toast_empty_name">You must enter a name</string>
     <string name="toast_duplicate_field">Field name already used</string>
@@ -40,7 +40,7 @@
 
 
     <!--Rename-->
-    <string name="rename_model">Rename model</string>
+    <string name="rename_model">Rename note type</string>
 
 
     <!--Field Editing-->
@@ -57,7 +57,7 @@
 
 
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this model?</string>
+    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
 
 

@@ -23,6 +23,9 @@ import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.ichi2.utils.Assert;
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
+import com.ichi2.utils.LanguageUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,12 +69,7 @@ import java.util.Set;
                     "PMD.MethodNamingConventions"})
 public class Card implements Cloneable {
 
-    public static final int TYPE_NEW = 0;
-    public static final int TYPE_LRN = 1;
     public static final int TYPE_REV = 2;
-    public static final int QUEUE_SUSP = -1;
-    public static final int QUEUE_USER_BRD = -2;
-    public static final int QUEUE_SCHED_BRD = -3;
 
     private Collection mCol;
     private double mTimerStarted;
@@ -127,8 +125,8 @@ public class Card implements Cloneable {
             // to flush, set nid, ord, and due
             mId = Utils.timestampID(mCol.getDb(), "cards");
             mDid = 1;
-            mType = 0;
-            mQueue = 0;
+            mType = Consts.CARD_TYPE_NEW;
+            mQueue = Consts.QUEUE_TYPE_NEW;
             mIvl = 0;
             mFactor = 0;
             mReps = 0;
@@ -188,7 +186,7 @@ public class Card implements Cloneable {
             mUsn = mCol.usn();
         }
         // bug check
-        //if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
+        //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
         //}
         assert (mDue < Long.valueOf("4294967296"));
@@ -223,7 +221,7 @@ public class Card implements Cloneable {
         mMod = Utils.intTime();
         mUsn = mCol.usn();
         // bug check
-        //if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
+        //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
         //}
         assert (mDue < Long.valueOf("4294967296"));
@@ -447,6 +445,10 @@ public class Card implements Cloneable {
 
     public void setMod(long mod) {
         mMod = mod;
+    }
+
+    public long getMod() {
+        return mMod ;
     }
 
 
@@ -686,5 +688,45 @@ public class Card implements Cloneable {
 
     public void setUserFlag(int flag) {
         mFlags = setFlagInInt(mFlags, flag);
+    }
+
+    // not in Anki.
+    public String getDueString() {
+        String t = nextDue();
+        if (getQueue() < 0) {
+            t = "(" + t + ")";
+        }
+        return t;
+    }
+
+    // as in Anki aqt/browser.py
+    private String nextDue() {
+        long date;
+        long due = getDue();
+        if (getODid() != 0) {
+            return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card);
+        } else if (getQueue() == Consts.QUEUE_TYPE_LRN) {
+            date = due;
+        } else if (getQueue() == Consts.QUEUE_TYPE_NEW || getType() == Consts.CARD_TYPE_NEW) {
+            return (new Long(due)).toString();
+        } else if (getQueue() == Consts.QUEUE_TYPE_REV || getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || (getType() == Consts.CARD_TYPE_REV && getQueue() < 0)) {
+            long time = System.currentTimeMillis() / 1000L;
+            long nbDaySinceCreation = (due - getCol().getSched().getToday());
+            date = time + (nbDaySinceCreation * 86400L);
+        } else {
+            return "";
+        }
+        return LanguageUtil.getShortDateFormatFromS(date);
+    }
+
+    /** Non libAnki */
+    public boolean isDynamic() {
+        //I have cards in my collection with oDue <> 0 and oDid = 0.
+        //These are not marked as dynamic.
+        return this.getODid() != 0;
+    }
+
+    public boolean isReview() {
+        return this.getType() == Consts.CARD_TYPE_REV && this.getQueue() == Consts.QUEUE_TYPE_REV;
     }
 }

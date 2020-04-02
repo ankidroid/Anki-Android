@@ -41,12 +41,13 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.provider.Settings;
+
+import com.afollestad.materialdialogs.GravityEnum;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.app.ShareCompat;
@@ -61,6 +62,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,6 +71,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
@@ -103,6 +106,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.ImportUtils;
+import com.ichi2.utils.Permissions;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
@@ -193,6 +197,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
      */
     private long mFocusedDeck;
 
+    /** If we have accepted the "We will show you permissions" dialog, don't show it again on activity rebirth */
+    private boolean mClosedWelcomeMessage;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -362,6 +368,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Timber.d("onCreate()");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        //we need to restore here, as we need it before super.onCreate() is called.
+        restoreWelcomeMessage(savedInstanceState);
         // Open Collection on UI thread while splash screen is showing
         boolean colOpen = firstCollectionOpen();
 
@@ -428,7 +437,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             showStartupScreensAndDialogs(preferences, 0);
         } else {
             // Show error dialogs
-            if (CollectionHelper.hasStorageAccessPermission(this)) {
+            if (Permissions.hasStorageAccessPermission(this)) {
                 if (!AnkiDroidApp.isSdCardMounted()) {
                     // SD card not mounted
                     onSdCardNotMounted();
@@ -449,13 +458,30 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * @return whether or not we were successful
      */
     private boolean firstCollectionOpen() {
-        if (CollectionHelper.hasStorageAccessPermission(this)) {
+        if (Permissions.hasStorageAccessPermission(this)) {
             // Show error dialog if collection could not be opened
             return CollectionHelper.getInstance().getColSafe(this) != null;
-        } else {
-            // Request storage permission if we don't have it (e.g. on Android 6.0+)
+        } else if (mClosedWelcomeMessage) {
+            // DEFECT #5847: This fails if the activity is killed.
+            //Even if the dialog is showing, we want to show it again.
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_STORAGE_PERMISSION);
+            return false;
+        } else {
+            // Request storage permission if we don't have it (e.g. on Android 6.0+)
+            new MaterialDialog.Builder(this)
+                    .title(R.string.collection_load_welcome_request_permissions_title)
+                    .titleGravity(GravityEnum.CENTER)
+                    .content(R.string.collection_load_welcome_request_permissions_details)
+                    .positiveText(R.string.dialog_ok)
+                    .onPositive((innerDialog, innerWhich) -> {
+                        this.mClosedWelcomeMessage = true;
+                        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                REQUEST_STORAGE_PERMISSION);
+                    })
+                    .cancelable(false)
+                    .canceledOnTouchOutside(false)
+                    .show();
             return false;
         }
     }
@@ -745,6 +771,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putLong("mContextMenuDid", mContextMenuDid);
+        savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage);
     }
 
 
@@ -841,6 +868,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
 
+    private void restoreWelcomeMessage(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            return;
+        }
+        mClosedWelcomeMessage = savedInstanceState.getBoolean("mClosedWelcomeMessage");
+    }
 
     /**
      * Perform the following tasks:
@@ -897,7 +930,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // No space left
             showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance());
             preferences.edit().remove("noSpaceLeft").apply();
-        } else if (preferences.getString("lastVersion", "").equals("")) {
+        } else if ("".equals(preferences.getString("lastVersion", ""))) {
             // Fresh install
             preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
             onFinishedStartup();
@@ -992,9 +1025,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // Skip full DB check if the basic check is OK
             //TODO: remove this variable if we really want to do the full db check on every user
             boolean skipDbCheck = false;
-            if (previous < upgradeDbVersion && getCol().basicCheck()) {
-                skipDbCheck = true;
-            }
+            //if (previous < upgradeDbVersion && getCol().basicCheck()) {
+            //    skipDbCheck = true;
+            //}
 
             //noinspection ConstantConditions
             if ((!skipDbCheck && previous < upgradeDbVersion) || previous < upgradePrefsVersion) {
@@ -1007,7 +1040,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 //noinspection ConstantConditions
                 if (!skipDbCheck && previous < upgradeDbVersion) {
                     Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
-                    integrityCheck();
+                    //#5852 - since we may have a warning about disk space, we don't want to force a check database
+                    //and show a warning before the user knows what is happening.
+                    new MaterialDialog.Builder(this)
+                            .title(R.string.integrity_check_startup_title)
+                            .content(R.string.integrity_check_startup_content)
+                            .positiveText(R.string.integrity_check_positive)
+                            .negativeText(R.string.close)
+                            .onPositive((materialDialog, dialogAction) -> integrityCheck())
+                            .onNeutral((materialDialog, dialogAction) -> restartActivity())
+                            .onNegative((materialDialog, dialogAction) ->  restartActivity())
+                            .canceledOnTouchOutside(false)
+                            .cancelable(false)
+                            .build()
+                            .show();
+
                 } else if (previous < upgradePrefsVersion) {
                     // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
                     // proceed
@@ -1232,6 +1279,26 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback method to handle database integrity check
     public void integrityCheck() {
+        //#5852 - We were having issues with integrity checks where the users had run out of space.
+        //display a dialog box if we don't have the space
+        CollectionIntegrityStorageCheck status = CollectionIntegrityStorageCheck.createInstance(this);
+        if (status.shouldWarnOnIntegrityCheck()) {
+            Timber.d("Displaying File Size confirmation");
+            new MaterialDialog.Builder(this)
+                    .title(R.string.check_db_title)
+                    .content(status.getWarningDetails(this))
+                    .positiveText(R.string.integrity_check_continue_anyway)
+                    .onPositive((dialog, which) -> performIntegrityCheck())
+                    .negativeText(R.string.dialog_cancel)
+                    .show();
+        } else {
+            performIntegrityCheck();
+        }
+    }
+
+
+    private void performIntegrityCheck() {
+        Timber.d("performIntegrityCheck()");
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_DATABASE, new DeckTask.TaskListener() {
             @Override
             public void onPreExecute() {
@@ -1263,7 +1330,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
             @Override
-            public void onProgressUpdate(DeckTask.TaskData... values) {
+            public void onProgressUpdate(TaskData... values) {
                 mProgressDialog.setContent(values[0].getString());
             }
         });
@@ -1308,7 +1375,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     public void exit() {
-        CollectionHelper.getInstance().closeCollection(false);
+        CollectionHelper.getInstance().closeCollection(false, "DeckPicker:exit()");
         finishWithoutAnimation();
     }
 
@@ -1363,9 +1430,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private Connection.TaskListener mSyncListener = new Connection.CancellableTaskListener() {
-        String currentMessage;
-        long countUp;
-        long countDown;
+        private String currentMessage;
+        private long countUp;
+        private long countDown;
+        private boolean dialogDisplayFailure = false;
 
         @Override
         public void onDisconnected() {
@@ -1374,28 +1442,36 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void onCancelled() {
-            mProgressDialog.dismiss();
             showSyncLogMessage(R.string.sync_cancelled, "");
-            // update deck list in case sync was cancelled during media sync and main sync was actually successful
-            updateDeckList();
+            if (!dialogDisplayFailure) {
+                mProgressDialog.dismiss();
+                // update deck list in case sync was cancelled during media sync and main sync was actually successful
+                updateDeckList();
+            }
+            // reset our display failure fate, just in case it is re-used
+            dialogDisplayFailure = false;
         }
 
         @Override
         public void onPreExecute() {
             countUp = 0;
             countDown = 0;
-            // Store the current time so that we don't bother the user with a sync prompt for another 10 minutes
-            // Note: getLs() in Libanki doesn't take into account the case when no changes were found, or sync cancelled
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
             final long syncStartTime = System.currentTimeMillis();
-            preferences.edit().putLong("lastSyncTime", syncStartTime).apply();
 
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = StyledProgressDialog
-                        .show(DeckPicker.this, getResources().getString(R.string.sync_title),
-                                getResources().getString(R.string.sync_title) + "\n"
-                                        + getResources().getString(R.string.sync_up_down_size, countUp, countDown),
-                                false);
+                try {
+                    mProgressDialog = StyledProgressDialog
+                            .show(DeckPicker.this, getResources().getString(R.string.sync_title),
+                                    getResources().getString(R.string.sync_title) + "\n"
+                                            + getResources().getString(R.string.sync_up_down_size, countUp, countDown),
+                                    false);
+                } catch (WindowManager.BadTokenException e) {
+                    // If we could not show the progress dialog to start even, bail out - user will get a message
+                    Timber.w(e, "Unable to display Sync progress dialog, Activity not valid?");
+                    dialogDisplayFailure = true;
+                    Connection.cancel();
+                    return;
+                }
 
                 // Override the back key so that the user can cancel a sync which is in progress
                 mProgressDialog.setOnKeyListener((dialog, keyCode, event) -> {
@@ -1429,6 +1505,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     }
                 });
             }
+
+            // Store the current time so that we don't bother the user with a sync prompt for another 10 minutes
+            // Note: getLs() in Libanki doesn't take into account the case when no changes were found, or sync cancelled
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            preferences.edit().putLong("lastSyncTime", syncStartTime).apply();
         }
 
 
@@ -1542,6 +1623,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if ("connectionError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_connection_error);
+                        if (result.length >= 1 && result[1] instanceof Exception) {
+                            dialogMessage += "\n\n" + ((Exception)result[1]).getLocalizedMessage();
+                        }
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if ("IOException".equals(resultType)) {
                         handleDbError();
@@ -1912,7 +1996,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_manual_getting_started));
             mayOpenUrl(helpUrl);
             UIUtils.showSnackbar(this, R.string.empty_deck, false, R.string.help,
-                    v -> openUrl(helpUrl), findViewById(R.id.root_layout), mSnackbarShowHideCallback);
+                    v -> openHelpUrl(helpUrl), findViewById(R.id.root_layout), mSnackbarShowHideCallback);
             if (mFragmented) {
                 openStudyOptions(false);
             } else {
@@ -1932,6 +2016,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 updateDeckList();
             }
         }
+    }
+
+
+    private void openHelpUrl(Uri helpUrl) {
+        openUrl(helpUrl);
     }
 
 
@@ -1987,7 +2076,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     if (getCol().cardCount() != -1) {
                         String time = "-";
                         if (eta != -1) {
-                            time = res.getString(R.string.time_quantity_minutes, eta);
+                            time = Utils.timeQuantity(AnkiDroidApp.getInstance(), eta*60);
                         }
                         if (getSupportActionBar() != null) {
                             getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));

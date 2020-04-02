@@ -45,6 +45,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
@@ -805,7 +806,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         ListPreference leechActPref = (ListPreference) findPreference("lapLeechAct");
         leechActPref.setEntries(R.array.leech_action_labels);
         leechActPref.setEntryValues(R.array.leech_action_values);
-        leechActPref.setValue(mPref.getString("lapLeechAct", "0"));
+        leechActPref.setValue(mPref.getString("lapLeechAct", new Integer(Consts.LEECH_SUSPEND).toString()));
     }
 
 

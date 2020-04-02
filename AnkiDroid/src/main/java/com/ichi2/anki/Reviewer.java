@@ -38,13 +38,15 @@ import android.widget.FrameLayout;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.dialogs.IntegerDialog;
+import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
+import com.ichi2.libanki.Consts;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
@@ -168,8 +170,10 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         mPrefWhiteboard = MetaDB.getWhiteboardState(this, getParentDid());
         if (mPrefWhiteboard) {
+            //DEFECT: Slight inefficiency here, as we set the database using these methods
+            boolean whiteboardVisibility = MetaDB.getWhiteboardVisibility(this, getParentDid());
             setWhiteboardEnabledState(true);
-            setWhiteboardVisibility(true);
+            setWhiteboardVisibility(whiteboardVisibility);
         }
 
         col.getSched().reset();     // Reset schedule incase card had previous been loaded
@@ -266,6 +270,8 @@ public class Reviewer extends AbstractFlashcardViewer {
                 // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
                 mPrefWhiteboard = ! mPrefWhiteboard;
                 Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
+                //Even though the visibility is now stored in its own setting, we want it to be dependent
+                //on the enabled status
                 setWhiteboardEnabledState(mPrefWhiteboard);
                 setWhiteboardVisibility(mPrefWhiteboard);
                 refreshActionBar();
@@ -318,18 +324,14 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     private void showRescheduleCardDialog() {
-        IntegerDialog rescheduleDialog = new IntegerDialog();
-        rescheduleDialog.setArgs(
-                getResources().getString(R.string.reschedule_card_dialog_title),
-                getResources().getString(R.string.reschedule_card_dialog_message),
-                4);
-        rescheduleDialog.setCallbackRunnable(rescheduleDialog.new IntRunnable() {
-            public void run() {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
-                        new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
-            }
-        });
-        showDialogFragment(rescheduleDialog);
+        Consumer<Integer> runnable = days ->
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
+                    new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()},
+                    Collection.DismissType.RESCHEDULE_CARDS, days})
+            );
+        RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
+
+        showDialogFragment(dialog);
     }
 
 
@@ -384,19 +386,19 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mCurrentCard != null) {
             switch (mCurrentCard.getUserFlag()) {
             case 1:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_red);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_red);
                 break;
             case 2:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_orange);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_orange);
                 break;
             case 3:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_green);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_green);
                 break;
             case 4:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_blue);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_blue);
                 break;
             default:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.flag_transparent);
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_transparent);
                 break;
             }
         }
@@ -536,6 +538,91 @@ public class Reviewer extends AbstractFlashcardViewer {
         return super.onKeyUp(keyCode, event);
     }
 
+    @Override
+    protected void displayAnswerBottomBar() {
+        super.displayAnswerBottomBar();
+        int buttonCount;
+        try {
+            buttonCount = mSched.answerButtons(mCurrentCard);
+        } catch (RuntimeException e) {
+            AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-showEaseButtons");
+            closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
+            return;
+        }
+
+        // Set correct label and background resource for each button
+        // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
+        // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
+        final int[] background = Themes.getResFromAttr(this, new int [] {
+                R.attr.againButtonRef,
+                R.attr.hardButtonRef,
+                R.attr.goodButtonRef,
+                R.attr.easyButtonRef});
+        final int[] textColor = Themes.getColorFromAttr(this, new int [] {
+                R.attr.againButtonTextColor,
+                R.attr.hardButtonTextColor,
+                R.attr.goodButtonTextColor,
+                R.attr.easyButtonTextColor});
+        mEase1Layout.setVisibility(View.VISIBLE);
+        mEase1Layout.setBackgroundResource(background[0]);
+        mEase4Layout.setBackgroundResource(background[3]);
+        switch (buttonCount) {
+            case 2:
+                // Ease 2 is "good"
+                mEase2Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setBackgroundResource(background[2]);
+                mEase2.setText(R.string.ease_button_good);
+                mEase2.setTextColor(textColor[2]);
+                mNext2.setTextColor(textColor[2]);
+                mEase2Layout.requestFocus();
+                break;
+            case 3:
+                // Ease 2 is good
+                mEase2Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setBackgroundResource(background[2]);
+                mEase2.setText(R.string.ease_button_good);
+                mEase2.setTextColor(textColor[2]);
+                mNext2.setTextColor(textColor[2]);
+                // Ease 3 is easy
+                mEase3Layout.setVisibility(View.VISIBLE);
+                mEase3Layout.setBackgroundResource(background[3]);
+                mEase3.setText(R.string.ease_button_easy);
+                mEase3.setTextColor(textColor[3]);
+                mNext3.setTextColor(textColor[3]);
+                mEase2Layout.requestFocus();
+                break;
+            default:
+                mEase2Layout.setVisibility(View.VISIBLE);
+                // Ease 2 is "hard"
+                mEase2Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setBackgroundResource(background[1]);
+                mEase2.setText(R.string.ease_button_hard);
+                mEase2.setTextColor(textColor[1]);
+                mNext2.setTextColor(textColor[1]);
+                mEase2Layout.requestFocus();
+                // Ease 3 is good
+                mEase3Layout.setVisibility(View.VISIBLE);
+                mEase3Layout.setBackgroundResource(background[2]);
+                mEase3.setText(R.string.ease_button_good);
+                mEase3.setTextColor(textColor[2]);
+                mNext3.setTextColor(textColor[2]);
+                mEase4Layout.setVisibility(View.VISIBLE);
+                mEase3Layout.requestFocus();
+                break;
+        }
+
+        // Show next review time
+        if (shouldShowNextReviewTime()) {
+            mNext1.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_ONE));
+            mNext2.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_TWO));
+            if (buttonCount > 2) {
+                mNext3.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_THREE));
+            }
+            if (buttonCount > 3) {
+                mNext4.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_FOUR));
+            }
+        }
+    }
 
     @Override
     protected SharedPreferences restorePreferences() {
@@ -614,6 +701,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     // Show or hide the whiteboard
     private void setWhiteboardVisibility(boolean state) {
         mShowWhiteboard = state;
+        MetaDB.storeWhiteboardVisibility(this, getParentDid(), state);
         if (state) {
             mWhiteboard.setVisibility(View.VISIBLE);
             disableDrawerSwipe();
@@ -674,10 +762,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         for(Card card : cards) {
             if (card.getId() == mCurrentCard.getId()) continue;
             int queue = card.getQueue();
-            if(type == DismissType.SUSPEND_NOTE && queue != Card.QUEUE_SUSP) {
+            if(type == DismissType.SUSPEND_NOTE && queue != Consts.QUEUE_TYPE_SUSPENDED) {
                 return true;
             } else if (type == DismissType.BURY_NOTE &&
-                    queue != Card.QUEUE_SUSP && queue != Card.QUEUE_USER_BRD && queue != Card.QUEUE_SCHED_BRD) {
+                    queue != Consts.QUEUE_TYPE_SUSPENDED && queue != Consts.QUEUE_TYPE_SIBLING_BURIED && queue != Consts.QUEUE_TYPE_MANUALLY_BURIED) {
                 return true;
             }
         }

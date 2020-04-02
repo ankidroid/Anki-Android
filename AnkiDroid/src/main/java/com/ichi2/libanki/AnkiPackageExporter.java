@@ -181,7 +181,7 @@ class AnkiExporter extends Exporter {
         }
         JSONObject dconfs = new JSONObject();
         for (JSONObject d : mSrc.getDecks().all()) {
-            if (d.getString("id").equals("1")) {
+            if ("1".equals(d.getString("id"))) {
                 continue;
             }
             if (mDid != null && !dids.contains(d.getLong("id"))) {
@@ -192,11 +192,13 @@ class AnkiExporter extends Exporter {
                     dconfs.put(Long.toString(d.getLong("conf")), true);
                 }
             }
+
+            JSONObject destinationDeck = JSONObjectUtils.slowDeepClone(d);
             if (!mIncludeSched) {
                 // scheduling not included, so reset deck settings to default
-                d.put("conf", 1);
+                destinationDeck.put("conf", 1);
             }
-            dst.getDecks().update(d);
+            dst.getDecks().update(destinationDeck);
         }
         // copy used deck confs
         Timber.d("Copy deck options");
@@ -231,8 +233,8 @@ class AnkiExporter extends Exporter {
                     String fname = f.getName();
                     if (fname.startsWith("_")) {
                         // Loop through every model that will be exported, and check if it contains a reference to f
-                        for (int idx = 0; idx < mid.size(); idx++) {
-                            if (_modelHasMedia(mSrc.getModels().get(idx), fname)) {
+                        for (JSONObject model : mSrc.getModels().all()) {
+                            if (_modelHasMedia(model, fname)) {
                                 media.put(fname, true);
                                 break;
                             }
@@ -312,6 +314,17 @@ class AnkiExporter extends Exporter {
 
     public void setDid(Long did) {
         mDid = did;
+    }
+
+    private static class JSONObjectUtils {
+        private JSONObjectUtils() {
+
+        }
+
+        /** Defect: Inefficient deep clone. We should find or write a faster method */
+        private static JSONObject slowDeepClone(JSONObject object) throws JSONException {
+            return new JSONObject(object.toString());
+        }
     }
 }
 

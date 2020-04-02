@@ -31,9 +31,11 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
+import com.ichi2.libanki.AbstractSched;
 import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
@@ -410,7 +412,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundUpdateNote");
         // Save the note
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         Card editCard = params[0].getCard();
         Note editNote = editCard.note();
         boolean fromReviewer = params[0].getBoolean();
@@ -483,7 +485,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundAnswerCard(TaskData... params) {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
         Card newCard = null;
@@ -515,7 +517,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     }
 
 
-    private Card getCard(Sched sched) {
+    private Card getCard(AbstractSched sched) {
         if (sHadCardQueue) {
             sched.reset();
             sHadCardQueue = false;
@@ -554,7 +556,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundDismissNote(TaskData... params) {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         Object[] data = params[0].getObjArray();
         Card card = (Card) data[0];
         Collection.DismissType type = (Collection.DismissType) data[1];
@@ -580,7 +582,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         // collect undo information
                         col.markUndo(type, new Object[] { card });
                         // suspend card
-                        if (card.getQueue() == -1) {
+                        if (card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
                             sched.unsuspendCards(new long[] { card.getId() });
                         } else {
                             sched.suspendCards(new long[] { card.getId() });
@@ -625,7 +627,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundDismissNotes(TaskData... params) {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         Object[] data = params[0].getObjArray();
         long[] cardIds = (long[]) data[0];
         // query cards
@@ -647,7 +649,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         for (int i = 0; i < cards.length; i++) {
                             Card card = cards[i];
                             cids[i] = card.getId();
-                            if (card.getQueue() != -1) {
+                            if (card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED) {
                                 hasUnsuspended = true;
                                 originalSuspended[i] = false;
                             } else {
@@ -822,7 +824,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundUndo(TaskData... params) {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         try {
             col.getDb().getDatabase().beginTransaction();
             Card newCard = null;
@@ -864,7 +866,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         List<Map<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);
         // Render the first few items
         for (int i = 0; i < Math.min(numCardsToRender, searchResult.size()); i++) {
-            Card c = col.getCard(Long.parseLong(searchResult.get(i).get("id"), 10));
+            Card c = col.getCard(Long.parseLong(searchResult.get(i).get("id")));
             CardBrowser.updateSearchItemQA(mContext, searchResult.get(i), c);
         }
         // Finish off the task
@@ -879,30 +881,54 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundRenderBrowserQA(TaskData... params) {
+        //TODO: Convert this to accept the following to make thread-safe:
+        //(Range<Position>, Function<Position, BrowserCard>)
         Timber.d("doInBackgroundRenderBrowserQA");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        List<Map<String, String>> items = (List<Map<String, String>>) params[0].getObjArray()[0];
+        List<Map<String, String>> cards = (List<Map<String, String>>) params[0].getObjArray()[0];
         Integer startPos = (Integer) params[0].getObjArray()[1];
         Integer n = (Integer) params[0].getObjArray()[2];
 
         // for each specified card in the browser list
         for (int i = startPos; i < startPos + n; i++) {
-            if (i >= 0 && i < items.size() && items.get(i).get("answer") == null) {
-                // Extract card item
-                Card c = col.getCard(Long.parseLong(items.get(i).get("id"), 10));
-                // Update item
-                CardBrowser.updateSearchItemQA(mContext, items.get(i), c);
-                // Stop if cancelled
-                if (isCancelled()) {
-                    Timber.d("doInBackgroundRenderBrowserQA was aborted");
-                    return null;
-                } else {
-                    float progress = (float) i / n * 100;
-                    publishProgress(new TaskData((int) progress));
-                }
+            // Stop if cancelled
+            if (isCancelled()) {
+                Timber.d("doInBackgroundRenderBrowserQA was aborted");
+                return null;
             }
+            if (i < 0 || i >= cards.size()) {
+                continue;
+            }
+            Map<String, String> card;
+            try {
+                card = cards.get(i);
+            }
+            catch (IndexOutOfBoundsException e) {
+                //even though we test against card.size() above, there's still a race condition
+                //We might be able to optimise this to return here. Logically if we're past the end of the collection,
+                //we won't reach any more cards.
+                continue;
+            }
+            if (card.get("answer") != null) {
+                //We've already rendered the answer, we don't need to do it again.
+                continue;
+            }
+            // Extract card item
+            Card c;
+            try {
+                c = col.getCard(Long.parseLong(card.get("id")));
+            } catch (Exception e) {
+                //#5891 - card can be inconsistent between the deck browser screen and the collection.
+                //Realistically, we can skip any exception as it's a rendering task which should not kill the
+                //process
+                continue;
+            }
+            // Update item
+            CardBrowser.updateSearchItemQA(mContext, card, c);
+            float progress = (float) i / n * 100;
+            publishProgress(new TaskData((int) progress));
         }
-        return new TaskData(items);
+        return new TaskData(cards);
     }
 
 
@@ -920,7 +946,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(false);
         } else {
             // Close the collection and we restart the app to reload
-            CollectionHelper.getInstance().closeCollection(true);
+            CollectionHelper.getInstance().closeCollection(true, "Check Database Completed");
             return new TaskData(0, result, true);
         }
     }
@@ -940,7 +966,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundUpdateValuesFromDeck");
         try {
             Collection col = CollectionHelper.getInstance().getCol(mContext);
-            Sched sched = col.getSched();
+            AbstractSched sched = col.getSched();
             Object[] obj = params[0].getObjArray();
             boolean reset = (Boolean) obj[0];
             if (reset) {
@@ -1061,7 +1087,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         publishProgress(new TaskData(res.getString(R.string.importing_collection)));
         if (col != null) {
             // unload collection and trigger a backup
-            CollectionHelper.getInstance().closeCollection(true);
+            CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
             CollectionHelper.getInstance().lockCollection();
             BackupManager.performBackupInBackground(colPath, true);
         }
@@ -1491,7 +1517,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         boolean hasUnmarked = false;
         for (int cardPosition : checkedCardPositions) {
             Card card = col.getCard(Long.parseLong(cards.get(cardPosition).get("id")));
-            hasUnsuspended = hasUnsuspended || card.getQueue() != -1;
+            hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
             hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
             if (hasUnsuspended && hasUnmarked)
                 break;

@@ -40,6 +40,7 @@ import com.ichi2.libanki.sync.MediaSyncer;
 import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
+import com.ichi2.utils.Permissions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -128,8 +129,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     protected void onPreExecute() {
         super.onPreExecute();
         // Acquire the wake lock before syncing to ensure CPU remains on until the sync completes.
-        if (ContextCompat.checkSelfPermission(AnkiDroidApp.getInstance().getApplicationContext(),
-                Manifest.permission.WAKE_LOCK) == PackageManager.PERMISSION_GRANTED) {
+        if (Permissions.canUseWakeLock(AnkiDroidApp.getInstance().getApplicationContext())) {
             mWakeLock.acquire();
         }
         if (mListener != null) {
@@ -219,7 +219,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 AnkiDroidApp.sendExceptionReport(e2, "doInBackgroundLogin");
             }
             data.success = false;
-            data.result = new Object[] {"connectionError" };
+            data.result = new Object[] {"connectionError", e2};
             return data;
         }
         String hostkey = null;
@@ -264,6 +264,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 msg.contains("InterruptedIOException") ||
                 msg.contains("stream was reset") ||
                 msg.contains("ConnectionShutdownException") ||
+                msg.contains("CLEARTEXT communication") ||
                 msg.contains("TimeoutException");
     }
 
@@ -282,7 +283,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
         boolean colCorruptFullSync = false;
         if (!CollectionHelper.getInstance().colIsOpen() || !ok) {
-            if (conflictResolution != null && conflictResolution.equals("download")) {
+            if (conflictResolution != null && "download".equals(conflictResolution)) {
                 colCorruptFullSync = true;
             } else {
                 data.success = false;
@@ -308,11 +309,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     return data;
                 }
                 String retCode = (String) ret[0];
-                if (!retCode.equals("noChanges") && !retCode.equals("success")) {
+                if (!"noChanges".equals(retCode) && !"success".equals(retCode)) {
                     data.success = false;
                     data.result = ret;
                     // Check if there was a sanity check error
-                    if (retCode.equals("sanityCheckError")) {
+                    if ("sanityCheckError".equals(retCode)) {
                         // Force full sync next time
                         col.modSchemaNoCheck();
                         col.save();
@@ -320,7 +321,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     return data;
                 }
                 // save and note success state
-                if (retCode.equals("noChanges")) {
+                if ("noChanges".equals(retCode)) {
                     // publishProgress(R.string.sync_no_changes_message);
                     noChanges = true;
                 }
@@ -329,7 +330,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     // Disable sync cancellation for full-sync
                     sIsCancellable = false;
                     server = new FullSyncer(col, hkey, this);
-                    if (conflictResolution.equals("upload")) {
+                    if ("upload".equals(conflictResolution)) {
                         Timber.i("Sync - fullsync - upload collection");
                         publishProgress(R.string.sync_preparing_full_sync_message);
                         Object[] ret = server.upload();
@@ -344,7 +345,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                             data.result = ret;
                             return data;
                         }
-                    } else if (conflictResolution.equals("download")) {
+                    } else if ("download".equals(conflictResolution)) {
                         Timber.i("Sync - fullsync - download collection");
                         publishProgress(R.string.sync_downloading_message);
                         Object[] ret = server.download();
@@ -353,11 +354,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                             data.result = new Object[] { "genericError" };
                             return data;
                         }
-                        if (ret[0].equals("success")) {
+                        if ("success".equals(ret[0])) {
                             data.success = true;
                             col.reopen();
                         }
-                        if (!ret[0].equals("success")) {
+                        if (!"success".equals(ret[0])) {
                             data.success = false;
                             data.result = ret;
                             if (!colCorruptFullSync) {
@@ -373,12 +374,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     return data;
                 } catch (RuntimeException e) {
                     if (timeoutOccurred(e)) {
-                        data.result = new Object[] {"connectionError" };
-                    } else if (e.getMessage().equals("UserAbortedSync")) {
-                        data.result = new Object[] {"UserAbortedSync" };
+                        data.result = new Object[] {"connectionError", e};
+                    } else if ("UserAbortedSync".equals(e.getMessage())) {
+                        data.result = new Object[] {"UserAbortedSync", e};
                     } else {
                         AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
-                        data.result = new Object[] { "IOException" };
+                        data.result = new Object[] {"IOException", e};
                     }
                     data.success = false;
                     return data;
@@ -406,11 +407,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                             mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_db_error);
                             noMediaChanges = true;
                         }
-                        if (ret.equals("noChanges")) {
+                        if ("noChanges".equals(ret)) {
                             publishProgress(R.string.sync_media_no_changes);
                             noMediaChanges = true;
                         }
-                        if (ret.equals("sanityFailed")) {
+                        if ("sanityFailed".equals(ret)) {
                             mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_sanity_failed);
                         } else {
                             publishProgress(R.string.sync_media_success);
@@ -418,9 +419,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     }
                 } catch (RuntimeException e) {
                     if (timeoutOccurred(e)) {
-                        data.result = new Object[] {"connectionError" };
-                    } else if (e.getMessage().equals("UserAbortedSync")) {
-                        data.result = new Object[] {"UserAbortedSync" };
+                        data.result = new Object[] {"connectionError", e};
+                    } else if ("UserAbortedSync".equals(e.getMessage())) {
+                        data.result = new Object[] {"UserAbortedSync", e};
                     }
                     mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage();
                 }
@@ -437,12 +438,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         } catch (MediaSyncException e) {
             Timber.e("Media sync rejected by server");
             data.success = false;
-            data.result = new Object[] {"mediaSyncServerError"};
+            data.result = new Object[] {"mediaSyncServerError", e};
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
             return data;
         } catch (UnknownHttpResponseException e) {
-            Timber.e("doInBackgroundSync -- unknown response code error");
-            e.printStackTrace();
+            Timber.e(e, "doInBackgroundSync -- unknown response code error");
             data.success = false;
             int code = e.getResponseCode();
             String msg = e.getLocalizedMessage();
@@ -451,16 +451,15 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         } catch (Exception e) {
             // Global error catcher.
             // Try to give a human readable error, otherwise print the raw error message
-            Timber.e("doInBackgroundSync error");
-            e.printStackTrace();
+            Timber.e(e, "doInBackgroundSync error");
             data.success = false;
             if (timeoutOccurred(e)) {
-                data.result = new Object[]{"connectionError"};
-            } else if (e.getMessage().equals("UserAbortedSync")) {
-                data.result = new Object[] {"UserAbortedSync" };
+                data.result = new Object[]{"connectionError", e};
+            } else if ("UserAbortedSync".equals(e.getMessage())) {
+                data.result = new Object[] {"UserAbortedSync", e};
             } else {
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
-                data.result = new Object[] {e.getLocalizedMessage()};
+                data.result = new Object[] {e.getLocalizedMessage(), e};
             }
             return data;
         } finally {

@@ -42,6 +42,7 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.FlashCardsContract.CardTemplate;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
@@ -328,11 +329,11 @@ public class CardContentProvider extends ContentProvider {
                         String[] keyAndValue = arg.split("="); //split arguments into key ("limit") and value ("?")
                         try {
                             //check if value is a placeholder ("?"), if so replace with the next value of selectionArgs
-                            String value = keyAndValue[1].trim().equals("?") ? selectionArgs[selectionArgIndex++] :
+                            String value = "?".equals(keyAndValue[1].trim()) ? selectionArgs[selectionArgIndex++] :
                                     keyAndValue[1];
-                            if (keyAndValue[0].trim().equals("limit")) {
+                            if ("limit".equals(keyAndValue[0].trim())) {
                                 limit = Integer.valueOf(value);
-                            } else if (keyAndValue[0].trim().equals("deckID")) {
+                            } else if ("deckID".equals(keyAndValue[0].trim())) {
                                 deckIdOfTemporarilySelectedDeck = Long.valueOf(value);
                                 if(!selectDeckWithCheck(col, deckIdOfTemporarilySelectedDeck)){
                                     return rv; //if the provided deckID is wrong, return empty cursor.
@@ -1163,7 +1164,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void answerCard(Collection col, Sched sched, Card cardToAnswer, int ease, long timeTaken) {
+    private void answerCard(Collection col, AbstractSched sched, Card cardToAnswer, int ease, long timeTaken) {
         try {
             DB db = col.getDb();
             db.getDatabase().beginTransaction();
@@ -1186,7 +1187,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
 
-    private void buryOrSuspendCard(Collection col, Sched sched, Card card, boolean bury) {
+    private void buryOrSuspendCard(Collection col, AbstractSched sched, Card card, boolean bury) {
         try {
             DB db = col.getDb();
             db.getDatabase().beginTransaction();

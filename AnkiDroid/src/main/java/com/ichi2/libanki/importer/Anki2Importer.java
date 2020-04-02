@@ -24,6 +24,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
@@ -102,6 +103,7 @@ public class Anki2Importer extends Importer {
             }
         } catch (RuntimeException e) {
             Timber.e(e, "RuntimeException while importing");
+            throw new ImportExportException(e.getMessage());
         }
     }
 
@@ -116,7 +118,7 @@ public class Anki2Importer extends Importer {
         mSrc = Storage.Collection(mContext, mFile);
 
         if (!importingV2 && mCol.schedVer() != 1) {
-            if (mSrc.getDb().queryScalar("select 1 from cards where queue != 0 limit 1") > 0) {
+            if (mSrc.getDb().queryScalar("select 1 from cards where queue != " + Consts.QUEUE_TYPE_NEW + " limit 1") > 0) {
                 mSrc.close(false);
                 throw new ImportExportException(mContext.getString(R.string.import_cannot_with_v2));
             }
@@ -636,8 +638,16 @@ public class Anki2Importer extends Importer {
             // Mark file addition to media db (see note in Media.java)
             mDst.getMedia().markFileAdd(fname);
         } catch (IOException e) {
+
             // the user likely used subdirectories
             Timber.e(e, "Error copying file %s.", fname);
+
+            // If we are out of space, we should re-throw
+            if (e.getCause() != null && e.getCause().getMessage().contains("No space left on device")) {
+                // we need to let the user know why we are failing
+                Timber.e("We are out of space, bubbling up the file copy exception");
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -697,7 +707,7 @@ public class Anki2Importer extends Importer {
             }
             // make sure new position is correct
             mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar(
-                    "select max(due)+1 from cards where type = 0"));
+                    "select max(due)+1 from cards where type = " + Consts.CARD_TYPE_NEW));
             mDst.save();
         } catch (JSONException e) {
             throw new RuntimeException(e);

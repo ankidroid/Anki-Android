@@ -33,6 +33,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.utils.AdaptionUtil;
 
 import timber.log.Timber;
 
@@ -132,9 +133,13 @@ public class MyAccount extends AnkiActivity {
 
 
     private void resetPassword() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(getResources().getString(R.string.resetpw_url)));
-        startActivityWithoutAnimation(intent);
+        if (AdaptionUtil.hasWebBrowser(this)) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(getResources().getString(R.string.resetpw_url)));
+            startActivityWithoutAnimation(intent);
+        } else {
+            UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + getResources().getString(R.string.resetpw_url), false);
+        }
     }
 
 
@@ -150,7 +155,8 @@ public class MyAccount extends AnkiActivity {
         resetPWButton.setOnClickListener(v -> resetPassword());
 
         Button signUpButton = mLoginToMyAccountView.findViewById(R.id.sign_up_button);
-        signUpButton.setOnClickListener(v -> openUrl(Uri.parse(getResources().getString(R.string.register_url))));
+        Uri url = Uri.parse(getResources().getString(R.string.register_url));
+        signUpButton.setOnClickListener(v -> openUrl(url));
 
         mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);
         mUsernameLoggedIn = mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);
@@ -200,11 +206,17 @@ public class MyAccount extends AnkiActivity {
                     switchToState(STATE_LOGGED_IN);
                 }
             } else {
-                Timber.e("Login failed, error code %d",data.returnType);
+                Timber.e("Login failed, error code %d", data.returnType);
                 if (data.returnType == 403) {
                     UIUtils.showSimpleSnackbar(MyAccount.this, R.string.invalid_username_password, true);
                 } else {
-                    UIUtils.showSimpleSnackbar(MyAccount.this, R.string.connection_error_message, true);
+                    String message = getResources().getString(R.string.connection_error_message);
+                    Object[] result = (Object [])data.result;
+                    if (result.length > 1 && result[1] instanceof Exception) {
+                        showSimpleMessageDialog(message, ((Exception)result[1]).getLocalizedMessage(), false);
+                    } else {
+                        UIUtils.showSimpleSnackbar(MyAccount.this, message, false);
+                    }
                 }
             }
         }

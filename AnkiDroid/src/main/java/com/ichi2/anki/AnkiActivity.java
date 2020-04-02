@@ -4,6 +4,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +35,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.AdaptionUtil;
 
 import timber.log.Timber;
 
@@ -171,20 +173,24 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     @Deprecated
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
+        try {
+            super.startActivityForResult(intent, requestCode);
+        } catch (ActivityNotFoundException e) {
+            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed,true);
+        }
     }
 
 
     public void startActivityForResultWithoutAnimation(Intent intent, int requestCode) {
         disableIntentAnimation(intent);
-        super.startActivityForResult(intent, requestCode);
+        startActivityForResult(intent, requestCode);
         disableActivityAnimation();
     }
 
 
     public void startActivityForResultWithAnimation(Intent intent, int requestCode, int animation) {
         enableIntentAnimation(intent);
-        super.startActivityForResult(intent, requestCode);
+        startActivityForResult(intent, requestCode);
         enableActivityAnimation(animation);
     }
 
@@ -299,7 +305,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
     protected void openUrl(Uri url) {
-        CompatHelper.getCompat().openUrl(this, url);
+        //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
+        //display the toast
+        if (AdaptionUtil.hasWebBrowser(this)) {
+            CompatHelper.getCompat().openUrl(this, url);
+        } else {
+            UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + url, false);
+        }
     }
 
     public CustomTabActivityHelper getCustomTabActivityHelper() {

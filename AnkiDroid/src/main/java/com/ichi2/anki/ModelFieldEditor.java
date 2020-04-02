@@ -166,8 +166,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
     /*
-    * Creates a dialog to rename the currently selected field, short loading ti
-    * Processing time scales with number of items
+    * Creates a dialog to create a field
     */
     private void addFieldDialog() {
         mFieldNameInput = new EditText(this);
@@ -179,12 +178,12 @@ public class ModelFieldEditor extends AnkiActivity {
                 .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
                     String fieldName = mFieldNameInput.getText().toString()
-                            .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                            .replaceAll("[\\n\\r]", "");
 
                     if (fieldName.length() == 0) {
-                        showToast(getResources().getString(R.string.toast_empty_name));
+                        UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
                     } else if (containsField(fieldName)) {
-                        showToast(getResources().getString(R.string.toast_duplicate_field));
+                        UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
                     } else {
                         //Name is valid, now field is added
                         try {
@@ -199,7 +198,7 @@ public class ModelFieldEditor extends AnkiActivity {
                             Runnable confirm = () -> {
                                 mCol.modSchemaNoCheck();
                                 String fieldName1 = mFieldNameInput.getText().toString()
-                                        .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                        .replaceAll("[\\n\\r]", "");
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FIELD, mChangeFieldHandler,
                                         new DeckTask.TaskData(new Object[]{mMod, fieldName1}));
                                 dismissContextMenu();
@@ -219,8 +218,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
     /*
-     * Creates a dialog to rename the currently selected field, short loading ti
-     * Processing time scales with number of items
+     * Creates a dialog to delete the currently selected field
      */
     private void deleteFieldDialog() {
         Runnable confirm = () -> {
@@ -235,7 +233,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
         if (mFieldLabels.size() < 2) {
-            showToast(getResources().getString(R.string.toast_last_field));
+            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_last_field), true);
         } else {
             try {
                 mCol.modSchema();
@@ -265,7 +263,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
     /*
-     * Creates a dialog to rename the currently selected field, short loading ti
+     * Creates a dialog to rename the currently selected field
      * Processing time is constant
      */
     private void renameFieldDialog() {
@@ -280,11 +278,11 @@ public class ModelFieldEditor extends AnkiActivity {
                 .onPositive((dialog, which) -> {
 
                         String fieldLabel = mFieldNameInput.getText().toString()
-                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                .replaceAll("[\\n\\r]", "");
                         if (fieldLabel.length() == 0) {
-                            showToast(getResources().getString(R.string.toast_empty_name));
+                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
                         } else if (containsField(fieldLabel)) {
-                            showToast(getResources().getString(R.string.toast_duplicate_field));
+                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
                         } else {
                             //Field is valid, now rename
                             try {
@@ -332,12 +330,12 @@ public class ModelFieldEditor extends AnkiActivity {
                         try {
                             pos = Integer.parseInt(newPosition);
                         } catch (NumberFormatException n) {
-                            showToast(getResources().getString(R.string.toast_out_of_range));
+                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
                             return;
                         }
 
                         if (pos < 1 || pos > mFieldLabels.size()) {
-                            showToast(getResources().getString(R.string.toast_out_of_range));
+                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
                         } else {
                             // Input is valid, now attempt to modify
                             try {
@@ -406,13 +404,13 @@ public class ModelFieldEditor extends AnkiActivity {
     private void renameField() throws ConfirmModSchemaException {
         try {
             String fieldLabel = mFieldNameInput.getText().toString()
-                    .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                    .replaceAll("[\\n\\r]", "");
             JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
             mCol.getModels().renameField(mMod, field, fieldLabel);
             mCol.getModels().save();
             fullRefreshList();
         } catch (JSONException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -461,13 +459,6 @@ public class ModelFieldEditor extends AnkiActivity {
             }
         }
         return false;
-    }
-
-
-    private void showToast(CharSequence text) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
     }
 
 

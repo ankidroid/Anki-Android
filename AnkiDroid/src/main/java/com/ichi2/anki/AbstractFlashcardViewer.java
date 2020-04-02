@@ -39,6 +39,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+
+import androidx.annotation.CheckResult;
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
@@ -50,6 +55,7 @@ import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,8 +65,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
+import android.webkit.RenderProcessGoneDetail;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -79,6 +87,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -89,12 +98,16 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DiffEngine;
+import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.FunctionalInterfaces.Function;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -105,6 +118,9 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -323,13 +339,26 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     private int mFadeDuration = 300;
 
-    protected Sched mSched;
+    protected AbstractSched mSched;
 
     private ReviewerExtRegistry mExtensions;
 
     private Sound mSoundPlayer = new Sound();
 
     private long mUseTimerDynamicMS;
+
+    /**
+     * Last card that the WebView Renderer crashed on.
+     * If we get 2 crashes on the same card, then we likely have an infinite loop and want to exit gracefully.
+     */
+    @Nullable
+    private Long lastCrashingCardId = null;
+
+    /** Reference to the parent of the cardFrame to allow regeneration of the cardFrame in case of crash */
+    private ViewGroup mCardFrameParent;
+
+    /** Lock to allow thread-safe regeneration of mCard */
+    private ReadWriteLock mCardLock = new ReentrantReadWriteLock();
 
     // private int zEase;
 
@@ -441,16 +470,33 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         break;
                 }
             }
-            try {
-                if (event != null) {
-                    mCard.dispatchTouchEvent(event);
-                }
-            } catch (NullPointerException e) {
-                Timber.e(e, "Error on dispatching touch event");
-            }
+            //Gesture listener is added before mCard is set
+            processCardAction(card -> {
+                if (card == null) return;
+                card.dispatchTouchEvent(event);
+            });
             return false;
         }
     };
+
+    @SuppressLint("CheckResult")
+    private void processCardAction(Consumer<WebView> cardConsumer) {
+        processCardFunction(card -> {
+            cardConsumer.consume(card);
+            return true;
+        });
+    }
+
+    @CheckResult
+    private <T> T processCardFunction(Function<WebView, T> cardFunction) {
+        Lock readLock = mCardLock.readLock();
+        try {
+            readLock.lock();
+            return cardFunction.apply(mCard);
+        } finally {
+            readLock.unlock();
+        }
+    }
 
 
     protected DeckTask.TaskListener mDismissCardHandler = new NextCardHandler() { /* superclass is sufficient */ };
@@ -676,7 +722,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
             // shouldOverrideUrlLoading() in createWebView() in this file.
             sb.append("<center>\n<input type=text name=typed id=typeans onfocus=\"taFocus();\" " +
-                      "onblur=\"taBlur(this);\" onKeyPress=\"return taKey(this, event)\" autocomplete=\"off\" ");
+                    "onblur=\"taBlur(this);\" onKeyPress=\"return taKey(this, event)\" autocomplete=\"off\" ");
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
             if (mTypeFont != null && !TextUtils.isEmpty(mTypeFont) && mTypeSize > 0) {
@@ -917,7 +963,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCardFrame != null) {
             mCardFrame.removeAllViews();
         }
-        destroyWebView(mCard);
+        destroyWebView(mCard); //OK to do without a lock
     }
 
 
@@ -933,48 +979,55 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // Hardware buttons for scrolling
-        if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
-            mCard.pageUp(false);
-            if (mDoubleScrolling) {
-                mCard.pageUp(false);
-            }
-            return true;
-        }
-        if (keyCode == KeyEvent.KEYCODE_PAGE_DOWN) {
-            mCard.pageDown(false);
-            if (mDoubleScrolling) {
-                mCard.pageDown(false);
-            }
-            return true;
-        }
-        if (mScrollingButtons && keyCode == KeyEvent.KEYCODE_PICTSYMBOLS) {
-            mCard.pageUp(false);
-            if (mDoubleScrolling) {
-                mCard.pageUp(false);
-            }
-            return true;
-        }
-        if (mScrollingButtons && keyCode == KeyEvent.KEYCODE_SWITCH_CHARSET) {
-            mCard.pageDown(false);
-            if (mDoubleScrolling) {
-                mCard.pageDown(false);
-            }
+        if (processCardFunction(card -> processHardwareButtonScroll(keyCode, card))) {
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
 
+    private boolean processHardwareButtonScroll(int keyCode, WebView card) {
+        if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
+            card.pageUp(false);
+            if (mDoubleScrolling) {
+                card.pageUp(false);
+            }
+            return true;
+        }
+        if (keyCode == KeyEvent.KEYCODE_PAGE_DOWN) {
+            card.pageDown(false);
+            if (mDoubleScrolling) {
+                card.pageDown(false);
+            }
+            return true;
+        }
+        if (mScrollingButtons && keyCode == KeyEvent.KEYCODE_PICTSYMBOLS) {
+            card.pageUp(false);
+            if (mDoubleScrolling) {
+                card.pageUp(false);
+            }
+            return true;
+        }
+        if (mScrollingButtons && keyCode == KeyEvent.KEYCODE_SWITCH_CHARSET) {
+            card.pageDown(false);
+            if (mDoubleScrolling) {
+                card.pageDown(false);
+            }
+            return true;
+        }
+        return false;
+    }
+
+
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (mAnswerField != null && !mAnswerField.isFocused()) {
-	        if (!sDisplayAnswer) {
-	            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-	                displayCardAnswer();
-	                return true;
-	            }
-	        }
+            if (!sDisplayAnswer) {
+                if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+                    displayCardAnswer();
+                    return true;
+                }
+            }
         }
         return super.onKeyUp(keyCode, event);
     }
@@ -1064,12 +1117,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     // Get the did of the parent deck (ignoring any subdecks)
     protected long getParentDid() {
-        long deckID;
-        try {
-            deckID = getCol().getDecks().current().getLong("id");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        long deckID = getCol().getDecks().selected();
         return deckID;
     }
 
@@ -1253,13 +1301,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 break;
             case EASE_2:
                 mChosenAnswer.setText("\u2022\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == 4 ?
+                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == Consts.BUTTON_FOUR ?
                         R.color.material_blue_grey_600:
                         R.color.material_green_500));
                 break;
             case EASE_3:
                 mChosenAnswer.setText("\u2022\u2022\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == 4 ?
+                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == Consts.BUTTON_FOUR ?
                         R.color.material_green_500 :
                         R.color.material_light_blue_500));
                 break;
@@ -1290,6 +1338,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mTopBarLayout = (RelativeLayout) findViewById(R.id.top_bar);
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
+        mCardFrameParent = (ViewGroup) mCardFrame.getParent();
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
         if (!mDisableClipboard) {
@@ -1441,6 +1490,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
 
             @Override
+            @TargetApi(Build.VERSION_CODES.N)
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                WebResourceResponse webResourceResponse = null;
+                if (!AdaptionUtil.hasWebBrowser(getBaseContext())) {
+                    String scheme = request.getUrl().getScheme().trim();
+                    if (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https")) {
+                        String response = getResources().getString(R.string.no_outgoing_link_in_cardbrowser);
+                        webResourceResponse = new WebResourceResponse("text/html", "utf-8", new ByteArrayInputStream(response.getBytes()));
+                    }
+                }
+                return webResourceResponse;
+            }
+
+            @Override
             @SuppressWarnings("deprecation") // tracked as #5017 in github
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return filterUrl(url);
@@ -1474,11 +1537,48 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     mFlipCardLayout.performClick();
                     return true;
                 }
-                if ("signal:typefocus".equals(url)) {
-                    // Hide the “SHOW ANSWER” button when the input has focus. The soft keyboard takes up enough space
-                    // by itself.
-                    mFlipCardLayout.setVisibility(View.GONE);
-                    return true;
+                int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
+                switch (signalOrdinal) {
+                    case WebViewSignalParserUtils.SIGNAL_UNHANDLED:
+                        break; //continue parsing
+                    case WebViewSignalParserUtils.SIGNAL_NOOP:
+                        return true;
+                    case WebViewSignalParserUtils.TYPE_FOCUS:
+                        // Hide the “SHOW ANSWER” button when the input has focus. The soft keyboard takes up enough
+                        // space by itself.
+                        mFlipCardLayout.setVisibility(View.GONE);
+                        return true;
+                    case WebViewSignalParserUtils.RELINQUISH_FOCUS:
+                        //#5811 - The WebView could be focused via mouse. Allow components to return focus to Android.
+                        focusAnswerCompletionField();
+                        return true;
+                    /**
+                     *  Call displayCardAnswer() and answerCard() from anki deck template using javascript
+                     *  See card.js in assets/scripts folder
+                     */
+                    case WebViewSignalParserUtils.SHOW_ANSWER:
+                        // display answer when showAnswer() called from card.js
+                        if (!sDisplayAnswer) {
+                            displayCardAnswer();
+                        }
+                        return true;
+                    case WebViewSignalParserUtils.ANSWER_ORDINAL_1:
+                        flipOrAnswerCard(EASE_1);
+                        return true;
+                    case WebViewSignalParserUtils.ANSWER_ORDINAL_2:
+                        flipOrAnswerCard(EASE_2);
+                        return true;
+                    case WebViewSignalParserUtils.ANSWER_ORDINAL_3:
+                        flipOrAnswerCard(EASE_3);
+                        return true;
+                    case WebViewSignalParserUtils.ANSWER_ORDINAL_4:
+                        flipOrAnswerCard(EASE_4);
+                        return true;
+                    default:
+                        //We know it was a signal, but forgot a case in the case statement.
+                        //This is not the same as SIGNAL_UNHANDLED, where it isn't a known signal.
+                        Timber.w("Unhandled signal case: %d", signalOrdinal);
+                        return true;
                 }
                 Intent intent = null;
                 try {
@@ -1546,107 +1646,172 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 drawMark();
                 view.loadUrl("javascript:onPageFinished();");
             }
+
+            /** Fix: #5780 - WebView Renderer OOM crashes reviewer */
+            @Override
+            @TargetApi(Build.VERSION_CODES.O)
+            public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
+                Timber.i("Obtaining write lock for card");
+                Lock writeLock = mCardLock.writeLock();
+                Timber.i("Obtained write lock for card");
+                try {
+                    writeLock.lock();
+                    if (mCard == null || !mCard.equals(view)) {
+                        //A view crashed that wasn't ours.
+                        //We have nothing to handle. Returning false is a desire to crash, so return true.
+                        Timber.i("Unrelated WebView Renderer terminated. Crashed: %b",  detail.didCrash());
+                        return true;
+                    }
+
+                    Timber.e("WebView Renderer process terminated. Crashed: %b",  detail.didCrash());
+
+                    //Destroy the current WebView (to ensure WebView is GCed).
+                    //Otherwise, we get the following error:
+                    //"crash wasn't handled by all associated webviews, triggering application crash"
+                    mCardFrame.removeAllViews();
+                    mCardFrameParent.removeView(mCardFrame);
+                    //destroy after removal from the view - produces logcat warnings otherwise
+                    destroyWebView(mCard);
+                    mCard = null;
+                    //inflate a new instance of mCardFrame
+                    mCardFrame = inflateNewView(R.id.flashcard);
+                    //Even with the above, I occasionally saw the above error. Manually trigger the GC.
+                    //I'll keep this line unless I see another crash, which would point to another underlying issue.
+                    System.gc();
+
+                    //We only want to show one message per branch.
+
+                    //It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
+                    int errorCauseId = detail.didCrash() ? R.string.webview_crash_unknown : R.string.webview_crash_oom;
+                    String errorCauseString = getResources().getString(errorCauseId);
+
+                    if (!canRecoverFromWebViewRendererCrash()) {
+                        Timber.e("Unrecoverable WebView Render crash");
+                        String errorMessage = getResources().getString(R.string.webview_crash_fatal, errorCauseString);
+                        UIUtils.showThemedToast(AbstractFlashcardViewer.this, errorMessage, false);
+                        finishWithoutAnimation();
+                        return true;
+                    }
+
+                    if (webViewRendererLastCrashedOnCard(mCurrentCard.getId())) {
+                        Timber.e("Web Renderer crash loop on card: %d", mCurrentCard.getId());
+                        displayRenderLoopDialog(mCurrentCard, detail);
+                        return true;
+                    }
+
+                    // If we get here, the error is non-fatal and we should re-render the WebView
+                    // This logic may need to be better defined. The card could have changed by the time we get here.
+                    lastCrashingCardId = mCurrentCard.getId();
+
+
+                    String nonFatalError = getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, nonFatalError, false);
+
+                    //we need to add at index 0 so gestures still go through.
+                    mCardFrameParent.addView(mCardFrame, 0);
+
+                    recreateWebView();
+                } finally {
+                    writeLock.unlock();
+                    Timber.d("Relinquished writeLock");
+                }
+                displayCardQuestion();
+
+                //We handled the crash and can continue.
+                return true;
+            }
+
+
+            @TargetApi(Build.VERSION_CODES.O)
+            private void displayRenderLoopDialog(Card mCurrentCard, RenderProcessGoneDetail detail) {
+                String cardInformation = Long.toString(mCurrentCard.getId());
+                Resources res = getResources();
+
+                String errorDetails = detail.didCrash()
+                        ? res.getString(R.string.webview_crash_unknwon_detailed)
+                        : res.getString(R.string.webview_crash_oom_details);
+                new MaterialDialog.Builder(AbstractFlashcardViewer.this)
+                        .title(res.getString(R.string.webview_crash_loop_dialog_title))
+                        .content(res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
+                        .positiveText(R.string.dialog_ok)
+                        .cancelable(false)
+                        .canceledOnTouchOutside(false)
+                        .onPositive((materialDialog, dialogAction) -> finishWithoutAnimation())
+                        .show();
+            }
         });
         // Set transparent color to prevent flashing white when night mode enabled
         webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
         return webView;
     }
 
-    private void destroyWebView(WebView webView) {
-        if (webView != null) {
-            webView.stopLoading();
-            webView.setWebChromeClient(null);
-            webView.setWebViewClient(null);
-            webView.destroy();
+    /** If a card is displaying the question, flip it, otherwise answer it */
+    private void flipOrAnswerCard(int cardOrdinal) {
+        if (!sDisplayAnswer) {
+           displayCardAnswer();
+           return;
         }
+        answerCard(cardOrdinal);
+    }
+
+    private boolean webViewRendererLastCrashedOnCard(long cardId) {
+        return lastCrashingCardId != null && lastCrashingCardId == cardId;
     }
 
 
-    protected void showEaseButtons() {
+    private boolean canRecoverFromWebViewRendererCrash() {
+        // DEFECT
+        // If we don't have a card to render, we're in a bad state. The class doesn't currently track state
+        // well enough to be able to know exactly where we are in the initialisation pipeline.
+        // so it's best to mark the crash as non-recoverable.
+        // We should fix this, but it's very unlikely that we'll ever get here. Logs will tell
+
+        // Revisit webViewCrashedOnCard() if changing this. Logic currently assumes we have a card.
+        return mCurrentCard != null;
+    }
+
+    //#5780 - Users could OOM the WebView Renderer. This triggers the same symptoms
+    @VisibleForTesting()
+    @SuppressWarnings("unused")
+    public void crashWebViewRenderer() {
+        loadUrlInViewer("chrome://crash");
+    }
+
+
+    /** Used to set the "javascript:" URIs for IPC */
+    private void loadUrlInViewer(final String url) {
+        processCardAction(card -> card.loadUrl(url));
+    }
+
+    private <T extends View> T inflateNewView(@IdRes int id) {
+        int layoutId = getContentViewAttr(mPrefFullscreenReview);
+        ViewGroup content = (ViewGroup) LayoutInflater.from(AbstractFlashcardViewer.this).inflate(layoutId, null, false);
+        T ret = content.findViewById(id);
+        ((ViewGroup) ret.getParent()).removeView(ret); //detach the view from its parent
+        content.removeAllViews();
+        return ret;
+    }
+
+    private void destroyWebView(WebView webView) {
+        try {
+            if (webView != null) {
+                webView.stopLoading();
+                webView.setWebChromeClient(null);
+                webView.setWebViewClient(null);
+                webView.destroy();
+            }
+        } catch (NullPointerException npe) {
+            Timber.e(npe, "WebView became null on destruction");
+        }
+    }
+
+    protected boolean shouldShowNextReviewTime() {
+        return mShowNextReviewTime;
+    }
+
+    protected void displayAnswerBottomBar() {
         // hide flipcard button
         mFlipCardLayout.setVisibility(View.GONE);
-
-        int buttonCount;
-        try {
-            buttonCount = mSched.answerButtons(mCurrentCard);
-        } catch (RuntimeException e) {
-            AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-showEaseButtons");
-            closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
-            return;
-        }
-
-        // Set correct label and background resource for each button
-        // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
-        // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
-        final int[] background = Themes.getResFromAttr(this, new int [] {
-                R.attr.againButtonRef,
-                R.attr.hardButtonRef,
-                R.attr.goodButtonRef,
-                R.attr.easyButtonRef});
-        final int[] textColor = Themes.getColorFromAttr(this, new int [] {
-                R.attr.againButtonTextColor,
-                R.attr.hardButtonTextColor,
-                R.attr.goodButtonTextColor,
-                R.attr.easyButtonTextColor});
-        mEase1Layout.setVisibility(View.VISIBLE);
-        mEase1Layout.setBackgroundResource(background[0]);
-        mEase4Layout.setBackgroundResource(background[3]);
-        switch (buttonCount) {
-            case 2:
-                // Ease 2 is "good"
-                mEase2Layout.setVisibility(View.VISIBLE);
-                mEase2Layout.setBackgroundResource(background[2]);
-                mEase2.setText(R.string.ease_button_good);
-                mEase2.setTextColor(textColor[2]);
-                mNext2.setTextColor(textColor[2]);
-                mEase2Layout.requestFocus();
-                break;
-            case 3:
-                // Ease 2 is good
-                mEase2Layout.setVisibility(View.VISIBLE);
-                mEase2Layout.setBackgroundResource(background[2]);
-                mEase2.setText(R.string.ease_button_good);
-                mEase2.setTextColor(textColor[2]);
-                mNext2.setTextColor(textColor[2]);
-                // Ease 3 is easy
-                mEase3Layout.setVisibility(View.VISIBLE);
-                mEase3Layout.setBackgroundResource(background[3]);
-                mEase3.setText(R.string.ease_button_easy);
-                mEase3.setTextColor(textColor[3]);
-                mNext3.setTextColor(textColor[3]);
-                mEase2Layout.requestFocus();
-                break;
-            default:
-                mEase2Layout.setVisibility(View.VISIBLE);
-                // Ease 2 is "hard"
-                mEase2Layout.setVisibility(View.VISIBLE);
-                mEase2Layout.setBackgroundResource(background[1]);
-                mEase2.setText(R.string.ease_button_hard);
-                mEase2.setTextColor(textColor[1]);
-                mNext2.setTextColor(textColor[1]);
-                mEase2Layout.requestFocus();
-                // Ease 3 is good
-                mEase3Layout.setVisibility(View.VISIBLE);
-                mEase3Layout.setBackgroundResource(background[2]);
-                mEase3.setText(R.string.ease_button_good);
-                mEase3.setTextColor(textColor[2]);
-                mNext3.setTextColor(textColor[2]);
-                mEase4Layout.setVisibility(View.VISIBLE);
-                mEase3Layout.requestFocus();
-                break;
-        }
-
-        // Show next review time
-        if (mShowNextReviewTime) {
-            mNext1.setText(mSched.nextIvlStr(this, mCurrentCard, 1));
-            mNext2.setText(mSched.nextIvlStr(this, mCurrentCard, 2));
-            if (buttonCount > 2) {
-                mNext3.setText(mSched.nextIvlStr(this, mCurrentCard, 3));
-            }
-            if (buttonCount > 3) {
-                mNext4.setText(mSched.nextIvlStr(this, mCurrentCard, 4));
-            }
-        }
     }
 
 
@@ -1656,6 +1821,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mEase3Layout.setVisibility(View.GONE);
         mEase4Layout.setVisibility(View.GONE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
+        focusAnswerCompletionField();
+    }
+
+    /**
+     * Focuses the appropriate field for an answer
+     * And allows keyboard shortcuts to go to the default handlers.
+     * */
+    private void focusAnswerCompletionField() {
+        // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
+        // In this case, the user can use touch to focus the field if necessary.
         if (typeAnswer()) {
             mAnswerField.requestFocus();
         } else {
@@ -1719,7 +1894,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mPrefShowETA = preferences.getBoolean("showETA", true);
         mUseInputTag = preferences.getBoolean("useInputTag", false);
         // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
-        mDisableClipboard = preferences.getString("dictionary", "0").equals("0");
+        mDisableClipboard = "0".equals(preferences.getString("dictionary", "0"));
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
         mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0"));
@@ -1778,15 +1953,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mShowNextReviewTime = getCol().getConf().getBoolean("estTimes");
             mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
 
-            // Get the review options for this group
-            JSONObject revOptions = getCol().getDecks().confForDid(getCol().getDecks().current().getLong("id")).getJSONObject("rev");
+            // Dynamic don't have review options; attempt to get deck-specific auto-advance options
+            // but be prepared to go with all default if it's a dynamic deck
+            JSONObject revOptions = new JSONObject();
+            if (!getCol().getDecks().isDyn(getCol().getDecks().current().getLong("id"))) {
+                revOptions = getCol().getDecks().confForDid(getCol().getDecks().current().getLong("id")).getJSONObject("rev");
+            }
 
             mOptUseGeneralTimerSettings = revOptions.optBoolean("useGeneralTimeoutSettings", true);
             mOptUseTimer = revOptions.optBoolean("timeoutAnswer", false);
             mOptWaitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20);
             mOptWaitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60);
         } catch (JSONException e) {
-            throw new RuntimeException();
+            Timber.e(e, "Unable to restoreCollectionPreferences");
+            throw new RuntimeException(e);
         } catch (NullPointerException npe) {
             // NPE on collection only happens if the Collection is broken, follow AnkiActivity example
             Intent deckPicker = new Intent(this, DeckPicker.class);
@@ -1801,6 +1981,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCurrentCard == null) {
             return;
         }
+        recreateWebView();
+    }
+
+    private void recreateWebView() {
         if (mCard == null) {
             mCard = createWebView();
             // On your desktop use chrome://inspect to connect to emulator WebViews
@@ -1844,7 +2028,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
             if (mPrefShowETA) {
                 int eta = mSched.eta(counts, false);
-                actionBar.setSubtitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));
             }
         }
 
@@ -1856,13 +2040,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         switch (mSched.countIdx(mCurrentCard)) {
-            case Card.TYPE_NEW:
+            case Consts.CARD_TYPE_NEW:
                 newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
                 break;
-            case Card.TYPE_LRN:
+            case Consts.CARD_TYPE_LRN:
                 lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
                 break;
-            case Card.TYPE_REV:
+            case Consts.CARD_TYPE_REV:
                 revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
                 break;
             default:
@@ -1958,8 +2142,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             displayString = enrichWithQADiv(question, false);
 
             //if (mSpeakText) {
-                // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
-                // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
+            // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
+            // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
             //}
         }
 
@@ -1997,7 +2181,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
      */
     protected String cleanCorrectAnswer(String answer) {
-        if (answer == null || answer.equals("")) {
+        if (answer == null || "".equals(answer)) {
             return "";
         }
         Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer.trim()));
@@ -2017,7 +2201,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @return The typed answer text, cleaned up.
      */
     protected String cleanTypedAnswer(String answer) {
-        if (answer == null || answer.equals("")) {
+        if (answer == null || "".equals(answer)) {
             return "";
         }
         return Utils.nfcNormalized(answer.trim());
@@ -2062,7 +2246,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mIsSelecting = false;
         updateCard(enrichWithQADiv(answer, true));
-        showEaseButtons();
+        displayAnswerBottomBar();
         // If the user wants to show the next question automatically
         if (mUseTimer) {
             long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
@@ -2079,9 +2263,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @param dy amount to be scrolled
      */
     public void scrollCurrentCardBy(int dy) {
-        if (dy != 0 && mCard.canScrollVertically(dy)) {
-            mCard.scrollBy(0, dy);
-        }
+        processCardAction(card -> {
+            if (dy != 0 && card.canScrollVertically(dy)) {
+                card.scrollBy(0, dy);
+            }
+        });
     }
 
 
@@ -2095,12 +2281,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         MotionEvent eDown = MotionEvent.obtain(SystemClock.uptimeMillis(),
                 SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, x, y,
                 1, 1, 0, 1, 1, 0, 0);
-        mCard.dispatchTouchEvent(eDown);
+        processCardAction(card -> card.dispatchTouchEvent(eDown));
 
         MotionEvent eUp = MotionEvent.obtain(eDown.getDownTime(),
                 SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, x, y,
                 1, 1, 0, 1, 1, 0, 0);
-        mCard.dispatchTouchEvent(eUp);
+        processCardAction(card -> card.dispatchTouchEvent(eUp));
+
     }
 
 
@@ -2134,30 +2321,30 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private void updateCard(String content) {
+    private void updateCard(final String newContent) {
         Timber.d("updateCard()");
 
         mUseTimerDynamicMS = 0;
 
         // Add CSS for font color and font size
         if (mCurrentCard == null) {
-            mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
+            processCardAction(card -> card.getSettings().setDefaultFontSize(calculateDynamicFontSize(newContent)));
         }
 
         if (sDisplayAnswer) {
-            addAnswerSounds(content);
+            addAnswerSounds(newContent);
         } else {
             // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
             // leaving the card (such as when edited)
             mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
-            mSoundPlayer.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
+            mSoundPlayer.addSounds(mBaseUrl, newContent, Sound.SOUNDS_QUESTION);
             if (mUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
                 addAnswerSounds(mCurrentCard.a());
             }
         }
 
-        content = Sound.expandSounds(mBaseUrl, content);
+        String content = Sound.expandSounds(mBaseUrl, newContent);
 
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
@@ -2362,15 +2549,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public void fillFlashcard() {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
-        if (mCard != null) {
-            CompatHelper.getCompat().setHTML5MediaAutoPlay(mCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
-            mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
-        }
+        final String cardContent = mCardContent.toString();
+        processCardAction(card -> loadContentIntoCard(card, cardContent));
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
             switchTopBarVisibility(View.VISIBLE);
         }
         if (!sDisplayAnswer) {
             updateForNewCard();
+        }
+    }
+
+
+    private void loadContentIntoCard(WebView card, String content) {
+        if (card != null) {
+            CompatHelper.getCompat().setHTML5MediaAutoPlay(card.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
+            card.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", content, "text/html", "utf-8", null);
         }
     }
 
@@ -2543,7 +2736,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private void selectAndCopyText() {
         try {
             KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
-            shiftPressEvent.dispatch(mCard);
+            processCardAction(shiftPressEvent::dispatch);
             shiftPressEvent.isShiftPressed();
             mIsSelecting = true;
         } catch (Exception e) {
@@ -2871,10 +3064,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
     private void drawMark() {
-        mCard.loadUrl("javascript:_drawMark("+mCurrentCard.note().hasTag("marked")+");");
+        if (mCurrentCard == null) {
+            return;
+        }
+        loadUrlInViewer("javascript:_drawMark("+mCurrentCard.note().hasTag("marked")+");");
     }
 
     protected void onMark(Card card) {
+        if (card == null) {
+            return;
+        }
         Note note = card.note();
         if (note.hasTag("marked")) {
             note.delTag("marked");
@@ -2887,10 +3086,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
     private void drawFlag() {
-        mCard.loadUrl("javascript:_drawFlag("+mCurrentCard.getUserFlag()+");");
+        if (mCurrentCard == null) {
+            return;
+        }
+        loadUrlInViewer("javascript:_drawFlag("+mCurrentCard.getUserFlag()+");");
     }
 
     protected void onFlag(Card card, int flag) {
+        if (card == null) {
+            return;
+        }
         card.setUserFlag(flag);
         card.flush();
         refreshActionBar();
@@ -2912,5 +3117,45 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void dismiss(Collection.DismissType type) {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mDismissCardHandler,
                 new DeckTask.TaskData(new Object[]{mCurrentCard, type}));
+    }
+
+    /** Signals from a WebView represent actions with no parameters */
+    @VisibleForTesting
+    static class WebViewSignalParserUtils {
+        /** A signal which we did not know how to handle */
+        public static final int SIGNAL_UNHANDLED = 0;
+        /** A known signal which should perform a noop */
+        public static final int SIGNAL_NOOP = 1;
+
+        public static final int TYPE_FOCUS = 2;
+        /** Tell the app that we no longer want to focus the WebView and should instead return keyboard focus to a
+         * native answer input method. */
+        public static final int RELINQUISH_FOCUS = 3;
+
+        public static final int SHOW_ANSWER = 4;
+        public static final int ANSWER_ORDINAL_1 = 5;
+        public static final int ANSWER_ORDINAL_2 = 6;
+        public static final int ANSWER_ORDINAL_3 = 7;
+        public static final int ANSWER_ORDINAL_4 = 8;
+
+        public static int getSignalFromUrl(String url) {
+            switch (url) {
+                case "signal:typefocus": return TYPE_FOCUS;
+                case "signal:relinquishFocus": return RELINQUISH_FOCUS;
+                case "signal:show_answer": return SHOW_ANSWER;
+                case "signal:answer_ease1": return ANSWER_ORDINAL_1;
+                case "signal:answer_ease2": return ANSWER_ORDINAL_2;
+                case "signal:answer_ease3": return ANSWER_ORDINAL_3;
+                case "signal:answer_ease4": return ANSWER_ORDINAL_4;
+                default: break;
+            }
+
+            if (url.startsWith("signal:answer_ease")) {
+                Timber.w("Unhandled signal: ease value: %s", url);
+                return SIGNAL_NOOP;
+            }
+
+            return SIGNAL_UNHANDLED; //unknown, or not a signal.
+        }
     }
 }

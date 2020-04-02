@@ -215,7 +215,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
 
     private String computeAddress() {
-        String address = "http://glosbe.com/gapi/translate?from=FROMLANG&dest=TOLANG&format=json&phrase=SOURCE&pretty=true";
+        String address = "https://glosbe.com/gapi/translate?from=FROMLANG&dest=TOLANG&format=json&phrase=SOURCE&pretty=true";
 
         String strFrom = mSpinnerFrom.getSelectedItem().toString();
         // Conversion to iso, lister created before.

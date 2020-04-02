@@ -229,6 +229,7 @@ public class Models {
 
     public boolean ensureNotEmpty() {
         if (mModels.isEmpty()) {
+            // TODO: Maybe we want to restore all models if we don't have any
             addBasicModel(mCol);
             return true;
         } else {
@@ -1346,6 +1347,37 @@ public class Models {
 
     public static JSONObject addBasicModel(Collection col, String name) {
         JSONObject m = _newBasicModel(col, name);
+        col.getModels().add(m);
+        return m;
+    }
+
+    /* Basic w/ typing */
+
+    private static JSONObject _newBasicTypingModel(Collection col) {
+        String name = AnkiDroidApp.getAppResources().getString(R.string.basic_typing_model_name);
+        return _newBasicTypingModel(col, name);
+    }
+
+    private static JSONObject _newBasicTypingModel(Collection col, String name) {
+        //addField and addTemplate can't actually throw an exception, since we add new field/template.
+        JSONObject m = _newBasicModel(col, name);
+        try {
+            JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
+            t.put("afmt", "{{"+"Front"+"}}\n\n<hr id=answer>\n\n{{type:"+"Back"+"}}");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return m;
+    }
+
+    public static JSONObject addBasicTypingModel(Collection col, String name) {
+        JSONObject m = _newBasicTypingModel(col, name);
+        col.getModels().add(m);
+        return m;
+    }
+
+    public static JSONObject addBasicTypingModel(Collection col) {
+        JSONObject m = _newBasicTypingModel(col);
         col.getModels().add(m);
         return m;
     }

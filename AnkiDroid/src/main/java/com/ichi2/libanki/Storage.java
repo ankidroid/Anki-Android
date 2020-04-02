@@ -69,6 +69,7 @@ public class Storage {
             } else if (create) {
                 // add in reverse order so basic is default
                 Models.addClozeModel(col);
+                Models.addBasicTypingModel(col);
                 Models.addForwardOptionalReverse(col);
                 Models.addForwardReverse(col);
                 Models.addBasicModel(col);
@@ -165,7 +166,7 @@ public class Storage {
             }
             if (ver < 7) {
                 col.modSchemaNoCheck();
-                col.getDb().execute("UPDATE cards SET odue = 0 WHERE (type = 1 OR queue = 2) AND NOT odid");
+                col.getDb().execute("UPDATE cards SET odue = 0 WHERE (type = " + Consts.CARD_TYPE_LRN + " OR queue = 2) AND NOT odid");
                 col.getDb().execute("UPDATE col SET ver = 7");
             }
             if (ver < 8) {
@@ -177,7 +178,7 @@ public class Storage {
                 col.getDb().execute("UPDATE col SET ver = 9");
             }
             if (ver < 10) {
-                col.getDb().execute("UPDATE cards SET left = left + left * 1000 WHERE queue = 1");
+                col.getDb().execute("UPDATE cards SET left = left + left * 1000 WHERE queue = " + Consts.QUEUE_TYPE_LRN);
                 col.getDb().execute("UPDATE col SET ver = 10");
             }
             if (ver < 11) {

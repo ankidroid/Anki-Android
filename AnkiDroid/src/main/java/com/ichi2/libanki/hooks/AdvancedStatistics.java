@@ -588,6 +588,7 @@ public class AdvancedStatistics extends Hook  {
             query = "SELECT id, due, ivl, factor, type, reps " +
                     "FROM cards " +
                     "WHERE did IN (" + did + ") " +
+                    "AND queue != " + Consts.QUEUE_TYPE_SUSPENDED + " " +   // ignore suspended cards
                     "order by id;";
             Timber.d("Forecast query: %s", query);
             cur = db.query(query, null);
@@ -662,15 +663,15 @@ public class AdvancedStatistics extends Hook  {
 
         private final String queryNew =
                 queryBaseNew
-                        + "where type=0;";
+                        + "where type=" + CARD_TYPE_NEW + ";";
 
         private final String queryYoung =
                 queryBaseYoungMature
-                        + "where type=1 and lastIvl < 21;";
+                        + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl < 21;";
 
         private final String queryMature =
                 queryBaseYoungMature
-                        + "where type=1 and lastIvl >= 21;";
+                        + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl >= 21;";
 
         public EaseClassifier(SupportSQLiteDatabase db) {
             this.db = db;
@@ -808,7 +809,7 @@ public class AdvancedStatistics extends Hook  {
             int ivl = c.getIvl();
             double factor = c.getFactor();
 
-            if(type == 0) {
+            if(type == CARD_TYPE_NEW) {
                 if (outcome <= 2)
                     ivl = 1;
                 else
@@ -849,7 +850,7 @@ public class AdvancedStatistics extends Hook  {
 
             Cursor cur = null;
             String query = "select cards.did, "+
-                    "sum(case when revlog.type = 0 then 1 else 0 end)"+ /* learning */
+                    "sum(case when revlog.type = " + CARD_TYPE_NEW + " then 1 else 0 end)"+ /* learning */
                     " from revlog, cards where revlog.cid = cards.id and revlog.id > " + dayStartCutoff +
                     " group by cards.did";
             Timber.d("AdvancedStatistics.TodayStats query: %s", query);
@@ -1634,7 +1635,7 @@ public class AdvancedStatistics extends Hook  {
             this.outcome = 0;
 
             //# Rate-limit new cards by shifting starting time
-            if (card.getType() == 0)
+            if (card.getType() == CARD_TYPE_NEW)
                 tElapsed = newCardSimulator.simulateNewCard(deck);
             else
                 tElapsed = card.getDue();
@@ -1666,7 +1667,7 @@ public class AdvancedStatistics extends Hook  {
          */
         public void simulateReview() {
 
-            if(card.getType() == 0 || simulationResult.nReviewsDoneToday(tElapsed) < maxReviewsPerDay || outcome > 0) {
+            if(card.getType() == CARD_TYPE_NEW || simulationResult.nReviewsDoneToday(tElapsed) < maxReviewsPerDay || outcome > 0) {
                 // Update the forecasted number of reviews
                 if(outcome == 0)
                     simulationResult.incrementNReviews(card.getType(), tElapsed, prob);

@@ -48,7 +48,7 @@ public class RobolectricTest {
     @After
     public void tearDown() {
         // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-        CollectionHelper.getInstance().closeCollection(false);
+        CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
 
         // After every test, make sure the sqlite implementation is set back to default
         DB.setSqliteOpenHelperFactory(null);

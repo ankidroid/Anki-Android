@@ -177,7 +177,7 @@ public class Media {
                              " from old.media m\n" +
                              " left outer join old.log l using (fname)\n" +
                              " union\n" +
-                             " select fname, null, 0, 1 from old.log where type=1;";
+                             " select fname, null, 0, 1 from old.log where type=" + Consts.CARD_TYPE_LRN + ";";
                 mDb.execute(sql);
                 mDb.execute("delete from meta");
                 mDb.execute("insert into meta select dirMod, usn from old.meta");
@@ -949,7 +949,7 @@ public class Media {
             // then loop through all files
             int cnt = 0;
             for (ZipEntry i : Collections.list(z.entries())) {
-                if (i.getName().equals("_meta")) {
+                if ("_meta".equals(i.getName())) {
                     // ignore previously-retrieved meta
                     continue;
                 } else {

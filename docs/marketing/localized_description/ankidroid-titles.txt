@@ -5,6 +5,7 @@ ca: AnkiDroid fitxes per memoritzar
 cs: AnkiDroid kartičky
 de: AnkiDroid Karteikarten
 el: Κάρτες Ανκί-Ντρόιντ
+eo: AnkiDroid
 es-AR: Tarjetas flash AnkiDroid
 es-ES: Tarjetas AnkiDroid
 et: AnkiDroid mälukaardid
@@ -30,4 +31,3 @@ tr: AnkiDroid Bilgi Kartları
 vi: Thẻ thông minh AnkiDroid
 zh-CN: AnkiDroid 记忆卡片
 zh-TW: AnkiDroid 抽認卡
-eo: AnkiDroid

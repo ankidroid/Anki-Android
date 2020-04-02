@@ -3,6 +3,7 @@
  * Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>                              *
  * Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>                                   *
+ * Copyright (c) 2020 Mike Hardy <github@mikehardy.net>                                 *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -21,22 +22,29 @@ package com.ichi2.anki.web;
 
 import android.content.Context;
 
+import com.ichi2.async.Connection;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.sync.Tls12SocketFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import timber.log.Timber;
 
 /**
  * Helper class to download from web.
  * <p>
  * Used in AsyncTasks in Translation and Pronunciation activities, and more...
  */
-@SuppressWarnings("deprecation") // tracking HTTP transport change in github already
 public class HttpFetcher {
 
     public static String fetchThroughHttp(String address) {
@@ -46,24 +54,34 @@ public class HttpFetcher {
 
     public static String fetchThroughHttp(String address, String encoding) {
 
+        Timber.d("fetching %s", address);
+        Response response = null;
+
         try {
-            org.apache.http.client.HttpClient httpClient = new org.apache.http.impl.client.DefaultHttpClient();
-            org.apache.http.params.HttpParams params = httpClient.getParams();
-            org.apache.http.params.HttpConnectionParams.setConnectionTimeout(params, 10000);
-            org.apache.http.params.HttpConnectionParams.setSoTimeout(params, 60000);
-            org.apache.http.protocol.HttpContext localContext = new org.apache.http.protocol.BasicHttpContext();
-            org.apache.http.client.methods.HttpGet httpGet = new org.apache.http.client.methods.HttpGet(address);
-            org.apache.http.HttpResponse response = httpClient.execute(httpGet, localContext);
-            if (response.getStatusLine().getStatusCode() != 200) {
+            Request.Builder requestBuilder = new Request.Builder();
+            requestBuilder.url(address).get();
+            Request httpGet = requestBuilder.build();
+
+            OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+            Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
+                    .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
+            OkHttpClient client = clientBuilder.build();
+            response = client.newCall(httpGet).execute();
+
+
+            if (response.code() != 200) {
+                Timber.d("Response code was %s, returning failure", response.code());
                 return "FAILED";
             }
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(),
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.body().byteStream(),
                     Charset.forName(encoding)));
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line);
             }
@@ -71,48 +89,15 @@ public class HttpFetcher {
             return stringBuilder.toString();
 
         } catch (Exception e) {
+            Timber.d(e, "Failed with an exception");
             return "FAILED with exception: " + e.getMessage();
+        } finally {
+            if (response != null && response.body() != null) {
+                response.body().close();
+            }
         }
-
     }
 
-
-    // public static String downloadFileToCache(String UrlToFile, Context context, String prefix)
-    // {
-    // try
-    // {
-    // URL url = new URL(UrlToFile);
-    //
-    // String extension = UrlToFile.substring(UrlToFile.length() - 4);
-    //
-    // HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-    // urlConnection.setRequestMethod("GET");
-    // urlConnection.setDoOutput(true);
-    // urlConnection.connect();
-    //
-    // File outputDir = context.getCacheDir();
-    // File file = File.createTempFile(prefix, extension, outputDir);
-    //
-    // FileOutputStream fileOutput = new FileOutputStream(file);
-    // InputStream inputStream = urlConnection.getInputStream();
-    //
-    // byte[] buffer = new byte[1024];
-    // int bufferLength = 0;
-    //
-    // while ((bufferLength = inputStream.read(buffer)) > 0)
-    // {
-    // fileOutput.write(buffer, 0, bufferLength);
-    // }
-    // fileOutput.close();
-    //
-    // return file.getAbsolutePath();
-    //
-    // }
-    // catch (Exception e)
-    // {
-    // return "FAILED " + e.getMessage();
-    // }
-    // }
 
     public static String downloadFileToSdCard(String UrlToFile, Context context, String prefix) {
         String str = downloadFileToSdCardMethod(UrlToFile, context, prefix, "GET");
@@ -125,28 +110,51 @@ public class HttpFetcher {
 
 
     public static String downloadFileToSdCardMethod(String UrlToFile, Context context, String prefix, String method) {
+
+        Response response = null;
+
         try {
             URL url = new URL(UrlToFile);
 
             String extension = UrlToFile.substring(UrlToFile.length() - 4);
 
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod(method);
-            urlConnection.setRequestProperty("Referer", "com.ichi2.anki");
-            urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
-            urlConnection.setRequestProperty("Accept", "*/*");
-			urlConnection.setConnectTimeout(10000);
-			urlConnection.setReadTimeout(60000);
-            urlConnection.connect();
+            Request.Builder requestBuilder = new Request.Builder();
+            requestBuilder.url(url);
+            if ("GET".equals(method)) {
+                requestBuilder.get();
+            } else {
+                requestBuilder.post(RequestBody.create(null, new byte[0]));
+            }
+            Request request = requestBuilder.build();
+
+            OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+            clientBuilder.addNetworkInterceptor(chain -> chain.proceed(
+                    chain.request()
+                            .newBuilder()
+                            .header("Referer", "com.ichi2.anki")
+                            .header("User-Agent", "Mozilla/5.0 ( compatible ) ")
+                            .header("Accept", "*/*")
+                            .build()
+            ));
+            Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
+                    .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
+            OkHttpClient client = clientBuilder.build();
+            response = client.newCall(request).execute();
 
             File file = File.createTempFile(prefix, extension, context.getCacheDir());
-            InputStream inputStream = urlConnection.getInputStream();
+            InputStream inputStream = response.body().byteStream();
             CompatHelper.getCompat().copyFile(inputStream, file.getCanonicalPath());
             inputStream.close();
             return file.getAbsolutePath();
 
         } catch (Exception e) {
             return "FAILED " + e.getMessage();
+        } finally {
+            if (response != null && response.body() != null) {
+                response.body().close();
+            }
         }
     }
 

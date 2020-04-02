@@ -77,6 +77,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONArray;
@@ -219,7 +220,7 @@ public class NoteEditor extends AnkiActivity {
                         }
                     }
                 } catch (JSONException e) {
-                    throw new RuntimeException();
+                    throw new RuntimeException(e);
                 }
                 UIUtils.showThemedToast(NoteEditor.this,
                         getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
@@ -411,7 +412,7 @@ public class NoteEditor extends AnkiActivity {
                     finishWithoutAnimation();
                     return;
                 }
-                if (mSourceText[0].equals("Aedict Notepad") && addFromAedict(mSourceText[1])) {
+                if ("Aedict Notepad".equals(mSourceText[0]) && addFromAedict(mSourceText[1])) {
                     finishWithoutAnimation();
                     return;
                 }
@@ -449,8 +450,8 @@ public class NoteEditor extends AnkiActivity {
             if (!mAddNote && mEditorNote.model().getJSONArray("tmpls").length()>1) {
                 deckTextView.setText(R.string.CardEditorCardDeck);
             }
-        } catch (JSONException e1) {
-            throw new RuntimeException();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
         mNoteDeckSpinner = (Spinner) findViewById(R.id.note_deck_spinner);
         mAllDeckIds = new ArrayList<>();
@@ -1221,6 +1222,10 @@ public class NoteEditor extends AnkiActivity {
                                 return false;
                         }
                     });
+                    if (AdaptionUtil.hasReducedPreferences()) {
+                        popup.getMenu().findItem(R.id.menu_multimedia_photo).setVisible(false);
+                        popup.getMenu().findItem(R.id.menu_multimedia_text).setVisible(false);
+                    }
                     popup.show();
                 }
             }

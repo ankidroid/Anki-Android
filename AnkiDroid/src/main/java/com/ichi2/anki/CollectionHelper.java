@@ -16,17 +16,20 @@
 
 package com.ichi2.anki;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import androidx.core.content.ContextCompat;
+import android.text.format.Formatter;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
+import com.ichi2.preferences.PreferenceExtensions;
+import com.ichi2.utils.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +54,18 @@ public class CollectionHelper {
      * <p>Accessed only from synchronized methods.
      */
     private boolean mCollectionLocked;
+
+    @Nullable
+    public static Long getCollectionSize(Context context) {
+        try {
+            String path = getCollectionPath(context);
+            return new File(path).length();
+        } catch (Exception e) {
+            Timber.e(e, "Error getting collection Length");
+            return null;
+        }
+    }
+
     public synchronized void lockCollection() {
         mCollectionLocked = true;
     }
@@ -120,8 +135,8 @@ public class CollectionHelper {
      * Close the {@link Collection}, optionally saving
      * @param save whether or not save before closing
      */
-    public synchronized void closeCollection(boolean save) {
-        Timber.i("closeCollection");
+    public synchronized void closeCollection(boolean save, String reason) {
+        Timber.i("closeCollection: %s", reason);
         if (mCollection != null) {
             mCollection.close(save);
         }
@@ -209,7 +224,10 @@ public class CollectionHelper {
      */
     public static String getCurrentAnkiDroidDirectory(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-        return preferences.getString("deckPath", getDefaultAnkiDroidDirectory());
+        return PreferenceExtensions.getOrSetString(
+                preferences,
+                "deckPath",
+                CollectionHelper::getDefaultAnkiDroidDirectory);
     }
 
     /**
@@ -222,12 +240,103 @@ public class CollectionHelper {
     }
 
     /**
-     * Check if we have permission to access the external storage
-     * @param context
-     * @return
+     * This currently stores either:
+     * An error message stating the reason that a storage check must be performed
+     * OR
+     * The current storage requirements, and the current available storage.
      */
-    public static boolean hasStorageAccessPermission(Context context) {
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED;
+    public static class CollectionIntegrityStorageCheck {
+
+        @Nullable
+        private final String mErrorMessage;
+
+        //OR:
+        @Nullable
+        private final Long mRequiredSpace;
+        @Nullable
+        private final Long mFreeSpace;
+
+        private CollectionIntegrityStorageCheck(long requiredSpace, long freeSpace) {
+            this.mFreeSpace = freeSpace;
+            this.mRequiredSpace = requiredSpace;
+            this.mErrorMessage = null;
+        }
+
+        private CollectionIntegrityStorageCheck(@NonNull String errorMessage) {
+            this.mRequiredSpace = null;
+            this.mFreeSpace = null;
+            this.mErrorMessage = errorMessage;
+        }
+
+        private static CollectionIntegrityStorageCheck fromError(String errorMessage) {
+            return new CollectionIntegrityStorageCheck(errorMessage);
+        }
+
+        private static String defaultRequiredFreeSpace(Context context) {
+            long oneHundredFiftyMB = 150 * 1000 * 1000; //tested, 1024 displays 157MB. 1000 displays 150
+            return Formatter.formatShortFileSize(context, oneHundredFiftyMB);
+        }
+
+        public static CollectionIntegrityStorageCheck createInstance(Context context) {
+
+            Long maybeCurrentCollectionSizeInBytes = getCollectionSize(context);
+            if (maybeCurrentCollectionSizeInBytes == null) {
+                Timber.w("Error obtaining collection file size.");
+                String requiredFreeSpace = defaultRequiredFreeSpace(context);
+                return fromError(context.getResources().getString(R.string.integrity_check_insufficient_space, requiredFreeSpace));
+            }
+
+            // This means that when VACUUMing a database, as much as twice the size of the original database file is
+            // required in free disk space. - https://www.sqlite.org/lang_vacuum.html
+            long requiredSpaceInBytes = maybeCurrentCollectionSizeInBytes * 2;
+
+            // We currently use the same directory as the collection for VACUUM/ANALYZE due to the SQLite APIs
+            File collectionFile = new File(getCollectionPath(context));
+            long freeSpace = FileUtil.getFreeDiskSpace(collectionFile, -1);
+
+            if (freeSpace == -1) {
+                Timber.w("Error obtaining free space for '%s'", collectionFile.getPath());
+                String readableFileSize  = Formatter.formatFileSize(context, requiredSpaceInBytes);
+                return fromError(context.getResources().getString(R.string.integrity_check_insufficient_space, readableFileSize));
+            }
+
+            return new CollectionIntegrityStorageCheck(requiredSpaceInBytes, freeSpace);
+        }
+
+        public boolean shouldWarnOnIntegrityCheck() {
+            return this.mErrorMessage != null || fileSystemDoesNotHaveSpaceForBackup();
+        }
+
+        private boolean fileSystemDoesNotHaveSpaceForBackup() {
+            //only to be called when mErrorMessage == null
+            if (mFreeSpace == null || mRequiredSpace == null) {
+                Timber.e("fileSystemDoesNotHaveSpaceForBackup called in invalid state.");
+                return true;
+            }
+            Timber.d("Required Free Space: %d. Current: %d", mRequiredSpace, mFreeSpace);
+            return mRequiredSpace > mFreeSpace;
+        }
+
+
+        public String getWarningDetails(Context context) {
+            if (mErrorMessage != null) {
+                return mErrorMessage;
+            }
+            if (mFreeSpace == null || mRequiredSpace == null) {
+                Timber.e("CollectionIntegrityCheckStatus in an invalid state");
+                String defaultRequiredFreeSpace = defaultRequiredFreeSpace(context);
+                return context.getResources().getString(R.string.integrity_check_insufficient_space, defaultRequiredFreeSpace);
+            }
+
+            String required = Formatter.formatShortFileSize(context, mRequiredSpace);
+            String insufficientSpace = context.getResources().getString(
+                    R.string.integrity_check_insufficient_space, required);
+
+            //Also concat in the extra content showing the current free space.
+            String currentFree = Formatter.formatShortFileSize(context, mFreeSpace);
+            String insufficientSpaceCurrentFree = context.getResources().getString(
+                    R.string.integrity_check_insufficient_space_extra_content, currentFree);
+            return insufficientSpace + insufficientSpaceCurrentFree;
+        }
     }
 }
