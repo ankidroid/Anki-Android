@@ -1403,18 +1403,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /**
      * Removes cards from view. Doesn't delete them in model (database).
      */
-    private void removeNotesView(Card[] cards) {
+    private void removeNotesView(Card[] cards, boolean reorderCards) {
         List<Long> cardIds = new ArrayList<>(cards.length);
         for (Card c : cards) {
             cardIds.add(c.getId());
         }
-        removeNotesView(cardIds);
+        removeNotesView(cardIds, reorderCards);
     }
 
     /**
      * Removes cards from view. Doesn't delete them in model (database).
+     * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
-    private void removeNotesView(java.util.Collection<Long> cardsIds) {
+    private void removeNotesView(java.util.Collection<Long> cardsIds, boolean reorderCards) {
         long reviewerCardId = getReviewerCardId();
         List<Map<String, String>> oldMCards = getCards();
         Map<Long, Integer> idToPos = getPositionMap(oldMCards);
@@ -1435,6 +1436,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
         mCards = newMCards;
+
+        if (reorderCards) {
+            //Suboptimal from a UX perspective, we should reorder
+            //but this is only hit on a rare sad path and we'd need to rejig the data structures to allow an efficient
+            //search
+            Timber.w("Removing current selection due to unexpected removal of cards");
+            onSelectNone();
+        }
+
         updateList();
     }
 
@@ -1463,7 +1473,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             Card[] cards = (Card[]) values[0].getObjArray();
-            removeNotesView(cards);
+            //we don't need to reorder cards here as we've already deselected all notes,
+            removeNotesView(cards, false);
         }
 
 
@@ -1538,6 +1549,18 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onPostExecute(TaskData result) {
             if (result != null) {
+                if (result.getObjArray() != null && result.getObjArray().length > 1) {
+                    try {
+                        @SuppressWarnings("unchecked")
+                        List<Long> cardsIdsToHide = (List<Long>) result.getObjArray()[1];
+                        if (cardsIdsToHide.size() > 0) {
+                            Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size());
+                            removeNotesView(cardsIdsToHide, true);
+                        }
+                    } catch (Exception e) {
+                        Timber.e(e, "failed to hide cards");
+                    }
+                }
                 hideProgressBar();
                 mCardsAdapter.notifyDataSetChanged();
                 Timber.d("Completed doInBackgroundRenderBrowserQA Successfuly");
@@ -1936,25 +1959,68 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mActionBarTitle.setVisibility(View.GONE);
     }
 
-    @VisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     boolean isInMultiSelectMode() {
         return mInMultiSelectMode;
     }
 
-    @VisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     long cardCount() {
         return mCards.size();
     }
 
-    @VisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
      boolean isShowingSelectAll() {
         return mActionBarMenu != null && mActionBarMenu.findItem(R.id.action_select_all).isVisible();
     }
 
-    @VisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     boolean isShowingSelectNone() {
         return mActionBarMenu != null &&
                 mActionBarMenu.findItem(R.id.action_select_none) != null && //
                 mActionBarMenu.findItem(R.id.action_select_none).isVisible();
     }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    void clearCardData(int position) {
+        String id = mCards.get(position).get("id");
+        mCards.get(position).clear();
+        mCards.get(position).put("id", id);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    void rerenderAllCards() {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
+                new DeckTask.TaskData(new Object[]{getCards(), 0, mCards.size()-1}));
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    long[] getCardIds() {
+        @SuppressWarnings("unchecked")
+        Map<String, String>[] cardsCopy = mCards.toArray(new Map[0]);
+        long[] ret = new long[cardsCopy.length];
+        for (int i = 0; i < cardsCopy.length; i++) {
+            ret[i] = Long.parseLong(cardsCopy[i].get("id"));
+        }
+        return ret;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    void checkedCardsAtPositions(int[] positions) {
+        for (int i = 0; i < positions.length; i++) {
+            mCheckedCardPositions.add(positions[i]);
+        }
+        onSelectionChanged();
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    boolean hasCheckedCardAtPosition(int i) {
+        return mCheckedCardPositions.contains(i);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public int checkedCardCount() {
+        return mCheckedCardPositions.size();
+    }
+
 }

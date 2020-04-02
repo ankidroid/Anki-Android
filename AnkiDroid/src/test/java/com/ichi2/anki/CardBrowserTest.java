@@ -5,7 +5,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.ichi2.libanki.Note;
+import com.ichi2.testutils.AnkiAssert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -18,6 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 import static org.robolectric.Shadows.shadowOf;
@@ -100,6 +103,40 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat(browser.isInMultiSelectMode(), is(false));
     }
 
+    @Test
+    public void browserDoesNotFailWhenSelectingANonExistingCard() {
+        //#5900
+        CardBrowser browser = getBrowserWithNotes(6);
+        //Sometimes an async operation deletes a card, we clear the data and rerender it to simulate this
+        deleteCardAtPosition(browser, 0);
+        AnkiAssert.assertDoesNotThrow(browser::rerenderAllCards);
+        assertThat(browser.cardCount(), equalTo(5L));
+    }
+
+
+    @Test
+    @Ignore("Not yet implemented, feature has performance implications in large collections, instead we remove selections")
+    public void selectionsAreCorrectWhenNonExistingCardIsRemoved() {
+        CardBrowser browser = getBrowserWithNotes(7);
+        browser.checkedCardsAtPositions(new int[] {1, 3, 5, 6});
+        deleteCardAtPosition(browser, 2); //delete non-selected
+        deleteCardAtPosition(browser, 3); //delete selected, ensure it's not still selected
+
+        //ACT
+        browser.rerenderAllCards();
+        //ASSERT
+        assertThat(browser.cardCount(), equalTo(6L));
+        assertThat("A checked card should have been removed", browser.checkedCardCount(), equalTo(3));
+        assertThat("Checked card before should not have changed", browser.hasCheckedCardAtPosition(1), is(true));
+        assertThat("Checked card after should have changed by 2 places", browser.hasCheckedCardAtPosition(3), is(true));
+        assertThat("Checked card after should have changed by 2 places", browser.hasCheckedCardAtPosition(4), is(true));
+    }
+
+    private void deleteCardAtPosition(CardBrowser browser, int positionToCorrupt) {
+        removeCardFromCollection(browser.getCardIds()[positionToCorrupt]);
+        browser.clearCardData(positionToCorrupt);
+    }
+
     private void selectOneOfManyCards(CardBrowser browser) {
         Timber.d("Selecting single card");
         ShadowActivity shadowActivity = shadowOf(browser);
@@ -137,6 +174,9 @@ public class CardBrowserTest extends RobolectricTest {
         return (CardBrowser) multimediaController.get();
     }
 
+    private void removeCardFromCollection(Long cardId) {
+        getCol().remCards(new long[] { cardId });
+    }
 
     private void addNote(String value) {
         Note n = getCol().newNote();
