@@ -101,8 +101,7 @@ android {
 }
 
 play {
-    serviceAccountEmail = '294046724212-r3bef6kl46pb9gk0h1pl5rcjmpfrdpjl@developer.gserviceaccount.com'
-    serviceAccountCredentials = file("${homePath}/src/583631bdd16d.p12")
+    serviceAccountCredentials = file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json")
     track = 'alpha'
 }
 
