@@ -2025,7 +2025,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void openHelpUrl(Uri helpUrl) {
-        openUrl(helpUrl);
+        if (AdaptionUtil.hasWebBrowser(this)) {
+            openUrl(helpUrl);
+        } else {
+            UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + helpUrl, false);
+        }
     }
 
 
