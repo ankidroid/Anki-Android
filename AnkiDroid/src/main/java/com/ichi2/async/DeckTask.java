@@ -889,6 +889,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Integer startPos = (Integer) params[0].getObjArray()[1];
         Integer n = (Integer) params[0].getObjArray()[2];
 
+        List<Long> invalidCardIds = new ArrayList<>();
         // for each specified card in the browser list
         for (int i = startPos; i < startPos + n; i++) {
             // Stop if cancelled
@@ -915,14 +916,26 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
             // Extract card item
             Card c;
-            String cardId = card.get("id");
+            String maybeCardId = card.get("id");
+            if (maybeCardId == null) {
+                Timber.w("CardId was null, skipping");
+                continue;
+            }
+            Long cardId;
             try {
-                c = col.getCard(Long.parseLong(cardId));
+                cardId = Long.parseLong(maybeCardId);
+            } catch (Exception e) {
+                Timber.e("Unable to parse CardId: %s. Unable to remove card", maybeCardId);
+                continue;
+            }
+            try {
+                c = col.getCard(cardId);
             } catch (Exception e) {
                 //#5891 - card can be inconsistent between the deck browser screen and the collection.
                 //Realistically, we can skip any exception as it's a rendering task which should not kill the
                 //process
-                Timber.e(e, "Could not process card '%s' - skipping", cardId);
+                Timber.e(e, "Could not process card '%s' - skipping and removing from sight", maybeCardId);
+                invalidCardIds.add(cardId);
                 continue;
             }
             // Update item
@@ -930,7 +943,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             float progress = (float) i / n * 100;
             publishProgress(new TaskData((int) progress));
         }
-        return new TaskData(cards);
+        return new TaskData(new Object[] { cards, invalidCardIds });
     }
 
 
