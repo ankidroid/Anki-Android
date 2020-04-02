@@ -1759,7 +1759,7 @@ public class Collection {
         Timber.d("resetNewCardInsertionPosition");
         notifyProgress.run();
         // new card position
-        mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = Consts.CARD_TYPE_NEW"));
+        mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = " + Consts.CARD_TYPE_NEW));
         return Collections.emptyList();
     }
 
@@ -1846,7 +1846,7 @@ public class Collection {
         notifyProgress.run();
         // cards with odue set when it shouldn't be
         ArrayList<Long> ids = mDb.queryColumn(Long.class,
-                "select id from cards where odue > 0 and (type=Consts.CARD_TYPE_LRN or queue=" + Consts.QUEUE_TYPE_REV + ") and not odid", 0);
+                "select id from cards where odue > 0 and (type= " + Consts.CARD_TYPE_LRN + " or queue=" + Consts.QUEUE_TYPE_REV + ") and not odid", 0);
         notifyProgress.run();
         if (ids.size() != 0) {
             problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
