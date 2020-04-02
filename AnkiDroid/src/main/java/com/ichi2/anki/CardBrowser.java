@@ -1796,7 +1796,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
          */
         private int getColor(Map<String, String> card) {
             boolean suspended = "True".equals(card.get("suspended"));
-            int flag = new Integer(card.get("flags"));
+            int flag = getFlagOrDefault(card, 0);
             boolean marked = card.get("marked") != null ;
             switch (flag) {
                 case 1:
@@ -1850,6 +1850,22 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
     }
+
+
+    private int getFlagOrDefault(Map<String, String> card, int defaultValue) {
+        String flagValue = card.get("flag");
+        if (flagValue == null) {
+            Timber.w("Unable to obtain flag for card: '%s'. Returning %d", card.get("id"), defaultValue);
+            return defaultValue;
+        }
+        try {
+            return Integer.parseInt(flagValue);
+        } catch (Exception e) {
+            Timber.e(e, "couldn't parse flag value: %s", flagValue);
+            return defaultValue;
+        }
+    }
+
 
     private void onCheck(int position, View cell) {
         CheckBox checkBox = (CheckBox) cell.findViewById(R.id.card_checkbox);
