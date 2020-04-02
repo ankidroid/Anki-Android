@@ -149,7 +149,9 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
             }
             finally {
                 try {
-                    inputStream.close();
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
                 } catch (IOException ioe) {
                     // nothing
                 }
