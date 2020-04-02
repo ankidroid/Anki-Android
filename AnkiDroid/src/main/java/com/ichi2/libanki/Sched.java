@@ -345,7 +345,9 @@ public class Sched extends AbstractSched {
                 // and add to running total
                 tot += cnt;
             }
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
             throw new RuntimeException(e);
         }
         return tot;
