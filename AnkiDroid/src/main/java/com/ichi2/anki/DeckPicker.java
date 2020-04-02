@@ -2001,7 +2001,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_manual_getting_started));
             mayOpenUrl(helpUrl);
             UIUtils.showSnackbar(this, R.string.empty_deck, false, R.string.help,
-                    v -> openUrl(helpUrl), findViewById(R.id.root_layout), mSnackbarShowHideCallback);
+                    v -> openHelpUrl(helpUrl), findViewById(R.id.root_layout), mSnackbarShowHideCallback);
             if (mFragmented) {
                 openStudyOptions(false);
             } else {
@@ -2021,6 +2021,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 updateDeckList();
             }
         }
+    }
+
+
+    private void openHelpUrl(Uri helpUrl) {
+        openUrl(helpUrl);
     }
 
 
