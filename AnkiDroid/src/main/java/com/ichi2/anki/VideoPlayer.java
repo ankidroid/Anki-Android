@@ -41,20 +41,17 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);        
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mVideoView = (VideoView) findViewById(R.id.video_surface);
+        mVideoView = findViewById(R.id.video_surface);
         mVideoView.getHolder().addCallback(this);
         mSoundPlayer = new Sound();
     }
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        mSoundPlayer.playSound(mPath, new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                finish();
-                MediaPlayer.OnCompletionListener originalListener = mSoundPlayer.getMediaCompletionListener();
-                if (originalListener != null) {
-                    originalListener.onCompletion(mp);
-                }
+        mSoundPlayer.playSound(mPath, mp -> {
+            finish();
+            MediaPlayer.OnCompletionListener originalListener = mSoundPlayer.getMediaCompletionListener();
+            if (originalListener != null) {
+                originalListener.onCompletion(mp);
             }
         }, mVideoView);
     }
