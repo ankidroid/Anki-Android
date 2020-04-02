@@ -31,6 +31,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
+import com.ichi2.libanki.AbstractSched;
 import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -411,7 +412,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundUpdateNote");
         // Save the note
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         Card editCard = params[0].getCard();
         Note editNote = editCard.note();
         boolean fromReviewer = params[0].getBoolean();
@@ -484,7 +485,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundAnswerCard(TaskData... params) {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
         Card newCard = null;
@@ -516,7 +517,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     }
 
 
-    private Card getCard(Sched sched) {
+    private Card getCard(AbstractSched sched) {
         if (sHadCardQueue) {
             sched.reset();
             sHadCardQueue = false;
@@ -555,7 +556,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundDismissNote(TaskData... params) {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         Object[] data = params[0].getObjArray();
         Card card = (Card) data[0];
         Collection.DismissType type = (Collection.DismissType) data[1];
@@ -626,7 +627,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundDismissNotes(TaskData... params) {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         Object[] data = params[0].getObjArray();
         long[] cardIds = (long[]) data[0];
         // query cards
@@ -823,7 +824,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundUndo(TaskData... params) {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         try {
             col.getDb().getDatabase().beginTransaction();
             Card newCard = null;
@@ -965,7 +966,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundUpdateValuesFromDeck");
         try {
             Collection col = CollectionHelper.getInstance().getCol(mContext);
-            Sched sched = col.getSched();
+            AbstractSched sched = col.getSched();
             Object[] obj = params[0].getObjArray();
             boolean reset = (Boolean) obj[0];
             if (reset) {

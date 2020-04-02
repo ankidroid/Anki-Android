@@ -58,14 +58,14 @@ import timber.log.Timber;
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
                     "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
-public class SchedV2 extends Sched {
+public class SchedV2 extends AbstractSched {
 
 
 
     // Not in libanki
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
 
-    private String mName = "std";
+    private String mName = "std2";
     private boolean mHaveCustomStudy = true;
 
     private Collection mCol;
@@ -1262,7 +1262,7 @@ public class SchedV2 extends Sched {
     }
 
 
-    public int _revForDeck(long did, int lim, HashMap<Long, HashMap> childMap) {
+    private int _revForDeck(long did, int lim, HashMap<Long, HashMap> childMap) {
         List<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);

@@ -41,6 +41,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.AbstractSched;
 import com.ichi2.libanki.Utils;
 
 import org.json.JSONArray;
@@ -706,7 +707,7 @@ public class ContentProviderTest {
     public void testQueryNextCard(){
         Collection col;
         col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
 
         Cursor reviewInfoCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(
                 FlashCardsContract.ReviewInfo.CONTENT_URI, null, null, null, null);
@@ -740,7 +741,7 @@ public class ContentProviderTest {
         String deckArguments[] = {Long.toString(deckToTest)};
         Collection col;
         col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         long selectedDeckBeforeTest = col.getDecks().selected();
         col.getDecks().select(1); //select Default deck
 

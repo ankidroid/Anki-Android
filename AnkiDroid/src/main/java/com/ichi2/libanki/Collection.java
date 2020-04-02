@@ -85,7 +85,7 @@ public class Collection {
     private Models mModels;
     private Tags mTags;
 
-    private Sched mSched;
+    private AbstractSched mSched;
 
     private double mStartTime;
     private int mStartReps;
@@ -2174,7 +2174,7 @@ public class Collection {
     }
 
 
-    public Sched getSched() {
+    public AbstractSched getSched() {
         return mSched;
     }
 
