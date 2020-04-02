@@ -195,6 +195,14 @@ public class AnkiDroidApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (sInstance != null) {
+            Timber.i("onCreate() called multiple times");
+            //5887 - fix crash.
+            if (sInstance.getResources() == null) {
+                Timber.w("Skipping re-initialisation - no resources. Maybe uninstalling app?");
+                return;
+            }
+        }
         sInstance = this;
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
