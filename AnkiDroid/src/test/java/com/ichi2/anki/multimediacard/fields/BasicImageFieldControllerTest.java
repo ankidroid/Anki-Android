@@ -1,6 +1,13 @@
 package com.ichi2.anki.multimediacard.fields;
 
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Intent;
+
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityTestBase;
+import com.ichi2.testutils.AnkiAssert;
+import com.ichi2.testutils.MockContentResolver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,6 +70,24 @@ public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTe
         assertThat("A broken existing file should not display a preview",
                 controller.isShowingPreview(),
                 is(false));
+    }
+
+
+    @Test
+    public void invalidImageResultDoesNotCrashController() {
+        BasicImageFieldController controller = getValidControllerNoImage();
+        MultimediaEditFieldActivity activity = setupActivityMock(controller, controller.mActivity);
+
+        ContentResolver mock = MockContentResolver.returningEmptyCursor();
+        when(activity.getContentResolver()).thenReturn(mock);
+
+        //Act & Assert
+        AnkiAssert.assertDoesNotThrow(() -> performImageResult(controller, new Intent()));
+    }
+
+
+    private void performImageResult(BasicImageFieldController controller, Intent intent) {
+        controller.onActivityResult(BasicImageFieldController.ACTIVITY_SELECT_IMAGE, Activity.RESULT_OK, intent);
     }
 
     @CheckResult

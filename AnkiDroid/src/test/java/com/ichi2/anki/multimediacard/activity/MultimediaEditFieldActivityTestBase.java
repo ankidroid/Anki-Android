@@ -10,12 +10,15 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.IFieldController;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.Shadows;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowApplication;
 
 import androidx.test.core.app.ApplicationProvider;
+
+import static org.mockito.Mockito.when;
 
 public abstract class MultimediaEditFieldActivityTestBase extends RobolectricTest {
 
@@ -49,5 +52,12 @@ public abstract class MultimediaEditFieldActivityTestBase extends RobolectricTes
 
 
         return testCardTemplatePreviewer.getFieldController();
+    }
+
+    protected MultimediaEditFieldActivity setupActivityMock(IFieldController controller, MultimediaEditFieldActivity mActivity) {
+        MultimediaEditFieldActivity activity = Mockito.mock(MultimediaEditFieldActivity.class);
+        when(activity.getResources()).thenReturn(mActivity.getResources());
+        controller.setEditingActivity(activity);
+        return activity;
     }
 }
