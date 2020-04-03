@@ -19,6 +19,8 @@ import android.text.TextUtils;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Preferences;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -28,8 +30,8 @@ public class LanguageUtil {
 
     /** A list of all languages supported by AnkiDroid */
     public static final String[] APP_LANGUAGES = { "ar", "bg", "ca", "cs", "de", "el", "en", "eo", "es-AR", "es-ES", "et", "fa",
-            "fi", "fr", "got", "gl", "hi", "hu", "id", "it", "ja", "ko", "lt", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru",
-            "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_TW" };
+            "fi", "fr", "got", "gl", "hi", "hu", "id", "it", "ja", "ko", "lt", "nl", "nn-NO", "no", "pl", "pt_PT", "pt_BR", "ro", "ru",
+            "sk", "sl", "sr", "sv", "th", "tr", "tt-RU", "uk", "vi", "zh_CN", "zh_TW" };
 
 
     /**
@@ -68,6 +70,14 @@ public class LanguageUtil {
             locale = new Locale(localeCode);
         }
         return locale;
+    }
+
+    public static String getShortDateFormatFromMs(long ms) {
+        return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(ms));
+    }
+
+    public static String getShortDateFormatFromS(long s) {
+        return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(s * 1000L));
     }
 
 }

@@ -22,6 +22,7 @@ package com.ichi2.anki;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -62,18 +63,19 @@ import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.ui.ConfirmationPreference;
 import com.ichi2.ui.SeekBarPreference;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.VersionUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -126,6 +128,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preference_headers, target);
+        Iterator iterator = target.iterator();
+        while (iterator.hasNext()) {
+            Header header = (Header)iterator.next();
+            if ((header.titleRes == R.string.pref_cat_advanced) && AdaptionUtil.hasReducedPreferences()){
+                iterator.remove();
+            }
+        }
     }
 
 
@@ -185,13 +194,20 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         i.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
         return i;
     }
-
     private void initSubscreen(String action, PreferenceContext listener) {
         PreferenceScreen screen;
         switch (action) {
             case "com.ichi2.anki.prefs.general":
                 listener.addPreferencesFromResource(R.xml.preferences_general);
                 screen = listener.getPreferenceScreen();
+                if (AdaptionUtil.hasReducedPreferences()) {
+                    CheckBoxPreference mCheckBoxPref_Vibrate = (CheckBoxPreference) screen.findPreference("widgetVibrate");
+                    CheckBoxPreference mCheckBoxPref_Blink = (CheckBoxPreference) screen.findPreference("widgetBlink");
+                    PreferenceCategory mCategory = (PreferenceCategory) screen.findPreference("category_general_notification_pref");
+                    mCategory.removePreference(mCheckBoxPref_Vibrate);
+                    mCategory.removePreference(mCheckBoxPref_Blink);
+                }
+
                 // Build languages
                 initializeLanguageDialog(screen);
                 break;
@@ -203,7 +219,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         screen.findPreference("fullscreenMode");
                 fullscreenPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                     SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(Preferences.this);
-                    if (prefs.getBoolean("gestures", false) || !newValue.equals("2")) {
+                    if (prefs.getBoolean("gestures", false) || !"2".equals(newValue)) {
                         return true;
                     } else {
                         Toast.makeText(getApplicationContext(),
@@ -329,6 +345,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 });
                 // Workaround preferences
                 removeUnnecessaryAdvancedPrefs(screen);
+                addThirdPartyAppsListener(screen);
                 break;
             case "com.ichi2.anki.prefs.custom_sync_server":
                 getSupportActionBar().setTitle(R.string.custom_sync_server_title);
@@ -339,6 +356,25 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 listener.addPreferencesFromResource(R.xml.preferences_advanced_statistics);
                 break;
         }
+    }
+
+
+    private void addThirdPartyAppsListener(PreferenceScreen screen) {
+        //#5864 - some people don't have a browser so we can't use <intent>
+        //and need to handle the keypress ourself.
+        Preference showThirdParty = screen.findPreference("thirdpartyapps_link");
+        final String githubThirdPartyAppsUrl = "https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps";
+        showThirdParty.setOnPreferenceClickListener((preference) -> {
+            try {
+                Intent openThirdPartyAppsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(githubThirdPartyAppsUrl));
+                super.startActivity(openThirdPartyAppsIntent);
+            } catch (ActivityNotFoundException e) {
+                //We use a different message here. We have limited space in the snackbar
+                String error = getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl);
+                UIUtils.showSimpleSnackbar(this, error, false);
+            }
+            return true;
+        });
     }
 
 
@@ -404,7 +440,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         case "schedVer":
                             ((CheckBoxPreference)pref).setChecked(conf.optInt("schedVer", 1) == 2);
                     }
-                } catch (JSONException | NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     throw new RuntimeException(e);
                 }
             } else {
@@ -490,7 +526,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().setMod();
                     break;
                 case "useCurrent":
-                    getCol().getConf().put("addToCur", ((ListPreference) pref).getValue().equals("0"));
+                    getCol().getConf().put("addToCur", "0".equals(((ListPreference) pref).getValue()));
                     getCol().setMod();
                     break;
                 case "dayOffset": {
@@ -611,7 +647,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             updateSummary(pref);
         } catch (BadTokenException e) {
             Timber.e(e, "Preferences: BadTokenException on showDialog");
-        } catch (NumberFormatException | JSONException e) {
+        } catch (NumberFormatException e) {
             throw new RuntimeException(e);
         }
     }
@@ -673,11 +709,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         // Get summary text
         String oldSummary = mOriginalSumarries.get(pref.getKey());
         // Replace summary text with value according to some rules
-        if (oldSummary.equals("")) {
+        if ("".equals(oldSummary)) {
             pref.setSummary(value);
-        } else if (value.equals("")) {
+        } else if ("".equals(value)) {
             pref.setSummary(oldSummary);
-        } else if (pref.getKey().equals("minimumCardsDueForNotification")) {
+        } else if ("minimumCardsDueForNotification".equals(pref.getKey())) {
             pref.setSummary(replaceStringIfNumeric(oldSummary, value));
         } else {
             pref.setSummary(replaceString(oldSummary, value));

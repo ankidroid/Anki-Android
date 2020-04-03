@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.*;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
@@ -224,5 +225,51 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
                 "$!";
         // Make sure $! as typed shows up as $!
         assertEquals(expectedOutput, typeAnsAnswerFilter(buf, "", "$!"));
+    }
+
+    @Test
+    public void relinquishFocusIsParsedFromSignal() {
+        String url = "signal:relinquishFocus"; //confirmed data from JS transition via debugger.
+        assertEquals(RELINQUISH_FOCUS, getSignalFromUrl(url));
+    }
+
+    @Test
+    public void typeFocusIsParsedFromSignal() {
+        String url = "signal:typefocus";
+        assertEquals(TYPE_FOCUS, getSignalFromUrl(url));
+    }
+
+    @Test
+    public void showAnswerIsParsedFromSignal() {
+        String url = "signal:show_answer";
+        assertEquals(SHOW_ANSWER, getSignalFromUrl(url));
+    }
+
+    //I'd love to turn these int parameterised tests, but it feels like more overhead for just 4 tests.
+    @Test
+    public void ease1IsParsedFromSignal() {
+        String url = "signal:answer_ease1";
+        assertEquals(ANSWER_ORDINAL_1, getSignalFromUrl(url));
+    }
+    @Test
+    public void ease2IsParsedFromSignal() {
+        String url = "signal:answer_ease2";
+        assertEquals(ANSWER_ORDINAL_2, getSignalFromUrl(url));
+    }
+    @Test
+    public void ease3IsParsedFromSignal() {
+        String url = "signal:answer_ease3";
+        assertEquals(ANSWER_ORDINAL_3, getSignalFromUrl(url));
+    }
+    @Test
+    public void ease4IsParsedFromSignal() {
+        String url = "signal:answer_ease4";
+        assertEquals(ANSWER_ORDINAL_4, getSignalFromUrl(url));
+    }
+
+    @Test
+    public void invalidEaseIsParsedFromSignal() {
+        String url = "signal:answer_ease0";
+        assertEquals(SIGNAL_NOOP, getSignalFromUrl(url));
     }
 }

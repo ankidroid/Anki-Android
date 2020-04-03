@@ -32,9 +32,9 @@ import android.text.style.StyleSpan;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.hooks.Hooks;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
@@ -58,16 +58,15 @@ import timber.log.Timber;
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
                     "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
-public class SchedV2 extends Sched {
+public class SchedV2 extends AbstractSched {
 
 
 
     // Not in libanki
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
 
-    private String mName = "std";
+    private String mName = "std2";
     private boolean mHaveCustomStudy = true;
-    private boolean mBurySiblingsOnAnswer = true;
 
     private Collection mCol;
     private int mQueueLimit;
@@ -135,9 +134,6 @@ public class SchedV2 extends Sched {
         Card card = _getCard();
         if (card != null) {
             mCol.log(card);
-            if (!mBurySiblingsOnAnswer) {
-                _burySiblings(card);
-            }
             mReps += 1;
             card.startTimer();
             return card;
@@ -158,9 +154,7 @@ public class SchedV2 extends Sched {
     public void answerCard(Card card, int ease) {
         mCol.log();
         mCol.markReview(card);
-        if (mBurySiblingsOnAnswer) {
-            _burySiblings(card);
-        }
+        _burySiblings(card);
 
         _answerCard(card, ease);
 
@@ -179,18 +173,18 @@ public class SchedV2 extends Sched {
 
         card.setReps(card.getReps() + 1);
 
-        if (card.getQueue() == 0) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             // came from the new queue, move to learning
-            card.setQueue(1);
-            card.setType(1);
+            card.setQueue(Consts.QUEUE_TYPE_LRN);
+            card.setType(Consts.CARD_TYPE_LRN);
             // init reps to graduation
             card.setLeft(_startingLeft(card));
             // update daily limit
             _updateStats(card, "new");
         }
-        if (card.getQueue() == 1 || card.getQueue() == 3) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
             _answerLrnCard(card, ease);
-        } else if (card.getQueue() == 2) {
+        } else if (card.getQueue() == Consts.QUEUE_TYPE_REV) {
             _answerRevCard(card, ease);
             // Update daily limit
             _updateStats(card, "rev");
@@ -207,12 +201,12 @@ public class SchedV2 extends Sched {
 
 
     public void _answerCardPreview(Card card, int ease) {
-        if (ease == 1) {
+        if (ease == Consts.BUTTON_ONE) {
             // Repeat after delay
-            card.setQueue(4);
+            card.setQueue(Consts.QUEUE_TYPE_PREVIEW);
             card.setDue(Utils.intTime() + _previewDelay(card));
             mLrnCount += 1;
-        } else if (ease == 2) {
+        } else if (ease == Consts.BUTTON_TWO) {
             // Restore original card state and remove from filtered deck
             _restorePreviewCard(card);
             _removeFromFiltered(card);
@@ -253,7 +247,7 @@ public class SchedV2 extends Sched {
 
 
     public int countIdx(Card card) {
-        if (card.getQueue() == 3 || card.getQueue() == 4) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.getQueue() == Consts.QUEUE_TYPE_PREVIEW) {
             return 1;
         }
         return card.getQueue();
@@ -262,12 +256,8 @@ public class SchedV2 extends Sched {
 
     public int answerButtons(Card card) {
         JSONObject conf = _cardConf(card);
-        try {
-            if (card.getODid() != 0 && !conf.getBoolean("resched")) {
-                return 2;
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (card.getODid() != 0 && !conf.getBoolean("resched")) {
+            return 2;
         }
         return 4;
     }
@@ -289,13 +279,9 @@ public class SchedV2 extends Sched {
         List<JSONObject> list = mCol.getDecks().parents(did);
         list.add(mCol.getDecks().get(did));
         for (JSONObject g : list) {
-            try {
-                JSONArray a = g.getJSONArray(key);
-                // add
-                a.put(1, a.getLong(1) + cnt);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            JSONArray a = g.getJSONArray(key);
+            // add
+            a.put(1, a.getLong(1) + cnt);
             mCol.getDecks().save(g);
         }
     }
@@ -305,23 +291,19 @@ public class SchedV2 extends Sched {
         JSONObject cur = mCol.getDecks().current();
         ArrayList<JSONObject> decks = new ArrayList<>();
         decks.add(cur);
-        try {
-            decks.addAll(mCol.getDecks().parents(cur.getLong("id")));
-            for (long did : mCol.getDecks().children(cur.getLong("id")).values()) {
-                decks.add(mCol.getDecks().get(did));
-            }
-            for (JSONObject g : decks) {
-                // add
-                JSONArray ja = g.getJSONArray("newToday");
-                ja.put(1, ja.getInt(1) - newc);
-                g.put("newToday", ja);
-                ja = g.getJSONArray("revToday");
-                ja.put(1, ja.getInt(1) - rev);
-                g.put("revToday", ja);
-                mCol.getDecks().save(g);
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        decks.addAll(mCol.getDecks().parents(cur.getLong("id")));
+        for (long did : mCol.getDecks().children(cur.getLong("id")).values()) {
+            decks.add(mCol.getDecks().get(did));
+        }
+        for (JSONObject g : decks) {
+            // add
+            JSONArray ja = g.getJSONArray("newToday");
+            ja.put(1, ja.getInt(1) - newc);
+            g.put("newToday", ja);
+            ja = g.getJSONArray("revToday");
+            ja.put(1, ja.getInt(1) - rev);
+            g.put("revToday", ja);
+            mCol.getDecks().save(g);
         }
     }
 
@@ -360,7 +342,9 @@ public class SchedV2 extends Sched {
                 // and add to running total
                 tot += cnt;
             }
-        } catch (JSONException | IllegalAccessException | InvocationTargetException e) {
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
             throw new RuntimeException(e);
         }
         return tot;
@@ -382,33 +366,29 @@ public class SchedV2 extends Sched {
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> data = new ArrayList<>();
         HashMap<Long, HashMap> childMap = mCol.getDecks().childMap();
-        try {
-            for (JSONObject deck : decks) {
-                String p = Decks.parent(deck.getString("name"));
-                // new
-                int nlim = _deckNewLimitSingle(deck);
-                if (!TextUtils.isEmpty(p)) {
-                    nlim = Math.min(nlim, lims.get(p)[0]);
-                }
-                int _new = _newForDeck(deck.getLong("id"), nlim);
-                // learning
-                int lrn = _lrnForDeck(deck.getLong("id"));
-                // reviews
-                Integer plim;
-                if (!TextUtils.isEmpty(p)) {
-                    plim = lims.get(p)[1];
-                } else {
-                    plim = null;
-                }
-                int rlim = _deckRevLimitSingle(deck, plim);
-                int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
-                // save to list
-                data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
-                // add deck as a parent
-                lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
+        for (JSONObject deck : decks) {
+            String p = Decks.parent(deck.getString("name"));
+            // new
+            int nlim = _deckNewLimitSingle(deck);
+            if (!TextUtils.isEmpty(p)) {
+                nlim = Math.min(nlim, lims.get(p)[0]);
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            int _new = _newForDeck(deck.getLong("id"), nlim);
+            // learning
+            int lrn = _lrnForDeck(deck.getLong("id"));
+            // reviews
+            Integer plim;
+            if (!TextUtils.isEmpty(p)) {
+                plim = lims.get(p)[1];
+            } else {
+                plim = null;
+            }
+            int rlim = _deckRevLimitSingle(deck, plim);
+            int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
+            // save to list
+            data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            // add deck as a parent
+            lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
         }
         return data;
     }
@@ -484,12 +464,8 @@ public class SchedV2 extends Sched {
             // limit the counts to the deck's limits
             JSONObject conf = mCol.getDecks().confForDid(did);
             JSONObject deck = mCol.getDecks().get(did);
-            try {
-                if (conf.getInt("dyn") == 0) {
-                    _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+            if (conf.getInt("dyn") == 0) {
+                _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
             tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
         }
@@ -566,7 +542,7 @@ public class SchedV2 extends Sched {
     @SuppressWarnings("unused")
     private int _cntFnNew(long did, int lim) {
         return mCol.getDb().queryScalar(
-                "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim + ")");
+                "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + lim + ")");
     }
 
 
@@ -596,7 +572,7 @@ public class SchedV2 extends Sched {
                     cur = mCol
                             .getDb()
                             .getDatabase()
-                            .query("SELECT id FROM cards WHERE did = " + did + " AND queue = 0 order by due, ord LIMIT " + lim,
+                            .query("SELECT id FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_NEW + " order by due, ord LIMIT " + lim,
                                     null);
                     while (cur.moveToNext()) {
                         mNewQueue.add(cur.getLong(0));
@@ -637,21 +613,17 @@ public class SchedV2 extends Sched {
 
 
     private void _updateNewCardRatio() {
-        try {
-            if (mCol.getConf().getInt("newSpread") == Consts.NEW_CARDS_DISTRIBUTE) {
-                if (mNewCount != 0) {
-                    mNewCardModulus = (mNewCount + mRevCount) / mNewCount;
-                    // if there are cards to review, ensure modulo >= 2
-                    if (mRevCount != 0) {
-                        mNewCardModulus = Math.max(2, mNewCardModulus);
-                    }
-                    return;
+        if (mCol.getConf().getInt("newSpread") == Consts.NEW_CARDS_DISTRIBUTE) {
+            if (mNewCount != 0) {
+                mNewCardModulus = (mNewCount + mRevCount) / mNewCount;
+                // if there are cards to review, ensure modulo >= 2
+                if (mRevCount != 0) {
+                    mNewCardModulus = Math.max(2, mNewCardModulus);
                 }
+                return;
             }
-            mNewCardModulus = 0;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
+        mNewCardModulus = 0;
     }
 
 
@@ -663,11 +635,7 @@ public class SchedV2 extends Sched {
             return false;
         }
         int spread;
-        try {
-            spread = mCol.getConf().getInt("newSpread");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        spread = mCol.getConf().getInt("newSpread");
         if (spread == Consts.NEW_CARDS_LAST) {
             return false;
         } else if (spread == Consts.NEW_CARDS_FIRST) {
@@ -712,29 +680,25 @@ public class SchedV2 extends Sched {
 
     /* New count for a single deck. */
     public int _newForDeck(long did, int lim) {
-    	if (lim == 0) {
-    		return 0;
-    	}
-    	lim = Math.min(lim, mReportLimit);
-    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim + ")");
+        if (lim == 0) {
+            return 0;
+        }
+        lim = Math.min(lim, mReportLimit);
+        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + lim + ")");
     }
 
 
     /* Limit for deck without parent limits. */
     public int _deckNewLimitSingle(JSONObject g) {
-        try {
-            if (g.getInt("dyn") != 0) {
-                return mDynReportLimit;
-            }
-            JSONObject c = mCol.getDecks().confForDid(g.getLong("id"));
-            return Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (g.getInt("dyn") != 0) {
+            return mDynReportLimit;
         }
+        JSONObject c = mCol.getDecks().confForDid(g.getLong("id"));
+        return Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
     }
 
     public int totalNewForCurrentDeck() {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 0 LIMIT " + mReportLimit + ")");
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + mReportLimit + ")");
     }
 
     /**
@@ -742,16 +706,12 @@ public class SchedV2 extends Sched {
      */
 
     private boolean _updateLrnCutoff(boolean force) {
-        try {
-            long nextCutoff = Utils.intTime() + mCol.getConf().getInt("collapseTime");
-            if (nextCutoff - mLrnCutoff > 60 || force) {
-                mLrnCutoff = nextCutoff;
-                return true;
-            }
-            return false;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        long nextCutoff = Utils.intTime() + mCol.getConf().getInt("collapseTime");
+        if (nextCutoff - mLrnCutoff > 60 || force) {
+            mLrnCutoff = nextCutoff;
+            return true;
         }
+        return false;
     }
 
 
@@ -766,15 +726,15 @@ public class SchedV2 extends Sched {
         // sub-day
         mLrnCount = mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit()
-                + " AND queue = 1 AND due < " + mLrnCutoff);
+                + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < " + mLrnCutoff);
 
         // day
         mLrnCount += mCol.getDb().queryScalar(
-                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = 3 AND due <= " + mToday);
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday);
 
         // previews
         mLrnCount += mCol.getDb().queryScalar(
-                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = 4");
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_PREVIEW + "");
     }
 
 
@@ -796,11 +756,7 @@ public class SchedV2 extends Sched {
             return true;
         }
         long cutoff = 0;
-        try {
-            cutoff = Utils.intTime() + mCol.getConf().getLong("collapseTime");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        cutoff = Utils.intTime() + mCol.getConf().getLong("collapseTime");
         Cursor cur = null;
         mLrnQueue.clear();
         try {
@@ -808,7 +764,7 @@ public class SchedV2 extends Sched {
                     .getDb()
                     .getDatabase()
                     .query(
-                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (1, 4) AND due < "
+                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < "
                                     + cutoff + " LIMIT " + mReportLimit, null);
             while (cur.moveToNext()) {
                 mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
@@ -839,11 +795,7 @@ public class SchedV2 extends Sched {
         if (_fillLrn()) {
             double cutoff = Utils.now();
             if (collapse) {
-                try {
-                    cutoff += mCol.getConf().getInt("collapseTime");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                cutoff += mCol.getConf().getInt("collapseTime");
             }
             if (mLrnQueue.getFirst()[0] < cutoff) {
                 long id = mLrnQueue.remove()[1];
@@ -874,7 +826,7 @@ public class SchedV2 extends Sched {
                         .getDb()
                         .getDatabase()
                         .query(
-                                "SELECT id FROM cards WHERE did = " + did + " AND queue = 3 AND due <= " + mToday
+                                "SELECT id FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday
                                         + " LIMIT " + mQueueLimit, null);
                 while (cur.moveToNext()) {
                     mLrnDayQueue.add(cur.getLong(0));
@@ -914,8 +866,8 @@ public class SchedV2 extends Sched {
     private void _answerLrnCard(Card card, int ease) {
         JSONObject conf = _lrnConf(card);
         int type;
-        if (card.getType() == 2 || card.getType() == 3) {
-            type = 2;
+        if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
+            type = Consts.CARD_TYPE_REV;
         } else {
             type = 0;
         }
@@ -925,11 +877,11 @@ public class SchedV2 extends Sched {
         boolean leaving = false;
 
         // immediate graduate?
-        if (ease == 4) {
+        if (ease == Consts.BUTTON_FOUR) {
             _rescheduleAsRev(card, conf, true);
             leaving = true;
         // next step?
-        } else if (ease == 3) {
+        } else if (ease == Consts.BUTTON_THREE) {
             // graduation time?
             if ((card.getLeft() % 1000) - 1 <= 0) {
                 _rescheduleAsRev(card, conf, false);
@@ -937,7 +889,7 @@ public class SchedV2 extends Sched {
             } else {
                 _moveToNextStep(card, conf);
             }
-        } else if (ease == 2) {
+        } else if (ease == Consts.BUTTON_TWO) {
             _repeatStep(card, conf);
         } else {
             // move back to first step
@@ -957,7 +909,7 @@ public class SchedV2 extends Sched {
         card.setLeft(_startingLeft(card));
 
         // relearning card?
-        if (card.getType() == 3) {
+        if (card.getType() == Consts.CARD_TYPE_RELEARNING) {
             _updateRevIvlOnFail(card, conf);
         }
 
@@ -968,11 +920,7 @@ public class SchedV2 extends Sched {
     private void _moveToNextStep(Card card, JSONObject conf) {
         // decrement real left count and recalculate left today
         int left = (card.getLeft() % 1000) - 1;
-        try {
-            card.setLeft(_leftToday(conf.getJSONArray("delays"), left) * 1000 + left);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        card.setLeft(_leftToday(conf.getJSONArray("delays"), left) * 1000 + left);
 
         _rescheduleLrnCard(card, conf);
     }
@@ -1002,27 +950,23 @@ public class SchedV2 extends Sched {
             int maxExtra = (int) Math.min(300, (int)(delay * 0.25));
             int fuzz = new Random().nextInt(maxExtra);
             card.setDue(Math.min(mDayCutoff - 1, card.getDue() + fuzz));
-            card.setQueue(1);
-            try {
-                if (card.getDue() < (Utils.intTime() + mCol.getConf().getInt("collapseTime"))) {
-                    mLrnCount += 1;
-                    // if the queue is not empty and there's nothing else to do, make
-                    // sure we don't put it at the head of the queue and end up showing
-                    // it twice in a row
-                    if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
-                        long smallestDue = mLrnQueue.getFirst()[0];
-                        card.setDue(Math.max(card.getDue(), smallestDue + 1));
-                    }
-                    _sortIntoLrn(card.getDue(), card.getId());
+            card.setQueue(Consts.QUEUE_TYPE_LRN);
+            if (card.getDue() < (Utils.intTime() + mCol.getConf().getInt("collapseTime"))) {
+                mLrnCount += 1;
+                // if the queue is not empty and there's nothing else to do, make
+                // sure we don't put it at the head of the queue and end up showing
+                // it twice in a row
+                if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
+                    long smallestDue = mLrnQueue.getFirst()[0];
+                    card.setDue(Math.max(card.getDue(), smallestDue + 1));
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+                _sortIntoLrn(card.getDue(), card.getId());
             }
         } else {
             // the card is due in one or more days, so we need to use the day learn queue
             long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
             card.setDue(mToday + ahead);
-            card.setQueue(3);
+            card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
         }
         return delay;
     }
@@ -1037,12 +981,12 @@ public class SchedV2 extends Sched {
             try {
                 delay = ja.getDouble(len - left);
             } catch (JSONException e) {
-            	if (conf.getJSONArray("delays").length() > 0) {
-            		delay = conf.getJSONArray("delays").getDouble(0);
-            	} else {
-            		// user deleted final step; use dummy value
-            		delay = 1.0;
-            	}
+                if (conf.getJSONArray("delays").length() > 0) {
+                    delay = conf.getJSONArray("delays").getDouble(0);
+                } else {
+                    // user deleted final step; use dummy value
+                    delay = 1.0;
+                }
             }
             return (int) (delay * 60.0);
         } catch (JSONException e) {
@@ -1055,14 +999,10 @@ public class SchedV2 extends Sched {
         // halfway between last and  next
         int delay1 = _delayForGrade(conf, left);
         int delay2;
-        try {
-            if (conf.getJSONArray("delays").length() > 1) {
-                delay2 = _delayForGrade(conf, left - 1);
-            } else {
-                delay2 = delay1 * 2;
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (conf.getJSONArray("delays").length() > 1) {
+            delay2 = _delayForGrade(conf, left - 1);
+        } else {
+            delay2 = delay1 * 2;
         }
         int avg = (delay1 + Math.max(delay1, delay2)) / 2;
         return avg;
@@ -1070,7 +1010,7 @@ public class SchedV2 extends Sched {
 
 
     private JSONObject _lrnConf(Card card) {
-        if (card.getType() == 2 || card.getType() == 3) {
+        if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
             return _lapseConf(card);
         } else {
             return _newConf(card);
@@ -1079,7 +1019,7 @@ public class SchedV2 extends Sched {
 
 
     private void _rescheduleAsRev(Card card, JSONObject conf, boolean early) {
-        boolean lapse = (card.getType() == 2 || card.getType() == 3);
+        boolean lapse = (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING);
         if (lapse) {
             _rescheduleGraduatingLapse(card);
         } else {
@@ -1093,25 +1033,21 @@ public class SchedV2 extends Sched {
 
     private void _rescheduleGraduatingLapse(Card card) {
         card.setDue(mToday + card.getIvl());
-        card.setQueue(2);
-        card.setType(2);
+        card.setQueue(Consts.QUEUE_TYPE_REV);
+        card.setType(Consts.CARD_TYPE_REV);
     }
 
 
     private int _startingLeft(Card card) {
-        try {
-            JSONObject conf;
-        	if (card.getType() == 3) {
-        		conf = _lapseConf(card);
-        	} else {
-        		conf = _lrnConf(card);
-        	}
-            int tot = conf.getJSONArray("delays").length();
-            int tod = _leftToday(conf.getJSONArray("delays"), tot);
-            return tot + tod * 1000;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        JSONObject conf;
+        if (card.getType() == Consts.CARD_TYPE_RELEARNING) {
+        conf = _lapseConf(card);
+        } else {
+            conf = _lrnConf(card);
         }
+        int tot = conf.getJSONArray("delays").length();
+        int tod = _leftToday(conf.getJSONArray("delays"), tot);
+        return tot + tod * 1000;
     }
 
 
@@ -1128,11 +1064,7 @@ public class SchedV2 extends Sched {
         int ok = 0;
         int offset = Math.min(left, delays.length());
         for (int i = 0; i < offset; i++) {
-            try {
-                now += (int) (delays.getDouble(delays.length() - offset + i) * 60.0);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            now += (int) (delays.getDouble(delays.length() - offset + i) * 60.0);
             if (now > mDayCutoff) {
                 break;
             }
@@ -1148,27 +1080,23 @@ public class SchedV2 extends Sched {
 
 
     private int _graduatingIvl(Card card, JSONObject conf, boolean early, boolean fuzz) {
-        if (card.getType() == 2 || card.getType() == 3) {
+        if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
             return card.getIvl();
         }
         int ideal;
         JSONArray ja;
-        try {
-            ja = conf.getJSONArray("ints");
-            if (!early) {
-                // graduate
-                ideal = ja.getInt(0);
-            } else {
-                // early remove
-                ideal = ja.getInt(1);
-            }
-            if (fuzz) {
-                ideal = _fuzzedIvl(ideal);
-            }
-            return ideal;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        ja = conf.getJSONArray("ints");
+        if (!early) {
+            // graduate
+            ideal = ja.getInt(0);
+        } else {
+            // early remove
+            ideal = ja.getInt(1);
         }
+        if (fuzz) {
+            ideal = _fuzzedIvl(ideal);
+        }
+        return ideal;
     }
 
 
@@ -1176,13 +1104,9 @@ public class SchedV2 extends Sched {
     private void _rescheduleNew(Card card, JSONObject conf, boolean early) {
         card.setIvl(_graduatingIvl(card, conf, early));
         card.setDue(mToday + card.getIvl());
-        try {
-            card.setFactor(conf.getInt("initialFactor"));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        card.setType(2);
-        card.setQueue(2);
+        card.setFactor(conf.getInt("initialFactor"));
+        card.setType(Consts.CARD_TYPE_REV);
+        card.setQueue(Consts.QUEUE_TYPE_REV);
     }
 
 
@@ -1212,13 +1136,13 @@ public class SchedV2 extends Sched {
         try {
             int cnt = mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = " + did
-                            + " AND queue = 1 AND due < " + (Utils.intTime() + mCol.getConf().getInt("collapseTime"))
+                            + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < " + (Utils.intTime() + mCol.getConf().getInt("collapseTime"))
                             + " LIMIT " + mReportLimit + ")");
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = " + did
-                            + " AND queue = 3 AND due <= " + mToday
+                            + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday
                             + " LIMIT " + mReportLimit + ")");
-        } catch (SQLException | JSONException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -1244,41 +1168,37 @@ public class SchedV2 extends Sched {
         if (d == null) {
             return 0;
         }
-        try {
-            if (d.getInt("dyn") != 0) {
-                return mDynReportLimit;
-            }
-            JSONObject c = mCol.getDecks().confForDid(d.getLong("id"));
-            int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+        if (d.getInt("dyn") != 0) {
+            return mDynReportLimit;
+        }
+        JSONObject c = mCol.getDecks().confForDid(d.getLong("id"));
+        int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
 
-            if (parentLimit != null) {
-                return Math.min(parentLimit, lim);
-            } else if (!d.getString("name").contains("::")) {
-                return lim;
-            } else {
-                for (JSONObject parent : mCol.getDecks().parents(d.getLong("id"))) {
-                    // pass in dummy parentLimit so we don't do parent lookup again
-                    lim = Math.min(lim, _deckRevLimitSingle(parent, lim));
-                }
-                return lim;
+        if (parentLimit != null) {
+            return Math.min(parentLimit, lim);
+        } else if (!d.getString("name").contains("::")) {
+            return lim;
+        } else {
+            for (JSONObject parent : mCol.getDecks().parents(d.getLong("id"))) {
+                // pass in dummy parentLimit so we don't do parent lookup again
+                lim = Math.min(lim, _deckRevLimitSingle(parent, lim));
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            return lim;
         }
     }
 
 
-    public int _revForDeck(long did, int lim, HashMap<Long, HashMap> childMap) {
+    private int _revForDeck(long did, int lim, HashMap<Long, HashMap> childMap) {
         List<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);
-        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(dids) + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
+        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(dids) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday + " LIMIT " + lim + ")");
     }
 
 
     private void _resetRevCount() {
         int lim = _currentRevLimit();
-        mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
+        mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday + " LIMIT " + lim + ")");
     }
 
 
@@ -1305,7 +1225,7 @@ public class SchedV2 extends Sched {
                         .getDb()
                         .getDatabase()
                         .query(
-                                "SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 2 AND due <= " + mToday
+                                "SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday
                                         + " ORDER BY due, random() LIMIT " + lim, null);
                 while (cur.moveToNext()) {
                     mRevQueue.add(cur.getLong(0));
@@ -1346,8 +1266,8 @@ public class SchedV2 extends Sched {
 
     public int totalRevForCurrentDeck() {
         return mCol.getDb().queryScalar(String.format(Locale.US,
-        		"SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN %s AND queue = 2 AND due <= %d LIMIT %s)",
-        		Utils.ids2str(mCol.getDecks().active()), mToday, mReportLimit));
+                "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN %s AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= %d LIMIT %s)",
+                Utils.ids2str(mCol.getDecks().active()), mToday, mReportLimit));
     }
 
 
@@ -1360,7 +1280,7 @@ public class SchedV2 extends Sched {
         int delay = 0;
         boolean early = card.getODid() != 0 && (card.getODue() > mToday);
         int type = early ? 3 : 1;
-        if (ease == 1) {
+        if (ease == Consts.BUTTON_ONE) {
             delay = _rescheduleLapse(card);
         } else {
             _rescheduleRev(card, ease, early);
@@ -1371,41 +1291,32 @@ public class SchedV2 extends Sched {
 
     private int _rescheduleLapse(Card card) {
         JSONObject conf;
-        try {
-            conf = _lapseConf(card);
-            card.setLapses(card.getLapses() + 1);
-            card.setFactor(Math.max(1300, card.getFactor() - 200));
-            int delay;
-
-            boolean suspended = _checkLeech(card, conf) && card.getQueue() == -1;
-            if (conf.getJSONArray("delays").length() != 0 && !suspended) {
-                card.setType(3);
-                delay = _moveToFirstStep(card, conf);
-            } else {
-                // no relearning steps
-                _updateRevIvlOnFail(card, conf);
-                _rescheduleAsRev(card, conf, false);
-                // need to reset the queue after rescheduling
-                if (suspended) {
-                    card.setQueue(-1);
-                }
-                delay = 0;
+        conf = _lapseConf(card);
+        card.setLapses(card.getLapses() + 1);
+        card.setFactor(Math.max(1300, card.getFactor() - 200));
+        int delay;
+         boolean suspended = _checkLeech(card, conf) && card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED;
+        if (conf.getJSONArray("delays").length() != 0 && !suspended) {
+            card.setType(Consts.CARD_TYPE_RELEARNING);
+            delay = _moveToFirstStep(card, conf);
+        } else {
+            // no relearning steps
+            _updateRevIvlOnFail(card, conf);
+            _rescheduleAsRev(card, conf, false);
+            // need to reset the queue after rescheduling
+            if (suspended) {
+                card.setQueue(Consts.QUEUE_TYPE_SUSPENDED);
             }
-
-            return delay;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            delay = 0;
         }
+
+        return delay;
     }
 
 
     private int _lapseIvl(Card card, JSONObject conf) {
-        try {
-            int ivl = Math.max(1, Math.max(conf.getInt("minInt"), (int)(card.getIvl() * conf.getDouble("mult"))));
-            return ivl;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        int ivl = Math.max(1, Math.max(conf.getInt("minInt"), (int)(card.getIvl() * conf.getDouble("mult"))));
+        return ivl;
     }
 
 
@@ -1454,22 +1365,18 @@ public class SchedV2 extends Sched {
         }
 
         int ivl2 = _constrainedIvl(card.getIvl() * hardFactor, conf, hardMin, fuzz);
-        if (ease == 2) {
+        if (ease == Consts.BUTTON_TWO) {
             return ivl2;
         }
 
         int ivl3 = _constrainedIvl((card.getIvl() + delay / 2) * fct, conf, ivl2, fuzz);
-        if (ease == 3) {
+        if (ease == Consts.BUTTON_THREE) {
             return ivl3;
         }
 
-        try {
-            int ivl4 = _constrainedIvl((
-                    (card.getIvl() + delay) * fct * conf.getDouble("ease4")), conf, ivl3, fuzz);
-            return ivl4;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        int ivl4 = _constrainedIvl((
+                                    (card.getIvl() + delay) * fct * conf.getDouble("ease4")), conf, ivl3, fuzz);
+        return ivl4;
     }
 
     private int _fuzzedIvl(int ivl) {
@@ -1506,11 +1413,7 @@ public class SchedV2 extends Sched {
         }
 
         newIvl = (int) Math.max(Math.max(newIvl, prev + 1), 1);
-        try {
-            newIvl = Math.min(newIvl, conf.getInt("maxIvl"));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        newIvl = Math.min(newIvl, conf.getInt("maxIvl"));
 
         return newIvl;
     }
@@ -1537,7 +1440,7 @@ public class SchedV2 extends Sched {
 
     // next interval for card when answered early+correctly
     private int _earlyReviewIvl(Card card, int ease) {
-        if (card.getODid() == 0 || card.getType() != 2 || card.getFactor() == 0) {
+        if (card.getODid() == 0 || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
             throw new RuntimeException("Unexpected card parameters");
         }
         if (ease <= 1) {
@@ -1553,7 +1456,7 @@ public class SchedV2 extends Sched {
         double minNewIvl = 1;
 
         double factor;
-        if (ease == 2)  {
+        if (ease == Consts.BUTTON_TWO)  {
             factor = conf.optDouble("hardFactor", 1.2);
             // hard cards shouldn't have their interval decreased by more than 50%
             // of the normal factor
@@ -1562,13 +1465,9 @@ public class SchedV2 extends Sched {
             factor = card.getFactor() / 1000;
         } else { // ease == 4
             factor = card.getFactor() / 1000;
-            try {
-                double ease4 = conf.getDouble("ease4");
-                // 1.3 -> 1.15
-                easyBonus = ease4 - (ease4 - 1)/2;
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            double ease4 = conf.getDouble("ease4");
+            // 1.3 -> 1.15
+            easyBonus = ease4 - (ease4 - 1)/2;
         }
 
         double ivl = Math.max(elapsed * factor, 1);
@@ -1598,13 +1497,9 @@ public class SchedV2 extends Sched {
             did = mCol.getDecks().selected();
         }
         JSONObject deck = mCol.getDecks().get(did);
-        try {
-            if (deck.getInt("dyn") == 0) {
-                Timber.e("error: deck is not a filtered deck");
-                return null;
-            }
-        } catch (JSONException e1) {
-            throw new RuntimeException(e1);
+        if (deck.getInt("dyn") == 0) {
+            Timber.e("error: deck is not a filtered deck");
+            return null;
         }
         // move any existing cards back first, then fill
         emptyDyn(did);
@@ -1623,30 +1518,26 @@ public class SchedV2 extends Sched {
         int total = 0;
         JSONArray terms;
         List<Long> ids;
-        try {
-            terms = deck.getJSONArray("terms");
-            for (int i = 0; i < terms.length(); i++) {
-                JSONArray term = terms.getJSONArray(i);
-                String search = term.getString(0);
-                int limit = term.getInt(1);
-                int order = term.getInt(2);
+        terms = deck.getJSONArray("terms");
+        for (int i = 0; i < terms.length(); i++) {
+            JSONArray term = terms.getJSONArray(i);
+            String search = term.getString(0);
+            int limit = term.getInt(1);
+            int order = term.getInt(2);
 
-                String orderlimit = _dynOrder(order, limit);
-                if (!TextUtils.isEmpty(search.trim())) {
-                    search = String.format(Locale.US, "(%s)", search);
-                }
-                search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered", search);
-                ids = mCol.findCards(search, orderlimit);
-                if (ids.isEmpty()) {
-                    return total;
-                }
-                // move the cards over
-                mCol.log(deck.getLong("id"), ids);
-                _moveToDyn(deck.getLong("id"), ids, start + total);
-                total += ids.size();
+            String orderlimit = _dynOrder(order, limit);
+            if (!TextUtils.isEmpty(search.trim())) {
+                search = String.format(Locale.US, "(%s)", search);
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered", search);
+            ids = mCol.findCards(search, orderlimit);
+            if (ids.isEmpty()) {
+                return total;
+            }
+            // move the cards over
+            mCol.log(deck.getLong("id"), ids);
+            _moveToDyn(deck.getLong("id"), ids, start + total);
+            total += ids.size();
         }
         return total;
     }
@@ -1711,13 +1602,13 @@ public class SchedV2 extends Sched {
                 break;
             case Consts.DYN_DUEPRIORITY:
                 t = String.format(Locale.US,
-                        "(case when queue=2 and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 100000+due end)",
+                        "(case when queue=" + Consts.QUEUE_TYPE_REV + " and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 100000+due end)",
                         mToday, mToday);
                 break;
             default:
-            	// if we don't understand the term, default to due order
-            	t = "c.due";
-            	break;
+                // if we don't understand the term, default to due order
+                t = "c.due";
+                break;
         }
         return t + " limit " + l;
     }
@@ -1735,12 +1626,8 @@ public class SchedV2 extends Sched {
             due += 1;
         }
         String queue = "";
-        try {
-            if (!deck.getBoolean("resched")) {
-                queue = ", queue = 2";
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (!deck.getBoolean("resched")) {
+            queue = ", queue = " + Consts.QUEUE_TYPE_REV + "";
         }
 
         mCol.getDb().executeMany(
@@ -1767,11 +1654,11 @@ public class SchedV2 extends Sched {
 
         // learning and relearning cards may be seconds-based or day-based;
         // other types map directly to queues
-        if (card.getType() == 1 || card.getType() == 3) {
+        if (card.getType() == Consts.CARD_TYPE_LRN || card.getType() == Consts.CARD_TYPE_RELEARNING) {
             if (card.getODue() > 1000000000) {
-                card.setQueue(1);
+                card.setQueue(Consts.QUEUE_TYPE_LRN);
             } else {
-                card.setQueue(3);
+                card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
             }
         } else {
             card.setQueue(card.getType());
@@ -1786,30 +1673,26 @@ public class SchedV2 extends Sched {
     /** Leech handler. True if card was a leech. */
     private boolean _checkLeech(Card card, JSONObject conf) {
         int lf;
-        try {
-            lf = conf.getInt("leechFails");
-            if (lf == 0) {
-                return false;
+        lf = conf.getInt("leechFails");
+        if (lf == 0) {
+            return false;
+        }
+        // if over threshold or every half threshold reps after that
+        if (card.getLapses() >= lf && (card.getLapses() - lf) % Math.max(lf / 2, 1) == 0) {
+            // add a leech tag
+            Note n = card.note();
+            n.addTag("leech");
+            n.flush();
+            // handle
+            if (conf.getInt("leechAction") == Consts.LEECH_SUSPEND) {
+                card.setQueue(Consts.QUEUE_TYPE_SUSPENDED);
             }
-            // if over threshold or every half threshold reps after that
-            if (card.getLapses() >= lf && (card.getLapses() - lf) % Math.max(lf / 2, 1) == 0) {
-                // add a leech tag
-                Note n = card.note();
-                n.addTag("leech");
-                n.flush();
-                // handle
-                if (conf.getInt("leechAction") == 0) {
-                    card.setQueue(-1);
-                }
-                // notify UI
-                if (mContextReference != null) {
-                    Context context = mContextReference.get();
-                    Hooks.getInstance(context).runHook("leech", card, context);
-                }
-                return true;
+            // notify UI
+            if (mContextReference != null) {
+                Context context = mContextReference.get();
+                Hooks.getInstance(context).runHook("leech", card, context);
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            return true;
         }
         return false;
     }
@@ -1825,68 +1708,56 @@ public class SchedV2 extends Sched {
 
 
     private JSONObject _newConf(Card card) {
-        try {
-            JSONObject conf = _cardConf(card);
-            // normal deck
-            if (card.getODid() == 0) {
-                return conf.getJSONObject("new");
-            }
-            // dynamic deck; override some attributes, use original deck for others
-            JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
-            JSONObject dict = new JSONObject();
-            // original deck
-            dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
-            dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
-            dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true));
-            dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"));
-            // overrides
-            dict.put("separate", conf.getBoolean("separate"));
-            dict.put("order", Consts.NEW_CARDS_DUE);
-            dict.put("perDay", mReportLimit);
-            return dict;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        JSONObject conf = _cardConf(card);
+        // normal deck
+        if (card.getODid() == 0) {
+            return conf.getJSONObject("new");
         }
+        // dynamic deck; override some attributes, use original deck for others
+        JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
+        JSONObject dict = new JSONObject();
+        // original deck
+        dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
+        dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
+        dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true));
+        dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"));
+        // overrides
+        dict.put("separate", conf.getBoolean("separate"));
+        dict.put("order", Consts.NEW_CARDS_DUE);
+        dict.put("perDay", mReportLimit);
+        return dict;
     }
 
 
     private JSONObject _lapseConf(Card card) {
-        try {
-            JSONObject conf = _cardConf(card);
-            // normal deck
-            if (card.getODid() == 0) {
-                return conf.getJSONObject("lapse");
-            }
-            // dynamic deck; override some attributes, use original deck for others
-            JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
-            JSONObject dict = new JSONObject();
-            // original deck
-            dict.put("minInt", oconf.getJSONObject("lapse").getInt("minInt"));
-            dict.put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"));
-            dict.put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"));
-            dict.put("mult", oconf.getJSONObject("lapse").getDouble("mult"));
-            dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"));
-            // overrides
-            dict.put("resched", conf.getBoolean("resched"));
-            return dict;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        JSONObject conf = _cardConf(card);
+        // normal deck
+        if (card.getODid() == 0) {
+            return conf.getJSONObject("lapse");
         }
+        // dynamic deck; override some attributes, use original deck for others
+        JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
+        JSONObject dict = new JSONObject();
+        // original deck
+        dict.put("minInt", oconf.getJSONObject("lapse").getInt("minInt"));
+        dict.put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"));
+        dict.put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"));
+        dict.put("mult", oconf.getJSONObject("lapse").getDouble("mult"));
+        dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"));
+        // overrides
+        dict.put("resched", conf.getBoolean("resched"));
+        return dict;
     }
 
 
     private JSONObject _revConf(Card card) {
-        try {
-            JSONObject conf = _cardConf(card);
-            // normal deck
-            if (card.getODid() == 0) {
-                return conf.getJSONObject("rev");
-            }
-            // dynamic deck
-            return mCol.getDecks().confForDid(card.getODid()).getJSONObject("rev");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        JSONObject conf = _cardConf(card);
+        // normal deck
+        if (card.getODid() == 0) {
+            return conf.getJSONObject("rev");
         }
+        // dynamic deck
+        return mCol.getDecks().confForDid(card.getODid()).getJSONObject("rev");
     }
 
 
@@ -1898,11 +1769,7 @@ public class SchedV2 extends Sched {
     private boolean _previewingCard(Card card) {
         JSONObject conf = _cardConf(card);
 
-        try {
-            return conf.getInt("dyn") != 0 && !conf.getBoolean("resched");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        return conf.getInt("dyn") != 0 && !conf.getBoolean("resched");
     }
 
 
@@ -1934,11 +1801,7 @@ public class SchedV2 extends Sched {
         int unburied = mCol.getConf().optInt("lastUnburied", 0);
         if (unburied < mToday) {
             unburyCards();
-            try {
-                mCol.getConf().put("lastUnburied", mToday);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            mCol.getConf().put("lastUnburied", mToday);
         }
     }
 
@@ -1980,15 +1843,11 @@ public class SchedV2 extends Sched {
     private void update(JSONObject g) {
         for (String t : new String[] { "new", "rev", "lrn", "time" }) {
             String key = t + "Today";
-            try {
-                if (g.getJSONArray(key).getInt(0) != mToday) {
-                    JSONArray ja = new JSONArray();
-                    ja.put(mToday);
-                    ja.put(0);
-                    g.put(key, ja);
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+            if (g.getJSONArray(key).getInt(0) != mToday) {
+                JSONArray ja = new JSONArray();
+                ja.put(mToday);
+                ja.put(0);
+                g.put(key, ja);
             }
         }
     }
@@ -2039,13 +1898,9 @@ public class SchedV2 extends Sched {
             sb.append("\n\n");
             sb.append("" + context.getString(R.string.sched_has_buried) + now);
         }
-        try {
-            if (mHaveCustomStudy && mCol.getDecks().current().getInt("dyn") == 0) {
-                sb.append("\n\n");
-                sb.append(context.getString(R.string.studyoptions_congrats_custom));
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (mHaveCustomStudy && mCol.getDecks().current().getInt("dyn") == 0) {
+            sb.append("\n\n");
+            sb.append(context.getString(R.string.studyoptions_congrats_custom));
         }
         return sb.toString();
     }
@@ -2055,14 +1910,14 @@ public class SchedV2 extends Sched {
     public boolean revDue() {
         return mCol.getDb()
                 .queryScalar(
-                        "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = 2 AND due <= " + mToday
+                        "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday
                                 + " LIMIT 1") != 0;
     }
 
 
     /** true if there are any new cards due. */
     public boolean newDue() {
-        return mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = 0 LIMIT 1") != 0;
+        return mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0;
     }
 
 
@@ -2075,7 +1930,7 @@ public class SchedV2 extends Sched {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
         int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
-                "select 1 from cards where queue = -2 and did in %s limit 1", sdids));
+                "select 1 from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in %s limit 1", sdids));
         return cnt != 0;
     }
 
@@ -2089,7 +1944,7 @@ public class SchedV2 extends Sched {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
         int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
-                "select 1 from cards where queue = -3 and did in %s limit 1", sdids));
+                "select 1 from cards where queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED + " and did in %s limit 1", sdids));
         return cnt != 0;
     }
 
@@ -2122,12 +1977,8 @@ public class SchedV2 extends Sched {
             return context.getString(R.string.sched_end);
         }
         String s = Utils.timeQuantity(context, ivl);
-        try {
-            if (ivl < mCol.getConf().getInt("collapseTime")) {
-                s = context.getString(R.string.less_than_time, s);
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (ivl < mCol.getConf().getInt("collapseTime")) {
+            s = context.getString(R.string.less_than_time, s);
         }
         return s;
     }
@@ -2139,62 +1990,54 @@ public class SchedV2 extends Sched {
     public long nextIvl(Card card, int ease) {
         // preview mode?
         if (_previewingCard(card)) {
-            if (ease == 1) {
+            if (ease == Consts.BUTTON_ONE) {
                 return _previewDelay(card);
             }
             return 0;
         }
-        try {
-            // (re)learning?
-            if (card.getQueue() == 0 || card.getQueue() == 1 || card.getQueue() == 3) {
-                return _nextLrnIvl(card, ease);
-            } else if (ease == 1) {
-                // lapse
-                JSONObject conf = _lapseConf(card);
-                if (conf.getJSONArray("delays").length() > 0) {
-                    return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
-                }
-                return _lapseIvl(card, conf) * 86400L;
-            } else {
-                // review
-                boolean early = card.getODid() != 0 && (card.getODue() > mToday);
-                if (early) {
-                    return _earlyReviewIvl(card, ease) * 86400L;
-                } else {
-                    return _nextRevIvl(card, ease, false) * 86400L;
-                }
+        // (re)learning?
+        if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
+            return _nextLrnIvl(card, ease);
+        } else if (ease == Consts.BUTTON_ONE) {
+            // lapse
+            JSONObject conf = _lapseConf(card);
+            if (conf.getJSONArray("delays").length() > 0) {
+                return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            return _lapseIvl(card, conf) * 86400L;
+        } else {
+            // review
+            boolean early = card.getODid() != 0 && (card.getODue() > mToday);
+            if (early) {
+                return _earlyReviewIvl(card, ease) * 86400L;
+            } else {
+                return _nextRevIvl(card, ease, false) * 86400L;
+            }
         }
     }
 
 
     // this isn't easily extracted from the learn code
     private long _nextLrnIvl(Card card, int ease) {
-        if (card.getQueue() == 0) {
+        if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             card.setLeft(_startingLeft(card));
         }
         JSONObject conf = _lrnConf(card);
-        try {
-            if (ease == 1) {
-                // fail
-                return _delayForGrade(conf, conf.getJSONArray("delays").length());
-            } else if (ease == 2) {
-                return _delayForRepeatingGrade(conf, card.getLeft());
-            } else if (ease == 4) {
-                return _graduatingIvl(card, conf, true, false) * 86400L;
-            } else { // ease == 3
-                int left = card.getLeft() % 1000 - 1;
-                if (left <= 0) {
-                    // graduate
-                    return _graduatingIvl(card, conf, false, false) * 86400L;
-                } else {
-                    return _delayForGrade(conf, left);
-                }
+        if (ease == Consts.BUTTON_ONE) {
+            // fail
+            return _delayForGrade(conf, conf.getJSONArray("delays").length());
+        } else if (ease == Consts.BUTTON_TWO) {
+            return _delayForRepeatingGrade(conf, card.getLeft());
+        } else if (ease == Consts.BUTTON_FOUR) {
+            return _graduatingIvl(card, conf, true, false) * 86400L;
+        } else { // ease == 3
+            int left = card.getLeft() % 1000 - 1;
+            if (left <= 0) {
+                // graduate
+                return _graduatingIvl(card, conf, false, false) * 86400L;
+            } else {
+                return _delayForGrade(conf, left);
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -2208,8 +2051,8 @@ public class SchedV2 extends Sched {
      * other types map directly to queues
      */
     private String _restoreQueueSnippet() {
-        return "queue = (case when type in (1,3) then\n" +
-                "  (case when (case when odue then odue else due end) > 1000000000 then 1 else 3 end)\n" +
+        return "queue = (case when type in (" + Consts.CARD_TYPE_LRN + "," + Consts.CARD_TYPE_RELEARNING + ") then\n" +
+                "  (case when (case when odue then odue else due end) > 1000000000 then 1 else " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " end)\n" +
                 "else\n" +
                 "  type\n" +
                 "end)  ";
@@ -2221,7 +2064,7 @@ public class SchedV2 extends Sched {
     public void suspendCards(long[] ids) {
         mCol.log(ids);
         mCol.getDb().execute(
-                "UPDATE cards SET queue = -1, mod = " + Utils.intTime() + ", usn = " + mCol.usn() + " WHERE id IN "
+                "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = " + Utils.intTime() + ", usn = " + mCol.usn() + " WHERE id IN "
                         + Utils.ids2str(ids));
     }
 
@@ -2233,7 +2076,7 @@ public class SchedV2 extends Sched {
         mCol.log(ids);
         mCol.getDb().execute(
                 "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = " + Utils.intTime() + ", usn = " + mCol.usn()
-                        + " WHERE queue = -1 AND id IN " + Utils.ids2str(ids));
+                        + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids));
     }
 
 
@@ -2243,7 +2086,7 @@ public class SchedV2 extends Sched {
 
 
     public void buryCards(long[] cids, boolean manual) {
-        int queue = manual ? -3 : -2;
+        int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : Consts.QUEUE_TYPE_SIBLING_BURIED;
         mCol.log(cids);
         mCol.getDb().execute("update cards set queue=?,mod=?,usn=? where id in " + Utils.ids2str(cids),
                 new Object[]{queue, Utils.now(), mCol.usn()});
@@ -2254,8 +2097,8 @@ public class SchedV2 extends Sched {
      * Unbury all buried cards in all decks
      */
     public void unburyCards() {
-        mCol.log(mCol.getDb().queryColumn( Long.class,"select id from cards where queue in (-2, -3)", 0));
-        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where queue in (-2, -3)");
+        mCol.log(mCol.getDb().queryColumn( Long.class,"select id from cards where queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")", 0));
+        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")");
     }
 
 
@@ -2271,11 +2114,11 @@ public class SchedV2 extends Sched {
     public void unburyCardsForDeck(String type, List<Long> allDecks) {
         String queue;
         if ("all".equals(type)) {
-            queue = "queue in (-2, -3)";
+            queue = "queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")";
         } else if ("manual".equals(type)) {
-            queue = "queue = -3";
+            queue = "queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED;
         } else if ("siblings".equals(type)) {
-            queue = "queue = -2";
+            queue = "queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
         } else {
             throw new RuntimeException("unknown type");
         }
@@ -2294,7 +2137,7 @@ public class SchedV2 extends Sched {
      */
     public void buryNote(long nid) {
         long[] cids = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
-                "SELECT id FROM cards WHERE nid = " + nid + " AND queue >= 0", 0));
+                "SELECT id FROM cards WHERE nid = " + nid + " AND queue >= " + Consts.CARD_TYPE_NEW + "", 0));
         buryCards(cids);
     }
 
@@ -2314,11 +2157,11 @@ public class SchedV2 extends Sched {
         try {
             cur = mCol.getDb().getDatabase().query(String.format(Locale.US,
                     "select id, queue from cards where nid=%d and id!=%d "+
-                    "and (queue=0 or (queue=2 and due<=%d))", card.getNid(), card.getId(), mToday), null);
+                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=" + Consts.QUEUE_TYPE_REV + " and due<=%d))", card.getNid(), card.getId(), mToday), null);
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
-                if (queue == 2) {
+                if (queue == Consts.QUEUE_TYPE_REV) {
                     if (buryRev) {
                         toBury.add(cid);
                     }
@@ -2351,9 +2194,9 @@ public class SchedV2 extends Sched {
     /** Put cards at the end of the new queue. */
     public void forgetCards(long[] ids) {
         remFromDyn(ids);
-        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,odue=0,factor="+Consts.STARTING_FACTOR +
+        mCol.getDb().execute("update cards set type=" + Consts.CARD_TYPE_NEW + ",queue=" + Consts.QUEUE_TYPE_NEW + ",ivl=0,due=0,odue=0,factor="+Consts.STARTING_FACTOR +
                 " where id in " + Utils.ids2str(ids));
-        int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0");
+        int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=" + Consts.CARD_TYPE_NEW + "");
         // takes care of mod + usn
         sortCards(ids, pmax + 1);
         mCol.log(ids);
@@ -2378,7 +2221,7 @@ public class SchedV2 extends Sched {
         }
         remFromDyn(ids);
         mCol.getDb().executeMany(
-                "update cards set type=2,queue=2,ivl=?,due=?,odue=0, " +
+                "update cards set type=" + Consts.CARD_TYPE_REV + ",queue=" + Consts.QUEUE_TYPE_REV + ",ivl=?,due=?,odue=0, " +
                         "usn=?,mod=?,factor=? where id=?", d);
         mCol.log(ids);
     }
@@ -2389,7 +2232,7 @@ public class SchedV2 extends Sched {
      */
     public void resetCards(Long[] ids) {
         long[] nonNew = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, String.format(Locale.US,
-                "select id from cards where id in %s and (queue != 0 or type != 0)", Utils.ids2str(ids)), 0));
+                "select id from cards where id in %s and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")", Utils.ids2str(ids)), 0));
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
         mCol.log((Object[]) ids);
@@ -2411,10 +2254,10 @@ public class SchedV2 extends Sched {
         long now = Utils.intTime();
         ArrayList<Long> nids = new ArrayList<>();
         for (long id : cids) {
-        	long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = " + id);
-        	if (!nids.contains(nid)) {
-        		nids.add(nid);
-        	}
+            long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = " + id);
+            if (!nids.contains(nid)) {
+                nids.add(nid);
+            }
         }
         if (nids.size() == 0) {
             // no new cards
@@ -2432,12 +2275,12 @@ public class SchedV2 extends Sched {
         // shift?
         if (shift) {
             int low = mCol.getDb().queryScalar(
-                    "SELECT min(due) FROM cards WHERE due >= " + start + " AND type = 0 AND id NOT IN " + scids);
+                    "SELECT min(due) FROM cards WHERE due >= " + start + " AND type = " + Consts.CARD_TYPE_NEW + " AND id NOT IN " + scids);
             if (low != 0) {
                 int shiftby = high - low + 1;
                 mCol.getDb().execute(
                         "UPDATE cards SET mod = " + now + ", usn = " + mCol.usn() + ", due = due + " + shiftby
-                                + " WHERE id NOT IN " + scids + " AND due >= " + low + " AND queue = 0");
+                                + " WHERE id NOT IN " + scids + " AND due >= " + low + " AND queue = " + Consts.QUEUE_TYPE_NEW);
             }
         }
         // reorder cards
@@ -2445,7 +2288,7 @@ public class SchedV2 extends Sched {
         Cursor cur = null;
         try {
             cur = mCol.getDb().getDatabase()
-                    .query("SELECT id, nid FROM cards WHERE type = 0 AND id IN " + scids, null);
+                    .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids, null);
             while (cur.moveToNext()) {
                 long nid = cur.getLong(1);
                 d.add(new Object[] { due.get(nid), now, mCol.usn(), cur.getLong(0) });
@@ -2473,16 +2316,12 @@ public class SchedV2 extends Sched {
 
     public void resortConf(JSONObject conf) {
         List<Long> dids = mCol.getDecks().didsForConf(conf);
-        try {
-            for (long did : dids) {
-                if (conf.getJSONObject("new").getLong("order") == 0) {
-                    randomizeCards(did);
-                } else {
-                    orderCards(did);
-                }
+        for (long did : dids) {
+            if (conf.getJSONObject("new").getLong("order") == 0) {
+                randomizeCards(did);
+            } else {
+                orderCards(did);
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -2500,12 +2339,8 @@ public class SchedV2 extends Sched {
         }
         JSONObject conf = mCol.getDecks().confForDid(did);
         // in order due?
-        try {
-            if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_RANDOM) {
-                randomizeCards(did);
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_RANDOM) {
+            randomizeCards(did);
         }
     }
 
@@ -2516,7 +2351,7 @@ public class SchedV2 extends Sched {
      */
 
     private void _emptyAllFiltered() {
-        mCol.getDb().execute(String.format(Locale.US,"update cards set did = odid, queue = (case when type = 1 then 0 when type = 3 then 2 else type end), type = (case when type = 1 then 0 when type = 3 then 2 else type end), due = odue, odue = 0, odid = 0, usn = %d where odid != 0", mCol.usn()));
+        mCol.getDb().execute(String.format(Locale.US,"update cards set did = odid, queue = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.QUEUE_TYPE_NEW + " when type = " + Consts.CARD_TYPE_RELEARNING + " then " + Consts.QUEUE_TYPE_REV + " else type end), type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " when type = " + Consts.CARD_TYPE_RELEARNING + " then " + Consts.CARD_TYPE_REV + " else type end), due = odue, odue = 0, odid = 0, usn = %d where odid != 0", mCol.usn()));
     }
 
 
@@ -2527,32 +2362,32 @@ public class SchedV2 extends Sched {
     private void _removeAllFromLearning(int schedVer) {
         // remove review cards from relearning
         if (schedVer == 1) {
-            mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", Utils.intTime(), mCol.usn()));
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", type = " + Consts.CARD_TYPE_REV + ", mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (" + Consts.CARD_TYPE_REV + "," + Consts.CARD_TYPE_RELEARNING + ")", Utils.intTime(), mCol.usn()));
         } else {
-            mCol.getDb().execute(String.format(Locale.US,"update cards set due = %d+ivl, queue = 2, type = 2, mod = %d, usn = %d, odue = 0 where queue in (1,3) and type in (2,3)", mToday, Utils.intTime(), mCol.usn()));
+            mCol.getDb().execute(String.format(Locale.US,"update cards set due = %d+ivl, queue = " + Consts.QUEUE_TYPE_REV + ", type = " + Consts.CARD_TYPE_REV + ", mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (" + Consts.CARD_TYPE_REV + "," + Consts.CARD_TYPE_RELEARNING + ")", mToday, Utils.intTime(), mCol.usn()));
         }
 
 
         // remove new cards from learning
-        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "select id from cards where queue in (1,3)", 0)));
+        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "select id from cards where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")", 0)));
     }
 
 
     // v1 doesn't support buried/suspended (re)learning cards
     private void _resetSuspendedLearning() {
-        mCol.getDb().execute(String.format(Locale.US,"update cards set type = (case when type = 1 then 0 when type in (2, 3) then 2 else type end), due = (case when odue then odue else due end), odue = 0, mod = %d, usn = %d where queue < 0", Utils.intTime(), mCol.usn()));
+        mCol.getDb().execute(String.format(Locale.US,"update cards set type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " when type in (" + Consts.CARD_TYPE_REV + ", " + Consts.CARD_TYPE_RELEARNING + ") then " + Consts.CARD_TYPE_REV + " else type end), due = (case when odue then odue else due end), odue = 0, mod = %d, usn = %d where queue < 0", Utils.intTime(), mCol.usn()));
     }
 
 
     // no 'manually buried' queue in v1
     private void _moveManuallyBuried() {
-        mCol.getDb().execute(String.format(Locale.US, "update cards set queue=-2, mod=%d where queue=-3", Utils.intTime()));
+        mCol.getDb().execute(String.format(Locale.US, "update cards set queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", mod=%d where queue=" + Consts.QUEUE_TYPE_MANUALLY_BURIED , Utils.intTime()));
     }
 
     // adding 'hard' in v2 scheduler means old ease entries need shifting
     // up or down
     private void _remapLearningAnswers(String sql) {
-        mCol.getDb().execute("update revlog set " + sql + " and type in (0,2)");
+        mCol.getDb().execute("update revlog set " + sql + " and type in (" + Consts.REVLOG_LRN + ", " + Consts.REVLOG_RELRN + ")");
     }
 
     public void moveToV1() {
@@ -2561,14 +2396,14 @@ public class SchedV2 extends Sched {
 
         _moveManuallyBuried();
         _resetSuspendedLearning();
-        _remapLearningAnswers("ease=ease-1 where ease in (3,4)");
+        _remapLearningAnswers("ease=ease-1 where ease in (" + Consts.BUTTON_THREE + "," + Consts.BUTTON_FOUR + ")");
     }
 
 
     public void moveToV2() {
         _emptyAllFiltered();
         _removeAllFromLearning(1);
-        _remapLearningAnswers("ease=ease+1 where ease in (2,3)");
+        _remapLearningAnswers("ease=ease+1 where ease in (" + Consts.BUTTON_TWO + "," + Consts.BUTTON_THREE + ")");
     }
 
 
@@ -2667,9 +2502,9 @@ public class SchedV2 extends Sched {
                         .getDb()
                         .getDatabase()
                         .query("select "
-                                + "avg(case when type = 0 then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = 0 then time else null end) as newTime, "
-                                + "avg(case when type in (1, 3) then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (1, 3) then time else null end) as revTime, "
-                                + "avg(case when type = 2 then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = 2 then time else null end) as relrnTime "
+                                + "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, "
+                                + "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then time else null end) as revTime, "
+                                + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
                                 + "from revlog where id > "
                                 + ((mCol.getSched().getDayCutoff() - (10 * 86400)) * 1000), null);
                 if (!cur.moveToFirst()) {
@@ -2754,16 +2589,16 @@ public class SchedV2 extends Sched {
     public void decrementCounts(Card card) {
         int type = card.getQueue();
         switch (type) {
-        case 0:
+        case Consts.QUEUE_TYPE_NEW:
             mNewCount--;
             break;
-        case 1:
+        case Consts.QUEUE_TYPE_LRN:
             mLrnCount -= card.getLeft() / 1000;
             break;
-        case 2:
+        case Consts.QUEUE_TYPE_REV:
             mRevCount--;
             break;
-        case 3:
+        case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
             mLrnCount--;
             break;
         }
@@ -2789,12 +2624,8 @@ public class SchedV2 extends Sched {
 
     public boolean leechActionSuspend(Card card) {
         JSONObject conf;
-        try {
-            conf = _cardConf(card).getJSONObject("lapse");
-            return conf.getInt("leechAction") == 0;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        conf = _cardConf(card).getJSONObject("lapse");
+        return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
     }
 
 
@@ -2802,4 +2633,19 @@ public class SchedV2 extends Sched {
         mContextReference = contextReference;
     }
 
+    /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
+    @Override
+    public int[] recalculateCounts() {
+        _resetLrnCount();
+        _resetNewCount();
+        _resetRevCount();
+        return new int[] { mNewCount, mLrnCount, mRevCount };
+    }
+
+    @Override
+    public void setReportLimit(int reportLimit) {
+        this.mReportLimit = reportLimit;
+    }
+
+    /** End #5666 */
 }

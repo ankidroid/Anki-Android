@@ -27,9 +27,8 @@ import android.util.Pair;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.utils.Assert;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -177,7 +176,7 @@ public class Media {
                              " from old.media m\n" +
                              " left outer join old.log l using (fname)\n" +
                              " union\n" +
-                             " select fname, null, 0, 1 from old.log where type=1;";
+                             " select fname, null, 0, 1 from old.log where type=" + Consts.CARD_TYPE_LRN + ";";
                 mDb.execute(sql);
                 mDb.execute("delete from meta");
                 mDb.execute("insert into meta select dirMod, usn from old.meta");
@@ -298,16 +297,12 @@ public class Media {
         List<String> l = new ArrayList<>();
         JSONObject model = mCol.getModels().get(mid);
         List<String> strings = new ArrayList<>();
-        try {
-            if (model.getInt("type") == Consts.MODEL_CLOZE && string.contains("{{c")) {
-                // if the field has clozes in it, we'll need to expand the
-                // possibilities so we can render latex
-                strings = _expandClozes(string);
-            } else {
-                strings.add(string);
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (model.getInt("type") == Consts.MODEL_CLOZE && string.contains("{{c")) {
+            // if the field has clozes in it, we'll need to expand the
+            // possibilities so we can render latex
+            strings = _expandClozes(string);
+        } else {
+            strings.add(string);
         }
 
         for (String s : strings) {
@@ -942,14 +937,14 @@ public class Media {
      * This method closes the file before it returns.
      */
     public int addFilesFromZip(ZipFile z) throws IOException {
-        try {
+    try {
             List<Object[]> media = new ArrayList<>();
             // get meta info first
             JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
             // then loop through all files
             int cnt = 0;
             for (ZipEntry i : Collections.list(z.entries())) {
-                if (i.getName().equals("_meta")) {
+                if ("_meta".equals(i.getName())) {
                     // ignore previously-retrieved meta
                     continue;
                 } else {
@@ -969,8 +964,6 @@ public class Media {
                 mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
             }
             return cnt;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         } finally {
             z.close();
         }

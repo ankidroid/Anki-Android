@@ -2,7 +2,7 @@ import com.android.ddmlib.DdmPreferences
 
 plugins {
  // Gradle plugin portal 
- id 'com.github.triplet.play' version '2.7.2'
+ id 'com.github.triplet.play' version '2.7.3'
 }
 
 apply plugin: 'com.android.application'
@@ -101,8 +101,7 @@ android {
 }
 
 play {
-    serviceAccountEmail = '294046724212-r3bef6kl46pb9gk0h1pl5rcjmpfrdpjl@developer.gserviceaccount.com'
-    serviceAccountCredentials = file("${homePath}/src/583631bdd16d.p12")
+    serviceAccountCredentials = file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json")
     track = 'alpha'
 }
 
@@ -146,19 +145,19 @@ dependencies {
 
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     //noinspection GradleDependency
-    implementation 'com.squareup.okhttp3:okhttp:3.12.8'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.10'
     implementation 'com.arcao:slf4j-timber:3.1'
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'org.jsoup:jsoup:1.12.2'
+    implementation 'org.jsoup:jsoup:1.13.1'
     api project(":api")
 
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.6.0'
-    testImplementation 'org.mockito:mockito-core:3.3.1'
-    testImplementation 'org.powermock:powermock-core:2.0.5'
-    testImplementation 'org.powermock:powermock-module-junit4:2.0.5'
-    testImplementation 'org.powermock:powermock-api-mockito2:2.0.5'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.6.1'
+    testImplementation 'org.mockito:mockito-core:3.3.3'
+    testImplementation 'org.powermock:powermock-core:2.0.7'
+    testImplementation 'org.powermock:powermock-module-junit4:2.0.7'
+    testImplementation 'org.powermock:powermock-api-mockito2:2.0.7'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
     testImplementation "org.robolectric:robolectric:4.2.1"

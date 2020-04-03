@@ -26,9 +26,8 @@ import android.util.Pair;
 
 import com.ichi2.async.DeckTask;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONObject;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -391,42 +390,38 @@ public class Finder {
         if (!order) {
             return new Pair<>("", false);
         }
-        try {
-            // use deck default
-            String type = mCol.getConf().getString("sortType");
-            String sort = null;
-            if (type.startsWith("note")) {
-                if (type.startsWith("noteCrt")) {
-                    sort = "n.id, c.ord";
-                } else if (type.startsWith("noteMod")) {
-                    sort = "n.mod, c.ord";
-                } else if (type.startsWith("noteFld")) {
-                    sort = "n.sfld COLLATE NOCASE, c.ord";
-                }
-            } else if (type.startsWith("card")) {
-                if (type.startsWith("cardMod")) {
-                    sort = "c.mod";
-                } else if (type.startsWith("cardReps")) {
-                    sort = "c.reps";
-                } else if (type.startsWith("cardDue")) {
-                    sort = "c.type, c.due";
-                } else if (type.startsWith("cardEase")) {
-                    sort = "c.type == 0, c.factor";
-                } else if (type.startsWith("cardLapses")) {
-                    sort = "c.lapses";
-                } else if (type.startsWith("cardIvl")) {
-                    sort = "c.ivl";
-                }
+        // use deck default
+        String type = mCol.getConf().getString("sortType");
+        String sort = null;
+        if (type.startsWith("note")) {
+            if (type.startsWith("noteCrt")) {
+                sort = "n.id, c.ord";
+            } else if (type.startsWith("noteMod")) {
+                sort = "n.mod, c.ord";
+            } else if (type.startsWith("noteFld")) {
+                sort = "n.sfld COLLATE NOCASE, c.ord";
             }
-            if (sort == null) {
-            	// deck has invalid sort order; revert to noteCrt
-            	sort = "n.id, c.ord";
+        } else if (type.startsWith("card")) {
+            if (type.startsWith("cardMod")) {
+                sort = "c.mod";
+            } else if (type.startsWith("cardReps")) {
+                sort = "c.reps";
+            } else if (type.startsWith("cardDue")) {
+                sort = "c.type, c.due";
+            } else if (type.startsWith("cardEase")) {
+                sort = "c.type == " + Consts.CARD_TYPE_NEW + ", c.factor";
+            } else if (type.startsWith("cardLapses")) {
+                sort = "c.lapses";
+            } else if (type.startsWith("cardIvl")) {
+                sort = "c.ivl";
             }
-            boolean sortBackwards = mCol.getConf().getBoolean("sortBackwards");
-            return new Pair<>(" ORDER BY " + sort, sortBackwards);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
+        if (sort == null) {
+            // deck has invalid sort order; revert to noteCrt
+            sort = "n.id, c.ord";
+        }
+        boolean sortBackwards = mCol.getConf().getBoolean("sortBackwards");
+        return new Pair<>(" ORDER BY " + sort, sortBackwards);
     }
 
 
@@ -459,16 +454,16 @@ public class Finder {
             } else if ("new".equals(val)) {
                 n = 0;
             } else {
-                return "queue IN (1, 3)";
+                return "queue IN (1, " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")";
             }
             return "type = " + n;
         } else if ("suspended".equals(val)) {
-            return "c.queue = -1";
+            return "c.queue = " + Consts.QUEUE_TYPE_SUSPENDED;
         } else if ("buried".equals(val)) {
-            return "c.queue = -2";
+            return "c.queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
         } else if ("due".equals(val)) {
-            return "(c.queue in (2,3) and c.due <= " + mCol.getSched().getToday() +
-                    ") or (c.queue = 1 and c.due <= " + mCol.getSched().getDayCutoff() + ")";
+            return "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and c.due <= " + mCol.getSched().getToday() +
+                    ") or (c.queue = " + Consts.QUEUE_TYPE_LRN + " and c.due <= " + mCol.getSched().getDayCutoff() + ")";
         } else {
             return null;
         }
@@ -564,7 +559,7 @@ public class Finder {
         if ("due".equals(prop)) {
             val += mCol.getSched().getToday();
             // only valid for review/daily learning
-            q = "(c.queue in (2,3)) and ";
+            q = "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")) and ";
         } else if ("ease".equals(prop)) {
             prop = "factor";
             // already done: val = int(val*1000)
@@ -608,16 +603,12 @@ public class Finder {
 
     private String _findModel(String val) {
         LinkedList<Long> ids = new LinkedList<>();
-        try {
-            for (JSONObject m : mCol.getModels().all()) {
-                String modelName = m.getString("name");
-                modelName = Normalizer.normalize(modelName, Normalizer.Form.NFC);
-                if (modelName.equalsIgnoreCase(val)) {
-                    ids.add(m.getLong("id"));
-                }
+        for (JSONObject m : mCol.getModels().all()) {
+            String modelName = m.getString("name");
+            modelName = Normalizer.normalize(modelName, Normalizer.Form.NFC);
+            if (modelName.equalsIgnoreCase(val)) {
+                ids.add(m.getLong("id"));
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
         return "n.mid in " + Utils.ids2str(ids);
     }
@@ -645,31 +636,27 @@ public class Finder {
         }
         List<Long> ids = null;
         // current deck?
-        try {
-            if ("current".equalsIgnoreCase(val)) {
-                ids = dids(mCol.getDecks().selected());
-            } else if (!val.contains("*")) {
-                // single deck
-                ids = dids(mCol.getDecks().id(val, false));
-            } else {
-                // wildcard
-                ids = new ArrayList<>();
-                val = val.replace("*", ".*");
-                val = val.replace("+", "\\+");
-                for (JSONObject d : mCol.getDecks().all()) {
-                    String deckName = d.getString("name");
-                    deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
-                    if (deckName.matches("(?i)" + val)) {
-                        for (long id : dids(d.getLong("id"))) {
-                            if (!ids.contains(id)) {
-                                ids.add(id);
-                            }
+        if ("current".equalsIgnoreCase(val)) {
+            ids = dids(mCol.getDecks().selected());
+        } else if (!val.contains("*")) {
+            // single deck
+            ids = dids(mCol.getDecks().id(val, false));
+        } else {
+            // wildcard
+            ids = new ArrayList<>();
+            val = val.replace("*", ".*");
+            val = val.replace("+", "\\+");
+            for (JSONObject d : mCol.getDecks().all()) {
+                String deckName = d.getString("name");
+                deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
+                if (deckName.matches("(?i)" + val)) {
+                    for (long id : dids(d.getLong("id"))) {
+                        if (!ids.contains(id)) {
+                            ids.add(id);
                         }
                     }
                 }
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
         if (ids == null || ids.size() == 0) {
             return null;
@@ -692,28 +679,24 @@ public class Finder {
         }
         // search for template names
         List<String> lims = new ArrayList<>();
-        try {
-            for (JSONObject m : mCol.getModels().all()) {
-                JSONArray tmpls = m.getJSONArray("tmpls");
-                for (int ti = 0; ti < tmpls.length(); ++ti) {
-                    JSONObject t = tmpls.getJSONObject(ti);
-                    String templateName = t.getString("name");
-                    Normalizer.normalize(templateName, Normalizer.Form.NFC);
-                    if (templateName.equalsIgnoreCase(val)) {
-                        if (m.getInt("type") == Consts.MODEL_CLOZE) {
-                            // if the user has asked for a cloze card, we want
-                            // to give all ordinals, so we just limit to the
-                            // model instead
-                            lims.add("(n.mid = " + m.getLong("id") + ")");
-                        } else {
-                            lims.add("(n.mid = " + m.getLong("id") + " and c.ord = " +
-                                    t.getInt("ord") + ")");
-                        }
+        for (JSONObject m : mCol.getModels().all()) {
+            JSONArray tmpls = m.getJSONArray("tmpls");
+            for (int ti = 0; ti < tmpls.length(); ++ti) {
+                JSONObject t = tmpls.getJSONObject(ti);
+                String templateName = t.getString("name");
+                Normalizer.normalize(templateName, Normalizer.Form.NFC);
+                if (templateName.equalsIgnoreCase(val)) {
+                    if (m.getInt("type") == Consts.MODEL_CLOZE) {
+                        // if the user has asked for a cloze card, we want
+                        // to give all ordinals, so we just limit to the
+                        // model instead
+                        lims.add("(n.mid = " + m.getLong("id") + ")");
+                    } else {
+                        lims.add("(n.mid = " + m.getLong("id") + " and c.ord = " +
+                                t.getInt("ord") + ")");
                     }
                 }
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
         return TextUtils.join(" or ", lims.toArray(new String[lims.size()]));
     }
@@ -743,20 +726,16 @@ public class Finder {
 
         // find models that have that field
         Map<Long, Object[]> mods = new HashMap<>();
-        try {
-            for (JSONObject m : mCol.getModels().all()) {
-                JSONArray flds = m.getJSONArray("flds");
-                for (int fi = 0; fi < flds.length(); ++fi) {
-                    JSONObject f = flds.getJSONObject(fi);
-                    String fieldName = f.getString("name");
-                    fieldName = Normalizer.normalize(fieldName, Normalizer.Form.NFC);
-                    if (fieldName.equalsIgnoreCase(field)) {
-                        mods.put(m.getLong("id"), new Object[] { m, f.getInt("ord") });
-                    }
+        for (JSONObject m : mCol.getModels().all()) {
+            JSONArray flds = m.getJSONArray("flds");
+            for (int fi = 0; fi < flds.length(); ++fi) {
+                JSONObject f = flds.getJSONObject(fi);
+                String fieldName = f.getString("name");
+                fieldName = Normalizer.normalize(fieldName, Normalizer.Form.NFC);
+                if (fieldName.equalsIgnoreCase(field)) {
+                    mods.put(m.getLong("id"), new Object[] { m, f.getInt("ord") });
                 }
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
         if (mods.isEmpty()) {
             // nothing has that field
@@ -885,18 +864,14 @@ public class Finder {
             String field, boolean fold) {
         Map<Long, Integer> mmap = new HashMap<>();
         if (field != null) {
-            try {
-                for (JSONObject m : col.getModels().all()) {
-                    JSONArray flds = m.getJSONArray("flds");
-                    for (int fi = 0; fi < flds.length(); ++fi) {
-                        JSONObject f = flds.getJSONObject(fi);
-                        if (f.getString("name").equalsIgnoreCase(field)) {
-                            mmap.put(m.getLong("id"), f.getInt("ord"));
-                        }
+            for (JSONObject m : col.getModels().all()) {
+                JSONArray flds = m.getJSONArray("flds");
+                for (int fi = 0; fi < flds.length(); ++fi) {
+                    JSONObject f = flds.getJSONObject(fi);
+                    if (f.getString("name").equalsIgnoreCase(field)) {
+                        mmap.put(m.getLong("id"), f.getInt("ord"));
                     }
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
             }
             if (mmap.isEmpty()) {
                 return 0;
@@ -968,19 +943,15 @@ public class Finder {
     public List<String> fieldNames(Collection col, boolean downcase) {
         Set<String> fields = new HashSet<>();
         List<String> names = new ArrayList<>();
-        try {
-            for (JSONObject m : col.getModels().all()) {
-                JSONArray flds = m.getJSONArray("flds");
-                for (int fi = 0; fi < flds.length(); ++fi) {
-                    JSONObject f = flds.getJSONObject(fi);
-                    if (!fields.contains(f.getString("name").toLowerCase(Locale.US))) {
-                        names.add(f.getString("name"));
-                        fields.add(f.getString("name").toLowerCase(Locale.US));
-                    }
+        for (JSONObject m : col.getModels().all()) {
+            JSONArray flds = m.getJSONArray("flds");
+            for (int fi = 0; fi < flds.length(); ++fi) {
+                JSONObject f = flds.getJSONObject(fi);
+                if (!fields.contains(f.getString("name").toLowerCase(Locale.US))) {
+                    names.add(f.getString("name"));
+                    fields.add(f.getString("name").toLowerCase(Locale.US));
                 }
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
         if (downcase) {
             return new ArrayList<>(fields);
@@ -997,17 +968,13 @@ public class Finder {
     public static Integer ordForMid(Collection col, Map<Long, Integer> fields, long mid, String fieldName) {
         if (!fields.containsKey(mid)) {
             JSONObject model = col.getModels().get(mid);
-            try {
-                JSONArray flds = model.getJSONArray("flds");
-                for (int c = 0; c < flds.length(); c++) {
-                    JSONObject f = flds.getJSONObject(c);
-                    if (f.getString("name").equalsIgnoreCase(fieldName)) {
-                        fields.put(mid, c);
-                        break;
-                    }
+            JSONArray flds = model.getJSONArray("flds");
+            for (int c = 0; c < flds.length(); c++) {
+                JSONObject f = flds.getJSONObject(c);
+                if (f.getString("name").equalsIgnoreCase(fieldName)) {
+                    fields.put(mid, c);
+                    break;
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
             }
         }
         return fields.get(mid);
@@ -1118,7 +1085,7 @@ public class Finder {
                 card.put("question", null);
                 card.put("answer", null);
                 card.put("flags", (new Integer(Card.intToFlag(cur.getInt(5)))).toString());
-                card.put("suspended", queue == Card.QUEUE_SUSP ? "True": "False");
+                card.put("suspended", queue == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
                 card.put("marked", (tags.matches(".*[Mm]arked.*"))?"marked": null);
             }
         } catch (SQLException e) {

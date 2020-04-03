@@ -31,8 +31,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
 
 import org.apache.http.entity.AbstractHttpEntity;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -231,7 +230,7 @@ public class HttpSyncer {
                 Timber.e(e, "SSLException while building HttpClient");
                 throw new RuntimeException("SSLException while building HttpClient", e);
             }
-        } catch (UnsupportedEncodingException | JSONException e) {
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             Timber.e(e, "BasicHttpSyncer.sync: IOException");

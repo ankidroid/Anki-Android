@@ -37,9 +37,9 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.widget.WidgetStatus;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 
@@ -148,14 +148,10 @@ public class ModelFieldEditor extends AnkiActivity {
         mMod = mCol.getModels().get(noteTypeID);
 
         mFieldLabels = new ArrayList<>();
-        try {
-            mNoteFields = mMod.getJSONArray("flds");
-            for (int i = 0; i < mNoteFields.length(); i++) {
-                JSONObject o = mNoteFields.getJSONObject(i);
-                mFieldLabels.add(o.getString("name"));
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        mNoteFields = mMod.getJSONArray("flds");
+        for (int i = 0; i < mNoteFields.length(); i++) {
+            JSONObject o = mNoteFields.getJSONObject(i);
+            mFieldLabels.add(o.getString("name"));
         }
     }
 
@@ -166,8 +162,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
     /*
-    * Creates a dialog to rename the currently selected field, short loading ti
-    * Processing time scales with number of items
+    * Creates a dialog to create a field
     */
     private void addFieldDialog() {
         mFieldNameInput = new EditText(this);
@@ -179,7 +174,7 @@ public class ModelFieldEditor extends AnkiActivity {
                 .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
                     String fieldName = mFieldNameInput.getText().toString()
-                            .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                            .replaceAll("[\\n\\r]", "");
 
                     if (fieldName.length() == 0) {
                         UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
@@ -199,7 +194,7 @@ public class ModelFieldEditor extends AnkiActivity {
                             Runnable confirm = () -> {
                                 mCol.modSchemaNoCheck();
                                 String fieldName1 = mFieldNameInput.getText().toString()
-                                        .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                        .replaceAll("[\\n\\r]", "");
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FIELD, mChangeFieldHandler,
                                         new DeckTask.TaskData(new Object[]{mMod, fieldName1}));
                                 dismissContextMenu();
@@ -219,8 +214,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
     /*
-     * Creates a dialog to rename the currently selected field, short loading ti
-     * Processing time scales with number of items
+     * Creates a dialog to delete the currently selected field
      */
     private void deleteFieldDialog() {
         Runnable confirm = () -> {
@@ -255,17 +249,13 @@ public class ModelFieldEditor extends AnkiActivity {
     }
 
     private void deleteField() {
-        try {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_FIELD, mChangeFieldHandler,
-                    new DeckTask.TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_FIELD, mChangeFieldHandler,
+                                new DeckTask.TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
     }
 
 
     /*
-     * Creates a dialog to rename the currently selected field, short loading ti
+     * Creates a dialog to rename the currently selected field
      * Processing time is constant
      */
     private void renameFieldDialog() {
@@ -280,7 +270,7 @@ public class ModelFieldEditor extends AnkiActivity {
                 .onPositive((dialog, which) -> {
 
                         String fieldLabel = mFieldNameInput.getText().toString()
-                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                .replaceAll("[\\n\\r]", "");
                         if (fieldLabel.length() == 0) {
                             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
                         } else if (containsField(fieldLabel)) {
@@ -366,8 +356,6 @@ public class ModelFieldEditor extends AnkiActivity {
                                 c.setConfirm(confirm);
                                 c.setCancel(mConfirmDialogCancel);
                                 ModelFieldEditor.this.showDialogFragment(c);
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
                             }
                         }
                     })
@@ -404,16 +392,12 @@ public class ModelFieldEditor extends AnkiActivity {
      * Renames the current field
      */
     private void renameField() throws ConfirmModSchemaException {
-        try {
-            String fieldLabel = mFieldNameInput.getText().toString()
-                    .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-            JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
-            mCol.getModels().renameField(mMod, field, fieldLabel);
-            mCol.getModels().save();
-            fullRefreshList();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        String fieldLabel = mFieldNameInput.getText().toString()
+                .replaceAll("[\\n\\r]", "");
+        JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
+        mCol.getModels().renameField(mMod, field, fieldLabel);
+        mCol.getModels().save();
+        fullRefreshList();
     }
 
 

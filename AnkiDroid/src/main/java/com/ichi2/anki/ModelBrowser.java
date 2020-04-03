@@ -49,8 +49,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.widget.WidgetStatus;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -245,12 +244,8 @@ public class ModelBrowser extends AnkiActivity {
         mModelIds = new ArrayList<>();
 
         for (int i = 0; i < mModels.size(); i++) {
-            try {
-                mModelIds.add(mModels.get(i).getLong("id"));
-                mModelDisplayList.add(new DisplayPair(mModels.get(i).getString("name"), mCardCounts.get(i)));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            mModelIds.add(mModels.get(i).getLong("id"));
+            mModelDisplayList.add(new DisplayPair(mModels.get(i).getString("name"), mCardCounts.get(i)));
         }
 
         mModelDisplayAdapter = new DisplayPairAdapter(this, mModelDisplayList);
@@ -303,6 +298,7 @@ public class ModelBrowser extends AnkiActivity {
         final String basicName = getResources().getString(R.string.basic_model_name);
         final String addForwardReverseName = getResources().getString(R.string.forward_reverse_model_name);
         final String addForwardOptionalReverseName = getResources().getString(R.string.forward_optional_reverse_model_name);
+        final String addTypingName = getResources().getString(R.string.basic_typing_model_name);
         final String addClozeModelName = getResources().getString(R.string.cloze_model_name);
 
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
@@ -314,25 +310,23 @@ public class ModelBrowser extends AnkiActivity {
         mNewModelLabels.add(String.format(add, basicName));
         mNewModelLabels.add(String.format(add, addForwardReverseName));
         mNewModelLabels.add(String.format(add, addForwardOptionalReverseName));
+        mNewModelLabels.add(String.format(add, addTypingName));
         mNewModelLabels.add(String.format(add, addClozeModelName));
 
         mNewModelNames.add(basicName);
         mNewModelNames.add(addForwardReverseName);
         mNewModelNames.add(addForwardOptionalReverseName);
+        mNewModelNames.add(addTypingName);
         mNewModelNames.add(addClozeModelName);
 
         final int numStdModels = mNewModelLabels.size();
 
         if (mModels != null) {
             for (JSONObject model : mModels) {
-                try {
-                    String name = model.getString("name");
-                    mNewModelLabels.add(String.format(clone, name));
-                    mNewModelNames.add(name);
-                    existingModelsNames.add(name);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                String name = model.getString("name");
+                mNewModelLabels.add(String.format(clone, name));
+                mNewModelNames.add(name);
+                existingModelsNames.add(name);
             }
         }
 
@@ -389,43 +383,41 @@ public class ModelBrowser extends AnkiActivity {
         //Temporary workaround - Lack of stdmodels class, so can only handle 4 default English mModels
         //like Ankidroid but unlike desktop Anki
         JSONObject model;
-        try {
-            if (modelName.length() > 0) {
-                switch (position) {
-                    //Basic Model
-                    case (0):
-                        model = Models.addBasicModel(col);
-                        break;
-                    //Add forward reverse model
-                    case (1):
-                        model = Models.addForwardReverse(col);
-                        break;
-                    //Add forward optional reverse model
-                    case (2):
-                        model = Models.addForwardOptionalReverse(col);
-                        break;
-                    //Close model
-                    case (3):
-                        model = Models.addClozeModel(col);
-                        break;
-                    default:
-                        //New model
-                        //Model that is being cloned
-                        JSONObject oldModel = new JSONObject(mModels.get(position - 4).toString());
-                        JSONObject newModel = Models.addBasicModel(col);
-                        oldModel.put("id", newModel.get("id"));
-                        model = oldModel;
-                        break;
-
-                }
-                model.put("name", modelName);
-                col.getModels().update(model);
-                fullRefresh();
-            } else {
-                showToast(getResources().getString(R.string.toast_empty_name));
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (modelName.length() > 0) {
+            switch (position) {
+                //Basic Model
+                case (0):
+                    model = Models.addBasicModel(col);
+                    break;
+                //Add forward reverse model
+                case (1):
+                    model = Models.addForwardReverse(col);
+                    break;
+                //Add forward optional reverse model
+                case (2):
+                    model = Models.addForwardOptionalReverse(col);
+                    break;
+                case (3):
+                    model = Models.addBasicTypingModel(col);
+                    break;
+                //Close model
+                case (4):
+                    model = Models.addClozeModel(col);
+                    break;
+                default:
+                    //New model
+                    //Model that is being cloned
+                    JSONObject oldModel = new JSONObject(mModels.get(position - 5).toString());
+                    JSONObject newModel = Models.addBasicModel(col);
+                    oldModel.put("id", newModel.get("id"));
+                    model = oldModel;
+                    break;
+             }
+            model.put("name", modelName);
+            col.getModels().update(model);
+            fullRefresh();
+        } else {
+            showToast(getResources().getString(R.string.toast_empty_name));
         }
     }
 
@@ -480,41 +472,34 @@ public class ModelBrowser extends AnkiActivity {
      * Displays a confirmation box asking if you want to rename the note type and then renames it if confirmed
      */
     private void renameModelDialog() {
-        try {
-            mModelNameInput = new EditText(this);
-            mModelNameInput.setSingleLine(true);
-            mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
-            mModelNameInput.setSelection(mModelNameInput.getText().length());
-            new MaterialDialog.Builder(this)
-                                .title(R.string.rename_model)
-                                .positiveText(R.string.rename)
-                                .negativeText(R.string.dialog_cancel)
-                                .customView(mModelNameInput, true)
-                                .onPositive((dialog, which) -> {
-                                        JSONObject model = mModels.get(mModelListPosition);
-                                        String deckName = mModelNameInput.getText().toString()
-                                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                                        getCol().getDecks().id(deckName, false);
-                                        if (deckName.length() > 0) {
-                                            try {
-                                                model.put("name", deckName);
-                                                col.getModels().update(model);
-                                                mModels.get(mModelListPosition).put("name", deckName);
-                                                mModelDisplayList.set(mModelListPosition,
-                                                        new DisplayPair(mModels.get(mModelListPosition).getString("name"),
-                                                                mCardCounts.get(mModelListPosition)));
-                                            } catch (JSONException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                            refreshList();
-                                        } else {
-                                            showToast(getResources().getString(R.string.toast_empty_name));
-                                        }
-                                    })
-                                .show();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        mModelNameInput = new EditText(this);
+        mModelNameInput.setSingleLine(true);
+        mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
+        mModelNameInput.setSelection(mModelNameInput.getText().length());
+        new MaterialDialog.Builder(this)
+                            .title(R.string.rename_model)
+                            .positiveText(R.string.rename)
+                            .negativeText(R.string.dialog_cancel)
+                            .customView(mModelNameInput, true)
+                            .onPositive((dialog, which) -> {
+                                    JSONObject model = mModels.get(mModelListPosition);
+                                    String deckName = mModelNameInput.getText().toString()
+                                            // Anki desktop doesn't allow double quote characters in deck names
+                                            .replaceAll("[\"\\n\\r]", "");
+                                    getCol().getDecks().id(deckName, false);
+                                    if (deckName.length() > 0) {
+                                        model.put("name", deckName);
+                                        col.getModels().update(model);
+                                        mModels.get(mModelListPosition).put("name", deckName);
+                                        mModelDisplayList.set(mModelListPosition,
+                                                new DisplayPair(mModels.get(mModelListPosition).getString("name"),
+                                                        mCardCounts.get(mModelListPosition)));
+                                        refreshList();
+                                    } else {
+                                        showToast(getResources().getString(R.string.toast_empty_name));
+                                    }
+                                })
+                            .show();
     }
 
     private void dismissContextMenu() {

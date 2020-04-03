@@ -32,14 +32,16 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.upgrade.Upgrade;
+import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -48,6 +50,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -56,6 +59,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import androidx.annotation.Nullable;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
@@ -81,7 +85,7 @@ public class Collection {
     private Models mModels;
     private Tags mTags;
 
-    private Sched mSched;
+    private AbstractSched mSched;
 
     private double mStartTime;
     private int mStartReps;
@@ -175,11 +179,7 @@ public class Collection {
         mStartTime = 0;
         _loadScheduler();
         if (!mConf.optBoolean("newBury", false)) {
-            try {
-                mConf.put("newBury", true);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            mConf.put("newBury", true);
             setMod();
         }
     }
@@ -231,11 +231,7 @@ public class Collection {
         } else {
             v2Sched.moveToV2();
         }
-        try {
-            mConf.put("schedVer", ver);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        mConf.put("schedVer", ver);
         setMod();
         _loadScheduler();
     }
@@ -262,11 +258,7 @@ public class Collection {
             mDty = cursor.getInt(3) == 1; // No longer used
             mUsn = cursor.getInt(4);
             mLs = cursor.getLong(5);
-            try {
-                mConf = new JSONObject(cursor.getString(6));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            mConf = new JSONObject(cursor.getString(6));
             deckConf = cursor.getString(7);
             mTags.load(cursor.getString(8));
         } finally {
@@ -540,11 +532,7 @@ public class Collection {
         } catch (JSONException e) {
             id = 1;
         }
-        try {
-            mConf.put(type, id + 1);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        mConf.put(type, id + 1);
         return id;
     }
 
@@ -674,25 +662,21 @@ public class Collection {
     private ArrayList<JSONObject> _tmplsFromOrds(JSONObject model, ArrayList<Integer> avail) {
         ArrayList<JSONObject> ok = new ArrayList<>();
         JSONArray tmpls;
-        try {
-            if (model.getInt("type") == Consts.MODEL_STD) {
-                tmpls = model.getJSONArray("tmpls");
-                for (int i = 0; i < tmpls.length(); i++) {
-                    JSONObject t = tmpls.getJSONObject(i);
-                    if (avail.contains(t.getInt("ord"))) {
-                        ok.add(t);
-                    }
-                }
-            } else {
-                // cloze - generate temporary templates from first
-                for (int ord : avail) {
-                    JSONObject t = new JSONObject(model.getJSONArray("tmpls").getString(0));
-                    t.put("ord", ord);
+        if (model.getInt("type") == Consts.MODEL_STD) {
+            tmpls = model.getJSONArray("tmpls");
+            for (int i = 0; i < tmpls.length(); i++) {
+                JSONObject t = tmpls.getJSONObject(i);
+                if (avail.contains(t.getInt("ord"))) {
                     ok.add(t);
                 }
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } else {
+            // cloze - generate temporary templates from first
+            for (int ord : avail) {
+                JSONObject t = new JSONObject(model.getJSONArray("tmpls").getString(0));
+                t.put("ord", ord);
+                ok.add(t);
+            }
         }
         return ok;
     }
@@ -746,7 +730,7 @@ public class Collection {
                 if (odid != 0) {
                     due = odue;
                 }
-                if (!dues.containsKey(nid) && type == 0) {
+                if (!dues.containsKey(nid) && type == Consts.CARD_TYPE_NEW) {
                     dues.put(nid, due);
                 }
             }
@@ -815,8 +799,6 @@ public class Collection {
                     }
                 }
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -843,22 +825,18 @@ public class Collection {
 
     public List<Card> previewCards(Note note, int type, int did) {
 	    ArrayList<JSONObject> cms = null;
-	    if (type == 0) {
+	    if (type == Consts.CARD_TYPE_NEW) {
 	        cms = findTemplates(note);
-	    } else if (type == 1) {
+	    } else if (type == Consts.CARD_TYPE_LRN) {
 	        cms = new ArrayList<>();
 	        for (Card c : note.cards()) {
 	            cms.add(c.template());
 	        }
 	    } else {
 	        cms = new ArrayList<>();
-	        try {
-                JSONArray ja = note.model().getJSONArray("tmpls");
-                for (int i = 0; i < ja.length(); ++i) {
-                    cms.add(ja.getJSONObject(i));
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+            JSONArray ja = note.model().getJSONArray("tmpls");
+            for (int i = 0; i < ja.length(); ++i) {
+                cms.add(ja.getJSONObject(i));
             }
 	    }
 	    if (cms.isEmpty()) {
@@ -898,12 +876,8 @@ public class Collection {
         int ord = -1;
         long did;
         card.setNid(nid);
-        try {
-            ord = template.getInt("ord");
-            card.setOrd(ord);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        ord = template.getInt("ord");
+        card.setOrd(ord);
         did = mDb.queryScalar("select did from cards where nid = " + nid + " and ord = " + ord);
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
@@ -916,17 +890,13 @@ public class Collection {
             }
         }
         card.setDid(did);
-        try {
-            // if invalid did, use default instead
-            JSONObject deck = mDecks.get(card.getDid());
-            if (deck.getInt("dyn") == 1) {
-            	// must not be a filtered deck
-            	card.setDid(1);
-            } else {
-                card.setDid(deck.getLong("id"));
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        // if invalid did, use default instead
+        JSONObject deck = mDecks.get(card.getDid());
+        if (deck.getInt("dyn") == 1) {
+            // must not be a filtered deck
+            card.setDid(1);
+        } else {
+            card.setDid(deck.getLong("id"));
         }
         card.setDue(_dueForDid(card.getDid(), due));
         if (flush) {
@@ -939,18 +909,14 @@ public class Collection {
     public int _dueForDid(long did, int due) {
         JSONObject conf = mDecks.confForDid(did);
         // in order due?
-        try {
-            if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_DUE) {
-                return due;
-            } else {
-                // random mode; seed with note ts so all cards of this note get
-                // the same random number
-                Random r = new Random();
-                r.setSeed(due);
-                return r.nextInt(Math.max(due, 1000) - 1) + 1;
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_DUE) {
+            return due;
+        } else {
+            // random mode; seed with note ts so all cards of this note get
+            // the same random number
+            Random r = new Random();
+            r.setSeed(due);
+            return r.nextInt(Math.max(due, 1000) - 1) + 1;
         }
     }
 
@@ -1119,54 +1085,50 @@ public class Collection {
         for (String name : fmap.keySet()) {
             fields.put(name, flist[fmap.get(name).first]);
         }
-        try {
-            int cardNum = ((Integer) data[4]) + 1;
-            fields.put("Tags", ((String) data[5]).trim());
-            fields.put("Type", (String) model.get("name"));
-            fields.put("Deck", mDecks.name((Long) data[3]));
-            String[] parents = fields.get("Deck").split("::", -1);
-            fields.put("Subdeck", parents[parents.length-1]);
-            fields.put("CardFlag", _flagNameFromCardFlags((Integer) data[7]));
-            JSONObject template;
-            if (model.getInt("type") == Consts.MODEL_STD) {
-                template = model.getJSONArray("tmpls").getJSONObject((Integer) data[4]);
-            } else {
-                template = model.getJSONArray("tmpls").getJSONObject(0);
-            }
-            fields.put("Card", template.getString("name"));
-            fields.put(String.format(Locale.US, "c%d", cardNum), "1");
-            // render q & a
-            HashMap<String, String> d = new HashMap<>();
-            d.put("id", Long.toString((Long) data[0]));
-            qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
-            afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
-            for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>("a", afmt)}) {
-                String type = p.first;
-                String format = p.second;
-                if ("q".equals(type)) {
-                    format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
-                    format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
-                } else {
-                    format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
-                    format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
-                    // the following line differs from libanki // TODO: why?
-                    fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
-                }
-                fields = (Map<String, String>) Hooks.runFilter("mungeFields", fields, model, data, this);
-                String html = new Template(format, fields).render();
-                d.put(type, (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this));
-                // empty cloze?
-                if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
-                    if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
-                        String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
-                        d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
-                    }
-                }
-            }
-            return d;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        int cardNum = ((Integer) data[4]) + 1;
+        fields.put("Tags", ((String) data[5]).trim());
+        fields.put("Type", (String) model.get("name"));
+        fields.put("Deck", mDecks.name((Long) data[3]));
+        String[] parents = fields.get("Deck").split("::", -1);
+        fields.put("Subdeck", parents[parents.length-1]);
+        fields.put("CardFlag", _flagNameFromCardFlags((Integer) data[7]));
+        JSONObject template;
+        if (model.getInt("type") == Consts.MODEL_STD) {
+            template = model.getJSONArray("tmpls").getJSONObject((Integer) data[4]);
+        } else {
+            template = model.getJSONArray("tmpls").getJSONObject(0);
         }
+        fields.put("Card", template.getString("name"));
+        fields.put(String.format(Locale.US, "c%d", cardNum), "1");
+        // render q & a
+        HashMap<String, String> d = new HashMap<>();
+        d.put("id", Long.toString((Long) data[0]));
+        qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
+        afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
+        for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>("a", afmt)}) {
+            String type = p.first;
+            String format = p.second;
+            if ("q".equals(type)) {
+                format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
+                format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
+            } else {
+                format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
+                format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
+                // the following line differs from libanki // TODO: why?
+                fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+            }
+            fields = (Map<String, String>) Hooks.runFilter("mungeFields", fields, model, data, this);
+            String html = new Template(format, fields).render();
+            d.put(type, (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this));
+            // empty cloze?
+            if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
+                if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
+                    String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
+                    d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
+                }
+            }
+        }
+        return d;
     }
 
 
@@ -1274,21 +1236,13 @@ public class Collection {
      */
 
     public void setTimeLimit(long seconds) {
-        try {
-            mConf.put("timeLim", seconds);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        mConf.put("timeLim", seconds);
     }
 
 
     public long getTimeLimit() {
         long timebox = 0;
-        try {
-            timebox = mConf.getLong("timeLim");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        timebox = mConf.getLong("timeLim");
         return timebox;
     }
 
@@ -1301,17 +1255,13 @@ public class Collection {
 
     /* Return (elapsedTime, reps) if timebox reached, or null. */
     public Long[] timeboxReached() {
-        try {
-            if (mConf.getLong("timeLim") == 0) {
-                // timeboxing disabled
-                return null;
-            }
-            double elapsed = Utils.now() - mStartTime;
-            if (elapsed > mConf.getLong("timeLim")) {
-                return new Long[] { mConf.getLong("timeLim"), (long) (mSched.getReps() - mStartReps) };
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (mConf.getLong("timeLim") == 0) {
+            // timeboxing disabled
+            return null;
+        }
+        double elapsed = Utils.now() - mStartTime;
+        if (elapsed > mConf.getLong("timeLim")) {
+            return new Long[] { mConf.getLong("timeLim"), (long) (mSched.getReps() - mStartReps) };
         }
         return null;
     }
@@ -1363,10 +1313,10 @@ public class Collection {
                 long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
                 mDb.execute("DELETE FROM revlog WHERE id = " + last);
                 // restore any siblings
-                mDb.execute("update cards set queue=type,mod=?,usn=? where queue=-2 and nid=?",
+                mDb.execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
                         new Object[]{Utils.intTime(), usn(), c.getNid()});
                 // and finally, update daily count
-                int n = c.getQueue() == 3 ? 1 : c.getQueue();
+                int n = c.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : c.getQueue();
                 String type = (new String[]{"new", "lrn", "rev"})[n];
                 mSched._updateStats(c, type, -1);
                 mSched.setReps(mSched.getReps() - 1);
@@ -1571,30 +1521,26 @@ public class Collection {
         if (badNotes) {
             return false;
         }
-        try {
-            // invalid ords
-            for (JSONObject m : mModels.all()) {
-                // ignore clozes
-                if (m.getInt("type") != Consts.MODEL_STD) {
-                    continue;
-                }
-                // Make a list of valid ords for this model
-                JSONArray tmpls = m.getJSONArray("tmpls");
-                int[] ords = new int[tmpls.length()];
-                for (int t = 0; t < tmpls.length(); t++) {
-                    ords[t] = tmpls.getJSONObject(t).getInt("ord");
-                }
-
-                boolean badOrd = mDb.queryScalar(String.format(Locale.US,
-                        "select 1 from cards where ord not in %s and nid in ( " +
-                        "select id from notes where mid = %d) limit 1",
-                        Utils.ids2str(ords), m.getLong("id"))) > 0;
-                if (badOrd) {
-                    return false;
-                }
+        // invalid ords
+        for (JSONObject m : mModels.all()) {
+            // ignore clozes
+            if (m.getInt("type") != Consts.MODEL_STD) {
+                continue;
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            // Make a list of valid ords for this model
+            JSONArray tmpls = m.getJSONArray("tmpls");
+            int[] ords = new int[tmpls.length()];
+            for (int t = 0; t < tmpls.length(); t++) {
+                ords[t] = tmpls.getJSONObject(t).getInt("ord");
+            }
+
+            boolean badOrd = mDb.queryScalar(String.format(Locale.US,
+                                                           "select 1 from cards where ord not in %s and nid in ( " +
+                                                           "select id from notes where mid = %d) limit 1",
+                                                           Utils.ids2str(ords), m.getLong("id"))) > 0;
+            if (badOrd) {
+                return false;
+            }
         }
         return true;
     }
@@ -1605,177 +1551,73 @@ public class Collection {
         File file = new File(mPath);
         ArrayList<String> problems = new ArrayList<>();
         long oldSize = file.length();
-        int currentTask = 1;
-        int totalTasks = (mModels.all().size() * 4) + 20; // 4 things are in all-models loops, 20 things are one-offs
+        final int[] currentTask = {1};
+        int totalTasks = (mModels.all().size() * 4) + 23; // a few fixes are in all-models loops, the rest are one-offs
+        Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
+        FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
+                (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
+                    //DEFECT: notifyProgress will lag if an exception is thrown.
+                    try {
+                        mDb.getDatabase().beginTransaction();
+                        problems.addAll(function.apply(notifyProgress));
+                        mDb.getDatabase().setTransactionSuccessful();
+                    } catch (Exception e) {
+                        Timber.e(e, "Failed to execute integrity check");
+                        AnkiDroidApp.sendExceptionReport(e, "fixIntegrity");
+                    } finally {
+                        try {
+                            mDb.getDatabase().endTransaction();
+                        } catch (Exception e) {
+                            Timber.e(e, "Failed to end integrity check transaction");
+                            AnkiDroidApp.sendExceptionReport(e, "fixIntegrity - endTransaction");
+                        }
+                    }
+                };
         try {
             mDb.getDatabase().beginTransaction();
-            try {
-                save();
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (!"ok".equals(mDb.queryString("PRAGMA integrity_check"))) {
-                    return -1;
-                }
-                // note types with a missing model
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ArrayList<Long> ids = mDb.queryColumn(Long.class,
-                        "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() != 0) {
-                	problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
-	                _remNotes(Utils.arrayList2array(ids));
-                }
-                // for each model
-                for (JSONObject m : mModels.all()) {
-                    // cards with invalid ordinal
-                    fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                    if (m.getInt("type") == Consts.MODEL_STD) {
-                        ArrayList<Integer> ords = new ArrayList<>();
-                        JSONArray tmpls = m.getJSONArray("tmpls");
-                        for (int t = 0; t < tmpls.length(); t++) {
-                            ords.add(tmpls.getJSONObject(t).getInt("ord"));
-                        }
-                        ids = mDb.queryColumn(Long.class,
-                                "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
-                                "SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
-                        if (ids.size() > 0) {
-                            problems.add("Deleted " + ids.size() + " card(s) with missing template.");
-                            remCards(Utils.arrayList2array(ids));
-                        }
-                    }
-                    // notes with invalid field counts
-                    ids = new ArrayList<>();
-                    Cursor cur = null;
-                    try {
-                        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                        cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
-                        while (cur.moveToNext()) {
-                            String flds = cur.getString(1);
-                            long id = cur.getLong(0);
-                            int fldsCount = 0;
-                            for (int i = 0; i < flds.length(); i++) {
-                                if (flds.charAt(i) == 0x1f) {
-                                    fldsCount++;
-                                }
-                            }
-                            if (fldsCount + 1 != m.getJSONArray("flds").length()) {
-                                ids.add(id);
-                            }
-                        }
-                        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                        if (ids.size() > 0) {
-                            problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
-                            _remNotes(Utils.arrayList2array(ids));
-                        }
-                    } finally {
-                        if (cur != null && !cur.isClosed()) {
-                            cur.close();
-                        }
-                    }
-                }
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                // delete any notes with missing cards
-                ids = mDb.queryColumn(Long.class,
-                        "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() != 0) {
-                	problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
-	                _remNotes(Utils.arrayList2array(ids));
-                }
-                // cards with missing notes
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ids = mDb.queryColumn(Long.class,
-                        "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() != 0) {
-                    problems.add("Deleted " + ids.size() + " card(s) with missing note.");
-                    remCards(Utils.arrayList2array(ids));
-                }
-                // cards with odue set when it shouldn't be
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ids = mDb.queryColumn(Long.class,
-                        "select id from cards where odue > 0 and (type=1 or queue=2) and not odid", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() != 0) {
-                    problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
-                    mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
-                }
-                // cards with odid set when not in a dyn deck
-                ArrayList<Long> dids = new ArrayList<>();
-                for (long id : mDecks.allIds()) {
-                    if (!mDecks.isDyn(id)) {
-                        dids.add(id);
-                    }
-                }
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ids = mDb.queryColumn(Long.class,
-                        "select id from cards where odid > 0 and did in " + Utils.ids2str(dids), 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() != 0) {
-                    problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
-                    mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
-                }
-                // tags
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                mTags.registerNotes();
-                // field cache
-                for (JSONObject m : mModels.all()) {
-                    fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                    updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
-                }
-                // new cards can't have a due position > 32 bits
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
-                        + " WHERE due > 1000000 AND type = 0");
-                // new card position
-                mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
-                // reviews should have a reasonable due #
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 100000", 0);
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                if (ids.size() > 0) {
-                	problems.add("Reviews had incorrect due date.");
-                    mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
-                            ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
-                }
-                // v2 sched had a bug that could create decimal intervals
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
-                        "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
-                int rowCount = s.executeUpdateDelete();
-                if (rowCount > 0) {
-                    problems.add("Fixed " + rowCount + " cards with v2 scheduler bug.");
-                }
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                s = mDb.getDatabase().compileStatement(
-                        "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
-                rowCount = s.executeUpdateDelete();
-                if (rowCount > 0) {
-                    problems.add("Fixed " + rowCount + " review history entries with v2 scheduler bug.");
-                }
-                mDb.getDatabase().setTransactionSuccessful();
-                // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
-                fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
-                int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
-                if (ixs < 7) {
-                    problems.add("Indices were missing.");
-                    Storage.addIndices(mDb);
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            } finally {
-                mDb.getDatabase().endTransaction();
+            save();
+            notifyProgress.run();
+
+            if (!mDb.getDatabase().isDatabaseIntegrityOk()) {
+                return -1;
             }
+            mDb.getDatabase().setTransactionSuccessful();
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return -1;
+        } finally {
+            mDb.getDatabase().endTransaction();
         }
-        // models
-        if (mModels.ensureNotEmpty()) {
-            problems.add("Added missing note type.");
+
+        executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
+        // for each model
+        for (JSONObject m : mModels.all()) {
+            executeIntegrityTask.consume((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
+            executeIntegrityTask.consume((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
         }
-        // and finally, optimize
-        optimize(progressCallback, currentTask, totalTasks);
+        executeIntegrityTask.consume(this::deleteNotesWithMissingCards);
+        executeIntegrityTask.consume(this::deleteCardsWithMissingNotes);
+        executeIntegrityTask.consume(this::removeOriginalDuePropertyWhereInvalid);
+        executeIntegrityTask.consume(this::removeDynamicPropertyFromNonDynamicDecks);
+        executeIntegrityTask.consume(this::removeDeckOptionsFromDynamicDecks);
+        executeIntegrityTask.consume(this::rebuildTags);
+        executeIntegrityTask.consume(this::updateFieldCache);
+        executeIntegrityTask.consume(this::fixNewCardDuePositionOverflow);
+        executeIntegrityTask.consume(this::resetNewCardInsertionPosition);
+        executeIntegrityTask.consume(this::fixExcessiveReviewDueDates);
+        // v2 sched had a bug that could create decimal intervals
+        executeIntegrityTask.consume(this::fixDecimalCardsData);
+        executeIntegrityTask.consume(this::fixDecimalRevLogData);
+        executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
+        executeIntegrityTask.consume(this::ensureModelsAreNotEmpty);
+        // and finally, optimize (unable to be done inside transaction).
+        try {
+            optimize(notifyProgress);
+        } catch (Exception e) {
+            Timber.e(e, "optimize");
+            AnkiDroidApp.sendExceptionReport(e, "fixIntegrity - optimize");
+        }
         file = new File(mPath);
         long newSize = file.length();
         // if any problems were found, force a full sync
@@ -1787,12 +1629,309 @@ public class Collection {
     }
 
 
-    public void optimize(DeckTask.ProgressCallback progressCallback, int currentTask, int totalTasks) {
+    private ArrayList<String> ensureModelsAreNotEmpty(Runnable notifyProgress) {
+        Timber.d("ensureModelsAreNotEmpty()");
+        ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
+        if (mModels.ensureNotEmpty()) {
+            problems.add("Added missing note type.");
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> restoreMissingDatabaseIndices(Runnable notifyProgress) {
+        Timber.d("restoreMissingDatabaseIndices");
+        ArrayList<String> problems = new ArrayList<>();
+        // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
+        notifyProgress.run();
+        int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
+        if (ixs < 7) {
+            problems.add("Indices were missing.");
+            Storage.addIndices(mDb);
+        }
+        return problems;
+    }
+
+    private ArrayList<String> fixDecimalCardsData(Runnable notifyProgress) {
+        Timber.d("fixDecimalCardsData");
+        ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
+        SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
+                "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
+        int rowCount = s.executeUpdateDelete();
+        if (rowCount > 0) {
+            problems.add("Fixed " + rowCount + " cards with v2 scheduler bug.");
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> fixDecimalRevLogData(Runnable notifyProgress) {
+        Timber.d("fixDecimalRevLogData()");
+        ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
+        SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
+                "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
+        int rowCount = s.executeUpdateDelete();
+        if (rowCount > 0) {
+            problems.add("Fixed " + rowCount + " review history entries with v2 scheduler bug.");
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> fixExcessiveReviewDueDates(Runnable notifyProgress) {
+        Timber.d("fixExcessiveReviewDueDates()");
+        ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
+        // reviews should have a reasonable due #
+        ArrayList<Long> ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000", 0);
+        notifyProgress.run();
+        if (ids.size() > 0) {
+            problems.add("Reviews had incorrect due date.");
+            mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
+                    ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+        }
+        return problems;
+    }
+
+
+    private List<String> resetNewCardInsertionPosition(Runnable notifyProgress) throws JSONException {
+        Timber.d("resetNewCardInsertionPosition");
+        notifyProgress.run();
+        // new card position
+        mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = " + Consts.CARD_TYPE_NEW));
+        return Collections.emptyList();
+    }
+
+
+    private List<String> fixNewCardDuePositionOverflow(Runnable notifyProgress) {
+        Timber.d("fixNewCardDuePositionOverflow");
+        // new cards can't have a due position > 32 bits
+        notifyProgress.run();
+        mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
+                + " WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW);
+        return Collections.emptyList();
+    }
+
+
+    private List<String> updateFieldCache(Runnable notifyProgress) {
+        Timber.d("updateFieldCache");
+        // field cache
+        for (JSONObject m : mModels.all()) {
+            notifyProgress.run();
+            updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
+        }
+        return Collections.emptyList();
+    }
+
+
+    private List<String> rebuildTags(Runnable notifyProgress) {
+        Timber.d("rebuildTags");
+        // tags
+        notifyProgress.run();
+        mTags.registerNotes();
+        return Collections.emptyList();
+    }
+
+
+    private ArrayList<String> removeDeckOptionsFromDynamicDecks(Runnable notifyProgress) {
+        Timber.d("removeDeckOptionsFromDynamicDecks()");
+        ArrayList<String> problems = new ArrayList<>();
+        //#5708 - a dynamic deck should not have "Deck Options"
+        notifyProgress.run();
+        int fixCount = 0;
+        for (long id : mDecks.allDynamicDeckIds()) {
+            try {
+                if (mDecks.hasDeckOptions(id)) {
+                    mDecks.removeDeckOptions(id);
+                    fixCount++;
+                }
+            } catch (NoSuchDeckException e) {
+                Timber.e("Unable to find dynamic deck %d", id);
+            }
+        }
+        if (fixCount > 0) {
+            mDecks.save();
+            problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> removeDynamicPropertyFromNonDynamicDecks(Runnable notifyProgress) {
+        Timber.d("removeDynamicPropertyFromNonDynamicDecks()");
+        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<Long> dids = new ArrayList<>();
+        for (long id : mDecks.allIds()) {
+            if (!mDecks.isDyn(id)) {
+                dids.add(id);
+            }
+        }
+        notifyProgress.run();
+        // cards with odid set when not in a dyn deck
+        ArrayList<Long> ids = mDb.queryColumn(Long.class,
+                "select id from cards where odid > 0 and did in " + Utils.ids2str(dids), 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
+            mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> removeOriginalDuePropertyWhereInvalid(Runnable notifyProgress) {
+        Timber.d("removeOriginalDuePropertyWhereInvalid()");
+        ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
+        // cards with odue set when it shouldn't be
+        ArrayList<Long> ids = mDb.queryColumn(Long.class,
+                "select id from cards where odue > 0 and (type= " + Consts.CARD_TYPE_LRN + " or queue=" + Consts.QUEUE_TYPE_REV + ") and not odid", 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
+            mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> deleteCardsWithMissingNotes(Runnable notifyProgress) {
+        Timber.d("deleteCardsWithMissingNotes()");
+        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<Long> ids;// cards with missing notes
+        notifyProgress.run();
+        ids = mDb.queryColumn(Long.class,
+                "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)", 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Deleted " + ids.size() + " card(s) with missing note.");
+            remCards(Utils.arrayList2array(ids));
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> deleteNotesWithMissingCards(Runnable notifyProgress) {
+        Timber.d("deleteNotesWithMissingCards()");
+        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<Long> ids;
+        notifyProgress.run();
+        // delete any notes with missing cards
+        ids = mDb.queryColumn(Long.class,
+                "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
+            _remNotes(Utils.arrayList2array(ids));
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> deleteNotesWithWrongFieldCounts(Runnable notifyProgress, JSONObject m) throws JSONException {
+        Timber.d("deleteNotesWithWrongFieldCounts");
+        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<Long> ids;// notes with invalid field counts
+        ids = new ArrayList<>();
+        Cursor cur = null;
+        try {
+            notifyProgress.run();
+            cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
+            Timber.i("cursor size: %d", cur.getCount());
+            int currentRow = 0;
+
+            //Since we loop through all rows, we only want one exception
+            @Nullable Exception firstException = null;
+            while (cur.moveToNext()) {
+                try {
+                    String flds = cur.getString(1);
+                    long id = cur.getLong(0);
+                    int fldsCount = 0;
+                    for (int i = 0; i < flds.length(); i++) {
+                        if (flds.charAt(i) == 0x1f) {
+                            fldsCount++;
+                        }
+                    }
+                    if (fldsCount + 1 != m.getJSONArray("flds").length()) {
+                        ids.add(id);
+                    }
+                } catch (IllegalStateException ex) {
+                    // DEFECT: Theory that is this an OOM is discussed in #5852
+                    // We store one exception to stop excessive logging
+                    Timber.i(ex,  "deleteNotesWithWrongFieldCounts - Exception on row %d. Columns: %d", currentRow, cur.getColumnCount());
+                    if (firstException == null) {
+                        String details = String.format(Locale.ROOT, "deleteNotesWithWrongFieldCounts row: %d col: %d",
+                                currentRow,
+                                cur.getColumnCount());
+                        AnkiDroidApp.sendExceptionReport(ex, details);
+                        firstException = ex;
+                    }
+                }
+                currentRow++;
+            }
+            Timber.i("deleteNotesWithWrongFieldCounts - completed successfully");
+            notifyProgress.run();
+            if (ids.size() > 0) {
+                problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
+                _remNotes(Utils.arrayList2array(ids));
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, JSONObject m) throws JSONException {
+        Timber.d("deleteCardsWithInvalidModelOrdinals()");
+        ArrayList<String> problems = new ArrayList<>();
+        notifyProgress.run();
+        if (m.getInt("type") == Consts.MODEL_STD) {
+            ArrayList<Integer> ords = new ArrayList<>();
+            JSONArray tmpls = m.getJSONArray("tmpls");
+            for (int t = 0; t < tmpls.length(); t++) {
+                ords.add(tmpls.getJSONObject(t).getInt("ord"));
+            }
+            // cards with invalid ordinal
+            ArrayList<Long> ids = mDb.queryColumn(Long.class,
+                    "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
+                            "SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
+            if (ids.size() > 0) {
+                problems.add("Deleted " + ids.size() + " card(s) with missing template.");
+                remCards(Utils.arrayList2array(ids));
+            }
+        }
+        return problems;
+    }
+
+
+    private ArrayList<String> deleteNotesWithMissingModel(Runnable notifyProgress) {
+        Timber.d("deleteNotesWithMissingModel()");
+        ArrayList<String> problems = new ArrayList<>();
+        // note types with a missing model
+        notifyProgress.run();
+        ArrayList<Long> ids = mDb.queryColumn(Long.class,
+                "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
+        notifyProgress.run();
+        if (ids.size() != 0) {
+            problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
+            _remNotes(Utils.arrayList2array(ids));
+        }
+        return problems;
+    }
+
+
+    public void optimize(Runnable progressCallback) {
         Timber.i("executing VACUUM statement");
-        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+        progressCallback.run();
         mDb.execute("VACUUM");
         Timber.i("executing ANALYZE statement");
-        fixIntegrityProgress(progressCallback, currentTask++, totalTasks);
+        progressCallback.run();
         mDb.execute("ANALYZE");
     }
 
@@ -1977,7 +2116,7 @@ public class Collection {
     }
 
 
-    public Sched getSched() {
+    public AbstractSched getSched() {
         return mSched;
     }
 
@@ -2002,4 +2141,17 @@ public class Collection {
         return mContext;
     }
 
+    /** Not in libAnki */
+
+    //This duplicates _loadScheduler (but returns the value and sets the report limit).
+    public AbstractSched createScheduler(int reportLimit) {
+        int ver = schedVer();
+        if (ver == 1) {
+            mSched = new Sched(this);
+        } else if (ver == 2) {
+            mSched = new SchedV2(this);
+        }
+        mSched.setReportLimit(reportLimit);
+        return mSched;
+    }
 }

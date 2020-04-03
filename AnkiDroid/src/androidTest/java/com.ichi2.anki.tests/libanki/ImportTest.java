@@ -29,7 +29,7 @@ import com.ichi2.libanki.importer.Anki2Importer;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.importer.Importer;
 
-import org.json.JSONException;
+import com.ichi2.utils.JSONException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -281,9 +281,9 @@ public class ImportTest {
 //        i.initMapping();
 //        i.run();
 //        n.load();
-//        assertTrue(n.getItem("Front").equals("1"));
-//        assertTrue(n.getItem("Back").equals("x"));
-//        assertTrue(n.getItem("Three").equals("3"));
+//        assertTrue("1".equals(n.getItem("Front")));
+//        assertTrue("x".equals(n.getItem("Back")));
+//        assertTrue("3".equals(n.getItem("Three")));
 //    }
 
     /**

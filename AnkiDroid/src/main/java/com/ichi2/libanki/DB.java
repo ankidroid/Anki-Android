@@ -120,7 +120,7 @@ public class DB {
         public void onCorruption(SupportSQLiteDatabase db) {
             Timber.e("The database has been corrupted: %s", db.getPath());
             AnkiDroidApp.sendExceptionReport(new RuntimeException("Database corrupted"), "DB.MyDbErrorHandler.onCorruption", "Db has been corrupted: " + db.getPath());
-            CollectionHelper.getInstance().closeCollection(false);
+            CollectionHelper.getInstance().closeCollection(false, "Database corrupted");
             DatabaseErrorDialog.databaseCorruptFlag = true;
         }
     }

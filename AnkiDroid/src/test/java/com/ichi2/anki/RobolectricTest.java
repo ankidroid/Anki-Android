@@ -24,8 +24,8 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.robolectric.shadows.ShadowDialog;
@@ -48,7 +48,7 @@ public class RobolectricTest {
     @After
     public void tearDown() {
         // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-        CollectionHelper.getInstance().closeCollection(false);
+        CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
 
         // After every test, make sure the sqlite implementation is set back to default
         DB.setSqliteOpenHelperFactory(null);

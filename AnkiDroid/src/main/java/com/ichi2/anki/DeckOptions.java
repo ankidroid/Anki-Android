@@ -45,15 +45,16 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -529,16 +530,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
              * Remove the currently selected options group
              */
             private void remConf() throws ConfirmModSchemaException {
-                try {
-                    // Remove options group, asking user to confirm full sync if necessary
-                    mCol.getDecks().remConf(mOptions.getLong("id"));
-                    // Run the CPU intensive re-sort operation in a background thread
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_REMOVE, mConfChangeHandler,
-                            new DeckTask.TaskData(new Object[] { mOptions }));
-                    mDeck.put("conf", 1);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                // Remove options group, asking user to confirm full sync if necessary
+                mCol.getDecks().remConf(mOptions.getLong("id"));
+                // Run the CPU intensive re-sort operation in a background thread
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_REMOVE, mConfChangeHandler,
+                                        new DeckTask.TaskData(new Object[] { mOptions }));
+                mDeck.put("conf", 1);
             }
         }
 
@@ -784,14 +781,10 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         Collections.sort(confs, new JSONNameComparator());
         String[] confValues = new String[confs.size()];
         String[] confLabels = new String[confs.size()];
-        try {
-            for (int i = 0; i < confs.size(); i++) {
-                JSONObject o = confs.get(i);
-                confValues[i] = o.getString("id");
-                confLabels[i] = o.getString("name");
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        for (int i = 0; i < confs.size(); i++) {
+            JSONObject o = confs.get(i);
+            confValues[i] = o.getString("id");
+            confLabels[i] = o.getString("name");
         }
         deckConfPref.setEntries(confLabels);
         deckConfPref.setEntryValues(confValues);
@@ -805,7 +798,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         ListPreference leechActPref = (ListPreference) findPreference("lapLeechAct");
         leechActPref.setEntries(R.array.leech_action_labels);
         leechActPref.setEntryValues(R.array.leech_action_values);
-        leechActPref.setValue(mPref.getString("lapLeechAct", "0"));
+        leechActPref.setValue(mPref.getString("lapLeechAct", new Integer(Consts.LEECH_SUSPEND).toString()));
     }
 
 
@@ -814,18 +807,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
      */
     private int getOptionsGroupCount() {
         int count = 0;
-        try {
-            long conf = mDeck.getLong("conf");
-            for (JSONObject deck : mCol.getDecks().all()) {
-                if (deck.getInt("dyn") == 1) {
-                    continue;
-                }
-                if (deck.getLong("conf") == conf) {
-                    count++;
-                }
+        long conf = mDeck.getLong("conf");
+        for (JSONObject deck : mCol.getDecks().all()) {
+            if (deck.getInt("dyn") == 1) {
+                continue;
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            if (deck.getLong("conf") == conf) {
+                count++;
+            }
         }
         return count;
     }
@@ -836,11 +825,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
      */
     private String getOptionsGroupName() {
         long confId = mPref.getLong("deckConf", 0);
-        try {
-            return mCol.getDecks().getConf(confId).getString("name");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        return mCol.getDecks().getConf(confId).getString("name");
     }
 
 
@@ -848,21 +833,17 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
      * Get the number of (non-dynamic) subdecks for the current deck
      */
     private int getSubdeckCount() {
-        try {
-            int count = 0;
-            long did = mDeck.getLong("id");
-            TreeMap<String, Long> children = mCol.getDecks().children(did);
-            for (Map.Entry<String, Long> entry : children.entrySet()) {
-                JSONObject child = mCol.getDecks().get(entry.getValue());
-                if (child.getInt("dyn") == 1) {
-                    continue;
-                }
-                count++;
+        int count = 0;
+        long did = mDeck.getLong("id");
+        TreeMap<String, Long> children = mCol.getDecks().children(did);
+        for (Map.Entry<String, Long> entry : children.entrySet()) {
+            JSONObject child = mCol.getDecks().get(entry.getValue());
+            if (child.getInt("dyn") == 1) {
+                continue;
             }
-            return count;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            count++;
         }
+        return count;
     }
 
 
@@ -871,12 +852,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         public int compare(JSONObject lhs, JSONObject rhs) {
             String o1;
             String o2;
-            try {
-                o1 = lhs.getString("name");
-                o2 = rhs.getString("name");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            o1 = lhs.getString("name");
+            o2 = rhs.getString("name");
             return o1.compareToIgnoreCase(o2);
         }
     }

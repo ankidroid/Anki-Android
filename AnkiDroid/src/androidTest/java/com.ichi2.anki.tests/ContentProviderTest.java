@@ -36,14 +36,16 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.AbstractSched;
 import com.ichi2.libanki.Utils;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -705,7 +707,7 @@ public class ContentProviderTest {
     public void testQueryNextCard(){
         Collection col;
         col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
 
         Cursor reviewInfoCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(
                 FlashCardsContract.ReviewInfo.CONTENT_URI, null, null, null, null);
@@ -739,7 +741,7 @@ public class ContentProviderTest {
         String deckArguments[] = {Long.toString(deckToTest)};
         Collection col;
         col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
-        Sched sched = col.getSched();
+        AbstractSched sched = col.getSched();
         long selectedDeckBeforeTest = col.getDecks().selected();
         col.getDecks().select(1); //select Default deck
 
@@ -798,7 +800,7 @@ public class ContentProviderTest {
         long cardId = card.getId();
 
         // the card starts out being new
-        assertEquals("card is initial new", Card.TYPE_NEW, card.getQueue());
+        assertEquals("card is initial new", Consts.CARD_TYPE_NEW, card.getQueue());
 
         ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
@@ -844,7 +846,7 @@ public class ContentProviderTest {
         Card card = col.getSched().getCard();
 
         // verify that the card is not already user-buried
-        Assert.assertNotEquals("Card is not user-buried before test", Card.QUEUE_USER_BRD, card.getQueue());
+        Assert.assertNotEquals("Card is not user-buried before test", Consts.QUEUE_TYPE_SIBLING_BURIED, card.getQueue());
 
         // retain the card id, we will lookup the card after the update
         long cardId = card.getId();
@@ -869,7 +871,7 @@ public class ContentProviderTest {
         // -----------------------------
 
         Card cardAfterUpdate = col.getCard(cardId);
-        assertEquals("Card is user-buried", Card.QUEUE_USER_BRD, cardAfterUpdate.getQueue());
+        assertEquals("Card is user-buried", Consts.QUEUE_TYPE_SIBLING_BURIED, cardAfterUpdate.getQueue());
 
         // cleanup, unbury cards
         // ---------------------
@@ -892,7 +894,7 @@ public class ContentProviderTest {
         Card card = col.getSched().getCard();
 
         // verify that the card is not already suspended
-        Assert.assertNotEquals("Card is not suspended before test", Card.QUEUE_SUSP, card.getQueue());
+        Assert.assertNotEquals("Card is not suspended before test", Consts.QUEUE_TYPE_SUSPENDED, card.getQueue());
 
         // retain the card id, we will lookup the card after the update
         long cardId = card.getId();
@@ -917,7 +919,7 @@ public class ContentProviderTest {
         // --------------------------------
 
         Card cardAfterUpdate = col.getCard(cardId);
-        assertEquals("Card is suspended", Card.QUEUE_SUSP, cardAfterUpdate.getQueue());
+        assertEquals("Card is suspended", Consts.QUEUE_TYPE_SUSPENDED, cardAfterUpdate.getQueue());
 
         // cleanup, unsuspend card and reschedule
         // --------------------------------------
@@ -976,7 +978,7 @@ public class ContentProviderTest {
     }
 
     private Collection reopenCol() {
-        CollectionHelper.getInstance().closeCollection(false);
+        CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
         return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
     }
 

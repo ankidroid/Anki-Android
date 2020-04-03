@@ -21,8 +21,7 @@ import android.database.Cursor;
 
 import android.util.Pair;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,14 +72,10 @@ public class Note implements Cloneable {
             mId = Utils.timestampID(mCol.getDb(), "notes");
             mGuId = Utils.guid64();
             mModel = model;
-            try {
-                mMid = model.getLong("id");
-                mTags = new ArrayList<>();
-                mFields = new String[model.getJSONArray("flds").length()];
-                Arrays.fill(mFields, "");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            mMid = model.getLong("id");
+            mTags = new ArrayList<>();
+            mFields = new String[model.getJSONArray("flds").length()];
+            Arrays.fill(mFields, "");
             mFlags = 0;
             mData = "";
             mFMap = mCol.getModels().fieldMap(mModel);

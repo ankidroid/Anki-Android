@@ -29,9 +29,8 @@ import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -83,7 +82,6 @@ public class MediaSyncer {
 
 
     public String sync() throws UnknownHttpResponseException, MediaSyncException {
-        try {
             // check if there have been any changes
             // If we haven't built the media db yet, do so on this sync. See note at the top
             // of this class about this difference to the original.
@@ -192,7 +190,7 @@ public class MediaSyncer {
                     }
 
                     mCon.publishProgress(String.format(
-                            AnkiDroidApp.getAppResources().getString(R.string.sync_media_changes_count), toSend));
+                                                       AnkiDroidApp.getAppResources().getString(R.string.sync_media_changes_count), toSend));
 
                     JSONArray changes = mServer.uploadChanges(zip);
                     int processedCnt = changes.getInt(0);
@@ -200,8 +198,8 @@ public class MediaSyncer {
                     mCol.getMedia().markClean(fnames.subList(0, processedCnt));
 
                     mCol.log(String.format(Locale.US,
-                            "processed %d, serverUsn %d, clientUsn %d",
-                            processedCnt, serverLastUsn, lastUsn));
+                                           "processed %d, serverUsn %d, clientUsn %d",
+                                           processedCnt, serverLastUsn, lastUsn));
 
                     if (serverLastUsn - processedCnt == lastUsn) {
                         mCol.log("lastUsn in sync, updating local");
@@ -231,9 +229,6 @@ public class MediaSyncer {
             } else {
                 mCol.getMedia().forceResync();
                 return sRet;
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
     }
 
