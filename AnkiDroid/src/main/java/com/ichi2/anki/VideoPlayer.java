@@ -54,7 +54,7 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
 
         if (mPath == null) {
             //#5911 - path shouldn't be null. I couldn't determine why this happens.
-            //TODO: We should catch this via a diagnostic event
+            AnkiDroidApp.sendExceptionReport("Video: mPath was unexpectedly null", "VideoPlayer surfaceCreated");
             Timber.e("path was unexpectedly null");
             UIUtils.showThemedToast(this, getString(R.string.video_creation_error), true);
             finish();

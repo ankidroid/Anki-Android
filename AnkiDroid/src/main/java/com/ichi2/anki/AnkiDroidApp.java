@@ -37,6 +37,7 @@ import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
+import com.ichi2.anki.exception.ManuallyReportedException;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
@@ -304,6 +305,10 @@ public class AnkiDroidApp extends Application {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
+    /** Used when we don't have an exception to throw, but we know something is wrong and want to diagnose it */
+    public static void sendExceptionReport(@NonNull String message, String origin) {
+        sendExceptionReport(new ManuallyReportedException(message), origin, null);
+    }
 
     public static void sendExceptionReport(Throwable e, String origin) {
         sendExceptionReport(e, origin, null);
@@ -530,4 +535,5 @@ public class AnkiDroidApp extends Application {
             }
         }
     }
+
 }
