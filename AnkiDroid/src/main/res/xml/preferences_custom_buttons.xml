@@ -40,7 +40,7 @@ MENU_DISABLED = 3
             android:key="customButtonScheduleCard"
             android:title="@string/card_editor_reschedule_card" />
         <ListPreference
-            android:defaultValue="2"
+            android:defaultValue="1"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="customButtonMarkCard"
@@ -76,7 +76,7 @@ MENU_DISABLED = 3
             android:key="customButtonDeckOptions"
             android:title="@string/study_options" />
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="2"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="customButtonFlag"
