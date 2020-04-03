@@ -48,7 +48,9 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
@@ -228,6 +230,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             String imagePath = rotateAndCompress(mTempCameraImagePath);
             mField.setImagePath(imagePath);
             mField.setHasTemporaryMedia(true);
+        } else {
+            Timber.w("Unhandled request code: %d", requestCode);
+            return;
         }
         setPreviewImage(mField.getImagePath(), getMaxImageSize());
     }
