@@ -92,7 +92,6 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.template.Template;
@@ -1094,7 +1093,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         new DeckTask.TaskData(mCurrentCard, true));
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
-                fillFlashcard();
+                redrawCard();
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
             getCol().getSched().reset();
@@ -1115,6 +1114,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected long getParentDid() {
         long deckID = getCol().getDecks().selected();
         return deckID;
+    }
+
+    private void redrawCard() {
+        //#3654 We can call this from ActivityResult, which could mean that the card content hasn't yet been set
+        //if the activity was destroyed. In this case, just wait until onCollectionLoaded callback succeeds.
+        if (hasLoadedCardContent()) {
+            fillFlashcard();
+        } else {
+            Timber.i("Skipping card redraw - card still initialising.");
+        }
+    }
+
+    /** Whether the callback to onCollectionLoaded has loaded card content */
+    private boolean hasLoadedCardContent() {
+        return mCardContent != null;
     }
 
 
@@ -2537,6 +2551,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public void fillFlashcard() {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
+        if (mCardContent == null) {
+            Timber.w("fillFlashCard() called with no card content");
+            return;
+        }
         final String cardContent = mCardContent.toString();
         processCardAction(card -> loadContentIntoCard(card, cardContent));
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
