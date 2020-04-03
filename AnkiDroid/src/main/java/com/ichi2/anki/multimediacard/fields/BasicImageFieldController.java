@@ -36,6 +36,7 @@ import android.provider.MediaStore.MediaColumns;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.FileProvider;
 
+import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -232,7 +233,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             } catch (Exception e) {
                 AnkiDroidApp.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent");
                 Timber.e(e, "Failed to select image");
-                UIUtils.showThemedToast(mActivity, mActivity.getResources().getString(R.string.multimedia_editor_something_wrong), false);
+                showSomethingWentWrong();
                 return;
             }
         } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
@@ -248,18 +249,49 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
+    private void showSomethingWentWrong() {
+        UIUtils.showThemedToast(mActivity, mActivity.getResources().getString(R.string.multimedia_editor_something_wrong), false);
+    }
+
+
     private void handleSelectImageIntent(Intent data) {
+        if (data == null) {
+            Timber.e("no intent provided");
+            showSomethingWentWrong();
+            return;
+        }
+
+        Timber.i("Handle Select Image. Intent: %s. extras: %s", data, data.getExtras() == null ? "null" : TextUtils.join(", ", data.getExtras().keySet()));
         Uri selectedImage = data.getData();
-        // Timber.d(selectedImage.toString());
+
+        if (selectedImage == null) {
+            Timber.w("selectedImage was null");
+            showSomethingWentWrong();
+            return;
+        }
+
         String[] filePathColumn = { MediaColumns.DATA };
 
         Cursor cursor = mActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-        cursor.moveToFirst();
+
+        if (cursor == null) {
+            Timber.w("cursor was null");
+            showSomethingWentWrong();
+            return;
+        }
+
+        if (!cursor.moveToFirst()) {
+            //TODO: #5909, it would be best to instrument this to see if we can fix the failure
+            Timber.w("cursor had no data");
+            showSomethingWentWrong();
+            return;
+        }
 
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
         String filePath = cursor.getString(columnIndex);
         cursor.close();
 
+        Timber.i("Decoded image: '%s'", filePath);
         mField.setImagePath(filePath);
     }
 
