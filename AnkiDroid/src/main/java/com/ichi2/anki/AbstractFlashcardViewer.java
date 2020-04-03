@@ -1675,7 +1675,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mCustomButtons.put(R.id.action_undo, Integer.parseInt(preferences.getString("customButtonUndo", Integer.toString(MenuItem.SHOW_AS_ACTION_ALWAYS))));
         mCustomButtons.put(R.id.action_schedule, Integer.parseInt(preferences.getString("customButtonScheduleCard", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
-        mCustomButtons.put(R.id.action_mark_card, Integer.parseInt(preferences.getString("customButtonMarkCard", Integer.toString(MenuItem.SHOW_AS_ACTION_ALWAYS))));
+        mCustomButtons.put(R.id.action_flag, Integer.parseInt(preferences.getString("customButtonFlag", Integer.toString(MenuItem.SHOW_AS_ACTION_IF_ROOM))));
         mCustomButtons.put(R.id.action_edit, Integer.parseInt(preferences.getString("customButtonEditCard", Integer.toString(MenuItem.SHOW_AS_ACTION_IF_ROOM))));
         mCustomButtons.put(R.id.action_add_note_reviewer, Integer.parseInt(preferences.getString("customButtonAddCard", Integer.toString(MENU_DISABLED))));
         mCustomButtons.put(R.id.action_replay, Integer.parseInt(preferences.getString("customButtonReplay", Integer.toString(MenuItem.SHOW_AS_ACTION_IF_ROOM))));
@@ -1685,7 +1685,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mCustomButtons.put(R.id.action_open_deck_options, Integer.parseInt(preferences.getString("customButtonDeckOptions", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
         mCustomButtons.put(R.id.action_bury, Integer.parseInt(preferences.getString("customButtonBury", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
         mCustomButtons.put(R.id.action_suspend, Integer.parseInt(preferences.getString("customButtonSuspend", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
-        mCustomButtons.put(R.id.action_flag, Integer.parseInt(preferences.getString("customButtonFlag", Integer.toString(MenuItem.SHOW_AS_ACTION_IF_ROOM))));
+        mCustomButtons.put(R.id.action_mark_card, Integer.parseInt(preferences.getString("customButtonMarkCard", Integer.toString(MenuItem.SHOW_AS_ACTION_ALWAYS))));
         mCustomButtons.put(R.id.action_delete, Integer.parseInt(preferences.getString("customButtonDelete", Integer.toString(MenuItem.SHOW_AS_ACTION_NEVER))));
 
         if (preferences.getBoolean("keepScreenOn", false)) {
