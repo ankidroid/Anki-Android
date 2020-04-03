@@ -230,12 +230,9 @@ public class Decks {
     public Long id(String name, boolean create, String type) {
         name = name.replace("\"", "");
         name = Normalizer.normalize(name, Normalizer.Form.NFC);
-        for (Map.Entry<Long, JSONObject> g : mDecks.entrySet()) {
-            String deckName = g.getValue().getString("name");
-            deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
-            if (deckName.equalsIgnoreCase(name)) {
-                return g.getKey();
-            }
+        JSONObject deck = byName(name);
+        if (deck != null) {
+            return deck.getLong("id");
         }
         if (!create) {
             return null;
@@ -430,15 +427,15 @@ public class Decks {
 
 
     /**
-     * Get deck with NAME.
+     * Get deck with NAME, ignoring case.
      */
     public JSONObject byName(String name) {
         for (JSONObject m : mDecks.values()) {
-            if (m.get("name").equals(name)) {
+            if (equalName(m.getString("name"),name)) {
                 return m;
-			}
-		}
-		return null;
+            }
+        }
+        return null;
     }
 
 
@@ -458,7 +455,7 @@ public class Decks {
      */
     public void rename(JSONObject g, String newName) throws DeckRenameException {
         // make sure target node doesn't already exist
-        if (allNames().contains(newName)) {
+        if (byName(newName) != null) {
             throw new DeckRenameException(DeckRenameException.ALREADY_EXISTS);
         }
         // ensure we have parents
@@ -774,7 +771,7 @@ public class Decks {
 
         for (JSONObject deck: decks) {
             // two decks with the same name?
-            if (names.contains(deck.getString("name"))) {
+            if (names.contains(normalizeName(deck.getString("name")))) {
                 Timber.i("fix duplicate deck name %s", deck.getString("name"));
                 deck.put("name", deck.getString("name") + Utils.intTime(1000));
                 save(deck);
@@ -789,14 +786,12 @@ public class Decks {
 
             // immediate parent must exist
             String immediateParent = parent(deck.getString("name"));
-            if (immediateParent != null) {
-                if (!names.contains(immediateParent)) {
-                    Timber.i("fix deck with missing parent %s", deck.getString("name"));
-                    _ensureParents(deck.getString("name"));
-                    names.add(immediateParent);
-                }
+            if (immediateParent != null && !names.contains(normalizeName(immediateParent))) {
+                Timber.i("fix deck with missing parent %s", deck.getString("name"));
+                _ensureParents(deck.getString("name"));
+                names.add(normalizeName(immediateParent));
             }
-            names.add(deck.getString("name"));
+            names.add(normalizeName(deck.getString("name")));
         }
     }
 
@@ -991,6 +986,20 @@ public class Decks {
         return get(did).getInt("dyn") != 0;
     }
 
+    /*
+     * ******************************
+     * utils methods
+     * **************************************
+     */
+    public static String normalizeName(String name) {
+        name = Normalizer.normalize(name, Normalizer.Form.NFC);
+        name = name.toLowerCase();
+        return name;
+    }
+
+    public static boolean equalName(String name1, String name2) {
+        return normalizeName(name1).equals(normalizeName(name2));
+    }
 
     /*
     * ***********************************************************
