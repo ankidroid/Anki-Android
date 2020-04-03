@@ -3050,6 +3050,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * Public method to start new video player activity
      */
     public void playVideo(String path) {
+        Timber.i("Launching Video: %s", path);
         Intent videoPlayer = new Intent(this, VideoPlayer.class);
         videoPlayer.putExtra("path", path);
         startActivityWithoutAnimation(videoPlayer);

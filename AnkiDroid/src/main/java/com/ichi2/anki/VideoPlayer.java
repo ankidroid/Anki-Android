@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
 import android.view.WindowManager;
 import android.widget.VideoView;
 
+import timber.log.Timber;
 
 
 /****************************************************************************************
@@ -35,9 +36,11 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Timber.i("onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_player);
         mPath = getIntent().getStringExtra("path");
+        Timber.i("Video Player intent had path: %s", mPath);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);        
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -47,6 +50,7 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
     }
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        Timber.i("surfaceCreated");
         mSoundPlayer.playSound(mPath, mp -> {
             finish();
             MediaPlayer.OnCompletionListener originalListener = mSoundPlayer.getMediaCompletionListener();
