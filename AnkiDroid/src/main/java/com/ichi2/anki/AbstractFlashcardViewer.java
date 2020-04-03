@@ -75,6 +75,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -85,6 +86,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
@@ -349,6 +351,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /** whether controls are currently blocked */
     private boolean mControlBlocked = true;
 
+    /** Handle Mark/Flag state of cards */
+    private CardMarker mCardMarker;
     // private int zEase;
 
     // ----------------------------------------------------------------------------
@@ -769,7 +773,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         sb.append("</code></div>");
         return m.replaceAll(sb.toString());
     }
-
 
     /**
      * Return the correct answer to use for {{type::cloze::NN}} fields.
@@ -1341,6 +1344,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         FrameLayout mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
 
         mTopBarLayout = (RelativeLayout) findViewById(R.id.top_bar);
+
+        ImageView mark = mTopBarLayout.findViewById(R.id.mark_icon);
+        ImageView flag = mTopBarLayout.findViewById(R.id.flag_icon);
+        mCardMarker = new CardMarker(mark, flag);
+
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mCardFrameParent = (ViewGroup) mCardFrame.getParent();
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
@@ -2723,7 +2731,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCurrentCard == null) {
             return;
         }
-        loadUrlInViewer("javascript:_drawMark("+mCurrentCard.note().hasTag("marked")+");");
+        mCardMarker.displayMark(mCurrentCard.note().hasTag("marked"));
     }
 
     protected void onMark(Card card) {
@@ -2745,7 +2753,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCurrentCard == null) {
             return;
         }
-        loadUrlInViewer("javascript:_drawFlag("+mCurrentCard.getUserFlag()+");");
+        mCardMarker.displayFlag(mCurrentCard.getUserFlag());
     }
 
     protected void onFlag(Card card, int flag) {
