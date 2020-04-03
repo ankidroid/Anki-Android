@@ -51,6 +51,16 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Timber.i("surfaceCreated");
+
+        if (mPath == null) {
+            //#5911 - path shouldn't be null. I couldn't determine why this happens.
+            //TODO: We should catch this via a diagnostic event
+            Timber.e("path was unexpectedly null");
+            UIUtils.showThemedToast(this, getString(R.string.video_creation_error), true);
+            finish();
+            return;
+        }
+
         mSoundPlayer.playSound(mPath, mp -> {
             finish();
             MediaPlayer.OnCompletionListener originalListener = mSoundPlayer.getMediaCompletionListener();
