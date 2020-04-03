@@ -223,18 +223,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
         mImageFileSizeWarning.setVisibility(View.GONE);
         if (requestCode == ACTIVITY_SELECT_IMAGE) {
-            Uri selectedImage = data.getData();
-            // Timber.d(selectedImage.toString());
-            String[] filePathColumn = { MediaColumns.DATA };
-
-            Cursor cursor = mActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String filePath = cursor.getString(columnIndex);
-            cursor.close();
-
-            mField.setImagePath(filePath);
+            handleSelectImageIntent(data);
         } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
             String imagePath = rotateAndCompress(mTempCameraImagePath);
             mField.setImagePath(imagePath);
@@ -242,6 +231,23 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
         setPreviewImage(mField.getImagePath(), getMaxImageSize());
     }
+
+
+    private void handleSelectImageIntent(Intent data) {
+        Uri selectedImage = data.getData();
+        // Timber.d(selectedImage.toString());
+        String[] filePathColumn = { MediaColumns.DATA };
+
+        Cursor cursor = mActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String filePath = cursor.getString(columnIndex);
+        cursor.close();
+
+        mField.setImagePath(filePath);
+    }
+
 
     @Override
     public void onFocusLost() {
