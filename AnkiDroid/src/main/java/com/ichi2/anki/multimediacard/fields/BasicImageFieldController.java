@@ -68,7 +68,8 @@ import timber.log.Timber;
 
 public class BasicImageFieldController extends FieldControllerBase implements IFieldController {
 
-    private static final int ACTIVITY_SELECT_IMAGE = 1;
+    @VisibleForTesting
+    static final int ACTIVITY_SELECT_IMAGE = 1;
     private static final int ACTIVITY_TAKE_PICTURE = 2;
     private static final int IMAGE_SAVE_MAX_WIDTH = 1920;
 
@@ -225,8 +226,17 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
         mImageFileSizeWarning.setVisibility(View.GONE);
         if (requestCode == ACTIVITY_SELECT_IMAGE) {
-            handleSelectImageIntent(data);
+            try {
+                handleSelectImageIntent(data);
+                mImageFileSizeWarning.setVisibility(View.GONE);
+            } catch (Exception e) {
+                AnkiDroidApp.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent");
+                Timber.e(e, "Failed to select image");
+                UIUtils.showThemedToast(mActivity, mActivity.getResources().getString(R.string.multimedia_editor_something_wrong), false);
+                return;
+            }
         } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
+            mImageFileSizeWarning.setVisibility(View.GONE);
             String imagePath = rotateAndCompress(mTempCameraImagePath);
             mField.setImagePath(imagePath);
             mField.setHasTemporaryMedia(true);
