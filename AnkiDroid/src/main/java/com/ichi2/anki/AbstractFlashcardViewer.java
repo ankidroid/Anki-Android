@@ -2549,6 +2549,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public void fillFlashcard() {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
+        if (mCardContent == null) {
+            Timber.w("fillFlashCard() called with no card content");
+            return;
+        }
         final String cardContent = mCardContent.toString();
         processCardAction(card -> loadContentIntoCard(card, cardContent));
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
