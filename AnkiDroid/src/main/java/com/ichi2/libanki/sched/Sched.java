@@ -742,7 +742,8 @@ public class Sched extends SchedV2 {
 
     // Dynamically invoked in _walkingCount, passed as a parameter in _resetRevCount
     @SuppressWarnings("unused")
-    private int _cntFnRev(long did, int lim) {
+    protected int _cntFnRev(long did, int lim) {
+        //protected because _walkingCount need to be able to access it.
         return mCol.getDb().queryScalar(
                 "SELECT count() FROM (SELECT id FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_REV + " and due <= " + mToday
                         + " LIMIT " + lim + ")");
