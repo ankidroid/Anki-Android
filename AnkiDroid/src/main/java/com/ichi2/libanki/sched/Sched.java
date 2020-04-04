@@ -592,29 +592,6 @@ public class Sched extends SchedV2 {
     }
 
 
-    /* the number of steps that can be completed by the day cutoff */
-    private int _leftToday(JSONArray delays, int left) {
-        return _leftToday(delays, left, 0);
-    }
-
-
-    private int _leftToday(JSONArray delays, int left, long now) {
-        if (now == 0) {
-            now = Utils.intTime();
-        }
-        int ok = 0;
-        int offset = Math.min(left, delays.length());
-        for (int i = 0; i < offset; i++) {
-            now += (int) (delays.getDouble(delays.length() - offset + i) * 60.0);
-            if (now > mDayCutoff) {
-                break;
-            }
-            ok = i;
-        }
-        return ok + 1;
-    }
-
-
     private int _graduatingIvl(Card card, JSONObject conf, boolean early) {
         return _graduatingIvl(card, conf, early, true);
     }

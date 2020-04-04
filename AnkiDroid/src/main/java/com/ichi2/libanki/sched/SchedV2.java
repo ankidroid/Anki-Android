@@ -1043,7 +1043,7 @@ public class SchedV2 extends AbstractSched {
 
 
     /* the number of steps that can be completed by the day cutoff */
-    private int _leftToday(JSONArray delays, int left) {
+    protected int _leftToday(JSONArray delays, int left) {
         return _leftToday(delays, left, 0);
     }
 
