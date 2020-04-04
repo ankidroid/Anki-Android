@@ -42,13 +42,13 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.FlashCardsContract.CardTemplate;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.AbstractSched;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.Utils;
 
 import com.ichi2.utils.JSONArray;

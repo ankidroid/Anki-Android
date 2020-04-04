@@ -1,9 +1,10 @@
-package com.ichi2.libanki;
+package com.ichi2.libanki.sched;
 
 import android.app.Activity;
 import android.content.Context;
 
 
+import com.ichi2.libanki.Card;
 import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;

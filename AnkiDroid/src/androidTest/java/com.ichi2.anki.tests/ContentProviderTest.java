@@ -38,10 +38,8 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Sched;
-import com.ichi2.libanki.AbstractSched;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.libanki.Utils;
 

@@ -87,7 +87,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.AbstractSched;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
