@@ -378,10 +378,6 @@ public class Sched extends SchedV2 {
     }
 
 
-    public int totalNewForCurrentDeck() {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + mReportLimit + ")");
-    }
-
     /**
      * Learning queues *********************************************************** ************************************
      */
@@ -797,13 +793,6 @@ public class Sched extends SchedV2 {
             return _fillRev();
         }
         return false;
-    }
-
-
-    public int totalRevForCurrentDeck() {
-        return mCol.getDb().queryScalar(String.format(Locale.US,
-        		"SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN %s AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= %d LIMIT %s)",
-        		_deckLimit(), mToday, mReportLimit));
     }
 
 
