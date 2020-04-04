@@ -1246,7 +1246,7 @@ public class Sched extends SchedV2 {
 
     @Override
     protected void _updateCutoff() {
-        int oldToday = mToday;
+        Integer oldToday = mToday;
         // days since col created
         mToday = (int) ((Utils.now() - mCol.getCrt()) / 86400);
         // end of day cutoff
