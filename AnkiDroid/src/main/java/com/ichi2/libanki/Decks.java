@@ -1007,10 +1007,12 @@ public class Decks {
      * utils methods
      * **************************************
      */
+    private static HashMap<String, String> normalized = new HashMap<String, String>();
     public static String normalizeName(String name) {
-        name = Normalizer.normalize(name, Normalizer.Form.NFC);
-        name = name.toLowerCase();
-        return name;
+        if (!normalized.containsKey(name)) {
+            normalized.put(name, Normalizer.normalize(name, Normalizer.Form.NFC).toLowerCase());
+        }
+        return normalized.get(name);
     }
 
     public static boolean equalName(String name1, String name2) {
