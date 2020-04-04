@@ -1329,7 +1329,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _logRev(Card card, int ease, int delay, int type) {
+    protected void _logRev(Card card, int ease, int delay, int type) {
         log(card.getId(), mCol.usn(), ease, ((delay != 0) ? (-delay) : card.getIvl()), card.getLastIvl(),
                 card.getFactor(), card.timeTaken(), type);
     }
