@@ -57,6 +57,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.regex.Pattern;
 
 import androidx.annotation.Nullable;
@@ -84,6 +86,8 @@ public class Collection {
     private Decks mDecks;
     private Models mModels;
     private Tags mTags;
+
+    private FutureTask futureLoadingModel;
 
     private AbstractSched mSched;
 
@@ -266,7 +270,6 @@ public class Collection {
                 cursor.close();
             }
         }
-        mModels.load(loadColumn("models"));
         mDecks.load(loadColumn("decks"), deckConf);
     }
 
@@ -2024,8 +2027,25 @@ public class Collection {
         return mMedia;
     }
 
+    public void loadModels() {
+        if (futureLoadingModel != null) {
+            return;
+        }
+        futureLoadingModel = new FutureTask(
+            () -> mModels.load(loadColumn("models"))
+        );
+        futureLoadingModel.run();
+    }
 
     public Models getModels() {
+        if (futureLoadingModel == null) {
+            loadModels();
+        }
+        try {
+            futureLoadingModel.get();
+        } catch (ExecutionException | InterruptedException e) {
+            return mModels.load(loadColumn("models"));
+        }
         return mModels;
     }
 
