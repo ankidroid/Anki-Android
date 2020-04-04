@@ -272,7 +272,7 @@ public class Collection {
 
     public String loadColumn(String columnName) {
         int pos = 1;
-        int chunk = 256*1024;
+        int chunk = 1024*1024; // 1 mb, a little less than what a cursor line may contain
         StringBuffer buf = new StringBuffer("");
 
         while (true) {
