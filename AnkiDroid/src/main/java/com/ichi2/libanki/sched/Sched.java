@@ -378,15 +378,6 @@ public class Sched extends SchedV2 {
     }
 
 
-    /* Limit for deck without parent limits. */
-    public int _deckNewLimitSingle(JSONObject g) {
-        if (g.getInt("dyn") != 0) {
-            return mReportLimit;
-        }
-        JSONObject c = mCol.getDecks().confForDid(g.getLong("id"));
-        return Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
-    }
-
     public int totalNewForCurrentDeck() {
         return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + mReportLimit + ")");
     }
