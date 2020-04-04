@@ -312,6 +312,7 @@ public class SchedV2 extends AbstractSched {
         int tot = 0;
         HashMap<Long, Integer> pcounts = new HashMap<>();
         // for each of the active decks
+        HashMap<String, JSONObject> nameMap = mCol.getDecks().nameMap();
         try {
             for (long did : mCol.getDecks().active()) {
                 // get the individual deck's limit
@@ -320,7 +321,7 @@ public class SchedV2 extends AbstractSched {
                     continue;
                 }
                 // check the parents
-                List<JSONObject> parents = mCol.getDecks().parents(did);
+                List<JSONObject> parents = mCol.getDecks().parents(did, nameMap);
                 for (JSONObject p : parents) {
                     // add if missing
                     long id = p.getLong("id");
