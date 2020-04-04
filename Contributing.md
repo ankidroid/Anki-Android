@@ -8,6 +8,9 @@ Here are some links to other pages related to contributing to AnkiDroid:
 # Answer questions on the forum
 Providing support for users can place a significant burden on the developers, so one of the easiest ways that you can contribute back to AnkiDroid is by regularly answering questions that you know the answer to [on the forum](https://groups.google.com/forum/#!forum/anki-android).
 
+# Rate AnkiDroid
+Hearing positive feedback is a motivation booster for all involved, and a better rating means more people using AnkiDroid and sharing decks.
+
 # Translate AnkiDroid
 Even if you prefer to use AnkiDroid in English, other people in your country might prefer to use it in their own language. Translating AnkiDroid to your native language means your country's AnkiDroid will grow much faster, leading to better shared decks in your language.
 
