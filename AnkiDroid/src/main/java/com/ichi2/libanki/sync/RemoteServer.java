@@ -40,7 +40,7 @@ public class RemoteServer extends HttpSyncer {
     }
 
 
-    /** Returns hkey or none if user/pw incorrect. */
+    /** Returns hkey or null if user/pw incorrect. */
     @Override
     public Response hostKey(String user, String pw) throws UnknownHttpResponseException {
         try {

@@ -122,7 +122,7 @@ public class SchedV2 extends AbstractSched {
 
 
     /**
-     * Pop the next card from the queue. None if finished.
+     * Pop the next card from the queue. null if finished.
      */
     public Card getCard() {
         _checkDay();
