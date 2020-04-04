@@ -28,7 +28,7 @@ import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.sched.Sched;
 
 import java.util.List;
 

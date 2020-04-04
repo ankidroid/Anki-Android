@@ -955,7 +955,7 @@ public class Decks {
     }
 
 
-    protected HashMap<String, JSONObject> nameMap() {
+    public HashMap<String, JSONObject> nameMap() {
         HashMap<String, JSONObject> map = new HashMap<>();
 
         for (JSONObject object : mDecks.values()) {

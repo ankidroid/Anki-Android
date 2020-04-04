@@ -31,7 +31,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
-import com.ichi2.libanki.AbstractSched;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
