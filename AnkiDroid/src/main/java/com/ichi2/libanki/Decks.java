@@ -921,6 +921,11 @@ public class Decks {
      */
     public List<JSONObject> parents(long did) {
         // get parent and grandparent names
+        return parents(did, null);
+    }
+
+    public List<JSONObject> parents(long did, HashMap<String, JSONObject> nameMap) {
+        // get parent and grandparent names
         List<String> parents = new ArrayList<>();
         List<String> parts = Arrays.asList(get(did).getString("name").split("::", -1));
         for (String part : parts.subList(0, parts.size() - 1)) {
@@ -933,7 +938,14 @@ public class Decks {
         // convert to objects
         List<JSONObject> oParents = new ArrayList<>();
         for (int i = 0; i < parents.size(); i++) {
-            oParents.add(i, get(id(parents.get(i))));
+            String parentName = parents.get(i);
+            JSONObject deck;
+            if (nameMap == null) {
+                deck = get(id(parentName));
+            } else {
+                deck = nameMap.get(parentName);
+            }
+            oParents.add(i, deck);
         }
         return oParents;
     }
