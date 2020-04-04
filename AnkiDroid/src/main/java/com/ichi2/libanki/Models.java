@@ -265,7 +265,7 @@ public class Models {
     }
 
 
-    /** get model with ID, or none. */
+    /** get model with ID, or null. */
     public JSONObject get(long id) {
         if (mModels.containsKey(id)) {
             return mModels.get(id);
