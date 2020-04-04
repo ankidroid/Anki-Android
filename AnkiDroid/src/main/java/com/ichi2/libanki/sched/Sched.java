@@ -851,7 +851,7 @@ public class Sched extends SchedV2 {
         } else {
             _rescheduleRev(card, ease);
         }
-        _logRev(card, ease, delay);
+        _logRev(card, ease, delay, Consts.REVLOG_REV);
     }
 
 
@@ -921,12 +921,6 @@ public class Sched extends SchedV2 {
             card.setODid(0);
             card.setODue(0);
         }
-    }
-
-
-    private void _logRev(Card card, int ease, int delay) {
-        log(card.getId(), mCol.usn(), ease, ((delay != 0) ? (-delay) : card.getIvl()), card.getLastIvl(),
-                card.getFactor(), card.timeTaken(), 1);
     }
 
 
