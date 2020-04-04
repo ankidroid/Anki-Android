@@ -410,7 +410,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps) {
+    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps) {
         List<DeckDueTreeNode> tree = new ArrayList<>();
         // group and recurse
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
@@ -480,7 +480,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Return the next due card, or null.
      */
-    private Card _getCard() {
+    protected Card _getCard() {
         // learning card due?
         Card c = _getLrnCard();
         if (c != null) {
@@ -535,7 +535,7 @@ public class SchedV2 extends AbstractSched {
 
     // Used as an argument for _walkingCount() in _resetNewCount() above
     @SuppressWarnings("unused")
-    private int _cntFnNew(long did, int lim) {
+    protected int _cntFnNew(long did, int lim) {
         return mCol.getDb().queryScalar(
                 "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + lim + ")");
     }
@@ -643,12 +643,12 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _deckNewLimit(long did) {
+    protected int _deckNewLimit(long did) {
         return _deckNewLimit(did, null);
     }
 
 
-    private int _deckNewLimit(long did, LimitMethod fn) {
+    protected int _deckNewLimit(long did, LimitMethod fn) {
         if (fn == null) {
             fn = (g -> _deckNewLimitSingle(g));
         }
@@ -713,7 +713,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _resetLrnCount() {
+    protected void _resetLrnCount() {
         // sub-day
         mLrnCount = mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit()
@@ -729,7 +729,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _resetLrn() {
+    protected void _resetLrn() {
         _updateLrnCutoff(true);
         _resetLrnCount();
         mLrnQueue.clear();
@@ -739,7 +739,7 @@ public class SchedV2 extends AbstractSched {
 
 
     // sub-day learning
-    private boolean _fillLrn() {
+    protected boolean _fillLrn() {
         if (mLrnCount == 0) {
             return false;
         }
@@ -776,12 +776,12 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private Card _getLrnCard() {
+    protected Card _getLrnCard() {
         return _getLrnCard(false);
     }
 
 
-    private Card _getLrnCard(boolean collapse) {
+    protected Card _getLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
             double cutoff = Utils.now();
@@ -854,7 +854,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _answerLrnCard(Card card, int ease) {
+    protected void _answerLrnCard(Card card, int ease) {
         JSONObject conf = _lrnConf(card);
         int type;
         if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
@@ -890,7 +890,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _updateRevIvlOnFail(Card card, JSONObject conf) {
+    protected void _updateRevIvlOnFail(Card card, JSONObject conf) {
         card.setLastIvl(card.getIvl());
         card.setIvl(_lapseIvl(card, conf));
     }
@@ -1000,7 +1000,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private JSONObject _lrnConf(Card card) {
+    protected JSONObject _lrnConf(Card card) {
         if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
             return _lapseConf(card);
         } else {
@@ -1009,7 +1009,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _rescheduleAsRev(Card card, JSONObject conf, boolean early) {
+    protected void _rescheduleAsRev(Card card, JSONObject conf, boolean early) {
         boolean lapse = (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING);
         if (lapse) {
             _rescheduleGraduatingLapse(card);
@@ -1029,7 +1029,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _startingLeft(Card card) {
+    protected int _startingLeft(Card card) {
         JSONObject conf;
         if (card.getType() == Consts.CARD_TYPE_RELEARNING) {
         conf = _lapseConf(card);
@@ -1149,7 +1149,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _deckRevLimitSingle(JSONObject d) {
+    protected int _deckRevLimitSingle(JSONObject d) {
         return _deckRevLimitSingle(d, null);
     }
 
@@ -1179,7 +1179,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _revForDeck(long did, int lim, HashMap<Long, HashMap> childMap) {
+    protected int _revForDeck(long did, int lim, HashMap<Long, HashMap> childMap) {
         List<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);
@@ -1187,19 +1187,19 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _resetRevCount() {
+    protected void _resetRevCount() {
         int lim = _currentRevLimit();
         mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday + " LIMIT " + lim + ")");
     }
 
 
-    private void _resetRev() {
+    protected void _resetRev() {
         _resetRevCount();
         mRevQueue.clear();
     }
 
 
-    private boolean _fillRev() {
+    protected boolean _fillRev() {
         if (!mRevQueue.isEmpty()) {
             return true;
         }
@@ -1267,7 +1267,7 @@ public class SchedV2 extends AbstractSched {
      * *********************************************
      */
 
-    private void _answerRevCard(Card card, int ease) {
+    protected void _answerRevCard(Card card, int ease) {
         int delay = 0;
         boolean early = card.getODid() != 0 && (card.getODue() > mToday);
         int type = early ? 3 : 1;
@@ -1280,7 +1280,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _rescheduleLapse(Card card) {
+    protected int _rescheduleLapse(Card card) {
         JSONObject conf;
         conf = _lapseConf(card);
         card.setLapses(card.getLapses() + 1);
@@ -1311,7 +1311,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _rescheduleRev(Card card, int ease, boolean early) {
+    protected void _rescheduleRev(Card card, int ease, boolean early) {
         // update interval
         card.setLastIvl(card.getIvl());
         if (early) {
@@ -1343,7 +1343,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Next interval for CARD, given EASE.
      */
-    private int _nextRevIvl(Card card, int ease, boolean fuzz) {
+    protected int _nextRevIvl(Card card, int ease, boolean fuzz) {
         long delay = _daysLate(card);
         JSONObject conf = _revConf(card);
         double fct = card.getFactor() / 1000.0;
@@ -1397,7 +1397,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _constrainedIvl(double ivl, JSONObject conf, double prev, boolean fuzz) {
+    protected int _constrainedIvl(double ivl, JSONObject conf, double prev, boolean fuzz) {
         int newIvl = (int) (ivl * conf.optDouble("ivlFct", 1));
         if (fuzz) {
             newIvl = _fuzzedIvl(newIvl);
@@ -1419,7 +1419,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _updateRevIvl(Card card, int ease) {
+    protected void _updateRevIvl(Card card, int ease) {
         card.setIvl(_nextRevIvl(card, ease, true));
     }
 
@@ -1564,7 +1564,7 @@ public class SchedV2 extends AbstractSched {
      * @param l deck["limit"]
      * @return The generated SQL to be suffixed to "select ... from ... order by "
      */
-    private String _dynOrder(int o, int l) {
+    protected String _dynOrder(int o, int l) {
         String t;
         switch (o) {
             case Consts.DYN_OLDEST:
@@ -1605,7 +1605,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _moveToDyn(long did, List<Long> ids, int start) {
+    protected void _moveToDyn(long did, List<Long> ids, int start) {
         JSONObject deck = mCol.getDecks().get(did);
         ArrayList<Object[]> data = new ArrayList<>();
         int u = mCol.usn();
@@ -1662,7 +1662,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     /** Leech handler. True if card was a leech. */
-    private boolean _checkLeech(Card card, JSONObject conf) {
+    protected boolean _checkLeech(Card card, JSONObject conf) {
         int lf;
         lf = conf.getInt("leechFails");
         if (lf == 0) {
@@ -1698,7 +1698,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private JSONObject _newConf(Card card) {
+    protected JSONObject _newConf(Card card) {
         JSONObject conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
@@ -1720,7 +1720,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private JSONObject _lapseConf(Card card) {
+    protected JSONObject _lapseConf(Card card) {
         JSONObject conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
@@ -1774,7 +1774,7 @@ public class SchedV2 extends AbstractSched {
      * This function uses GregorianCalendar so as to be sensitive to leap years, daylight savings, etc.
      */
 
-    private void _updateCutoff() {
+    protected void _updateCutoff() {
         int oldToday = mToday == null ? 0 : mToday;
         // days since col created
         mToday = _daysSinceCreation();
@@ -1831,7 +1831,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void update(JSONObject g) {
+    protected void update(JSONObject g) {
         for (String t : new String[] { "new", "rev", "lrn", "time" }) {
             String key = t + "Today";
             if (g.getJSONArray(key).getInt(0) != mToday) {
@@ -2009,7 +2009,7 @@ public class SchedV2 extends AbstractSched {
 
 
     // this isn't easily extracted from the learn code
-    private long _nextLrnIvl(Card card, int ease) {
+    protected long _nextLrnIvl(Card card, int ease) {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             card.setLeft(_startingLeft(card));
         }
@@ -2137,7 +2137,7 @@ public class SchedV2 extends AbstractSched {
      * ********************
      */
 
-    private void _burySiblings(Card card) {
+    protected void _burySiblings(Card card) {
         ArrayList<Long> toBury = new ArrayList<>();
         JSONObject nconf = _newConf(card);
         boolean buryNew = nconf.optBoolean("bury", true);
@@ -2599,7 +2599,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Sorts a card into the lrn queue LIBANKI: not in libanki
      */
-    private void _sortIntoLrn(long due, long id) {
+    protected void _sortIntoLrn(long due, long id) {
         Iterator i = mLrnQueue.listIterator();
         int idx = 0;
         while (i.hasNext()) {
