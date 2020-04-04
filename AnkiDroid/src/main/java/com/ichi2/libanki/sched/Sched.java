@@ -195,7 +195,7 @@ public class Sched extends SchedV2 {
 
     private void unburyCardsForDeck(List<Long> allDecks) {
         // Refactored to allow unburying an arbitrary deck
-        String sids = Utils.ids2str(allDecks);
+        String sids = _deckLimit();
         mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids, 0));
         mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids,
                 new Object[] { Utils.intTime(), mCol.usn() });
@@ -379,7 +379,7 @@ public class Sched extends SchedV2 {
 
 
     public int totalNewForCurrentDeck() {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + mReportLimit + ")");
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + mReportLimit + ")");
     }
 
     /**
@@ -803,7 +803,7 @@ public class Sched extends SchedV2 {
     public int totalRevForCurrentDeck() {
         return mCol.getDb().queryScalar(String.format(Locale.US,
         		"SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN %s AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= %d LIMIT %s)",
-        		Utils.ids2str(mCol.getDecks().active()), mToday, mReportLimit));
+        		_deckLimit(), mToday, mReportLimit));
     }
 
 
