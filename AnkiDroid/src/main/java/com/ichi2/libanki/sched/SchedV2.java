@@ -72,35 +72,35 @@ public class SchedV2 extends AbstractSched {
     private String mName = "std2";
     private boolean mHaveCustomStudy = true;
 
-    private Collection mCol;
-    private int mQueueLimit;
-    private int mReportLimit;
+    protected Collection mCol;
+    protected int mQueueLimit;
+    protected int mReportLimit;
     private int mDynReportLimit;
-    private int mReps;
-    private boolean mHaveQueues;
-    private Integer mToday;
+    protected int mReps;
+    protected boolean mHaveQueues;
+    protected Integer mToday;
     public long mDayCutoff;
     private long mLrnCutoff;
 
-    private int mNewCount;
-    private int mLrnCount;
-    private int mRevCount;
+    protected int mNewCount;
+    protected int mLrnCount;
+    protected int mRevCount;
 
     private int mNewCardModulus;
 
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
     // Queues
-    private final LinkedList<Long> mNewQueue = new LinkedList<>();
-    private final LinkedList<long[]> mLrnQueue = new LinkedList<>();
-    private final LinkedList<Long> mLrnDayQueue = new LinkedList<>();
-    private final LinkedList<Long> mRevQueue = new LinkedList<>();
+    protected final LinkedList<Long> mNewQueue = new LinkedList<>();
+    protected final LinkedList<long[]> mLrnQueue = new LinkedList<>();
+    protected final LinkedList<Long> mLrnDayQueue = new LinkedList<>();
+    protected final LinkedList<Long> mRevQueue = new LinkedList<>();
 
     private LinkedList<Long> mNewDids;
-    private LinkedList<Long> mLrnDids;
+    protected LinkedList<Long> mLrnDids;
 
     // Not in libanki
-    private WeakReference<Activity> mContextReference;
+    protected WeakReference<Activity> mContextReference;
 
 
     /**
@@ -272,7 +272,7 @@ public class SchedV2 extends AbstractSched {
      * **********************************************
      */
 
-    private void _updateStats(Card card, String type) {
+    protected void _updateStats(Card card, String type) {
         _updateStats(card, type, 1);
     }
 
@@ -312,7 +312,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _walkingCount(LimitMethod limFn, CountMethod cntFn) {
+    protected int _walkingCount(LimitMethod limFn, CountMethod cntFn) {
         int tot = 0;
         HashMap<Long, Integer> pcounts = new HashMap<>();
         // for each of the active decks
@@ -527,7 +527,7 @@ public class SchedV2 extends AbstractSched {
      * New cards **************************************************************** *******************************
      */
 
-    private void _resetNewCount() {
+    protected void _resetNewCount() {
         mNewCount = _walkingCount((JSONObject g) -> _deckNewLimitSingle(g),
                                   (long did, int lim) -> _cntFnNew(did, lim));
     }
@@ -598,7 +598,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private Card _getNewCard() {
+    protected Card _getNewCard() {
         if (_fillNew()) {
             mNewCount -= 1;
             return mCol.getCard(mNewQueue.remove());
@@ -625,7 +625,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * @return True if it's time to display a new card when distributing.
      */
-    private boolean _timeForNewCard() {
+    protected boolean _timeForNewCard() {
         if (mNewCount == 0) {
             return false;
         }
@@ -845,7 +845,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private Card _getLrnDayCard() {
+    protected Card _getLrnDayCard() {
         if (_fillLrnDay()) {
             mLrnCount -= 1;
             return mCol.getCard(mLrnDayQueue.remove());
@@ -963,7 +963,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _delayForGrade(JSONObject conf, int left) {
+    protected int _delayForGrade(JSONObject conf, int left) {
         left = left % 1000;
         try {
             double delay;
@@ -1245,7 +1245,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private Card _getRevCard() {
+    protected Card _getRevCard() {
         if (_fillRev()) {
             mRevCount -= 1;
             return mCol.getCard(mRevQueue.remove());
@@ -1370,7 +1370,7 @@ public class SchedV2 extends AbstractSched {
         return ivl4;
     }
 
-    private int _fuzzedIvl(int ivl) {
+    protected int _fuzzedIvl(int ivl) {
         int[] minMax = _fuzzedIvlRange(ivl);
         // Anki's python uses random.randint(a, b) which returns x in [a, b] while the eq Random().nextInt(a, b)
         // returns x in [0, b-a), hence the +1 diff with libanki
@@ -1413,7 +1413,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Number of days later than scheduled.
      */
-    private long _daysLate(Card card) {
+    protected long _daysLate(Card card) {
         long due = card.getODid() != 0 ? card.getODue() : card.getDue();
         return Math.max(0, mToday - due);
     }
@@ -1741,7 +1741,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private JSONObject _revConf(Card card) {
+    protected JSONObject _revConf(Card card) {
         JSONObject conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
