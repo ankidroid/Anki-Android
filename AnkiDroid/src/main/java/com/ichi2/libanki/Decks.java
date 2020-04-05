@@ -435,13 +435,9 @@ public class Decks {
      * Get deck with NAME, ignoring case.
      */
     @CheckResult
-    public @Nullable JSONObject byName(String name) {
-        for (JSONObject m : mDecks.values()) {
-            if (equalName(m.getString("name"),name)) {
-                return m;
-            }
-        }
-        return null;
+    public JSONObject byName(String name) {
+        String normalized = normalizeName(name);
+        return mNameMap.get(normalized);
     }
 
 
