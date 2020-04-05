@@ -1036,11 +1036,6 @@ public class Decks {
     }
 
 
-    protected HashMap<String, JSONObject> nameMap() {
-        return _nameMap;
-    }
-
-
     /**
      * Sync handling
      * ***********************************************************
