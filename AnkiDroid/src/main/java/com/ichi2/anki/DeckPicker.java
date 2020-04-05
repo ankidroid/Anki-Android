@@ -267,8 +267,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // If boolean and string are both set, we are signalling an error message
             // instead of a successful result.
             if (result.getBoolean() && result.getString() != null) {
+                Timber.w("Import: Add Failed: %s", result.getString());
                 showSimpleMessageDialog(result.getString());
             } else {
+                Timber.i("Import: Add succeeded");
                 AnkiPackageImporter imp = (AnkiPackageImporter) result.getObjArray()[0];
                 showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
                 updateDeckList();
@@ -295,6 +297,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         @SuppressWarnings("unchecked")
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            Timber.i("Import: Replace Task Completed");
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
@@ -346,8 +349,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // If boolean and string are both set, we are signalling an error message
             // instead of a successful result.
             if (result.getBoolean() && result.getString() != null) {
+                Timber.w("Export Failed: %s", result.getString());
                 showSimpleMessageDialog(result.getString());
             } else {
+                Timber.i("Export successful");
                 String exportPath = result.getString();
                 if (exportPath != null) {
                     showAsyncDialogFragment(DeckPickerExportCompleteDialog.newInstance(exportPath));
@@ -413,6 +418,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mPullToSyncWrapper = findViewById(R.id.pull_to_sync_wrapper);
         mPullToSyncWrapper.setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE);
         mPullToSyncWrapper.setOnRefreshListener(() -> {
+            Timber.i("Pull to Sync: Syncing");
             mPullToSyncWrapper.setRefreshing(false);
             sync();
         });
@@ -431,7 +437,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mStudyoptionsFrame.setVisibility(View.GONE);
         }
 
-
+        Timber.i("colOpen: %b", colOpen);
         if (colOpen) {
             // Show any necessary dialogs (e.g. changelog, special messages, etc)
             showStartupScreensAndDialogs(preferences, 0);
@@ -439,14 +445,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // Show error dialogs
             if (Permissions.hasStorageAccessPermission(this)) {
                 if (!AnkiDroidApp.isSdCardMounted()) {
-                    // SD card not mounted
+                    Timber.i("SD card not mounted");
                     onSdCardNotMounted();
                 } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(this)) {
-                    // AnkiDroid directory inaccessible
+                    Timber.i("AnkiDroid directory inaccessible");
                     Intent i = Preferences.getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
                     startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
                     Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
                 } else {
+                    Timber.i("Displaying database error");
                     showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
                 }
             }
@@ -459,6 +466,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      */
     private boolean firstCollectionOpen() {
         if (Permissions.hasStorageAccessPermission(this)) {
+            Timber.i("User has permissions to access collection");
             // Show error dialog if collection could not be opened
             return CollectionHelper.getInstance().getColSafe(this) != null;
         } else if (mClosedWelcomeMessage) {
@@ -468,6 +476,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     REQUEST_STORAGE_PERMISSION);
             return false;
         } else {
+            Timber.i("Displaying initial permission request dialog");
             // Request storage permission if we don't have it (e.g. on Android 6.0+)
             new MaterialDialog.Builder(this)
                     .title(R.string.collection_load_welcome_request_permissions_title)
@@ -512,10 +521,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     .show();
         });
         addSharedButton.setOnClickListener(view -> {
+            Timber.i("Adding Shared Deck");
             mActionsMenu.collapse();
             addSharedDeck();
         });
         addNoteButton.setOnClickListener(view -> {
+            Timber.i("Adding Note");
             mActionsMenu.collapse();
             addNote();
         });
@@ -757,6 +768,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         super.onResume();
         mActivityPaused = false;
         if (mSyncOnResume) {
+            Timber.i("Performing Sync on Resume");
             sync();
             mSyncOnResume = false;
         } else if (colIsOpen()) {
@@ -822,6 +834,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         long lastSyncTime = preferences.getLong("lastSyncTime", 0);
         if (hkey.length() != 0 && preferences.getBoolean("automaticSyncMode", false) &&
                 Connection.isOnline() && Utils.intTime(1000) - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
+            Timber.i("Triggering Automatic Sync");
             sync();
         }
     }
@@ -850,10 +863,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         switch(keyCode) {
 
             case KeyEvent.KEYCODE_A:
+                Timber.i("Adding Note from keypress");
                 addNote();
                 break;
 
             case KeyEvent.KEYCODE_B:
+                Timber.i("Open Browser from keypress");
                 openCardBrowser();
                 break;
 
@@ -891,6 +906,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             try {
                 getCol().modSchema();
             } catch (ConfirmModSchemaException e) {
+                Timber.w("Forcing full sync");
                 // If libanki determines it's necessary to confirm the full sync then show a confirmation dialog
                 // We have to show the dialog via the DialogHandler since this method is called via an async task
                 Resources res = getResources();
@@ -924,19 +940,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
 
         if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
-            // Not enough space to do backup
+            Timber.i("Not enough space to do backup");
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance());
         } else if (preferences.getBoolean("noSpaceLeft", false)) {
-            // No space left
+            Timber.i("No space left");
             showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance());
             preferences.edit().remove("noSpaceLeft").apply();
         } else if ("".equals(preferences.getString("lastVersion", ""))) {
-            // Fresh install
+            Timber.i("Fresh install");
             preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
             onFinishedStartup();
         } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName())) {
-            // AnkiDroid is being updated and a collection already exists.
-
+            Timber.i("AnkiDroid is being updated and a collection already exists.");
             // The user might appreciate us now, see if they will help us get better?
             if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
                 showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance());
@@ -979,6 +994,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
             if (previous < 20300200) {
+                Timber.i("Deleting media database");
                 File mediaDb = new File(CollectionHelper.getCurrentAnkiDroidDirectory(this), "collection.media.ad.db2");
                 if (mediaDb.exists()) {
                     mediaDb.delete();
@@ -986,11 +1002,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
             // Recommend the user to do a full-sync if they're upgrading from before 2.3.1beta8
             if (previous < 20301208) {
+                Timber.i("Recommend the user to do a full-sync");
                 mRecommendFullSync = true;
             }
 
             // Fix "font-family" definition in templates created by AnkiDroid before 2.6alhpa23
             if (previous < 20600123) {
+                Timber.i("Fixing font-family definition in templates");
                 try {
                     Models models = getCol().getModels();
                     for (JSONObject m : models.all()) {
@@ -1012,11 +1030,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             // Specifying a checkpoint in the future is not supported, please don't do it!
             if (current < upgradePrefsVersion) {
+                Timber.e("Checkpoint in future produced.");
                 UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_PREFERENCES_AT_VERSION", false);
                 onFinishedStartup();
                 return;
             }
             if (current < upgradeDbVersion) {
+                Timber.e("Invalid value for CHECK_DB_AT_VERSION");
                 UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_DB_AT_VERSION", false);
                 onFinishedStartup();
                 return;
@@ -1056,6 +1076,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             .show();
 
                 } else if (previous < upgradePrefsVersion) {
+                    Timber.i("Updated preferences with no integrity check - restarting activity");
                     // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
                     // proceed
                     restartActivity();
@@ -1064,6 +1085,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // If no changes are required we go to the new features activity
                 // There the "lastVersion" is set, so that this code is not reached again
                 if (VersionUtils.isReleaseVersion()) {
+                    Timber.i("Displaying new features");
                     Intent infoIntent = new Intent(this, Info.class);
                     infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
 
@@ -1074,6 +1096,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
                     }
                 } else {
+                    Timber.i("Dev Build - not showing 'new features'");
                     // Don't show new features dialog for development builds
                     preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
                     String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
@@ -1083,6 +1106,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         } else {
             // This is the main call when there is nothing special required
+            Timber.i("No startup screens required");
             onFinishedStartup();
         }
     }
@@ -1092,10 +1116,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         // clear all prefs if super old version to prevent any errors
         if (previousVersionCode < 20300130) {
+            Timber.i("Old version of Anki - Clearing preferences");
             preferences.edit().clear().apply();
         }
         // when upgrading from before 2.5alpha35
         if (previousVersionCode < 20500135) {
+            Timber.i("Old version of Anki - Fixing Zoom");
             // Card zooming behaviour was changed the preferences renamed
             int oldCardZoom = preferences.getInt("relativeDisplayFontSize", 100);
             int oldImageZoom = preferences.getInt("relativeImageSize", 100);
@@ -1109,6 +1135,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
 
         if (preferences.contains("fullscreenReview")) {
+            Timber.i("Old version of Anki - Fixing Fullscreen");
             // clear fullscreen flag as we use a integer
             try {
                 boolean old = preferences.getBoolean("fullscreenReview", false);
@@ -1122,6 +1149,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void undo() {
+        Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, new DeckTask.TaskListener() {
@@ -1254,6 +1282,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback method to handle repairing deck
     public void repairDeck() {
+        Timber.i("Repairing Deck");
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, new DeckTask.TaskListener() {
 
             @Override
@@ -1298,7 +1327,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void performIntegrityCheck() {
-        Timber.d("performIntegrityCheck()");
+        Timber.i("performIntegrityCheck()");
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_DATABASE, new DeckTask.TaskListener() {
             @Override
             public void onPreExecute() {
@@ -1419,6 +1448,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String hkey = preferences.getString("hkey", "");
         if (hkey.length() == 0) {
+            Timber.w("User not logged in");
             mPullToSyncWrapper.setRefreshing(false);
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
         } else {
