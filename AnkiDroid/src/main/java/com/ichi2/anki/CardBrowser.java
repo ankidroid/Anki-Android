@@ -895,7 +895,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 builderSingle.setTitle(getString(R.string.move_all_to_deck));
 
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
-                for (JSONObject deck : mDropDownDecks) {
+                for (JSONObject deck : getValidDecksForChangeDeck()) {
                     try {
                         arrayAdapter.add(deck.getString("name"));
                     } catch (JSONException e) {
@@ -1230,6 +1230,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } else {
             updateCardsInList(cards, null);
         }
+    }
+
+    /** Returns the decks which are valid targets for "Change Deck" */
+    private ArrayList<JSONObject> getValidDecksForChangeDeck() {
+        return mDropDownDecks;
     }
 
     private abstract class ListenerWithProgressBar extends DeckTask.TaskListener {
