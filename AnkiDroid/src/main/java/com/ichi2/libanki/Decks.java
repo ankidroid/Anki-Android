@@ -1015,11 +1015,6 @@ public class Decks {
      */
     public List<JSONObject> parents(long did) {
         // get parent and grandparent names
-        return parents(did, null);
-    }
-
-    public List<JSONObject> parents(long did, HashMap<String, JSONObject> nameMap) {
-        // get parent and grandparent names
         List<String> parents = new ArrayList<>();
         List<String> parts = Arrays.asList(path(get(did).getString("name")));
         for (int i = 0; i < parts.size() - 1; i++) {
@@ -1034,26 +1029,15 @@ public class Decks {
         List<JSONObject> oParents = new ArrayList<>();
         for (int i = 0; i < parents.size(); i++) {
             String parentName = parents.get(i);
-            JSONObject deck;
-            if (nameMap == null) {
-                deck = get(id(parentName));
-            } else {
-                deck = nameMap.get(parentName);
-            }
+            JSONObject deck = mNameMap.get(parentName);
             oParents.add(i, deck);
         }
         return oParents;
     }
 
 
-    public HashMap<String, JSONObject> nameMap() {
-        HashMap<String, JSONObject> map = new HashMap<>();
-
-        for (JSONObject object : mDecks.values()) {
-            map.put(object.getString("name"), object);
-        }
-
-        return map;
+    protected HashMap<String, JSONObject> nameMap() {
+        return _nameMap;
     }
 
 
