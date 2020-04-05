@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import com.ichi2.utils.Assert;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.utils.JSONUtils;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.JSONObject;
 
@@ -337,8 +338,14 @@ public class Card implements Cloneable {
      * Time limit for answering in milliseconds.
      */
     public int timeLimit() {
-        JSONObject conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
-        return conf.getInt("maxTaken") * 1000;
+        final int MILLIS_IN_A_SECOND = 1000;
+        final int DEFAULT_MAX_TAKEN = Consts.DECK_CONF_DEFAULT_MAX_TAKEN;
+        try {
+            JSONObject conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
+            return JSONUtils.getIntOrSetDefaultWithWarn(conf, "maxTaken", DEFAULT_MAX_TAKEN) * MILLIS_IN_A_SECOND;
+        } catch (Exception e) {
+            return DEFAULT_MAX_TAKEN * MILLIS_IN_A_SECOND;
+        }
     }
 
 

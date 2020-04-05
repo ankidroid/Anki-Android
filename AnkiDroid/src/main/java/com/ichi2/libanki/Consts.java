@@ -102,4 +102,7 @@ public class Consts {
     public static final int REVLOG_CRAM = 3;
 
     // The labels defined in consts.py are in AnkiDroid's resources files.
+
+    //Deck Configuration
+    public static final int DECK_CONF_DEFAULT_MAX_TAKEN = 60;
 }

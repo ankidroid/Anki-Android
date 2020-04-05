@@ -122,7 +122,7 @@ public class Decks {
                     // may not be set on old decks
                     + "'bury': True"
                 + "},"
-                + "'maxTaken': 60,"
+                + "'maxTaken': " + Consts.DECK_CONF_DEFAULT_MAX_TAKEN + ","
                 + "'timer': 0,"
                 + "'autoplay': True,"
                 + "'replayq': True,"

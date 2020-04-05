@@ -24,6 +24,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
 
+import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import org.junit.After;
@@ -85,5 +86,13 @@ public class RobolectricTest {
     protected JSONObject getCurrentDatabaseModelCopy(String modelName) throws JSONException {
         Models collectionModels = getCol().getModels();
         return new JSONObject(collectionModels.byName(modelName).toString().trim());
+    }
+
+
+    public Note addNote(int i) {
+        Note n = getCol().newNote();
+        n.setField(0, Integer.toString(i));
+        getCol().addNote(n);
+        return n;
     }
 }
