@@ -42,7 +42,7 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.decks.Decks;
 import com.ichi2.libanki.stats.Stats;
 import com.ichi2.ui.SlidingTabLayout;
 

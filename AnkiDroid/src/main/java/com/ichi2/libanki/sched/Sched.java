@@ -33,9 +33,9 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.decks.Decks;
 
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;

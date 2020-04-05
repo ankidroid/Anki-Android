@@ -37,7 +37,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.decks.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;

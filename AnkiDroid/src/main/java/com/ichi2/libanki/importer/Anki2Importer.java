@@ -25,7 +25,7 @@ import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.decks.Decks;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;

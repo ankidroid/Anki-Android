@@ -96,7 +96,7 @@ import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.decks.Decks;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;

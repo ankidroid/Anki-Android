@@ -1,6 +1,6 @@
 package com.ichi2.utils;
 
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.decks.Decks;
 
 import java.util.Comparator;
 
