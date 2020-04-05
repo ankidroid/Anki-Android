@@ -986,7 +986,6 @@ public class Decks {
 
 
     public HashMap<Long, HashMap> childMap() {
-        HashMap<String, JSONObject> nameMap = nameMap();
 
         HashMap<Long, HashMap> childMap = new HashMap<>();
 
@@ -1002,7 +1001,7 @@ public class Decks {
             List<String> parts = Arrays.asList(path(deck.getString("name")));
             if (parts.size() > 1) {
                 String immediateParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
-                long pid = nameMap.get(immediateParent).getLong("id");
+                long pid = mNameMap.get(immediateParent).getLong("id");
                 childMap.get(pid).put(deck.getLong("id"), node);
             }
         }
