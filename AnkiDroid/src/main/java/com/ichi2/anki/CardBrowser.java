@@ -715,7 +715,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (intent.getAction() == compat.ACTION_PROCESS_TEXT) {
             CharSequence search = intent.getCharSequenceExtra(compat.EXTRA_PROCESS_TEXT);
             if (search != null && search.length() != 0) {
-                Timber.d("CardBrowser :: Called with search intent: %s", search.toString());
+                Timber.i("CardBrowser :: Called with search intent: %s", search.toString());
                 mSearchView.setQuery(search, true);
                 intent.setAction(Intent.ACTION_DEFAULT);
             }
@@ -1819,7 +1819,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private int getFlagOrDefault(Map<String, String> card, int defaultValue) {
         String flagValue = card.get("flag");
         if (flagValue == null) {
-            Timber.w("Unable to obtain flag for card: '%s'. Returning %d", card.get("id"), defaultValue);
+            Timber.d("Unable to obtain flag for card: '%s'. Returning %d", card.get("id"), defaultValue);
             return defaultValue;
         }
         try {
