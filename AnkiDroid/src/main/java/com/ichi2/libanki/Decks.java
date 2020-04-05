@@ -138,6 +138,7 @@ public class Decks {
     private Collection mCol;
     private HashMap<Long, JSONObject> mDecks;
     private HashMap<Long, JSONObject> mDconf;
+    private HashMap<String, JSONObject> mNameMap;
     private boolean mChanged;
 
 
@@ -154,12 +155,14 @@ public class Decks {
     public void load(String decks, String dconf) {
         mDecks = new HashMap<>();
         mDconf = new HashMap<>();
+        mNameMap = new HashMap<>();
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
         for (int i = 0; i < ids.length(); i++) {
             String id = ids.getString(i);
             JSONObject o = decksarray.getJSONObject(id);
             long longId = Long.parseLong(id);
+            nameMapAdd(o.getString("name"), o);
             mDecks.put(longId, o);
         }
         JSONObject confarray = new JSONObject(dconf);
@@ -260,6 +263,7 @@ public class Decks {
         mDecks.put(id, g);
         save(g);
         maybeAddToActive();
+        nameMapAdd(name, g);
         //runHook("newDeck"); // TODO
         return id;
     }
@@ -322,6 +326,7 @@ public class Decks {
         }
         // delete the deck and add a grave
         mDecks.remove(did);
+        nameMapRemove(deck.getString("name"), deck);
         // ensure we have an active deck
         if (active().contains(did)) {
             select(mDecks.keySet().iterator().next());
@@ -444,12 +449,50 @@ public class Decks {
      * Add or update an existing deck. Used for syncing and merging.
      */
     public void update(JSONObject g) {
+        long id = g.getLong("id");
+        JSONObject oldDeck = get(id, false);
+        if (oldDeck != null) {
+            // In case where another update got the name
+            // `oldName`, it would be a mistake to remove it from nameMap
+            nameMapRemove(oldDeck.getString("name"), oldDeck);
+        }
+        nameMapAdd(g.getString("name"), g);
         mDecks.put(g.getLong("id"), g);
         maybeAddToActive();
         // mark registry changed, but don't bump mod time
         save();
     }
 
+    private void nameMapAdd(String name, JSONObject g) {
+        mNameMap.put(name, g);
+        // Normalized name is also added because it's required to use it in by name.
+        // Non normalized is kept for Parent
+        mNameMap.put(normalizeName(name), g);
+    }
+
+    /**
+        Remove name from nameMap if it is equal to expectedDeck.
+
+        It is possible that another deck has been given name `name`,
+        in which case we don't want to remove it from nameMap.
+
+        E.g. if A is renamed to A::B and A::B already existed and get
+        renamed to A::B::B, then we don't want to remove A::B from
+        nameMap when A::B is renamed to A::B::B, since A::B is
+        potentially the correct value.
+     */
+    private void nameMapRemove(String name, JSONObject expectedDeck) {
+        String[] names = new String[] {name, normalizeName(name)};
+        for (String name_: names) {
+            JSONObject currentDeck = byName(name_);
+            if (currentDeck != null && currentDeck.getLong("id") == expectedDeck.getLong("id")) {
+                /* Remove name from mapping only if it still maps to
+                 * expectedDeck. I.e. no other deck had been given this
+                 * name yet. */
+                mNameMap.remove(name_);
+            }
+        }
+    }
 
     /**
      * Rename deck prefix to NAME if not exists. Updates children.
@@ -481,17 +524,22 @@ public class Decks {
         // rename children
         String oldName = g.getString("name");
         for (JSONObject grp : all()) {
-            if (grp.getString("name").startsWith(oldName + "::")) {
+            String grpOldName = grp.getString("name");
+            if (grpOldName.startsWith(oldName + "::")) {
+                String grpNewName = grpOldName.replaceFirst(Pattern.quote(oldName + "::"), newName + "::");
                 // In Java, String.replaceFirst consumes a regex so we need to quote the pattern to be safe
-                grp.put("name", grp.getString("name").replaceFirst(Pattern.quote(oldName + "::"),
-                                                                   newName + "::"));
+                nameMapRemove(grpOldName, grp);
+                grp.put("name", grpNewName);
+                nameMapAdd(grpNewName, grp);
                 save(grp);
             }
         }
+        nameMapRemove(oldName, g);
         // adjust name
         g.put("name", newName);
         // ensure we have parents again, as we may have renamed parent->child
         newName = _ensureParents(newName);
+        nameMapAdd(newName, g);
         save(g);
         // renaming may have altered active did order
         maybeAddToActive();
