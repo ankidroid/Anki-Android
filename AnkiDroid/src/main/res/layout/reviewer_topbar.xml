@@ -37,17 +37,6 @@
             android:textColor="?attr/reviewCountColor"
             android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/mark_icon"
-            android:layout_toRightOf="@+id/review_number"
-            android:layout_toLeftOf="@+id/choosen_answer"
-            android:layout_alignTop="@+id/choosen_answer"
-            android:layout_alignBottom="@+id/choosen_answer"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center" />
-
         <TextView
             android:id="@+id/choosen_answer"
             android:layout_width="wrap_content"
@@ -59,17 +48,32 @@
             android:text=""
             android:textSize="14sp" />
 
-    <ImageView
-        android:id="@+id/flag_icon"
-        android:layout_toRightOf="@+id/choosen_answer"
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/card_time"
         android:layout_alignTop="@+id/card_time"
         android:layout_alignBottom="@+id/card_time"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_toRightOf="@+id/choosen_answer"
+        android:gravity="center" >
 
+        <ImageView
+            android:id="@+id/mark_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:id="@+id/flag_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_gravity="center"
+            />
+        </LinearLayout>
         <Chronometer
             android:id="@+id/card_time"
             android:layout_width="wrap_content"
