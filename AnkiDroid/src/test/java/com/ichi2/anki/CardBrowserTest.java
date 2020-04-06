@@ -6,13 +6,18 @@ import android.widget.ListView;
 
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
+import com.ichi2.utils.JSONObject;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowActivity;
+
+import java.util.HashSet;
+import java.util.List;
 
 import javax.annotation.CheckReturnValue;
 
@@ -22,6 +27,7 @@ import timber.log.Timber;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.Is.is;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -130,6 +136,66 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("Checked card before should not have changed", browser.hasCheckedCardAtPosition(1), is(true));
         assertThat("Checked card after should have changed by 2 places", browser.hasCheckedCardAtPosition(3), is(true));
         assertThat("Checked card after should have changed by 2 places", browser.hasCheckedCardAtPosition(4), is(true));
+    }
+
+    @Test
+    public void canChangeDeckToRegularDeck() {
+        addDeck("Hello");
+        CardBrowser b = getBrowserWithNotes(5);
+
+        List<JSONObject> decks = b.getValidDecksForChangeDeck();
+
+        for (JSONObject d : decks) {
+            if (d.getString("name").equals("Hello")) {
+                return;
+            }
+        }
+        Assert.fail("Added deck was not found in the Card Browser");
+    }
+
+    @Test
+    public void cannotChangeDeckToDynamicDeck() {
+        //5932 - dynamic decks are meant to have cards added to them through "Rebuild".
+        addDynamicDeck("World");
+        CardBrowser b = getBrowserWithNotes(5);
+
+        List<JSONObject> decks = b.getValidDecksForChangeDeck();
+
+        for (JSONObject d : decks) {
+            if (d.getString("name").equals("World")) {
+                Assert.fail("Dynamic decks should not be transferred to by the browser.");
+            }
+        }
+
+    }
+
+    @Test
+    public void changeDeckIntegrationTestDynamicAndNon() {
+        addDeck("Hello");
+        addDynamicDeck("World");
+
+        HashSet<String> validNames = new HashSet<>();
+        validNames.add("Default");
+        validNames.add("Hello");
+
+        CardBrowser b = getBrowserWithNotes(5);
+
+        List<JSONObject> decks = b.getValidDecksForChangeDeck();
+        for (JSONObject d : decks) {
+            assertThat(validNames, hasItem(d.getString("name")));
+        }
+        assertThat("Additional unexpected decks were present", decks.size(), is(2));
+    }
+
+
+
+    private void addDynamicDeck(String name) {
+        getCol().getDecks().newDyn(name);
+    }
+
+
+    private void addDeck(String deckName) {
+        getCol().getDecks().id(deckName, true);
     }
 
     private void deleteCardAtPosition(CardBrowser browser, int positionToCorrupt) {

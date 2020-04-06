@@ -73,6 +73,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
@@ -1233,8 +1234,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     /** Returns the decks which are valid targets for "Change Deck" */
-    private ArrayList<JSONObject> getValidDecksForChangeDeck() {
-        return mDropDownDecks;
+    @VisibleForTesting
+    List<JSONObject> getValidDecksForChangeDeck() {
+        List<JSONObject> nonDynamicDecks = new ArrayList<>();
+        for (JSONObject d : mDropDownDecks) {
+            if (Decks.isDynamic(d)) {
+                continue;
+            }
+            nonDynamicDecks.add(d);
+        }
+        return nonDynamicDecks;
     }
 
     private abstract class ListenerWithProgressBar extends DeckTask.TaskListener {

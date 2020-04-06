@@ -1053,4 +1053,8 @@ public class Decks {
     public void removeDeckOptions(long deckId) throws NoSuchDeckException {
         getDeckOrFail(deckId).remove("conf");
     }
+
+    public static boolean isDynamic(JSONObject deck) {
+        return deck.getInt("dyn") != 0;
+    }
 }
