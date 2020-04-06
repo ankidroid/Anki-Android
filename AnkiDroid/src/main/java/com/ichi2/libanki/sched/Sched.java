@@ -1224,11 +1224,10 @@ public class Sched extends SchedV2 {
     protected void update(JSONObject g) {
         for (String t : new String[] { "new", "rev", "lrn", "time" }) {
             String key = t + "Today";
+            JSONArray ja = g.getJSONArray(key);
             if (g.getJSONArray(key).getInt(0) != mToday) {
-                JSONArray ja = new JSONArray();
-                ja.put(mToday);
-                ja.put(0);
-                g.put(key, ja);
+                ja.put(0, mToday);
+                ja.put(1, 0);
             }
         }
     }
