@@ -6,13 +6,18 @@ import android.widget.ListView;
 
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
+import com.ichi2.utils.JSONObject;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowActivity;
+
+import java.util.HashSet;
+import java.util.List;
 
 import javax.annotation.CheckReturnValue;
 
@@ -22,6 +27,8 @@ import timber.log.Timber;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -132,6 +139,113 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("Checked card after should have changed by 2 places", browser.hasCheckedCardAtPosition(4), is(true));
     }
 
+    @Test
+    public void canChangeDeckToRegularDeck() {
+        addDeck("Hello");
+        CardBrowser b = getBrowserWithNotes(5);
+
+        List<JSONObject> decks = b.getValidDecksForChangeDeck();
+
+        for (JSONObject d : decks) {
+            if (d.getString("name").equals("Hello")) {
+                return;
+            }
+        }
+        Assert.fail("Added deck was not found in the Card Browser");
+    }
+
+    @Test
+    public void cannotChangeDeckToDynamicDeck() {
+        //5932 - dynamic decks are meant to have cards added to them through "Rebuild".
+        addDynamicDeck("World");
+        CardBrowser b = getBrowserWithNotes(5);
+
+        List<JSONObject> decks = b.getValidDecksForChangeDeck();
+
+        for (JSONObject d : decks) {
+            if (d.getString("name").equals("World")) {
+                Assert.fail("Dynamic decks should not be transferred to by the browser.");
+            }
+        }
+
+    }
+
+    @Test
+    public void changeDeckIntegrationTestDynamicAndNon() {
+        addDeck("Hello");
+        addDynamicDeck("World");
+
+        HashSet<String> validNames = new HashSet<>();
+        validNames.add("Default");
+        validNames.add("Hello");
+
+        CardBrowser b = getBrowserWithNotes(5);
+
+        List<JSONObject> decks = b.getValidDecksForChangeDeck();
+        for (JSONObject d : decks) {
+            assertThat(validNames, hasItem(d.getString("name")));
+        }
+        assertThat("Additional unexpected decks were present", decks.size(), is(2));
+    }
+
+    @Test
+    public void moveToNonDynamicDeckWorks() {
+        addDeck("Foo");
+        addDynamicDeck("Bar");
+        long deckIdToChangeTo = addDeck("Hello");
+        addDeck("ZZ");
+        selectDefaultDeck();
+        CardBrowser b = getBrowserWithNotes(5);
+        b.checkedCardsAtPositions(new int[] {0, 2});
+
+        List<Long> cardIds = b.getCheckedCardIds();
+
+        for (Long cardId : cardIds) {
+            assertThat("Deck should have been changed yet", getCol().getCard(cardId).getDid(), not(deckIdToChangeTo));
+        }
+
+        final int deckPosition = b.getChangeDeckPositionFromId(deckIdToChangeTo);
+
+        //act
+        AnkiAssert.assertDoesNotThrow(() -> b.changeDeck(deckPosition));
+
+        //assert
+        for (Long cardId : cardIds) {
+            assertThat("Deck should be changed", getCol().getCard(cardId).getDid(), is(deckIdToChangeTo));
+        }
+    }
+
+    @Test
+    public void changeDeckViaTaskIsHandledCorrectly() {
+        long dynId = addDynamicDeck("World");
+        selectDefaultDeck();
+        CardBrowser b = getBrowserWithNotes(5);
+        b.checkedCardsAtPositions(new int[] {0, 2});
+
+        List<Long> cardIds = b.getCheckedCardIds();
+
+        b.executeChangeDeckTask(toLongArray(cardIds), dynId);
+
+        for (Long cardId: cardIds) {
+            assertThat("Deck should not be changed", getCol().getCard(cardId).getDid(), not(dynId));
+        }
+    }
+
+
+    private void selectDefaultDeck() {
+        getCol().getDecks().select(1);
+    }
+
+
+    private long addDynamicDeck(String name) {
+        return getCol().getDecks().newDyn(name);
+    }
+
+
+    private long addDeck(String deckName) {
+        return getCol().getDecks().id(deckName, true);
+    }
+
     private void deleteCardAtPosition(CardBrowser browser, int positionToCorrupt) {
         removeCardFromCollection(browser.getCardIds()[positionToCorrupt]);
         browser.clearCardData(positionToCorrupt);
@@ -157,6 +271,15 @@ public class CardBrowserTest extends RobolectricTest {
         //select seems to run an infinite loop :/
         ShadowActivity shadowActivity = shadowOf(browser);
         shadowActivity.clickMenuItem(action_select_all);
+    }
+
+    //There has to be a better way :(
+    private long[] toLongArray(List<Long> list){
+        long[] ret = new long[list.size()];
+        for(int i = 0; i < ret.length; i++) {
+            ret[i] = list.get(i);
+        }
+        return ret;
     }
 
 

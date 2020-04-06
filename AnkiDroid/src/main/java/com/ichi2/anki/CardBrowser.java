@@ -73,6 +73,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
@@ -92,7 +93,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -127,6 +130,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private int mColumn1Index;
     private int mColumn2Index;
 
+    //DEFECT: Doesn't need to be a local
     private long mNewDid;   // for change_deck
 
     private static final int EDIT_CARD = 0;
@@ -355,9 +359,28 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return ids;
     }
 
-    private void changeDeck(int selectedDeck) {
+    @VisibleForTesting
+    void changeDeck(int deckPosition) {
         long[] ids = getSelectedCardIds();
-        mNewDid = mDropDownDecks.get(selectedDeck).getLong("id");
+
+        JSONObject selectedDeck = getValidDecksForChangeDeck().get(deckPosition);
+
+        try {
+            //#5932 - can't be dynamic
+            if (Decks.isDynamic(selectedDeck)) {
+                Timber.w("Attempted to change cards to dynamic deck. Cancelling operation.");
+                displayCouldNotChangeDeck();
+                return;
+            }
+        } catch (Exception e) {
+            displayCouldNotChangeDeck();
+            Timber.e(e);
+            return;
+        }
+
+        mNewDid = selectedDeck.getLong("id");
+
+        Timber.i("Changing selected cards to deck: %d", mNewDid);
 
         if (ids.length == 0) {
             endMultiSelectMode();
@@ -369,9 +392,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mReloadRequired = true;
         }
 
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
-                new DeckTask.TaskData(new Object[]{ids, Collection.DismissType.CHANGE_DECK_MULTI, mNewDid}));
+        executeChangeDeckTask(ids, mNewDid);
     }
+
+
+    private void displayCouldNotChangeDeck() {
+        UIUtils.showThemedToast(this, getString(R.string.card_browser_deck_change_error), true);
+    }
+
 
     private Long getLastDeckId() {
         SharedPreferences state = getSharedPreferences(PERSISTENT_STATE_FILE,0);
@@ -894,8 +922,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
                 builderSingle.setTitle(getString(R.string.move_all_to_deck));
 
+                //WARNING: changeDeck depends on this index, so any changes should be reflected there.
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
-                for (JSONObject deck : mDropDownDecks) {
+                for (JSONObject deck : getValidDecksForChangeDeck()) {
                     try {
                         arrayAdapter.add(deck.getString("name"));
                     } catch (JSONException e) {
@@ -1232,6 +1261,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+    /** Returns the decks which are valid targets for "Change Deck" */
+    @VisibleForTesting
+    List<JSONObject> getValidDecksForChangeDeck() {
+        List<JSONObject> nonDynamicDecks = new ArrayList<>();
+        for (JSONObject d : mDropDownDecks) {
+            if (Decks.isDynamic(d)) {
+                continue;
+            }
+            nonDynamicDecks.add(d);
+        }
+        return nonDynamicDecks;
+    }
+
     private abstract class ListenerWithProgressBar extends DeckTask.TaskListener {
         @Override
         public void onPreExecute() {
@@ -1321,6 +1363,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCardsAdapter.notifyDataSetChanged();
             invalidateOptionsMenu();    // maybe the availability of undo changed
 
+            if (!result.getBoolean()) {
+                Timber.i("mChangeDeckHandler failed, not offering undo");
+                displayCouldNotChangeDeck();
+                return;
+            }
             // snackbar to offer undo
             String deckName = getCol().getDecks().name(mNewDid);
             mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
@@ -2023,8 +2070,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void checkedCardsAtPositions(int[] positions) {
-        for (int i = 0; i < positions.length; i++) {
-            mCheckedCardPositions.add(positions[i]);
+        for (int position : positions) {
+            mCheckedCardPositions.add(position);
+            if (position >= mCards.size()) {
+                throw new IllegalStateException(
+                        String.format(Locale.US, "Attempted to check card at index %d. %d cards available",
+                                position, mCards.size()));
+            }
         }
         onSelectionChanged();
     }
@@ -2039,4 +2091,33 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return mCheckedCardPositions.size();
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public int getChangeDeckPositionFromId(long deckId) {
+        List<JSONObject> decks = getValidDecksForChangeDeck();
+        for (int i = 0; i < decks.size(); i++) {
+            JSONObject deck = decks.get(i);
+            if (deck.getLong("id") == deckId) {
+                return i;
+            }
+        }
+        throw new IllegalStateException(String.format(Locale.US, "Deck %d not found", deckId));
+    }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public List<Long> getCheckedCardIds() {
+        List<Long> cardIds = new ArrayList<>();
+        for (Integer pos : mCheckedCardPositions) {
+            String id = mCards.get(pos).get("id");
+            cardIds.add(Long.valueOf(Objects.requireNonNull(id)));
+        }
+        return cardIds;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE) //should only be called from changeDeck()
+    void executeChangeDeckTask(long[] ids, long newDid) {
+        mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
+                new TaskData(new Object[]{ids, Collection.DismissType.CHANGE_DECK_MULTI, newDid}));
+    }
 }
