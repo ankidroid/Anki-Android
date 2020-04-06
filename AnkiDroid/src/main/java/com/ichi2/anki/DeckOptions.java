@@ -55,6 +55,7 @@ import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.NamedJSONComparator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -778,7 +779,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     protected void buildLists() {
         ListPreference deckConfPref = (ListPreference) findPreference("deckConf");
         ArrayList<JSONObject> confs = mCol.getDecks().allConf();
-        Collections.sort(confs, new JSONNameComparator());
+        Collections.sort(confs, NamedJSONComparator.instance);
         String[] confValues = new String[confs.size()];
         String[] confLabels = new String[confs.size()];
         for (int i = 0; i < confs.size(); i++) {
@@ -844,18 +845,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             count++;
         }
         return count;
-    }
-
-
-    public class JSONNameComparator implements Comparator<JSONObject> {
-        @Override
-        public int compare(JSONObject lhs, JSONObject rhs) {
-            String o1;
-            String o2;
-            o1 = lhs.getString("name");
-            o2 = rhs.getString("name");
-            return o1.compareToIgnoreCase(o2);
-        }
     }
 
 

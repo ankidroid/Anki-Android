@@ -79,6 +79,8 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.DeckComparator;
+import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONArray;
@@ -423,7 +425,7 @@ public class NoteEditor extends AnkiActivity {
         mAllModelIds = new ArrayList<>();
         final ArrayList<String> modelNames = new ArrayList<>();
         ArrayList<JSONObject> models = getCol().getModels().all();
-        Collections.sort(models, new JSONNameComparator());
+        Collections.sort(models, NamedJSONComparator.instance);
         for (JSONObject m : models) {
             modelNames.add(m.getString("name"));
             mAllModelIds.add(m.getLong("id"));
@@ -445,7 +447,7 @@ public class NoteEditor extends AnkiActivity {
         final ArrayList<String> deckNames = new ArrayList<>();
 
         ArrayList<JSONObject> decks = getCol().getDecks().all();
-        Collections.sort(decks, new JSONNameComparator());
+        Collections.sort(decks, DeckComparator.instance);
         for (JSONObject d : decks) {
             // add current deck and all other non-filtered decks to deck list
             long thisDid = d.getLong("id");
@@ -1521,28 +1523,6 @@ public class NoteEditor extends AnkiActivity {
     // INNER CLASSES
     // ----------------------------------------------------------------------------
 
-    public class JSONNameComparator implements Comparator<JSONObject> {
-        @Override
-        public int compare(JSONObject lhs, JSONObject rhs) {
-            String[] o1;
-            String[] o2;
-            o1 = lhs.getString("name").split("::");
-            o2 = rhs.getString("name").split("::");
-            for (int i = 0; i < Math.min(o1.length, o2.length); i++) {
-                int result = o1[i].compareToIgnoreCase(o2[i]);
-                if (result != 0) {
-                    return result;
-                }
-            }
-            if (o1.length < o2.length) {
-                return -1;
-            } else if (o1.length > o2.length) {
-                return 1;
-            } else {
-                return 0;
-            }
-        }
-    }
 
 
     private class SetNoteTypeListener implements OnItemSelectedListener {

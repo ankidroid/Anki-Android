@@ -28,6 +28,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 
+import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -374,12 +375,7 @@ public class Decks {
      */
     public ArrayList<JSONObject> allSorted() {
         ArrayList<JSONObject> decks = all();
-        Collections.sort(decks, new Comparator<JSONObject>() {
-            @Override
-            public int compare(JSONObject lhs, JSONObject rhs) {
-                return lhs.getString("name").compareTo(rhs.getString("name"));
-            }
-        });
+        Collections.sort(decks, DeckComparator.instance);
         return decks;
     }
 
@@ -900,9 +896,7 @@ public class Decks {
         // Go through all decks, sorted by name
         ArrayList<JSONObject> decks = all();
 
-        Collections.sort(decks, (o1, o2) -> {
-                return o1.getString("name").compareTo(o2.getString("name"));
-        });
+        Collections.sort(decks, DeckComparator.instance);
 
         for (JSONObject deck : decks) {
             HashMap node = new HashMap();
