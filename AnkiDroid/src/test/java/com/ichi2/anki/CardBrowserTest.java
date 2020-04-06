@@ -28,6 +28,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -187,6 +188,31 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("Additional unexpected decks were present", decks.size(), is(2));
     }
 
+    @Test
+    public void failureToMoveToDynamicDeckIsHandled() {
+        addDynamicDeck("World");
+        selectDefaultDeck();
+        CardBrowser b = getBrowserWithNotes(5);
+        b.checkedCardsAtPositions(new int[] {0, 2});
+
+        List<Long> cardIds = b.getCheckedCardIds();
+
+        JSONObject deckToChangeTo = getCol().getDecks().byName("World");
+        assertThat("We want to move to a dynamic deck (normally invalid)", deckToChangeTo.get("dyn"), not(0));
+        long deckIdToChangeTo = deckToChangeTo.getLong("id");
+        final int deckPosition = b.getDeckPositionFromId(deckIdToChangeTo);
+
+        AnkiAssert.assertDoesNotThrow(() -> b.changeDeck(deckPosition));
+
+        for (Long cardId: cardIds) {
+            assertThat("Deck should not be changed", getCol().getCard(cardId).getDid(), not(deckIdToChangeTo));
+        }
+    }
+
+
+    private void selectDefaultDeck() {
+        getCol().getDecks().select(1);
+    }
 
 
     private void addDynamicDeck(String name) {

@@ -93,7 +93,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -356,9 +358,28 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return ids;
     }
 
-    private void changeDeck(int selectedDeck) {
+    @VisibleForTesting
+    void changeDeck(int deckPosition) {
         long[] ids = getSelectedCardIds();
-        mNewDid = mDropDownDecks.get(selectedDeck).getLong("id");
+
+        JSONObject selectedDeck = mDropDownDecks.get(deckPosition);
+
+        try {
+            //#5932 - can't be dynamic
+            if (Decks.isDynamic(selectedDeck)) {
+                Timber.w("Attempted to change cards to dynamic deck. Cancelling operation.");
+                displayCouldNotChangeDeck();
+                return;
+            }
+        } catch (Exception e) {
+            displayCouldNotChangeDeck();
+            Timber.e(e);
+            return;
+        }
+
+        mNewDid = selectedDeck.getLong("id");
+
+        Timber.i("Changing selected cards to deck: %d", mNewDid);
 
         if (ids.length == 0) {
             endMultiSelectMode();
@@ -373,6 +394,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
                 new DeckTask.TaskData(new Object[]{ids, Collection.DismissType.CHANGE_DECK_MULTI, mNewDid}));
     }
+
+
+    private void displayCouldNotChangeDeck() {
+        UIUtils.showThemedToast(this, getString(R.string.card_browser_deck_change_error), true);
+    }
+
 
     private Long getLastDeckId() {
         SharedPreferences state = getSharedPreferences(PERSISTENT_STATE_FILE,0);
@@ -2037,8 +2064,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void checkedCardsAtPositions(int[] positions) {
-        for (int i = 0; i < positions.length; i++) {
-            mCheckedCardPositions.add(positions[i]);
+        for (int position : positions) {
+            mCheckedCardPositions.add(position);
+            if (position >= mCards.size()) {
+                throw new IllegalStateException(
+                        String.format(Locale.US, "Attempted to check card at index %d. %d cards available",
+                                position, mCards.size()));
+            }
         }
         onSelectionChanged();
     }
@@ -2053,4 +2085,25 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return mCheckedCardPositions.size();
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public int getDeckPositionFromId(long deckId) {
+        for (int i = 0; i < mDropDownDecks.size(); i++) {
+            JSONObject deck = mDropDownDecks.get(i);
+            if (deck.getLong("id") == deckId) {
+                return i;
+            }
+        }
+        throw new IllegalStateException(String.format(Locale.US, "Deck %d not found", deckId));
+    }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public List<Long> getCheckedCardIds() {
+        List<Long> cardIds = new ArrayList<>();
+        for (Integer pos : mCheckedCardPositions) {
+            String id = mCards.get(pos).get("id");
+            cardIds.add(Long.valueOf(Objects.requireNonNull(id)));
+        }
+        return cardIds;
+    }
 }
