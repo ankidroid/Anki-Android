@@ -46,7 +46,9 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 // fixmes:
@@ -410,11 +412,12 @@ public class Decks {
     }
 
     /** Obtains the deck from the DeckID, or default if the deck was not found */
+    @CheckResult
     public @NonNull JSONObject get(long did) {
         return get(did, true);
     }
 
-
+    @CheckResult
     public JSONObject get(long did, boolean _default) {
         if (mDecks.containsKey(did)) {
             return mDecks.get(did);
@@ -429,7 +432,8 @@ public class Decks {
     /**
      * Get deck with NAME, ignoring case.
      */
-    public JSONObject byName(String name) {
+    @CheckResult
+    public @Nullable JSONObject byName(String name) {
         for (JSONObject m : mDecks.values()) {
             if (equalName(m.getString("name"),name)) {
                 return m;
