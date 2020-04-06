@@ -130,6 +130,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private int mColumn1Index;
     private int mColumn2Index;
 
+    //DEFECT: Doesn't need to be a local
     private long mNewDid;   // for change_deck
 
     private static final int EDIT_CARD = 0;
@@ -391,8 +392,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mReloadRequired = true;
         }
 
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
-                new DeckTask.TaskData(new Object[]{ids, Collection.DismissType.CHANGE_DECK_MULTI, mNewDid}));
+        executeChangeDeckTask(ids, mNewDid);
     }
 
 
@@ -1362,6 +1362,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCardsAdapter.notifyDataSetChanged();
             invalidateOptionsMenu();    // maybe the availability of undo changed
 
+            if (!result.getBoolean()) {
+                Timber.i("mChangeDeckHandler failed, not offering undo");
+                displayCouldNotChangeDeck();
+                return;
+            }
             // snackbar to offer undo
             String deckName = getCol().getDecks().name(mNewDid);
             mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
@@ -2105,5 +2110,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             cardIds.add(Long.valueOf(Objects.requireNonNull(id)));
         }
         return cardIds;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE) //should only be called from changeDeck()
+    void executeChangeDeckTask(long[] ids, long newDid) {
+        mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
+                new TaskData(new Object[]{ids, Collection.DismissType.CHANGE_DECK_MULTI, newDid}));
     }
 }

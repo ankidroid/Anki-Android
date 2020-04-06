@@ -190,16 +190,13 @@ public class CardBrowserTest extends RobolectricTest {
 
     @Test
     public void failureToMoveToDynamicDeckIsHandled() {
-        addDynamicDeck("World");
+        long deckIdToChangeTo = addDynamicDeck("World");
         selectDefaultDeck();
         CardBrowser b = getBrowserWithNotes(5);
         b.checkedCardsAtPositions(new int[] {0, 2});
 
         List<Long> cardIds = b.getCheckedCardIds();
 
-        JSONObject deckToChangeTo = getCol().getDecks().byName("World");
-        assertThat("We want to move to a dynamic deck (normally invalid)", deckToChangeTo.get("dyn"), not(0));
-        long deckIdToChangeTo = deckToChangeTo.getLong("id");
         final int deckPosition = b.getDeckPositionFromId(deckIdToChangeTo);
 
         AnkiAssert.assertDoesNotThrow(() -> b.changeDeck(deckPosition));
@@ -209,19 +206,59 @@ public class CardBrowserTest extends RobolectricTest {
         }
     }
 
+    @Test
+    public void moveToNonDynamicDeckWorks() {
+        long deckIdToChangeTo = addDeck("Hello");
+        selectDefaultDeck();
+        CardBrowser b = getBrowserWithNotes(5);
+        b.checkedCardsAtPositions(new int[] {0, 2});
+
+        List<Long> cardIds = b.getCheckedCardIds();
+
+        for (Long cardId : cardIds) {
+            assertThat("Deck should have been changed yet", getCol().getCard(cardId).getDid(), not(deckIdToChangeTo));
+        }
+
+        final int deckPosition = b.getDeckPositionFromId(deckIdToChangeTo);
+
+        //act
+        AnkiAssert.assertDoesNotThrow(() -> b.changeDeck(deckPosition));
+
+        //assert
+        for (Long cardId : cardIds) {
+            assertThat("Deck should be changed", getCol().getCard(cardId).getDid(), is(deckIdToChangeTo));
+        }
+    }
+
+    @Test
+    public void changeDeckViaTaskIsHandledCorrectly() {
+        long dynId = addDynamicDeck("World");
+        selectDefaultDeck();
+        CardBrowser b = getBrowserWithNotes(5);
+        b.checkedCardsAtPositions(new int[] {0, 2});
+
+        List<Long> cardIds = b.getCheckedCardIds();
+
+        b.executeChangeDeckTask(toLongArray(cardIds), dynId);
+
+        for (Long cardId: cardIds) {
+            assertThat("Deck should not be changed", getCol().getCard(cardId).getDid(), not(dynId));
+        }
+    }
+
 
     private void selectDefaultDeck() {
         getCol().getDecks().select(1);
     }
 
 
-    private void addDynamicDeck(String name) {
-        getCol().getDecks().newDyn(name);
+    private long addDynamicDeck(String name) {
+        return getCol().getDecks().newDyn(name);
     }
 
 
-    private void addDeck(String deckName) {
-        getCol().getDecks().id(deckName, true);
+    private long addDeck(String deckName) {
+        return getCol().getDecks().id(deckName, true);
     }
 
     private void deleteCardAtPosition(CardBrowser browser, int positionToCorrupt) {
@@ -249,6 +286,15 @@ public class CardBrowserTest extends RobolectricTest {
         //select seems to run an infinite loop :/
         ShadowActivity shadowActivity = shadowOf(browser);
         shadowActivity.clickMenuItem(action_select_all);
+    }
+
+    //There has to be a better way :(
+    long[] toLongArray(List<Long> list){
+        long[] ret = new long[list.size()];
+        for(int i = 0; i < ret.length; i++) {
+            ret[i] = list.get(i);
+        }
+        return ret;
     }
 
 

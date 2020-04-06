@@ -37,8 +37,8 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
@@ -737,6 +737,28 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
                     case CHANGE_DECK_MULTI: {
                         long newDid = (long) data[2];
+
+                        Timber.i("Changing %d cards to deck: '%d'", cards.length, newDid);
+                        JSONObject deckData = col.getDecks().get(newDid);
+
+                        if (Decks.isDynamic(deckData)) {
+                            //#5932 - can't change to a dynamic deck. Use "Rebuild"
+                            Timber.w("Attempted to move to dynamic deck. Cancelling task.");
+                            return new TaskData(false);
+                        }
+
+                        //Confirm that the deck exists (and is not the default)
+                        try {
+                            long actualId = deckData.getLong("id");
+                            if (actualId != newDid) {
+                                Timber.w("Attempted to move to deck %d, but got %d", newDid, actualId);
+                                return new TaskData(false);
+                            }
+                        } catch (Exception e) {
+                            Timber.e(e, "failed to check deck");
+                            return new TaskData(false);
+                        }
+
                         long[] changedCardIds = new long[cards.length];
                         for (int i = 0; i < cards.length; i++) {
                             changedCardIds[i] = cards[i].getId();
