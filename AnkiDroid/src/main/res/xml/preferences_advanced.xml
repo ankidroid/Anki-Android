@@ -67,6 +67,12 @@
                 android:key="fixHebrewText"
                 android:summary="@string/fix_hebrew_text_summ"
                 android:title="@string/fix_hebrew_text" />
+            <!-- Workaround for #5533 -->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="disableExtendedTextUi"
+                android:summary="@string/disable_extended_text_ui_summ"
+                android:title="@string/disable_extended_text_ui" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_plugins"
