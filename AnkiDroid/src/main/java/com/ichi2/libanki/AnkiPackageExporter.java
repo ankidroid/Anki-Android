@@ -193,7 +193,7 @@ class AnkiExporter extends Exporter {
                 }
             }
 
-            JSONObject destinationDeck = JSONObjectUtils.slowDeepClone(d);
+            JSONObject destinationDeck = d.deepClone();
             if (!mIncludeSched) {
                 // scheduling not included, so reset deck settings to default
                 destinationDeck.put("conf", 1);
@@ -314,17 +314,6 @@ class AnkiExporter extends Exporter {
 
     public void setDid(Long did) {
         mDid = did;
-    }
-
-    private static class JSONObjectUtils {
-        private JSONObjectUtils() {
-
-        }
-
-        /** Defect: Inefficient deep clone. We should find or write a faster method */
-        private static JSONObject slowDeepClone(JSONObject object) throws JSONException {
-            return new JSONObject(object.toString());
-        }
     }
 }
 
