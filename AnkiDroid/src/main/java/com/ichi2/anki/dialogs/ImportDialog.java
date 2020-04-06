@@ -8,7 +8,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.ImportUtils;
 

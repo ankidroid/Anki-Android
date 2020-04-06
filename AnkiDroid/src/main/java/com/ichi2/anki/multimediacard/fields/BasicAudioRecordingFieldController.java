@@ -24,15 +24,10 @@ import android.content.Intent;
 
 import android.widget.LinearLayout;
 
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.AudioView;
-import com.ichi2.libanki.Collection;
 
 import java.io.File;
-import java.io.IOException;
-
-import timber.log.Timber;
 
 public class BasicAudioRecordingFieldController extends FieldControllerBase implements IFieldController {
 
