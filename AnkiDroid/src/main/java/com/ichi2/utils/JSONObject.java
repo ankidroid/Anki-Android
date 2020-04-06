@@ -283,4 +283,20 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
     public JSONObject optJSONObject(String name) {
         return JSONObject.objectToObject(super.optJSONObject(name));
     }
+
+    public JSONObject deepClone() {
+        JSONObject clone = new JSONObject();
+        for (String key: this) {
+            if (get(key) instanceof JSONObject) {
+                JSONObject value = (JSONObject) get(key);
+                clone.put(key, value.deepClone());
+            }
+            else if (get(key) instanceof JSONArray) {
+                JSONArray value = (JSONArray) get(key);
+                clone.put(key, value.deepClone());
+            } else {
+                clone.put(key, get(key));
+            }
+        }
+    }
 }
