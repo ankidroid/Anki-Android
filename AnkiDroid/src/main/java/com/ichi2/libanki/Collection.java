@@ -352,7 +352,7 @@ public class Collection {
 
     public synchronized void save(String name, long mod) {
         // let the managers conditionally flush
-        mModels.flush();
+        getModels().flush();
         mDecks.flush();
         mTags.flush();
         // and flush deck + bump mod if db has been changed
@@ -479,7 +479,7 @@ public class Collection {
         // we can save space by removing the log of deletions
         mDb.execute("delete from graves");
         mUsn += 1;
-        mModels.beforeUpload();
+        getModels().beforeUpload();
         mTags.beforeUpload();
         mDecks.beforeUpload();
         modSchemaNoCheck();
@@ -569,7 +569,7 @@ public class Collection {
      * @return The new note
      */
     public Note newNote(boolean forDeck) {
-        return newNote(mModels.current(forDeck));
+        return newNote(getModels().current(forDeck));
     }
 
     /**
@@ -640,7 +640,7 @@ public class Collection {
      */
     public ArrayList<JSONObject> findTemplates(Note note) {
         JSONObject model = note.model();
-        ArrayList<Integer> avail = mModels.availOrds(model, Utils.joinFields(note.getFields()));
+        ArrayList<Integer> avail = getModels().availOrds(model, Utils.joinFields(note.getFields()));
         return _tmplsFromOrds(model, avail);
     }
 
@@ -738,8 +738,8 @@ public class Collection {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
                 String flds = cur.getString(2);
-                JSONObject model = mModels.get(mid);
-                ArrayList<Integer> avail = mModels.availOrds(model, flds);
+                JSONObject model = getModels().get(mid);
+                ArrayList<Integer> avail = getModels().availOrds(model, flds);
                 long did = dids.get(nid);
                 // use sibling due if there is one, else use a new id
                 long due;
@@ -1011,12 +1011,12 @@ public class Collection {
         ArrayList<Object[]> r = new ArrayList<>();
         for (Object[] o : _fieldData(snids)) {
             String[] fields = Utils.splitFields((String) o[2]);
-            JSONObject model = mModels.get((Long) o[1]);
+            JSONObject model = getModels().get((Long) o[1]);
             if (model == null) {
                 // note point to invalid model
                 continue;
             }
-            r.add(new Object[] { Utils.stripHTMLMedia(fields[mModels.sortIdx(model)]), Utils.fieldChecksum(fields[0]), o[0] });
+            r.add(new Object[] { Utils.stripHTMLMedia(fields[getModels().sortIdx(model)]), Utils.fieldChecksum(fields[0]), o[0] });
         }
         // apply, relying on calling code to bump usn+mod
         mDb.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r);
@@ -1066,8 +1066,8 @@ public class Collection {
         // unpack fields and create dict
         String[] flist = Utils.splitFields((String) data[6]);
         Map<String, String> fields = new HashMap<>();
-        JSONObject model = mModels.get((Long) data[2]);
-        Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
+        JSONObject model = getModels().get((Long) data[2]);
+        Map<String, Pair<Integer, JSONObject>> fmap = getModels().fieldMap(model);
         for (String name : fmap.keySet()) {
             fields.put(name, flist[fmap.get(name).first]);
         }
@@ -1502,13 +1502,13 @@ public class Collection {
         }
         boolean badNotes = mDb.queryScalar(String.format(Locale.US,
                 "select 1 from notes where id not in (select distinct nid from cards) " +
-                "or mid not in %s limit 1", Utils.ids2str(mModels.ids()))) > 0;
+                "or mid not in %s limit 1", Utils.ids2str(getModels().ids()))) > 0;
         // notes without cards or models
         if (badNotes) {
             return false;
         }
         // invalid ords
-        for (JSONObject m : mModels.all()) {
+        for (JSONObject m : getModels().all()) {
             // ignore clozes
             if (m.getInt("type") != Consts.MODEL_STD) {
                 continue;
@@ -1538,7 +1538,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         long oldSize = file.length();
         final int[] currentTask = {1};
-        int totalTasks = (mModels.all().size() * 4) + 23; // a few fixes are in all-models loops, the rest are one-offs
+        int totalTasks = (getModels().all().size() * 4) + 23; // a few fixes are in all-models loops, the rest are one-offs
         Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
         FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
                 (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
@@ -1578,7 +1578,7 @@ public class Collection {
 
         executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
         // for each model
-        for (JSONObject m : mModels.all()) {
+        for (JSONObject m : getModels().all()) {
             executeIntegrityTask.consume((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
             executeIntegrityTask.consume((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
         }
@@ -1619,7 +1619,7 @@ public class Collection {
         Timber.d("ensureModelsAreNotEmpty()");
         ArrayList<String> problems = new ArrayList<>();
         notifyProgress.run();
-        if (mModels.ensureNotEmpty()) {
+        if (getModels().ensureNotEmpty()) {
             problems.add("Added missing note type.");
         }
         return problems;
@@ -1705,9 +1705,9 @@ public class Collection {
     private List<String> updateFieldCache(Runnable notifyProgress) {
         Timber.d("updateFieldCache");
         // field cache
-        for (JSONObject m : mModels.all()) {
+        for (JSONObject m : getModels().all()) {
             notifyProgress.run();
-            updateFieldCache(Utils.arrayList2array(mModels.nids(m)));
+            updateFieldCache(Utils.arrayList2array(getModels().nids(m)));
         }
         return Collections.emptyList();
     }
@@ -1902,7 +1902,7 @@ public class Collection {
         // note types with a missing model
         notifyProgress.run();
         ArrayList<Long> ids = mDb.queryColumn(Long.class,
-                "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(mModels.ids()), 0);
+                "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(getModels().ids()), 0);
         notifyProgress.run();
         if (ids.size() != 0) {
             problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
@@ -2052,7 +2052,7 @@ public class Collection {
     /** Check if this collection is valid. */
     public boolean validCollection() {
     	//TODO: more validation code
-    	return mModels.validateModel();
+    	return getModels().validateModel();
     }
 
     public JSONObject getConf() {
