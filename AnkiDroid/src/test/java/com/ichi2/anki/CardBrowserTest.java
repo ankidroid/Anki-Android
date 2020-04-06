@@ -274,7 +274,7 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
     //There has to be a better way :(
-    long[] toLongArray(List<Long> list){
+    private long[] toLongArray(List<Long> list){
         long[] ret = new long[list.size()];
         for(int i = 0; i < ret.length; i++) {
             ret[i] = list.get(i);
