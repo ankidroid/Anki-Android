@@ -242,19 +242,19 @@ public class JSONArray extends org.json.JSONArray {
         }
     }
 
+
     public JSONArray deepClone() {
         JSONArray clone = new JSONArray();
-        for (String key: copyFrom.keys()) {
-            if (get(key) instanceof JSONObject) {
-                JSONObject value = (JSONObject) get(key);
-                clone.put(key, value.deepClone());
+        for (int i = 0; i < length(); i++) {
+            if (get(i) instanceof JSONObject) {
+                clone.put(getJSONObject(i).deepClone());
             }
-            else if (get(key) instanceof JSONArray) {
-                JSONArray value = (JSONArray) get(key);
-                clone.put(key, value.deepClone());
+            else if (get(i) instanceof JSONArray) {
+                clone.put(getJSONArray(i).deepClone());
             } else {
-                clone.put(key, get(key));
+                clone.put(get(i));
             }
         }
+        return clone;
     }
 }
