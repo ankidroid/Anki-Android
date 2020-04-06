@@ -99,8 +99,8 @@ public class CollectionHelper {
      */
     public synchronized Collection getCol(Context context) {
         // Open collection
-        String path = getCollectionPath(context);
         if (!colIsOpen()) {
+            String path = getCollectionPath(context);
             // Check that the directory has been created and initialized
             try {
                 initializeAnkiDroidDirectory(getParentDirectory(path));
