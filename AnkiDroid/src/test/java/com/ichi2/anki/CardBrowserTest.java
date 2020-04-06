@@ -189,26 +189,11 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
     @Test
-    public void failureToMoveToDynamicDeckIsHandled() {
-        long deckIdToChangeTo = addDynamicDeck("World");
-        selectDefaultDeck();
-        CardBrowser b = getBrowserWithNotes(5);
-        b.checkedCardsAtPositions(new int[] {0, 2});
-
-        List<Long> cardIds = b.getCheckedCardIds();
-
-        final int deckPosition = b.getDeckPositionFromId(deckIdToChangeTo);
-
-        AnkiAssert.assertDoesNotThrow(() -> b.changeDeck(deckPosition));
-
-        for (Long cardId: cardIds) {
-            assertThat("Deck should not be changed", getCol().getCard(cardId).getDid(), not(deckIdToChangeTo));
-        }
-    }
-
-    @Test
     public void moveToNonDynamicDeckWorks() {
+        addDeck("Foo");
+        addDynamicDeck("Bar");
         long deckIdToChangeTo = addDeck("Hello");
+        addDeck("ZZ");
         selectDefaultDeck();
         CardBrowser b = getBrowserWithNotes(5);
         b.checkedCardsAtPositions(new int[] {0, 2});
@@ -219,7 +204,7 @@ public class CardBrowserTest extends RobolectricTest {
             assertThat("Deck should have been changed yet", getCol().getCard(cardId).getDid(), not(deckIdToChangeTo));
         }
 
-        final int deckPosition = b.getDeckPositionFromId(deckIdToChangeTo);
+        final int deckPosition = b.getChangeDeckPositionFromId(deckIdToChangeTo);
 
         //act
         AnkiAssert.assertDoesNotThrow(() -> b.changeDeck(deckPosition));

@@ -363,7 +363,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     void changeDeck(int deckPosition) {
         long[] ids = getSelectedCardIds();
 
-        JSONObject selectedDeck = mDropDownDecks.get(deckPosition);
+        JSONObject selectedDeck = getValidDecksForChangeDeck().get(deckPosition);
 
         try {
             //#5932 - can't be dynamic
@@ -922,6 +922,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
                 builderSingle.setTitle(getString(R.string.move_all_to_deck));
 
+                //WARNING: changeDeck depends on this index, so any changes should be reflected there.
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
                 for (JSONObject deck : getValidDecksForChangeDeck()) {
                     try {
@@ -2091,9 +2092,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public int getDeckPositionFromId(long deckId) {
-        for (int i = 0; i < mDropDownDecks.size(); i++) {
-            JSONObject deck = mDropDownDecks.get(i);
+    public int getChangeDeckPositionFromId(long deckId) {
+        List<JSONObject> decks = getValidDecksForChangeDeck();
+        for (int i = 0; i < decks.size(); i++) {
+            JSONObject deck = decks.get(i);
             if (deck.getLong("id") == deckId) {
                 return i;
             }
