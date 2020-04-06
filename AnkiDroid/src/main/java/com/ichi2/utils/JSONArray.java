@@ -241,4 +241,20 @@ public class JSONArray extends org.json.JSONArray {
             throw new JSONException(e);
         }
     }
+
+
+    public JSONArray deepClone() {
+        JSONArray clone = new JSONArray();
+        for (int i = 0; i < length(); i++) {
+            if (get(i) instanceof JSONObject) {
+                clone.put(getJSONObject(i).deepClone());
+            }
+            else if (get(i) instanceof JSONArray) {
+                clone.put(getJSONArray(i).deepClone());
+            } else {
+                clone.put(get(i));
+            }
+        }
+        return clone;
+    }
 }

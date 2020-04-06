@@ -10,7 +10,7 @@ package com.ichi2.utils;
 import java.util.Iterator;
 import java.util.Map;
 
-public class JSONObject extends org.json.JSONObject {
+public class JSONObject extends org.json.JSONObject implements Iterable<String> {
 
     public static final Object NULL = JSONObject.NULL;
 
@@ -94,13 +94,18 @@ public class JSONObject extends org.json.JSONObject {
 
     public JSONObject(JSONObject copyFrom) {
         this();
-        Iterator<String> it = copyFrom.keys();
-        while (it.hasNext()) {
-            String key = it.next();
+        for (String key: this) {
             put(key, copyFrom.get(key));
         }
     }
 
+    /**
+        Iters on the keys. (Similar to iteration in Python's
+        dictionnary.
+    */
+    public Iterator<String> iterator() {
+        return keys();
+    }
 
     /**
      * Change type from JSONObject to JSONObject.
@@ -277,5 +282,20 @@ public class JSONObject extends org.json.JSONObject {
 
     public JSONObject optJSONObject(String name) {
         return JSONObject.objectToObject(super.optJSONObject(name));
+    }
+
+    public JSONObject deepClone() {
+        JSONObject clone = new JSONObject();
+        for (String key: this) {
+            if (get(key) instanceof JSONObject) {
+                clone.put(key, getJSONObject(key).deepClone());
+            }
+            else if (get(key) instanceof JSONArray) {
+                clone.put(key, getJSONArray(key).deepClone());
+            } else {
+                clone.put(key, get(key));
+            }
+        }
+        return clone;
     }
 }
