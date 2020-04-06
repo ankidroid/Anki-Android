@@ -299,7 +299,7 @@ public class Decks {
             mCol.getSched().emptyDyn(did);
             if (childrenToo) {
                 for (long id : children(did).values()) {
-                    rem(id, cardsToo);
+                    rem(id, cardsToo, false);
                 }
             }
         } else {
@@ -307,7 +307,7 @@ public class Decks {
             if (childrenToo) {
                 // we don't want to delete children when syncing
                 for (long id : children(did).values()) {
-                    rem(id, cardsToo);
+                    rem(id, cardsToo, false);
                 }
             }
             // delete cards too?
