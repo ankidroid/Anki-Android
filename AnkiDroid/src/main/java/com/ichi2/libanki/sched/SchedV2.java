@@ -318,10 +318,8 @@ public class SchedV2 extends AbstractSched {
             // add
             JSONArray ja = g.getJSONArray("newToday");
             ja.put(1, ja.getInt(1) - newc);
-            g.put("newToday", ja);
             ja = g.getJSONArray("revToday");
             ja.put(1, ja.getInt(1) - rev);
-            g.put("revToday", ja);
             mCol.getDecks().save(g);
         }
     }
@@ -1879,11 +1877,10 @@ public class SchedV2 extends AbstractSched {
     protected void update(JSONObject g) {
         for (String t : new String[] { "new", "rev", "lrn", "time" }) {
             String key = t + "Today";
+            JSONArray ja = g.getJSONArray(key);
             if (g.getJSONArray(key).getInt(0) != mToday) {
-                JSONArray ja = new JSONArray();
-                ja.put(mToday);
-                ja.put(0);
-                g.put(key, ja);
+                ja.put(0, mToday);
+                ja.put(1, 0);
             }
         }
     }

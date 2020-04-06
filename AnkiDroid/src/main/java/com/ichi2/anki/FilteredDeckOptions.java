@@ -127,15 +127,12 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                     if ("search".equals(entry.getKey())) {
                         JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(0, entry.getValue());
-                        mDeck.put("terms", ar);
                     } else if ("limit".equals(entry.getKey())) {
                         JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(1, entry.getValue());
-                        mDeck.put("terms", ar);
                     } else if ("order".equals(entry.getKey())) {
                         JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(2, Integer.parseInt((String) entry.getValue()));
-                        mDeck.put("terms", ar);
                     } else if ("resched".equals(entry.getKey())) {
                         mDeck.put("resched", entry.getValue());
                     } else if ("stepsOn".equals(entry.getKey())) {
