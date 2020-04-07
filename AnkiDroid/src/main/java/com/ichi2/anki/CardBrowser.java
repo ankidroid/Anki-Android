@@ -104,6 +104,28 @@ import timber.log.Timber;
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener {
 
+    // Properties in mCards. this is a stringly typed map for speed.
+    // Would be even faster as an array given these are all consts.
+    public static final String QUESTION = "question";
+    public static final String ANSWER = "answer";
+    public static final String FLAGS = "flags";
+    public static final String SUSPENDED = "suspended";
+    public static final String MARKED = "marked";
+    public static final String SFLD = "sfld";
+    public static final String DECK = "deck";
+    public static final String TAGS = "tags";
+    public static final String ID = "id";
+    public static final String CARD = "card";
+    public static final String DUE = "due";
+    public static final String EASE = "ease";
+    public static final String CHANGED = "changed";
+    public static final String CREATED = "created";
+    public static final String EDITED = "edited";
+    public static final String INTERVAL = "interval";
+    public static final String LAPSES = "lapses";
+    public static final String NOTE = "note";
+    public static final String REVIEWS = "reviews";
+
     private List<Map<String, String>> mCards;
     private HashMap<String, String> mDeckNames;
     private ArrayList<JSONObject> mDropDownDecks;
@@ -149,23 +171,24 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "cardEase",
         "cardReps",
         "cardLapses"};
-    private static final String[] COLUMN1_KEYS = {"question", "sfld"};
+    private static final String[] COLUMN1_KEYS = {QUESTION, SFLD};
+
     // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
     // Note: the last 6 are currently hidden
-    private static final String[] COLUMN2_KEYS = {"answer",
-        "card",
-        "deck",
-        "note",
-        "question",
-        "tags",
-        "lapses",
-        "reviews",
-        "interval",
-        "ease",
-        "due",
-        "changed",
-        "created",
-        "edited",
+    private static final String[] COLUMN2_KEYS = {ANSWER,
+        CARD,
+        DECK,
+        NOTE,
+        QUESTION,
+        TAGS,
+        LAPSES,
+        REVIEWS,
+        INTERVAL,
+        EASE,
+        DUE,
+        CHANGED,
+        CREATED,
+        EDITED,
     };
     private long mLastRenderStart = 0;
     private DeckDropDownAdapter mDropDownAdapter;
@@ -354,7 +377,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         long[] ids = new long[checkedPositions.length];
         int count = 0;
         for (int cardPosition : checkedPositions) {
-            ids[count++] = Long.valueOf(mCards.get(cardPosition).get("id"));
+            ids[count++] = Long.valueOf(mCards.get(cardPosition).get(ID));
         }
         return ids;
     }
@@ -378,7 +401,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
 
-        mNewDid = selectedDeck.getLong("id");
+        mNewDid = selectedDeck.getLong(ID);
 
         Timber.i("Changing selected cards to deck: %d", mNewDid);
 
@@ -584,7 +607,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     onCheck(position, view);
                 } else {
                     // load up the card selected on the list
-                    mCurrentCardId = Long.parseLong(getCards().get(position).get("id"));
+                    mCurrentCardId = Long.parseLong(getCards().get(position).get(ID));
                     sCardBrowserCard = getCol().getCard(mCurrentCardId);
                     // start note editor using the card we just loaded
                     Intent editCard = new Intent(CardBrowser.this, NoteEditor.class);
@@ -1232,7 +1255,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private Map<Long, Integer> getPositionMap(List<Map<String, String>> list) {
         Map<Long, Integer> positions = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
-            positions.put(Long.valueOf(list.get(i).get("id")), i);
+            positions.put(Long.valueOf(list.get(i).get(ID)), i);
         }
         return positions;
     }
@@ -1320,22 +1343,22 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             Map<String, String> card = getCards().get(pos);
             // update tags
-            card.put("marked", (c.note().hasTag("marked"))?"marked": null);
+            card.put(MARKED, (c.note().hasTag("marked")) ? "marked" : null);
             if (updatedCardTags != null) {
-                card.put("tags", updatedCardTags.get(c.getNid()));
+                card.put(TAGS, updatedCardTags.get(c.getNid()));
             }
             // update sfld
             String sfld = note.getSFld();
-            card.put("sfld", sfld);
+            card.put(SFLD, sfld);
             // update Q & A etc
             updateSearchItemQA(getBaseContext(), card, c);
             // update deck
             String deckName;
             deckName = getCol().getDecks().get(c.getDid()).getString("name");
-            card.put("deck", deckName);
+            card.put(DECK, deckName);
             // update flags (marked / suspended / etc) which determine color
-            card.put("suspended", c.getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
-            card.put("flags", (new Integer(c.getUserFlag())).toString());
+            card.put(SUSPENDED, c.getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
+            card.put(FLAGS, (new Integer(c.getUserFlag())).toString());
         }
 
         updateList();
@@ -1401,34 +1424,34 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         // put all of the fields in except for those that have already been pulled out straight from the
         // database
-        item.put("answer", formatQA(a));
-        item.put("card", c.template().optString("name"));
-        item.put("due", c.getDueString());
+        item.put(ANSWER, formatQA(a));
+        item.put(CARD, c.template().optString("name"));
+        item.put(DUE, c.getDueString());
         if (c.getType() == Consts.CARD_TYPE_NEW) {
-            item.put("ease", context.getString(R.string.card_browser_ease_new_card));
+            item.put(EASE, context.getString(R.string.card_browser_ease_new_card));
         } else {
-            item.put("ease", (c.getFactor()/10)+"%");
+            item.put(EASE, (c.getFactor()/10)+"%");
         }
 
-        item.put("changed", LanguageUtil.getShortDateFormatFromS(c.getMod()));
-        item.put("created", LanguageUtil.getShortDateFormatFromMs(c.note().getId()));
-        item.put("edited", LanguageUtil.getShortDateFormatFromS(c.note().getMod()));
+        item.put(CHANGED, LanguageUtil.getShortDateFormatFromS(c.getMod()));
+        item.put(CREATED, LanguageUtil.getShortDateFormatFromMs(c.note().getId()));
+        item.put(EDITED, LanguageUtil.getShortDateFormatFromS(c.note().getMod()));
         // interval
         switch (c.getType()) {
             case Consts.CARD_TYPE_NEW:
-                item.put("interval", context.getString(R.string.card_browser_interval_new_card));
+                item.put(INTERVAL, context.getString(R.string.card_browser_interval_new_card));
                 break;
             case Consts.CARD_TYPE_LRN :
-                item.put("interval", context.getString(R.string.card_browser_interval_learning_card));
+                item.put(INTERVAL, context.getString(R.string.card_browser_interval_learning_card));
                 break;
             default:
-                item.put("interval", Utils.roundedTimeSpanUnformatted(context, c.getIvl()*86400));
+                item.put(INTERVAL, Utils.roundedTimeSpanUnformatted(context, c.getIvl()*86400));
                 break;
         }
-        item.put("lapses", Integer.toString(c.getLapses()));
-        item.put("note", c.model().optString("name"));
-        item.put("question", formatQA(q));
-        item.put("reviews", Integer.toString(c.getReps()));
+        item.put(LAPSES, Integer.toString(c.getLapses()));
+        item.put(NOTE, c.model().optString("name"));
+        item.put(QUESTION, formatQA(q));
+        item.put(REVIEWS, Integer.toString(c.getReps()));
     }
 
 
@@ -1477,9 +1500,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         List<Map<String, String>> newMCards = new ArrayList<Map<String, String>>();
-        for (Map<String, String> card: oldMCards) {
-            if (! idToRemove.contains(Long.parseLong(card.get("id")))) {
-                newMCards.add(card);
+        for (Map<String, String> cardProperties: oldMCards) {
+            if (! idToRemove.contains(Long.parseLong(cardProperties.get(ID)))) {
+                newMCards.add(cardProperties);
             }
         }
         mCards = newMCards;
@@ -1802,13 +1825,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         /**
          * Get the background color of items in the card list based on the Card
-         * @param card -- a card object to color
+         * @param cardProperties -- a card object to color
          * @return index into TypedArray specifying the background color
          */
-        private int getColor(Map<String, String> card) {
-            boolean suspended = "True".equals(card.get("suspended"));
-            int flag = getFlagOrDefault(card, 0);
-            boolean marked = card.get("marked") != null ;
+        private int getColor(Map<String, String> cardProperties) {
+            boolean suspended = "True".equals(cardProperties.get(SUSPENDED));
+            int flag = getFlagOrDefault(cardProperties, 0);
+            boolean marked = cardProperties.get(MARKED) != null ;
             switch (flag) {
                 case 1:
                    return R.attr.flagRed;
@@ -1864,9 +1887,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     int getFlagOrDefault(Map<String, String> card, int defaultValue) {
-        String flagValue = card.get("flags");
+        String flagValue = card.get(FLAGS);
         if (flagValue == null) {
-            Timber.d("Unable to obtain flag for card: '%s'. Returning %d", card.get("id"), defaultValue);
+            Timber.d("Unable to obtain flag for card: '%s'. Returning %d", card.get(ID), defaultValue);
             return defaultValue;
         }
         try {
@@ -1940,7 +1963,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private long[] getAllCardIds() {
         long[] l = new long[mCards.size()];
         for (int i = 0; i < mCards.size(); i++) {
-            l[i] = Long.parseLong(mCards.get(i).get("id"));
+            l[i] = Long.parseLong(mCards.get(i).get(ID));
         }
         return l;
     }
@@ -2046,9 +2069,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void clearCardData(int position) {
-        String id = mCards.get(position).get("id");
+        String id = mCards.get(position).get(ID);
         mCards.get(position).clear();
-        mCards.get(position).put("id", id);
+        mCards.get(position).put(ID, id);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -2063,7 +2086,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         Map<String, String>[] cardsCopy = mCards.toArray(new Map[0]);
         long[] ret = new long[cardsCopy.length];
         for (int i = 0; i < cardsCopy.length; i++) {
-            ret[i] = Long.parseLong(cardsCopy[i].get("id"));
+            ret[i] = Long.parseLong(cardsCopy[i].get(ID));
         }
         return ret;
     }
@@ -2096,7 +2119,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         List<JSONObject> decks = getValidDecksForChangeDeck();
         for (int i = 0; i < decks.size(); i++) {
             JSONObject deck = decks.get(i);
-            if (deck.getLong("id") == deckId) {
+            if (deck.getLong(ID) == deckId) {
                 return i;
             }
         }
@@ -2108,7 +2131,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public List<Long> getCheckedCardIds() {
         List<Long> cardIds = new ArrayList<>();
         for (Integer pos : mCheckedCardPositions) {
-            String id = mCards.get(pos).get("id");
+            String id = mCards.get(pos).get(ID);
             cardIds.add(Long.valueOf(Objects.requireNonNull(id)));
         }
         return cardIds;
@@ -2125,7 +2148,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public Map<String, String> getPropertiesForCardId(long cardId) {
         for (Map<String, String> props : mCards) {
-            String id = Objects.requireNonNull(props.get("id"));
+            String id = Objects.requireNonNull(props.get(ID));
             if (Long.parseLong(id) == cardId) {
                 return props;
             }

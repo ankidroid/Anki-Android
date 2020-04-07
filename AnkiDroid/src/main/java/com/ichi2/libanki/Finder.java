@@ -24,6 +24,7 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
+import com.ichi2.anki.CardBrowser;
 import com.ichi2.async.DeckTask;
 
 import com.ichi2.utils.JSONArray;
@@ -1074,19 +1075,19 @@ public class Finder {
                     return new ArrayList<>();
                 }                
                 Map<String, String> card = new HashMap<>();
-                card.put("id", cur.getString(0));
-                card.put("sfld", cur.getString(1));
-                card.put("deck", deckNames.get(cur.getString(2)));
+                card.put(CardBrowser.ID, cur.getString(0));
+                card.put(CardBrowser.SFLD, cur.getString(1));
+                card.put(CardBrowser.DECK, deckNames.get(cur.getString(2)));
                 int queue = cur.getInt(3);
                 String tags = cur.getString(4);
-                card.put("tags", tags);
+                card.put(CardBrowser.TAGS, tags);
                 res.add(card);
                 // add placeholder for question and answer
-                card.put("question", null);
-                card.put("answer", null);
-                card.put("flags", (new Integer(Card.intToFlag(cur.getInt(5)))).toString());
-                card.put("suspended", queue == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
-                card.put("marked", (tags.matches(".*[Mm]arked.*"))?"marked": null);
+                card.put(CardBrowser.QUESTION, null);
+                card.put(CardBrowser.ANSWER, null);
+                card.put(CardBrowser.FLAGS, (new Integer(Card.intToFlag(cur.getInt(5)))).toString());
+                card.put(CardBrowser.SUSPENDED, queue == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
+                card.put(CardBrowser.MARKED, (tags.matches(".*[Mm]arked.*"))?"marked": null);
             }
         } catch (SQLException e) {
             // invalid grouping
