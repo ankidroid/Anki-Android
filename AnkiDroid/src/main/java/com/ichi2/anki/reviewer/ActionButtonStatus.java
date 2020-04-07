@@ -33,7 +33,7 @@ public class ActionButtonStatus {
     public void setup(SharedPreferences preferences) {
         setupButton(preferences, R.id.action_undo, "customButtonUndo", SHOW_AS_ACTION_ALWAYS);
         setupButton(preferences, R.id.action_schedule, "customButtonScheduleCard", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_flag, "customButtonFlag", SHOW_AS_ACTION_IF_ROOM);
+        setupButton(preferences, R.id.action_flag, "customButtonFlag", SHOW_AS_ACTION_ALWAYS);
         setupButton(preferences, R.id.action_edit, "customButtonEditCard", SHOW_AS_ACTION_IF_ROOM);
         setupButton(preferences, R.id.action_add_note_reviewer, "customButtonAddCard", MENU_DISABLED);
         setupButton(preferences, R.id.action_replay, "customButtonReplay", SHOW_AS_ACTION_IF_ROOM);
@@ -43,7 +43,7 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_open_deck_options, "customButtonDeckOptions", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_bury, "customButtonBury", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_suspend, "customButtonSuspend", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_mark_card, "customButtonMarkCard", SHOW_AS_ACTION_ALWAYS);
+        setupButton(preferences, R.id.action_mark_card, "customButtonMarkCard", SHOW_AS_ACTION_IF_ROOM);
         setupButton(preferences, R.id.action_delete, "customButtonDelete", SHOW_AS_ACTION_NEVER);
     }
 
