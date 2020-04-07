@@ -472,7 +472,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         ar.getJSONArray(0).put(0, "deck:\"" + deckToStudyName + "\" " + terms[0]);
         ar.getJSONArray(0).put(1, terms[1]);
         ar.getJSONArray(0).put(2, terms[2]);
-        dyn.put("resched", resched);
+        dyn.setResched(resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REBUILD_CRAM, new CollectionTask.TaskListener() {

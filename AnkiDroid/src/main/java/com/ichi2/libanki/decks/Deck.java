@@ -35,4 +35,8 @@ public class Deck extends ReadOnlyJSONObject {
     public JSONArray getDelays() {
         return getJSONArray("delays");
     }
+
+    public void setResched(boolean resched) {
+        put("resched", resched);
+    }
 }
