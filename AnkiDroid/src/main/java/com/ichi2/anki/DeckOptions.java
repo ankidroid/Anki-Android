@@ -198,7 +198,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                         switch (key) {
                             case "maxAnswerTime":
-                                mOptions.put("maxTaken", value);
+                                mOptions.setMaxTaken(value);
                                 break;
                             case "newFactor":
                                 mOptions.getNew().put("initialFactor", (Integer) value * 10);

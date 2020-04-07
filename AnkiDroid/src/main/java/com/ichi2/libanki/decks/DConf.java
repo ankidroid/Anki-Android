@@ -55,6 +55,10 @@ public class DConf extends ReadOnlyJSONObject{
         return new LapseConf(getJSONObject("lapse"));
     }
 
+    public void setMaxTaken(Object o) {
+        put("maxTaken", o);
+    }
+
     public JSONObject getReminder(){
         return getJSON().getJSONObject("reminder");
     }
