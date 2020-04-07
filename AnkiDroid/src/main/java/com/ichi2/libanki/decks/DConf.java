@@ -43,8 +43,8 @@ public class DConf extends ReadOnlyJSONObject{
         return ret;
     }
 
-    public ReviewingConf getNew() {
-        return new ReviewingConf(getJSONObject("new"));
+    public NewConf getNew() {
+        return new NewConf(getJSONObject("new"));
     }
 
     public ReviewConf getRev() {

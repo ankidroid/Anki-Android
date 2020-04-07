@@ -507,8 +507,8 @@ public class AdvancedStatistics {
 
             if (conf.getInt("dyn") == 0) {
                 revPerDay = conf.getRev().getInt("perDay");
-                newPerDay = conf.getJSONObject("new").getInt("perDay");
-                initialFactor = conf.getJSONObject("new").getInt("initialFactor");
+                newPerDay = conf.getNew().getInt("perDay");
+                initialFactor = conf.getNew().getInt("initialFactor");
 
                 Timber.d("rev.perDay=" + revPerDay);
                 Timber.d("new.perDay=" + newPerDay);

@@ -38,6 +38,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.Decks;
+import com.ichi2.libanki.decks.NewConf;
 
 import com.ichi2.libanki.decks.ReviewingConf;
 import com.ichi2.libanki.decks.ReviewConf;
@@ -1188,7 +1189,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected ReviewingConf _newConf(Card card) {
+    protected NewConf _newConf(Card card) {
         DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
@@ -1200,7 +1201,7 @@ public class Sched extends SchedV2 {
         if (delays == null) {
             delays = oconf.getNew().getJSONArray("delays");
         }
-        ReviewingConf dict = new ReviewingConf();
+        NewConf dict = new NewConf();
         // original deck
         dict.put("ints", oconf.getNew().getJSONArray("ints"));
         dict.put("initialFactor", oconf.getNew().getInt("initialFactor"));

@@ -50,6 +50,7 @@ import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.ROJSONComparator;
 import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.ReviewConf;
+import com.ichi2.libanki.decks.NewConf;
 import com.ichi2.libanki.decks.ReviewingConf;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
@@ -115,7 +116,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("autoPlayAudio", Boolean.toString(mOptions.getBoolean("autoplay")));
                 mValues.put("replayQuestion", Boolean.toString(mOptions.optBoolean("replayq", true)));
                 // new
-                ReviewingConf newOptions = mOptions.getNew();
+                NewConf newOptions = mOptions.getNew();
                 mValues.put("newSteps", StepsPreference.convertFromJSON(newOptions.getJSONArray("delays")));
                 mValues.put("newGradIvl", newOptions.getJSONArray("ints").getString(0));
                 mValues.put("newEasy", newOptions.getJSONArray("ints").getString(1));
