@@ -445,7 +445,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 mLoadWithDeckOptions = false;
                 Deck deck = getCol().getDecks().current();
                 if (deck.getInt("dyn") != 0 && deck.has("empty")) {
-                    deck.remove("empty");
+                    deck.removeEmpty();
                 }
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.rebuild_cram_deck), true);
