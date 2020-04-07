@@ -38,6 +38,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.decks.DConf;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.Decks;
 
 import com.ichi2.libanki.utils.SystemTime;
@@ -296,9 +297,9 @@ public class SchedV2 extends AbstractSched {
     public void _updateStats(Card card, String type, long cnt) {
         String key = type + "Today";
         long did = card.getDid();
-        List<JSONObject> list = mCol.getDecks().parents(did);
+        List<Deck> list = mCol.getDecks().parents(did);
         list.add(mCol.getDecks().get(did));
-        for (JSONObject g : list) {
+        for (Deck g : list) {
             JSONArray a = g.getJSONArray(key);
             // add
             a.put(1, a.getLong(1) + cnt);
@@ -308,14 +309,14 @@ public class SchedV2 extends AbstractSched {
 
 
     public void extendLimits(int newc, int rev) {
-        JSONObject cur = mCol.getDecks().current();
-        ArrayList<JSONObject> decks = new ArrayList<>();
+        Deck cur = mCol.getDecks().current();
+        ArrayList<Deck> decks = new ArrayList<>();
         decks.add(cur);
         decks.addAll(mCol.getDecks().parents(cur.getLong("id")));
         for (long did : mCol.getDecks().children(cur.getLong("id")).values()) {
             decks.add(mCol.getDecks().get(did));
         }
-        for (JSONObject g : decks) {
+        for (Deck g : decks) {
             // add
             JSONArray ja = g.getJSONArray("newToday");
             ja.put(1, ja.getInt(1) - newc);
@@ -330,7 +331,7 @@ public class SchedV2 extends AbstractSched {
         int tot = 0;
         HashMap<Long, Integer> pcounts = new HashMap<>();
         // for each of the active decks
-        HashMap<String, JSONObject> nameMap = mCol.getDecks().nameMap();
+        HashMap<String, Deck> nameMap = mCol.getDecks().nameMap();
         for (long did : mCol.getDecks().active()) {
             // get the individual deck's limit
             int lim = limFn.operation(mCol.getDecks().get(did));
@@ -338,8 +339,8 @@ public class SchedV2 extends AbstractSched {
                 continue;
             }
             // check the parents
-            List<JSONObject> parents = mCol.getDecks().parents(did, nameMap);
-            for (JSONObject p : parents) {
+            List<Deck> parents = mCol.getDecks().parents(did, nameMap);
+            for (Deck p : parents) {
                 // add if missing
                 long id = p.getLong("id");
                 if (!pcounts.containsKey(id)) {
@@ -351,7 +352,7 @@ public class SchedV2 extends AbstractSched {
             // see how many cards we actually have
             int cnt = cntFn.operation(did, lim);
             // if non-zero, decrement from parents counts
-            for (JSONObject p : parents) {
+            for (Deck p : parents) {
                 long id = p.getLong("id");
                 pcounts.put(id, pcounts.get(id) - cnt);
             }
@@ -381,11 +382,11 @@ public class SchedV2 extends AbstractSched {
     public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
-        ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
+        ArrayList<Deck> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> data = new ArrayList<>();
         HashMap<Long, HashMap> childMap = mCol.getDecks().childMap();
-        for (JSONObject deck : decks) {
+        for (Deck deck : decks) {
             if (collectionTask != null && collectionTask.isCancelled()) {
                 return null;
             }
@@ -493,7 +494,7 @@ public class SchedV2 extends AbstractSched {
             }
             // limit the counts to the deck's limits
             DConf conf = mCol.getDecks().confForDid(did);
-            JSONObject deck = mCol.getDecks().get(did);
+            Deck deck = mCol.getDecks().get(did);
             if (conf.getInt("dyn") == 0) {
                 _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
@@ -559,7 +560,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     protected void _resetNewCount() {
-        mNewCount = _walkingCount((JSONObject g) -> _deckNewLimitSingle(g),
+        mNewCount = _walkingCount((Deck g) -> _deckNewLimitSingle(g),
                                   (long did, int lim) -> _cntFnNew(did, lim));
     }
 
@@ -684,12 +685,12 @@ public class SchedV2 extends AbstractSched {
         if (fn == null) {
             fn = (g -> _deckNewLimitSingle(g));
         }
-        List<JSONObject> decks = mCol.getDecks().parents(did);
+        List<Deck> decks = mCol.getDecks().parents(did);
         decks.add(mCol.getDecks().get(did));
         int lim = -1;
         // for the deck and each of its parents
         int rem = 0;
-        for (JSONObject g : decks) {
+        for (Deck g : decks) {
             rem = fn.operation(g);
             if (lim == -1) {
                 lim = rem;
@@ -712,8 +713,8 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /** Limit for deck without parent limits. */
-    public int _deckNewLimitSingle(JSONObject g) {
+    /* Limit for deck without parent limits. */
+    public int _deckNewLimitSingle(Deck g) {
         if (g.getInt("dyn") != 0) {
             return mDynReportLimit;
         }
@@ -1185,17 +1186,17 @@ public class SchedV2 extends AbstractSched {
      */
 
     private int _currentRevLimit() {
-        JSONObject d = mCol.getDecks().get(mCol.getDecks().selected(), false);
+        Deck d = mCol.getDecks().get(mCol.getDecks().selected(), false);
         return _deckRevLimitSingle(d);
     }
 
 
-    protected int _deckRevLimitSingle(JSONObject d) {
+    protected int _deckRevLimitSingle(Deck d) {
         return _deckRevLimitSingle(d, null);
     }
 
 
-    private int _deckRevLimitSingle(JSONObject d, Integer parentLimit) {
+    private int _deckRevLimitSingle(Deck d, Integer parentLimit) {
         // invalid deck selected?
         if (d == null) {
             return 0;
@@ -1211,7 +1212,7 @@ public class SchedV2 extends AbstractSched {
         } else if (!d.getString("name").contains("::")) {
             return lim;
         } else {
-            for (JSONObject parent : mCol.getDecks().parents(d.getLong("id"))) {
+            for (Deck parent : mCol.getDecks().parents(d.getLong("id"))) {
                 // pass in dummy parentLimit so we don't do parent lookup again
                 lim = Math.min(lim, _deckRevLimitSingle(parent, lim));
             }
@@ -1531,7 +1532,7 @@ public class SchedV2 extends AbstractSched {
         if (did == 0) {
             did = mCol.getDecks().selected();
         }
-        JSONObject deck = mCol.getDecks().get(did);
+        Deck deck = mCol.getDecks().get(did);
         if (deck.getInt("dyn") == 0) {
             Timber.e("error: deck is not a filtered deck");
             return null;
@@ -1548,7 +1549,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _fillDyn(JSONObject deck) {
+    private int _fillDyn(Deck deck) {
         int start = -100000;
         int total = 0;
         JSONArray terms;
@@ -1650,7 +1651,7 @@ public class SchedV2 extends AbstractSched {
 
 
     protected void _moveToDyn(long did, List<Long> ids, int start) {
-        JSONObject deck = mCol.getDecks().get(did);
+        Deck deck = mCol.getDecks().get(did);
         ArrayList<Object[]> data = new ArrayList<>();
         int u = mCol.usn();
         int due = start;
@@ -1829,7 +1830,7 @@ public class SchedV2 extends AbstractSched {
         }
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead
-        for (JSONObject deck : mCol.getDecks().all()) {
+        for (Deck deck : mCol.getDecks().all()) {
             update(deck);
         }
         // unbury if the day has rolled over
@@ -1875,7 +1876,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected void update(JSONObject g) {
+    protected void update(Deck g) {
         for (String t : new String[] { "new", "rev", "lrn", "time" }) {
             String key = t + "Today";
             JSONArray ja = g.getJSONArray(key);

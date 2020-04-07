@@ -52,6 +52,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.Utils;
 
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -1012,7 +1013,7 @@ public class CardContentProvider extends ContentProvider {
                     throw new IllegalArgumentException("Deck name already exists: " + deckName);
                 }
                 did = col.getDecks().id(deckName, true);
-                JSONObject deck = col.getDecks().get(did);
+                Deck deck = col.getDecks().get(did);
                 if (deck != null) {
                     try {
                         String deckDesc = values.getAsString(FlashCardsContract.Deck.DECK_DESC);

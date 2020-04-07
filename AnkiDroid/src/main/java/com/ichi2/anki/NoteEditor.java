@@ -78,6 +78,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Note.ClozeUtils;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
@@ -492,9 +493,9 @@ public class NoteEditor extends AnkiActivity {
         mAllDeckIds = new ArrayList<>();
         final ArrayList<String> deckNames = new ArrayList<>();
 
-        ArrayList<JSONObject> decks = getCol().getDecks().all();
+        ArrayList<Deck> decks = getCol().getDecks().all();
         Collections.sort(decks, DeckComparator.instance);
-        for (JSONObject d : decks) {
+        for (Deck d : decks) {
             // add current deck and all other non-filtered decks to deck list
             long thisDid = d.getLong("id");
             if (d.getInt("dyn") == 0 || (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() == thisDid)) {
@@ -1615,7 +1616,7 @@ public class NoteEditor extends AnkiActivity {
             if (oldModelId != newId) {
                 JSONObject model = getCol().getModels().get(newId);
                 getCol().getModels().setCurrent(model);
-                JSONObject cdeck = getCol().getDecks().current();
+                Deck cdeck = getCol().getDecks().current();
                 cdeck.put("mid", newId);
                 getCol().getDecks().save(cdeck);
                 // Update deck

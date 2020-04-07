@@ -24,6 +24,7 @@ import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.dialogs.CustomStudyDialog.CustomStudyListener;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Test;
@@ -57,7 +58,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
         });
 
 
-        JSONObject customStudy = getCol().getDecks().current();
+        Deck customStudy = getCol().getDecks().current();
         assertThat("Custom Study should be dynamic", customStudy.getInt("dyn") == 1);
         assertThat("could not find deck: Custom study session", customStudy, notNullValue());
         customStudy.remove("id");

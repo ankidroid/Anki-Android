@@ -27,6 +27,7 @@ import android.util.Pair;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.async.CollectionTask;
 
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -632,7 +633,7 @@ public class Finder {
             ids = new ArrayList<>();
             val = val.replace("*", ".*");
             val = val.replace("+", "\\+");
-            for (JSONObject d : mCol.getDecks().all()) {
+            for (Deck d : mCol.getDecks().all()) {
                 String deckName = d.getString("name");
                 deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
                 if (deckName.matches("(?i)" + val)) {

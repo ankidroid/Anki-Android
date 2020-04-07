@@ -13,6 +13,13 @@ public class DConf extends ReadOnlyJSONObject{
         super(json);
     }
 
+    /**
+     * Filtered decks contains their own config.
+     * We keep the same values but consider it as a dconf.*/
+    public DConf(Deck deck) {
+        this(deck.getJSON());
+    }
+
 
     @Nullable
     public Boolean parseTimer() {

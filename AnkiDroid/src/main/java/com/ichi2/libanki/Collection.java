@@ -33,6 +33,7 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.Decks;
 import com.ichi2.libanki.exception.NoSuchDeckException;
@@ -857,7 +858,7 @@ public class Collection {
         }
         card.setDid(did);
         // if invalid did, use default instead
-        JSONObject deck = mDecks.get(card.getDid());
+        Deck deck = mDecks.get(card.getDid());
         if (deck.getInt("dyn") == 1) {
             // must not be a filtered deck
             card.setDid(1);

@@ -48,6 +48,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.ROJSONComparator;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
@@ -78,7 +79,7 @@ import timber.log.Timber;
 public class DeckOptions extends AppCompatPreferenceActivity implements OnSharedPreferenceChangeListener {
 
     private DConf mOptions;
-    private JSONObject mDeck;
+    private Deck mDeck;
     private Collection mCol;
     private boolean mPreferenceChanged = false;
     private BroadcastReceiver mUnmountReceiver = null;
@@ -824,7 +825,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private int getOptionsGroupCount() {
         int count = 0;
         long conf = mDeck.getLong("conf");
-        for (JSONObject deck : mCol.getDecks().all()) {
+        for (Deck deck : mCol.getDecks().all()) {
             if (deck.getInt("dyn") == 1) {
                 continue;
             }
@@ -853,7 +854,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         long did = mDeck.getLong("id");
         TreeMap<String, Long> children = mCol.getDecks().children(did);
         for (Map.Entry<String, Long> entry : children.entrySet()) {
-            JSONObject child = mCol.getDecks().get(entry.getValue());
+            Deck child = mCol.getDecks().get(entry.getValue());
             if (child.getInt("dyn") == 1) {
                 continue;
             }

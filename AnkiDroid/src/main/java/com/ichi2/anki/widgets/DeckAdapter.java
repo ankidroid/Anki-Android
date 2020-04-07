@@ -36,6 +36,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.sched.Sched;
 
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
@@ -255,7 +256,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 }
             }
             // If any of this node's parents are collapsed, don't add it to the deck list
-            for (JSONObject parent : mCol.getDecks().parents(node.did)) {
+            for (Deck parent : mCol.getDecks().parents(node.did)) {
                 mHasSubdecks = true;    // If a deck has a parent it means it's a subdeck so set a flag
                 if (parent.optBoolean("collapsed")) {
                     return;
@@ -290,7 +291,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             }
         }
         // If the deck is not in our list, we search again using the immediate parent
-        List<JSONObject> parents = mCol.getDecks().parents(did);
+        List<Deck> parents = mCol.getDecks().parents(did);
         if (parents.size() == 0) {
             return 0;
         } else {

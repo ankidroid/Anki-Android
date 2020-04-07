@@ -47,6 +47,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -218,7 +219,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                     switch (dialogId) {
                         case CUSTOM_STUDY_NEW: {
                             AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
-                            JSONObject deck = col.getDecks().get(did);
+                            Deck deck = col.getDecks().get(did);
                             deck.put("extendNew", n);
                             col.getDecks().save(deck);
                             col.getSched().extendLimits(n, 0);
@@ -227,7 +228,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                         }
                         case CUSTOM_STUDY_REV: {
                             AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
-                            JSONObject deck = col.getDecks().get(did);
+                            Deck deck = col.getDecks().get(did);
                             deck.put("extendRev", n);
                             col.getDecks().save(deck);
                             col.getSched().extendLimits(0, n);
@@ -423,13 +424,13 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
      * @param resched whether to reschedule the cards based on the answers given (or ignore them if false)
      */
     private void createCustomStudySession(JSONArray delays, Object[] terms, Boolean resched) {
-        JSONObject dyn;
+        Deck dyn;
         final AnkiActivity activity = getAnkiActivity();
         Collection col = CollectionHelper.getInstance().getCol(activity);
         long did = getArguments().getLong("did");
         String deckToStudyName = col.getDecks().get(did).getString("name");
         String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
-        JSONObject cur = col.getDecks().byName(customStudyDeck);
+        Deck cur = col.getDecks().byName(customStudyDeck);
         if (cur != null) {
             Timber.i("Found deck: '%s'", customStudyDeck);
             if (cur.getInt("dyn") != 1) {

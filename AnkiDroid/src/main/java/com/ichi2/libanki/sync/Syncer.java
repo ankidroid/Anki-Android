@@ -31,6 +31,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 
 import com.ichi2.libanki.decks.DConf;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -364,7 +365,7 @@ public class Syncer {
                 result.put("client", "graves had usn = -1");
                 return result;
             }
-            for (JSONObject g : mCol.getDecks().all()) {
+            for (Deck g : mCol.getDecks().all()) {
                 if (g.getInt("usn") == -1) {
                     Timber.e("Sync - SanityCheck: unsynced deck: " + g.getString("name"));
                     result.put("client", "deck had usn = -1");
@@ -723,7 +724,7 @@ public class Syncer {
         JSONArray result = new JSONArray();
         if (mCol.getServer()) {
             JSONArray decks = new JSONArray();
-            for (JSONObject g : mCol.getDecks().all()) {
+            for (Deck g : mCol.getDecks().all()) {
                 if (g.getInt("usn") >= mMinUsn) {
                     decks.put(g);
                 }
@@ -738,7 +739,7 @@ public class Syncer {
             result.put(dconfs);
         } else {
             JSONArray decks = new JSONArray();
-            for (JSONObject g : mCol.getDecks().all()) {
+            for (Deck g : mCol.getDecks().all()) {
                 if (g.getInt("usn") == -1) {
                     g.put("usn", mMaxUsn);
                     decks.put(g);
@@ -762,8 +763,8 @@ public class Syncer {
     private void mergeDecks(JSONArray rchg) {
         JSONArray decks = rchg.getJSONArray(0);
         for (int i = 0; i < decks.length(); i++) {
-            JSONObject r = decks.getJSONObject(i);
-            JSONObject l = mCol.getDecks().get(r.getLong("id"), false);
+            Deck r = new Deck(decks.getJSONObject(i));
+            Deck l = mCol.getDecks().get(r.getLong("id"), false);
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
                 mCol.getDecks().update(r);

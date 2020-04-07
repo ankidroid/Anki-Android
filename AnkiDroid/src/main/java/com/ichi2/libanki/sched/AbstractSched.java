@@ -10,6 +10,7 @@ import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.decks.DConf;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -55,7 +56,7 @@ public abstract class AbstractSched {
     /** New count for a single deck. */
     public abstract int _newForDeck(long did, int lim);
     /** Limit for deck without parent limits. */
-    public abstract int _deckNewLimitSingle(JSONObject g);
+    public abstract int _deckNewLimitSingle(Deck g);
     public abstract int totalNewForCurrentDeck();
     public abstract int totalRevForCurrentDeck();
     public abstract int[] _fuzzedIvlRange(int ivl);
@@ -234,7 +235,7 @@ public abstract class AbstractSched {
     }
 
     public interface LimitMethod {
-        int operation(JSONObject g);
+        int operation(Deck g);
     }
 
     public interface CountMethod {

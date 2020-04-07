@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONObject;
 
@@ -154,9 +155,9 @@ public class CardBrowserTest extends RobolectricTest {
         addDeck("Hello");
         CardBrowser b = getBrowserWithNotes(5);
 
-        List<JSONObject> decks = b.getValidDecksForChangeDeck();
+        List<Deck> decks = b.getValidDecksForChangeDeck();
 
-        for (JSONObject d : decks) {
+        for (Deck d : decks) {
             if (d.getString("name").equals("Hello")) {
                 return;
             }
@@ -170,9 +171,9 @@ public class CardBrowserTest extends RobolectricTest {
         addDynamicDeck("World");
         CardBrowser b = getBrowserWithNotes(5);
 
-        List<JSONObject> decks = b.getValidDecksForChangeDeck();
+        List<Deck> decks = b.getValidDecksForChangeDeck();
 
-        for (JSONObject d : decks) {
+        for (Deck d : decks) {
             if (d.getString("name").equals("World")) {
                 Assert.fail("Dynamic decks should not be transferred to by the browser.");
             }
@@ -191,8 +192,8 @@ public class CardBrowserTest extends RobolectricTest {
 
         CardBrowser b = getBrowserWithNotes(5);
 
-        List<JSONObject> decks = b.getValidDecksForChangeDeck();
-        for (JSONObject d : decks) {
+        List<Deck> decks = b.getValidDecksForChangeDeck();
+        for (Deck d : decks) {
             assertThat(validNames, hasItem(d.getString("name")));
         }
         assertThat("Additional unexpected decks were present", decks.size(), is(2));

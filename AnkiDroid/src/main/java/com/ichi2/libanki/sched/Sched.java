@@ -36,6 +36,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.decks.DConf;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.Decks;
 
 import com.ichi2.utils.JSONArray;
@@ -216,10 +217,10 @@ public class Sched extends SchedV2 {
     public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
-        ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
+        ArrayList<Deck> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> data = new ArrayList<>();
-        for (JSONObject deck : decks) {
+        for (Deck deck : decks) {
             if (collectionTask != null && collectionTask.isCancelled()) {
                 return null;
             }
@@ -301,7 +302,7 @@ public class Sched extends SchedV2 {
             }
             // limit the counts to the deck's limits
             DConf conf = mCol.getDecks().confForDid(did);
-            JSONObject deck = mCol.getDecks().get(did);
+            Deck deck = mCol.getDecks().get(did);
             if (conf.getInt("dyn") == 0) {
                 rev = Math.max(0, Math.min(rev, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
                 _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
@@ -373,12 +374,12 @@ public class Sched extends SchedV2 {
         if (fn == null) {
             fn = (g -> _deckNewLimitSingle(g));
         }
-        List<JSONObject> decks = mCol.getDecks().parents(did);
+        List<Deck> decks = mCol.getDecks().parents(did);
         decks.add(mCol.getDecks().get(did));
         int lim = -1;
         // for the deck and each of its parents
         int rem = 0;
-        for (JSONObject g : decks) {
+        for (Deck g : decks) {
             rem = fn.operation(g);
             if (lim == -1) {
                 lim = rem;
@@ -722,7 +723,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected int _deckRevLimitSingle(JSONObject d) {
+    protected int _deckRevLimitSingle(Deck d) {
         if (d.getInt("dyn") != 0) {
             return mReportLimit;
         }
@@ -992,7 +993,7 @@ public class Sched extends SchedV2 {
         if (did == 0) {
             did = mCol.getDecks().selected();
         }
-        JSONObject deck = mCol.getDecks().get(did);
+        Deck deck = mCol.getDecks().get(did);
         if (deck.getInt("dyn") == 0) {
             Timber.e("error: deck is not a filtered deck");
             return null;
@@ -1009,7 +1010,7 @@ public class Sched extends SchedV2 {
     }
 
 
-    private List<Long> _fillDyn(JSONObject deck) {
+    private List<Long> _fillDyn(Deck deck) {
         JSONArray terms;
         List<Long> ids;
         terms = deck.getJSONArray("terms").getJSONArray(0);
@@ -1264,7 +1265,7 @@ public class Sched extends SchedV2 {
         }
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead
-        for (JSONObject deck : mCol.getDecks().all()) {
+        for (Deck deck : mCol.getDecks().all()) {
             update(deck);
         }
         // unbury if the day has rolled over
@@ -1276,7 +1277,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected void update(JSONObject g) {
+    protected void update(Deck g) {
         for (String t : new String[] { "new", "rev", "lrn", "time" }) {
             String key = t + "Today";
             JSONArray ja = g.getJSONArray(key);

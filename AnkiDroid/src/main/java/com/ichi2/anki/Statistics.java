@@ -44,6 +44,7 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.decks.Decks;
 import com.ichi2.libanki.stats.Stats;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.ui.SlidingTabLayout;
 
 import com.ichi2.utils.JSONException;
@@ -71,7 +72,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     private ViewPager mViewPager;
     private AnkiStatsTaskHandler mTaskHandler = null;
     private long mDeckId;
-    private ArrayList<JSONObject> mDropDownDecks;
+    private ArrayList<Deck> mDropDownDecks;
     private Spinner mActionBarSpinner;
     private static boolean sIsSubtitle;
 
@@ -221,7 +222,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         if (position == 0) {
             mDeckId = Stats.ALL_DECKS_ID;
         } else {
-            JSONObject deck = mDropDownDecks.get(position - 1);
+            Deck deck = mDropDownDecks.get(position - 1);
             try {
                 mDeckId = deck.getLong("id");
             } catch (JSONException e) {

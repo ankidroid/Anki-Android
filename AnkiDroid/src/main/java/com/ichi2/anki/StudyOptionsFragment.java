@@ -45,6 +45,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.decks.Decks;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.HtmlUtils;
 
@@ -442,7 +443,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         if (requestCode == DECK_OPTIONS) {
             if (mLoadWithDeckOptions) {
                 mLoadWithDeckOptions = false;
-                JSONObject deck = getCol().getDecks().current();
+                Deck deck = getCol().getDecks().current();
                 if (deck.getInt("dyn") != 0 && deck.has("empty")) {
                     deck.remove("empty");
                 }
@@ -553,7 +554,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     initAllContentViews(mStudyOptionsView);
                     // Set the deck name
                     String fullName;
-                    JSONObject deck = getCol().getDecks().current();
+                    Deck deck = getCol().getDecks().current();
                     // Main deck name
                     fullName = deck.getString("name");
                     String[] name = Decks.path(fullName);

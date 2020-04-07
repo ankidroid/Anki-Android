@@ -29,8 +29,7 @@ import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
-
-import com.ichi2.utils.JSONObject;
+import com.ichi2.libanki.decks.Deck;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -1300,7 +1299,7 @@ public class Stats {
         if (deckId == ALL_DECKS_ID) {
             // All decks
             ArrayList<Long> ids = new ArrayList<>();
-            for (JSONObject d : col.getDecks().all()) {
+            for (Deck d : col.getDecks().all()) {
                 ids.add(d.getLong("id"));
             }
             return Utils.ids2str(Utils.arrayList2array(ids));

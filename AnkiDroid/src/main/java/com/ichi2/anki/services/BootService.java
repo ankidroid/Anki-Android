@@ -14,6 +14,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.decks.DConf;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.utils.Permissions;
 
 import com.ichi2.utils.JSONObject;
@@ -91,7 +92,7 @@ public class BootService extends BroadcastReceiver {
 
     private void scheduleDeckReminder(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        for (JSONObject deck : CollectionHelper.getInstance().getCol(context).getDecks().all()) {
+        for (Deck deck : CollectionHelper.getInstance().getCol(context).getDecks().all()) {
             Collection col = CollectionHelper.getInstance().getCol(context);
             if (col.getDecks().isDyn(deck.getLong("id"))) {
                 continue;

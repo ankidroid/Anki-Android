@@ -36,6 +36,7 @@ import android.view.MenuItem;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
@@ -59,7 +60,7 @@ import timber.log.Timber;
  */
 public class FilteredDeckOptions extends AppCompatPreferenceActivity implements OnSharedPreferenceChangeListener {
 
-    private JSONObject mDeck;
+    private Deck mDeck;
     private Collection mCol;
     private boolean mAllowCommit = true;
     private boolean mPrefChanged = false;

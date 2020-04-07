@@ -37,6 +37,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -663,7 +664,7 @@ public class ContentProviderTest {
                 long deckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
                 String deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
 
-                JSONObject deck = decks.get(deckID);
+                Deck deck = decks.get(deckID);
                 assertNotNull("Check that the deck we received actually exists", deck);
                 assertEquals("Check that the received deck has the correct name", deck.getString("name"), deckName);
             }
@@ -688,7 +689,7 @@ public class ContentProviderTest {
                 long returnedDeckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
                 String returnedDeckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
 
-                JSONObject realDeck = col.getDecks().get(deckId);
+                Deck realDeck = col.getDecks().get(deckId);
                 assertEquals("Check that received deck ID equals real deck ID", deckId, returnedDeckID);
                 assertEquals("Check that received deck name equals real deck name", realDeck.getString("name"), returnedDeckName);
             }

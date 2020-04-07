@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ichi2.anki.R;
 
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
@@ -22,9 +23,9 @@ public final class DeckDropDownAdapter extends BaseAdapter {
     }
 
     private Context context;
-    private ArrayList<JSONObject> decks;
+    private ArrayList<Deck> decks;
 
-    public DeckDropDownAdapter(Context context, ArrayList<JSONObject> decks) {
+    public DeckDropDownAdapter(Context context, ArrayList<Deck> decks) {
         this.context = context;
         this.decks = decks;
     }
@@ -78,7 +79,7 @@ public final class DeckDropDownAdapter extends BaseAdapter {
         if (position == 0) {
             deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
         } else {
-            JSONObject deck = decks.get(position - 1);
+            Deck deck = decks.get(position - 1);
             String deckName = deck.getString("name");
             deckNameView.setText(deckName);
         }
@@ -100,7 +101,7 @@ public final class DeckDropDownAdapter extends BaseAdapter {
         if (position == 0) {
             deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
         } else {
-            JSONObject deck = decks.get(position - 1);
+            Deck deck = decks.get(position - 1);
             String deckName = deck.getString("name");
             deckNameView.setText(deckName);
         }

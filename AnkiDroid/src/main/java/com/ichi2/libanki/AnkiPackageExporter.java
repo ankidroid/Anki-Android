@@ -25,6 +25,7 @@ import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.compat.CompatHelper;
 
 import com.ichi2.libanki.decks.DConf;
+import com.ichi2.libanki.decks.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -181,7 +182,7 @@ class AnkiExporter extends Exporter {
             }
         }
         JSONObject dconfs = new JSONObject();
-        for (JSONObject d : mSrc.getDecks().all()) {
+        for (Deck d : mSrc.getDecks().all()) {
             if ("1".equals(d.getString("id"))) {
                 continue;
             }
@@ -194,7 +195,7 @@ class AnkiExporter extends Exporter {
                 }
             }
 
-            JSONObject destinationDeck = d.deepClone();
+            Deck destinationDeck = new Deck(d.deepClone());
             if (!mIncludeSched) {
                 // scheduling not included, so reset deck settings to default
                 destinationDeck.put("conf", 1);
