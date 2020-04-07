@@ -161,7 +161,7 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck" >%d cards have been moved to the default deck. Please see the manual to locate them.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were moved to the default deck. Please see the manual to locate them.</string>
 
     <string name="video_creation_error">Could not play video</string>
 
