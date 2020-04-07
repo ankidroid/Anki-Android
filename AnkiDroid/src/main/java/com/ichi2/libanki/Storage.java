@@ -116,9 +116,9 @@ public class Storage {
             if (ver < 3) {
                 // new deck properties
                 for (Deck d : col.getDecks().all()) {
-                    d.put("dyn", 0);
-                    d.put("collapsed", false);
-                    col.getDecks().save(d);
+                    // Code moved to Decks package to access protected
+                    // methods.
+                    d.version3to4(col);
                 }
             }
             if (ver < 4) {

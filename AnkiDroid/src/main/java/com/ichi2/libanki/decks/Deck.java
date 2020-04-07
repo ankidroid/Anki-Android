@@ -1,5 +1,6 @@
 package com.ichi2.libanki.decks;
 
+import com.ichi2.libanki.Collection;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -54,5 +55,12 @@ public class Deck extends ReadOnlyJSONObject {
 
     public void removeEmpty() {
         remove("empty");
+    }
+
+    /* Methods updating schema versions */
+    public void version3to4(Collection col) {
+        put("dyn", 0);
+        put("collapsed", false);
+        col.getDecks().save();
     }
 }
