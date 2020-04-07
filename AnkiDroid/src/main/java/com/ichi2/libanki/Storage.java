@@ -20,6 +20,7 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.Decks;
 
 import com.ichi2.utils.JSONArray;
@@ -203,7 +204,7 @@ public class Storage {
                     }
                     col.getDecks().save(d);
                 }
-                for (JSONObject c : col.getDecks().allConf()) {
+                for (DConf c : col.getDecks().allConf()) {
                     JSONObject r = c.getJSONObject("rev");
                     r.put("ivlFct", r.optDouble("ivlFct", 1));
                     if (r.has("ivlfct")) {

@@ -30,6 +30,7 @@ import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 
+import com.ichi2.libanki.decks.DConf;
 import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -402,7 +403,7 @@ public class Anki2Importer extends Importer {
         long newid = mDst.getDecks().id(name);
         // pull conf over
         if (g.has("conf") && g.getLong("conf") != 1) {
-            JSONObject conf = mSrc.getDecks().getConf(g.getLong("conf"));
+            DConf conf = mSrc.getDecks().getConf(g.getLong("conf"));
             mDst.getDecks().save(conf);
             mDst.getDecks().updateConf(conf);
             JSONObject g2 = mDst.getDecks().get(newid);

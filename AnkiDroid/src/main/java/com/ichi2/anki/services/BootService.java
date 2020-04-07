@@ -13,6 +13,7 @@ import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.decks.DConf;
 import com.ichi2.utils.Permissions;
 
 import com.ichi2.utils.JSONObject;
@@ -96,7 +97,7 @@ public class BootService extends BroadcastReceiver {
                 continue;
             }
             final long deckConfigurationId = deck.getLong("conf");
-            final JSONObject deckConfiguration = col.getDecks().getConf(deckConfigurationId);
+            final DConf deckConfiguration = col.getDecks().getConf(deckConfigurationId);
 
             if (deckConfiguration.has("reminder")) {
                 final JSONObject reminder = deckConfiguration.getJSONObject("reminder");

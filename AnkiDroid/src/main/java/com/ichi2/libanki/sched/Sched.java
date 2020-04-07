@@ -35,6 +35,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.Decks;
 
 import com.ichi2.utils.JSONArray;
@@ -299,7 +300,7 @@ public class Sched extends SchedV2 {
                 _new += ch.newCount;
             }
             // limit the counts to the deck's limits
-            JSONObject conf = mCol.getDecks().confForDid(did);
+            DConf conf = mCol.getDecks().confForDid(did);
             JSONObject deck = mCol.getDecks().get(did);
             if (conf.getInt("dyn") == 0) {
                 rev = Math.max(0, Math.min(rev, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
@@ -725,7 +726,7 @@ public class Sched extends SchedV2 {
         if (d.getInt("dyn") != 0) {
             return mReportLimit;
         }
-        JSONObject c = mCol.getDecks().confForDid(d.getLong("id"));
+        DConf c = mCol.getDecks().confForDid(d.getLong("id"));
         return Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
     }
 
@@ -1179,20 +1180,20 @@ public class Sched extends SchedV2 {
      */
 
     @Override
-    public JSONObject _cardConf(Card card) {
+    public DConf _cardConf(Card card) {
         return mCol.getDecks().confForDid(card.getDid());
     }
 
 
     @Override
     protected JSONObject _newConf(Card card) {
-        JSONObject conf = _cardConf(card);
+        DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
             return conf.getJSONObject("new");
         }
         // dynamic deck; override some attributes, use original deck for others
-        JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
+        DConf oconf = mCol.getDecks().confForDid(card.getODid());
         JSONArray delays = conf.optJSONArray("delays");
         if (delays == null) {
             delays = oconf.getJSONObject("new").getJSONArray("delays");
@@ -1213,13 +1214,13 @@ public class Sched extends SchedV2 {
 
     @Override
     protected JSONObject _lapseConf(Card card) {
-        JSONObject conf = _cardConf(card);
+        DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
             return conf.getJSONObject("lapse");
         }
         // dynamic deck; override some attributes, use original deck for others
-        JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
+        DConf oconf = mCol.getDecks().confForDid(card.getODid());
         JSONArray delays = conf.optJSONArray("delays");
         if (delays == null) {
             delays = oconf.getJSONObject("lapse").getJSONArray("delays");
@@ -1238,7 +1239,7 @@ public class Sched extends SchedV2 {
 
 
     private boolean _resched(Card card) {
-        JSONObject conf = _cardConf(card);
+        DConf conf = _cardConf(card);
         if (conf.getInt("dyn") == 0) {
             return true;
         }
@@ -1483,7 +1484,6 @@ public class Sched extends SchedV2 {
         }
         mCol.getDb().executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?", d);
     }
-
 
 
     /*

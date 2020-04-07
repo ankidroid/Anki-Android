@@ -104,6 +104,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
@@ -2226,7 +2227,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      *
      * @return The configuration for the current {@link Card}
      */
-    private JSONObject getConfigForCurrentCard() {
+    private DConf getConfigForCurrentCard() {
         return getCol().getDecks().confForDid(getDeckIdForCard(mCurrentCard));
     }
 

@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.decks.DConf;
 import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -64,7 +65,7 @@ public abstract class AbstractSched {
     public abstract void emptyDyn(long did);
     public abstract void emptyDyn(long did, String lim);
     public abstract void remFromDyn(long[] cids);
-    public abstract JSONObject _cardConf(Card card);
+    public abstract DConf _cardConf(Card card);
     public abstract String _deckLimit();
     public abstract void _checkDay();
     public abstract CharSequence finishedMsg(Context context);
@@ -126,10 +127,7 @@ public abstract class AbstractSched {
     public abstract void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift);
     public abstract void randomizeCards(long did);
     public abstract void orderCards(long did);
-    public abstract void resortConf(JSONObject conf);
-    /**
-     * for post-import
-     */
+    public abstract void resortConf(DConf conf);
     public abstract void maybeRandomizeDeck();
     public abstract void maybeRandomizeDeck(Long did);
     public abstract boolean haveBuried(long did);

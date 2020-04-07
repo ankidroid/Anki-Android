@@ -140,7 +140,7 @@ public class Decks {
 
     private Collection mCol;
     private HashMap<Long, JSONObject> mDecks;
-    private HashMap<Long, JSONObject> mDconf;
+    private HashMap<Long, DConf> mDconf;
     private boolean mChanged;
 
 
@@ -169,7 +169,7 @@ public class Decks {
         ids = confarray.names();
         for (int i = 0; ids != null && i < ids.length(); i++) {
             String id = ids.getString(i);
-            mDconf.put(Long.parseLong(id), confarray.getJSONObject(id));
+            mDconf.put(Long.parseLong(id), new DConf(confarray.getJSONObject(id)));
         }
         mChanged = false;
     }
@@ -210,8 +210,8 @@ public class Decks {
             }
             values.put("decks", Utils.jsonToString(decksarray));
             JSONObject confarray = new JSONObject();
-            for (Map.Entry<Long, JSONObject> d : mDconf.entrySet()) {
-                confarray.put(Long.toString(d.getKey()), d.getValue());
+            for (Map.Entry<Long, DConf> d : mDconf.entrySet()) {
+                confarray.put(Long.toString(d.getKey()), d.getValue().getJSON());
             }
             values.put("dconf", Utils.jsonToString(confarray));
             mCol.getDb().update("col", values);
@@ -444,7 +444,7 @@ public class Decks {
     @CheckResult
     public @Nullable JSONObject byName(String name) {
         for (JSONObject m : mDecks.values()) {
-            if (equalName(m.getString("name"),name)) {
+            if (equalName(m.getString("name"), name)) {
                 return m;
             }
         }
@@ -618,34 +618,36 @@ public class Decks {
     /**
      * A list of all deck config.
      */
-    public ArrayList<JSONObject> allConf() {
-        ArrayList<JSONObject> confs = new ArrayList<>();
-        for (JSONObject c : mDconf.values()) {
+    public ArrayList<DConf> allConf() {
+        ArrayList<DConf> confs = new ArrayList<>();
+        for (DConf c : mDconf.values()) {
             confs.add(c);
         }
         return confs;
     }
 
 
-    public JSONObject confForDid(long did) {
+    public DConf confForDid(long did) {
         JSONObject deck = get(did, false);
         assert deck != null;
         if (deck.has("conf")) {
-            JSONObject conf = getConf(deck.getLong("conf"));
+            DConf conf = getConf(deck.getLong("conf"));
             conf.put("dyn", 0);
             return conf;
         }
         // dynamic decks have embedded conf
-        return deck;
+        return new DConf(deck);
+        //todo: deal more nicely than by taking json and creating a new object
     }
 
 
-    public JSONObject getConf(long confId) {
+    public DConf getConf(long confId) {
         return mDconf.get(confId);
     }
 
 
-    public void updateConf(JSONObject g) {
+    // JSONObject version kept for importing and exporting
+    public void updateConf(DConf g) {
         mDconf.put(g.getLong("id"), g);
         save();
     }
@@ -660,9 +662,9 @@ public class Decks {
      * Create a new configuration and return id.
      */
     public long confId(String name, String cloneFrom) {
-        JSONObject c;
+        DConf c;
         long id;
-        c = new JSONObject(cloneFrom);
+        c = new DConf(cloneFrom);
         while (true) {
             id = Utils.intTime(1000);
             if (!mDconf.containsKey(id)) {
@@ -704,7 +706,7 @@ public class Decks {
     }
 
 
-    public List<Long> didsForConf(JSONObject conf) {
+    public List<Long> didsForConf(DConf conf) {
         List<Long> dids = new ArrayList<>();
         for(JSONObject deck : mDecks.values()) {
             if (deck.has("conf") && deck.getLong("conf") == conf.getLong("id")) {
@@ -715,9 +717,9 @@ public class Decks {
     }
 
 
-    public void restoreToDefault(JSONObject conf) {
+    public void restoreToDefault(DConf conf) {
         int oldOrder = conf.getJSONObject("new").getInt("order");
-        JSONObject _new = new JSONObject(defaultConf);
+        DConf _new = new DConf(defaultConf);
         _new.put("id", conf.getLong("id"));
         _new.put("name", conf.getString("name"));
         mDconf.put(conf.getLong("id"), _new);
@@ -1000,7 +1002,7 @@ public class Decks {
 
     public void beforeUpload() {
         boolean changed_decks = Utils.markAsUploaded(all());
-        boolean changed_conf = Utils.markAsUploaded(allConf());
+        boolean changed_conf = ReadOnlyJSONObject.markAsUploaded(allConf());
         if (changed_decks || changed_conf) {
             // shouldSave should always be called on both lists, for
             // its side effect. Thus the disjunction should not be

@@ -23,6 +23,8 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.compat.CompatHelper;
+
+import com.ichi2.libanki.decks.DConf;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -201,7 +203,7 @@ class AnkiExporter extends Exporter {
         }
         // copy used deck confs
         Timber.d("Copy deck options");
-        for (JSONObject dc : mSrc.getDecks().allConf()) {
+        for (DConf dc : mSrc.getDecks().allConf()) {
             if (dconfs.has(dc.getString("id"))) {
                 dst.getDecks().updateConf(dc);
             }

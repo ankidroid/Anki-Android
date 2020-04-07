@@ -28,6 +28,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.Decks;
 import com.ichi2.libanki.stats.Stats;
 
@@ -498,7 +499,7 @@ public class AdvancedStatistics {
 
             Timber.d("Trying to get deck settings for deck with id=" + did);
 
-            JSONObject conf = decks.confForDid(did);
+            DConf conf = decks.confForDid(did);
 
             int newPerDay = Settings.getMaxNewPerDay();
             int revPerDay = Settings.getMaxReviewsPerDay();

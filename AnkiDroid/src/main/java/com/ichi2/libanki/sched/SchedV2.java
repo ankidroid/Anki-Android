@@ -37,6 +37,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.Decks;
 
 import com.ichi2.libanki.utils.SystemTime;
@@ -274,7 +275,7 @@ public class SchedV2 extends AbstractSched {
 
 
     public int answerButtons(Card card) {
-        JSONObject conf = _cardConf(card);
+        DConf conf = _cardConf(card);
         if (card.getODid() != 0 && !conf.getBoolean("resched")) {
             return 2;
         }
@@ -491,7 +492,7 @@ public class SchedV2 extends AbstractSched {
                 _new += ch.newCount;
             }
             // limit the counts to the deck's limits
-            JSONObject conf = mCol.getDecks().confForDid(did);
+            DConf conf = mCol.getDecks().confForDid(did);
             JSONObject deck = mCol.getDecks().get(did);
             if (conf.getInt("dyn") == 0) {
                 _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
@@ -716,7 +717,7 @@ public class SchedV2 extends AbstractSched {
         if (g.getInt("dyn") != 0) {
             return mDynReportLimit;
         }
-        JSONObject c = mCol.getDecks().confForDid(g.getLong("id"));
+        DConf c = mCol.getDecks().confForDid(g.getLong("id"));
         return Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
     }
 
@@ -1069,7 +1070,7 @@ public class SchedV2 extends AbstractSched {
     protected int _startingLeft(Card card) {
         JSONObject conf;
         if (card.getType() == Consts.CARD_TYPE_RELEARNING) {
-        conf = _lapseConf(card);
+            conf = _lapseConf(card);
         } else {
             conf = _lrnConf(card);
         }
@@ -1202,7 +1203,7 @@ public class SchedV2 extends AbstractSched {
         if (d.getInt("dyn") != 0) {
             return mDynReportLimit;
         }
-        JSONObject c = mCol.getDecks().confForDid(d.getLong("id"));
+        DConf c = mCol.getDecks().confForDid(d.getLong("id"));
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
 
         if (parentLimit != null) {
@@ -1736,19 +1737,19 @@ public class SchedV2 extends AbstractSched {
      * Tools ******************************************************************** ***************************
      */
 
-    public JSONObject _cardConf(Card card) {
+    public DConf _cardConf(Card card) {
         return mCol.getDecks().confForDid(card.getDid());
     }
 
 
     protected JSONObject _newConf(Card card) {
-        JSONObject conf = _cardConf(card);
+        DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
             return conf.getJSONObject("new");
         }
         // dynamic deck; override some attributes, use original deck for others
-        JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
+        DConf oconf = mCol.getDecks().confForDid(card.getODid());
         JSONObject dict = new JSONObject();
         // original deck
         dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
@@ -1764,13 +1765,13 @@ public class SchedV2 extends AbstractSched {
 
 
     protected JSONObject _lapseConf(Card card) {
-        JSONObject conf = _cardConf(card);
+        DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
             return conf.getJSONObject("lapse");
         }
         // dynamic deck; override some attributes, use original deck for others
-        JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
+        DConf oconf = mCol.getDecks().confForDid(card.getODid());
         JSONObject dict = new JSONObject();
         // original deck
         dict.put("minInt", oconf.getJSONObject("lapse").getInt("minInt"));
@@ -1785,7 +1786,7 @@ public class SchedV2 extends AbstractSched {
 
 
     protected JSONObject _revConf(Card card) {
-        JSONObject conf = _cardConf(card);
+        DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
             return conf.getJSONObject("rev");
@@ -1801,7 +1802,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private boolean _previewingCard(Card card) {
-        JSONObject conf = _cardConf(card);
+        DConf conf = _cardConf(card);
 
         return conf.getInt("dyn") != 0 && !conf.getBoolean("resched");
     }
@@ -2373,7 +2374,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void resortConf(JSONObject conf) {
+    public void resortConf(DConf conf) {
         List<Long> dids = mCol.getDecks().didsForConf(conf);
         for (long did : dids) {
             if (conf.getJSONObject("new").getLong("order") == 0) {
@@ -2396,7 +2397,7 @@ public class SchedV2 extends AbstractSched {
         if (did == null) {
             did = mCol.getDecks().selected();
         }
-        JSONObject conf = mCol.getDecks().confForDid(did);
+        DConf conf = mCol.getDecks().confForDid(did);
         // in order due?
         if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_RANDOM) {
             randomizeCards(did);

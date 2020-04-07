@@ -20,6 +20,7 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.decks.DConf;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -46,7 +47,7 @@ public class SchedV2Test extends RobolectricTest {
 
         long homeDeckId = addDeck("Poorretention");
 
-        JSONObject homeDeckConf = getCol().getDecks().confForDid(homeDeckId);
+        DConf homeDeckConf = getCol().getDecks().confForDid(homeDeckId);
         JSONObject lapse = homeDeckConf.getJSONObject("lapse");
 
         lapse.put("minInt", 2);
