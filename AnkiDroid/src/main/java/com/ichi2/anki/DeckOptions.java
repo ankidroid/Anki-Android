@@ -286,7 +286,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.setReplayq(value);
                                 break;
                             case "desc":
-                                mDeck.put("desc", value);
+                                mDeck.setDesc(value);
                                 mCol.getDecks().save(mDeck);
                                 break;
                             case "newSteps":

@@ -11,4 +11,8 @@ public class Deck extends ReadOnlyJSONObject {
     public Deck(String json) {
         super(json);
     }
+
+    public void setDesc(Object o) {
+        put("desc", o);
+    }
 }

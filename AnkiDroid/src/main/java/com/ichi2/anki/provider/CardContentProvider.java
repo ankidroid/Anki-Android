@@ -1018,7 +1018,7 @@ public class CardContentProvider extends ContentProvider {
                     try {
                         String deckDesc = values.getAsString(FlashCardsContract.Deck.DECK_DESC);
                         if (deckDesc != null) {
-                            deck.put("desc", deckDesc);
+                            deck.setDesc(deckDesc);
                         }
                     } catch (JSONException e) {
                         Timber.e(e, "Could not set a field of new deck %s", deckName);

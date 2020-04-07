@@ -413,7 +413,7 @@ public class Anki2Importer extends Importer {
         }
         // save desc
         Deck deck = mDst.getDecks().get(newid);
-        deck.put("desc", g.getString("desc"));
+        deck.setDesc(g.getString("desc"));
         mDst.getDecks().save(deck);
         // add to deck map and return
         mDecks.put(did, newid);
