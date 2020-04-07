@@ -208,6 +208,8 @@
     </string-array>
 
     <string name="answer_buttons_position_preference" translatable="false">answerButtonPosition</string>
+    <!--We don't translate the tag so we can list a valid query in the FAQ -->
+    <string name="missing_home_deck_tag">AnkiDroid_HomeDeckFix</string>
     <string-array name="answer_buttons_position" translatable="false">
         <item>top</item>
         <item>bottom</item>

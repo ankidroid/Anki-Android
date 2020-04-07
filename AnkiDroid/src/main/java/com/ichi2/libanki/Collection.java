@@ -1488,17 +1488,16 @@ public class Collection {
     /** Fix possible problems and rebuild caches. */
     public long fixIntegrity(CollectionTask.ProgressCallback progressCallback) {
         File file = new File(mPath);
-        ArrayList<String> problems = new ArrayList<>();
-        long oldSize = file.length();
+        CheckDatabaseResult result = new CheckDatabaseResult(file.length());
         final int[] currentTask = {1};
-        int totalTasks = (mModels.all().size() * 4) + 23; // a few fixes are in all-models loops, the rest are one-offs
+        int totalTasks = (mModels.all().size() * 4) + 25; // a few fixes are in all-models loops, the rest are one-offs
         Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
         FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
                 (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
                     //DEFECT: notifyProgress will lag if an exception is thrown.
                     try {
                         mDb.getDatabase().beginTransaction();
-                        problems.addAll(function.apply(notifyProgress));
+                        result.addAll(function.apply(notifyProgress));
                         mDb.getDatabase().setTransactionSuccessful();
                     } catch (Exception e) {
                         Timber.e(e, "Failed to execute integrity check");
@@ -1550,6 +1549,7 @@ public class Collection {
         executeIntegrityTask.consume(this::fixDecimalRevLogData);
         executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
         executeIntegrityTask.consume(this::ensureModelsAreNotEmpty);
+        executeIntegrityTask.consume((progressNotifier) -> this.ensureCardsHaveHomeDeck(progressNotifier, result));
         // and finally, optimize (unable to be done inside transaction).
         try {
             optimize(notifyProgress);
@@ -1560,11 +1560,66 @@ public class Collection {
         file = new File(mPath);
         long newSize = file.length();
         // if any problems were found, force a full sync
-        if (problems.size() > 0) {
+        if (result.hasProblems()) {
             modSchemaNoCheck();
         }
-        logProblems(problems);
-        return (oldSize - newSize) / 1024;
+        logProblems(result.getProblems());
+        return (result.getOldSize() - newSize) / 1024;
+    }
+
+
+    private List<String> ensureCardsHaveHomeDeck(Runnable notifyProgress, CheckDatabaseResult result) {
+        // #5932 - a card may not have a home deck if:
+        // * It is in a dynamic deck, and has odid = 0.
+        // * It is in a dynamic deck, and the odid refers to a dynamic deck.
+        notifyProgress.run();
+        //Both of these cases can be fixed by setting the odid to 1.
+
+        //get the deck Ids to query
+        Long[] dynDeckIds = getDecks().allDynamicDeckIds();
+        //make it mutable
+        List<Long> dynIdsAndZero = new ArrayList<>(Arrays.asList(dynDeckIds));
+        dynIdsAndZero.add(0L);
+
+        ArrayList<Long> cardIds = mDb.queryColumn(Long.class, "select id from cards where did in " +
+                Utils.ids2str(dynDeckIds) +
+                "and odid in " +
+                Utils.ids2str(dynIdsAndZero)
+                , 0);
+
+        notifyProgress.run();
+
+        if (cardIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        //PERF: in debug, 3 seconds for 87 cards.
+        //So, roughly 30 for 1000 cards
+        Timber.i("Found %d decks with no home deck", cardIds.size());
+        int fixed = 0;
+        for (long cardId : cardIds) {
+            try {
+                Card c = getCard(cardId);
+                c.setDid(Consts.DEFAULT_DECK_ID);
+                c.setODid(0L);
+                c.note().addTag(mContext.getString(R.string.missing_home_deck_tag));
+
+                c.note().flush();
+                c.flush();
+                fixed++;
+            } catch (Exception e) {
+                Timber.e(e, "Failed to fix card '%d'", cardId);
+            }
+        }
+
+        result.setCardsWithFixedHomeDeckCount(fixed);
+
+        if (fixed == 0) {
+            return Collections.emptyList();
+        }
+        Timber.d("Completed");
+        String message = String.format(Locale.US, "Fixed %d decks with no home deck", fixed);
+        return Collections.singletonList(message);
     }
 
 
@@ -1891,7 +1946,7 @@ public class Collection {
      *
      * @param integrityCheckProblems list of problems, the first 10 will be used
      */
-    private void logProblems(ArrayList<String> integrityCheckProblems) {
+    private void logProblems(List<String> integrityCheckProblems) {
 
         if (integrityCheckProblems.size() > 0) {
             StringBuffer additionalInfo = new StringBuffer();
@@ -2092,5 +2147,37 @@ public class Collection {
         }
         mSched.setReportLimit(reportLimit);
         return mSched;
+    }
+
+    private static class CheckDatabaseResult {
+        private final List<String> mProblems = new ArrayList<>();
+        private long mOldSize;
+        private int mFixedCardsWithNoHomeDeckCount;
+
+
+        public CheckDatabaseResult(long oldSize) {
+            mOldSize = oldSize;
+        }
+
+        public void addAll(List<String> strings) {
+            mProblems.addAll(strings);
+        }
+
+        public long getOldSize() {
+            return mOldSize;
+        }
+
+        public void setCardsWithFixedHomeDeckCount(int count) {
+            this.mFixedCardsWithNoHomeDeckCount = count;
+        }
+
+        public boolean hasProblems() {
+            return mProblems.size() > 0;
+        }
+
+
+        public List<String> getProblems() {
+            return mProblems;
+        }
     }
 }
