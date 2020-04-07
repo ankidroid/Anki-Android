@@ -464,9 +464,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         }
         // and then set various options
         if (delays.length() > 0) {
-            dyn.put("delays", delays);
+            dyn.setDelays(delays);
         } else {
-            dyn.put("delays", JSONObject.NULL);
+            dyn.setDelaysNull();
         }
         JSONArray ar = dyn.getTerms();
         ar.getJSONArray(0).put(0, "deck:\"" + deckToStudyName + "\" " + terms[0]);

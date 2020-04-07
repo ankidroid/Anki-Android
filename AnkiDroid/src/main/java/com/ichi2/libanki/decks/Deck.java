@@ -23,4 +23,16 @@ public class Deck extends ReadOnlyJSONObject {
     public JSONArray getTerms() {
         return getJSONArray("terms");
     }
+
+    public void setDelays(JSONArray delays) {
+        put("delays", delays);
+    }
+
+    public void setDelaysNull() {
+        put("delays", JSONObject.NULL);
+    }
+
+    public JSONArray getDelays() {
+        return getJSONArray("delays");
+    }
 }
