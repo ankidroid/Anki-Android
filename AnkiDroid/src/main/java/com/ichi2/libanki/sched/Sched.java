@@ -1016,7 +1016,7 @@ public class Sched extends SchedV2 {
     private List<Long> _fillDyn(Deck deck) {
         JSONArray terms;
         List<Long> ids;
-        terms = deck.getJSONArray("terms").getJSONArray(0);
+        terms = deck.getTerms().getJSONArray(0);
         String search = terms.getString(0);
         int limit = terms.getInt(1);
         int order = terms.getInt(2);

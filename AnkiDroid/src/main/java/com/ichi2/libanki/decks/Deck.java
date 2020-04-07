@@ -19,4 +19,8 @@ public class Deck extends ReadOnlyJSONObject {
     public void setConf(long conf) {
         put("conf", conf);
     }
+
+    public JSONArray getTerms() {
+        return getJSONArray("terms");
+    }
 }

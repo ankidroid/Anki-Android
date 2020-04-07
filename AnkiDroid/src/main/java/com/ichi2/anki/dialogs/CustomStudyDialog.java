@@ -468,7 +468,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         } else {
             dyn.put("delays", JSONObject.NULL);
         }
-        JSONArray ar = dyn.getJSONArray("terms");
+        JSONArray ar = dyn.getTerms();
         ar.getJSONArray(0).put(0, "deck:\"" + deckToStudyName + "\" " + terms[0]);
         ar.getJSONArray(0).put(1, terms[1]);
         ar.getJSONArray(0).put(2, terms[2]);

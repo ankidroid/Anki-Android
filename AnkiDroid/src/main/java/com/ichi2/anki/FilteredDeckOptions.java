@@ -91,7 +91,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
         protected void cacheValues() {
             Timber.d("cacheValues()");
 
-            JSONArray ar = mDeck.getJSONArray("terms").getJSONArray(0);
+            JSONArray ar = mDeck.getTerms().getJSONArray(0);
             mValues.put("search", ar.getString(0));
             mValues.put("limit", ar.getString(1));
             mValues.put("order", ar.getString(2));
@@ -126,13 +126,13 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                 for (Entry<String, Object> entry : mUpdate.valueSet()) {
                     Timber.i("Change value for key '" + entry.getKey() + "': " + entry.getValue());
                     if ("search".equals(entry.getKey())) {
-                        JSONArray ar = mDeck.getJSONArray("terms");
+                        JSONArray ar = mDeck.getTerms();
                         ar.getJSONArray(0).put(0, entry.getValue());
                     } else if ("limit".equals(entry.getKey())) {
-                        JSONArray ar = mDeck.getJSONArray("terms");
+                        JSONArray ar = mDeck.getTerms();
                         ar.getJSONArray(0).put(1, entry.getValue());
                     } else if ("order".equals(entry.getKey())) {
-                        JSONArray ar = mDeck.getJSONArray("terms");
+                        JSONArray ar = mDeck.getTerms();
                         ar.getJSONArray(0).put(2, Integer.parseInt((String) entry.getValue()));
                     } else if ("resched".equals(entry.getKey())) {
                         mDeck.put("resched", entry.getValue());

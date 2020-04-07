@@ -1557,7 +1557,7 @@ public class SchedV2 extends AbstractSched {
         int total = 0;
         JSONArray terms;
         List<Long> ids;
-        terms = deck.getJSONArray("terms");
+        terms = deck.getTerms();
         for (int i = 0; i < terms.length(); i++) {
             JSONArray term = terms.getJSONArray(i);
             String search = term.getString(0);
