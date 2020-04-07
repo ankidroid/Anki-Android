@@ -39,4 +39,8 @@ public class Deck extends ReadOnlyJSONObject {
     public void setResched(boolean resched) {
         put("resched", resched);
     }
+
+    public void setMid(long mid) {
+        put("mid", mid);
+    }
 }

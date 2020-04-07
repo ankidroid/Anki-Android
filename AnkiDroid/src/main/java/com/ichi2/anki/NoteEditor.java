@@ -1617,7 +1617,7 @@ public class NoteEditor extends AnkiActivity {
                 JSONObject model = getCol().getModels().get(newId);
                 getCol().getModels().setCurrent(model);
                 Deck cdeck = getCol().getDecks().current();
-                cdeck.put("mid", newId);
+                cdeck.setMid(newId);
                 getCol().getDecks().save(cdeck);
                 // Update deck
                 if (!getCol().getConf().optBoolean("addToCur", true)) {
