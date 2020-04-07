@@ -70,4 +70,8 @@ public class DConf extends ReadOnlyJSONObject{
     public void setTimer(int timer) {
         put("timer", timer);
     }
+
+    public void setAutoplay(Object o) {
+        put("autoplay", o);
+    }
 }

@@ -280,7 +280,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.setTimer((Boolean) value ? 1 : 0);
                                 break;
                             case "autoPlayAudio":
-                                mOptions.put("autoplay", value);
+                                mOptions.setAutoplay(value);
                                 break;
                             case "replayQuestion":
                                 mOptions.put("replayq", value);
