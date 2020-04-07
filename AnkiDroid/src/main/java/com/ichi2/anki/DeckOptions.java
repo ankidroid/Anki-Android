@@ -321,7 +321,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 if (!TextUtils.isEmpty(newName)) {
                                     // New config clones current config
                                     long id = mCol.getDecks().confId(newName, mOptions.toString());
-                                    mDeck.put("conf", id);
+                                    mDeck.setConf(id);
                                     mCol.getDecks().save(mDeck);
                                 }
                                 break;
@@ -552,7 +552,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 // Run the CPU intensive re-sort operation in a background thread
                 CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CONF_REMOVE, mConfChangeHandler,
                                         new CollectionTask.TaskData(new Object[] { mOptions }));
-                mDeck.put("conf", 1);
+                mDeck.setConf(1);
             }
         }
 

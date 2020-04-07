@@ -198,7 +198,7 @@ class AnkiExporter extends Exporter {
             Deck destinationDeck = new Deck(d.deepClone());
             if (!mIncludeSched) {
                 // scheduling not included, so reset deck settings to default
-                destinationDeck.put("conf", 1);
+                destinationDeck.setConf(1);
             }
             dst.getDecks().update(destinationDeck);
         }

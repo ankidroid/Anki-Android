@@ -408,7 +408,7 @@ public class Anki2Importer extends Importer {
             mDst.getDecks().save(conf);
             mDst.getDecks().updateConf(conf);
             Deck g2 = mDst.getDecks().get(newid);
-            g2.put("conf", g.getLong("conf"));
+            g2.setConf(g.getLong("conf"));
             mDst.getDecks().save(g2);
         }
         // save desc
