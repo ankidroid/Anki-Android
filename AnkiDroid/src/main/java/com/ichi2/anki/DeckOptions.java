@@ -277,7 +277,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getLapse().put("mult", (Integer) value / 100.0f);
                                 break;
                             case "showAnswerTimer":
-                                mOptions.put("timer", (Boolean) value ? 1 : 0);
+                                mOptions.setTimer((Boolean) value ? 1 : 0);
                                 break;
                             case "autoPlayAudio":
                                 mOptions.put("autoplay", value);

@@ -66,4 +66,8 @@ public class DConf extends ReadOnlyJSONObject{
     public void setReminder(Object o) {
         put("reminder", o);
     }
+
+    public void setTimer(int timer) {
+        put("timer", timer);
+    }
 }
