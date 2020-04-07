@@ -47,6 +47,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.decks.DConf;
+import com.ichi2.libanki.decks.LapseConf;
 import com.ichi2.libanki.decks.ROJSONComparator;
 import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.ReviewConf;
@@ -138,7 +139,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("revTimeoutQuestionSeconds", Integer.toString(revOptions.optInt("timeoutQuestionSeconds", 60)));
 
                 // lapse
-                ReviewingConf lapOptions = mOptions.getLapse();
+                LapseConf lapOptions = mOptions.getLapse();
                 mValues.put("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")));
                 mValues.put("lapNewIvl", Integer.toString((int) (lapOptions.getDouble("mult") * 100)));
                 mValues.put("lapMinIvl", lapOptions.getString("minInt"));

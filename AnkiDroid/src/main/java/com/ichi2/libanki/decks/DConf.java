@@ -51,7 +51,7 @@ public class DConf extends ReadOnlyJSONObject{
         return new ReviewConf(getJSONObject("rev"));
     }
 
-    public ReviewingConf getLapse() {
-        return new ReviewingConf(getJSONObject("lapse"));
+    public LapseConf getLapse() {
+        return new LapseConf(getJSONObject("lapse"));
     }
 }

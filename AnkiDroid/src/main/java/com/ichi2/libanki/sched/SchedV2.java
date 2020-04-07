@@ -40,6 +40,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.Decks;
+import com.ichi2.libanki.decks.LapseConf;
 import com.ichi2.libanki.decks.NewConf;
 
 import com.ichi2.libanki.decks.ReviewConf;
@@ -2691,7 +2692,7 @@ public class SchedV2 extends AbstractSched {
 
 
     public boolean leechActionSuspend(Card card) {
-        ReviewingConf conf = _cardConf(card).getLapse();
+        LapseConf conf = _cardConf(card).getLapse();
         return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
     }
 
