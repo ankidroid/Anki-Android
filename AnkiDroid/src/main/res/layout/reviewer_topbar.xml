@@ -60,14 +60,14 @@
         android:gravity="center" >
 
         <ImageView
-            android:id="@+id/mark_icon"
+            android:id="@+id/flag_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
             android:layout_gravity="center"
             />
         <ImageView
-            android:id="@+id/flag_icon"
+            android:id="@+id/mark_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
