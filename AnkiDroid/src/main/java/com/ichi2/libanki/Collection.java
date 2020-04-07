@@ -1595,7 +1595,7 @@ public class Collection {
 
         //PERF: in debug, 3 seconds for 87 cards.
         //So, roughly 30 for 1000 cards
-        Timber.i("Found %d decks with no home deck", cardIds.size());
+        Timber.i("Found %d cards with no home deck", cardIds.size());
         int fixed = 0;
         for (long cardId : cardIds) {
             try {
