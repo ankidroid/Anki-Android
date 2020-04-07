@@ -741,14 +741,14 @@ public class Syncer {
             JSONArray decks = new JSONArray();
             for (Deck g : mCol.getDecks().all()) {
                 if (g.getInt("usn") == -1) {
-                    g.put("usn", mMaxUsn);
+                    g.setUsn(mMaxUsn);
                     decks.put(g);
                 }
             }
             JSONArray dconfs = new JSONArray();
             for (DConf g : mCol.getDecks().allConf()) {
                 if (g.getInt("usn") == -1) {
-                    g.put("usn", mMaxUsn);
+                    g.setUsn(mMaxUsn);
                     dconfs.put(g);
                 }
             }

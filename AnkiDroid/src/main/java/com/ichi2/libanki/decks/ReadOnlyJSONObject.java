@@ -192,4 +192,8 @@ public class ReadOnlyJSONObject implements Iterable<String> {
     public JSONArray optDelays() {
         return optJSONArray("delays");
     }
+
+    public void setUsn(int usn) {
+        put("usn", usn);
+    }
 }
