@@ -1618,7 +1618,7 @@ public class Collection {
             return Collections.emptyList();
         }
         Timber.d("Completed");
-        String message = String.format(Locale.US, "Fixed %d decks with no home deck", fixed);
+        String message = String.format(Locale.US, "Fixed %d cards with no home deck", fixed);
         return Collections.singletonList(message);
     }
 
