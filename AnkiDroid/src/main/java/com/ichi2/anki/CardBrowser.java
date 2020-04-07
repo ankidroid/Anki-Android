@@ -1862,9 +1862,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     }
 
-
-    private int getFlagOrDefault(Map<String, String> card, int defaultValue) {
-        String flagValue = card.get("flag");
+    @VisibleForTesting
+    int getFlagOrDefault(Map<String, String> card, int defaultValue) {
+        String flagValue = card.get("flags");
         if (flagValue == null) {
             Timber.d("Unable to obtain flag for card: '%s'. Returning %d", card.get("id"), defaultValue);
             return defaultValue;
@@ -2119,5 +2119,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
                 new TaskData(new Object[]{ids, Collection.DismissType.CHANGE_DECK_MULTI, newDid}));
+    }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public Map<String, String> getPropertiesForCardId(long cardId) {
+        for (Map<String, String> props : mCards) {
+            String id = Objects.requireNonNull(props.get("id"));
+            if (Long.parseLong(id) == cardId) {
+                return props;
+            }
+        }
+        throw new IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId));
     }
 }

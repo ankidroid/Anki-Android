@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONObject;
@@ -18,6 +19,7 @@ import org.robolectric.shadows.ShadowActivity;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.CheckReturnValue;
 
@@ -37,7 +39,7 @@ public class CardBrowserTest extends RobolectricTest {
 
     @Test
     public void browserIsNotInitiallyInMultiSelectModeWithNoCards() {
-        CardBrowser browser = getBrowserWithNoCards();
+        CardBrowser browser = getBrowserWithNoNewCards();
         assertThat(browser.isInMultiSelectMode(), is(false));
     }
 
@@ -49,7 +51,7 @@ public class CardBrowserTest extends RobolectricTest {
 
     @Test
     public void selectAllIsNotVisibleWhenNoCardsInDeck() {
-        CardBrowser browser = getBrowserWithNoCards();
+        CardBrowser browser = getBrowserWithNoNewCards();
         assertThat(browser.isShowingSelectAll(), is(false));
     }
 
@@ -231,6 +233,28 @@ public class CardBrowserTest extends RobolectricTest {
         }
     }
 
+    @Test
+    public void flagValueIsShownOnCard() {
+        Note n = addNote("1");
+        flagCardForNote(n, 1);
+
+        long cardId = n.cards().get(0).getId();
+
+        CardBrowser b = getBrowserWithNoNewCards();
+        Map<String, String> cardProperties = b.getPropertiesForCardId(cardId);
+
+        int actualFlag = b.getFlagOrDefault(cardProperties, 0);
+
+        assertThat("The card flag value should be reflected in the UI", actualFlag, is(1));
+    }
+
+
+    private void flagCardForNote(Note n, int flag) {
+        Card c = n.cards().get(0);
+        c.setUserFlag(flag);
+        c.flush();
+    }
+
 
     private void selectDefaultDeck() {
         getCol().getDecks().select(1);
@@ -301,16 +325,17 @@ public class CardBrowserTest extends RobolectricTest {
         getCol().remCards(new long[] { cardId });
     }
 
-    private void addNote(String value) {
+    private Note addNote(String value) {
         Note n = getCol().newNote();
         n.setField(0, value);
         if (getCol().addNote(n) != 1) {
             throw new IllegalStateException("card was not added");
         }
+        return n;
     }
 
     @CheckReturnValue
-    private CardBrowser getBrowserWithNoCards() {
+    private CardBrowser getBrowserWithNoNewCards() {
         ActivityController multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
                 .create().start().resume().visible();
         return (CardBrowser) multimediaController.get();
