@@ -12,6 +12,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Collection;
 import com.ichi2.utils.JSONObject;
 
@@ -22,8 +23,6 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
-
-import androidx.annotation.NonNull;
 
 
 public abstract class AbstractSched {
@@ -76,7 +75,7 @@ public abstract class AbstractSched {
     public abstract void emptyDyn(long did);
     public abstract void emptyDyn(long did, String lim);
     public abstract void remFromDyn(long[] cids);
-    public abstract JSONObject _cardConf(Card card);
+    public abstract DeckConfig _cardConf(Card card);
     public abstract String _deckLimit();
     public abstract void _checkDay();
     public abstract CharSequence finishedMsg(Context context);
@@ -138,7 +137,7 @@ public abstract class AbstractSched {
     public abstract void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift);
     public abstract void randomizeCards(long did);
     public abstract void orderCards(long did);
-    public abstract void resortConf(JSONObject conf);
+    public abstract void resortConf(DeckConfig conf);
     /**
      * for post-import
      */

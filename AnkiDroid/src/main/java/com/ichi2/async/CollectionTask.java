@@ -43,6 +43,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 
 import com.ichi2.utils.JSONArray;
@@ -1322,7 +1323,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundReorder");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object[] data = params[0].getObjArray();
-        JSONObject conf = (JSONObject) data[0];
+        DeckConfig conf = (DeckConfig) data[0];
         col.getSched().resortConf(conf);
         return new TaskData(true);
     }
@@ -1333,7 +1334,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object[] data = params[0].getObjArray();
         JSONObject deck = (JSONObject) data[0];
-        JSONObject conf = (JSONObject) data[1];
+        DeckConfig conf = (DeckConfig) data[1];
         try {
             long newConfId = conf.getLong("id");
             // If new config has a different sorting order, reorder the cards
@@ -1362,7 +1363,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundConfReset");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object[] data = params[0].getObjArray();
-        JSONObject conf = (JSONObject) data[0];
+        DeckConfig conf = (DeckConfig) data[0];
         col.getDecks().restoreToDefault(conf);
         col.save();
         return new TaskData(true);
@@ -1373,7 +1374,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundConfRemove");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object[] data = params[0].getObjArray();
-        JSONObject conf = (JSONObject) data[0];
+        DeckConfig conf = (DeckConfig) data[0];
         try {
             // Note: We do the actual removing of the options group in the main thread so that we 
             // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
@@ -1399,7 +1400,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object[] data = params[0].getObjArray();
         JSONObject deck = (JSONObject) data[0];
-        JSONObject conf = (JSONObject) data[1];
+        DeckConfig conf = (DeckConfig) data[1];
         try {
             TreeMap<String, Long> children = col.getDecks().children(deck.getLong("id"));
             for (Map.Entry<String, Long> entry : children.entrySet()) {

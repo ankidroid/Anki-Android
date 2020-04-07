@@ -36,6 +36,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.DeckConfig;
 
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
@@ -661,7 +662,7 @@ public class Sched extends SchedV2 {
             return mReportLimit;
         }
         long did = d.getLong("id");
-        JSONObject c = mCol.getDecks().confForDid(did);
+        DeckConfig c = mCol.getDecks().confForDid(did);
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
         if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_REV, did)) {
             lim--;
@@ -1125,20 +1126,20 @@ public class Sched extends SchedV2 {
      */
 
     @Override
-    public JSONObject _cardConf(Card card) {
+    public DeckConfig _cardConf(Card card) {
         return mCol.getDecks().confForDid(card.getDid());
     }
 
 
     @Override
     protected JSONObject _newConf(Card card) {
-        JSONObject conf = _cardConf(card);
+        DeckConfig conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
             return conf.getJSONObject("new");
         }
         // dynamic deck; override some attributes, use original deck for others
-        JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
+        DeckConfig oconf = mCol.getDecks().confForDid(card.getODid());
         JSONArray delays = conf.optJSONArray("delays");
         if (delays == null) {
             delays = oconf.getJSONObject("new").getJSONArray("delays");
@@ -1159,13 +1160,13 @@ public class Sched extends SchedV2 {
 
     @Override
     protected JSONObject _lapseConf(Card card) {
-        JSONObject conf = _cardConf(card);
+        DeckConfig conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
             return conf.getJSONObject("lapse");
         }
         // dynamic deck; override some attributes, use original deck for others
-        JSONObject oconf = mCol.getDecks().confForDid(card.getODid());
+        DeckConfig oconf = mCol.getDecks().confForDid(card.getODid());
         JSONArray delays = conf.optJSONArray("delays");
         if (delays == null) {
             delays = oconf.getJSONObject("lapse").getJSONArray("delays");
@@ -1184,7 +1185,7 @@ public class Sched extends SchedV2 {
 
 
     private boolean _resched(Card card) {
-        JSONObject conf = _cardConf(card);
+        DeckConfig conf = _cardConf(card);
         if (conf.getInt("dyn") == 0) {
             return true;
         }

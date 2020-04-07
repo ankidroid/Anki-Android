@@ -38,11 +38,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -139,7 +137,7 @@ public class Decks {
 
     private Collection mCol;
     private HashMap<Long, JSONObject> mDecks;
-    private HashMap<Long, JSONObject> mDconf;
+    private HashMap<Long, DeckConfig> mDconf;
     // Never access mNameMap directly. Uses byName
     private NameMap mNameMap;
     private boolean mChanged;
@@ -233,7 +231,7 @@ public class Decks {
         ids = confarray.names();
         for (int i = 0; ids != null && i < ids.length(); i++) {
             String id = ids.getString(i);
-            mDconf.put(Long.parseLong(id), confarray.getJSONObject(id));
+            mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id)));
         }
         mChanged = false;
     }
@@ -265,7 +263,7 @@ public class Decks {
             }
             values.put("decks", Utils.jsonToString(decksarray));
             JSONObject confarray = new JSONObject();
-            for (Map.Entry<Long, JSONObject> d : mDconf.entrySet()) {
+            for (Map.Entry<Long, DeckConfig> d : mDconf.entrySet()) {
                 confarray.put(Long.toString(d.getKey()), d.getValue());
             }
             values.put("dconf", Utils.jsonToString(confarray));
@@ -679,30 +677,30 @@ public class Decks {
     /**
      * A list of all deck config.
      */
-    public ArrayList<JSONObject> allConf() {
+    public ArrayList<DeckConfig> allConf() {
         return new ArrayList<>(mDconf.values());
     }
 
 
-    public JSONObject confForDid(long did) {
+    public DeckConfig confForDid(long did) {
         JSONObject deck = get(did, false);
         assert deck != null;
         if (deck.has("conf")) {
-            JSONObject conf = getConf(deck.getLong("conf"));
+            DeckConfig conf = getConf(deck.getLong("conf"));
             conf.put("dyn", 0);
             return conf;
         }
         // dynamic decks have embedded conf
-        return deck;
+        return new DeckConfig(deck);
     }
 
 
-    public JSONObject getConf(long confId) {
+    public DeckConfig getConf(long confId) {
         return mDconf.get(confId);
     }
 
 
-    public void updateConf(JSONObject g) {
+    public void updateConf(DeckConfig g) {
         mDconf.put(g.getLong("id"), g);
         save();
     }
@@ -717,9 +715,9 @@ public class Decks {
      * Create a new configuration and return id.
      */
     public long confId(String name, String cloneFrom) {
-        JSONObject c;
+        DeckConfig c;
         long id;
-        c = new JSONObject(cloneFrom);
+        c = new DeckConfig(cloneFrom);
         while (true) {
             id = Utils.intTime(1000);
             if (!mDconf.containsKey(id)) {
@@ -761,7 +759,7 @@ public class Decks {
     }
 
 
-    public List<Long> didsForConf(JSONObject conf) {
+    public List<Long> didsForConf(DeckConfig conf) {
         List<Long> dids = new ArrayList<>();
         for(JSONObject deck : mDecks.values()) {
             if (deck.has("conf") && deck.getLong("conf") == conf.getLong("id")) {
@@ -772,9 +770,9 @@ public class Decks {
     }
 
 
-    public void restoreToDefault(JSONObject conf) {
+    public void restoreToDefault(DeckConfig conf) {
         int oldOrder = conf.getJSONObject("new").getInt("order");
-        JSONObject _new = new JSONObject(defaultConf);
+        DeckConfig _new = new DeckConfig(defaultConf);
         _new.put("id", conf.getLong("id"));
         _new.put("name", conf.getString("name"));
         mDconf.put(conf.getLong("id"), _new);

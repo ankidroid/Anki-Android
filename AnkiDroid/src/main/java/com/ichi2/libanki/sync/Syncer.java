@@ -30,6 +30,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -728,7 +729,7 @@ public class Syncer {
                 }
             }
             JSONArray dconfs = new JSONArray();
-            for (JSONObject g : mCol.getDecks().allConf()) {
+            for (DeckConfig g : mCol.getDecks().allConf()) {
                 if (g.getInt("usn") >= mMinUsn) {
                     dconfs.put(g);
                 }
@@ -744,7 +745,7 @@ public class Syncer {
                 }
             }
             JSONArray dconfs = new JSONArray();
-            for (JSONObject g : mCol.getDecks().allConf()) {
+            for (DeckConfig g : mCol.getDecks().allConf()) {
                 if (g.getInt("usn") == -1) {
                     g.put("usn", mMaxUsn);
                     dconfs.put(g);
@@ -770,8 +771,8 @@ public class Syncer {
         }
         JSONArray confs = rchg.getJSONArray(1);
         for (int i = 0; i < confs.length(); i++) {
-            JSONObject r = confs.getJSONObject(i);
-            JSONObject l = mCol.getDecks().getConf(r.getLong("id"));
+            DeckConfig r = new DeckConfig(confs.getJSONObject(i));
+            DeckConfig l = mCol.getDecks().getConf(r.getLong("id"));
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
                 mCol.getDecks().updateConf(r);
