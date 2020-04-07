@@ -118,7 +118,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("replayQuestion", Boolean.toString(mOptions.optBoolean("replayq", true)));
                 // new
                 NewConf newOptions = mOptions.getNew();
-                mValues.put("newSteps", StepsPreference.convertFromJSON(newOptions.getJSONArray("delays")));
+                mValues.put("newSteps", StepsPreference.convertFromJSON(newOptions.getDelays()));
                 mValues.put("newGradIvl", newOptions.getJSONArray("ints").getString(0));
                 mValues.put("newEasy", newOptions.getJSONArray("ints").getString(1));
                 mValues.put("newFactor", Integer.toString(newOptions.getInt("initialFactor") / 10));
@@ -140,7 +140,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                 // lapse
                 LapseConf lapOptions = mOptions.getLapse();
-                mValues.put("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")));
+                mValues.put("lapSteps", StepsPreference.convertFromJSON(lapOptions.getDelays()));
                 mValues.put("lapNewIvl", Integer.toString((int) (lapOptions.getDouble("mult") * 100)));
                 mValues.put("lapMinIvl", lapOptions.getString("minInt"));
                 mValues.put("lapLeechThres", lapOptions.getString("leechFails"));

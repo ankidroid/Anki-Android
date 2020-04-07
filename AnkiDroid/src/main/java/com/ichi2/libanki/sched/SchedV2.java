@@ -951,7 +951,7 @@ public class SchedV2 extends AbstractSched {
     private void _moveToNextStep(Card card, ReviewingConf conf) {
         // decrement real left count and recalculate left today
         int left = (card.getLeft() % 1000) - 1;
-        card.setLeft(_leftToday(conf.getJSONArray("delays"), left) * 1000 + left);
+        card.setLeft(_leftToday(conf.getDelays(), left) * 1000 + left);
 
         _rescheduleLrnCard(card, conf);
     }
@@ -1007,13 +1007,13 @@ public class SchedV2 extends AbstractSched {
         left = left % 1000;
         try {
             double delay;
-            JSONArray ja = conf.getJSONArray("delays");
+            JSONArray ja = conf.getDelays();
             int len = ja.length();
             try {
                 delay = ja.getDouble(len - left);
             } catch (JSONException e) {
-                if (conf.getJSONArray("delays").length() > 0) {
-                    delay = conf.getJSONArray("delays").getDouble(0);
+                if (conf.getDelays().length() > 0) {
+                    delay = conf.getDelays().getDouble(0);
                 } else {
                     // user deleted final step; use dummy value
                     delay = 1.0;
@@ -1030,7 +1030,7 @@ public class SchedV2 extends AbstractSched {
         // halfway between last and  next
         int delay1 = _delayForGrade(conf, left);
         int delay2;
-        if (conf.getJSONArray("delays").length() > 1) {
+        if (conf.getDelays().length() > 1) {
             delay2 = _delayForGrade(conf, left - 1);
         } else {
             delay2 = delay1 * 2;
@@ -1079,8 +1079,8 @@ public class SchedV2 extends AbstractSched {
         } else {
             conf = _lrnConf(card);
         }
-        int tot = conf.getJSONArray("delays").length();
-        int tod = _leftToday(conf.getJSONArray("delays"), tot);
+        int tot = conf.getDelays().length();
+        int tod = _leftToday(conf.getDelays(), tot);
         return tot + tod * 1000;
     }
 
@@ -1335,7 +1335,7 @@ public class SchedV2 extends AbstractSched {
         card.setFactor(Math.max(1300, card.getFactor() - 200));
         int delay;
          boolean suspended = _checkLeech(card, conf) && card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED;
-        if (conf.getJSONArray("delays").length() != 0 && !suspended) {
+        if (conf.getDelays().length() != 0 && !suspended) {
             card.setType(Consts.CARD_TYPE_RELEARNING);
             delay = _moveToFirstStep(card, conf);
         } else {
@@ -1759,7 +1759,7 @@ public class SchedV2 extends AbstractSched {
         dict.put("ints", oconf.getNew().getJSONArray("ints"));
         dict.put("initialFactor", oconf.getNew().getInt("initialFactor"));
         dict.put("bury", oconf.getNew().optBoolean("bury", true));
-        dict.put("delays", oconf.getNew().getJSONArray("delays"));
+        dict.put("delays", oconf.getNew().getDelays());
         // overrides
         dict.put("separate", conf.getBoolean("separate"));
         dict.put("order", Consts.NEW_CARDS_DUE);
@@ -1782,7 +1782,7 @@ public class SchedV2 extends AbstractSched {
         dict.put("leechFails", oconf.getLapse().getInt("leechFails"));
         dict.put("leechAction", oconf.getLapse().getInt("leechAction"));
         dict.put("mult", oconf.getLapse().getDouble("mult"));
-        dict.put("delays", oconf.getLapse().getJSONArray("delays"));
+        dict.put("delays", oconf.getLapse().getDelays());
         // overrides
         dict.put("resched", conf.getBoolean("resched"));
         return dict;
@@ -2054,8 +2054,8 @@ public class SchedV2 extends AbstractSched {
         } else if (ease == Consts.BUTTON_ONE) {
             // lapse
             ReviewingConf conf = _lapseConf(card);
-            if (conf.getJSONArray("delays").length() > 0) {
-                return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
+            if (conf.getDelays().length() > 0) {
+                return (long) (conf.getDelays().getDouble(0) * 60.0);
             }
             return _lapseIvl(card, conf) * 86400L;
         } else {
@@ -2078,7 +2078,7 @@ public class SchedV2 extends AbstractSched {
         ReviewingConf conf = _lrnConf(card);
         if (ease == Consts.BUTTON_ONE) {
             // fail
-            return _delayForGrade(conf, conf.getJSONArray("delays").length());
+            return _delayForGrade(conf, conf.getDelays().length());
         } else if (ease == Consts.BUTTON_TWO) {
             return _delayForRepeatingGrade(conf, card.getLeft());
         } else if (ease == Consts.BUTTON_FOUR) {

@@ -184,4 +184,12 @@ public class ReadOnlyJSONObject implements Iterable<String> {
     public String toString() {
         return getJSON().toString();
     }
+
+    public JSONArray getDelays(){
+        return getJSON().optJSONArray("delays");
+    }
+
+    public JSONArray optDelays() {
+        return optJSONArray("delays");
+    }
 }

@@ -95,7 +95,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             mValues.put("search", ar.getString(0));
             mValues.put("limit", ar.getString(1));
             mValues.put("order", ar.getString(2));
-            JSONArray delays = mDeck.optJSONArray("delays");
+            JSONArray delays = mDeck.optDelays();
             if (delays != null) {
                 mValues.put("steps", StepsPreference.convertFromJSON(delays));
                 mValues.put("stepsOn", Boolean.toString(true));

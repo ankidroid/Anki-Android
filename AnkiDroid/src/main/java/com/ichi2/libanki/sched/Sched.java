@@ -172,7 +172,7 @@ public class Sched extends SchedV2 {
                 return 4;
             }
             ReviewingConf conf = _lrnConf(card);
-            if (card.getType() == Consts.CARD_TYPE_NEW || card.getType() == Consts.CARD_TYPE_LRN || conf.getJSONArray("delays").length() > 1) {
+            if (card.getType() == Consts.CARD_TYPE_NEW || card.getType() == Consts.CARD_TYPE_LRN || conf.getDelays().length() > 1) {
                 return 3;
             }
             return 2;
@@ -514,7 +514,7 @@ public class Sched extends SchedV2 {
             if (ease == Consts.BUTTON_TWO) {
                 // decrement real left count and recalculate left today
                 int left = (card.getLeft() % 1000) - 1;
-                card.setLeft(_leftToday(conf.getJSONArray("delays"), left) * 1000 + left);
+                card.setLeft(_leftToday(conf.getDelays(), left) * 1000 + left);
                 // failed
             } else {
                 card.setLeft(_startingLeft(card));
@@ -609,8 +609,8 @@ public class Sched extends SchedV2 {
     	} else {
     		conf = _lrnConf(card);
     	}
-        int tot = conf.getJSONArray("delays").length();
-        int tod = _leftToday(conf.getJSONArray("delays"), tot);
+        int tot = conf.getDelays().length();
+        int tod = _leftToday(conf.getDelays(), tot);
         return tot + tod * 1000;
     }
 
@@ -870,7 +870,7 @@ public class Sched extends SchedV2 {
             return delay;
         }
         // if no relearning steps, nothing to do
-        if (conf.getJSONArray("delays").length() == 0) {
+        if (conf.getDelays().length() == 0) {
             return delay;
         }
         // record rev due date for later
@@ -1198,9 +1198,9 @@ public class Sched extends SchedV2 {
         }
         // dynamic deck; override some attributes, use original deck for others
         DConf oconf = mCol.getDecks().confForDid(card.getODid());
-        JSONArray delays = conf.optJSONArray("delays");
+        JSONArray delays = conf.optDelays();
         if (delays == null) {
-            delays = oconf.getNew().getJSONArray("delays");
+            delays = oconf.getNew().getDelays();
         }
         NewConf dict = new NewConf();
         // original deck
@@ -1225,9 +1225,9 @@ public class Sched extends SchedV2 {
         }
         // dynamic deck; override some attributes, use original deck for others
         DConf oconf = mCol.getDecks().confForDid(card.getODid());
-        JSONArray delays = conf.optJSONArray("delays");
+        JSONArray delays = conf.optDelays();
         if (delays == null) {
-            delays = oconf.getLapse().getJSONArray("delays");
+            delays = oconf.getLapse().getDelays();
         }
         LapseConf dict = new LapseConf();
         // original deck
@@ -1339,8 +1339,8 @@ public class Sched extends SchedV2 {
         } else if (ease == Consts.BUTTON_ONE) {
             // lapsed
             ReviewingConf conf = _lapseConf(card);
-            if (conf.getJSONArray("delays").length() > 0) {
-                return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
+            if (conf.getDelays().length() > 0) {
+                return (long) (conf.getDelays().getDouble(0) * 60.0);
             }
             return _nextLapseIvl(card, conf) * 86400L;
         } else {
@@ -1359,7 +1359,7 @@ public class Sched extends SchedV2 {
         ReviewingConf conf = _lrnConf(card);
         if (ease == Consts.BUTTON_ONE) {
             // fail
-            return _delayForGrade(conf, conf.getJSONArray("delays").length());
+            return _delayForGrade(conf, conf.getDelays().length());
         } else if (ease == Consts.BUTTON_THREE) {
             // early removal
             if (!_resched(card)) {
