@@ -101,7 +101,7 @@ public class BootService extends BroadcastReceiver {
             final DConf deckConfiguration = col.getDecks().getConf(deckConfigurationId);
 
             if (deckConfiguration.has("reminder")) {
-                final JSONObject reminder = deckConfiguration.getJSONObject("reminder");
+                final JSONObject reminder = deckConfiguration.getReminder();
 
                 if (reminder.getBoolean("enabled")) {
                     final PendingIntent reminderIntent = PendingIntent.getBroadcast(

@@ -54,4 +54,12 @@ public class DConf extends ReadOnlyJSONObject{
     public LapseConf getLapse() {
         return new LapseConf(getJSONObject("lapse"));
     }
+
+    public JSONObject getReminder(){
+        return getJSON().getJSONObject("reminder");
+    }
+
+    public void setReminder(Object o) {
+        put("reminder", o);
+    }
 }

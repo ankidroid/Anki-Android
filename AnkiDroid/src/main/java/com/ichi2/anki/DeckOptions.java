@@ -149,7 +149,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("currentConf", mCol.getDecks().getConf(mDeck.getLong("conf")).getString("name"));
                 // reminders
                 if (mOptions.has("reminder")) {
-                    final JSONObject reminder = mOptions.getJSONObject("reminder");
+                    final JSONObject reminder = mOptions.getReminder();
                     final JSONArray reminderTime = reminder.getJSONArray("time");
 
                     mValues.put("reminderEnabled", Boolean.toString(reminder.getBoolean("enabled")));
@@ -367,14 +367,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                                 reminder.put("enabled", value);
                                 if (mOptions.has("reminder")) {
-                                    reminder.put("time", mOptions.getJSONObject("reminder").getJSONArray("time"));
+                                    reminder.put("time", mOptions.getReminder().getJSONArray("time"));
                                 } else {
                                     reminder.put("time", new JSONArray()
                                             .put(TimePreference.parseHours(TimePreference.DEFAULT_VALUE))
                                             .put(TimePreference.parseMinutes(TimePreference.DEFAULT_VALUE)));
                                 }
 
-                                mOptions.put("reminder", reminder);
+                                mOptions.setReminder(reminder);
 
                                 final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                                 final PendingIntent reminderIntent = PendingIntent.getBroadcast(
@@ -409,7 +409,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 reminder.put("time", new JSONArray().put(TimePreference.parseHours((String) value))
                                         .put(TimePreference.parseMinutes((String) value)));
 
-                                mOptions.put("reminder", reminder);
+                                mOptions.setReminder(reminder);
 
                                 final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                                 final PendingIntent reminderIntent = PendingIntent.getBroadcast(
