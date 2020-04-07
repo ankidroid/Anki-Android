@@ -331,7 +331,7 @@ public class Card implements Cloneable {
      * Time limit for answering in milliseconds.
      */
     public int timeLimit() {
-        JSONObject conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
+        DeckConfig conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
         return conf.getInt("maxTaken") * 1000;
     }
 
@@ -584,7 +584,7 @@ public class Card implements Cloneable {
 
 
     public boolean showTimer() {
-        JSONObject options = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
+        DeckConfig options = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
         return DeckConfig.parseTimerOpt(options, true);
     }
 

@@ -1093,7 +1093,7 @@ public class Utils {
        @return whether there was a non-zero usn; in this case the list
        should be saved before the upload.
      */
-    public static boolean markAsUploaded(ArrayList<JSONObject> ar) {
+    public static boolean markAsUploaded(ArrayList<? extends JSONObject> ar) {
         boolean changed = false;
         for (JSONObject obj: ar) {
             if (obj.optInt("usn", 1) != 0) {

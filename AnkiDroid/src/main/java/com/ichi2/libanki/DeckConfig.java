@@ -1,5 +1,6 @@
 /*
  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+ Copyright (c) 2020 Arthur Milchior <Arthur@Milchior.fr>
 
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
@@ -13,14 +14,20 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.ichi2.libanki;
 
 import com.ichi2.utils.JSONObject;
 
 import androidx.annotation.Nullable;
 
-public class DeckConfig {
+public class DeckConfig extends JSONObject{
+    public DeckConfig(JSONObject json) {
+        super(json);
+    }
+
+    public DeckConfig(String json) {
+        super(json);
+    }
 
     public static @Nullable Boolean parseTimer(JSONObject config) {
         //Note: Card.py used != 0, DeckOptions used == 1

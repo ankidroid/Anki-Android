@@ -882,7 +882,7 @@ public class Collection {
 
 
     public int _dueForDid(long did, int due) {
-        JSONObject conf = mDecks.confForDid(did);
+        DeckConfig conf = mDecks.confForDid(did);
         // in order due?
         if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_DUE) {
             return due;
@@ -1599,10 +1599,10 @@ public class Collection {
         notifyProgress.run();
 
         //obtain a list of all valid dconf IDs
-        List<JSONObject> allConf = getDecks().allConf();
+        List<DeckConfig> allConf = getDecks().allConf();
         HashSet<Long> configIds  = new HashSet<>();
 
-        for (JSONObject conf : allConf) {
+        for (DeckConfig conf : allConf) {
             configIds.add(conf.getLong("id"));
         }
 

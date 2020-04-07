@@ -13,6 +13,7 @@ import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.utils.Permissions;
 
 import com.ichi2.utils.JSONObject;
@@ -90,7 +91,7 @@ public class BootService extends BroadcastReceiver {
 
     private void scheduleDeckReminder(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        for (JSONObject deckConfiguration : CollectionHelper.getInstance().getCol(context).getDecks().allConf()) {
+        for (DeckConfig deckConfiguration : CollectionHelper.getInstance().getCol(context).getDecks().allConf()) {
             Collection col = CollectionHelper.getInstance().getCol(context);
             if (deckConfiguration.has("reminder")) {
                 final JSONObject reminder = deckConfiguration.getJSONObject("reminder");
