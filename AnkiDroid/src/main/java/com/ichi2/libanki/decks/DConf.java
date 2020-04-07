@@ -78,4 +78,8 @@ public class DConf extends ReadOnlyJSONObject{
     public void setReplayq(Object o) {
         put("replayq", o);
     }
+
+    public void setName(Object o) {
+        put("name", o);
+    }
 }

@@ -306,7 +306,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "confRename": {
                                 String newName = (String) value;
                                 if (!TextUtils.isEmpty(newName)) {
-                                    mOptions.put("name", newName);
+                                    mOptions.setName(newName);
                                 }
                                 break;
                             }
