@@ -220,7 +220,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                         case CUSTOM_STUDY_NEW: {
                             AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
                             Deck deck = col.getDecks().get(did);
-                            deck.put("extendNew", n);
+                            deck.setExtend("New", n);
                             col.getDecks().save(deck);
                             col.getSched().extendLimits(n, 0);
                             onLimitsExtended(jumpToReviewer);
@@ -229,7 +229,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                         case CUSTOM_STUDY_REV: {
                             AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
                             Deck deck = col.getDecks().get(did);
-                            deck.put("extendRev", n);
+                            deck.setExtend("Rev", n);
                             col.getDecks().save(deck);
                             col.getSched().extendLimits(0, n);
                             onLimitsExtended(jumpToReviewer);

@@ -43,4 +43,8 @@ public class Deck extends ReadOnlyJSONObject {
     public void setMid(long mid) {
         put("mid", mid);
     }
+
+    public void setExtend(String key, int n) {
+        put("extend" + key, n);
+    }
 }
