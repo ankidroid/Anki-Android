@@ -184,28 +184,9 @@ public class Storage {
             if (ver < 11) {
                 col.modSchemaNoCheck();
                 for (Deck d : col.getDecks().all()) {
-                    if (d.getInt("dyn") != 0) {
-                        int order = d.getInt("order");
-                        // failed order was removed
-                        if (order >= 5) {
-                            order -= 1;
-                        }
-                        JSONArray ja = new JSONArray(Arrays.asList(new Object[] { d.getString("search"),
-                                d.getInt("limit"), order }));
-                        d.put("terms", new JSONArray());
-                        d.getJSONArray("terms").put(0, ja);
-                        d.remove("search");
-                        d.remove("limit");
-                        d.remove("order");
-                        d.put("resched", true);
-                        d.put("return", true);
-                    } else {
-                        if (!d.has("extendNew")) {
-                            d.put("extendNew", 10);
-                            d.put("extendRev", 50);
-                        }
-                    }
-                    col.getDecks().save(d);
+                    // Code moved to Decks package to access protected
+                    // methods.
+                    d.version10to11(col);
                 }
                 for (DConf c : col.getDecks().allConf()) {
                     ReviewConf r = c.getRev();

@@ -1,6 +1,7 @@
 package com.ichi2.libanki.decks;
 
 import com.ichi2.libanki.Collection;
+import java.util.Arrays;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -62,5 +63,30 @@ public class Deck extends ReadOnlyJSONObject {
         put("dyn", 0);
         put("collapsed", false);
         col.getDecks().save();
+    }
+
+    public void version10to11(Collection col) {
+        if (getInt("dyn") != 0) {
+            int order = getInt("order");
+            // failed order was removed
+            if (order >= 5) {
+                order -= 1;
+            }
+            JSONArray ja = new JSONArray(Arrays.asList(new Object[] { getString("search"),
+                                                                      getInt("limit"), order }));
+            put("terms", new JSONArray());
+            getJSONArray("terms").put(0, ja);
+            remove("search");
+            remove("limit");
+            remove("order");
+            put("resched", true);
+            put("return", true);
+        } else {
+            if (!has("extendNew")) {
+                put("extendNew", 10);
+                put("extendRev", 50);
+            }
+        }
+        col.getDecks().save(this);
     }
 }
