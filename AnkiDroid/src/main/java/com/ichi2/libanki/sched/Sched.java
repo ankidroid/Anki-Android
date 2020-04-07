@@ -308,8 +308,8 @@ public class Sched extends SchedV2 {
             DConf conf = mCol.getDecks().confForDid(did);
             Deck deck = mCol.getDecks().get(did);
             if (conf.getInt("dyn") == 0) {
-                rev = Math.max(0, Math.min(rev, conf.getRev().getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
-                _new = Math.max(0, Math.min(_new, conf.getNew().getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
+                rev = Math.max(0, Math.min(rev, conf.getRev().getInt("perDay") - deck.getToday("rev").getInt(1)));
+                _new = Math.max(0, Math.min(_new, conf.getNew().getInt("perDay") - deck.getToday("new").getInt(1)));
             }
             tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
         }
@@ -732,7 +732,7 @@ public class Sched extends SchedV2 {
             return mReportLimit;
         }
         DConf c = mCol.getDecks().confForDid(d.getLong("id"));
-        return Math.max(0, c.getRev().getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+        return Math.max(0, c.getRev().getInt("perDay") - d.getToday("rev").getInt(1));
     }
 
 
@@ -1282,9 +1282,8 @@ public class Sched extends SchedV2 {
     @Override
     protected void update(Deck g) {
         for (String t : new String[] { "new", "rev", "lrn", "time" }) {
-            String key = t + "Today";
-            JSONArray ja = g.getJSONArray(key);
-            if (g.getJSONArray(key).getInt(0) != mToday) {
+            JSONArray ja = g.getToday(t);
+            if (g.getToday(t).getInt(0) != mToday) {
                 ja.put(0, mToday);
                 ja.put(1, 0);
             }

@@ -299,12 +299,11 @@ public class SchedV2 extends AbstractSched {
 
 
     public void _updateStats(Card card, String type, long cnt) {
-        String key = type + "Today";
         long did = card.getDid();
         List<Deck> list = mCol.getDecks().parents(did);
         list.add(mCol.getDecks().get(did));
         for (Deck g : list) {
-            JSONArray a = g.getJSONArray(key);
+            JSONArray a = g.getToday(type);
             // add
             a.put(1, a.getLong(1) + cnt);
             mCol.getDecks().save(g);
@@ -322,9 +321,9 @@ public class SchedV2 extends AbstractSched {
         }
         for (Deck g : decks) {
             // add
-            JSONArray ja = g.getJSONArray("newToday");
+            JSONArray ja = g.getToday("new");
             ja.put(1, ja.getInt(1) - newc);
-            ja = g.getJSONArray("revToday");
+            ja = g.getToday("rev");
             ja.put(1, ja.getInt(1) - rev);
             mCol.getDecks().save(g);
         }
@@ -500,7 +499,7 @@ public class SchedV2 extends AbstractSched {
             DConf conf = mCol.getDecks().confForDid(did);
             Deck deck = mCol.getDecks().get(did);
             if (conf.getInt("dyn") == 0) {
-                _new = Math.max(0, Math.min(_new, conf.getNew().getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
+                _new = Math.max(0, Math.min(_new, conf.getNew().getInt("perDay") - deck.getToday("new").getInt(1)));
             }
             tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
         }
@@ -723,7 +722,7 @@ public class SchedV2 extends AbstractSched {
             return mDynReportLimit;
         }
         DConf c = mCol.getDecks().confForDid(g.getLong("id"));
-        return Math.max(0, c.getNew().getInt("perDay") - g.getJSONArray("newToday").getInt(1));
+        return Math.max(0, c.getNew().getInt("perDay") - g.getToday("new").getInt(1));
     }
 
     public int totalNewForCurrentDeck() {
@@ -1209,7 +1208,7 @@ public class SchedV2 extends AbstractSched {
             return mDynReportLimit;
         }
         DConf c = mCol.getDecks().confForDid(d.getLong("id"));
-        int lim = Math.max(0, c.getRev().getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+        int lim = Math.max(0, c.getRev().getInt("perDay") - d.getToday("rev").getInt(1));
 
         if (parentLimit != null) {
             return Math.min(parentLimit, lim);
@@ -1881,9 +1880,8 @@ public class SchedV2 extends AbstractSched {
 
     protected void update(Deck g) {
         for (String t : new String[] { "new", "rev", "lrn", "time" }) {
-            String key = t + "Today";
-            JSONArray ja = g.getJSONArray(key);
-            if (g.getJSONArray(key).getInt(0) != mToday) {
+            JSONArray ja = g.getToday(t);
+            if (g.getToday(t).getInt(0) != mToday) {
                 ja.put(0, mToday);
                 ja.put(1, 0);
             }
