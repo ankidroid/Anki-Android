@@ -178,7 +178,7 @@ class AnkiExporter extends Exporter {
             }
         }
         JSONObject dconfs = new JSONObject();
-        for (JSONObject d : mSrc.getDecks().all()) {
+        for (Deck d : mSrc.getDecks().all()) {
             if ("1".equals(d.getString("id"))) {
                 continue;
             }
@@ -191,7 +191,7 @@ class AnkiExporter extends Exporter {
                 }
             }
 
-            JSONObject destinationDeck = d.deepClone();
+            Deck destinationDeck = d.deepClone();
             if (!mIncludeSched) {
                 // scheduling not included, so reset deck settings to default
                 destinationDeck.put("conf", 1);

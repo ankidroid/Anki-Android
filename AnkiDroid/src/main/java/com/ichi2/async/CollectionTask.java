@@ -44,6 +44,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 
 import com.ichi2.utils.JSONArray;
@@ -806,7 +807,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                         long newDid = (long) data[2];
 
                         Timber.i("Changing %d cards to deck: '%d'", cards.length, newDid);
-                        JSONObject deckData = col.getDecks().get(newDid);
+                        Deck deckData = col.getDecks().get(newDid);
 
                         if (Decks.isDynamic(deckData)) {
                             //#5932 - can't change to a dynamic deck. Use "Rebuild"
@@ -1333,7 +1334,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundConfChange");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object[] data = params[0].getObjArray();
-        JSONObject deck = (JSONObject) data[0];
+        Deck deck = (Deck) data[0];
         DeckConfig conf = (DeckConfig) data[1];
         try {
             long newConfId = conf.getLong("id");
@@ -1399,12 +1400,12 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundConfSetSubdecks");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object[] data = params[0].getObjArray();
-        JSONObject deck = (JSONObject) data[0];
+        Deck deck = (Deck) data[0];
         DeckConfig conf = (DeckConfig) data[1];
         try {
             TreeMap<String, Long> children = col.getDecks().children(deck.getLong("id"));
             for (Map.Entry<String, Long> entry : children.entrySet()) {
-                JSONObject child = col.getDecks().get(entry.getValue());
+                Deck child = col.getDecks().get(entry.getValue());
                 if (child.getInt("dyn") == 1) {
                     continue;
                 }

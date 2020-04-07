@@ -14,6 +14,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Deck;
 import com.ichi2.utils.Permissions;
 
 import com.ichi2.utils.JSONObject;

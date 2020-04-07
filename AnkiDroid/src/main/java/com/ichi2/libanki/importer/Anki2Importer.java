@@ -30,6 +30,7 @@ import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Deck;
 import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -453,7 +454,7 @@ public class Anki2Importer extends Importer {
             return mDecks.get(did);
         }
         // get the name in src
-        JSONObject g = mSrc.getDecks().get(did);
+        Deck g = mSrc.getDecks().get(did);
         String name = g.getString("name");
         // if there's a prefix, replace the top level deck
         if (!TextUtils.isEmpty(mDeckPrefix)) {
@@ -482,12 +483,12 @@ public class Anki2Importer extends Importer {
             DeckConfig conf = mSrc.getDecks().getConf(g.getLong("conf"));
             mDst.getDecks().save(conf);
             mDst.getDecks().updateConf(conf);
-            JSONObject g2 = mDst.getDecks().get(newid);
+            Deck g2 = mDst.getDecks().get(newid);
             g2.put("conf", g.getLong("conf"));
             mDst.getDecks().save(g2);
         }
         // save desc
-        JSONObject deck = mDst.getDecks().get(newid);
+        Deck deck = mDst.getDecks().get(newid);
         deck.put("desc", g.getString("desc"));
         mDst.getDecks().save(deck);
         // add to deck map and return

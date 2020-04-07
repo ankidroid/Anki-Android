@@ -136,30 +136,30 @@ public class Decks {
 
 
     private Collection mCol;
-    private HashMap<Long, JSONObject> mDecks;
+    private HashMap<Long, Deck> mDecks;
     private HashMap<Long, DeckConfig> mDconf;
     // Never access mNameMap directly. Uses byName
     private NameMap mNameMap;
     private boolean mChanged;
 
     private static class NameMap {
-        private final HashMap<String, JSONObject> mNameMap;
+        private final HashMap<String, Deck> mNameMap;
 
         private NameMap() {
             mNameMap = new HashMap<>();
         }
 
-        public static NameMap constructor(java.util.Collection<JSONObject> decks) {
+        public static NameMap constructor(java.util.Collection<Deck> decks) {
             NameMap map = new NameMap();
-            for (JSONObject deck: decks) {
+            for (Deck deck: decks) {
                 map.add(deck);
             }
             return map;
         }
 
-        public synchronized JSONObject get(String name) {
+        public synchronized Deck get(String name) {
             String normalized = normalizeName(name);
-            JSONObject deck = mNameMap.get(normalized);
+            Deck deck = mNameMap.get(normalized);
             if (deck == null) {
                 return null;
             }
@@ -170,7 +170,7 @@ public class Decks {
             return deck;
         }
 
-        public synchronized void add(JSONObject g) {
+        public synchronized void add(Deck g) {
             String name = g.getString("name");
             mNameMap.put(name, g);
             // Normalized name is also added because it's required to use it in by name.
@@ -222,7 +222,7 @@ public class Decks {
         JSONArray ids = decksarray.names();
         for (int i = 0; i < ids.length(); i++) {
             String id = ids.getString(i);
-            JSONObject o = decksarray.getJSONObject(id);
+            Deck o = new Deck(decksarray.getJSONObject(id));
             long longId = Long.parseLong(id);
             mDecks.put(longId, o);
         }
@@ -258,7 +258,7 @@ public class Decks {
         ContentValues values = new ContentValues();
         if (mChanged) {
             JSONObject decksarray = new JSONObject();
-            for (Map.Entry<Long, JSONObject> d : mDecks.entrySet()) {
+            for (Map.Entry<Long, Deck> d : mDecks.entrySet()) {
                 decksarray.put(Long.toString(d.getKey()), d.getValue());
             }
             values.put("decks", Utils.jsonToString(decksarray));
@@ -300,7 +300,7 @@ public class Decks {
         name = strip(name);
         name = name.replace("\"", "");
         name = Normalizer.normalize(name, Normalizer.Form.NFC);
-        JSONObject deck = byName(name);
+        Deck deck = byName(name);
         if (deck != null) {
             return deck.getLong("id");
         }
@@ -311,9 +311,8 @@ public class Decks {
             // not top level; ensure all parents exist
             name = _ensureParents(name);
         }
-        JSONObject g;
         long id;
-        g = new JSONObject(type);
+        Deck g = new Deck(type);
         g.put("name", name);
         while (true) {
             id = Utils.intTime(1000);
@@ -408,11 +407,11 @@ public class Decks {
     public ArrayList<String> allNames(boolean dyn) {
         ArrayList<String> list = new ArrayList<>();
         if (dyn) {
-            for (JSONObject x : mDecks.values()) {
+            for (Deck x : mDecks.values()) {
                 list.add(x.getString("name"));
             }
         } else {
-            for (JSONObject x : mDecks.values()) {
+            for (Deck x : mDecks.values()) {
                 if (x.getInt("dyn") == 0) {
                     list.add(x.getString("name"));
                 }
@@ -425,7 +424,7 @@ public class Decks {
     /**
      * A list of all decks.
      */
-    public ArrayList<JSONObject> all() {
+    public ArrayList<Deck> all() {
         return new ArrayList<>(mDecks.values());
     }
 
@@ -437,8 +436,8 @@ public class Decks {
      * This method does not exist in the original python module but *must* be used for any user
      * interface components that display a deck list to ensure the ordering is consistent.
      */
-    public ArrayList<JSONObject> allSorted() {
-        ArrayList<JSONObject> decks = all();
+    public ArrayList<Deck> allSorted() {
+        ArrayList<Deck> decks = all();
         Collections.sort(decks, DeckComparator.instance);
         return decks;
     }
@@ -450,14 +449,14 @@ public class Decks {
 
 
     public void collpase(long did) {
-        JSONObject deck = get(did);
+        Deck deck = get(did);
         deck.put("collapsed", !deck.getBoolean("collapsed"));
         save(deck);
     }
 
 
     public void collapseBrowser(long did) {
-        JSONObject deck = get(did);
+        Deck deck = get(did);
         boolean collapsed = deck.optBoolean("browserCollapsed", false);
         deck.put("browserCollapsed", !collapsed);
         save(deck);
@@ -473,12 +472,13 @@ public class Decks {
 
     /** Obtains the deck from the DeckID, or default if the deck was not found */
     @CheckResult
-    public @NonNull JSONObject get(long did) {
+    public @NonNull Deck get(long did) {
         return get(did, true);
     }
 
+
     @CheckResult
-    public JSONObject get(long did, boolean _default) {
+    public Deck get(long did, boolean _default) {
         if (mDecks.containsKey(did)) {
             return mDecks.get(did);
         } else if (_default) {
@@ -493,7 +493,7 @@ public class Decks {
      * Get deck with NAME, ignoring case.
      */
     @CheckResult
-    public JSONObject byName(String name) {
+    public @Nullable Deck byName(String name) {
         return mNameMap.get(name);
     }
 
@@ -501,7 +501,7 @@ public class Decks {
     /**
      * Add or update an existing deck. Used for syncing and merging.
      */
-    public void update(JSONObject g) {
+    public void update(Deck g) {
         long id = g.getLong("id");
         JSONObject oldDeck = get(id, false);
         if (oldDeck != null) {
@@ -519,10 +519,10 @@ public class Decks {
     /**
      * Rename deck prefix to NAME if not exists. Updates children.
      */
-    public void rename(JSONObject g, String newName) throws DeckRenameException {
+    public void rename(Deck g, String newName) throws DeckRenameException {
         newName = strip(newName);
         // make sure target node doesn't already exist
-        JSONObject deckWithThisName = byName(newName);
+        Deck deckWithThisName = byName(newName);
         if (deckWithThisName != null) {
             if (deckWithThisName.getLong("id") != g.getLong("id")) {
                 throw new DeckRenameException(DeckRenameException.ALREADY_EXISTS);
@@ -545,7 +545,7 @@ public class Decks {
         }
         // rename children
         String oldName = g.getString("name");
-        for (JSONObject grp : all()) {
+        for (Deck grp : all()) {
             String grpOldName = grp.getString("name");
             if (grpOldName.startsWith(oldName + "::")) {
                 String grpNewName = grpOldName.replaceFirst(Pattern.quote(oldName + "::"), newName + "::");
@@ -569,7 +569,7 @@ public class Decks {
 
 
     public void renameForDragAndDrop(Long draggedDeckDid, Long ontoDeckDid) throws DeckRenameException {
-        JSONObject draggedDeck = get(draggedDeckDid);
+        Deck draggedDeck = get(draggedDeckDid);
         String draggedDeckName = draggedDeck.getString("name");
         String ontoDeckName = get(ontoDeckDid).getString("name");
 
@@ -683,7 +683,7 @@ public class Decks {
 
 
     public DeckConfig confForDid(long did) {
-        JSONObject deck = get(did, false);
+        Deck deck = get(did, false);
         assert deck != null;
         if (deck.has("conf")) {
             DeckConfig conf = getConf(deck.getLong("conf"));
@@ -740,7 +740,7 @@ public class Decks {
         assert id != 1;
         mCol.modSchema();
         mDconf.remove(id);
-        for (JSONObject g : all()) {
+        for (Deck g : all()) {
             // ignore cram decks
             if (!g.has("conf")) {
                 continue;
@@ -753,7 +753,7 @@ public class Decks {
     }
 
 
-    public void setConf(JSONObject grp, long id) {
+    public void setConf(Deck grp, long id) {
         grp.put("conf", id);
         save(grp);
     }
@@ -761,7 +761,7 @@ public class Decks {
 
     public List<Long> didsForConf(DeckConfig conf) {
         List<Long> dids = new ArrayList<>();
-        for(JSONObject deck : mDecks.values()) {
+        for(Deck deck : mDecks.values()) {
             if (deck.has("conf") && deck.getLong("conf") == conf.getLong("id")) {
                 dids.add(deck.getLong("id"));
             }
@@ -796,7 +796,7 @@ public class Decks {
 
 
     public String name(long did, boolean _default) {
-        JSONObject deck = get(did, _default);
+        Deck deck = get(did, _default);
         if (deck != null) {
             return deck.getString("name");
         }
@@ -805,7 +805,7 @@ public class Decks {
 
 
     public String nameOrNone(long did) {
-        JSONObject deck = get(did, false);
+        Deck deck= get(did, false);
         if (deck != null) {
             return deck.getString("name");
         }
@@ -821,7 +821,7 @@ public class Decks {
 
     private void maybeAddToActive() {
         // reselect current deck, or default if current has disappeared
-        JSONObject c = current();
+        Deck c = current();
         select(c.getLong("id"));
     }
 
@@ -864,10 +864,10 @@ public class Decks {
     }
 
     private void _checkDeckTree() {
-        ArrayList<JSONObject> decks = allSorted();
-        Map<String, JSONObject> names = new HashMap<>(decks.size());
+        ArrayList<Deck> decks = allSorted();
+        Map<String, Deck> names = new HashMap<>(decks.size());
 
-        for (JSONObject deck: decks) {
+        for (Deck deck: decks) {
             String deckName = deck.getString("name");
 
             /** With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for
@@ -906,7 +906,7 @@ public class Decks {
             }
 
             // two decks with the same name?
-            JSONObject homonym = names.get(normalizeName(deckName));
+            Deck homonym = names.get(normalizeName(deckName));
             if (homonym != null) {
                 Timber.i("fix duplicate deck name %s", deckName);
                 do {
@@ -922,7 +922,7 @@ public class Decks {
             String immediateParent = parent(deckName);
             if (immediateParent != null && !names.containsKey(normalizeName(immediateParent))) {
                 Timber.i("fix deck with missing parent %s", deckName);
-                JSONObject parent = byName(immediateParent);
+                Deck parent = byName(immediateParent);
                 _ensureParents(deckName);
                 names.put(normalizeName(immediateParent), parent);
             }
@@ -963,7 +963,7 @@ public class Decks {
     }
 
 
-    public JSONObject current() {
+    public Deck current() {
         return get(selected());
     }
 
@@ -998,7 +998,7 @@ public class Decks {
         String name;
         name = get(did).getString("name");
         TreeMap<String, Long> actv = new TreeMap<>();
-        for (JSONObject g : all()) {
+        for (Deck g : all()) {
             if (g.getString("name").startsWith(name + "::")) {
                 actv.put(g.getString("name"), g.getLong("id"));
             }
@@ -1028,11 +1028,11 @@ public class Decks {
         HashMap<Long, HashMap> childMap = new HashMap<>();
 
         // Go through all decks, sorted by name
-        ArrayList<JSONObject> decks = all();
+        ArrayList<Deck> decks = all();
 
         Collections.sort(decks, DeckComparator.instance);
 
-        for (JSONObject deck : decks) {
+        for (Deck deck : decks) {
             HashMap node = new HashMap();
             childMap.put(deck.getLong("id"), node);
 
@@ -1067,14 +1067,14 @@ public class Decks {
     /**
      * All parents of did.
      */
-    public List<JSONObject> parents(long did) {
+    public List<Deck> parents(long did) {
         // get parent and grandparent names
         String[] parents = parentsNames(get(did).getString("name"));
         // convert to objects
-        List<JSONObject> oParents = new ArrayList<>();
+        List<Deck> oParents = new ArrayList<>();
         for (int i = 0; i < parents.length; i++) {
             String parentName = parents[i];
-            JSONObject deck = mNameMap.get(parentName);
+            Deck deck = mNameMap.get(parentName);
             oParents.add(i, deck);
         }
         return oParents;
@@ -1167,7 +1167,7 @@ public class Decks {
     }
 
 
-    public HashMap<Long, JSONObject> getDecks() {
+    public HashMap<Long, Deck> getDecks() {
         return mDecks;
     }
 
@@ -1181,8 +1181,8 @@ public class Decks {
         return validValues.toArray(new Long[0]);
     }
 
-    private JSONObject getDeckOrFail(long deckId) throws NoSuchDeckException {
-        JSONObject deck = get(deckId, false);
+    private Deck getDeckOrFail(long deckId) throws NoSuchDeckException {
+        Deck deck = get(deckId, false);
         if (deck == null) {
             throw new NoSuchDeckException(deckId);
         }
@@ -1198,7 +1198,7 @@ public class Decks {
         getDeckOrFail(deckId).remove("conf");
     }
 
-    public static boolean isDynamic(JSONObject deck) {
+    public static boolean isDynamic(Deck deck) {
         return deck.getInt("dyn") != 0;
     }
 
@@ -1212,7 +1212,7 @@ public class Decks {
         if (TextUtils.isEmpty(newName)) {
             return null;
         }
-        JSONObject deck = get(did, false);
+        Deck deck = get(did, false);
         if (deck == null) {
             return null;
         }

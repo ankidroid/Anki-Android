@@ -11,6 +11,7 @@ import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Collection;
@@ -65,7 +66,7 @@ public abstract class AbstractSched {
     /** New count for a single deck. */
     public abstract int _newForDeck(long did, int lim);
     /** Limit for deck without parent limits. */
-    public abstract int _deckNewLimitSingle(JSONObject g);
+    public abstract int _deckNewLimitSingle(Deck g);
     public abstract int totalNewForCurrentDeck();
     public abstract int totalRevForCurrentDeck();
     public abstract Pair<Integer, Integer> _fuzzIvlRange(int ivl);
@@ -376,7 +377,7 @@ public abstract class AbstractSched {
 
 
     public interface LimitMethod {
-        int operation(JSONObject g);
+        int operation(Deck g);
     }
 
     public interface CountMethod {
