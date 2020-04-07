@@ -176,13 +176,22 @@ public class Decks {
 
 
     public void save() {
-        save(null);
+        mChanged = true;
     }
 
 
     /**
      * Can be called with either a deck or a deck configuration.
      */
+    public void save(ReadOnlyJSONObject g) {
+        if (g != null) {
+            g.put("mod", Utils.intTime());
+            g.put("usn", mCol.usn());
+        }
+        mChanged = true;
+    }
+
+
     public void save(JSONObject g) {
         if (g != null) {
             g.put("mod", Utils.intTime());

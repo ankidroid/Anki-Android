@@ -34,6 +34,7 @@ import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.decks.ReadOnlyJSONObject;
 import com.ichi2.utils.ImportUtils;
 
 import com.ichi2.utils.JSONArray;
