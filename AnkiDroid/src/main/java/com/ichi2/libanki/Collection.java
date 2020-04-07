@@ -2034,7 +2034,7 @@ public class Collection {
         futureLoadingModel = new FutureTask(
             () -> mModels.load(loadColumn("models"))
         );
-        futureLoadingModel.run();
+        new Thread(futureLoadingModel).start();
     }
 
     public Models getModels() {
