@@ -110,7 +110,7 @@ public class Storage {
         try {
             if (ver < 3) {
                 // new deck properties
-                for (JSONObject d : col.getDecks().all()) {
+                for (Deck d : col.getDecks().all()) {
                     d.put("dyn", 0);
                     d.put("collapsed", false);
                     col.getDecks().save(d);
@@ -178,7 +178,7 @@ public class Storage {
             }
             if (ver < 11) {
                 col.modSchemaNoCheck();
-                for (JSONObject d : col.getDecks().all()) {
+                for (Deck d : col.getDecks().all()) {
                     if (d.getInt("dyn") != 0) {
                         int order = d.getInt("order");
                         // failed order was removed

@@ -866,7 +866,7 @@ public class Collection {
         }
         card.setDid(did);
         // if invalid did, use default instead
-        JSONObject deck = mDecks.get(card.getDid());
+        Deck deck = mDecks.get(card.getDid());
         if (deck.getInt("dyn") == 1) {
             // must not be a filtered deck
             card.setDid(1);
@@ -1610,7 +1610,7 @@ public class Collection {
 
         int changed = 0;
 
-        for (JSONObject d : getDecks().all()) {
+        for (Deck d : getDecks().all()) {
             //dynamic decks do not have dconf
             if (Decks.isDynamic(d)) {
                 continue;

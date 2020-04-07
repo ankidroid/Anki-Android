@@ -77,6 +77,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.Deck;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
@@ -131,7 +132,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static Pattern sMarkedPattern = Pattern.compile(".*[Mm]arked.*");
 
     private List<Map<String, String>> mCards;
-    private ArrayList<JSONObject> mDropDownDecks;
+    private ArrayList<Deck> mDropDownDecks;
     private ListView mCardsListView;
     private SearchView mSearchView;
     private MultiColumnListAdapter mCardsAdapter;
@@ -390,7 +391,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     void changeDeck(int deckPosition) {
         long[] ids = getSelectedCardIds();
 
-        JSONObject selectedDeck = getValidDecksForChangeDeck().get(deckPosition);
+        Deck selectedDeck = getValidDecksForChangeDeck().get(deckPosition);
 
         try {
             //#5932 - can't be dynamic
@@ -1010,7 +1011,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
                 //WARNING: changeDeck depends on this index, so any changes should be reflected there.
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
-                for (JSONObject deck : getValidDecksForChangeDeck()) {
+                for (Deck deck : getValidDecksForChangeDeck()) {
                     try {
                         arrayAdapter.add(deck.getString("name"));
                     } catch (JSONException e) {
@@ -1217,7 +1218,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mRestrictOnDeck = "";
             saveLastDeckId(ALL_DECKS_ID);
         } else {
-            JSONObject deck = mDropDownDecks.get(position - 1);
+            Deck deck = mDropDownDecks.get(position - 1);
             mRestrictOnDeck = "deck:\"" + deck.getString("name") + "\" ";
             saveLastDeckId(deck.getLong("id"));
         }
@@ -1319,9 +1320,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     /** Returns the decks which are valid targets for "Change Deck" */
     @VisibleForTesting
-    List<JSONObject> getValidDecksForChangeDeck() {
-        List<JSONObject> nonDynamicDecks = new ArrayList<>();
-        for (JSONObject d : mDropDownDecks) {
+    List<Deck> getValidDecksForChangeDeck() {
+        List<Deck> nonDynamicDecks = new ArrayList<>();
+        for (Deck d : mDropDownDecks) {
             if (Decks.isDynamic(d)) {
                 continue;
             }
@@ -2273,9 +2274,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public int getChangeDeckPositionFromId(long deckId) {
-        List<JSONObject> decks = getValidDecksForChangeDeck();
+        List<Deck> decks = getValidDecksForChangeDeck();
         for (int i = 0; i < decks.size(); i++) {
-            JSONObject deck = decks.get(i);
+            Deck deck = decks.get(i);
             if (deck.getLong(ID) == deckId) {
                 return i;
             }
