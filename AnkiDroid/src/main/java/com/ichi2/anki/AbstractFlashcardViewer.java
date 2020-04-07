@@ -2709,8 +2709,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (mCurrentCard == null) {
             return;
         }
-        mCardMarker.displayMark(mCurrentCard.note().hasTag("marked"));
+        mCardMarker.displayMark(shouldDisplayMark());
     }
+
+
+    protected boolean shouldDisplayMark() {
+        return mCurrentCard.note().hasTag("marked");
+    }
+
 
     protected void onMark(Card card) {
         if (card == null) {
@@ -2731,8 +2737,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (mCurrentCard == null) {
             return;
         }
-        mCardMarker.displayFlag(mCurrentCard.getUserFlag());
+        mCardMarker.displayFlag(getFlagToDisplay());
     }
+
+
+    protected int getFlagToDisplay() {
+        return mCurrentCard.getUserFlag();
+    }
+
 
     protected void onFlag(Card card, int flag) {
         if (card == null) {
