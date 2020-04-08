@@ -1618,7 +1618,6 @@ public class Collection {
 
         result.setCardsWithFixedHomeDeckCount(cardIds.size());
 
-        Timber.d("Completed");
         String message = String.format(Locale.US, "Fixed %d cards with no home deck", cardIds.size());
         return Collections.singletonList(message);
     }
