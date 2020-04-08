@@ -1494,265 +1494,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.setScrollbarFadingEnabled(true);
         Timber.d("Focusable = %s, Focusable in touch mode = %s", webView.isFocusable(), webView.isFocusableInTouchMode());
 
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            @TargetApi(Build.VERSION_CODES.N)
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                String url = request.getUrl().toString();
-                return filterUrl(url);
-            }
-
-            @Override
-            @TargetApi(Build.VERSION_CODES.N)
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                WebResourceResponse webResourceResponse = null;
-                if (!AdaptionUtil.hasWebBrowser(getBaseContext())) {
-                    String scheme = request.getUrl().getScheme().trim();
-                    if (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https")) {
-                        String response = getResources().getString(R.string.no_outgoing_link_in_cardbrowser);
-                        webResourceResponse = new WebResourceResponse("text/html", "utf-8", new ByteArrayInputStream(response.getBytes()));
-                    }
-                }
-                return webResourceResponse;
-            }
-
-            @Override
-            @SuppressWarnings("deprecation") // tracked as #5017 in github
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return filterUrl(url);
-            }
-
-            // Filter any links using the custom "playsound" protocol defined in Sound.java.
-            // We play sounds through these links when a user taps the sound icon.
-            private boolean filterUrl(String url) {
-                if (url.startsWith("playsound:")) {
-                    // Send a message that will be handled on the UI thread.
-                    Message msg = Message.obtain();
-                    String soundPath = url.replaceFirst("playsound:", "");
-                    msg.obj = soundPath;
-                    mHandler.sendMessage(msg);
-                    return true;
-                }
-                if (url.startsWith("file") || url.startsWith("data:")) {
-                    return false; // Let the webview load files, i.e. local images.
-                }
-                if (url.startsWith("typeblurtext:")) {
-                    // Store the text the javascript has send us…
-                    mTypeInput = decodeUrl(url.replaceFirst("typeblurtext:", ""));
-                    // … and show the “SHOW ANSWER” button again.
-                    mFlipCardLayout.setVisibility(View.VISIBLE);
-                    return true;
-                }
-                if (url.startsWith("typeentertext:")) {
-                    // Store the text the javascript has send us…
-                    mTypeInput = decodeUrl(url.replaceFirst("typeentertext:", ""));
-                    // … and show the answer.
-                    mFlipCardLayout.performClick();
-                    return true;
-                }
-                int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
-                switch (signalOrdinal) {
-                    case WebViewSignalParserUtils.SIGNAL_UNHANDLED:
-                        break; //continue parsing
-                    case WebViewSignalParserUtils.SIGNAL_NOOP:
-                        return true;
-                    case WebViewSignalParserUtils.TYPE_FOCUS:
-                        // Hide the “SHOW ANSWER” button when the input has focus. The soft keyboard takes up enough
-                        // space by itself.
-                        mFlipCardLayout.setVisibility(View.GONE);
-                        return true;
-                    case WebViewSignalParserUtils.RELINQUISH_FOCUS:
-                        //#5811 - The WebView could be focused via mouse. Allow components to return focus to Android.
-                        focusAnswerCompletionField();
-                        return true;
-                    /**
-                     *  Call displayCardAnswer() and answerCard() from anki deck template using javascript
-                     *  See card.js in assets/scripts folder
-                     */
-                    case WebViewSignalParserUtils.SHOW_ANSWER:
-                        // display answer when showAnswer() called from card.js
-                        if (!sDisplayAnswer) {
-                            displayCardAnswer();
-                        }
-                        return true;
-                    case WebViewSignalParserUtils.ANSWER_ORDINAL_1:
-                        flipOrAnswerCard(EASE_1);
-                        return true;
-                    case WebViewSignalParserUtils.ANSWER_ORDINAL_2:
-                        flipOrAnswerCard(EASE_2);
-                        return true;
-                    case WebViewSignalParserUtils.ANSWER_ORDINAL_3:
-                        flipOrAnswerCard(EASE_3);
-                        return true;
-                    case WebViewSignalParserUtils.ANSWER_ORDINAL_4:
-                        flipOrAnswerCard(EASE_4);
-                        return true;
-                    default:
-                        //We know it was a signal, but forgot a case in the case statement.
-                        //This is not the same as SIGNAL_UNHANDLED, where it isn't a known signal.
-                        Timber.w("Unhandled signal case: %d", signalOrdinal);
-                        return true;
-                }
-                Intent intent = null;
-                try {
-                    if (url.startsWith("intent:")) {
-                        intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
-                    } else if (url.startsWith("android-app:")) {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-                            intent = Intent.parseUri(url, 0);
-                            intent.setData(null);
-                            intent.setPackage(Uri.parse(url).getHost());
-                        } else {
-                            intent = Intent.parseUri(url, Intent.URI_ANDROID_APP_SCHEME);
-                        }
-                    }
-                    if (intent != null) {
-                        if (getPackageManager().resolveActivity(intent, 0) == null) {
-                            String packageName = intent.getPackage();
-                            if (packageName == null) {
-                                Timber.d("Not using resolved intent uri because not available: %s", intent);
-                                intent = null;
-                            } else {
-                                Timber.d("Resolving intent uri to market uri because not available: %s", intent);
-                                intent = new Intent(Intent.ACTION_VIEW,
-                                        Uri.parse("market://details?id=" + packageName));
-                                if (getPackageManager().resolveActivity(intent, 0) == null) {
-                                    intent = null;
-                                }
-                            }
-                        } else {
-                            // https://developer.chrome.com/multidevice/android/intents says that we should remove this
-                            intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                        }
-                    }
-                } catch (Throwable t) {
-                    Timber.w("Unable to parse intent uri: %s because: %s", url, t.getMessage());
-                }
-                if (intent == null) {
-                    Timber.d("Opening external link \"%s\" with an Intent", url);
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                } else {
-                    Timber.d("Opening resolved external link \"%s\" with an Intent: %s", url, intent);
-                }
-                try {
-                    startActivityWithoutAnimation(intent);
-                } catch (ActivityNotFoundException e) {
-                    e.printStackTrace(); // Don't crash if the intent is not handled
-                }
-                return true;
-            }
-
-            private String decodeUrl(String url) {
-                try {
-                    return URLDecoder.decode(url, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    Timber.e(e, "UTF-8 isn't supported as an encoding?");
-                }
-                return "";
-            }
-
-            // Run any post-load events in javascript that rely on the window being completely loaded.
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                Timber.d("onPageFinished triggered");
-                drawFlag();
-                drawMark();
-                view.loadUrl("javascript:onPageFinished();");
-            }
-
-            /** Fix: #5780 - WebView Renderer OOM crashes reviewer */
-            @Override
-            @TargetApi(Build.VERSION_CODES.O)
-            public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
-                Timber.i("Obtaining write lock for card");
-                Lock writeLock = mCardLock.writeLock();
-                Timber.i("Obtained write lock for card");
-                try {
-                    writeLock.lock();
-                    if (mCard == null || !mCard.equals(view)) {
-                        //A view crashed that wasn't ours.
-                        //We have nothing to handle. Returning false is a desire to crash, so return true.
-                        Timber.i("Unrelated WebView Renderer terminated. Crashed: %b",  detail.didCrash());
-                        return true;
-                    }
-
-                    Timber.e("WebView Renderer process terminated. Crashed: %b",  detail.didCrash());
-
-                    //Destroy the current WebView (to ensure WebView is GCed).
-                    //Otherwise, we get the following error:
-                    //"crash wasn't handled by all associated webviews, triggering application crash"
-                    mCardFrame.removeAllViews();
-                    mCardFrameParent.removeView(mCardFrame);
-                    //destroy after removal from the view - produces logcat warnings otherwise
-                    destroyWebView(mCard);
-                    mCard = null;
-                    //inflate a new instance of mCardFrame
-                    mCardFrame = inflateNewView(R.id.flashcard);
-                    //Even with the above, I occasionally saw the above error. Manually trigger the GC.
-                    //I'll keep this line unless I see another crash, which would point to another underlying issue.
-                    System.gc();
-
-                    //We only want to show one message per branch.
-
-                    //It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
-                    int errorCauseId = detail.didCrash() ? R.string.webview_crash_unknown : R.string.webview_crash_oom;
-                    String errorCauseString = getResources().getString(errorCauseId);
-
-                    if (!canRecoverFromWebViewRendererCrash()) {
-                        Timber.e("Unrecoverable WebView Render crash");
-                        String errorMessage = getResources().getString(R.string.webview_crash_fatal, errorCauseString);
-                        UIUtils.showThemedToast(AbstractFlashcardViewer.this, errorMessage, false);
-                        finishWithoutAnimation();
-                        return true;
-                    }
-
-                    if (webViewRendererLastCrashedOnCard(mCurrentCard.getId())) {
-                        Timber.e("Web Renderer crash loop on card: %d", mCurrentCard.getId());
-                        displayRenderLoopDialog(mCurrentCard, detail);
-                        return true;
-                    }
-
-                    // If we get here, the error is non-fatal and we should re-render the WebView
-                    // This logic may need to be better defined. The card could have changed by the time we get here.
-                    lastCrashingCardId = mCurrentCard.getId();
-
-
-                    String nonFatalError = getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);
-                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, nonFatalError, false);
-
-                    //we need to add at index 0 so gestures still go through.
-                    mCardFrameParent.addView(mCardFrame, 0);
-
-                    recreateWebView();
-                } finally {
-                    writeLock.unlock();
-                    Timber.d("Relinquished writeLock");
-                }
-                displayCardQuestion();
-
-                //We handled the crash and can continue.
-                return true;
-            }
-
-
-            @TargetApi(Build.VERSION_CODES.O)
-            private void displayRenderLoopDialog(Card mCurrentCard, RenderProcessGoneDetail detail) {
-                String cardInformation = Long.toString(mCurrentCard.getId());
-                Resources res = getResources();
-
-                String errorDetails = detail.didCrash()
-                        ? res.getString(R.string.webview_crash_unknwon_detailed)
-                        : res.getString(R.string.webview_crash_oom_details);
-                new MaterialDialog.Builder(AbstractFlashcardViewer.this)
-                        .title(res.getString(R.string.webview_crash_loop_dialog_title))
-                        .content(res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
-                        .positiveText(R.string.dialog_ok)
-                        .cancelable(false)
-                        .canceledOnTouchOutside(false)
-                        .onPositive((materialDialog, dialogAction) -> finishWithoutAnimation())
-                        .show();
-            }
-        });
+        webView.setWebViewClient(new CardViewerWebClient());
         // Set transparent color to prevent flashing white when night mode enabled
         webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
         return webView;
@@ -3166,6 +2908,272 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
 
             return SIGNAL_UNHANDLED; //unknown, or not a signal.
+        }
+    }
+
+    protected class CardViewerWebClient extends WebViewClient {
+        @Override
+        @TargetApi(Build.VERSION_CODES.N)
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            String url = request.getUrl().toString();
+            return filterUrl(url);
+        }
+
+
+        @Override
+        @TargetApi(Build.VERSION_CODES.N)
+        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            WebResourceResponse webResourceResponse = null;
+            if (!AdaptionUtil.hasWebBrowser(getBaseContext())) {
+                String scheme = request.getUrl().getScheme().trim();
+                if (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https")) {
+                    String response = getResources().getString(R.string.no_outgoing_link_in_cardbrowser);
+                    webResourceResponse = new WebResourceResponse("text/html", "utf-8", new ByteArrayInputStream(response.getBytes()));
+                }
+            }
+            return webResourceResponse;
+        }
+
+
+        @Override
+        @SuppressWarnings("deprecation") // tracked as #5017 in github
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return filterUrl(url);
+        }
+
+
+        // Filter any links using the custom "playsound" protocol defined in Sound.java.
+        // We play sounds through these links when a user taps the sound icon.
+        private boolean filterUrl(String url) {
+            if (url.startsWith("playsound:")) {
+                // Send a message that will be handled on the UI thread.
+                Message msg = Message.obtain();
+                String soundPath = url.replaceFirst("playsound:", "");
+                msg.obj = soundPath;
+                mHandler.sendMessage(msg);
+                return true;
+            }
+            if (url.startsWith("file") || url.startsWith("data:")) {
+                return false; // Let the webview load files, i.e. local images.
+            }
+            if (url.startsWith("typeblurtext:")) {
+                // Store the text the javascript has send us…
+                mTypeInput = decodeUrl(url.replaceFirst("typeblurtext:", ""));
+                // … and show the “SHOW ANSWER” button again.
+                mFlipCardLayout.setVisibility(View.VISIBLE);
+                return true;
+            }
+            if (url.startsWith("typeentertext:")) {
+                // Store the text the javascript has send us…
+                mTypeInput = decodeUrl(url.replaceFirst("typeentertext:", ""));
+                // … and show the answer.
+                mFlipCardLayout.performClick();
+                return true;
+            }
+            int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
+            switch (signalOrdinal) {
+                case WebViewSignalParserUtils.SIGNAL_UNHANDLED:
+                    break; //continue parsing
+                case WebViewSignalParserUtils.SIGNAL_NOOP:
+                    return true;
+                case WebViewSignalParserUtils.TYPE_FOCUS:
+                    // Hide the “SHOW ANSWER” button when the input has focus. The soft keyboard takes up enough
+                    // space by itself.
+                    mFlipCardLayout.setVisibility(View.GONE);
+                    return true;
+                case WebViewSignalParserUtils.RELINQUISH_FOCUS:
+                    //#5811 - The WebView could be focused via mouse. Allow components to return focus to Android.
+                    focusAnswerCompletionField();
+                    return true;
+                /**
+                 *  Call displayCardAnswer() and answerCard() from anki deck template using javascript
+                 *  See card.js in assets/scripts folder
+                 */
+                case WebViewSignalParserUtils.SHOW_ANSWER:
+                    // display answer when showAnswer() called from card.js
+                    if (!sDisplayAnswer) {
+                        displayCardAnswer();
+                    }
+                    return true;
+                case WebViewSignalParserUtils.ANSWER_ORDINAL_1:
+                    flipOrAnswerCard(EASE_1);
+                    return true;
+                case WebViewSignalParserUtils.ANSWER_ORDINAL_2:
+                    flipOrAnswerCard(EASE_2);
+                    return true;
+                case WebViewSignalParserUtils.ANSWER_ORDINAL_3:
+                    flipOrAnswerCard(EASE_3);
+                    return true;
+                case WebViewSignalParserUtils.ANSWER_ORDINAL_4:
+                    flipOrAnswerCard(EASE_4);
+                    return true;
+                default:
+                    //We know it was a signal, but forgot a case in the case statement.
+                    //This is not the same as SIGNAL_UNHANDLED, where it isn't a known signal.
+                    Timber.w("Unhandled signal case: %d", signalOrdinal);
+                    return true;
+            }
+            Intent intent = null;
+            try {
+                if (url.startsWith("intent:")) {
+                    intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+                } else if (url.startsWith("android-app:")) {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+                        intent = Intent.parseUri(url, 0);
+                        intent.setData(null);
+                        intent.setPackage(Uri.parse(url).getHost());
+                    } else {
+                        intent = Intent.parseUri(url, Intent.URI_ANDROID_APP_SCHEME);
+                    }
+                }
+                if (intent != null) {
+                    if (getPackageManager().resolveActivity(intent, 0) == null) {
+                        String packageName = intent.getPackage();
+                        if (packageName == null) {
+                            Timber.d("Not using resolved intent uri because not available: %s", intent);
+                            intent = null;
+                        } else {
+                            Timber.d("Resolving intent uri to market uri because not available: %s", intent);
+                            intent = new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("market://details?id=" + packageName));
+                            if (getPackageManager().resolveActivity(intent, 0) == null) {
+                                intent = null;
+                            }
+                        }
+                    } else {
+                        // https://developer.chrome.com/multidevice/android/intents says that we should remove this
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                    }
+                }
+            } catch (Throwable t) {
+                Timber.w("Unable to parse intent uri: %s because: %s", url, t.getMessage());
+            }
+            if (intent == null) {
+                Timber.d("Opening external link \"%s\" with an Intent", url);
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            } else {
+                Timber.d("Opening resolved external link \"%s\" with an Intent: %s", url, intent);
+            }
+            try {
+                startActivityWithoutAnimation(intent);
+            } catch (ActivityNotFoundException e) {
+                e.printStackTrace(); // Don't crash if the intent is not handled
+            }
+            return true;
+        }
+
+
+        private String decodeUrl(String url) {
+            try {
+                return URLDecoder.decode(url, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                Timber.e(e, "UTF-8 isn't supported as an encoding?");
+            }
+            return "";
+        }
+
+
+        // Run any post-load events in javascript that rely on the window being completely loaded.
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            Timber.d("onPageFinished triggered");
+            drawFlag();
+            drawMark();
+            view.loadUrl("javascript:onPageFinished();");
+        }
+
+
+        /** Fix: #5780 - WebView Renderer OOM crashes reviewer */
+        @Override
+        @TargetApi(Build.VERSION_CODES.O)
+        public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
+            Timber.i("Obtaining write lock for card");
+            Lock writeLock = mCardLock.writeLock();
+            Timber.i("Obtained write lock for card");
+            try {
+                writeLock.lock();
+                if (mCard == null || !mCard.equals(view)) {
+                    //A view crashed that wasn't ours.
+                    //We have nothing to handle. Returning false is a desire to crash, so return true.
+                    Timber.i("Unrelated WebView Renderer terminated. Crashed: %b",  detail.didCrash());
+                    return true;
+                }
+
+                Timber.e("WebView Renderer process terminated. Crashed: %b",  detail.didCrash());
+
+                //Destroy the current WebView (to ensure WebView is GCed).
+                //Otherwise, we get the following error:
+                //"crash wasn't handled by all associated webviews, triggering application crash"
+                mCardFrame.removeAllViews();
+                mCardFrameParent.removeView(mCardFrame);
+                //destroy after removal from the view - produces logcat warnings otherwise
+                destroyWebView(mCard);
+                mCard = null;
+                //inflate a new instance of mCardFrame
+                mCardFrame = inflateNewView(R.id.flashcard);
+                //Even with the above, I occasionally saw the above error. Manually trigger the GC.
+                //I'll keep this line unless I see another crash, which would point to another underlying issue.
+                System.gc();
+
+                //We only want to show one message per branch.
+
+                //It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
+                int errorCauseId = detail.didCrash() ? R.string.webview_crash_unknown : R.string.webview_crash_oom;
+                String errorCauseString = getResources().getString(errorCauseId);
+
+                if (!canRecoverFromWebViewRendererCrash()) {
+                    Timber.e("Unrecoverable WebView Render crash");
+                    String errorMessage = getResources().getString(R.string.webview_crash_fatal, errorCauseString);
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, errorMessage, false);
+                    finishWithoutAnimation();
+                    return true;
+                }
+
+                if (webViewRendererLastCrashedOnCard(mCurrentCard.getId())) {
+                    Timber.e("Web Renderer crash loop on card: %d", mCurrentCard.getId());
+                    displayRenderLoopDialog(mCurrentCard, detail);
+                    return true;
+                }
+
+                // If we get here, the error is non-fatal and we should re-render the WebView
+                // This logic may need to be better defined. The card could have changed by the time we get here.
+                lastCrashingCardId = mCurrentCard.getId();
+
+
+                String nonFatalError = getResources().getString(R.string.webview_crash_nonfatal, errorCauseString);
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, nonFatalError, false);
+
+                //we need to add at index 0 so gestures still go through.
+                mCardFrameParent.addView(mCardFrame, 0);
+
+                recreateWebView();
+            } finally {
+                writeLock.unlock();
+                Timber.d("Relinquished writeLock");
+            }
+            displayCardQuestion();
+
+            //We handled the crash and can continue.
+            return true;
+        }
+
+
+        @TargetApi(Build.VERSION_CODES.O)
+        private void displayRenderLoopDialog(Card mCurrentCard, RenderProcessGoneDetail detail) {
+            String cardInformation = Long.toString(mCurrentCard.getId());
+            Resources res = getResources();
+
+            String errorDetails = detail.didCrash()
+                    ? res.getString(R.string.webview_crash_unknwon_detailed)
+                    : res.getString(R.string.webview_crash_oom_details);
+            new MaterialDialog.Builder(AbstractFlashcardViewer.this)
+                    .title(res.getString(R.string.webview_crash_loop_dialog_title))
+                    .content(res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
+                    .positiveText(R.string.dialog_ok)
+                    .cancelable(false)
+                    .canceledOnTouchOutside(false)
+                    .onPositive((materialDialog, dialogAction) -> finishWithoutAnimation())
+                    .show();
         }
     }
 }
