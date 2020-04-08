@@ -1554,6 +1554,7 @@ public class NoteEditor extends AnkiActivity {
             long oldModelId;
             oldModelId = getCol().getModels().current().getLong("id");
             long newId = mAllModelIds.get(pos);
+            Timber.i("Changing note type to '%d", newId);
             if (oldModelId != newId) {
                 JSONObject model = getCol().getModels().get(newId);
                 getCol().getModels().setCurrent(model);

@@ -489,11 +489,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
         Card newCard = null;
+        Timber.i(oldCard != null ? "Answering card" : "Obtaining card");
         try {
             DB db = col.getDb();
             db.getDatabase().beginTransaction();
             try {
                 if (oldCard != null) {
+                    Timber.i("Answering card %d", oldCard.getId());
                     sched.answerCard(oldCard, ease);
                 }
                 if (newCard == null) {
