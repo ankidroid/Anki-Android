@@ -2188,8 +2188,8 @@ public class Collection {
             this.mNewSize = size;
         }
 
-        public long getSizeChangeInKb() {
-            return (mOldSize - mNewSize) / 1024;
+        public double getSizeChangeInKb() {
+            return (mOldSize - mNewSize) / 1024.0;
         }
 
 
