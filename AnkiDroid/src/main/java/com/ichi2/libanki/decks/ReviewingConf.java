@@ -23,4 +23,8 @@ public class ReviewingConf extends ReadOnlyJSONObject {
     public void putMult(double mult) {
         put("mult", mult);
     }
+
+    public void putDelays(JSONArray delays) {
+        put("delays", delays);
+    }
 }

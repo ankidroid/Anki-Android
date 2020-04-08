@@ -290,11 +290,11 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mCol.getDecks().save(mDeck);
                                 break;
                             case "newSteps":
-                                mOptions.getNew().put("delays", StepsPreference.convertToJSON((String) value));
+                                mOptions.getNew().putDelays(StepsPreference.convertToJSON((String) value));
                                 break;
                             case "lapSteps":
                                 mOptions.getLapse()
-                                        .put("delays", StepsPreference.convertToJSON((String) value));
+                                        .putDelays(StepsPreference.convertToJSON((String) value));
                                 break;
                             case "deckConf": {
                                 long newConfId = Long.parseLong((String) value);
