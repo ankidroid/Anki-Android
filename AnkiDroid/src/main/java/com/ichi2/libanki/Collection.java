@@ -1611,7 +1611,9 @@ public class Collection {
 
         mDb.execute("update cards " +
                         "set did = " + nextDeckId + ", " +
-                        "odid = 0 " +
+                        "odid = 0," +
+                        "mod = " +  Utils.intTime() + ", " +
+                        "usn = " + usn() + " " +
                         "where did in " +
                         Utils.ids2str(dynDeckIds) +
                         "and odid in " +
