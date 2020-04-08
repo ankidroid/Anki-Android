@@ -1314,7 +1314,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             int order = conf.getNew().getInt("order");
             int defaultOrder = col.getDecks().getConf(1).getNew().getInt("order");
             if (order != defaultOrder) {
-                conf.getNew().put("order", defaultOrder);
+                conf.getNew().putOrder(defaultOrder);
                 col.getSched().resortConf(conf);
             }
             col.save();

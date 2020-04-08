@@ -9,4 +9,8 @@ public class NewConf extends ReviewingConf {
     public NewConf(JSONObject conf) {
         super(conf);
     }
+
+    public void putOrder(int n) {
+        put("order", n);
+    }
 }

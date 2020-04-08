@@ -208,11 +208,11 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 // Sorting is slow, so only do it if we change order
                                 int oldValue = mOptions.getNew().getInt("order");
                                 if (oldValue != newValue) {
-                                    mOptions.getNew().put("order", newValue);
+                                    mOptions.getNew().putOrder(newValue);
                                     CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REORDER, mConfChangeHandler,
                                             new CollectionTask.TaskData(new Object[] {mOptions}));
                                 }
-                                mOptions.getNew().put("order", Integer.parseInt((String) value));
+                                mOptions.getNew().putOrder(Integer.parseInt((String) value));
                                 break;
                             }
                             case "newPerDay":
