@@ -21,7 +21,7 @@
     <string name="check_db_title">Check database?</string>
     <string name="check_db_warning">This may take a long time</string>
     <string name="check_db_acknowledge">Database checked</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
+    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
     <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
     <string name="delete_deck_title">Delete deck?</string>

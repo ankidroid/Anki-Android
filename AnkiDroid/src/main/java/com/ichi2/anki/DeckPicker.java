@@ -2407,10 +2407,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     UIUtils.showThemedToast(DeckPicker.this,  message, false);
                 }
 
-                long shrunk = Math.round(databaseResult.getSizeChangeInKb() / 1024.0);
-                if (shrunk > 0.0) {
+                long shrunkInMb = Math.round(databaseResult.getSizeChangeInKb() / 1024.0);
+                if (shrunkInMb > 0.0) {
                     msg = String.format(Locale.getDefault(),
-                    getResources().getString(R.string.check_db_acknowledge_shrunk), (int) shrunk);
+                    getResources().getString(R.string.check_db_acknowledge_shrunk), (int) shrunkInMb);
                 } else {
                     msg = getResources().getString(R.string.check_db_acknowledge);
                 }
