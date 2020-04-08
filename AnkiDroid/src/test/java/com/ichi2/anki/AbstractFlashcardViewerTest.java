@@ -1,7 +1,14 @@
 package com.ichi2.anki;
 
+import android.content.Intent;
+
+import com.ichi2.libanki.Note;
+import com.ichi2.testutils.AnkiAssert;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.android.controller.ActivityController;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -9,19 +16,25 @@ import java.lang.reflect.Method;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class AbstractFlashcardViewerTest extends RobolectricTest {
 
-    public class NonabstractFlashcardViewer extends AbstractFlashcardViewer {
+    public static class NonAbstractFlashcardViewer extends AbstractFlashcardViewer {
         @Override
         protected void setTitle() {
+        }
+
+        public String getTypedInput() {
+            return super.getTypedInputText();
         }
     }
 
     public String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        NonabstractFlashcardViewer nafv = new NonabstractFlashcardViewer();
+        NonAbstractFlashcardViewer nafv = new NonAbstractFlashcardViewer();
 
         Class[] argClasses = {String.class, String.class, String.class};
         Method method = AbstractFlashcardViewer.class.getDeclaredMethod("typeAnsAnswerFilter", argClasses);
@@ -271,5 +284,41 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     public void invalidEaseIsParsedFromSignal() {
         String url = "signal:answer_ease0";
         assertEquals(SIGNAL_NOOP, getSignalFromUrl(url));
+    }
+
+    @Test
+    public void invalidEncodingDoesNotCrash() {
+        //#5944 - input came in as: 'typeblurtext:%'. We've fixed the encoding, but want to make sure there's no crash
+        // as JS can call this function with arbitrary data.
+        String url = "typeblurtext:%";
+
+        NonAbstractFlashcardViewer nafv = getViewer();
+        AnkiAssert.assertDoesNotThrow(() -> nafv.handleUrlFromJavascript(url));
+    }
+
+    @Test
+    public void validEncodingSetsAnswerCorrectly() {
+        //你好%
+        String url = "typeblurtext:%E4%BD%A0%E5%A5%BD%25";
+        NonAbstractFlashcardViewer nafv = getViewer();
+
+        nafv.handleUrlFromJavascript(url);
+
+        assertThat(nafv.getTypedInput(), is("你好%"));
+    }
+
+
+    private NonAbstractFlashcardViewer getViewer() {
+        Note n = getCol().newNote();
+        n.setField(0, "a");
+        getCol().addNote(n);
+
+        ActivityController multimediaController = Robolectric.buildActivity(NonAbstractFlashcardViewer.class, new Intent())
+                .create().start().resume().visible();
+
+        NonAbstractFlashcardViewer viewer = (NonAbstractFlashcardViewer) multimediaController.get();
+        viewer.onCollectionLoaded(getCol());
+        viewer.loadInitialCard();
+        return viewer;
     }
 }

@@ -96,7 +96,9 @@ function buttonAnswerEase4() {
 
 /* Tell the app the text in the input box when it loses focus */
 function taBlur(itag) {
-    window.location.href = "typeblurtext:" + itag.value;
+    //#5944 - percent wasn't encoded, but Mandarin was.
+    var encodedVal = encodeURI(itag.value);
+    window.location.href = "typeblurtext:" + encodedVal;
 }
 
 /* Look at the text entered into the input box and send the text on a return */
@@ -111,7 +113,9 @@ function taKey(itag, e) {
     }
 
     if (keycode == 13) {
-        window.location.href = "typeentertext:" + itag.value;
+        //#5944 - percent wasn't encoded, but Mandarin was.
+        var encodedVal = encodeURI(itag.value);
+        window.location.href = "typeentertext:" + encodedVal;
         return false;
     } else {
         return true;
