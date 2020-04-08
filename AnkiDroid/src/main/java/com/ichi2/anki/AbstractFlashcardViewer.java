@@ -2916,6 +2916,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @TargetApi(Build.VERSION_CODES.N)
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             String url = request.getUrl().toString();
+            Timber.i("Obtained URL from card: '%s'", url);
             return filterUrl(url);
         }
 
