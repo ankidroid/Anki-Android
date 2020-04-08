@@ -5,7 +5,9 @@ import android.view.MenuItem;
 
 import java.lang.reflect.Method;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 /**
@@ -28,32 +30,34 @@ public class ActionBarOverflow {
     protected static Method sAndroidXIsActionButton;
 
     static {
+        setupMethods(ActionBarOverflow::getPrivateMethodHandleSystemErrors);
+    }
+
+    @VisibleForTesting
+    static void setupMethods(PrivateMethodAccessor accessor) {
         //Note: Multiple of these can succeed.
+        sNativeIsActionButton = accessor.getPrivateMethod(NATIVE_CLASS, "isActionButton");
+        sSupportIsActionButton = accessor.getPrivateMethod(SUPPORT_CLASS, "isActionButton");
+        sAndroidXIsActionButton = accessor.getPrivateMethod(ANDROIDX_CLASS, "isActionButton");
+    }
+
+
+    @CheckResult
+    private static Method getPrivateMethodHandleSystemErrors(String className, String methodName) {
+        Method action = null;
         try {
             //We know this won't always work, we'll log if this isn't the case.
-            @SuppressLint("PrivateApi") Class<?> MenuItemImpl = Class.forName(NATIVE_CLASS);
-            sNativeIsActionButton = MenuItemImpl.getDeclaredMethod("isActionButton");
-            sNativeIsActionButton.setAccessible(true);
-            Timber.d("Setup ActionBarOverflow: %s", NATIVE_CLASS);
-        } catch (Exception ignoreAndLogEx) {
-            Timber.d(ignoreAndLogEx, "Failed to obtain: sNativeIsActionButton");
+            @SuppressLint("PrivateApi") Class<?> MenuItemImpl = Class.forName(className);
+            action = MenuItemImpl.getDeclaredMethod(methodName);
+            action.setAccessible(true);
+            Timber.d("Setup ActionBarOverflow: %s", className);
+        } catch (Exception | NoSuchFieldError | NoSuchMethodError ignoreAndLogEx) {
+            //See: #5806. MenuItemImpl;->isActionButton is on the light greylist
+            //https://developer.android.com/distribute/best-practices/develop/restrictions-non-sdk-interfaces#results-of-keeping-non-sdk
+            Timber.d(ignoreAndLogEx, "Failed to handle: %s", className);
         }
-        try {
-            Class<?> MenuItemImpl = Class.forName(SUPPORT_CLASS);
-            sSupportIsActionButton = MenuItemImpl.getDeclaredMethod("isActionButton");
-            sSupportIsActionButton.setAccessible(true);
-            Timber.d("Setup ActionBarOverflow: %s", SUPPORT_CLASS);
-        } catch (Exception ignoreAndLogEx) {
-            Timber.d(ignoreAndLogEx, "Failed to obtain: sSupportIsActionButton");
-        }
-        try {
-            Class<?> MenuItemImpl = Class.forName(ANDROIDX_CLASS);
-            sAndroidXIsActionButton = MenuItemImpl.getDeclaredMethod("isActionButton");
-            sAndroidXIsActionButton.setAccessible(true);
-            Timber.d("Setup ActionBarOverflow: %s", ANDROIDX_CLASS);
-        } catch (Exception ignoreAndLogEx) {
-            Timber.d(ignoreAndLogEx, "Failed to obtain: sAndroidXIsActionButton");
-        }
+
+        return action;
     }
 
 // --------------------------------------------------------------------------------------------
@@ -91,5 +95,35 @@ public class ActionBarOverflow {
                 Timber.w("Unhandled ActionBar class: %s", className);
                 return null;
         }
+    }
+
+    @VisibleForTesting
+    @FunctionalInterface
+    interface PrivateMethodAccessor {
+        Method getPrivateMethod(String className, String methodName);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    static boolean hasUsableMethod() {
+        return  sSupportIsActionButton != null ||
+                sNativeIsActionButton != null ||
+                sAndroidXIsActionButton != null;
+
+    }
+
+    @CheckResult
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    static Method getPrivateMethodOnlyHandleExceptions(String className, String methodName) {
+        Method action = null;
+        try {
+            @SuppressLint("PrivateApi") Class<?> MenuItemImpl = Class.forName(className);
+            action = MenuItemImpl.getDeclaredMethod(methodName);
+            action.setAccessible(true);
+            Timber.d("Setup ActionBarOverflow: %s", className);
+        } catch (Exception ignoreAndLogEx) {
+            Timber.d(ignoreAndLogEx, "Failed to handle: %s", className);
+        }
+
+        return action;
     }
 }
