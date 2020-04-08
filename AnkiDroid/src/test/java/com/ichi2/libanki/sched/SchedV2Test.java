@@ -52,7 +52,7 @@ public class SchedV2Test extends RobolectricTest {
         LapseConf lapse = homeDeckConf.getLapse();
 
         lapse.put("minInt", 2);
-        lapse.put("mult", 0.7d);
+        lapse.putMult(0.7d);
         lapse.put("delays", new JSONArray("[20]"));
 
         ensureLapseMatchesSppliedAnkiDesktopConfig(lapse);

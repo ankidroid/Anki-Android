@@ -274,7 +274,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getLapse().putLeechAction(Integer.parseInt((String) value));
                                 break;
                             case "lapNewIvl":
-                                mOptions.getLapse().put("mult", (Integer) value / 100.0f);
+                                mOptions.getLapse().putMult((Integer) value / 100.0f);
                                 break;
                             case "showAnswerTimer":
                                 mOptions.setTimer((Boolean) value ? 1 : 0);

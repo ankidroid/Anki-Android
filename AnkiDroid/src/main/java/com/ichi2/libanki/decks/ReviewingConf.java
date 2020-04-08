@@ -19,4 +19,8 @@ public class ReviewingConf extends ReadOnlyJSONObject {
     public void putLeechAction(Integer action) {
         put("leechAction", action);
     }
+
+    public void putMult(double mult) {
+        put("mult", mult);
+    }
 }
