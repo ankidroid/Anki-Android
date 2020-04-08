@@ -42,7 +42,8 @@ env:
    - API=28
    - API=29
    - API=Q # This will be API30 when it is released, until now it is Q and it is failing unfortunately
-   - API=24 JDK="1.11" # make sure we work in the future
+   - API=24 JDK="1.11" # make sure we work in future dev environments
+   - API=24 JDK="1.14" # make sure we work in future dev environments
 
 jobs:
   fast_finish: true  # Report success without waiting for jobs that allowed to fail.
@@ -71,6 +72,7 @@ jobs:
   allow_failures:
     - env: API=Q # unreleased Android API30 is failing in local builds, let's expose that on Travis
     - env: API=24 JDK="1.11" # non-default JDKs should not hold up success reporting
+    - env: API=24 JDK="1.14" # non-default JDKs should not hold up success reporting
     - env: FINALIZE_COVERAGE=TRUE API=NONE # finalizing coverage should not hold up success reporting
 
 before_install:
