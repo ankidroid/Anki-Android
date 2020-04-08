@@ -1564,6 +1564,11 @@ public class Collection {
             modSchemaNoCheck();
         }
         logProblems(result.getProblems());
+        int count = result.getCardsWithFixedHomeDeckCount();
+        if (count != 0) {
+            String message = mContext.getResources().getString(R.string.integrity_check_fixed_no_home_deck, count);
+            UIUtils.showThemedToast(mContext,  message, false);
+        }
         return (result.getOldSize() - newSize) / 1024;
     }
 
@@ -2176,6 +2181,11 @@ public class Collection {
 
         public List<String> getProblems() {
             return mProblems;
+        }
+
+
+        public int getCardsWithFixedHomeDeckCount() {
+            return mFixedCardsWithNoHomeDeckCount;
         }
     }
 }
