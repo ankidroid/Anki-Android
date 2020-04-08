@@ -1711,8 +1711,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck
             JSONObject revOptions = new JSONObject();
-            if (!getCol().getDecks().isDyn(getCol().getDecks().current().getLong("id"))) {
-                revOptions = getCol().getDecks().confForDid(getCol().getDecks().current().getLong("id")).getJSONObject("rev");
+            long selectedDid = getCol().getDecks().selected();
+            if (!getCol().getDecks().isDyn(selectedDid)) {
+                revOptions = getCol().getDecks().confForDid(selectedDid).getJSONObject("rev");
             }
 
             mOptUseGeneralTimerSettings = revOptions.optBoolean("useGeneralTimeoutSettings", true);
