@@ -1569,6 +1569,7 @@ public class Collection {
 
 
     private List<String> ensureCardsHaveHomeDeck(Runnable notifyProgress, CheckDatabaseResult result) {
+        Timber.d("ensureCardsHaveHomeDeck()");
         // #5932 - a card may not have a home deck if:
         // * It is in a dynamic deck, and has odid = 0.
         // * It is in a dynamic deck, and the odid refers to a dynamic deck.
@@ -1593,32 +1594,29 @@ public class Collection {
             return Collections.emptyList();
         }
 
-        //PERF: in debug, 3 seconds for 87 cards.
-        //So, roughly 30 for 1000 cards
-        Timber.i("Found %d cards with no home deck", cardIds.size());
-        int fixed = 0;
-        for (long cardId : cardIds) {
-            try {
-                Card c = getCard(cardId);
-                c.setDid(Consts.DEFAULT_DECK_ID);
-                c.setODid(0L);
-                c.note().addTag(mContext.getString(R.string.missing_home_deck_tag));
+        //we use a ! prefix to keep it at the top of the deck list
+        String recoveredDeckName = "! " + mContext.getString(R.string.check_integrity_recovered_deck);
+        Long nextDeckId = getDecks().id(recoveredDeckName , true);
 
-                c.note().flush();
-                c.flush();
-                fixed++;
-            } catch (Exception e) {
-                Timber.e(e, "Failed to fix card '%d'", cardId);
-            }
+        if (nextDeckId == null) {
+            throw new IllegalStateException("Unable to create deck");
         }
 
-        result.setCardsWithFixedHomeDeckCount(fixed);
+        getDecks().flush();
 
-        if (fixed == 0) {
-            return Collections.emptyList();
-        }
+        mDb.execute("update cards " +
+                        "set did = " + nextDeckId + ", " +
+                        "odid = 0 " +
+                        "where did in " +
+                        Utils.ids2str(dynDeckIds) +
+                        "and odid in " +
+                        Utils.ids2str(dynIdsAndZero));
+
+
+        result.setCardsWithFixedHomeDeckCount(cardIds.size());
+
         Timber.d("Completed");
-        String message = String.format(Locale.US, "Fixed %d cards with no home deck", fixed);
+        String message = String.format(Locale.US, "Fixed %d cards with no home deck", cardIds.size());
         return Collections.singletonList(message);
     }
 
