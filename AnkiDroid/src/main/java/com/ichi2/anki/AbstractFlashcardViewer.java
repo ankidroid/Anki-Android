@@ -3069,6 +3069,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 return URLDecoder.decode(url, "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 Timber.e(e, "UTF-8 isn't supported as an encoding?");
+            } catch (Exception e) {
+                Timber.e(e, "Exception decoding: '%s'", url);
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.card_viewer_url_decode_error), true);
             }
             return "";
         }
@@ -3176,5 +3179,31 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     .onPositive((materialDialog, dialogAction) -> finishWithoutAnimation())
                     .show();
         }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    protected String getTypedInputText() {
+        return mTypeInput;
+    }
+
+    @SuppressLint("WebViewApiAvailability")
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    void handleUrlFromJavascript(String url) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //WebViewCompat recommended here, but I'll avoid the dependency as it's test code
+            CardViewerWebClient c = ((CardViewerWebClient) this.mCard.getWebViewClient());
+            if (c == null) {
+                throw new IllegalStateException("Couldn't obtain WebView - maybe it wasn't created yet");
+            }
+            c.filterUrl(url);
+        } else {
+            throw new IllegalStateException("Can't get WebViewClient due to Android API");
+        }
+    }
+
+    @VisibleForTesting
+    void loadInitialCard() {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+                new DeckTask.TaskData(null, 0));
     }
 }
