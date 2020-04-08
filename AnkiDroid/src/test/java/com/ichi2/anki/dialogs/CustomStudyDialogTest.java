@@ -61,12 +61,13 @@ public class CustomStudyDialogTest extends RobolectricTest {
         Deck customStudy = getCol().getDecks().current();
         assertThat("Custom Study should be dynamic", customStudy.getInt("dyn") == 1);
         assertThat("could not find deck: Custom study session", customStudy, notNullValue());
-        customStudy.remove("id");
-        customStudy.remove("mod");
-        customStudy.remove("name");
+        JSONObject customStudy_ = customStudy.deepClone();
+        customStudy_.remove("id");
+        customStudy_.remove("mod");
+        customStudy_.remove("name");
 
         String expected = "{\"newToday\":[0,0],\"revToday\":[0,0],\"lrnToday\":[0,0],\"timeToday\":[0,0],\"collapsed\":false,\"dyn\":1,\"desc\":\"\",\"usn\":-1,\"delays\":null,\"separate\":true,\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]],\"resched\":true,\"return\":true}";
-        assertThat(customStudy.toString(), is(expected));
+        assertThat(customStudy_.toString(), is(expected));
     }
 
 

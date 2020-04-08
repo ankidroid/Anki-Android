@@ -11,7 +11,7 @@ public class DConf extends ReadOnlyJSONObject{
         super(json);
     }
 
-    public DConf(String json) {
+    protected DConf(String json) {
         super(json);
     }
 

@@ -10,7 +10,7 @@ public class Deck extends ReadOnlyJSONObject {
         super(json);
     }
 
-    public Deck(String json) {
+    protected Deck(String json) {
         super(json);
     }
 

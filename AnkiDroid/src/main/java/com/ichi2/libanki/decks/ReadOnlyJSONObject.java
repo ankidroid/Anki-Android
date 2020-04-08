@@ -14,19 +14,19 @@ public class ReadOnlyJSONObject implements Iterable<String> {
     private JSONObject json;
 
     /** All changes made to this are applied to json */
-    public ReadOnlyJSONObject(JSONObject json) {
+    protected ReadOnlyJSONObject(JSONObject json) {
         this.json = json;
     }
 
-    public ReadOnlyJSONObject() {
+    protected ReadOnlyJSONObject() {
         this.json = new JSONObject();
     }
 
-    public ReadOnlyJSONObject(String json) {
+    protected ReadOnlyJSONObject(String json) {
         this.json = new JSONObject(json);
     }
 
-    public JSONObject getJSON() {
+    protected JSONObject getJSON() {
         return json;
     }
 
@@ -54,11 +54,11 @@ public class ReadOnlyJSONObject implements Iterable<String> {
         return json.getString(key);
     }
 
-    public JSONObject getJSONObject(String key) {
+    protected JSONObject getJSONObject(String key) {
         return json.getJSONObject(key);
     }
 
-    public JSONArray getJSONArray(String key) {
+    protected JSONArray getJSONArray(String key) {
         return json.getJSONArray(key);
     }
 
@@ -86,11 +86,11 @@ public class ReadOnlyJSONObject implements Iterable<String> {
         return json.optString(key);
     }
 
-    public JSONObject optJSONObject(String key) {
+    protected JSONObject optJSONObject(String key) {
         return json.optJSONObject(key);
     }
 
-    public JSONArray optJSONArray(String key) {
+    protected JSONArray optJSONArray(String key) {
         return json.optJSONArray(key);
     }
 
@@ -114,23 +114,23 @@ public class ReadOnlyJSONObject implements Iterable<String> {
         return json.optString(key, fallback);
     }
 
-    public JSONObject put(String name, Object value) {
+    protected JSONObject put(String name, Object value) {
         return json.put(name, value);
     }
 
-    public JSONObject put(String key, int value) {
+    protected JSONObject put(String key, int value) {
         return json.put(key, value);
     }
 
-    public JSONObject put(String key, long value) {
+    protected JSONObject put(String key, long value) {
         return json.put(key, value);
     }
 
-    public JSONObject put(String key, double value) {
+    protected JSONObject put(String key, double value) {
         return json.put(key, value);
     }
 
-    public JSONObject put(String key, boolean value) {
+    protected JSONObject put(String key, boolean value) {
         return json.put(key, value);
     }
 
@@ -139,7 +139,7 @@ public class ReadOnlyJSONObject implements Iterable<String> {
         return json.has(key);
     }
 
-    public void remove(String key) {
+    protected void remove(String key) {
         json.remove(key);
     }
 
