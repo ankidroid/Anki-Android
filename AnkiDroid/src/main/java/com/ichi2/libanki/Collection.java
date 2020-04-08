@@ -1290,6 +1290,7 @@ public class Collection {
                     c.note().delTag("leech");
                     c.note().flush();
                 }
+                Timber.i("Undo Review of card %d, leech: %b", c.getId(), wasLeech);
                 // write old data
                 c.flush(false);
                 // and delete revlog entry
@@ -1307,6 +1308,7 @@ public class Collection {
             }
 
             case BURY_NOTE:
+                Timber.i("UNDO: Burying notes");
                 for (Card cc : (ArrayList<Card>) data[2]) {
                     cc.flush(false);
                 }
@@ -1314,11 +1316,13 @@ public class Collection {
 
             case SUSPEND_CARD: {
                 Card suspendedCard = (Card) data[1];
+                Timber.i("UNDO: Suspend Card %d", suspendedCard.getId());
                 suspendedCard.flush(false);
                 return suspendedCard.getId();
             }
 
             case SUSPEND_CARD_MULTI: {
+                Timber.i("Undo: Suspend multiple cards");
                 Card[] cards = (Card[]) data[1];
                 boolean[] originalSuspended = (boolean[]) data[2];
                 List<Long> toSuspendIds = new ArrayList<>();
@@ -1349,12 +1353,14 @@ public class Collection {
             }
 
             case SUSPEND_NOTE:
+                Timber.i("Undo: Suspend note");
                 for (Card ccc : (ArrayList<Card>) data[1]) {
                     ccc.flush(false);
                 }
                 return (Long) data[2];
 
             case MARK_NOTE_MULTI: {
+                Timber.i("Undo: Mark notes");
                 List<Note> originalMarked = (List<Note>) data[1];
                 List<Note> originalUnmarked = (List<Note>) data[2];
                 CardUtils.markAll(originalMarked, true);
@@ -1363,6 +1369,7 @@ public class Collection {
             }
 
             case DELETE_NOTE: {
+                Timber.i("Undo: Delete note");
                 ArrayList<Long> ids = new ArrayList<>();
                 Note note = (Note) data[1];
                 note.flush(note.getMod(), false);
@@ -1376,6 +1383,7 @@ public class Collection {
             }
 
             case DELETE_NOTE_MULTI: {
+                Timber.i("Undo: Delete notes");
                 // undo all of these at once instead of one-by-one
                 ArrayList<Long> ids = new ArrayList<>();
                 List<Card> allCards = (ArrayList<Card>) data[2];
@@ -1393,6 +1401,7 @@ public class Collection {
             }
 
             case CHANGE_DECK_MULTI: {
+                Timber.i("Undo: Change Decks");
                 Card[] cards = (Card[]) data[1];
                 long[] originalDid = (long[]) data[2];
                 // move cards to original deck
@@ -1408,6 +1417,7 @@ public class Collection {
             }
 
             case BURY_CARD: {
+                Timber.i("Undo: Bury Card");
                 for (Card cc : (ArrayList<Card>) data[2]) {
                     cc.flush(false);
                 }
@@ -1417,7 +1427,7 @@ public class Collection {
             case RESET_CARDS:
             case RESCHEDULE_CARDS:
             case REPOSITION_CARDS:
-                Timber.d("Undoing action of type %s on %d cards", data[0], ((Card[])data[1]).length);
+                Timber.i("Undoing action of type %s on %d cards", data[0], ((Card[])data[1]).length);
                 Card[] cards = (Card[]) data[1];
                 for (int i = 0; i < cards.length; i++) {
                     Card card = cards[i];

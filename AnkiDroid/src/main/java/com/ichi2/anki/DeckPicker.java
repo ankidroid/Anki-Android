@@ -1166,7 +1166,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             @Override
             public void onPostExecute(TaskData result) {
                 hideProgressBar();
+                Timber.i("Undo completed");
                 if (isReview) {
+                    Timber.i("Review undone - opening reviewer.");
                     openReviewer();
                 }
             }
