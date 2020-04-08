@@ -1596,7 +1596,7 @@ public class Collection {
         }
 
         //we use a ! prefix to keep it at the top of the deck list
-        String recoveredDeckName = "! " + mContext.getString(R.string.check_integrity_recovered_deck);
+        String recoveredDeckName = "! " + mContext.getString(R.string.check_integrity_recovered_deck_name);
         Long nextDeckId = getDecks().id(recoveredDeckName , true);
 
         if (nextDeckId == null) {

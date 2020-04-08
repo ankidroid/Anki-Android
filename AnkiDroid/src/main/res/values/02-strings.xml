@@ -249,5 +249,5 @@
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
 </resources>
