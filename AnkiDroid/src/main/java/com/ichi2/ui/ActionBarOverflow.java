@@ -28,11 +28,13 @@ public class ActionBarOverflow {
     protected static Method sAndroidXIsActionButton;
 
     static {
+        //Note: Multiple of these can succeed.
         try {
             //We know this won't always work, we'll log if this isn't the case.
             @SuppressLint("PrivateApi") Class<?> MenuItemImpl = Class.forName(NATIVE_CLASS);
             sNativeIsActionButton = MenuItemImpl.getDeclaredMethod("isActionButton");
             sNativeIsActionButton.setAccessible(true);
+            Timber.d("Setup ActionBarOverflow: %s", NATIVE_CLASS);
         } catch (Exception ignoreAndLogEx) {
             Timber.d(ignoreAndLogEx, "Failed to obtain: sNativeIsActionButton");
         }
@@ -40,6 +42,7 @@ public class ActionBarOverflow {
             Class<?> MenuItemImpl = Class.forName(SUPPORT_CLASS);
             sSupportIsActionButton = MenuItemImpl.getDeclaredMethod("isActionButton");
             sSupportIsActionButton.setAccessible(true);
+            Timber.d("Setup ActionBarOverflow: %s", SUPPORT_CLASS);
         } catch (Exception ignoreAndLogEx) {
             Timber.d(ignoreAndLogEx, "Failed to obtain: sSupportIsActionButton");
         }
@@ -47,6 +50,7 @@ public class ActionBarOverflow {
             Class<?> MenuItemImpl = Class.forName(ANDROIDX_CLASS);
             sAndroidXIsActionButton = MenuItemImpl.getDeclaredMethod("isActionButton");
             sAndroidXIsActionButton.setAccessible(true);
+            Timber.d("Setup ActionBarOverflow: %s", ANDROIDX_CLASS);
         } catch (Exception ignoreAndLogEx) {
             Timber.d(ignoreAndLogEx, "Failed to obtain: sAndroidXIsActionButton");
         }
