@@ -1119,7 +1119,7 @@ public class SchedV2 extends AbstractSched {
         }
         int ideal;
         JSONArray ja;
-        ja = conf.getJSONArray("ints");
+        ja = conf.getInts();
         if (!early) {
             // graduate
             ideal = ja.getInt(0);
@@ -1755,7 +1755,7 @@ public class SchedV2 extends AbstractSched {
         DConf oconf = mCol.getDecks().confForDid(card.getODid());
         NewConf dict = new NewConf();
         // original deck
-        dict.put("ints", oconf.getNew().getJSONArray("ints"));
+        dict.put("ints", oconf.getNew().getInts());
         dict.put("initialFactor", oconf.getNew().getInt("initialFactor"));
         dict.put("bury", oconf.getNew().optBoolean("bury", true));
         dict.put("delays", oconf.getNew().getDelays());

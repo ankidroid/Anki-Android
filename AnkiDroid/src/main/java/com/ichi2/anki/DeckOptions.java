@@ -119,8 +119,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 // new
                 NewConf newOptions = mOptions.getNew();
                 mValues.put("newSteps", StepsPreference.convertFromJSON(newOptions.getDelays()));
-                mValues.put("newGradIvl", newOptions.getJSONArray("ints").getString(0));
-                mValues.put("newEasy", newOptions.getJSONArray("ints").getString(1));
+                mValues.put("newGradIvl", newOptions.getInts().getString(0));
+                mValues.put("newEasy", newOptions.getInts().getString(1));
                 mValues.put("newFactor", Integer.toString(newOptions.getInt("initialFactor") / 10));
                 mValues.put("newOrder", newOptions.getString("order"));
                 mValues.put("newPerDay", newOptions.getString("perDay"));
@@ -222,14 +222,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 JSONArray ja = new JSONArray(); // [graduating, easy]
 
                                 ja.put(value);
-                                ja.put(mOptions.getNew().getJSONArray("ints").get(1));
+                                ja.put(mOptions.getNew().getInts().get(1));
                                 mOptions.getNew().put("ints", ja);
                                 break;
                             }
                             case "newEasy": {
                                 JSONArray ja = new JSONArray(); // [graduating, easy]
 
-                                ja.put(mOptions.getNew().getJSONArray("ints").get(0));
+                                ja.put(mOptions.getNew().getInts().get(0));
                                 ja.put(value);
                                 mOptions.getNew().put("ints", ja);
                                 break;
