@@ -189,13 +189,9 @@ public class Storage {
                     d.version10to11(col);
                 }
                 for (DConf c : col.getDecks().allConf()) {
-                    ReviewConf r = c.getRev();
-                    r.put("ivlFct", r.optDouble("ivlFct", 1));
-                    if (r.has("ivlfct")) {
-                        r.remove("ivlfct");
-                    }
-                    r.put("maxIvl", 36500);
-                    col.getDecks().save(c);
+                    // Code moved to DConf package to access protected
+                    // methods.
+                    c.version10to11(col);
                 }
                 for (JSONObject m : col.getModels().all()) {
                     JSONArray tmpls = m.getJSONArray("tmpls");

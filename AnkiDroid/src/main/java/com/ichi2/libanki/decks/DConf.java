@@ -1,5 +1,7 @@
 package com.ichi2.libanki.decks;
 
+import com.ichi2.libanki.Collection;
+import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 import androidx.annotation.Nullable;
@@ -81,5 +83,15 @@ public class DConf extends ReadOnlyJSONObject{
 
     public void setName(Object o) {
         put("name", o);
+    }
+
+    public void version10to11(Collection col) {
+        ReviewingConf r = getRev();
+        r.put("ivlFct", r.optDouble("ivlFct", 1));
+        if (r.has("ivlfct")) {
+            r.remove("ivlfct");
+        }
+        r.put("maxIvl", 36500);
+        col.getDecks().save();
     }
 }
