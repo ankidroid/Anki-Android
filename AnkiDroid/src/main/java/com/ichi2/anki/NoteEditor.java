@@ -1687,13 +1687,20 @@ public class NoteEditor extends AnkiActivity {
                 String selectedText = text.substring(selectionStart, selectionEnd);
                 String afterText = text.substring(selectionEnd);
 
-                // Find the largest existing cloze deletion id
-                Matcher matcher = mClozeRegexPattern.matcher(text);
+                // Search in all fields of the current note for the cloze reference with the highest value
+                // Per the manual, cloze references are the name of the delimiters for cloze deletions e.g. {{c1::text}}
                 int highestClozeId = 0;
-                while (matcher.find()) {
-                    int detectedClozeId = Integer.parseInt(matcher.group(1));
-                    if (detectedClozeId > highestClozeId) {
-                        highestClozeId = detectedClozeId;
+                // Begin looping through the fields
+                for (FieldEditText currentField : mEditFields) {
+                    // Get the actual data contained in the current field
+                    String fieldLiteral = currentField.getText().toString();
+                    // Begin searching in the current field for cloze references
+                    Matcher matcher = mClozeRegexPattern.matcher(fieldLiteral);
+                    while (matcher.find()) {
+                        int detectedClozeId = Integer.parseInt(matcher.group(1));
+                        if (detectedClozeId > highestClozeId) {
+                            highestClozeId = detectedClozeId;
+                        }
                     }
                 }
 
