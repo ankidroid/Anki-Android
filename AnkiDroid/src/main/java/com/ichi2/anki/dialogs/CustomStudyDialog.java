@@ -39,6 +39,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
@@ -448,6 +449,15 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck);
             long customStudyDid = col.getDecks().newDyn(customStudyDeck);
             dyn = col.getDecks().get(customStudyDid);
+        }
+        if (!dyn.has("terms")) {
+            //#5959 - temp code to diagnose why terms doesn't exist.
+            // normally we wouldn't want to log this much, but we need to know how deep the corruption is to fix the
+            // issue
+            Timber.w("Invalid Dynamic Deck: %s", dyn);
+            AnkiDroidApp.sendExceptionReport("Custom Study Deck had no terms", "CustomStudyDialog - createCustomStudySession");
+            UIUtils.showThemedToast(this.getContext(), getString(R.string.custom_study_rebuild_deck_corrupt), false);
+            return;
         }
         // and then set various options
         if (delays.length() > 0) {

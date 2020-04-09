@@ -87,6 +87,8 @@
     <string name="custom_study_ahead">Review ahead by x days:</string>
     <string name="custom_study_random">Select x cards randomly from the deck:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+
     <string name="rebuild_custom_study_deck">Rebuilding custom study deck…</string>
     <string name="importing_collection">Importing collection…</string>
     <string name="import_media_count">Importing media files %1$d%%…</string>
