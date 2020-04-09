@@ -147,4 +147,12 @@ public abstract class AbstractSched {
                     Arrays.toString(names), did, depth, revCount, lrnCount, newCount, children);
         }
     }
+
+    public interface LimitMethod {
+        int operation(JSONObject g);
+    }
+
+    public interface CountMethod {
+        int operation(long did, int lim);
+    }
 }

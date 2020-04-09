@@ -37,9 +37,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -311,15 +309,14 @@ public class Sched extends AbstractSched {
     }
 
 
-    private int _walkingCount(Method limFn, Method cntFn) {
+    private int _walkingCount(LimitMethod limFn, CountMethod cntFn) {
         int tot = 0;
         HashMap<Long, Integer> pcounts = new HashMap<>();
         // for each of the active decks
         HashMap<String, JSONObject> nameMap = mCol.getDecks().nameMap();
-        try {
             for (long did : mCol.getDecks().active()) {
                 // get the individual deck's limit
-                int lim = (Integer)limFn.invoke(Sched.this, mCol.getDecks().get(did));
+                int lim = limFn.operation(mCol.getDecks().get(did));
                 if (lim == 0) {
                     continue;
                 }
@@ -329,13 +326,13 @@ public class Sched extends AbstractSched {
                     // add if missing
                     long id = p.getLong("id");
                     if (!pcounts.containsKey(id)) {
-                        pcounts.put(id, (Integer)limFn.invoke(Sched.this, p));
+                        pcounts.put(id, limFn.operation(p));
                     }
                     // take minimum of child and parent
                     lim = Math.min(pcounts.get(id), lim);
                 }
                 // see how many cards we actually have
-                int cnt = (Integer)cntFn.invoke(Sched.this, did, lim);
+                int cnt = cntFn.operation(did, lim);
                 // if non-zero, decrement from parents counts
                 for (JSONObject p : parents) {
                     long id = p.getLong("id");
@@ -346,11 +343,6 @@ public class Sched extends AbstractSched {
                 // and add to running total
                 tot += cnt;
             }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
         return tot;
     }
 
@@ -521,12 +513,8 @@ public class Sched extends AbstractSched {
      */
 
     private void _resetNewCount() {
-        try {
-            mNewCount = _walkingCount(Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class),
-                    Sched.class.getDeclaredMethod("_cntFnNew", long.class, int.class));
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
+            mNewCount = _walkingCount(g -> _deckNewLimitSingle(g),
+                (did, lim) -> _cntFnNew(did, lim));
     }
 
 
@@ -645,10 +633,9 @@ public class Sched extends AbstractSched {
     }
 
 
-    private int _deckNewLimit(long did, Method fn) {
-        try {
+    private int _deckNewLimit(long did, LimitMethod fn) {
             if (fn == null) {
-                fn = Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class);
+                fn = (g -> _deckNewLimitSingle(g));
             }
             List<JSONObject> decks = mCol.getDecks().parents(did);
             decks.add(mCol.getDecks().get(did));
@@ -656,7 +643,7 @@ public class Sched extends AbstractSched {
             // for the deck and each of its parents
             int rem = 0;
             for (JSONObject g : decks) {
-                rem = (Integer) fn.invoke(Sched.this, g);
+                rem = fn.operation(g);
                 if (lim == -1) {
                     lim = rem;
                 } else {
@@ -664,9 +651,6 @@ public class Sched extends AbstractSched {
                 }
             }
             return lim;
-        } catch (IllegalArgumentException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
@@ -1109,11 +1093,7 @@ public class Sched extends AbstractSched {
      */
 
     private int _deckRevLimit(long did) {
-        try {
-            return _deckNewLimit(did, Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class));
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
+            return _deckNewLimit(did, d -> _deckRevLimitSingle(d));
     }
 
 
@@ -1133,12 +1113,8 @@ public class Sched extends AbstractSched {
 
 
     private void _resetRevCount() {
-        try {
-            mRevCount = _walkingCount(Sched.class.getDeclaredMethod("_deckRevLimitSingle", JSONObject.class),
-                    Sched.class.getDeclaredMethod("_cntFnRev", long.class, int.class));
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
+        mRevCount = _walkingCount(d -> _deckRevLimitSingle(d),
+                (did, lim) -> _cntFnRev(did, lim));
     }
 
 

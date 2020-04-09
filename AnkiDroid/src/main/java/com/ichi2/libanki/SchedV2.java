@@ -38,9 +38,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -308,15 +306,14 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _walkingCount(Method limFn, Method cntFn) {
+    private int _walkingCount(LimitMethod limFn, CountMethod cntFn) {
         int tot = 0;
         HashMap<Long, Integer> pcounts = new HashMap<>();
         // for each of the active decks
         HashMap<String, JSONObject> nameMap = mCol.getDecks().nameMap();
-        try {
             for (long did : mCol.getDecks().active()) {
                 // get the individual deck's limit
-                int lim = (Integer)limFn.invoke(SchedV2.this, mCol.getDecks().get(did));
+                int lim = limFn.operation(mCol.getDecks().get(did));
                 if (lim == 0) {
                     continue;
                 }
@@ -326,13 +323,13 @@ public class SchedV2 extends AbstractSched {
                     // add if missing
                     long id = p.getLong("id");
                     if (!pcounts.containsKey(id)) {
-                        pcounts.put(id, (Integer)limFn.invoke(SchedV2.this, p));
+                        pcounts.put(id, limFn.operation(p));
                     }
                     // take minimum of child and parent
                     lim = Math.min(pcounts.get(id), lim);
                 }
                 // see how many cards we actually have
-                int cnt = (Integer)cntFn.invoke(SchedV2.this, did, lim);
+                int cnt = cntFn.operation(did, lim);
                 // if non-zero, decrement from parents counts
                 for (JSONObject p : parents) {
                     long id = p.getLong("id");
@@ -343,11 +340,6 @@ public class SchedV2 extends AbstractSched {
                 // and add to running total
                 tot += cnt;
             }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
         return tot;
     }
 
@@ -530,12 +522,8 @@ public class SchedV2 extends AbstractSched {
      */
 
     private void _resetNewCount() {
-        try {
-            mNewCount = _walkingCount(SchedV2.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class),
-                    SchedV2.class.getDeclaredMethod("_cntFnNew", long.class, int.class));
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
+            mNewCount = _walkingCount((JSONObject g) -> _deckNewLimitSingle(g),
+                (long did, int lim) -> _cntFnNew(did, lim));
     }
 
 
@@ -654,10 +642,9 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _deckNewLimit(long did, Method fn) {
-        try {
+    private int _deckNewLimit(long did, LimitMethod fn) {
             if (fn == null) {
-                fn = SchedV2.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class);
+                fn = (g -> _deckNewLimitSingle(g));
             }
             List<JSONObject> decks = mCol.getDecks().parents(did);
             decks.add(mCol.getDecks().get(did));
@@ -665,7 +652,7 @@ public class SchedV2 extends AbstractSched {
             // for the deck and each of its parents
             int rem = 0;
             for (JSONObject g : decks) {
-                rem = (Integer) fn.invoke(SchedV2.this, g);
+                rem = fn.operation(g);
                 if (lim == -1) {
                     lim = rem;
                 } else {
@@ -673,9 +660,6 @@ public class SchedV2 extends AbstractSched {
                 }
             }
             return lim;
-        } catch (IllegalArgumentException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
