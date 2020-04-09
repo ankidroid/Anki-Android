@@ -311,35 +311,35 @@ public class SchedV2 extends AbstractSched {
         HashMap<Long, Integer> pcounts = new HashMap<>();
         // for each of the active decks
         HashMap<String, JSONObject> nameMap = mCol.getDecks().nameMap();
-            for (long did : mCol.getDecks().active()) {
-                // get the individual deck's limit
-                int lim = limFn.operation(mCol.getDecks().get(did));
-                if (lim == 0) {
-                    continue;
-                }
-                // check the parents
-                List<JSONObject> parents = mCol.getDecks().parents(did, nameMap);
-                for (JSONObject p : parents) {
-                    // add if missing
-                    long id = p.getLong("id");
-                    if (!pcounts.containsKey(id)) {
-                        pcounts.put(id, limFn.operation(p));
-                    }
-                    // take minimum of child and parent
-                    lim = Math.min(pcounts.get(id), lim);
-                }
-                // see how many cards we actually have
-                int cnt = cntFn.operation(did, lim);
-                // if non-zero, decrement from parents counts
-                for (JSONObject p : parents) {
-                    long id = p.getLong("id");
-                    pcounts.put(id, pcounts.get(id) - cnt);
-                }
-                // we may also be a parent
-                pcounts.put(did, lim - cnt);
-                // and add to running total
-                tot += cnt;
+        for (long did : mCol.getDecks().active()) {
+            // get the individual deck's limit
+            int lim = limFn.operation(mCol.getDecks().get(did));
+            if (lim == 0) {
+                continue;
             }
+            // check the parents
+            List<JSONObject> parents = mCol.getDecks().parents(did, nameMap);
+            for (JSONObject p : parents) {
+                // add if missing
+                long id = p.getLong("id");
+                if (!pcounts.containsKey(id)) {
+                    pcounts.put(id, limFn.operation(p));
+                }
+                // take minimum of child and parent
+                lim = Math.min(pcounts.get(id), lim);
+            }
+            // see how many cards we actually have
+            int cnt = cntFn.operation(did, lim);
+            // if non-zero, decrement from parents counts
+            for (JSONObject p : parents) {
+                long id = p.getLong("id");
+                pcounts.put(id, pcounts.get(id) - cnt);
+            }
+            // we may also be a parent
+            pcounts.put(did, lim - cnt);
+            // and add to running total
+            tot += cnt;
+        }
         return tot;
     }
 
@@ -522,8 +522,8 @@ public class SchedV2 extends AbstractSched {
      */
 
     private void _resetNewCount() {
-            mNewCount = _walkingCount((JSONObject g) -> _deckNewLimitSingle(g),
-                (long did, int lim) -> _cntFnNew(did, lim));
+        mNewCount = _walkingCount((JSONObject g) -> _deckNewLimitSingle(g),
+                                  (long did, int lim) -> _cntFnNew(did, lim));
     }
 
 
@@ -643,23 +643,23 @@ public class SchedV2 extends AbstractSched {
 
 
     private int _deckNewLimit(long did, LimitMethod fn) {
-            if (fn == null) {
-                fn = (g -> _deckNewLimitSingle(g));
+        if (fn == null) {
+            fn = (g -> _deckNewLimitSingle(g));
+        }
+        List<JSONObject> decks = mCol.getDecks().parents(did);
+        decks.add(mCol.getDecks().get(did));
+        int lim = -1;
+        // for the deck and each of its parents
+        int rem = 0;
+        for (JSONObject g : decks) {
+            rem = fn.operation(g);
+            if (lim == -1) {
+                lim = rem;
+            } else {
+                lim = Math.min(rem, lim);
             }
-            List<JSONObject> decks = mCol.getDecks().parents(did);
-            decks.add(mCol.getDecks().get(did));
-            int lim = -1;
-            // for the deck and each of its parents
-            int rem = 0;
-            for (JSONObject g : decks) {
-                rem = fn.operation(g);
-                if (lim == -1) {
-                    lim = rem;
-                } else {
-                    lim = Math.min(rem, lim);
-                }
-            }
-            return lim;
+        }
+        return lim;
     }
 
 
