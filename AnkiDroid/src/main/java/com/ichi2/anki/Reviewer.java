@@ -61,6 +61,9 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
+    // Deck picker reset scheduler before opening the reviewer. So
+    // first reset is useless.
+    private boolean mSchedResetDone = false;
 
 
     private DeckTask.TaskListener mRescheduleCardHandler = new ScheduleDeckTaskListener() {
@@ -96,6 +99,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
+        if (getIntent().hasExtra("com.ichi2.anki.SchedResetDone")) {
+            mSchedResetDone = true;
+        }
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
             Timber.d("onCreate() :: received Intent with action = %s", getIntent().getAction());
             selectDeckFromExtra();
@@ -171,7 +177,10 @@ public class Reviewer extends AbstractFlashcardViewer {
             setWhiteboardVisibility(whiteboardVisibility);
         }
 
-        col.getSched().reset();     // Reset schedule incase card had previous been loaded
+        if (!mSchedResetDone) {
+            col.getSched().reset();     // Reset schedule in case card was previously loaded
+            mSchedResetDone = false;
+        }
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
                 new DeckTask.TaskData(null, 0));
 
