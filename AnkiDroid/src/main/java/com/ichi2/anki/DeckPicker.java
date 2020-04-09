@@ -183,6 +183,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
+    private List<Sched.DeckDueTreeNode> mDueTree;
+
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
      * Since syncing closes the database, this flag allows us to avoid doing any
@@ -208,7 +210,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Long did = (Long) view.getTag();
         if (getCol().getDecks().children(did).size() > 0) {
             getCol().getDecks().collpase(did);
-            updateDeckList();
+            __renderPage();
             dismissAllDialogFragments();
         }
     };
@@ -2065,7 +2067,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     /**
      * Launch an asynchronous task to rebuild the deck list and recalculate the deck counts. Use this
-     * after any change to a deck (e.g., rename, collapse, add/delete) that needs to be reflected
+     * after any change to a deck (e.g., rename, importing, add/delete) that needs to be reflected
      * in the deck list.
      *
      * This method also triggers an update for the widget to reflect the newly calculated counts.
@@ -2093,37 +2095,47 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showCollectionErrorDialog();
                     return;
                 }
-                List<Sched.DeckDueTreeNode> nodes = (List<Sched.DeckDueTreeNode>) result.getObjArray()[0];
-                mDeckListAdapter.buildDeckList(nodes, getCol());
+                mDueTree = (List<Sched.DeckDueTreeNode>) result.getObjArray()[0];
 
-                // Set the "x due in y minutes" subtitle
-                try {
-                    int eta = mDeckListAdapter.getEta();
-                    int due = mDeckListAdapter.getDue();
-                    Resources res = getResources();
-                    if (getCol().cardCount() != -1) {
-                        String time = "-";
-                        if (eta != -1) {
-                            time = Utils.timeQuantity(AnkiDroidApp.getInstance(), eta*60);
-                        }
-                        if (getSupportActionBar() != null) {
-                            getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
-                        }
-                    }
-                } catch (RuntimeException e) {
-                    Timber.e(e, "RuntimeException setting time remaining");
-                }
-
-                long current = getCol().getDecks().current().optLong("id");
-                if (mFocusedDeck != current) {
-                    scrollDecklistToDeck(current);
-                    mFocusedDeck = current;
-                }
-
+                __renderPage();
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
             }
         });
+    }
+
+    public void __renderPage() {
+        if (mDueTree == null) {
+            // mDueTree may be set back to null when the activity restart.
+            // We may need to recompute it.
+            updateDeckList();
+            return;
+        }
+        mDeckListAdapter.buildDeckList(mDueTree, getCol());
+
+        // Set the "x due in y minutes" subtitle
+        try {
+            int eta = mDeckListAdapter.getEta();
+            int due = mDeckListAdapter.getDue();
+            Resources res = getResources();
+            if (getCol().cardCount() != -1) {
+                String time = "-";
+                if (eta != -1) {
+                    time = Utils.timeQuantity(AnkiDroidApp.getInstance(), eta*60);
+                }
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+                }
+            }
+        } catch (RuntimeException e) {
+            Timber.e(e, "RuntimeException setting time remaining");
+        }
+
+        long current = getCol().getDecks().current().optLong("id");
+        if (mFocusedDeck != current) {
+            scrollDecklistToDeck(current);
+            mFocusedDeck = current;
+        }
     }
 
 
