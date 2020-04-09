@@ -120,7 +120,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
      * @return Exactly the same object, with a different type.
      */
     public static JSONObject objectToObject(org.json.JSONObject obj){
-        Assert.that(obj == null || (obj instanceof JSONObject), "Object "+ obj+" should have been an instance of our JSONObject.");
+        Assert.that(obj == null || (obj instanceof JSONObject), "Object %s should have been an instance of our JSONObject.", obj);
         return (JSONObject) obj;
     }
 
