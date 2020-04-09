@@ -424,7 +424,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         final AnkiActivity activity = (AnkiActivity) getActivity();
         Collection col = CollectionHelper.getInstance().getCol(activity);
         long did = getArguments().getLong("did");
-        String deckName = col.getDecks().get(did).getString("name");
+        String deckToStudyName = col.getDecks().get(did).getString("name");
         String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
         JSONObject cur = col.getDecks().byName(customStudyDeck);
         if (cur != null) {
@@ -456,7 +456,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
             dyn.put("delays", JSONObject.NULL);
         }
         JSONArray ar = dyn.getJSONArray("terms");
-        ar.getJSONArray(0).put(0, "deck:\"" + deckName + "\" " + terms[0]);
+        ar.getJSONArray(0).put(0, "deck:\"" + deckToStudyName + "\" " + terms[0]);
         ar.getJSONArray(0).put(1, terms[1]);
         ar.getJSONArray(0).put(2, terms[2]);
         dyn.put("resched", resched);
