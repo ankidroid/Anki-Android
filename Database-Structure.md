@@ -271,7 +271,7 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
     collapsed: "true when deck is collapsed", 
     browserCollapsed: "true when deck collapsed in browser", 
     newToday/revToday/lrnToday : two number array.
-                                 First one is currently unused
+                                 First one is the number of days that have passed between the collection was created and the deck was last updated
                                  The second one is equal to the number of cards seen today in this deck minus the number of new cards in custom study today.
                                  BEWARE, it's changed in anki.sched(v2).Scheduler._updateStats and anki.sched(v2).Scheduler._updateCutoff.update  but can't be found by grepping 'newToday', because it's instead written as type+"Today" with type which may be new/rev/lrnToday    
     timeToday: "two number array used somehow for custom study. Currently unused in the code", 
