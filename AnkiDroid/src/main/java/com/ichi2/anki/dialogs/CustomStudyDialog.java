@@ -21,6 +21,8 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import timber.log.Timber;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -426,13 +428,16 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
         JSONObject cur = col.getDecks().byName(customStudyDeck);
         if (cur != null) {
+            Timber.i("Found deck: '%s'", customStudyDeck);
             if (cur.getInt("dyn") != 1) {
+                Timber.w("Deck: '%s' was non-dynamic", customStudyDeck);
                 new MaterialDialog.Builder(getActivity())
                     .content(R.string.custom_study_deck_exists)
                     .negativeText(R.string.dialog_cancel)
                     .build().show();
                 return;
             } else {
+                Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck);
                 // safe to empty
                 col.getSched().emptyDyn(cur.getLong("id"));
                 // reuse; don't delete as it may have children
@@ -440,6 +445,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 col.getDecks().select(cur.getLong("id"));
             }
         } else {
+            Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck);
             long customStudyDid = col.getDecks().newDyn(customStudyDeck);
             dyn = col.getDecks().get(customStudyDid);
         }
@@ -455,6 +461,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         ar.getJSONArray(0).put(2, terms[2]);
         dyn.put("resched", resched);
         // Rebuild the filtered deck
+        Timber.i("Rebuilding Custom Study Deck");
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, new DeckTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
