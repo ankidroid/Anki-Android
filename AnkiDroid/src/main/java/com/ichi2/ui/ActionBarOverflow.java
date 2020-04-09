@@ -60,14 +60,12 @@ public class ActionBarOverflow {
         return action;
     }
 
-// --------------------------------------------------------------------------------------------
-
     /**
      * Check if an item is showing (not in the overflow menu).
      *
      * @param item
      *            the MenuItem.
-     * @return {@code true} if the MenuItem is visible on the ActionBar. {@code false} if not. {@code null if unknown)
+     * @return {@code true} if the MenuItem is visible on the ActionBar. {@code false} if not. {@code null if unknown}
      */
     public static @Nullable Boolean isActionButton(MenuItem item) {
         //I don't think falling through is the right action here.
