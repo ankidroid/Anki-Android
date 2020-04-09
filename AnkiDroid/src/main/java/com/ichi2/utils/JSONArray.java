@@ -29,7 +29,7 @@ public class JSONArray extends org.json.JSONArray {
      * @return the same element as input. But considered as a JSONArray.
      */
     public static JSONArray arrayToArray(org.json.JSONArray ar){
-        Assert.that(ar == null || ar instanceof JSONArray, "Object "+ar+" should have been an instance of our JSONArray.");
+        Assert.that(ar == null || ar instanceof JSONArray, "Object %s should have been an instance of our JSONArray.", ar);
         return (JSONArray) ar;
     }
 

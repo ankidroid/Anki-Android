@@ -18,9 +18,10 @@
 package com.ichi2.utils;
 
 public class Assert {
-    public static void that(boolean condition, String message) {
+    public static void that(boolean condition, String message, Object... args) {
         if (!condition) {
-            throw new AssertionError(message);
+            String msg = String.format(message, args);
+            throw new AssertionError(msg);
         }
     }
 }
