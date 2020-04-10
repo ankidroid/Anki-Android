@@ -932,7 +932,8 @@ public class Decks {
         // get parent and grandparent names
         List<String> parents = new ArrayList<>();
         List<String> parts = Arrays.asList(get(did).getString("name").split("::", -1));
-        for (String part : parts.subList(0, parts.size() - 1)) {
+        for (int i = 0; i < parts.size() - 1; i++) {
+            String part = parts.get(i);
             if (parents.size() == 0) {
                 parents.add(part);
             } else {
