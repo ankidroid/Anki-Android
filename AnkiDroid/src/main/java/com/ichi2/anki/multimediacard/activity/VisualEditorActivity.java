@@ -91,6 +91,7 @@ public class VisualEditorActivity extends AnkiActivity {
         setupAction.apply(R.id.editor_button_bold, BOLD);
         setupAction.apply(R.id.editor_button_italic, ITALIC);
         setupAction.apply(R.id.editor_button_underline, UNDERLINE);
+        setupAction.apply(R.id.editor_button_clear_formatting, CLEAR_FORMATTING);
 
         findViewById(R.id.editor_button_cloze).setOnClickListener(v -> performCloze());
     }

@@ -84,6 +84,15 @@
                 android:padding="@dimen/toolbar_item_padding"
                 app:srcCompat="@drawable/ic_cloze_black_24dp"
                 />
+            <!-- Format Clear -->
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/editor_button_clear_formatting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="@dimen/toolbar_item_padding"
+                app:srcCompat="@drawable/ic_format_clear_black_24dp"
+                />
 
 
         </com.ichi2.anki.multimediacard.visualeditor.VisualEditorToolbar>
