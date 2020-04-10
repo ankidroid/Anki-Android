@@ -84,6 +84,11 @@ public class VisualEditorActivity extends AnkiActivity {
         setJsAction.apply(R.id.editor_button_italic, "setItalic");
         setJsAction.apply(R.id.editor_button_underline, "setUnderline");
         setJsAction.apply(R.id.editor_button_clear_formatting, "removeFormat");
+        setJsAction.apply(R.id.editor_button_list_bullet, "insertUnorderedList");
+        setJsAction.apply(R.id.editor_button_list_numbered, "insertOrderedList");
+        setJsAction.apply(R.id.editor_button_horizontal_rule, "insertHorizontalRule");
+
+
 
         findViewById(R.id.editor_button_cloze).setOnClickListener(v -> cloze(clozeId++));
     }
