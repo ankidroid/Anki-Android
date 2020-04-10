@@ -770,33 +770,22 @@ public class Reviewer extends AbstractFlashcardViewer {
      * @return true if there is another card of same note that could be dismissed
      */
     private boolean suspendNoteAvailable() {
-        if (mCurrentCard == null || mCurrentCard.note() == null || mCurrentCard.note().cards().size() < 2 || getControlBlocked) {
+        if (mCurrentCard == null || getControlBlocked()) {
             return false;
         }
-        List<Card> cards = mCurrentCard.note().cards();
-        for(Card card : cards) {
-            if (card.getId() == mCurrentCard.getId()) continue;
-            int queue = card.getQueue();
-            if(queue != Consts.QUEUE_TYPE_SUSPENDED) {
-                return true;
-            }
-        }
-        return false;
+        // whether there exists a sibling not buried.
+        return getCol().getDb().queryScalar("select count() from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+                new Object[] {mCurrentCard.getNid(), mCurrentCard.getId()}) == 1;
     }
 
     private boolean buryNoteAvailable() {
-        if (mCurrentCard == null || mCurrentCard.note() == null || mCurrentCard.note().cards().size() < 2) {
+        if (mCurrentCard == null) {
             return false;
         }
-        List<Card> cards = mCurrentCard.note().cards();
-        for(Card card : cards) {
-            if (card.getId() == mCurrentCard.getId()) continue;
-            int queue = card.getQueue();
-            if (queue != Consts.QUEUE_TYPE_SUSPENDED && queue != Consts.QUEUE_TYPE_SIBLING_BURIED && queue != Consts.QUEUE_TYPE_MANUALLY_BURIED) {
-                return true;
-            }
-        }
-        return false;
+        // Whether there exists a sibling which is neither susbended nor buried
+        boolean bury = getCol().getDb().queryScalar("select count(id) from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+                new Object[] {mCurrentCard.getNid(), mCurrentCard.getId()}) == 1;
+        return bury;
     }
 
     /**
