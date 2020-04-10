@@ -178,18 +178,17 @@ public class Tags {
     * @return a list of the tags
     */
     public ArrayList<String> byDeck(long did, boolean children) {
-        String sql;
+        List<String> tags;
         if (children) {
             ArrayList<Long> dids = new ArrayList<>();
             dids.add(did);
             for (long id : mCol.getDecks().children(did).values()) {
                 dids.add(id);
             }
-            sql = "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(Utils.arrayList2array(dids));
+            tags = mCol.getDb().queryColumn(String.class, "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(Utils.arrayList2array(dids)), 0);
         } else {
-            sql = "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = " + did;
+            tags = mCol.getDb().queryColumn(String.class, "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = ?", 0, new Object[] {did});
         }
-        List<String> tags = mCol.getDb().queryColumn(String.class, sql, 0);
         // Cast to set to remove duplicates
         // Use methods used to get all tags to parse tags here as well.
         return new ArrayList<>(new HashSet<>(split(TextUtils.join(" ", tags))));

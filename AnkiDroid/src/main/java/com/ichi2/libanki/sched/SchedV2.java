@@ -537,7 +537,8 @@ public class SchedV2 extends AbstractSched {
     @SuppressWarnings("unused")
     protected int _cntFnNew(long did, int lim) {
         return mCol.getDb().queryScalar(
-                "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + lim + ")");
+                "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
+                new Object[]{did, lim});
     }
 
 
@@ -567,8 +568,8 @@ public class SchedV2 extends AbstractSched {
                     cur = mCol
                             .getDb()
                             .getDatabase()
-                            .query("SELECT id FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_NEW + " order by due, ord LIMIT " + lim,
-                                    null);
+                            .query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " order by due, ord LIMIT ?",
+                                    new Object[]{did, lim});
                     while (cur.moveToNext()) {
                         mNewQueue.add(cur.getLong(0));
                     }
@@ -675,7 +676,8 @@ public class SchedV2 extends AbstractSched {
             return 0;
         }
         lim = Math.min(lim, mReportLimit);
-        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + lim + ")");
+    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
+                                        new Object[] {did, lim});
     }
 
 
@@ -689,7 +691,8 @@ public class SchedV2 extends AbstractSched {
     }
 
     public int totalNewForCurrentDeck() {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT " + mReportLimit + ")");
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
+                                        new Object[] {mReportLimit});
     }
 
     /**
@@ -717,15 +720,16 @@ public class SchedV2 extends AbstractSched {
         // sub-day
         mLrnCount = mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit()
-                + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < " + mLrnCutoff);
+                + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?", new Object[] {mLrnCutoff});
 
         // day
         mLrnCount += mCol.getDb().queryScalar(
-                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday);
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?",
+                new Object[] {mToday});
 
         // previews
         mLrnCount += mCol.getDb().queryScalar(
-                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_PREVIEW + "");
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_PREVIEW);
     }
 
 
@@ -755,8 +759,8 @@ public class SchedV2 extends AbstractSched {
                     .getDb()
                     .getDatabase()
                     .query(
-                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < "
-                                    + cutoff + " LIMIT " + mReportLimit, null);
+                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ?"
+                            + " LIMIT ?", new Object[] { cutoff, mReportLimit});
             while (cur.moveToNext()) {
                 mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
             }
@@ -817,8 +821,8 @@ public class SchedV2 extends AbstractSched {
                         .getDb()
                         .getDatabase()
                         .query(
-                                "SELECT id FROM cards WHERE did = " + did + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday
-                                        + " LIMIT " + mQueueLimit, null);
+                                "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? LIMIT ?",
+                                new Object[] {did, mToday, mQueueLimit});
                 while (cur.moveToNext()) {
                     mLrnDayQueue.add(cur.getLong(0));
                 }
@@ -1126,13 +1130,15 @@ public class SchedV2 extends AbstractSched {
     private int _lrnForDeck(long did) {
         try {
             int cnt = mCol.getDb().queryScalar(
-                    "SELECT count() FROM (SELECT null FROM cards WHERE did = " + did
-                            + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < " + (Utils.intTime() + mCol.getConf().getInt("collapseTime"))
-                            + " LIMIT " + mReportLimit + ")");
+                    "SELECT count() FROM (SELECT null FROM cards WHERE did = ?"
+                            + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?"
+                            + " LIMIT ?)",
+                    new Object[] {did, (Utils.intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit});
             return cnt + mCol.getDb().queryScalar(
-                    "SELECT count() FROM (SELECT null FROM cards WHERE did = " + did
-                            + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= " + mToday
-                            + " LIMIT " + mReportLimit + ")");
+                    "SELECT count() FROM (SELECT null FROM cards WHERE did = ?"
+                            + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?"
+                            + " LIMIT ?)",
+                    new Object[] {did, mToday, mReportLimit});
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -1183,13 +1189,15 @@ public class SchedV2 extends AbstractSched {
         List<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);
-        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(dids) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday + " LIMIT " + lim + ")");
+        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(dids) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
+                                        new Object[] {mToday, lim});
     }
 
 
     protected void _resetRevCount() {
         int lim = _currentRevLimit();
-        mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday + " LIMIT " + lim + ")");
+        mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
+                                             new Object[]{mToday, lim});
     }
 
 
@@ -1216,8 +1224,9 @@ public class SchedV2 extends AbstractSched {
                         .getDb()
                         .getDatabase()
                         .query(
-                                "SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday
-                                        + " ORDER BY due, random() LIMIT " + lim, null);
+                                "SELECT id FROM cards WHERE did in " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? "
+                                        + " ORDER BY due, random() LIMIT ?",
+                                new Object[] {mToday, lim});
                 while (cur.moveToNext()) {
                     mRevQueue.add(cur.getLong(0));
                 }
@@ -1256,9 +1265,9 @@ public class SchedV2 extends AbstractSched {
 
 
     public int totalRevForCurrentDeck() {
-        return mCol.getDb().queryScalar(String.format(Locale.US,
-                "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN %s AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= %d LIMIT %s)",
-                Utils.ids2str(mCol.getDecks().active()), mToday, mReportLimit));
+        return mCol.getDb().queryScalar(
+                "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
+                new Object[]{mToday, mReportLimit});
     }
 
 
@@ -1901,8 +1910,9 @@ public class SchedV2 extends AbstractSched {
     public boolean revDue() {
         return mCol.getDb()
                 .queryScalar(
-                        "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= " + mToday
-                                + " LIMIT 1") != 0;
+                        "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
+                                + " LIMIT 1",
+                        new Object[] {mToday}) != 0;
     }
 
 
@@ -1920,8 +1930,8 @@ public class SchedV2 extends AbstractSched {
     private boolean haveBuriedSiblings(List<Long> allDecks) {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
-        int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
-                "select 1 from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in %s limit 1", sdids));
+        int cnt = mCol.getDb().queryScalar(
+                "select 1 from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sdids + " limit 1");
         return cnt != 0;
     }
 
@@ -1934,8 +1944,8 @@ public class SchedV2 extends AbstractSched {
     private boolean haveManuallyBuried(List<Long> allDecks) {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
-        int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
-                "select 1 from cards where queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED + " and did in %s limit 1", sdids));
+        int cnt = mCol.getDb().queryScalar(
+                "select 1 from cards where queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED + " and did in " + sdids + " limit 1");
         return cnt != 0;
     }
 
@@ -2055,8 +2065,9 @@ public class SchedV2 extends AbstractSched {
     public void suspendCards(long[] ids) {
         mCol.log(ids);
         mCol.getDb().execute(
-                "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = " + Utils.intTime() + ", usn = " + mCol.usn() + " WHERE id IN "
-                        + Utils.ids2str(ids));
+                "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
+                        + Utils.ids2str(ids),
+                new Object[] {Utils.intTime(), mCol.usn()});
     }
 
 
@@ -2066,8 +2077,9 @@ public class SchedV2 extends AbstractSched {
     public void unsuspendCards(long[] ids) {
         mCol.log(ids);
         mCol.getDb().execute(
-                "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = " + Utils.intTime() + ", usn = " + mCol.usn()
-                        + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids));
+                "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = ?, usn = ?"
+                        + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids),
+                new Object[] {Utils.intTime(), mCol.usn()});
     }
 
 
@@ -2128,7 +2140,8 @@ public class SchedV2 extends AbstractSched {
      */
     public void buryNote(long nid) {
         long[] cids = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
-                "SELECT id FROM cards WHERE nid = " + nid + " AND queue >= " + Consts.CARD_TYPE_NEW + "", 0));
+                "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW, 0,
+                new Object[] {nid}));
         buryCards(cids);
     }
 
@@ -2146,9 +2159,10 @@ public class SchedV2 extends AbstractSched {
         // loop through and remove from queues
         Cursor cur = null;
         try {
-            cur = mCol.getDb().getDatabase().query(String.format(Locale.US,
-                    "select id, queue from cards where nid=%d and id!=%d "+
-                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=" + Consts.QUEUE_TYPE_REV + " and due<=%d))", card.getNid(), card.getId(), mToday), null);
+            cur = mCol.getDb().getDatabase().query(
+                    "select id, queue from cards where nid=? and id!=? "+
+                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=" + Consts.QUEUE_TYPE_REV + " and due<=?))",
+                    new Object[] {card.getNid(), card.getId(), mToday});
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
@@ -2222,8 +2236,8 @@ public class SchedV2 extends AbstractSched {
      * Completely reset cards for export.
      */
     public void resetCards(Long[] ids) {
-        long[] nonNew = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, String.format(Locale.US,
-                "select id from cards where id in %s and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")", Utils.ids2str(ids)), 0));
+        long[] nonNew = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
+                "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")", 0));
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
         mCol.log((Object[]) ids);
@@ -2245,7 +2259,8 @@ public class SchedV2 extends AbstractSched {
         long now = Utils.intTime();
         ArrayList<Long> nids = new ArrayList<>();
         for (long id : cids) {
-            long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = " + id);
+            long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?",
+                                                    new Object[] {id});
             if (!nids.contains(nid)) {
                 nids.add(nid);
             }
@@ -2266,12 +2281,14 @@ public class SchedV2 extends AbstractSched {
         // shift?
         if (shift) {
             int low = mCol.getDb().queryScalar(
-                    "SELECT min(due) FROM cards WHERE due >= " + start + " AND type = " + Consts.CARD_TYPE_NEW + " AND id NOT IN " + scids);
+                    "SELECT min(due) FROM cards WHERE due >= ? AND type = " + Consts.CARD_TYPE_NEW + " AND id NOT IN " + scids,
+                    new Object[] {start});
             if (low != 0) {
                 int shiftby = high - low + 1;
                 mCol.getDb().execute(
-                        "UPDATE cards SET mod = " + now + ", usn = " + mCol.usn() + ", due = due + " + shiftby
-                                + " WHERE id NOT IN " + scids + " AND due >= " + low + " AND queue = " + Consts.QUEUE_TYPE_NEW);
+                        "UPDATE cards SET mod = ?, usn = ?, due = due + ?"
+                                + " WHERE id NOT IN " + scids + " AND due >= ? AND queue = " + Consts.QUEUE_TYPE_NEW,
+                        new Object[]{now, mCol.usn(), shiftby, low});
             }
         }
         // reorder cards
@@ -2294,13 +2311,15 @@ public class SchedV2 extends AbstractSched {
 
 
     public void randomizeCards(long did) {
-        List<Long> cids = mCol.getDb().queryColumn(Long.class, "select id from cards where did = " + did, 0);
+        List<Long> cids = mCol.getDb().queryColumn(Long.class, "select id from cards where did = ?", 0,
+                                                   new Object[]{did});
         sortCards(Utils.toPrimitive(cids), 1, 1, true, false);
     }
 
 
     public void orderCards(long did) {
-        List<Long> cids = mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE did = " + did + " ORDER BY nid", 0);
+        List<Long> cids = mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE did = ? ORDER BY nid", 0,
+                                                   new Object[]{did});
         sortCards(Utils.toPrimitive(cids), 1, 1, false, false);
     }
 
@@ -2342,7 +2361,8 @@ public class SchedV2 extends AbstractSched {
      */
 
     private void _emptyAllFiltered() {
-        mCol.getDb().execute(String.format(Locale.US,"update cards set did = odid, queue = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.QUEUE_TYPE_NEW + " when type = " + Consts.CARD_TYPE_RELEARNING + " then " + Consts.QUEUE_TYPE_REV + " else type end), type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " when type = " + Consts.CARD_TYPE_RELEARNING + " then " + Consts.CARD_TYPE_REV + " else type end), due = odue, odue = 0, odid = 0, usn = %d where odid != 0", mCol.usn()));
+        mCol.getDb().execute("update cards set did = odid, queue = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.QUEUE_TYPE_NEW + " when type = " + Consts.CARD_TYPE_RELEARNING + " then " + Consts.QUEUE_TYPE_REV + " else type end), type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " when type = " + Consts.CARD_TYPE_RELEARNING + " then " + Consts.CARD_TYPE_REV + " else type end), due = odue, odue = 0, odid = 0, usn = ? where odid != 0",
+                             new Object[]{mCol.usn()});
     }
 
 
@@ -2353,9 +2373,11 @@ public class SchedV2 extends AbstractSched {
     private void _removeAllFromLearning(int schedVer) {
         // remove review cards from relearning
         if (schedVer == 1) {
-            mCol.getDb().execute(String.format(Locale.US,"update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", type = " + Consts.CARD_TYPE_REV + ", mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (" + Consts.CARD_TYPE_REV + "," + Consts.CARD_TYPE_RELEARNING + ")", Utils.intTime(), mCol.usn()));
+            mCol.getDb().execute("update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", type = " + Consts.CARD_TYPE_REV + ", mod = ?, usn = ?, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (" + Consts.CARD_TYPE_REV + "," + Consts.CARD_TYPE_RELEARNING + ")",
+                                 new Object[] {Utils.intTime(), mCol.usn()});
         } else {
-            mCol.getDb().execute(String.format(Locale.US,"update cards set due = %d+ivl, queue = " + Consts.QUEUE_TYPE_REV + ", type = " + Consts.CARD_TYPE_REV + ", mod = %d, usn = %d, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (" + Consts.CARD_TYPE_REV + "," + Consts.CARD_TYPE_RELEARNING + ")", mToday, Utils.intTime(), mCol.usn()));
+            mCol.getDb().execute("update cards set due = ?+ivl, queue = " + Consts.QUEUE_TYPE_REV + ", type = " + Consts.CARD_TYPE_REV + ", mod = ?, usn = ?, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (" + Consts.CARD_TYPE_REV + "," + Consts.CARD_TYPE_RELEARNING + ")",
+                                 new Object[] {mToday, Utils.intTime(), mCol.usn()});
         }
 
 
@@ -2366,13 +2388,15 @@ public class SchedV2 extends AbstractSched {
 
     // v1 doesn't support buried/suspended (re)learning cards
     private void _resetSuspendedLearning() {
-        mCol.getDb().execute(String.format(Locale.US,"update cards set type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " when type in (" + Consts.CARD_TYPE_REV + ", " + Consts.CARD_TYPE_RELEARNING + ") then " + Consts.CARD_TYPE_REV + " else type end), due = (case when odue then odue else due end), odue = 0, mod = %d, usn = %d where queue < 0", Utils.intTime(), mCol.usn()));
+        mCol.getDb().execute("update cards set type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " when type in (" + Consts.CARD_TYPE_REV + ", " + Consts.CARD_TYPE_RELEARNING + ") then " + Consts.CARD_TYPE_REV + " else type end), due = (case when odue then odue else due end), odue = 0, mod = ?, usn = ? where queue < 0",
+                             new Object[] {Utils.intTime(), mCol.usn()});
     }
 
 
     // no 'manually buried' queue in v1
     private void _moveManuallyBuried() {
-        mCol.getDb().execute(String.format(Locale.US, "update cards set queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", mod=%d where queue=" + Consts.QUEUE_TYPE_MANUALLY_BURIED , Utils.intTime()));
+        mCol.getDb().execute("update cards set queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", mod=? where queue=" + Consts.QUEUE_TYPE_MANUALLY_BURIED,
+                             new Object[] {Utils.intTime()});
     }
 
     // adding 'hard' in v2 scheduler means old ease entries need shifting
@@ -2497,7 +2521,8 @@ public class SchedV2 extends AbstractSched {
                                 + "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then time else null end) as revTime, "
                                 + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
                                 + "from revlog where id > "
-                                + ((mCol.getSched().getDayCutoff() - (10 * 86400)) * 1000), null);
+                                + "?",
+                               new Object[] {(mCol.getSched().getDayCutoff() - (10 * 86400)) * 1000});
                 if (!cur.moveToFirst()) {
                     return -1;
                 }

@@ -324,7 +324,7 @@ public class Models {
         boolean current = current().getLong("id") == id;
         // delete notes/cards
         mCol.remCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
-                                                                     "SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = " + id + ")", 0)));
+                                                                     "SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = ?)", 0, new Object[] {id})));
         // then the model
         mModels.remove(id);
         save();
@@ -383,7 +383,7 @@ public class Models {
 
     /** Note ids for M */
     public ArrayList<Long> nids(JSONObject m) {
-        return mCol.getDb().queryColumn(Long.class, "SELECT id FROM notes WHERE mid = " + m.getLong("id"), 0);
+        return mCol.getDb().queryColumn(Long.class, "SELECT id FROM notes WHERE mid = ?", 0, new Object[] {m.getLong("id")});
     }
 
     /**
@@ -392,7 +392,7 @@ public class Models {
      * @return The number of notes with that model.
      */
     public int useCount(JSONObject m) {
-        return mCol.getDb().queryScalar("select count() from notes where mid = " + m.getLong("id"));
+        return mCol.getDb().queryScalar("select count() from notes where mid = ?", new Object[] {m.getLong("id")});
     }
 
     /**
@@ -402,7 +402,7 @@ public class Models {
      * @return The number of notes with that model.
      */
     public int tmplUseCount(JSONObject m, int ord) {
-        return mCol.getDb().queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = " + m.getLong("id") + " and cards.ord = " + ord);
+        return mCol.getDb().queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?", new Object[] {m.getLong("id"), ord});
     }
 
     /**

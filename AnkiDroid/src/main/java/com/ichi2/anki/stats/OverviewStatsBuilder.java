@@ -237,9 +237,9 @@ public class OverviewStatsBuilder {
         // Fill in the overview stats
         oStats.forecastTotalReviews = tot;
         oStats.forecastAverageReviews = totd.size() == 0 ? 0 : (double) tot / (totd.size() * chunk);
-        oStats.forecastDueTomorrow = mCol.getDb().queryScalar(String.format(Locale.US,
-                "select count() from cards where did in %s and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " +
-                        "and due = ?", _limit()), new String[]{Integer.toString(mCol.getSched().getToday() + 1)});
+        oStats.forecastDueTomorrow = mCol.getDb().queryScalar(
+                "select count() from cards where did in " + _limit() + " and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " +
+                        "and due = ?", new Object[]{mCol.getSched().getToday() + 1});
     }
 
     private List<int[]> _due(Integer start, Integer end, int chunk) {
