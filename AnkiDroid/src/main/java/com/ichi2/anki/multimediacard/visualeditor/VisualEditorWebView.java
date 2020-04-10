@@ -165,7 +165,8 @@ public class VisualEditorWebView extends WebView {
         execUnsafe("setHtml('" + s.getEscapedValue() + "');");
     }
 
-    public void execNiladicFunction(String functionName) {
+    /** Executes a niladic JavaScript function */
+    public void execFunction(String functionName) {
         execUnsafe(functionName + "();");
     }
 

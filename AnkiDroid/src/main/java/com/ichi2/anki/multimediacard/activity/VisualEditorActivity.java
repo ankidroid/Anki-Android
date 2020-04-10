@@ -76,7 +76,7 @@ public class VisualEditorActivity extends AnkiActivity {
         //Could be better, this is done per card in AbstractFlashCardViewer
         mWebView.getSettings().setDefaultFontSize(CardAppearance.calculateDynamicFontSize(mField.getText()));
 
-        SimpleListenerSetup setJsAction = (id, f) -> findViewById(id).setOnClickListener(v -> mWebView.execNiladicFunction(f));
+        SimpleListenerSetup setJsAction = (id, f) -> findViewById(id).setOnClickListener(v -> mWebView.execFunction(f));
 
         setJsAction.apply(R.id.editor_button_bold, "setBold");
         setJsAction.apply(R.id.editor_button_italic, "setItalic");
@@ -113,11 +113,11 @@ public class VisualEditorActivity extends AnkiActivity {
         switch (item.getItemId()) {
             case R.id.action_undo:
                 Timber.i("Undo button pressed");
-                mWebView.execNiladicFunction("undo");
+                mWebView.execFunction("undo");
                 return true;
             case R.id.action_redo:
                 Timber.i("Redo Undo button pressed");
-                mWebView.execNiladicFunction("redo");
+                mWebView.execFunction("redo");
                 return true;
             case R.id.action_save:
                 Timber.i("Save button pressed");
