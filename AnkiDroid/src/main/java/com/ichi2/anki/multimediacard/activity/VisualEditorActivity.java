@@ -19,6 +19,7 @@ import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.ExecEscape
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.WebViewDebugging;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -87,11 +88,7 @@ public class VisualEditorActivity extends AnkiActivity {
 
 
     private void setupWebView(VisualEditorWebView webView) {
-        //TODO: Duplication
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
-                AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
-            WebView.setWebContentsDebuggingEnabled(true);
-        }
+        WebViewDebugging.initializeDebugging(AnkiDroidApp.getSharedPrefs(this));
 
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
