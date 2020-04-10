@@ -463,14 +463,14 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Setup bury / suspend providers
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_suspend), new SuspendProvider(this));
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_bury), new BuryProvider(this));
-        if (dismissNoteAvailable(DismissType.SUSPEND_NOTE)) {
+        if (suspendNoteAvailable()) {
             menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_action_suspend_dropdown);
             menu.findItem(R.id.action_suspend).setTitle(R.string.menu_suspend);
         } else {
             menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_action_suspend);
             menu.findItem(R.id.action_suspend).setTitle(R.string.menu_suspend_card);
         }
-        if (dismissNoteAvailable(DismissType.BURY_NOTE)) {
+        if (buryNoteAvailable()) {
             menu.findItem(R.id.action_bury).setIcon(R.drawable.ic_flip_to_back_white_24px_dropdown);
             menu.findItem(R.id.action_bury).setTitle(R.string.menu_bury);
         } else {
@@ -769,18 +769,30 @@ public class Reviewer extends AbstractFlashcardViewer {
      * @param type Currently only SUSPEND_NOTE and BURY_NOTE supported
      * @return true if there is another card of same note that could be dismissed
      */
-    private boolean dismissNoteAvailable(DismissType type) {
-        if (mCurrentCard == null || mCurrentCard.note() == null || mCurrentCard.note().cards().size() < 2 || getControlBlocked()) {
+    private boolean suspendNoteAvailable() {
+        if (mCurrentCard == null || mCurrentCard.note() == null || mCurrentCard.note().cards().size() < 2 || getControlBlocked) {
             return false;
         }
         List<Card> cards = mCurrentCard.note().cards();
         for(Card card : cards) {
             if (card.getId() == mCurrentCard.getId()) continue;
             int queue = card.getQueue();
-            if(type == DismissType.SUSPEND_NOTE && queue != Consts.QUEUE_TYPE_SUSPENDED) {
+            if(queue != Consts.QUEUE_TYPE_SUSPENDED) {
                 return true;
-            } else if (type == DismissType.BURY_NOTE &&
-                    queue != Consts.QUEUE_TYPE_SUSPENDED && queue != Consts.QUEUE_TYPE_SIBLING_BURIED && queue != Consts.QUEUE_TYPE_MANUALLY_BURIED) {
+            }
+        }
+        return false;
+    }
+
+    private boolean buryNoteAvailable() {
+        if (mCurrentCard == null || mCurrentCard.note() == null || mCurrentCard.note().cards().size() < 2) {
+            return false;
+        }
+        List<Card> cards = mCurrentCard.note().cards();
+        for(Card card : cards) {
+            if (card.getId() == mCurrentCard.getId()) continue;
+            int queue = card.getQueue();
+            if (queue != Consts.QUEUE_TYPE_SUSPENDED && queue != Consts.QUEUE_TYPE_SIBLING_BURIED && queue != Consts.QUEUE_TYPE_MANUALLY_BURIED) {
                 return true;
             }
         }
@@ -802,7 +814,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         @Override
         public boolean hasSubMenu() {
-            return dismissNoteAvailable(DismissType.SUSPEND_NOTE);
+            return suspendNoteAvailable();
         }
 
         @Override
@@ -844,7 +856,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         @Override
         public boolean hasSubMenu() {
-            return dismissNoteAvailable(DismissType.BURY_NOTE);
+            return buryNoteAvailable();
         }
 
         @Override
