@@ -30,6 +30,7 @@ import androidx.appcompat.widget.Toolbar;
 import timber.log.Timber;
 
 //BUG: Initial undo will undo the initial text
+//NOTE: Remove formatting on "{{c1::" will cause a failure to detect the cloze deletion, this is the same as Anki.
 public class VisualEditorActivity extends AnkiActivity {
 
     public static final String EXTRA_FIELD = "visual.card.ed.extra.current.field";
