@@ -141,6 +141,9 @@
     <string name="select_locale_title">भाषा चुनें</string>
     <string name="safe_display">सुरक्षित प्रदर्शन मोड</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">मध्य संरेखित करें</string>
     <string name="vertical_centering_summ">कार्ड की सामग्री को अनुलंब रूप से केंद्रित करना</string>
     <string name="pref_backup_max">बैकअप की अधिकतम संख्या</string>

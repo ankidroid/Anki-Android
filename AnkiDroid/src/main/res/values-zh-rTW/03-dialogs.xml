@@ -98,6 +98,7 @@
     <string name="custom_study_ahead">提早複習 x 天:</string>
     <string name="custom_study_random">隨機選擇 x 張卡片，從牌組:</string>
     <string name="custom_study_preview">預覽過去 x 天新增的卡片:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="rebuild_custom_study_deck">重建自訂學習的牌組。\n請稍後...</string>
     <string name="importing_collection">匯入收藏中&#8230;</string>
     <string name="import_media_count">匯入媒體檔案 %1$d%%\n 請稍後......</string>
@@ -161,4 +162,9 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="video_creation_error">Could not play video</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
 </resources>

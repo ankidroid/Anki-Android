@@ -141,6 +141,9 @@
     <string name="select_locale_title">Sprache wählen</string>
     <string name="safe_display">Sicherer Anzeigemodus</string>
     <string name="safe_display_summ">Alle Animationen deaktivieren und Karten mit sichererer Methode darstellen. E-Ink-Geräte können dies benötigen.</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">Zentriert</string>
     <string name="vertical_centering_summ">Den Inhalt der Karten vertikal zentrieren</string>
     <string name="pref_backup_max">Maximale Anzahl an Sicherungen</string>
@@ -219,8 +222,8 @@
     <string name="deck_conf_new_bury_summ">Verwandte neue Karten werden bis zum nächsten Tag ausgesetzt</string>
     <string name="deck_conf_rev_bury">Verwandte fällige Karten zurückstellen</string>
     <string name="deck_conf_rev_bury_summ">Verwandte fällige Karten werden bis zum nächsten Tag ausgesetzt</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings">Allgemeine Einstellungen verwenden</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Verwenden Sie die allgemeinen Einstellungen für die \'Automatische Antwort anzeigen\', anstatt die Einstellungen für diese Gruppe zu verwenden.</string>
     <string name="deck_conf_easy_bonus">Bonus für \'einfach\'</string>
     <string name="deck_conf_ivl_fct">Interval-Faktor</string>
     <string name="deck_conf_max_ivl">Maximales Intervall</string>

@@ -73,10 +73,10 @@
     </plurals>
     <string name="reschedule_card_dialog_title">重设卡牌学习进度</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="other">重设卡牌学习进度</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="other">当前间隔：%d 天</item>
     </plurals>
     <string name="reschedule_card_dialog_message">重新安排在x天后复习</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
@@ -98,6 +98,7 @@
     <string name="custom_study_ahead">提前 x 天复习：</string>
     <string name="custom_study_random">从牌组中随机选择 x 张卡片：</string>
     <string name="custom_study_preview">预览过去 x 天中新增的卡片：</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="rebuild_custom_study_deck">重建自定义学习牌组\n 请等待...</string>
     <string name="importing_collection">正在导入牌组集合&#8230;</string>
     <string name="import_media_count">导入媒体文件 %1$d%%&#8230;</string>
@@ -146,19 +147,24 @@
     <string name="empty_cards_count">将要删除卡牌：%d</string>
     <string name="empty_cards_deleted">已删除卡牌：%d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_audio_permission_refused">无法获取麦克风权限。</string>
+    <string name="multimedia_editor_camera_permission_refused">无法获取相机权限。功能已被禁用。</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">音频录制权限被拒绝</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_title">欢迎来到 AnkiDroid！</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid 需要存储权限，我们只用来存储您的 AnkiDroid 集合、记忆卡片媒体和备份。 我们的代码是开源的，由志愿者撰写，并且受到数百万人的信任。\n\n如果您有任何疑问，请访问我们的应用内手册或访问我们的支持论坛。\n\n感谢您尝试AnkiDroid！\n— AnkiDroid 开发团队</string>
+    <string name="mutimedia_editor_assertion_failed">显示高级编辑器时发生未知错误</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_startup_title">AnkiDroid 已升级</string>
+    <string name="integrity_check_startup_content">AnkiDroid 已升级。此升级包括可能出现数据库问题的修复，我们建议您现在开始检查数据库。</string>
+    <string name="integrity_check_positive">检查数据库</string>
+    <string name="integrity_check_continue_anyway">仍要继续</string>
+    <string name="integrity_check_insufficient_space">检查数据库使用大量临时存储。\n\n强烈建议您在继续之前在设备上至少有 %s 可用空间。</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\n您当前有 %s 可用。</string>
+    <string name="video_creation_error">Could not play video</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
 </resources>

@@ -104,6 +104,7 @@
     <string name="custom_study_ahead">Réviser à l\'avance de x jours :</string>
     <string name="custom_study_random">Sélectionner x cartes au hasard dans ce paquet :</string>
     <string name="custom_study_preview">Afficher les nouvelles cartes ajoutées dans les x derniers jours :</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="rebuild_custom_study_deck">Reconstruction du paquet d\'étude personnalisée.\nMerci de patienter&#8230;</string>
     <string name="importing_collection">Importation de la collection. \nVeuillez patienter&#8230;</string>
     <string name="import_media_count">Importation des fichiers médias %1$d%%\nVeuillez patienter&#8230;</string>
@@ -167,4 +168,9 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="video_creation_error">Could not play video</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
 </resources>

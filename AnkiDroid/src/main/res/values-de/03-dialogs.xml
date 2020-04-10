@@ -76,12 +76,12 @@
     </plurals>
     <string name="reschedule_card_dialog_title">Karte neu planen</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="one">Karte neu planen</item>
+        <item quantity="other">Karten neu planen</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Aktuelles Intervall: %d Tag</item>
+        <item quantity="other">Aktuelles Intervall: %d Tage</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Neues Intervall: In x Tagen Lernen:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
@@ -104,6 +104,7 @@
     <string name="custom_study_ahead">x Tage im Voraus lernen:</string>
     <string name="custom_study_random">x Karten zufällig aus dem Stapel wählen:</string>
     <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="rebuild_custom_study_deck">Erstelle neuen Stapel für eine benutzerdefinierte Sitzung&#8230;</string>
     <string name="importing_collection">Importiere Sammlung&#8230;</string>
     <string name="import_media_count">Importiere Mediendateien %1$d%%&#8230;</string>
@@ -152,19 +153,24 @@
     <string name="empty_cards_count">%d Karten zu löschen</string>
     <string name="empty_cards_deleted">%d Karten gelöscht</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_audio_permission_refused">Zugriff auf das Mikrofon nicht möglich.</string>
+    <string name="multimedia_editor_camera_permission_refused">Konnte keine Kamera-Berechtigung erhalten. Funktion wurde deaktiviert.</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Berechtigung zur Aufnahme von Audio verweigert</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_title">Willkommen bei AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid benötigt eine Speichergenehmigung, die wir ausschließlich zur Speicherung Ihrer AnkiDroid-Sammlung, Flashcard Medien und Sicherungen verwenden. Unser Code ist Open-Source, geschrieben von Freiwilligen und vertrauenswürdig von Millionen Menschen.\n\nWenn Sie Fragen haben, besuchen Sie bitte unser In-App-Handbuch oder besuchen Sie unsere Support-Foren.\n\nVielen Dank, dass Sie AnkiDroid ausprobieren!\n—AnkiDroid Entwicklerteam</string>
+    <string name="mutimedia_editor_assertion_failed">Unbekannter Fehler beim Anzeigen des Erweiterten Editors</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_startup_title">AnkiDroid aktualisiert</string>
+    <string name="integrity_check_startup_content">AnkiDroid wurde aktualisiert. Dieses Upgrade enthält Korrekturen für mögliche Datenbankprobleme und wir empfehlen Ihnen, die Datenbank jetzt zu überprüfen.</string>
+    <string name="integrity_check_positive">Datenbank überprüfen</string>
+    <string name="integrity_check_continue_anyway">Trotzdem fortfahren</string>
+    <string name="integrity_check_insufficient_space">Prüfe Datenbank verwendet eine große Menge an temporären Speicher.\n\nEs wird dringend empfohlen, dass Sie mindestens %s freien Speicherplatz auf Ihrem Gerät haben, bevor Sie fortfahren.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nDu hast derzeit %s kostenlos.</string>
+    <string name="video_creation_error">Could not play video</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
 </resources>

@@ -141,6 +141,9 @@
     <string name="select_locale_title">Valitse kieli</string>
     <string name="safe_display">Turvallinen näyttötila</string>
     <string name="safe_display_summ">Poista kaikki animaatiot käytöstä ja käytä turvallisempaa menetelmää korttien piirtämiseen. E-muste laitteet voivat vaatia tätä.</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">Tasaa keskelle</string>
     <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
     <string name="pref_backup_max">Varmuuskopioiden enimmäismäärä</string>

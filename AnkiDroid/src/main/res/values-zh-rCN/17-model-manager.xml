@@ -23,7 +23,7 @@
     <string name="model_browser_label">笔记类型</string>
     <string name="model_editor_label">管理字段</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">无法删除最后一个卡牌记录类型</string>
     <string name="toast_last_field">笔记类型至少需要包含一个字段</string>
     <string name="toast_empty_name">您必须输入一个名称</string>
     <string name="toast_duplicate_field">名称已被其他字段使用</string>
@@ -44,7 +44,7 @@
     <string name="model_browser_template">编辑卡片</string>
     <string name="model_browser_add">添加笔记类型</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">重命名卡牌记录类型</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">编辑字段</string>
     <string name="model_field_editor_add">添加字段</string>
@@ -57,7 +57,7 @@
     <string name="model_field_editor_sort_field">按此字段排序</string>
     <string name="model_clone_suffix">复制</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">您确定要删除此卡牌记录类型吗？</string>
     <string name="field_delete_warning">是否确定删除此字段？</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">添加：%1$s </string>

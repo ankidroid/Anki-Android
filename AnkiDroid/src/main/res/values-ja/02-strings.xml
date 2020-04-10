@@ -128,7 +128,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroidへようこそ</string>
     <string name="fact_adder_intent_title">AnkiDroid カード</string>
-    <string name="card_editor_add_card">ノートを追加</string>
+    <string name="note_editor_add_note">Add note</string>
+    <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">カードをコピー</string>
     <string name="card_editor_reposition_card">新規カードの表示順序を変更</string>
     <string name="card_editor_reset_card">学習履歴をリセット</string>
@@ -157,6 +158,8 @@
     <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
     <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？　処理に時間がかかる可能性があります。</string>
     <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
+    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">ファイル名 \"%s\" は拡張子が .apkg か .colpkgではありません。</string>
     <string name="import_error_content_provider">選択されたファイルをAnkiDroidによって自動的にインポートできませんでした。ankiのファイルを手動でインポートする方法については、マニュアルをご覧ください: \n %s</string>
     <string name="import_replacing">コレクションを置き換えています...</string>
@@ -235,4 +238,6 @@
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
+    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
 </resources>

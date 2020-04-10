@@ -104,6 +104,7 @@
     <string name="custom_study_ahead">Idő előtti, x nappal előre ismétlés:</string>
     <string name="custom_study_random">A pakliból x kártya véletlen kiválasztása:</string>
     <string name="custom_study_preview">Az elmúlt x nap új kártyáinak előre átnézése:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="rebuild_custom_study_deck">Egyéni gyakorlópakli újraépítése.\nKérlek, várj...</string>
     <string name="importing_collection">Gyűjtemény importálása.\nKérlek, várj&#8230;</string>
     <string name="import_media_count">Média fájlok importálása %1$d%%\nKérlek, várj&#8230;</string>
@@ -167,4 +168,9 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="video_creation_error">Could not play video</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
 </resources>

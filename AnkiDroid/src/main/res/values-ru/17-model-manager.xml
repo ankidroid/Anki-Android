@@ -23,7 +23,7 @@
     <string name="model_browser_label">Изменить типы записей</string>
     <string name="model_editor_label">Изменить поля</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">Нельзя удалить последний тип записи</string>
     <string name="toast_last_field">В типе записей должно быть хотя бы одно поле</string>
     <string name="toast_empty_name">Введите имя</string>
     <string name="toast_duplicate_field">Имя поля уже используется</string>
@@ -50,7 +50,7 @@
     <string name="model_browser_template">Править карточки</string>
     <string name="model_browser_add">Добавить тип записи</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">Переименовать тип записи</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Править поля</string>
     <string name="model_field_editor_add">Добавить поле</string>
@@ -63,7 +63,7 @@
     <string name="model_field_editor_sort_field">Сортировать по этому полю</string>
     <string name="model_clone_suffix">копировать</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">Вы уверены, что хотите удалить этот тип записи?</string>
     <string name="field_delete_warning">Удалить это поле?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Добавить: %1$s </string>

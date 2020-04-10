@@ -63,30 +63,30 @@
     <string name="preview_title">Vista previa</string>
     <string name="reposition_card_dialog_title">Reposicionar nueva tarjeta</string>
     <string name="reposition_card_dialog_message">Posición de inicio:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_not_new_error">Sólo las tarjetas nuevas pueden ser reposicionadas</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d tarjeta reposicionada</item>
+        <item quantity="other">%d tarjetas reposicionadas</item>
     </plurals>
     <string name="reset_card_dialog_title">Resetear el progreso de la tarjeta</string>
     <string name="reset_card_dialog_message">Esta tarjeta se colocará al final de la nueva cola de tarjetas.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d tarjeta reiniciada</item>
+        <item quantity="other">%d tarjetas reiniciadas</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Reprogramar tarjeta</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="one">Reprogramar tarjeta</item>
+        <item quantity="other">Reprogramar tarjetas</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Intervalo actual: %d día</item>
+        <item quantity="other">Intervalo actual: %d días</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Reprogramar para revisión en x días:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d tarjeta reprogramada</item>
+        <item quantity="other">%d tarjetas reprogramadas</item>
     </plurals>
     <string name="answering_error_title">Error en la base de datos</string>
     <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, haz clic en \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
@@ -96,14 +96,15 @@
     <string name="intent_add_clear_all">Borrar todo</string>
     <string name="intent_aedict_empty">La categoría \'por defecto\' está vacía</string>
     <string name="intent_aedict_category">Para añadir tarjetas AnkiDroid borra todas las categorías del Bloc de notas o agrega una llamada \'por defecto\'</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Tarjetas nuevas en el mazo: %d</string>
+    <string name="custom_study_rev_total_rev">Repasos pendientes en el mazo: %d</string>
     <string name="custom_study_new_extend">Aumentar el límite de tarjetas nuevas para hoy en</string>
     <string name="custom_study_rev_extend">Aumentar el límite de repasos para hoy en</string>
     <string name="custom_study_forgotten">Revisar tarjetas olvidadas en los últimos x días:</string>
     <string name="custom_study_ahead">Revisar con x días de adelanto:</string>
     <string name="custom_study_random">Selecciona x tarjetas al azar del mazo:</string>
     <string name="custom_study_preview">Previsualizar nuevas tarjetas añadidas en los últimos x días:</string>
+    <string name="custom_study_rebuild_deck_corrupt">No se pudo reconstruir el mazo de estudio personalizado</string>
     <string name="rebuild_custom_study_deck">Reconstruyendo mazo de estudio personalizada&#8230;</string>
     <string name="importing_collection">Importando colección&#8230;</string>
     <string name="import_media_count">Importando archivos multimedia %1$d%%&#8230;</string>
@@ -152,19 +153,24 @@
     <string name="empty_cards_count">Tarjetas a eliminar: %d</string>
     <string name="empty_cards_deleted">Tarjetas eliminadas: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_audio_permission_refused">No se pudo obtener el permiso del micrófono.</string>
+    <string name="multimedia_editor_camera_permission_refused">No se pudo obtener el permiso de la cámara. Funcionalidad ha sido desactivada.</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Permiso de grabación de audio denegado</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_title">¡Bienvenido a AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requiere permiso de almacenamiento, que utilizamos exclusivamente para almacenar su colección AnkiDroid, soportes de flash y copias de seguridad. Nuestro código es de código abierto, escrito por voluntarios y confiado por millones.\n\nSi tienes alguna pregunta, por favor accede a nuestro manual en la aplicación o visita nuestros foros de soporte.\n\n¡Gracias por probar AnkiDroid!\n—Equipo de Desarrollo de AnkiDroid</string>
+    <string name="mutimedia_editor_assertion_failed">Error desconocido al mostrar el Editor Avanzado</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_startup_title">Ankidroid actualizado</string>
+    <string name="integrity_check_startup_content">AnkiDroid ha sido actualizado. Esta actualización incluye correcciones para posibles problemas de base de datos, y le aconsejamos que comprueba la base de datos ahora.</string>
+    <string name="integrity_check_positive">Comprobar base de datos</string>
+    <string name="integrity_check_continue_anyway">Continuar igualmente</string>
+    <string name="integrity_check_insufficient_space">Compruebar de la base de datos utiliza una gran cantidad de almacenamiento temporal.\n\nEs altamente recomendable que tenga al menos %s espacio libre en su dispositivo antes de continuar.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nActualmente tienes %s libre.</string>
+    <string name="video_creation_error">Reproducción de vídeo fallida</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">No se pudo cambiar el mazo</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error al decodificar datos de la tarjeta</string>
 </resources>

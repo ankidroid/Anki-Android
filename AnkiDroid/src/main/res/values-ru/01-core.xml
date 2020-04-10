@@ -68,10 +68,10 @@
         <item quantity="other">Осталось %d минут</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="few">%d hours %d left</item>
-        <item quantity="many">%d hours %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d час %d остался</item>
+        <item quantity="few">%d час %d остались</item>
+        <item quantity="many">%d час %d остались</item>
+        <item quantity="other">%d час %d осталось</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="one">%d day %d left</item>
@@ -121,13 +121,13 @@
     <string name="menu_bury">Отложить</string>
     <string name="menu_suspend">Исключить</string>
     <string name="menu_delete_note">Удалить запись</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag">Флаг</string>
+    <string name="menu_flag_card">Поставить флаг</string>
+    <string name="menu_flag_card_zero">Без флага</string>
+    <string name="menu_flag_card_one">Красный флаг</string>
+    <string name="menu_flag_card_two">Оранжевый флаг</string>
+    <string name="menu_flag_card_three">Зелёный флаг</string>
+    <string name="menu_flag_card_four">Синий флаг</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
     <string name="menu_select">Выделить текст</string>
     <string name="menu_search">Посмотреть в %1$s</string>
@@ -193,7 +193,7 @@
     </plurals>
     <string name="invalid_template">Невозможно сгенерировать карточку</string>
     <string name="card_template_editor_would_delete_note">Удаление этого типа приведёт к удалению некоторых записей. Пожалуйста, сначала создайте новый тип карточек.</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">Тип карточек текущей карточки был удалён.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Чтение и запись в базу данных AnkiDroid</string>
     <string name="read_write_permission_description">доступ к колодам, карточкам, записям, их типам, а также создание новых</string>

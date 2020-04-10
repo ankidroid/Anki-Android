@@ -64,12 +64,12 @@
         <item quantity="other">noch %d Minuten</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d Stunde %d übrig</item>
+        <item quantity="other">%d Stunden %d übrig</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d Stunden %d übrig</item>
+        <item quantity="other">%d Tage %d verbleiben</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -111,13 +111,13 @@
     <string name="menu_bury">Zurückstellen</string>
     <string name="menu_suspend">Aussetzen</string>
     <string name="menu_delete_note">Notiz löschen</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag">Flagge</string>
+    <string name="menu_flag_card">Karte markieren</string>
+    <string name="menu_flag_card_zero">Keine Flagge</string>
+    <string name="menu_flag_card_one">Rote Flagge</string>
+    <string name="menu_flag_card_two">Orange Flagge</string>
+    <string name="menu_flag_card_three">Grüne Flagge</string>
+    <string name="menu_flag_card_four">Blaue Flagge</string>
     <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
     <string name="menu_select">Text auswählen</string>
     <string name="menu_search">In %1$s nachschlagen</string>
@@ -181,7 +181,7 @@
     </plurals>
     <string name="invalid_template">Es konnte keine Karte erzeugt werden</string>
     <string name="card_template_editor_would_delete_note">Kartentyp kann nicht gelöscht werden, da dadurch mindestens eine Notiz gelöscht würde.</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">Der Kartentyp der aktuellen Karte wurde gelöscht.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid-Datenbank lesen und schreiben</string>
     <string name="read_write_permission_description">Zugriff auf bereits vorhandene Notizen, Karten, Hinweis-Typen und Stapel, sowie Neuerstellung</string>

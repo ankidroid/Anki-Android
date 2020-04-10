@@ -141,6 +141,9 @@
     <string name="select_locale_title">选择语言</string>
     <string name="safe_display">安全显示模式</string>
     <string name="safe_display_summ">禁用所有动画并使用更安全的方法绘制卡牌。使用墨水屏（E-ink）的设备可能需要此功能。</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">居中对齐</string>
     <string name="vertical_centering_summ">垂直居中卡片内容</string>
     <string name="pref_backup_max">最大备份数量</string>
@@ -218,8 +221,8 @@
     <string name="deck_conf_new_bury_summ">相关新卡片隐藏至第二天显示</string>
     <string name="deck_conf_rev_bury">隐藏相关复习</string>
     <string name="deck_conf_rev_bury_summ">相关复习隐藏至第二天显示</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings">使用常规设置</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">使用一般的 “自动显示答案” 设置，而不是使用此组的设置。</string>
     <string name="deck_conf_easy_bonus">回答简单的时间间隔增加比例</string>
     <string name="deck_conf_ivl_fct">时间间隔因子</string>
     <string name="deck_conf_max_ivl">最大时间间隔</string>

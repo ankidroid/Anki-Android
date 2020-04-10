@@ -141,6 +141,9 @@
     <string name="select_locale_title">Выберите язык</string>
     <string name="safe_display">Статический режим экрана</string>
     <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экраноов на электронных чернилах</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">Выравнивать по центру</string>
     <string name="vertical_centering_summ">Выравнивает содержимое карточек по вертикали</string>
     <string name="pref_backup_max">Число резервных копий</string>
@@ -221,7 +224,7 @@
     <string name="deck_conf_new_bury_summ">Связанные новые карточки отложены на завтра</string>
     <string name="deck_conf_rev_bury">Отложить связанные повторения</string>
     <string name="deck_conf_rev_bury_summ">Связанные повторения отложены до завтра</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings">Использовать общие настройки</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Множитель для \"Легко\"</string>
     <string name="deck_conf_ivl_fct">Множитель интервалов</string>
@@ -260,7 +263,7 @@
     <string name="pref_browser_editor_font">Шрифт в списке и редакторе</string>
     <string name="deck_conf_cram_filter">Фильтр</string>
     <string name="deck_conf_cram_options">Параметры</string>
-    <string name="deck_conf_cram_search">Поиск</string>
+    <string name="deck_conf_cram_search">Запрос</string>
     <string name="deck_conf_cram_limit">Количество</string>
     <string name="deck_conf_cram_order">Отобрать</string>
     <string name="deck_conf_cram_reschedule">Перепланировать</string>

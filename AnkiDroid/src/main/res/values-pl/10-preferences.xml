@@ -141,6 +141,9 @@
     <string name="select_locale_title">Wybór języka</string>
     <string name="safe_display">Tryb bezpiecznego wyświetlania</string>
     <string name="safe_display_summ">Wyłącz wszystkie animacje i użyj bezpieczniejszej metody rysowania kart. Urządzenia E-ink mogą tego wymagać.</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">Wycentruj</string>
     <string name="vertical_centering_summ">Wycentruj w pionie zawartość kart</string>
     <string name="pref_backup_max">Maksymalna liczba kopii zapasowych</string>
@@ -221,7 +224,7 @@
     <string name="deck_conf_new_bury_summ">Nowe karty powiązane są zakopane do kolejnego dnia</string>
     <string name="deck_conf_rev_bury">Zakop powiązane powtórki</string>
     <string name="deck_conf_rev_bury_summ">Powiązane powtórki są zakopane do kolejnego dnia</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings">Użyj ustawień ogólnych</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Bonus dla łatwych</string>
     <string name="deck_conf_ivl_fct">Modyfikator interwału</string>

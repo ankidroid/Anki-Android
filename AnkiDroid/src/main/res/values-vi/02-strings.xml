@@ -128,7 +128,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">Chào mừng đến với AnkiDroid</string>
     <string name="fact_adder_intent_title">Thẻ AnkiDroid</string>
-    <string name="card_editor_add_card">Thêm ghi chú</string>
+    <string name="note_editor_add_note">Add note</string>
+    <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">Sao chép thẻ</string>
     <string name="card_editor_reposition_card">Đặt lại vị trí</string>
     <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>
@@ -157,6 +158,8 @@
     <string name="import_message_replace_confirm">Thao tác này sẽ xoá tất cả bộ sưu tập hiện hữu và thay nó bằng dữ liệu của tệp %s</string>
     <string name="import_message_add_confirm">Thêm \"%s\" vào bộ sưu tập? Có thể hơi lâu</string>
     <string name="import_log_no_apkg">Đây không phải là gói tệp tin Anki hợp lệ</string>
+    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Tên file \"%s\" không chứa định dạng .apkg hoặc .colpkg</string>
     <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp anki: \n%s</string>
     <string name="import_replacing">Đang thay thế bộ sưu tập&#8230;</string>
@@ -236,4 +239,6 @@
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
+    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
 </resources>

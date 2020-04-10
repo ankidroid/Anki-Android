@@ -128,7 +128,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">歡迎使用 AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid 卡片</string>
-    <string name="card_editor_add_card">增加筆記</string>
+    <string name="note_editor_add_note">Add note</string>
+    <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">複製卡片</string>
     <string name="card_editor_reposition_card">更改位置</string>
     <string name="card_editor_reset_card">重設卡片進度</string>
@@ -157,6 +158,8 @@
     <string name="import_message_replace_confirm">這將會刪除你現有的收藏並以%s的內容取代，你確定嗎？</string>
     <string name="import_message_add_confirm">新增「%s」到收藏嗎？這可能會花上好一段時間</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考使用者手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
     <string name="import_replacing">正在導入牌組集合&#8230;&#8230;</string>
@@ -236,4 +239,6 @@
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
+    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
 </resources>

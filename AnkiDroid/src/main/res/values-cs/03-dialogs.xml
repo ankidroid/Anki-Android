@@ -48,7 +48,7 @@
     <plurals name="delete_deck_message">
         <item quantity="one">Odstranit kartu v %1$s? Obsahuje %2$d kartu.</item>
         <item quantity="few">Odstranit všechny karty v %1$s? Obsahuje %2$d karty.</item>
-        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards.</item>
+        <item quantity="many">Odstranit všechny karty v %1$s? Obsahuje %2$d karet.</item>
         <item quantity="other">Odstranit všechny karty v %1$s? Obsahuje %2$d karet.</item>
     </plurals>
     <string name="delete_cram_deck_message">Jste si jistý, že si přejete poslat všechny karty z balíčku %s zpátky do původního balíčku?</string>
@@ -82,16 +82,16 @@
     </plurals>
     <string name="reschedule_card_dialog_title">Přeplánovat kartu</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="few">Reschedule cards</item>
-        <item quantity="many">Reschedule cards</item>
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="one">Přeplánovat kartu</item>
+        <item quantity="few">Přeplánovat karty</item>
+        <item quantity="many">Přeplánovat karty</item>
+        <item quantity="other">Přeplánovat karty</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
+        <item quantity="one">Současný interval: %d den</item>
         <item quantity="few">Current interval: %d days</item>
         <item quantity="many">Current interval: %d days</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="other">Současný interval: %d dní</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Přeplánovat zkoušení pro x dní:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
@@ -116,6 +116,7 @@
     <string name="custom_study_ahead">Opakovat dopředu o x dnů:</string>
     <string name="custom_study_random">Vybrat náhodně x karet z balíčku:</string>
     <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="rebuild_custom_study_deck">Obnovování uživatelského balíčku.\nProsím čekejte...</string>
     <string name="importing_collection">Importování kolekce.\nProsím čekejte&#8230;</string>
     <string name="import_media_count">Import multimediálních souborů %1$d%%\nProsím čekejte&#8230;</string>
@@ -169,14 +170,19 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_title">Vítejte v AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid vyžaduje oprávnění k úložišti, které používáme výhradně pro ukládání vaší AnkiDroid kolekce, multimédií kartiček a záloh. Náš kód je otevřený, napsaný dobrovolníky a mají v něj důvěru miliony.\n\nPokud máte jakékoliv dotazy, nahlédněte prosím do naší příručky v aplikaci nebo navštivte naše fóra podpory.\n\nDěkujeme, že zkoušíte AnkiDroid!\n—AnkiDroid vývojový tým</string>
+    <string name="mutimedia_editor_assertion_failed">Nastala neznámá chyba při zobrazování pokročilého editoru</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_startup_title">AnkiDroid aktualizován</string>
+    <string name="integrity_check_startup_content">AnkiDroid byl aktualizován. Tato aktualizace obsahuje opravy možných problémů databáze, a doporučuje se nyní spustit kontrolu databáze.</string>
+    <string name="integrity_check_positive">Zkontrolovat databázi</string>
+    <string name="integrity_check_continue_anyway">Přesto pokračovat</string>
+    <string name="integrity_check_insufficient_space">Kontrola databáze používá velké množství dočasného úložiště.\n\nDůrazně se doporučuje, abyste předtím, než budete pokračovat, měli v zařízení alespoň %s volného místa.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nMomentálně máte %s volného místa.</string>
+    <string name="video_creation_error">Could not play video</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
 </resources>

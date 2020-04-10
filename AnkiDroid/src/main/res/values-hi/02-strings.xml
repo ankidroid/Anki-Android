@@ -130,7 +130,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid में आपका स्वागत है</string>
     <string name="fact_adder_intent_title">AnkiDroid कार्ड</string>
-    <string name="card_editor_add_card">नोट जोड़ें</string>
+    <string name="note_editor_add_note">Add note</string>
+    <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">प्रति कार्ड</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">प्रगति को रीसेट</string>
@@ -160,6 +161,8 @@
     <string name="import_message_replace_confirm">यह अपने मौजूदा संग्रह को हटाने और यह फ़ाइल %s का डेटा के साथ बदलना होगा। क्या आपको यकीन है?</string>
     <string name="import_message_add_confirm">\"%s\" को संग्रह में जोड़ें? यह एक लंबा समय लग सकता है</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
     <string name="import_replacing">संग्रह की जगह.. ।</string>
@@ -246,4 +249,6 @@
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
+    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
 </resources>

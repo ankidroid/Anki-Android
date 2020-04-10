@@ -98,6 +98,7 @@
     <string name="custom_study_ahead">先取りする日数</string>
     <string name="custom_study_random">デッキからランダムに x 枚のカードを抽出する</string>
     <string name="custom_study_preview">過去 x 日間に追加された新規カードをプレビュー</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="rebuild_custom_study_deck">カスタムデッキを再構築しています...</string>
     <string name="importing_collection">コレクションをインポートしています&#8230;</string>
     <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
@@ -161,4 +162,9 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="video_creation_error">Could not play video</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
 </resources>

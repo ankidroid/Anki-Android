@@ -23,7 +23,7 @@
     <string name="model_browser_label">Notiztypen verwalten</string>
     <string name="model_editor_label">Felder verwalten</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">Sie können Ihren letzten Notiztyp nicht löschen</string>
     <string name="toast_last_field">Notizypen müssen mindestens ein Feld haben</string>
     <string name="toast_empty_name">Sie müssen einen Namen eingeben</string>
     <string name="toast_duplicate_field">Feldname bereits verwendet</string>
@@ -46,7 +46,7 @@
     <string name="model_browser_template">Karten bearbeiten</string>
     <string name="model_browser_add">Notiztyp hinzufügen</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">Notiztyp umbenennen</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Felder bearbeiten</string>
     <string name="model_field_editor_add">Feld hinzufügen</string>
@@ -59,7 +59,7 @@
     <string name="model_field_editor_sort_field">Nach diesem Feld sortieren</string>
     <string name="model_clone_suffix">Kopie</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">Sind Sie sicher, dass Sie diesen Notiztyp löschen möchten?</string>
     <string name="field_delete_warning">Möchten Sie dieses Feld wirklich löschen?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Hinzufügen: %1$s </string>

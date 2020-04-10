@@ -98,6 +98,7 @@
     <string name="custom_study_ahead">x일 만큼 미리 복습하기:</string>
     <string name="custom_study_random">카드 묶음으로부터 x개의 카드를 무작위로 고르기:</string>
     <string name="custom_study_preview">최근 x일 내에 추가된 카드를 미리 학습하기:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="rebuild_custom_study_deck">맞춤 학습 카드 묶음을 다시 섞는 중입니다.\n잠시만 기다려 주세요...</string>
     <string name="importing_collection">컬렉션 가져오는 중.\n잠시만 기다려 주세요...</string>
     <string name="import_media_count">미디어 파일 불러오는 중 %1$d%%\n잠시만 기다려 주세요...</string>
@@ -161,4 +162,9 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="video_creation_error">Could not play video</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
 </resources>

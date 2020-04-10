@@ -128,7 +128,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">Selamat Datang ke AnkiDroid</string>
     <string name="fact_adder_intent_title">Kad AnkiDroid</string>
-    <string name="card_editor_add_card">Tambahkan catatan</string>
+    <string name="note_editor_add_note">Add note</string>
+    <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">Salin kad</string>
     <string name="card_editor_reposition_card">Reposisi</string>
     <string name="card_editor_reset_card">Set semula aktivitas</string>
@@ -157,6 +158,8 @@
     <string name="import_message_replace_confirm">Ini akan menghapus koleksi Anda yang ada dan menggantinya dengan data dari file %s. Apakah Anda yakin?</string>
     <string name="import_message_add_confirm">Tambahkan \"%s\" ke koleksi? Ini mungkin memakan waktu lama</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_content_provider">File yang dipilih tidak bisa diimpor secara otomatis oleh AnkiDroid. Silakan lihat manual pengguna tentang cara mengimpor file anki secara manual: \n%s</string>
     <string name="import_replacing">Mengganti koleksi&#8230;</string>
@@ -236,4 +239,6 @@
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
+    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
 </resources>

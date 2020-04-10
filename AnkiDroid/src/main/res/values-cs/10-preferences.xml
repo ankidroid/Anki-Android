@@ -141,6 +141,9 @@
     <string name="select_locale_title">Vyberte jazyk</string>
     <string name="safe_display">Režim bezpečného zobrazení</string>
     <string name="safe_display_summ">Zakázat všechny animace a použít bezpečnější metodu pro vykreslení karty. E-ink zařízení toto mohou vyžadovat.</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">Zarovnání na střed</string>
     <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
     <string name="pref_backup_max">Maximální počet záloh</string>
@@ -221,8 +224,8 @@
     <string name="deck_conf_new_bury_summ">Související nové karty jsou odloženy na další den</string>
     <string name="deck_conf_rev_bury">Přeskočit související opakování</string>
     <string name="deck_conf_rev_bury_summ">Související opakování jsou odloženy na další den</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings">Použít obecné nastavení</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Použít obecné nastavení „automaticky zobrazovat odpověď“ místo nastavení pro tuto skupinu.</string>
     <string name="deck_conf_easy_bonus">Bonus pro snadné</string>
     <string name="deck_conf_ivl_fct">Modifikátor intervalu</string>
     <string name="deck_conf_max_ivl">Maximální interval</string>

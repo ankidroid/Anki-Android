@@ -142,6 +142,9 @@
     <string name="select_locale_title">Nyelv kiválasztása</string>
     <string name="safe_display">Biztonságos megjelenítési mód</string>
     <string name="safe_display_summ">Kapcsolja ki az összes animációt, és biztonságosabb módszereket használjon a kártya rajzok számára. Az e-tintaeszközök igényelhetik ezt.</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">Középre igazítás</string>
     <string name="vertical_centering_summ">A kártyák tartalmának középre igazítása függőlegesen</string>
     <string name="pref_backup_max">Biztonsági másolatok maximális száma</string>

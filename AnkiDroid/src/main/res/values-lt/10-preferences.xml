@@ -142,6 +142,9 @@
     <string name="select_locale_title">Pasirinkite kalbą</string>
     <string name="safe_display">Ribotoji ekrano veiksena</string>
     <string name="safe_display_summ">Išjungti visą animaciją ir naudoti saugesnį kortelių piešimo būdą. To gali reikėti įrenginiams, kurių veikimas paremtas „E-ink“ technologija.</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">Centrinis lygiavimas</string>
     <string name="vertical_centering_summ">Kortelių turinį vertikaliai išdėstyti centre</string>
     <string name="pref_backup_max">Didžiausias atsarginių kopijų skaičius</string>

@@ -67,13 +67,13 @@
     <string name="leech_suspend_notification">Карточка помечена как приставучая и исключена</string>
     <string name="leech_notification">Карточка помечена как приставучая</string>
     <string name="corrupt_font">Файл шрифта %s повреждён</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
+    <string name="webview_crash_unknown">Неизвестная ошибка</string>
+    <string name="webview_crash_unknwon_detailed">Вызвано внутренней ошибкой в WebView</string>
+    <string name="webview_crash_oom">Нехватка памяти</string>
+    <string name="webview_crash_oom_details">WebView был завершён системой. Это обычно происходит, когда у приложения заканчивается память, часто из-за больших шрифтов или медиафайлов.</string>
+    <string name="webview_crash_nonfatal">Ошибка WebView. Причина: %s</string>
+    <string name="webview_crash_fatal">Критическая ошибка: обработчик WebView завершился. Причина: %s</string>
+    <string name="webview_crash_loop_dialog_title">Сбой отображения системного WebView</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
@@ -90,11 +90,11 @@
         <item>Забытых</item>
         <item>Повторения</item>
         <item>Интервал</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Changed</item>
-        <item>Created</item>
-        <item>Edited</item>
+        <item>Лёгкость</item>
+        <item>Срок</item>
+        <item>Изменено</item>
+        <item>Создано</item>
+        <item>Изменено</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Добавить новых на сегодня</string>
@@ -110,7 +110,7 @@
     <string name="discard_unsaved_changes">Закрыть и отказаться от изменений?</string>
     <string name="factadder_saving_error">Ошибка при сохранении записи</string>
     <string name="saving_facts">Запись сохраняется</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Тип записи сохраняется</string>
     <string name="add">Добавить</string>
     <string name="save">Сохранить</string>
     <string name="close">Закрыть</string>
@@ -134,7 +134,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid приветствует вас</string>
     <string name="fact_adder_intent_title">Карточка AnkiDroid</string>
-    <string name="card_editor_add_card">Добавить запись</string>
+    <string name="note_editor_add_note">Add note</string>
+    <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">Копировать карточку</string>
     <string name="card_editor_reposition_card">Переместить</string>
     <string name="card_editor_reset_card">Сбросить прогресс</string>
@@ -166,10 +167,12 @@
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
     <string name="import_message_add_confirm">Добавить \"%s\" в коллекцию? Это может занять много времени</string>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
+    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">У файла “%s” должно быть расширение .apkg или .colpkg</string>
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
     <string name="import_replacing">Коллекция заменяется&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Импорт прерван</string>
     <string name="export_include_schedule">Вместе с расписанием</string>
     <string name="export_include_media">Вместе с медиафайлами</string>
     <string name="confirm_apkg_export">Экспортировать коллекцию в пакет Anki?</string>
@@ -262,7 +265,9 @@
     <string name="export_v2_dummy_note">Этот файл требует новой версии Anki.</string>
     <string name="export_v2_forbidden">Переключитесь на планировщик 1-й версии перед экспортом колоды с расписанием.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
+    <string name="activity_start_failed_load_url">Не удалось загрузить \"%s\".</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
+    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
 </resources>

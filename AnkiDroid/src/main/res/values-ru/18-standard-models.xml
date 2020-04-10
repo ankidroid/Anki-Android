@@ -20,19 +20,19 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
-    <string name="text_field_name">Text</string>
-    <string name="extra_field_name">Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
+    <string name="front_field_name">Лицевая сторона</string>
+    <string name="back_field_name">Оборотная сторона</string>
+    <string name="text_field_name">Текст</string>
+    <string name="extra_field_name">Дополнительно</string>
+    <string name="field_to_ask_front_name">Добавить обратную</string>
     <!--Card type-->
-    <string name="card_one_name">Card 1</string>
-    <string name="card_two_name">Card 2</string>
-    <string name="card_cloze_name">Cloze</string>
+    <string name="card_one_name">Карточка 1</string>
+    <string name="card_two_name">Карточка 2</string>
+    <string name="card_cloze_name">С пропусками</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
-    <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_model_name">Базовый</string>
+    <string name="cloze_model_name">С пропусками</string>
+    <string name="basic_typing_model_name">Базовый (ввод ответа)</string>
+    <string name="forward_reverse_model_name">Основная (с обратной карточкой)</string>
+    <string name="forward_optional_reverse_model_name">Базовая (обратная по выбору)</string>
 </resources>

@@ -104,6 +104,7 @@
     <string name="custom_study_ahead">Revisió de x dies endavant:</string>
     <string name="custom_study_random">Tria aleatòriament x fitxes del paquet:</string>
     <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="rebuild_custom_study_deck">S\'està reconstruïnt el paquet d\'estudi personalitzat. \nUn moment si us plau...</string>
     <string name="importing_collection">S\'està important la col. lecció. \nUn moment si us plau ...</string>
     <string name="import_media_count">S\'estant importació els continguts multimèdia %1$d%%\nun moment si us plau...</string>
@@ -167,4 +168,9 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="video_creation_error">Could not play video</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
 </resources>

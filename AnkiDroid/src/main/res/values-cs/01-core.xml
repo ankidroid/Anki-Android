@@ -121,13 +121,13 @@
     <string name="menu_bury">Přeskočit</string>
     <string name="menu_suspend">Vyřadit</string>
     <string name="menu_delete_note">Odstranit poznámku</string>
-    <string name="menu_flag">Flag</string>
+    <string name="menu_flag">Příznak</string>
     <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag_card_zero">Žádný příznak</string>
+    <string name="menu_flag_card_one">Červený příznak</string>
+    <string name="menu_flag_card_two">Oranžový příznak</string>
+    <string name="menu_flag_card_three">Zelený příznak</string>
+    <string name="menu_flag_card_four">Modrý příznak</string>
     <string name="delete_note_message">Opravdu smazat poznámku a všechny její karty?\n%s</string>
     <string name="menu_select">Vybrat text</string>
     <string name="menu_search">Vyhledat v %1$s</string>
@@ -193,7 +193,7 @@
     </plurals>
     <string name="invalid_template">Karta nemůže být vytvořena</string>
     <string name="card_template_editor_would_delete_note"> Odstraněním tohoto typu karty můžete způsobit, že jedna nebo         více poznámek budou odstraněny. Nejprve vytvořte nový typ karty.</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">Typ karty současné karty byl odstraněn.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Čtení a zápis do AnkiDroid databáze</string>
     <string name="read_write_permission_description">spravovat stávající poznámky, karty, typy poznámek a balíčky, a také vytvářet nové</string>

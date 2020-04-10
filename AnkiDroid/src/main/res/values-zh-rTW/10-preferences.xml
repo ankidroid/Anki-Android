@@ -141,6 +141,9 @@
     <string name="select_locale_title">選擇語言</string>
     <string name="safe_display">安全顯示模式</string>
     <string name="safe_display_summ">關閉所有動畫且使用較安全的方法來繪製卡片。電子墨水裝置可能會需要這個方法。</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">置中</string>
     <string name="vertical_centering_summ">垂直置中卡片內容</string>
     <string name="pref_backup_max">最大備份數量</string>
