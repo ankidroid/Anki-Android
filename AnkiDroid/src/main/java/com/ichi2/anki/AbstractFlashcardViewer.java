@@ -1883,7 +1883,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             question = getCol().getMedia().escapeImages(question);
             question = typeAnsQuestionFilter(question);
 
-            Timber.d("question: '%s'", question);
+            Timber.v("question: '%s'", question);
             // Show text entry based on if the user wants to write the answer
             if (typeAnswer()) {
                 mAnswerField.setVisibility(View.VISIBLE);
@@ -2108,7 +2108,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             cardClass += " vertically_centered";
         }
 
-        Timber.d("content card = \n %s", content);
+        Timber.v("content card = \n %s", content);
         StringBuilder style = new StringBuilder();
         mExtensions.updateCssStyle(style);
 
@@ -2122,7 +2122,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             style.append(String.format("img { zoom: %s }\n", mImageZoom / 100.0));
         }
 
-        Timber.d("::style:: / %s", style);
+        Timber.v("::style:: / %s", style);
 
         if (mNightMode) {
             // Enable the night-mode class
