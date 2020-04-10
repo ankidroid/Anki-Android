@@ -434,7 +434,7 @@ public class Utils {
         // be careful not to create multiple objects without flushing them, or they
         // may share an ID.
         long t = intTime(1000);
-        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = " + t) != 0) {
+        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = ?", new Object[] {t}) != 0) {
             t += 1;
         }
         return t;

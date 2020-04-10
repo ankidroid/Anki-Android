@@ -176,8 +176,7 @@ public class DB {
         return queryScalar(query, null);
     }
 
-
-    public int queryScalar(String query, String[] selectionArgs) {
+    public int queryScalar(String query, Object[] selectionArgs) {
         Cursor cursor = null;
         int scalar;
         try {
@@ -196,9 +195,13 @@ public class DB {
 
 
     public String queryString(String query) throws SQLException {
+        return queryString(query, null);
+    }
+
+    public String queryString(String query, Object[] bindArgs) throws SQLException {
         Cursor cursor = null;
         try {
-            cursor = mDatabase.query(query, null);
+            cursor = mDatabase.query(query, bindArgs);
             if (!cursor.moveToNext()) {
                 throw new SQLException("No result for query: " + query);
             }
@@ -212,10 +215,14 @@ public class DB {
 
 
     public long queryLongScalar(String query) {
+        return queryLongScalar(query, null);
+    }
+
+    public long queryLongScalar(String query, Object[] bindArgs) {
         Cursor cursor = null;
         long scalar;
         try {
-            cursor = mDatabase.query(query, null);
+            cursor = mDatabase.query(query, bindArgs);
             if (!cursor.moveToNext()) {
                 return 0;
             }
@@ -240,13 +247,17 @@ public class DB {
      * @return An ArrayList with the contents of the specified column.
      */
     public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
+        return queryColumn(type, query, column, null);
+    }
+
+    public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column, Object[] bindArgs) {
         int nullExceptionCount = 0;
         InvocationTargetException nullException = null; // to catch the null exception for reporting
         ArrayList<T> results = new ArrayList<>();
         Cursor cursor = null;
 
         try {
-            cursor = mDatabase.query(query, null);
+            cursor = mDatabase.query(query, bindArgs);
             String methodName = getCursorMethodName(type.getSimpleName());
             while (cursor.moveToNext()) {
                 try {

@@ -314,7 +314,7 @@ public class Decks {
             if (cardsToo) {
                 // don't use cids(), as we want cards in cram decks too
                 ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class,
-                                                                "SELECT id FROM cards WHERE did = " + did + " OR odid = " + did, 0);
+                                                                "SELECT id FROM cards WHERE did = ? OR odid = ?", 0, new Object[] {did, did});
                 mCol.remCards(Utils.arrayList2array(cids));
             }
         }
@@ -751,7 +751,7 @@ public class Decks {
 
     public Long[] cids(long did, boolean children) {
         if (!children) {
-            return Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards where did=" + did, 0));
+            return Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards where did=?", 0, new Object[] {did}));
         }
         List<Long> dids = new ArrayList<>();
         dids.add(did);

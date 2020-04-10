@@ -864,7 +864,7 @@ public class Collection {
         card.setNid(nid);
         ord = template.getInt("ord");
         card.setOrd(ord);
-        did = mDb.queryScalar("select did from cards where nid = " + nid + " and ord = " + ord);
+        did = mDb.queryScalar("select did from cards where nid = ? and ord = ?", new Object[] {nid, ord});
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
             did = template.optLong("did", 0);
@@ -1297,7 +1297,7 @@ public class Collection {
                 // write old data
                 c.flush(false);
                 // and delete revlog entry
-                long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
+                long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", new Object [] {c.getId()});
                 mDb.execute("DELETE FROM revlog WHERE id = " + last);
                 // restore any siblings
                 mDb.execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
@@ -1510,9 +1510,9 @@ public class Collection {
         if (mDb.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1") > 0) {
             return false;
         }
-        boolean badNotes = mDb.queryScalar(String.format(Locale.US,
+        boolean badNotes = mDb.queryScalar(
                 "select 1 from notes where id not in (select distinct nid from cards) " +
-                "or mid not in %s limit 1", Utils.ids2str(mModels.ids()))) > 0;
+                "or mid not in " +  Utils.ids2str(mModels.ids()) + " limit 1") > 0;
         // notes without cards or models
         if (badNotes) {
             return false;
@@ -1530,10 +1530,10 @@ public class Collection {
                 ords[t] = tmpls.getJSONObject(t).getInt("ord");
             }
 
-            boolean badOrd = mDb.queryScalar(String.format(Locale.US,
-                                                           "select 1 from cards where ord not in %s and nid in ( " +
-                                                           "select id from notes where mid = %d) limit 1",
-                                                           Utils.ids2str(ords), m.getLong("id"))) > 0;
+            boolean badOrd = mDb.queryScalar(
+                                                           "select 1 from cards where ord not in " + Utils.ids2str(ords) + " and nid in ( " +
+                                                           "select id from notes where mid = ?) limit 1",
+                                                           new Object[] {m.getLong("id")}) > 0;
             if (badOrd) {
                 return false;
             }
@@ -1896,7 +1896,7 @@ public class Collection {
             // cards with invalid ordinal
             ArrayList<Long> ids = mDb.queryColumn(Long.class,
                     "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
-                            "SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
+                            "SELECT id FROM notes WHERE mid = ?)", 0, new Object[] {m.getLong("id")});
             if (ids.size() > 0) {
                 problems.add("Deleted " + ids.size() + " card(s) with missing template.");
                 remCards(Utils.arrayList2array(ids));
