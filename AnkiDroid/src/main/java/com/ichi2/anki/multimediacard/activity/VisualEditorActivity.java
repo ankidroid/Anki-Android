@@ -72,7 +72,6 @@ public class VisualEditorActivity extends AnkiActivity {
             setSupportActionBar(toolbar);
         }
 
-        //TODO: I think we can move this up
         startLoadingCollection();
     }
 
