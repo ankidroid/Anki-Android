@@ -45,7 +45,6 @@ public class VisualEditorActivity extends AnkiActivity {
     private int mIndex;
     private VisualEditorWebView mWebView;
     private int clozeId;
-    private String[] allFields;
     private long mModelId;
     private String[] mFields;
 
@@ -77,9 +76,11 @@ public class VisualEditorActivity extends AnkiActivity {
     private void setupEditorScrollbarButtons() {
         SimpleListenerSetup setJsAction = (id, f) -> findViewById(id).setOnClickListener(v -> mWebView.execFunction(f));
 
+        //defined: https://github.com/jkennethcarino/rtexteditorview/blob/master/library/src/main/assets/editor.js
         setJsAction.apply(R.id.editor_button_bold, "setBold");
         setJsAction.apply(R.id.editor_button_italic, "setItalic");
         setJsAction.apply(R.id.editor_button_underline, "setUnderline");
+        setJsAction.apply(R.id.editor_button_clear_formatting, "removeFormat");
 
         findViewById(R.id.editor_button_cloze).setOnClickListener(v -> cloze(clozeId++));
     }
