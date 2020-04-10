@@ -45,6 +45,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
+import com.ichi2.utils.WebViewDebugging;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
@@ -226,6 +227,8 @@ public class AnkiDroidApp extends Application {
         if (BuildConfig.DEBUG) {
             UsageAnalytics.setDryRun(true);
         }
+
+        WebViewDebugging.initializeDebugging(preferences);
 
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         NotificationChannels.setup(getApplicationContext());
