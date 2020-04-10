@@ -1,17 +1,35 @@
+/**
+To understand summernote, look at the API surface of document.execCommand:
+https://developer.mozilla.org/en-US/docs/Web/API/document/execCommand#Commands
+This is the API surface which is being built upon
+*/
+
 var cloze = function(clozeId) {
-    //The Anki Desktop cloze functionality appears to work as follows:
+    //The Anki Desktop cloze functionality works as follows:
     //Ignore the HTML and insert the text at the start and end of the cursor.
-    //TODO: Confirm that this allows undo.
+
+    //I'm being lazy, avoiding summernote and interracting with the browser directly.
+    //This might be possible:
+    //https://stackoverflow.com/questions/6139107/programmatically-select-text-in-a-contenteditable-html-element
+    var clozePrefix = "{{c" + clozeId + "::";
+    var clozeSuffix = "}}";
+
     var selected = $('#summernote').summernote('createRange');
     var startPoint = selected.getStartPoint();
-    var startContext = startPoint.node.textContent;
-    var startOffset = startPoint.offset;
-    var clozeInsert = "{{c" + clozeId + "::";
-    startPoint.node.textContent = startContext.substring(0, startOffset) + clozeInsert + startContext.substring(startOffset);
-
     var endPoint = selected.getEndPoint();
-    var endContext = endPoint.node.textContent;
-    var endOffset = endPoint.offset + clozeInsert.length;
-    endPoint.node.textContent = endContext.substring(0, endOffset) + "}}" + endContext.substring(endOffset);
-    //TODO: Select something better
+
+    insertAtPoint(startPoint, clozePrefix, 0);
+    insertAtPoint(endPoint, clozeSuffix, clozePrefix.length);
 };
+
+function insertAtPoint(startPoint, text, offset) {
+    var startNode = startPoint.node;
+    var range = document.createRange();
+    range.setStart(startNode, startPoint.offset + offset);
+    range.setEnd(startNode, startPoint.offset + offset);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+
+    document.execCommand("insertText", true, text);
+}
