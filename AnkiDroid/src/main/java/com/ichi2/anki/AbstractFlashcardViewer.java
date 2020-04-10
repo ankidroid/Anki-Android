@@ -105,6 +105,7 @@ import com.ichi2.utils.FunctionalInterfaces.Function;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.WebViewDebugging;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -1743,11 +1744,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private void recreateWebView() {
         if (mCard == null) {
             mCard = createWebView();
-            // On your desktop use chrome://inspect to connect to emulator WebViews
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
-                    AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
-                WebView.setWebContentsDebuggingEnabled(true);
-            }
+            WebViewDebugging.initializeDebugging(AnkiDroidApp.getSharedPrefs(this));
             mCardFrame.addView(mCard);
         }
         if (mCard.getVisibility() != View.VISIBLE) {
