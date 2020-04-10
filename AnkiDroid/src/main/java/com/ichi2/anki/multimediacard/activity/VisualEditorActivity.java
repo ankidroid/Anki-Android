@@ -113,6 +113,11 @@ public class VisualEditorActivity extends AnkiActivity {
         switch (item.getItemId()) {
             case R.id.action_undo:
                 Timber.i("Undo button pressed");
+                mWebView.exec(ExecEscaped.fromString("undo"));
+                return true;
+            case R.id.action_redo:
+                Timber.i("Redo Undo button pressed");
+                mWebView.exec(ExecEscaped.fromString("redo"));
                 return true;
             case R.id.action_save:
                 Timber.i("Save button pressed");

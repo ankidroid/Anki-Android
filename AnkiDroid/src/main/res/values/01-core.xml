@@ -71,6 +71,7 @@
     <string name="studyoptions_congrats_undo">Undo %s</string>
     <string name="menu_import">Import</string>
     <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_review">last review</string>
     <string name="undo_action_bury_card">bury card</string>
     <string name="undo_action_bury_note">bury note</string>
