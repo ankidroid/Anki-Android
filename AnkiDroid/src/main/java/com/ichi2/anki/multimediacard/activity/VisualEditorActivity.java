@@ -170,17 +170,28 @@ public class VisualEditorActivity extends AnkiActivity {
         Timber.d("onCollectionLoaded");
         initWebView(col);
 
-//        String defaultCardCss = ".note-editable {\n"
-//                + " font-family: arial;\n"
-//                + " font-size: 20px;\n"
-//                + " text-align: center;\n"
-//                + " color: black;\n"
-//                + " background-color: white;\n }";
-
-        String css = col.getModels().get(mModelId).getString("css");
-        css = css.replace(".card", ".note-editable ");
+        String css = getModelCss(col);
         mWebView.injectCss(css);
+    }
 
+
+    private String getModelCss(Collection col) {
+        try {
+            String css = col.getModels().get(mModelId).getString("css");
+            return css.replace(".card", ".note-editable ");
+        } catch (Exception e) {
+            UIUtils.showThemedToast(this, "Failed to load template CSS", false);
+            return getDefaultCss();
+        }
+    }
+
+    private String getDefaultCss() {
+        return ".note-editable {\n"
+              + " font-family: arial;\n"
+              + " font-size: 20px;\n"
+              + " text-align: center;\n"
+              + " color: black;\n"
+              + " background-color: white;\n }";
     }
 
 
