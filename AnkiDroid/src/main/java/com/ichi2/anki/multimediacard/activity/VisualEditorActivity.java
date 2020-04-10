@@ -38,6 +38,7 @@ import timber.log.Timber;
 
 import static com.ichi2.anki.multimediacard.visualeditor.VisualEditorFunctionality.*;
 
+//BUG: <hr/> is  less thick in the editor
 //NOTE: Remove formatting on "{{c1::" will cause a failure to detect the cloze deletion, this is the same as Anki.
 public class VisualEditorActivity extends AnkiActivity {
 
@@ -92,6 +93,9 @@ public class VisualEditorActivity extends AnkiActivity {
         setupAction.apply(R.id.editor_button_italic, ITALIC);
         setupAction.apply(R.id.editor_button_underline, UNDERLINE);
         setupAction.apply(R.id.editor_button_clear_formatting, CLEAR_FORMATTING);
+        setupAction.apply(R.id.editor_button_list_bullet, UNORDERED_LIST);
+        setupAction.apply(R.id.editor_button_list_numbered, ORDERED_LIST);
+        setupAction.apply(R.id.editor_button_horizontal_rule, HORIZONTAL_RULE);
 
         findViewById(R.id.editor_button_cloze).setOnClickListener(v -> performCloze());
     }
