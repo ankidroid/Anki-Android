@@ -73,6 +73,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Note.ClozeUtils;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -93,8 +94,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
@@ -1644,7 +1643,6 @@ public class NoteEditor extends AnkiActivity {
     private class ActionModeCallback implements ActionMode.Callback {
         private FieldEditText mTextBox;
         private int mMenuId = View.generateViewId();
-        private Pattern mClozeRegexPattern = Pattern.compile("\\{\\{c(\\d+)::");
 
         ActionModeCallback(FieldEditText textBox) {
             super();
@@ -1687,26 +1685,10 @@ public class NoteEditor extends AnkiActivity {
                 String beforeText = text.substring(0, selectionStart);
                 String selectedText = text.substring(selectionStart, selectionEnd);
                 String afterText = text.substring(selectionEnd);
-
-                // Search in all fields of the current note for the cloze reference with the highest value
-                // Per the manual, cloze references are the name of the delimiters for cloze deletions e.g. {{c1::text}}
-                int highestClozeId = 0;
-                // Begin looping through the fields
-                for (FieldEditText currentField : mEditFields) {
-                    // Get the actual data contained in the current field
-                    String fieldLiteral = currentField.getText().toString();
-                    // Begin searching in the current field for cloze references
-                    Matcher matcher = mClozeRegexPattern.matcher(fieldLiteral);
-                    while (matcher.find()) {
-                        int detectedClozeId = Integer.parseInt(matcher.group(1));
-                        if (detectedClozeId > highestClozeId) {
-                            highestClozeId = detectedClozeId;
-                        }
-                    }
-                }
+                int nextClozeIndex = getNextClozeIndex();
 
                 // Format the cloze deletion open bracket
-                String clozeOpenBracket = "{{c" + (highestClozeId + 1) + "::";
+                String clozeOpenBracket = "{{c" + (nextClozeIndex) + "::";
 
                 // Update text field with updated text and selection
                 mTextBox.setText(beforeText + clozeOpenBracket + selectedText + "}}" + afterText);
@@ -1719,6 +1701,18 @@ public class NoteEditor extends AnkiActivity {
                 return false;
             }
         }
+
+
+        private int getNextClozeIndex() {
+            List<String> fieldValues = new ArrayList<>(mEditFields.size());
+            for (FieldEditText e : mEditFields) {
+                Editable editable = e.getText();
+                String fieldValue = editable == null ? "" : editable.toString();
+                fieldValues.add(fieldValue);
+            }
+            return ClozeUtils.getNextClozeIndex(fieldValues);
+        }
+
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {

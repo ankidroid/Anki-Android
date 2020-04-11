@@ -28,6 +28,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
@@ -376,5 +378,32 @@ public class Note implements Cloneable {
     @Override
     public int hashCode() {
         return (int) (mId ^ (mId >>> 32));
+    }
+
+
+    public static class ClozeUtils {
+        private static final Pattern mClozeRegexPattern = Pattern.compile("\\{\\{c(\\d+)::");
+
+        /*
+        Returns the next index that a cloze should be inserted at, given a list of fields.
+        Per the manual, cloze references are the name of the delimiters for cloze deletions e.g. {{c1::text}}
+        The next index is index after the highest existing cloze deletion, gaps are not considered.
+         */
+        public static int getNextClozeIndex(Iterable<String> fieldValues) {
+
+            int highestClozeId = 0;
+            // Begin looping through the fields
+            for (String fieldLiteral : fieldValues) {
+                // Begin searching in the current field for cloze references
+                Matcher matcher = mClozeRegexPattern.matcher(fieldLiteral);
+                while (matcher.find()) {
+                    int detectedClozeId = Integer.parseInt(matcher.group(1));
+                    if (detectedClozeId > highestClozeId) {
+                        highestClozeId = detectedClozeId;
+                    }
+                }
+            }
+            return highestClozeId + 1;
+        }
     }
 }
