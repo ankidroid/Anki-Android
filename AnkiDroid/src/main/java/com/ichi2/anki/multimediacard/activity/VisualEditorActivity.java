@@ -104,6 +104,7 @@ public class VisualEditorActivity extends AnkiActivity {
         setupAction.apply(R.id.editor_button_align_center, ALIGN_CENTER);
         setupAction.apply(R.id.editor_button_align_right, ALIGN_RIGHT);
         setupAction.apply(R.id.editor_button_align_justify, ALIGN_JUSTIFY);
+        setupAction.apply(R.id.editor_button_view_html, EDIT_SOURCE); //this is a toggle.
 
         findViewById(R.id.editor_button_cloze).setOnClickListener(v -> performCloze());
     }
