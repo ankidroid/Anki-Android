@@ -2426,6 +2426,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         mTouchLayer.setVisibility(View.VISIBLE);
         mInAnswer = false;
+        invalidateOptionsMenu();
     }
 
 
@@ -2480,6 +2481,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (typeAnswer()) {
             mAnswerField.setEnabled(false);
         }
+        invalidateOptionsMenu();
     }
 
 
