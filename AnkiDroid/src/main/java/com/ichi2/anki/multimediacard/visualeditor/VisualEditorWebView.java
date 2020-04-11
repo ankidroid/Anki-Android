@@ -59,6 +59,7 @@ public class VisualEditorWebView extends WebView {
     private String content;
 
     private RTextEditorView.OnTextChangeListener onTextChangeListener;
+    private SelectionChangeListener mSelectionChangedListener;
     private boolean isReady;
 
     public VisualEditorWebView(Context context) {
@@ -134,6 +135,36 @@ public class VisualEditorWebView extends WebView {
         this.content = content;
     }
 
+    /** SELECTION */
+
+    @JavascriptInterface
+    public void onImageSelection(String guid, String src) {
+        Timber.d("onImageSelection %s", src);
+        onSelectionChanged(SelectionType.imageFromSrc(guid, src));
+    }
+
+    @JavascriptInterface
+    public void onRegularSelection() {
+        onSelectionChanged(SelectionType.REGULAR);
+    }
+
+    protected void onSelectionChanged(SelectionType selection) {
+        SelectionChangeListener listener = getSelectionChangedListener();
+        if (listener == null) {
+            return;
+        }
+        listener.onSelectionChanged(selection);
+    }
+
+    public void setSelectionChangedListener(SelectionChangeListener listener) {
+        this.mSelectionChangedListener = listener;
+    }
+
+    public SelectionChangeListener getSelectionChangedListener() {
+        return this.mSelectionChangedListener;
+    }
+
+    /** END SELECTION */
 
     public boolean isReady() {
         return isReady;
@@ -255,6 +286,18 @@ public class VisualEditorWebView extends WebView {
     }
 
 
+    public void deleteImage(@NonNull String guid) {
+        //noinspection ConstantConditions
+        if (guid == null) {
+            Timber.w("Failed to delete image - no guid");
+            return;
+        }
+        ExecEscaped safeString =  ExecEscaped.fromString(guid);
+        String safeCommand = String.format("deleteImage('%s')", safeString.getEscapedValue());
+        execUnsafe(safeCommand);
+    }
+
+
     public static class ExecEscaped {
         private final String escapedValue;
 
@@ -302,6 +345,36 @@ public class VisualEditorWebView extends WebView {
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             view.loadUrl(request.getUrl().toString());
             return true;
+        }
+    }
+
+    @FunctionalInterface
+    public interface SelectionChangeListener {
+        void onSelectionChanged(SelectionType selection);
+    }
+
+    public enum SelectionType {
+        REGULAR,
+        IMAGE;
+
+        private String mData;
+        private String mGuid;
+
+        public static SelectionType imageFromSrc(String guid, String src) {
+            SelectionType type = SelectionType.IMAGE;
+            type.mData = src;
+            type.mGuid = guid;
+            return type;
+        }
+
+
+        public String getImageSrc() {
+            return mData;
+        }
+
+
+        public String getGuid() {
+            return mGuid;
         }
     }
 }

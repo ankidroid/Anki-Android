@@ -116,4 +116,8 @@
 
 
     <string name="title_activity_visual_editor">Visual Editor</string>
+
+    <!-- Visual Editor -->
+    <string name="visual_editor_delete_image">Delete Image</string>
+
 </resources>

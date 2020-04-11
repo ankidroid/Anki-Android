@@ -35,4 +35,41 @@ function insertAtPoint(startPoint, text, offset) {
 }
 
 var clearHistory = function() {
+    //TODO: for Undo, probably not going to be implemented.
 };
+
+function sendMouseDownToClient(e) {
+    if (e.target.nodeName.toUpperCase() == "IMG") {
+        RTextEditorView.onImageSelection(getGuid(e.target), e.target.src);
+        return;
+    }
+    RTextEditorView.onRegularSelection();
+}
+
+/**
+I want to serialise a reference to the currently selected image to avoid race conditions.
+This means we need an ID to pass in
+*/
+function getGuid(target) {
+    var guid =  target.getAttribute("data-ankidroid-guid");
+    if (guid) {
+        return guid;
+    }
+    guid = createGuid();
+    target.setAttribute("data-ankidroid-guid", guid);
+    return guid;
+}
+
+function getTargetByGuid(guid) {
+    return $("*[data-ankidroid-guid='" + escape(guid) + "']").first();
+}
+
+function escape(str) {
+    return str.replace(/[^0-9a-z]/gi, '');
+}
+
+/**
+https://gist.github.com/jed/982883
+https://gist.github.com/jed/982883#file-license-txt
+*/
+function createGuid(a){return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,createGuid)}

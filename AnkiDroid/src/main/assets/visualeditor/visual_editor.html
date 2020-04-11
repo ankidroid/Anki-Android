@@ -85,6 +85,9 @@ SOFTWARE.
                 var code = $('#summernote').summernote('code');
                 RTextEditorView.onEditorContentChanged(code);
               },
+              onMousedown: function(e) {
+                  sendMouseDownToClient(e);
+              },
               onChange: function(contents, $editable) {
                 RTextEditorView.onEditorContentChanged(contents);
               }
@@ -94,5 +97,6 @@ SOFTWARE.
     </script>
 <script src="file:///android_asset/editor.js"></script>
 <script src="file:///android_asset/visualeditor/visual_editor_functions.js"></script>
+<script src="file:///android_asset/visualeditor/visual_editor_image.js"></script>
 </body>
 </html>
