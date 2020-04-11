@@ -192,6 +192,7 @@ public class VisualEditorActivity extends AnkiActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     @CheckResult
     private boolean registerMediaForWebView(String imagePath) {
         if (imagePath == null) {
