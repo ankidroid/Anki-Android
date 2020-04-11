@@ -1187,6 +1187,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected void undo() {
         if (getCol().undoAvailable()) {
+            blockControls();
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler);
         }
     }
@@ -2862,6 +2863,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
     protected void dismiss(Collection.DismissType type) {
+        blockControls();
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mDismissCardHandler,
                 new DeckTask.TaskData(new Object[]{mCurrentCard, type}));
     }
