@@ -145,7 +145,7 @@ public class Models {
     /**
      * Load registry from JSON.
      */
-    public Models load(String json) {
+    public void load(String json) {
         mChanged = false;
         mModels = new HashMap<>();
         JSONObject modelarray = new JSONObject(json);
@@ -157,7 +157,6 @@ public class Models {
                 mModels.put(o.getLong("id"), o);
             }
         }
-        return this;
     }
 
 

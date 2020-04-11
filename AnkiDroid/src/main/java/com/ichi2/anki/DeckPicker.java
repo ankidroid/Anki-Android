@@ -2100,7 +2100,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 __renderPage();
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
-                getCol().loadModels(); // No more DB access is needed now, so we can do the DB intesive action of loading the models asynchronously.
             }
         });
     }
