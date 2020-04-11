@@ -311,8 +311,9 @@ public class VisualEditorActivity extends AnkiActivity {
             case R.id.action_image_delete:
                 deleteSelectedImage(selectionType);
                 return true;
+            default:
+                return false;
         }
-        return false;
     }
 
 
