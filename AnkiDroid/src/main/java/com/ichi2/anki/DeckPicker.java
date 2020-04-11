@@ -1971,6 +1971,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void handleDeckSelection(long did, boolean dontSkipStudyOptions) {
+        // ensure that models are entirely loaded before doing anything else
+        getCol().getModels();
         // Clear the undo history when selecting a new deck
         if (getCol().getDecks().selected() != did) {
             getCol().clearUndo();
