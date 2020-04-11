@@ -325,6 +325,7 @@ public class VisualEditorActivity extends AnkiActivity {
     /** HACK: Resets the selection type when the UI doesn't fire an appropriate event */
     private void resetSelectionType() {
         mSelectionType = SelectionType.REGULAR;
+        invalidateOptionsMenu();
     }
 
 
