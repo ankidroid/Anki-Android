@@ -93,6 +93,10 @@ public class VisualEditorActivity extends AnkiActivity {
         setJsAction.apply(R.id.editor_button_list_bullet, "insertUnorderedList");
         setJsAction.apply(R.id.editor_button_list_numbered, "insertOrderedList");
         setJsAction.apply(R.id.editor_button_horizontal_rule, "insertHorizontalRule");
+        setJsAction.apply(R.id.editor_button_align_left, "setAlignLeft");
+        setJsAction.apply(R.id.editor_button_align_center, "setAlignCenter");
+        setJsAction.apply(R.id.editor_button_align_right, "setAlignRight");
+        setJsAction.apply(R.id.editor_button_align_justify, "setAlignJustify");
 
 
 
