@@ -155,6 +155,15 @@
                 app:srcCompat="@drawable/ic_format_align_justify_black_24dp"
                 />
 
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/editor_button_view_html"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="@dimen/toolbar_item_padding"
+                app:srcCompat="@drawable/ic_code_black_24dp"
+                />
+
         </com.ichi2.anki.multimediacard.visualeditor.VisualEditorToolbar>
         </HorizontalScrollView>
     </RelativeLayout>
