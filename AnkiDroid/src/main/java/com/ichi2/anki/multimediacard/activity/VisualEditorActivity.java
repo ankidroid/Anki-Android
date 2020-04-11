@@ -95,6 +95,10 @@ public class VisualEditorActivity extends AnkiActivity {
         setupAction.apply(R.id.editor_button_list_bullet, UNORDERED_LIST);
         setupAction.apply(R.id.editor_button_list_numbered, ORDERED_LIST);
         setupAction.apply(R.id.editor_button_horizontal_rule, HORIZONTAL_RULE);
+        setupAction.apply(R.id.editor_button_align_left, ALIGN_LEFT);
+        setupAction.apply(R.id.editor_button_align_center, ALIGN_CENTER);
+        setupAction.apply(R.id.editor_button_align_right, ALIGN_RIGHT);
+        setupAction.apply(R.id.editor_button_align_justify, ALIGN_JUSTIFY);
 
         findViewById(R.id.editor_button_cloze).setOnClickListener(v -> performCloze());
     }
