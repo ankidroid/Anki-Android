@@ -759,7 +759,7 @@ public class Reviewer extends AbstractFlashcardViewer {
      * @return true if there is another card of same note that could be dismissed
      */
     private boolean dismissNoteAvailable(DismissType type) {
-        if (mCurrentCard == null || mCurrentCard.note() == null || mCurrentCard.note().cards().size() < 2) {
+        if (mCurrentCard == null || mCurrentCard.note() == null || mCurrentCard.note().cards().size() < 2 || getControlBlocked()) {
             return false;
         }
         List<Card> cards = mCurrentCard.note().cards();
