@@ -764,7 +764,7 @@ public class SchedV2 extends AbstractSched {
             Collections.sort(mLrnQueue, new Comparator<long[]>() {
                 @Override
                 public int compare(long[] lhs, long[] rhs) {
-                    return Long.valueOf(lhs[0]).compareTo(rhs[0]);
+                    return Long.compare(lhs[0], rhs[0]);
                 }
             });
             return !mLrnQueue.isEmpty();
