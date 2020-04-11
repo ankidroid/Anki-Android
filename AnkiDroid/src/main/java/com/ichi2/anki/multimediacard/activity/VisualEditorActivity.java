@@ -98,6 +98,7 @@ public class VisualEditorActivity extends AnkiActivity {
         setJsAction.apply(R.id.editor_button_align_center, "setAlignCenter");
         setJsAction.apply(R.id.editor_button_align_right, "setAlignRight");
         setJsAction.apply(R.id.editor_button_align_justify, "setAlignJustify");
+        setJsAction.apply(R.id.editor_button_view_html, "editHtml"); //this is a toggle.
 
 
 
