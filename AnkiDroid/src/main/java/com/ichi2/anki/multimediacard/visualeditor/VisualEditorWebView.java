@@ -51,8 +51,6 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public class VisualEditorWebView extends WebView {
-
-    private static final String DEFAULT_EDITOR_URL = "file:///android_asset/visualeditor/visual_editor.html";
     private String content;
 
     private RTextEditorView.OnTextChangeListener onTextChangeListener;
