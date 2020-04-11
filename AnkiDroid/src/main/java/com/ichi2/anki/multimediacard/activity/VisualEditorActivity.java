@@ -20,11 +20,11 @@ import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.SelectionT
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.AssetReader;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.WebViewDebugging;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Locale;
 
 import androidx.annotation.CheckResult;
@@ -57,6 +57,7 @@ public class VisualEditorActivity extends AnkiActivity {
     private String[] mFields;
     @NonNull
     private SelectionType mSelectionType = SelectionType.REGULAR;
+    private AssetReader mAssetReader = new AssetReader(this);
 
 
     @Override
@@ -194,7 +195,13 @@ public class VisualEditorActivity extends AnkiActivity {
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         Timber.d("onCollectionLoaded");
-        initWebView(col);
+        try {
+            initWebView(col);
+        } catch (IOException e) {
+            Timber.e(e, "Failed to init web view");
+            failStartingVisualEditor();
+            return;
+        }
 
         JSONObject model = col.getModels().get(mModelId);
         String css = getModelCss(model);
@@ -227,15 +234,10 @@ public class VisualEditorActivity extends AnkiActivity {
     }
 
 
-    private void initWebView(Collection col) {
+    private void initWebView(Collection col) throws IOException {
         String mBaseUrl = Utils.getBaseUrl(col.getMedia().dir());
-        InputStream is;
-        try {
-            is = getAssets().open("visualeditor/visual_editor.html");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        mWebView.init(is, mBaseUrl);
+        String assetAsString = mAssetReader.loadAsUtf8String("visualeditor/visual_editor.html");
+        mWebView.init(assetAsString, mBaseUrl);
     }
 
 

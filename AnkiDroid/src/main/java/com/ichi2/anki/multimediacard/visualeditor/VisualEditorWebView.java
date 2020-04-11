@@ -43,9 +43,6 @@ import android.webkit.WebViewClient;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.jkcarino.rtexteditorview.RTextEditorView;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Locale;
 
 import androidx.annotation.CheckResult;
@@ -82,7 +79,7 @@ public class VisualEditorWebView extends WebView {
     }
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
-    public void init(InputStream content, String baseUrl) {
+    public void init(String utf8Content, String baseUrl) {
         WebSettings settings = getSettings();
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setJavaScriptEnabled(true);
@@ -91,40 +88,7 @@ public class VisualEditorWebView extends WebView {
         setWebChromeClient(getDefaultWebChromeClient());
         setWebViewClient(getDefaultWebViewClient());
         addJavascriptInterface(this, "RTextEditorView");
-        //TODO: Janky, don't do this here.
-        String asString;
-        try {
-            byte[] fs;
-            fs = readFile(content);
-            asString = new String(fs, "UTF-8");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        loadDataWithBaseURL(baseUrl + "__visual_editor__.html\"", asString, "text/html; charset=utf-8", "base64", null);
-    }
-
-    private byte[] readFile(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream buffer = null;
-        try {
-            buffer = new ByteArrayOutputStream();
-
-            int nRead;
-            byte[] data = new byte[16384];
-
-            while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
-                buffer.write(data, 0, nRead);
-            }
-
-            return buffer.toByteArray();
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-            if (buffer != null) {
-                buffer.close();
-            }
-        }
+        loadDataWithBaseURL(baseUrl + "__visual_editor__.html\"", utf8Content, "text/html; charset=utf-8", "UTF-8", null);
     }
 
     @JavascriptInterface
