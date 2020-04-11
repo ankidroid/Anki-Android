@@ -360,6 +360,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /** Lock to allow thread-safe regeneration of mCard */
     private ReadWriteLock mCardLock = new ReentrantReadWriteLock();
 
+    /** whether controls are currently blocked */
+    private boolean mControlBlocked = true;
+
     // private int zEase;
 
     // ----------------------------------------------------------------------------
@@ -2370,6 +2373,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     private void unblockControls() {
+        mControlBlocked = false;
         mCardFrame.setEnabled(true);
         mFlipCardLayout.setEnabled(true);
 
@@ -2423,6 +2427,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     private void blockControls() {
+        mControlBlocked = true;
         mCardFrame.setEnabled(false);
         mFlipCardLayout.setEnabled(false);
         mTouchLayer.setVisibility(View.INVISIBLE);
@@ -3202,5 +3207,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     void loadInitialCard() {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
                 new DeckTask.TaskData(null, 0));
+    }
+
+    public boolean getControlBlocked() {
+        return mControlBlocked;
     }
 }
