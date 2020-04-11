@@ -13,6 +13,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView;
@@ -36,6 +37,7 @@ import androidx.annotation.IdRes;
 import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 import timber.log.Timber;
 
@@ -110,21 +112,33 @@ public class VisualEditorActivity extends AnkiActivity {
         setJsAction.apply(R.id.editor_button_view_html, "editHtml"); //this is a toggle.
 
         findViewById(R.id.editor_button_add_image).setOnClickListener(v -> this.openAdvancedViewerForAddImage());
+        findViewById(R.id.editor_button_record_audio).setOnClickListener(v -> this.openAdvancedViewerForRecordAudio());
 
 
         findViewById(R.id.editor_button_cloze).setOnClickListener(v -> cloze(clozeId++));
     }
 
 
+    private void openAdvancedViewerForRecordAudio() {
+        if (!checkCollectionHasLoaded(R.string.visual_editor_could_not_start_add_image)) {
+            return;
+        }
+        IField field = new AudioRecordingField();
+        openMultimediaEditor(field);
+    }
+
+
     private void openAdvancedViewerForAddImage() {
-        //TODO; Copied from NoteEditor
-        if (mModelId == 0 || !mHasLoadedCol) {
-            //Haven't loaded yet.
-            UIUtils.showThemedToast(this, "Unable to add image", false);
+        if (!checkCollectionHasLoaded(R.string.visual_editor_could_not_start_add_audio)) {
             return;
         }
 
         IField field = new ImageField();
+        openMultimediaEditor(field);
+    }
+
+
+    private void openMultimediaEditor(IField field) {
         IMultimediaEditableNote mNote = NoteService.createEmptyNote(getCol().getModels().get(mModelId));
         mNote.setField(0, field);
         Intent editCard = new Intent(this, MultimediaEditFieldActivity.class);
@@ -132,6 +146,16 @@ public class VisualEditorActivity extends AnkiActivity {
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field);
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, mNote);
         startActivityForResultWithoutAnimation(editCard, REQUEST_MULTIMEDIA_EDIT);
+    }
+
+
+    private boolean checkCollectionHasLoaded(@StringRes int resId) {
+        if (mModelId == 0 || !mHasLoadedCol) {
+            //Haven't loaded yet.
+            UIUtils.showThemedToast(this, getString(resId), false);
+            return false;
+        }
+        return true;
     }
 
 
@@ -158,6 +182,9 @@ public class VisualEditorActivity extends AnkiActivity {
             if (!registerMediaForWebView(field.getImagePath())) {
                 return;
             }
+            if (!registerMediaForWebView(field.getAudioPath())) {
+                return;
+            }
 
             this.mWebView.pasteHtml(field.getFormattedValue());
             return;
@@ -167,6 +194,11 @@ public class VisualEditorActivity extends AnkiActivity {
 
     @CheckResult
     private boolean registerMediaForWebView(String imagePath) {
+        if (imagePath == null) {
+            //Nothing to register - continue with execution.
+            return true;
+        }
+
         //TODO: this is a little too early, ideally should be in a temp file which can't be cleared until we exit.
         Timber.i("Adding media to collection: %s", imagePath);
         File f = new File(imagePath);
