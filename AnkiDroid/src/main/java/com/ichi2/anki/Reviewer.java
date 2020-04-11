@@ -367,7 +367,20 @@ public class Reviewer extends AbstractFlashcardViewer {
     private void setCustomButtons(Menu menu) {
         for(int itemId : mCustomButtons.keySet()) {
             if(mCustomButtons.get(itemId) != MENU_DISABLED) {
-                menu.findItem(itemId).setShowAsAction(mCustomButtons.get(itemId));
+                MenuItem item = menu.findItem(itemId);
+                item.setShowAsAction(mCustomButtons.get(itemId));
+                Drawable icon = item.getIcon();
+                if (getControlBlocked()) {
+                    item.setEnabled(false);
+                    if (icon != null) {
+                        icon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
+                    }
+                } else {
+                    item.setEnabled(true);
+                    if (icon != null) {
+                        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
+                    }
+                }
             }
             else {
                 menu.findItem(itemId).setVisible(false);
