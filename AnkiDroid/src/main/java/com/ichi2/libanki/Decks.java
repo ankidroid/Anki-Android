@@ -517,9 +517,14 @@ public class Decks {
 
     private boolean _isParent(String parentDeckName, String childDeckName) {
         List<String> parentDeckPath = path(parentDeckName);
+        List<String> childDeckPath = path(childDeckName);
         parentDeckPath.add(basename(childDeckName));
 
-        Iterator<String> cpIt = path(childDeckName).iterator();
+        if (parentDeckPath.size() != childDeckPath.size()) {
+            return false;
+        }
+
+        Iterator<String> cpIt = childDeckPath.iterator();
         Iterator<String> ppIt = parentDeckPath.iterator();
         while (cpIt.hasNext() && ppIt.hasNext()) {
             if (!cpIt.next().equals(ppIt.next())) {
