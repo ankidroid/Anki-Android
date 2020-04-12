@@ -570,7 +570,8 @@ public class Decks {
         if (path.size() < 2) {
             return name;
         }
-        for(String p : path.subList(0, path.size() - 1)) {
+        for(int i = 0; i < path.size() - 1; i++) {
+            String p = path.get(i);
             if (TextUtils.isEmpty(s)) {
                 s += p;
             } else {
