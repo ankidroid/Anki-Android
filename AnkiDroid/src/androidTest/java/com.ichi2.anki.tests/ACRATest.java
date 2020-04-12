@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Instrumentation;
 import android.content.SharedPreferences;
 
+import androidx.test.annotation.UiThreadTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
@@ -46,6 +47,7 @@ public class ACRATest {
 
 
     @Before
+    @UiThreadTest
     public void setUp() {
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
         app = (AnkiDroidApp) instrumentation.getTargetContext().getApplicationContext();

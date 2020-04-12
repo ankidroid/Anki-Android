@@ -4,8 +4,11 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.webkit.WebView;
 
+import androidx.annotation.UiThread;
+
 public class WebViewDebugging {
 
+    @UiThread
     public static void initializeDebugging(SharedPreferences sharedPrefs) {
         // DEFECT: We might be able to cache this value: check what happens on WebView Renderer crash
         // On your desktop use chrome://inspect to connect to emulator WebViews
