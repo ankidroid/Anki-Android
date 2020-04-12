@@ -52,7 +52,6 @@ import com.ichi2.widget.WidgetStatus;
 
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 import timber.log.Timber;
@@ -138,16 +137,15 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void setTitle() {
-        List<String> title;
+        String title;
         if (colIsOpen()) {
-            title = Decks.path(getCol().getDecks().current().getString("name"));
+            title = Decks.basename(getCol().getDecks().current().getString("name"));
         } else {
             Timber.e("Could not set title in reviewer because collection closed");
-            title = new ArrayList<>();
-            title.add("");
+            title = "";
         }
-        getSupportActionBar().setTitle(title.get(title.size() - 1));
-        super.setTitle(title.get(title.size() - 1));
+        getSupportActionBar().setTitle(title);
+        super.setTitle(title);
         getSupportActionBar().setSubtitle("");
     }
 
