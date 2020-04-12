@@ -384,10 +384,13 @@ public class Note implements Cloneable {
     public static class ClozeUtils {
         private static final Pattern mClozeRegexPattern = Pattern.compile("\\{\\{c(\\d+)::");
 
-        /*
-        Returns the next index that a cloze should be inserted at, given a list of fields.
-        Per the manual, cloze references are the name of the delimiters for cloze deletions e.g. {{c1::text}}
-        The next index is index after the highest existing cloze deletion, gaps are not considered.
+        /**
+         * Calculate the next number that should be used if inserting a new cloze deletion.
+         * Per the manual the next number should be greater than any existing cloze deletion
+         * even if there are gaps in the sequence, and regardless of existing cloze ordering
+         *
+         * @param fieldValues Iterable of field values that may contain existing cloze deletions
+         * @return the next index that a cloze should be inserted at
          */
         public static int getNextClozeIndex(Iterable<String> fieldValues) {
 
