@@ -1980,12 +1980,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId();
         // Reset the schedule so that we get the counts for the currently selected deck
-        getCol().getSched().reset();
         mFocusedDeck = did;
         // Get some info about the deck to handle special cases
         int pos = mDeckListAdapter.findDeckPosition(did);
         Sched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
-        int[] studyOptionsCounts = getCol().getSched().counts();
         // Figure out what action to take
         if (deckDueTreeNode.newCount + deckDueTreeNode.lrnCount + deckDueTreeNode.revCount > 0) {
             // If there are cards to study then either go to Reviewer or StudyOptions
@@ -1996,7 +1994,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // Otherwise jump straight to the reviewer
                 openReviewer();
             }
-        } else if (studyOptionsCounts[0] + studyOptionsCounts[1] + studyOptionsCounts[2] > 0) {
+            return;
+        }
+        getCol().getSched().reset();
+        int[] studyOptionsCounts = getCol().getSched().counts();
+        if (studyOptionsCounts[0] + studyOptionsCounts[1] + studyOptionsCounts[2] > 0) {
             // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
             openStudyOptions(false);
         } else if (getCol().getSched().newDue() || getCol().getSched().revDue()) {
@@ -2350,7 +2352,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void openReviewer() {
         Intent reviewer = new Intent(this, Reviewer.class);
-        reviewer.putExtra("com.ichi2.anki.SchedResetDone", true);
         startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
         getCol().startTimebox();
     }
