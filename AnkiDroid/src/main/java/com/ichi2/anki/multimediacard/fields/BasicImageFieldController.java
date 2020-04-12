@@ -25,13 +25,11 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.provider.MediaStore.MediaColumns;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.FileProvider;
@@ -54,6 +52,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.BitmapUtil;
+import com.ichi2.utils.ContentProviderFileReference;
 import com.ichi2.utils.ExifUtil;
 import com.ichi2.utils.Permissions;
 
@@ -80,6 +79,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private String mTempCameraImagePath;
     private DisplayMetrics mMetrics = null;
+    private ContentProviderFileReference mContentProviderFileReference = new ContentProviderFileReference();
 
 
     private int getMaxImageSize() {
@@ -270,26 +270,20 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             return;
         }
 
-        String[] filePathColumn = { MediaColumns.DATA };
-
-        Cursor cursor = mActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-
-        if (cursor == null) {
-            Timber.w("cursor was null");
+        String filePath;
+        try {
+            filePath = mContentProviderFileReference.extractFilePath(mActivity.getContentResolver(), selectedImage);
+        } catch (Exception e) {
+            Timber.w("URI decoding failed");
             showSomethingWentWrong();
             return;
         }
 
-        if (!cursor.moveToFirst()) {
-            //TODO: #5909, it would be best to instrument this to see if we can fix the failure
-            Timber.w("cursor had no data");
+        if (filePath == null) {
+            Timber.w("Couldn't decode URI");
             showSomethingWentWrong();
             return;
         }
-
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String filePath = cursor.getString(columnIndex);
-        cursor.close();
 
         Timber.i("Decoded image: '%s'", filePath);
         mField.setImagePath(filePath);
