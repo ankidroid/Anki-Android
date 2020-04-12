@@ -33,6 +33,7 @@ import org.robolectric.shadows.ShadowLog;
 
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.platform.app.InstrumentationRegistry;
+import timber.log.Timber;
 
 public class RobolectricTest {
 
@@ -52,6 +53,10 @@ public class RobolectricTest {
 
         // After every test, make sure the sqlite implementation is set back to default
         DB.setSqliteOpenHelperFactory(null);
+
+        //called on each AnkiDroidApp.onCreate(), and spams the build
+        //there is no onDestroy(), so call it here.
+        Timber.uprootAll();
     }
 
 
