@@ -5,11 +5,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import com.ichi2.compat.CompatHelper;
+
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
@@ -67,17 +67,7 @@ public class ContentProviderFileReference {
                 Timber.w("Couldn't create %s", file.toString());
                 return null;
             }
-            try (OutputStream output = new FileOutputStream(file, false)) {
-                byte[] buffer = new byte[4 * 1024]; // or other buffer size
-                int read;
-
-                while ((read = is.read(buffer)) != -1) {
-                    output.write(buffer, 0, read);
-                }
-
-                output.flush();
-
-            }
+            CompatHelper.getCompat().copyFile(is, file.getAbsolutePath());
             return file.getPath();
         } catch (IOException e) {
             Timber.e(e, "Exception copying stream");
