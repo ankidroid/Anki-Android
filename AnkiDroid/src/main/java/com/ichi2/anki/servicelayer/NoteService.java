@@ -36,6 +36,8 @@ import com.ichi2.utils.JSONObject;
 import java.io.File;
 import java.io.IOException;
 
+import timber.log.Timber;
+
 public class NoteService {
     /**
      * Creates an empty Note from given Model
@@ -173,26 +175,33 @@ public class NoteService {
                 break;
         }
         if (tmpMediaPath != null) {
+            Timber.i("Media path was set");
             try {
                 File inFile = new File(tmpMediaPath);
-                if (inFile.exists()) {
-                    String fname = col.getMedia().addFile(inFile);
-                    File outFile = new File(col.getMedia().dir(), fname);
-                    if (field.hasTemporaryMedia() && !outFile.getAbsolutePath().equals(tmpMediaPath)) {
-                        // Delete original
-                        inFile.delete();
-                    }
-                    switch (field.getType()) {
-                        case AUDIO_RECORDING:
-                        case AUDIO_CLIP:
-                            field.setAudioPath(outFile.getAbsolutePath());
-                            break;
-                        case IMAGE:
-                            field.setImagePath(outFile.getAbsolutePath());
-                            break;
-                        default:
-                            break;
-                    }
+                if (!inFile.exists()) {
+                    Timber.w("Supplied file no longer exists: %s", tmpMediaPath);
+                    return;
+                }
+
+                String fname = col.getMedia().addFile(inFile);
+                Timber.i("Added to media directory under %s", fname);
+                File outFile = new File(col.getMedia().dir(), fname);
+                if (field.hasTemporaryMedia() && !outFile.getAbsolutePath().equals(tmpMediaPath)) {
+                    Timber.i("Deleting temporary media");
+                    // Delete original
+                    inFile.delete();
+                }
+                Timber.i("Setting new path to '%s'", outFile.getAbsolutePath());
+                switch (field.getType()) {
+                    case AUDIO_RECORDING:
+                    case AUDIO_CLIP:
+                        field.setAudioPath(outFile.getAbsolutePath());
+                        break;
+                    case IMAGE:
+                        field.setImagePath(outFile.getAbsolutePath());
+                        break;
+                    default:
+                        break;
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
