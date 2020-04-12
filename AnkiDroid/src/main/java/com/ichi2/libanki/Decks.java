@@ -518,9 +518,8 @@ public class Decks {
     private boolean _isParent(String parentDeckName, String childDeckName) {
         List<String> parentDeckPath = path(parentDeckName);
         List<String> childDeckPath = path(childDeckName);
-        parentDeckPath.add(basename(childDeckName));
 
-        if (parentDeckPath.size() != childDeckPath.size()) {
+        if (parentDeckPath.size() + 1 != childDeckName.size()) {
             return false;
         }
 
