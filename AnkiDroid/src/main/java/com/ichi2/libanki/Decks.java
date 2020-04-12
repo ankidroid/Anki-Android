@@ -516,17 +516,15 @@ public class Decks {
 
 
     private boolean _isParent(String parentDeckName, String childDeckName) {
-        List<String> parentDeckPath = path(parentDeckName);
-        List<String> childDeckPath = path(childDeckName);
+        String[] parentDeckPath = path(parentDeckName);
+        String[] childDeckPath = path(childDeckName);
 
-        if (parentDeckPath.size() + 1 != childDeckName.size()) {
+        if (parentDeckPath.length + 1 != childDeckPath.length) {
             return false;
         }
 
-        Iterator<String> cpIt = childDeckPath.iterator();
-        Iterator<String> ppIt = parentDeckPath.iterator();
-        while (cpIt.hasNext() && ppIt.hasNext()) {
-            if (!cpIt.next().equals(ppIt.next())) {
+        for (int i = 0; i < parentDeckPath.length; i++) {
+            if (! parentDeckPath[i].equals(childDeckPath[i])) {
                 return false;
             }
         }
@@ -535,15 +533,14 @@ public class Decks {
 
 
     private boolean _isAncestor(String ancestorDeckName, String descendantDeckName) {
-        List<String> ancestorDeckPath = path(ancestorDeckName);
-        List<String> descendantDeckPath = path(descendantDeckName);
-        if (ancestorDeckPath.size() > descendantDeckName.size()) {
+        String[] ancestorDeckPath = path(ancestorDeckName);
+        String[] descendantDeckPath = path(descendantDeckName);
+        if (ancestorDeckPath.length > descendantDeckPath.length) {
             return false;
         }
-        Iterator<String> apIt = ancestorDeckPath.iterator();
-        Iterator<String> dpIt = descendantDeckPath.iterator();
-        while (apIt.hasNext() && dpIt.hasNext()) {
-            if (!apIt.next().equals(dpIt.next())) {
+
+        for (int i = 0; i < ancestorDeckPath.length; i++) {
+            if (ancestorDeckPath[i] != descendantDeckPath[i]) {
                 return false;
             }
         }
@@ -551,13 +548,13 @@ public class Decks {
     }
 
 
-    public static List<String> path(String name) {
-        return Arrays.asList(name.split("::", -1));
+    public static String[] path(String name) {
+        return name.split("::", -1);
     }
 
     public static String basename(String name) {
-        List<String> path = path(name);
-        return path.get(path.size() - 1);
+        String[] path = path(name);
+        return path[path.length - 1];
     }
 
 
@@ -566,12 +563,12 @@ public class Decks {
      */
     public String _ensureParents(String name) {
         String s = "";
-        List<String> path = path(name);
-        if (path.size() < 2) {
+        String[] path = path(name);
+        if (path.length < 2) {
             return name;
         }
-        for(int i = 0; i < path.size() - 1; i++) {
-            String p = path.get(i);
+        for(int i = 0; i < path.length - 1; i++) {
+            String p = path[i];
             if (TextUtils.isEmpty(s)) {
                 s += p;
             } else {
@@ -582,7 +579,7 @@ public class Decks {
             // get original case
             s = name(did);
         }
-        name = s + "::" + path.get(path.size() - 1);
+        name = s + "::" + path[path.length - 1];
         return name;
     }
 
