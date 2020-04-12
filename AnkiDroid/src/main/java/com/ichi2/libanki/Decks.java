@@ -498,9 +498,6 @@ public class Decks {
                 rename(draggedDeck, basename(draggedDeckName));
             }
         } else if (_canDragAndDrop(draggedDeckName, ontoDeckName)) {
-            draggedDeck = get(draggedDeckDid);
-            draggedDeckName = draggedDeck.getString("name");
-            ontoDeckName = get(ontoDeckDid).getString("name");
             rename(draggedDeck, ontoDeckName + "::" + basename(draggedDeckName));
         }
     }
