@@ -23,6 +23,7 @@ import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.SelectionT
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.AssetReader;
 import com.ichi2.utils.JSONObject;
@@ -30,6 +31,8 @@ import com.ichi2.utils.WebViewDebugging;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.CheckResult;
@@ -61,7 +64,6 @@ public class VisualEditorActivity extends AnkiActivity {
     private IField mField;
     private int mIndex;
     private VisualEditorWebView mWebView;
-    private int clozeId;
     private long mModelId;
     private String[] mFields;
     @NonNull
@@ -115,7 +117,19 @@ public class VisualEditorActivity extends AnkiActivity {
         findViewById(R.id.editor_button_record_audio).setOnClickListener(v -> this.openAdvancedViewerForRecordAudio());
 
 
-        findViewById(R.id.editor_button_cloze).setOnClickListener(v -> cloze(clozeId++));
+        findViewById(R.id.editor_button_cloze).setOnClickListener(v -> performCloze());
+    }
+
+
+    private void performCloze() {
+        cloze(getNextClozeId());
+    }
+
+
+    private int getNextClozeId() {
+        List<String> fields = Arrays.asList(mFields);
+        fields.set(mIndex, mCurrentText);
+        return Note.ClozeUtils.getNextClozeIndex(fields);
     }
 
 
