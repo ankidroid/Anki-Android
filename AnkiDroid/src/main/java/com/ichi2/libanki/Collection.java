@@ -279,11 +279,8 @@ public class Collection {
         StringBuffer buf = new StringBuffer("");
 
         while (true) {
-            Cursor cursor = null;
-            try {
-                cursor = mDb.getDatabase().query(
-                        "SELECT substr(" + columnName + ", ?, ?) FROM col",
-                        new String[]{Integer.toString(pos), Integer.toString(chunk)});
+            try (Cursor cursor = mDb.getDatabase().query("SELECT substr(" + columnName + ", ?, ?) FROM col",
+                    new String[] {Integer.toString(pos), Integer.toString(chunk)})) {
                 if (!cursor.moveToFirst()) {
                     return buf.toString();
                 }
@@ -296,10 +293,6 @@ public class Collection {
                     break;
                 }
                 pos += chunk;
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
             }
         }
         return buf.toString();

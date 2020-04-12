@@ -2149,12 +2149,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
             try {
-                FileOutputStream f = new FileOutputStream(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this),
-                        "card.html"));
-                try {
+                try (FileOutputStream f = new FileOutputStream(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this),
+                        "card.html"))) {
                     f.write(mCardContent.toString().getBytes());
-                } finally {
-                    f.close();
                 }
             } catch (IOException e) {
                 Timber.d(e, "failed to save card");

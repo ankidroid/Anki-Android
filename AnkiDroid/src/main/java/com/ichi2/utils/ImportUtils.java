@@ -93,16 +93,11 @@ public class ImportUtils {
         // Get the original filename from the content provider URI
         String errorMessage = null;
         String filename = null;
-        Cursor cursor = null;
-        try {
-            cursor = context.getContentResolver().query(data, new String[]{OpenableColumns.DISPLAY_NAME}, null, null, null);
+        try (Cursor cursor = context.getContentResolver().query(data, new String[] {OpenableColumns.DISPLAY_NAME}, null, null, null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 filename = cursor.getString(0);
                 Timber.d("handleFileImport() Importing from content provider: %s", filename);
             }
-        } finally {
-            if (cursor != null)
-                cursor.close();
         }
 
         // Hack to fix bug where ContentResolver not returning filename correctly

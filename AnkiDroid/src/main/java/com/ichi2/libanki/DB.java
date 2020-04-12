@@ -199,17 +199,11 @@ public class DB {
     }
 
     public String queryString(String query, Object[] bindArgs) throws SQLException {
-        Cursor cursor = null;
-        try {
-            cursor = mDatabase.query(query, bindArgs);
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             if (!cursor.moveToNext()) {
                 throw new SQLException("No result for query: " + query);
             }
             return cursor.getString(0);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
     }
 
@@ -219,18 +213,12 @@ public class DB {
     }
 
     public long queryLongScalar(String query, Object[] bindArgs) {
-        Cursor cursor = null;
         long scalar;
-        try {
-            cursor = mDatabase.query(query, bindArgs);
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             if (!cursor.moveToNext()) {
                 return 0;
             }
             scalar = cursor.getLong(0);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
 
         return scalar;
@@ -254,10 +242,8 @@ public class DB {
         int nullExceptionCount = 0;
         InvocationTargetException nullException = null; // to catch the null exception for reporting
         ArrayList<T> results = new ArrayList<>();
-        Cursor cursor = null;
 
-        try {
-            cursor = mDatabase.query(query, bindArgs);
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             String methodName = getCursorMethodName(type.getSimpleName());
             while (cursor.moveToNext()) {
                 try {
@@ -280,9 +266,6 @@ public class DB {
             // This is really coding error, so it should be revealed if it ever happens
             throw new RuntimeException(e);
         } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
             if (nullExceptionCount > 0) {
                 if (nullException != null) {
                     StringBuilder sb = new StringBuilder();

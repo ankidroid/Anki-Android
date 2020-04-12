@@ -423,9 +423,7 @@ public class Media {
         File mdir = new File(dir());
         // gather all media references in NFC form
         Set<String> allRefs = new HashSet<>();
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase().query("select id, mid, flds from notes", null);
+        try (Cursor cur = mCol.getDb().getDatabase().query("select id, mid, flds from notes", null)) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
@@ -441,10 +439,6 @@ public class Media {
                     }
                 }
                 allRefs.addAll(noteRefs);
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         // loop through media folder
@@ -689,9 +683,7 @@ public class Media {
 
     private Pair<List<String>, List<String>> _changes() {
         Map<String, Object[]> cache = new HashMap<>();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("select fname, csum, mtime from media where csum is not null", null);
+        try (Cursor cur = mDb.getDatabase().query("select fname, csum, mtime from media where csum is not null", null)) {
             while (cur.moveToNext()) {
                 String name = cur.getString(0);
                 String csum = cur.getString(1);
@@ -700,10 +692,6 @@ public class Media {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
         }
         List<String> added = new ArrayList<>();
         List<String> removed = new ArrayList<>();
@@ -784,19 +772,13 @@ public class Media {
 
 
     public Pair<String, Integer> syncInfo(String fname) {
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("select csum, dirty from media where fname=?", new String[] { fname });
+        try (Cursor cur = mDb.getDatabase().query("select csum, dirty from media where fname=?", new String[] {fname})) {
             if (cur.moveToNext()) {
                 String csum = cur.getString(0);
                 int dirty = cur.getInt(1);
                 return new Pair<>(csum, dirty);
             } else {
                 return new Pair<>(null, 0);
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
     }
