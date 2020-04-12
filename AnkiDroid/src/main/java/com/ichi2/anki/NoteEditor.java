@@ -702,7 +702,7 @@ public class NoteEditor extends AnkiActivity {
             }
             getCol().getModels().current().put("tags", ja);
             getCol().getModels().setChanged();
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new CollectionTask.TaskData(mEditorNote));
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new CollectionTask.TaskData(mEditorNote));
         } else {
             // Check whether note type has been changed
             final JSONObject newModel = getCurrentlySelectedModel();

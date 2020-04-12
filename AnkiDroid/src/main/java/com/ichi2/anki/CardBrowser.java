@@ -801,7 +801,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         if (!mCheckedCardPositions.isEmpty()) {
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_CHECK_CARD_SELECTION,
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CHECK_CARD_SELECTION,
                     mCheckSelectedCardsHandler,
                     new CollectionTask.TaskData(new Object[]{mCheckedCardPositions, getCards()}));
         }
@@ -822,7 +822,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private void flagTask (int flag) {
-        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI,
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS_MULTI,
                                 mFlagCardHandler,
                                 new CollectionTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, new Integer (flag)}));
     }
@@ -916,7 +916,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_delete_card:
                 if (mInMultiSelectMode) {
-                    CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI,
+                    CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS_MULTI,
                             mDeleteNoteHandler,
                             new CollectionTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.DELETE_NOTE_MULTI}));
 
@@ -927,7 +927,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_mark_card:
-                CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI,
+                CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS_MULTI,
                         mMarkCardHandler,
                         new CollectionTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.MARK_NOTE_MULTI}));
 
@@ -935,7 +935,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
             case R.id.action_suspend_card:
-                CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI,
+                CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS_MULTI,
                         mSuspendCardHandler,
                         new CollectionTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.SUSPEND_CARD_MULTI}));
 
@@ -975,7 +975,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_undo:
                 if (getCol().undoAvailable()) {
-                    CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_UNDO, mUndoHandler);
+                    CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UNDO, mUndoHandler);
                 }
                 return true;
             case R.id.action_select_none:
@@ -1011,7 +1011,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 dialog.setArgs(title, message);
                 Runnable confirm = () -> {
                     Timber.i("CardBrowser:: ResetProgress button pressed");
-                    CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
+                    CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
                             new CollectionTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.RESET_CARDS}));
                 };
                 dialog.setConfirm(confirm);
@@ -1023,7 +1023,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
                 long[] selectedCardIds = getSelectedCardIds();
                 FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
-                    CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI,
+                    CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS_MULTI,
                         mRescheduleCardHandler,
                         new TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays}));
 
@@ -1062,7 +1062,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         getString(R.string.reposition_card_dialog_message),
                         5);
                 repositionDialog.setCallbackRunnable(days ->
-                    CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
+                    CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
                         new CollectionTask.TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, days}))
                 );
                 showDialogFragment(repositionDialog);
@@ -1088,7 +1088,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...");
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
                     new CollectionTask.TaskData(sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             if (mSearchView != null) {
@@ -1230,7 +1230,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int numCardsToRender = (int) Math.ceil(mCardsListView.getHeight()/
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics())) + 5;
             // Perform database query to get all card ids
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new CollectionTask.TaskData(
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new CollectionTask.TaskData(
                     new Object[] { mDeckNames, searchText, ((mOrder != CARD_ORDER_NONE)),  numCardsToRender}));
         }
     }
@@ -1396,7 +1396,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_UNDO, mUndoHandler);
+                    CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UNDO, mUndoHandler);
                 }
             }, mCardsListView, null);
         }
@@ -1557,7 +1557,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, getString(R.string.deleted_message), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_UNDO, mUndoHandler);
+                    CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UNDO, mUndoHandler);
                 }
             }, mCardsListView, null);
         }
@@ -1705,7 +1705,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
                         mLastRenderStart = currentTime;
                         CollectionTask.cancelTask(CollectionTask.TASK_TYPE_RENDER_BROWSER_QA);
-                        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
+                        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
                                 new CollectionTask.TaskData(new Object[]{getCards(), firstVisibleItem, visibleItemCount}));
                     }
                 }
@@ -1719,7 +1719,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (scrollState == SCROLL_STATE_IDLE) {
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
-                CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
+                CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
                         new CollectionTask.TaskData(new Object[]{getCards(), startIdx - 5, 2 * numVisible + 5}));
             }
         }
@@ -2076,7 +2076,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void rerenderAllCards() {
-        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
                 new CollectionTask.TaskData(new Object[]{getCards(), 0, mCards.size()-1}));
     }
 
@@ -2140,7 +2140,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) //should only be called from changeDeck()
     void executeChangeDeckTask(long[] ids, long newDid) {
         mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
-        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
                 new TaskData(new Object[]{ids, Collection.DismissType.CHANGE_DECK_MULTI, newDid}));
     }
 

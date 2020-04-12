@@ -224,7 +224,7 @@ public class ModelBrowser extends AnkiActivity {
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         this.col = col;
-        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
 
@@ -503,14 +503,14 @@ public class ModelBrowser extends AnkiActivity {
      * Reloads everything
      */
     private void fullRefresh() {
-        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
     /*
      * Deletes the currently selected model
      */
     private void deleteModel() throws ConfirmModSchemaException {
-        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
                 new CollectionTask.TaskData(mCurrentID));
         mModels.remove(mModelListPosition);
         mModelIds.remove(mModelListPosition);
@@ -611,7 +611,7 @@ public class ModelBrowser extends AnkiActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TEMPLATE_EDIT) {
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
         }
     }
 }
