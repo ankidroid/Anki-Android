@@ -144,21 +144,21 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
 
     /**
-     * Block the current thread until the currently running DeckTask instance (if any) has finished.
+     * Block the current thread until the currently running CollectionTask instance (if any) has finished.
      */
     public static void waitToFinish() {
         waitToFinish(null);
     }
 
     /**
-     * Block the current thread until the currently running DeckTask instance (if any) has finished.
+     * Block the current thread until the currently running CollectionTask instance (if any) has finished.
      * @param timeout timeout in seconds
      * @return whether or not the previous task was successful or not
      */
     public static boolean waitToFinish(Integer timeout) {
         try {
             if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                Timber.d("DeckTask: waiting for task %d to finish...", sLatestInstance.mType);
+                Timber.d("CollectionTask: waiting for task %d to finish...", sLatestInstance.mType);
                 if (timeout != null) {
                     sLatestInstance.get(timeout, TimeUnit.SECONDS);
                 } else {
@@ -235,7 +235,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
         // Skip the task if the collection cannot be opened
         if (mType != TASK_TYPE_REPAIR_DECK && CollectionHelper.getInstance().getColSafe(mContext) == null) {
-            Timber.e("Aborting DeckTask %d as Collection could not be opened", mType);
+            Timber.e("CollectionTask CollectionTask %d as Collection could not be opened", mType);
             return null;
         }
         // Actually execute the task now that we are at the front of the queue.
@@ -1597,7 +1597,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
     /**
-     * Adapter for the old interface, where the DeckTask itself was not passed to the listener.
+     * Adapter for the old interface, where the CollectionTask itself was not passed to the listener.
      * <p>
      * All methods are invoked on the main thread.
      * <p>
