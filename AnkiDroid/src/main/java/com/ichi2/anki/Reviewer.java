@@ -41,7 +41,6 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.Consts;
@@ -52,7 +51,6 @@ import com.ichi2.widget.WidgetStatus;
 
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 import timber.log.Timber;
 
@@ -183,7 +181,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             col.getSched().reset();     // Reset schedule in case card was previously loaded
             mSchedResetDone = false;
         }
-        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
                 new CollectionTask.TaskData(null, 0));
 
         disableDrawerSwipeOnConflicts();
@@ -331,7 +329,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days ->
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
                     new CollectionTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()},
                     Collection.DismissType.RESCHEDULE_CARDS, days})
             );
@@ -351,7 +349,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         dialog.setArgs(title, message);
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
                     new CollectionTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS}));
         };
         dialog.setConfirm(confirm);

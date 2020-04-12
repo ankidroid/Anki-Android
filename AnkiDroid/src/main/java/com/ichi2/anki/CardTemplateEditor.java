@@ -496,7 +496,7 @@ public class CardTemplateEditor extends AnkiActivity {
                     if (modelHasChanged()) {
                         // regenerate the cards of the model
                         CollectionTask.TaskData args = new CollectionTask.TaskData(new Object[] {model});
-                        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_SAVE_MODEL, mSaveModelAndExitHandler, args);
+                        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_SAVE_MODEL, mSaveModelAndExitHandler, args);
                     } else {
                         ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                     }
@@ -645,7 +645,7 @@ public class CardTemplateEditor extends AnkiActivity {
             CardTemplateEditor activity = ((CardTemplateEditor) getActivity());
             activity.getCol().modSchemaNoCheck();
             Object [] args = new Object[] {model, tmpl};
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_REMOVE_TEMPLATE,
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REMOVE_TEMPLATE,
                     activity.mAddRemoveTemplateHandler,  new CollectionTask.TaskData(args));
             activity.dismissAllDialogFragments();
         }
@@ -697,7 +697,7 @@ public class CardTemplateEditor extends AnkiActivity {
             }
             // Add new template to the current model via AsyncTask
             Object [] args = new Object[] {model, newTemplate};
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_ADD_TEMPLATE,
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ADD_TEMPLATE,
                     activity.mAddRemoveTemplateHandler,  new CollectionTask.TaskData(args));
             activity.dismissAllDialogFragments();
         }

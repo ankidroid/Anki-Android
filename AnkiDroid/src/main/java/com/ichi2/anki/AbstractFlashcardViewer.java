@@ -1085,7 +1085,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
            note type could have lead to the card being deleted */
         if (data != null && data.hasExtra("reloadRequired")) {
             getCol().getSched().reset();
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
                     new CollectionTask.TaskData(null, 0));
         }
 
@@ -1093,7 +1093,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (resultCode == RESULT_OK) {
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
-                CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
+                CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
                         new CollectionTask.TaskData(sEditorCard, true));
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
@@ -1101,7 +1101,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
             getCol().getSched().reset();
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
                     new CollectionTask.TaskData(null, 0));
         }
         if (!mDisableClipboard) {
@@ -1192,7 +1192,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void undo() {
         if (getCol().undoAvailable()) {
             blockControls();
-            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_UNDO, mAnswerCardHandler);
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UNDO, mAnswerCardHandler);
         }
     }
 
@@ -1345,7 +1345,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
                 new CollectionTask.TaskData(mCurrentCard, mCurrentEase));
     }
 
@@ -2875,7 +2875,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected void dismiss(Collection.DismissType type) {
         blockControls();
-        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS, mDismissCardHandler,
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS, mDismissCardHandler,
                 new CollectionTask.TaskData(new Object[]{mCurrentCard, type}));
     }
 
@@ -3211,7 +3211,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @VisibleForTesting
     void loadInitialCard() {
-        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
                 new CollectionTask.TaskData(null, 0));
     }
 

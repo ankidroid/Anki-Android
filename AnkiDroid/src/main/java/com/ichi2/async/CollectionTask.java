@@ -135,7 +135,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
      * @param params to pass to the task
      * @return the newly created task
      */
-    public static CollectionTask launchDeckTask(int type, Listener listener, TaskData... params) {
+    public static CollectionTask launchCollectionTask(int type, Listener listener, TaskData... params) {
         // Start new task
         CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
         newTask.execute(params);
