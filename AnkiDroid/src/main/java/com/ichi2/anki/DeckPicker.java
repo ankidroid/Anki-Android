@@ -185,6 +185,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private List<Sched.DeckDueTreeNode> mDueTree;
 
+    private List<CollectionTask> tasksToCancelOnClose;
+
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
      * Since syncing closes the database, this flag allows us to avoid doing any
@@ -373,6 +375,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
+        tasksToCancelOnClose = new ArrayList();
         Timber.d("onCreate()");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
@@ -799,10 +802,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     protected void onPause() {
         Timber.d("onPause()");
+        killUselessTask();
         mActivityPaused = true;
         super.onPause();
     }
 
+    private void killUselessTask() {
+        for (CollectionTask collectionTask: tasksToCancelOnClose) {
+            collectionTask.cancel(true);
+        }
+        tasksToCancelOnClose.clear();
+    }
 
     @Override
     protected void onStop() {
@@ -2075,7 +2085,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
+        CollectionTask task = CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -2104,6 +2114,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
             }
         });
+        tasksToCancelOnClose.add(task);
     }
 
     public void __renderPage() {
