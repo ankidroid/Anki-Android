@@ -14,26 +14,41 @@ import java.util.List;
 import java.util.Locale;
 
 public abstract class AbstractSched {
+    /**
+     * Pop the next card from the queue. null if finished.
+     */
     public abstract Card getCard();
     public abstract void reset();
     public abstract void answerCard(Card card, int ease);
     public abstract int[] counts();
     public abstract int[] counts(Card card);
+    /**
+     * Return counts over next DAYS. Includes today.
+     */
     public abstract int dueForecast();
     public abstract int dueForecast(int days);
     public abstract int countIdx(Card card);
     public abstract int answerButtons(Card card);
+    /**
+     * Unbury all buried cards in all decks
+     */
     public abstract void unburyCards();
     public abstract void unburyCardsForDeck();
     public abstract void _updateStats(Card card, String type, long cnt);
     public abstract void extendLimits(int newc, int rev);
+    /**
+     * Returns [deckname, did, rev, lrn, new]
+     */
     public abstract List<DeckDueTreeNode> deckDueList();
     public abstract List<DeckDueTreeNode> deckDueTree();
+    /** New count for a single deck. */
     public abstract int _newForDeck(long did, int lim);
+    /** Limit for deck without parent limits. */
     public abstract int _deckNewLimitSingle(JSONObject g);
     public abstract int totalNewForCurrentDeck();
     public abstract int totalRevForCurrentDeck();
     public abstract int[] _fuzzedIvlRange(int ivl);
+    /** Rebuild a dynamic deck. */
     public abstract void rebuildDyn();
     public abstract List<Long> rebuildDyn(long did);
     public abstract void emptyDyn(long did);
@@ -44,23 +59,64 @@ public abstract class AbstractSched {
     public abstract void _checkDay();
     public abstract CharSequence finishedMsg(Context context);
     public abstract String _nextDueMsg(Context context);
+    /** true if there are any rev cards due. */
     public abstract boolean revDue();
+    /** true if there are any new cards due. */
     public abstract boolean newDue();
     public abstract boolean haveBuried();
+    /**
+     * Return the next interval for a card and ease as a string.
+     *
+     * For a given card and ease, this returns a string that shows when the card will be shown again when the
+     * specific ease button (AGAIN, GOOD etc.) is touched. This uses unit symbols like “s” rather than names
+     * (“second”), like Anki desktop.
+     *
+     * @param context The app context, used for localization
+     * @param card The card being reviewed
+     * @param ease The button number (easy, good etc.)
+     * @return A string like “1 min” or “1.7 mo”
+     */
     public abstract String nextIvlStr(Context context, Card card, int ease);
+    /**
+     * Return the next interval for CARD, in seconds.
+     */
     public abstract long nextIvl(Card card, int ease);
+    /**
+     * Suspend cards.
+     */
     public abstract void suspendCards(long[] ids);
+    /**
+     * Unsuspend cards
+     */
     public abstract void unsuspendCards(long[] ids);
     public abstract void buryCards(long[] cids);
+    /**
+     * Bury all cards for note until next session.
+     * @param nid The id of the targeted note.
+     */
     public abstract void buryNote(long nid);
+    /** Put cards at the end of the new queue. */
     public abstract void forgetCards(long[] ids);
+    /**
+     * Put cards in review queue with a new interval in days (min, max).
+     *
+     * @param ids The list of card ids to be affected
+     * @param imin the minimum interval (inclusive)
+     * @param imax The maximum interval (inclusive)
+     */
     public abstract void reschedCards(long[] ids, int imin, int imax);
+    /**
+     * Completely reset cards for export.
+     */
     public abstract void resetCards(Long[] ids);
     public abstract void sortCards(long[] cids, int start);
     public abstract void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift);
     public abstract void randomizeCards(long did);
     public abstract void orderCards(long did);
     public abstract void resortConf(JSONObject conf);
+    /**
+     * for post-import
+     */
     public abstract void maybeRandomizeDeck();
     public abstract void maybeRandomizeDeck(Long did);
     public abstract boolean haveBuried(long did);
@@ -72,6 +128,23 @@ public abstract class AbstractSched {
     public abstract int getReps();
     public abstract void setReps(int reps);
     public abstract int cardCount();
+    /**
+     * Return an estimate, in minutes, for how long it will take to complete all the reps in {@code counts}.
+     *
+     * The estimator builds rates for each queue type by looking at 10 days of history from the revlog table. For
+     * efficiency, and to maintain the same rates for a review session, the rates are cached and reused until a
+     * reload is forced.
+     *
+     * Notes:
+     * - Because the revlog table does not record deck IDs, the rates cannot be reduced to a single deck and thus cover
+     * the whole collection which may be inaccurate for some decks.
+     * - There is no efficient way to determine how many lrn cards are generated by each new card. This estimator
+     * assumes 1 card is generated as a compromise.
+     * - If there is no revlog data to work with, reasonable defaults are chosen as a compromise to predicting 0 minutes.
+     *
+     * @param counts An array of [new, lrn, rev] counts from the scheduler's counts() method.
+     * @param reload Force rebuild of estimator rates using the revlog.
+     */
     public abstract int eta(int[] counts);
     public abstract int eta(int[] counts, boolean reload);
     public abstract void decrementCounts(Card card);

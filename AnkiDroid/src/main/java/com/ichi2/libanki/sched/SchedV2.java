@@ -670,7 +670,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /* New count for a single deck. */
+    /** New count for a single deck. */
     public int _newForDeck(long did, int lim) {
         if (lim == 0) {
             return 0;
@@ -681,7 +681,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /* Limit for deck without parent limits. */
+    /** Limit for deck without parent limits. */
     public int _deckNewLimitSingle(JSONObject g) {
         if (g.getInt("dyn") != 0) {
             return mDynReportLimit;
@@ -1046,7 +1046,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /* the number of steps that can be completed by the day cutoff */
+    /** the number of steps that can be completed by the day cutoff */
     protected int _leftToday(JSONArray delays, int left) {
         return _leftToday(delays, left, 0);
     }
@@ -1095,7 +1095,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /* Reschedule a new card that's graduated for the first time. */
+    /** Reschedule a new card that's graduated for the first time. */
     private void _rescheduleNew(Card card, JSONObject conf, boolean early) {
         card.setIvl(_graduatingIvl(card, conf, early));
         card.setDue(mToday + card.getIvl());
@@ -1438,7 +1438,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    // next interval for card when answered early+correctly
+    /** next interval for card when answered early+correctly */
     private int _earlyReviewIvl(Card card, int ease) {
         if (card.getODid() == 0 || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
             throw new RuntimeException("Unexpected card parameters");
@@ -1484,7 +1484,7 @@ public class SchedV2 extends AbstractSched {
      * *****************************
      */
 
-    /* Rebuild a dynamic deck. */
+    /** Rebuild a dynamic deck. */
     public void rebuildDyn() {
         rebuildDyn(0);
     }
