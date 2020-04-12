@@ -68,7 +68,7 @@ public class ContentProviderFileReference {
                 return null;
             }
             CompatHelper.getCompat().copyFile(is, file.getAbsolutePath());
-            return file.getPath();
+            return file.getAbsolutePath();
         } catch (IOException e) {
             Timber.e(e, "Exception copying stream");
             return null;
