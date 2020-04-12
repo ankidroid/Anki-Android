@@ -5,6 +5,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,12 +18,104 @@ import timber.log.Timber;
 
 public class ContentProviderFileReference {
     @CheckResult
-    public @Nullable String extractFilePath(@NonNull ContentResolver resolver, @NonNull Uri uri) {
+    public @Nullable String extractFilePath(@NonNull ContentResolver resolver, @NonNull Uri uri, String downloadDirectory) {
+
+        //DEFECT: We could get a small amount of performance boost by checking providers based on the URI.
+        //But, it's a lot of code for minimal performance gain.
+        String localPath = getLocalFilePath(resolver, uri);
+
+        if (localPath != null) {
+            return localPath;
+        }
+
+        if (downloadDirectory == null) {
+            return null;
+        }
+
+        return downloadFile(resolver, uri, downloadDirectory);
+    }
+
+
+    private String downloadFile(ContentResolver resolver, Uri uri, String downloadDir) {
+        String fileName = getFileName(resolver, uri);
+
+        if (!new File(downloadDir).isDirectory()) {
+            Timber.w("Path does not exist: %s", downloadDir);
+            return null;
+        }
+
+        if (fileName == null) {
+            //DEFECT: We could do better and generate a name,
+            Timber.w("Could not obtain file name");
+            return null;
+        }
+
+        try (InputStream is = resolver.openInputStream(uri)) {
+            if (is == null) {
+                Timber.i("Failed to decode: no inputStream");
+                return null;
+            }
+
+            File file = new File(downloadDir, fileName);
+
+            //If we already have a file there, don't overwrite.
+            if (file.exists()) {
+                return file.getPath();
+            }
+
+            if (!file.createNewFile()) {
+                Timber.w("Couldn't create %s", file.toString());
+                return null;
+            }
+            try (OutputStream output = new FileOutputStream(file, false)) {
+                byte[] buffer = new byte[4 * 1024]; // or other buffer size
+                int read;
+
+                while ((read = is.read(buffer)) != -1) {
+                    output.write(buffer, 0, read);
+                }
+
+                output.flush();
+
+            }
+            return file.getPath();
+        } catch (IOException e) {
+            Timber.e(e, "Exception copying stream");
+            return null;
+        }
+    }
+
+
+
+    private String getFileName(@NonNull ContentResolver resolver, @NonNull Uri uri) {
+        String[] projection = {MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.TITLE};
+        Cursor metaCursor = resolver.query(uri, projection, null, null, null);
+        if (metaCursor == null) {
+            return null;
+        }
+        try {
+            if (!metaCursor.moveToFirst()) {
+                return null;
+            }
+
+            String fileName = metaCursor.getString(metaCursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME));
+            if (fileName != null) {
+                return fileName;
+            }
+            return metaCursor.getString(metaCursor.getColumnIndex(MediaStore.MediaColumns.TITLE));
+        } catch (Exception e) {
+            Timber.e(e, "Failed to get filename");
+            return null;
+        }
+        finally {
+            metaCursor.close();
+        }
+    }
+
+    private String getLocalFilePath(@NonNull ContentResolver resolver, @NonNull Uri uri) {
         String[] filePathColumn = { MediaStore.MediaColumns.DATA };
 
-        Cursor cursor = null;
-        try {
-            cursor = resolver.query(uri, filePathColumn, null, null, null);
+        try (Cursor cursor = resolver.query(uri, filePathColumn, null, null, null)) {
 
             if (cursor == null) {
                 Timber.w("cursor was null");
@@ -41,12 +139,8 @@ public class ContentProviderFileReference {
 
             return filePath;
         } catch (Exception e) {
-          Timber.e(e, "Exception decoding filepath");
-          return null;
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            Timber.e(e, "Exception decoding filepath");
+            return null;
         }
     }
 }

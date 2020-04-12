@@ -272,7 +272,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         String filePath;
         try {
-            filePath = mContentProviderFileReference.extractFilePath(mActivity.getContentResolver(), selectedImage);
+            String downloadDirectory = this.mActivity.getCacheDir().getAbsolutePath();
+            filePath = mContentProviderFileReference.extractFilePath(mActivity.getContentResolver(), selectedImage, downloadDirectory);
         } catch (Exception e) {
             Timber.w("URI decoding failed");
             showSomethingWentWrong();
