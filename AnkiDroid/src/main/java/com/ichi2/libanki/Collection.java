@@ -1473,7 +1473,7 @@ public class Collection {
             case RESET_CARDS:
             case REPOSITION_CARDS:
             case RESCHEDULE_CARDS:
-                // Card array is cloned in DeckTask, which pays attention to memory pressure
+                // Card array is cloned in CollectionTask, which pays attention to memory pressure
                 mUndo.add(new Object[]{type, o[0]});
                 break;
             default:

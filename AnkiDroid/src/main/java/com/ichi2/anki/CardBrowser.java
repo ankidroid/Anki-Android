@@ -415,7 +415,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mReloadRequired = true;
         }
 
-        executeChangeDeckTask(ids, mNewDid);
+        executeChangeCollectionTask(ids, mNewDid);
     }
 
 
@@ -2138,7 +2138,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) //should only be called from changeDeck()
-    void executeChangeDeckTask(long[] ids, long newDid) {
+    void executeChangeCollectionTask(long[] ids, long newDid) {
         mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
                 new TaskData(new Object[]{ids, Collection.DismissType.CHANGE_DECK_MULTI, newDid}));
