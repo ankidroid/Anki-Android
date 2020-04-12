@@ -30,6 +30,7 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 
 import com.ichi2.anki.R;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -357,8 +358,14 @@ public class SchedV2 extends AbstractSched {
 
     /**
      * Returns [deckname, did, rev, lrn, new]
+     *
+     * Return nulls when deck task is cancelled.
      */
     public List<DeckDueTreeNode> deckDueList() {
+        return deckDueList(null);
+    }
+
+    public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
@@ -366,6 +373,9 @@ public class SchedV2 extends AbstractSched {
         ArrayList<DeckDueTreeNode> data = new ArrayList<>();
         HashMap<Long, HashMap> childMap = mCol.getDecks().childMap();
         for (JSONObject deck : decks) {
+            if (collectionTask != null && collectionTask.isCancelled()) {
+                return null;
+            }
             String p = Decks.parent(deck.getString("name"));
             // new
             int nlim = _deckNewLimitSingle(deck);
@@ -394,7 +404,15 @@ public class SchedV2 extends AbstractSched {
 
 
     public List<DeckDueTreeNode> deckDueTree() {
-        return _groupChildren(deckDueList());
+        return deckDueTree(null);
+    }
+
+    public List<DeckDueTreeNode> deckDueTree(CollectionTask collectionTask) {
+        List<DeckDueTreeNode> deckDueTree = deckDueList(collectionTask);
+        if (deckDueTree == null) {
+            return null;
+        }
+        return _groupChildren(deckDueTree);
     }
 
 
