@@ -65,20 +65,20 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mSchedResetDone = false;
 
 
-    private CollectionTask.TaskListener mRescheduleCardHandler = new ScheduleDeckTaskListener() {
+    private CollectionTask.TaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reschedule_cards_dialog_acknowledge;
         }
     };
 
-    private CollectionTask.TaskListener mResetProgressCardHandler = new ScheduleDeckTaskListener() {
+    private CollectionTask.TaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reset_cards_dialog_acknowledge;
         }
     };
 
     /** We need to listen for and handle reschedules / resets very similarly */
-    abstract class ScheduleDeckTaskListener extends NextCardHandler {
+    abstract class ScheduleCollectionTaskListener extends NextCardHandler {
 
         abstract protected int getToastResourceId();
 
