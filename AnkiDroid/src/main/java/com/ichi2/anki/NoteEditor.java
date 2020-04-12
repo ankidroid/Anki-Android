@@ -67,7 +67,7 @@ import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
-import com.ichi2.async.DeckTask;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -90,7 +90,6 @@ import com.ichi2.utils.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -189,7 +188,7 @@ public class NoteEditor extends AnkiActivity {
     // restoring the Activity.
     private Bundle mSavedFields;
 
-    private DeckTask.TaskListener mSaveFactHandler = new DeckTask.TaskListener() {
+    private CollectionTask.TaskListener mSaveFactHandler = new CollectionTask.TaskListener() {
         private boolean mCloseAfter = false;
         private Intent mIntent;
 
@@ -202,7 +201,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
         @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
+        public void onProgressUpdate(CollectionTask.TaskData... values) {
             int count = values[0].getInt();
             if (count > 0) {
                 mChanged = true;
@@ -249,7 +248,7 @@ public class NoteEditor extends AnkiActivity {
 
 
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
+        public void onPostExecute(CollectionTask.TaskData result) {
             if (result.getBoolean()) {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     try {
@@ -703,7 +702,7 @@ public class NoteEditor extends AnkiActivity {
             }
             getCol().getModels().current().put("tags", ja);
             getCol().getModels().setChanged();
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mEditorNote));
+            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new CollectionTask.TaskData(mEditorNote));
         } else {
             // Check whether note type has been changed
             final JSONObject newModel = getCurrentlySelectedModel();

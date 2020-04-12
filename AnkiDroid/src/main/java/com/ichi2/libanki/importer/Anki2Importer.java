@@ -22,7 +22,7 @@ import android.text.TextUtils;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ImportExportException;
-import com.ichi2.async.DeckTask;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Media;
@@ -748,7 +748,7 @@ public class Anki2Importer extends Importer {
      */
     protected void publishProgress(int notesDone, int cardsDone, int postProcess) {
         if (mProgress != null) {
-            mProgress.publishProgress(new DeckTask.TaskData(getRes().getString(R.string.import_progress,
+            mProgress.publishProgress(new CollectionTask.TaskData(getRes().getString(R.string.import_progress,
                     notesDone, cardsDone, postProcess)));
         }
     }

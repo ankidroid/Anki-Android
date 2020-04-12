@@ -18,15 +18,12 @@
 
 package com.ichi2.async;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.PowerManager;
-import androidx.core.content.ContextCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -273,7 +270,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         sIsCancellable = true;
         Timber.d("doInBackgroundSync()");
         // Block execution until any previous background task finishes, or timeout after 5s
-        boolean ok = DeckTask.waitToFinish(5);
+        boolean ok = CollectionTask.waitToFinish(5);
 
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];

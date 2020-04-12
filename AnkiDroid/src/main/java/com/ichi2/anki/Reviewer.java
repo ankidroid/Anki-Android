@@ -39,7 +39,7 @@ import android.widget.FrameLayout;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
-import com.ichi2.async.DeckTask;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -67,13 +67,13 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mSchedResetDone = false;
 
 
-    private DeckTask.TaskListener mRescheduleCardHandler = new ScheduleDeckTaskListener() {
+    private CollectionTask.TaskListener mRescheduleCardHandler = new ScheduleDeckTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reschedule_cards_dialog_acknowledge;
         }
     };
 
-    private DeckTask.TaskListener mResetProgressCardHandler = new ScheduleDeckTaskListener() {
+    private CollectionTask.TaskListener mResetProgressCardHandler = new ScheduleDeckTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reset_cards_dialog_acknowledge;
         }
@@ -86,7 +86,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
+        public void onPostExecute(CollectionTask.TaskData result) {
             super.onPostExecute(result);
             invalidateOptionsMenu();
             int cardCount = result.getObjArray().length;
@@ -183,8 +183,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             col.getSched().reset();     // Reset schedule in case card was previously loaded
             mSchedResetDone = false;
         }
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
-                new DeckTask.TaskData(null, 0));
+        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+                new CollectionTask.TaskData(null, 0));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -331,8 +331,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days ->
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
-                    new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()},
+            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
+                    new CollectionTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()},
                     Collection.DismissType.RESCHEDULE_CARDS, days})
             );
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
@@ -351,8 +351,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         dialog.setArgs(title, message);
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
-                    new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS}));
+            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
+                    new CollectionTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS}));
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);

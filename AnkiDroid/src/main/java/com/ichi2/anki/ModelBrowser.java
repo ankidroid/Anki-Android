@@ -43,8 +43,8 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.DeckTask;
-import com.ichi2.async.DeckTask.TaskData;
+import com.ichi2.async.CollectionTask;
+import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.widget.WidgetStatus;
@@ -95,7 +95,7 @@ public class ModelBrowser extends AnkiActivity {
      * Displays the loading bar when loading the mModels and displaying them
      * loading bar is necessary because card count per model is not cached *
      */
-    private DeckTask.TaskListener mLoadingModelsHandler = new DeckTask.TaskListener() {
+    private CollectionTask.TaskListener mLoadingModelsHandler = new CollectionTask.TaskListener() {
         @Override
         public void onCancelled() {
             hideProgressBar();
@@ -124,7 +124,7 @@ public class ModelBrowser extends AnkiActivity {
      * Displays loading bar when deleting a model loading bar is needed
      * because deleting a model also deletes all of the associated cards/notes *
      */
-    private DeckTask.TaskListener mDeleteModelHandler = new DeckTask.TaskListener() {
+    private CollectionTask.TaskListener mDeleteModelHandler = new CollectionTask.TaskListener() {
 
         @Override
         public void onPreExecute() {
@@ -224,7 +224,7 @@ public class ModelBrowser extends AnkiActivity {
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         this.col = col;
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
 
@@ -503,15 +503,15 @@ public class ModelBrowser extends AnkiActivity {
      * Reloads everything
      */
     private void fullRefresh() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
     /*
      * Deletes the currently selected model
      */
     private void deleteModel() throws ConfirmModSchemaException {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
-                new DeckTask.TaskData(mCurrentID));
+        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
+                new CollectionTask.TaskData(mCurrentID));
         mModels.remove(mModelListPosition);
         mModelIds.remove(mModelListPosition);
         mModelDisplayList.remove(mModelListPosition);
@@ -611,7 +611,7 @@ public class ModelBrowser extends AnkiActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TEMPLATE_EDIT) {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
         }
     }
 }

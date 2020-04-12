@@ -42,7 +42,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.DeckTask;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
@@ -82,14 +82,14 @@ public class CardTemplateEditor extends AnkiActivity {
     // ----------------------------------------------------------------------------
 
     /* Used for updating the collection when a reverse card is added or a template is deleted */
-    private DeckTask.TaskListener mAddRemoveTemplateHandler = new DeckTask.TaskListener() {
+    private CollectionTask.TaskListener mAddRemoveTemplateHandler = new CollectionTask.TaskListener() {
         @Override
         public void onPreExecute() {
             showProgressBar();
         }
 
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
+        public void onPostExecute(CollectionTask.TaskData result) {
             hideProgressBar();
             if (result.getBoolean()) {
                 // Refresh the GUI -- setting the last template as the active tab
@@ -495,8 +495,8 @@ public class CardTemplateEditor extends AnkiActivity {
                     Timber.i("CardTemplateEditor:: Save model button pressed");
                     if (modelHasChanged()) {
                         // regenerate the cards of the model
-                        DeckTask.TaskData args = new DeckTask.TaskData(new Object[] {model});
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_MODEL, mSaveModelAndExitHandler, args);
+                        CollectionTask.TaskData args = new CollectionTask.TaskData(new Object[] {model});
+                        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_SAVE_MODEL, mSaveModelAndExitHandler, args);
                     } else {
                         ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                     }
@@ -547,7 +547,7 @@ public class CardTemplateEditor extends AnkiActivity {
         }
 
         /* Used for updating the collection when a model has been edited */
-        private DeckTask.TaskListener mSaveModelAndExitHandler = new DeckTask.TaskListener() {
+        private CollectionTask.TaskListener mSaveModelAndExitHandler = new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 ((AnkiActivity) getActivity()).showProgressBar();
@@ -556,7 +556,7 @@ public class CardTemplateEditor extends AnkiActivity {
             }
 
             @Override
-            public void onPostExecute(DeckTask.TaskData result) {
+            public void onPostExecute(CollectionTask.TaskData result) {
                 if (result.getBoolean()) {
                     getActivity().setResult(RESULT_OK);
                     ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.RIGHT);
@@ -645,8 +645,8 @@ public class CardTemplateEditor extends AnkiActivity {
             CardTemplateEditor activity = ((CardTemplateEditor) getActivity());
             activity.getCol().modSchemaNoCheck();
             Object [] args = new Object[] {model, tmpl};
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REMOVE_TEMPLATE,
-                    activity.mAddRemoveTemplateHandler,  new DeckTask.TaskData(args));
+            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_REMOVE_TEMPLATE,
+                    activity.mAddRemoveTemplateHandler,  new CollectionTask.TaskData(args));
             activity.dismissAllDialogFragments();
         }
 
@@ -697,8 +697,8 @@ public class CardTemplateEditor extends AnkiActivity {
             }
             // Add new template to the current model via AsyncTask
             Object [] args = new Object[] {model, newTemplate};
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_TEMPLATE,
-                    activity.mAddRemoveTemplateHandler,  new DeckTask.TaskData(args));
+            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_ADD_TEMPLATE,
+                    activity.mAddRemoveTemplateHandler,  new CollectionTask.TaskData(args));
             activity.dismissAllDialogFragments();
         }
 

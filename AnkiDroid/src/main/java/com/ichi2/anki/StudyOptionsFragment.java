@@ -39,7 +39,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
-import com.ichi2.async.DeckTask;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -328,15 +328,15 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.rebuild_cram_deck), true);
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
-                        new DeckTask.TaskData(mFragmented));
+                CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
+                        new CollectionTask.TaskData(mFragmented));
                 return true;
             case R.id.action_empty:
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.empty_cram_deck), false);
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, getDeckTaskListener(true),
-                        new DeckTask.TaskData(mFragmented));
+                CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_EMPTY_CRAM, getDeckTaskListener(true),
+                        new CollectionTask.TaskData(mFragmented));
                 return true;
             case R.id.action_rename:
                 ((DeckPicker) getActivity()).renameDeckDialog(getCol().getDecks().selected());
@@ -456,10 +456,10 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 }
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.rebuild_cram_deck), true);
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
-                            new DeckTask.TaskData(mFragmented));
+                    CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
+                            new CollectionTask.TaskData(mFragmented));
             } else {
-                DeckTask.waitToFinish();
+                CollectionTask.waitToFinish();
                 refreshInterface(true);
             }
         } else if (requestCode == AnkiActivity.REQUEST_REVIEW) {
@@ -514,8 +514,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     protected void refreshInterface(boolean resetSched, boolean resetDecklist) {
         Timber.d("Refreshing StudyOptionsFragment");
         // Load the deck counts for the deck from Collection asynchronously
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, getDeckTaskListener(resetDecklist),
-                new DeckTask.TaskData(new Object[]{resetSched}));
+        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, getDeckTaskListener(resetDecklist),
+                new CollectionTask.TaskData(new Object[]{resetSched}));
     }
 
 
@@ -525,15 +525,15 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
      *                        to reflect the latest values.
      */
-    private DeckTask.TaskListener getDeckTaskListener(final boolean refreshDecklist) {
-        return new DeckTask.TaskListener() {
+    private CollectionTask.TaskListener getDeckTaskListener(final boolean refreshDecklist) {
+        return new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
 
             }
 
             @Override
-            public void onPostExecute(DeckTask.TaskData result) {
+            public void onPostExecute(CollectionTask.TaskData result) {
                 dismissProgressDialog();
                 if (result != null) {
                     // Get the return values back from the AsyncTask

@@ -41,7 +41,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-import com.ichi2.async.DeckTask;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 
@@ -472,14 +472,14 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, new DeckTask.TaskListener() {
+        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_REBUILD_CRAM, new CollectionTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
                     activity.showProgressBar();
                 }
 
                 @Override
-                public void onPostExecute(DeckTask.TaskData result) {
+                public void onPostExecute(CollectionTask.TaskData result) {
                     activity.hideProgressBar();
                     ((CustomStudyListener) activity).onCreateCustomStudySession();
                 }

@@ -25,7 +25,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.CardBrowser;
-import com.ichi2.async.DeckTask;
+import com.ichi2.async.CollectionTask;
 
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -1029,7 +1029,7 @@ public class Finder {
         boolean rev = res2.second;
         String sql = _queryForCardBrowser(preds, order);
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
-            DeckTask task = DeckTask.getInstance();
+            CollectionTask task = CollectionTask.getInstance();
             while (cur.moveToNext()) {
                 // cancel if the launching task was cancelled. 
                 if (task.isCancelled()){
