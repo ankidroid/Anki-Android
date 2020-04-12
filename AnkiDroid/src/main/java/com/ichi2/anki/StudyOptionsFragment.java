@@ -43,11 +43,14 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.HtmlUtils;
 
 import com.ichi2.utils.JSONObject;
+
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -563,19 +566,19 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     JSONObject deck = getCol().getDecks().current();
                     // Main deck name
                     fullName = deck.getString("name");
-                    String[] name = fullName.split("::");
+                    List<String> name = Decks.path(fullName);
                     StringBuilder nameBuilder = new StringBuilder();
-                    if (name.length > 0) {
-                        nameBuilder.append(name[0]);
+                    if (name.size() > 0) {
+                        nameBuilder.append(name.get(0));
                     }
-                    if (name.length > 1) {
-                        nameBuilder.append("\n").append(name[1]);
+                    if (name.size() > 1) {
+                        nameBuilder.append("\n").append(name.get(1));
                     }
-                    if (name.length > 3) {
+                    if (name.size() > 3) {
                         nameBuilder.append("...");
                     }
-                    if (name.length > 2) {
-                        nameBuilder.append("\n").append(name[name.length - 1]);
+                    if (name.size() > 2) {
+                        nameBuilder.append("\n").append(name.get(name.size() - 1));
                     }
                     mTextDeckName.setText(nameBuilder.toString());
 

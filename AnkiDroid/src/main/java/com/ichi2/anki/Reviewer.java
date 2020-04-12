@@ -45,12 +45,14 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Decks;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.widget.WidgetStatus;
 
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import timber.log.Timber;
@@ -136,14 +138,16 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void setTitle() {
-        String[] title = {""};
+        List<String> title;
         if (colIsOpen()) {
-            title = getCol().getDecks().current().getString("name").split("::");
+            title = Decks.path(getCol().getDecks().current().getString("name"));
         } else {
             Timber.e("Could not set title in reviewer because collection closed");
+            title = new ArrayList<>();
+            title.add("");
         }
-        getSupportActionBar().setTitle(title[title.length - 1]);
-        super.setTitle(title[title.length - 1]);
+        getSupportActionBar().setTitle(title.get(title.size() - 1));
+        super.setTitle(title.get(title.size() - 1));
         getSupportActionBar().setSubtitle("");
     }
 
