@@ -421,6 +421,20 @@ public class ModelFieldEditor extends AnkiActivity {
         }
     }
 
+    /*
+     * Toggle the "Remember last input" setting AKA the "Sticky" setting
+     */
+    private void toggleStickyField() {
+        // Get the current field
+        JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
+        // If the sticky setting is enabled then disable it, otherwise enable it
+        if (field.getBoolean("sticky")) {
+            field.put("sticky", false);
+        } else {
+            field.put("sticky", true);
+        }
+    }
+
 
     /*
      * Reloads everything
@@ -525,6 +539,9 @@ public class ModelFieldEditor extends AnkiActivity {
                 break;
             case ModelEditorContextMenu.FIELD_RENAME:
                 renameFieldDialog();
+                break;
+            case ModelEditorContextMenu.FIELD_TOGGLE_STICKY:
+                toggleStickyField();
                 break;
         }
     };
