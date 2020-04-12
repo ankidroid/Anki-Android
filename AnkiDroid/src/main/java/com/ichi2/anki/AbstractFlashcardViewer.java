@@ -2499,6 +2499,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
     protected void executeCommand(int which) {
+        if (mControlBlocked) {
+            return;
+        }
         switch (which) {
             case GESTURE_NOTHING:
                 break;
