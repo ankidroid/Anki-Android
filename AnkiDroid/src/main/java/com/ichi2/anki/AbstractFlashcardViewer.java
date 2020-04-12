@@ -117,7 +117,6 @@ import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -1779,8 +1778,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         if (actionBar != null) {
-            List<String> title = Decks.path(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
-            actionBar.setTitle(title.get(title.size() - 1));
+            String title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
+            actionBar.setTitle(title);
             if (mPrefShowETA) {
                 int eta = mSched.eta(counts, false);
                 actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));

@@ -493,12 +493,13 @@ public class Decks {
         String draggedDeckName = draggedDeck.getString("name");
         String ontoDeckName = get(ontoDeckDid).getString("name");
 
+        String draggedBasename = basename(draggedDeckName);
         if (ontoDeckDid == null) {
-            if (path(draggedDeckName).size() > 1) {
-                rename(draggedDeck, basename(draggedDeckName));
+            if (!draggedBasename.equals(draggedDeckName)) {
+                rename(draggedDeck, draggedBasename);
             }
         } else if (_canDragAndDrop(draggedDeckName, ontoDeckName)) {
-            rename(draggedDeck, ontoDeckName + "::" + basename(draggedDeckName));
+            rename(draggedDeck, ontoDeckName + "::" + draggedBasename);
         }
     }
 
