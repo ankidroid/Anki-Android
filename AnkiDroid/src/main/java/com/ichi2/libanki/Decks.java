@@ -536,8 +536,13 @@ public class Decks {
 
 
     private boolean _isAncestor(String ancestorDeckName, String descendantDeckName) {
-        Iterator<String> apIt = path(ancestorDeckName).iterator();
-        Iterator<String> dpIt = path(descendantDeckName).iterator();
+        List<String> ancestorDeckPath = path(ancestorDeckName);
+        List<String> descendantDeckPath = path(descendantDeckName);
+        if (ancestorDeckPath.size() > descendantDeckName.size()) {
+            return false;
+        }
+        Iterator<String> apIt = ancestorDeckPath.iterator();
+        Iterator<String> dpIt = descendantDeckPath.iterator();
         while (apIt.hasNext() && dpIt.hasNext()) {
             if (!apIt.next().equals(dpIt.next())) {
                 return false;
