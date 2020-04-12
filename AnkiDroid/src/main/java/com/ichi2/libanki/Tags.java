@@ -142,15 +142,9 @@ public class Tags {
             mChanged = true;
         }
         List<String> tags = new ArrayList<>();
-        Cursor cursor = null;
-        try {
-            cursor = mCol.getDb().getDatabase().query("SELECT DISTINCT tags FROM notes"+lim, null);
+        try (Cursor cursor = mCol.getDb().getDatabase().query("SELECT DISTINCT tags FROM notes" + lim, null)) {
             while (cursor.moveToNext()) {
                 tags.add(cursor.getString(0));
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
             }
         }
         HashSet<String> tagSet = new HashSet<>();
@@ -244,15 +238,13 @@ public class Tags {
             t = t.replace("*", "%");
             lim.append(l).append("like '% ").append(t).append(" %'");
         }
-        Cursor cur = null;
         List<Long> nids = new ArrayList<>();
         ArrayList<Object[]> res = new ArrayList<>();
-        try {
-            cur = mCol
-                    .getDb()
-                    .getDatabase()
-                    .query("select id, tags from notes where id in " + Utils.ids2str(ids) +
-                            " and (" + lim + ")", null);
+        try (Cursor cur = mCol
+                .getDb()
+                .getDatabase()
+                .query("select id, tags from notes where id in " + Utils.ids2str(ids) +
+                        " and (" + lim + ")", null)) {
             if (add) {
                 while (cur.moveToNext()) {
                     nids.add(cur.getLong(0));
@@ -264,10 +256,6 @@ public class Tags {
                     res.add(new Object[] { remFromStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(),
                             cur.getLong(0) });
                 }
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         // update tags

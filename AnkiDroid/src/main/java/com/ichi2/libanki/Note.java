@@ -86,10 +86,8 @@ public class Note implements Cloneable {
 
     public void load() {
         Timber.d("load()");
-        Cursor cursor = null;
-        try {
-            cursor = mCol.getDb().getDatabase()
-                    .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null);
+        try (Cursor cursor = mCol.getDb().getDatabase()
+                .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null)) {
             if (!cursor.moveToFirst()) {
                 throw new RuntimeException("Notes.load(): No result from query for note " + mId);
             }
@@ -104,10 +102,6 @@ public class Note implements Cloneable {
             mModel = mCol.getModels().get(mMid);
             mFMap = mCol.getModels().fieldMap(mModel);
             mScm = mCol.getScm();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
     }
 
@@ -157,16 +151,10 @@ public class Note implements Cloneable {
 
     public ArrayList<Card> cards() {
         ArrayList<Card> cards = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase()
-                    .query("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null);
+        try (Cursor cur = mCol.getDb().getDatabase()
+                .query("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null)) {
             while (cur.moveToNext()) {
                 cards.add(mCol.getCard(cur.getLong(0)));
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         return cards;

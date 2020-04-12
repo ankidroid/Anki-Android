@@ -534,19 +534,13 @@ public class Anki2Importer extends Importer {
                 }
                 cards.add(card);
                 // we need to import revlog, rewriting card ids and bumping usn
-                Cursor cur2 = null;
-                try {
-                    cur2 = mSrc.getDb().getDatabase().query("select * from revlog where cid = " + scid, null);
+                try (Cursor cur2 = mSrc.getDb().getDatabase().query("select * from revlog where cid = " + scid, null)) {
                     while (cur2.moveToNext()) {
                         Object[] rev = new Object[] { cur2.getLong(0), cur2.getLong(1), cur2.getInt(2), cur2.getInt(3),
                                 cur2.getLong(4), cur2.getLong(5), cur2.getLong(6), cur2.getLong(7), cur2.getInt(8) };
                         rev[1] = card[0];
                         rev[2] = mDst.usn();
                         revlog.add(rev);
-                    }
-                } finally {
-                    if (cur2 != null) {
-                        cur2.close();
                     }
                 }
                 cnt += 1;

@@ -663,19 +663,13 @@ public class Models {
             return;
         }
         ArrayList<Object[]> r = new ArrayList<>();
-        Cursor cur = null;
 
-        try {
-            cur = mCol.getDb().getDatabase()
-                    .query("select id, flds from notes where mid = " + m.getLong("id"), null);
+        try (Cursor cur = mCol.getDb().getDatabase()
+                .query("select id, flds from notes where mid = " + m.getLong("id"), null)) {
             while (cur.moveToNext()) {
                 r.add(new Object[] {
                         Utils.joinFields(fn.transform(Utils.splitFields(cur.getString(1)))),
                         Utils.intTime(), mCol.usn(), cur.getLong(0)});
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         mCol.getDb().executeMany("update notes set flds=?,mod=?,usn=? where id = ?", r);
@@ -861,10 +855,8 @@ public class Models {
         long mid;
         nfields = newModel.getJSONArray("flds").length();
         mid = newModel.getLong("id");
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase().query(
-                    "select id, flds from notes where id in ".concat(Utils.ids2str(nids)), null);
+        try (Cursor cur = mCol.getDb().getDatabase().query(
+                "select id, flds from notes where id in ".concat(Utils.ids2str(nids)), null)) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 String[] flds = Utils.splitFields(cur.getString(1));
@@ -883,10 +875,6 @@ public class Models {
                 }
                 String joinedFlds = Utils.joinFields(flds2.toArray(new String[flds2.size()]));
                 d.add(new Object[] { joinedFlds, mid, Utils.intTime(), mCol.usn(), nid });
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         mCol.getDb().executeMany("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", d);

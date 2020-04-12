@@ -97,19 +97,13 @@ public class Finder {
         String order = res2.first;
         boolean rev = res2.second;
         String sql = _query(preds, order);
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase().query(sql, args);
+        try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
                 res.add(cur.getLong(0));
             }
         } catch (SQLException e) {
             // invalid grouping
             return new ArrayList<>();
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
         }
         if (rev) {
             Collections.reverse(res);
@@ -133,19 +127,13 @@ public class Finder {
             preds = "(" + preds + ")";
         }
         String sql = "select distinct(n.id) from cards c, notes n where c.nid=n.id and " + preds;
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase().query(sql, args);
+        try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
                 res.add(cur.getLong(0));
             }
         } catch (SQLException e) {
             // invalid grouping
             return new ArrayList<>();
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
         }
         return res;
     }
@@ -743,17 +731,15 @@ public class Finder {
             return null;
         }
         LinkedList<Long> nids = new LinkedList<>();
-        Cursor cur = null;
-        try {
+        try (Cursor cur = mCol.getDb().getDatabase().query(
+                "select id, mid, flds from notes where mid in " +
+                        Utils.ids2str(new LinkedList<>(mods.keySet())) +
+                        " and flds like ? escape '\\'", new String[] {"%" + sqlVal + "%"})) {
             /*
              * Here we use the sqlVal expression, that is required for LIKE syntax in sqllite.
              * There is no problem with special characters, because only % and _ are special
              * characters in this syntax.
              */
-            cur = mCol.getDb().getDatabase().query(
-                    "select id, mid, flds from notes where mid in " +
-                            Utils.ids2str(new LinkedList<>(mods.keySet())) +
-                            " and flds like ? escape '\\'", new String[] { "%" + sqlVal + "%" });
 
             while (cur.moveToNext()) {
                 String[] flds = Utils.splitFields(cur.getString(2));
@@ -762,10 +748,6 @@ public class Finder {
                 if (pattern.matcher(strg).matches()) {
                     nids.add(cur.getLong(0));
                 }
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         if (nids.isEmpty()) {
@@ -785,19 +767,13 @@ public class Finder {
         val = split[1];
         String csum = Long.toString(Utils.fieldChecksum(val));
         List<Long> nids = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase().query(
-                    "select id, flds from notes where mid=? and csum=?",
-                    new String[] { mid, csum });
+        try (Cursor cur = mCol.getDb().getDatabase().query(
+                "select id, flds from notes where mid=? and csum=?",
+                new String[] {mid, csum})) {
             long nid = cur.getLong(0);
             String flds = cur.getString(1);
             if (Utils.stripHTMLMedia(Utils.splitFields(flds)[0]).equals(val)) {
                 nids.add(nid);
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         return "n.id in " +  Utils.ids2str(nids);
@@ -891,10 +867,8 @@ public class Finder {
         ArrayList<Object[]> d = new ArrayList<>();
         String snids = Utils.ids2str(nids);
         nids = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = col.getDb().getDatabase().query(
-                    "select id, mid, flds from notes where id in " + snids, null);
+        try (Cursor cur = col.getDb().getDatabase().query(
+                "select id, mid, flds from notes where id in " + snids, null)) {
             while (cur.moveToNext()) {
                 String flds = cur.getString(2);
                 String origFlds = flds;
@@ -919,10 +893,6 @@ public class Finder {
                     nids.add(nid);
                     d.add(new Object[] { flds, Utils.intTime(), col.usn(), nid }); // order based on query below
                 }
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         if (d.isEmpty()) {
@@ -1000,10 +970,8 @@ public class Finder {
         Map<String, List<Long>> vals = new HashMap<>();
         List<Pair<String, List<Long>>> dupes = new ArrayList<>();
         Map<Long, Integer> fields = new HashMap<>();
-        Cursor cur = null;
-        try {
-            cur = col.getDb().getDatabase().query(
-                    "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)), null);
+        try (Cursor cur = col.getDb().getDatabase().query(
+                "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)), null)) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
@@ -1025,10 +993,6 @@ public class Finder {
                 if (vals.get(val).size() == 2) {
                     dupes.add(new Pair<>(val, vals.get(val)));
                 }
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         return dupes;
@@ -1064,9 +1028,7 @@ public class Finder {
         String order = res2.first;
         boolean rev = res2.second;
         String sql = _queryForCardBrowser(preds, order);
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase().query(sql, args);
+        try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             DeckTask task = DeckTask.getInstance();
             while (cur.moveToNext()) {
                 // cancel if the launching task was cancelled. 
@@ -1093,10 +1055,6 @@ public class Finder {
             // invalid grouping
             Timber.e("Invalid grouping, sql: " + sql);
             return new ArrayList<>();
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
         }
         if (rev) {
             Collections.reverse(res);

@@ -389,16 +389,13 @@ public class ContentProviderTest {
             cv.put(FlashCardsContract.Note.FLDS, Utils.joinFields(dummyFields2));
             cr.update(uri, cv, null, null);
             // Query the table again
-            Cursor noteCursor = cr.query(uri, FlashCardsContract.Note.DEFAULT_PROJECTION, null, null, null);
-            try {
+            try (Cursor noteCursor = cr.query(uri, FlashCardsContract.Note.DEFAULT_PROJECTION, null, null, null)) {
                 assertNotNull("Check that there is a valid cursor for detail data after update", noteCursor);
                 assertEquals("Check that there is one and only one entry after update", 1, noteCursor.getCount());
                 assertTrue("Move to first item in cursor", noteCursor.moveToFirst());
                 String[] newFlds = Utils.splitFields(
                         noteCursor.getString(noteCursor.getColumnIndex(FlashCardsContract.Note.FLDS)));
                 assertTrue("Check that the flds have been updated correctly", Arrays.equals(newFlds, dummyFields2));
-            } finally {
-                noteCursor.close();
             }
         }
     }
@@ -682,8 +679,7 @@ public class ContentProviderTest {
 
         long deckId = mTestDeckIds[0];
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
-        Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(deckUri, null, null, null, null);
-        try {
+        try (Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(deckUri, null, null, null, null)) {
             if (decksCursor == null || !decksCursor.moveToFirst()) {
                 fail("No deck received. Should have delivered deck with id " + deckId);
             } else {
@@ -694,8 +690,6 @@ public class ContentProviderTest {
                 assertEquals("Check that received deck ID equals real deck ID", deckId, returnedDeckID);
                 assertEquals("Check that received deck name equals real deck name", realDeck.getString("name"), returnedDeckName);
             }
-        } finally {
-            decksCursor.close();
         }
     }
 
