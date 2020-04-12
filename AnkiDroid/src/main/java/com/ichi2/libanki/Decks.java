@@ -495,13 +495,13 @@ public class Decks {
 
         if (ontoDeckDid == null) {
             if (path(draggedDeckName).size() > 1) {
-                rename(draggedDeck, _basename(draggedDeckName));
+                rename(draggedDeck, basename(draggedDeckName));
             }
         } else if (_canDragAndDrop(draggedDeckName, ontoDeckName)) {
             draggedDeck = get(draggedDeckDid);
             draggedDeckName = draggedDeck.getString("name");
             ontoDeckName = get(ontoDeckDid).getString("name");
-            rename(draggedDeck, ontoDeckName + "::" + _basename(draggedDeckName));
+            rename(draggedDeck, ontoDeckName + "::" + basename(draggedDeckName));
         }
     }
 
@@ -519,7 +519,7 @@ public class Decks {
 
     private boolean _isParent(String parentDeckName, String childDeckName) {
         List<String> parentDeckPath = path(parentDeckName);
-        parentDeckPath.add(_basename(childDeckName));
+        parentDeckPath.add(basename(childDeckName));
 
         Iterator<String> cpIt = path(childDeckName).iterator();
         Iterator<String> ppIt = parentDeckPath.iterator();
@@ -547,7 +547,8 @@ public class Decks {
     public static List<String> path(String name) {
         return Arrays.asList(name.split("::", -1));
     }
-    private String _basename(String name) {
+
+    public static String basename(String name) {
         List<String> path = path(name);
         return path.get(path.size() - 1);
     }
