@@ -533,7 +533,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
             // Get due tree
-            Object[] o = new Object[] {col.getSched().deckDueTree()};
+            Object[] o = new Object[] {col.getSched().deckDueTree(this)};
             return new TaskData(o);
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundLoadDeckCounts - error");

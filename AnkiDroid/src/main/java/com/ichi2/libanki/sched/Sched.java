@@ -29,6 +29,7 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 
 import com.ichi2.anki.R;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -217,13 +218,16 @@ public class Sched extends SchedV2 {
      * Returns [deckname, did, rev, lrn, new]
      */
     @Override
-    public List<DeckDueTreeNode> deckDueList() {
+    public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> data = new ArrayList<>();
         for (JSONObject deck : decks) {
+            if (collectionTask != null && collectionTask.isCancelled()) {
+                return null;
+            }
             String p = Decks.parent(deck.getString("name"));
             // new
             int nlim = _deckNewLimitSingle(deck);
