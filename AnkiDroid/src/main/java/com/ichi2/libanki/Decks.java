@@ -494,7 +494,7 @@ public class Decks {
         String ontoDeckName = get(ontoDeckDid).getString("name");
 
         if (ontoDeckDid == null) {
-            if (_path(draggedDeckName).size() > 1) {
+            if (path(draggedDeckName).size() > 1) {
                 rename(draggedDeck, _basename(draggedDeckName));
             }
         } else if (_canDragAndDrop(draggedDeckName, ontoDeckName)) {
@@ -518,10 +518,10 @@ public class Decks {
 
 
     private boolean _isParent(String parentDeckName, String childDeckName) {
-        List<String> parentDeckPath = _path(parentDeckName);
+        List<String> parentDeckPath = path(parentDeckName);
         parentDeckPath.add(_basename(childDeckName));
 
-        Iterator<String> cpIt = _path(childDeckName).iterator();
+        Iterator<String> cpIt = path(childDeckName).iterator();
         Iterator<String> ppIt = parentDeckPath.iterator();
         while (cpIt.hasNext() && ppIt.hasNext()) {
             if (!cpIt.next().equals(ppIt.next())) {
@@ -533,8 +533,8 @@ public class Decks {
 
 
     private boolean _isAncestor(String ancestorDeckName, String descendantDeckName) {
-        Iterator<String> apIt = _path(ancestorDeckName).iterator();
-        Iterator<String> dpIt = _path(descendantDeckName).iterator();
+        Iterator<String> apIt = path(ancestorDeckName).iterator();
+        Iterator<String> dpIt = path(descendantDeckName).iterator();
         while (apIt.hasNext() && dpIt.hasNext()) {
             if (!apIt.next().equals(dpIt.next())) {
                 return false;
@@ -544,11 +544,11 @@ public class Decks {
     }
 
 
-    private List<String> _path(String name) {
+    public static List<String> path(String name) {
         return Arrays.asList(name.split("::", -1));
     }
     private String _basename(String name) {
-        List<String> path = _path(name);
+        List<String> path = path(name);
         return path.get(path.size() - 1);
     }
 
@@ -558,7 +558,7 @@ public class Decks {
      */
     public String _ensureParents(String name) {
         String s = "";
-        List<String> path = _path(name);
+        List<String> path = path(name);
         if (path.size() < 2) {
             return name;
         }
