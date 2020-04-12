@@ -548,8 +548,12 @@ public class Decks {
     }
 
 
+    private static HashMap<String, String[]> pathCache = new HashMap();
     public static String[] path(String name) {
-        return name.split("::", -1);
+        if (!pathCache.containsKey(name)) {
+            pathCache.put(name, name.split("::", -1));
+        }
+        return pathCache.get(name);
     }
 
     public static String basename(String name) {
