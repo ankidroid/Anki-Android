@@ -83,8 +83,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.anki.reviewer.ReviewerExtRegistry;
+import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
@@ -127,6 +128,8 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
+
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
@@ -141,19 +144,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      */
     public static final int EDIT_CURRENT_CARD = 0;
     public static final int DECK_OPTIONS = 1;
-
-    /** Constant for class attribute signaling answer */
-    public static final String ANSWER_CLASS = "\"answer\"";
-
-    /** Constant for class attribute signaling question */
-    public static final String QUESTION_CLASS = "\"question\"";
-
-    /** Max size of the font for dynamic calculation of font size */
-    private static final int DYNAMIC_FONT_MAX_SIZE = 14;
-
-    /** Min size of the font for dynamic calculation of font size */
-    private static final int DYNAMIC_FONT_MIN_SIZE = 3;
-    private static final int DYNAMIC_FONT_FACTOR = 5;
 
     public static final int EASE_1 = 1;
     public static final int EASE_2 = 2;
@@ -192,13 +182,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Variables to hold preferences
      */
+    private CardAppearance mCardAppearance;
     private boolean mPrefHideDueCount;
     private boolean mPrefShowETA;
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
     private int mPrefFullscreenReview;
-    private int mCardZoom;
-    private int mImageZoom;
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
@@ -206,7 +195,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // Android WebView
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
-    protected boolean mNightMode = false;
 
     protected boolean mOptUseGeneralTimerSettings;
 
@@ -220,7 +208,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected int mOptWaitAnswerSecond;
     protected int mOptWaitQuestionSecond;
 
-    private boolean mPrefCenterVertically;
     protected boolean mUseInputTag;
 
     // Preferences from the collection
@@ -341,8 +328,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private int mFadeDuration = 300;
 
     protected AbstractSched mSched;
-
-    private ReviewerExtRegistry mExtensions;
 
     private Sound mSoundPlayer = new Sound();
 
@@ -849,9 +834,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
-        // Create the extensions as early as possible, so that they can be offered events.
-        mExtensions = new ReviewerExtRegistry(getBaseContext());
-        restorePreferences();
+        SharedPreferences preferences = restorePreferences();
+        mCardAppearance = CardAppearance.create(new ReviewerCustomFonts(this.getBaseContext()), preferences);
         super.onCreate(savedInstanceState);
         setContentView(getContentViewAttr(mPrefFullscreenReview));
 
@@ -1657,10 +1641,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
         mDisableClipboard = "0".equals(preferences.getString("dictionary", "0"));
         // mDeckFilename = preferences.getString("deckFilename", "");
-        mNightMode = preferences.getBoolean("invertedColors", false);
         mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0"));
-        mCardZoom = preferences.getInt("cardZoom", 100);
-        mImageZoom = preferences.getInt("imageZoom", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mSpeakText = preferences.getBoolean("tts", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
@@ -1668,7 +1649,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mPrefWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
-        mPrefCenterVertically = preferences.getBoolean("centerVertically", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         if (mGesturesEnabled) {
@@ -1893,7 +1873,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mAnswerField.setVisibility(View.GONE);
             }
 
-            displayString = enrichWithQADiv(question, false);
+            displayString = CardAppearance.enrichWithQADiv(question, false);
 
             //if (mSpeakText) {
             // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
@@ -1999,7 +1979,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
 
         mIsSelecting = false;
-        updateCard(enrichWithQADiv(answer, true));
+        updateCard(CardAppearance.enrichWithQADiv(answer, true));
         displayAnswerBottomBar();
         // If the user wants to show the next question automatically
         if (mUseTimer) {
@@ -2070,6 +2050,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     }
 
+    protected boolean isInNightMode() {
+        return mCardAppearance.isNightMode();
+    }
+
 
     private void updateCard(final String newContent) {
         Timber.d("updateCard()");
@@ -2096,60 +2080,31 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         String content = Sound.expandSounds(mBaseUrl, newContent);
 
-        // In order to display the bold style correctly, we have to change
-        // font-weight to 700
-        content = content.replace("font-weight:600;", "font-weight:700;");
+        content = CardAppearance.fixBoldStyle(content);
+
+        Timber.v("content card = \n %s", content);
+
+        String style = mCardAppearance.getStyle();
+        Timber.v("::style:: / %s", style);
 
         // CSS class for card-specific styling
-        String cardClass = "card card" + (mCurrentCard.getOrd() + 1);
+        String cardClass = mCardAppearance.getCardClass(mCurrentCard.getOrd() + 1, Themes.getCurrentTheme(this));
         if (Template.textContainsMathjax(content)) {
             cardClass += " mathjax-needs-to-render";
         }
 
-        if (mPrefCenterVertically) {
-            cardClass += " vertically_centered";
-        }
-
-        Timber.v("content card = \n %s", content);
-        StringBuilder style = new StringBuilder();
-        mExtensions.updateCssStyle(style);
-
-        // Zoom cards
-        if (mCardZoom != 100) {
-            style.append(String.format("body { zoom: %s }\n", mCardZoom / 100.0));
-        }
-
-        // Zoom images
-        if (mImageZoom != 100) {
-            style.append(String.format("img { zoom: %s }\n", mImageZoom / 100.0));
-        }
-
-        Timber.v("::style:: / %s", style);
-
-        if (mNightMode) {
-            // Enable the night-mode class
-            cardClass += " night_mode";
-
-            // Emit the dark_mode selector to allow dark theme overrides
-            if (Themes.getCurrentTheme(this) == Themes.THEME_NIGHT_DARK) {
-                cardClass += " ankidroid_dark_mode";
-            }
-
+        if (isInNightMode()) {
             // If card styling doesn't contain any mention of the night_mode class then do color inversion as fallback
             // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
             if (!mCurrentCard.css().contains(".night_mode")) {
                 content = HtmlColors.invertColors(content);
             }
-        } else {
-            // Emit the plain_mode selector to allow plain theme overrides
-            if (Themes.getCurrentTheme(this) == Themes.THEME_DAY_PLAIN) {
-                cardClass += " ankidroid_plain_mode";
-            }
         }
 
-        content = smpToHtmlEntity(content);
+
+        content = CardAppearance.convertSmpToHtmlEntity(content);
         mCardContent = new SpannedString(mCardTemplate.replace("::content::", content)
-                .replace("::style::", style.toString()).replace("::class::", cardClass));
+                .replace("::style::", style).replace("::class::", cardClass));
         Timber.d("base url = %s", mBaseUrl);
 
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
@@ -2167,25 +2122,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (!mConfigurationChanged) {
             playSounds(false); // Play sounds if appropriate
         }
-    }
-
-
-    /**
-     * Converts characters in Unicode Supplementary Multilingual Plane (SMP) to their equivalent Html Entities. This is
-     * done because webview has difficulty displaying these characters.
-     *
-     * @param text
-     * @return
-     */
-    private String smpToHtmlEntity(String text) {
-        StringBuffer sb = new StringBuffer();
-        Matcher m = Pattern.compile("([^\u0000-\uFFFF])").matcher(text);
-        while (m.find()) {
-            String a = "&#x" + Integer.toHexString(m.group(1).codePointAt(0)) + ";";
-            m.appendReplacement(sb, Matcher.quoteReplacement(a));
-        }
-        m.appendTail(sb);
-        return sb.toString();
     }
 
     /**
@@ -2325,51 +2261,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     /**
-     * Adds a div html tag around the contents to have an indication, where answer/question is displayed
-     *
-     * @param content
-     * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
-     * @return
-     */
-    private static String enrichWithQADiv(String content, boolean isAnswer) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div class=");
-        if (isAnswer) {
-            sb.append(ANSWER_CLASS);
-        } else {
-            sb.append(QUESTION_CLASS);
-        }
-        sb.append(" id=\"qa\">");
-        sb.append(content);
-        sb.append("</div>");
-        return sb.toString();
-    }
-
-
-    /**
      * @return true if the AnkiDroid preference for writing answer is true and if the Anki Deck CardLayout specifies a
      *         field to query
      */
     private boolean typeAnswer() {
         return !mUseInputTag && null != mTypeCorrect;
-    }
-
-
-    /**
-     * Calculates a dynamic font size depending on the length of the contents taking into account that the input string
-     * contains html-tags, which will not be displayed and therefore should not be taken into account.
-     *
-     * @param htmlContent
-     * @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
-     */
-    private static int calculateDynamicFontSize(String htmlContent) {
-        // Replace each <br> with 15 spaces, each <hr> with 30 spaces, then
-        // remove all html tags and spaces
-        String realContent = htmlContent.replaceAll("\\<br.*?\\>", " ");
-        realContent = realContent.replaceAll("\\<hr.*?\\>", " ");
-        realContent = realContent.replaceAll("\\<.*?\\>", "");
-        realContent = realContent.replaceAll("&nbsp;", " ");
-        return Math.max(DYNAMIC_FONT_MIN_SIZE, DYNAMIC_FONT_MAX_SIZE - realContent.length() / DYNAMIC_FONT_FACTOR);
     }
 
 

@@ -694,7 +694,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     // Create the whiteboard
     private void createWhiteboard() {
-        mWhiteboard = new Whiteboard(this, mNightMode, mBlackWhiteboard);
+        mWhiteboard = new Whiteboard(this, isInNightMode(), mBlackWhiteboard);
         FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWhiteboard.setLayoutParams(lp2);
