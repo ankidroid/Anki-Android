@@ -30,7 +30,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.DeckTask;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.hooks.Hooks;
@@ -1536,7 +1536,7 @@ public class Collection {
 
 
     /** Fix possible problems and rebuild caches. */
-    public long fixIntegrity(DeckTask.ProgressCallback progressCallback) {
+    public long fixIntegrity(CollectionTask.ProgressCallback progressCallback) {
         File file = new File(mPath);
         ArrayList<String> problems = new ArrayList<>();
         long oldSize = file.length();
@@ -1925,8 +1925,8 @@ public class Collection {
     }
 
 
-    private void fixIntegrityProgress(DeckTask.ProgressCallback progressCallback, int current, int total) {
-        progressCallback.publishProgress(new DeckTask.TaskData(
+    private void fixIntegrityProgress(CollectionTask.ProgressCallback progressCallback, int current, int total) {
+        progressCallback.publishProgress(new CollectionTask.TaskData(
                 progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total));
     }
 

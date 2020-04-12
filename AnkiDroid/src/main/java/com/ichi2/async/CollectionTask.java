@@ -69,7 +69,7 @@ import timber.log.Timber;
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
  */
-public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData, DeckTask.TaskData> {
+public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, CollectionTask.TaskData, CollectionTask.TaskData> {
 
     public static final int TASK_TYPE_SAVE_COLLECTION = 2;
     public static final int TASK_TYPE_ANSWER_CARD = 3;
@@ -116,15 +116,15 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     /**
-     * The most recently started {@link DeckTask} instance.
+     * The most recently started {@link CollectionTask} instance.
      */
-    private static DeckTask sLatestInstance;
+    private static CollectionTask sLatestInstance;
 
     private static boolean sHadCardQueue = false;
 
 
     /**
-     * Starts a new {@link DeckTask}.
+     * Starts a new {@link CollectionTask}.
      * <p>
      * Tasks will be executed serially, in the order in which they are started.
      * <p>
@@ -135,9 +135,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      * @param params to pass to the task
      * @return the newly created task
      */
-    public static DeckTask launchDeckTask(int type, Listener listener, TaskData... params) {
+    public static CollectionTask launchDeckTask(int type, Listener listener, TaskData... params) {
         // Start new task
-        DeckTask newTask = new DeckTask(type, listener, sLatestInstance);
+        CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
         newTask.execute(params);
         return newTask;
     }
@@ -197,10 +197,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private final int mType;
     private final Listener mListener;
-    private DeckTask mPreviousTask;
+    private CollectionTask mPreviousTask;
 
 
-    public DeckTask(int type, Listener listener, DeckTask previousTask) {
+    public CollectionTask(int type, Listener listener, CollectionTask previousTask) {
         mType = type;
         mListener = listener;
         mPreviousTask = previousTask;
@@ -1037,7 +1037,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundRebuildCram");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         col.getSched().rebuildDyn(col.getDecks().selected());
-        return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(new Object[]{true}));
+        return doInBackgroundUpdateValuesFromDeck(new CollectionTask.TaskData(new Object[]{true}));
     }
 
 
@@ -1045,7 +1045,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundEmptyCram");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         col.getSched().emptyDyn(col.getDecks().selected());
-        return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(new Object[]{true}));
+        return doInBackgroundUpdateValuesFromDeck(new CollectionTask.TaskData(new Object[]{true}));
     }
 
 
@@ -1562,7 +1562,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     }
 
     /**
-     * Listener for the status and result of a {@link DeckTask}.
+     * Listener for the status and result of a {@link CollectionTask}.
      * <p>
      * Its methods are guaranteed to be invoked on the main thread.
      * <p>
@@ -1571,7 +1571,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public interface Listener {
 
         /** Invoked before the task is started. */
-        void onPreExecute(DeckTask task);
+        void onPreExecute(CollectionTask task);
 
 
         /**
@@ -1579,7 +1579,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
          * <p>
          * The semantics of the result depends on the task itself.
          */
-        void onPostExecute(DeckTask task, TaskData result);
+        void onPostExecute(CollectionTask task, TaskData result);
 
 
         /**
@@ -1587,7 +1587,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
          * <p>
          * The semantics of the update data depends on the task itself.
          */
-        void onProgressUpdate(DeckTask task, TaskData... values);
+        void onProgressUpdate(CollectionTask task, TaskData... values);
 
         /**
          * Invoked when the background task is cancelled.
@@ -1628,19 +1628,19 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
         @Override
-        public void onPreExecute(DeckTask task) {
+        public void onPreExecute(CollectionTask task) {
             onPreExecute();
         }
 
 
         @Override
-        public void onPostExecute(DeckTask task, TaskData result) {
+        public void onPostExecute(CollectionTask task, TaskData result) {
             onPostExecute(result);
         }
 
 
         @Override
-        public void onProgressUpdate(DeckTask task, TaskData... values) {
+        public void onProgressUpdate(CollectionTask task, TaskData... values) {
             onProgressUpdate(values);
         }
 
@@ -1655,10 +1655,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      */
     public class ProgressCallback {
         private Resources res;
-        private DeckTask task;
+        private CollectionTask task;
 
 
-        public ProgressCallback(DeckTask task, Resources res) {
+        public ProgressCallback(CollectionTask task, Resources res) {
             this.res = res;
             if (res != null) {
                 this.task = task;
@@ -1885,7 +1885,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
     }
 
-    public static synchronized DeckTask getInstance() {
+    public static synchronized CollectionTask getInstance() {
         return sLatestInstance;
     }
 }
