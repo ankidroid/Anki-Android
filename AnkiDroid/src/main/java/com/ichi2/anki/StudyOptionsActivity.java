@@ -136,7 +136,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
      */
     @Override
     public void onCreateCustomStudySession() {
-        // Sched already reset by DeckTask in CustomStudyDialog
+        // Sched already reset by CollectionTask in CustomStudyDialog
         getCurrentFragment().refreshInterface();
     }
 
