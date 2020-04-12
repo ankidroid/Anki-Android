@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CustomFontsReviewerExt implements ReviewerExt {
+public class ReviewerCustomFonts {
 
     private final String mCustomStyle;
     private String mDefaultFontStyle;
@@ -36,13 +36,11 @@ public class CustomFontsReviewerExt implements ReviewerExt {
     private String mThemeFontStyle;
     private String mDominantFontStyle;
 
-    public CustomFontsReviewerExt(Context context) {
+    public ReviewerCustomFonts(Context context) {
         Map<String, AnkiFont> customFontsMap = getCustomFontsMap(context);
         mCustomStyle = getCustomFontsStyle(customFontsMap) + getDominantFontStyle(context, customFontsMap);
     }
 
-
-    @Override
     public void updateCssStyle(StringBuilder cssStyle) {
         cssStyle.append(mCustomStyle);
     }
