@@ -87,6 +87,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -116,6 +117,7 @@ import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -1777,8 +1779,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         if (actionBar != null) {
-            String[] title = getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
-            actionBar.setTitle(title[title.length - 1]);
+            List<String> title = Decks.path(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
+            actionBar.setTitle(title.get(title.size() - 1));
             if (mPrefShowETA) {
                 int eta = mSched.eta(counts, false);
                 actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));

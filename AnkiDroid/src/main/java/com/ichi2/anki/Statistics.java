@@ -42,6 +42,7 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Stats;
 import com.ichi2.ui.SlidingTabLayout;
 
@@ -605,7 +606,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
             mDeckId = ((Statistics) getActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
-                List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
+                List<String> parts = Decks.path(col.getDecks().current().getString("name"));
                 if (sIsSubtitle) {
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(parts.get(parts.size() - 1));
                 } else {
