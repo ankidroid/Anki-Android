@@ -323,18 +323,25 @@ public class NoteEditor extends AnkiActivity {
             mSelectedTags = new ArrayList<>();
         }
         savedInstanceState.putStringArray("tags", mSelectedTags.toArray(new String[0]));
+        savedInstanceState.putBundle("editFields", getFieldsAsBundle());
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+    private Bundle getFieldsAsBundle() {
         Bundle fields = new Bundle();
         // Save the content of all the note fields. We use the field's ord as the key to
         // easily map the fields correctly later.
         if(mEditFields == null){
+            //DA - I don't believe that this is required. Needs testing
             mEditFields = new LinkedList<>();
         }
         for (FieldEditText e : mEditFields) {
             fields.putString(Integer.toString(e.getOrd()), e.getText().toString());
         }
-        savedInstanceState.putBundle("editFields", fields);
-        super.onSaveInstanceState(savedInstanceState);
+        return fields;
     }
+
 
     // Finish initializing the activity after the collection has been correctly loaded
     @Override
