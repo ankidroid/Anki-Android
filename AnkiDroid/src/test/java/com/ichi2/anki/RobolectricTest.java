@@ -17,6 +17,7 @@
 package com.ichi2.anki;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -24,10 +25,13 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
 
+import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Before;
+import org.robolectric.Robolectric;
+import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowDialog;
 import org.robolectric.shadows.ShadowLog;
 
@@ -90,5 +94,25 @@ public class RobolectricTest {
     protected JSONObject getCurrentDatabaseModelCopy(String modelName) throws JSONException {
         Models collectionModels = getCol().getModels();
         return new JSONObject(collectionModels.byName(modelName).toString().trim());
+    }
+
+    protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
+        ActivityController controller = Robolectric.buildActivity(clazz, i)
+                .create().start().resume().visible();
+        //noinspection unchecked
+        return (T) controller.get();
+    }
+
+    protected Note addNoteUsingBasicModel(String front, String back) {
+        JSONObject basicModel = getCol().getModels().byName("Basic");
+        //PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
+        //Saves a database trip afterwards.
+        Note n = getCol().newNote(basicModel);
+        n.setField(0, front);
+        n.setField(1, back);
+        if (getCol().addNote(n) != 1) {
+            throw new IllegalStateException(String.format("Could not add note: {'%s', '%s'}", front, back));
+        }
+        return n;
     }
 }

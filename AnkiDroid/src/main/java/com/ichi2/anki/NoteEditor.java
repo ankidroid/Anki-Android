@@ -28,6 +28,8 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
@@ -114,6 +116,7 @@ public class NoteEditor extends AnkiActivity {
     // * Consider persistence strategy for temporary media. Saving after multimedia edit is probably too early, but
     // we don't want to risk the cache being cleared. Maybe add in functionality to remove from collection if added and
     // the action is cancelled?
+    // kill sCardBrowserCard and AbstractFlashcardViewer.getEditorCard()
 
 
 //    public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
@@ -1037,6 +1040,7 @@ public class NoteEditor extends AnkiActivity {
                     else {
                         fieldEditText.getText().append(field.getFormattedValue());
                     }
+                    //DA - I think we only want to save the field here, not the note.
                     NoteService.saveMedia(col, mNote);
                     mChanged = true;
                 }
@@ -1064,8 +1068,22 @@ public class NoteEditor extends AnkiActivity {
     /** @param col Readonly variable to get cache dir */
     private MultimediaEditableNote getCurrentMultimediaEditableNote(Collection col) {
         MultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-        NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
+
+        String[] fields = getCurrentFieldStrings();
+        NoteService.updateMultimediaNoteFromFields(col, fields, mEditorNote.getMid(), mNote);
         return mNote;
+    }
+
+
+    private String[] getCurrentFieldStrings() {
+        if (mEditFields == null) {
+            return new String[0];
+        }
+        String[] ret = new String[mEditFields.size()];
+        for (int i = 0; i < mEditFields.size(); i++) {
+            ret[i] = mEditFields.get(i).getText().toString();
+        }
+        return ret;
     }
 
 
@@ -1174,9 +1192,7 @@ public class NoteEditor extends AnkiActivity {
                         }
                         case R.id.menu_multimedia_text: {
                             Timber.i("NoteEditor:: Advanced editor button pressed");
-                            TextField field = new TextField();
-                            field.setText(mEditFields.get(index).getText().toString());
-                            startMultimediaFieldEditorForField(index, field);
+                            startAdvancedTextEditor(index);
                             return true;
                         }
                         default:
@@ -1694,5 +1710,17 @@ public class NoteEditor extends AnkiActivity {
         public void onDestroyActionMode(ActionMode mode) {
             // Left empty on purpose
         }
+    }
+
+    @VisibleForTesting
+    void startAdvancedTextEditor(int index) {
+        TextField field = new TextField();
+        field.setText(mEditFields.get(index).getText().toString());
+        startMultimediaFieldEditorForField(index, field);
+    }
+
+    @VisibleForTesting
+    void setFieldValueFromUi(int i, String newText) {
+        mEditFields.get(i).setText(newText);
     }
 }

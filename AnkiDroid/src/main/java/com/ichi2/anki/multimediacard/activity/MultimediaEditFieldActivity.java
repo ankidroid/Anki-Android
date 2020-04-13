@@ -96,13 +96,19 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             setSupportActionBar(toolbar);
         }
 
-        mField = (IField) this.getIntent().getExtras().getSerializable(EXTRA_FIELD);
+        Intent intent = this.getIntent();
+        mField = getFieldFromIntent(intent);
 
-        mNote = (IMultimediaEditableNote) this.getIntent().getSerializableExtra(EXTRA_WHOLE_NOTE);
+        mNote = (IMultimediaEditableNote) intent.getSerializableExtra(EXTRA_WHOLE_NOTE);
 
-        mFieldIndex = this.getIntent().getIntExtra(EXTRA_FIELD_INDEX, 0);
+        mFieldIndex = intent.getIntExtra(EXTRA_FIELD_INDEX, 0);
 
         recreateEditingUi(ChangeUIRequest.init(mField));
+    }
+
+    @VisibleForTesting
+    public static IField getFieldFromIntent(Intent intent) {
+        return (IField) intent.getExtras().getSerializable(EXTRA_FIELD);
     }
 
 
