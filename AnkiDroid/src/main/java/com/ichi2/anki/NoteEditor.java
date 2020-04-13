@@ -106,6 +106,15 @@ import timber.log.Timber;
  */
 @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
 public class NoteEditor extends AnkiActivity {
+    // DA 2020-04-13 - Refactoring Plans once tested:
+    // * There is a difference in functionality depending on whether we are editing
+    // * Extract mAddNote and mCurrentEditedCard into inner class. Gate mCurrentEditedCard on edit state.
+    // * Possibly subclass
+    // * Make this in memory and immutable for metadata, it's hard to reason about our state if we're modifying col
+    // * Consider persistence strategy for temporary media. Saving after multimedia edit is probably too early, but
+    // we don't want to risk the cache being cleared. Maybe add in functionality to remove from collection if added and
+    // the action is cancelled?
+
 
 //    public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
 //    public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
