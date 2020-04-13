@@ -54,7 +54,7 @@ public class DB {
     private static SupportSQLiteOpenHelper.Factory sqliteOpenHelperFactory = null;
 
     /**
-     * The deck, which is actually an SQLite database.
+     * The collection, which is actually an SQLite database.
      */
     private SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
@@ -227,7 +227,7 @@ public class DB {
 
     /**
      * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
-     * the specified class. See Deck.initUndo() for a usage example.
+     * the specified class.
      *
      * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
