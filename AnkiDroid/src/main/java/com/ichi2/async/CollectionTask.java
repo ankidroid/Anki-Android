@@ -109,6 +109,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     public static final int TASK_TYPE_SAVE_MODEL = 47;
     public static final int TASK_TYPE_FIND_EMPTY_CARDS = 48;
     public static final int TASK_TYPE_CHECK_CARD_SELECTION = 49;
+    public static final int TASK_TYPE_SCHED_RESET = 50;
     public static final int TASK_TYPE_LOAD_NEXT_CARD = 52;
 
     /**
@@ -352,6 +353,8 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 return doInBackGroundFindEmptyCards(params);
             case TASK_TYPE_CHECK_CARD_SELECTION:
                 return doInBackgroundCheckCardSelection(params);
+            case TASK_TYPE_SCHED_RESET:
+                return doInBackgroundReset(params);
             case TASK_TYPE_LOAD_NEXT_CARD:
                 return doInBackgroundLoadNextCard(params);
 
@@ -1562,6 +1565,12 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
 
         return new TaskData(new Object[] { hasUnsuspended, hasUnmarked});
+    }
+
+    public TaskData doInBackgroundReset(TaskData... params) {
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        col.getSched().reset();
+        return null;
     }
 
     public TaskData doInBackgroundLoadNextCard(TaskData... params) {
