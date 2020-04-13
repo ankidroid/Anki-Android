@@ -1020,8 +1020,7 @@ public class NoteEditor extends AnkiActivity {
                     Bundle extras = data.getExtras();
                     int index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX);
                     IField field = (IField) extras.get(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD);
-                    MultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-                    NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
+                    MultimediaEditableNote mNote = getCurrentMultimediaEditableNote(col);
                     mNote.setField(index, field);
                     FieldEditText fieldEditText = mEditFields.get(index);
                     // Completely replace text for text fields (because current text was passed in)
@@ -1061,6 +1060,14 @@ public class NoteEditor extends AnkiActivity {
             }
         }
     }
+
+    /** @param col Readonly variable to get cache dir */
+    private MultimediaEditableNote getCurrentMultimediaEditableNote(Collection col) {
+        MultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
+        NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
+        return mNote;
+    }
+
 
     private void populateEditFields() {
         String[][] fields;
@@ -1139,10 +1146,8 @@ public class NoteEditor extends AnkiActivity {
                 final Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
-                IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-                NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
-                IField field = mNote.getField(index);
-                startMultimediaFieldEditor(index, mNote, field);
+                IMultimediaEditableNote mNote = getCurrentMultimediaEditableNote(col);
+                startMultimediaFieldEditor(index, mNote);
             } else {
                 // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
                 // TODO: Update the icons for dark material theme, then can set 3rd argument to true
@@ -1190,10 +1195,9 @@ public class NoteEditor extends AnkiActivity {
 
     private void startMultimediaFieldEditorForField(int index, IField field) {
         Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
-        IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-        NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
+        IMultimediaEditableNote mNote = getCurrentMultimediaEditableNote(col);
         mNote.setField(index, field);
-        startMultimediaFieldEditor(index, mNote, field);
+        startMultimediaFieldEditor(index, mNote);
     }
 
 
@@ -1240,7 +1244,8 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void startMultimediaFieldEditor(final int index, IMultimediaEditableNote mNote, IField field) {
+    private void startMultimediaFieldEditor(final int index, IMultimediaEditableNote mNote) {
+        IField field = mNote.getField(index);
         Intent editCard = new Intent(NoteEditor.this, MultimediaEditFieldActivity.class);
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, index);
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field);
