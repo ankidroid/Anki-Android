@@ -253,6 +253,9 @@
     <string name="help_title_send_exception">Send troubleshooting report</string>
     <string name="help_dialog_exception_report_debounce">Report already submitted</string>
 
+    <string name="visual_editor_could_not_start_add_image" tools:ignore="MissingTranslation">Unable to add image</string>
+    <string name="visual_editor_could_not_start_add_audio" tools:ignore="MissingTranslation">Unable to add audio</string>
+
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>
