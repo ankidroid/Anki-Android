@@ -859,7 +859,7 @@ public class Decks {
             ja.put(n);
         }
         mCol.getConf().put("activeDecks", ja);
-        mChanged = true;
+        mCol.setMod();
     }
 
 
