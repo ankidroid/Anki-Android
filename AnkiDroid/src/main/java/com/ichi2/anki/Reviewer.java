@@ -171,7 +171,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             setWhiteboardVisibility(whiteboardVisibility);
         }
 
-        col.getSched().planifyReset();     // Reset schedule in case card was previously loaded
+        mSched.planifyReset();     // Reset schedule in case card was previously loaded
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
                 new CollectionTask.TaskData(null, 0));
 
