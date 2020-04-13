@@ -178,7 +178,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         if (!mSchedResetDone) {
-            col.getSched().reset();     // Reset schedule in case card was previously loaded
+            mSched.reset();     // Reset schedule in case card was previously loaded
             mSchedResetDone = false;
         }
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
