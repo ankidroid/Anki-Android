@@ -34,8 +34,8 @@ public final class TtsParser {
     }
 
     private static void parseTtsElements(Element element, List<LocalisedText> textsToRead) {
-        if (element.tagName().equalsIgnoreCase("tts") &&
-                element.attr("service").equalsIgnoreCase("android")) {
+        if ("tts".equalsIgnoreCase(element.tagName()) &&
+                "android".equalsIgnoreCase(element.attr("service"))) {
             textsToRead.add(new LocalisedText(element.text(), element.attr("voice")));
             return; // ignore any children
         }
