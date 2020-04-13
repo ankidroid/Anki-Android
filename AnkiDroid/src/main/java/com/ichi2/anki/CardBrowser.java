@@ -251,13 +251,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     };
 
 
-    private CollectionTask.TaskListener mRepositionCardHandler = new CollectionTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            Timber.d("CardBrowser::RepositionCardHandler() onPreExecute");
-        }
-
-
+    private CollectionTask.TaskListener mRepositionCardHandler = new CollectionTask.TimberClassListener("CardBrowser::RepositionCardHandler()") {
         @Override
         public void onPostExecute(CollectionTask.TaskData result) {
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute");
@@ -268,16 +262,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mResetProgressCardHandler = new CollectionTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            Timber.d("CardBrowser::ResetProgressCardHandler() onPreExecute");
-        }
-
-
-        @Override
+    private CollectionTask.TaskListener mResetProgressCardHandler = new CollectionTask.TimberClassListener("CardBrowser::ResetProgressCardHandler()") {
+     @Override
         public void onPostExecute(CollectionTask.TaskData result) {
-            Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute");
+            super.onPostExecute(result);
             mReloadRequired = true;
             int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(CardBrowser.this,
@@ -285,16 +273,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mRescheduleCardHandler = new CollectionTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            Timber.d("CardBrowser::RescheduleCardHandler() onPreExecute");
-        }
-
-
+    private CollectionTask.TaskListener mRescheduleCardHandler = new CollectionTask.TimberClassListener("CardBrowser::RescheduleCardHandler()") {
         @Override
         public void onPostExecute(CollectionTask.TaskData result) {
-            Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute");
+            super.onPostExecute(result);
             mReloadRequired = true;
             int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(CardBrowser.this,

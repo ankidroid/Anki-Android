@@ -1650,6 +1650,21 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
     }
 
+    public static class TimberClassListener extends TaskListener {
+        private String mTaskName;
+
+        public TimberClassListener(String taskName) {
+            mTaskName = taskName;
+        }
+
+        public void onPreExecute(){
+            Timber.d(mTaskName + ": onPreExecute");
+        };
+        public void onPostExecute(TaskData result){
+            Timber.d(mTaskName + ": onPostExecute");
+        }
+    }
+
     /**
      * Helper class for allowing inner function to publish progress of an AsyncTask.
      */
