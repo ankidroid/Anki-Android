@@ -1,6 +1,7 @@
 package com.ichi2.anki.cardviewer;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.themes.Themes;
@@ -67,6 +68,12 @@ public class CardAppearance {
      * @return The resultant text with SMP characters converted to entities
      */
     public static String convertSmpToHtmlEntity(String text) {
+        //This is believed to be unused on current WebViews. See discussion:
+        //SMP fails on my Anki Desktop, and displays fine to me without this patch.
+        //https://github.com/ankidroid/Anki-Android/pull/5988#issuecomment-612683552
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return text;
+        }
         StringBuffer sb = new StringBuffer();
         Matcher m = Pattern.compile("([^\u0000-\uFFFF])").matcher(text);
         while (m.find()) {
