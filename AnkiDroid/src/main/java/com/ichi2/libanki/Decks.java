@@ -551,7 +551,7 @@ public class Decks {
     private static HashMap<String, String[]> pathCache = new HashMap();
     public static String[] path(String name) {
         if (!pathCache.containsKey(name)) {
-            pathCache.put(name, path(name));
+            pathCache.put(name, name.split("::", -1));
         }
         return pathCache.get(name);
     }

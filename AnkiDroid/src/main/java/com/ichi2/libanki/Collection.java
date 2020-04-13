@@ -1068,8 +1068,8 @@ public class Collection {
         fields.put("Tags", ((String) data[5]).trim());
         fields.put("Type", (String) model.get("name"));
         fields.put("Deck", mDecks.name((Long) data[3]));
-        String[] parents = Decks.path(fields.get("Deck"));
-        fields.put("Subdeck", parents[parents.length-1]);
+        String baseName = Decks.basename(fields.get("Deck"));
+        fields.put("Subdeck", baseName);
         fields.put("CardFlag", _flagNameFromCardFlags((Integer) data[7]));
         JSONObject template;
         if (model.getInt("type") == Consts.MODEL_STD) {
