@@ -8,6 +8,10 @@ body.night_mode {
   background-color: black;
 }
 
+body.ankidroid_dark_mode {
+  background-color: #303030;
+}
+
 #content {
   margin: 0.5em;
 }
@@ -52,6 +56,10 @@ body.night_mode {
 
 .night_mode .typeBad {
   background-color: #905050;
+}
+
+.ankidroid_dark_mode input#typeans {
+  background-color: #303030;
 }
 
 .replaybutton {
@@ -110,3 +118,25 @@ scale up, but not down.  */
 .night_mode .replaybutton svg {
   fill: white;
 }
+
+#_mark_flag {
+  top: 0;
+  font-size: 30px;
+  display: block;
+  -webkit-text-stroke: 1px black;
+  margin: 10px;
+}
+
+#_flag {
+  display: none;
+  right: 10px;
+  float: right;
+}
+
+#_mark {
+  display: none;
+  left: 10px;
+  float: left;
+  color: yellow;
+}
+

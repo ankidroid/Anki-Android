@@ -1,11 +1,14 @@
 
 package com.ichi2.compat;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.Window;
 import android.webkit.CookieManager;
@@ -44,6 +47,7 @@ public class CompatV21 extends CompatV19 implements Compat {
     }
 
     @Override
+    @SuppressLint("NewApi")
     public int getCameraCount() {
         CameraManager cameraManager = (CameraManager)AnkiDroidApp.getInstance().getApplicationContext()
                 .getSystemService(Context.CAMERA_SERVICE);
@@ -55,5 +59,15 @@ public class CompatV21 extends CompatV19 implements Compat {
             Timber.e(e, "Unable to enumerate cameras");
         }
         return 0;
+    }
+
+    @Override
+    public Object initTtsParams() {
+        return new Bundle();
+    }
+
+    @Override
+    public int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId) {
+        return tts.speak(text, queueMode, (Bundle) ttsParams, utteranceId);
     }
 }

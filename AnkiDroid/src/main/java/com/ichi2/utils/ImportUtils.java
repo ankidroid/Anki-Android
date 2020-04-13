@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
@@ -40,59 +42,89 @@ public class ImportUtils {
         // This intent is used for opening apkg package files
         // We want to go immediately to DeckPicker, clearing any history in the process
         Timber.i("IntentHandler/ User requested to view a file");
+        String extras = intent.getExtras() == null ? "none" : TextUtils.join(", ", intent.getExtras().keySet());
+        Timber.i("Intent: %s. Data: %s", intent, extras);
+
+        try {
+            return handleFileImportInternal(context, intent);
+        } catch (Exception e) {
+            AnkiDroidApp.sendExceptionReport(e, "handleFileImport");
+            Timber.e(e, "failed to handle import intent");
+            return context.getString(R.string.import_error_exception, e.getLocalizedMessage());
+        }
+    }
+
+    //Added to remove exception handlers
+    private static String handleFileImportInternal(Context context, Intent intent) {
         String errorMessage = null;
+
+        if (intent.getData() == null) {
+            Timber.i("No intent data. Attempting to read clip data.");
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN
+                    || intent.getClipData() == null
+                    || intent.getClipData().getItemCount() == 0) {
+                return context.getString(R.string.import_error_unhandled_request);
+            }
+            Uri clipUri = intent.getClipData().getItemAt(0).getUri();
+            return handleContentProviderFile(context, intent, clipUri);
+        }
+
         // If the file is being sent from a content provider we need to read the content before we can open the file
-        if (intent.getData().getScheme().equals("content")) {
-            // Get the original filename from the content provider URI
-            String filename = null;
-            Cursor cursor = null;
-            try {
-                cursor = context.getContentResolver().query(intent.getData(), new String[]{OpenableColumns.DISPLAY_NAME}, null, null, null);
-                if (cursor != null && cursor.moveToFirst()) {
-                    filename = cursor.getString(0);
-                    Timber.d("handleFileImport() Importing from content provider: %s", filename);
-                }
-            } finally {
-                if (cursor != null)
-                    cursor.close();
-            }
-
-            // Hack to fix bug where ContentResolver not returning filename correctly
-            if (filename == null) {
-                if (intent.getType().equals("application/apkg") || ImportUtils.hasValidZipFile(context, intent)) {
-                    // Set a dummy filename if MIME type provided or is a valid zip file
-                    filename = "unknown_filename.apkg";
-                    Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue");
-                } else {
-                    Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile");
-                    AnkiDroidApp.sendExceptionReport(new RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed");
-                    errorMessage = AnkiDroidApp.getAppResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing");
-                }
-            }
-
-            if ((filename != null) && !filename.toLowerCase().endsWith(".apkg")) {
-                // Don't import if not apkg file
-                errorMessage = context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
-            } else if (filename != null) {
-                // Copy to temporary file
-                String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
-                errorMessage = ImportUtils.copyFileToCache(context, intent, tempOutDir) ? null : "copyFileToCache() failed";
-                // Show import dialog
-                if (errorMessage == null) {
-                    ImportUtils.sendShowImportFileDialogMsg(tempOutDir);
-                } else {
-                    AnkiDroidApp.sendExceptionReport(new RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed");
-                }
-            }
-        } else if (intent.getData().getScheme().equals("file")) {
+        if ("content".equals(intent.getData().getScheme())) {
+            Timber.i("Attempting to read content from intent.");
+            return handleContentProviderFile(context, intent, intent.getData());
+        } else if ("file".equals(intent.getData().getScheme())) {
+            Timber.i("Attempting to read file from intent.");
             // When the VIEW intent is sent as a file, we can open it directly without copying from content provider
             String filename = intent.getData().getPath();
             Timber.d("Importing regular file: %s", filename);
-            if (filename != null && filename.endsWith(".apkg")) {
+            if (isValidPackageName(filename)) {
                 // If file has apkg extension then send message to show Import dialog
                 ImportUtils.sendShowImportFileDialogMsg(filename);
             } else {
                 errorMessage = context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
+            }
+        }
+        return errorMessage;
+    }
+
+
+    private static String handleContentProviderFile(Context context, Intent intent, Uri data) {
+        // Get the original filename from the content provider URI
+        String errorMessage = null;
+        String filename = null;
+        try (Cursor cursor = context.getContentResolver().query(data, new String[] {OpenableColumns.DISPLAY_NAME}, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                filename = cursor.getString(0);
+                Timber.d("handleFileImport() Importing from content provider: %s", filename);
+            }
+        }
+
+        // Hack to fix bug where ContentResolver not returning filename correctly
+        if (filename == null) {
+            if (intent.getType() != null && ("application/apkg".equals(intent.getType()) || ImportUtils.hasValidZipFile(context, intent))) {
+                // Set a dummy filename if MIME type provided or is a valid zip file
+                filename = "unknown_filename.apkg";
+                Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue");
+            } else {
+                Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile");
+                AnkiDroidApp.sendExceptionReport(new RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed");
+                errorMessage = AnkiDroidApp.getAppResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing");
+            }
+        }
+
+        if (!isValidPackageName(filename)) {
+            // Don't import if file doesn't have an Anki package extension
+            errorMessage = context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
+        } else if (filename != null) {
+            // Copy to temporary file
+            String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
+            errorMessage = ImportUtils.copyFileToCache(context, intent, tempOutDir) ? null : "copyFileToCache() failed (possibly out of storage space)";
+            // Show import dialog
+            if (errorMessage == null) {
+                ImportUtils.sendShowImportFileDialogMsg(tempOutDir);
+            } else {
+                AnkiDroidApp.sendExceptionReport(new RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed");
             }
         }
         return errorMessage;
@@ -129,7 +161,7 @@ public class ImportUtils {
         Bundle msgData = new Bundle();
         msgData.putString("importPath", path);
         handlerMessage.setData(msgData);
-        if ("collection.apkg".equals(filename)) {
+        if (isCollectionPackage(filename)) {
             // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
             handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG;
         } else {
@@ -138,6 +170,18 @@ public class ImportUtils {
         }
         // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
         DialogHandler.storeMessage(handlerMessage);
+    }
+
+    public static boolean isCollectionPackage(String filename) {
+        return filename != null && (filename.toLowerCase().endsWith(".colpkg") || "collection.apkg".equals(filename));
+    }
+
+    private static boolean isDeckPackage(String filename) {
+        return filename != null && filename.toLowerCase().endsWith(".apkg") && !"collection.apkg".equals(filename);
+    }
+
+    public static boolean isValidPackageName(String filename) {
+        return isDeckPackage(filename) || isCollectionPackage(filename);
     }
 
     /**

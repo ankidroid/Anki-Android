@@ -234,7 +234,8 @@ public class Whiteboard extends View {
 
     private void createBitmap() {
         // To fix issue #1336, just make the whiteboard big and square.
-        int bitmapSize = Math.max(getDisplayWidth(), getDisplayHeight());
+        final Point p = getDisplayDimenions();
+        int bitmapSize = Math.max(p.x, p.y);
         if (mMonochrome && !mInvertedColors) {
             createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ALPHA_8);
         } else {
@@ -342,22 +343,12 @@ public class Whiteboard extends View {
         return false;
     }
 
-
-    private static int getDisplayHeight() {
+    private static Point getDisplayDimenions() {
         Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
                 getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point point = new Point();
         display.getSize(point);
-        return point.y;
-    }
-
-
-    private static int getDisplayWidth() {
-        Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
-                getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-        return point.x;
+        return point;
     }
 
     /**

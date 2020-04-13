@@ -31,7 +31,7 @@
             android:key="deckPath"
             android:summary="@string/preference_summary_literal"
             android:title="@string/col_path" />
-        <Preference
+        <com.ichi2.ui.ConfirmationPreference
             android:key="force_full_sync"
             android:title="@string/force_full_sync_title"
             android:summary="@string/force_full_sync_summary" />
@@ -67,6 +67,12 @@
                 android:key="fixHebrewText"
                 android:summary="@string/fix_hebrew_text_summ"
                 android:title="@string/fix_hebrew_text" />
+            <!-- Workaround for #5533 -->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="disableExtendedTextUi"
+                android:summary="@string/disable_extended_text_ui_summ"
+                android:title="@string/disable_extended_text_ui" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_plugins"
@@ -76,6 +82,11 @@
                 android:key="providerEnabled"
                 android:summary="@string/enable_api_summary"
                 android:title="@string/enable_api_title"/>
+            <Preference
+                android:key="thirdpartyapps_link"
+                android:summary="@string/thirdparty_apps_summary"
+                android:title="@string/thirdparty_apps_title">
+            </Preference>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="tts"
@@ -86,7 +97,6 @@
                 android:entries="@array/dictionary_labels"
                 android:entryValues="@array/dictionary_values"
                 android:key="dictionary"
-                android:summary="@string/preference_summary_literal"
                 android:title="@string/dictionary" />
             <com.ichi2.preferences.CustomDialogPreference
                 android:dialogIcon="@drawable/ic_dialog_alert"
@@ -124,6 +134,10 @@
         </PreferenceCategory>
 
 
+    <CheckBoxPreference
+        android:key="schedVer"
+        android:title="@string/sched_ver"
+        android:summary="@string/sched_ver_summ" />
     <Preference
         android:key="about_dialog_preference"
         android:title="@string/about_title">

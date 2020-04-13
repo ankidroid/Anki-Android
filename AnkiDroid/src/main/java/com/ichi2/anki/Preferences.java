@@ -22,6 +22,7 @@ package com.ichi2.anki;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -46,6 +47,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
@@ -59,19 +61,21 @@ import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
+import com.ichi2.ui.ConfirmationPreference;
 import com.ichi2.ui.SeekBarPreference;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.VersionUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -94,10 +98,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     /** Key of the language preference */
     public static final String LANGUAGE = "language";
 
+    /* Only enable AnkiDroid notifications unrelated to due reminders */
+    public static final int PENDING_NOTIFICATIONS_ONLY = 1000000;
+
     // Other variables
     private final HashMap<String, String> mOriginalSumarries = new HashMap<>();
     private static final String [] sCollectionPreferences = {"showEstimates", "showProgress",
-            "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset"};
+            "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer"};
 
 
     // ----------------------------------------------------------------------------
@@ -121,6 +128,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preference_headers, target);
+        Iterator iterator = target.iterator();
+        while (iterator.hasNext()) {
+            Header header = (Header)iterator.next();
+            if ((header.titleRes == R.string.pref_cat_advanced) && AdaptionUtil.hasReducedPreferences()){
+                iterator.remove();
+            }
+        }
     }
 
 
@@ -180,13 +194,20 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         i.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
         return i;
     }
-
     private void initSubscreen(String action, PreferenceContext listener) {
         PreferenceScreen screen;
         switch (action) {
             case "com.ichi2.anki.prefs.general":
                 listener.addPreferencesFromResource(R.xml.preferences_general);
                 screen = listener.getPreferenceScreen();
+                if (AdaptionUtil.hasReducedPreferences()) {
+                    CheckBoxPreference mCheckBoxPref_Vibrate = (CheckBoxPreference) screen.findPreference("widgetVibrate");
+                    CheckBoxPreference mCheckBoxPref_Blink = (CheckBoxPreference) screen.findPreference("widgetBlink");
+                    PreferenceCategory mCategory = (PreferenceCategory) screen.findPreference("category_general_notification_pref");
+                    mCategory.removePreference(mCheckBoxPref_Vibrate);
+                    mCategory.removePreference(mCheckBoxPref_Blink);
+                }
+
                 // Build languages
                 initializeLanguageDialog(screen);
                 break;
@@ -198,7 +219,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         screen.findPreference("fullscreenMode");
                 fullscreenPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                     SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(Preferences.this);
-                    if (prefs.getBoolean("gestures", false) || !newValue.equals("2")) {
+                    if (prefs.getBoolean("gestures", false) || !"2".equals(newValue)) {
                         return true;
                     } else {
                         Toast.makeText(getApplicationContext(),
@@ -241,6 +262,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     edit.remove("customButtonDeckOptions");
                     edit.remove("customButtonBury");
                     edit.remove("customButtonSuspend");
+                    edit.remove("customButtonFlag");
                     edit.remove("customButtonDelete");
                     edit.remove("customButtonClearWhiteboard");
                     edit.remove("customButtonShowHideWhiteboard");
@@ -309,20 +331,21 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     screen.addPreference(analyticsDebugMode);
                 }
                 // Force full sync option
-                Preference fullSyncPreference = screen.findPreference("force_full_sync");
-                fullSyncPreference.setOnPreferenceClickListener(preference -> {
+                ConfirmationPreference fullSyncPreference = (ConfirmationPreference)screen.findPreference("force_full_sync");
+                fullSyncPreference.setDialogMessage(R.string.force_full_sync_summary);
+                fullSyncPreference.setDialogTitle(R.string.force_full_sync_title);
+                fullSyncPreference.setOkHandler(() -> {
                     if (getCol() == null) {
-                        Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
-                        return false;
+                        Toast.makeText(getApplicationContext(), R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+                        return;
                     }
-                    // TODO: Could be useful to show the full confirmation dialog
                     getCol().modSchemaNoCheck();
                     getCol().setMod();
                     Toast.makeText(getApplicationContext(), android.R.string.ok, Toast.LENGTH_SHORT).show();
-                    return true;
                 });
                 // Workaround preferences
                 removeUnnecessaryAdvancedPrefs(screen);
+                addThirdPartyAppsListener(screen);
                 break;
             case "com.ichi2.anki.prefs.custom_sync_server":
                 getSupportActionBar().setTitle(R.string.custom_sync_server_title);
@@ -333,6 +356,25 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 listener.addPreferencesFromResource(R.xml.preferences_advanced_statistics);
                 break;
         }
+    }
+
+
+    private void addThirdPartyAppsListener(PreferenceScreen screen) {
+        //#5864 - some people don't have a browser so we can't use <intent>
+        //and need to handle the keypress ourself.
+        Preference showThirdParty = screen.findPreference("thirdpartyapps_link");
+        final String githubThirdPartyAppsUrl = "https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps";
+        showThirdParty.setOnPreferenceClickListener((preference) -> {
+            try {
+                Intent openThirdPartyAppsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(githubThirdPartyAppsUrl));
+                super.startActivity(openThirdPartyAppsIntent);
+            } catch (ActivityNotFoundException e) {
+                //We use a different message here. We have limited space in the snackbar
+                String error = getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl);
+                UIUtils.showSimpleSnackbar(this, error, false);
+            }
+            return true;
+        });
     }
 
 
@@ -395,9 +437,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             calendar.setTimeInMillis(timestamp.getTime());
                             ((SeekBarPreference)pref).setValue(calendar.get(Calendar.HOUR_OF_DAY));
                             break;
+                        case "schedVer":
+                            ((CheckBoxPreference)pref).setChecked(conf.optInt("schedVer", 1) == 2);
                     }
-                } catch (JSONException | NumberFormatException e) {
-                    throw new RuntimeException();
+                } catch (NumberFormatException e) {
+                    throw new RuntimeException(e);
                 }
             } else {
                 // Disable Col preferences if Collection closed
@@ -482,7 +526,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().setMod();
                     break;
                 case "useCurrent":
-                    getCol().getConf().put("addToCur", ((ListPreference) pref).getValue().equals("0"));
+                    getCol().getConf().put("addToCur", "0".equals(((ListPreference) pref).getValue()));
                     getCol().setMod();
                     break;
                 case "dayOffset": {
@@ -500,7 +544,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     ListPreference listpref = (ListPreference) screen.findPreference("minimumCardsDueForNotification");
                     if (listpref != null) {
                         updateNotificationPreference(listpref);
-                        if (Integer.valueOf(listpref.getValue()) < 1000000) {
+                        if (Integer.valueOf(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
                             BootService.scheduleNotification(this);
                         } else {
                             PendingIntent intent = PendingIntent.getBroadcast(this, 0,
@@ -547,13 +591,64 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP);
                     break;
                 }
+                case "schedVer": {
+                    boolean wantNew = ((CheckBoxPreference) pref).isChecked();
+                    boolean haveNew = getCol().schedVer() == 2;
+                    // northing to do?
+                    if (haveNew == wantNew) {
+                        break;
+                    }
+                    MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
+                    if (haveNew && !wantNew) {
+                        // Going back to V1
+                        builder.title(R.string.sched_ver_toggle_title);
+                        builder.content(R.string.sched_ver_2to1);
+                        builder.onPositive((dialog, which) -> {
+                            getCol().modSchemaNoCheck();
+                            try {
+                                getCol().changeSchedulerVer(1);
+                                ((CheckBoxPreference) pref).setChecked(false);
+                            } catch (ConfirmModSchemaException e2) {
+                                // This should never be reached as we explicitly called modSchemaNoCheck()
+                                throw new RuntimeException(e2);
+                            }
+                        });
+                        builder.onNegative((dialog, which) -> {
+                            ((CheckBoxPreference) pref).setChecked(true);
+                        });
+                        builder.positiveText(R.string.dialog_ok);
+                        builder.negativeText(R.string.dialog_cancel);
+                        builder.show();
+                        break;
+                    }
+                    // Going to V2
+                    builder.title(R.string.sched_ver_toggle_title);
+                    builder.content(R.string.sched_ver_1to2);
+                    builder.onPositive((dialog, which) -> {
+                        getCol().modSchemaNoCheck();
+                        try {
+                            getCol().changeSchedulerVer(2);
+                            ((CheckBoxPreference) pref).setChecked(true);
+                        } catch (ConfirmModSchemaException e2) {
+                            // This should never be reached as we explicitly called modSchemaNoCheck()
+                            throw new RuntimeException(e2);
+                        }
+                    });
+                    builder.onNegative((dialog, which) -> {
+                        ((CheckBoxPreference) pref).setChecked(false);
+                    });
+                    builder.positiveText(R.string.dialog_ok);
+                    builder.negativeText(R.string.dialog_cancel);
+                    builder.show();
+                    break;
+                }
             }
             // Update the summary text to reflect new value
             updateSummary(pref);
         } catch (BadTokenException e) {
             Timber.e(e, "Preferences: BadTokenException on showDialog");
-        } catch (NumberFormatException | JSONException e) {
-            throw new RuntimeException();
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -614,11 +709,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         // Get summary text
         String oldSummary = mOriginalSumarries.get(pref.getKey());
         // Replace summary text with value according to some rules
-        if (oldSummary.equals("")) {
+        if ("".equals(oldSummary)) {
             pref.setSummary(value);
-        } else if (value.equals("")) {
+        } else if ("".equals(value)) {
             pref.setSummary(oldSummary);
-        } else if (pref.getKey().equals("minimumCardsDueForNotification")) {
+        } else if ("minimumCardsDueForNotification".equals(pref.getKey())) {
             pref.setSummary(replaceStringIfNumeric(oldSummary, value));
         } else {
             pref.setSummary(replaceString(oldSummary, value));

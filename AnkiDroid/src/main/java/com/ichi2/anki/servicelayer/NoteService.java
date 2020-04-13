@@ -20,7 +20,8 @@
 package com.ichi2.anki.servicelayer;
 
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.fields.AudioField;
+import com.ichi2.anki.multimediacard.fields.AudioClipField;
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
@@ -28,9 +29,9 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,8 +78,10 @@ public class NoteService {
                 IField field = null;
                 if (value.startsWith("<img")) {
                     field = new ImageField();
+                } else if (value.startsWith("[sound:") && value.contains("rec")) {
+                    field = new AudioRecordingField();
                 } else if (value.startsWith("[sound:")) {
-                    field = new AudioField();
+                    field = new AudioClipField();
                 } else {
                     field = new TextField();
                 }
@@ -156,7 +159,8 @@ public class NoteService {
     private static void importMediaToDirectory(Collection col, IField field) {
         String tmpMediaPath = null;
         switch (field.getType()) {
-            case AUDIO:
+            case AUDIO_RECORDING:
+            case AUDIO_CLIP:
                 tmpMediaPath = field.getAudioPath();
                 break;
 
@@ -179,7 +183,8 @@ public class NoteService {
                         inFile.delete();
                     }
                     switch (field.getType()) {
-                        case AUDIO:
+                        case AUDIO_RECORDING:
+                        case AUDIO_CLIP:
                             field.setAudioPath(outFile.getAbsolutePath());
                             break;
                         case IMAGE:

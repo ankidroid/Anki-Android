@@ -21,14 +21,15 @@ import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.ichi2.anki.R;
-import com.ichi2.async.DeckTask;
+import com.ichi2.anki.exception.ImportExportException;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -90,7 +91,7 @@ public class Anki2Importer extends Importer {
 
 
     @Override
-    public void run() {
+    public void run() throws ImportExportException {
         publishProgress(0, 0, 0);
         try {
             _prepareFiles();
@@ -101,13 +102,26 @@ public class Anki2Importer extends Importer {
             }
         } catch (RuntimeException e) {
             Timber.e(e, "RuntimeException while importing");
+            throw new ImportExportException(e.getMessage());
         }
     }
 
 
-    private void _prepareFiles() {
+    private void _prepareFiles() throws ImportExportException {
+        boolean importingV2 = mFile.endsWith(".anki21");
+        if (importingV2 && mCol.schedVer() == 1) {
+            throw new ImportExportException(mContext.getString(R.string.import_needs_v2));
+        }
+
         mDst = mCol;
         mSrc = Storage.Collection(mContext, mFile);
+
+        if (!importingV2 && mCol.schedVer() != 1) {
+            if (mSrc.getDb().queryScalar("select 1 from cards where queue != " + Consts.QUEUE_TYPE_NEW + " limit 1") > 0) {
+                mSrc.close(false);
+                throw new ImportExportException(mContext.getString(R.string.import_cannot_with_v2));
+            }
+        }
     }
 
 
@@ -171,9 +185,8 @@ public class Anki2Importer extends Importer {
         // we may need to rewrite the guid if the model schemas don't match,
         // so we need to keep track of the changes for the card import stage
         mChangedGuids = new HashMap<>();
-        // apart from upgrading from anki1 decks, we ignore updates to changed
-        // schemas. we need to note the ignored guids, so we avoid importing
-        // invalid cards
+        // we ignore updates to changed schemas. we need to note the ignored
+        // guids, so we avoid importing invalid cards
         mIgnoredGuids = new HashMap<>();
         // iterate over source collection
         ArrayList<Object[]> add = new ArrayList<>();
@@ -245,8 +258,6 @@ public class Anki2Importer extends Importer {
                 }
             }
             publishProgress(100, 0, 0);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         } finally {
             if (cur != null) {
                 cur.close();
@@ -290,23 +301,9 @@ public class Anki2Importer extends Importer {
         if (!mNotes.containsKey(origGuid)) {
             return true;
         }
-        // as the schemas differ and we already have a note with a different
-        // note type, this note needs a new guid
-        if (!mDupeOnSchemaChange) {
-            return false;
-        }
-        while (true) {
-            note[GUID] = Utils.incGuid((String) note[GUID]);
-            mChangedGuids.put(origGuid, (String) note[GUID]);
-            // if we don't have an existing guid, we can add
-            if (!mNotes.containsKey(note[GUID])) {
-                return true;
-            }
-            // if the existing guid shares the same mid, we can reuse
-            if (dstMid == (Long) mNotes.get(note[GUID])[MID]) {
-                return false;
-            }
-        }
+		// schema changed; don't import
+		mIgnoredGuids.put(origGuid, true);
+		return false;
     }
 
 
@@ -327,46 +324,42 @@ public class Anki2Importer extends Importer {
 
     /** Return local id for remote MID. */
     private long _mid(long srcMid) {
-        try {
-            // already processed this mid?
-            if (mModelMap.containsKey(srcMid)) {
-                return mModelMap.get(srcMid);
-            }
-            long mid = srcMid;
-            JSONObject srcModel = mSrc.getModels().get(srcMid);
-            String srcScm = mSrc.getModels().scmhash(srcModel);
-            while (true) {
-                // missing from target col?
-                if (!mDst.getModels().have(mid)) {
-                    // copy it over
-                    JSONObject model = new JSONObject(Utils.jsonToString(srcModel));
-                    model.put("id", mid);
-                    model.put("mod", Utils.intNow());
-                    model.put("usn", mCol.usn());
-                    mDst.getModels().update(model);
-                    break;
-                }
-                // there's an existing model; do the schemas match?
-                JSONObject dstModel = mDst.getModels().get(mid);
-                String dstScm = mDst.getModels().scmhash(dstModel);
-                if (srcScm.equals(dstScm)) {
-                    // they do; we can reuse this mid
-                    JSONObject model = new JSONObject(Utils.jsonToString(srcModel));
-                    model.put("id", mid);
-                    model.put("mod", Utils.intNow());
-                    model.put("usn", mCol.usn());
-                    mDst.getModels().update(model);
-                    break;
-                }
-                // as they don't match, try next id
-                mid += 1;
-            }
-            // save map and return new mid
-            mModelMap.put(srcMid, mid);
-            return mid;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        // already processed this mid?
+        if (mModelMap.containsKey(srcMid)) {
+            return mModelMap.get(srcMid);
         }
+        long mid = srcMid;
+        JSONObject srcModel = mSrc.getModels().get(srcMid);
+        String srcScm = mSrc.getModels().scmhash(srcModel);
+        while (true) {
+            // missing from target col?
+            if (!mDst.getModels().have(mid)) {
+                // copy it over
+                JSONObject model = new JSONObject(Utils.jsonToString(srcModel));
+                model.put("id", mid);
+                model.put("mod", Utils.intTime());
+                model.put("usn", mCol.usn());
+                mDst.getModels().update(model);
+                break;
+            }
+            // there's an existing model; do the schemas match?
+            JSONObject dstModel = mDst.getModels().get(mid);
+            String dstScm = mDst.getModels().scmhash(dstModel);
+            if (srcScm.equals(dstScm)) {
+                // they do; we can reuse this mid
+                JSONObject model = new JSONObject(Utils.jsonToString(srcModel));
+                model.put("id", mid);
+                model.put("mod", Utils.intTime());
+                model.put("usn", mCol.usn());
+                mDst.getModels().update(model);
+                break;
+            }
+            // as they don't match, try next id
+            mid += 1;
+        }
+        // save map and return new mid
+        mModelMap.put(srcMid, mid);
+        return mid;
     }
 
 
@@ -377,55 +370,51 @@ public class Anki2Importer extends Importer {
 
     /** Given did in src col, return local id. */
     private long _did(long did) {
-        try {
-            // already converted?
-            if (mDecks.containsKey(did)) {
-                return mDecks.get(did);
-            }
-            // get the name in src
-            JSONObject g = mSrc.getDecks().get(did);
-            String name = g.getString("name");
-            // if there's a prefix, replace the top level deck
-            if (!TextUtils.isEmpty(mDeckPrefix)) {
-                List<String> parts = Arrays.asList(name.split("::", -1));
-                String tmpname = TextUtils.join("::", parts.subList(1, parts.size()));
-                name = mDeckPrefix;
-                if (!TextUtils.isEmpty(tmpname)) {
-                    name += "::" + tmpname;
-                }
-            }
-            // Manually create any parents so we can pull in descriptions
-            String head = "";
-            List<String> parents = Arrays.asList(name.split("::", -1));
-            for (String parent : parents.subList(0, parents.size() -1)) {
-                if (!TextUtils.isEmpty(head)) {
-                    head += "::";
-                }
-                head += parent;
-                long idInSrc = mSrc.getDecks().id(head);
-                _did(idInSrc);
-            }
-            // create in local
-            long newid = mDst.getDecks().id(name);
-            // pull conf over
-            if (g.has("conf") && g.getLong("conf") != 1) {
-                JSONObject conf = mSrc.getDecks().getConf(g.getLong("conf"));
-                mDst.getDecks().save(conf);
-                mDst.getDecks().updateConf(conf);
-                JSONObject g2 = mDst.getDecks().get(newid);
-                g2.put("conf", g.getLong("conf"));
-                mDst.getDecks().save(g2);
-            }
-            // save desc
-            JSONObject deck = mDst.getDecks().get(newid);
-            deck.put("desc", g.getString("desc"));
-            mDst.getDecks().save(deck);
-            // add to deck map and return
-            mDecks.put(did, newid);
-            return newid;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        // already converted?
+        if (mDecks.containsKey(did)) {
+            return mDecks.get(did);
         }
+        // get the name in src
+        JSONObject g = mSrc.getDecks().get(did);
+        String name = g.getString("name");
+        // if there's a prefix, replace the top level deck
+        if (!TextUtils.isEmpty(mDeckPrefix)) {
+            List<String> parts = Arrays.asList(name.split("::", -1));
+            String tmpname = TextUtils.join("::", parts.subList(1, parts.size()));
+            name = mDeckPrefix;
+            if (!TextUtils.isEmpty(tmpname)) {
+                name += "::" + tmpname;
+            }
+        }
+        // Manually create any parents so we can pull in descriptions
+        String head = "";
+        List<String> parents = Arrays.asList(name.split("::", -1));
+        for (String parent : parents.subList(0, parents.size() -1)) {
+            if (!TextUtils.isEmpty(head)) {
+                head += "::";
+            }
+            head += parent;
+            long idInSrc = mSrc.getDecks().id(head);
+            _did(idInSrc);
+        }
+        // create in local
+        long newid = mDst.getDecks().id(name);
+        // pull conf over
+        if (g.has("conf") && g.getLong("conf") != 1) {
+            JSONObject conf = mSrc.getDecks().getConf(g.getLong("conf"));
+            mDst.getDecks().save(conf);
+            mDst.getDecks().updateConf(conf);
+            JSONObject g2 = mDst.getDecks().get(newid);
+            g2.put("conf", g.getLong("conf"));
+            mDst.getDecks().save(g2);
+        }
+        // save desc
+        JSONObject deck = mDst.getDecks().get(newid);
+        deck.put("desc", g.getString("desc"));
+        mDst.getDecks().save(deck);
+        // add to deck map and return
+        mDecks.put(did, newid);
+        return newid;
     }
 
 
@@ -515,11 +504,15 @@ public class Anki2Importer extends Importer {
                 // update cid, nid, etc
                 card[1] = mNotes.get(guid)[0];
                 card[2] = _did((Long) card[2]);
-                card[4] = Utils.intNow();
+                card[4] = Utils.intTime();
                 card[5] = usn;
                 // review cards have a due date relative to collection
                 if ((Integer) card[7] == 2 || (Integer) card[7] == 3 || (Integer) card[6] == 2) {
                     card[8] = (Long) card[8] - aheadBy;
+                }
+                // odue needs updating too
+                if (((Long) card[14]).longValue() != 0) {
+                    card[14] = (Long) card[14] - aheadBy;
                 }
                 // if odid true, convert card from filtered to normal
                 if ((Long) card[15] != 0) {
@@ -541,19 +534,13 @@ public class Anki2Importer extends Importer {
                 }
                 cards.add(card);
                 // we need to import revlog, rewriting card ids and bumping usn
-                Cursor cur2 = null;
-                try {
-                    cur2 = mSrc.getDb().getDatabase().query("select * from revlog where cid = " + scid, null);
+                try (Cursor cur2 = mSrc.getDb().getDatabase().query("select * from revlog where cid = " + scid, null)) {
                     while (cur2.moveToNext()) {
                         Object[] rev = new Object[] { cur2.getLong(0), cur2.getLong(1), cur2.getInt(2), cur2.getInt(3),
                                 cur2.getLong(4), cur2.getLong(5), cur2.getLong(6), cur2.getLong(7), cur2.getInt(8) };
                         rev[1] = card[0];
                         rev[2] = mDst.usn();
                         revlog.add(rev);
-                    }
-                } finally {
-                    if (cur2 != null) {
-                        cur2.close();
                     }
                 }
                 cnt += 1;
@@ -634,8 +621,16 @@ public class Anki2Importer extends Importer {
             // Mark file addition to media db (see note in Media.java)
             mDst.getMedia().markFileAdd(fname);
         } catch (IOException e) {
+
             // the user likely used subdirectories
             Timber.e(e, "Error copying file %s.", fname);
+
+            // If we are out of space, we should re-throw
+            if (e.getCause() != null && e.getCause().getMessage().contains("No space left on device")) {
+                // we need to let the user know why we are failing
+                Timber.e("We are out of space, bubbling up the file copy exception");
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -689,17 +684,13 @@ public class Anki2Importer extends Importer {
      */
 
     private void _postImport() {
-        try {
-            for (long did : mDecks.values()) {
-                mCol.getSched().maybeRandomizeDeck(did);
-            }
-            // make sure new position is correct
-            mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar(
-                    "select max(due)+1 from cards where type = 0"));
-            mDst.save();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        for (long did : mDecks.values()) {
+            mCol.getSched().maybeRandomizeDeck(did);
         }
+        // make sure new position is correct
+        mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar(
+                "select max(due)+1 from cards where type = " + Consts.CARD_TYPE_NEW));
+        mDst.save();
     }
 
 
@@ -757,7 +748,7 @@ public class Anki2Importer extends Importer {
      */
     protected void publishProgress(int notesDone, int cardsDone, int postProcess) {
         if (mProgress != null) {
-            mProgress.publishProgress(new DeckTask.TaskData(getRes().getString(R.string.import_progress,
+            mProgress.publishProgress(new CollectionTask.TaskData(getRes().getString(R.string.import_progress,
                     notesDone, cardsDone, postProcess)));
         }
     }

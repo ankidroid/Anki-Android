@@ -42,17 +42,18 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.FlashCardsContract.CardTemplate;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.Utils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,7 +84,7 @@ import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
  * <p/>
  * Note that unlike Android's contact providers:
  * <ul>
-  * <li>it's not possible to access cards of more than one note at a time</li>
+ * <li>it's not possible to access cards of more than one note at a time</li>
  * <li>it's not possible to access cards of a note without providing the note's ID</li>
  * </ul>
  */
@@ -328,11 +329,11 @@ public class CardContentProvider extends ContentProvider {
                         String[] keyAndValue = arg.split("="); //split arguments into key ("limit") and value ("?")
                         try {
                             //check if value is a placeholder ("?"), if so replace with the next value of selectionArgs
-                            String value = keyAndValue[1].trim().equals("?") ? selectionArgs[selectionArgIndex++] :
+                            String value = "?".equals(keyAndValue[1].trim()) ? selectionArgs[selectionArgIndex++] :
                                     keyAndValue[1];
-                            if (keyAndValue[0].trim().equals("limit")) {
+                            if ("limit".equals(keyAndValue[0].trim())) {
                                 limit = Integer.valueOf(value);
-                            } else if (keyAndValue[0].trim().equals("deckID")) {
+                            } else if ("deckID".equals(keyAndValue[0].trim())) {
                                 deckIdOfTemporarilySelectedDeck = Long.valueOf(value);
                                 if(!selectDeckWithCheck(col, deckIdOfTemporarilySelectedDeck)){
                                     return rv; //if the provided deckID is wrong, return empty cursor.
@@ -901,7 +902,7 @@ public class CardContentProvider extends ContentProvider {
                     // Add the fields
                     String[] allFields = Utils.splitFields(fieldNames);
                     for (String f: allFields) {
-                        mm.addField(newModel, mm.newField(f));
+                        mm.addFieldInNewModel(newModel, mm.newField(f));
                     }
                     // Add some empty card templates
                     for (int idx = 0; idx < numCards; idx++) {
@@ -912,7 +913,7 @@ public class CardContentProvider extends ContentProvider {
                             answerField = allFields[1];
                         }
                         t.put("afmt",String.format("{{FrontSide}}\\n\\n<hr id=answer>\\n\\n{{%s}}", answerField));
-                        mm.addTemplate(newModel, t);
+                        mm.addTemplateInNewModel(newModel, t);
                     }
                     // Add the CSS if specified
                     if (css != null) {
@@ -940,10 +941,6 @@ public class CardContentProvider extends ContentProvider {
                     // Get the mid and return a URI
                     String mid = Long.toString(newModel.getLong("id"));
                     return Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, mid);
-                } catch (ConfirmModSchemaException e) {
-                    // This exception should never be thrown when inserting new models
-                    Timber.e(e, "Unexpected ConfirmModSchema exception adding new model %s", modelName);
-                    throw new IllegalArgumentException("ConfirmModSchema exception adding new model " + modelName);
                 } catch (JSONException e) {
                     Timber.e(e, "Could not set a field of new model %s", modelName);
                     return null;
@@ -965,14 +962,10 @@ public class CardContentProvider extends ContentProvider {
                 String bafmt = values.getAsString(CardTemplate.BROWSER_ANSWER_FORMAT);
                 try {
                     JSONObject t = models.newTemplate(name);
-                    try {
-                        t.put("qfmt", qfmt);
-                        t.put("afmt", afmt);
-                        t.put("bqfmt", bqfmt);
-                        t.put("bafmt", bafmt);
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
+                    t.put("qfmt", qfmt);
+                    t.put("afmt", afmt);
+                    t.put("bqfmt", bqfmt);
+                    t.put("bafmt", bafmt);
                     models.addTemplate(existingModel, t);
                     models.save(existingModel);
                     col.save();
@@ -1167,7 +1160,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void answerCard(Collection col, Sched sched, Card cardToAnswer, int ease, long timeTaken) {
+    private void answerCard(Collection col, AbstractSched sched, Card cardToAnswer, int ease, long timeTaken) {
         try {
             DB db = col.getDb();
             db.getDatabase().beginTransaction();
@@ -1190,7 +1183,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
 
-    private void buryOrSuspendCard(Collection col, Sched sched, Card card, boolean bury) {
+    private void buryOrSuspendCard(Collection col, AbstractSched sched, Card card, boolean bury) {
         try {
             DB db = col.getDb();
             db.getDatabase().beginTransaction();

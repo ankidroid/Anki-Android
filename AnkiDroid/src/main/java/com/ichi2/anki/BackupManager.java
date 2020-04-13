@@ -17,12 +17,13 @@
 package com.ichi2.anki;
 
 import android.content.SharedPreferences;
-import android.os.StatFs;
 
 
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.FileUtil;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -118,12 +119,12 @@ public class BackupManager {
             try {
                 len--;
                 lastBackupDate = df.parse(deckBackups[len].getName().replaceAll(
-                        "^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).apkg$", "$1"));
+                        "^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).colpkg$", "$1"));
             } catch (ParseException e) {
                 lastBackupDate = null;
             }
         }
-        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000L > Utils.intNow(1000) && !force) {
+        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000L > Utils.intTime(1000) && !force) {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours");
             return false;
         }
@@ -131,7 +132,7 @@ public class BackupManager {
         String backupFilename;
         try {
             backupFilename = String.format(Utils.ENGLISH_LOCALE, colFile.getName().replace(".anki2", "")
-                    + "-%s.apkg", df.format(cal.getTime()));
+                    + "-%s.colpkg", df.format(cal.getTime()));
         } catch (UnknownFormatConversionException e) {
             Timber.e(e, "performBackup: error on creating backup filename");
             return false;
@@ -164,7 +165,7 @@ public class BackupManager {
         }
         Timber.i("Launching new thread to backup %s to %s", colPath, backupFile.getPath());
 
-        // Backup collection as apkg in new thread
+        // Backup collection as Anki package in new thread
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -206,12 +207,7 @@ public class BackupManager {
 
 
     private static long getFreeDiscSpace(File file) {
-        try {
-            return CompatHelper.getCompat().getAvailableBytes(new StatFs(file.getParentFile().getPath()));
-        } catch (IllegalArgumentException e) {
-            Timber.e(e, "Free space could not be retrieved");
-            return MIN_FREE_SPACE * 1024 * 1024;
-        }
+        return FileUtil.getFreeDiskSpace(file, MIN_FREE_SPACE * 1024 * 1024);
     }
 
 
@@ -295,8 +291,8 @@ public class BackupManager {
         }
         ArrayList<File> deckBackups = new ArrayList<>();
         for (File aktFile : files) {
-            if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.apkg$", "$1.apkg")
-                    .equals(colFile.getName().replace(".anki2",".apkg"))) {
+            if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.(apkg|colpkg)$", "$1")
+                    .equals(colFile.getName().replace(".anki2",""))) {
                 deckBackups.add(aktFile);
             }
         }

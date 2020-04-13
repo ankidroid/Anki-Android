@@ -24,6 +24,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -36,8 +37,8 @@ public class UtilsTest {
 
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource("path-traversal.zip");
-        File file = new File(resource.getPath());
         try {
+            File file = new File(resource.toURI());
             ZipFile zipFile = new ZipFile(file);
             Enumeration zipEntries = zipFile.entries();
             while (zipEntries.hasMoreElements()) {
@@ -46,8 +47,8 @@ public class UtilsTest {
             }
             Assert.fail("Expected an IOException");
         }
-        catch (IOException e) {
-            Assert.assertEquals(e.getMessage(), "File is outside extraction target directory.");
+        catch (Exception e) {
+            Assert.assertEquals("File is outside extraction target directory.", e.getMessage());
         }
     }
 
@@ -76,10 +77,11 @@ public class UtilsTest {
 
     @Test
     public void testCopyFile() throws Exception {
+        String resourcePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip").toURI()).toString();
         URL resource = Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip");
         File copy = File.createTempFile("testCopyFileToStream", ".zip");
         copy.deleteOnExit();
-        Utils.copyFile(new File(resource.getFile()), copy);
-        Assert.assertEquals(TestUtils.getMD5(resource.getPath()), TestUtils.getMD5(copy.getCanonicalPath()));
+        Utils.copyFile(new File(resource.toURI()), copy);
+        Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
     }
 }

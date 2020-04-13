@@ -43,14 +43,13 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.DeckTask;
-import com.ichi2.async.DeckTask.TaskData;
+import com.ichi2.async.CollectionTask;
+import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Models;
+import com.ichi2.libanki.StdModels;
 import com.ichi2.widget.WidgetStatus;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -96,7 +95,7 @@ public class ModelBrowser extends AnkiActivity {
      * Displays the loading bar when loading the mModels and displaying them
      * loading bar is necessary because card count per model is not cached *
      */
-    private DeckTask.TaskListener mLoadingModelsHandler = new DeckTask.TaskListener() {
+    private CollectionTask.TaskListener mLoadingModelsHandler = new CollectionTask.TaskListener() {
         @Override
         public void onCancelled() {
             hideProgressBar();
@@ -125,7 +124,7 @@ public class ModelBrowser extends AnkiActivity {
      * Displays loading bar when deleting a model loading bar is needed
      * because deleting a model also deletes all of the associated cards/notes *
      */
-    private DeckTask.TaskListener mDeleteModelHandler = new DeckTask.TaskListener() {
+    private CollectionTask.TaskListener mDeleteModelHandler = new CollectionTask.TaskListener() {
 
         @Override
         public void onPreExecute() {
@@ -225,7 +224,7 @@ public class ModelBrowser extends AnkiActivity {
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         this.col = col;
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
 
@@ -245,12 +244,8 @@ public class ModelBrowser extends AnkiActivity {
         mModelIds = new ArrayList<>();
 
         for (int i = 0; i < mModels.size(); i++) {
-            try {
-                mModelIds.add(mModels.get(i).getLong("id"));
-                mModelDisplayList.add(new DisplayPair(mModels.get(i).getString("name"), mCardCounts.get(i)));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            mModelIds.add(mModels.get(i).getLong("id"));
+            mModelDisplayList.add(new DisplayPair(mModels.get(i).getString("name"), mCardCounts.get(i)));
         }
 
         mModelDisplayAdapter = new DisplayPairAdapter(this, mModelDisplayList);
@@ -299,37 +294,26 @@ public class ModelBrowser extends AnkiActivity {
         String add = getResources().getString(R.string.model_browser_add_add);
         String clone = getResources().getString(R.string.model_browser_add_clone);
 
-        // AnkiDroid doesn't have stdmodels class or model name localization, this could be much cleaner if implemented
-        final String basicName = "Basic";
-        final String addForwardReverseName = "Basic (and reversed card)";
-        final String addForwardOptionalReverseName = "Basic (optional reversed card)";
-        final String addClozeModelName = "Cloze";
-
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
         mNewModelLabels = new ArrayList<>();
+        ArrayList<String> existingModelsNames = new ArrayList<>();
 
         //Used to fetch model names
         mNewModelNames = new ArrayList<>();
-        mNewModelLabels.add(String.format(add, basicName));
-        mNewModelLabels.add(String.format(add, addForwardReverseName));
-        mNewModelLabels.add(String.format(add, addForwardOptionalReverseName));
-        mNewModelLabels.add(String.format(add, addClozeModelName));
-
-        mNewModelNames.add(basicName);
-        mNewModelNames.add(addForwardReverseName);
-        mNewModelNames.add(addForwardOptionalReverseName);
-        mNewModelNames.add(addClozeModelName);
+        for (StdModels StdModels: StdModels.stdModels) {
+            String defaultName = StdModels.getDefaultName();
+            mNewModelLabels.add(String.format(add, defaultName));
+            mNewModelNames.add(defaultName);
+        }
 
         final int numStdModels = mNewModelLabels.size();
 
         if (mModels != null) {
             for (JSONObject model : mModels) {
-                try {
-                    mNewModelLabels.add(String.format(clone, model.getString("name")));
-                    mNewModelNames.add(model.getString("name"));
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                String name = model.getString("name");
+                mNewModelLabels.add(String.format(clone, name));
+                mNewModelNames.add(name);
+                existingModelsNames.add(name);
             }
         }
 
@@ -345,15 +329,17 @@ public class ModelBrowser extends AnkiActivity {
                 .onPositive((dialog, which) -> {
                         mModelNameInput = new EditText(ModelBrowser.this);
                         mModelNameInput.setSingleLine();
-
-                        //Temporary workaround - Lack of stdmodels class
-                        if (addSelectionSpinner.getSelectedItemPosition() < numStdModels) {
-                            mModelNameInput.setText(randomizeName(mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition())));
-                        } else {
-                            mModelNameInput.setText(mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition()) +
-                                    " " + getResources().getString(R.string.model_clone_suffix));
+                        final boolean isStdModel = addSelectionSpinner.getSelectedItemPosition() < numStdModels;
+                        // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
+                        String suggestedName = mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition());
+                        if (!isStdModel) {
+                            suggestedName += " " + getResources().getString(R.string.model_clone_suffix);
                         }
 
+                        if (existingModelsNames.contains(suggestedName)) {
+                            suggestedName = randomizeName(suggestedName);
+                        }
+                        mModelNameInput.setText(suggestedName);
                         mModelNameInput.setSelection(mModelNameInput.getText().length());
 
                         //Create textbox to name new model
@@ -380,48 +366,24 @@ public class ModelBrowser extends AnkiActivity {
      * @param position position in dialog the user selected to add / clone the model type from
      */
     private void addNewNoteType(String modelName, int position) {
-        //Temporary workaround - Lack of stdmodels class, so can only handle 4 default English mModels
-        //like Ankidroid but unlike desktop Anki
         JSONObject model;
-        try {
-            if (modelName.length() > 0) {
-                switch (position) {
-                    //Basic Model
-                    case (0):
-                        model = Models.addBasicModel(col);
-                        break;
-                    //Add forward reverse model
-                    case (1):
-                        model = Models.addForwardReverse(col);
-                        break;
-                    //Add forward optional reverse model
-                    case (2):
-                        model = Models.addForwardOptionalReverse(col);
-                        break;
-                    //Close model
-                    case (3):
-                        model = Models.addClozeModel(col);
-                        break;
-                    default:
-                        //New model
-                        //Model that is being cloned
-                        JSONObject oldModel = new JSONObject(mModels.get(position - 4).toString());
-                        JSONObject newModel = Models.addBasicModel(col);
-                        oldModel.put("id", newModel.get("id"));
-                        model = oldModel;
-                        break;
-
-                }
-                model.put("name", modelName);
-                col.getModels().update(model);
-                fullRefresh();
+        if (modelName.length() > 0) {
+            int nbStdModels = StdModels.stdModels.length;
+            if (position < nbStdModels) {
+                model = StdModels.stdModels[position].add(col);
             } else {
-                showToast(getResources().getString(R.string.toast_empty_name));
+                //New model
+                //Model that is being cloned
+                JSONObject oldModel = new JSONObject(mModels.get(position - nbStdModels).toString());
+                JSONObject newModel = StdModels.basicModel.add(col);
+                oldModel.put("id", newModel.get("id"));
+                model = oldModel;
             }
-        } catch (ConfirmModSchemaException e) {
-            //We should never get here since we're only modifying new mModels
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            model.put("name", modelName);
+            col.getModels().update(model);
+            fullRefresh();
+        } else {
+            showToast(getResources().getString(R.string.toast_empty_name));
         }
     }
 
@@ -434,8 +396,8 @@ public class ModelBrowser extends AnkiActivity {
             Runnable confirm = new Runnable() {
                 @Override
                 public void run() {
+                    col.modSchemaNoCheck();
                     try {
-                        col.modSchema(false);
                         deleteModel();
                     } catch (ConfirmModSchemaException e) {
                         //This should never be reached because modSchema() didn't throw an exception
@@ -476,41 +438,34 @@ public class ModelBrowser extends AnkiActivity {
      * Displays a confirmation box asking if you want to rename the note type and then renames it if confirmed
      */
     private void renameModelDialog() {
-        try {
-            mModelNameInput = new EditText(this);
-            mModelNameInput.setSingleLine(true);
-            mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
-            mModelNameInput.setSelection(mModelNameInput.getText().length());
-            new MaterialDialog.Builder(this)
-                                .title(R.string.rename_model)
-                                .positiveText(R.string.rename)
-                                .negativeText(R.string.dialog_cancel)
-                                .customView(mModelNameInput, true)
-                                .onPositive((dialog, which) -> {
-                                        JSONObject model = mModels.get(mModelListPosition);
-                                        String deckName = mModelNameInput.getText().toString()
-                                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                                        getCol().getDecks().id(deckName, false);
-                                        if (deckName.length() > 0) {
-                                            try {
-                                                model.put("name", deckName);
-                                                col.getModels().update(model);
-                                                mModels.get(mModelListPosition).put("name", deckName);
-                                                mModelDisplayList.set(mModelListPosition,
-                                                        new DisplayPair(mModels.get(mModelListPosition).getString("name"),
-                                                                mCardCounts.get(mModelListPosition)));
-                                            } catch (JSONException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                            refreshList();
-                                        } else {
-                                            showToast(getResources().getString(R.string.toast_empty_name));
-                                        }
-                                    })
-                                .show();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        mModelNameInput = new EditText(this);
+        mModelNameInput.setSingleLine(true);
+        mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
+        mModelNameInput.setSelection(mModelNameInput.getText().length());
+        new MaterialDialog.Builder(this)
+                            .title(R.string.rename_model)
+                            .positiveText(R.string.rename)
+                            .negativeText(R.string.dialog_cancel)
+                            .customView(mModelNameInput, true)
+                            .onPositive((dialog, which) -> {
+                                    JSONObject model = mModels.get(mModelListPosition);
+                                    String deckName = mModelNameInput.getText().toString()
+                                            // Anki desktop doesn't allow double quote characters in deck names
+                                            .replaceAll("[\"\\n\\r]", "");
+                                    getCol().getDecks().id(deckName, false);
+                                    if (deckName.length() > 0) {
+                                        model.put("name", deckName);
+                                        col.getModels().update(model);
+                                        mModels.get(mModelListPosition).put("name", deckName);
+                                        mModelDisplayList.set(mModelListPosition,
+                                                new DisplayPair(mModels.get(mModelListPosition).getString("name"),
+                                                        mCardCounts.get(mModelListPosition)));
+                                        refreshList();
+                                    } else {
+                                        showToast(getResources().getString(R.string.toast_empty_name));
+                                    }
+                                })
+                            .show();
     }
 
     private void dismissContextMenu() {
@@ -548,15 +503,15 @@ public class ModelBrowser extends AnkiActivity {
      * Reloads everything
      */
     private void fullRefresh() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
     /*
      * Deletes the currently selected model
      */
     private void deleteModel() throws ConfirmModSchemaException {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
-                new DeckTask.TaskData(mCurrentID));
+        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
+                new CollectionTask.TaskData(mCurrentID));
         mModels.remove(mModelListPosition);
         mModelIds.remove(mModelListPosition);
         mModelDisplayList.remove(mModelListPosition);
@@ -656,7 +611,7 @@ public class ModelBrowser extends AnkiActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TEMPLATE_EDIT) {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
         }
     }
 }

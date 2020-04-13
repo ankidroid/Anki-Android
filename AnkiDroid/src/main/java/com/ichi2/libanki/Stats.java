@@ -27,8 +27,7 @@ import com.ichi2.anki.stats.OverviewStatsBuilder;
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.hooks.Hooks;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -110,11 +109,7 @@ public class Stats {
         if (mWholeCollection) {
             title = AnkiDroidApp.getInstance().getResources().getString(R.string.card_browser_all_decks);
         } else {
-            try {
-                title = mCol.getDecks().get(mDeckId).getString("name");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            title = mCol.getDecks().get(mDeckId).getString("name");
         }
         return new Object[] {/*0*/ mType, /*1*/mTitle, /*2*/mBackwards, /*3*/mValueLabels, /*4*/mColors,
          /*5*/mAxisTitles, /*6*/title, /*7*/mMaxCards, /*8*/mMaxElements, /*9*/mFirstElement, /*10*/mLastElement,
@@ -135,10 +130,10 @@ public class Stats {
         Cursor cur = null;
         String query = "select count(), sum(time)/1000, "+
                 "sum(case when ease = 1 then 1 else 0 end), "+ /* failed */
-                "sum(case when type = 0 then 1 else 0 end), "+ /* learning */
-                "sum(case when type = 1 then 1 else 0 end), "+ /* review */
-                "sum(case when type = 2 then 1 else 0 end), "+ /* relearn */
-                "sum(case when type = 3 then 1 else 0 end) "+ /* filter */
+                "sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end), "+ /* learning */
+                "sum(case when type = " + Consts.CARD_TYPE_LRN + " then 1 else 0 end), "+ /* review */
+                "sum(case when type = " + Consts.CARD_TYPE_REV + " then 1 else 0 end), "+ /* relearn */
+                "sum(case when type = " + Consts.CARD_TYPE_RELEARNING + " then 1 else 0 end) "+ /* filter */
                 "from revlog where id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query: %s", query);
 
@@ -257,7 +252,7 @@ public class Stats {
         Cursor cur = null;
         try {
             cur = mCol.getDb().getDatabase().query(
-                    "SELECT COUNT(*) as num_reviews, sum(case when type = 0 then 1 else 0 end) as new_cards FROM revlog " + lim, null);
+                    "SELECT COUNT(*) as num_reviews, sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end) as new_cards FROM revlog " + lim, null);
             while (cur.moveToNext()) {
                 oStats.totalReviews = cur.getInt(0);
             }
@@ -288,7 +283,7 @@ public class Stats {
 
         try {
             cur = mCol.getDb().getDatabase().query(
-                    "select avg(ivl), max(ivl) from cards where did in " +_limit() + " and queue = 2", null);
+                    "select avg(ivl), max(ivl) from cards where did in " +_limit() + " and queue = " + Consts.QUEUE_TYPE_REV + "", null);
             cur.moveToFirst();
             oStats.averageInterval = cur.getDouble(0);
             oStats.longestInterval = cur.getDouble(1);
@@ -378,7 +373,7 @@ public class Stats {
                     + " AS day, " // day
                     + "count(), " // all cards
                     + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                    + "FROM cards WHERE did IN " + _limit() + " AND queue IN (2,3)" + lim
+                    + "FROM cards WHERE did IN " + _limit() + " AND queue IN (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")" + lim
                     + " GROUP BY day ORDER BY day";
             Timber.d("Forecast query: %s", query);
             cur = mCol
@@ -536,15 +531,15 @@ public class Stats {
         ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
         String query = "SELECT (cast((id/1000 - " + mCol.getSched().getDayCutoff() + ") / "+SECONDS_PER_DAY+" AS INT))/"
-                + chunk + " AS day, " + "sum(CASE WHEN type = 0 THEN " + ti + " ELSE 0 END)"
+                + chunk + " AS day, " + "sum(CASE WHEN type = " + Consts.CARD_TYPE_NEW + " THEN " + ti + " ELSE 0 END)"
                 + tf
                 + ", " // lrn
-                + "sum(CASE WHEN type = 1 AND lastIvl < 21 THEN " + ti + " ELSE 0 END)" + tf
+                + "sum(CASE WHEN type = " + Consts.CARD_TYPE_LRN + " AND lastIvl < 21 THEN " + ti + " ELSE 0 END)" + tf
                 + ", " // yng
-                + "sum(CASE WHEN type = 1 AND lastIvl >= 21 THEN " + ti + " ELSE 0 END)" + tf
+                + "sum(CASE WHEN type = " + Consts.CARD_TYPE_LRN + " AND lastIvl >= 21 THEN " + ti + " ELSE 0 END)" + tf
                 + ", " // mtr
                 + "sum(CASE WHEN type = 2 THEN " + ti + " ELSE 0 END)" + tf + ", " // lapse
-                + "sum(CASE WHEN type = 3 THEN " + ti + " ELSE 0 END)" + tf // cram
+                + "sum(CASE WHEN type = " + Consts.CARD_TYPE_RELEARNING + " THEN " + ti + " ELSE 0 END)" + tf // cram
                 + " FROM revlog " + lim + " GROUP BY day ORDER BY day";
 
         Timber.d("ReviewCount query: %s", query);
@@ -701,7 +696,7 @@ public class Stats {
                     .getDatabase()
                     .query(
                             "select ivl / " + chunk + " as grp, count() from cards " +
-                                    "where did in "+ _limit() +" and queue = 2 " + lim + " " +
+                                    "where did in "+ _limit() +" and queue = " + Consts.QUEUE_TYPE_REV + " " + lim + " " +
                                     "group by grp " +
                                     "order by grp", null);
             while (cur.moveToNext()) {
@@ -713,7 +708,7 @@ public class Stats {
                     .getDatabase()
                     .query(
                             "select count(), avg(ivl), max(ivl) from cards where did in " +_limit() +
-                                    " and queue = 2", null);
+                                    " and queue = " + Consts.QUEUE_TYPE_REV + "", null);
             cur.moveToFirst();
             all = cur.getDouble(0);
             avg = cur.getDouble(1);
@@ -801,16 +796,20 @@ public class Stats {
         if (lim.length() > 0) {
             lim = " and " + lim;
         }
-
-        Calendar sd = GregorianCalendar.getInstance();
-        sd.setTimeInMillis(mCol.getCrt() * 1000);
-
+        int rolloverHour;
+        if (mCol.schedVer() == 1) {
+            Calendar sd = GregorianCalendar.getInstance();
+            sd.setTimeInMillis(mCol.getCrt() * 1000);
+            rolloverHour = sd.get(Calendar.HOUR_OF_DAY);
+        } else {
+            rolloverHour = mCol.getConf().optInt("rollover", 4);
+        }
         int pd = _periodDays();
         if (pd > 0) {
             lim += " and id > " + ((mCol.getSched().getDayCutoff() - (SECONDS_PER_DAY * pd)) * 1000);
         }
         long cutoff = mCol.getSched().getDayCutoff();
-        long cut = cutoff - sd.get(Calendar.HOUR_OF_DAY) * 3600;
+        long cut = cutoff - rolloverHour * 3600;
 
         ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
@@ -819,9 +818,9 @@ public class Stats {
                 "sum(case when ease = 1 then 0 else 1 end) / " +
                 "cast(count() as float) * 100, " +
                 "count() " +
-                "from revlog where type in (0,1,2) " + lim +" " +
+                "from revlog where type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_LRN + "," + Consts.CARD_TYPE_REV + ") " + lim +" " +
                 "group by hour having count() > 30 order by hour";
-        Timber.d(sd.get(Calendar.HOUR_OF_DAY) + " : " +cutoff + " breakdown query: %s", query);
+        Timber.d(rolloverHour + " : " +cutoff + " breakdown query: %s", query);
         try {
             cur = mCol.getDb()
                     .getDatabase()
@@ -955,7 +954,7 @@ public class Stats {
                 "cast(count() as float) * 100, " +
                 "count() " +
                 "from revlog " +
-                "where type in (0,1,2) " + lim +" " +
+                "where type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_LRN + "," + Consts.CARD_TYPE_REV + ") " + lim +" " +
                 "group by wd " +
                 "order by wd";
         Timber.d(sd.get(Calendar.HOUR_OF_DAY) + " : " +cutoff + " weekly breakdown query: %s", query);
@@ -1081,13 +1080,19 @@ public class Stats {
             lim = "";
         }
 
+        String ease4repl;
+        if (mCol.schedVer() == 1) {
+            ease4repl = "3";
+        } else {
+            ease4repl = "ease";
+        }
         ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
         String query = "select (case " +
-                "                when type in (0,2) then 0 " +
+                "                when type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_REV + ") then 0 " +
                 "        when lastIvl < 21 then 1 " +
                 "        else 2 end) as thetype, " +
-                "        (case when type in (0,2) and ease = 4 then 3 else ease end), count() from revlog " + lim + " " +
+                "        (case when type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_REV + ") and ease = 4 then " + ease4repl +" else ease end), count() from revlog " + lim + " " +
                 "        group by thetype, ease " +
                 "        order by thetype, ease";
         Timber.d("AnswerButtons query: %s", query);
@@ -1119,7 +1124,7 @@ public class Stats {
             double ease = data[1];
             double cnt = data[2];
 
-            if (currentType == 1) {
+            if (currentType == Consts.CARD_TYPE_LRN) {
                 ease += 5;
             } else if (currentType == 2) {
                 ease += 10;
@@ -1156,9 +1161,9 @@ public class Stats {
         double[] pieData;
         Cursor cur = null;
         String query = "select " +
-                "sum(case when queue=2 and ivl >= 21 then 1 else 0 end), -- mtr\n" +
-                "sum(case when queue in (1,3) or (queue=2 and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
-                "sum(case when queue=0 then 1 else 0 end), -- new\n" +
+                "sum(case when queue=" + Consts.QUEUE_TYPE_REV + " and ivl >= 21 then 1 else 0 end), -- mtr\n" +
+                "sum(case when queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") or (queue=" + Consts.QUEUE_TYPE_REV + " and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
+                "sum(case when queue=" + Consts.QUEUE_TYPE_NEW + " then 1 else 0 end), -- new\n" +
                 "sum(case when queue<0 then 1 else 0 end) -- susp\n" +
                 "from cards where did in " + _limit();
         Timber.d("CardsTypes query: %s", query);
@@ -1223,11 +1228,7 @@ public class Stats {
             // All decks
             ArrayList<Long> ids = new ArrayList<>();
             for (JSONObject d : col.getDecks().all()) {
-                try {
-                    ids.add(d.getLong("id"));
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                ids.add(d.getLong("id"));
             }
             return Utils.ids2str(Utils.arrayList2array(ids));
         } else {

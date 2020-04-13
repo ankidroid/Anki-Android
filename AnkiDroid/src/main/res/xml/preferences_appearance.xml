@@ -32,34 +32,29 @@
             android:entries="@array/day_theme_labels"
             android:entryValues="@array/day_theme_values"
             android:key="dayTheme"
-            android:summary="XXX"
             android:title="@string/day_theme" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/night_theme_labels"
             android:entryValues="@array/night_theme_values"
             android:key="nightTheme"
-            android:summary="XXX"
             android:title="@string/night_theme" />
     </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_fonts" >
             <ListPreference
-                android:defaultValue="0"
+                android:defaultValue="@string/empty_string"
                 android:key="defaultFont"
                 android:shouldDisableView="true"
-                android:summary="@string/preference_summary_literal"
                 android:title="@string/default_font" />
             <ListPreference
                 android:defaultValue="0"
                 android:key="overrideFontBehavior"
                 android:entries="@array/override_font_labels"
                 android:entryValues="@array/override_font_values"
-                android:summary="@string/preference_summary_literal"
                 android:title="@string/override_font" />
             <ListPreference
-                android:defaultValue="0"
+                android:defaultValue="@string/empty_string"
                 android:key="browserEditorFont"
-                android:summary="@string/preference_summary_literal"
                 android:title="@string/pref_browser_editor_font" />
             <com.ichi2.ui.SeekBarPreference
                 android:defaultValue="100"

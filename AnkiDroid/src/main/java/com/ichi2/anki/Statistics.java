@@ -42,11 +42,12 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Stats;
 import com.ichi2.ui.SlidingTabLayout;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -236,13 +237,9 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     // Iterates the drop down decks, and selects the one matching the given id
     private boolean selectDeckById(long deckId) {
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
-            try {
-                if (mDropDownDecks.get(dropDownDeckIdx).getLong("id") == deckId) {
-                    selectDropDownItem(dropDownDeckIdx + 1);
-                    return true;
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException();
+            if (mDropDownDecks.get(dropDownDeckIdx).getLong("id") == deckId) {
+                selectDropDownItem(dropDownDeckIdx + 1);
+                return true;
             }
         }
         return false;
@@ -280,7 +277,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
         //this is called when mSectionsPagerAdapter.notifyDataSetChanged() is called, so checkAndUpdate() here
@@ -452,16 +449,12 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             mActivitySectionPagerAdapter = ((Statistics) getActivity()).getSectionsPagerAdapter();
             mDeckId = ((Statistics) getActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
-                try {
-                    Collection col = CollectionHelper.getInstance().getCol(getActivity());
-                    List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::", -1));
-                    if (sIsSubtitle) {
-                        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(parts.get(parts.size() - 1));
-                    } else {
-                        getActivity().setTitle(parts.get(parts.size() - 1));
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                Collection col = CollectionHelper.getInstance().getCol(getActivity());
+                List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::", -1));
+                if (sIsSubtitle) {
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(parts.get(parts.size() - 1));
+                } else {
+                    getActivity().setTitle(parts.get(parts.size() - 1));
                 }
             } else {
                 if (sIsSubtitle) {
@@ -613,15 +606,11 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
             mDeckId = ((Statistics) getActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
-                try {
-                    List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
-                    if (sIsSubtitle) {
-                        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(parts.get(parts.size() - 1));
-                    } else {
-                        getActivity().setTitle(parts.get(parts.size() - 1));
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                String basename = Decks.basename(col.getDecks().current().getString("name"));
+                if (sIsSubtitle) {
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(basename);
+                } else {
+                    getActivity().setTitle(basename);
                 }
             } else {
                 if (sIsSubtitle) {

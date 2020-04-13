@@ -123,6 +123,8 @@
     <string name="licence_wiki">http://www.gnu.org/licenses/gpl.html</string>
     <string name="link_source">https://github.com/ankidroid/Anki-Android</string>
     <string name="link_donation">http://ankisrs.net/support</string>
+    <string name="link_market">market://details?id=com.ichi2.anki</string>
+    <string name="link_market_kindle">http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki</string>
     <string name="link_translation">http://crowdin.net/project/ankidroid</string>
     <string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
     <string name="link_contribution">https://github.com/ankidroid/Anki-Android/wiki/Contributing</string>
@@ -134,6 +136,7 @@
     <string name="link_manual_zh">https://docs.ankidroid.org/manual-zh.html</string>
     <string name="link_manual_getting_started">https://docs.ankidroid.org/manual.html#gettingStarted</string>
     <string name="link_hebrew_font">https://github.com/ankidroid/Anki-Android/releases/download/tohu-font/Tohu.ttf</string>
+    <string name="link_faq_tts">https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">http://ankisrs.net/docs/manual.html#corrupt-collections</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>

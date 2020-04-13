@@ -370,7 +370,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
     private String computeAddressOfTranslationPage() {
         // Service name has to be replaced from the language lister.
-        String address = "http://dict.tu-chemnitz.de/dings.cgi?lang=en&service=SERVICE&opterrors=0&optpro=0&query=Welt";
+        String address = "https://dict.tu-chemnitz.de/dings.cgi?lang=en&service=SERVICE&opterrors=0&optpro=0&query=Welt";
 
         String strFrom = mSpinnerFrom.getSelectedItem().toString();
         String langCodeFrom = mLanguageLister.getCodeFor(strFrom);

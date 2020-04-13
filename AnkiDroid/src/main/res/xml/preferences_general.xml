@@ -47,19 +47,16 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_general">
         <ListPreference
-            android:defaultValue="0"
             android:entries="@array/add_to_cur_labels"
             android:entryValues="@array/add_to_cur_values"
             android:key="useCurrent"
-            android:summary=""
             android:title="@string/use_current" />
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="@string/empty_string"
             android:key="language"
-            android:summary="@string/preference_summary_literal"
             android:title="@string/language" />
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="analyticsOptIn"
             android:summary="@string/analytics_summ"
             android:title="@string/analytics_title" />
@@ -70,7 +67,8 @@
             android:key="reportErrorMode"
             android:title="@string/error_reporting_choice" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/notification_pref" >
+    <PreferenceCategory android:title="@string/notification_pref"
+        android:key="category_general_notification_pref">
         <ListPreference
             android:defaultValue="1000000"
             android:entries="@array/notification_minimum_cards_due_labels"

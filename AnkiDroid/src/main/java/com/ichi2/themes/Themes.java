@@ -32,11 +32,11 @@ public class Themes {
     public final static int ALPHA_ICON_ENABLED_DARK = 138; // 54%
 
     // Day themes
-    private final static int THEME_DAY_LIGHT = 0;
-    private final static int THEME_DAY_PLAIN = 1;
+    public final static int THEME_DAY_LIGHT = 0;
+    public final static int THEME_DAY_PLAIN = 1;
     // Night themes
-    private final static int THEME_NIGHT_BLACK = 0;
-    private final static int THEME_NIGHT_DARK = 1;
+    public final static int THEME_NIGHT_BLACK = 0;
+    public final static int THEME_NIGHT_DARK = 1;
 
 
     public static void setTheme(Context context) {

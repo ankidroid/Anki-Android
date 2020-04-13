@@ -18,18 +18,22 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
 
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.material.snackbar.Snackbar;
+import com.ichi2.compat.Compat;
+import com.ichi2.compat.CompatHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 
 import timber.log.Timber;
@@ -44,16 +48,15 @@ public class ReadText {
     private static int mQuestionAnswer;
     public static final String NO_TTS = "0";
     public static ArrayList<String[]> sTextQueue = new ArrayList<>();
-    public static HashMap<String, String> mTtsParams;
+    private static Compat compat = CompatHelper.getCompat();
+    private static Object mTtsParams = compat.initTtsParams();
 
 
-    // private boolean mTtsReady = false;
-    @SuppressWarnings("deprecation") // Movement to new API tracked in github as #5021
     public static void speak(String text, String loc, int queueMode) {
         int result = mTts.setLanguage(localeFromStringIgnoringScriptAndExtensions(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
-                    +" ("+loc+")", Toast.LENGTH_LONG).show();
+                    + " (" + loc + ")", Toast.LENGTH_LONG).show();
             Timber.e("Error loading locale " + loc);
         } else {
             if (mTts.isSpeaking() && queueMode == TextToSpeech.QUEUE_FLUSH) {
@@ -61,12 +64,12 @@ public class ReadText {
                 stopTts();
                 //sTextQueue.add(new String[] { text, loc });
             }
-            Timber.d("tts text '%s' to be played for locale (%s)",text, loc);
-            mTts.speak(mTextToSpeak, queueMode, mTtsParams);
+            Timber.d("tts text '%s' to be played for locale (%s)", text, loc);
+            compat.speak(mTts, mTextToSpeak, queueMode, mTtsParams, "stringId");
         }
     }
 
-
+    
     public static String getLanguage(long did, int ord, int qa) {
         return MetaDB.getLanguage(mReviewer.get(), did, ord, qa);
     }
@@ -121,7 +124,7 @@ public class ReadText {
                                 speak(mTextToSpeak, locale, TextToSpeech.QUEUE_FLUSH);
                             }
                             String language = getLanguage(mDid, mOrd, mQuestionAnswer);
-                            if (language.equals("")) { // No language stored
+                            if ("".equals(language)) { // No language stored
                                 MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
                             } else {
                                 MetaDB.updateLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
@@ -136,7 +139,11 @@ public class ReadText {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                builder.build().show();
+                try {
+                    builder.build().show();
+                } catch (WindowManager.BadTokenException e) {
+                    Timber.w("Activity invalidated before TTS language dialog could display");
+                }
             }
         }, delay);
     }
@@ -169,14 +176,14 @@ public class ReadText {
      * The voice is chosen as follows:
      * <p>
      * 1. If localeCode is a non-empty string representing a locale in the format returned
-     *    by Locale.toString(), and a voice matching the language of this locale (and ideally,
-     *    but not necessarily, also the country and variant of the locale) is available, then this
-     *    voice is used.
+     * by Locale.toString(), and a voice matching the language of this locale (and ideally,
+     * but not necessarily, also the country and variant of the locale) is available, then this
+     * voice is used.
      * 2. Otherwise, if the database contains a saved language for the given 'did', 'ord' and 'qa'
-     *    arguments, and a TTS voice matching that language is available, then this voice is used
-     *    (unless the saved language is NO_TTS, in which case the text is not read at all).
+     * arguments, and a TTS voice matching that language is available, then this voice is used
+     * (unless the saved language is NO_TTS, in which case the text is not read at all).
      * 3. Otherwise, the user is asked to select a language from among those for which a voice is
-     *    available.
+     * available.
      *
      * @param queueMode TextToSpeech.QUEUE_ADD or TextToSpeech.QUEUE_FLUSH.
      */
@@ -293,8 +300,15 @@ public class ReadText {
                         }
                         @Override
                         @Deprecated
-                        public void onError(String arg0) {
-                            // do nothing
+                        public void onError(String utteranceId) {
+                            Timber.v("Andoid TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
+
+                            final Uri helpUrl = Uri.parse(mReviewer.get().getString(R.string.link_faq_tts));
+                            final AnkiActivity ankiActivity = (AnkiActivity) mReviewer.get();
+                            ankiActivity.mayOpenUrl(helpUrl);
+                            UIUtils.showSnackbar(ankiActivity, R.string.no_tts_available_message, false, R.string.help,
+                                    v -> openTtsHelpUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
+                                    new Snackbar.Callback());
                         }
                         @Override
                         public void onStart(String arg0) {
@@ -307,11 +321,16 @@ public class ReadText {
                 }
             }
         });
-        mTtsParams = new HashMap<>();
-        mTtsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "stringId");
         // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
         Toast.makeText(context, context.getString(R.string.initializing_tts), Toast.LENGTH_LONG).show();
     }
+
+
+    private static void openTtsHelpUrl(Uri helpUrl) {
+        AnkiActivity activity =  (AnkiActivity) mReviewer.get();
+        activity.openUrl(helpUrl);
+    }
+
 
     public static void buildAvailableLanguages() {
         availableTtsLocales.clear();

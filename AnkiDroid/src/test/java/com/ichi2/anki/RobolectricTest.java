@@ -24,8 +24,8 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.robolectric.shadows.ShadowDialog;
@@ -33,6 +33,7 @@ import org.robolectric.shadows.ShadowLog;
 
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.platform.app.InstrumentationRegistry;
+import timber.log.Timber;
 
 public class RobolectricTest {
 
@@ -48,10 +49,14 @@ public class RobolectricTest {
     @After
     public void tearDown() {
         // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-        CollectionHelper.getInstance().closeCollection(false);
+        CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
 
         // After every test, make sure the sqlite implementation is set back to default
         DB.setSqliteOpenHelperFactory(null);
+
+        //called on each AnkiDroidApp.onCreate(), and spams the build
+        //there is no onDestroy(), so call it here.
+        Timber.uprootAll();
     }
 
 

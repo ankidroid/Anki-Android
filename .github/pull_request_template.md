@@ -4,7 +4,7 @@
 _Describe the problem or feature and motivation_
 
 ## Fixes
-_Link to the issues._
+Fixes _Link to the issues._
 
 ## Approach
 _How does this change address the problem?_

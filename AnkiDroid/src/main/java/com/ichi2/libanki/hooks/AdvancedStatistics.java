@@ -26,11 +26,11 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Stats;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -513,20 +513,16 @@ public class AdvancedStatistics extends Hook  {
             int revPerDay = Settings.getMaxReviewsPerDay();
             int initialFactor = Settings.getInitialFactor();
 
-            try {
-                if (conf.getInt("dyn") == 0) {
-                    revPerDay = conf.getJSONObject("rev").getInt("perDay");
-                    newPerDay = conf.getJSONObject("new").getInt("perDay");
-                    initialFactor = conf.getJSONObject("new").getInt("initialFactor");
+            if (conf.getInt("dyn") == 0) {
+                revPerDay = conf.getJSONObject("rev").getInt("perDay");
+                newPerDay = conf.getJSONObject("new").getInt("perDay");
+                initialFactor = conf.getJSONObject("new").getInt("initialFactor");
 
-                    Timber.d("rev.perDay=" + revPerDay);
-                    Timber.d("new.perDay=" + newPerDay);
-                    Timber.d("new.initialFactor=" + initialFactor);
-                } else {
-                    Timber.d("dyn=" + conf.getInt("dyn"));
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+                Timber.d("rev.perDay=" + revPerDay);
+                Timber.d("new.perDay=" + newPerDay);
+                Timber.d("new.initialFactor=" + initialFactor);
+            } else {
+                Timber.d("dyn=" + conf.getInt("dyn"));
             }
 
             return new Deck(did, newPerDay, revPerDay, initialFactor);
@@ -587,6 +583,7 @@ public class AdvancedStatistics extends Hook  {
             query = "SELECT id, due, ivl, factor, type, reps " +
                     "FROM cards " +
                     "WHERE did IN (" + did + ") " +
+                    "AND queue != " + Consts.QUEUE_TYPE_SUSPENDED + " " +   // ignore suspended cards
                     "order by id;";
             Timber.d("Forecast query: %s", query);
             cur = db.query(query, null);
@@ -661,15 +658,15 @@ public class AdvancedStatistics extends Hook  {
 
         private final String queryNew =
                 queryBaseNew
-                        + "where type=0;";
+                        + "where type=" + CARD_TYPE_NEW + ";";
 
         private final String queryYoung =
                 queryBaseYoungMature
-                        + "where type=1 and lastIvl < 21;";
+                        + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl < 21;";
 
         private final String queryMature =
                 queryBaseYoungMature
-                        + "where type=1 and lastIvl >= 21;";
+                        + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl >= 21;";
 
         public EaseClassifier(SupportSQLiteDatabase db) {
             this.db = db;
@@ -807,7 +804,7 @@ public class AdvancedStatistics extends Hook  {
             int ivl = c.getIvl();
             double factor = c.getFactor();
 
-            if(type == 0) {
+            if(type == CARD_TYPE_NEW) {
                 if (outcome <= 2)
                     ivl = 1;
                 else
@@ -848,7 +845,7 @@ public class AdvancedStatistics extends Hook  {
 
             Cursor cur = null;
             String query = "select cards.did, "+
-                    "sum(case when revlog.type = 0 then 1 else 0 end)"+ /* learning */
+                    "sum(case when revlog.type = " + CARD_TYPE_NEW + " then 1 else 0 end)"+ /* learning */
                     " from revlog, cards where revlog.cid = cards.id and revlog.id > " + dayStartCutoff +
                     " group by cards.did";
             Timber.d("AdvancedStatistics.TodayStats query: %s", query);
@@ -1083,7 +1080,7 @@ public class AdvancedStatistics extends Hook  {
          * @return Factor which will be used if it cannot be read from Deck settings.
          */
         public int getInitialFactor() {
-            return 2500;
+            return Consts.STARTING_FACTOR;
         }
 
         public long getNow() {
@@ -1633,7 +1630,7 @@ public class AdvancedStatistics extends Hook  {
             this.outcome = 0;
 
             //# Rate-limit new cards by shifting starting time
-            if (card.getType() == 0)
+            if (card.getType() == CARD_TYPE_NEW)
                 tElapsed = newCardSimulator.simulateNewCard(deck);
             else
                 tElapsed = card.getDue();
@@ -1665,7 +1662,7 @@ public class AdvancedStatistics extends Hook  {
          */
         public void simulateReview() {
 
-            if(card.getType() == 0 || simulationResult.nReviewsDoneToday(tElapsed) < maxReviewsPerDay || outcome > 0) {
+            if(card.getType() == CARD_TYPE_NEW || simulationResult.nReviewsDoneToday(tElapsed) < maxReviewsPerDay || outcome > 0) {
                 // Update the forecasted number of reviews
                 if(outcome == 0)
                     simulationResult.incrementNReviews(card.getType(), tElapsed, prob);

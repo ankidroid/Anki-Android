@@ -39,6 +39,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Locale;
 
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.NPathComplexity"})
@@ -73,19 +75,21 @@ public class FullSyncer extends HttpSyncer {
 
 
     @Override
-    @SuppressWarnings("deprecation") // tracking HTTP transport change in github already
     public Object[] download() throws UnknownHttpResponseException {
         InputStream cont;
+        ResponseBody body = null;
         try {
-            org.apache.http.HttpResponse ret = super.req("download");
-            if (ret == null) {
+            Response ret = super.req("download");
+            if (ret == null || ret.body() == null) {
                 return null;
             }
-            cont = ret.getEntity().getContent();
-        } catch (IllegalStateException e1) {
+            body = ret.body();
+            cont = body.byteStream();
+        } catch (IllegalArgumentException e1) {
+            if (body != null) {
+                body.close();
+            }
             throw new RuntimeException(e1);
-        } catch (IOException e1) {
-            return null;
         }
         String path;
         if (mCol != null) {
@@ -102,7 +106,7 @@ public class FullSyncer extends HttpSyncer {
         try {
             super.writeToFile(cont, tpath);
             FileInputStream fis = new FileInputStream(tpath);
-            if (super.stream2String(fis, 15).equals("upgradeRequired")) {
+            if ("upgradeRequired".equals(super.stream2String(fis, 15))) {
                 return new Object[]{"upgradeRequired"};
             }
         } catch (FileNotFoundException e) {
@@ -111,6 +115,8 @@ public class FullSyncer extends HttpSyncer {
         } catch (IOException e) {
             Timber.e(e, "Full sync failed to download collection.");
             return new Object[] { "sdAccessError" };
+        } finally {
+            body.close();
         }
 
         // check the received file is ok
@@ -141,7 +147,6 @@ public class FullSyncer extends HttpSyncer {
 
 
     @Override
-    @SuppressWarnings("deprecation") // tracking HTTP transport change in github already
     public Object[] upload() throws UnknownHttpResponseException {
         // make sure it's ok before we try to upload
         mCon.publishProgress(R.string.sync_check_upload_file);
@@ -154,19 +159,19 @@ public class FullSyncer extends HttpSyncer {
         // apply some adjustments, then upload
         mCol.beforeUpload();
         String filePath = mCol.getPath();
-        org.apache.http.HttpResponse ret;
+        Response ret;
         mCon.publishProgress(R.string.sync_uploading_message);
         try {
             ret = super.req("upload", new FileInputStream(filePath));
-            if (ret == null) {
+            if (ret == null || ret.body() == null) {
                 return null;
             }
-            int status = ret.getStatusLine().getStatusCode();
+            int status = ret.code();
             if (status != 200) {
                 // error occurred
-                return new Object[] { "error", status, ret.getStatusLine().getReasonPhrase() };
+                return new Object[] { "error", status, ret.message() };
             } else {
-                return new Object[] { super.stream2String(ret.getEntity().getContent()) };
+                return new Object[] { ret.body().string() };
             }
         } catch (IllegalStateException | IOException e) {
             throw new RuntimeException(e);

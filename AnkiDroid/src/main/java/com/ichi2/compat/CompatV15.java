@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat;
 
 import android.os.StatFs;
 import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
@@ -49,6 +50,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
@@ -193,6 +196,16 @@ public class CompatV15 implements Compat {
     }
 
     // Until API 26 do the copy using streams
+    public void copyFile(@NonNull String source, @NonNull String target) throws IOException {
+        try (InputStream fileInputStream = new FileInputStream(new File(source))) {
+            copyFile(fileInputStream, target);
+        } catch (IOException e) {
+            Timber.e(e, "copyFile() error copying source %s", source);
+            throw e;
+        }
+    }
+
+    // Until API 26 do the copy using streams
     public long copyFile(@NonNull String source, @NonNull OutputStream target) throws IOException {
         long count;
 
@@ -231,5 +244,18 @@ public class CompatV15 implements Compat {
         }
         target.flush();
         return count;
+    }
+
+    @Override
+    public Object initTtsParams() {
+        return new HashMap<String, String>();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId) {
+        HashMap<String, String> params = (HashMap) ttsParams;
+        params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
+        return tts.speak(text, queueMode, params);
     }
 }

@@ -123,6 +123,9 @@
     <string name="select_locale_title">Select language</string>
     <string name="safe_display">Safe display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can't use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">Center align</string>
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
     <string name="pref_backup_max">Max number of backups</string>
@@ -144,6 +147,11 @@
     <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
     <string name="show_virt_kybd">Automatically show the keyboard when cards require input.</string>
     <string name="show_virt_kybd_summ">Show keyboard</string>
+    <string name="sched_ver">Experimental V2 scheduler</string>
+    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_ver_toggle_title">Confirm</string>
+    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
+    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on">Keep screen on</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
     <string name="convert_fen_text">Chess notation support</string>
@@ -156,6 +164,8 @@
     <string name="custom_buttons_setting_if_room">Show if room</string>
     <string name="custom_buttons_setting_menu_only">Menu only</string>
     <string name="reset_custom_buttons">Reset to default</string>
+    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
 
     <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
@@ -201,6 +211,8 @@
     <string name="deck_conf_new_bury_summ">Related new cards are buried until the next day</string>
     <string name="deck_conf_rev_bury">Bury related reviews</string>
     <string name="deck_conf_rev_bury_summ">Related reviews are buried until the next day</string>
+    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Easy bonus</string>
     <string name="deck_conf_ivl_fct">Interval modifier</string>
     <string name="deck_conf_max_ivl">Maximum interval</string>

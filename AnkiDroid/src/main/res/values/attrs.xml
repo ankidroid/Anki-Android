@@ -79,6 +79,10 @@
     <attr name="suspendedColor" format="color"/>
     <attr name="selectedColor" format="color"/>
     <attr name="markedColor" format="color"/>
+    <attr name="flagRed" format="color"/>
+    <attr name="flagOrange" format="color"/>
+    <attr name="flagGreen" format="color"/>
+    <attr name="flagBlue" format="color"/>
     <!-- Note editor colors -->
     <attr name="duplicateColor" format="color"/>
     <!-- Images -->

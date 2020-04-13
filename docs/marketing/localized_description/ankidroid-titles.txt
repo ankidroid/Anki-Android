@@ -4,15 +4,18 @@ bg: AnkiDroid Флашкарти
 ca: AnkiDroid fitxes per memoritzar
 cs: AnkiDroid kartičky
 de: AnkiDroid Karteikarten
-el: Κάρτες AnkiDroid
+el: Κάρτες Ανκί-Ντρόιντ
+eo: AnkiDroid
 es-AR: Tarjetas flash AnkiDroid
 es-ES: Tarjetas AnkiDroid
+et: AnkiDroid mälukaardid
 fa: فلش کارتهای انکی دروید
 fi: AnkiDroid-muistikortit
 fr: AnkiDroid (Cartes mémoire)
 gl: Cartóns AnkiDroid
+he: AnkiDroid כרטיסי לימוד
 hi: AnkiDroid फ़्लैशकार्ड
-hu: AnkiDroid szókártyák
+hu: AnkiDroid Szókártyák
 id: Kad imbas AnkiDroid
 ko: AnkiDroid 플래시 카드
 lt: „AnkiDroid“ atminties kortelės

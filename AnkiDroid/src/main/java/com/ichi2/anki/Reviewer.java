@@ -38,16 +38,18 @@ import android.widget.FrameLayout;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.dialogs.IntegerDialog;
-import com.ichi2.async.DeckTask;
+import com.ichi2.anki.dialogs.RescheduleDialog;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
+import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Decks;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.widget.WidgetStatus;
 
-import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -60,39 +62,32 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
+    // Deck picker reset scheduler before opening the reviewer. So
+    // first reset is useless.
+    private boolean mSchedResetDone = false;
 
 
-    private DeckTask.TaskListener mRescheduleCardHandler = new ScheduleDeckTaskListener() {
+    private CollectionTask.TaskListener mRescheduleCardHandler = new ScheduleDeckTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reschedule_cards_dialog_acknowledge;
         }
     };
 
-    private DeckTask.TaskListener mRepositionCardHandler =new ScheduleDeckTaskListener() {
-        protected int getToastResourceId() {
-            return R.plurals.reposition_card_dialog_acknowledge;
-        }
-    };
-
-    private DeckTask.TaskListener mResetProgressCardHandler = new ScheduleDeckTaskListener() {
+    private CollectionTask.TaskListener mResetProgressCardHandler = new ScheduleDeckTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reset_cards_dialog_acknowledge;
         }
     };
 
-    /** We need to listen for and handle repositions / reschedules / resets very similarly */
-    abstract class ScheduleDeckTaskListener extends DeckTask.TaskListener {
+    /** We need to listen for and handle reschedules / resets very similarly */
+    abstract class ScheduleDeckTaskListener extends NextCardHandler {
 
         abstract protected int getToastResourceId();
 
-        @Override
-        public void onPreExecute() {
-            Timber.d("Reviewer::ScheduleDeckTaskListener() onPreExecute");
-        }
 
         @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Reviewer::ScheduleDeckTaskListener() onPostExecute");
+        public void onPostExecute(CollectionTask.TaskData result) {
+            super.onPostExecute(result);
             invalidateOptionsMenu();
             int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(Reviewer.this,
@@ -105,6 +100,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
+        if (getIntent().hasExtra("com.ichi2.anki.SchedResetDone")) {
+            mSchedResetDone = true;
+        }
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
             Timber.d("onCreate() :: received Intent with action = %s", getIntent().getAction());
             selectDeckFromExtra();
@@ -139,18 +137,15 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void setTitle() {
-        try {
-            String[] title = {""};
-            if (colIsOpen()) {
-                title = getCol().getDecks().current().getString("name").split("::");
-            } else {
-                Timber.e("Could not set title in reviewer because collection closed");
-            }
-            getSupportActionBar().setTitle(title[title.length - 1]);
-            super.setTitle(title[title.length - 1]);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        String title;
+        if (colIsOpen()) {
+            title = Decks.basename(getCol().getDecks().current().getString("name"));
+        } else {
+            Timber.e("Could not set title in reviewer because collection closed");
+            title = "";
         }
+        getSupportActionBar().setTitle(title);
+        super.setTitle(title);
         getSupportActionBar().setSubtitle("");
     }
 
@@ -161,9 +156,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         switch (fullscreenMode) {
             case 1:
-                return R.layout.reviewer_fullscreen_1;
+                return R.layout.reviewer_fullscreen;
             case 2:
-                return R.layout.reviewer_fullscreen_2;
+                return R.layout.reviewer_fullscreen_noanswers;
             default:
                 return R.layout.reviewer;
         }
@@ -178,13 +173,18 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         mPrefWhiteboard = MetaDB.getWhiteboardState(this, getParentDid());
         if (mPrefWhiteboard) {
+            //DEFECT: Slight inefficiency here, as we set the database using these methods
+            boolean whiteboardVisibility = MetaDB.getWhiteboardVisibility(this, getParentDid());
             setWhiteboardEnabledState(true);
-            setWhiteboardVisibility(true);
+            setWhiteboardVisibility(whiteboardVisibility);
         }
 
-        col.getSched().reset();     // Reset schedule incase card had previous been loaded
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
-                new DeckTask.TaskData(null, 0));
+        if (!mSchedResetDone) {
+            col.getSched().reset();     // Reset schedule in case card was previously loaded
+            mSchedResetDone = false;
+        }
+        CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+                new CollectionTask.TaskData(null, 0));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -276,6 +276,8 @@ public class Reviewer extends AbstractFlashcardViewer {
                 // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
                 mPrefWhiteboard = ! mPrefWhiteboard;
                 Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
+                //Even though the visibility is now stored in its own setting, we want it to be dependent
+                //on the enabled status
                 setWhiteboardEnabledState(mPrefWhiteboard);
                 setWhiteboardVisibility(mPrefWhiteboard);
                 refreshActionBar();
@@ -301,41 +303,41 @@ public class Reviewer extends AbstractFlashcardViewer {
                 addNote();
                 break;
 
+            case R.id.action_flag_zero:
+                Timber.i("Reviewer:: No flag");
+                onFlag(mCurrentCard, 0);
+                break;
+            case R.id.action_flag_one:
+                Timber.i("Reviewer:: Flag one");
+                onFlag(mCurrentCard, 1);
+                break;
+            case R.id.action_flag_two:
+                Timber.i("Reviewer:: Flag two");
+                onFlag(mCurrentCard, 2);
+                break;
+            case R.id.action_flag_three:
+                Timber.i("Reviewer:: Flag three");
+                onFlag(mCurrentCard, 3);
+                break;
+            case R.id.action_flag_four:
+                Timber.i("Reviewer:: Flag four");
+                onFlag(mCurrentCard, 4);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
     }
 
-
-    private void showRepositionCardDialog() {
-        IntegerDialog repositionDialog = new IntegerDialog();
-        repositionDialog.setArgs(
-                getResources().getString(R.string.reposition_card_dialog_title),
-                getResources().getString(R.string.reposition_card_dialog_message),
-                5);
-        repositionDialog.setCallbackRunnable(repositionDialog.new IntRunnable() {
-            public void run() {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
-                        new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.REPOSITION_CARDS, this.getInt()}));                    }
-        });
-        showDialogFragment(repositionDialog);
-    }
-
-
     private void showRescheduleCardDialog() {
-        IntegerDialog rescheduleDialog = new IntegerDialog();
-        rescheduleDialog.setArgs(
-                getResources().getString(R.string.reschedule_card_dialog_title),
-                getResources().getString(R.string.reschedule_card_dialog_message),
-                4);
-        rescheduleDialog.setCallbackRunnable(rescheduleDialog.new IntRunnable() {
-            public void run() {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
-                        new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
-            }
-        });
-        showDialogFragment(rescheduleDialog);
+        Consumer<Integer> runnable = days ->
+            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
+                    new CollectionTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()},
+                    Collection.DismissType.RESCHEDULE_CARDS, days})
+            );
+        RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
+
+        showDialogFragment(dialog);
     }
 
 
@@ -349,8 +351,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         dialog.setArgs(title, message);
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
-                    new DeckTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS}));
+            CollectionTask.launchDeckTask(CollectionTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
+                    new CollectionTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS}));
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);
@@ -367,7 +369,20 @@ public class Reviewer extends AbstractFlashcardViewer {
     private void setCustomButtons(Menu menu) {
         for(int itemId : mCustomButtons.keySet()) {
             if(mCustomButtons.get(itemId) != MENU_DISABLED) {
-                menu.findItem(itemId).setShowAsAction(mCustomButtons.get(itemId));
+                MenuItem item = menu.findItem(itemId);
+                item.setShowAsAction(mCustomButtons.get(itemId));
+                Drawable icon = item.getIcon();
+                if (getControlBlocked()) {
+                    item.setEnabled(false);
+                    if (icon != null) {
+                        icon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
+                    }
+                } else {
+                    item.setEnabled(true);
+                    if (icon != null) {
+                        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
+                    }
+                }
             }
             else {
                 menu.findItem(itemId).setVisible(false);
@@ -387,17 +402,35 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_outline_white_24dp);
         }
 
+        if (mCurrentCard != null) {
+            switch (mCurrentCard.getUserFlag()) {
+            case 1:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_red);
+                break;
+            case 2:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_orange);
+                break;
+            case 3:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_green);
+                break;
+            case 4:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_blue);
+                break;
+            default:
+                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_transparent);
+                break;
+            }
+        }
+
         if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.undoSize() > 0) {
             // Whiteboard undo queue non-empty. Switch the undo icon to a whiteboard specific one.
             menu.findItem(R.id.action_undo).setIcon(R.drawable.ic_eraser_variant_white_24dp);
-            menu.findItem(R.id.action_undo).setEnabled(true).getIcon().setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
         } else if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.isUndoModeActive()) {
             // Whiteboard undo queue empty, but user has added strokes to it for current card. Disable undo button.
             menu.findItem(R.id.action_undo).setIcon(R.drawable.ic_eraser_variant_white_24dp);
             menu.findItem(R.id.action_undo).setEnabled(false).getIcon().setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
         } else if (colIsOpen() && getCol().undoAvailable()) {
             menu.findItem(R.id.action_undo).setIcon(R.drawable.ic_undo_white_24dp);
-            menu.findItem(R.id.action_undo).setEnabled(true).getIcon().setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
         } else {
             menu.findItem(R.id.action_undo).setIcon(R.drawable.ic_undo_white_24dp);
             menu.findItem(R.id.action_undo).setEnabled(false).getIcon().setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
@@ -432,14 +465,14 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Setup bury / suspend providers
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_suspend), new SuspendProvider(this));
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_bury), new BuryProvider(this));
-        if (dismissNoteAvailable(DismissType.SUSPEND_NOTE)) {
+        if (suspendNoteAvailable()) {
             menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_action_suspend_dropdown);
             menu.findItem(R.id.action_suspend).setTitle(R.string.menu_suspend);
         } else {
             menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_action_suspend);
             menu.findItem(R.id.action_suspend).setTitle(R.string.menu_suspend_card);
         }
-        if (dismissNoteAvailable(DismissType.BURY_NOTE)) {
+        if (buryNoteAvailable()) {
             menu.findItem(R.id.action_bury).setIcon(R.drawable.ic_flip_to_back_white_24px_dropdown);
             menu.findItem(R.id.action_bury).setTitle(R.string.menu_bury);
         } else {
@@ -522,6 +555,91 @@ public class Reviewer extends AbstractFlashcardViewer {
         return super.onKeyUp(keyCode, event);
     }
 
+    @Override
+    protected void displayAnswerBottomBar() {
+        super.displayAnswerBottomBar();
+        int buttonCount;
+        try {
+            buttonCount = mSched.answerButtons(mCurrentCard);
+        } catch (RuntimeException e) {
+            AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-showEaseButtons");
+            closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
+            return;
+        }
+
+        // Set correct label and background resource for each button
+        // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
+        // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
+        final int[] background = Themes.getResFromAttr(this, new int [] {
+                R.attr.againButtonRef,
+                R.attr.hardButtonRef,
+                R.attr.goodButtonRef,
+                R.attr.easyButtonRef});
+        final int[] textColor = Themes.getColorFromAttr(this, new int [] {
+                R.attr.againButtonTextColor,
+                R.attr.hardButtonTextColor,
+                R.attr.goodButtonTextColor,
+                R.attr.easyButtonTextColor});
+        mEase1Layout.setVisibility(View.VISIBLE);
+        mEase1Layout.setBackgroundResource(background[0]);
+        mEase4Layout.setBackgroundResource(background[3]);
+        switch (buttonCount) {
+            case 2:
+                // Ease 2 is "good"
+                mEase2Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setBackgroundResource(background[2]);
+                mEase2.setText(R.string.ease_button_good);
+                mEase2.setTextColor(textColor[2]);
+                mNext2.setTextColor(textColor[2]);
+                mEase2Layout.requestFocus();
+                break;
+            case 3:
+                // Ease 2 is good
+                mEase2Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setBackgroundResource(background[2]);
+                mEase2.setText(R.string.ease_button_good);
+                mEase2.setTextColor(textColor[2]);
+                mNext2.setTextColor(textColor[2]);
+                // Ease 3 is easy
+                mEase3Layout.setVisibility(View.VISIBLE);
+                mEase3Layout.setBackgroundResource(background[3]);
+                mEase3.setText(R.string.ease_button_easy);
+                mEase3.setTextColor(textColor[3]);
+                mNext3.setTextColor(textColor[3]);
+                mEase2Layout.requestFocus();
+                break;
+            default:
+                mEase2Layout.setVisibility(View.VISIBLE);
+                // Ease 2 is "hard"
+                mEase2Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setBackgroundResource(background[1]);
+                mEase2.setText(R.string.ease_button_hard);
+                mEase2.setTextColor(textColor[1]);
+                mNext2.setTextColor(textColor[1]);
+                mEase2Layout.requestFocus();
+                // Ease 3 is good
+                mEase3Layout.setVisibility(View.VISIBLE);
+                mEase3Layout.setBackgroundResource(background[2]);
+                mEase3.setText(R.string.ease_button_good);
+                mEase3.setTextColor(textColor[2]);
+                mNext3.setTextColor(textColor[2]);
+                mEase4Layout.setVisibility(View.VISIBLE);
+                mEase3Layout.requestFocus();
+                break;
+        }
+
+        // Show next review time
+        if (shouldShowNextReviewTime()) {
+            mNext1.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_ONE));
+            mNext2.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_TWO));
+            if (buttonCount > 2) {
+                mNext3.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_THREE));
+            }
+            if (buttonCount > 3) {
+                mNext4.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_FOUR));
+            }
+        }
+    }
 
     @Override
     protected SharedPreferences restorePreferences() {
@@ -600,6 +718,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     // Show or hide the whiteboard
     private void setWhiteboardVisibility(boolean state) {
         mShowWhiteboard = state;
+        MetaDB.storeWhiteboardVisibility(this, getParentDid(), state);
         if (state) {
             mWhiteboard.setVisibility(View.VISIBLE);
             disableDrawerSwipe();
@@ -652,22 +771,23 @@ public class Reviewer extends AbstractFlashcardViewer {
      * @param type Currently only SUSPEND_NOTE and BURY_NOTE supported
      * @return true if there is another card of same note that could be dismissed
      */
-    private boolean dismissNoteAvailable(DismissType type) {
-        if (mCurrentCard == null || mCurrentCard.note() == null || mCurrentCard.note().cards().size() < 2) {
+    private boolean suspendNoteAvailable() {
+        if (mCurrentCard == null || getControlBlocked()) {
             return false;
         }
-        List<Card> cards = mCurrentCard.note().cards();
-        for(Card card : cards) {
-            if (card.getId() == mCurrentCard.getId()) continue;
-            int queue = card.getQueue();
-            if(type == DismissType.SUSPEND_NOTE && queue != Card.QUEUE_SUSP) {
-                return true;
-            } else if (type == DismissType.BURY_NOTE &&
-                    queue != Card.QUEUE_SUSP && queue != Card.QUEUE_USER_BRD && queue != Card.QUEUE_SCHED_BRD) {
-                return true;
-            }
+        // whether there exists a sibling not buried.
+        return getCol().getDb().queryScalar("select count() from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+                new Object[] {mCurrentCard.getNid(), mCurrentCard.getId()}) == 1;
+    }
+
+    private boolean buryNoteAvailable() {
+        if (mCurrentCard == null) {
+            return false;
         }
-        return false;
+        // Whether there exists a sibling which is neither susbended nor buried
+        boolean bury = getCol().getDb().queryScalar("select count(id) from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+                new Object[] {mCurrentCard.getNid(), mCurrentCard.getId()}) == 1;
+        return bury;
     }
 
     /**
@@ -685,7 +805,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         @Override
         public boolean hasSubMenu() {
-            return dismissNoteAvailable(DismissType.SUSPEND_NOTE);
+            return suspendNoteAvailable();
         }
 
         @Override
@@ -727,7 +847,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         @Override
         public boolean hasSubMenu() {
-            return dismissNoteAvailable(DismissType.BURY_NOTE);
+            return buryNoteAvailable();
         }
 
         @Override
@@ -785,9 +905,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.action_reposition_card:
-                    showRepositionCardDialog();
-                    return true;
                 case R.id.action_reschedule_card:
                     showRescheduleCardDialog();
                     return true;

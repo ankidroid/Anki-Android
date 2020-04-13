@@ -20,12 +20,15 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Pair;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.MetaDB;
+import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.sched.Sched;
 
 import java.util.List;
 
@@ -37,6 +40,7 @@ import timber.log.Timber;
 public final class WidgetStatus {
 
     private static boolean sSmallWidgetEnabled = false;
+    private static boolean sNotificationEnabled = false;
     private static AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
 
 
@@ -54,8 +58,9 @@ public final class WidgetStatus {
     public static void update(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false);
-        if (sSmallWidgetEnabled &&
-                ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED))) {
+        sNotificationEnabled = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000;
+        boolean canExecuteTask = ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED));
+        if ((sSmallWidgetEnabled || sNotificationEnabled) && canExecuteTask) {
             Timber.d("WidgetStatus.update(): updating");
             sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
             sUpdateDeckStatusAsyncTask.execute(context);
@@ -106,6 +111,9 @@ public final class WidgetStatus {
             if (sSmallWidgetEnabled) {
                 new AnkiDroidWidgetSmall.UpdateService().doUpdate(context);
             }
+            Intent intent = new Intent(NotificationService.INTENT_ACTION);
+            Context appContext = context.getApplicationContext();
+            LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent);
         }
 
 
