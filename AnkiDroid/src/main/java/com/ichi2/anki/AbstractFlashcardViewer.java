@@ -3218,4 +3218,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public boolean getControlBlocked() {
         return mControlBlocked;
     }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    static void setEditorCard(Card card) {
+        //I don't see why we don't do this by intent.
+        sEditorCard = card;
+    }
 }
