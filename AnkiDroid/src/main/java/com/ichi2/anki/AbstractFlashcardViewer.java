@@ -749,7 +749,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @param correctAnswer The correct answer, taken from the note.
      * @return The formatted answer text
      */
-    private String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) {
+    @VisibleForTesting
+    String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) {
         Matcher m = sTypeAnsPat.matcher(buf);
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
