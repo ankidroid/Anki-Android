@@ -3,11 +3,11 @@ package com.ichi2.anki;
 import android.content.Context;
 
 import androidx.test.core.app.ActivityScenario;
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.LooperMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,13 +16,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
+@LooperMode(LooperMode.Mode.PAUSED)
 public class DeckPickerTest extends RobolectricTest {
 
     @Test
     public void verifyCodeMessages() {
 
         Map<Integer, String> mCodeResponsePairs = new HashMap<>();
-        final Context context = ApplicationProvider.getApplicationContext();
+        final Context context = getTargetContext();
         mCodeResponsePairs.put(407, context.getString(R.string.sync_error_407_proxy_required));
         mCodeResponsePairs.put(409, context.getString(R.string.sync_error_409));
         mCodeResponsePairs.put(413, context.getString(R.string.sync_error_413_collection_size));

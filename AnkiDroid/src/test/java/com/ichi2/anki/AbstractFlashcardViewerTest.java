@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
+import org.robolectric.annotation.LooperMode;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -21,11 +22,15 @@ import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SH
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SIGNAL_NOOP;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl;
+
+import static android.os.Looper.getMainLooper;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
+@LooperMode(LooperMode.Mode.PAUSED)
 public class AbstractFlashcardViewerTest extends RobolectricTest {
 
     public static class NonAbstractFlashcardViewer extends AbstractFlashcardViewer {
@@ -320,6 +325,10 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         NonAbstractFlashcardViewer viewer = (NonAbstractFlashcardViewer) multimediaController.get();
         viewer.onCollectionLoaded(getCol());
         viewer.loadInitialCard();
+        // Without this, AbstractFlashcardViewer.mCard is still null, and RobolectricTest.tearDown executes before
+        // AsyncTasks spawned by by loading the viewer finish. Is there a way to synchronize these things while under test?
+        try { Thread.sleep(2000); } catch (Throwable t) { /* nothing */ }
+        shadowOf(getMainLooper()).idle();
         return viewer;
     }
 }
