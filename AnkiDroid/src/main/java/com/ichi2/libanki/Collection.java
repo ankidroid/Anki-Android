@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -52,7 +53,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import io.requery.android.database.sqlite.SQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -61,13 +62,16 @@ import timber.log.Timber;
 //
 // This module manages the tag cache and tags for notes.
 
+@SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
+        "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt","PMD.ExcessiveMethodLength"})
 public class Collection {
 
     private Context mContext;
 
     private DB mDb;
     private boolean mServer;
-    private double mLastSave;
+    //private double mLastSave;
     private Media mMedia;
     private Decks mDecks;
     private Models mModels;
@@ -114,8 +118,15 @@ public class Collection {
         BURY_CARD(R.string.undo_action_bury_card),
         BURY_NOTE(R.string.undo_action_bury_note),
         SUSPEND_CARD(R.string.undo_action_suspend_card),
+        SUSPEND_CARD_MULTI(R.string.card_browser_toggle_suspend_card),
         SUSPEND_NOTE(R.string.undo_action_suspend_note),
-        DELETE_NOTE(R.string.undo_action_delete);
+        DELETE_NOTE(R.string.undo_action_delete),
+        DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
+        CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
+        MARK_NOTE_MULTI(R.string.card_browser_toggle_mark_card),
+        REPOSITION_CARDS(R.string.undo_action_reposition_card),
+        RESCHEDULE_CARDS(R.string.undo_action_reschedule_card),
+        RESET_CARDS(R.string.undo_action_reset_card);
 
         public int undoNameId;
 
@@ -131,7 +142,7 @@ public class Collection {
     }
 
     public Collection(Context context, DB db, String path, boolean server) {
-        this(context, db, path, false, false);
+        this(context, db, path, server, false);
     }
 
     public Collection(Context context, DB db, String path, boolean server, boolean log) {
@@ -142,7 +153,7 @@ public class Collection {
         _openLog();
         log(path, VersionUtils.getPkgVersionName());
         mServer = server;
-        mLastSave = Utils.now();
+        //mLastSave = Utils.now(); // assigned but never accessed - only leaving in for upstream comparison
         clearUndo();
         mMedia = new Media(this, server);
         mModels = new Models(this);
@@ -182,7 +193,7 @@ public class Collection {
         String deckConf = "";
         try {
             // Read in deck table columns
-            cursor = mDb.getDatabase().rawQuery(
+            cursor = mDb.getDatabase().query(
                     "SELECT crt, mod, scm, dty, usn, ls, " +
                     "conf, dconf, tags FROM col", null);
             if (!cursor.moveToFirst()) {
@@ -218,7 +229,7 @@ public class Collection {
         while (true) {
             Cursor cursor = null;
             try {
-                cursor = mDb.getDatabase().rawQuery(
+                cursor = mDb.getDatabase().query(
                         "SELECT substr(" + columnName + ", ?, ?) FROM col",
                         new String[]{Integer.toString(pos), Integer.toString(chunk)});
                 if (!cursor.moveToFirst()) {
@@ -301,9 +312,9 @@ public class Collection {
         }
         // undoing non review operation is handled differently in ankidroid
 //        _markOp(name);
-        mLastSave = Utils.now();
+        //mLastSave = Utils.now(); // assigned but never accessed - only leaving in for upstream comparison
     }
-    
+
 
     /** make sure we don't accidentally bump mod time */
     public void lock() {
@@ -325,7 +336,7 @@ public class Collection {
     public synchronized void close(boolean save) {
         if (mDb != null) {
             try {
-                SQLiteDatabase db = mDb.getDatabase();
+                SupportSQLiteDatabase db = mDb.getDatabase();
                 if (save) {
                     db.beginTransaction();
                     try {
@@ -499,7 +510,7 @@ public class Collection {
             values.put("usn", usn());
             values.put("oid", id);
             values.put("type", type);
-            mDb.insert("graves", null, values);
+            mDb.insert("graves", values);
         }
     }
 
@@ -643,7 +654,7 @@ public class Collection {
         HashMap<Long, Long> dids = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("select id, nid, ord, did, odid from cards where nid in " + snids, null);
+            cur = mDb.getDatabase().query("select id, nid, ord, did, odid from cards where nid in " + snids, null);
             while (cur.moveToNext()) {
                 long nid = cur.getLong(1);
                 long did = cur.getLong(3);
@@ -682,7 +693,7 @@ public class Collection {
         int usn = usn();
         cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
+            cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
             while (cur.moveToNext()) {
                 JSONObject model = mModels.get(cur.getLong(1));
                 ArrayList<Integer> avail = mModels.availOrds(model, cur.getString(2));
@@ -902,11 +913,11 @@ public class Collection {
         StringBuilder rep = new StringBuilder();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("select group_concat(ord+1), count(), flds from cards c, notes n "
+            cur = mDb.getDatabase().query("select group_concat(ord+1), count(), flds from cards c, notes n "
                                            + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid", null);
             while (cur.moveToNext()) {
                 String ords = cur.getString(0);
-                int cnt = cur.getInt(1);
+                //int cnt = cur.getInt(1);  // present but unused upstream as well
                 String flds = cur.getString(2);
                 rep.append(String.format("Empty card numbers: %s\nFields: %s\n\n", ords, flds.replace("\u001F", " / ")));
             }
@@ -927,7 +938,7 @@ public class Collection {
         ArrayList<Object[]> result = new ArrayList<>();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
+            cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
             while (cur.moveToNext()) {
                 result.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getString(2) });
             }
@@ -969,13 +980,13 @@ public class Collection {
 
     public ArrayList<HashMap<String, String>> renderQA(int[] ids, String type) {
         String where;
-        if (type.equals("card")) {
+        if ("card".equals(type)) {
             where = "AND c.id IN " + Utils.ids2str(ids);
-        } else if (type.equals("fact")) {
+        } else if ("fact".equals(type)) {
             where = "AND f.id IN " + Utils.ids2str(ids);
-        } else if (type.equals("model")) {
+        } else if ("model".equals(type)) {
             where = "AND m.id IN " + Utils.ids2str(ids);
-        } else if (type.equals("all")) {
+        } else if ("all".equals(type)) {
             where = "";
         } else {
             throw new RuntimeException();
@@ -1029,7 +1040,7 @@ public class Collection {
             for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>("a", afmt)}) {
                 String type = p.first;
                 String format = p.second;
-                if (type.equals("q")) {
+                if ("q".equals(type)) {
                     format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
                     format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
                 } else {
@@ -1042,10 +1053,10 @@ public class Collection {
                 String html = new Template(format, fields).render();
                 d.put(type, (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this));
                 // empty cloze?
-                if (type.equals("q") && model.getInt("type") == Consts.MODEL_CLOZE) {
+                if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
                     if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
                         String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
-                        d.put("q", String.format("Please edit this note and add some cloze deletions. (%s)", link));
+                        d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
                     }
                 }
             }
@@ -1068,7 +1079,7 @@ public class Collection {
         ArrayList<Object[]> data = new ArrayList<>();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery(
+            cur = mDb.getDatabase().query(
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
                             + "n.tags, n.flds FROM cards c, notes n WHERE c.nid == n.id " + where, null);
             while (cur.moveToNext()) {
@@ -1219,14 +1230,16 @@ public class Collection {
 
 
     public boolean undoAvailable() {
+        Timber.d("undoAvailable() undo size: %s", mUndo.size());
         return mUndo.size() > 0;
     }
 
 
     public long undo() {
     	Object[] data = mUndo.removeLast();
+        Timber.d("undo() of type %s", data[0]);
     	switch ((DismissType) data[0]) {
-            case REVIEW:
+            case REVIEW: {
                 Card c = (Card) data[1];
                 // remove leech tag if it didn't have it before
                 Boolean wasLeech = (Boolean) data[2];
@@ -1248,6 +1261,7 @@ public class Collection {
                 mSched._updateStats(c, type, -1);
                 mSched.setReps(mSched.getReps() - 1);
                 return c.getId();
+            }
 
             case BURY_NOTE:
                 for (Card cc : (ArrayList<Card>) data[2]) {
@@ -1255,10 +1269,41 @@ public class Collection {
                 }
                 return (Long) data[3];
 
-            case SUSPEND_CARD:
+            case SUSPEND_CARD: {
                 Card suspendedCard = (Card) data[1];
                 suspendedCard.flush(false);
                 return suspendedCard.getId();
+            }
+
+            case SUSPEND_CARD_MULTI: {
+                Card[] cards = (Card[]) data[1];
+                boolean[] originalSuspended = (boolean[]) data[2];
+                List<Long> toSuspendIds = new ArrayList<>();
+                List<Long> toUnsuspendIds = new ArrayList<>();
+                for (int i = 0; i < cards.length; i++) {
+                    Card card = cards[i];
+                    if (originalSuspended[i]) {
+                        toSuspendIds.add(card.getId());
+                    } else {
+                        toUnsuspendIds.add(card.getId());
+                    }
+                }
+
+                // unboxing
+                long[] toSuspendIdsArray = new long[toSuspendIds.size()];
+                long[] toUnsuspendIdsArray = new long[toUnsuspendIds.size()];
+                for (int i = 0; i < toSuspendIds.size(); i++) {
+                    toSuspendIdsArray[i] = toSuspendIds.get(i);
+                }
+                for (int i = 0; i < toUnsuspendIds.size(); i++) {
+                    toUnsuspendIdsArray[i] = toUnsuspendIds.get(i);
+                }
+
+                getSched().suspendCards(toSuspendIdsArray);
+                getSched().unsuspendCards(toUnsuspendIdsArray);
+
+                return -1;  // don't fetch new card
+            }
 
             case SUSPEND_NOTE:
                 for (Card ccc : (ArrayList<Card>) data[1]) {
@@ -1266,23 +1311,77 @@ public class Collection {
                 }
                 return (Long) data[2];
 
-            case DELETE_NOTE:
+            case MARK_NOTE_MULTI: {
+                List<Note> originalMarked = (List<Note>) data[1];
+                List<Note> originalUnmarked = (List<Note>) data[2];
+                CardUtils.markAll(originalMarked, true);
+                CardUtils.markAll(originalUnmarked, false);
+                return -1;  // don't fetch new card
+            }
+
+            case DELETE_NOTE: {
                 ArrayList<Long> ids = new ArrayList<>();
-                Note note2 = (Note) data[1];
-                note2.flush(note2.getMod(), false);
-                ids.add(note2.getId());
-                for (Card c4 : (ArrayList<Card>) data[2]) {
-                    c4.flush(false);
-                    ids.add(c4.getId());
+                Note note = (Note) data[1];
+                note.flush(note.getMod(), false);
+                ids.add(note.getId());
+                for (Card c : (ArrayList<Card>) data[2]) {
+                    c.flush(false);
+                    ids.add(c.getId());
                 }
                 mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 return (Long) data[3];
+            }
 
-            case BURY_CARD:
+            case DELETE_NOTE_MULTI: {
+                // undo all of these at once instead of one-by-one
+                ArrayList<Long> ids = new ArrayList<>();
+                List<Card> allCards = (ArrayList<Card>) data[2];
+                Note[] notes = (Note[]) data[1];
+                for (Note n : notes) {
+                    n.flush(n.getMod(), false);
+                    ids.add(n.getId());
+                }
+                for (Card c : allCards) {
+                    c.flush(false);
+                    ids.add(c.getId());
+                }
+                mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+                return -1;  // don't fetch new card
+            }
+
+            case CHANGE_DECK_MULTI: {
+                Card[] cards = (Card[]) data[1];
+                long[] originalDid = (long[]) data[2];
+                // move cards to original deck
+                for (int i = 0; i < cards.length; i++) {
+                    Card card = cards[i];
+                    card.load();
+                    card.setDid(originalDid[i]);
+                    Note note = card.note();
+                    note.flush();
+                    card.flush();
+                }
+                return -1;  // don't fetch new card
+            }
+
+            case BURY_CARD: {
                 for (Card cc : (ArrayList<Card>) data[2]) {
                     cc.flush(false);
                 }
                 return (Long) data[3];
+            }
+
+            case RESET_CARDS:
+            case RESCHEDULE_CARDS:
+            case REPOSITION_CARDS:
+                Timber.d("Undoing action of type %s on %d cards", data[0], ((Card[])data[1]).length);
+                Card[] cards = (Card[]) data[1];
+                for (int i = 0; i < cards.length; i++) {
+                    Card card = cards[i];
+                    card.flush(false);
+                }
+                return 0;
+
             default:
                 return 0;
         }
@@ -1290,29 +1389,51 @@ public class Collection {
 
 
     public void markUndo(DismissType type, Object[] o) {
-    	switch(type) {
-    	case REVIEW:
-    		mUndo.add(new Object[]{type, ((Card)o[0]).clone(), o[1]});
-    		break;
-        case BURY_CARD:
-            mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-            break;
-        case BURY_NOTE:
-            mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-            break;
-        case SUSPEND_CARD:
-            mUndo.add(new Object[]{type, ((Card)o[0]).clone()});
-            break;
-        case SUSPEND_NOTE:
-            mUndo.add(new Object[]{type, o[0], o[1]});
-            break;
-    	case DELETE_NOTE:
-    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-    		break;
-    	}
-    	while (mUndo.size() > UNDO_SIZE_MAX) {
-    		mUndo.removeFirst();
-    	}
+        Timber.d("markUndo() of type %s", type);
+        switch (type) {
+            case REVIEW:
+                mUndo.add(new Object[]{type, ((Card) o[0]).clone(), o[1]});
+                break;
+            case BURY_CARD:
+                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                break;
+            case BURY_NOTE:
+                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                break;
+            case SUSPEND_CARD:
+                mUndo.add(new Object[]{type, ((Card) o[0]).clone()});
+                break;
+            case SUSPEND_CARD_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case MARK_NOTE_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case SUSPEND_NOTE:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case DELETE_NOTE:
+                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                break;
+            case DELETE_NOTE_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case CHANGE_DECK_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case RESET_CARDS:
+            case REPOSITION_CARDS:
+            case RESCHEDULE_CARDS:
+                // Card array is cloned in DeckTask, which pays attention to memory pressure
+                mUndo.add(new Object[]{type, o[0]});
+                break;
+            default:
+                Timber.e("markUndo() received unknown type? %s", type);
+                break;
+        }
+        while (mUndo.size() > UNDO_SIZE_MAX) {
+            mUndo.removeFirst();
+        }
     }
 
 
@@ -1378,7 +1499,7 @@ public class Collection {
             mDb.getDatabase().beginTransaction();
             try {
                 save();
-                if (!mDb.queryString("PRAGMA integrity_check").equals("ok")) {
+                if (!"ok".equals(mDb.queryString("PRAGMA integrity_check"))) {
                     return -1;
                 }
                 // note types with a missing model
@@ -1409,7 +1530,7 @@ public class Collection {
                     ids = new ArrayList<>();
                     Cursor cur = null;
                     try {
-                        cur = mDb.getDatabase().rawQuery("select id, flds from notes where mid = " + m.getLong("id"), null);
+                        cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
                         while (cur.moveToNext()) {
                             String flds = cur.getString(1);
                             long id = cur.getLong(0);
@@ -1510,7 +1631,7 @@ public class Collection {
         if (problems.size() > 0) {
             modSchemaNoCheck();
         }
-        // TODO: report problems
+        logProblems(problems);
         return (oldSize - newSize) / 1024;
     }
 
@@ -1527,6 +1648,27 @@ public class Collection {
      * Logging
      * ***********************************************************
      */
+
+    /**
+     * Track database corruption problems - AcraLimiter should quench it if it's a torrent
+     * but we will take care to limit possible data usage by limiting count we send regardless
+     *
+     * @param integrityCheckProblems list of problems, the first 10 will be logged and sent via ACRA
+     */
+    private void logProblems(ArrayList integrityCheckProblems) {
+
+        if (integrityCheckProblems.size() > 0) {
+            StringBuffer additionalInfo = new StringBuffer();
+            for (int i = 0; ((i < 10) && (integrityCheckProblems.size() > i)); i++) {
+                additionalInfo.append(integrityCheckProblems.get(i)).append("\n");
+            }
+            AnkiDroidApp.sendExceptionReport(
+                    new Exception("Problem list (limited to first 10)"), "Collection.fixIntegrity()", additionalInfo.toString());
+            Timber.i("fixIntegrity() Problem list (limited to first 10):\n%s", additionalInfo);
+        } else {
+            Timber.i("fixIntegrity() no problems found");
+        }
+    }
 
     public void log(Object... args) {
         if (!mDebugLog) {

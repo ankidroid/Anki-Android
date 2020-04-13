@@ -49,39 +49,39 @@
   <string name="CardEditorNoteDeck">Deck:</string>
   <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">Tag: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="CardEditorCards">Kartu:%1$s</string>
+  <string name="tag_name">Tag nama</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
-  <string name="filter_tags">Filter tags</string>
-  <string name="no_tags">You haven’t added any tags yet</string>
-  <string name="sdcard_missing_message">Kad SD tidak tercapai kerana sedang diguna sebagai storan USB. Tanggalkan USB untuk mendapatkan dek anda.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="check_all_tags">Centang / hapus centang semua tag</string>
+  <string name="filter_tags">Tag filter</string>
+  <string name="no_tags">Anda belum menambahkan tag belum</string>
+  <string name="sdcard_missing_message">Kad SD tidak tercapai kerana sedang diguna sebagai storan USB. Tanggalkan USB untuk mendapatkan dek anda</string>
+  <string name="updated_version">Diperbarui ke versi %s</string>
   <!-- Reviewer.java -->
   <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="disable_whiteboard">Nonaktifkan papan tulis</string>
   <string name="show_whiteboard">Tunjuk Papan hitam</string>
   <string name="hide_whiteboard">Tutup Papan hitam</string>
   <string name="clear_whiteboard">Bersih Papan hitam</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">Putar ulang audio</string>
   <string name="leech_suspend_notification">Kartu ditandai sebagai pacat dan digantung</string>
   <string name="leech_notification">Kartu ditandai sebagai pacat</string>
   <string name="corrupt_font">File font %s rusak</string>
   <!-- Browser -->
   <string-array name="browser_column1_headings">
-    <item>Question</item>
+    <item>Pertanyaan</item>
     <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
+    <item>Menjawab</item>
+    <item>Kartu</item>
     <item>Deck</item>
     <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>Pertanyaan</item>
+    <item>Tag</item>
+    <item>Lapisan</item>
+    <item>Ulasan</item>
     <!--
     <item>Changed</item>
     <item>Created</item>
@@ -92,75 +92,76 @@
         -->
   </string-array>
   <!-- Custom study options -->
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Tingkatkan batas kartu baru hari ini</string>
+  <string name="custom_study_increase_review_limit">Tingkatkan batas kartu review hari ini</string>
+  <string name="custom_study_review_forgotten">Tinjau kartu yang terlupakan</string>
+  <string name="custom_study_review_ahead">Tinjau depan</string>
+  <string name="custom_study_random_selection">Pelajari pilihan kartu secara acak</string>
+  <string name="custom_study_preview_new">Preview kartu baru</string>
+  <string name="custom_study_limit_tags">Batasi tag tertentu</string>
   <!-- Card editor -->
   <string name="cardeditor_title_add_note">Tambahkan catatan</string>
   <string name="cardeditor_title_edit_card">Ubah catatan</string>
-  <string name="discard_unsaved_changes">Close and lose current input?</string>
+  <string name="discard_unsaved_changes">Tutup dan kehilangan masukan saat ini?</string>
   <string name="factadder_saving_error">Terjadi kesalahan dalam menyimpan catatan</string>
   <string name="saving_facts">Menyimpan catatan</string>
   <string name="saving_model">Saving model</string>
   <string name="add">Tambah</string>
-  <string name="save">Save</string>
+  <string name="save">Menyimpan</string>
   <string name="close">Tutup</string>
   <string name="select">Pilih</string>
   <string name="saving_changes">Menyimpan perubahan...</string>
-  <string name="reordering_cards">Menata kembali kartu...</string>
-  <string name="field_remapping">%1$s (from “%2$s”)</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="reordering_cards">Menata kembali kartu&#8230;</string>
+  <string name="field_remapping">%1$s (dari \"%2$s\")</string>
+  <string name="confirm_map_cards_to_nothing">Setiap kartu yang dipetakan tidak akan dihapus. Jika sebuah catatan tidak memiliki kartu yang tersisa, kartu tersebut akan hilang. Apakah anda yakin ingin melanjutkan?</string>
   <plurals name="timebox_reached">
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d kartu dipelajari di%2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="other">%1$d menit</item>
   </plurals>
   <string name="studyoptions_welcome_title">Selamat Datang ke AnkiDroid</string>
   <string name="fact_adder_intent_title">Kad AnkiDroid</string>
   <string name="card_editor_add_card">Tambahkan catatan</string>
   <string name="card_editor_copy_card">Salin kad</string>
-  <string name="card_editor_reset_card">Set semula aktiviti</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_reposition_card">Reposition</string>
+  <string name="card_editor_reset_card">Set semula aktivitas</string>
+  <string name="card_editor_reschedule_card">Kartu penjadwal ulang</string>
+  <string name="card_editor_preview_card">Pratinjau</string>
   <string name="error_insufficient_memory">Operasi gagal kerana tahap memori pada peranti anda</string>
   <string name="rename">Ubah nama</string>
   <string name="default_conf_delete_error">Kelompok pilihan default tidak dapat dihapus</string>
   <plurals name="factadder_cards_added">
-    <item quantity="other">%d cards added</item>
+    <item quantity="other">%d kartu ditambahkan</item>
   </plurals>
   <string name="help_title">Bantuan</string>
   <string name="check_db">Periksa database</string>
-  <string name="check_media">Check media</string>
-  <string name="empty_cards">Empty cards</string>
-  <string name="check_db_message">Memeriksa database. \nSilahkan tunggu...</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-  <string name="delete_deck">Menghapus dek...\nSilahkan menunggu.</string>
-  <string name="show_hint">Show %s</string>
+  <string name="check_media">Periksa media</string>
+  <string name="empty_cards">Kartu kosong</string>
+  <string name="check_db_message">Memeriksa database. Silahkan tunggu...</string>
+  <string name="empty_card_warning">Ini kartu kosong. Gunakan opsi \"Empty cards\" dari menu pada layar daftar dek.</string>
+  <string name="unknown_type_field_warning">Ketik jawaban: bidang yang tidak diketahui%s</string>
+  <string name="delete_deck">Menghapus dek...</string>
+  <string name="show_hint">Tampilkan %s</string>
   <string name="info_rate">Beri peringkat AnkiDroid</string>
   <string name="col_load_failed">Gagal memuat koleksi. \nTekan kembali untuk menutup AnkiDroid.</string>
-  <string name="import_title">Importing</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_title">Pengimporan</string>
+  <string name="import_select_title">Pilih file yang akan diimpor</string>
   <string name="import_message_add">Tambahkan</string>
   <string name="import_message_replace_confirm">Ini akan menghapus koleksi Anda yang ada dan menggantinya dengan data dari file %s. Apakah Anda yakin?</string>
-  <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
+  <string name="import_message_add_confirm">Tambahkan \"%s\" ke koleksi? Ini mungkin memakan waktu lama</string>
   <string name="import_log_no_apkg">Bukan file apkg yang sah</string>
-  <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
-  <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
-  <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="import_error_not_apkg_extension">Nama file \" %s \" tidak memiliki ekstensi .apkg</string>
+  <string name="import_error_content_provider">File yang dipilih tidak bisa diimpor secara otomatis oleh AnkiDroid. Silakan lihat manual pengguna tentang cara mengimpor file anki secara manual: \n%s</string>
+  <string name="import_replacing">Mengganti koleksi&#8230;</string>
+  <string name="export_include_schedule">Sertakan penjadwalan</string>
+  <string name="export_include_media">Sertakan media</string>
+  <string name="confirm_apkg_export">Koleksi ekspor sebagai file apkg?</string>
+  <string name="confirm_apkg_export_deck">Ekspor \"%s\" sebagai file apkg?</string>
+  <string name="export_in_progress">Mengekspor file apkg&#8230;</string>
+  <string name="export_successful_title">Kirim apkg?</string>
+  <string name="export_successful">File \"%s\" telah diekspor. Apakah Anda ingin mengirimkannya dengan aplikasi lain?</string>
+  <string name="export_email_subject">AnkiDroid mengekspor flashcards: %s</string>
   <string name="export_email_text">
         <![CDATA[
         Hi!
@@ -169,52 +170,52 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]>
     </string>
-  <string name="export_unsuccessful">Error exporting apkg file</string>
+  <string name="export_unsuccessful">Kesalahan mengekspor file apkg</string>
   <string name="import_hint">Untuk mengimpor kartu, tempatkan file apkg ke dalam direktori %s dan tekan ok</string>
   <string name="upgrade_import_no_file_found">Tidak ada %1$s file yang dapat di impor ditemukan</string>
-  <string name="study_options">Deck options</string>
-  <string name="select_tts">Set TTS language</string>
-  <string name="custom_study">Custom study</string>
-  <string name="more_options">More</string>
-  <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
+  <string name="study_options">Pilihan dek</string>
+  <string name="select_tts">Tetapkan bahasa TTS</string>
+  <string name="custom_study">Kajian khusus</string>
+  <string name="more_options">Lebih</string>
+  <string name="dyn_deck_desc">Ini adalah dek khusus untuk belajar di luar jadwal normal. Kartu akan otomatis dikembalikan ke deck aslinya setelah Anda memeriksanya. Menghapus dek ini dari daftar dek akan mengembalikan semua kartu yang tersisa ke dek asli mereka.</string>
   <string name="steps_error">Langkah-langkah harus angka yang lebih besar daripada 0</string>
-  <string name="steps_min_error">At least one step is required</string>
+  <string name="steps_min_error">Setidaknya satu langkah diperlukan</string>
   <string name="sched_end">(akhir)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="sched_unbury_action">Untuk melihat mereka sekarang sentuhan item \"Unbury\" di menu</string>
+  <string name="sched_has_buried">Beberapa kartu yang terkait atau dikuburkan ditunda sampai besok</string>
+  <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk mengkonfirmasi menambahkan “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Tag yang ada \" %1$s \" dipilih</string>
+  <string name="lookup_hint">Setelah menyalin teks, tekan di mana saja di flashcard untuk menampilkan ikon pencarian</string>
   <!-- Time spans -->
   <plurals name="time_span_seconds">
-    <item quantity="other">%s seconds</item>
+    <item quantity="other">%s detik</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="other">%s minutes</item>
+    <item quantity="other">%s menit</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="other">%s hours</item>
+    <item quantity="other">%sjam</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="other">%s days</item>
+    <item quantity="other">%hari</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="other">%s months</item>
+    <item quantity="other">%s bulan</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="other">%s years</item>
+    <item quantity="other">%s tahun</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-  <string name="filtered_deck_name">Filtered Deck</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="decks_rename_exists">Itu dek sudah ada</string>
+  <string name="decks_rename_filtered_nosubdecks">Dek yang disaring tidak dapat memiliki tabir</string>
+  <string name="filtered_deck_name">Disortir Deck</string>
+  <string name="reminder_title">Jangan lupa belajar hari ini!</string>
   <plurals name="reminder_text">
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="other">%2$d kartu baru untuk ulasan in %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Kesalahan saat berbagi file apkg</string>
 </resources>

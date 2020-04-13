@@ -114,9 +114,10 @@
     <string name="fact_adder_intent_title">AnkiDroid card</string>
     <string name="card_editor_add_card">Add note</string>
     <string name="card_editor_copy_card">Copy card</string>
+    <string name="card_editor_card_scheduling">Scheduling</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Reset progress</string>
-    <string name="card_editor_reschedule_card">Reschedule card</string>
+    <string name="card_editor_reschedule_card">Reschedule</string>
     <string name="card_editor_preview_card">Preview</string>
     <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
     <string name="rename">Rename</string>
@@ -154,6 +155,11 @@
     <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
     <string name="export_in_progress">Exporting apkg file…</string>
     <string name="export_successful_title">Send apkg?</string>
+    <string name="export_send_button">Send</string>
+    <string name="export_save_button">Save to file</string>
+    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
+    <string name="export_save_apkg_successful">Successfully saved apkg</string>
+    <string name="export_save_apkg_unsuccessful">Save apkg failed</string>
     <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
     <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
     <string name="export_email_text">
@@ -167,7 +173,7 @@
     <string name="export_unsuccessful">Error exporting apkg file</string>
     <string name="import_hint">Place the apkg file in directory “%s” and touch “OK” to import cards</string>
     <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
-    <string name="study_options">Deck options</string>
+    <string name="study_options">Options</string>
     <string name="select_tts">Set TTS language</string>
     <string name="custom_study">Custom study</string>
     <string name="more_options">More</string>
@@ -216,8 +222,8 @@
 
     <string name="reminder_title">Do not forget to study today!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d new card to review in %1$s</item>
-        <item quantity="other">%2$d new cards to review in %1$s</item>
+        <item quantity="one">%2$d card to review in %1$s</item>
+        <item quantity="other">%2$d cards to review in %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error sharing apkg file</string>

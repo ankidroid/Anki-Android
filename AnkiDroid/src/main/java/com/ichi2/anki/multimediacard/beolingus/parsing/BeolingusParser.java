@@ -22,6 +22,8 @@ package com.ichi2.anki.multimediacard.beolingus.parsing;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import timber.log.Timber;
+
 /**
  * This class parses beolingus pages
  */
@@ -40,7 +42,8 @@ public class BeolingusParser {
         Matcher m = PRONUNC_PATTERN.matcher(html);
         while (m.find()) {
             if (m.group(2).equals(wordToSearchFor)) {
-                return "http://dict.tu-chemnitz.de" + m.group(1);
+                Timber.d("pronunciation URL is https://dict.tu-chemnitz.de%s", m.group(1));
+                return "https://dict.tu-chemnitz.de" + m.group(1);
             }
         }
         return "no";
@@ -51,9 +54,12 @@ public class BeolingusParser {
      * @return {@code "no"}, or the http address of the mp3 file
      */
     public static String getMp3AddressFromPronounciation(String pronunciationPageHtml) {
+        // Only log the page if you need to work with the regex
+        // Timber.d("pronunciationPageHtml is " + pronunciationPageHtml);
         Matcher m = MP3_PATTERN.matcher(pronunciationPageHtml);
         if (m.find()) {
-            return "http://dict.tu-chemnitz.de" + m.group(1);
+            Timber.d("MP3 address is https://dict.tu-chemnitz.de%s", m.group(1));
+            return "https://dict.tu-chemnitz.de" + m.group(1);
         }
         return "no";
     }

@@ -22,7 +22,6 @@ package com.ichi2.anki.multimediacard.fields;
 import android.content.Context;
 import android.content.Intent;
 
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.CollectionHelper;
@@ -37,19 +36,16 @@ import timber.log.Timber;
 
 public class BasicAudioFieldController extends FieldControllerBase implements IFieldController {
 
-    protected static final int ACTIVITY_RECORD_AUDIO = 1;
-
     /**
      * This controller always return a temporary path where it writes the audio
      */
     private String tempAudioPath;
-    private String origAudioPath;
     private AudioView mAudioView;
 
 
     @Override
     public void createUI(Context context, LinearLayout layout) {
-        origAudioPath = mField.getAudioPath();
+        String origAudioPath = mField.getAudioPath();
 
         boolean bExist = false;
 
@@ -63,29 +59,25 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
         }
 
         if (!bExist) {
-            File file = null;
             try {
                 Collection col = CollectionHelper.getInstance().getCol(context);
                 File storingDirectory = new File(col.getMedia().dir());
-                file = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory);
+                File file = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory);
                 tempAudioPath = file.getAbsolutePath();
             } catch (IOException e) {
-                Timber.e("Could not create temporary audio file. " + e.getMessage());
+                Timber.e(e, "Could not create temporary audio file.");
                 tempAudioPath = null;
             }
         }
 
         mAudioView = AudioView.createRecorderInstance(mActivity, R.drawable.av_play, R.drawable.av_pause,
                 R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, tempAudioPath);
-        mAudioView.setOnRecordingFinishEventListener(new AudioView.OnRecordingFinishEventListener() {
-            @Override
-            public void onRecordingFinish(View v) {
-                // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
-                mField.setAudioPath(tempAudioPath);
-                mField.setHasTemporaryMedia(true);
-            }
+        mAudioView.setOnRecordingFinishEventListener(v -> {
+            // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
+            mField.setAudioPath(tempAudioPath);
+            mField.setHasTemporaryMedia(true);
         });
-        layout.addView(mAudioView, LinearLayout.LayoutParams.FILL_PARENT);
+        layout.addView(mAudioView, LinearLayout.LayoutParams.MATCH_PARENT);
     }
 
 
@@ -96,6 +88,7 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // do nothing
     }
 
     @Override

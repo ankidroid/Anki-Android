@@ -15,13 +15,13 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
-import android.text.Html;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,6 +35,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.async.DeckTask;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
@@ -57,9 +58,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     /**
      * Constants for selecting which content view to display
      */
-    public static final int CONTENT_STUDY_OPTIONS = 0;
-    public static final int CONTENT_CONGRATS = 1;
-    public static final int CONTENT_EMPTY = 2;
+    private static final int CONTENT_STUDY_OPTIONS = 0;
+    private static final int CONTENT_CONGRATS = 1;
+    private static final int CONTENT_EMPTY = 2;
 
     // Threshold at which the total number of new cards is truncated by libanki
     private static final int NEW_CARD_COUNT_TRUNCATE_THRESHOLD = 1000;
@@ -96,7 +97,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     private Thread mFullNewCountThread = null;
 
-    StudyOptionsListener mListener;
+    private StudyOptionsListener mListener;
 
 
     public interface StudyOptionsListener {
@@ -104,12 +105,12 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            mListener = (StudyOptionsListener) activity;
+            mListener = (StudyOptionsListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement StudyOptionsListener");
+            throw new ClassCastException(context.toString() + " must implement StudyOptionsListener");
         }
     }
 
@@ -594,7 +595,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                         desc = getCol().getDecks().getActualDescription();
                     }
                     if (desc.length() > 0) {
-                        mTextDeckDescription.setText(Html.fromHtml(desc));
+                        mTextDeckDescription.setText(CompatHelper.getCompat().fromHtml(desc));
                         mTextDeckDescription.setVisibility(View.VISIBLE);
                     } else {
                         mTextDeckDescription.setVisibility(View.GONE);
@@ -658,16 +659,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 if (mFragmented && refreshDecklist) {
                     mListener.onRequireDeckListUpdate();
                 }
-            }
-
-            @Override
-            public void onProgressUpdate(DeckTask.TaskData... values) {
-
-            }
-
-            @Override
-            public void onCancelled() {
-
             }
         };
     }

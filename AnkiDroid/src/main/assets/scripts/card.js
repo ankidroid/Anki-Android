@@ -69,7 +69,7 @@ function taBlur(itag) {
     window.location.href = "typeblurtext:" + itag.value;
 }
 
-/* Look at the text enterend into the input box and send the text on a return */
+/* Look at the text entered into the input box and send the text on a return */
 function taKey(itag, e) {
     var keycode;
     if (window.event) {
@@ -88,23 +88,6 @@ function taKey(itag, e) {
     }
 }
 
-// from https://plainjs.com/javascript/styles/get-the-position-of-an-element-relative-to-the-document-24/
-function offset(el) {
-    var rect = el.getBoundingClientRect();
-    var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
-}
-
-function scrollToAnswer(){
-    var answer = document.getElementById('answer');
-
-    if (answer) {
-       window.scrollTo(0, offset(answer).top);
-    }
-}
-
 window.onload = function() {
     /* If the WebView loads too early on Android <= 4.3 (which happens
        on the first card or regularly with WebView switching enabled),
@@ -115,13 +98,13 @@ window.onload = function() {
        correctly. */
     window.scrollTo(0,0);
     resizeImages();
-    scrollToAnswer();
+    window.location.href = "#answer";
 };
 
 var onPageFinished = function() {
     if (!resizeDone) {
         resizeImages();
         /* Re-anchor to answer after image resize since the point changes */
-        scrollToAnswer();
+        window.location.href = "#answer";
     }
 }

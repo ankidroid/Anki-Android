@@ -85,6 +85,9 @@
   <string name="undo_action_suspend_card">suspender tarjeta</string>
   <string name="undo_action_suspend_note">suspender nota</string>
   <string name="undo_action_delete">eliminar nota</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Desenterrar</string>
   <string name="rename_deck">Renombrar mazo</string>
   <string name="menu_add">Añadir</string>
@@ -142,7 +145,7 @@
   <string name="cancel_sync_confirm">¿Desea cancelar la sincronización?</string>
   <string name="continue_sync">Continuar la sincronización</string>
   <string name="sync_cancelled">Sincronización cancelada</string>
-  <string name="sync_cancel_message">Cancelando&#8230;\nPuede tardar un rato.</string>
+  <string name="sync_cancel_message">Cancelando&#8230;\nEsto puede tardar un poco.</string>
   <string name="export">Exportar</string>
   <string name="export_collection">Exportar colección</string>
   <string name="export_deck">Exportar mazo</string>
@@ -162,5 +165,5 @@
   <string name="card_template_editor_would_delete_note"> Eliminar este tipo de tarjeta podría causar que una o más notas se eliminen. Por favor, cree un nuevo tipo de tarjeta primero.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">acceder a notas, tarjetas, tipo de notas, y mazos existentes, así como crear otros nuevos</string>
 </resources>

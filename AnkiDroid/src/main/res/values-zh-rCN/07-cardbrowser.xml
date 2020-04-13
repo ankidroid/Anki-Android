@@ -44,13 +44,21 @@
     <item quantity="other">共有%d张卡片</item>
   </plurals>
   <string name="card_browser_all_decks">所有牌组</string>
-  <string name="card_browser_delete_card">删除笔记</string>
-  <string name="card_browser_suspend_card">不要复习</string>
-  <string name="card_browser_unsuspend_card">恢复复习</string>
-  <string name="card_browser_mark_card">已标记的笔记</string>
-  <string name="card_browser_unmark_card">未标记的笔记</string>
+  <string name="card_browser_delete_card">删除卡牌记录</string>
+  <string name="card_browser_suspend_card">Suspend cards</string>
+  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+  <string name="card_browser_change_deck">Change deck</string>
+  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+  <string name="card_browser_mark_card">Mark notes</string>
+  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+  <string name="card_browser_unmark_card">Unmark notes</string>
   <string name="delete_card_title">确认删除笔记？</string>
+  <string name="delete_cards_title">是否删除卡牌记录？</string>
   <string name="delete_card_message">确认删除此笔记的所有卡片？\n搜索字段：%s</string>
+  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+  <string name="deleted_message">卡牌记录已删除</string>
+  <string name="changed_deck_message">移动至 %s</string>
+  <string name="card_browser_suspended_cards">(un)suspended cards</string>
   <string name="card_browser_show_marked">筛选已标记卡牌</string>
   <string name="card_browser_show_suspended">筛选已暂停卡牌</string>
   <string name="card_browser_search_by_tag">按标签筛选</string>
@@ -82,4 +90,6 @@
     <item>按复习时间排序</item>
     <item>按失误次数排序</item>
   </string-array>
+  <string name="card_browser_select_all">全选</string>
+  <string name="card_browser_select_none">取消全选</string>
 </resources>

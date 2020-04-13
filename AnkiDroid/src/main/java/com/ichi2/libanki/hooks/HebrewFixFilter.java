@@ -76,7 +76,7 @@ public class HebrewFixFilter extends Hook {
      * @param text Hebrew text
      * @return text in the Western (LTR) alphabet and punctuation range, starting in the extended range
      */
-    String translate(String text) {
+    private String translate(String text) {
         StringBuilder sb = new StringBuilder(text.length());
         int codePoint;
 

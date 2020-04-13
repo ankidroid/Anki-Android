@@ -3,16 +3,13 @@ package com.ichi2.anki.dialogs;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,19 +26,19 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
-public class TagsDialog extends DialogFragment {
+public class TagsDialog extends AnalyticsDialogFragment {
     public interface TagsDialogListener {
         void onPositive(List<String> selectedTags, int option);
     }
 
-    public static final int TYPE_NONE = -1;
+    private static final int TYPE_NONE = -1;
     public static final int TYPE_ADD_TAG = 0;
     public static final int TYPE_FILTER_BY_TAG = 1;
     public static final int TYPE_CUSTOM_STUDY_TAGS = 2;
@@ -60,14 +57,11 @@ public class TagsDialog extends DialogFragment {
     private TagsArrayAdapter mTagsArrayAdapter;
     private int mSelectedOption = -1;
 
-    private Toolbar mToolbar;
     private SearchView mToolbarSearchView;
     private MenuItem mToolbarSearchItem;
-    private MenuItem mToolbarAddItem;
 
     private TextView mNoTagsTextView;
     private RecyclerView mTagsListRecyclerView;
-    private RadioGroup mOptionsGroup;
 
     private MaterialDialog mDialog;
 
@@ -114,7 +108,7 @@ public class TagsDialog extends DialogFragment {
 
         View tagsDialogView = LayoutInflater.from(getActivity())
                 .inflate(R.layout.tags_dialog, null, false);
-        mTagsListRecyclerView = (RecyclerView) tagsDialogView.findViewById(R.id.tags_dialog_tags_list);
+        mTagsListRecyclerView = tagsDialogView.findViewById(R.id.tags_dialog_tags_list);
         mTagsListRecyclerView.requestFocus();
         mTagsListRecyclerView.setHasFixedSize(true);
 
@@ -124,23 +118,18 @@ public class TagsDialog extends DialogFragment {
         mTagsArrayAdapter = new TagsArrayAdapter();
         mTagsListRecyclerView.setAdapter(mTagsArrayAdapter);
 
-        mNoTagsTextView = (TextView) tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview);
+        mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview);
         if (mAllTags.isEmpty()) {
             mNoTagsTextView.setVisibility(View.VISIBLE);
         }
-        mOptionsGroup = (RadioGroup) tagsDialogView.findViewById(R.id.tags_dialog_options_radiogroup);
+        RadioGroup mOptionsGroup = tagsDialogView.findViewById(R.id.tags_dialog_options_radiogroup);
         for (int i = 0; i < mOptionsGroup.getChildCount(); i++) {
             mOptionsGroup.getChildAt(i).setId(i);
         }
         mOptionsGroup.check(0);
 
         mSelectedOption = mOptionsGroup.getCheckedRadioButtonId();
-        mOptionsGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                mSelectedOption = checkedId;
-            }
-        });
+        mOptionsGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> mSelectedOption = checkedId);
 
         switch (mType) {
             case TYPE_ADD_TAG:
@@ -151,6 +140,7 @@ public class TagsDialog extends DialogFragment {
             default:
                 mDialogTitle = getResources().getString(R.string.studyoptions_limit_select_tags);
                 mPositiveText = getString(R.string.select);
+                break;
         }
 
         adjustToolbar(tagsDialogView);
@@ -159,13 +149,8 @@ public class TagsDialog extends DialogFragment {
                 .positiveText(mPositiveText)
                 .negativeText(res.getString(R.string.dialog_cancel))
                 .customView(tagsDialogView, false)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        mTagsDialogListener
-                                .onPositive(new ArrayList<>(mCurrentTags), mSelectedOption);
-                    }
-                });
+                .onPositive((dialog, which) -> mTagsDialogListener
+                        .onPositive(new ArrayList<>(mCurrentTags), mSelectedOption));
         mDialog = builder.build();
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -173,56 +158,44 @@ public class TagsDialog extends DialogFragment {
     }
 
     private void adjustToolbar(View tagsDialogView) {
-        mToolbar = (Toolbar) tagsDialogView.findViewById(R.id.tags_dialog_toolbar);
+        Toolbar mToolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar);
         mToolbar.setTitle(mDialogTitle);
 
         mToolbar.inflateMenu(R.menu.tags_dialog_menu);
 
-        final InputFilter addTagFilter = new InputFilter() {
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart,
-                                       int dend) {
-                for (int i = start; i < end; i++) {
-                    if (source.charAt(i) == ' ') {
-                        return "";
-                    }
+        final InputFilter addTagFilter = (source, start, end, dest, dstart, dend) -> {
+            for (int i = start; i < end; i++) {
+                if (source.charAt(i) == ' ') {
+                    return "";
                 }
-                return null;
             }
+            return null;
         };
-        mToolbarAddItem = mToolbar.getMenu().findItem(R.id.tags_dialog_action_add);
-        mToolbarAddItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                String query = mToolbarSearchView.getQuery().toString();
-                if (MenuItemCompat.isActionViewExpanded(mToolbarSearchItem) && !TextUtils.isEmpty(query)) {
-                    addTag(query);
-                    mToolbarSearchView.setQuery("", true);
-                } else {
-                    MaterialDialog.Builder addTagBuilder = new MaterialDialog.Builder(getActivity())
-                            .title(getString(R.string.add_tag))
-                            .negativeText(R.string.dialog_cancel)
-                            .positiveText(R.string.dialog_ok)
-                            .inputType(InputType.TYPE_CLASS_TEXT)
-                            .input(R.string.tag_name, R.string.empty_string, new MaterialDialog.InputCallback() {
-                                @Override
-                                public void onInput(MaterialDialog dialog, CharSequence input) {
-                                    addTag(input.toString());
-                                }
-                            });
-                    final MaterialDialog addTagDialog = addTagBuilder.build();
-                    EditText inputET = addTagDialog.getInputEditText();
-                    inputET.setFilters(new InputFilter[]{addTagFilter});
-                    addTagDialog.show();
-                }
-                return true;
+        MenuItem mToolbarAddItem = mToolbar.getMenu().findItem(R.id.tags_dialog_action_add);
+        mToolbarAddItem.setOnMenuItemClickListener(menuItem -> {
+            String query = mToolbarSearchView.getQuery().toString();
+            if (mToolbarSearchItem.isActionViewExpanded() && !TextUtils.isEmpty(query)) {
+                addTag(query);
+                mToolbarSearchView.setQuery("", true);
+            } else {
+                MaterialDialog.Builder addTagBuilder = new MaterialDialog.Builder(getActivity())
+                        .title(getString(R.string.add_tag))
+                        .negativeText(R.string.dialog_cancel)
+                        .positiveText(R.string.dialog_ok)
+                        .inputType(InputType.TYPE_CLASS_TEXT)
+                        .input(R.string.tag_name, R.string.empty_string, (dialog, input) -> addTag(input.toString()));
+                final MaterialDialog addTagDialog = addTagBuilder.build();
+                EditText inputET = addTagDialog.getInputEditText();
+                inputET.setFilters(new InputFilter[]{addTagFilter});
+                addTagDialog.show();
             }
+            return true;
         });
 
         mToolbarSearchItem = mToolbar.getMenu().findItem(R.id.tags_dialog_action_filter);
-        mToolbarSearchView = (SearchView) MenuItemCompat.getActionView(mToolbarSearchItem);
+        mToolbarSearchView = (SearchView) mToolbarSearchItem.getActionView();
 
-        EditText queryET = (EditText) mToolbarSearchView.findViewById(R.id.search_src_text);
+        EditText queryET = mToolbarSearchView.findViewById(R.id.search_src_text);
         queryET.setFilters(new InputFilter[]{addTagFilter});
 
         mToolbarSearchView.setQueryHint(getString(R.string.filter_tags));
@@ -242,27 +215,24 @@ public class TagsDialog extends DialogFragment {
         });
 
         MenuItem checkAllItem = mToolbar.getMenu().findItem(R.id.tags_dialog_action_select_all);
-        checkAllItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                boolean changed = false;
-                if (mCurrentTags.containsAll(mTagsArrayAdapter.mTagsList)) {
-                    mCurrentTags.removeAll(mTagsArrayAdapter.mTagsList);
-                    changed = true;
-                } else {
-                    for (String tag : mTagsArrayAdapter.mTagsList) {
-                        if (!mCurrentTags.contains(tag)) {
-                            mCurrentTags.add(tag);
-                            changed = true;
-                        }
+        checkAllItem.setOnMenuItemClickListener(menuItem -> {
+            boolean changed = false;
+            if (mCurrentTags.containsAll(mTagsArrayAdapter.mTagsList)) {
+                mCurrentTags.removeAll(mTagsArrayAdapter.mTagsList);
+                changed = true;
+            } else {
+                for (String tag : mTagsArrayAdapter.mTagsList) {
+                    if (!mCurrentTags.contains(tag)) {
+                        mCurrentTags.add(tag);
+                        changed = true;
                     }
                 }
-
-                if (changed) {
-                    mTagsArrayAdapter.notifyDataSetChanged();
-                }
-                return true;
             }
+
+            if (changed) {
+                mTagsArrayAdapter.notifyDataSetChanged();
+            }
+            return true;
         });
 
         switch (mType) {
@@ -271,6 +241,7 @@ public class TagsDialog extends DialogFragment {
                 break;
             default:
                 mToolbarAddItem.setVisible(false);
+                break;
         }
     }
 
@@ -320,42 +291,35 @@ public class TagsDialog extends DialogFragment {
         }
 
         public void sortData() {
-            Collections.sort(mTagsList, new Comparator<String>() {
-                @Override
-                public int compare(String lhs, String rhs) {
-                    boolean lhs_checked = mCurrentTags.contains(lhs);
-                    boolean rhs_checked = mCurrentTags.contains(rhs);
-                    //priority for checked items.
-                    return lhs_checked == rhs_checked ? lhs.compareToIgnoreCase(rhs) : lhs_checked ? -1 : 1;
-                }
+            Collections.sort(mTagsList, (lhs, rhs) -> {
+                boolean lhs_checked = mCurrentTags.contains(lhs);
+                boolean rhs_checked = mCurrentTags.contains(rhs);
+                //priority for checked items.
+                return lhs_checked == rhs_checked ? lhs.compareToIgnoreCase(rhs) : lhs_checked ? -1 : 1;
             });
         }
 
         @Override
-        public TagsArrayAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                              int viewType) {
+        public TagsArrayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.tags_item_list_dialog, parent, false);
 
-            ViewHolder vh = new ViewHolder((CheckedTextView) v.findViewById(R.id.tags_dialog_tag_item));
-            vh.mTagItemCheckedTextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    CheckedTextView ctv = (CheckedTextView) view;
-                    ctv.toggle();
-                    String tag = ctv.getText().toString();
-                    if (ctv.isChecked() && !mCurrentTags.contains(tag)) {
-                        mCurrentTags.add(tag);
-                    } else if (!ctv.isChecked() && mCurrentTags.contains(tag)) {
-                        mCurrentTags.remove(tag);
-                    }
+            ViewHolder vh = new ViewHolder(v.findViewById(R.id.tags_dialog_tag_item));
+            vh.mTagItemCheckedTextView.setOnClickListener(view -> {
+                CheckedTextView ctv = (CheckedTextView) view;
+                ctv.toggle();
+                String tag = ctv.getText().toString();
+                if (ctv.isChecked() && !mCurrentTags.contains(tag)) {
+                    mCurrentTags.add(tag);
+                } else if (!ctv.isChecked() && mCurrentTags.contains(tag)) {
+                    mCurrentTags.remove(tag);
                 }
             });
             return vh;
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             String tag = mTagsList.get(position);
             holder.mTagItemCheckedTextView.setText(tag);
             holder.mTagItemCheckedTextView.setChecked(mCurrentTags.contains(tag));

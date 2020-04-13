@@ -18,13 +18,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,7 +57,7 @@ public class MyAccount extends AnkiActivity {
             case STATE_LOGGED_IN:
                 String username = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("username", "");
                 mUsernameLoggedIn.setText(username);
-                mToolbar = (Toolbar) mLoggedIntoMyAccountView.findViewById(R.id.toolbar);
+                mToolbar = mLoggedIntoMyAccountView.findViewById(R.id.toolbar);
                 if (mToolbar!= null) {
                     mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
                     setSupportActionBar(mToolbar);
@@ -68,7 +66,7 @@ public class MyAccount extends AnkiActivity {
                 break;
 
             case STATE_LOG_IN:
-                mToolbar = (Toolbar) mLoginToMyAccountView.findViewById(R.id.toolbar);
+                mToolbar = mLoginToMyAccountView.findViewById(R.id.toolbar);
                 if (mToolbar!= null) {
                     mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
                     setSupportActionBar(mToolbar);
@@ -96,29 +94,12 @@ public class MyAccount extends AnkiActivity {
         }
     }
 
-
-    // Commented awaiting the resolution of the next issue: http://code.google.com/p/anki/issues/detail?id=1932
-    // private boolean isUsernameAndPasswordValid(String username, String password) {
-    // return isLoginFieldValid(username) && isLoginFieldValid(password);
-    // }
-    //
-    //
-    // private boolean isLoginFieldValid(String loginField) {
-    // boolean loginFieldValid = false;
-    //
-    // if (loginField.length() >= 2 && loginField.matches("[A-Za-z0-9]+")) {
-    // loginFieldValid = true;
-    // }
-    //
-    // return loginFieldValid;
-    // }
-
     private void saveUserInformation(String username, String hkey) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
         editor.putString("username", username);
         editor.putString("hkey", hkey);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -129,12 +110,6 @@ public class MyAccount extends AnkiActivity {
 
         String username = mUsername.getText().toString().trim(); // trim spaces, issue 1586
         String password = mPassword.getText().toString();
-
-        /*
-         * Commented awaiting the resolution of the next issue: http://code.google.com/p/anki/issues/detail?id=1932
-         * if(isUsernameAndPasswordValid(username, password)) { Connection.login(loginListener, new
-         * Connection.Payload(new Object[] {username, password})); } else { mInvalidUserPassAlert.show(); }
-         */
 
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
             Connection.login(loginListener, new Connection.Payload(new Object[]{username, password}));
@@ -149,7 +124,7 @@ public class MyAccount extends AnkiActivity {
         Editor editor = preferences.edit();
         editor.putString("username", "");
         editor.putString("hkey", "");
-        editor.commit();
+        editor.apply();
         //  force media resync on deauth
         getCol().getMedia().forceResync();
         switchToState(STATE_LOG_IN);
@@ -159,54 +134,28 @@ public class MyAccount extends AnkiActivity {
     private void resetPassword() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(getResources().getString(R.string.resetpw_url)));
-        startActivity(intent);
+        startActivityWithoutAnimation(intent);
     }
 
 
     private void initAllContentViews() {
         mLoginToMyAccountView = getLayoutInflater().inflate(R.layout.my_account, null);
-        mUsername = (EditText) mLoginToMyAccountView.findViewById(R.id.username);
-        mPassword = (EditText) mLoginToMyAccountView.findViewById(R.id.password);
+        mUsername = mLoginToMyAccountView.findViewById(R.id.username);
+        mPassword = mLoginToMyAccountView.findViewById(R.id.password);
 
-        Button loginButton = (Button) mLoginToMyAccountView.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new OnClickListener() {
+        Button loginButton = mLoginToMyAccountView.findViewById(R.id.login_button);
+        loginButton.setOnClickListener(v -> login());
 
-            @Override
-            public void onClick(View v) {
-                login();
-            }
+        Button resetPWButton = mLoginToMyAccountView.findViewById(R.id.reset_password_button);
+        resetPWButton.setOnClickListener(v -> resetPassword());
 
-        });
-
-        Button resetPWButton = (Button) mLoginToMyAccountView.findViewById(R.id.reset_password_button);
-        resetPWButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                resetPassword();
-            }
-        });
-
-        Button signUpButton = (Button) mLoginToMyAccountView.findViewById(R.id.sign_up_button);
-        signUpButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openUrl(Uri.parse(getResources().getString(R.string.register_url)));
-            }
-
-        });
+        Button signUpButton = mLoginToMyAccountView.findViewById(R.id.sign_up_button);
+        signUpButton.setOnClickListener(v -> openUrl(Uri.parse(getResources().getString(R.string.register_url))));
 
         mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);
-        mUsernameLoggedIn = (TextView) mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);
-        Button logoutButton = (Button) mLoggedIntoMyAccountView.findViewById(R.id.logout_button);
-        logoutButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-
-        });
+        mUsernameLoggedIn = mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);
+        Button logoutButton = mLoggedIntoMyAccountView.findViewById(R.id.logout_button);
+        logoutButton.setOnClickListener(v -> logout());
     }
 
 
@@ -223,7 +172,7 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onPreExecute() {
-            Timber.d("loginListener.onPreExcecute()");
+            Timber.d("loginListener.onPreExecute()");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
                         getResources().getString(R.string.alert_logging_message), false);

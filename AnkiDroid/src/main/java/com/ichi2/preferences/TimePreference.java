@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
 
+import com.ichi2.compat.CompatHelper;
+
 
 public class TimePreference extends DialogPreference {
     public static final String DEFAULT_VALUE = "00:00";
@@ -51,9 +53,7 @@ public class TimePreference extends DialogPreference {
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-
-        timePicker.setCurrentHour(hours);
-        timePicker.setCurrentMinute(minutes);
+        CompatHelper.getCompat().setTime(timePicker, hours, minutes);
     }
 
     @Override
@@ -61,8 +61,8 @@ public class TimePreference extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            hours = timePicker.getCurrentHour();
-            minutes = timePicker.getCurrentMinute();
+            hours = CompatHelper.getCompat().getHour(timePicker);
+            minutes = CompatHelper.getCompat().getMinute(timePicker);
 
             final String time = String.format("%1$02d:%2$02d", hours, minutes);
 

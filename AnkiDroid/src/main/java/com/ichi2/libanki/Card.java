@@ -60,6 +60,8 @@ import java.util.Set;
  - rev queue: integer day
  - lrn queue: integer timestamp
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.ExcessiveMethodLength","PMD.FieldDeclarationsShouldBeAtStartOfClass",
+                    "PMD.MethodNamingConventions"})
 public class Card implements Cloneable {
 
     public static final int TYPE_NEW = 0;
@@ -141,7 +143,7 @@ public class Card implements Cloneable {
     public void load() {
         Cursor cursor = null;
         try {
-            cursor = mCol.getDb().getDatabase().rawQuery("SELECT * FROM cards WHERE id = " + mId, null);
+            cursor = mCol.getDb().getDatabase().query("SELECT * FROM cards WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
                 throw new RuntimeException(" No card with id " + mId);
             }
@@ -184,9 +186,9 @@ public class Card implements Cloneable {
             mUsn = mCol.usn();
         }
         // bug check
-        if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
+        //if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
-        }
+        //}
         assert (mDue < Long.valueOf("4294967296"));
         mCol.getDb().execute(
                 "insert or replace into cards values " +
@@ -219,9 +221,9 @@ public class Card implements Cloneable {
         mMod = Utils.intNow();
         mUsn = mCol.usn();
         // bug check
-        if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
+        //if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
-        }
+        //}
         assert (mDue < Long.valueOf("4294967296"));
 
         ContentValues values = new ContentValues();
@@ -645,5 +647,19 @@ public class Card implements Cloneable {
             }
         }
         return TextUtils.join(",  ", members);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Card) {
+            return this.getId() == ((Card)obj).getId();
+        }
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        // Map a long to an int. For API>=24 you would just do `Long.hashCode(this.getId())`
+        return (int)(this.getId()^(this.getId()>>>32));
     }
 }

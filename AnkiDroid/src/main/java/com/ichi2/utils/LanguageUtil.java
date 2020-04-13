@@ -27,10 +27,19 @@ import java.util.Locale;
 public class LanguageUtil {
 
     /** A list of all languages supported by AnkiDroid */
-    public static final String[] APP_LANGUAGES = { "ar", "bg", "ca", "cs", "de", "el", "es-AR", "es-ES", "et", "fa",
+    public static final String[] APP_LANGUAGES = { "ar", "bg", "ca", "cs", "de", "el", "en", "eo", "es-AR", "es-ES", "et", "fa",
             "fi", "fr", "got", "gl", "hi", "hu", "id", "it", "ja", "ko", "lt", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru",
-            "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_TW", "en" };
+            "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_TW" };
 
+
+    /**
+     * Returns the {@link Locale} for the given code or the default locale, if no code is given.
+     *
+     * @return The {@link Locale} for the given code
+     */
+    public static Locale getLocale() {
+        return getLocale("");
+    }
 
     /**
      * Returns the {@link Locale} for the given code or the default locale, if no code is given.
@@ -38,9 +47,6 @@ public class LanguageUtil {
      * @param localeCode The locale code of the language
      * @return The {@link Locale} for the given code
      */
-    public static Locale getLocale() {
-        return getLocale("");
-    }
     public static Locale getLocale(String localeCode) {
         Locale locale;
         if (localeCode == null || TextUtils.isEmpty(localeCode)) {

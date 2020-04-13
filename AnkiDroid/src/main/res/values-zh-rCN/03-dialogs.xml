@@ -61,6 +61,9 @@
     <item><![CDATA[AnkiDroid 在<a href=\"%1$s\"> GNU GPL v3 许可证</a>下发布。源代码在<a href=\"%2$s\">GitHub</a>上提供。]]></item>
   </string-array>
   <string name="preview_title">预览</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">重设卡片进度</string>
   <string name="reset_card_dialog_message">这张卡片将被置于新卡片队列的末尾。</string>
   <string name="reset_card_dialog_acknowledge">重置卡片</string>
@@ -85,7 +88,7 @@
   <string name="custom_study_preview">预览过去 x 天中新增的卡片：</string>
   <string name="rebuild_custom_study_deck">重建自定义学习牌组\n 请等待...</string>
   <string name="importing_collection">正在导入牌组集合&#8230;</string>
-  <string name="import_media_count">Importing media files %1$d%%&#8230;</string>
+  <string name="import_media_count">导入媒体文件 %1$d%%&#8230;</string>
   <string name="import_progress">正在导入笔记: %1$d%%\n• 正在导入卡牌: %2$d%%\n• 正在后期处理: %3$d%%</string>
   <string name="import_update_details">现有笔记%2$d条，已更新%1$d条。</string>
   <string name="import_update_ignored">忽略了某些更新，因为这些笔记的类型已改变</string>

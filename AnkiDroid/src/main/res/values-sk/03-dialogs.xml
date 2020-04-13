@@ -49,6 +49,7 @@
   <plurals name="delete_deck_message">
     <item quantity="one">Vymazať všetky kartičky v balíčku %1$s? Obsahuje %2$d kartičku.</item>
     <item quantity="few">Vymazať všetky kartičky v balíčku %1$s? Obsahuje %2$d kartičky.</item>
+    <item quantity="many">Delete all cards in %1$s? It contains %2$d cards.</item>
     <item quantity="other">Vymazať všetky kartičky v balíčku %1$s? Obsahuje %2$d kartičiek.</item>
   </plurals>
   <string name="delete_cram_deck_message">Vrátiť všetky kartičky v %s späť do ich pôvodných balíčkov?</string>
@@ -63,6 +64,9 @@
     <item><![CDATA[AnkiDroid je vydaný pod <a href=\"%1$s\">licenciou GNU-GPL v3</a> a jeho zdrojový kód je dostupný na stránke <a href=\"%2$s\">GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Náhľad</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Vynulovať zaznamenaný priebeh v učení kartičky</string>
   <string name="reset_card_dialog_message">Táto kartička bude umiestnená na posledné miesto v poradí nových kartičiek</string>
   <string name="reset_card_dialog_acknowledge">Obnoviť kartičku</string>

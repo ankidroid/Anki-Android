@@ -20,11 +20,10 @@ package com.wildplot.android.rendering.interfaces;
  */
 public interface Function2D {
 
-	/**
-	 * 
-	 * @param x given x value
-	 * @return calculated y value
-	 */
-	public double f(double x);
+    /**
+     * @param x given x value
+     * @return calculated y value
+     */
+    double f(double x);
 
 }

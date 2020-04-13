@@ -16,30 +16,89 @@
 
 package com.ichi2.anki.tests;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.res.AssetManager;
+import android.content.ContextWrapper;
 import android.text.TextUtils;
+import android.view.View;
 
+import com.azimolabs.conditionwatcher.Instruction;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.hooks.Hooks;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Shared methods for unit tests.
  */
 public class Shared {
 
+
+    /**
+     * Instantiate one of these with the View id of the item you want Robolectric to wait on, and it will
+     * fast-poll until the item is inflated and visible
+     */
+    public static class ViewItemWaitingInstruction extends Instruction {
+
+        private int viewId;
+
+
+        public  String getDescription() {
+            return "Waits for an id to be visible";
+        }
+
+
+        /**
+         * Instantiate this with the Resource id of the view to wait for
+         */
+        public ViewItemWaitingInstruction(int viewId) {
+            this.viewId = viewId;
+        }
+
+
+        @Override
+        public boolean checkCondition() {
+            Activity activity = getCurrentActivity();
+            return ((activity != null) && (activity.findViewById(viewId) != null) &&
+                    (activity.findViewById(viewId).getVisibility() == View.VISIBLE));
+        }
+
+
+        /** Get the current activity so, to inspect for View ids */
+        private Activity getCurrentActivity() {
+            final Activity[] activity = new Activity[1];
+            onView(isRoot()).check((view, noViewFoundException) -> {
+                    View content = view.findViewById(android.R.id.content);
+                    if (content != null) {
+                        activity[0] = scanForActivity(content.getContext());
+                    }
+            });
+            return activity[0];
+        }
+
+
+        /** If the Context is a wrapper, recursively go for the Activity */
+        private Activity scanForActivity(Context cont) {
+            if (cont == null) return null;
+            else if (cont instanceof Activity) return (Activity)cont;
+            else if (cont instanceof ContextWrapper) return scanForActivity(((ContextWrapper)cont).getBaseContext());
+            return null;
+        }
+    }
+
     public static Collection getEmptyCol(Context context) throws IOException {
         File f = File.createTempFile("test", ".anki2");
         // Provide a string instead of an actual File. Storage.Collection won't populate the DB
         // if the file already exists (it assumes it's an existing DB).
         String path = f.getAbsolutePath();
-        f.delete();
+        assertTrue(f.delete());
         return Storage.Collection(context, path);
     }
 
@@ -59,14 +118,17 @@ public class Shared {
      * @param name An additional suffix to ensure the test directory is only used by a particular resource.
      * @return See getTestDir.
      */
-    public static File getTestDir(Context context, String name) {
+    private static File getTestDir(Context context, String name) {
+        String suffix = "";
         if (!TextUtils.isEmpty(name)) {
-            name = "-" + name;
+            suffix = "-" + name;
         }
-        File dir = new File(context.getCacheDir(), "testfiles" + name);
-        dir.mkdir();
+        File dir = new File(context.getCacheDir(), "testfiles" + suffix);
+        if (!dir.exists()) {
+            assertTrue(dir.mkdir());
+        }
         for (File f : dir.listFiles()) {
-            f.delete();
+            assertTrue(f.delete());
         }
         return dir;
     }

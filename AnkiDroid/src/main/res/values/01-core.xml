@@ -69,6 +69,12 @@
     <string name="undo_action_suspend_card">suspend card</string>
     <string name="undo_action_suspend_note">suspend note</string>
     <string name="undo_action_delete">delete note</string>
+    <string name="undo_action_delete_multi">delete notes</string>
+    <string name="undo_action_change_deck_multi">change decks</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
     <string name="menu_add">Add</string>
@@ -122,6 +128,7 @@
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
 
     <string name="sd_card_not_mounted">Device storage not mounted</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync">Sync</string>
     <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
     <string name="continue_sync">Continue sync</string>
@@ -145,6 +152,7 @@
     </plurals>
     <string name="invalid_template">A card could not be generated</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+    <string name="template_for_current_card_deleted">The template for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>

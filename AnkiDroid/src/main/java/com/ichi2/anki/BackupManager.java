@@ -20,12 +20,11 @@ import android.content.SharedPreferences;
 import android.os.StatFs;
 
 
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
@@ -44,33 +43,32 @@ import timber.log.Timber;
 
 public class BackupManager {
 
-    public static final int MIN_FREE_SPACE = 10;
-    public static final int MIN_BACKUP_COL_SIZE = 10000; // threshold in bytes to backup a col file
+    private static final int MIN_FREE_SPACE = 10;
+    private static final int MIN_BACKUP_COL_SIZE = 10000; // threshold in bytes to backup a col file
 
-    public final static String BACKUP_SUFFIX = "backup";
+    private final static String BACKUP_SUFFIX = "backup";
     public final static String BROKEN_DECKS_SUFFIX = "broken";
-
-    private static boolean mUseBackups = true;
 
 
     /** Number of hours after which a backup new backup is created */
-    public static final int BACKUP_INTERVAL = 5;
+    private static final int BACKUP_INTERVAL = 5;
 
 
     /* Prevent class from being instantiated */
     private BackupManager() {
+        // do nothing
     }
 
 
     public static boolean isActivated() {
-        return mUseBackups;
+        return true;
     }
 
 
     private static File getBackupDirectory(File ankidroidDir) {
         File directory = new File(ankidroidDir, BACKUP_SUFFIX);
-        if (!directory.isDirectory()) {
-            directory.mkdirs();
+        if (!directory.isDirectory() && !directory.mkdirs()) {
+            Timber.w("getBackupDirectory() mkdirs on %s failed", ankidroidDir);
         }
         return directory;
     }
@@ -78,8 +76,8 @@ public class BackupManager {
 
     private static File getBrokenDirectory(File ankidroidDir) {
         File directory = new File(ankidroidDir, BROKEN_DECKS_SUFFIX);
-        if (!directory.isDirectory()) {
-            directory.mkdirs();
+        if (!directory.isDirectory() && !directory.mkdirs()) {
+            Timber.w("getBrokenDirectory() mkdirs on %s failed", ankidroidDir);
         }
         return directory;
     }
@@ -95,12 +93,8 @@ public class BackupManager {
     }
 
 
-    public static boolean performBackupInBackground(String path, int interval) {
-        return performBackupInBackground(path, interval, false);
-    }
-
-
-    public static boolean performBackupInBackground(final String colPath, int interval, boolean force) {
+    @SuppressWarnings("PMD.NPathComplexity")
+    private static boolean performBackupInBackground(final String colPath, int interval, boolean force) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
         if (prefs.getInt("backupMax", 8) == 0 && !force) {
             Timber.w("backups are disabled");
@@ -153,7 +147,7 @@ public class BackupManager {
         // Abort backup if not enough free space
         if (getFreeDiscSpace(colFile) < colFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
             Timber.e("performBackup: Not enough space on sd card to backup.");
-            prefs.edit().putBoolean("noSpaceLeft", true).commit();
+            prefs.edit().putBoolean("noSpaceLeft", true).apply();
             return false;
         }
 
@@ -175,24 +169,19 @@ public class BackupManager {
             @Override
             public void run() {
                 // Save collection file as zip archive
-                int BUFFER_SIZE = 1024;
-                byte[] buf = new byte[BUFFER_SIZE];
                 try {
-                    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(colPath), BUFFER_SIZE);
                     ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
                     ZipEntry ze = new ZipEntry("collection.anki2");
                     zos.putNextEntry(ze);
-                    int len;
-                    while ((len = bis.read(buf, 0, BUFFER_SIZE)) != -1) {
-                        zos.write(buf, 0, len);
-                    }
+                    CompatHelper.getCompat().copyFile(colPath, zos);
                     zos.close();
-                    bis.close();
                     // Delete old backup files if needed
                     SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
                     deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));
                     // set timestamp of file in order to avoid creating a new backup unless its changed
-                    backupFile.setLastModified(colFile.lastModified());
+                    if (!backupFile.setLastModified(colFile.lastModified())) {
+                        Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFilename);
+                    }
                     Timber.i("Backup created succesfully");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -210,8 +199,6 @@ public class BackupManager {
 
     /**
      * Get free disc space in bytes from path to Collection
-     * @param path
-     * @return
      */
     public static long getFreeDiscSpace(String path) {
         return getFreeDiscSpace(new File(path));
@@ -220,10 +207,7 @@ public class BackupManager {
 
     private static long getFreeDiscSpace(File file) {
         try {
-            StatFs stat = new StatFs(file.getParentFile().getPath());
-            long blocks = stat.getAvailableBlocks();
-            long blocksize = stat.getBlockSize();
-            return blocks * blocksize;
+            return CompatHelper.getCompat().getAvailableBytes(new StatFs(file.getParentFile().getPath()));
         } catch (IllegalArgumentException e) {
             Timber.e(e, "Free space could not be retrieved");
             return MIN_FREE_SPACE * 1024 * 1024;
@@ -241,13 +225,11 @@ public class BackupManager {
     public static boolean repairCollection(Collection col) {
         String deckPath = col.getPath();
         File deckFile = new File(deckPath);
-        if (col != null) {
-            col.close();
-        }
+        col.close();
 
         // repair file
         String execString = "sqlite3 " + deckPath + " .dump | sqlite3 " + deckPath + ".tmp";
-        Timber.i("repairCollection - Execute: " + execString);
+        Timber.i("repairCollection - Execute: %s", execString);
         try {
             String[] cmd = { "/system/bin/sh", "-c", execString };
             Process process = Runtime.getRuntime().exec(cmd);
@@ -266,7 +248,7 @@ public class BackupManager {
             File repairedFile = new File(deckPath + ".tmp");
             return repairedFile.renameTo(deckFile);
         } catch (IOException | InterruptedException e) {
-            Timber.e("repairCollection - error: " + e.getMessage());
+            Timber.e(e, "repairCollection - error");
         }
         return false;
     }
@@ -296,11 +278,9 @@ public class BackupManager {
             String deckName = colFile.getName();
             File directory = new File(colFile.getParent());
             for (File f : directory.listFiles()) {
-                if (f.getName().startsWith(deckName)) {
-                    if (!f.renameTo(new File(getBrokenDirectory(colFile.getParentFile()), f.getName().replace(deckName,
-                            movedFilename)))) {
-                        return false;
-                    }
+                if (f.getName().startsWith(deckName) &&
+                        !f.renameTo(new File(getBrokenDirectory(colFile.getParentFile()), f.getName().replace(deckName, movedFilename)))) {
+                    return false;
                 }
             }
         }
@@ -327,23 +307,21 @@ public class BackupManager {
     }
 
 
-    public static boolean deleteDeckBackups(String colFile, int keepNumber) {
+    private static boolean deleteDeckBackups(String colFile, int keepNumber) {
         return deleteDeckBackups(getBackups(new File(colFile)), keepNumber);
     }
 
 
-    public static boolean deleteDeckBackups(File colFile, int keepNumber) {
-        return deleteDeckBackups(getBackups(colFile), keepNumber);
-    }
-
-
-    public static boolean deleteDeckBackups(File[] backups, int keepNumber) {
+    private static boolean deleteDeckBackups(File[] backups, int keepNumber) {
         if (backups == null) {
             return false;
         }
         for (int i = 0; i < backups.length - keepNumber; i++) {
-            backups[i].delete();
-            Timber.e("deleteDeckBackups: backup file "+backups[i].getPath()+ " deleted.");
+            if (!backups[i].delete()) {
+                Timber.e("deleteDeckBackups() failed to delete %s", backups[i].getAbsolutePath());
+            } else {
+                Timber.i("deleteDeckBackups: backup file %s deleted.", backups[i].getAbsolutePath());
+            }
         }
         return true;
     }

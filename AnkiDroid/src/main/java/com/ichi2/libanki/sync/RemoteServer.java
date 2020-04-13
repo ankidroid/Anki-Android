@@ -23,7 +23,6 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
 
-import org.apache.http.HttpResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +30,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions",
+        "deprecation"}) // tracking HTTP transport change in github already
 public class RemoteServer extends HttpSyncer {
 
     public RemoteServer(Connection con, String hkey) {
@@ -38,10 +39,9 @@ public class RemoteServer extends HttpSyncer {
     }
 
 
-    /** Returns hkey or none if user/pw incorrect. 
-     * @throws UnknownHttpResponseException */
+    /** Returns hkey or none if user/pw incorrect. */
     @Override
-    public HttpResponse hostKey(String user, String pw) throws UnknownHttpResponseException {
+    public org.apache.http.HttpResponse hostKey(String user, String pw) throws UnknownHttpResponseException {
         try {
             mPostVars = new HashMap<>();
             JSONObject jo = new JSONObject();
@@ -55,7 +55,7 @@ public class RemoteServer extends HttpSyncer {
 
 
     @Override
-    public HttpResponse meta() throws UnknownHttpResponseException {
+    public org.apache.http.HttpResponse meta() throws UnknownHttpResponseException {
         try {
             mPostVars = new HashMap<>();
             mPostVars.put("k", mHKey);
@@ -113,7 +113,7 @@ public class RemoteServer extends HttpSyncer {
 
     /** Python has dynamic type deduction, but we don't, so return String **/
     private String _run(String cmd, JSONObject data) throws UnknownHttpResponseException {
-        HttpResponse ret = super.req(cmd, super.getInputStream(Utils.jsonToString(data)));
+        org.apache.http.HttpResponse ret = super.req(cmd, super.getInputStream(Utils.jsonToString(data)));
         try {
             return super.stream2String(ret.getEntity().getContent());
         } catch (IllegalStateException | IOException e) {

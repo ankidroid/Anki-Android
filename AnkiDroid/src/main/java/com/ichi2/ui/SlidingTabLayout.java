@@ -16,12 +16,10 @@
  
 package com.ichi2.ui;
  
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.os.Build;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -35,7 +33,7 @@ import android.widget.TextView;
  * the user's scroll progress.
  * <p>
  * To use the component, simply add it to your view hierarchy. Then in your
- * {@link android.app.Activity} or {@link android.support.v4.app.Fragment} call
+ * {@link android.app.Activity} or {@link androidx.fragment.app.Fragment} call
  * {@link #setViewPager(ViewPager)} providing it the ViewPager this layout is being used for.
  * <p>
  * The colors can be customized in two ways. The first and simplest is to provide an array of colors
@@ -160,7 +158,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
  
         mViewPager = viewPager;
         if (viewPager != null) {
-            viewPager.setOnPageChangeListener(new InternalViewPagerListener());
+            viewPager.addOnPageChangeListener(new InternalViewPagerListener());
             populateTabStrip();
         }
     }
@@ -169,27 +167,21 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * Create a default view to be used for tabs. This is called if a custom tab view is not set via
      * {@link #setCustomTabView(int, int)}.
      */
-    @SuppressLint("NewApi")
 	protected TextView createDefaultTabView(Context context) {
         TextView textView = new TextView(context);
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, TAB_VIEW_TEXT_SIZE_SP);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
- 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // If we're running on Honeycomb or newer, then we can use the Theme's
-            // selectableItemBackground to ensure that the View has a pressed state
-            TypedValue outValue = new TypedValue();
-            getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground,
-                    outValue, true);
-            textView.setBackgroundResource(outValue.resourceId);
-        }
- 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            // If we're running on ICS or newer, enable all-caps to match the Action Bar tab style
-            textView.setAllCaps(true);
-        }
- 
+
+        // use the Theme's selectableItemBackground to ensure that the View has a pressed state
+        TypedValue outValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground,
+                outValue, true);
+        textView.setBackgroundResource(outValue.resourceId);
+        
+        // enable all-caps to match the Action Bar tab style
+        textView.setAllCaps(true);
+
         int padding = (int) (TAB_VIEW_PADDING_DIPS * getResources().getDisplayMetrics().density);
         textView.setPadding(padding, padding, padding, padding);
  

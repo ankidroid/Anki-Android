@@ -43,7 +43,7 @@
   <string name="decks">Decks</string>
   <string name="card_browser">Card browser</string>
   <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
+  <string name="settings">Iestatījumi</string>
   <string name="help">Help</string>
   <string name="send_feedback">Send feedback</string>
   <string name="studyoptions_title">Deck overview</string>
@@ -88,6 +88,9 @@
   <string name="undo_action_suspend_card">apturēt kārti</string>
   <string name="undo_action_suspend_note">apturēt piezīmi</string>
   <string name="undo_action_delete">dzēst piezīmi</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Unbury</string>
   <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Add</string>

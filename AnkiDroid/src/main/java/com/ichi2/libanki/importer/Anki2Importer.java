@@ -47,6 +47,9 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
+        "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
 public class Anki2Importer extends Importer {
 
     private static final int GUID = 1;
@@ -66,6 +69,7 @@ public class Anki2Importer extends Importer {
      * Python: (guid, ord) -> cid
      * Java: guid -> ord -> cid
      */
+    @SuppressWarnings("PMD.SingularField")
     private Map<String, Map<Integer, Long>> mCards;
     private Map<Long, Long> mDecks;
     private Map<Long, Long> mModelMap;
@@ -150,7 +154,7 @@ public class Anki2Importer extends Importer {
         Map<Long, Boolean> existing = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = mDst.getDb().getDatabase().rawQuery("select id, guid, mod, mid from notes", null);
+            cur = mDst.getDb().getDatabase().query("select id, guid, mod, mid from notes", null);
             while (cur.moveToNext()) {
                 long id = cur.getLong(0);
                 String guid = cur.getString(1);
@@ -179,7 +183,7 @@ public class Anki2Importer extends Importer {
         int dupes = 0;
         ArrayList<String> dupesIgnored = new ArrayList<>();
         try {
-            cur = mSrc.getDb().getDatabase().rawQuery("select * from notes", null);
+            cur = mSrc.getDb().getDatabase().query("select * from notes", null);
 
             // Counters for progress updates
             int total = cur.getCount();
@@ -249,7 +253,7 @@ public class Anki2Importer extends Importer {
             }
         }
         if (dupes > 0) {
-            int up = update.size();
+            //int up = update.size(); // unused upstream as well, leaving for upstream comparison only
             mLog.add(getRes().getString(R.string.import_update_details, update.size(), dupes));
             if (dupesIgnored.size() > 0) {
                 mLog.add(getRes().getString(R.string.import_update_ignored));
@@ -436,7 +440,7 @@ public class Anki2Importer extends Importer {
         Map<Long, Boolean> existing = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = mDst.getDb().getDatabase().rawQuery(
+            cur = mDst.getDb().getDatabase().query(
                     "select f.guid, c.ord, c.id from cards c, notes f " +
                     "where c.nid = f.id", null);
             while (cur.moveToNext()) {
@@ -464,7 +468,7 @@ public class Anki2Importer extends Importer {
         int usn = mDst.usn();
         long aheadBy = mSrc.getSched().getToday() - mDst.getSched().getToday();
         try {
-            cur = mSrc.getDb().getDatabase().rawQuery(
+            cur = mSrc.getDb().getDatabase().query(
                     "select f.guid, f.mid, c.* from cards c, notes f " +
                     "where c.nid = f.id", null);
 
@@ -539,7 +543,7 @@ public class Anki2Importer extends Importer {
                 // we need to import revlog, rewriting card ids and bumping usn
                 Cursor cur2 = null;
                 try {
-                    cur2 = mSrc.getDb().getDatabase().rawQuery("select * from revlog where cid = " + scid, null);
+                    cur2 = mSrc.getDb().getDatabase().query("select * from revlog where cid = " + scid, null);
                     while (cur2.moveToNext()) {
                         Object[] rev = new Object[] { cur2.getLong(0), cur2.getLong(1), cur2.getInt(2), cur2.getInt(3),
                                 cur2.getLong(4), cur2.getLong(5), cur2.getLong(6), cur2.getLong(7), cur2.getInt(8) };
@@ -591,11 +595,6 @@ public class Anki2Importer extends Importer {
                 _writeDstMedia(fname, _srcMediaData(fname));
             }
         }
-    }
-
-
-    private BufferedInputStream _mediaData(String fname) {
-        return  _mediaData(fname, null);
     }
 
 
@@ -721,7 +720,7 @@ public class Anki2Importer extends Importer {
      * Return the contents of the given input stream, limited to Anki2Importer.MEDIAPICKLIMIT bytes This is only used
      * for comparison of media files with the limited resources of mobile devices
      */
-    byte[] _mediaPick(BufferedInputStream is) {
+    private byte[] _mediaPick(BufferedInputStream is) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream(MEDIAPICKLIMIT * 2);
             byte[] buf = new byte[MEDIAPICKLIMIT];
@@ -757,7 +756,6 @@ public class Anki2Importer extends Importer {
      * @param postProcess Percentage of remaining tasks complete.
      */
     protected void publishProgress(int notesDone, int cardsDone, int postProcess) {
-        String checkmark = "\u2714";
         if (mProgress != null) {
             mProgress.publishProgress(new DeckTask.TaskData(getRes().getString(R.string.import_progress,
                     notesDone, cardsDone, postProcess)));

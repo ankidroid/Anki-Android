@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">예상 소요 시간 (분):</string>
   <string name="studyoptions_start">학습</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">확장</string>
+  <string name="collapse">감추기</string>
   <string name="study_more">더 학습하기</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d개의 카드 예정 (%2$s)</item>
@@ -82,6 +82,9 @@
   <string name="undo_action_suspend_card">카드 미루기</string>
   <string name="undo_action_suspend_note">노트 비활성화하기</string>
   <string name="undo_action_delete">노트 삭제</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">집어넣었던 카드 꺼내기</string>
   <string name="rename_deck">카드 묶음 이름 바꾸기</string>
   <string name="menu_add">추가</string>
@@ -158,5 +161,5 @@
   <string name="card_template_editor_would_delete_note">이 카드 유형을 제거하면 하나 또는 여러개의 노트가 삭제됩니다. 먼저 새 카드 유형을 만드세요.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">AnkiDroid 데이터베이스에 읽고 쓰기</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">기존의 노트, 카드, 노트 유형, 카드 묶음을 접근 및 생성</string>
 </resources>

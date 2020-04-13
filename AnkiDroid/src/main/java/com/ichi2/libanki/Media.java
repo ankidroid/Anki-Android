@@ -70,6 +70,9 @@ import timber.log.Timber;
  * creating a new File() object), we must include the full path. Use the dir() method to make this step easier.<br>
  * E.g: new File(dir(), "filename.jpg")
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
+        "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
 public class Media {
 
     private static final Pattern fIllegalCharReg = Pattern.compile("[><:\"/?*^\\\\|\\x00\\r\\n]");
@@ -306,7 +309,7 @@ public class Media {
             for (Pattern p : mRegexps) {
                 // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine
                 // the index based on which pattern we are using
-                int fnameIdx = p == fSoundRegexps ? 2 : p == fImgRegExpU ? 2 : 3;
+                int fnameIdx = p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
                 m = p.matcher(s);
                 while (m.find()) {
                     String fname = m.group(fnameIdx);
@@ -378,7 +381,7 @@ public class Media {
             Matcher m = p.matcher(string);
             // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine
             // the index based on which pattern we are using
-            int fnameIdx = p == fImgRegExpU ? 2 : 3;
+            int fnameIdx = p.equals(fImgRegExpU) ? 2 : 3;
             while (m.find()) {
                 String tag = m.group(0);
                 String fname = m.group(fnameIdx);
@@ -418,7 +421,7 @@ public class Media {
         Set<String> allRefs = new HashSet<>();
         Cursor cur = null;
         try {
-            cur = mCol.getDb().getDatabase().rawQuery("select id, mid, flds from notes", null);
+            cur = mCol.getDb().getDatabase().query("select id, mid, flds from notes", null);
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
@@ -630,7 +633,7 @@ public class Media {
         Map<String, Object[]> cache = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("select fname, csum, mtime from media where csum is not null", null);
+            cur = mDb.getDatabase().query("select fname, csum, mtime from media where csum is not null", null);
             while (cur.moveToNext()) {
                 String name = cur.getString(0);
                 String csum = cur.getString(1);
@@ -725,7 +728,7 @@ public class Media {
     public Pair<String, Integer> syncInfo(String fname) {
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("select csum, dirty from media where fname=?", new String[] { fname });
+            cur = mDb.getDatabase().query("select csum, dirty from media where fname=?", new String[] { fname });
             if (cur.moveToNext()) {
                 String csum = cur.getString(0);
                 int dirty = cur.getInt(1);
@@ -813,7 +816,7 @@ public class Media {
             JSONArray meta = new JSONArray();
             int sz = 0;
             byte buffer[] = new byte[2048];
-            cur = mDb.getDatabase().rawQuery(
+            cur = mDb.getDatabase().query(
                     "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT, null);
 
             for (int c = 0; cur.moveToNext(); c++) {
@@ -858,7 +861,7 @@ public class Media {
             f.deleteOnExit();
             return new Pair<>(f, fnames);
         } catch (IOException e) {
-            Timber.e("Failed to create media changes zip", e);
+            Timber.e(e, "Failed to create media changes zip: ");
             throw new RuntimeException(e);
         } finally {
             if (cur != null) {
@@ -931,7 +934,7 @@ public class Media {
      * function and have delegated its job to the caller of this class.
      */
     public static int indexOfFname(Pattern p) {
-        int fnameIdx = p == fSoundRegexps ? 2 : p == fImgRegExpU ? 2 : 3;
+        int fnameIdx = p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
         return fnameIdx;
     }
 

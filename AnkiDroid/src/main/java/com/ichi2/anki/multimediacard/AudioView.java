@@ -20,15 +20,12 @@
 package com.ichi2.anki.multimediacard;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
-import android.os.Build;
 
+import androidx.appcompat.widget.AppCompatImageButton;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.ichi2.anki.R;
@@ -47,15 +44,15 @@ public class AudioView extends LinearLayout {
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
 
-    OnRecordingFinishEventListener mOnRecordingFinishEventListener = null;
+    private OnRecordingFinishEventListener mOnRecordingFinishEventListener = null;
 
     private Status mStatus = Status.IDLE;
 
-    int mResPlayImage;
-    int mResPauseImage;
-    int mResStopImage;
-    int mResRecordImage;
-    int mResRecordStopImage;
+    private int mResPlayImage;
+    private int mResPauseImage;
+    private int mResStopImage;
+    private int mResRecordImage;
+    private int mResRecordStopImage;
 
     private Context mContext;
 
@@ -65,20 +62,6 @@ public class AudioView extends LinearLayout {
         PLAYING, PAUSED, STOPPED, // The different possible states once playing
                                   // has started
         RECORDING // The recorder being played status
-    }
-
-
-    /**
-     * @param context Resources for images
-     * @param resPlay
-     * @param resPause
-     * @param resStop
-     * @param audioPath
-     * @return
-     */
-    public static AudioView createPlayerInstance(Context context, int resPlay, int resPause, int resStop,
-            String audioPath) {
-        return new AudioView(context, resPlay, resPause, resStop, audioPath);
     }
 
 
@@ -135,15 +118,6 @@ public class AudioView extends LinearLayout {
 
     public String getAudioPath() {
         return mAudioPath;
-    }
-
-
-    public void setRecordButtonVisible(boolean isVisible) {
-        if (isVisible) {
-            mRecord.setVisibility(VISIBLE);
-        } else {
-            mRecord.setVisibility(INVISIBLE);
-        }
     }
 
 
@@ -210,8 +184,8 @@ public class AudioView extends LinearLayout {
         }
     }
 
-    protected class PlayPauseButton extends ImageButton {
-        OnClickListener onClickListener = new View.OnClickListener() {
+    protected class PlayPauseButton extends AppCompatImageButton {
+        private OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mAudioPath == null) {
@@ -223,13 +197,10 @@ public class AudioView extends LinearLayout {
                         try {
                             mPlayer = new MediaPlayer();
                             mPlayer.setDataSource(getAudioPath());
-                            mPlayer.setOnCompletionListener(new OnCompletionListener() {
-                                @Override
-                                public void onCompletion(MediaPlayer mp) {
-                                    mStatus = Status.STOPPED;
-                                    mPlayer.stop();
-                                    notifyStop();
-                                }
+                            mPlayer.setOnCompletionListener(mp -> {
+                                mStatus = Status.STOPPED;
+                                mPlayer.stop();
+                                notifyStop();
                             });
                             mPlayer.prepare();
                             mPlayer.start();
@@ -238,7 +209,7 @@ public class AudioView extends LinearLayout {
                             mStatus = Status.PLAYING;
                             notifyPlay();
                         } catch (Exception e) {
-                            Timber.e(e.getMessage());
+                            Timber.e(e);
                             showToast(gtxt(R.string.multimedia_editor_audio_view_playing_failed));
                             mStatus = Status.IDLE;
                         }
@@ -260,7 +231,7 @@ public class AudioView extends LinearLayout {
                             mPlayer.prepare();
                             mPlayer.seekTo(0);
                         } catch (Exception e) {
-                            Timber.e(e.getMessage());
+                            Timber.e(e);
                         }
                         mPlayer.start();
                         notifyPlay();
@@ -310,23 +281,22 @@ public class AudioView extends LinearLayout {
         }
     }
 
-    protected class StopButton extends ImageButton {
-        OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (mStatus) {
-                    case PAUSED:
-                    case PLAYING:
-                        mPlayer.stop();
-                        mStatus = Status.STOPPED;
-                        notifyStop();
-                        break;
+    protected class StopButton extends AppCompatImageButton {
+        private OnClickListener onClickListener = v -> {
+            switch (mStatus) {
+                case PAUSED:
+                case PLAYING:
+                    mPlayer.stop();
+                    mStatus = Status.STOPPED;
+                    notifyStop();
+                    break;
 
-                    case IDLE:
-                    case STOPPED:
-                    case RECORDING:
-                    case INITIALIZED:
-                }
+                case IDLE:
+                case STOPPED:
+                case RECORDING:
+                case INITIALIZED:
+                default:
+                    break;
             }
         };
 
@@ -347,15 +317,15 @@ public class AudioView extends LinearLayout {
 
                 default:
                     setEnabled(true);
+                    break;
             }
             // It doesn't need to update itself on any other state changes
         }
 
     }
 
-    protected class RecordButton extends ImageButton {
-        OnClickListener onClickListener = new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
+    protected class RecordButton extends AppCompatImageButton {
+        private OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Since mAudioPath is not compulsory, we check if it exists
@@ -367,23 +337,24 @@ public class AudioView extends LinearLayout {
                     case IDLE: // If not already recorded or not already played
                     case STOPPED: // if already recorded or played
                         boolean highSampling = false;
-                        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                        if (currentapiVersion >= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
-                            try {
-                                // try high quality AAC @ 44.1kHz / 192kbps first
-                                mRecorder = initMediaRecorder();
-                                mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                                mRecorder.setAudioChannels(2);
-                                mRecorder.setAudioSamplingRate(44100);
-                                mRecorder.setAudioEncodingBitRate(192000);
-                                mRecorder.prepare();
-                                mRecorder.start();
-                                highSampling = true;
-                            } catch (Exception e) {
-                            }
+                        try {
+                            // try high quality AAC @ 44.1kHz / 192kbps first
+                            // can throw IllegalArgumentException if codec isn't supported
+                            mRecorder = initMediaRecorder();
+                            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+                            mRecorder.setAudioChannels(2);
+                            mRecorder.setAudioSamplingRate(44100);
+                            mRecorder.setAudioEncodingBitRate(192000);
+                            // this can also throw IOException if output path is invalid
+                            mRecorder.prepare();
+                            mRecorder.start();
+                            highSampling = true;
+                        } catch (Exception e) {
+                            // in all cases, fall back to low sampling
                         }
 
                         if (!highSampling) {
+                            // if we are here, either the codec didn't work or output file was invalid
                             // fall back on default
                             try {
                                 mRecorder = initMediaRecorder();
@@ -393,6 +364,7 @@ public class AudioView extends LinearLayout {
                                 mRecorder.start();
 
                             } catch (Exception e) {
+                                // either output file failed or codec didn't work, in any case fail out
                                 Timber.e("RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
                                 showToast(gtxt(R.string.multimedia_editor_audio_view_recording_failed));
                                 mStatus = Status.STOPPED;
@@ -413,7 +385,7 @@ public class AudioView extends LinearLayout {
                         break;
 
                     default:
-                        // do nothing
+                        break;
                 }
             }
 
@@ -453,6 +425,6 @@ public class AudioView extends LinearLayout {
     }
 
     public interface OnRecordingFinishEventListener {
-        public void onRecordingFinish(View v);
+        void onRecordingFinish(View v);
     }
 }

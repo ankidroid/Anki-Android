@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # Copyright (c) 2010 norbert.nagold@gmail.com
 #
@@ -18,7 +18,7 @@
 # This script updates the master file(s) for crowdin.net
 
 import pycurl
-import StringIO
+import io
 import sys
 import string
 import os
@@ -73,16 +73,16 @@ def updateMasterFile(fn):
         targetName = fn + '.xml'
         sourceName = path + targetName
     if targetName:  
-        print 'Update of Master File ' + targetName
+        print('Update of Master File ' + targetName)
         c = pycurl.Curl()
         fields = [('files['+targetName+']', (c.FORM_FILE, sourceName))]
         c.setopt(pycurl.URL, 'https://api.crowdin.com/api/project/' + PROJECT_IDENTIFIER + '/update-file?key=' + CROWDIN_KEY)
         c.setopt(pycurl.HTTPPOST, fields)
-        b = StringIO.StringIO()
+        b = io.BytesIO()
         c.setopt(pycurl.WRITEFUNCTION, b.write) 
         c.perform()
         c.close()
-        print b.getvalue()
+        print(b.getvalue().decode('utf-8'))
 
 
 try:
@@ -95,21 +95,21 @@ try:
     CROWDIN_KEY = c.readline();
     c.close()
 except IOError as e:
-    CROWDIN_KEY = raw_input("please enter your crowdin key or create \'crowdin_key.txt\': ")
+    CROWDIN_KEY = input("please enter your crowdin key or create \'crowdin_key.txt\': ")
 
 #sel = raw_input("update (m)aster file, update (t)ranslation or (r)efresh builds? ")
 sel='m'
 
 if sel == 'm':
     # Update Master Files:
-    fn = raw_input("update " + ', '.join([str(x) for x in files]) + ", (all)?")
+    fn = input("update " + ', '.join([str(x) for x in files]) + ", (all)?")
     if fn == 'all':
-        for n in range(0, len(files)):
-            updateMasterFile(files[n])
+        for f in files:
+            updateMasterFile(f)
     else:
         updateMasterFile(fn)
 else:
-    print "nothing to do"
+    print("nothing to do")
 
 '''
 elif sel == 't':

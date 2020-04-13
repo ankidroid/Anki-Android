@@ -70,7 +70,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Copy exported file to cwd
-cp AnkiDroid/build/outputs/apk/AnkiDroid-release.apk AnkiDroid-$VERSION.apk
+cp AnkiDroid/build/outputs/apk/release/AnkiDroid-release.apk AnkiDroid-$VERSION.apk
 
 # Commit modified AndroidManifest.xml
 git add $SRC_DIR$MANIFEST

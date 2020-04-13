@@ -130,6 +130,7 @@
   <string name="fact_adder_intent_title">קלף אנקידרויד</string>
   <string name="card_editor_add_card">הוסף הערה</string>
   <string name="card_editor_copy_card">העתק כרטיס</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">איפוס התקדמות</string>
   <string name="card_editor_reschedule_card">תזמן קלף מחדש</string>
   <string name="card_editor_preview_card">תצוגה מקדימה</string>

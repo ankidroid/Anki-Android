@@ -126,6 +126,7 @@
   <string name="fact_adder_intent_title">AnkiDroid Karte</string>
   <string name="card_editor_add_card">Notiz hinzufügen</string>
   <string name="card_editor_copy_card">Karte kopieren</string>
+  <string name="card_editor_reposition_card">Position ändern</string>
   <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
   <string name="card_editor_reschedule_card">Karte neu planen</string>
   <string name="card_editor_preview_card">Vorschau</string>

@@ -62,6 +62,9 @@
     <item><![CDATA[AnkiDroid is vrijgegeven onder de <a href=\"%1$s\"> GNU-GPL v3 licentie</a> en de broncode is beschikbaar <a href=\"%2$s\"> op GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Voorbeeld</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Herstel leervoortgang</string>
   <string name="reset_card_dialog_message">Deze kaart zal worden geplaatst aan het einde van de wachtrij voor nieuwe kaarten</string>
   <string name="reset_card_dialog_acknowledge">Kaart resetten</string>

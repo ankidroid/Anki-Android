@@ -13,7 +13,7 @@ package com.ichi2.compat.customtabs;
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import android.support.customtabs.CustomTabsClient;
+import androidx.browser.customtabs.CustomTabsClient;
 
 /**
  * Callback for events when connecting and disconnecting from Custom Tabs Service.

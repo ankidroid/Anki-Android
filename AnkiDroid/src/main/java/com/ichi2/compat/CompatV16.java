@@ -6,12 +6,13 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import android.text.Html;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
@@ -24,14 +25,14 @@ import com.ichi2.compat.customtabs.CustomTabsHelper;
 
 import java.io.File;
 
-import io.requery.android.database.sqlite.SQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /** Implementation of {@link Compat} for SDK level 16 */
 @TargetApi(16)
 public class CompatV16 extends CompatV15 implements Compat {
 
     @Override
-    public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
+    public void disableDatabaseWriteAheadLogging(SupportSQLiteDatabase db) {
         db.disableWriteAheadLogging();
     }
 
@@ -40,9 +41,7 @@ public class CompatV16 extends CompatV15 implements Compat {
         return Html.escapeHtml(txt);
     }
 
-    /*
-    *  Update dimensions of widget from V16 on (elder versions do not support widget measuring)
-    */
+    // Update dimensions of widget from V16 on (elder versions do not support widget measuring)
     @Override
     public void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls) {
         AppWidgetManager manager = AppWidgetManager.getInstance(context);

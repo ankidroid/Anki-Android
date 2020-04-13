@@ -18,18 +18,17 @@
 
 package com.ichi2.anki;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.text.ClipboardManager;
+import androidx.appcompat.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -67,13 +66,13 @@ public class Info extends AnkiActivity {
 
         setContentView(R.layout.info);
         final View mainView = findViewById(android.R.id.content);
-        Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
+        Toolbar toolbar = mainView.findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
 
         setTitle(String.format("%s v%s", VersionUtils.getAppName(), VersionUtils.getPkgVersionName()));
-        webView = (WebView) findViewById(R.id.info);
+        webView = findViewById(R.id.info);
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 // Hide the progress indicator when the page has finished loaded
@@ -83,30 +82,27 @@ public class Info extends AnkiActivity {
             }
         });
 
-        Button marketButton = (Button) findViewById(R.id.market);
-        marketButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                if (mType == TYPE_ABOUT) {
-                    if (CompatHelper.isKindle()) {
-                        Intent intent = new Intent("android.intent.action.VIEW",
-                                Uri.parse("http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki"));
-                        startActivity(intent);
-                    } else {
-                        Info.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                                .parse("market://details?id=com.ichi2.anki")));
-                    }
-                    return;
+        Button marketButton = findViewById(R.id.market);
+        marketButton.setOnClickListener(arg0 -> {
+            if (mType == TYPE_ABOUT) {
+                if (CompatHelper.isKindle()) {
+                    Intent intent = new Intent("android.intent.action.VIEW",
+                            Uri.parse("http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki"));
+                    startActivityWithoutAnimation(intent);
+                } else {
+                    Info.this.startActivityWithoutAnimation(new Intent(Intent.ACTION_VIEW, Uri
+                            .parse("market://details?id=com.ichi2.anki")));
                 }
-                setResult(RESULT_OK);
-                switch (mType) {
-                    case TYPE_NEW_VERSION:
-                        AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                                .putString("lastVersion", VersionUtils.getPkgVersionName()).commit();
-                        break;
-                }
-                finishWithAnimation();
+                return;
             }
+            setResult(RESULT_OK);
+            switch (mType) {
+                case TYPE_NEW_VERSION:
+                    AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
+                            .putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+                    break;
+            }
+            finishWithAnimation();
         });
 
         StringBuilder sb = new StringBuilder();
@@ -120,7 +116,7 @@ public class Info extends AnkiActivity {
                 webView.setBackgroundColor(typedValue.data);
                 getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true);
                 String textColor = String.format("#%06X", (0xFFFFFF & typedValue.data)); // Color to hex string
-                sb.append("<html><style>body {color:"+textColor+";}</style>");
+                sb.append("<html><style>body {color:").append(textColor).append(";}</style>");
 
                 sb.append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">");
                 sb.append(
@@ -142,25 +138,19 @@ public class Info extends AnkiActivity {
                 sb.append("</body></html>");
                 webView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
                 ((Button) findViewById(R.id.market)).setText(res.getString(R.string.info_rate));
-                Button debugCopy = ((Button) findViewById(R.id.debug_info));
+                Button debugCopy = (findViewById(R.id.debug_info));
                 debugCopy.setText(res.getString(R.string.feedback_copy_debug));
                 debugCopy.setVisibility(View.VISIBLE);
-                debugCopy.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        copyDebugInfo();
-                    }
-                });
+                debugCopy.setOnClickListener(v -> copyDebugInfo());
                 break;
 
             case TYPE_NEW_VERSION:
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 webView.loadUrl("file:///android_asset/changelog.html");
-                //webView.loadUrl("https://ankidroid.org/docs/changelog.html");
                 break;
 
             default:
-                finish();
+                finishWithoutAnimation();
                 break;
         }
     }
@@ -188,16 +178,14 @@ public class Info extends AnkiActivity {
      * @return debugInfo
      */
     public String copyDebugInfo() {
-        StringBuilder sb = new StringBuilder();
-        // AnkiDroid Version
-        sb.append("AnkiDroid Version = ").append(VersionUtils.getPkgVersionName()).append("\n\n");
-        // Android SDK
-        sb.append("Android Version = " + Build.VERSION.RELEASE).append("\n\n");
-        // ACRA install ID
-        sb.append("ACRA UUID = ").append(Installation.id(this)).append("\n");
-        String debugInfo = sb.toString();
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        clipboard.setText(debugInfo);
+        String debugInfo = "AnkiDroid Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
+                "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
+                "ACRA UUID = " + Installation.id(this) + "\n";
+
+        android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+        if (clipboardManager != null) {
+            clipboardManager.setPrimaryClip(ClipData.newPlainText(this.getTitle(), debugInfo));
+        }
         return debugInfo;
     }
 }

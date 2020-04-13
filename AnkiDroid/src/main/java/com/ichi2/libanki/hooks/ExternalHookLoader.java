@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -25,8 +24,8 @@ public class ExternalHookLoader {
      * Adaption of example from Google on loading custom classes. See original example for more help
      * https://code.google.com/p/android-custom-class-loading-sample/source/browse/#svn%2Ftrunk%2Fandroid-custom-class-loading-sample
      * 
-     * @param Activity mainActivity : the activity which is going to load the hook
-     * @param String colPath : path to AnkiDroid collection. Hook plugins should go in ~/plugins/hooks as compiled apk or jar packages
+     * @param mainActivity : the activity which is going to load the hook
+     * @param colPath : path to AnkiDroid collection. Hook plugins should go in ~/plugins/hooks as compiled apk or jar packages
      */
     public ExternalHookLoader(Activity mainActivity, String colPath) {
         mMainActivity = mainActivity;
@@ -37,10 +36,9 @@ public class ExternalHookLoader {
     /**
      * import a hook class from an external apk or jar package stored in COLLECTION_PATH/plugins/hooks
      * 
-     * @param String dexFilename : name of the package file in hooks folder -- e.g. "ChessFilter.jar"
-     * @param String className: full name of class to load from package -- e.g. "com.testplugin.ChessFilter"
+     * @param dexFilename : name of the package file in hooks folder -- e.g. "ChessFilter.jar"
+     * @param className: full name of class to load from package -- e.g. "com.testplugin.ChessFilter"
      */
-    @SuppressLint("NewApi")
 	public HookPlugin importExternalHook(String dexFilename, String className) {
         // filename of the hook which is currently being loaded
         final File dexExternalStoragePath = new File(mHookFolderPath, dexFilename);

@@ -126,6 +126,7 @@
   <string name="fact_adder_intent_title">Ficha AnkiDroid</string>
   <string name="card_editor_add_card">Adicionar nota</string>
   <string name="card_editor_copy_card">Copiar ficha</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Reiniciar progresso</string>
   <string name="card_editor_reschedule_card">Reagendar ficha</string>
   <string name="card_editor_preview_card">Pré-visualizar</string>
@@ -162,7 +163,7 @@
   <string name="confirm_apkg_export_deck">Exportar \"%s\" como ficheiro apkg?</string>
   <string name="export_in_progress">A exportar o ficheiro apkg&#8230;</string>
   <string name="export_successful_title">Enviar apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+  <string name="export_successful">O ficheiro “%s” foi exportado. Quer enviá-lo com outra aplicação?</string>
   <string name="export_email_subject">AnkiDroid exportou fichas: %s</string>
   <string name="export_email_text">
         <![CDATA[

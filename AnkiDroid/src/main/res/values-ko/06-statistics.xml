@@ -41,9 +41,9 @@
 <resources>
   <string name="statistics_young">최근</string>
   <string name="statistics_mature">오래된</string>
-  <string name="statistics_young_and_learn">Young+Learn</string>
+  <string name="statistics_young_and_learn">최근+학습</string>
   <string name="statistics_unlearned">본 적 없는</string>
-  <string name="statistics_suspended_and_buried">Suspended+Buried</string>
+  <string name="statistics_suspended_and_buried">비활성화+집어넣음</string>
   <string name="statistics_relearn">재학습</string>
   <string name="statistics_learn">학습</string>
   <string name="statistics_cram">벼락치기</string>
@@ -74,23 +74,23 @@
   <string name="stats_today_type_breakdown">학습: &lt;b&gt;%1$s&lt;/b&gt;, 복습: &lt;b&gt;%2$s&lt;/b&gt;, 재학습: &lt;b&gt;%3$s&lt;/b&gt;, 필터링됨: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">오래된 카드의 정답: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">오늘 어떠한 오래된 카드도 공부하지 않았습니다.</string>
-  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
-  <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
-  <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
-  <string name="stats_overview_reviews_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_reviews_per_day_all">If you studied every day: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_time_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-  <string name="stats_overview_time_per_day_all">If you studied every day:  &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
-  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
-  <string name="stats_overview_average_interval">"Average interval: "</string>
-  <string name="stats_overview_longest_interval">"Longest interval: "</string>
-  <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
-  <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; months</string>
-  <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; days</string>
-  <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hours</string>
+  <string name="stats_overview_forecast_total">합계: &lt;b&gt;%1$d&lt;/b&gt; 복습</string>
+  <string name="stats_overview_forecast_average">평균: 하루에 &lt;b&gt;%1$.1f&lt;/b&gt; 복습</string>
+  <string name="stats_overview_forecast_due_tomorrow">내일 마감: &lt;b&gt;%1$d&lt;/b&gt;</string>
+  <string name="stats_overview_days_studied">학습한 날들: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
+  <string name="stats_overview_total_reviews">합계: &lt;b&gt;%1$d&lt;/b&gt; 복습</string>
+  <string name="stats_overview_reviews_per_day_studydays">학습한 날짜 평균: 하루에 &lt;b&gt;%1$.1f&lt;/b&gt; 복습</string>
+  <string name="stats_overview_reviews_per_day_all">매일 학습했다면: 하루에 &lt;b&gt;%1$.1f&lt;/b&gt; 복습</string>
+  <string name="stats_overview_time_per_day_studydays">학습한 날짜 평균: 하루에 &lt;b&gt;%1$.1f&lt;/b&gt; 분</string>
+  <string name="stats_overview_time_per_day_all">매일 학습했다면:  하루에 &lt;b&gt;%1$.1f&lt;/b&gt; 분</string>
+  <string name="stats_overview_new_cards_per_day">평균: 하루에 &lt;b&gt;%1$.1f&lt;/b&gt; 카드</string>
+  <string name="stats_overview_total_new_cards">합계: &lt;b&gt;%1$d&lt;/b&gt; 카드</string>
+  <string name="stats_overview_average_interval">"평균 학습 간격: "</string>
+  <string name="stats_overview_longest_interval">"가장 긴 간격: "</string>
+  <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; 년</string>
+  <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; 월</string>
+  <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; 일</string>
+  <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; 시간</string>
   <string name="deck_summary_all_decks">모든 카드 묶음</string>
   <string name="stats_select_time_scale">시간 단위 선택</string>
   <string-array name="due_x_axis_title">
@@ -99,11 +99,11 @@
     <item>개월</item>
   </string-array>
   <string name="stats_today">오늘</string>
-  <string name="stats_overview">Overview</string>
+  <string name="stats_overview">개요</string>
   <string name="stats_forecast">예상</string>
   <string name="stats_review_count">복습 횟수</string>
   <string name="stats_review_time">복습 시간</string>
-  <string name="stats_added">Added</string>
+  <string name="stats_added">추가됨</string>
   <string name="stats_review_intervals">간격</string>
   <string name="stats_breakdown">시간별 분석</string>
   <string name="stats_weekly_breakdown">주간 분석</string>

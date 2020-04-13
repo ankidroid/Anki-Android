@@ -62,6 +62,9 @@
     <item><![CDATA[O AnkiDroid é publicado sob a <a href=\"%1$s\">licença GNU-GPL v3</a> e o código fonte está disponível no <a href=\"%2$s\">GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Pré-visualizar</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Reiniciar progresso da ficha</string>
   <string name="reset_card_dialog_message">Esta ficha será colocada no fim da fila das fichas novas.</string>
   <string name="reset_card_dialog_acknowledge">Ficha reiniciada</string>

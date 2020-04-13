@@ -42,9 +42,13 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+
 // fixmes:
 // - make sure users can't set grad interval < 1
 
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes",
+        "PMD.MethodNamingConventions","PMD.AvoidReassigningParameters","PMD.SimplifyBooleanReturns"})
 public class Decks {
 
 
@@ -437,7 +441,7 @@ public class Decks {
     }
 
 
-    public JSONObject get(long did) {
+    public @NonNull JSONObject get(long did) {
         return get(did, true);
     }
 

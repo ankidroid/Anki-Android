@@ -19,18 +19,21 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
-import android.support.v4.content.FileProvider;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,16 +56,13 @@ import timber.log.Timber;
 
 public class BasicImageFieldController extends FieldControllerBase implements IFieldController {
 
-    protected static final int ACTIVITY_SELECT_IMAGE = 1;
-    protected static final int ACTIVITY_TAKE_PICTURE = 2;
-    protected static final int IMAGE_PREVIEW_MAX_WIDTH = 100;
+    private static final int ACTIVITY_SELECT_IMAGE = 1;
+    private static final int ACTIVITY_TAKE_PICTURE = 2;
     private static final int IMAGE_SAVE_MAX_WIDTH = 1920;
 
-    protected Button mBtnGallery;
-    protected Button mBtnCamera;
-    protected ImageView mImagePreview;
+    private ImageView mImagePreview;
 
-    protected String mTempCameraImagePath;
+    private String mTempCameraImagePath;
     private DisplayMetrics mMetrics = null;
 
 
@@ -85,7 +85,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         int height = metrics.heightPixels;
         int width = metrics.widthPixels;
 
-        LinearLayout.LayoutParams p = new LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
+        LinearLayout.LayoutParams p = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         setPreviewImage(mField.getImagePath(), getMaxImageSize());
         mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -94,49 +94,54 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mImagePreview.setMaxHeight((int) Math.round(height * 0.4));
         mImagePreview.setMaxWidth((int) Math.round(width * 0.6));
 
-        mBtnGallery = new Button(mActivity);
+        Button mBtnGallery = new Button(mActivity);
         mBtnGallery.setText(gtxt(R.string.multimedia_editor_image_field_editing_galery));
-        mBtnGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                mActivity.startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
-            }
+        mBtnGallery.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            mActivity.startActivityForResultWithoutAnimation(i, ACTIVITY_SELECT_IMAGE);
         });
 
-        mBtnCamera = new Button(mActivity);
+        Button mBtnCamera = new Button(mActivity);
         mBtnCamera.setText(gtxt(R.string.multimedia_editor_image_field_editing_photo));
-        mBtnCamera.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("NewApi")
-            @Override
-            public void onClick(View v) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                File image;
-                File storageDir;
-                String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
-                try {
-                    storageDir = mActivity.getCacheDir();
-                    image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
-                    mTempCameraImagePath = image.getPath();
-                    Uri uriSavedImage = FileProvider.getUriForFile(mActivity,
-                            mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider",
-                            image);
+        mBtnCamera.setOnClickListener(v -> {
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File image;
+            File storageDir;
+            String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
+            try {
+                storageDir = mActivity.getCacheDir();
+                image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
+                mTempCameraImagePath = image.getPath();
+                Uri uriSavedImage = FileProvider.getUriForFile(mActivity,
+                        mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider",
+                        image);
 
-                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-                    mActivity.startActivityForResult(cameraIntent, ACTIVITY_TAKE_PICTURE);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+                if (cameraIntent.resolveActivity(context.getPackageManager()) != null) {
+                    mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
                 }
+                else {
+                    Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
-        // Chromebooks do not support camera capture yet.
-        if (CompatHelper.isChromebook()) {
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             mBtnCamera.setVisibility(View.INVISIBLE);
         }
 
-        layout.addView(mImagePreview, android.view.ViewGroup.LayoutParams.FILL_PARENT, p);
-        layout.addView(mBtnGallery, android.view.ViewGroup.LayoutParams.FILL_PARENT);
-        layout.addView(mBtnCamera, android.view.ViewGroup.LayoutParams.FILL_PARENT);
+        // Some hardware has no camera or reports yes but has zero (e.g., cheap devices, and Chromebook emulator)
+        if ((!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA) &&
+                !context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) ||
+                (CompatHelper.getCompat().getCameraCount() < 1)) {
+            mBtnCamera.setVisibility(View.INVISIBLE);
+        }
+
+        layout.addView(mImagePreview, ViewGroup.LayoutParams.MATCH_PARENT, p);
+        layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
+        layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
 
@@ -145,7 +150,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    protected DisplayMetrics getDisplayMetrics() {
+    private DisplayMetrics getDisplayMetrics() {
         if (mMetrics == null) {
             mMetrics = new DisplayMetrics();
             mActivity.getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
@@ -156,9 +161,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // ignore RESULT_CANCELED but handle image select and take
         if (resultCode == Activity.RESULT_CANCELED) {
-            // Do Nothing.
-        } else if (requestCode == ACTIVITY_SELECT_IMAGE) {
+            return;
+        }
+        if (requestCode == ACTIVITY_SELECT_IMAGE) {
             Uri selectedImage = data.getData();
             // Timber.d(selectedImage.toString());
             String[] filePathColumn = { MediaColumns.DATA };
@@ -181,13 +188,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     @Override
     public void onFocusLost() {
+        // do nothing
 
     }
 
 
     @Override
     public void onDone() {
-        //
+        // do nothing
     }
 
 
@@ -206,7 +214,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             f.delete();
             return outPath;
         } catch (FileNotFoundException e) {
-            Timber.e("Error in BasicImageFieldController.rotateAndCompress() : " + e.getMessage());
+            Timber.e(e, "Error in BasicImageFieldController.rotateAndCompress()");
             return inPath;
         } finally {
             try {
@@ -220,24 +228,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    protected void setPreviewImage(String imagePath, int maxsize) {
+    private void setPreviewImage(String imagePath, int maxsize) {
         if (imagePath != null && !imagePath.equals("")) {
-            // Caused bug on API <= 7
-            // mImagePreview.setImageURI(Uri.fromFile(new File(imagePath)));
-
-            // fix but crashes with out of memory
-            // mImagePreview.setImageURI(Uri.parse(new File(imagePath).toString()));
-
-            // fix for both
             File f = new File(imagePath);
-
             Bitmap b = BitmapUtil.decodeFile(f, maxsize);
-
-            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-            if (currentapiVersion >= android.os.Build.VERSION_CODES.ECLAIR) {
-                b = ExifUtil.rotateFromCamera(f, b);
-            }
-
+            b = ExifUtil.rotateFromCamera(f, b);
             mImagePreview.setImageBitmap(b);
         }
     }
@@ -248,5 +243,4 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         ImageView imageView = mImagePreview;
         BitmapUtil.freeImageView(imageView);
     }
-
 }

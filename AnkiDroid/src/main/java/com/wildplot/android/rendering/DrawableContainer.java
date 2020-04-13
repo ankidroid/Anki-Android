@@ -22,57 +22,51 @@ import java.util.Vector;
 
 
 public class DrawableContainer implements Drawable {
-    Vector<Drawable> drawableVector = new Vector<>();
-    private boolean isOnFrame = false;
-    private boolean isOnAbort = false;
-    private boolean isCritical = false;
-    private Drawable currentDrawable = null;
 
-    public DrawableContainer(boolean isOnFrame, boolean isCritical){
+    private Vector<Drawable> drawableVector = new Vector<>();
+    private boolean isOnFrame;
+    private boolean isCritical;
+
+
+    public DrawableContainer(boolean isOnFrame, boolean isCritical) {
         this.isOnFrame = isOnFrame;
         this.isCritical = isCritical;
     }
 
-    public void addDrawable(Drawable drawable){
+
+    public void addDrawable(Drawable drawable) {
         drawableVector.add(drawable);
 
     }
 
+
     @Override
     public void paint(GraphicsWrap g) {
-        isOnAbort = false;
-        currentDrawable = null;
-        for(Drawable drawable: drawableVector){
-            currentDrawable = drawable;
-            if(isOnAbort)
-                return;
+        for (Drawable drawable : drawableVector) {
             drawable.paint(g);
         }
     }
+
 
     @Override
     public boolean isOnFrame() {
         return isOnFrame;
     }
 
-    @Override
-    public void abortAndReset() {
-        isOnAbort = true;
-        if(currentDrawable != null)
-            currentDrawable.abortAndReset();
-    }
 
     @Override
     public boolean isClusterable() {
         return false;
     }
 
+
     @Override
     public boolean isCritical() {
         return isCritical;
     }
 
-    public int getSize(){
+
+    public int getSize() {
         return drawableVector.size();
     }
 }

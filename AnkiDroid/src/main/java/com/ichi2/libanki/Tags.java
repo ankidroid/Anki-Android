@@ -48,6 +48,7 @@ This class differs from the python version by keeping the in-memory tag cache as
 instead of a JSONObject. It is much more convenient to work with a TreeMap in Java, but there
 may be a performance penalty in doing so (on startup and shutdown).
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
 public class Tags {
 
     private static final Pattern sCanonify = Pattern.compile("[\"']");
@@ -152,7 +153,7 @@ public class Tags {
         List<String> tags = new ArrayList<>();
         Cursor cursor = null;
         try {
-            cursor = mCol.getDb().getDatabase().rawQuery("SELECT DISTINCT tags FROM notes"+lim, null);
+            cursor = mCol.getDb().getDatabase().query("SELECT DISTINCT tags FROM notes"+lim, null);
             while (cursor.moveToNext()) {
                 tags.add(cursor.getString(0));
             }
@@ -215,7 +216,6 @@ public class Tags {
      *
      * @param ids The cards to tag.
      * @param tags List of tags to add/remove. They are space-separated.
-     * @param add True/False to add/remove.
      */
     public void bulkAdd(List<Long> ids, String tags) {
         bulkAdd(ids, tags, true);
@@ -225,6 +225,10 @@ public class Tags {
     /**
      * FIXME: This method must be fixed before it is used. Its behaviour is currently incorrect.
      * This method is currently unused in AnkiDroid so it will not cause any errors in its current state.
+     *
+     * @param ids The cards to tag.
+     * @param tags List of tags to add/remove. They are space-separated.
+     * @param add True/False to add/remove.
      */
     public void bulkAdd(List<Long> ids, String tags, boolean add) {
         List<String> newTags = split(tags);
@@ -254,7 +258,7 @@ public class Tags {
             cur = mCol
                     .getDb()
                     .getDatabase()
-                    .rawQuery("select id, tags from notes where id in " + Utils.ids2str(ids) +
+                    .query("select id, tags from notes where id in " + Utils.ids2str(ids) +
                             " and (" + lim + ")", null);
             if (add) {
                 while (cur.moveToNext()) {

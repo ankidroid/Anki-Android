@@ -19,14 +19,12 @@
 
 package com.ichi2.utils;
 
-import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 
 import java.io.File;
 
-@TargetApi(5)
 public class ExifUtil {
     public static Bitmap rotateFromCamera(File theFile, Bitmap bmp) {
         try {

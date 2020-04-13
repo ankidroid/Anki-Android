@@ -21,12 +21,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -47,7 +47,6 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.themes.Themes;
 import com.ichi2.ui.SlidingTabLayout;
 
 import org.json.JSONArray;
@@ -65,6 +64,7 @@ import timber.log.Timber;
 /**
  * Allows the user to view the template for the current note type
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
 public class CardTemplateEditor extends AnkiActivity {
     private TemplatePagerAdapter mTemplateAdapter;
     private JSONObject mModelBackup = null;
@@ -72,6 +72,7 @@ public class CardTemplateEditor extends AnkiActivity {
     private SlidingTabLayout mSlidingTabLayout;
     private long mModelId;
     private long mNoteId;
+    private int mOrdId;
     private static final int REQUEST_PREVIEWER = 0;
     private static final String DUMMY_TAG = "DUMMY_NOTE_TO_DELETE_x0-90-fa";
 
@@ -80,15 +81,11 @@ public class CardTemplateEditor extends AnkiActivity {
     // Listeners
     // ----------------------------------------------------------------------------
 
-    /* Used for updating the collection when a reverse card is added */
-    private DeckTask.TaskListener mUpdateTemplateHandler = new DeckTask.TaskListener() {
+    /* Used for updating the collection when a reverse card is added or a template is deleted */
+    private DeckTask.TaskListener mAddRemoveTemplateHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
             showProgressBar();
-        }
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
         }
 
         @Override
@@ -137,11 +134,14 @@ public class CardTemplateEditor extends AnkiActivity {
                 finishWithoutAnimation();
                 return;
             }
-            // get id for currently edited card (optional)
+            // get id for currently edited note (optional)
             mNoteId = getIntent().getLongExtra("noteId", -1L);
+            // get id for currently edited template (optional)
+            mOrdId = getIntent().getIntExtra("ordId", -1);
         } else {
             mModelId = savedInstanceState.getLong("modelId");
             mNoteId = savedInstanceState.getLong("noteId");
+            mOrdId = savedInstanceState.getInt("ordId");
             try {
                 mModelBackup = new JSONObject(savedInstanceState.getString("modelBackup"));
             } catch (JSONException e) {
@@ -164,18 +164,24 @@ public class CardTemplateEditor extends AnkiActivity {
         }
         outState.putLong("modelId", mModelId);
         outState.putLong("noteId", mNoteId);
+        outState.putLong("ordId", mOrdId);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (modelHasChanged()) {
+            showDiscardChangesDialog();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
-                if (modelHasChanged()) {
-                    showDiscardChangesDialog();
-                } else {
-                    finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                }
+                onBackPressed();
                 return true;
             }
             default:
@@ -213,8 +219,7 @@ public class CardTemplateEditor extends AnkiActivity {
         mViewPager.setAdapter(mTemplateAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(final int position, final float v, final int i2) {
-            }
+            public void onPageScrolled(final int position, final float v, final int i2) { /* do nothing */ }
 
             @Override
             public void onPageSelected(final int position) {
@@ -225,8 +230,7 @@ public class CardTemplateEditor extends AnkiActivity {
             }
 
             @Override
-            public void onPageScrollStateChanged(final int position) {
-            }
+            public void onPageScrollStateChanged(final int position) { /* do nothing */ }
         });
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
@@ -245,6 +249,11 @@ public class CardTemplateEditor extends AnkiActivity {
         }
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId);
+
+        // Set the tab to the current template if an ord id was provided
+        if (mOrdId != -1) {
+            mViewPager.setCurrentItem(mOrdId);
+        }
     }
 
     public boolean modelHasChanged() {
@@ -257,15 +266,12 @@ public class CardTemplateEditor extends AnkiActivity {
                 .content(R.string.discard_unsaved_changes)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        Timber.i("TemplateEditor:: OK button pressed to confirm discard changes");
-                        getCol().getModels().update(CardTemplateEditor.this.mModelBackup);
-                        getCol().getModels().flush();
-                        getCol().reset();
-                        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                    }
+                .onPositive((dialog, which) -> {
+                    Timber.i("TemplateEditor:: OK button pressed to confirm discard changes");
+                    getCol().getModels().update(CardTemplateEditor.this.mModelBackup);
+                    getCol().getModels().flush();
+                    getCol().reset();
+                    finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                 })
                 .build().show();
     }
@@ -296,7 +302,7 @@ public class CardTemplateEditor extends AnkiActivity {
     // ----------------------------------------------------------------------------
 
     /**
-     * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link androidx.core.app.FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the tabs.
      */
     public class TemplatePagerAdapter extends FragmentPagerAdapter {
@@ -362,10 +368,10 @@ public class CardTemplateEditor extends AnkiActivity {
 
 
     public static class CardTemplateFragment extends Fragment{
-        EditText mFront;
-        EditText mCss;
-        EditText mBack;
-        JSONObject mModel;
+        private EditText mFront;
+        private EditText mCss;
+        private EditText mBack;
+        private JSONObject mModel;
         public static CardTemplateFragment newInstance(int position, long modelId, long noteId) {
             CardTemplateFragment f = new CardTemplateFragment();
             Bundle args = new Bundle();
@@ -409,9 +415,9 @@ public class CardTemplateEditor extends AnkiActivity {
                         }
                     }
                     @Override
-                    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+                    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { /* do nothing */ }
                     @Override
-                    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+                    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { /* do nothing */ }
                 };
                 mFront.addTextChangedListener(templateEditorWatcher);
                 mCss.addTextChangedListener(templateEditorWatcher);
@@ -570,10 +576,6 @@ public class CardTemplateEditor extends AnkiActivity {
             }
 
             @Override
-            public void onProgressUpdate(DeckTask.TaskData... values) {
-            }
-
-            @Override
             public void onPostExecute(DeckTask.TaskData result) {
                 if (result.getBoolean()) {
                     getActivity().setResult(RESULT_OK);
@@ -584,9 +586,6 @@ public class CardTemplateEditor extends AnkiActivity {
                     ((AnkiActivity) getActivity()).finishWithoutAnimation();
                 }
             }
-
-            @Override
-            public void onCancelled() {}
         };
 
         private boolean modelHasChanged() {
@@ -667,7 +666,7 @@ public class CardTemplateEditor extends AnkiActivity {
             activity.getCol().modSchemaNoCheck();
             Object [] args = new Object[] {model, tmpl};
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REMOVE_TEMPLATE,
-                    activity.mUpdateTemplateHandler,  new DeckTask.TaskData(args));
+                    activity.mAddRemoveTemplateHandler,  new DeckTask.TaskData(args));
             activity.dismissAllDialogFragments();
         }
 
@@ -723,7 +722,7 @@ public class CardTemplateEditor extends AnkiActivity {
             // Add new template to the current model via AsyncTask
             Object [] args = new Object[] {model, newTemplate};
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_TEMPLATE,
-                    activity.mUpdateTemplateHandler,  new DeckTask.TaskData(args));
+                    activity.mAddRemoveTemplateHandler,  new DeckTask.TaskData(args));
             activity.dismissAllDialogFragments();
         }
 

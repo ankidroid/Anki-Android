@@ -18,11 +18,14 @@
 
 package com.ichi2.async;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.PowerManager;
+import androidx.core.content.ContextCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -37,20 +40,17 @@ import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 
 import timber.log.Timber;
 
 public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
 
-    public static final int TASK_TYPE_LOGIN = 0;
-    public static final int TASK_TYPE_SYNC = 1;
+    private static final int TASK_TYPE_LOGIN = 0;
+    private static final int TASK_TYPE_SYNC = 1;
     public static final int CONN_TIMEOUT = 30000;
 
 
@@ -75,7 +75,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         sIsCancellable = false;
         Context context = AnkiDroidApp.getInstance().getApplicationContext();
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Connection");
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                AnkiDroidApp.getAppResources().getString(R.string.app_name) + ":Connection");
     }
 
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
@@ -124,7 +125,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     protected void onPreExecute() {
         super.onPreExecute();
         // Acquire the wake lock before syncing to ensure CPU remains on until the sync completes.
-        mWakeLock.acquire();
+        if (ContextCompat.checkSelfPermission(AnkiDroidApp.getInstance().getApplicationContext(),
+                Manifest.permission.WAKE_LOCK) == PackageManager.PERMISSION_GRANTED) {
+            mWakeLock.acquire();
+        }
         if (mListener != null) {
             mListener.onPreExecute();
         }
@@ -138,7 +142,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     protected void onPostExecute(Payload data) {
         super.onPostExecute(data);
         // Sync has ended so release the wake lock
-        mWakeLock.release();
+        if (mWakeLock.isHeld()) {
+            mWakeLock.release();
+        }
         if (mListener != null) {
             mListener.onPostExecute(data);
         }
@@ -193,11 +199,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
+    @SuppressWarnings("deprecation") // tracking HTTP transport change in github already
     private Payload doInBackgroundLogin(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
         HttpSyncer server = new RemoteServer(this, null);
-        HttpResponse ret;
+        org.apache.http.HttpResponse ret;
         try {
             ret = server.hostKey(username, password);
         } catch (UnknownHttpResponseException e) {
@@ -308,8 +315,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 if (retCode.equals("noChanges")) {
                     // publishProgress(R.string.sync_no_changes_message);
                     noChanges = true;
-                } else {
-                    // publishProgress(R.string.sync_database_acknowledge);
                 }
             } else {
                 try {
@@ -404,8 +409,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         data.result = new Object[] {"connectionError" };
                     } else if (e.getMessage().equals("UserAbortedSync")) {
                         data.result = new Object[] {"UserAbortedSync" };
-                    } else {
-                        AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
                     }
                     mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage();
                 }
@@ -475,29 +478,29 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     public static boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-            return false;
+        if (cm != null) {
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+            return (netInfo != null) && netInfo.isConnected();
         }
-        return true;
+        return false;
     }
 
 
-    public static interface TaskListener {
-        public void onPreExecute();
+    public interface TaskListener {
+        void onPreExecute();
 
 
-        public void onProgressUpdate(Object... values);
+        void onProgressUpdate(Object... values);
 
 
-        public void onPostExecute(Payload data);
+        void onPostExecute(Payload data);
 
 
-        public void onDisconnected();
+        void onDisconnected();
     }
 
-    public static interface CancellableTaskListener extends TaskListener {
-        public void onCancelled();
+    public interface CancellableTaskListener extends TaskListener {
+        void onCancelled();
     }
 
     public static class Payload {
@@ -511,26 +514,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         public Collection col;
 
 
-        public Payload() {
-            data = null;
-            success = true;
-        }
-
-
         public Payload(Object[] data) {
-            this.data = data;
-            success = true;
-        }
-
-
-        public Payload(int taskType, Object[] data) {
-            this.taskType = taskType;
-            this.data = data;
-            success = true;
-        }
-
-        public Payload(int taskType, Object[] data, String path) {
-            this.taskType = taskType;
             this.data = data;
             success = true;
         }
@@ -544,25 +528,5 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     public synchronized static boolean isCancellable() {
         return sIsCancellable;
-    }
-
-    public class CancelCallback {
-        private WeakReference<ThreadSafeClientConnManager> mConnectionManager = null;
-
-
-        public void setConnectionManager(ThreadSafeClientConnManager connectionManager) {
-            mConnectionManager = new WeakReference<>(connectionManager);
-        }
-
-
-        public void cancelAllConnections() {
-            Timber.d("cancelAllConnections()");
-            if (mConnectionManager != null) {
-                ThreadSafeClientConnManager connectionManager = mConnectionManager.get();
-                if (connectionManager != null) {
-                    connectionManager.shutdown();
-                }
-            }
-        }
     }
 }

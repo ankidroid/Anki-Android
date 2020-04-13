@@ -20,12 +20,12 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
 
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.compat.CompatHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class ReadText {
 
 
     // private boolean mTtsReady = false;
-
+    @SuppressWarnings("deprecation") // Movement to new API tracked in github as #5021
     public static void speak(String text, String loc, int queueMode) {
         int result = mTts.setLanguage(localeFromStringIgnoringScriptAndExtensions(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -283,10 +283,28 @@ public class ReadText {
                         Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
                         Timber.w("TTS initialized but no available languages found");
                     }
+                    mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                        @Override
+                        public void onDone(String arg0) {
+                            if (ReadText.sTextQueue.size() > 0) {
+                                String[] text = ReadText.sTextQueue.remove(0);
+                                ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
+                            }
+                        }
+                        @Override
+                        @Deprecated
+                        public void onError(String arg0) {
+                            // do nothing
+                        }
+                        @Override
+                        public void onStart(String arg0) {
+                            // no nothing
+                        }
+                    });
                 } else {
                     Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
+                    Timber.w("TTS not successfully initialized");
                 }
-                CompatHelper.getCompat().setTtsOnUtteranceProgressListener(mTts);
             }
         });
         mTtsParams = new HashMap<>();

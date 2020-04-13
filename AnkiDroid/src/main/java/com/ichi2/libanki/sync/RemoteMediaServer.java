@@ -30,7 +30,6 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
 
-import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +44,8 @@ import java.util.zip.ZipFile;
 
 import timber.log.Timber;
 
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions",
+        "deprecation"}) // tracking HTTP transport change in github already
 public class RemoteMediaServer extends HttpSyncer {
 
     private Collection mCol;
@@ -76,7 +77,7 @@ public class RemoteMediaServer extends HttpSyncer {
             mPostVars.put("v",
                     String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
 
-            HttpResponse resp = super.req("begin", super.getInputStream(Utils.jsonToString(new JSONObject())));
+            org.apache.http.HttpResponse resp = super.req("begin", super.getInputStream(Utils.jsonToString(new JSONObject())));
             JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
             JSONObject ret = _dataOnly(jresp, JSONObject.class);
             mSKey = ret.getString("sk");
@@ -93,7 +94,7 @@ public class RemoteMediaServer extends HttpSyncer {
             mPostVars = new HashMap<>();
             mPostVars.put("sk", mSKey);
 
-            HttpResponse resp = super.req("mediaChanges",
+            org.apache.http.HttpResponse resp = super.req("mediaChanges",
                     super.getInputStream(Utils.jsonToString(new JSONObject().put("lastUsn", lastUsn))));
             JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
             return _dataOnly(jresp, JSONArray.class);
@@ -111,7 +112,7 @@ public class RemoteMediaServer extends HttpSyncer {
      */
     public ZipFile downloadFiles(List<String> top) throws UnknownHttpResponseException {
         try {
-            HttpResponse resp;
+            org.apache.http.HttpResponse resp;
             resp = super.req("downloadFiles",
                     super.getInputStream(Utils.jsonToString(new JSONObject().put("files", new JSONArray(top)))));
             String zipPath = mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncFromServer.zip");
@@ -130,7 +131,7 @@ public class RemoteMediaServer extends HttpSyncer {
     public JSONArray uploadChanges(File zip) throws UnknownHttpResponseException, MediaSyncException {
         try {
             // no compression, as we compress the zip file instead
-            HttpResponse resp = super.req("uploadChanges", new FileInputStream(zip), 0);
+            org.apache.http.HttpResponse resp = super.req("uploadChanges", new FileInputStream(zip), 0);
             JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
             return _dataOnly(jresp, JSONArray.class);
         } catch (JSONException | IOException e) {
@@ -142,7 +143,7 @@ public class RemoteMediaServer extends HttpSyncer {
     // args: local
     public String mediaSanity(int lcnt) throws UnknownHttpResponseException, MediaSyncException {
         try {
-            HttpResponse resp = super.req("mediaSanity",
+            org.apache.http.HttpResponse resp = super.req("mediaSanity",
                     super.getInputStream(Utils.jsonToString(new JSONObject().put("local", lcnt))));
             JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
             return _dataOnly(jresp, String.class);

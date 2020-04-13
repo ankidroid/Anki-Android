@@ -3,14 +3,14 @@ package com.ichi2.anki.dialogs;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
+import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
-public class ExportDialog extends DialogFragment {
+public class ExportDialog extends AnalyticsDialogFragment {
 
     public interface ExportDialogListener {
 

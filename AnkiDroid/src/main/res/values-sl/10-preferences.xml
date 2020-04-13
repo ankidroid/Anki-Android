@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Debelina črte</string>
   <string name="whiteboard_black">Črne črte</string>
   <string name="whiteboard_black_summ">Uporabi manj pomnilnika razen v nočnem načinu</string>
-  <string name="write_answers_disable">Onemogoči tipkanje v odgovoru</string>
-  <string name="write_answers_disable_summ">Onemogoči pojavitev tipkovnice na karticah s polji za vnos odgovora</string>
   <string name="use_input_tag">Vtipkaj odgovor v kartico</string>
   <string name="use_input_tag_summ">Uporabi besedilno polje v kartici za vnos odgovora</string>
-  <string name="text_selection_click">Zaobidenje z dolgim pritiskom</string>
-  <string name="text_selection_click_summ">Omogočite to, če z dolgim pritiskom ne morete izbrati besedila</string>
   <string name="dictionary">Slovar za iskanje</string>
   <string name="reset_languages">Ponastavi jezike</string>
   <string name="reset_languages_summ">Ponastavi jezikovne dodelitve (za slovarje pretvorbe besedila v govor) za vse komplete</string>
@@ -146,7 +142,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Izberite jezik</string>
   <string name="safe_display">Način varnega prikaza</string>
-  <string name="safe_display_summ">Onemogoči vse animacije in uporabi varnejši način risanja kartic. Naprave E-ink in starejše, ki uporabljajo pisave po meri, bodo morda to zahtevale.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Poravnaj na sredino</string>
   <string name="vertical_centering_summ">Navpično usredini vsebino kartic</string>
   <string name="pref_backup_max">Največje št. varnostnih kopij</string>
@@ -164,8 +160,6 @@
   <string name="time_limit_summ">XXX min.</string>
   <string name="day_offset">Začetek naslednjega dne</string>
   <string name="day_offset_summ">XXX ur po polnoči</string>
-  <string name="input_workaround">Zaobidenje vnosa</string>
-  <string name="input_workaround_summ">Zaobidenje za težave žarišča v poljih za vnos HTML. Povzroča težave na nekaterih napravah.</string>
   <string name="pref_keep_screen_on">Ohrani zaslon vklopljen</string>
   <string name="pref_keep_screen_on_summ">Onemogoči časovno omejitev zaslona</string>
   <string name="convert_fen_text">Podpora za šahovski zapis</string>

@@ -126,6 +126,7 @@
   <string name="fact_adder_intent_title">Carte AnkiDroid</string>
   <string name="card_editor_add_card">Ajouter une note</string>
   <string name="card_editor_copy_card">Copier la carte</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
   <string name="card_editor_reschedule_card">Replanifier la carte</string>
   <string name="card_editor_preview_card">Aperçu</string>
@@ -161,9 +162,9 @@
   <string name="confirm_apkg_export">Exporter la collection au format apkg ?</string>
   <string name="confirm_apkg_export_deck">Exporter « %s » au format apkg ?</string>
   <string name="export_in_progress">Export du fichier apkg en cours&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">Envoyer apkg ?</string>
+  <string name="export_successful">Le fichier « %s » a été exporté. Voulez-vous le partager à l\'aide d\'une autre app ?</string>
+  <string name="export_email_subject">AnkiDroid a exporté %s flashcards</string>
   <string name="export_email_text">
         <![CDATA[
         Salut !
@@ -172,7 +173,7 @@
         Essayez de l’ouvrir avec une des <a href="http://ankisrs.net/#download">Distributions Anki</a> disponibles et amusez-vous avec un apprentissage rapide et efficace !
         ]]>
     </string>
-  <string name="export_unsuccessful">Error exporting apkg file</string>
+  <string name="export_unsuccessful">Erreur lors de l\'export du fichier apkg</string>
   <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire « %s » et touchez « OK »</string>
   <string name="upgrade_import_no_file_found">Pas de fichier %1$s importable trouvé</string>
   <string name="study_options">Options des paquets</string>
@@ -220,11 +221,11 @@
   <string name="decks_rename_exists">Ce paquet existe déjà.</string>
   <string name="decks_rename_filtered_nosubdecks">Un paquet filtré ne peut pas avoir de sous-paquets.</string>
   <string name="filtered_deck_name">Paquet Filtré</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">N’oubliez pas d’étudier aujourd\'hui !</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d new card to review in %1$s</item>
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="one">%2$d nouvelles cartes à réviser en %1$s</item>
+    <item quantity="other">%2$d nouvelles cartes à réviser en %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Erreur lors du partage du fichier apkg</string>
 </resources>

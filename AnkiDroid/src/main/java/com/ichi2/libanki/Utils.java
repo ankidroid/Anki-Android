@@ -26,38 +26,30 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.text.Html;
+import androidx.annotation.NonNull;
 
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
-import com.ichi2.utils.LanguageUtil;
+import com.ichi2.compat.CompatHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.text.Normalizer;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,19 +64,18 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import timber.log.Timber;
 
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
+        "PMD.MethodNamingConventions","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public class Utils {
     // Used to format doubles with English's decimal separator system
     public static final Locale ENGLISH_LOCALE = new Locale("en_US");
 
     public static final int CHUNK_SIZE = 32768;
-
-    private static NumberFormat mCurrentPercentageFormat;
 
     // These are doubles on purpose because we want a rounded, not integer result later.
     private static final double TIME_MINUTE = 60.0;  // seconds
@@ -113,7 +104,7 @@ public class Utils {
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String BASE91_EXTRA_CHARS = "!#$%&()*+,-./:;<=>?@[]^_`{|}~";
 
-    public static final int FILE_COPY_BUFFER_SIZE = 2048;
+    private static final int FILE_COPY_BUFFER_SIZE = 1024 * 32;
 
     /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
     public static double now() {
@@ -136,7 +127,7 @@ public class Utils {
      * @param time_s The time to format, in seconds
      * @return The time quantity string. Something like "3 s" or "1.7 yr".
      */
-    public static String timeQuantity(Context context, int time_s) {
+    public static String timeQuantity(Context context, long time_s) {
         Resources res = context.getResources();
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
         // hard-coded. See also 01-core.xml
@@ -163,11 +154,12 @@ public class Utils {
      * @param time_s The time to format, in seconds
      * @return The formatted, localized time string. The time is always an integer.
      */
-    public static String timeSpan(Context context, int time_s) {
+    public static String timeSpan(Context context, long time_s) {
         int time_x;  // Time in unit x
         Resources res = context.getResources();
         if (Math.abs(time_s) < TIME_MINUTE ) {
-            return res.getQuantityString(R.plurals.time_span_seconds, time_s, time_s);
+            time_x = (int) time_s;
+            return res.getQuantityString(R.plurals.time_span_seconds, time_x, time_x);
         } else if (Math.abs(time_s) < TIME_HOUR) {
             time_x = (int) Math.round(time_s/TIME_MINUTE);
             return res.getQuantityString(R.plurals.time_span_minutes, time_x, time_x);
@@ -193,7 +185,7 @@ public class Utils {
      * @param time_s The time to format, in seconds
      * @return The formatted, localized time string. The time is always a float.
      */
-    public static String roundedTimeSpan(Context context, int time_s) {
+    public static String roundedTimeSpan(Context context, long time_s) {
         if (Math.abs(time_s) < TIME_DAY) {
             return context.getResources().getString(R.string.stats_overview_hours, time_s/TIME_HOUR);
         } else if (Math.abs(time_s) < TIME_MONTH) {
@@ -210,21 +202,6 @@ public class Utils {
      * ***********************************************************************************************
      */
 
-    /**
-     * @return double with percentage sign
-     */
-    public static String fmtPercentage(Double value) {
-    return fmtPercentage(value, 0);
-    }
-    public static String fmtPercentage(Double value, int point) {
-        // only retrieve the percentage format the first time
-        if (mCurrentPercentageFormat == null) {
-            mCurrentPercentageFormat = NumberFormat.getPercentInstance(LanguageUtil.getLocale());
-        }
-        return mCurrentPercentageFormat.format(value);
-    }
-
-    // Removed fmtDouble(). Was used only by other functions here. We now use getString() with localized formatting now.
 
     /**
      * HTML
@@ -271,7 +248,7 @@ public class Utils {
         Matcher htmlEntities = htmlEntitiesPattern.matcher(html);
         StringBuffer sb = new StringBuffer();
         while (htmlEntities.find()) {
-            htmlEntities.appendReplacement(sb, Html.fromHtml(htmlEntities.group()).toString());
+            htmlEntities.appendReplacement(sb, CompatHelper.getCompat().fromHtml(htmlEntities.group()).toString());
         }
         htmlEntities.appendTail(sb);
         return sb.toString();
@@ -396,7 +373,7 @@ public class Utils {
 
 
     // used in ankiweb
-    public static String base62(int num, String extra) {
+    private static String base62(int num, String extra) {
         String table = ALL_CHARACTERS + extra;
         int len = table.length();
         String buf = "";
@@ -410,7 +387,7 @@ public class Utils {
     }
 
     // all printable characters minus quotes, backslash and separators
-    public static String base91(int num) {
+    private static String base91(int num) {
         return base62(num, BASE91_EXTRA_CHARS);
     }
 
@@ -496,7 +473,7 @@ public class Utils {
     public static String checksum(String data) {
         String result = "";
         if (data != null) {
-            MessageDigest md = null;
+            MessageDigest md;
             byte[] digest = null;
             try {
                 md = MessageDigest.getInstance("SHA1");
@@ -573,11 +550,6 @@ public class Utils {
         return fileChecksum(file.getAbsolutePath());
     }
 
-    /** Replace HTML line break tags with new lines. */
-    public static String replaceLineBreak(String text) {
-        return text.replaceAll("<br(\\s*\\/*)>", "\n");
-    }
-
 
     /**
      *  Tempo files
@@ -611,7 +583,6 @@ public class Utils {
 
     public static void unzipFiles(ZipFile zipFile, String targetDirectory, String[] zipEntries,
                                   Map<String, String> zipEntryToFilenameMap) throws IOException {
-        byte[] buf = new byte[FILE_COPY_BUFFER_SIZE];
         File dir = new File(targetDirectory);
         if (!dir.exists() && !dir.mkdirs()) {
             throw new IOException("Failed to create target directory: " + targetDirectory);
@@ -619,97 +590,82 @@ public class Utils {
         if (zipEntryToFilenameMap == null) {
             zipEntryToFilenameMap = new HashMap<>();
         }
-        BufferedInputStream zis = null;
-        BufferedOutputStream bos = null;
-        try {
-            for (String requestedEntry : zipEntries) {
-                ZipEntry ze = zipFile.getEntry(requestedEntry);
-                if (ze != null) {
-                    String name = ze.getName();
-                    if (zipEntryToFilenameMap.containsKey(name)) {
-                        name = zipEntryToFilenameMap.get(name);
-                    }
-                    File destFile = new File(dir, name);
-                    if (!ze.isDirectory()) {
-                        Timber.i("uncompress %s", name);
-                        zis = new BufferedInputStream(zipFile.getInputStream(ze));
-                        bos = new BufferedOutputStream(new FileOutputStream(destFile), FILE_COPY_BUFFER_SIZE);
-                        int n;
-                        while ((n = zis.read(buf, 0, FILE_COPY_BUFFER_SIZE)) != -1) {
-                            bos.write(buf, 0, n);
-                        }
-                        bos.flush();
-                        bos.close();
-                        zis.close();
+        for (String requestedEntry : zipEntries) {
+            ZipEntry ze = zipFile.getEntry(requestedEntry);
+            if (ze != null) {
+                String name = ze.getName();
+                if (zipEntryToFilenameMap.containsKey(name)) {
+                    name = zipEntryToFilenameMap.get(name);
+                }
+                File destFile = new File(dir, name);
+                if (!isInside(destFile, dir)) {
+                    Timber.e("Refusing to decompress invalid path: %s", destFile.getCanonicalPath());
+                    throw new IOException("File is outside extraction target directory.");
+                }
+
+                if (!ze.isDirectory()) {
+                    Timber.i("uncompress %s", name);
+                    try (InputStream zis = zipFile.getInputStream(ze)) {
+                        writeToFile(zis, destFile.getAbsolutePath());
                     }
                 }
-            }
-        } finally {
-            if (bos != null) {
-                bos.close();
-            }
-            if (zis != null) {
-                zis.close();
             }
         }
     }
 
     /**
-     * Compress data.
-     * @param bytesToCompress is the byte array to compress.
-     * @return a compressed byte array.
-     * @throws java.io.IOException
+     * Checks to see if a given file path resides inside a given directory.
+     * Useful for protection against path traversal attacks prior to creating the file
+     * @param file the file with an uncertain filesystem location
+     * @param dir the directory that should contain the file
+     * @return true if the file path is inside the directory
+     * @exception IOException if there are security or filesystem issues determining the paths
      */
-    public static byte[] compress(byte[] bytesToCompress, int comp) throws IOException {
-        // Compressor with highest level of compression.
-        Deflater compressor = new Deflater(comp, true);
-        // Give the compressor the data to compress.
-        compressor.setInput(bytesToCompress);
-        compressor.finish();
-
-        // Create an expandable byte array to hold the compressed data.
-        // It is not necessary that the compressed data will be smaller than
-        // the uncompressed data.
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(bytesToCompress.length);
-
-        // Compress the data
-        byte[] buf = new byte[65536];
-        while (!compressor.finished()) {
-            bos.write(buf, 0, compressor.deflate(buf));
-        }
-
-        bos.close();
-
-        // Get the compressed data
-        return bos.toByteArray();
+    public static boolean isInside(@NonNull File file, @NonNull File dir) throws IOException {
+        return file.getCanonicalPath().startsWith(dir.getCanonicalPath());
     }
 
+
+    /**
+     * Calls {@link #writeToFileImpl(InputStream, String)} and handles IOExceptions
+     * @throws IOException Rethrows exception after a set number of retries
+     */
+    public static void writeToFile(InputStream source, String destination) throws IOException {
+        // sometimes this fails and works on retries (hardware issue?)
+        final int retries = 5;
+        int retryCnt = 0;
+        boolean success = false;
+        while (!success && retryCnt++ < retries) {
+            try {
+                writeToFileImpl(source, destination);
+                success = true;
+            } catch (IOException e) {
+                if (retryCnt == retries) {
+                    throw e;
+                } else {
+                    Timber.e("IOException while writing to file, retrying...");
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Utility method to write to a file.
      * Throws the exception, so we can report it in syncing log
-     * @throws IOException
      */
-    public static void writeToFile(InputStream source, String destination) throws IOException {
+    private static void writeToFileImpl(InputStream source, String destination) throws IOException {
         File f = new File(destination);
         try {
             Timber.d("Creating new file... = %s", destination);
             f.createNewFile();
 
             long startTimeMillis = System.currentTimeMillis();
-            OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
-
-            // Transfer bytes, from source to destination.
-            byte[] buf = new byte[CHUNK_SIZE];
-            long sizeBytes = 0;
-            int len;
-            if (source == null) {
-                Timber.e("writeToFile :: source is null!");
-            }
-            while ((len = source.read(buf)) >= 0) {
-                output.write(buf, 0, len);
-                sizeBytes += len;
-            }
+            long sizeBytes = CompatHelper.getCompat().copyFile(source, destination);
             long endTimeMillis = System.currentTimeMillis();
 
             Timber.d("Finished writeToFile!");
@@ -720,7 +676,6 @@ public class Utils {
                 speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
             }
             Timber.d("Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s", sizeKb, durationSeconds, speedKbSec);
-            output.close();
         } catch (IOException e) {
             throw new IOException(f.getName() + ": " + e.getLocalizedMessage(), e);
         }
@@ -746,18 +701,6 @@ public class Utils {
         return Date.valueOf(df.format(cal.getTime()));
     }
 
-
-    public static void printDate(String name, double date) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-        cal.setTimeInMillis((long)date * 1000);
-        Timber.d("Value of %s: %s", name, cal.getTime().toGMTString());
-    }
-
-
-    // Use DateUtil.formatElapsedTime((long) value) instead of doubleToTime.
-    // public static String doubleToTime(double value) { ...}
 
     /**
      * Indicates whether the specified action can be used as an intent. This method queries the package manager for
@@ -802,16 +745,6 @@ public class Utils {
      * @param array The input with type Long[]
      * @return The output with type long[]
      */
-    public static long[] toPrimitive(Long[] array) {
-        if (array == null) {
-            return null;
-        }
-        long[] results = new long[array.length];
-        for (int i = 0; i < array.length; i++) {
-            results[i] = array[i];
-        }
-        return results;
-    }
     public static long[] toPrimitive(Collection<Long> array) {
         if (array == null) {
             return null;
@@ -873,7 +806,7 @@ public class Utils {
             String filePath = fontsList[i].getAbsolutePath();
             String filePathExtension = splitFilename(filePath)[1];
             for (String fontExtension : FONT_FILE_EXTENSIONS) {
-                // Go through the list of allowed extensios.
+                // Go through the list of allowed extensions.
                 if (filePathExtension.equalsIgnoreCase(fontExtension)) {
                     // This looks like a font file.
                     AnkiFont font = AnkiFont.createAnkiFont(context, filePath, false);
@@ -905,12 +838,7 @@ public class Utils {
         int deckCount = 0;
         File[] deckList = null;
         if (dir.exists() && dir.isDirectory()) {
-            deckList = dir.listFiles(new FileFilter(){
-                @Override
-                public boolean accept(File pathname) {
-                    return pathname.isFile() && pathname.getName().endsWith(".apkg");
-                }
-            });
+            deckList = dir.listFiles(pathname -> pathname.isFile() && pathname.getName().endsWith(".apkg"));
             deckCount = deckList.length;
         }
         List<File> decks = new ArrayList<>();
@@ -923,33 +851,16 @@ public class Utils {
      * Simply copy a file to another location
      * @param sourceFile The source file
      * @param destFile The destination file, doesn't need to exist yet.
-     * @throws IOException
      */
     public static void copyFile(File sourceFile, File destFile) throws IOException {
-        if(!destFile.exists()) {
-            destFile.createNewFile();
-        }
-
-        FileChannel source = null;
-        FileChannel destination = null;
-
-        try {
-            source = new FileInputStream(sourceFile).getChannel();
-            destination = new FileOutputStream(destFile).getChannel();
-            destination.transferFrom(source, 0, source.size());
-        } finally {
-            if (source != null) {
-                source.close();
-            }
-            if (destination != null) {
-                destination.close();
-            }
+        try (FileInputStream source = new FileInputStream(sourceFile)) {
+            writeToFile(source, destFile.getAbsolutePath());
         }
     }
 
     /**
      * Like org.json.JSONObject except that it doesn't escape forward slashes
-     * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape chracter '/'.
+     * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape character '/'.
      * The org.json.JSONObject parser accepts both escaped and unescaped forward slashes, so we only need to worry for
      * our output, when we write to the database or syncing.
      *
@@ -963,7 +874,7 @@ public class Utils {
 
     /**
      * Like org.json.JSONArray except that it doesn't escape forward slashes
-     * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape chracter '/'.
+     * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape character '/'.
      * The org.json.JSONArray parser accepts both escaped and unescaped forward slashes, so we only need to worry for
      * our output, when we write to the database or syncing.
      *
@@ -1011,7 +922,7 @@ public class Utils {
      * @return the unescaped text
      */
     public static String unescape(String htmlText) {
-        return Html.fromHtml(htmlText).toString();
+        return CompatHelper.getCompat().fromHtml(htmlText).toString();
     }
 
 

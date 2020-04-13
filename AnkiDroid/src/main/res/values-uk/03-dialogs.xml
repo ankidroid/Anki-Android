@@ -49,6 +49,7 @@
   <plurals name="delete_deck_message">
     <item quantity="one">Видалити всі картки в %1$s? Там міститься %2$d картка.</item>
     <item quantity="few">Видалити всі картки в %1$s? Там міститься %2$d карток.</item>
+    <item quantity="many">Delete all cards in %1$s? It contains %2$d cards.</item>
     <item quantity="other">Видалити всі картки в %1$s? Там міститься %2$d карток.</item>
   </plurals>
   <string name="delete_cram_deck_message">Ви впевнені що хочете відправити всі карти з %s назад до їх початкових колод?</string>
@@ -63,6 +64,9 @@
     <item><![CDATA[AnkiDroid випущений під <a href=\"%1$s\"> ліцензією GNU GPL v3</a>, а програмний код доступний <a href=\"%2$s\"> на GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Перегляд</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Скинути поступ картки</string>
   <string name="reset_card_dialog_message">Ця картка буде переміщена у кінець черги нових карток</string>
   <string name="reset_card_dialog_acknowledge">Скинути картки</string>

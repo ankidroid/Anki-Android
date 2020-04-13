@@ -13,7 +13,7 @@ body.night_mode {
 }
 
 /* For the typed/correct answer comparison. The typePrompt and typeOff
-  classes are AnkiDroid specific, and used only for older (beforer
+  classes are AnkiDroid specific, and used only for older (before
   4.0) Android versions . typePrompt is a placeholder where the input
   box should be. typeOff is added when the user switched off entering
   the answer. */

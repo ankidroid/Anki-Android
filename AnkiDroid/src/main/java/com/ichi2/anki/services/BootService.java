@@ -1,16 +1,14 @@
 package com.ichi2.anki.services;
 
 import android.app.AlarmManager;
-import android.app.IntentService;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.receiver.NotificationReceiver;
-import com.ichi2.anki.receiver.ReminderReceiver;
 import com.ichi2.libanki.Collection;
 
 import org.json.JSONException;
@@ -18,7 +16,7 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 
-public class BootService extends IntentService {
+public class BootService extends BroadcastReceiver {
 
     /**
      * This service is also run when the app is started (from {@link com.ichi2.anki.AnkiDroidApp},
@@ -26,29 +24,26 @@ public class BootService extends IntentService {
      */
     private static boolean sWasRun = false;
 
-    public BootService() {
-        super("BootService");
-    }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public void onReceive(Context context, Intent intent) {
         if (sWasRun) {
             return;
         }
-        if (!CollectionHelper.hasStorageAccessPermission(this)) {
+        if (!CollectionHelper.hasStorageAccessPermission(context)) {
             return;
         }
 
-        scheduleDeckReminder();
-        scheduleNotification(this);
+        scheduleDeckReminder(context);
+        scheduleNotification(context);
         sWasRun = true;
     }
 
-    private void scheduleDeckReminder() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+    private void scheduleDeckReminder(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         try {
-            for (JSONObject deck : CollectionHelper.getInstance().getCol(this).getDecks().all()) {
-                Collection col = CollectionHelper.getInstance().getCol(this);
+            for (JSONObject deck : CollectionHelper.getInstance().getCol(context).getDecks().all()) {
+                Collection col = CollectionHelper.getInstance().getCol(context);
                 if (col.getDecks().isDyn(deck.getLong("id"))) {
                     continue;
                 }
@@ -60,9 +55,9 @@ public class BootService extends IntentService {
 
                     if (reminder.getBoolean("enabled")) {
                         final PendingIntent reminderIntent = PendingIntent.getBroadcast(
-                                this,
+                                context,
                                 (int) deck.getLong("id"),
-                                new Intent(this, ReminderReceiver.class).putExtra(ReminderService.EXTRA_DECK_ID,
+                                new Intent(context, ReminderService.class).putExtra(ReminderService.EXTRA_DECK_ID,
                                         deck.getLong("id")),
                                 0
                         );
@@ -87,7 +82,7 @@ public class BootService extends IntentService {
     }
 
     public static void scheduleNotification(Context context) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         if (Integer.parseInt(sp.getString("minimumCardsDueForNotification", "1000001")) <= 1000000) {
             return;
@@ -98,7 +93,7 @@ public class BootService extends IntentService {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         final PendingIntent notificationIntent =
-                PendingIntent.getBroadcast(context, 0, new Intent(context, NotificationReceiver.class), 0);
+                PendingIntent.getBroadcast(context, 0, new Intent(context, NotificationService.class), 0);
         alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.getTimeInMillis(),

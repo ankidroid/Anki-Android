@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Šířka tahu</string>
   <string name="whiteboard_black">Černé tahy</string>
   <string name="whiteboard_black_summ">Využívá méně paměti, pokud je v nočním režimu</string>
-  <string name="write_answers_disable">Zakázat psát odpovědi</string>
-  <string name="write_answers_disable_summ">Zabránění zobrazení klávesnice na kartách, které obsahují pole pro zapsání odpovědi</string>
   <string name="use_input_tag">Napište odpověď do karty</string>
   <string name="use_input_tag_summ">Odpověď vložte do textového pole na kartě</string>
-  <string name="text_selection_click">Řešení dlouhého stisku</string>
-  <string name="text_selection_click_summ">Povolte, pokud nejste schopni spustit výběr textu přes dlouhý klik</string>
   <string name="dictionary">Slovník</string>
   <string name="reset_languages">Obnovit jazyky</string>
   <string name="reset_languages_summ">Vynulovat přiřazení jazyka (pro řevod textu na řeč a slovníky) pro všechny balíčky</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Vyberte jazyk</string>
   <string name="safe_display">Režim bezpečného zobrazení</string>
-  <string name="safe_display_summ">Zakázat všechny animace a použít bezpečnější metodu pro vykreslení karty. E-ink a starší zařízení pro použití vlastních písem toto může vyžadovat.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Zarovnání na střed</string>
   <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
   <string name="pref_backup_max">Maximální počet záloh</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Začátek příštího dne</string>
   <string name="day_offset_summ">XXX hodin po půlnoci</string>
-  <string name="input_workaround">Řešení zadávání</string>
-  <string name="input_workaround_summ">Řešení problémů s HTML vstupními poli. Způsobuje problémy na některých zařízeních.</string>
   <string name="pref_keep_screen_on">Nevypínat obrazovku</string>
   <string name="pref_keep_screen_on_summ">Nepovolit zhasnutí displeje</string>
   <string name="convert_fen_text">Podpora šachovnicového zápisu</string>
@@ -198,6 +192,7 @@
   <plurals name="deck_conf_group_summ">
     <item quantity="one">%1$s\n%2$d balíček používá tuto skupinu</item>
     <item quantity="few">%1$s\n%2$d balíčky používají tuto skupinu</item>
+    <item quantity="many">%1$s\n%2$d decks use this group</item>
     <item quantity="other">%1$s\n%2$d balíčků používá tuto skupinu</item>
   </plurals>
   <string name="deck_conf_new_cards">Nové karty</string>
@@ -246,6 +241,7 @@
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">%s podřízený balíček bude používat tuto skupinu</item>
     <item quantity="few">%s podřízené balíčky budou používat tuto skupinu</item>
+    <item quantity="many">%s subdecks will use this group</item>
     <item quantity="other">%s podřízených balíčků budou používat tuto skupinu</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>

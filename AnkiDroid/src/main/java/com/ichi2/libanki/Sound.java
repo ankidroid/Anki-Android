@@ -17,9 +17,9 @@
 
 package com.ichi2.libanki;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaMetadataRetriever;
@@ -43,7 +43,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,6 +51,7 @@ import timber.log.Timber;
 /**
  * Class used to parse, load and play sound files on AnkiDroid.
  */
+@SuppressWarnings({"PMD.NPathComplexity","PMD.CollapsibleIfStatements"})
 public class Sound {
 
     /**
@@ -105,23 +105,13 @@ public class Sound {
     /**
      * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
      */
-    private static AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
-        public void onAudioFocusChange(int focusChange) {
-        }
+    private static AudioManager.OnAudioFocusChangeListener afChangeListener = focusChange -> {
     };
 
 
     // Clears current sound paths; call before parseSounds() calls
     public void resetSounds() {
         mSoundPaths.clear();
-    }
-
-    /**
-     * resetSounds removes lists of sounds
-     * @param which -- One of the subset flags, such as Sound.SOUNDS_QUESTION
-     */
-    public void resetSounds(int which) {
-        mSoundPaths.remove(which);
     }
 
 
@@ -140,7 +130,7 @@ public class Sound {
         while (matcher.find()) {
             // Create appropriate list if needed; list must not be empty so long as code does no check
             if (!mSoundPaths.containsKey(qa)) {
-                mSoundPaths.put(qa, new ArrayList<String>());
+                mSoundPaths.put(qa, new ArrayList<>());
             }
 
             // Get the sound file name
@@ -157,7 +147,7 @@ public class Sound {
      * together, which even when configured as supported may not be instigated
      * @return True if a non-null list was created, or false otherwise
      */
-    public Boolean makeQuestionAnswerList() {
+    private Boolean makeQuestionAnswerList() {
         // if combined list already exists, don't recreate
         if (mSoundPaths.containsKey(Sound.SOUNDS_QUESTION_AND_ANSWER)) {
             return false; // combined list already exists
@@ -166,7 +156,7 @@ public class Sound {
         // make combined list only if necessary to avoid an empty combined list
         if (mSoundPaths.containsKey(Sound.SOUNDS_QUESTION) || mSoundPaths.containsKey(Sound.SOUNDS_ANSWER)) {
             // some list exists to place into combined list
-            mSoundPaths.put(Sound.SOUNDS_QUESTION_AND_ANSWER, new ArrayList<String>());
+            mSoundPaths.put(Sound.SOUNDS_QUESTION_AND_ANSWER, new ArrayList<>());
         } else { // no need to make list
             return false;
         }
@@ -219,9 +209,9 @@ public class Sound {
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
             // The <span> around the button (SVG or PNG image) is needed to make the vertical alignment work.
-            stringBuilder.append("<a class='replaybutton' href=\"playsound:" + soundPath + "\">"
-                    + "<span>"+ button
-                    + "</span></a>");
+            stringBuilder.append("<a class='replaybutton' href=\"playsound:").append(soundPath).append("\">")
+                    .append("<span>").append(button)
+                    .append("</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             Timber.d("Content left = %s", contentLeft);
         }
@@ -273,8 +263,6 @@ public class Sound {
 
     /**
      * Plays the given sound or video and sets playAllListener if available on media player to start next media
-     * @param soundPath
-     * @param playAllListener
      */
     public void playSound(String soundPath, OnCompletionListener playAllListener) {
         playSound(soundPath, playAllListener, null);
@@ -283,11 +271,8 @@ public class Sound {
     /**
      * Plays the given sound or video and sets playAllListener if available on media player to start next media.
      * If videoView is null and the media is a video, then a request is sent to start the VideoPlayer Activity
-     * @param soundPath
-     * @param playAllListener
-     * @param videoView
      */
-    @SuppressLint("NewApi")
+    @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements","deprecation"}) // audio API deprecation tracked on github as #5022
     public void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView) {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
         Uri soundUri = Uri.parse(soundPath);
@@ -302,7 +287,7 @@ public class Sound {
             boolean isVideo = Arrays.asList(VIDEO_WHITELIST).contains(extension);
             if (!isVideo) {
                 final String guessedType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-                isVideo = isVideo || (guessedType != null && guessedType.startsWith("video/"));
+                isVideo = (guessedType != null) && guessedType.startsWith("video/");
             }
             // Also check that there is a video thumbnail, as some formats like mp4 can be audio only
             isVideo = isVideo &&
@@ -329,22 +314,12 @@ public class Sound {
                 // Provide a VideoView to the MediaPlayer if valid video file
                 if (isVideo && videoView != null) {
                     mMediaPlayer.setDisplay(videoView.getHolder());
-                    mMediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
-                        @Override
-                        public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-                            configureVideo(videoView, width, height);
-                        }
-                    });
+                    mMediaPlayer.setOnVideoSizeChangedListener((mp, width, height) -> configureVideo(videoView, width, height));
                 }
                 // Setup the MediaPlayer
                 mMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
                 mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        mMediaPlayer.start();
-                    }
-                });
+                mMediaPlayer.setOnPreparedListener(mp -> mMediaPlayer.start());
                 if (playAllListener != null) {
                     mMediaPlayer.setOnCompletionListener(playAllListener);
                 }
@@ -365,8 +340,10 @@ public class Sound {
         Display display = wm.getDefaultDisplay();
         // adjust the size of the video so it fits on the screen
         float videoProportion = (float) videoWidth / (float) videoHeight;
-        int screenWidth = display.getWidth();
-        int screenHeight = display.getHeight();
+        Point point = new Point();
+        display.getSize(point);
+        int screenWidth = point.x;
+        int screenHeight = point.y;
         float screenProportion = (float) screenWidth / (float) screenHeight;
         android.view.ViewGroup.LayoutParams lp = videoView.getLayoutParams();
 
@@ -421,6 +398,7 @@ public class Sound {
     /**
      * Releases the sound.
      */
+    @SuppressWarnings("deprecation") // Tracked on github as #5022
     private void releaseSound() {
         if (mMediaPlayer != null) {
             mMediaPlayer.release();
@@ -466,7 +444,6 @@ public class Sound {
 
     /**
      * Set the context for the calling activity (necessary for playing videos)
-     * @param activityRef
      */
     public void setContext(WeakReference<Activity> activityRef) {
         mCallingActivity = activityRef;

@@ -126,6 +126,7 @@
   <string name="fact_adder_intent_title">AnkiDroid карта</string>
   <string name="card_editor_add_card">Нова бележка</string>
   <string name="card_editor_copy_card">копиране на карта</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Начално състояние на напредъка</string>
   <string name="card_editor_reschedule_card">Промяна графика на картите</string>
   <string name="card_editor_preview_card">Преглед</string>

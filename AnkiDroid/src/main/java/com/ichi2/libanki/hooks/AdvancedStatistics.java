@@ -40,7 +40,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
-import io.requery.android.database.sqlite.SQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 /**
@@ -96,6 +96,9 @@ import timber.log.Timber;
  * [ReviewOutcome]++-1>[Card]
  * [AdvancedStatistics]creates -.-> [StatsMetaInfo]
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.ExcessiveClassLength","PMD.ExcessiveMethodLength",
+                    "PMD.AvoidReassigningParameters","PMD.FieldDeclarationsShouldBeAtStartOfClass","PMD.SwitchStatementsShouldHaveDefault",
+                    "PMD.NPathComplexity","PMD.OneDeclarationPerLine","PMD.SwitchStmtsShouldHaveDefault"})
 public class AdvancedStatistics extends Hook  {
 
     private static final int TIME = 0;
@@ -568,12 +571,12 @@ public class AdvancedStatistics extends Hook  {
 
     private class CardIterator {
 
-        Cursor cur;
+        private Cursor cur;
 
         private final int today;
         private Deck deck;
 
-        public CardIterator(SQLiteDatabase db, int today, Deck deck) {
+        public CardIterator(SupportSQLiteDatabase db, int today, Deck deck) {
 
             this.today = today;
             this.deck = deck;
@@ -586,7 +589,7 @@ public class AdvancedStatistics extends Hook  {
                     "WHERE did IN (" + did + ") " +
                     "order by id;";
             Timber.d("Forecast query: %s", query);
-            cur = db.rawQuery(query, null);
+            cur = db.query(query, null);
 
         }
 
@@ -625,7 +628,7 @@ public class AdvancedStatistics extends Hook  {
 
         private final Random random;
 
-        private final SQLiteDatabase db;
+        private final SupportSQLiteDatabase db;
         private double[][] probabilities;
         private double[][] probabilitiesCumulative;
 
@@ -668,7 +671,7 @@ public class AdvancedStatistics extends Hook  {
                 queryBaseYoungMature
                         + "where type=1 and lastIvl >= 21;";
 
-        public EaseClassifier(SQLiteDatabase db) {
+        public EaseClassifier(SupportSQLiteDatabase db) {
             this.db = db;
 
             singleReviewOutcome = new ReviewOutcome(null, 0);
@@ -737,7 +740,7 @@ public class AdvancedStatistics extends Hook  {
             int n = prior[REVIEW_OUTCOME_REPEAT] + prior[REVIEW_OUTCOME_HARD] + prior[REVIEW_OUTCOME_GOOD] + prior[REVIEW_OUTCOME_EASY];
 
             try {
-                cur = db.rawQuery(queryNewEaseCountForCurrentEase, null);
+                cur = db.query(queryNewEaseCountForCurrentEase, null);
                 cur.moveToNext();
 
                 freqs[REVIEW_OUTCOME_REPEAT]    += cur.getInt(REVIEW_OUTCOME_REPEAT_PLUS_1);        //Repeat
@@ -841,7 +844,7 @@ public class AdvancedStatistics extends Hook  {
 
         private Map<Long, Integer> nLearnedPerDeckId = new HashMap<Long, Integer>();
 
-        public TodayStats(SQLiteDatabase db, long dayStartCutoff) {
+        public TodayStats(SupportSQLiteDatabase db, long dayStartCutoff) {
 
             Cursor cur = null;
             String query = "select cards.did, "+
@@ -851,7 +854,7 @@ public class AdvancedStatistics extends Hook  {
             Timber.d("AdvancedStatistics.TodayStats query: %s", query);
 
             try {
-                cur = db.rawQuery(query, null);
+                cur = db.query(query, null);
 
                 while(cur.moveToNext()) {
                     nLearnedPerDeckId.put(cur.getLong(0), cur.getInt(1));
@@ -910,7 +913,7 @@ public class AdvancedStatistics extends Hook  {
      */
     private class ReviewSimulator {
 
-        private final SQLiteDatabase db;
+        private final SupportSQLiteDatabase db;
         private final EaseClassifier classifier;
 
         //TODO: also exists in Review
@@ -921,7 +924,7 @@ public class AdvancedStatistics extends Hook  {
 
         private final NewCardSimulator newCardSimulator = new NewCardSimulator();
 
-        public ReviewSimulator(SQLiteDatabase db, EaseClassifier classifier, int nTimeBins, int timeBinLength) {
+        public ReviewSimulator(SupportSQLiteDatabase db, EaseClassifier classifier, int nTimeBins, int timeBinLength) {
             this.db = db;
             this.classifier = classifier;
 

@@ -31,8 +31,9 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+@SuppressWarnings({"PMD.AvoidReassigningParameters","PMD.AssignmentToNonFinalStatic"})
 public class Hooks {
-    public static Hooks sInstance;
+    private static Hooks sInstance;
     private static Map<String, List<Hook>> hooks;
 
     public static synchronized Hooks getInstance(Context context) {

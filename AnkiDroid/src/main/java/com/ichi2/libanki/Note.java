@@ -28,10 +28,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
+import timber.log.Timber;
 
+
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
 public class Note implements Cloneable {
 
     private Collection mCol;
@@ -88,10 +90,11 @@ public class Note implements Cloneable {
 
 
     public void load() {
+        Timber.d("load()");
         Cursor cursor = null;
         try {
             cursor = mCol.getDb().getDatabase()
-                    .rawQuery("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null);
+                    .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
                 throw new RuntimeException("Notes.load(): No result from query for note " + mId);
             }
@@ -111,6 +114,10 @@ public class Note implements Cloneable {
                 cursor.close();
             }
         }
+    }
+
+    public void reloadModel() {
+        mModel = mCol.getModels().get(mMid);
     }
 
 
@@ -158,7 +165,7 @@ public class Note implements Cloneable {
         Cursor cur = null;
         try {
             cur = mCol.getDb().getDatabase()
-                    .rawQuery("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null);
+                    .query("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null);
             while (cur.moveToNext()) {
                 cards.add(mCol.getCard(cur.getLong(0)));
             }
@@ -371,5 +378,20 @@ public class Note implements Cloneable {
 
     public List<String> getTags() {
         return mTags;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Note note = (Note) o;
+
+        return mId == note.mId;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (mId ^ (mId >>> 32));
     }
 }

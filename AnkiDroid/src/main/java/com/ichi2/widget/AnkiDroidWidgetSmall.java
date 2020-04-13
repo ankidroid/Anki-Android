@@ -32,6 +32,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.anki.analytics.UsageAnalytics;
 
 import timber.log.Timber;
 
@@ -55,6 +56,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         Timber.d("SmallWidget: Widget enabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", true).commit();
+        UsageAnalytics.sendAnalyticsEvent(this.getClass().getSimpleName(), "enabled");
     }
 
 
@@ -64,6 +66,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         Timber.d("SmallWidget: Widget disabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", false).commit();
+        UsageAnalytics.sendAnalyticsEvent(this.getClass().getSimpleName(), "disabled");
     }
 
     @Override
@@ -83,8 +86,13 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         /** The cached estimated reviewing time. */
         private int eta;
 
+        public void doUpdate(Context context) {
+            AppWidgetManager.getInstance(context)
+                    .updateAppWidget(new ComponentName(context, AnkiDroidWidgetSmall.class), buildUpdate(context, true));
+        }
 
         @Override
+        @Deprecated
         public void onStart(Intent intent, int startId) {
             Timber.i("SmallWidget: OnStart");
 
@@ -149,14 +157,14 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                         updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);
                         updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
                         updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
-                        updateViews.setContentDescription(R.id.widget_due, getResources().getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount));
+                        updateViews.setContentDescription(R.id.widget_due, context.getResources().getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount));
                     }
                     if (eta <= 0 || dueCardsCount <= 0) {
                         updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);
                     } else {
                         updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE);
                         updateViews.setTextViewText(R.id.widget_eta, Integer.toString(eta));
-                        updateViews.setContentDescription(R.id.widget_eta, getResources().getQuantityString(R.plurals.widget_eta, eta, eta));
+                        updateViews.setContentDescription(R.id.widget_eta, context.getResources().getQuantityString(R.plurals.widget_eta, eta, eta));
                     }
                 }
             }

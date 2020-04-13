@@ -128,7 +128,7 @@ public final class AddContentApi {
      * @param deckId id for the deck the cards should be stored in (use #DEFAULT_DECK_ID for default deck)
      * @param fieldsList List of fields arrays (one per note). Array lengths should be same as number of fields in model
      * @param tagsList List of tags (one per note) (may be null)
-     * @return The number of notes added (<0 means there was a problem)
+     * @return The number of notes added (&lt;0 means there was a problem)
      */
     public int addNotes(long modelId, long deckId, List<String[]> fieldsList, List<Set<String>> tagsList) {
         if (tagsList != null && fieldsList.size() != tagsList.size()) {
@@ -180,7 +180,7 @@ public final class AddContentApi {
     /**
      * Get the number of notes that exist for the specified model ID
      * @param mid id of the model to be used
-     * @return number of notes that exist with that model ID
+     * @return number of notes that exist with that model ID or -1 if there was a problem
      */
     public int getNoteCount(long mid) {
         Cursor cursor = getCompat().queryNotes(mid);
@@ -219,7 +219,7 @@ public final class AddContentApi {
     /**
      * Get the contents of a note with known ID
      * @param noteId the ID of the note to find
-     * @return object containing the contents of note with noteID
+     * @return object containing the contents of note with noteID or null if there was a problem
      */
     public NoteInfo getNote(long noteId) {
         Uri noteUri = Uri.withAppendedPath(Note.CONTENT_URI, Long.toString(noteId));
@@ -256,7 +256,7 @@ public final class AddContentApi {
      * Get the html that would be generated for the specified note type and field list
      * @param flds array of field values for the note. Length must be the same as num. fields in mid.
      * @param mid id for the note type to be used
-     * @return list of front & back pairs for each card which contain the card HTML, or null if there was a problem
+     * @return list of front &amp; back pairs for each card which contain the card HTML, or null if there was a problem
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
     public Map<String, Map<String, String>> previewNewNote(long mid, String[] flds) {
@@ -304,7 +304,7 @@ public final class AddContentApi {
 
     /**
      * Insert a new basic front/back model with two fields and TWO cards
-     * The first card goes from front->back, and the second goes from back->front
+     * The first card goes from front-&gt;back, and the second goes from back-&gt;pront
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
@@ -360,7 +360,7 @@ public final class AddContentApi {
 
     /**
      * Get the ID for the note type / model which is currently in use
-     * @return id for current model, or <0 if there was a problem
+     * @return id for current model, or &lt;0 if there was a problem
      */
     public long getCurrentModelId() {
         // Get the current model

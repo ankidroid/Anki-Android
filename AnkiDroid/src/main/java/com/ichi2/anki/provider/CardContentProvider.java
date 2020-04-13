@@ -28,10 +28,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -60,7 +61,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import io.requery.android.database.sqlite.SQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
@@ -223,7 +224,8 @@ public class CardContentProvider extends ContentProvider {
             case NOTES_V2: {
                 /* Search for notes using direct SQL query */
                 String[] proj = sanitizeNoteProjection(projection);
-                return col.getDb().getDatabase().query("notes", proj, selection, selectionArgs, null, null, order);
+                String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, selection, null, null, order, null);
+                return col.getDb().getDatabase().query(sql, selectionArgs);
             }
             case NOTES: {
                 /* Search for notes using the libanki browser syntax */
@@ -232,7 +234,8 @@ public class CardContentProvider extends ContentProvider {
                 List<Long> noteIds = col.findNotes(query);
                 if ((noteIds != null) && (!noteIds.isEmpty())) {
                     String sel = String.format("id in (%s)", TextUtils.join(",", noteIds));
-                    return col.getDb().getDatabase().query("notes", proj, sel, null, null, null, order);
+                    String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, sel, null, null, order, null);
+                    return col.getDb().getDatabase().query(sql);
                 } else {
                     return null;
                 }
@@ -241,7 +244,8 @@ public class CardContentProvider extends ContentProvider {
                 /* Direct access note with specific ID*/
                 String noteId = uri.getPathSegments().get(1);
                 String[] proj = sanitizeNoteProjection(projection);
-                return col.getDb().getDatabase().query("notes", proj, "id=?", new String[]{noteId}, null, null, order);
+                String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, "id=?", null, null, order, null);
+                return col.getDb().getDatabase().query(sql, new String[]{noteId});
             }
 
             case NOTES_ID_CARDS: {
@@ -618,6 +622,8 @@ public class CardContentProvider extends ContentProvider {
                 long noteID = -1;
                 int ease = -1;
                 long timeTaken = -1;
+                int bury = -1;
+                int suspend = -1;
                 for (Map.Entry<String, Object> entry : valueSet) {
                     String key = entry.getKey();
 
@@ -629,12 +635,24 @@ public class CardContentProvider extends ContentProvider {
                         ease = values.getAsInteger(key);
                     }else if (key.equals(FlashCardsContract.ReviewInfo.TIME_TAKEN)) {
                         timeTaken = values.getAsLong(key);
+                    } else if (key.equals(FlashCardsContract.ReviewInfo.BURY)) {
+                        bury = values.getAsInteger(key);
+                    } else if (key.equals(FlashCardsContract.ReviewInfo.SUSPEND)) {
+                        suspend = values.getAsInteger(key);
                     }
                 }
                 if (cardOrd != -1 && noteID != -1) {
                     Card cardToAnswer = getCard(noteID, cardOrd, col);
                     if(cardToAnswer != null) {
-                        answerCard(col, col.getSched(), cardToAnswer, ease, timeTaken);
+                        if( bury == 1 ) {
+                            // bury card
+                            buryOrSuspendCard(col, col.getSched(), cardToAnswer, true);
+                        } else if (suspend == 1) {
+                            // suspend card
+                            buryOrSuspendCard(col, col.getSched(), cardToAnswer, false);
+                        } else {
+                            answerCard(col, col.getSched(), cardToAnswer, ease, timeTaken);
+                        }
                         updated++;
                     }else{
                         Timber.e("Requested card with noteId %d and cardOrd %d was not found. Either the provided " +
@@ -751,7 +769,7 @@ public class CardContentProvider extends ContentProvider {
         JSONObject model = null;
 
         col.getDecks().flush(); // is it okay to move this outside the for-loop? Is it needed at all?
-        SQLiteDatabase sqldb = col.getDb().getDatabase();
+        SupportSQLiteDatabase sqldb = col.getDb().getDatabase();
         try {
             int result = 0;
             sqldb.beginTransaction();
@@ -960,7 +978,7 @@ public class CardContentProvider extends ContentProvider {
                     col.save();
                     return ContentUris.withAppendedId(uri, t.getInt("ord"));
                 } catch (ConfirmModSchemaException e) {
-                    throw new IllegalArgumentException("Unable to add template", e);
+                    throw new IllegalArgumentException("Unable to add template without user requesting/accepting full-sync", e);
                 } catch (JSONException e) {
                     throw new IllegalArgumentException("Unable to get ord from new template", e);
                 }
@@ -1167,6 +1185,32 @@ public class CardContentProvider extends ContentProvider {
         } catch (RuntimeException e) {
             Timber.e(e, "answerCard - RuntimeException on answering card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
+            return;
+        }
+    }
+
+
+    private void buryOrSuspendCard(Collection col, Sched sched, Card card, boolean bury) {
+        try {
+            DB db = col.getDb();
+            db.getDatabase().beginTransaction();
+            try {
+                if (card != null) {
+                    if(bury) {
+                        // bury
+                        sched.buryCards(new long[] {card.getId()});
+                    } else {
+                        // suspend
+                        sched.suspendCards(new long[] {card.getId()});
+                    }
+                }
+                db.getDatabase().setTransactionSuccessful();
+            } finally {
+                db.getDatabase().endTransaction();
+            }
+        } catch (RuntimeException e) {
+            Timber.e(e, "buryOrSuspendCard - RuntimeException on burying or suspending card");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundBurySuspendCard");
             return;
         }
     }

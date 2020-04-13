@@ -37,29 +37,29 @@
 <resources>
   <string-array name="error_reporting_choice_labels">
     <item>Στείλε πάντα αναφορά</item>
-    <item>Μη στέλνεις αναφορά</item>
-    <item>Ρώτα με</item>
+    <item>Μη στέλνεις ποτέ αναφορά</item>
+    <item>Ρωτήστε με</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Καμία ενέργεια</item>
     <item>Εμφάνιση απάντησης</item>
-    <item>Απάντησε κουμπί 1</item>
-    <item>Απάντησε κουμπί 2</item>
-    <item>Απάντησε κουμπί 3</item>
-    <item>Απάντησε κουμπί 4</item>
-    <item>Απάντησε την προτεινόμενη (πράσινη)</item>
+    <item>Κουμπί απάντησης 1</item>
+    <item>Κουμπί απάντησης 2</item>
+    <item>Κουμπί απάντησης 3</item>
+    <item>Κουμπί απάντησης 4</item>
+    <item>Προτεινόμεμη απάμτηση (πράσινη)</item>
     <item>Απάντηση καλύτερη από την προτεινόμενη</item>
     <item>Αναίρεση</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Επεξεργασία σημείωσης</item>
+    <item>Μαρκάρισμα σημείωσης</item>
     <item>Αναζήτηση έκφρασης</item>
-    <item>Κρύψιμο κάρτας</item>
+    <item>Θάψιμο κάρτας</item>
     <item>Αναστολή κάρτας</item>
-    <item>Delete note</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Διαγραφή σημείωσης</item>
+    <item>Αναπαραγωγή πολυμέσων</item>
+    <item>Ματαίωση μάθησης</item>
+    <item>Απόκρυψης σημείωσης</item>
+    <item>Αναστολής σημείωσης</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Αναστολή κάρτας</item>
@@ -81,24 +81,24 @@
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Χρήση προσωρινής τράπουλας</item>
+    <item>Απόφαση κατά τύπο σημείωσης</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Ανάμειξη νέων καρτών και επαναλήψεων</item>
+    <item>Οι νέες κάρτες μετά από τις επαναλήψεις</item>
+    <item>Οι νέες κάρτες πριν τις επαναλήψεις</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Όταν δε συγκεκριμενοποιείται γραμματοσειρά στις κάρτες</item>
+    <item>Πάντα</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>Φωτεινό</item>
+    <item>Απλό</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>Μαύρο</item>
+    <item>Σκοτεινό</item>
   </string-array>
 </resources>

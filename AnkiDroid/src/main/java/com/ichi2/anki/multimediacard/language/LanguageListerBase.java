@@ -21,7 +21,6 @@ package com.ichi2.anki.multimediacard.language;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -32,7 +31,7 @@ import java.util.HashMap;
  */
 public class LanguageListerBase {
 
-    protected HashMap<String, String> mLanguageMap;
+    private HashMap<String, String> mLanguageMap;
 
 
     public LanguageListerBase() {
@@ -59,14 +58,8 @@ public class LanguageListerBase {
 
 
     public ArrayList<String> getLanguages() {
-        ArrayList<String> res = new ArrayList<>();
-        res.addAll(mLanguageMap.keySet());
-        Collections.sort(res, new Comparator<String>() {
-            @Override
-            public int compare(String text1, String text2) {
-                return text1.compareToIgnoreCase(text2);
-            }
-        });
+        ArrayList<String> res = new ArrayList<>(mLanguageMap.keySet());
+        Collections.sort(res, String::compareToIgnoreCase);
         return res;
     }
 

@@ -17,48 +17,63 @@ package com.wildplot.android.parsing;
 
 import com.wildplot.android.parsing.AtomTypes.*;
 
-public class Atom implements TreeElement{
+public class Atom implements TreeElement {
     private TopLevelParser parser;
-    public static enum AtomType {VARIABLE, NUMBER, EXP_IN_BRACKETS, FUNCTION_MATH, FUNCTION_X, FUNCTION_X_Y, INVALID};
+
+
+
+    public enum AtomType {VARIABLE, NUMBER, EXP_IN_BRACKETS, FUNCTION_MATH, FUNCTION_X, FUNCTION_X_Y, INVALID}
+
+
+
     private AtomType atomType = AtomType.INVALID;
     private TreeElement atomObject;
     private Expression expression;
 
-    public Atom(String atomString, TopLevelParser parser){
+
+    public Atom(String atomString, TopLevelParser parser) {
         this.parser = parser;
 
-        if(!TopLevelParser.stringHasValidBrackets(atomString)){
+        if (!TopLevelParser.stringHasValidBrackets(atomString)) {
             this.atomType = AtomType.INVALID;
             return;
         }
 
         boolean isValid = initAsExpInBrackets(atomString);
-        if(!isValid)
+        if (!isValid) {
             isValid = initAsFunctionMath(atomString);
-        if(!isValid)
+        }
+        if (!isValid) {
             isValid = initAsFunctionX(atomString);
-        if(!isValid)
+        }
+        if (!isValid) {
             isValid = initAsFunctionXY(atomString);
-        if(!isValid)
+        }
+        if (!isValid) {
             isValid = initAsNumber(atomString);
-        if(!isValid)
+        }
+        if (!isValid) {
             isValid = initAsXVariable(atomString);
-        if(!isValid)
+        }
+        if (!isValid) {
             isValid = initAsYVariable(atomString);
-        if(!isValid)
+        }
+        if (!isValid) {
             isValid = initAsVariable(atomString);
-        if(!isValid)
+        }
+        if (!isValid) {
             this.atomType = AtomType.INVALID;
+        }
 
     }
 
 
-    private boolean initAsExpInBrackets(String atomString){
-        if(atomString.length() > 0 && atomString.charAt(0) == '(' && atomString.charAt(atomString.length()-1) == ')'){
-            String expressionString = atomString.substring(1, atomString.length()-1);
+    private boolean initAsExpInBrackets(String atomString) {
+        if (atomString.length() > 0 && atomString.charAt(0) == '(' && atomString.charAt(atomString.length() - 1) == ')') {
+            String expressionString = atomString.substring(1, atomString.length() - 1);
             Expression expressionInBrackets = new Expression(expressionString, parser);
             boolean isValidExpressionInBrackets = expressionInBrackets.getExpressionType() != Expression.ExpressionType.INVALID;
-            if(isValidExpressionInBrackets){
+            if (isValidExpressionInBrackets) {
                 this.expression = expressionInBrackets;
                 this.atomType = AtomType.EXP_IN_BRACKETS;
                 return true;
@@ -68,10 +83,11 @@ public class Atom implements TreeElement{
         return false;
     }
 
-    private boolean initAsFunctionMath(String atomString){
+
+    private boolean initAsFunctionMath(String atomString) {
         MathFunctionAtom mathFunctionAtom = new MathFunctionAtom(atomString, parser);
         boolean isValidMathFunction = mathFunctionAtom.getMathType() != MathFunctionAtom.MathType.INVALID;
-        if(isValidMathFunction){
+        if (isValidMathFunction) {
             this.atomType = AtomType.FUNCTION_MATH;
             this.atomObject = mathFunctionAtom;
             return true;
@@ -80,10 +96,11 @@ public class Atom implements TreeElement{
         return false;
     }
 
-    private boolean initAsFunctionX(String atomString){
+
+    private boolean initAsFunctionX(String atomString) {
         FunctionXAtom functionXAtom = new FunctionXAtom(atomString, parser);
         boolean isValidFunctionXAtom = functionXAtom.getAtomType() != AtomType.INVALID;
-        if(isValidFunctionXAtom){
+        if (isValidFunctionXAtom) {
             this.atomType = AtomType.FUNCTION_X;
             this.atomObject = functionXAtom;
             return true;
@@ -92,10 +109,11 @@ public class Atom implements TreeElement{
         return false;
     }
 
-    private boolean initAsFunctionXY(String atomString){
+
+    private boolean initAsFunctionXY(String atomString) {
         FunctionXYAtom functionXYAtom = new FunctionXYAtom(atomString, parser);
         boolean isValidFunctionXYAtom = functionXYAtom.getAtomType() != AtomType.INVALID;
-        if(isValidFunctionXYAtom){
+        if (isValidFunctionXYAtom) {
             this.atomType = AtomType.FUNCTION_X_Y;
             this.atomObject = functionXYAtom;
             return true;
@@ -104,10 +122,11 @@ public class Atom implements TreeElement{
         return false;
     }
 
-    private boolean initAsNumber(String atomString){
+
+    private boolean initAsNumber(String atomString) {
         NumberAtom numberAtom = new NumberAtom(atomString);
         boolean isValidNumberAtom = numberAtom.getAtomType() != AtomType.INVALID;
-        if(isValidNumberAtom){
+        if (isValidNumberAtom) {
             this.atomType = numberAtom.getAtomType();
             this.atomObject = numberAtom;
             return true;
@@ -115,8 +134,9 @@ public class Atom implements TreeElement{
         return false;
     }
 
-    private boolean initAsXVariable(String atomString){
-        if(atomString.equals(parser.getxName())){
+
+    private boolean initAsXVariable(String atomString) {
+        if (atomString.equals(parser.getxName())) {
             this.atomType = AtomType.VARIABLE;
             this.atomObject = new XVariableAtom(parser);
             return true;
@@ -125,8 +145,9 @@ public class Atom implements TreeElement{
         return false;
     }
 
-    private boolean initAsYVariable(String atomString){
-        if(atomString.equals(parser.getyName())){
+
+    private boolean initAsYVariable(String atomString) {
+        if (atomString.equals(parser.getyName())) {
             this.atomType = AtomType.VARIABLE;
             this.atomObject = new YVariableAtom(parser);
             return true;
@@ -135,10 +156,11 @@ public class Atom implements TreeElement{
         return false;
     }
 
-    private boolean initAsVariable(String atomString){
+
+    private boolean initAsVariable(String atomString) {
         VariableAtom variableAtom = new VariableAtom(atomString, parser);
         boolean isValidVariableAtom = variableAtom.getAtomType() != AtomType.INVALID;
-        if (isValidVariableAtom){
+        if (isValidVariableAtom) {
             this.atomType = variableAtom.getAtomType();
             this.atomObject = variableAtom;
             return true;
@@ -146,11 +168,13 @@ public class Atom implements TreeElement{
         return false;
     }
 
+
     public AtomType getAtomType() {
         return atomType;
     }
 
-    public double getValue() throws ExpressionFormatException{
+
+    public double getValue() throws ExpressionFormatException {
         switch (atomType) {
             case EXP_IN_BRACKETS:
                 return expression.getValue();
@@ -166,8 +190,9 @@ public class Atom implements TreeElement{
         }
     }
 
+
     @Override
-    public boolean isVariable() throws ExpressionFormatException{
+    public boolean isVariable() throws ExpressionFormatException {
         switch (atomType) {
             case EXP_IN_BRACKETS:
                 return expression.isVariable();

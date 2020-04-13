@@ -25,8 +25,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.view.Gravity;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -57,9 +55,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     private static final int REQUEST_CODE_TRANSLATE_GLOSBE = 101;
     private static final int REQUEST_CODE_PRONOUNCIATION = 102;
     private static final int REQUEST_CODE_TRANSLATE_COLORDICT = 103;
-    private static final int REQUEST_CODE_IMAGE_SEARCH = 104;
 
-    private TextView mSearchLabel;
     private EditText mEditText;
 
     // This is used to copy from another field value to this field
@@ -71,18 +67,18 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         mEditText = new EditText(mActivity);
         mEditText.setMinLines(3);
         mEditText.setText(mField.getText());
-        layout.addView(mEditText, LinearLayout.LayoutParams.FILL_PARENT);
+        layout.addView(mEditText, LayoutParams.MATCH_PARENT);
 
         LinearLayout layoutTools = new LinearLayout(mActivity);
         layoutTools.setOrientation(LinearLayout.HORIZONTAL);
         layout.addView(layoutTools);
 
-        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.FILL_PARENT, 1);
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
 
         createCloneButton(layoutTools, p);
         createClearButton(layoutTools, p);
         // search label
-        mSearchLabel = new TextView(mActivity);
+        TextView mSearchLabel = new TextView(mActivity);
         mSearchLabel.setText(R.string.multimedia_editor_text_field_editing_search_label);
         layout.addView(mSearchLabel);
         // search buttons
@@ -105,38 +101,28 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         clearButton.setText(gtxt(R.string.multimedia_editor_text_field_editing_clear));
         layoutTools.addView(clearButton, p);
 
-        clearButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                mEditText.setText("");
-
-            }
-        });
+        clearButton.setOnClickListener(v -> mEditText.setText(""));
     }
 
 
     /**
-     * @param layoutTools
+     * @param layoutTools to create the button
      * @param p Button to load pronunciation from Beolingus
      */
     private void createPronounceButton(LinearLayout layoutTools, LayoutParams p) {
         Button btnPronounce = new Button(mActivity);
         btnPronounce.setText(gtxt(R.string.multimedia_editor_text_field_editing_say));
-        btnPronounce.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String source = mEditText.getText().toString();
+        btnPronounce.setOnClickListener(v -> {
+            String source = mEditText.getText().toString();
 
-                if (source.length() == 0) {
-                    showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text));
-                    return;
-                }
-
-                Intent intent = new Intent(mActivity, LoadPronounciationActivity.class);
-                intent.putExtra(LoadPronounciationActivity.EXTRA_SOURCE, source);
-                mActivity.startActivityForResult(intent, REQUEST_CODE_PRONOUNCIATION);
+            if (source.length() == 0) {
+                showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text));
+                return;
             }
+
+            Intent intent = new Intent(mActivity, LoadPronounciationActivity.class);
+            intent.putExtra(LoadPronounciationActivity.EXTRA_SOURCE, source);
+            mActivity.startActivityForResultWithoutAnimation(intent, REQUEST_CODE_PRONOUNCIATION);
         });
 
         layoutTools.addView(btnPronounce, p);
@@ -147,49 +133,42 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     private void createTranslateButton(LinearLayout layoutTool, LayoutParams ps) {
         Button btnTranslate = new Button(mActivity);
         btnTranslate.setText(gtxt(R.string.multimedia_editor_text_field_editing_translate));
-        btnTranslate.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String source = mEditText.getText().toString();
+        btnTranslate.setOnClickListener(v -> {
+            String source = mEditText.getText().toString();
 
-                // Checks and warnings
-                if (source.length() == 0) {
-                    showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text));
-                    return;
-                }
-
-                if (source.contains(" ")) {
-                    showToast(gtxt(R.string.multimedia_editor_text_field_editing_many_words));
-                }
-
-                // Pick from two translation sources
-                PickStringDialogFragment fragment = new PickStringDialogFragment();
-
-                final ArrayList<String> translationSources = new ArrayList<>();
-                translationSources.add("Glosbe.com");
-                // Chromebooks do not support dependent apps yet.
-                if (!CompatHelper.isChromebook()) {
-                    translationSources.add("ColorDict");
-                }
-
-                fragment.setChoices(translationSources);
-                fragment.setOnclickListener(new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String translationSource = translationSources.get(which);
-                        if (translationSource.equals("Glosbe.com")) {
-                            startTranslationWithGlosbe();
-                        } else if (translationSource.equals("ColorDict")) {
-                            startTranslationWithColorDict();
-                        }
-                    }
-                });
-
-                fragment.setTitle(gtxt(R.string.multimedia_editor_trans_pick_translation_source));
-
-                fragment.show(mActivity.getSupportFragmentManager(), "pick.translation.source");
+            // Checks and warnings
+            if (source.length() == 0) {
+                showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text));
+                return;
             }
+
+            if (source.contains(" ")) {
+                showToast(gtxt(R.string.multimedia_editor_text_field_editing_many_words));
+            }
+
+            // Pick from two translation sources
+            PickStringDialogFragment fragment = new PickStringDialogFragment();
+
+            final ArrayList<String> translationSources = new ArrayList<>();
+            translationSources.add("Glosbe.com");
+            // Chromebooks do not support dependent apps yet.
+            if (!CompatHelper.isChromebook()) {
+                translationSources.add("ColorDict");
+            }
+
+            fragment.setChoices(translationSources);
+            fragment.setOnclickListener((dialog, which) -> {
+                String translationSource = translationSources.get(which);
+                if ("Glosbe.com".equals(translationSource)) {
+                    startTranslationWithGlosbe();
+                } else if ("ColorDict".equals(translationSource)) {
+                    startTranslationWithColorDict();
+                }
+            });
+
+            fragment.setTitle(gtxt(R.string.multimedia_editor_trans_pick_translation_source));
+
+            fragment.show(mActivity.getSupportFragmentManager(), "pick.translation.source");
         });
 
         layoutTool.addView(btnTranslate, ps);
@@ -202,7 +181,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     /**
      * @param layoutTools This creates a button, which will call a dialog, allowing to pick from another note's fields
      *            one, and use it's value in the current one.
-     * @param p
+     * @param p layout params
      */
     private void createCloneButton(LinearLayout layoutTools, LayoutParams p) {
         // Makes sense only for two and more fields
@@ -253,21 +232,17 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
             final BasicTextFieldController controller = this;
 
-            btnOtherField.setOnClickListener(new OnClickListener() {
+            btnOtherField.setOnClickListener(v -> {
+                PickStringDialogFragment fragment = new PickStringDialogFragment();
 
-                @Override
-                public void onClick(View v) {
-                    PickStringDialogFragment fragment = new PickStringDialogFragment();
+                fragment.setChoices(mPossibleClones);
+                fragment.setOnclickListener(controller);
+                fragment.setTitle(gtxt(R.string.multimedia_editor_text_field_editing_clone_source));
 
-                    fragment.setChoices(mPossibleClones);
-                    fragment.setOnclickListener(controller);
-                    fragment.setTitle(gtxt(R.string.multimedia_editor_text_field_editing_clone_source));
+                fragment.show(mActivity.getSupportFragmentManager(), "pick.clone");
 
-                    fragment.show(mActivity.getSupportFragmentManager(), "pick.clone");
+                // flow continues in the onClick function
 
-                    // flow continues in the onClick function
-
-                }
             });
 
         }
@@ -319,16 +294,16 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
     @Override
     public void onFocusLost() {
-
+        // do nothing
     }
 
 
     /**
-     * @param context
-     * @param intent
+     * @param context context with the PackageManager
+     * @param intent intent for state data
      * @return Needed to check, if the Color Dict is installed
      */
-    public static boolean isIntentAvailable(Context context, Intent intent) {
+    private static boolean isIntentAvailable(Context context, Intent intent) {
         final PackageManager packageManager = context.getPackageManager();
         List<?> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
@@ -361,7 +336,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
     // Only now not all APIs are used, may be later, they will be.
     @SuppressWarnings("unused")
-    protected void startTranslationWithColorDict() {
+    private void startTranslationWithColorDict() {
         final String PICK_RESULT_ACTION = "colordict.intent.action.PICK_RESULT";
         final String SEARCH_ACTION = "colordict.intent.action.SEARCH";
         final String EXTRA_QUERY = "EXTRA_QUERY";
@@ -386,16 +361,16 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             showToast(gtxt(R.string.multimedia_editor_trans_install_color_dict));
             return;
         }
-        mActivity.startActivityForResult(intent, REQUEST_CODE_TRANSLATE_COLORDICT);
+        mActivity.startActivityForResultWithoutAnimation(intent, REQUEST_CODE_TRANSLATE_COLORDICT);
     }
 
 
-    protected void startTranslationWithGlosbe() {
+    private void startTranslationWithGlosbe() {
         String source = mEditText.getText().toString();
 
         Intent intent = new Intent(mActivity, TranslationActivity.class);
         intent.putExtra(TranslationActivity.EXTRA_SOURCE, source);
-        mActivity.startActivityForResult(intent, REQUEST_CODE_TRANSLATE_GLOSBE);
+        mActivity.startActivityForResultWithoutAnimation(intent, REQUEST_CODE_TRANSLATE_GLOSBE);
     }
 
 
@@ -404,5 +379,4 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         // TODO Auto-generated method stub
 
     }
-
 }

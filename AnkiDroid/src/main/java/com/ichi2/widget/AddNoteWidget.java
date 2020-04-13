@@ -23,10 +23,26 @@ import android.widget.RemoteViews;
 
 import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.UsageAnalytics;
 
 import timber.log.Timber;
 
 public class AddNoteWidget extends AppWidgetProvider {
+
+    @Override
+    public void onEnabled(Context context) {
+        super.onEnabled(context);
+        UsageAnalytics.sendAnalyticsEvent(this.getClass().getSimpleName(), "enabled");
+    }
+
+
+    @Override
+    public void onDisabled(Context context) {
+        super.onEnabled(context);
+        UsageAnalytics.sendAnalyticsEvent(this.getClass().getSimpleName(), "disabled");
+    }
+
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);

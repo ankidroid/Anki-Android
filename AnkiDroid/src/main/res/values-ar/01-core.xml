@@ -97,6 +97,9 @@
   <string name="undo_action_suspend_card">علق البطاقة</string>
   <string name="undo_action_suspend_note">علق الملاحظة</string>
   <string name="undo_action_delete">احذف الملاحظة</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">إلغِ الدفن</string>
   <string name="rename_deck">أعِد تسمية المجموعة</string>
   <string name="menu_add">اضافة</string>
@@ -178,5 +181,5 @@
   <string name="card_template_editor_would_delete_note">سوف يسبب حذف نوع هذه البطاقة حذف ملاحظة أو أكثر. الرجاء انشاء نوع بطاقة جديدة أولاً.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة البيانات أنكيدرويد</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">حصل على ملاحظات، وبطاقات، وأنواع الملاحظات، ورزما وأنشأ جديدة</string>
 </resources>

@@ -2,12 +2,12 @@ package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
-public class ModelBrowserContextMenu extends DialogFragment {
+public class ModelBrowserContextMenu extends AnalyticsDialogFragment {
 
     public final static int MODEL_TEMPLATE = 0;
     public final static int MODEL_RENAME = 1;

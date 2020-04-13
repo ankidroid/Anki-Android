@@ -111,6 +111,7 @@ class Utils {
      * @param html The HTML escaped text
      * @return The text with its HTML entities unescaped.
      */
+    @SuppressWarnings("deprecation")
     private static String entsToTxt(String html) {
         // entitydefs defines nbsp as \xa0 instead of a standard space, so we
         // replace it first
@@ -118,6 +119,7 @@ class Utils {
         Matcher htmlEntities = htmlEntitiesPattern.matcher(html);
         StringBuffer sb = new StringBuffer();
         while (htmlEntities.find()) {
+            // Html.fromHtml(String) is deprecated but it's replacement isn't available till API24
             htmlEntities.appendReplacement(sb, Html.fromHtml(htmlEntities.group()).toString());
         }
         htmlEntities.appendTail(sb);

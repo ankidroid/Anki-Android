@@ -43,16 +43,25 @@
   <plurals name="card_browser_subtitle">
     <item quantity="one">%d karta wyświetlana</item>
     <item quantity="few">%d kart wyświetlanych</item>
+    <item quantity="many">%d cards shown</item>
     <item quantity="other">%d kart wyświetlanych</item>
   </plurals>
   <string name="card_browser_all_decks">Wszystkie talie</string>
-  <string name="card_browser_delete_card">Usuń notatkę</string>
-  <string name="card_browser_suspend_card">Zawieś kartę</string>
-  <string name="card_browser_unsuspend_card">Odwieś kartę</string>
-  <string name="card_browser_mark_card">Wyróżnij notatkę</string>
-  <string name="card_browser_unmark_card">Cofnij wyróżnienie notatki</string>
+  <string name="card_browser_delete_card">Delete notes</string>
+  <string name="card_browser_suspend_card">Suspend cards</string>
+  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+  <string name="card_browser_change_deck">Change deck</string>
+  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+  <string name="card_browser_mark_card">Mark notes</string>
+  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+  <string name="card_browser_unmark_card">Unmark notes</string>
   <string name="delete_card_title">Usuń notatkę</string>
+  <string name="delete_cards_title">Delete notes?</string>
   <string name="delete_card_message">Naprawdę usunąć wszystkie karty tej notatki?\nPole wyszukiwania: %s</string>
+  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+  <string name="deleted_message">Notes deleted</string>
+  <string name="changed_deck_message">Moved to %s</string>
+  <string name="card_browser_suspended_cards">(un)suspended cards</string>
   <string name="card_browser_show_marked">Odfiltruj zaznaczone</string>
   <string name="card_browser_show_suspended">Odfiltruj zawieszone</string>
   <string name="card_browser_search_by_tag">Filtruj po etykiecie</string>
@@ -84,4 +93,6 @@
     <item>Wg powtórek</item>
     <item>Według pomyłek</item>
   </string-array>
+  <string name="card_browser_select_all">Select all</string>
+  <string name="card_browser_select_none">Select none</string>
 </resources>

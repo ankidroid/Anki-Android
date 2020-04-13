@@ -57,20 +57,23 @@
   <string name="collapse">Zwiń</string>
   <string name="study_more">Studiuj więcej</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Oczekuje %1$d karta z (%2$s)</item>
-    <item quantity="few">Oczekuje %1$d z (%2$s) kart</item>
-    <item quantity="other">Oczekuje %1$d kart z (%2$s)</item>
+    <item quantity="one">Oczekuje %1$d karta (%2$s)</item>
+    <item quantity="few">Oczekują %1$d karty (%2$s)</item>
+    <item quantity="many">%1$d cards due (%2$s)</item>
+    <item quantity="other">Oczekuje %1$d kart (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">Została %d minuta</item>
     <item quantity="few">Zostały %d minuty</item>
+    <item quantity="many">%d minutes left</item>
     <item quantity="other">Zostało %d minut</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">Przestudiowano dziś %1$d kartę z %2$s</item>
-    <item quantity="few">Przestudiowano dziś %1$d z %2$s kart</item>
-    <item quantity="other">Przestudiowano dziś %1$d kart z %2$s</item>
+    <item quantity="one">Przejrzano dziś %1$d kartę w %2$s</item>
+    <item quantity="few">Przejrzano dziś %1$d kartę w %2$s</item>
+    <item quantity="many">Studied %1$d cards in %2$s today</item>
+    <item quantity="other">Przejrzano dziś %1$d karty w %2$s</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Podaj odpowiedź</string>
@@ -88,6 +91,9 @@
   <string name="undo_action_suspend_card">zawieszenie karty</string>
   <string name="undo_action_suspend_note">zawieszenie notatki</string>
   <string name="undo_action_delete">usunięcie notatki</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Odkop</string>
   <string name="rename_deck">Zmień nazwę talii</string>
   <string name="menu_add">Dodaj</string>
@@ -160,11 +166,12 @@
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Czy usunąć typ kart “%2$s” oraz jego %1$d kartę?</item>
     <item quantity="few">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
+    <item quantity="many">Delete the “%2$s” card type, and its %1$d cards?</item>
     <item quantity="other">Czy usunąć typ kart “%2$s” oraz jego %1$d karty?</item>
   </plurals>
   <string name="invalid_template">Karta nie mogła zostać wygenerowana</string>
   <string name="card_template_editor_would_delete_note">Usunięcie typu karty może spowodować usunięcie jednej lub większej ilości notatek. Proszę o utworzenie najpierw nowej karty.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Odczyt i zapis do bazy danych AnkiDroid</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">dostęp do istniejących notatek, kart, typów notatek i talii, a także tworzenia istniejących</string>
 </resources>

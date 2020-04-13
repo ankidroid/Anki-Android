@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Szerokość kreski</string>
   <string name="whiteboard_black">Czarne kreski</string>
   <string name="whiteboard_black_summ">Oszczędzaj pamięć z wyjątkiem trybu nocnego</string>
-  <string name="write_answers_disable">Zablokuj wpisywanie pełnej odpowiedzi</string>
-  <string name="write_answers_disable_summ">Blokuje pokazywanie się klawiatury na kartach zawierających pola \"wpisz tekst w odpowiedzi\"</string>
   <string name="use_input_tag">Wprowadź odpowiedź do karty</string>
   <string name="use_input_tag_summ">Użyj pola tekstowego na karcie do wprowadzenia odpowiedzi</string>
-  <string name="text_selection_click">Obejście problemu długiego przyciśnięcia</string>
-  <string name="text_selection_click_summ">Wybierz, jeśli masz problemy z zaznaczaniem tekstu poprzez przytrzymanie.</string>
   <string name="dictionary">Słownik</string>
   <string name="reset_languages">Zresetuj język</string>
   <string name="reset_languages_summ">Zresetuj przypisania języka (dla czytania tekstu i dla słowników) dla wszystkich talii</string>
@@ -138,14 +134,14 @@
   <string name="notification_minimum_cards_due_vibrate">Wibracje</string>
   <string name="notification_minimum_cards_due_blink">Migotanie</string>
   <string name="timeout_answer_text">Automatyczne wyświetlanie odpowiedzi</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+  <string name="timeout_answer_summ">Pokaż odpowiedź automatycznie bez interakcji z użytkownikiem. Opóźnienie czas automatycznego odtwarzania plików dźwiękowych.</string>
   <string name="timeout_answer_seconds">Czas do pokazania odpowiedzi</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Czas do pokazania kolejnego pytania</string>
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Wybór języka</string>
   <string name="safe_display">Tryb bezpiecznego wyświetlania</string>
-  <string name="safe_display_summ">Wyłącz wszystkie animacje i użyj bezpieczniejszej metody rysowania kart. E-ink i starsze urządzenia używając standardowych fontów mogą tego wymagać.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Wycentruj</string>
   <string name="vertical_centering_summ">Wycentruj w pionie zawartość kart</string>
   <string name="pref_backup_max">Maksymalna liczba kopii zapasowych</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Początek kolejnego dnia</string>
   <string name="day_offset_summ">XXX godzin po północy</string>
-  <string name="input_workaround">Obejście problemów z wpisywaniem</string>
-  <string name="input_workaround_summ">Obejście problemu nieaktywnych pól tekstowych HTML na niektórych urządzeniach.</string>
   <string name="pref_keep_screen_on">Utrzymuj włączony ekran</string>
   <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
   <string name="convert_fen_text">Obsługa notacji szachowej</string>
@@ -198,6 +192,7 @@
   <plurals name="deck_conf_group_summ">
     <item quantity="one">Tej grupy używa %1$s\n%2$d talia</item>
     <item quantity="few">Tej grupy używa(ją) %1$s\n%2$d talia(e)</item>
+    <item quantity="many">%1$s\n%2$d decks use this group</item>
     <item quantity="other">Tej grupy używają %1$s\n%2$d talie</item>
   </plurals>
   <string name="deck_conf_new_cards">Nowe karty</string>
@@ -246,6 +241,7 @@
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">Tej grupy używa Sub-talia %s</item>
     <item quantity="few">Tej grupy używa(ją) Sub-talia(e) %s</item>
+    <item quantity="many">%s subdecks will use this group</item>
     <item quantity="other">Tej grupy używają Sub-talie %s</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Ustaw dla wszystkich sub-talii</string>
@@ -258,7 +254,7 @@
   <string name="deck_conf_cram_order">karty zaznaczone przez</string>
   <string name="deck_conf_cram_reschedule">Kolejkuj ponownie</string>
   <string name="deck_conf_cram_reschedule_summ">Kolejkuj karty ponownie bazując na moich odpowiedziach w tej talii</string>
-  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
+  <string name="deck_conf_cram_steps">Własne kroki (w minutach)</string>
   <string name="deck_conf_cram_steps_summ">Zdefiniuj własne kroki</string>
   <string name="deck_conf_reminders_enabled">Włącz powiadomienia dla tej talii</string>
   <string name="deck_conf_reminders_time">Przypomnij o</string>

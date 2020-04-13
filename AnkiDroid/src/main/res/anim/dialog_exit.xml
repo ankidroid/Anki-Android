@@ -24,7 +24,7 @@
         android:duration="400"
         android:fromXScale="1.0"
         android:fromYScale="1.0"
-        android:interpolator="@interpolator/decelerate_quint"
+        android:interpolator="@anim/decelerate_quint"
         android:pivotX="50%"
         android:pivotY="50%"
         android:toXScale="0.9"
@@ -33,7 +33,7 @@
     <alpha
         android:duration="200"
         android:fromAlpha="1.0"
-        android:interpolator="@interpolator/decelerate_cubic"
+        android:interpolator="@anim/decelerate_cubic"
         android:toAlpha="0.0" />
 
 </set>

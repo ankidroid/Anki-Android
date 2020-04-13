@@ -25,8 +25,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.graphics.Point;
 import android.graphics.PointF;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -61,8 +62,8 @@ public class Whiteboard extends View {
 
     private boolean mSecondFingerWithinTapTolerance;
     private boolean mCurrentlyDrawing = false;
-    private boolean mInvertedColors = false;
-    private boolean mMonochrome = true;
+    private boolean mInvertedColors;
+    private boolean mMonochrome;
     private boolean mUndoModeActive = false;
 
 
@@ -345,14 +346,18 @@ public class Whiteboard extends View {
     private static int getDisplayHeight() {
         Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
                 getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        return display.getHeight();
+        Point point = new Point();
+        display.getSize(point);
+        return point.y;
     }
 
 
     private static int getDisplayWidth() {
         Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
                 getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        return display.getWidth();
+        Point point = new Point();
+        display.getSize(point);
+        return point.x;
     }
 
     /**

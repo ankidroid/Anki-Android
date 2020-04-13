@@ -35,7 +35,7 @@ import java.util.zip.ZipFile;
 
 import timber.log.Timber;
 
-
+@SuppressWarnings({"PMD.NPathComplexity"})
 public class AnkiPackageImporter extends Anki2Importer {
 
     private ZipFile mZip;
@@ -135,7 +135,7 @@ public class AnkiPackageImporter extends Anki2Importer {
         if (mNameToNum.containsKey(fname)) {
             try {
                 return new BufferedInputStream(mZip.getInputStream(mZip.getEntry(mNameToNum.get(fname))));
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 Timber.e("Could not extract media file " + fname + "from zip file.");
             }
         }

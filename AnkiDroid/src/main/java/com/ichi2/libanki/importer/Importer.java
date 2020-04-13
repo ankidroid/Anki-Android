@@ -27,6 +27,7 @@ import com.ichi2.libanki.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings({"PMD.MethodNamingConventions"})
 public abstract class Importer {
 
     protected boolean mNeedMapper = false;

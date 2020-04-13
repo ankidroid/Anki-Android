@@ -17,6 +17,8 @@ package com.wildplot.android.parsing;
 
 
 public interface TreeElement {
-    public double getValue();
-    public boolean isVariable();
+
+    double getValue();
+
+    boolean isVariable();
 }

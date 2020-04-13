@@ -8,6 +8,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.compat.CompatHelper;
 
 import java.io.File;
 
@@ -26,25 +27,31 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final String exportPath = getArguments().getString("exportPath");
-        return new MaterialDialog.Builder(getActivity())
+        MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getActivity())
                 .title(getNotificationTitle())
                 .content(getNotificationMessage())
                 .iconAttr(R.attr.dialogSendIcon)
-                .positiveText(R.string.dialog_ok)
+                .positiveText(R.string.export_send_button)
                 .negativeText(R.string.dialog_cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                        ((DeckPicker) getActivity()).emailFile(exportPath);
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                    }
+                .onPositive((dialog, which) -> {
+                    ((DeckPicker) getActivity()).dismissAllDialogFragments();
+                    ((DeckPicker) getActivity()).emailFile(exportPath);
                 })
-                .show();
+                .onNegative((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments());
+
+        // If they have the system storage framework, allow for a save option
+        if (CompatHelper.getSdkVersion() >= 19) {
+            dialogBuilder
+                    .neutralText(R.string.dialog_cancel)
+                    .onNeutral((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments())
+                    .negativeText(R.string.export_save_button)
+                    .onNegative((dialog, which) -> {
+                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
+                        ((DeckPicker) getActivity()).saveExportFile(exportPath);
+                    });
+        }
+
+        return dialogBuilder.show();
     }
     
     public String getNotificationTitle() {
@@ -53,14 +60,8 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
 
 
     public String getNotificationMessage() {
-        if (CollectionHelper.getCurrentAnkiDroidDirectory(getContext()).equals(CollectionHelper.getDefaultAnkiDroidDirectory())) {
-            // Show a relative path if the collection is stored in the default location
-            File exportFile = new File("AnkiDroid/export/", new File(getArguments().getString("exportPath")).getName());
-            return res().getString(R.string.export_successful, exportFile.getPath());
-        } else {
-            // Show the absolute path if the user has messed with the AnkiDroid directory
-            return res().getString(R.string.export_successful, getArguments().getString("exportPath"));
-        }
+        File exportPath = new File(getArguments().getString("exportPath"));
+        return res().getString(R.string.export_successful, exportPath.getName());
     }
 
 

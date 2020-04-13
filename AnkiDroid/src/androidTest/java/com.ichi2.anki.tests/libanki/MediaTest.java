@@ -15,8 +15,9 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests.libanki;
 
-import android.test.AndroidTestCase;
-import android.test.suitebuilder.annotation.Suppress;
+import android.Manifest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
 
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.tests.Shared;
@@ -24,23 +25,42 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Note;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 /**
  * Unit tests for {@link Media}.
  */
-public class MediaTest extends AndroidTestCase {
+@SuppressWarnings("deprecation")
+@RunWith(androidx.test.runner.AndroidJUnit4.class)
+public class MediaTest {
+
+    @Rule
+    public GrantPermissionRule mRuntimePermissionRule =
+            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+
+    @Test
     public void testAdd() throws IOException {
         // open new empty collection
-        Collection d = Shared.getEmptyCol(getContext());
-        File dir = Shared.getTestDir(getContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        File dir = Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext());
         BackupManager.removeDir(dir);
-        dir.mkdirs();
+        assertTrue(dir.mkdirs());
         File path = new File(dir, "foo.jpg");
         FileOutputStream os;
         os = new FileOutputStream(path, false);
@@ -59,18 +79,19 @@ public class MediaTest extends AndroidTestCase {
     }
 
 
+    @Test
     public void testStrings() throws IOException {
-        Collection d = Shared.getEmptyCol(getContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         Long mid = d.getModels().getModels().entrySet().iterator().next().getKey();
         List<String> expected;
         List<String> actual;
 
-        expected = Arrays.asList();
+        expected = Collections.emptyList();
         actual = d.getMedia().filesInStr(mid, "aoeu");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
-        expected = Arrays.asList("foo.jpg");
+        expected = Collections.singletonList("foo.jpg");
         actual = d.getMedia().filesInStr(mid, "aoeu<img src='foo.jpg'>ao");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
@@ -80,7 +101,7 @@ public class MediaTest extends AndroidTestCase {
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
-        expected = Arrays.asList("foo.jpg");
+        expected = Collections.singletonList("foo.jpg");
         actual = d.getMedia().filesInStr(mid, "aoeu<img src=foo.jpg style=bar>ao");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
@@ -90,7 +111,7 @@ public class MediaTest extends AndroidTestCase {
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
-        expected = Arrays.asList("foo.jpg");
+        expected = Collections.singletonList("foo.jpg");
         actual = d.getMedia().filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
@@ -100,7 +121,7 @@ public class MediaTest extends AndroidTestCase {
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
-        expected = Arrays.asList("foo.mp3");
+        expected = Collections.singletonList("foo.mp3");
         actual = d.getMedia().filesInStr(mid, "aou[sound:foo.mp3]aou");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
@@ -113,13 +134,14 @@ public class MediaTest extends AndroidTestCase {
         assertEquals("<img src=\"foo%20bar.jpg\">", d.getMedia().escapeImages("<img src=\"foo bar.jpg\">"));
     }
 
+    @Test
     public void testDeckIntegration() throws IOException {
-        Collection d = Shared.getEmptyCol(getContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         // create a media dir
         d.getMedia().dir();
         // Put a file into it
-        File file = new File(Shared.getTestDir(getContext()), "fake.png");
-        file.createNewFile();
+        File file = new File(Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext()), "fake.png");
+        assertTrue(file.createNewFile());
         d.getMedia().addFile(file);
         // add a note which references it
         Note f = d.newNote();
@@ -140,34 +162,32 @@ public class MediaTest extends AndroidTestCase {
         List<List<String>> ret = d.getMedia().check();
         List<String> expected;
         List<String> actual;
-        expected = Arrays.asList("fake2.png");
+        expected = Collections.singletonList("fake2.png");
         actual = ret.get(0);
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
-        expected = Arrays.asList("foo.jpg");
+        expected = Collections.singletonList("foo.jpg");
         actual = ret.get(1);
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
     }
 
-
-    @Suppress
     private List<String> added(Collection d) {
         return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is not null", 0);
     }
 
-    @Suppress
     private List<String> removed(Collection d) {
         return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is null", 0);
     }
 
+    @Test
     public void testChanges() throws IOException {
-        Collection d = Shared.getEmptyCol(getContext());
-        assertTrue(d.getMedia()._changed() != null);
-        assertTrue(added(d).size() == 0);
-        assertTrue(removed(d).size() == 0);
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        assertNotNull(d.getMedia()._changed());
+        assertEquals(added(d).size(), 0);
+        assertEquals(removed(d).size(), 0);
         // add a file
-        File dir = Shared.getTestDir(getContext());
+        File dir = Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext());
         File path = new File(dir, "foo.jpg");
         FileOutputStream os;
         os = new FileOutputStream(path, false);
@@ -177,41 +197,42 @@ public class MediaTest extends AndroidTestCase {
         // should have been logged
         d.getMedia().findChanges();
         assertTrue(added(d).size() > 0);
-        assertTrue(removed(d).size() == 0);
+        assertEquals(removed(d).size(), 0);
         // if we modify it, the cache won't notice
         os = new FileOutputStream(path, true);
         os.write("world".getBytes());
         os.close();
-        assertTrue(added(d).size() == 1);
-        assertTrue(removed(d).size() == 0);
+        assertEquals(added(d).size(), 1);
+        assertEquals(removed(d).size(), 0);
         // but if we add another file, it will
         path = new File(path.getAbsolutePath()+"2");
         os = new FileOutputStream(path, true);
         os.write("yo".getBytes());
         os.close();
         d.getMedia().findChanges(true);
-        assertTrue(added(d).size() == 2);
-        assertTrue(removed(d).size() == 0);
+        assertEquals(added(d).size(), 2);
+        assertEquals(removed(d).size(), 0);
         // deletions should get noticed too
-        path.delete();
+        assertTrue(path.delete());
         d.getMedia().findChanges(true);
-        assertTrue(added(d).size() == 1);
-        assertTrue(removed(d).size() == 1);
+        assertEquals(added(d).size(), 1);
+        assertEquals(removed(d).size(), 1);
     }
 
 
+    @Test
     public void testIllegal() throws IOException {
-        Collection d = Shared.getEmptyCol(getContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         String aString = "a:b|cd\\e/f\0g*h";
         String good = "abcdefgh";
-        assertTrue(d.getMedia().stripIllegal(aString).equals(good));
+        assertEquals(d.getMedia().stripIllegal(aString), good);
         for (int i = 0; i < aString.length(); i++) {
             char c = aString.charAt(i);
             boolean bad = d.getMedia().hasIllegal("something" + c + "morestring");
             if (bad) {
-                assertTrue(good.indexOf(c) == -1);
+                assertEquals(good.indexOf(c), -1);
             } else {
-                assertTrue(good.indexOf(c) != -1);
+                assertNotEquals(good.indexOf(c), -1);
             }
         }
     }

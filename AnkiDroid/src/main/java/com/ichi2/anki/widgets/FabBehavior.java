@@ -16,9 +16,9 @@
 package com.ichi2.anki.widgets;
 
 import android.content.Context;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -51,7 +51,7 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu>
         for (int z = dependencies.size(); i < z; ++i) {
             View view = (View) dependencies.get(i);
             if (view instanceof Snackbar.SnackbarLayout && parent.doViewsOverlap(fab, view)) {
-                minOffset = Math.min(minOffset, ViewCompat.getTranslationY(view) - (float) view.getHeight());
+                minOffset = Math.min(minOffset, view.getTranslationY() - (float) view.getHeight());
             }
         }
 
@@ -69,7 +69,7 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu>
             float translationY = getFabTranslationYForSnackbar(parent, fab);
             if (translationY != this.mTranslationY) {
                 ViewCompat.animate(fab).cancel();
-                ViewCompat.setTranslationY(fab, translationY);
+                fab.setTranslationY(translationY);
                 this.mTranslationY = translationY;
             }
         }

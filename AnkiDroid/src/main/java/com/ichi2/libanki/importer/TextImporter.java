@@ -13,14 +13,14 @@ public class TextImporter extends NoteImporter {
 
     @Override
     public void run() {
-
+        // do nothing
     }
 
     public void initMapping() {
-
+        // do nothing
     }
 
     public void setImportMode(int mode) {
-
+        // do nothing
     }
 }

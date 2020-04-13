@@ -85,6 +85,9 @@
   <string name="undo_action_suspend_card">sospendi carta</string>
   <string name="undo_action_suspend_note">sospendi nota</string>
   <string name="undo_action_delete">elimina nota</string>
+  <string name="undo_action_delete_multi">elimina note</string>
+  <string name="undo_action_change_deck_multi">cambia mazzi</string>
+  <string name="move_all_to_deck">Sposta tutto nel mazzo</string>
   <string name="unbury">Disseppellisci</string>
   <string name="rename_deck">Rinomina mazzo</string>
   <string name="menu_add">Aggiungi</string>
@@ -162,5 +165,5 @@
   <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>
 </resources>

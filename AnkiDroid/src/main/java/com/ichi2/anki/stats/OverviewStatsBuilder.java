@@ -48,7 +48,7 @@ public class OverviewStatsBuilder {
 
     private final WebView mWebView; //for resources access
     private final Collection mCol;
-    private final boolean mWholeCollection;
+    private final long mDeckId;
     private final Stats.AxisType mType;
 
 
@@ -70,10 +70,10 @@ public class OverviewStatsBuilder {
         public double longestInterval;
     }
 
-    public OverviewStatsBuilder(WebView chartView, Collection collectionData, boolean isWholeCollection, Stats.AxisType mStatType) {
+    public OverviewStatsBuilder(WebView chartView, Collection collectionData, long deckId, Stats.AxisType mStatType) {
         mWebView = chartView;
         mCol = collectionData;
-        mWholeCollection = isWholeCollection;
+        mDeckId = deckId;
         mType = mStatType;
     }
 
@@ -99,7 +99,7 @@ public class OverviewStatsBuilder {
     }
 
     private void appendOverViewStats(StringBuilder stringBuilder) {
-        Stats stats = new Stats(mCol, mWholeCollection);
+        Stats stats = new Stats(mCol, mDeckId);
 
         OverviewStats oStats = new OverviewStats();
         stats.calculateOverviewStatistics(mType, oStats);
@@ -172,7 +172,7 @@ public class OverviewStatsBuilder {
     }
 
     private void appendTodaysStats(StringBuilder stringBuilder) {
-        Stats stats = new Stats(mCol, mWholeCollection);
+        Stats stats = new Stats(mCol, mDeckId);
         int[] todayStats = stats.calculateTodayStats();
         stringBuilder.append(_title(mWebView.getResources().getString(R.string.stats_today)));
         Resources res = mWebView.getResources();
@@ -266,7 +266,7 @@ public class OverviewStatsBuilder {
                     "%s\n" +
                     "group by day order by day",
                     mCol.getSched().getToday(), chunk, _limit(), lim);
-            cur = mCol.getDb().getDatabase().rawQuery(query, null);
+            cur = mCol.getDb().getDatabase().query(query, null);
             while (cur.moveToNext()) {
                 d.add(new int[]{cur.getInt(0), cur.getInt(1), cur.getInt(2)});
             }
@@ -280,18 +280,6 @@ public class OverviewStatsBuilder {
 
 
     private String _limit() {
-        if (mWholeCollection) {
-            ArrayList<Long> ids = new ArrayList<>();
-            for (JSONObject d : mCol.getDecks().all()) {
-                try {
-                    ids.add(d.getLong("id"));
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            return Utils.ids2str(Utils.arrayList2array(ids));
-        } else {
-            return mCol.getSched()._deckLimit();
-        }
+        return Stats.deckLimit(mDeckId, mCol);
     }
 }

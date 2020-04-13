@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">Tidsestimat (min.):</string>
   <string name="studyoptions_start">Studer nå</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">Utvid</string>
+  <string name="collapse">Skjul</string>
   <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
@@ -85,6 +85,9 @@
   <string name="undo_action_suspend_card">suspender kort</string>
   <string name="undo_action_suspend_note">suspender notat</string>
   <string name="undo_action_delete">slett notat</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Grav opp igjen</string>
   <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Legg til</string>

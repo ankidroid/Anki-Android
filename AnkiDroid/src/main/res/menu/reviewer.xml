@@ -37,7 +37,7 @@
     <item
         android:id="@+id/action_replay"
         android:title="@string/replay_audio"
-        android:icon="@drawable/ic_replay_white_24dp"
+        android:icon="@drawable/ic_play_circle_white"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_bury"
@@ -46,7 +46,7 @@
     <item
         android:id="@+id/action_suspend"
         android:title="@string/menu_suspend"
-        android:icon="@drawable/ic_lock_outline_white_24dp" />
+        android:icon="@drawable/ic_action_suspend" />
     <item
         android:id="@+id/action_delete"
         android:title="@string/menu_delete_note"
@@ -66,4 +66,10 @@
         android:id="@+id/action_select_tts"
         android:title="@string/select_tts"
         android:visible="false" />
+    <item
+        android:id="@+id/action_schedule"
+        android:title="@string/card_editor_card_scheduling"
+        android:icon="@drawable/ic_card_reschedule_white">
+        <menu />
+    </item>
 </menu>

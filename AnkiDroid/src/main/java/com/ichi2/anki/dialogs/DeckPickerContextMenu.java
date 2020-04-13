@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -27,6 +26,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
+import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Collection;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import java.util.HashMap;
 
 import timber.log.Timber;
 
-public class DeckPickerContextMenu extends DialogFragment {
+public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     /**
      * Context Menus
      */

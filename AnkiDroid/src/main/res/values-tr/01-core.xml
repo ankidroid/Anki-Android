@@ -85,6 +85,9 @@
   <string name="undo_action_suspend_card">Kart askıya almayı</string>
   <string name="undo_action_suspend_note">Not askıya almayı</string>
   <string name="undo_action_delete">Not silmeyi</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Görünür Yap</string>
   <string name="rename_deck">Destenin adını değiştir</string>
   <string name="menu_add">Ekle</string>

@@ -117,17 +117,20 @@
   <plurals name="timebox_reached">
     <item quantity="one">%1$d preštudovaná kartička za %2$s</item>
     <item quantity="few">%1$d preštudované kartičky za %2$s</item>
+    <item quantity="many">%1$d cards studied in %2$s</item>
     <item quantity="other">%1$d preštudovaných kartičiek za %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minútu</item>
     <item quantity="few">%1$d minúty</item>
+    <item quantity="many">%1$d minutes</item>
     <item quantity="other">%1$d minút</item>
   </plurals>
   <string name="studyoptions_welcome_title">Vitajte v AnkiDroid</string>
   <string name="fact_adder_intent_title">AnkiDroid kartička</string>
   <string name="card_editor_add_card">Pridať poznámku</string>
   <string name="card_editor_copy_card">Kopírovať kartičku</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Vynulovať pokrok</string>
   <string name="card_editor_reschedule_card">Preplánovať kartičku</string>
   <string name="card_editor_preview_card">Náhľad</string>
@@ -137,6 +140,7 @@
   <plurals name="factadder_cards_added">
     <item quantity="one">%d pridaná kartička</item>
     <item quantity="few">%d pridané kartičky</item>
+    <item quantity="many">%d cards added</item>
     <item quantity="other">%d pridaných kartičiek</item>
   </plurals>
   <string name="help_title">Pomocník</string>
@@ -194,31 +198,37 @@
   <plurals name="time_span_seconds">
     <item quantity="one">%s sekunda</item>
     <item quantity="few">%s sekundy</item>
+    <item quantity="many">%s seconds</item>
     <item quantity="other">%s sekúnd</item>
   </plurals>
   <plurals name="time_span_minutes">
     <item quantity="one">%s minúty</item>
     <item quantity="few">%s minút</item>
+    <item quantity="many">%s minutes</item>
     <item quantity="other">%s minút</item>
   </plurals>
   <plurals name="time_span_hours">
     <item quantity="one">%s hodina</item>
     <item quantity="few">%s hodiny</item>
+    <item quantity="many">%s hours</item>
     <item quantity="other">%s hodín</item>
   </plurals>
   <plurals name="time_span_days">
     <item quantity="one">%s deň</item>
     <item quantity="few">%s dni</item>
+    <item quantity="many">%s days</item>
     <item quantity="other">%s dní</item>
   </plurals>
   <plurals name="time_span_months">
     <item quantity="one">%s mesiac</item>
     <item quantity="few">%s mesiace</item>
+    <item quantity="many">%s months</item>
     <item quantity="other">%s mesiacov</item>
   </plurals>
   <plurals name="time_span_years">
     <item quantity="one">%s rok</item>
     <item quantity="few">%s roky</item>
+    <item quantity="many">%s years</item>
     <item quantity="other">%s rokov</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL
@@ -232,6 +242,7 @@
   <plurals name="reminder_text">
     <item quantity="one">%2$d nová kartička na zopakovanie v %1$s</item>
     <item quantity="few">%2$d nové kartičky na zopakovanie v %1$s</item>
+    <item quantity="many">%2$d new cards to review in %1$s</item>
     <item quantity="other">%2$d nových kartičiek na zopakovanie v %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->

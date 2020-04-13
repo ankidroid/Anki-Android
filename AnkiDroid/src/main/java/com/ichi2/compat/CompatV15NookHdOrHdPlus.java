@@ -3,7 +3,7 @@ package com.ichi2.compat;
 
 import android.annotation.TargetApi;
 
-import io.requery.android.database.sqlite.SQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /**
  * Implementation of {@link Compat} for SDK level 15 for Nook HD Plus.
@@ -15,7 +15,7 @@ import io.requery.android.database.sqlite.SQLiteDatabase;
 public class CompatV15NookHdOrHdPlus extends CompatV15 implements Compat {
 
     @Override
-    public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
+    public void disableDatabaseWriteAheadLogging(SupportSQLiteDatabase db) {
         db.disableWriteAheadLogging();
     }
 

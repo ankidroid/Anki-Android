@@ -21,67 +21,81 @@ import com.wildplot.android.parsing.TopLevelParser;
 import com.wildplot.android.parsing.TreeElement;
 
 
-public class MathFunctionAtom implements TreeElement{
+public class MathFunctionAtom implements TreeElement {
+
     private TopLevelParser parser;
-    public static enum MathType {SIN, COS, TAN, SQRT, ACOS, ASIN, ATAN, SINH, COSH, LOG, LN, INVALID}
+
+    public enum MathType {SIN, COS, TAN, SQRT, ACOS, ASIN, ATAN, SINH, COSH, LOG, LN, INVALID}
+
     private MathType mathType = MathType.INVALID;
     private Expression expression;
     private boolean hasSavedValue = false;
     private double savedValue = 0;
 
-    public MathFunctionAtom(String funcString, TopLevelParser parser){
+
+    public MathFunctionAtom(String funcString, TopLevelParser parser) {
         this.parser = parser;
         boolean isValid = init(funcString);
-        if(!isValid){
+        if (!isValid) {
             this.mathType = MathType.INVALID;
         }
-        if(isValid && !isVariable()){
+        if (isValid && !isVariable()) {
             savedValue = getValue();
             hasSavedValue = true;
         }
     }
 
 
-
-    private boolean init(String funcString){
+    private boolean init(String funcString) {
         int leftBracket = funcString.indexOf("(");
         int rightBracket = funcString.lastIndexOf(")");
-        if(leftBracket > 1 && rightBracket > leftBracket+1){
+        if (leftBracket > 1 && rightBracket > leftBracket + 1) {
             String funcName = funcString.substring(0, leftBracket);
-            String expressionString = funcString.substring(leftBracket+1, rightBracket);
+            String expressionString = funcString.substring(leftBracket + 1, rightBracket);
             Expression expressionInBrackets = new Expression(expressionString, parser);
             boolean isValidExpression = expressionInBrackets.getExpressionType() != Expression.ExpressionType.INVALID;
-            if(isValidExpression){
-                if(funcName.equals("sin")){
-                    this.mathType = MathType.SIN;
-                }else if (funcName.equals("cos")){
-                    this.mathType = MathType.COS;
-                }else if (funcName.equals("tan")){
-                    this.mathType = MathType.TAN;
-                }else if (funcName.equals("sqrt")){
-                    this.mathType = MathType.SQRT;
-                }else if (funcName.equals("acos")){
-                    this.mathType = MathType.ACOS;
-                }else if (funcName.equals("asin")){
-                    this.mathType = MathType.ASIN;
-                }else if (funcName.equals("atan")){
-                    this.mathType = MathType.ATAN;
-                }else if (funcName.equals("sinh")){
-                    this.mathType = MathType.SINH;
-                }else if (funcName.equals("cosh")){
-                    this.mathType = MathType.COSH;
-                }else if (funcName.equals("log") || funcName.equals("lg")){
-                    this.mathType = MathType.LOG;
-                }else if (funcName.equals("ln")){
-                    this.mathType = MathType.LN;
-                }else {
-                    this.mathType = MathType.INVALID;
-                    return false;
+            if (isValidExpression) {
+                switch (funcName) {
+                    case "sin":
+                        this.mathType = MathType.SIN;
+                        break;
+                    case "cos":
+                        this.mathType = MathType.COS;
+                        break;
+                    case "tan":
+                        this.mathType = MathType.TAN;
+                        break;
+                    case "sqrt":
+                        this.mathType = MathType.SQRT;
+                        break;
+                    case "acos":
+                        this.mathType = MathType.ACOS;
+                        break;
+                    case "asin":
+                        this.mathType = MathType.ASIN;
+                        break;
+                    case "atan":
+                        this.mathType = MathType.ATAN;
+                        break;
+                    case "sinh":
+                        this.mathType = MathType.SINH;
+                        break;
+                    case "cosh":
+                        this.mathType = MathType.COSH;
+                        break;
+                    case "log":
+                    case "lg":
+                        this.mathType = MathType.LOG;
+                        break;
+                    case "ln":
+                        this.mathType = MathType.LN;
+                        break;
+                    default:
+                        this.mathType = MathType.INVALID;
+                        return false;
                 }
                 this.expression = expressionInBrackets;
                 return true;
-
-
 
 
             }
@@ -91,10 +105,12 @@ public class MathFunctionAtom implements TreeElement{
         return false;
     }
 
+
     @Override
-    public double getValue() throws ExpressionFormatException{
-        if(hasSavedValue)
+    public double getValue() throws ExpressionFormatException {
+        if (hasSavedValue) {
             return savedValue;
+        }
 
         switch (mathType) {
             case SIN:
@@ -125,15 +141,17 @@ public class MathFunctionAtom implements TreeElement{
         }
     }
 
+
     @Override
     public boolean isVariable() {
-        if (mathType != MathType.INVALID){
+        if (mathType != MathType.INVALID) {
 
             return expression.isVariable();
-        }
-        else
+        } else {
             throw new ExpressionFormatException("Number is Invalid, cannot parse");
+        }
     }
+
 
     public MathType getMathType() {
         return mathType;

@@ -15,7 +15,7 @@ public class BeolingusParserTest {
                 + "alt=\"[anhören]\" title=\"Wasser\" border=\"0\" align=\"top\" /></a>";
 
         String pronunciationUrl = BeolingusParser.getPronunciationAddressFromTranslation(html, "Wasser");
-        assertEquals("http://dict.tu-chemnitz.de/dings.cgi?speak=de/0/7/52qA5FttGIU;text=Wasser", pronunciationUrl);
+        assertEquals("https://dict.tu-chemnitz.de/dings.cgi?speak=de/0/7/52qA5FttGIU;text=Wasser", pronunciationUrl);
     }
 
     @Test
@@ -23,6 +23,6 @@ public class BeolingusParserTest {
         String html = "<td><a href=\"/speak-de/0/7/52qA5FttGIU.mp3\">Mit Ihrem";
 
         String mp3 = BeolingusParser.getMp3AddressFromPronounciation(html);
-        assertEquals("http://dict.tu-chemnitz.de/speak-de/0/7/52qA5FttGIU.mp3", mp3);
+        assertEquals("https://dict.tu-chemnitz.de/speak-de/0/7/52qA5FttGIU.mp3", mp3);
     }
 }

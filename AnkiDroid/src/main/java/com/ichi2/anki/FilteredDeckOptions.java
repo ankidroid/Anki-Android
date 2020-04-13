@@ -39,6 +39,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
+import com.ichi2.anki.analytics.UsageAnalytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -348,9 +349,11 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
 
     @Override
+    @SuppressWarnings("deprecation") // Tracked as #5019 on github
     protected void onCreate(Bundle icicle) {
         Themes.setThemeLegacy(this);
         super.onCreate(icicle);
+        UsageAnalytics.sendAnalyticsScreenView(this);
 
         mCol = CollectionHelper.getInstance().getCol(this);
         if (mCol == null) {
@@ -447,12 +450,13 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     }
 
 
+    @SuppressWarnings("deprecation") // conversion to fragments tracked in github as #5019
     protected void updateSummaries() {
         mAllowCommit = false;
         // for all text preferences, set summary as current database value
         for (String key : mPref.mValues.keySet()) {
             Preference pref = this.findPreference(key);
-            String value = null;
+            String value;
             if (pref == null) {
                 continue;
             } else if (pref instanceof CheckBoxPreference) {
@@ -488,6 +492,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     }
 
 
+    @SuppressWarnings("deprecation") // Tracked as #5019 on github
     protected void buildLists() {
         ListPreference newOrderPref = (ListPreference) findPreference("order");
         newOrderPref.setEntries(R.array.cram_deck_conf_order_labels);
