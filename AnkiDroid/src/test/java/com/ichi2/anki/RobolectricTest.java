@@ -36,7 +36,7 @@ import org.robolectric.shadows.ShadowDialog;
 import org.robolectric.shadows.ShadowLog;
 
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
-import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.core.app.ApplicationProvider;
 import timber.log.Timber;
 
 public class RobolectricTest {
@@ -77,7 +77,7 @@ public class RobolectricTest {
 
 
     protected Context getTargetContext() {
-        return InstrumentationRegistry.getInstrumentation().getTargetContext();
+        return ApplicationProvider.getApplicationContext();
     }
 
 
@@ -87,7 +87,7 @@ public class RobolectricTest {
 
 
     protected Collection getCol() {
-        return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        return CollectionHelper.getInstance().getCol(getTargetContext());
     }
 
 
@@ -97,10 +97,9 @@ public class RobolectricTest {
     }
 
     protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
-        ActivityController controller = Robolectric.buildActivity(clazz, i)
+        ActivityController<T> controller = Robolectric.buildActivity(clazz, i)
                 .create().start().resume().visible();
-        //noinspection unchecked
-        return (T) controller.get();
+        return controller.get();
     }
 
     protected Note addNoteUsingBasicModel(String front, String back) {
