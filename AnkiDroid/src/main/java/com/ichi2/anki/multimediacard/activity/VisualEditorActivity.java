@@ -1,6 +1,7 @@
 package com.ichi2.anki.multimediacard.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,6 +29,9 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.utils.AssetReader;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.WebViewDebugging;
+import com.jaredrummler.android.colorpicker.ColorPickerDialog;
+import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
+import com.jaredrummler.android.colorpicker.ColorShape;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +53,10 @@ import static com.ichi2.anki.NoteEditor.REQUEST_MULTIMEDIA_EDIT;
 //BUG: Initial undo will undo the initial text
 //BUG: <hr/> is  less thick in the editor
 //NOTE: Remove formatting on "{{c1::" will cause a failure to detect the cloze deletion, this is the same as Anki.
-public class VisualEditorActivity extends AnkiActivity {
+public class VisualEditorActivity extends AnkiActivity implements ColorPickerDialogListener {
+
+    private static final int COLOR_PICKER_FOREGROUND = 1;
+    private static final int COLOR_PICKER_BACKGROUND = 2;
 
     public static final String EXTRA_FIELD = "visual.card.ed.extra.current.field";
     public static final String EXTRA_FIELD_INDEX = "visual.card.ed.extra.current.field.index";
@@ -116,8 +123,27 @@ public class VisualEditorActivity extends AnkiActivity {
         findViewById(R.id.editor_button_add_image).setOnClickListener(v -> this.openAdvancedViewerForAddImage());
         findViewById(R.id.editor_button_record_audio).setOnClickListener(v -> this.openAdvancedViewerForRecordAudio());
 
+        findViewById(R.id.editor_button_text_color).setOnClickListener(v -> this.openColorPicker(COLOR_PICKER_FOREGROUND, null));
+        findViewById(R.id.editor_button_background_color).setOnClickListener(v -> this.openColorPicker(COLOR_PICKER_BACKGROUND, Color.YELLOW));
+
 
         findViewById(R.id.editor_button_cloze).setOnClickListener(v -> performCloze());
+    }
+
+
+    private void openColorPicker(int dialogId, Integer defaultColor) {
+        //COULD_BE_BETTER: Save presets
+        ColorPickerDialog.Builder d = ColorPickerDialog
+                .newBuilder()
+                .setDialogId(dialogId)
+                .setColorShape(ColorShape.SQUARE)
+                .setAllowPresets(true)
+                .setShowColorShades(false);
+
+        if (defaultColor != null) {
+            d.setColor(defaultColor);
+        }
+        this.showDialogFragment(d.create());
     }
 
 
@@ -467,6 +493,28 @@ public class VisualEditorActivity extends AnkiActivity {
     private void finishCancel() {
         setResult(RESULT_CANCELED);
         finishActivityWithFade(this);
+    }
+
+
+    @Override
+    public void onColorSelected(int dialogId, int color) {
+        switch (dialogId) {
+            case COLOR_PICKER_FOREGROUND:
+                mWebView.setSelectedTextColor(color);
+                break;
+            case COLOR_PICKER_BACKGROUND:
+                mWebView.setSelectedBackgroundColor(color);
+                break;
+            default:
+                Timber.w("Unexpected color picker: %d. Color: %06X", dialogId, color & 0xFFFFFF);
+                break;
+        }
+    }
+
+
+    @Override
+    public void onDialogDismissed(int dialogId) {
+        //Required for ColorPickerDialogListener interface. Not required.
     }
 
 

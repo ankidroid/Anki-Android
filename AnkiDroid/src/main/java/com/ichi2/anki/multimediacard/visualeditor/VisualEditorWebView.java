@@ -267,6 +267,20 @@ public class VisualEditorWebView extends WebView {
     }
 
 
+    public void setSelectedTextColor(int color) {
+        execUnsafe("setTextForeColor('" + colorToHex(color) + "');");
+    }
+
+    public void setSelectedBackgroundColor(int color) {
+        execUnsafe("setTextBackColor('" + colorToHex(color) +"');");
+    }
+
+
+    private String colorToHex(int color) {
+        return String.format("#%06X", (color & 0xFFFFFF));
+    }
+
+
     public static class ExecEscaped {
         private final String escapedValue;
 
