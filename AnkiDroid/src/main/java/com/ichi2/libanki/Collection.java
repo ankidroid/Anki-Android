@@ -1068,7 +1068,7 @@ public class Collection {
         fields.put("Tags", ((String) data[5]).trim());
         fields.put("Type", (String) model.get("name"));
         fields.put("Deck", mDecks.name((Long) data[3]));
-        String[] parents = fields.get("Deck").split("::", -1);
+        String[] parents = Decks.path(fields.get("Deck"));
         fields.put("Subdeck", parents[parents.length-1]);
         fields.put("CardFlag", _flagNameFromCardFlags((Integer) data[7]));
         JSONObject template;

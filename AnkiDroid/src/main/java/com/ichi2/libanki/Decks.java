@@ -462,7 +462,7 @@ public class Decks {
         newName = _ensureParents(newName);
         // make sure we're not nesting under a filtered deck
         if (newName.contains("::")) {
-            List<String> parts = Arrays.asList(newName.split("::", -1));
+            List<String> parts = Arrays.asList(path(newName));
             String newParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
             if (byName(newParent).getInt("dyn") != 0) {
                 throw new DeckRenameException(DeckRenameException.FILTERED_NOSUBDEKCS);
@@ -551,7 +551,7 @@ public class Decks {
     private static HashMap<String, String[]> pathCache = new HashMap();
     public static String[] path(String name) {
         if (!pathCache.containsKey(name)) {
-            pathCache.put(name, name.split("::", -1));
+            pathCache.put(name, path(name));
         }
         return pathCache.get(name);
     }
@@ -912,7 +912,7 @@ public class Decks {
             HashMap node = new HashMap();
             childMap.put(deck.getLong("id"), node);
 
-            List<String> parts = Arrays.asList(deck.getString("name").split("::", -1));
+            List<String> parts = Arrays.asList(path(deck.getString("name")));
             if (parts.size() > 1) {
                 String immediateParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
                 long pid = nameMap.get(immediateParent).getLong("id");
@@ -935,7 +935,7 @@ public class Decks {
     public List<JSONObject> parents(long did, HashMap<String, JSONObject> nameMap) {
         // get parent and grandparent names
         List<String> parents = new ArrayList<>();
-        List<String> parts = Arrays.asList(get(did).getString("name").split("::", -1));
+        List<String> parts = Arrays.asList(path(get(did).getString("name")));
         for (int i = 0; i < parts.size() - 1; i++) {
             String part = parts.get(i);
             if (parents.size() == 0) {
@@ -1032,7 +1032,7 @@ public class Decks {
 
     public static String parent(String deckName) {
         // method parent, from sched's method deckDueList in python
-        List<String> parts = Arrays.asList(deckName.split("::", -1));
+        List<String> parts = Arrays.asList(path(deckName));
         if (parts.size() < 2) {
             return null;
         } else {

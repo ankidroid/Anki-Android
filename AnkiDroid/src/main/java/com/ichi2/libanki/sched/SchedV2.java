@@ -419,7 +419,7 @@ public class SchedV2 extends AbstractSched {
     private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps) {
         // first, split the group names into components
         for (DeckDueTreeNode g : grps) {
-            g.names = g.names[0].split("::", -1);
+            g.names = Decks.path(g.names[0]);
         }
         // and sort based on those components
         Collections.sort(grps);
