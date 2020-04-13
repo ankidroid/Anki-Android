@@ -450,7 +450,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             mDeckId = ((Statistics) getActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
                 Collection col = CollectionHelper.getInstance().getCol(getActivity());
-                List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::", -1));
+                List<String> parts = Arrays.asList(Decks.path(col.getDecks().current().getString("name")));
                 if (sIsSubtitle) {
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(parts.get(parts.size() - 1));
                 } else {

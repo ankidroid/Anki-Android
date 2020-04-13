@@ -25,6 +25,7 @@ import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
@@ -379,7 +380,7 @@ public class Anki2Importer extends Importer {
         String name = g.getString("name");
         // if there's a prefix, replace the top level deck
         if (!TextUtils.isEmpty(mDeckPrefix)) {
-            List<String> parts = Arrays.asList(name.split("::", -1));
+            List<String> parts = Arrays.asList(Decks.path(name));
             String tmpname = TextUtils.join("::", parts.subList(1, parts.size()));
             name = mDeckPrefix;
             if (!TextUtils.isEmpty(tmpname)) {
@@ -388,7 +389,7 @@ public class Anki2Importer extends Importer {
         }
         // Manually create any parents so we can pull in descriptions
         String head = "";
-        List<String> parents = Arrays.asList(name.split("::", -1));
+        List<String> parents = Arrays.asList(Decks.path(name));
         for (String parent : parents.subList(0, parents.size() -1)) {
             if (!TextUtils.isEmpty(head)) {
                 head += "::";
