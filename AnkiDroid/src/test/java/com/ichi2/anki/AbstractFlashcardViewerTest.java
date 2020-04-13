@@ -10,12 +10,17 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.*;
+import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1;
+import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_2;
+import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_3;
+import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_4;
+import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.RELINQUISH_FOCUS;
+import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SHOW_ANSWER;
+import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SIGNAL_NOOP;
+import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS;
+import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
@@ -33,17 +38,13 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         }
     }
 
-    public String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) {
         NonAbstractFlashcardViewer nafv = new NonAbstractFlashcardViewer();
-
-        Class[] argClasses = {String.class, String.class, String.class};
-        Method method = AbstractFlashcardViewer.class.getDeclaredMethod("typeAnsAnswerFilter", argClasses);
-        method.setAccessible(true);
-        return (String) method.invoke(nafv, buf, userAnswer, correctAnswer);
+        return nafv.typeAnsAnswerFilter(buf, userAnswer, correctAnswer);
     }
 
     @Test
-    public void testTypeAnsAnswerFilterNormalCorrect() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void testTypeAnsAnswerFilterNormalCorrect() {
         String buf = "<style>.card {\n" +
                 " font-family: arial;\n" +
                 " font-size: 20px;\n" +
@@ -76,7 +77,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     @Test
-    public void testTypeAnsAnswerFilterNormalIncorrect() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void testTypeAnsAnswerFilterNormalIncorrect()  {
         String buf = "<style>.card {\n" +
                 " font-family: arial;\n" +
                 " font-size: 20px;\n" +
@@ -109,7 +110,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     @Test
-    public void testTypeAnsAnswerFilterNormalEmpty() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void testTypeAnsAnswerFilterNormalEmpty() {
         String buf = "<style>.card {\n" +
                 " font-family: arial;\n" +
                 " font-size: 20px;\n" +
@@ -142,7 +143,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     @Test
-    public void testTypeAnsAnswerFilterDollarSignsCorrect() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void testTypeAnsAnswerFilterDollarSignsCorrect() {
         String buf = "<style>.card {\n" +
                 " font-family: arial;\n" +
                 " font-size: 20px;\n" +
@@ -175,7 +176,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     @Test
-    public void testTypeAnsAnswerFilterDollarSignsIncorrect() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void testTypeAnsAnswerFilterDollarSignsIncorrect() {
         String buf = "<style>.card {\n" +
                 " font-family: arial;\n" +
                 " font-size: 20px;\n" +
@@ -208,7 +209,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     @Test
-    public void testTypeAnsAnswerFilterDollarSignsEmpty() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void testTypeAnsAnswerFilterDollarSignsEmpty() {
         String buf = "<style>.card {\n" +
                 " font-family: arial;\n" +
                 " font-size: 20px;\n" +
