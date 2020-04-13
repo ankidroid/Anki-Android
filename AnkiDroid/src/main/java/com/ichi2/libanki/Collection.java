@@ -352,23 +352,12 @@ public class Collection {
         if (mDb.getMod()) {
             flush(mod);
             mDb.commit();
-            lock();
             mDb.setMod(false);
         }
         // undoing non review operation is handled differently in ankidroid
 //        _markOp(name);
         //mLastSave = Utils.now(); // assigned but never accessed - only leaving in for upstream comparison
     }
-
-
-    /** make sure we don't accidentally bump mod time */
-    public void lock() {
-        // make sure we don't accidentally bump mod time
-        boolean mod = mDb.getMod();
-        mDb.execute("UPDATE col SET mod=mod");
-        mDb.setMod(mod);
-    }
-
 
     /**
      * Disconnect from DB.
