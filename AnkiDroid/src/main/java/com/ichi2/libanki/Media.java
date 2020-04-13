@@ -702,7 +702,7 @@ public class Media {
                 continue;
             }
             String fname = f.getName();
-            if (fname.equalsIgnoreCase("thumbs.db")) {
+            if ("thumbs.db".equalsIgnoreCase(fname)) {
                 continue;
             }
             // and files with invalid chars

@@ -2935,7 +2935,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             WebResourceResponse webResourceResponse = null;
             if (!AdaptionUtil.hasWebBrowser(getBaseContext())) {
                 String scheme = request.getUrl().getScheme().trim();
-                if (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https")) {
+                if ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme)) {
                     String response = getResources().getString(R.string.no_outgoing_link_in_cardbrowser);
                     webResourceResponse = new WebResourceResponse("text/html", "utf-8", new ByteArrayInputStream(response.getBytes()));
                 }

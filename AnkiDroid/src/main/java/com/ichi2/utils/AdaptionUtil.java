@@ -54,6 +54,6 @@ public class AdaptionUtil {
     }
 
     public static boolean hasReducedPreferences(){
-        return Build.MANUFACTURER.equalsIgnoreCase("Xiaomi") && (Build.PRODUCT.equalsIgnoreCase("Archytas") || Build.PRODUCT.equalsIgnoreCase("Archimedes"));
+        return "Xiaomi".equalsIgnoreCase(Build.MANUFACTURER) && ("Archytas".equalsIgnoreCase(Build.PRODUCT) || "Archimedes".equalsIgnoreCase(Build.PRODUCT));
     }
 }

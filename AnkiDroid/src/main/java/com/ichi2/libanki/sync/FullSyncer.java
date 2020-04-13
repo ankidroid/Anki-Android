@@ -124,7 +124,7 @@ public class FullSyncer extends HttpSyncer {
         DB tempDb = null;
         try {
             tempDb = new DB(tpath);
-            if (!tempDb.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+            if (!"ok".equalsIgnoreCase(tempDb.queryString("PRAGMA integrity_check"))) {
                 Timber.e("Full sync - downloaded file corrupt");
                 return new Object[] { "remoteDbError" };
             }
@@ -150,7 +150,7 @@ public class FullSyncer extends HttpSyncer {
     public Object[] upload() throws UnknownHttpResponseException {
         // make sure it's ok before we try to upload
         mCon.publishProgress(R.string.sync_check_upload_file);
-        if (!mCol.getDb().queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+        if (!"ok".equalsIgnoreCase(mCol.getDb().queryString("PRAGMA integrity_check"))) {
             return new Object[] { "dbError" };
         }
         if (!mCol.basicCheck()) {
