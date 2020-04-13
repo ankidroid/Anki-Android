@@ -1119,8 +1119,8 @@ public class NoteEditor extends AnkiActivity {
     private void setMMButtonListener(ImageButton mediaButton, final int index) {
         mediaButton.setOnClickListener(v -> {
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index);
-            final Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
             if (mEditorNote.items()[index][1].length() > 0) {
+                final Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
                 IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
@@ -1134,37 +1134,28 @@ public class NoteEditor extends AnkiActivity {
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
                 popup.setOnMenuItemClickListener(item -> {
-                    IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-                    NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
-                    IField field;
+
                     switch (item.getItemId()) {
                         case R.id.menu_multimedia_audio: {
                             Timber.i("NoteEditor:: Record audio button pressed");
-                            field = new AudioRecordingField();
-                            mNote.setField(index, field);
-                            startMultimediaFieldEditor(index, mNote, field);
+                            startMultimediaFieldEditorForField(index, new AudioRecordingField());
                             return true;
                         }
                         case R.id.menu_multimedia_audio_clip: {
                             Timber.i("NoteEditor:: Add audio clip button pressed");
-                            field = new AudioClipField();
-                            mNote.setField(index, field);
-                            startMultimediaFieldEditor(index, mNote, field);
+                            startMultimediaFieldEditorForField(index, new AudioClipField());
                             return true;
                         }
                         case R.id.menu_multimedia_photo: {
                             Timber.i("NoteEditor:: Add image button pressed");
-                            field = new ImageField();
-                            mNote.setField(index, field);
-                            startMultimediaFieldEditor(index, mNote, field);
+                            startMultimediaFieldEditorForField(index, new ImageField());
                             return true;
                         }
                         case R.id.menu_multimedia_text: {
                             Timber.i("NoteEditor:: Advanced editor button pressed");
-                            field = new TextField();
+                            TextField field = new TextField();
                             field.setText(mEditFields.get(index).getText().toString());
-                            mNote.setField(index, field);
-                            startMultimediaFieldEditor(index, mNote, field);
+                            startMultimediaFieldEditorForField(index, field);
                             return true;
                         }
                         default:
@@ -1178,6 +1169,15 @@ public class NoteEditor extends AnkiActivity {
                 popup.show();
             }
         });
+    }
+
+
+    private void startMultimediaFieldEditorForField(int index, IField field) {
+        Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
+        IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
+        NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
+        mNote.setField(index, field);
+        startMultimediaFieldEditor(index, mNote, field);
     }
 
 
