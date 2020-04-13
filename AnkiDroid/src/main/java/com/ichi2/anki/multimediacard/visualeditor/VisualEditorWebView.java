@@ -251,10 +251,18 @@ public abstract class VisualEditorWebView extends WebView {
 
     public abstract void deleteImage(@NonNull String guid);
 
-    public abstract void insertCloze(int clozeId);
-
-
     public abstract void pasteHtml(String html);
+
+
+    public abstract void setSelectedTextColor(int color);
+
+    public abstract void setSelectedBackgroundColor(int color);
+
+    protected String colorToHex(int color) {
+        return String.format("#%06X", (color & 0xFFFFFF));
+    }
+
+    public abstract void insertCloze(int clozeId);
 
 
     public static class ExecEscaped {

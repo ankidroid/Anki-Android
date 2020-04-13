@@ -75,6 +75,16 @@ public class SummerNoteVisualEditor extends VisualEditorWebView {
     }
 
     @Override
+    public void setSelectedTextColor(int color) {
+        execUnsafe("setTextForeColor('" + colorToHex(color) + "');");
+    }
+
+    @Override
+    public void setSelectedBackgroundColor(int color) {
+        execUnsafe("setTextBackColor('" + colorToHex(color) +"');");
+    }
+
+    @Override
     protected void onPostInit(String utf8Content, String baseUrl) {
         addJavascriptInterface(this, "RTextEditorView");
         loadDataWithBaseURL(baseUrl + "__visual_editor__.html\"", utf8Content, "text/html; charset=utf-8", "UTF-8", null);

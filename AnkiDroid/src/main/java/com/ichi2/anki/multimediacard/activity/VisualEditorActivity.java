@@ -1,8 +1,10 @@
 package com.ichi2.anki.multimediacard.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +31,9 @@ import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.utils.AssetReader;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.WebViewDebugging;
+import com.mrudultora.colorpicker.ColorPickerDialog;
+import com.mrudultora.colorpicker.listeners.OnSelectColorListener;
+import com.mrudultora.colorpicker.util.ColorItemShape;
 
 import java.io.File;
 import java.util.Arrays;
@@ -50,6 +55,9 @@ import static com.ichi2.anki.NoteEditor.REQUEST_MULTIMEDIA_EDIT;
 
 //NOTE: Remove formatting on "{{c1::" will cause a failure to detect the cloze deletion, this is the same as Anki.
 public class VisualEditorActivity extends AnkiActivity {
+
+    private static final int COLOR_PICKER_FOREGROUND = 1;
+    private static final int COLOR_PICKER_BACKGROUND = 2;
 
     public static final String EXTRA_FIELD = "visual.card.ed.extra.current.field";
     public static final String EXTRA_FIELD_INDEX = "visual.card.ed.extra.current.field.index";
@@ -118,7 +126,35 @@ public class VisualEditorActivity extends AnkiActivity {
 
         findViewById(R.id.editor_button_add_image).setOnClickListener(v -> this.openAdvancedViewerForAddImage());
 
+        findViewById(R.id.editor_button_text_color).setOnClickListener(v -> this.openColorPicker(COLOR_PICKER_FOREGROUND, Color.BLACK));
+        findViewById(R.id.editor_button_background_color).setOnClickListener(v -> this.openColorPicker(COLOR_PICKER_BACKGROUND, Color.YELLOW));
+
         findViewById(R.id.editor_button_cloze).setOnClickListener(v -> performCloze());
+    }
+
+
+    private void openColorPicker(int dialogId, Integer defaultColor) {
+        ColorPickerDialog colorPickerDialog = new ColorPickerDialog(this);   // Pass the context.
+        colorPickerDialog.setColors()
+                .setColumns(5)                        		// Default number of columns is 5.
+                .setDefaultSelectedColor(defaultColor)		// By default no color is used.
+                .setColorItemShape(ColorItemShape.SQUARE)
+                .setOnSelectColorListener(new OnSelectColorListener() {
+                    @Override
+                    public void onColorSelected(int color, int position) {
+                        if (dialogId == COLOR_PICKER_FOREGROUND) {
+                            mWebView.setSelectedTextColor(color);
+                        } else if (dialogId == COLOR_PICKER_BACKGROUND) {
+                            mWebView.setSelectedBackgroundColor(color);
+                        }
+                    }
+                    @Override
+                    public void cancel() {
+                        colorPickerDialog.dismissDialog();	// Dismiss the dialog.
+                    }
+                }).show();
+        colorPickerDialog.getPositiveButton().setTextSize(TypedValue.COMPLEX_UNIT_SP,14f);
+        colorPickerDialog.getNegativeButton().setTextSize(TypedValue.COMPLEX_UNIT_SP,14f);
     }
 
 
@@ -425,7 +461,6 @@ public class VisualEditorActivity extends AnkiActivity {
         setResult(RESULT_CANCELED);
         finishActivityWithFade(this);
     }
-
 
     @FunctionalInterface
     protected interface SimpleListenerSetup {
