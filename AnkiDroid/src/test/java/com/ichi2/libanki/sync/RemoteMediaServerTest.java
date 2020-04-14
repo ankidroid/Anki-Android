@@ -20,6 +20,8 @@ public class RemoteMediaServerTest {
     //COULD_BE_BETTER: We currently fail on a trailing flash in these variables.
     private static String sCustomServerWithNoFormatting = "https://sync.example.com/msync";
     private static String sCustomServerWithFormatting   = "https://sync%s.example.com/msync";
+    private static final String sDefaultUrlNoHostNum    = "https://sync.ankiweb.net/msync/";
+    private static final String sDefaultUrlWithHostNum  = "https://sync1.ankiweb.net/msync/";
 
     @Test
     public void getDefaultMediaUrlWithNoHostNum() {
@@ -27,7 +29,7 @@ public class RemoteMediaServerTest {
 
         String syncUrl = underTest.syncURL();
 
-        assertThat(syncUrl, is("https://sync.ankiweb.net/msync/"));
+        assertThat(syncUrl, is(sDefaultUrlNoHostNum));
     }
 
 
@@ -38,7 +40,7 @@ public class RemoteMediaServerTest {
 
         String syncUrl = underTest.syncURL();
 
-        assertThat(syncUrl, is("https://sync1.ankiweb.net/msync/"));
+        assertThat(syncUrl, is(sDefaultUrlWithHostNum));
     }
 
 
@@ -83,6 +85,33 @@ public class RemoteMediaServerTest {
         String syncUrl = underTest.syncURL();
 
         assertThat(syncUrl, is("https://sync.example.com/msync/"));
+    }
+
+    @Test
+    @Ignore("This should have worked, but was broken before I started")
+    public void invalidSettingReturnsCorrectResultWithNoHostNum() {
+        RemoteMediaServer underTest = getServerWithHostNum("");
+        setCustomServerWithNoUrl();
+
+        String syncUrl = underTest.syncURL();
+
+        assertThat(syncUrl, is(sDefaultUrlNoHostNum));
+    }
+
+    @Test
+    @Ignore("Not yet supported")
+    public void invalidSettingReturnsCorrectResultWithHostNum() {
+        RemoteMediaServer underTest = getServerWithHostNum("1");
+        setCustomServerWithNoUrl();
+
+        String syncUrl = underTest.syncURL();
+
+        assertThat(syncUrl, is(sDefaultUrlWithHostNum));
+    }
+
+    private void setCustomServerWithNoUrl() {
+        SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        userPreferences.edit().putBoolean("useCustomSyncServer", true).commit();
     }
 
     private void setCustomMediaServer(String s) {

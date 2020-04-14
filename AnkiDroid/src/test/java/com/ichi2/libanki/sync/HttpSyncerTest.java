@@ -18,6 +18,9 @@ import static org.hamcrest.Matchers.is;
 public class HttpSyncerTest {
     private static String sCustomServerWithNoFormatting = "https://sync.example.com/";
     private static String sCustomServerWithFormatting   = "https://sync%s.example.com/";
+    private static final String sDefaultUrlNoHostNum    = "https://sync.ankiweb.net/sync/";
+    private static final String sDefaultUrlWithHostNum  = "https://sync1.ankiweb.net/sync/";
+
 
     @Test
     public void getDefaultMediaUrlWithNoHostNum() {
@@ -25,7 +28,7 @@ public class HttpSyncerTest {
 
         String syncUrl = underTest.syncURL();
 
-        assertThat(syncUrl, is("https://sync.ankiweb.net/sync/"));
+        assertThat(syncUrl, is(sDefaultUrlNoHostNum));
     }
 
 
@@ -36,7 +39,7 @@ public class HttpSyncerTest {
 
         String syncUrl = underTest.syncURL();
 
-        assertThat(syncUrl, is("https://sync1.ankiweb.net/sync/"));
+        assertThat(syncUrl, is(sDefaultUrlWithHostNum));
     }
 
 
@@ -81,6 +84,32 @@ public class HttpSyncerTest {
         String syncUrl = underTest.syncURL();
 
         assertThat(syncUrl, is("https://sync.example.com/sync/"));
+    }
+
+    @Test
+    public void invalidSettingReturnsCorrectResultWithNoHostNum() {
+        HttpSyncer underTest = getServerWithHostNum("");
+        setCustomServerWithNoUrl();
+
+        String syncUrl = underTest.syncURL();
+
+        assertThat(syncUrl, is(sDefaultUrlNoHostNum));
+    }
+
+    @Test
+    @Ignore("Not yet supported")
+    public void invalidSettingReturnsCorrectResultWithHostNum() {
+        HttpSyncer underTest = getServerWithHostNum("1");
+        setCustomServerWithNoUrl();
+
+        String syncUrl = underTest.syncURL();
+
+        assertThat(syncUrl, is(sDefaultUrlWithHostNum));
+    }
+
+    private void setCustomServerWithNoUrl() {
+        SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        userPreferences.edit().putBoolean("useCustomSyncServer", true).commit();
     }
 
     private void setCustomServer(String s) {
