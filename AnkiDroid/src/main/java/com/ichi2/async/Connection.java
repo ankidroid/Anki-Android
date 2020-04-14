@@ -32,6 +32,7 @@ import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.sync.FullSyncer;
+import com.ichi2.libanki.sync.HostNum;
 import com.ichi2.libanki.sync.HttpSyncer;
 import com.ichi2.libanki.sync.MediaSyncer;
 import com.ichi2.libanki.sync.RemoteMediaServer;
@@ -202,7 +203,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private Payload doInBackgroundLogin(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        String hostNum = (String) data.data[2];
+        HostNum hostNum = (HostNum) data.data[2];
         HttpSyncer server = new RemoteServer(this, null, hostNum);
         Response ret;
         try {
@@ -276,7 +277,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
-        String hostNum = (String) data.data[3];
+        HostNum hostNum = (HostNum) data.data[3];
         // Use safe version that catches exceptions so that full sync is still possible
         Collection col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance());
 
@@ -293,7 +294,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         try {
             CollectionHelper.getInstance().lockCollection();
             HttpSyncer server = new RemoteServer(this, hkey, hostNum);
-            Syncer client = new Syncer(col, server);
+            Syncer client = new Syncer(col, server, hostNum);
 
             // run sync and check state
             boolean noChanges = false;

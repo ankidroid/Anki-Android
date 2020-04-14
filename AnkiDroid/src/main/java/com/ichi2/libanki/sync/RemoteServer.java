@@ -35,7 +35,7 @@ import okhttp3.Response;
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
 public class RemoteServer extends HttpSyncer {
 
-    public RemoteServer(Connection con, String hkey, String hostNum) {
+    public RemoteServer(Connection con, String hkey, HostNum hostNum) {
         super(hkey, con, hostNum);
     }
 

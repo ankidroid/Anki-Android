@@ -30,9 +30,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.web.PreferenceBackedHostNum;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
-import com.ichi2.libanki.Consts;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.AdaptionUtil;
 
@@ -116,7 +116,7 @@ public class MyAccount extends AnkiActivity {
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
             Connection.login(loginListener, new Connection.Payload(new Object[]{username, password,
-                    preferences.getString("hostNum", Consts.DEFAULT_HOST_NUM) }));
+                    PreferenceBackedHostNum.fromPreferences(preferences) }));
         } else {
             UIUtils.showSimpleSnackbar(this, R.string.invalid_username_password, true);
         }

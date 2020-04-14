@@ -93,6 +93,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
+import com.ichi2.anki.web.PreferenceBackedHostNum;
 import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
@@ -100,7 +101,6 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.Utils;
@@ -1471,7 +1471,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     new Connection.Payload(new Object[] { hkey,
                             preferences.getBoolean("syncFetchesMedia", true),
                             syncConflictResolution,
-                            preferences.getString("hostNum", Consts.DEFAULT_HOST_NUM) }));
+                            PreferenceBackedHostNum.fromPreferences(preferences) }));
         }
     }
 

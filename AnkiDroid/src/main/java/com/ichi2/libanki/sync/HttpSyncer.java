@@ -91,10 +91,10 @@ public class HttpSyncer {
     protected String mSKey;
     protected Connection mCon;
     protected Map<String, Object> mPostVars;
-    private final String mHostNum;
     private volatile OkHttpClient mHttpClient;
+    private final HostNum mHostNum;
 
-    public HttpSyncer(String hkey, Connection con, String hostNum) {
+    public HttpSyncer(String hkey, Connection con, HostNum hostNum) {
         mHKey = hkey;
         mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
         mCon = con;
@@ -475,7 +475,7 @@ public class HttpSyncer {
     }
 
     protected String getHostNum() {
-        return mHostNum;
+        return mHostNum.getHostNum();
     }
 
     protected boolean isUsingCustomSyncServer(@Nullable SharedPreferences userPreferences) {

@@ -67,7 +67,7 @@ public class Syncer {
     //private long mRScm;
     private int mMaxUsn;
 
-    private String mHostNum;
+    private HostNum mHostNum;
     private long mLMod;
     //private long mLScm;
     private int mMinUsn;
@@ -79,9 +79,10 @@ public class Syncer {
     private Cursor mCursor;
 
 
-    public Syncer(Collection col, HttpSyncer server) {
+    public Syncer(Collection col, HttpSyncer server, HostNum hostNum) {
         mCol = col;
         mServer = server;
+        mHostNum = hostNum;
     }
 
 
@@ -124,7 +125,7 @@ public class Syncer {
                 mRMod = rMeta.getLong("mod");
                 mMaxUsn = rMeta.getInt("usn");
                 // skip uname, AnkiDroid already stores and shows it
-                mHostNum = rMeta.getString("hostNum");
+                trySetHostNum(rMeta);
                 Timber.i("Sync: building local meta data");
                 JSONObject lMeta = meta();
                 mCol.log("lmeta", lMeta);
@@ -248,6 +249,18 @@ public class Syncer {
         }
         return new Object[] { "success" };
     }
+
+
+    private void trySetHostNum(JSONObject rMeta) {
+        //We perform this as old version of the sync server may not provide the hostNum
+        //And it's fine to continue without one.
+        try {
+            mHostNum.setHostNum(rMeta.getString("hostNum"));
+        } catch (Exception e) {
+            Timber.w(e, "Failed to set hostNum");
+        }
+    }
+
 
     private Object[] _forceFullSync() {
         // roll back and force full sync
