@@ -1088,7 +1088,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...");
-            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UPDATE_NOTE, mUpdateCardHandler,
                     new CollectionTask.TaskData(sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             if (mSearchView != null) {
