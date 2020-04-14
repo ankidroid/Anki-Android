@@ -599,7 +599,7 @@ public class Collection {
 
 
     /**
-     * Bulk delete facts by ID. Don't call this directly.
+     * Bulk delete notes by ID. Don't call this directly.
      */
     public void _remNotes(long[] ids) {
         if (ids.length == 0) {

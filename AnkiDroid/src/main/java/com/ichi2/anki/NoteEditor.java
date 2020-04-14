@@ -100,9 +100,9 @@ import java.util.Map.Entry;
 import timber.log.Timber;
 
 /**
- * Allows the user to edit a fact, for instance if there is a typo. A card is a presentation of a fact, and has two
- * sides: a question and an answer. Any number of fields can appear on each side. When you add a fact to Anki, cards
- * which show that fact are generated. Some models generate one card, others generate more than one.
+ * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
+ * sides: a question and an answer. Any number of fields can appear on each side. When you add a note to Anki, cards
+ * which show that note are generated. Some models generate one card, others generate more than one.
  *
  * @see <a href="http://ankisrs.net/docs/manual.html#cards">the Anki Desktop manual</a>
  */
@@ -180,7 +180,7 @@ public class NoteEditor extends AnkiActivity {
     private Map<Integer, Integer> mModelChangeFieldMap;
     private Map<Integer, Integer> mModelChangeCardMap;
 
-    /* indicates if a new fact is added or a card is edited */
+    /* indicates if a new note is added or a card is edited */
     private boolean mAddNote;
 
     private boolean mAedictIntent;
