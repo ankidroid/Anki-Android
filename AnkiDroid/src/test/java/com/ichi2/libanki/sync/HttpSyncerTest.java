@@ -33,7 +33,6 @@ public class HttpSyncerTest {
 
 
     @Test
-    @Ignore("Not yet supported")
     public void getDefaultMediaUrlWithHostNum() {
         HttpSyncer underTest = getServerWithHostNum("1");
 
@@ -97,7 +96,6 @@ public class HttpSyncerTest {
     }
 
     @Test
-    @Ignore("Not yet supported")
     public void invalidSettingReturnsCorrectResultWithHostNum() {
         HttpSyncer underTest = getServerWithHostNum("1");
         setCustomServerWithNoUrl();

@@ -79,7 +79,8 @@ public class Consts {
     public static final int SCHEMA_VERSION = 11;
     public static final int SYNC_ZIP_SIZE = (int)(2.5*1024*1024);
     public static final int SYNC_ZIP_COUNT = 25;
-    public static final String SYNC_BASE = "https://sync.ankiweb.net/";
+    public static final String LEGACY_SYNC_BASE = "https://sync.ankiweb.net/";
+    public static final String SYNC_BASE = "https://sync%s.ankiweb.net/";
     public static final String DEFAULT_HOST_NUM = "";
     public static final int SYNC_VER = 9;
 

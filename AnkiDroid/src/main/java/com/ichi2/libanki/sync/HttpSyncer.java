@@ -219,7 +219,10 @@ public class HttpSyncer {
             bos.flush();
             bos.close();
             // connection headers
-            String url = Consts.SYNC_BASE;
+
+            // Likely can be removed:
+            // https://github.com/ankidroid/Anki-Android/issues/4921#issuecomment-613566744
+            String url = Consts.LEGACY_SYNC_BASE;
             if ("register".equals(method)) {
                 url = url + "account/signup" + "?username=" + registerData.getString("u") + "&password="
                         + registerData.getString("p");
@@ -480,7 +483,7 @@ public class HttpSyncer {
     }
 
     protected String getDefaultAnkiWebUrl() {
-        return Consts.SYNC_BASE + getUrlPrefix() + "/";
+        return String.format(Consts.SYNC_BASE, getHostNum()) + getUrlPrefix() + "/";
     }
 }
 
