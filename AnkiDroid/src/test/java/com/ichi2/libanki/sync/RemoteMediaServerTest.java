@@ -88,7 +88,6 @@ public class RemoteMediaServerTest {
     }
 
     @Test
-    @Ignore("This should have worked, but was broken before I started")
     public void invalidSettingReturnsCorrectResultWithNoHostNum() {
         RemoteMediaServer underTest = getServerWithHostNum("");
         setCustomServerWithNoUrl();
