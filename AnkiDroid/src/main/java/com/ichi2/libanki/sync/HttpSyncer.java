@@ -56,6 +56,7 @@ import java.util.zip.GZIPOutputStream;
 
 import javax.net.ssl.SSLException;
 
+import androidx.annotation.Nullable;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -455,7 +456,7 @@ public class HttpSyncer {
     public String syncURL() {
         // Allow user to specify custom sync server
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        if (userPreferences != null && userPreferences.getBoolean("useCustomSyncServer", false)) {
+        if (isUsingCustomSyncServer(userPreferences)) {
             Uri syncBase = Uri.parse(userPreferences.getString("syncBaseUrl", Consts.SYNC_BASE));
             return syncBase.buildUpon().appendPath(getUrlPrefix()).toString() + "/";
         }
@@ -469,6 +470,10 @@ public class HttpSyncer {
 
     protected String getHostNum() {
         return mHostNum;
+    }
+
+    protected boolean isUsingCustomSyncServer(@Nullable SharedPreferences userPreferences) {
+        return userPreferences != null && userPreferences.getBoolean("useCustomSyncServer", false);
     }
 }
 
