@@ -511,9 +511,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                     Timber.i("Answering card %d", oldCard.getId());
                     sched.answerCard(oldCard, ease);
                 }
-                if (newCard == null) {
-                    newCard = getCard(sched);
-                }
+                newCard = getCard(sched);
                 if (newCard != null) {
                     // render cards before locking database
                     newCard._getQA(true);
