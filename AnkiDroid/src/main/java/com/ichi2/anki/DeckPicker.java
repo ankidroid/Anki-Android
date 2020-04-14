@@ -2009,11 +2009,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
             return;
         }
-        getCol().getSched().reset();
+        getCol().getSched().quickReset();
         // Actual reset is required because we need count.
         // More precisely, simply knowing a card exists would be sufficient.
-        int[] studyOptionsCounts = getCol().getSched().counts();
-        if (studyOptionsCounts[0] + studyOptionsCounts[1] + studyOptionsCounts[2] > 0) {
+        if (getCol().getSched().lrnDueFromToday()) {
             // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
             openStudyOptions(false);
         } else if (getCol().getSched().newDue() || getCol().getSched().revDue()) {

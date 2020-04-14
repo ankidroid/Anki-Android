@@ -70,6 +70,8 @@ public abstract class AbstractSched {
     public abstract boolean revDue();
     /** true if there are any new cards due. */
     public abstract boolean newDue();
+    /** true if there are cards due from today */
+    public abstract boolean lrnDueFromToday();
     public abstract boolean haveBuried();
     /**
      * Return the next interval for a card and ease as a string.
