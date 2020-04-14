@@ -199,7 +199,7 @@ public class NoteEditor extends AnkiActivity {
     // restoring the Activity.
     private Bundle mSavedFields;
 
-    private CollectionTask.TaskListener mSaveFactHandler = new CollectionTask.TaskListener() {
+    private CollectionTask.TaskListener mSaveNoteHandler = new CollectionTask.TaskListener() {
         private boolean mCloseAfter = false;
         private Intent mIntent;
 
@@ -713,7 +713,7 @@ public class NoteEditor extends AnkiActivity {
             }
             getCol().getModels().current().put("tags", ja);
             getCol().getModels().setChanged();
-            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new CollectionTask.TaskData(mEditorNote));
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ADD_FACT, mSaveNoteHandler, new CollectionTask.TaskData(mEditorNote));
         } else {
             // Check whether note type has been changed
             final JSONObject newModel = getCurrentlySelectedModel();
