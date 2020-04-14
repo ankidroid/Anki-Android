@@ -501,7 +501,7 @@ public class Collection {
      * Rebuild the queue and reload data after DB modified.
      */
     public void reset() {
-        mSched.reset();
+        mSched.planifyReset();
     }
 
 
