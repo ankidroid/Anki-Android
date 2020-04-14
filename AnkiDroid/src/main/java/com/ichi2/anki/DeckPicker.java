@@ -100,6 +100,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.Utils;
@@ -1467,8 +1468,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
         } else {
             Connection.sync(mSyncListener,
-                    new Connection.Payload(new Object[] { hkey, preferences.getBoolean("syncFetchesMedia", true),
-                            syncConflictResolution }));
+                    new Connection.Payload(new Object[] { hkey,
+                            preferences.getBoolean("syncFetchesMedia", true),
+                            syncConflictResolution,
+                            preferences.getString("hostNum", Consts.DEFAULT_HOST_NUM) }));
         }
     }
 

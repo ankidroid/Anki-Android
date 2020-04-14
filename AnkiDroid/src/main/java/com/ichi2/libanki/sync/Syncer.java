@@ -66,6 +66,8 @@ public class Syncer {
     private long mRMod;
     //private long mRScm;
     private int mMaxUsn;
+
+    private String mHostNum;
     private long mLMod;
     //private long mLScm;
     private int mMinUsn;
@@ -122,6 +124,7 @@ public class Syncer {
                 mRMod = rMeta.getLong("mod");
                 mMaxUsn = rMeta.getInt("usn");
                 // skip uname, AnkiDroid already stores and shows it
+                mHostNum = rMeta.getString("hostNum");
                 Timber.i("Sync: building local meta data");
                 JSONObject lMeta = meta();
                 mCol.log("lmeta", lMeta);

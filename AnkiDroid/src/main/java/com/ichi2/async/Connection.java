@@ -202,7 +202,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private Payload doInBackgroundLogin(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        HttpSyncer server = new RemoteServer(this, null);
+        String hostNum = (String) data.data[2];
+        HttpSyncer server = new RemoteServer(this, null, hostNum);
         Response ret;
         try {
             ret = server.hostKey(username, password);
@@ -275,6 +276,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
+        String hostNum = (String) data.data[3];
         // Use safe version that catches exceptions so that full sync is still possible
         Collection col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance());
 
@@ -290,7 +292,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
         try {
             CollectionHelper.getInstance().lockCollection();
-            HttpSyncer server = new RemoteServer(this, hkey);
+            HttpSyncer server = new RemoteServer(this, hkey, hostNum);
             Syncer client = new Syncer(col, server);
 
             // run sync and check state
@@ -326,7 +328,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 try {
                     // Disable sync cancellation for full-sync
                     sIsCancellable = false;
-                    server = new FullSyncer(col, hkey, this);
+                    server = new FullSyncer(col, hkey, this, hostNum);
                     if ("upload".equals(conflictResolution)) {
                         Timber.i("Sync - fullsync - upload collection");
                         publishProgress(R.string.sync_preparing_full_sync_message);
@@ -392,7 +394,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             boolean noMediaChanges = false;
             String mediaError = null;
             if (media) {
-                server = new RemoteMediaServer(col, hkey, this);
+                server = new RemoteMediaServer(col, hkey, this, hostNum);
                 MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server, this);
                 String ret;
                 try {

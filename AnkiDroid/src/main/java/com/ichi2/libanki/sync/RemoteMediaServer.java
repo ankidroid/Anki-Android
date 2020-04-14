@@ -50,8 +50,8 @@ public class RemoteMediaServer extends HttpSyncer {
     private Collection mCol;
 
 
-    public RemoteMediaServer(Collection col, String hkey, Connection con) {
-        super(hkey, con);
+    public RemoteMediaServer(Collection col, String hkey, Connection con, String hostNum) {
+        super(hkey, con, hostNum);
         mCol = col;
     }
 
