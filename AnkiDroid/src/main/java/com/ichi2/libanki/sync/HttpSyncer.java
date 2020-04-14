@@ -475,6 +475,10 @@ public class HttpSyncer {
     protected boolean isUsingCustomSyncServer(@Nullable SharedPreferences userPreferences) {
         return userPreferences != null && userPreferences.getBoolean("useCustomSyncServer", false);
     }
+
+    protected String getDefaultAnkiWebUrl() {
+        return Consts.SYNC_BASE + getUrlPrefix() + "/";
+    }
 }
 
 

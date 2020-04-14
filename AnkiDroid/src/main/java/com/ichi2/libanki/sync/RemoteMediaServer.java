@@ -65,7 +65,7 @@ public class RemoteMediaServer extends HttpSyncer {
             return mediaSyncBase.toString() + "/";
         }
         // Usual case
-        return Consts.SYNC_BASE + getUrlPrefix() + "/";
+        return getDefaultAnkiWebUrl();
     }
 
 
