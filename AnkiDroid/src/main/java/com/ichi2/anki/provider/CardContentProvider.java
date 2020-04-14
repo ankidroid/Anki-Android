@@ -346,7 +346,7 @@ public class CardContentProvider extends ContentProvider {
                 }
 
                 //retrieve the number of cards provided by the selection parameter "limit"
-                col.getSched().reset();
+                col.getSched().deferReset();
                 for (int k = 0; k< limit; k++){
                     Card currentCard = col.getSched().getCard();
 
