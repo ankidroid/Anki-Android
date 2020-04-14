@@ -34,7 +34,6 @@ public class RemoteMediaServerTest {
 
 
     @Test
-    @Ignore("Not yet supported")
     public void getDefaultMediaUrlWithHostNum() {
         RemoteMediaServer underTest = getServerWithHostNum("1");
 
@@ -98,7 +97,6 @@ public class RemoteMediaServerTest {
     }
 
     @Test
-    @Ignore("Not yet supported")
     public void invalidSettingReturnsCorrectResultWithHostNum() {
         RemoteMediaServer underTest = getServerWithHostNum("1");
         setCustomServerWithNoUrl();
