@@ -863,7 +863,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                     newCard.startTimer();
                     col.reset();
                     col.getSched().decrementCounts(newCard);
-                    sched.planifyReset();
                 } else if (cid != -1){
                     col.reset();
                     newCard = sched.getCard();
