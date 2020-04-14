@@ -121,8 +121,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
      */
     private static CollectionTask sLatestInstance;
 
-    private static boolean sHadCardQueue = false;
-
 
     /**
      * Starts a new {@link CollectionTask}.
@@ -531,10 +529,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
 
     private Card getCard(AbstractSched sched) {
-        if (sHadCardQueue) {
-            sched.reset();
-            sHadCardQueue = false;
-        }
         return sched.getCard();
     }
 
@@ -577,7 +571,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         try {
             col.getDb().getDatabase().beginTransaction();
             try {
-                sHadCardQueue = true;
+                sched.deferReset();
                 switch (type) {
                     case BURY_CARD:
                         // collect undo information
@@ -686,7 +680,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                             c.load();
                         }
 
-                        sHadCardQueue = true;
+                        sched.deferReset();
                         break;
                     }
 
@@ -742,7 +736,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                         col.markUndo(type, new Object[] {notesArr, allCards});
 
                         col.remNotes(uniqueNoteIds);
-                        sHadCardQueue = true;
+                        sched.deferReset();
                         // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
                         publishProgress(new TaskData(allCards.toArray(new Card[allCards.size()])));
                         break;
@@ -871,7 +865,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                     newCard.startTimer();
                     col.reset();
                     col.getSched().decrementCounts(newCard);
-                    sHadCardQueue = true;
+                    sched.deferReset();
                 } else if (cid != -1){
                     col.reset();
                     newCard = getCard(sched);
