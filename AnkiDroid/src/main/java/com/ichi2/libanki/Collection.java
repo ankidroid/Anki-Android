@@ -1009,32 +1009,6 @@ public class Collection {
      * Q/A generation *********************************************************** ************************************
      */
 
-    public ArrayList<HashMap<String, String>> renderQA() {
-        return renderQA(null, "card");
-    }
-
-
-    public ArrayList<HashMap<String, String>> renderQA(int[] ids, String type) {
-        String where;
-        if ("card".equals(type)) {
-            where = "AND c.id IN " + Utils.ids2str(ids);
-        } else if ("fact".equals(type)) {
-            where = "AND f.id IN " + Utils.ids2str(ids);
-        } else if ("model".equals(type)) {
-            where = "AND m.id IN " + Utils.ids2str(ids);
-        } else if ("all".equals(type)) {
-            where = "";
-        } else {
-            throw new RuntimeException();
-        }
-        ArrayList<HashMap<String, String>> result = new ArrayList<>();
-        for (Object[] row : _qaData(where)) {
-            result.add(_renderQA(row));
-        }
-        return result;
-    }
-
-
     /**
      * Returns hash of id, question, answer.
      */
