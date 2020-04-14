@@ -378,7 +378,6 @@ public class Syncer {
             if (found) {
                 mCol.getModels().save();
             }
-            mCol.getSched().reset();
             // check for missing parent decks
             mCol.getSched().deckDueList();
             // return summary of deck
