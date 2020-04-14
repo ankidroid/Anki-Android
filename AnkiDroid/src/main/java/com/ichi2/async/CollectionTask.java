@@ -73,7 +73,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
     public static final int TASK_TYPE_SAVE_COLLECTION = 2;
     public static final int TASK_TYPE_ANSWER_CARD = 3;
-    public static final int TASK_TYPE_ADD_FACT = 6;
+    public static final int TASK_TYPE_ADD_NOTE = 6;
     public static final int TASK_TYPE_UPDATE_FACT = 7;
     public static final int TASK_TYPE_UPDATE_FACTS_MULTI = 9;
     public static final int TASK_TYPE_UNDO = 8;
@@ -249,7 +249,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             case TASK_TYPE_ANSWER_CARD:
                 return doInBackgroundAnswerCard(params);
 
-            case TASK_TYPE_ADD_FACT:
+            case TASK_TYPE_ADD_NOTE:
                 return doInBackgroundAddNote(params);
 
             case TASK_TYPE_UPDATE_FACT:
