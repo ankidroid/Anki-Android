@@ -20,6 +20,8 @@ public abstract class AbstractSched {
      */
     public abstract Card getCard();
     public abstract void reset();
+    /** Ensures that reset is executed before the next card is selected */
+    public abstract void planifyReset();
     public abstract void answerCard(Card card, int ease);
     public abstract int[] counts();
     public abstract int[] counts(Card card);

@@ -155,6 +155,11 @@ public class SchedV2 extends AbstractSched {
         return card;
     }
 
+    /** Ensures that reset is executed before the next card is selected */
+    public void planifyReset(){
+        mHaveQueues = false;
+    }
+
     public void reset() {
         mNextCard = null;
         _updateCutoff();
