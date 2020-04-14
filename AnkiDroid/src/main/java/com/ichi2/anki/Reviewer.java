@@ -124,7 +124,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Select the deck
         getCol().getDecks().select(did);
         // Reset the schedule so that we get the counts for the currently selected deck
-        getCol().getSched().reset();
+        getCol().getSched().planifyReset();
     }
 
     @Override
