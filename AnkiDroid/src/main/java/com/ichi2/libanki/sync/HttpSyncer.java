@@ -457,12 +457,15 @@ public class HttpSyncer {
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
         if (userPreferences != null && userPreferences.getBoolean("useCustomSyncServer", false)) {
             Uri syncBase = Uri.parse(userPreferences.getString("syncBaseUrl", Consts.SYNC_BASE));
-            return syncBase.buildUpon().appendPath("sync").toString() + "/";
+            return syncBase.buildUpon().appendPath(getUrlPrefix()).toString() + "/";
         }
         // Usual case
-        return Consts.SYNC_BASE + "sync/";
+        return Consts.SYNC_BASE + getUrlPrefix() + "/";
     }
 
+    protected String getUrlPrefix() {
+        return "sync";
+    }
 
     protected String getHostNum() {
         return mHostNum;
