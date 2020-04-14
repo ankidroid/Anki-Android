@@ -299,7 +299,7 @@ public class NoteEditor extends AnkiActivity {
         Intent intent = getIntent();
         if (savedInstanceState != null) {
             mCaller = savedInstanceState.getInt("caller");
-            mAddNote = savedInstanceState.getBoolean("addFact");
+            mAddNote = savedInstanceState.getBoolean("addNote");
             mCurrentDid = savedInstanceState.getLong("did");
             mSelectedTags = new ArrayList<>(Arrays.asList(savedInstanceState.getStringArray("tags")));
             mSavedFields = savedInstanceState.getBundle("editFields");
@@ -320,7 +320,7 @@ public class NoteEditor extends AnkiActivity {
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         Timber.i("Saving instance");
         savedInstanceState.putInt("caller", mCaller);
-        savedInstanceState.putBoolean("addFact", mAddNote);
+        savedInstanceState.putBoolean("addNote", mAddNote);
         savedInstanceState.putLong("did", mCurrentDid);
         if(mSelectedTags == null){
             mSelectedTags = new ArrayList<>();
