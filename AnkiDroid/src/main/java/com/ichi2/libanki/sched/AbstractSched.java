@@ -22,6 +22,8 @@ public abstract class AbstractSched {
     public abstract void reset();
     /** Ensures that reset is executed before the next card is selected */
     public abstract void planifyReset();
+    /** Empty list, set list of deck but don't compute numbers*/
+    public abstract void quickReset();
     public abstract void answerCard(Card card, int ease);
     public abstract int[] counts();
     public abstract int[] counts(Card card);

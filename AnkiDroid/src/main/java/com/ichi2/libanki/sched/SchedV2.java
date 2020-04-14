@@ -160,13 +160,19 @@ public class SchedV2 extends AbstractSched {
         mHaveQueues = false;
     }
 
+    public void quickReset() {
+        reset(false);
+    }
+
     public void reset() {
         mNextCard = null;
         _updateCutoff();
-        _resetLrn();
-        _resetRev();
-        _resetNew();
-        mHaveQueues = true;
+        _resetLrn(computeNumber);
+        _resetRev(computeNumber);
+        _resetNew(computeNumber);
+        if (computeNumber) {
+            mHaveQueues = true;
+        }
         backgroundNextCard();
     }
 
@@ -572,12 +578,19 @@ public class SchedV2 extends AbstractSched {
                 new Object[]{did, lim});
     }
 
-
     private void _resetNew() {
-        _resetNewCount();
+        _resetNew(true);
+    }
+
+    private void _resetNew(boolean computeNumber) {
+        if (computeNumber) {
+            _resetNewCount();
+        }
         mNewDids = new LinkedList<>(mCol.getDecks().active());
         mNewQueue.clear();
-        _updateNewCardRatio();
+        if (computeNumber) {
+            _updateNewCardRatio();
+        }
     }
 
 
@@ -765,8 +778,14 @@ public class SchedV2 extends AbstractSched {
 
 
     protected void _resetLrn() {
+        _resetLrn(true);
+    }
+
+    protected void _resetLrn(boolean computeNumber) {
         _updateLrnCutoff(true);
-        _resetLrnCount();
+        if (computeNumber) {
+            _resetLrnCount();
+        }
         mLrnQueue.clear();
         mLrnDayQueue.clear();
         mLrnDids = mCol.getDecks().active();
@@ -1233,7 +1252,13 @@ public class SchedV2 extends AbstractSched {
 
 
     protected void _resetRev() {
-        _resetRevCount();
+        _resetRev(true);
+    }
+
+    protected void _resetRev(boolean computeNumber) {
+        if (computeNumber) {
+            _resetRevCount();
+        }
         mRevQueue.clear();
     }
 
