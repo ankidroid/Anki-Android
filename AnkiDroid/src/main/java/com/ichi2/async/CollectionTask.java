@@ -1020,6 +1020,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             Object[] obj = params[0].getObjArray();
             boolean reset = (Boolean) obj[0];
             if (reset) {
+                // reset actually required because of counts, which is used in getCollectionTaskListener
                 sched.reset();
             }
             int[] counts = sched.counts();
