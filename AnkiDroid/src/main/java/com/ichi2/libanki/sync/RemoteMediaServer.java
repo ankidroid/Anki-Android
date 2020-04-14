@@ -65,6 +65,8 @@ public class RemoteMediaServer extends HttpSyncer {
             if (mediaSyncBase == null) {
                 return getDefaultAnkiWebUrl();
             }
+            //Note: the preference did not necessarily contain /msync/, so we can't concat with the default as done in
+            // getDefaultAnkiWebUrl
             return Uri.parse(mediaSyncBase).toString() + "/";
         }
         // Usual case
