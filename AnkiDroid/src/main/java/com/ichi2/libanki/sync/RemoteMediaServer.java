@@ -65,7 +65,7 @@ public class RemoteMediaServer extends HttpSyncer {
             return mediaSyncBase.toString() + "/";
         }
         // Usual case
-        return Consts.SYNC_MEDIA_BASE;
+        return Consts.SYNC_BASE + getUrlPrefix() + "/";
     }
 
 
@@ -183,5 +183,12 @@ public class RemoteMediaServer extends HttpSyncer {
             return (T) resp.getJSONArray("data");
         }
         throw new RuntimeException("Did not specify a valid type for the 'data' element in resopnse");
+    }
+
+    // Difference from libAnki: we allow a custom URL to specify a different prefix, so this is only used with the
+    // default URL
+    @Override
+    protected String getUrlPrefix() {
+        return "msync";
     }
 }
