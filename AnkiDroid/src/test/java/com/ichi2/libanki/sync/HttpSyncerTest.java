@@ -121,6 +121,6 @@ public class HttpSyncerTest {
 
     @NonNull
     private HttpSyncer getServerWithHostNum(String hostNum) {
-        return new HttpSyncer(null, null, hostNum);
+        return new HttpSyncer(null, null, new HostNum(hostNum));
     }
 }

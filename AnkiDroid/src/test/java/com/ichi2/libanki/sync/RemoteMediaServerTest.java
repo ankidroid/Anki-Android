@@ -122,6 +122,8 @@ public class RemoteMediaServerTest {
 
     @NonNull
     private RemoteMediaServer getServerWithHostNum(String hostNum) {
-        return new RemoteMediaServer(null, null, null, hostNum);
+        return new RemoteMediaServer(null, null, null, new HostNum(hostNum));
     }
+
+
 }

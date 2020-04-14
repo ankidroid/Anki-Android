@@ -26,12 +26,10 @@ import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
-import com.ichi2.utils.VersionUtils;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.VersionUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,7 +48,7 @@ public class RemoteMediaServer extends HttpSyncer {
     private Collection mCol;
 
 
-    public RemoteMediaServer(Collection col, String hkey, Connection con, String hostNum) {
+    public RemoteMediaServer(Collection col, String hkey, Connection con, HostNum hostNum) {
         super(hkey, con, hostNum);
         mCol = col;
     }
