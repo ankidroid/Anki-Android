@@ -60,7 +60,7 @@ public class RemoteMediaServer extends HttpSyncer {
     public String syncURL() {
         // Allow user to specify custom sync server
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        if (userPreferences!= null && userPreferences.getBoolean("useCustomSyncServer", false)) {
+        if (isUsingCustomSyncServer(userPreferences)) {
             Uri mediaSyncBase = Uri.parse(userPreferences.getString("syncMediaUrl", Consts.SYNC_MEDIA_BASE));
             return mediaSyncBase.toString() + "/";
         }
