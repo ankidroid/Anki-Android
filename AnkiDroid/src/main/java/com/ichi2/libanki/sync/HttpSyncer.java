@@ -90,6 +90,7 @@ public class HttpSyncer {
     protected String mSKey;
     protected Connection mCon;
     protected Map<String, Object> mPostVars;
+    private volatile OkHttpClient mHttpClient;
 
 
     public HttpSyncer(String hkey, Connection con) {
@@ -97,6 +98,41 @@ public class HttpSyncer {
         mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
         mCon = con;
         mPostVars = new HashMap<>();
+    }
+
+    private OkHttpClient.Builder getHttpClientBuilder() {
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
+                .addNetworkInterceptor(chain -> chain.proceed(
+                        chain.request()
+                                .newBuilder()
+                                .header("User-Agent", "AnkiDroid-" + VersionUtils.getPkgVersionName())
+                                .build()
+                ));
+        Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
+                .followRedirects(true)
+                .followSslRedirects(true)
+                .retryOnConnectionFailure(true)
+                .cache(null)
+                .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
+        return clientBuilder;
+    }
+
+    private OkHttpClient getHttpClient() {
+        if (this.mHttpClient != null) {
+            return mHttpClient;
+        }
+        return setupHttpClient();
+    }
+
+    //PERF: Thread safety isn't required for the current implementation
+    private synchronized OkHttpClient setupHttpClient() {
+        if (mHttpClient != null) {
+            return mHttpClient;
+        }
+        mHttpClient = getHttpClientBuilder().build();
+        return mHttpClient;
     }
 
 
@@ -201,21 +237,7 @@ public class HttpSyncer {
             Request httpPost = requestBuilder.build();
 
             try {
-                OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().addNetworkInterceptor(chain -> chain.proceed(
-                        chain.request()
-                                .newBuilder()
-                                .header("User-Agent", "AnkiDroid-" + VersionUtils.getPkgVersionName())
-                                .build()
-                ));
-                Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
-                        .followRedirects(true)
-                        .followSslRedirects(true)
-                        .retryOnConnectionFailure(true)
-                        .cache(null)
-                        .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                        .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                        .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
-                OkHttpClient httpClient = clientBuilder.build();
+                OkHttpClient httpClient = getHttpClient();
                 Response httpResponse = httpClient.newCall(httpPost).execute();
 
                 // we assume badAuthRaises flag from Anki Desktop always False
