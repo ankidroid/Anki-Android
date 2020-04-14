@@ -60,20 +60,6 @@ public class FullSyncer extends HttpSyncer {
         mCon = con;
     }
 
-
-    @Override
-    public String syncURL() {
-        // Allow user to specify custom sync server
-        SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        if (userPreferences!= null && userPreferences.getBoolean("useCustomSyncServer", false)) {
-            Uri syncBase = Uri.parse(userPreferences.getString("syncBaseUrl", Consts.SYNC_BASE));
-            return syncBase.buildUpon().appendPath("sync").toString() + "/";
-        }
-        // Usual case
-        return Consts.SYNC_BASE + "sync/";
-    }
-
-
     @Override
     public Object[] download() throws UnknownHttpResponseException {
         InputStream cont;
