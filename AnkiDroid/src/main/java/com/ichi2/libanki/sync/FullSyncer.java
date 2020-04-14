@@ -50,8 +50,8 @@ public class FullSyncer extends HttpSyncer {
     private Connection mCon;
 
 
-    public FullSyncer(Collection col, String hkey, Connection con) {
-        super(hkey, con);
+    public FullSyncer(Collection col, String hkey, Connection con, String hostNum) {
+        super(hkey, con, hostNum);
         mPostVars = new HashMap<>();
         mPostVars.put("k", hkey);
         mPostVars.put("v",

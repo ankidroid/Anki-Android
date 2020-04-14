@@ -90,14 +90,15 @@ public class HttpSyncer {
     protected String mSKey;
     protected Connection mCon;
     protected Map<String, Object> mPostVars;
+    private final String mHostNum;
     private volatile OkHttpClient mHttpClient;
 
-
-    public HttpSyncer(String hkey, Connection con) {
+    public HttpSyncer(String hkey, Connection con, String hostNum) {
         mHKey = hkey;
         mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
         mCon = con;
         mPostVars = new HashMap<>();
+        mHostNum = hostNum;
     }
 
     private OkHttpClient.Builder getHttpClientBuilder() {
@@ -460,6 +461,11 @@ public class HttpSyncer {
         }
         // Usual case
         return Consts.SYNC_BASE + "sync/";
+    }
+
+
+    protected String getHostNum() {
+        return mHostNum;
     }
 }
 
