@@ -446,7 +446,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                         // reload qa-cache
                         newCard.q(true);
                     } else {
-                        newCard = getCard(sched);
+                        newCard = sched.getCard();
                     }
                     publishProgress(new TaskData(newCard));
                 } else {
@@ -512,7 +512,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                     Timber.i("Answering card %d", oldCard.getId());
                     sched.answerCard(oldCard, ease);
                 }
-                newCard = getCard(sched);
+                newCard = sched.getCard();
                 if (newCard != null) {
                     // render cards before locking database
                     newCard._getQA(true);
@@ -528,11 +528,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             return new TaskData(false);
         }
         return new TaskData(true);
-    }
-
-
-    private Card getCard(AbstractSched sched) {
-        return sched.getCard();
     }
 
 
@@ -621,7 +616,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                     }
                 }
                 // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
-                publishProgress(new TaskData(getCard(col.getSched()), 0));
+                publishProgress(new TaskData(col.getSched().getCard(), 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
                 col.getDb().getDatabase().endTransaction();
@@ -819,7 +814,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                         }
                         // In all cases schedule a new card so Reviewer doesn't sit on the old one
                         col.reset();
-                        publishProgress(new TaskData(getCard(sched), 0));
+                        publishProgress(new TaskData(sched.getCard(), 0));
                         break;
                     }
                 }
@@ -871,7 +866,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                     sched.planifyReset();
                 } else if (cid != -1){
                     col.reset();
-                    newCard = getCard(sched);
+                    newCard = sched.getCard();
                 }
                 // TODO: handle leech undoing properly
                 publishProgress(new TaskData(newCard, 0));
