@@ -137,14 +137,14 @@ public class SchedV2 extends AbstractSched {
     public Card getCard() {
         _checkDay();
         if (!mHaveQueues) {
-            reset();
+            quickReset();
         }
         Card card;
         if (mNextCard != null) {
             card = mNextCard;
             mNextCard = null;
         } else {
-            card = _getCard();
+            card = _getCard(!mHaveQueues);
         }
         if (card != null) {
             mCol.log(card);
@@ -152,6 +152,9 @@ public class SchedV2 extends AbstractSched {
             card.startTimer();
         }
         backgroundNextCard();
+        if (!mHaveQueues) {
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_SCHED_RESET);
+        }
         return card;
     }
 
@@ -517,15 +520,15 @@ public class SchedV2 extends AbstractSched {
     /**
      * Return the next due card, or null.
      */
-    protected Card _getCard() {
+    protected Card _getCard(boolean ignoreNumbers) {
         // learning card due?
-        Card c = _getLrnCard();
+        Card c = _getLrnCard(false, ignoreNumbers);
         if (c != null) {
             return c;
         }
         // new first, or time for one?
-        if (_timeForNewCard()) {
-            c = _getNewCard();
+        if (_timeForNewCard(ignoreNumbers)) {
+            c = _getNewCard(ignoreNumbers);
             if (c != null) {
                 return c;
             }
@@ -533,30 +536,30 @@ public class SchedV2 extends AbstractSched {
         // Day learning first and card due?
         boolean dayLearnFirst = mCol.getConf().optBoolean("dayLearnFirst", false);
         if (dayLearnFirst) {
-            c = _getLrnDayCard();
+            c = _getLrnDayCard(ignoreNumbers);
             if (c != null) {
                 return c;
             }
         }
         // Card due for review?
-        c = _getRevCard();
+        c = _getRevCard(ignoreNumbers);
         if (c != null) {
             return c;
         }
         // day learning card due?
         if (!dayLearnFirst) {
-            c = _getLrnDayCard();
+            c = _getLrnDayCard(ignoreNumbers);
             if (c != null) {
                 return c;
             }
         }
         // New cards left?
-        c = _getNewCard();
+        c = _getNewCard(ignoreNumbers);
         if (c != null) {
             return c;
         }
         // collapse or finish
-        return _getLrnCard(true);
+        return _getLrnCard(true, ignoreNumbers);
     }
 
 
@@ -594,11 +597,11 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private boolean _fillNew() {
+    private boolean _fillNew(boolean ignoreNumbers) {
         if (!mNewQueue.isEmpty()) {
             return true;
         }
-        if (mNewCount == 0) {
+        if (!ignoreNumbers && mNewCount == 0) {
             return false;
         }
         while (!mNewDids.isEmpty()) {
@@ -632,19 +635,19 @@ public class SchedV2 extends AbstractSched {
             // nothing left in the deck; move to next
             mNewDids.remove();
         }
-        if (mNewCount != 0) {
+        if (!ignoreNumbers && mNewCount != 0) {
             // if we didn't get a card but the count is non-zero,
             // we need to check again for any cards that were
             // removed from the queue but not buried
             _resetNew();
-            return _fillNew();
+            return _fillNew(ignoreNumbers);
         }
         return false;
     }
 
 
-    protected Card _getNewCard() {
-        if (_fillNew()) {
+    protected Card _getNewCard(boolean ignoreNumbers) {
+        if (_fillNew(ignoreNumbers)) {
             mNewCount -= 1;
             return mCol.getCard(mNewQueue.remove());
         }
@@ -670,8 +673,8 @@ public class SchedV2 extends AbstractSched {
     /**
      * @return True if it's time to display a new card when distributing.
      */
-    protected boolean _timeForNewCard() {
-        if (mNewCount == 0) {
+    protected boolean _timeForNewCard(boolean ignoreNumbers) {
+        if (!ignoreNumbers && mNewCount == 0) {
             return false;
         }
         int spread;
@@ -681,6 +684,8 @@ public class SchedV2 extends AbstractSched {
         } else if (spread == Consts.NEW_CARDS_FIRST) {
             return true;
         } else if (mNewCardModulus != 0) {
+            // if the counter has not yet been resetted, this value is
+            // random. This will occur only for the first card of review.
             return (mReps != 0 && (mReps % mNewCardModulus == 0));
         } else {
             return false;
@@ -793,8 +798,8 @@ public class SchedV2 extends AbstractSched {
 
 
     // sub-day learning
-    protected boolean _fillLrn() {
-        if (mLrnCount == 0) {
+    protected boolean _fillLrn(boolean ignoreNumbers) {
+        if (!ignoreNumbers && mLrnCount == 0) {
             return false;
         }
         if (!mLrnQueue.isEmpty()) {
@@ -830,14 +835,9 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected Card _getLrnCard() {
-        return _getLrnCard(false);
-    }
-
-
-    protected Card _getLrnCard(boolean collapse) {
+    protected Card _getLrnCard(boolean collapse, boolean ignoreNumbers) {
         _maybeResetLrn(collapse && mLrnCount == 0);
-        if (_fillLrn()) {
+        if (_fillLrn(ignoreNumbers)) {
             double cutoff = Utils.now();
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
@@ -854,8 +854,8 @@ public class SchedV2 extends AbstractSched {
 
 
     // daily learning
-    private boolean _fillLrnDay() {
-        if (mLrnCount == 0) {
+    private boolean _fillLrnDay(boolean ignoreNumbers) {
+        if (!ignoreNumbers && mLrnCount == 0) {
             return false;
         }
         if (!mLrnDayQueue.isEmpty()) {
@@ -899,8 +899,8 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected Card _getLrnDayCard() {
-        if (_fillLrnDay()) {
+    protected Card _getLrnDayCard(boolean ignoreNumbers) {
+        if (_fillLrnDay(ignoreNumbers)) {
             mLrnCount -= 1;
             return mCol.getCard(mLrnDayQueue.remove());
         }
@@ -1263,11 +1263,11 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected boolean _fillRev() {
+    protected boolean _fillRev(boolean ignoreNumbers) {
         if (!mRevQueue.isEmpty()) {
             return true;
         }
-        if (mRevCount == 0) {
+        if (!ignoreNumbers && mRevCount == 0) {
             return false;
         }
         int lim = Math.min(mQueueLimit, _currentRevLimit());
@@ -1299,19 +1299,19 @@ public class SchedV2 extends AbstractSched {
                 return true;
             }
         }
-        if (mRevCount != 0) {
+        if (!ignoreNumbers && mRevCount != 0) {
             // if we didn't get a card but the count is non-zero,
             // we need to check again for any cards that were
             // removed from the queue but not buried
             _resetRev();
-            return _fillRev();
+            return _fillRev(ignoreNumbers);
         }
         return false;
     }
 
 
-    protected Card _getRevCard() {
-        if (_fillRev()) {
+    protected Card _getRevCard(boolean ignoreNumbers) {
+        if (_fillRev(ignoreNumbers)) {
             mRevCount -= 1;
             return mCol.getCard(mRevQueue.remove());
         } else {

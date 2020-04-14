@@ -320,36 +320,36 @@ public class Sched extends SchedV2 {
      * Return the next due card, or null.
      */
     @Override
-    protected Card _getCard() {
+    protected Card _getCard(boolean ignoreNumbers) {
         // learning card due?
-        Card c = _getLrnCard();
+        Card c = _getLrnCard(false, ignoreNumbers);
         if (c != null) {
             return c;
         }
         // new first, or time for one?
-        if (_timeForNewCard()) {
-            c = _getNewCard();
+        if (_timeForNewCard(ignoreNumbers)) {
+            c = _getNewCard(ignoreNumbers);
             if (c != null) {
                 return c;
             }
         }
         // Card due for review?
-        c = _getRevCard();
+        c = _getRevCard(ignoreNumbers);
         if (c != null) {
             return c;
         }
         // day learning card due?
-        c = _getLrnDayCard();
+        c = _getLrnDayCard(ignoreNumbers);
         if (c != null) {
             return c;
         }
         // New cards left?
-        c = _getNewCard();
+        c = _getNewCard(ignoreNumbers);
         if (c != null) {
             return c;
         }
         // collapse or finish
-        return _getLrnCard(true);
+        return _getLrnCard(true, ignoreNumbers);
     }
 
 
@@ -421,8 +421,8 @@ public class Sched extends SchedV2 {
 
     // sub-day learning
     @Override
-    protected boolean _fillLrn() {
-        if (mLrnCount == 0) {
+    protected boolean _fillLrn(boolean ignoreNumbers) {
+        if (!ignoreNumbers && mLrnCount == 0) {
             return false;
         }
         if (!mLrnQueue.isEmpty()) {
@@ -457,14 +457,8 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected Card _getLrnCard() {
-        return _getLrnCard(false);
-    }
-
-
-    @Override
-    protected Card _getLrnCard(boolean collapse) {
-        if (_fillLrn()) {
+    protected Card _getLrnCard(boolean collapse, boolean ignoreNumbers) {
+        if (_fillLrn(ignoreNumbers)) {
             double cutoff = Utils.now();
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
@@ -768,11 +762,11 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected boolean _fillRev() {
+    protected boolean _fillRev(boolean ignoreNumbers) {
         if (!mRevQueue.isEmpty()) {
             return true;
         }
-        if (mRevCount == 0) {
+        if (!ignoreNumbers && mRevCount == 0) {
             return false;
         }
         while (!mRevDids.isEmpty()) {
@@ -820,12 +814,12 @@ public class Sched extends SchedV2 {
             // nothing left in the deck; move to next
             mRevDids.remove();
         }
-        if (mRevCount != 0) {
+        if (!ignoreNumbers && mRevCount != 0) {
             // if we didn't get a card but the count is non-zero,
             // we need to check again for any cards that were
             // removed from the queue but not buried
             _resetRev();
-            return _fillRev();
+            return _fillRev(ignoreNumbers);
         }
         return false;
     }
