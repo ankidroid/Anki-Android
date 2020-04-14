@@ -400,7 +400,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 db.getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding fact");
+            Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote");
             return new TaskData(false);
         }
@@ -443,7 +443,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 col.getDb().getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating fact");
+            Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
             return new TaskData(false);
         }
@@ -475,7 +475,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 col.getDb().getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating fact");
+            Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
             return new TaskData(false);
         }
