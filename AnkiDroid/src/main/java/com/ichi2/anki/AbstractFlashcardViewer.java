@@ -1754,8 +1754,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void updateScreenCounts() {
-        ActionBar actionBar = getSupportActionBar();
         if (mCurrentCard == null) return;
+        ActionBar actionBar = getSupportActionBar();
         int[] counts = mSched.counts(mCurrentCard);
 
         if (actionBar != null) {
