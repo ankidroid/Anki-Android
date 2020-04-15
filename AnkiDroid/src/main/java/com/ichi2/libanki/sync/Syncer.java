@@ -255,7 +255,9 @@ public class Syncer {
         //We perform this as old version of the sync server may not provide the hostNum
         //And it's fine to continue without one.
         try {
-            mHostNum.setHostNum(rMeta.getString("hostNum"));
+            if (rMeta.has("hostNum")) {
+                mHostNum.setHostNum(rMeta.getInt("hostNum"));
+            }
         } catch (Exception e) {
             Timber.w(e, "Failed to set hostNum");
         }

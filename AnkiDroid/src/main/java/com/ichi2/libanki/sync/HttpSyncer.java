@@ -465,7 +465,7 @@ public class HttpSyncer {
         return "sync";
     }
 
-    protected String getHostNum() {
+    protected Integer getHostNum() {
         return mHostNum.getHostNum();
     }
 
@@ -474,7 +474,12 @@ public class HttpSyncer {
     }
 
     protected String getDefaultAnkiWebUrl() {
-        return String.format(Consts.SYNC_BASE, getHostNum()) + getUrlPrefix() + "/";
+        String hostNumAsStringFormat = "";
+        Integer hostNum = getHostNum();
+        if (hostNum != null) {
+            hostNumAsStringFormat = hostNum.toString();
+        }
+        return String.format(Consts.SYNC_BASE, hostNumAsStringFormat) + getUrlPrefix() + "/";
     }
 }
 

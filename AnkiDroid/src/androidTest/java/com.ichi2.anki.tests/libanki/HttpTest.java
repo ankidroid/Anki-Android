@@ -36,7 +36,7 @@ public class HttpTest {
 
         String username = "AnkiDroidInstrumentedTestUser";
         String password = "AnkiDroidInstrumentedTestInvalidPass";
-        Connection.Payload invalidPayload = new Connection.Payload(new Object[]{username, password, new HostNum("")});
+        Connection.Payload invalidPayload = new Connection.Payload(new Object[]{username, password, new HostNum(null)});
         TestTaskListener testListener = new TestTaskListener(invalidPayload);
 
         // We have to carefully run things on the main thread here or the threading protections in BaseAsyncTask throw

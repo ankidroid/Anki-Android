@@ -24,7 +24,7 @@ public class HttpSyncerTest {
 
     @Test
     public void getDefaultMediaUrlWithNoHostNum() {
-        HttpSyncer underTest = getServerWithHostNum("");
+        HttpSyncer underTest = getServerWithHostNum(null);
 
         String syncUrl = underTest.syncURL();
 
@@ -34,7 +34,7 @@ public class HttpSyncerTest {
 
     @Test
     public void getDefaultMediaUrlWithHostNum() {
-        HttpSyncer underTest = getServerWithHostNum("1");
+        HttpSyncer underTest = getServerWithHostNum(1);
 
         String syncUrl = underTest.syncURL();
 
@@ -45,7 +45,7 @@ public class HttpSyncerTest {
     @Test
     @Ignore("Not yet supported")
     public void getCustomMediaUrlWithNoHostNum() {
-        HttpSyncer underTest = getServerWithHostNum("");
+        HttpSyncer underTest = getServerWithHostNum(null);
         setCustomServer(sCustomServerWithFormatting);
 
         String syncUrl = underTest.syncURL();
@@ -57,7 +57,7 @@ public class HttpSyncerTest {
     @Test
     @Ignore("Not yet supported")
     public void getCustomMediaUrlWithHostNum() {
-        HttpSyncer underTest = getServerWithHostNum("1");
+        HttpSyncer underTest = getServerWithHostNum(1);
         setCustomServer(sCustomServerWithFormatting);
 
         String syncUrl = underTest.syncURL();
@@ -67,7 +67,7 @@ public class HttpSyncerTest {
 
     @Test
     public void getUnformattedCustomMediaUrlWithHostNum() {
-        HttpSyncer underTest = getServerWithHostNum("");
+        HttpSyncer underTest = getServerWithHostNum(null);
         setCustomServer(sCustomServerWithNoFormatting);
 
         String syncUrl = underTest.syncURL();
@@ -77,7 +77,7 @@ public class HttpSyncerTest {
 
     @Test
     public void getUnformattedCustomMediaUrlWithNoHostNum() {
-        HttpSyncer underTest = getServerWithHostNum("1");
+        HttpSyncer underTest = getServerWithHostNum(1);
         setCustomServer(sCustomServerWithNoFormatting);
 
         String syncUrl = underTest.syncURL();
@@ -87,7 +87,7 @@ public class HttpSyncerTest {
 
     @Test
     public void invalidSettingReturnsCorrectResultWithNoHostNum() {
-        HttpSyncer underTest = getServerWithHostNum("");
+        HttpSyncer underTest = getServerWithHostNum(null);
         setCustomServerWithNoUrl();
 
         String syncUrl = underTest.syncURL();
@@ -97,7 +97,7 @@ public class HttpSyncerTest {
 
     @Test
     public void invalidSettingReturnsCorrectResultWithHostNum() {
-        HttpSyncer underTest = getServerWithHostNum("1");
+        HttpSyncer underTest = getServerWithHostNum(1);
         setCustomServerWithNoUrl();
 
         String syncUrl = underTest.syncURL();
@@ -120,7 +120,7 @@ public class HttpSyncerTest {
     }
 
     @NonNull
-    private HttpSyncer getServerWithHostNum(String hostNum) {
+    private HttpSyncer getServerWithHostNum(Integer hostNum) {
         return new HttpSyncer(null, null, new HostNum(hostNum));
     }
 }

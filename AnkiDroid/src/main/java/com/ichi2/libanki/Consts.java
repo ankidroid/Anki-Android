@@ -80,7 +80,7 @@ public class Consts {
     public static final int SYNC_ZIP_SIZE = (int)(2.5*1024*1024);
     public static final int SYNC_ZIP_COUNT = 25;
     public static final String SYNC_BASE = "https://sync%s.ankiweb.net/";
-    public static final String DEFAULT_HOST_NUM = "";
+    public static final Integer DEFAULT_HOST_NUM = null;
     public static final int SYNC_VER = 9;
 
     public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
