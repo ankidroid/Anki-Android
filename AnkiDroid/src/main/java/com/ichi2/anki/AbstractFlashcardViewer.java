@@ -1754,10 +1754,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void updateScreenCounts() {
+        int[] counts = mSched.counts(mCurrentCard);
+        updateScreenCounts(counts);
+    }
+
+    protected void updateScreenCounts(int[] counts) {
         if (mCurrentCard == null) return;
         ActionBar actionBar = getSupportActionBar();
-        int[] counts = mSched.counts(mCurrentCard);
-
         if (actionBar != null) {
             String title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
             actionBar.setTitle(title);
