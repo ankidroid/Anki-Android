@@ -141,9 +141,8 @@ public class SchedV2 extends AbstractSched {
             mCol.log(card);
             mReps += 1;
             card.startTimer();
-            return card;
         }
-        return null;
+        return card;
     }
 
 
