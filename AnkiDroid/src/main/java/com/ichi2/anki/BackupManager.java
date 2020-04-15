@@ -172,7 +172,7 @@ public class BackupManager {
                 // Save collection file as zip archive
                 try {
                     ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
-                    ZipEntry ze = new ZipEntry("collection.anki2");
+                    ZipEntry ze = new ZipEntry(CollectionHelper.COLLECTION_FILENAME);
                     zos.putNextEntry(ze);
                     CompatHelper.getCompat().copyFile(colPath, zos);
                     zos.close();
