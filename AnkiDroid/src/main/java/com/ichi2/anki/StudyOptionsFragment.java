@@ -107,13 +107,26 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     private StudyOptionsListener mListener;
 
-
+    /**
+     * Callbacks for UI events
+     */
+    private View.OnClickListener mButtonClickListener = v -> {
+        if (v.getId() == R.id.studyoptions_start) {
+            Timber.i("StudyOptionsFragment:: start study button pressed");
+            if (mCurrentContentView != CONTENT_CONGRATS) {
+                openReviewer();
+            } else {
+                showCustomStudyContextMenu();
+            }
+        }
+    };
+    
     public interface StudyOptionsListener {
         void onRequireDeckListUpdate();
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             mListener = (StudyOptionsListener) context;
@@ -121,28 +134,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             throw new ClassCastException(context.toString() + " must implement StudyOptionsListener");
         }
     }
-
-
-    /**
-     * Callbacks for UI events
-     */
-    private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            // long timeLimit = 0;
-            switch (v.getId()) {
-                case R.id.studyoptions_start:
-                    Timber.i("StudyOptionsFragment:: start study button pressed");
-                    if (mCurrentContentView != CONTENT_CONGRATS) {
-                        openReviewer();
-                    } else {
-                        showCustomStudyContextMenu();
-                    }
-                    return;
-                default:
-            }
-        }
-    };
 
     private void openFilteredDeckOptions() {
         openFilteredDeckOptions(false);
@@ -186,7 +177,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null) {
             // Currently in a layout without a container, so no reason to create our view.
             return null;
@@ -195,7 +186,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         mStudyOptionsView = studyOptionsView;
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
         initAllContentViews(studyOptionsView);
-        mToolbar = (Toolbar) studyOptionsView.findViewById(R.id.studyOptionsToolbar);
+        mToolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar);
         mToolbar.inflateMenu(R.menu.study_options_fragment);
         if (mToolbar != null) {
             configureToolbar();
@@ -262,19 +253,19 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             studyOptionsView.findViewById(R.id.studyoptions_gradient).setVisibility(View.VISIBLE);
         }
         mDeckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckinformation);
-        mTextDeckName = (TextView) studyOptionsView.findViewById(R.id.studyoptions_deck_name);
-        mTextDeckDescription = (TextView) studyOptionsView.findViewById(R.id.studyoptions_deck_description);
+        mTextDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name);
+        mTextDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description);
         // make links clickable
         mTextDeckDescription.setMovementMethod(LinkMovementMethod.getInstance());
-        mButtonStart = (Button) studyOptionsView.findViewById(R.id.studyoptions_start);
-        mTextCongratsMessage = (TextView) studyOptionsView.findViewById(R.id.studyoptions_congrats_message);
+        mButtonStart = studyOptionsView.findViewById(R.id.studyoptions_start);
+        mTextCongratsMessage = studyOptionsView.findViewById(R.id.studyoptions_congrats_message);
         // Code common to both fragmented and non-fragmented view
-        mTextTodayNew = (TextView) studyOptionsView.findViewById(R.id.studyoptions_new);
-        mTextTodayLrn = (TextView) studyOptionsView.findViewById(R.id.studyoptions_lrn);
-        mTextTodayRev = (TextView) studyOptionsView.findViewById(R.id.studyoptions_rev);
-        mTextNewTotal = (TextView) studyOptionsView.findViewById(R.id.studyoptions_total_new);
-        mTextTotal = (TextView) studyOptionsView.findViewById(R.id.studyoptions_total);
-        mTextETA = (TextView) studyOptionsView.findViewById(R.id.studyoptions_eta);
+        mTextTodayNew = studyOptionsView.findViewById(R.id.studyoptions_new);
+        mTextTodayLrn = studyOptionsView.findViewById(R.id.studyoptions_lrn);
+        mTextTodayRev = studyOptionsView.findViewById(R.id.studyoptions_rev);
+        mTextNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new);
+        mTextTotal = studyOptionsView.findViewById(R.id.studyoptions_total);
+        mTextETA = studyOptionsView.findViewById(R.id.studyoptions_eta);
         mButtonStart.setOnClickListener(mButtonClickListener);
     }
 
@@ -486,7 +477,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             try {
                 mProgressDialog.dismiss();
             } catch (Exception e) {
-                Timber.e("onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                Timber.e("onPostExecute - Dialog dismiss Exception = %s", e.getMessage());
             }
         }
     }
@@ -647,11 +638,10 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                             public void run() {
                                 Collection collection = getCol();
                                 // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
-                                StringBuilder sbQuery = new StringBuilder();
-                                sbQuery.append("SELECT count(*) FROM cards WHERE did IN ");
-                                sbQuery.append(Utils.ids2str(collection.getDecks().active()));
-                                sbQuery.append(" AND queue = " + Consts.QUEUE_TYPE_NEW);
-                                final int fullNewCount = collection.getDb().queryScalar(sbQuery.toString());
+                                String query = "SELECT count(*) FROM cards WHERE did IN " +
+                                        Utils.ids2str(collection.getDecks().active()) +
+                                        " AND queue = " + Consts.QUEUE_TYPE_NEW;
+                                final int fullNewCount = collection.getDb().queryScalar(query);
                                 if (fullNewCount > 0) {
                                     Runnable setNewTotalText = new Runnable() {
                                         @Override
