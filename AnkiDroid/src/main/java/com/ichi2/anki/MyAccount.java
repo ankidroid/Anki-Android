@@ -128,6 +128,7 @@ public class MyAccount extends AnkiActivity {
         Editor editor = preferences.edit();
         editor.putString("username", "");
         editor.putString("hkey", "");
+        PreferenceBackedHostNum.resetHostNum(editor);
         editor.apply();
         //  force media resync on deauth
         getCol().getMedia().forceResync();

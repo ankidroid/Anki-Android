@@ -4,8 +4,10 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 public class CustomSyncServer {
+    //COULD_BE_BETTER: coupled to PreferenceBackedHostNum
     public static final String PREFERENCE_CUSTOM_SYNC_BASE = "syncBaseUrl";
     public static final String PREFERENCE_CUSTOM_MEDIA_SYNC_URL = "syncMediaUrl";
     public static final String PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER = "useCustomSyncServer";
@@ -26,5 +28,14 @@ public class CustomSyncServer {
 
     public static boolean isEnabled(@NonNull SharedPreferences userPreferences) {
         return userPreferences.getBoolean(PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, false);
+    }
+
+    public static void handleSyncServerPreferenceChange(SharedPreferences prefs) {
+        Timber.i("Sync Server Preferences updated.");
+        // #4921 - if any of the preferences change, we should reset the HostNum.
+        // This is because different servers use different HostNums for data mappings.
+        SharedPreferences.Editor e = prefs.edit();
+        PreferenceBackedHostNum.resetHostNum(e);
+        e.apply();
     }
 }
