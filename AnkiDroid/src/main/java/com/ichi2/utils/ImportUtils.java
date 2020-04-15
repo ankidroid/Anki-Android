@@ -90,6 +90,8 @@ public class ImportUtils {
 
 
     private static String handleContentProviderFile(Context context, Intent intent, Uri data) {
+        //Note: intent.getData() can be null. Use data instead.
+
         // Get the original filename from the content provider URI
         String errorMessage = null;
         String filename = null;
@@ -102,7 +104,7 @@ public class ImportUtils {
 
         // Hack to fix bug where ContentResolver not returning filename correctly
         if (filename == null) {
-            if (intent.getType() != null && ("application/apkg".equals(intent.getType()) || ImportUtils.hasValidZipFile(context, intent))) {
+            if (intent.getType() != null && ("application/apkg".equals(intent.getType()) || ImportUtils.hasValidZipFile(context, data))) {
                 // Set a dummy filename if MIME type provided or is a valid zip file
                 filename = "unknown_filename.apkg";
                 Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue");
@@ -119,7 +121,7 @@ public class ImportUtils {
         } else if (filename != null) {
             // Copy to temporary file
             String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
-            errorMessage = ImportUtils.copyFileToCache(context, intent, tempOutDir) ? null : "copyFileToCache() failed (possibly out of storage space)";
+            errorMessage = ImportUtils.copyFileToCache(context, data, tempOutDir) ? null : "copyFileToCache() failed (possibly out of storage space)";
             // Show import dialog
             if (errorMessage == null) {
                 ImportUtils.sendShowImportFileDialogMsg(tempOutDir);
@@ -186,14 +188,14 @@ public class ImportUtils {
 
     /**
      * Check if the InputStream is to a valid non-empty zip file
-     * @param intent intent from which to get input stream
+     * @param data uri from which to get input stream
      * @return whether or not valid zip file
      */
-    private static boolean hasValidZipFile(Context context, Intent intent) {
+    private static boolean hasValidZipFile(Context context, Uri data) {
         // Get an input stream to the data in ContentProvider
         InputStream in = null;
         try {
-            in = context.getContentResolver().openInputStream(intent.getData());
+            in = context.getContentResolver().openInputStream(data);
         } catch (FileNotFoundException e) {
             Timber.e(e, "Could not open input stream to intent data");
         }
@@ -231,15 +233,15 @@ public class ImportUtils {
 
     /**
      * Copy the data from the intent to a temporary file
-     * @param intent intent from which to get input stream
+     * @param data intent from which to get input stream
      * @param tempPath temporary path to store the cached file
      * @return whether or not copy was successful
      */
-    private static boolean copyFileToCache(Context context, Intent intent, String tempPath) {
+    private static boolean copyFileToCache(Context context, Uri data, String tempPath) {
         // Get an input stream to the data in ContentProvider
         InputStream in;
         try {
-            in = context.getContentResolver().openInputStream(intent.getData());
+            in = context.getContentResolver().openInputStream(data);
         } catch (FileNotFoundException e) {
             Timber.e(e, "Could not open input stream to intent data");
             return false;
