@@ -17,12 +17,6 @@ public class DeckNameComparator implements Comparator<String> {
                 return result;
             }
         }
-        if (o1.length < o2.length) {
-            return -1;
-        } else if (o1.length > o2.length) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return Integer.compare(o1.length, o2.length);
     }
 }
