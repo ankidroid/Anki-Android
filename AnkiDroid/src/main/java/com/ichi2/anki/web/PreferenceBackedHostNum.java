@@ -24,6 +24,12 @@ public class PreferenceBackedHostNum extends HostNum {
         return new PreferenceBackedHostNum(hostNum, preferences);
     }
 
+    /** Clearing hostNum whenever on log out/changes the server URL should avoid any problems with malicious servers*/
+    public static void resetHostNum(SharedPreferences.Editor editor) {
+        editor.putString("hostNum", Consts.DEFAULT_HOST_NUM);
+    }
+
+
     @Override
     public String getHostNum() {
         String hostNum = mPreferences.getString("hostNum", null);
