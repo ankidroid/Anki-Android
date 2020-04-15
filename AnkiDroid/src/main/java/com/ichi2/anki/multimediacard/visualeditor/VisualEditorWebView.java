@@ -262,6 +262,10 @@ public abstract class VisualEditorWebView extends WebView {
         return String.format("#%06X", (color & 0xFFFFFF));
     }
 
+    public void load() {
+        execFunction("resizeImages"); //This is called on window.onload in the card viewer.
+    }
+
     public abstract void insertCloze(int clozeId);
 
 

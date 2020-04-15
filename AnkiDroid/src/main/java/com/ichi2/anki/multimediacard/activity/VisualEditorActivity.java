@@ -248,6 +248,8 @@ public class VisualEditorActivity extends AnkiActivity {
 
         webView.setHtml(mCurrentText);
 
+        webView.load();
+
         //Could be better, this is done per card in AbstractFlashCardViewer
         webView.getSettings().setDefaultFontSize(CardAppearance.calculateDynamicFontSize(mCurrentText));
     }
