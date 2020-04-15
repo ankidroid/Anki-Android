@@ -25,7 +25,7 @@ public class RemoteMediaServerTest {
 
     @Test
     public void getDefaultMediaUrlWithNoHostNum() {
-        RemoteMediaServer underTest = getServerWithHostNum("");
+        RemoteMediaServer underTest = getServerWithHostNum(null);
 
         String syncUrl = underTest.syncURL();
 
@@ -35,7 +35,7 @@ public class RemoteMediaServerTest {
 
     @Test
     public void getDefaultMediaUrlWithHostNum() {
-        RemoteMediaServer underTest = getServerWithHostNum("1");
+        RemoteMediaServer underTest = getServerWithHostNum(1);
 
         String syncUrl = underTest.syncURL();
 
@@ -46,7 +46,7 @@ public class RemoteMediaServerTest {
     @Test
     @Ignore("Not yet supported")
     public void getCustomMediaUrlWithNoHostNum() {
-        RemoteMediaServer underTest = getServerWithHostNum("");
+        RemoteMediaServer underTest = getServerWithHostNum(null);
         setCustomMediaServer(sCustomServerWithFormatting);
 
         String syncUrl = underTest.syncURL();
@@ -58,7 +58,7 @@ public class RemoteMediaServerTest {
     @Test
     @Ignore("Not yet supported")
     public void getCustomMediaUrlWithHostNum() {
-        RemoteMediaServer underTest = getServerWithHostNum("1");
+        RemoteMediaServer underTest = getServerWithHostNum(1);
         setCustomMediaServer(sCustomServerWithFormatting);
 
         String syncUrl = underTest.syncURL();
@@ -68,7 +68,7 @@ public class RemoteMediaServerTest {
 
     @Test
     public void getUnformattedCustomMediaUrlWithHostNum() {
-        RemoteMediaServer underTest = getServerWithHostNum("");
+        RemoteMediaServer underTest = getServerWithHostNum(null);
         setCustomMediaServer(sCustomServerWithNoFormatting);
 
         String syncUrl = underTest.syncURL();
@@ -78,7 +78,7 @@ public class RemoteMediaServerTest {
 
     @Test
     public void getUnformattedCustomMediaUrlWithNoHostNum() {
-        RemoteMediaServer underTest = getServerWithHostNum("1");
+        RemoteMediaServer underTest = getServerWithHostNum(1);
         setCustomMediaServer(sCustomServerWithNoFormatting);
 
         String syncUrl = underTest.syncURL();
@@ -88,7 +88,7 @@ public class RemoteMediaServerTest {
 
     @Test
     public void invalidSettingReturnsCorrectResultWithNoHostNum() {
-        RemoteMediaServer underTest = getServerWithHostNum("");
+        RemoteMediaServer underTest = getServerWithHostNum(null);
         setCustomServerWithNoUrl();
 
         String syncUrl = underTest.syncURL();
@@ -98,7 +98,7 @@ public class RemoteMediaServerTest {
 
     @Test
     public void invalidSettingReturnsCorrectResultWithHostNum() {
-        RemoteMediaServer underTest = getServerWithHostNum("1");
+        RemoteMediaServer underTest = getServerWithHostNum(1);
         setCustomServerWithNoUrl();
 
         String syncUrl = underTest.syncURL();
@@ -121,7 +121,7 @@ public class RemoteMediaServerTest {
     }
 
     @NonNull
-    private RemoteMediaServer getServerWithHostNum(String hostNum) {
+    private RemoteMediaServer getServerWithHostNum(Integer hostNum) {
         return new RemoteMediaServer(null, null, null, new HostNum(hostNum));
     }
 

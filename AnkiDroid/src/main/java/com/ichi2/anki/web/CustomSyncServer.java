@@ -34,8 +34,6 @@ public class CustomSyncServer {
         Timber.i("Sync Server Preferences updated.");
         // #4921 - if any of the preferences change, we should reset the HostNum.
         // This is because different servers use different HostNums for data mappings.
-        SharedPreferences.Editor e = prefs.edit();
-        PreferenceBackedHostNum.resetHostNum(e);
-        e.apply();
+        PreferenceBackedHostNum.fromPreferences(prefs).reset();
     }
 }
