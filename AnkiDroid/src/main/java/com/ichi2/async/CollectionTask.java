@@ -135,6 +135,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
      * @param params to pass to the task
      * @return the newly created task
      */
+    public static CollectionTask launchCollectionTask(int type, TaskData... params) {
+        return launchCollectionTask(type, null, params);
+    }
+
     public static CollectionTask launchCollectionTask(int type, Listener listener, TaskData... params) {
         // Start new task
         CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
@@ -360,7 +364,9 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mListener.onPreExecute(this);
+        if (mListener != null) {
+            mListener.onPreExecute(this);
+        }
     }
 
 
@@ -368,7 +374,9 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     @Override
     protected void onProgressUpdate(TaskData... values) {
         super.onProgressUpdate(values);
-        mListener.onProgressUpdate(this, values);
+        if (mListener != null) {
+            mListener.onProgressUpdate(this, values);
+        }
     }
 
 
@@ -376,14 +384,18 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     @Override
     protected void onPostExecute(TaskData result) {
         super.onPostExecute(result);
-        mListener.onPostExecute(this, result);
+        if (mListener != null) {
+            mListener.onPostExecute(this, result);
+        }
         Timber.d("enabling garbage collection of mPreviousTask...");
         mPreviousTask = null;
     }
 
     @Override
     protected void onCancelled(){
-        mListener.onCancelled();
+        if (mListener != null) {
+            mListener.onCancelled();
+        }
     }
 
     private TaskData doInBackgroundAddNote(TaskData[] params) {
