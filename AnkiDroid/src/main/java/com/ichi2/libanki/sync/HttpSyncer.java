@@ -220,17 +220,7 @@ public class HttpSyncer {
             bos.close();
             // connection headers
 
-            // Likely can be removed:
-            // https://github.com/ankidroid/Anki-Android/issues/4921#issuecomment-613566744
-            String url = Consts.LEGACY_SYNC_BASE;
-            if ("register".equals(method)) {
-                url = url + "account/signup" + "?username=" + registerData.getString("u") + "&password="
-                        + registerData.getString("p");
-            } else if (method.startsWith("upgrade")) {
-                url = url + method;
-            } else {
-                url = syncURL() + method;
-            }
+            String url = syncURL() + method;
 
             Request.Builder requestBuilder = new Request.Builder();
             requestBuilder.url(url);
