@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
+import com.ichi2.anki.web.CustomSyncServer;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -59,7 +60,7 @@ public class RemoteMediaServer extends HttpSyncer {
         // Allow user to specify custom sync server
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
         if (isUsingCustomSyncServer(userPreferences)) {
-            String mediaSyncBase = userPreferences.getString("syncMediaUrl", null);
+            String mediaSyncBase = CustomSyncServer.getMediaSyncUrl(userPreferences);
             if (mediaSyncBase == null) {
                 return getDefaultAnkiWebUrl();
             }
