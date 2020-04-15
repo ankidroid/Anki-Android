@@ -1091,7 +1091,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         try {
             // v2 scheduler?
             if (zip.getEntry(colname) == null) {
-                colname = "collection.anki2";
+                colname = CollectionHelper.COLLECTION_FILENAME;
             }
             Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] { colname, "media" }, null);
         } catch (IOException e) {
