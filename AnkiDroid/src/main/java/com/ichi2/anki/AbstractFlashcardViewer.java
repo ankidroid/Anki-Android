@@ -1754,9 +1754,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void updateScreenCounts() {
-        int[] counts = mSched.counts(mCurrentCard);
-        updateScreenCounts(counts);
-    }
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_SCHED_COUNT,
+                                            new CollectionTask.TaskListener(){
+                                                @Override
+                                                public void onPreExecute() {
+
+                                                }
+
+                                                @Override
+                                                public void onPostExecute(CollectionTask.TaskData result) {
+                                                    int [] counts = result.getCounts();
+                                                    updateScreenCounts(counts);
+                                                }
+                                            }
+                                            );
+            }
 
     protected void updateScreenCounts(int[] counts) {
         if (mCurrentCard == null) return;
