@@ -30,7 +30,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.web.PreferenceBackedHostNum;
+import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledProgressDialog;
@@ -114,9 +114,8 @@ public class MyAccount extends AnkiActivity {
         String password = mPassword.getText().toString();
 
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
             Connection.login(loginListener, new Connection.Payload(new Object[]{username, password,
-                    PreferenceBackedHostNum.fromPreferences(preferences) }));
+                    HostNumFactory.getInstance(this) }));
         } else {
             UIUtils.showSimpleSnackbar(this, R.string.invalid_username_password, true);
         }
@@ -129,7 +128,7 @@ public class MyAccount extends AnkiActivity {
         editor.putString("username", "");
         editor.putString("hkey", "");
         editor.apply();
-        PreferenceBackedHostNum.fromPreferences(preferences).reset();
+        HostNumFactory.getInstance(this).reset();
         //  force media resync on deauth
         getCol().getMedia().forceResync();
         switchToState(STATE_LOG_IN);
