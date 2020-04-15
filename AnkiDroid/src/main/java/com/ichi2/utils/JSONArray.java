@@ -102,8 +102,8 @@ public class JSONArray extends org.json.JSONArray {
     public JSONArray(Collection copyFrom) {
         this();
         if (copyFrom != null) {
-            for (Iterator it = copyFrom.iterator(); it.hasNext();) {
-                put(it.next());
+            for (Object o : copyFrom) {
+                put(o);
             }
         }
     }
