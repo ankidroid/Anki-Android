@@ -25,6 +25,7 @@ import android.net.Uri;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
+import com.ichi2.anki.web.CustomSyncServer;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
@@ -450,7 +451,7 @@ public class HttpSyncer {
         // Allow user to specify custom sync server
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
         if (isUsingCustomSyncServer(userPreferences)) {
-            String syncBaseString = userPreferences.getString("syncBaseUrl", null);
+            String syncBaseString = CustomSyncServer.getSyncBaseUrl(userPreferences);
             if (syncBaseString == null) {
                 return getDefaultAnkiWebUrl();
             }
@@ -469,7 +470,7 @@ public class HttpSyncer {
     }
 
     protected boolean isUsingCustomSyncServer(@Nullable SharedPreferences userPreferences) {
-        return userPreferences != null && userPreferences.getBoolean("useCustomSyncServer", false);
+        return userPreferences != null && CustomSyncServer.isEnabled(userPreferences);
     }
 
     protected String getDefaultAnkiWebUrl() {

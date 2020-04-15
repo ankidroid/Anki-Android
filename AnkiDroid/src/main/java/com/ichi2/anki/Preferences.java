@@ -51,6 +51,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
+import com.ichi2.anki.web.CustomSyncServer;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -675,10 +676,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 pref.setSummary(getResources().getString(R.string.about_version) + " " + VersionUtils.getPkgVersionName());
                 break;
             case "custom_sync_server_link":
-                if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("useCustomSyncServer", false)) {
+                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+                if (!CustomSyncServer.isEnabled(preferences)) {
                     pref.setSummary(R.string.disabled);
                 } else {
-                    pref.setSummary(AnkiDroidApp.getSharedPrefs(this).getString("syncBaseUrl", ""));
+                    pref.setSummary(CustomSyncServer.getSyncBaseUrlOrDefault(preferences, ""));
                 }
                 break;
             case "advanced_statistics_link":
