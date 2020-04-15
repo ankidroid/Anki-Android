@@ -1754,6 +1754,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void updateScreenCounts() {
+        if (mCurrentCard == null) return;
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_SCHED_COUNT,
                                             new CollectionTask.TaskListener(){
                                                 @Override
@@ -1768,7 +1769,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                                                 }
                                             }
                                             );
-            }
+        updateScreenCounts(null);
+    }
 
     protected void updateScreenCounts(int[] counts) {
         if (mCurrentCard == null) return;
@@ -1776,15 +1778,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (actionBar != null) {
             String title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
             actionBar.setTitle(title);
-            if (mPrefShowETA) {
+            if (mPrefShowETA && counts != null) {
                 int eta = mSched.eta(counts, false);
                 actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));
             }
         }
 
-        SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
-        SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));
-        SpannableString revCount = new SpannableString(String.valueOf(counts[2]));
+        String[] countsString;
+        if (counts == null) {
+            countsString = new String[] {"", "", ""};
+        } else {
+            countsString = new String[] {String.valueOf(counts[0]), String.valueOf(counts[1]), String.valueOf(counts[2])};
+        }
+        SpannableString newCount = new SpannableString(countsString[0]);
+        SpannableString lrnCount = new SpannableString(countsString[1]);
+        SpannableString revCount = new SpannableString(countsString[2]);
         if (mPrefHideDueCount) {
             revCount = new SpannableString("???");
         }
