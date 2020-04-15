@@ -568,7 +568,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private boolean _fillNew() {
-        if (mNewQueue.size() > 0) {
+        if (!mNewQueue.isEmpty()) {
             return true;
         }
         if (mNewCount == 0) {
@@ -828,7 +828,7 @@ public class SchedV2 extends AbstractSched {
         if (!mLrnDayQueue.isEmpty()) {
             return true;
         }
-        while (mLrnDids.size() > 0) {
+        while (!mLrnDids.isEmpty()) {
             long did = mLrnDids.getFirst();
             // fill the queue with the current did
             mLrnDayQueue.clear();
@@ -848,7 +848,7 @@ public class SchedV2 extends AbstractSched {
                     cur.close();
                 }
             }
-            if (mLrnDayQueue.size() > 0) {
+            if (!mLrnDayQueue.isEmpty()) {
                 // order
                 Random r = new Random();
                 r.setSeed(mToday);
@@ -2203,7 +2203,7 @@ public class SchedV2 extends AbstractSched {
             }
         }
         // then bury
-        if (toBury.size() > 0) {
+        if (!toBury.isEmpty()) {
             buryCards(Utils.arrayList2array(toBury),false);
         }
     }
@@ -2282,7 +2282,7 @@ public class SchedV2 extends AbstractSched {
                 nids.add(nid);
             }
         }
-        if (nids.size() == 0) {
+        if (nids.isEmpty()) {
             // no new cards
             return;
         }

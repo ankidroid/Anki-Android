@@ -777,7 +777,7 @@ public class Sched extends SchedV2 {
         if (mRevCount == 0) {
             return false;
         }
-        while (mRevDids.size() > 0) {
+        while (!mRevDids.isEmpty()) {
             long did = mRevDids.getFirst();
             int lim = Math.min(mQueueLimit, _deckRevLimit(did));
             Cursor cur = null;
@@ -1467,7 +1467,7 @@ public class Sched extends SchedV2 {
             }
         }
         // then bury
-        if (toBury.size() > 0) {
+        if (!toBury.isEmpty()) {
             mCol.getDb().execute("update cards set queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + ",mod=?,usn=? where id in " + Utils.ids2str(toBury),
                     new Object[] { Utils.now(), mCol.usn() });
             mCol.log(toBury);
@@ -1491,7 +1491,7 @@ public class Sched extends SchedV2 {
         		nids.add(nid);
         	}
         }
-        if (nids.size() == 0) {
+        if (nids.isEmpty()) {
             // no new cards
             return;
         }
