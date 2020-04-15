@@ -97,6 +97,10 @@ public class ContentProviderTest {
     private ArrayList<Uri> mCreatedNotes;
     private long mModelId = 0;
     private String[] mDummyFields = new String[1];
+
+    private Collection getCol() {
+        return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+    }
     /**
      * Initially create one note for each model.
      */
@@ -104,7 +108,7 @@ public class ContentProviderTest {
     public void setUp() throws Exception {
         Log.i(AnkiDroidApp.TAG, "setUp()");
         mCreatedNotes = new ArrayList<>();
-        final Collection col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        final Collection col = getCol();
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         mModelId = model.getLong("id");
@@ -142,7 +146,7 @@ public class ContentProviderTest {
     @After
     public void tearDown() throws Exception {
         Log.i(AnkiDroidApp.TAG, "tearDown()");
-        final Collection col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        final Collection col = getCol();
         // Delete all notes
         List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);
         if (remnantNotes.size() > 0) {
@@ -216,7 +220,7 @@ public class ContentProviderTest {
     public void testInsertTemplate() throws Exception {
         // Get required objects for test
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
-        Collection col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        Collection col = getCol();
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
@@ -252,7 +256,7 @@ public class ContentProviderTest {
     public void testInsertField() throws Exception {
         // Get required objects for test
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
-        Collection col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        Collection col = getCol();
         JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
         JSONArray initialFldsArr = model.getJSONArray("flds");
@@ -647,7 +651,7 @@ public class ContentProviderTest {
     @Test
     public void testQueryAllDecks() throws Exception{
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         Decks decks = col.getDecks();
 
         Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver()
@@ -675,7 +679,7 @@ public class ContentProviderTest {
     @Test
     public void testQueryCertainDeck() throws Exception {
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
 
         long deckId = mTestDeckIds[0];
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
@@ -699,7 +703,7 @@ public class ContentProviderTest {
     @Test
     public void testQueryNextCard(){
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         AbstractSched sched = col.getSched();
 
         Cursor reviewInfoCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(
@@ -733,7 +737,7 @@ public class ContentProviderTest {
         String deckSelector = "deckID=?";
         String deckArguments[] = {Long.toString(deckToTest)};
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         AbstractSched sched = col.getSched();
         long selectedDeckBeforeTest = col.getDecks().selected();
         col.getDecks().select(1); //select Default deck
@@ -786,7 +790,7 @@ public class ContentProviderTest {
     @Test
     public void testAnswerCard(){
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         long deckId = mTestDeckIds[0];
         col.getDecks().select(deckId);
         Card card = col.getSched().getCard();
@@ -833,7 +837,7 @@ public class ContentProviderTest {
         // get the first card due
         // ----------------------
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         long deckId = mTestDeckIds[0];
         col.getDecks().select(deckId);
         Card card = col.getSched().getCard();
@@ -881,7 +885,7 @@ public class ContentProviderTest {
         // get the first card due
         // ----------------------
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         long deckId = mTestDeckIds[0];
         col.getDecks().select(deckId);
         Card card = col.getSched().getCard();
@@ -930,7 +934,7 @@ public class ContentProviderTest {
         // get the first card due
         // ----------------------
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         long deckId = mTestDeckIds[0];
         col.getDecks().select(deckId);
         Card card = col.getSched().getCard();
@@ -972,7 +976,7 @@ public class ContentProviderTest {
 
     private Collection reopenCol() {
         CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
-        return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        return getCol();
     }
 
 }
