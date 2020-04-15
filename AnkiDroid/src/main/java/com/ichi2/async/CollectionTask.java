@@ -110,6 +110,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     public static final int TASK_TYPE_FIND_EMPTY_CARDS = 48;
     public static final int TASK_TYPE_CHECK_CARD_SELECTION = 49;
     public static final int TASK_TYPE_SCHED_RESET = 50;
+    public static final int TASK_TYPE_SCHED_COUNT = 51;
     public static final int TASK_TYPE_LOAD_NEXT_CARD = 52;
 
     /**
@@ -355,6 +356,8 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 return doInBackgroundCheckCardSelection(params);
             case TASK_TYPE_SCHED_RESET:
                 return doInBackgroundReset(params);
+            case TASK_TYPE_SCHED_COUNT:
+                return doInBackgroundCount(params);
             case TASK_TYPE_LOAD_NEXT_CARD:
                 return doInBackgroundLoadNextCard(params);
 
@@ -1573,6 +1576,11 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         return null;
     }
 
+    public TaskData doInBackgroundCount(TaskData... params) {
+        int[] counts = CollectionHelper.getInstance().getCol(mContext).getSched().counts();
+        return new TaskData(counts);
+    }
+
     public TaskData doInBackgroundLoadNextCard(TaskData... params) {
         CollectionHelper.getInstance().getCol(mContext).getSched().loadNextCard();
         return null;
@@ -1714,6 +1722,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         private int mType;
         private Comparator mComparator;
         private Object[] mObjects;
+        private int[] mCounts;
 
 
         public TaskData(Object[] obj) {
@@ -1841,6 +1850,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             mBool = bool;
         }
 
+        public TaskData(int[] counts) {
+            mCounts = counts;
+        }
+
 
         public List<Map<String, String>> getCards() {
             return mCards;
@@ -1899,6 +1912,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
         public Object[] getObjArray() {
             return mObjects;
+        }
+
+        public int[] getCounts() {
+            return mCounts;
         }
     }
 
