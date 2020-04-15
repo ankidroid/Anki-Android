@@ -480,7 +480,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 case CustomSyncServer.PREFERENCE_CUSTOM_SYNC_BASE:
                 case CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER:
                     //This may be a tad hasty - performed before "back" is pressed.
-                    CustomSyncServer.handleSyncServerPreferenceChange(prefs);
+                    CustomSyncServer.handleSyncServerPreferenceChange(getBaseContext());
                     break;
                 case "timeoutAnswer": {
                     CheckBoxPreference keepScreenOn = (CheckBoxPreference) screen.findPreference("keepScreenOn");

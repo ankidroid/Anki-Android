@@ -93,7 +93,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
-import com.ichi2.anki.web.PreferenceBackedHostNum;
+import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
@@ -1471,7 +1471,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     new Connection.Payload(new Object[] { hkey,
                             preferences.getBoolean("syncFetchesMedia", true),
                             syncConflictResolution,
-                            PreferenceBackedHostNum.fromPreferences(preferences) }));
+                            HostNumFactory.getInstance(getBaseContext()) }));
         }
     }
 
