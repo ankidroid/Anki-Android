@@ -48,7 +48,17 @@ android {
             debuggable true
             // Check Crash Reports page on developer wiki for info on ACRA testing
             buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
-            testCoverageEnabled true
+
+            // #6009 Allow optional disabling of JaCoCo for general build (assembleDebug).
+            // jacocoDebug task was slow, hung, and wasn't required unless I wanted coverage
+            if (project.rootProject.file('local.properties').exists()) {
+                Properties localProperties = new Properties()
+                localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+                testCoverageEnabled localProperties['enable_coverage'] != "false"
+            } else {
+                testCoverageEnabled true
+            }
+
         }
         release {
             minifyEnabled true
