@@ -108,7 +108,7 @@ public class RemoteMediaServerTest {
 
     private void setCustomServerWithNoUrl() {
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        userPreferences.edit().putBoolean("useCustomSyncServer", true).commit();
+        userPreferences.edit().putBoolean("useCustomSyncServer", true).apply();
     }
 
     private void setCustomMediaServer(String s) {
@@ -117,7 +117,7 @@ public class RemoteMediaServerTest {
         Editor e = userPreferences.edit();
         e.putBoolean("useCustomSyncServer", true);
         e.putString("syncMediaUrl", s);
-        e.commit();
+        e.apply();
     }
 
     @NonNull
