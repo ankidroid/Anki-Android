@@ -107,7 +107,7 @@ public class HttpSyncerTest {
 
     private void setCustomServerWithNoUrl() {
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        userPreferences.edit().putBoolean("useCustomSyncServer", true).commit();
+        userPreferences.edit().putBoolean("useCustomSyncServer", true).apply();
     }
 
     private void setCustomServer(String s) {
@@ -116,7 +116,7 @@ public class HttpSyncerTest {
         SharedPreferences.Editor e = userPreferences.edit();
         e.putBoolean("useCustomSyncServer", true);
         e.putString("syncBaseUrl", s);
-        e.commit();
+        e.apply();
     }
 
     @NonNull
