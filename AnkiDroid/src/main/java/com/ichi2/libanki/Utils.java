@@ -426,7 +426,7 @@ public class Utils {
     }
 
     public static Long[] list2ObjectArray(List<Long> list) {
-        return list.toArray(new Long[list.size()]);
+        return list.toArray(new Long[0]);
     }
 
     /** Return a non-conflicting timestamp for table. */
@@ -455,7 +455,7 @@ public class Utils {
         String table = ALL_CHARACTERS + extra;
         int len = table.length();
         String buf = "";
-        int mod = 0;
+        int mod;
         while (num != 0) {
             mod = num % len;
             buf = buf + table.substring(mod, mod + 1);
@@ -476,6 +476,7 @@ public class Utils {
     }
 
     // increment a guid by one, for note type conflicts
+    @SuppressWarnings({"unused"}) //used in Anki
     public static String incGuid(String guid) {
         return new StringBuffer(_incGuid(new StringBuffer(guid).reverse().toString())).reverse().toString();
     }
@@ -485,9 +486,9 @@ public class Utils {
         int idx = table.indexOf(guid.substring(0, 1));
         if (idx + 1 == table.length()) {
             // overflow
-            guid = table.substring(0, 1) + _incGuid(guid.substring(1, guid.length()));
+            guid = table.substring(0, 1) + _incGuid(guid.substring(1));
         } else {
-            guid = table.substring(idx + 1) + guid.substring(1, guid.length());
+            guid = table.substring(idx + 1) + guid.substring(1);
         }
         return guid;
     }
