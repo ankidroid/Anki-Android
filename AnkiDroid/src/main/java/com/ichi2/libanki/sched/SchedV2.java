@@ -104,6 +104,7 @@ public class SchedV2 extends AbstractSched {
 
     // Not in libanki
     protected WeakReference<Activity> mContextReference;
+    protected Card mNextCard;
 
 
     /**
@@ -138,22 +139,30 @@ public class SchedV2 extends AbstractSched {
         if (!mHaveQueues) {
             reset();
         }
-        Card card = _getCard();
+        Card card;
+        if (mNextCard != null) {
+            card = mNextCard;
+            mNextCard = null;
+        } else {
+            card = _getCard();
+        }
         if (card != null) {
             mCol.log(card);
             mReps += 1;
             card.startTimer();
         }
+        backgroundNextCard();
         return card;
     }
 
-
     public void reset() {
+        mNextCard = null;
         _updateCutoff();
         _resetLrn();
         _resetRev();
         _resetNew();
         mHaveQueues = true;
+        backgroundNextCard();
     }
 
 
@@ -2166,7 +2175,22 @@ public class SchedV2 extends AbstractSched {
      * Sibling spacing
      * ********************
      */
-
+    // Not in upstream.
+    // Usefull here to avoid code duplication, which was becoming big.
+    protected void _actualBurySibling(long cid, List<Long> queue, boolean burying, List<Long> toBury) {
+        if (burying) {
+            toBury.add(cid);
+        }
+        // if bury disabled, we still discard to give same-day spacing
+        queue.remove(cid);
+        // if mNextCard's id is cid, then it should be
+        // considered a part of the queue, and so be discarded too.
+        if (mNextCard != null && mNextCard.getId() == cid) {
+            mNextCard = null;
+            backgroundNextCard();
+        }
+    }
+    
     protected void _burySiblings(Card card) {
         ArrayList<Long> toBury = new ArrayList<>();
         JSONObject nconf = _newConf(card);
@@ -2184,17 +2208,9 @@ public class SchedV2 extends AbstractSched {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
                 if (queue == Consts.QUEUE_TYPE_REV) {
-                    if (buryRev) {
-                        toBury.add(cid);
-                    }
-                    // if bury disabled, we still discard to give same-day spacing
-                    mRevQueue.remove(cid);
+                    _actualBurySibling(cid, mRevQueue, buryRev, toBury);
                 } else {
-                    // if bury is disabled, we still discard to give same-day spacing
-                    if (buryNew) {
-                        toBury.add(cid);
-                    }
-                    mNewQueue.remove(cid);
+                    _actualBurySibling(cid, mNewQueue, buryNew, toBury);
                 }
             }
         } finally {
@@ -2681,4 +2697,31 @@ public class SchedV2 extends AbstractSched {
     }
 
     /** End #5666 */
+
+    // Not in libanki. In AnkiDroid to save time
+    protected void backgroundNextCard() {
+        if (mNextCard != null) {
+            return;
+        }
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_LOAD_NEXT_CARD);
+    }
+
+    // Should be called in background, preload next question/answer.
+    // Synchronzide, so that if the nextCard is already computed, it
+    // does not get overridden.
+    // Not in libanki. In AnkiDroid to
+    // improve interactive responsiveness
+    public synchronized void loadNextCard() {
+        _checkDay();
+        if (!mHaveQueues) {
+            reset();
+        }
+        if (mNextCard != null) {
+            return;
+        }
+        mNextCard = _getCard();
+        if (mNextCard != null) {
+            mNextCard._getQA();
+        }
+    }
 }

@@ -1442,17 +1442,9 @@ public class Sched extends SchedV2 {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
                 if (queue == Consts.QUEUE_TYPE_REV) {
-                    if (buryRev) {
-                        toBury.add(cid);
-                    }
-                    // if bury disabled, we still discard to give same-day spacing
-                    mRevQueue.remove(cid);
+                    _actualBurySibling(cid, mRevQueue, buryRev, toBury);
                 } else {
-                    // if bury is disabled, we still discard to give same-day spacing
-                    if (buryNew) {
-                        toBury.add(cid);
-                    }
-                    mNewQueue.remove(cid);
+                    _actualBurySibling(cid, mNewQueue, buryNew, toBury);
                 }
             }
         } finally {

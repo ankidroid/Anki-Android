@@ -232,4 +232,9 @@ public abstract class AbstractSched {
     public interface CountMethod {
         int operation(long did, int lim);
     }
+
+    // Should be called in background, preload next question/answer.
+    // Not in libanki. In AnkiDroid to improve interactive
+    // responsiveness
+    public abstract void loadNextCard();
 }
