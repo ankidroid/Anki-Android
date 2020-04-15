@@ -64,6 +64,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipFile;
 
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /**
@@ -139,7 +140,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         return launchCollectionTask(type, null, params);
     }
 
-    public static CollectionTask launchCollectionTask(int type, Listener listener, TaskData... params) {
+    public static CollectionTask launchCollectionTask(int type, @Nullable Listener listener, TaskData... params) {
         // Start new task
         CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
         newTask.execute(params);
