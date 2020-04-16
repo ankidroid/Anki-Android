@@ -23,6 +23,7 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -99,7 +100,8 @@ public class ContentProviderTest {
     private String[] mDummyFields = new String[1];
 
     private Collection getCol() {
-        return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        return CollectionHelper.getInstance().getCol(context);
     }
     /**
      * Initially create one note for each model.
