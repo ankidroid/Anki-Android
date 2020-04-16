@@ -20,6 +20,7 @@
 package com.ichi2.libanki.sched;
 
 import android.app.Activity;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -58,6 +59,7 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Random;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -222,16 +224,14 @@ public class SchedV2 extends AbstractSched {
 
 
     public int[] counts() {
-        return counts(null);
+        return new int[] {mNewCount, mLrnCount, mRevCount};
     }
 
 
-    public int[] counts(Card card) {
-        int[] counts = {mNewCount, mLrnCount, mRevCount};
-        if (card != null) {
-            int idx = countIdx(card);
-            counts[idx] += 1;
-        }
+    public int[] counts(@NonNull Card card) {
+        int[] counts = counts();
+        int idx = countIdx(card);
+        counts[idx] += 1;
         return counts;
     }
 
