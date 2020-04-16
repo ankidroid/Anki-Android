@@ -783,7 +783,7 @@ public class SchedV2 extends AbstractSched {
         if (!mNewQueue.isEmpty()) {
             return true;
         }
-        if (mNewCount == 0) {
+        if (mHaveCounts && mNewCount == 0) {
             return false;
         }
         while (!mNewDids.isEmpty()) {
@@ -818,11 +818,14 @@ public class SchedV2 extends AbstractSched {
             // nothing left in the deck; move to next
             mNewDids.remove();
         }
-        // if we didn't get a card, since the count is non-zero, we
-        // need to check again for any cards that were removed
-        // from the queue but not buried
-        _resetNew();
-        return _fillNew(true);
+        if (mHaveCounts && mNewCount != 0) {
+            // if we didn't get a card but the count is non-zero,
+            // we need to check again for any cards that were
+            // removed from the queue but not buried
+            _resetNew();
+            return _fillNew(true);
+        }
+        return false;
     }
 
 
@@ -854,7 +857,7 @@ public class SchedV2 extends AbstractSched {
      * @return True if it's time to display a new card when distributing.
      */
     protected boolean _timeForNewCard() {
-        if (mNewCount == 0) {
+        if (mHaveCounts && mNewCount == 0) {
             return false;
         }
         @Consts.NEW_CARD_ORDER int spread = mCol.getConf().getInt("newSpread");
@@ -863,6 +866,8 @@ public class SchedV2 extends AbstractSched {
         } else if (spread == Consts.NEW_CARDS_FIRST) {
             return true;
         } else if (mNewCardModulus != 0) {
+            // if the counter has not yet been resetted, this value is
+            // random. This will occur only for the first card of review.
             return (mReps != 0 && (mReps % mNewCardModulus == 0));
         } else {
             return false;
@@ -1001,7 +1006,7 @@ public class SchedV2 extends AbstractSched {
     // sub-day learning
     // Overridden: a single kind of queue in V1
     protected boolean _fillLrn() {
-        if (mLrnCount == 0) {
+        if (mHaveCounts && mLrnCount == 0) {
             return false;
         }
         if (!mLrnQueue.isEmpty()) {
@@ -1064,7 +1069,7 @@ public class SchedV2 extends AbstractSched {
 
     // daily learning
     protected boolean _fillLrnDay() {
-        if (mLrnCount == 0) {
+        if (mHaveCounts && mLrnCount == 0) {
             return false;
         }
         if (!mLrnDayQueue.isEmpty()) {
@@ -1523,7 +1528,7 @@ public class SchedV2 extends AbstractSched {
         if (!mRevQueue.isEmpty()) {
             return true;
         }
-        if (mRevCount == 0) {
+        if (mHaveCounts && mRevCount == 0) {
             return false;
         }
         int lim = Math.min(mQueueLimit, _currentRevLimit(true));
@@ -1557,11 +1562,14 @@ public class SchedV2 extends AbstractSched {
                 return true;
             }
         }
-        // since we didn't get a card and the count is non-zero, we
-        // need to check again for any cards that were removed from
-        // the queue but not buried
-        _resetRev();
-        return _fillRev(true);
+        if (mHaveCounts && mRevCount != 0) {
+            // if we didn't get a card but the count is non-zero,
+            // we need to check again for any cards that were
+            // removed from the queue but not buried
+            _resetRev();
+            return _fillRev(true);
+        }
+        return false;
     }
 
 
