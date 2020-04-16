@@ -43,6 +43,8 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -222,16 +224,14 @@ public class SchedV2 extends AbstractSched {
 
 
     public int[] counts() {
-        return counts(null);
+        return new int[] {mNewCount, mLrnCount, mRevCount};
     }
 
 
-    public int[] counts(Card card) {
-        int[] counts = {mNewCount, mLrnCount, mRevCount};
-        if (card != null) {
-            int idx = countIdx(card);
-            counts[idx] += 1;
-        }
+    public int[] counts(@NotNull Card card) {
+        int[] counts = counts();
+        int idx = countIdx(card);
+        counts[idx] += 1;
         return counts;
     }
 

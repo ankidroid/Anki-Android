@@ -42,6 +42,8 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -136,21 +138,13 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    public int[] counts() {
-        return counts(null);
-    }
-
-
-    @Override
-    public int[] counts(Card card) {
-        int[] counts = {mNewCount, mLrnCount, mRevCount};
-        if (card != null) {
-            int idx = countIdx(card);
-            if (idx == 1) {
-                counts[1] += card.getLeft() / 1000;
-            } else {
-                counts[idx] += 1;
-            }
+    public int[] counts(@NotNull Card card) {
+        int[] counts = counts();
+        int idx = countIdx(card);
+        if (idx == 1) {
+            counts[1] += card.getLeft() / 1000;
+        } else {
+            counts[idx] += 1;
         }
         return counts;
     }
@@ -159,7 +153,7 @@ public class Sched extends SchedV2 {
     @Override
     public int countIdx(Card card) {
         if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
-            return 1;
+            return Consts.QUEUE_TYPE_LRN;
         }
         return card.getQueue();
     }
