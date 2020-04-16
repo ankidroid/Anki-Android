@@ -146,7 +146,7 @@ public class AnkiDroidApp extends Application {
     public static final String FEEDBACK_REPORT_ALWAYS = "0";
 
     // Tag for logging messages.
-    public static final String TAG = "AnkiDroid";
+    public static final String TAG = "AnkiDroid_TAG";
     // Singleton instance of this class.
     private static AnkiDroidApp sInstance;
     // Constants for gestures

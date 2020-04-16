@@ -4,6 +4,7 @@ import android.Manifest;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.os.Build;
+import android.os.Environment;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.compat.CompatHelper;
@@ -39,7 +40,7 @@ public class DBTest {
             return;
         }
 
-        String storagePath = CollectionHelper.getDefaultAnkiDroidDirectory();
+        String storagePath = new File(Environment.getExternalStorageDirectory(), "AnkiDroid_Test").getAbsolutePath();
         File illFatedDBFile = new File(storagePath, "illFatedDB.anki2");
 
         // Make sure we have clean state to start with
