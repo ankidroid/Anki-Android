@@ -152,14 +152,6 @@ public class Collection {
 
     private static final int UNDO_SIZE_MAX = 20;
 
-    public Collection(Context context, DB db, String path) {
-        this(context, db, path, false);
-    }
-
-    public Collection(Context context, DB db, String path, boolean server) {
-        this(context, db, path, server, false);
-    }
-
     public Collection(Context context, DB db, String path, boolean server, boolean log) {
         mContext = context;
         mDebugLog = log;
