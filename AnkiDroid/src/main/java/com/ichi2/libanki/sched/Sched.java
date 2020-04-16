@@ -349,7 +349,7 @@ public class Sched extends SchedV2 {
     // sub-day learning
     @Override
     protected boolean _fillLrn() {
-        if (mLrnCount == 0) {
+        if (mHaveCounts && mLrnCount == 0) {
             return false;
         }
         if (!mLrnQueue.isEmpty()) {
@@ -673,7 +673,7 @@ public class Sched extends SchedV2 {
         if (!mRevQueue.isEmpty()) {
             return true;
         }
-        if (mRevCount == 0) {
+        if (mHaveCounts && mRevCount == 0) {
             return false;
         }
         while (!mRevDids.isEmpty()) {
@@ -721,11 +721,14 @@ public class Sched extends SchedV2 {
             // nothing left in the deck; move to next
             mRevDids.remove();
         }
-        // Since we didn't get a card and the count is non-zero, we
-        // need to check again for any cards that were removed from
-        // the queue but not buried
-        _resetRev();
-        return _fillRev(true);
+        if (mHaveCounts && mRevCount != 0) {
+            // if we didn't get a card but the count is non-zero,
+            // we need to check again for any cards that were
+            // removed from the queue but not buried
+            _resetRev();
+            return _fillRev(true);
+        }
+        return false;
     }
 
 
