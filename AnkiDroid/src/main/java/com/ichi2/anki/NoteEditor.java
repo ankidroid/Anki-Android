@@ -55,6 +55,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
@@ -914,10 +915,7 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void showDiscardChangesDialog() {
-        new MaterialDialog.Builder(this)
-                .content(R.string.discard_unsaved_changes)
-                .positiveText(R.string.dialog_ok)
-                .negativeText(R.string.dialog_cancel)
+        DiscardChangesDialog.getDefault(this)
                 .onPositive((dialog, which) -> {
                     Timber.i("NoteEditor:: OK button pressed to confirm discard changes");
                     closeNoteEditor();

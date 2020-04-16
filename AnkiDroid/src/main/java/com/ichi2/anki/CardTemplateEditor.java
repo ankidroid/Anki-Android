@@ -38,9 +38,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
@@ -254,10 +254,7 @@ public class CardTemplateEditor extends AnkiActivity {
     }
 
     private void showDiscardChangesDialog() {
-        new MaterialDialog.Builder(this)
-                .content(R.string.discard_unsaved_changes)
-                .positiveText(R.string.dialog_ok)
-                .negativeText(R.string.dialog_cancel)
+        DiscardChangesDialog.getDefault(this)
                 .onPositive((dialog, which) -> {
                     Timber.i("TemplateEditor:: OK button pressed to confirm discard changes");
                     getCol().getModels().update(CardTemplateEditor.this.mModelBackup);
@@ -265,7 +262,8 @@ public class CardTemplateEditor extends AnkiActivity {
                     getCol().reset();
                     finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                 })
-                .build().show();
+                .build()
+                .show();
     }
 
 
