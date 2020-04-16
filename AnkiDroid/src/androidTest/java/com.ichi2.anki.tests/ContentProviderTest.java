@@ -24,10 +24,14 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
+
+import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
@@ -53,6 +57,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -101,6 +106,8 @@ public class ContentProviderTest {
 
     private Collection getCol() {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putString("deckPath", new File(Environment.getExternalStorageDirectory(), "AnkiDroid_Test").getAbsolutePath()).apply();
         return CollectionHelper.getInstance().getCol(context);
     }
     /**
