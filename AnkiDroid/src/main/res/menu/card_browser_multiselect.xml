@@ -40,9 +40,10 @@
         android:icon="@drawable/ic_star_outline_white_24dp"
         android:title="@string/card_browser_mark_card"/>
 
-
+    <!-- The current pause icon appeared unintuitive to some users, change to ifRoom if we get
+    a better icon -->
     <item
-        ankidroid:showAsAction="ifRoom"
+        ankidroid:showAsAction="never"
         android:id="@+id/action_suspend_card"
         android:icon="@drawable/ic_action_suspend"
         android:title="@string/card_browser_suspend_card"/>
