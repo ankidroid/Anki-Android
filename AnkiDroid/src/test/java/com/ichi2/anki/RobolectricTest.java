@@ -211,6 +211,7 @@ public class RobolectricTest {
         if (getCol().addNote(n) == 0) {
             throw new IllegalStateException(String.format("Could not add note: {%s}", String.join(", ", fields)));
         }
+        getCol().reset();
         return n;
     }
 

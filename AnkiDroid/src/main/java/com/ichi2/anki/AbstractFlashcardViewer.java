@@ -592,6 +592,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true; // other handlers use this, toggle state every time through
             } else {
+                CollectionTask.launchCollectionTask(PRE_LOAD_CARD);
                 mNoMoreCards = false; // other handlers use this, toggle state every time through
                 // Start reviewing next card
                 updateTypeAnswerInfo();

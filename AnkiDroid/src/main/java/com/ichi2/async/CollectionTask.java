@@ -121,6 +121,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         FIND_EMPTY_CARDS,
         CHECK_CARD_SELECTION,
         LOAD_COLLECTION_COMPLETE,
+        PRE_LOAD_CARD,
     }
 
     /**
@@ -423,6 +424,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case LOAD_COLLECTION_COMPLETE:
                 doInBackgroundLoadCollectionComplete();
+                break;
+
+            case PRE_LOAD_CARD:
+                doInBackgroundPreLoadCard();
                 break;
 
             default:
@@ -1717,6 +1722,12 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         if (col != null) {
             CollectionHelper.loadCollectionComplete(col);
         }
+    }
+
+    public void doInBackgroundPreLoadCard() {
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        AbstractSched sched = col.getSched();
+        sched.loadNextCard(true);
     }
 
     /**

@@ -418,4 +418,15 @@ public abstract class AbstractSched {
      */
     public abstract void setCurrentCard(@NonNull Card card);
     public abstract void discardCurrentCard();
+
+    /**
+       set mNextCard to the next card that should be reviewed. Fill
+       queue if required.
+       @param qa Whether to also pre-compute question and answer
+       @return The next card to be displayed.
+     */
+    public abstract Card loadNextCard(boolean qa);
+
+    @Nullable
+    public abstract Card getCurrentCard();
 }

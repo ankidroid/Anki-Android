@@ -44,6 +44,7 @@ import com.ichi2.libanki.DeckConfig;
 
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -68,6 +69,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
@@ -147,6 +149,8 @@ public class SchedV2 extends AbstractSched {
     /* The next card that will be sent to the reviewer. I.e. the result of a second call to getCard, which is not the
      * current card nor a sibling.
      */
+    @Nullable
+    protected Card mNextCard;
 
     // Not in libAnki.
     private final Time mTime;
@@ -191,7 +195,8 @@ public class SchedV2 extends AbstractSched {
         if (!mHaveQueues) {
             reset();
         }
-        Card card = _getCard();
+        Card card = loadNextCard(false);
+        mNextCard = null;
         if (card != null) {
             mCol.log(card);
             mReps += 1;
@@ -207,7 +212,36 @@ public class SchedV2 extends AbstractSched {
         } else {
             discardCurrentCard();
         }
+        CollectionTask.launchCollectionTask(PRE_LOAD_CARD);
+
         return card;
+    }
+
+    /* Not in libanki. In AnkiDroid to increase responsiveness if
+    called in background before the card is usefull.
+
+    Also used in getCard for consistency.
+    Synchronized, so that if the nextCard is already computed, it
+    does not get overridden.
+    */
+    /**
+     * set mNextCard to the value of the next card of the queue.
+     * @param qa Whether to precompute question/answer. Useful when preparing next card, avoid it if you need the card immediately.
+     * @return the next card
+     */
+    public synchronized Card loadNextCard(boolean qa) {
+        _checkDay();
+        if (!mHaveQueues) {
+            reset();
+        }
+        if (mNextCard != null) {
+            return mNextCard;
+        }
+        mNextCard = _getCard();
+        if (qa && mNextCard != null) {
+            mNextCard._getQA();
+        }
+        return mNextCard;
     }
 
     /** Ensures that reset is executed before the next card is selected */
@@ -221,6 +255,7 @@ public class SchedV2 extends AbstractSched {
     }
 
     public void reset() {
+        mNextCard = null;
         _updateCutoff();
         _resetLrn();
         _resetRev();
@@ -233,6 +268,7 @@ public class SchedV2 extends AbstractSched {
             setCurrentCard(mUndidCard);
         }
         mUndidCard = null;
+        CollectionTask.launchCollectionTask(PRE_LOAD_CARD);
     }
 
 
@@ -655,7 +691,7 @@ public class SchedV2 extends AbstractSched {
         Card currentCard = mCurrentCard;
         /* mCurrentCard may be set to null when the reviewer gets closed. So we copy it to be sure to avoid
            NullPointerException */
-        if (mCurrentCard == null) {
+        if (currentCard == null) {
             /* This method is used to determine whether two cards are siblings. Since 0 is not a valid nid, all cards
             will have a nid distinct from 0. As it is used in sql statement, it is not possible to just use a function
             areSiblings()*/
@@ -2376,6 +2412,9 @@ public class SchedV2 extends AbstractSched {
                 // even if burying disabled, we still discard to give
                 // same-day spacing
                 queue_object.remove(cid);
+                if (mNextCard != null && mNextCard.getId() == cid) {
+                    mNextCard = null;
+                }
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -2884,10 +2923,14 @@ public class SchedV2 extends AbstractSched {
         }
         currentCardParentsDid.add(did);
         // We set the member only once it is filled, to ensure we avoid null pointer exception if `discardCurrentCard`
-        // were called during `setCurrentCard`.
+        // were called during `setCurrentCard`.  if current card is next card or in the queue
         mCurrentCardParentsDid = currentCardParentsDid;
         _burySiblings(card);
         // if current card is next card or in the queue
+        if (mNextCard != null && card.getId() == mNextCard.getId()) {
+            mNextCard = null;
+            CollectionTask.launchCollectionTask(PRE_LOAD_CARD);
+        }
         mRevQueue.remove(card.getId());
         mNewQueue.remove(card.getId());
     }
@@ -2897,5 +2940,9 @@ public class SchedV2 extends AbstractSched {
         Card currentCard = mCurrentCard;
         List<Long> currentCardParentsDid = mCurrentCardParentsDid;
         return currentCard != null && currentCard.getQueue() == queue && currentCardParentsDid != null && currentCardParentsDid.contains(did);
+    }
+
+    public Card getCurrentCard() {
+        return mCurrentCard;
     }
 }

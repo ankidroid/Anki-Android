@@ -1682,4 +1682,9 @@ public class Sched extends SchedV2 {
     public void setContext(WeakReference<Activity> contextReference) {
         mContextReference = contextReference;
     }
+
+    @Nullable
+    public Card getCurrent() {
+        return mCurrentCard;
+    }
 }
