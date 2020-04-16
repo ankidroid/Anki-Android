@@ -1,6 +1,8 @@
 package com.ichi2.anki.multimediacard.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -47,6 +49,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.widget.TooltipCompat;
 import timber.log.Timber;
 
 import static com.ichi2.anki.NoteEditor.REQUEST_MULTIMEDIA_EDIT;
@@ -93,7 +96,7 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
 
         setupWebView(mWebView);
 
-        setupEditorScrollbarButtons();
+        setupEditorScrollbarButtons(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -138,31 +141,44 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
     }
 
 
-    private void setupEditorScrollbarButtons() {
-        SimpleListenerSetup setJsAction = (id, f) -> findViewById(id).setOnClickListener(v -> mWebView.execFunction(f));
+    private void setupEditorScrollbarButtons(Context context) {
+        final Resources resources = context.getResources();
+        SimpleListenerSetup setupAction = (id, jsName, tooltipStringResource) -> {
+            View view = findViewById(id);
+            view.setOnClickListener(v -> mWebView.execFunction(jsName));
+            setTooltip(view, resources.getString(tooltipStringResource));
+        };
 
         //defined: https://github.com/jkennethcarino/rtexteditorview/blob/master/library/src/main/assets/editor.js
-        setJsAction.apply(R.id.editor_button_bold, "setBold");
-        setJsAction.apply(R.id.editor_button_italic, "setItalic");
-        setJsAction.apply(R.id.editor_button_underline, "setUnderline");
-        setJsAction.apply(R.id.editor_button_clear_formatting, "removeFormat");
-        setJsAction.apply(R.id.editor_button_list_bullet, "insertUnorderedList");
-        setJsAction.apply(R.id.editor_button_list_numbered, "insertOrderedList");
-        setJsAction.apply(R.id.editor_button_horizontal_rule, "insertHorizontalRule");
-        setJsAction.apply(R.id.editor_button_align_left, "setAlignLeft");
-        setJsAction.apply(R.id.editor_button_align_center, "setAlignCenter");
-        setJsAction.apply(R.id.editor_button_align_right, "setAlignRight");
-        setJsAction.apply(R.id.editor_button_align_justify, "setAlignJustify");
-        setJsAction.apply(R.id.editor_button_view_html, "editHtml"); //this is a toggle.
+        setupAction.apply(R.id.editor_button_bold, "setBold", R.string.visual_editor_tooltip_bold);
+        setupAction.apply(R.id.editor_button_italic, "setItalic", R.string.visual_editor_tooltip_italic);
+        setupAction.apply(R.id.editor_button_underline, "setUnderline", R.string.visual_editor_tooltip_underline);
+        setupAction.apply(R.id.editor_button_clear_formatting, "removeFormat", R.string.visual_editor_tooltip_clear_formatting);
+        setupAction.apply(R.id.editor_button_list_bullet, "insertUnorderedList", R.string.visual_editor_tooltip_bullet_list);
+        setupAction.apply(R.id.editor_button_list_numbered, "insertOrderedList", R.string.visual_editor_tooltip_numbered_list);
+        setupAction.apply(R.id.editor_button_horizontal_rule, "insertHorizontalRule", R.string.visual_editor_tooltip_horizontal_line);
+        setupAction.apply(R.id.editor_button_align_left, "setAlignLeft", R.string.visual_editor_tooltip_align_left);
+        setupAction.apply(R.id.editor_button_align_center, "setAlignCenter", R.string.visual_editor_tooltip_align_center);
+        setupAction.apply(R.id.editor_button_align_right, "setAlignRight", R.string.visual_editor_tooltip_align_right);
+        setupAction.apply(R.id.editor_button_align_justify, "setAlignJustify", R.string.visual_editor_tooltip_align_justify);
+        setupAction.apply(R.id.editor_button_view_html, "editHtml", R.string.visual_editor_tooltip_view_source); //this is a toggle.
 
-        findViewById(R.id.editor_button_add_image).setOnClickListener(v -> this.openAdvancedViewerForAddImage());
-        findViewById(R.id.editor_button_record_audio).setOnClickListener(v -> this.openAdvancedViewerForRecordAudio());
+        AndroidListenerSetup setupAndroidListener = (id, function, toolltipId) -> {
+            View view = findViewById(id);
+            view.setOnClickListener(v -> function.run());
+            setTooltip(view, resources.getString(toolltipId));
+        };
+        setupAndroidListener.apply(R.id.editor_button_cloze, this::performCloze, R.string.visual_editor_tooltip_cloze);
+        setupAndroidListener.apply(R.id.editor_button_add_image, this::openAdvancedViewerForAddImage, R.string.visual_editor_tooltip_add_image);
+        setupAndroidListener.apply(R.id.editor_button_record_audio, this::openAdvancedViewerForRecordAudio, R.string.visual_editor_tooltip_record_audio);
+        setupAndroidListener.apply(R.id.editor_button_text_color, () -> this.openColorPicker(COLOR_PICKER_FOREGROUND, null), R.string.visual_editor_tooltip_text_color);
+        setupAndroidListener.apply(R.id.editor_button_background_color, () -> this.openColorPicker(COLOR_PICKER_BACKGROUND, Color.YELLOW), R.string.visual_editor_tooltip_background_color);
 
-        findViewById(R.id.editor_button_text_color).setOnClickListener(v -> this.openColorPicker(COLOR_PICKER_FOREGROUND, null));
-        findViewById(R.id.editor_button_background_color).setOnClickListener(v -> this.openColorPicker(COLOR_PICKER_BACKGROUND, Color.YELLOW));
+    }
 
 
-        findViewById(R.id.editor_button_cloze).setOnClickListener(v -> performCloze());
+    private void setTooltip(View view, String tooltip) {
+        TooltipCompat.setTooltipText(view, tooltip);
     }
 
 
@@ -553,8 +569,15 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
     }
 
 
+    /** Setup a button which executes a JavaScript runnable */
     @FunctionalInterface
     protected interface SimpleListenerSetup {
-        void apply(@IdRes int buttonId, String function);
+        void apply(@IdRes int buttonId, String function, @StringRes int tooltipText);
+    }
+
+    /** A button which performs an Android Runnable */
+    @FunctionalInterface
+    protected interface AndroidListenerSetup {
+        void apply(@IdRes int buttonId, Runnable function, @StringRes int tooltipText);
     }
 }

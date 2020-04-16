@@ -6,7 +6,7 @@
         android:id="@+id/action_image_delete"
         android:enabled="true"
         android:icon="@drawable/ic_delete_white_24dp"
-        android:title="@string/visual_editor_delete_image"
+        android:title="@string/visual_editor_tooltip_delete_image"
         ankidroid:showAsAction="ifRoom"/>
 
     <!-- Plans: Edit/Crop/Rename/Resize -->
