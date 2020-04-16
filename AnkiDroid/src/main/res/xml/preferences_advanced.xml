@@ -27,7 +27,7 @@
     android:summary="@string/pref_cat_advanced_summ"
     android:key="pref_screen_advanced">
         <EditTextPreference
-            android:defaultValue="/sdcard/AnkiDroid"
+            android:defaultValue="/sdcard/AnkiDroid_xml"
             android:key="deckPath"
             android:summary="@string/preference_summary_literal"
             android:title="@string/col_path" />
