@@ -927,6 +927,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                     newCard.startTimer();
                     col.reset();
                     sched.deferReset(newCard);
+                    col.getSched().setCurrentCard(newCard);
                 } else {
                     // cid < 0
                     /* multi-card action undone, no action to take here */

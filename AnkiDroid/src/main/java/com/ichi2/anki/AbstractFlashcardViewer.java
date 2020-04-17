@@ -945,6 +945,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // Tells the scheduler there is no more current cards. 0 is
+        // not a valid id.
+        if (mSched != null) {
+            mSched.discardCurrentCard();
+        }
         Timber.d("onDestroy()");
         if (mSpeakText) {
             ReadText.releaseTts();
