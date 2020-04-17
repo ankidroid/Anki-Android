@@ -237,7 +237,7 @@ public class CardTemplateEditor extends AnkiActivity {
         }
         // Make backup of the model for cancellation purposes
         if (mModelBackup == null) {
-            mModelBackup = new JSONObject(col.getModels().get(mModelId).toString());
+            mModelBackup = col.getModels().get(mModelId).deepClone();
         }
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId);
