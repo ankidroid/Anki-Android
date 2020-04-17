@@ -95,6 +95,7 @@ public class Sched extends SchedV2 {
     public void answerCard(Card card, int ease) {
         mCol.log();
         mCol.markReview(card);
+        discardCurrentCard();
         _burySiblings(card);
         card.setReps(card.getReps() + 1);
         // former is for logging new cards, latter also covers filt. decks
@@ -366,9 +367,17 @@ public class Sched extends SchedV2 {
         mLrnQueue.clear();
         SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         try {
+            /* Difference with upstream:
+             * Current card can't come in the queue.
+             *
+             * In standard usage, a card is not requested before the previous card is marked as reviewed. However, if we
+             * decide to query a second card sooner, we don't want to get the same card a second time. This simulate
+             * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
+             * required when the card is reviewed.
+             */
             cur = db.query(
-                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? LIMIT ?",
-                                    new Object[]{mDayCutoff, mReportLimit});
+                           "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
+                           new Object[]{mDayCutoff, currentCardId(), mReportLimit});
             while (cur.moveToNext()) {
                 mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
             }
@@ -661,7 +670,11 @@ public class Sched extends SchedV2 {
         }
         long did = d.getLong("id");
         JSONObject c = mCol.getDecks().confForDid(did);
-        return Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+        int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+        if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_REV, did)) {
+            lim--;
+        }
+        return lim;
     }
 
 
@@ -699,7 +712,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected boolean _fillRev() {
+    protected boolean _fillRev(boolean allowSibling) {
         if (!mRevQueue.isEmpty()) {
             return true;
         }
@@ -715,10 +728,21 @@ public class Sched extends SchedV2 {
                 mRevQueue.clear();
                 // fill the queue with the current did
                 try {
+                    /* Difference with upstream: we take current card into account.
+                     *
+                     * When current card is answered, the card is not due anymore, so does not belong to the queue.
+                     * Furthermore, _burySiblings ensure that the siblings of the current cards are removed from the
+                     * queue to ensure same day spacing. We simulate this action by ensuring that those siblings are not
+                     * filled, except if we know there are cards and we didn't find any non-sibling card. This way, the
+                     * queue is not empty if it should not be empty (important for the conditional belows), but the
+                     * front of the queue contains distinct card.
+                     */
+                    String idName = (allowSibling) ? "id": "nid";
+                    long id = (allowSibling) ? currentCardId(): currentCardNid();
                     cur = db.query(
                                     "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
-                                            + " LIMIT ?",
-                                    new Object[]{did, mToday, lim});
+                                            + " AND " + idName + " != ? LIMIT ?",
+                                    new Object[]{did, mToday, id, lim});
                     while (cur.moveToNext()) {
                         mRevQueue.add(cur.getLong(0));
                     }
@@ -752,8 +776,8 @@ public class Sched extends SchedV2 {
         // Since we didn't get a card and the count is non-zero, we
         // need to check again for any cards that were removed from
         // the queue but not buried
-        _resetRev();
-        return _fillRev();
+        _resetRev(mCurrentCard);
+        return _fillRev(true);
     }
 
 
