@@ -210,6 +210,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     /** If we have accepted the "We will show you permissions" dialog, don't show it again on activity rebirth */
     private boolean mClosedWelcomeMessage;
+    private boolean mNumberLoaded = false;
 
     private Time mTime = new SystemTime();
 
@@ -820,8 +821,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mSyncOnResume = false;
         } else if (colIsOpen()) {
             selectNavigationItem(R.id.nav_decks);
-            updateDeckList(true);
-            updateDeckList(false);
+            updateDeckList(true, false);
+            updateDeckList(false, true);
             setTitle(getResources().getString(R.string.app_name));
         }
     }
@@ -2027,6 +2028,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void handleDeckSelection(long did, boolean dontSkipStudyOptions) {
+        if (!mNumberLoaded) {
+            return;
+        }
         // Clear the undo history when selecting a new deck
         if (getCol().getDecks().selected() != did) {
             getCol().clearUndo();
@@ -2131,10 +2135,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * There is a quick version to start ankidroid quickly without database access, and a longuer one with actual numbers.
      */
     private void updateDeckList() {
-        updateDeckList(false);
+        updateDeckList(false, true);
     }
 
-    private void updateDeckList(boolean quick) {
+    private void updateDeckList(boolean quick, boolean setNumberLoaded) {
         CollectionTask task = CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
 
             @Override
@@ -2163,6 +2167,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 __renderPage();
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
+                mNumberLoaded = setNumberLoaded;
             }
         }, new TaskData(quick));
         tasksToCancelOnClose.add(task);
