@@ -58,6 +58,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -211,6 +212,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /** If we have accepted the "We will show you permissions" dialog, don't show it again on activity rebirth */
     private boolean mClosedWelcomeMessage;
     private boolean mNumberLoaded = false;
+    private Pair<Long, Boolean> mClickBeforeLoading = null;
 
     private Time mTime = new SystemTime();
 
@@ -2029,6 +2031,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void handleDeckSelection(long did, boolean dontSkipStudyOptions) {
         if (!mNumberLoaded) {
+            mClickBeforeLoading = new Pair<Long, Boolean>(did, dontSkipStudyOptions);
             return;
         }
         // Clear the undo history when selecting a new deck
@@ -2168,6 +2171,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
                 mNumberLoaded = setNumberLoaded;
+                if (mClickBeforeLoading != null) {
+                    handleDeckSelection(mClickBeforeLoading.first, mClickBeforeLoading.second);
+                }
             }
         }, new TaskData(quick));
         tasksToCancelOnClose.add(task);
