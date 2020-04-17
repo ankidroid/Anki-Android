@@ -823,8 +823,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mSyncOnResume = false;
         } else if (colIsOpen()) {
             selectNavigationItem(R.id.nav_decks);
-            updateDeckList(true, false);
-            updateDeckList(false, true);
+            if (mDeckListAdapter.wasSet()) {
+                updateDeckList();
+            } else {
+                updateDeckList(true, false);
+                updateDeckList(false, true);
+            }
             setTitle(getResources().getString(R.string.app_name));
         }
     }
