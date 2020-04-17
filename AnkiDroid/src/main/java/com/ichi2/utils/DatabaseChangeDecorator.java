@@ -276,5 +276,9 @@ public class DatabaseChangeDecorator implements SupportSQLiteDatabase {
     public void close() throws IOException {
         wrapped.close();
     }
+
+    public SupportSQLiteDatabase getWrapped() {
+        return wrapped;
+    }
 }
 
