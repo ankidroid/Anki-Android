@@ -40,6 +40,7 @@ import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
+import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
 
@@ -52,6 +53,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -277,14 +279,47 @@ public class Collection {
         mDecks.load(loadColumn("decks"), deckConf);
     }
 
+    private static int sChunk = 0;
+
+    private int getChunk() {
+        if (sChunk != 0) {
+            return sChunk;
+        }
+        // the window size is saved in
+        // io.requery.android.database.CursorWindow.sCursorWindowSize.
+        // Values are copied here. Ideally, a getter would allow to access it.
+        final int WINDOW_SIZE_KB = 2048;
+        int sCursorWindowSize = WINDOW_SIZE_KB * 1024;
+
+        // We have the ability to look into our sqlite implementation on Android and use it's value
+        // as a ceiling. Try it, with a reasonable fallback in case of failure
+        SupportSQLiteDatabase db = mDb.getDatabase();
+        if (! (db instanceof DatabaseChangeDecorator)) {
+            return sChunk;
+        }
+        String db_name = ((DatabaseChangeDecorator) db).getWrapped().getClass().getName();
+        if ("io.requery.android.database.sqlite.SQLiteDatabase".equals(db_name)) {
+            try {
+                Field cursorWindowSize = io.requery.android.database.CursorWindow.class.getDeclaredField("sCursorWindowSize");
+                cursorWindowSize.setAccessible(true);
+                sCursorWindowSize = cursorWindowSize.getInt(null);
+            } catch (Exception e) {
+                Timber.w(e, "Unable to get window size from requery cursor.");
+            }
+        }
+
+        // reduce the actual size a little bit.
+        sChunk = (int) (sCursorWindowSize * 15. / 16.);
+        return sChunk;
+    }
+
     public String loadColumn(String columnName) {
         int pos = 1;
-        int chunk = 1024*1024; // 1 mb, a little less than what a cursor line may contain
         StringBuffer buf = new StringBuffer("");
 
         while (true) {
             try (Cursor cursor = mDb.getDatabase().query("SELECT substr(" + columnName + ", ?, ?) FROM col",
-                    new String[] {Integer.toString(pos), Integer.toString(chunk)})) {
+                    new String[] {Integer.toString(pos), Integer.toString(getChunk())})) {
                 if (!cursor.moveToFirst()) {
                     return buf.toString();
                 }
@@ -293,10 +328,10 @@ public class Collection {
                       break;
                 }
                 buf.append(res);
-                if (res.length() < chunk) {
+                if (res.length() < getChunk()) {
                     break;
                 }
-                pos += chunk;
+                pos += getChunk();
             }
         }
         return buf.toString();
