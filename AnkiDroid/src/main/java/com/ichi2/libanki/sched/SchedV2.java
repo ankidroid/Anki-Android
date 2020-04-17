@@ -2624,8 +2624,7 @@ public class SchedV2 extends AbstractSched {
 
 
     public void decrementCounts(Card card) {
-        int type = card.getQueue();
-        switch (type) {
+        switch (card.getQueue()) {
         case Consts.QUEUE_TYPE_NEW:
             mNewCount--;
             break;
