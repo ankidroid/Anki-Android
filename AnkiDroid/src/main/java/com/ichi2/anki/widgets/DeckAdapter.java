@@ -71,6 +71,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     // Flags
     private boolean mHasSubdecks;
+    private boolean mIsSet = false;
 
     // ViewHolder class to save inflated views for recycling
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -148,6 +149,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         mHasSubdecks = false;
         processNodes(nodes);
         notifyDataSetChanged();
+        mIsSet = true;
     }
 
 
@@ -309,5 +311,13 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     public List<Sched.DeckDueTreeNode> getDeckList() {
         return mDeckList;
+    }
+
+    /** Whether the adapter has values.
+
+        Those values may be out of date, but that's a good first
+        approximation. */
+    public boolean wasSet() {
+        return mIsSet;
     }
 }
