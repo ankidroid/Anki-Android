@@ -35,6 +35,7 @@ public class VisualEditorActivity extends AnkiActivity {
     private int mIndex;
     private VisualEditorWebView mWebView;
     private String mBaseUrl;
+    private int cloze;
 
 
     @Override
@@ -81,10 +82,17 @@ public class VisualEditorActivity extends AnkiActivity {
         setJsAction.apply(R.id.editor_button_italic, "setItalic");
         setJsAction.apply(R.id.editor_button_underline, "setUnderline");
 
+        findViewById(R.id.editor_button_cloze).setOnClickListener(v -> cloze(cloze++));
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
+    }
+
+    private void cloze(int clozeId) {
+        ExecEscaped e = ExecEscaped.fromString(String.format(Locale.US, "cloze(%d)", clozeId));
+        mWebView.exec(e);
     }
 
     @Override
