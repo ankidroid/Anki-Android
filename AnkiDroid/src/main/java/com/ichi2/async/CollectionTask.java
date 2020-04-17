@@ -243,7 +243,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
             case TASK_TYPE_LOAD_DECK_COUNTS:
-                return doInBackgroundLoadDeckCounts();
+                return doInBackgroundLoadDeckCounts(params);
 
             case TASK_TYPE_SAVE_COLLECTION:
                 doInBackgroundSaveCollection();
@@ -530,12 +530,13 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    private TaskData doInBackgroundLoadDeckCounts() {
+    private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
         Timber.d("doInBackgroundLoadDeckCounts");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
+            boolean quick = params[0].getBoolean();
             // Get due tree
-            Object[] o = new Object[] {col.getSched().deckDueTree(this)};
+            Object[] o = new Object[] {col.getSched().deckDueTree(this, quick)};
             return new TaskData(o);
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundLoadDeckCounts - error");

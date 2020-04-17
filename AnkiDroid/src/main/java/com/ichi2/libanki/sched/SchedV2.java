@@ -376,12 +376,14 @@ public class SchedV2 extends AbstractSched {
      * Return nulls when deck task is cancelled.
      */
     public List<DeckDueTreeNode> deckDueList() {
-        return deckDueList(null);
+        return deckDueList(null, false);
     }
 
-    public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask) {
+    public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask, boolean quick) {
         _checkDay();
-        mCol.getDecks().checkIntegrity();
+        if (!quick) {
+            mCol.getDecks().checkIntegrity();
+        }
         ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> data = new ArrayList<>();
@@ -392,13 +394,13 @@ public class SchedV2 extends AbstractSched {
             }
             String p = Decks.parent(deck.getString("name"));
             // new
-            int nlim = _deckNewLimitSingle(deck);
+            int nlim = quick ? 0 : _deckNewLimitSingle(deck);
             if (!TextUtils.isEmpty(p)) {
                 nlim = Math.min(nlim, lims.get(p)[0]);
             }
-            int _new = _newForDeck(deck.getLong("id"), nlim);
+            int _new = quick ? 0 : _newForDeck(deck.getLong("id"), nlim);
             // learning
-            int lrn = _lrnForDeck(deck.getLong("id"));
+            int lrn = quick ? 0 : _lrnForDeck(deck.getLong("id"));
             // reviews
             Integer plim;
             if (!TextUtils.isEmpty(p)) {
@@ -407,7 +409,7 @@ public class SchedV2 extends AbstractSched {
                 plim = null;
             }
             int rlim = _deckRevLimitSingle(deck, plim);
-            int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
+            int rev = quick ? 0 : _revForDeck(deck.getLong("id"), rlim, childMap);
             // save to list
             data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
             // add deck as a parent
@@ -418,11 +420,11 @@ public class SchedV2 extends AbstractSched {
 
 
     public List<DeckDueTreeNode> deckDueTree() {
-        return deckDueTree(null);
+        return deckDueTree(null, false);
     }
 
-    public List<DeckDueTreeNode> deckDueTree(CollectionTask collectionTask) {
-        List<DeckDueTreeNode> deckDueTree = deckDueList(collectionTask);
+    public List<DeckDueTreeNode> deckDueTree(CollectionTask collectionTask, boolean quick) {
+        List<DeckDueTreeNode> deckDueTree = deckDueList(collectionTask, quick);
         if (deckDueTree == null) {
             return null;
         }

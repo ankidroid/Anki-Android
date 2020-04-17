@@ -49,7 +49,7 @@ public abstract class AbstractSched {
      */
     public abstract List<DeckDueTreeNode> deckDueList();
     /** load the due tree, but halt if deck task is cancelled*/
-    public abstract List<DeckDueTreeNode> deckDueTree(CollectionTask collectionTask);
+    public abstract List<DeckDueTreeNode> deckDueTree(CollectionTask collectionTask, boolean quick);
     public abstract List<DeckDueTreeNode> deckDueTree();
     /** New count for a single deck. */
     public abstract int _newForDeck(long did, int lim);

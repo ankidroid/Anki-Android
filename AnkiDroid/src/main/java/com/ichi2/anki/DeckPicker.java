@@ -820,7 +820,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mSyncOnResume = false;
         } else if (colIsOpen()) {
             selectNavigationItem(R.id.nav_decks);
-            updateDeckList();
+            updateDeckList(true);
+            updateDeckList(false);
             setTitle(getResources().getString(R.string.app_name));
         }
     }
@@ -2126,8 +2127,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * in the deck list.
      *
      * This method also triggers an update for the widget to reflect the newly calculated counts.
+     *
+     * There is a quick version to start ankidroid quickly without database access, and a longuer one with actual numbers.
      */
     private void updateDeckList() {
+        updateDeckList(false);
+    }
+
+    private void updateDeckList(boolean quick) {
         CollectionTask task = CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
 
             @Override
@@ -2157,7 +2164,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
             }
-        });
+        }, new TaskData(quick));
         tasksToCancelOnClose.add(task);
     }
 

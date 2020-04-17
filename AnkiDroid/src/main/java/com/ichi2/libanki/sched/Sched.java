@@ -211,9 +211,11 @@ public class Sched extends SchedV2 {
      * Returns [deckname, did, rev, lrn, new]
      */
     @Override
-    public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask) {
+    public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask, boolean quick) {
         _checkDay();
-        mCol.getDecks().checkIntegrity();
+        if (!quick) {
+            mCol.getDecks().checkIntegrity();
+        }
         ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> data = new ArrayList<>();
@@ -227,11 +229,11 @@ public class Sched extends SchedV2 {
             if (!TextUtils.isEmpty(p)) {
                 nlim = Math.min(nlim, lims.get(p)[0]);
             }
-            int _new = _newForDeck(deck.getLong("id"), nlim);
+            int _new = quick ? 0 : _newForDeck(deck.getLong("id"), nlim);
             // learning
-            int lrn = _lrnForDeck(deck.getLong("id"));
+            int lrn = quick ? 0 : _lrnForDeck(deck.getLong("id"));
             // reviews
-            int rlim = _deckRevLimitSingle(deck);
+            int rlim = quick ? 0 : _deckRevLimitSingle(deck);
             if (!TextUtils.isEmpty(p)) {
                 rlim = Math.min(rlim, lims.get(p)[1]);
             }
