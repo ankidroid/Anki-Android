@@ -21,6 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
+import androidx.annotation.NonNull;
+
+
 public abstract class AbstractSched {
     /**
      * Pop the next card from the queue. null if finished.
@@ -353,4 +356,12 @@ public abstract class AbstractSched {
             Timber.w("LeechHook :: could not show leech toast as activity was null");
         }
     }
+
+    /**
+     * Notifies the scheduler that the provided card is being
+     * reviewed. Ensures that a different card is prefetched.
+     * @param card the current card in the reviewer
+     */
+    public abstract void setCurrentCard(@NonNull Card card);
+    public abstract void discardCurrentCard();
 }

@@ -882,8 +882,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                     Timber.d("Single card review undo succeeded");
                     newCard = col.getCard(cid);
                     newCard.startTimer();
-                    col.reset();
-                    col.getSched().decrementCounts(newCard);
                     sched.deferReset();
                 } else {
                     // cid < 0

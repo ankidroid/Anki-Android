@@ -589,6 +589,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true; // other handlers use this, toggle state every time through
             } else {
+                mSched.setCurrentCard(mCurrentCard);
                 mNoMoreCards = false; // other handlers use this, toggle state every time through
                 // Start reviewing next card
                 updateTypeAnswerInfo();
@@ -944,6 +945,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // Tells the scheduler there is no more current cards. 0 is
+        // not a valid id.
+        if (mSched != null) {
+            mSched.discardCurrentCard();
+        }
         Timber.d("onDestroy()");
         if (mSpeakText) {
             ReadText.releaseTts();
@@ -1344,6 +1350,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
+        mSched.discardCurrentCard();
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(true),
                 new CollectionTask.TaskData(mCurrentCard, mCurrentEase));
     }
@@ -3057,6 +3064,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void dismiss(Collection.DismissType type) {
         blockControls(false);
+        mSched.discardCurrentCard();
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS, mDismissCardHandler,
                 new CollectionTask.TaskData(new Object[]{mCurrentCard, type}));
     }

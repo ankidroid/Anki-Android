@@ -338,6 +338,12 @@ public class Sched extends SchedV2 {
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? "+
                         "LIMIT ?",
                 new Object[]{mToday, mReportLimit});
+        if (mCurrentCard != null && (
+                mCurrentCard.getQueue() == Consts.QUEUE_TYPE_LRN ||
+                        mCurrentCard.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
+        )) {
+            mLrnCount -= 1;
+        }
     }
 
 
@@ -366,8 +372,8 @@ public class Sched extends SchedV2 {
                     .getDb()
                     .getDatabase()
                     .query(
-                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? LIMIT ?",
-                                    new Object[]{mDayCutoff, mReportLimit});
+                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND nid != ? LIMIT ?",
+                            new Object[]{mDayCutoff, currentCardNid(), mReportLimit});
             while (cur.moveToNext()) {
                 mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
             }
@@ -660,7 +666,11 @@ public class Sched extends SchedV2 {
         }
         long did = d.getLong("id");
         JSONObject c = mCol.getDecks().confForDid(did);
-        return Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+        int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_REV && mCurrentCardParentsDid.contains(did)) {
+            lim--;
+        }
+        return lim;
     }
 
 
@@ -675,6 +685,9 @@ public class Sched extends SchedV2 {
     protected void _resetRevCount() {
         mRevCount = _walkingCount(d -> _deckRevLimitSingle(d),
                                   (did, lim) -> _cntFnRev(did, lim));
+        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_REV ) {
+            mRevCount -= 1;
+        }
     }
 
 
@@ -718,8 +731,8 @@ public class Sched extends SchedV2 {
                             .getDatabase()
                             .query(
                                     "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
-                                            + " LIMIT ?",
-                                    new Object[]{did, mToday, lim});
+                                            + " AND nid != ? LIMIT ?",
+                                    new Object[]{did, mToday, currentCardNid(), lim});
                     while (cur.moveToNext()) {
                         mRevQueue.add(cur.getLong(0));
                     }

@@ -60,6 +60,7 @@ import java.util.Locale;
 import java.util.Random;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
@@ -104,6 +105,23 @@ public class SchedV2 extends AbstractSched {
 
     // Not in libanki
     protected WeakReference<Activity> mContextReference;
+    /**
+     * The card currently being reviewed.
+     *
+     * Must not be returned during prefetching (as it is currently
+     * shown)
+     */
+    protected Card mCurrentCard;
+    /** The list of parent decks of the current card.
+     * Cached for performance .
+
+        Null iff mNextCard is null.*/
+    @Nullable
+    protected List<Long> mCurrentCardParentsDid;
+    /* The next card that will be sent to the reviewer. I.e. the
+     * result of a second call to getCard, which is not the current
+     * card nor a sibling.
+     */
 
     // Not in libAnki.
     private final Time mTime;
@@ -560,6 +578,9 @@ public class SchedV2 extends AbstractSched {
     protected void _resetNewCount() {
         mNewCount = _walkingCount((JSONObject g) -> _deckNewLimitSingle(g),
                                   (long did, int lim) -> _cntFnNew(did, lim));
+        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_NEW) {
+            mNewCount -= 1;
+        }
     }
 
 
@@ -579,6 +600,20 @@ public class SchedV2 extends AbstractSched {
         _updateNewCardRatio();
     }
 
+    /**
+        @return The id of the card currently in the reviewer. 0 if no
+        such card.
+     */
+    protected long currentCardNid() {
+        if (mCurrentCard == null) {
+            /* This method is used to determine whether two cards are
+            siblings. Since 0 is not a valid nid, all cards will have
+            a nid distinct from 0. As it is used in sql statement, it
+            is not possible to just use a function areSiblings()*/
+            return 0;
+        }
+        return mCurrentCard.getNid();
+    }
 
     private boolean _fillNew() {
         if (!mNewQueue.isEmpty()) {
@@ -598,8 +633,8 @@ public class SchedV2 extends AbstractSched {
                     cur = mCol
                             .getDb()
                             .getDatabase()
-                            .query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " order by due, ord LIMIT ?",
-                                    new Object[]{did, lim});
+                            .query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND nid != ? order by due, ord LIMIT ?",
+                                   new Object[]{did, currentCardNid(), lim});
                     while (cur.moveToNext()) {
                         mNewQueue.add(cur.getLong(0));
                     }
@@ -718,7 +753,11 @@ public class SchedV2 extends AbstractSched {
         }
         long did = g.getLong("id");
         JSONObject c = mCol.getDecks().confForDid(did);
-        return Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
+        int lim = Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
+        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_NEW && mCurrentCardParentsDid.contains(did)) {
+            lim--;
+        }
+        return lim;
     }
 
     public int totalNewForCurrentDeck() {
@@ -761,6 +800,13 @@ public class SchedV2 extends AbstractSched {
         // previews
         mLrnCount += mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_PREVIEW);
+        if (mCurrentCard != null && (
+                mCurrentCard.getQueue() == Consts.QUEUE_TYPE_LRN ||
+                        mCurrentCard.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ||
+                        mCurrentCard.getQueue() == Consts.QUEUE_TYPE_PREVIEW
+        )) {
+            mLrnCount -= 1;
+        }
     }
 
 
@@ -848,12 +894,21 @@ public class SchedV2 extends AbstractSched {
             mLrnDayQueue.clear();
             Cursor cur = null;
             try {
+                /* Difference with upstream: we take currentCard into
+                 * account
+                 *
+                 * When current card is answered, _burySiblings ensure
+                 * that the siblings of the current cards are removed
+                 * from the queue to ensure same day spacing. We
+                 * simulate this action by ensuring that those
+                 * siblings are not fetched in this query.
+                 */
                 cur = mCol
                         .getDb()
                         .getDatabase()
                         .query(
-                                "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? LIMIT ?",
-                                new Object[] {did, mToday, mQueueLimit});
+                                "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? AND nid != ? LIMIT ?",
+                                new Object[] {did, mToday, currentCardNid(), mQueueLimit});
                 while (cur.moveToNext()) {
                     mLrnDayQueue.add(cur.getLong(0));
                 }
@@ -1206,6 +1261,9 @@ public class SchedV2 extends AbstractSched {
         long did = d.getLong("id");
         JSONObject c = mCol.getDecks().confForDid(did);
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_REV && mCurrentCardParentsDid.contains(did)) {
+            lim --;
+        }
 
         if (parentLimit != null) {
             return Math.min(parentLimit, lim);
@@ -1234,6 +1292,9 @@ public class SchedV2 extends AbstractSched {
         int lim = _currentRevLimit();
         mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
                                              new Object[]{mToday, lim});
+        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_REV ) {
+            mRevCount -= 1;
+        }
     }
 
 
@@ -1256,13 +1317,22 @@ public class SchedV2 extends AbstractSched {
             mRevQueue.clear();
             // fill the queue with the current did
             try {
+                /* Difference with upstream: we take current card into
+                 * account.
+                 *
+                 * When current card is answered, _burySiblings ensure
+                 * that the siblings of the current cards are removed
+                 * from the queue to ensure same day spacing. We
+                 * simulate this action by ensuring that those
+                 * siblings are not fetched in this query.
+                 */
                 cur = mCol
                         .getDb()
                         .getDatabase()
                         .query(
-                                "SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? "
-                                        + " ORDER BY due, random() LIMIT ?",
-                                new Object[] {mToday, lim});
+                               "SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? "
+                                        + " ORDER BY due, random() AND nid != ? LIMIT ?",
+                                new Object[] {mToday, currentCardNid(), lim});
                 while (cur.moveToNext()) {
                     mRevQueue.add(cur.getLong(0));
                 }
@@ -2716,4 +2786,33 @@ public class SchedV2 extends AbstractSched {
     }
 
     /** End #5666 */
+    public void discardCurrentCard() {
+        mCurrentCard = null;
+        mCurrentCardParentsDid = null;
+    }
+
+    /**
+     * This imitate the action of the method answerCard, except that
+     * it does not chastate of any card.
+     *
+     * It means in particular that:
+     * + it removes the siblings of card from all queues
+     * + change the next card if required
+     * it also set variables, so that when querying the next card, the
+     * current card can be taken into account.
+     */
+    public void setCurrentCard(@NonNull Card card) {
+        mCurrentCard = card;
+        long did = card.getDid();
+        List<JSONObject> parents = mCol.getDecks().parents(did);
+        mCurrentCardParentsDid = new ArrayList<>(parents.size() + 1);
+        for (JSONObject parent : parents) {
+            mCurrentCardParentsDid.add(parent.getLong("id"));
+        }
+        mCurrentCardParentsDid.add(did);
+        _burySiblings(card);
+        // if current card is next card or in the queue
+        mRevQueue.remove(card.getId());
+        mNewQueue.remove(card.getId());
+    }
 }
