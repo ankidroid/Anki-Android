@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+    <!-- TODO: REDO -->
+    <item
+        android:id="@+id/action_undo"
+        android:enabled="true"
+        android:icon="@drawable/ic_undo_white_24dp"
+        android:title="@string/undo"
+        ankidroid:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_save"
+        android:icon="@drawable/ic_done_white_24dp"
+        android:title="@string/save"
+        ankidroid:showAsAction="always"/>
+</menu>

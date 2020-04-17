@@ -63,6 +63,7 @@ import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
+import com.ichi2.anki.multimediacard.activity.VisualEditorActivity;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.EFieldType;
@@ -153,6 +154,7 @@ public class NoteEditor extends AnkiActivity {
     public static final int REQUEST_ADD = 0;
     public static final int REQUEST_MULTIMEDIA_EDIT = 2;
     public static final int REQUEST_TEMPLATE_EDIT = 3;
+    public static final int REQUEST_VISUAL_EDIT = 4;
 
     private boolean mChanged = false;
     private boolean mTagsEdited = false;
@@ -1122,6 +1124,21 @@ public class NoteEditor extends AnkiActivity {
                 }
                 break;
             }
+            case REQUEST_VISUAL_EDIT: {
+                if (resultCode == RESULT_CANCELED) {
+                    return;
+                }
+                //TODO: Duplication
+                Collection col = getCol();
+                Bundle extras = data.getExtras();
+                int index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX);
+                IField field = (IField) extras.get(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD);
+                IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
+                NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
+                mNote.setField(index, field);
+                mEditFields.get(index).setText(field.getFormattedValue());
+            }
+                break;
             case REQUEST_MULTIMEDIA_EDIT: {
                 if (resultCode != RESULT_CANCELED) {
                     Collection col = getCol();
@@ -1272,9 +1289,33 @@ public class NoteEditor extends AnkiActivity {
                 setMMButtonListener(mediaButton, i);
             }
             mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, fields[i][0]));
+            ImageButton visualEditorButton = edit_line_view.findViewById(R.id.id_visual_editor);
+            setVisualEditorListener(visualEditorButton, i);
             mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(edit_line_view);
         }
+    }
+
+
+    private void setVisualEditorListener(ImageButton visualEditorButton, final int index) {
+        visualEditorButton.setOnClickListener(view -> {
+            Timber.i("NoteEditor:: Multimedia button pressed for field %d", index);
+            try {
+                final Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
+
+                // If the field already exists then we start the field editor, which figures out the type
+                // automatically
+                IField field = new TextField();
+                String value = mEditFields.get(index).getText().toString();
+                field.setFormattedString(col, value);
+                Intent i = new Intent(this, VisualEditorActivity.class);
+                i.putExtra(VisualEditorActivity.EXTRA_FIELD, field);
+                i.putExtra(VisualEditorActivity.EXTRA_FIELD_INDEX, index);
+                startActivityForResultWithoutAnimation(i, REQUEST_VISUAL_EDIT);
+            } catch (Exception e) {
+                UIUtils.showThemedToast(this, "Unable to open Visual Editor", false);
+            }
+        });
     }
 
 

@@ -11,9 +11,18 @@
         android:layout_height="wrap_content"
         android:drawablePadding="8dp"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/id_media_button"
+        android:layout_toLeftOf="@+id/id_visual_editor"
         android:layout_alignTop="@+id/id_media_button"
          />
+
+    <ImageButton
+        android:id="@+id/id_visual_editor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right|center_vertical"
+        android:background="@drawable/ic_settings_applications_black_36dp"
+        android:layout_toLeftOf="@+id/id_media_button"
+        android:layout_alignTop="@+id/id_media_button" />
 
     <ImageButton
         android:id="@+id/id_media_button"

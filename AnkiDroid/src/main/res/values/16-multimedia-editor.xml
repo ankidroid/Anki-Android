@@ -53,6 +53,7 @@
     <string name="multimedia_editor_field_editing_image">Image</string>
     <string name="multimedia_editor_field_editing_audio">Audio recording</string>
     <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_visual_editor">Visual Editor</string>
     <string name="multimedia_editor_field_editing_done">Done</string>
 
     <!-- Text field editing -->
@@ -112,4 +113,7 @@
 
 	<!-- Network failure -->
 	<string name="network_no_connection">No connection</string>
+
+
+    <string name="title_activity_visual_editor">Visual Editor</string>
 </resources>
