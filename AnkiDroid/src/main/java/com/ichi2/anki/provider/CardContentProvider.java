@@ -350,16 +350,15 @@ public class CardContentProvider extends ContentProvider {
                 for (int k = 0; k< limit; k++){
                     Card currentCard = col.getSched().getCard();
 
-                    if (currentCard != null) {
-                        int buttonCount = col.getSched().answerButtons(currentCard);
-                        JSONArray buttonTexts = new JSONArray();
-                        for (int i = 0; i < buttonCount; i++) {
-                            buttonTexts.put(col.getSched().nextIvlStr(mContext, currentCard, i + 1));
-                        }
-                        addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns);
-                    }else{
+                    if (currentCard == null) {
                         break;
                     }
+                    int buttonCount = col.getSched().answerButtons(currentCard);
+                    JSONArray buttonTexts = new JSONArray();
+                    for (int i = 0; i < buttonCount; i++) {
+                        buttonTexts.put(col.getSched().nextIvlStr(mContext, currentCard, i + 1));
+                    }
+                    addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns);
                 }
 
                 if (deckIdOfTemporarilySelectedDeck != -1) {//if the selected deck was changed
