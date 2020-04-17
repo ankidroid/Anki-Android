@@ -330,8 +330,8 @@ public class Storage {
         agc.put("1", gc);
         ContentValues values = new ContentValues();
         values.put("conf", Collection.defaultConf);
-        values.put("decks", Utils.jsonToString(ag));
-        values.put("dconf", Utils.jsonToString(agc));
+        values.put("decks", ag.toString());
+        values.put("dconf", agc.toString());
         db.update("col", values);
     }
 

@@ -85,7 +85,7 @@ public class Tags {
                 tags.put(t.getKey(), t.getValue());
             }
             ContentValues val = new ContentValues();
-            val.put("tags", Utils.jsonToString(tags));
+            val.put("tags", tags.toString());
             // TODO: the database update call here sets mod = true. Verify if this is intended.
             mCol.getDb().update("col", val);
             mChanged = false;

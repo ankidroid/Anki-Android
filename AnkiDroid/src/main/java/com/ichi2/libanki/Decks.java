@@ -195,12 +195,12 @@ public class Decks {
             for (Map.Entry<Long, JSONObject> d : mDecks.entrySet()) {
                 decksarray.put(Long.toString(d.getKey()), d.getValue());
             }
-            values.put("decks", Utils.jsonToString(decksarray));
+            values.put("decks", decksarray.toString());
             JSONObject confarray = new JSONObject();
             for (Map.Entry<Long, JSONObject> d : mDconf.entrySet()) {
                 confarray.put(Long.toString(d.getKey()), d.getValue());
             }
-            values.put("dconf", Utils.jsonToString(confarray));
+            values.put("dconf", confarray.toString());
             mCol.getDb().update("col", values);
             mChanged = false;
         }

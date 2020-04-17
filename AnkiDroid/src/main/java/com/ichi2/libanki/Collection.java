@@ -317,7 +317,7 @@ public class Collection {
         values.put("dty", mDty ? 1 : 0);
         values.put("usn", mUsn);
         values.put("ls", mLs);
-        values.put("conf", Utils.jsonToString(mConf));
+        values.put("conf", mConf.toString());
         mDb.update("col", values);
     }
 

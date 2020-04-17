@@ -336,7 +336,7 @@ public class Anki2Importer extends Importer {
             // missing from target col?
             if (!mDst.getModels().have(mid)) {
                 // copy it over
-                JSONObject model = new JSONObject(Utils.jsonToString(srcModel));
+                JSONObject model = new JSONObject(srcModel.toString());
                 model.put("id", mid);
                 model.put("mod", Utils.intTime());
                 model.put("usn", mCol.usn());
@@ -348,7 +348,7 @@ public class Anki2Importer extends Importer {
             String dstScm = mDst.getModels().scmhash(dstModel);
             if (srcScm.equals(dstScm)) {
                 // they do; we can reuse this mid
-                JSONObject model = new JSONObject(Utils.jsonToString(srcModel));
+                JSONObject model = new JSONObject(srcModel.toString());
                 model.put("id", mid);
                 model.put("mod", Utils.intTime());
                 model.put("usn", mCol.usn());

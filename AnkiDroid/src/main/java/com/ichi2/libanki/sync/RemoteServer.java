@@ -48,7 +48,7 @@ public class RemoteServer extends HttpSyncer {
             JSONObject jo = new JSONObject();
             jo.put("u", user);
             jo.put("p", pw);
-            return super.req("hostKey", HttpSyncer.getInputStream(Utils.jsonToString(jo)));
+            return super.req("hostKey", HttpSyncer.getInputStream(jo.toString()));
         } catch (JSONException e) {
             return null;
         }
@@ -64,7 +64,7 @@ public class RemoteServer extends HttpSyncer {
         jo.put("v", Consts.SYNC_VER);
         jo.put("cv",
                 String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
-        return super.req("meta", HttpSyncer.getInputStream(Utils.jsonToString(jo)));
+        return super.req("meta", HttpSyncer.getInputStream(jo.toString()));
     }
 
 
@@ -110,7 +110,7 @@ public class RemoteServer extends HttpSyncer {
 
     /** Python has dynamic type deduction, but we don't, so return String **/
     private String _run(String cmd, JSONObject data) throws UnknownHttpResponseException {
-        Response ret = super.req(cmd, HttpSyncer.getInputStream(Utils.jsonToString(data)));
+        Response ret = super.req(cmd, HttpSyncer.getInputStream(data.toString()));
         try {
             return ret.body().string();
         } catch (IllegalStateException | IOException e) {

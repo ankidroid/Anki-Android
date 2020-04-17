@@ -80,7 +80,7 @@ public class RemoteMediaServer extends HttpSyncer {
             mPostVars.put("v",
                     String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
 
-            Response resp = super.req("begin", HttpSyncer.getInputStream(Utils.jsonToString(new JSONObject())));
+            Response resp = super.req("begin", HttpSyncer.getInputStream(new JSONObject().toString()));
             JSONObject jresp = new JSONObject(resp.body().string());
             JSONObject ret = _dataOnly(jresp, JSONObject.class);
             mSKey = ret.getString("sk");
@@ -98,7 +98,7 @@ public class RemoteMediaServer extends HttpSyncer {
             mPostVars.put("sk", mSKey);
 
             Response resp = super.req("mediaChanges",
-                    HttpSyncer.getInputStream(Utils.jsonToString(new JSONObject().put("lastUsn", lastUsn))));
+                                      HttpSyncer.getInputStream(new JSONObject().put("lastUsn", lastUsn).toString()));
             JSONObject jresp = new JSONObject(resp.body().string());
             return _dataOnly(jresp, JSONArray.class);
         } catch (IOException e) {
@@ -117,7 +117,7 @@ public class RemoteMediaServer extends HttpSyncer {
         Response resp = null;
         try {
             resp = super.req("downloadFiles",
-                    HttpSyncer.getInputStream(Utils.jsonToString(new JSONObject().put("files", new JSONArray(top)))));
+                             HttpSyncer.getInputStream(new JSONObject().put("files", new JSONArray(top)).toString()));
             String zipPath = mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncFromServer.zip");
             // retrieve contents and save to file on disk:
             super.writeToFile(resp.body().byteStream(), zipPath);
@@ -149,7 +149,7 @@ public class RemoteMediaServer extends HttpSyncer {
     public String mediaSanity(int lcnt) throws UnknownHttpResponseException, MediaSyncException {
         try {
             Response resp = super.req("mediaSanity",
-                    HttpSyncer.getInputStream(Utils.jsonToString(new JSONObject().put("local", lcnt))));
+                                      HttpSyncer.getInputStream(new JSONObject().put("local", lcnt).toString()));
             JSONObject jresp = new JSONObject(resp.body().string());
             return _dataOnly(jresp, String.class);
         } catch (IOException | NullPointerException e) {

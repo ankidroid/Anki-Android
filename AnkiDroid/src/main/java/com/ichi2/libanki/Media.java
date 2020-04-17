@@ -894,7 +894,7 @@ public class Media {
             }
 
             z.putNextEntry(new ZipEntry("_meta"));
-            z.write(Utils.jsonToString(meta).getBytes());
+            z.write(meta.toString().getBytes());
             z.closeEntry();
             z.close();
             // Don't leave lingering temp files if the VM terminates.

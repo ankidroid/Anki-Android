@@ -343,7 +343,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
             media = exportFiltered(z, path, context);
         }
         // media map
-        z.writeStr("media", Utils.jsonToString(media));
+        z.writeStr("media", media.toString());
         z.close();
     }
 
