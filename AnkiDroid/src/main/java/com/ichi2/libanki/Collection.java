@@ -263,7 +263,11 @@ public class Collection {
                 cursor.close();
             }
         }
-        getModels().load(loadColumn("models"));
+        // getModels().load(loadColumn("models")); This code has been
+        // moved to `CollectionHelper::loadLazyCollection` for
+        // efficiency Models are loaded lazily on demand. The
+        // application layer can asynchronously pre-fetch those parts;
+        // otherwise they get loaded when required.
         mDecks.load(loadColumn("decks"), deckConf);
     }
 

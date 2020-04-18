@@ -348,6 +348,7 @@ public class CollectionHelper {
      * No-op if data is already fetched
      */
     public static void loadLazyCollection(Collection col) {
+        col.getModels();
     }
 
 }
