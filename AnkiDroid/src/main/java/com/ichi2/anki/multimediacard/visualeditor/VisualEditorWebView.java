@@ -299,6 +299,15 @@ public class VisualEditorWebView extends WebView {
     }
 
 
+    public void setNightMode(boolean nightMode) {
+        if(nightMode) {
+            execUnsafe("$(\"body\").addClass(\"night_mode\");");
+        } else {
+            execUnsafe("$(\"body\").removeClass(\"night_mode\");");
+        }
+    }
+
+
     public static class ExecEscaped {
         private final String escapedValue;
 
