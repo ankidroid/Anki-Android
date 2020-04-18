@@ -165,7 +165,6 @@ public class Collection {
         //mLastSave = Utils.now(); // assigned but never accessed - only leaving in for upstream comparison
         clearUndo();
         mMedia = new Media(this, server);
-        mModels = new Models(this);
         mDecks = new Decks(this);
         mTags = new Tags(this);
         load();
@@ -263,7 +262,11 @@ public class Collection {
                 cursor.close();
             }
         }
-        getModels().load(loadColumn("models"));
+        // getModels().load(loadColumn("models")); This code has been
+        // moved to `CollectionHelper::loadLazyCollection` for
+        // efficiency Models are loaded lazily on demand. The
+        // application layer can asynchronously pre-fetch those parts;
+        // otherwise they get loaded when required.
         mDecks.load(loadColumn("decks"), deckConf);
     }
 
@@ -2103,7 +2106,24 @@ public class Collection {
     }
 
 
-    public Models getModels() {
+    /**
+     * On first call, load the model if it was not loaded.
+     *
+     * Synchronized to ensure that loading does not occur twice.
+     * Normally the first call occurs in the background when
+     * collection is loaded.  The only exception being if the user
+     * perform an action (e.g. review) so quickly that
+     * loadModelsInBackground had no time to be called. In this case
+     * it will instantly finish. Note that loading model is a
+     * bottleneck anyway, so background call lose all interest.
+     *
+     * @return The model manager
+     */
+    public synchronized Models getModels() {
+        if (mModels == null) {
+            mModels = new Models(this);
+            mModels.load(loadColumn("models"));
+        }
         return mModels;
     }
 
