@@ -114,6 +114,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         SAVE_MODEL,
         FIND_EMPTY_CARDS,
         CHECK_CARD_SELECTION,
+        LOAD_COLLECTION_COMPLETE,
     }
 
     /**
@@ -410,6 +411,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
             case CHECK_CARD_SELECTION:
                 return doInBackgroundCheckCardSelection(params);
+
+            case LOAD_COLLECTION_COMPLETE:
+                doInBackgroundLoadCollectionComplete();
+                break;
 
             default:
                 Timber.e("unknown task type: %s", mType);
@@ -1684,6 +1689,13 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
 
         return new TaskData(new Object[] { hasUnsuspended, hasUnmarked});
+    }
+
+    public void doInBackgroundLoadCollectionComplete() {
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        if (col != null) {
+            CollectionHelper.loadCollectionComplete(col);
+        }
     }
 
     /**
