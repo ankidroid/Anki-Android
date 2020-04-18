@@ -2103,7 +2103,23 @@ public class Collection {
     }
 
 
-    public Models getModels() {
+    /**
+     * On first call, load the model if it was not loaded.
+     *
+     * Synchronized to ensure that loading does not occur twice.
+     * Normally the first call occurs in the background when
+     * collection is loaded.  The only exception being if the user
+     * perform an action (e.g. review) so quickly that
+     * loadModelsInBackground had no time to be called. In this case
+     * it will instantly finish. Note that loading model is a
+     * bottleneck anyway, so background call lose all interest.
+     *
+     * @return The model manager
+     */
+    public synchronized Models getModels() {
+        if (!mModels.isLoaded()) {
+            mModels.load(loadColumn("models"));
+        }
         return mModels;
     }
 
