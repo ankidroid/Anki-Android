@@ -340,4 +340,14 @@ public class CollectionHelper {
             return insufficientSpace + insufficientSpaceCurrentFree;
         }
     }
+
+    /** Fetches additional collection data not required for
+     * application startup
+     *
+     * Allows mandatory startup procedures to return early, speeding up startup. Less important tasks are offloaded here
+     * No-op if data is already fetched
+     */
+    public static void loadLazyCollection(Collection col) {
+    }
+
 }
