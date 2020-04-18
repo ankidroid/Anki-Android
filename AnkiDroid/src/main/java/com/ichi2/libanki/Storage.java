@@ -30,6 +30,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -231,7 +232,7 @@ public class Storage {
     }
 
 
-    private static void _upgradeClozeModel(Collection col, JSONObject m) throws ConfirmModSchemaException {
+    private static void _upgradeClozeModel(Collection col, @NonNull JSONObject m) throws ConfirmModSchemaException {
         m.put("type", Consts.MODEL_CLOZE);
         // convert first template
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);

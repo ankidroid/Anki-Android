@@ -41,6 +41,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
@@ -164,11 +166,11 @@ public class Models {
      * Mark M modified if provided, and schedule registry flush.
      */
     public void save() {
-        save(null, false);
+        mChanged = true;
     }
 
 
-    public void save(JSONObject m) {
+    public void save(@NonNull JSONObject m) {
         save(m, false);
     }
 
@@ -178,18 +180,18 @@ public class Models {
      * @param templates flag which (when true) re-generates the cards for each note which uses the model
      */
     public void save(JSONObject m, boolean templates) {
-        if (m != null && m.has("id")) {
-			m.put("mod", Utils.intTime());
-			m.put("usn", mCol.usn());
-			// TODO: fix empty id problem on _updaterequired (needed for model adding)
-			if (!isModelNew(m)) {
-				_updateRequired(m);
-			}
-			if (templates) {
-				_syncTemplates(m);
-			}
+        if (m.has("id")) {
+            m.put("mod", Utils.intTime());
+            m.put("usn", mCol.usn());
+            // TODO: fix empty id problem on _updaterequired (needed for model adding)
+            if (!isModelNew(m)) {
+                _updateRequired(m);
+            }
+            if (templates) {
+                _syncTemplates(m);
+            }
         }
-        mChanged = true;
+        save();
         // The following hook rebuilds the tree in the Anki Desktop browser -- we don't need it
         // runHook("newModel")
     }
@@ -258,7 +260,7 @@ public class Models {
     }
 
 
-    public void setCurrent(JSONObject m) {
+    public void setCurrent(@NonNull JSONObject m) {
         mCol.getConf().put("curModel", m.get("id"));
         mCol.setMod();
     }
@@ -335,7 +337,7 @@ public class Models {
     }
 
 
-    public void add(JSONObject m) {
+    public void add(@NonNull JSONObject m) {
         _setID(m);
         update(m);
         setCurrent(m);
@@ -344,14 +346,14 @@ public class Models {
 
 
     /** Add or update an existing model. Used for syncing and merging. */
-    public void update(JSONObject m) {
+    public void update(@NonNull JSONObject m) {
         mModels.put(m.getLong("id"), m);
         // mark registry changed, but don't bump mod time
         save();
     }
 
 
-    private void _setID(JSONObject m) {
+    private void _setID(@NonNull JSONObject m) {
         long id = Utils.intTime(1000);
         while (mModels.containsKey(id)) {
             id = Utils.intTime(1000);
@@ -462,7 +464,7 @@ public class Models {
     }
 
 
-    public void setSortIdx(JSONObject m, int idx) throws ConfirmModSchemaException{
+    public void setSortIdx(@NonNull JSONObject m, int idx) throws ConfirmModSchemaException{
         mCol.modSchema();
         m.put("sortf", idx);
         mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
@@ -470,7 +472,7 @@ public class Models {
     }
 
 
-    private void _addField(JSONObject m, JSONObject field) {
+    private void _addField(@NonNull JSONObject m, JSONObject field) {
         // do the actual work of addField. Do not check whether model
         // is not new.
 		JSONArray ja = m.getJSONArray("flds");
@@ -562,7 +564,7 @@ public class Models {
     }
 
 
-    public void moveField(JSONObject m, JSONObject field, int idx) throws ConfirmModSchemaException {
+    public void moveField(@NonNull JSONObject m, JSONObject field, int idx) throws ConfirmModSchemaException {
         mCol.modSchema();
         JSONArray ja = m.getJSONArray("flds");
         ArrayList<JSONObject> l = new ArrayList<>();
@@ -689,7 +691,7 @@ public class Models {
 
 
     /** Note: should col.genCards() afterwards. */
-    private void _addTemplate(JSONObject m, JSONObject template) {
+    private void _addTemplate(@NonNull JSONObject m, JSONObject template) {
         // do the actual work of addTemplate. Do not consider whether
         // model is new or not.
         JSONArray ja = m.getJSONArray("tmpls");
@@ -728,7 +730,7 @@ public class Models {
      * @return False if removing template would leave orphan notes.
      * @throws ConfirmModSchemaException 
      */
-    public boolean remTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
+    public boolean remTemplate(@NonNull JSONObject m, JSONObject template) throws ConfirmModSchemaException {
         assert (m.getJSONArray("tmpls").length() > 1);
         // find cards using this template
         JSONArray ja = m.getJSONArray("tmpls");
@@ -781,7 +783,7 @@ public class Models {
     }
 
 
-    public void moveTemplate(JSONObject m, JSONObject template, int idx) {
+    public void moveTemplate(@NonNull JSONObject m, JSONObject template, int idx) {
         JSONArray ja = m.getJSONArray("tmpls");
         int oldidx = -1;
         ArrayList<JSONObject> l = new ArrayList<>();
