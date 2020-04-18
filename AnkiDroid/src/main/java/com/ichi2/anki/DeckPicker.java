@@ -838,6 +838,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             updateDeckList();
             setTitle(getResources().getString(R.string.app_name));
         }
+        /** Complete task and enqueue fetching nonessential data for
+         * startup. */
+        CollectionTask.launchCollectionTask(LOAD_COLLECTION_COMPLETE);
     }
 
 
