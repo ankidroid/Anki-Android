@@ -12,11 +12,19 @@
     color: #2F2F2F;
     outline: none;
 }
+.night_mode_black_mode > .note-editor.note-frame.fullscreen .note-editable {
+    background-color: #110D11;
+    color: #FFFFFF;
+}
+
+.night_mode_dark_mode > .note-editor.note-frame.fullscreen .note-editable {
+    background-color: #333333;
+    color: #FFFFFF;
+}
 
 hr {
-    border: none;
-    height: 1px;
-    /* Set the hr color */
-    color: #333; /* old IE */
-    background-color: #333; /* Modern Browsers */
+    display: block;
+    height: 1.5px;
+    border: 0;
+    border-top: 1.5px solid #b2b2b2;
 }
