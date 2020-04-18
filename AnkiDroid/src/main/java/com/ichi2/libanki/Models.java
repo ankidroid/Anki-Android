@@ -101,6 +101,7 @@ public class Models {
     // BEGIN SQL table entries
     private int mId;
     private String mName = "";
+    private boolean mIsLoaded = false;
     //private long mCrt = Utils.intTime();
     //private long mMod = Utils.intTime();
     //private JSONObject mConf;
@@ -159,6 +160,11 @@ public class Models {
                 mModels.put(o.getLong("id"), o);
             }
         }
+        mIsLoaded = true;
+    }
+
+    public boolean isLoaded() {
+        return mIsLoaded;
     }
 
 
