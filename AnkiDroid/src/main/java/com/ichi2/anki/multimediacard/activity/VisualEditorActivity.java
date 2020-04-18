@@ -322,6 +322,8 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
 
         //Could be better, this is done per card in AbstractFlashCardViewer
         webView.getSettings().setDefaultFontSize(CardAppearance.calculateDynamicFontSize(mCurrentText));
+
+        webView.setNightMode(cardAppearance.isNightMode());
     }
 
 

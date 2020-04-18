@@ -12,3 +12,7 @@
     color: #2F2F2F;
     outline: none;
 }
+.night_mode > .note-editor.note-frame.fullscreen .note-editable {
+    background-color: #000000;
+    color: #FFFFFF;
+}
