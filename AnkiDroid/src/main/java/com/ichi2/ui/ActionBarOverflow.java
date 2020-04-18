@@ -17,13 +17,9 @@ import timber.log.Timber;
 public class ActionBarOverflow {
     //Idea from: https://stackoverflow.com/a/29208483
 
-    protected static final String SUPPORT_CLASS = "android.support.v7.internal.view.menu.MenuItemImpl";
-
     protected static final String NATIVE_CLASS = "com.android.internal.view.menu.MenuItemImpl";
 
     protected static final String ANDROIDX_CLASS = "androidx.appcompat.view.menu.MenuItemImpl";
-
-    protected static Method sSupportIsActionButton;
 
     protected static Method sNativeIsActionButton;
 
@@ -37,7 +33,6 @@ public class ActionBarOverflow {
     static void setupMethods(PrivateMethodAccessor accessor) {
         //Note: Multiple of these can succeed.
         sNativeIsActionButton = accessor.getPrivateMethod(NATIVE_CLASS, "isActionButton");
-        sSupportIsActionButton = accessor.getPrivateMethod(SUPPORT_CLASS, "isActionButton");
         sAndroidXIsActionButton = accessor.getPrivateMethod(ANDROIDX_CLASS, "isActionButton");
     }
 
@@ -71,29 +66,24 @@ public class ActionBarOverflow {
         //I don't think falling through is the right action here.
         String className = item.getClass().getName();
         switch (className) {
-            case SUPPORT_CLASS:
-                try {
-                    return (boolean) sSupportIsActionButton.invoke(item, (Object[]) null);
-                } catch (Exception e) {
-                    // fall through
-                }
-            case NATIVE_CLASS:
-                try {
-                    return (boolean) sNativeIsActionButton.invoke(item, (Object[]) null);
-                } catch (Exception e) {
-                    // fall through
-                }
-            case ANDROIDX_CLASS:
-                try {
-                    return (boolean) sAndroidXIsActionButton.invoke(item, (Object[]) null);
-                } catch (Exception e) {
-                    // fall through
-                }
+            case NATIVE_CLASS: return tryInvokeMethod(item, className, sNativeIsActionButton);
+            case ANDROIDX_CLASS: return tryInvokeMethod(item, className, sAndroidXIsActionButton);
             default:
                 Timber.w("Unhandled ActionBar class: %s", className);
                 return null;
         }
     }
+
+
+    private static Boolean tryInvokeMethod(MenuItem item, String className, Method method) {
+        try {
+            return (boolean) method.invoke(item, (Object[]) null);
+        } catch (Exception  | NoSuchFieldError | NoSuchMethodError ex) {
+            Timber.w(ex, "Error handling ActionBar class: %s", className);
+            return null;
+        }
+    }
+
 
     @VisibleForTesting
     @FunctionalInterface
@@ -103,8 +93,7 @@ public class ActionBarOverflow {
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     static boolean hasUsableMethod() {
-        return  sSupportIsActionButton != null ||
-                sNativeIsActionButton != null ||
+        return  sNativeIsActionButton != null ||
                 sAndroidXIsActionButton != null;
 
     }
