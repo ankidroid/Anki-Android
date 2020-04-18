@@ -42,6 +42,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 
 import java.util.Locale;
@@ -264,13 +265,26 @@ public abstract class VisualEditorWebView extends WebView {
 
     public abstract void pasteHtml(String html);
 
-
     public abstract void setSelectedTextColor(int color);
 
     public abstract void setSelectedBackgroundColor(int color);
 
     protected String colorToHex(int color) {
         return String.format("#%06X", (color & 0xFFFFFF));
+    }
+
+    public void setNightMode(boolean nightMode, int currentTheme) {
+        if (nightMode) {
+            if (currentTheme == Themes.THEME_NIGHT_DARK) {
+                execUnsafe("$(\"body\").addClass(\"night_mode_dark_mode\");");
+            } else {
+                execUnsafe("$(\"body\").addClass(\"night_mode_black_mode\");");
+            }
+        } else {
+            // remove night
+            execUnsafe("$(\"body\").removeClass(\"night_mode_dark_mode\");");
+            execUnsafe("$(\"body\").removeClass(\"night_mode_black_mode\");");
+        }
     }
 
     public void load() {

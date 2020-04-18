@@ -32,6 +32,7 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.exception.EmptyMediaException;
+import com.ichi2.themes.Themes;
 import com.ichi2.utils.AssetReader;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.WebViewDebugging;
@@ -330,6 +331,8 @@ public class VisualEditorActivity extends AnkiActivity {
 
         //Could be better, this is done per card in AbstractFlashCardViewer
         webView.getSettings().setDefaultFontSize(CardAppearance.calculateDynamicFontSize(mCurrentText));
+
+        webView.setNightMode(cardAppearance.isNightMode(), Themes.getCurrentTheme(this));
     }
 
 
