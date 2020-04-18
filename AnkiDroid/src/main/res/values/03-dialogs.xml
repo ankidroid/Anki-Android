@@ -198,6 +198,8 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <!-- Visual Editor -->
     <string name="visual_editor_could_not_start_add_image">Unable to add image</string>
     <string name="visual_editor_could_not_start_add_audio">Unable to add audio</string>
+    <string name="visual_editor_no_rich_clipboard">Enhanced clipboard actions are not supported by your version of Android</string>
 </resources>

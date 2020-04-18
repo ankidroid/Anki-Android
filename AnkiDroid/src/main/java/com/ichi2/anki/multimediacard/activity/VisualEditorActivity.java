@@ -448,6 +448,14 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
         //I decided it was best not to show "save/undo" while an image is visible, as it confuses the meaning of save.
         //If we want so in the future, add another inflate call here.
         getMenuInflater().inflate(menuResource, menu);
+
+        if (!VisualEditorWebView.canUseRichClipboard()) {
+            MenuItem cut = menu.findItem(R.id.action_cut);
+            if (cut != null) {
+                cut.setVisible(false);
+            }
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -484,6 +492,15 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
                 Timber.i("Save button pressed");
                 finishWithSuccess();
                 return true;
+            case R.id.action_cut:
+                // document.execCommand("cut", ...) does not work for images, so we need to implement our own function.
+                // "Cut" does not appear on the CAB when selecting only an image in a contentEditable,
+                // but we can still cut via our JavaScript function, therefore we have the button in the ActionBar
+                // COULD_BE_BETTER: See if we can optionally add this functionality back into the CAB
+                // DEFECT: I was unable to disable the onClick menu for images provided by summernote, this makes it
+                // annoying for the user as the custom image UI get in the way. This is because I'm unfamiliar with JS
+                cut();
+                return true;
             default:
                 return onSpecificOptionsItemSelected(item, selectionType);
         }
@@ -515,6 +532,14 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
                 return true;
             default:
                 return false;
+        }
+    }
+
+    private void cut() {
+        if (VisualEditorWebView.canUseRichClipboard()) {
+            mWebView.execFunction("cut");
+        } else {
+            UIUtils.showThemedToast(this, getString(R.string.visual_editor_no_rich_clipboard), true);
         }
     }
 

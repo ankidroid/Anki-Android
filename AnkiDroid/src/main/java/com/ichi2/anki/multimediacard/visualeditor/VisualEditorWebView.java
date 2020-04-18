@@ -28,6 +28,8 @@ package com.ichi2.anki.multimediacard.visualeditor;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -218,10 +220,26 @@ public class VisualEditorWebView extends WebView {
             loadUrl(trigger);
         }
     }
-    
+
+    public static boolean canUseRichClipboard() {
+        return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN;
+    }
+
     @JavascriptInterface
+    public void setClipboard(String data) {
+        Timber.d("setClipboard: %s", data);
+        if (canUseRichClipboard()) {
+            ClipboardManager clipboard = (ClipboardManager) this.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newHtmlText("Visual Editor Clipboard", data, data);
+            clipboard.setPrimaryClip(clip);
+        } else {
+            Timber.w("setClipboard called when functionality is unavailable.");
+        }
+    }
+
+     @JavascriptInterface
     public void updateCurrentStyle(String style) {
-        //Required by existing JS, but currently unused.
+         //Required by existing JS, but currently unused.
     }
 
     public String getContent() {
