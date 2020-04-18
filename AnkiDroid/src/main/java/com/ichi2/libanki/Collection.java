@@ -1473,15 +1473,10 @@ public class Collection {
             }
             // Make a list of valid ords for this model
             JSONArray tmpls = m.getJSONArray("tmpls");
-            int[] ords = new int[tmpls.length()];
-            for (int t = 0; t < tmpls.length(); t++) {
-                ords[t] = tmpls.getJSONObject(t).getInt("ord");
-            }
 
-            boolean badOrd = mDb.queryScalar(
-                                                           "select 1 from cards where ord not in " + Utils.ids2str(ords) + " and nid in ( " +
-                                                           "select id from notes where mid = ?) limit 1",
-                                                           new Object[] {m.getLong("id")}) > 0;
+            boolean badOrd = mDb.queryScalar("select 1 from cards where (ord < 0 or ord >= ?) and nid in ( " +
+                                             "select id from notes where mid = ?) limit 1",
+                                             new Object[] {tmpls.length(), m.getLong("id")}) > 0;
             if (badOrd) {
                 return false;
             }
