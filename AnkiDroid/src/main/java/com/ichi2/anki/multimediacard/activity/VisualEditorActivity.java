@@ -2,11 +2,10 @@ package com.ichi2.anki.multimediacard.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebView;
+import android.view.View;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
@@ -18,7 +17,9 @@ import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.ExecEscaped;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.WebViewDebugging;
 
 import java.io.IOException;
@@ -169,14 +170,20 @@ public class VisualEditorActivity extends AnkiActivity {
         Timber.d("onCollectionLoaded");
         initWebView(col);
 
-        String css = getModelCss(col);
+        JSONObject model = col.getModels().get(mModelId);
+        String css = getModelCss(model);
+        if (Models.isCloze(model)) {
+            Timber.d("Cloze detected. Enabling Cloze button");
+            findViewById(R.id.editor_button_cloze).setVisibility(View.VISIBLE);
+        }
+
         mWebView.injectCss(css);
     }
 
 
-    private String getModelCss(Collection col) {
+    private String getModelCss(JSONObject model) {
         try {
-            String css = col.getModels().get(mModelId).getString("css");
+            String css = model.getString("css");
             return css.replace(".card", ".note-editable ");
         } catch (Exception e) {
             UIUtils.showThemedToast(this, "Failed to load template CSS", false);
