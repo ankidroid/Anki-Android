@@ -12,15 +12,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-
-    <!-- TODO: Add hover text for buttons -->
-    <!-- Set up the main editor -->
-    <com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView
-        android:id="@+id/editor_view"
+    <!-- 24dp + 8dp padding -->
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        />
+        android:layout_marginBottom="32dp"
+        android:id="@+id/visual_editor_wrapper">
+
+        <com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView
+            android:id="@+id/editor_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <HorizontalScrollView
         android:id="@+id/toolbar_scrollview"
