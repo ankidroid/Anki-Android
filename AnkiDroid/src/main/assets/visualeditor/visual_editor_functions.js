@@ -33,3 +33,6 @@ function insertAtPoint(startPoint, text, offset) {
 
     document.execCommand("insertText", true, text);
 }
+
+var clearHistory = function() {
+};

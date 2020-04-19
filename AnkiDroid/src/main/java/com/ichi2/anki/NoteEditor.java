@@ -1310,6 +1310,8 @@ public class NoteEditor extends AnkiActivity {
                 field.setFormattedString(col, value);
                 Intent i = new Intent(this, VisualEditorActivity.class);
                 i.putExtra(VisualEditorActivity.EXTRA_FIELD, field);
+                i.putExtra(VisualEditorActivity.EXTRA_ALL_FIELDS, mEditorNote.getFields());
+                i.putExtra(VisualEditorActivity.EXTRA_MODEL_ID, mEditorNote.model().getLong("id"));
                 i.putExtra(VisualEditorActivity.EXTRA_FIELD_INDEX, index);
                 startActivityForResultWithoutAnimation(i, REQUEST_VISUAL_EDIT);
             } catch (Exception e) {

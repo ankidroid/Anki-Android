@@ -33,7 +33,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.webkit.ConsoleMessage;
-import android.webkit.ConsoleMessage.MessageLevel;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -41,11 +40,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
-import com.ichi2.utils.FunctionalInterfaces.Supplier;
 import com.jkcarino.rtexteditorview.RTextEditorView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Locale;
 
 import androidx.annotation.CheckResult;
@@ -53,12 +53,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
-import static android.webkit.ConsoleMessage.MessageLevel.*;
-
 public class VisualEditorWebView extends WebView {
 
     private static final String DEFAULT_EDITOR_URL = "file:///android_asset/visualeditor/visual_editor.html";
-    private String editorUrl;
     private String content;
 
     private RTextEditorView.OnTextChangeListener onTextChangeListener;
@@ -83,14 +80,8 @@ public class VisualEditorWebView extends WebView {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public void init() {
-        init(DEFAULT_EDITOR_URL);
-    }
-
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
-    public void init(String editorUrl) {
-        Timber.i("Initialising with URL: %s", editorUrl);
-        this.editorUrl = editorUrl;
+    public void init(InputStream content, String baseUrl) {
         WebSettings settings = getSettings();
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setJavaScriptEnabled(true);
@@ -99,7 +90,40 @@ public class VisualEditorWebView extends WebView {
         setWebChromeClient(getDefaultWebChromeClient());
         setWebViewClient(getDefaultWebViewClient());
         addJavascriptInterface(this, "RTextEditorView");
-        loadUrl(editorUrl);
+        //TODO: Janky, don't do this here.
+        String asString;
+        try {
+            byte[] fs;
+            fs = readFile(content);
+            asString = new String(fs, "UTF-8");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        loadDataWithBaseURL(baseUrl + "__visual_editor__.html\"", asString, "text/html; charset=utf-8", "base64", null);
+    }
+
+    private byte[] readFile(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream buffer = null;
+        try {
+            buffer = new ByteArrayOutputStream();
+
+            int nRead;
+            byte[] data = new byte[16384];
+
+            while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+
+            return buffer.toByteArray();
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            if (buffer != null) {
+                buffer.close();
+            }
+        }
     }
 
     @JavascriptInterface
@@ -261,7 +285,7 @@ public class VisualEditorWebView extends WebView {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            isReady = url.equalsIgnoreCase(editorUrl);
+            isReady = true; //ideally we should confirm the url, but as we load
             super.onPageFinished(view, url);
         }
 
