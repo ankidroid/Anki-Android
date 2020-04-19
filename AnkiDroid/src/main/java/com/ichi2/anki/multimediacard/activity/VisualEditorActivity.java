@@ -107,6 +107,25 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
         startLoadingCollection();
     }
 
+
+    private void disableUndo(Menu menu) {
+        MenuItem undo = menu.findItem(R.id.action_undo);
+        MenuItem redo = menu.findItem(R.id.action_redo);
+        if (undo != null) {
+            undo.setVisible(false);
+        }
+        if (redo != null) {
+            redo.setVisible(false);
+        }
+    }
+
+
+    protected boolean shouldDisableUndo() {
+        //Depends on the browser, and not up to standard for release. Disable it for now. Maybe allow for a preference
+        return true;
+    }
+
+
     private void saveChangesOrExit() {
         if (hasChanges()) {
             DiscardChangesDialog.getDefault(this)
@@ -456,6 +475,10 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
         //I decided it was best not to show "save/undo" while an image is visible, as it confuses the meaning of save.
         //If we want so in the future, add another inflate call here.
         getMenuInflater().inflate(menuResource, menu);
+
+        if (shouldDisableUndo()) {
+            disableUndo(menu);
+        }
 
         if (!VisualEditorWebView.canUseRichClipboard()) {
             MenuItem cut = menu.findItem(R.id.action_cut);
