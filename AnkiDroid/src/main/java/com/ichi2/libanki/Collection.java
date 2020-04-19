@@ -1569,13 +1569,18 @@ public class Collection {
     }
 
 
+    /**
+     * #5932 - a card may not have a home deck if:
+     * <ul>>
+     * <li>It is in a dynamic deck, and has odid = 0.</li>
+     * <li>It is in a dynamic deck, and the odid refers to a dynamic deck.</li>
+     * </ul>
+     * Both of these cases can be fixed by moving the decks to a known-good deck
+     */
     private List<String> ensureCardsHaveHomeDeck(Runnable notifyProgress, CheckDatabaseResult result) {
         Timber.d("ensureCardsHaveHomeDeck()");
-        // #5932 - a card may not have a home deck if:
-        // * It is in a dynamic deck, and has odid = 0.
-        // * It is in a dynamic deck, and the odid refers to a dynamic deck.
+
         notifyProgress.run();
-        //Both of these cases can be fixed by setting the odid to 1.
 
         //get the deck Ids to query
         Long[] dynDeckIds = getDecks().allDynamicDeckIds();
