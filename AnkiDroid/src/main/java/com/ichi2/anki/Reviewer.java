@@ -40,6 +40,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.anki.reviewer.ActionButtonStatus;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
@@ -63,6 +64,8 @@ public class Reviewer extends AbstractFlashcardViewer {
     // Deck picker reset scheduler before opening the reviewer. So
     // first reset is useless.
     private boolean mSchedResetDone = false;
+
+    private ActionButtonStatus mActionButtonStatus = new ActionButtonStatus(this);
 
 
     private CollectionTask.TaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
@@ -619,9 +622,11 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected SharedPreferences restorePreferences() {
         super.restorePreferences();
+        //Is this line necessary? Can we not use the return value from the call to super?
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) > 0;
+        mActionButtonStatus.setup(preferences);
         return preferences;
     }
 

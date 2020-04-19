@@ -85,7 +85,6 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.anki.reviewer.ActionButtonStatus;
 import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
@@ -296,8 +295,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int mGestureTapTop;
     private int mGestureTapBottom;
     private int mGestureLongclick;
-
-    protected ActionButtonStatus mActionButtonStatus = new ActionButtonStatus(this);
 
     protected static final int GESTURE_NOTHING = 0;
     private static final int GESTURE_SHOW_ANSWER = 1;
@@ -1668,8 +1665,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
             mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
         }
-
-        mActionButtonStatus.setup(preferences);
 
         if (preferences.getBoolean("keepScreenOn", false)) {
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
