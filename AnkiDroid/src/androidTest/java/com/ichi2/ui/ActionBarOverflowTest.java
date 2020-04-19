@@ -16,6 +16,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.fail;
 
 @RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
 public class ActionBarOverflowTest {
@@ -28,10 +29,13 @@ public class ActionBarOverflowTest {
 
     @Test
     public void errorsAreBeingThrownCanary() {
-        //See discussion on #5806
-        //https://developer.android.com/distribute/best-practices/develop/restrictions-non-sdk-interfaces
-        //Once this throws, errors are being thrown on a currently graylisted method
-        ActionBarOverflow.setupMethods(ActionBarOverflow::getPrivateMethodOnlyHandleExceptions);
+        try {
+            ActionBarOverflow.setupMethods(ActionBarOverflow::getPrivateMethodOnlyHandleExceptions);
+        } catch (Error e) {
+            fail("See discussion on #5806\n" +
+                    "https://developer.android.com/distribute/best-practices/develop/restrictions-non-sdk-interfaces\n" +
+                    "Once this throws, errors are being thrown on a currently graylisted method");
+        }
     }
 
     @Test
