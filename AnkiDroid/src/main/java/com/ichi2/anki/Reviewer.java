@@ -766,7 +766,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     /**
      * Whether or not dismiss note is available for current card and specified DismissType
-     * @param type Currently only SUSPEND_NOTE and BURY_NOTE supported
      * @return true if there is another card of same note that could be dismissed
      */
     private boolean suspendNoteAvailable() {
