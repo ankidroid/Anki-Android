@@ -13,6 +13,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.IField;
@@ -100,6 +101,40 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
         }
 
         startLoadingCollection();
+    }
+
+    private void saveChangesOrExit() {
+        if (hasChanges()) {
+            DiscardChangesDialog.getDefault(this)
+                    .onPositive((dialog, which) -> this.finishCancel())
+                    .build().show();
+        } else {
+            this.finishCancel();
+        }
+    }
+
+
+    private boolean hasChanges() {
+        try {
+            return !mCurrentText.equals(mFields[mIndex]);
+        } catch (Exception e) {
+            Timber.w(e, "Failed to determine if editor has changes. Assuming true.");
+            //Currently only used for
+            return true;
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        saveChangesOrExit();
+        //explicitly do not call super.onBackPressed()
+    }
+
+    @Override
+    protected boolean onActionBarBackPressed() {
+        saveChangesOrExit();
+        return true;
     }
 
 
@@ -292,7 +327,6 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
             return false;
         }
 
-        //TODO: Save past data for later so we can see if we've changed.
         mField = (IField) extras.getSerializable(VisualEditorActivity.EXTRA_FIELD);
         Integer index = (Integer) extras.getSerializable(VisualEditorActivity.EXTRA_FIELD_INDEX);
 

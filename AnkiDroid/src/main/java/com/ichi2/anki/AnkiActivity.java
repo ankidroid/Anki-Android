@@ -129,11 +129,16 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         switch (item.getItemId()) {
             case android.R.id.home:
                 Timber.i("Home button pressed");
-                finishWithoutAnimation();
-                return true;
+                return onActionBarBackPressed();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    protected boolean onActionBarBackPressed() {
+        finishWithoutAnimation();
+        return true;
     }
 
 
