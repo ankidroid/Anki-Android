@@ -12,19 +12,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import timber.log.Timber;
 
-import static android.view.MenuItem.SHOW_AS_ACTION_ALWAYS;
-import static android.view.MenuItem.SHOW_AS_ACTION_IF_ROOM;
-import static android.view.MenuItem.SHOW_AS_ACTION_NEVER;
-
+@SuppressWarnings("ConstantConditions") //loads of unboxing issues, which are safe
 public class ActionButtonStatus {
     /**
      * Custom button allocation
      */
+    @NonNull
     protected Map<Integer, Integer> mCustomButtons = new HashMap<>();
     private final ReviewerUi mReviewerUi;
 
-    protected static final int MENU_DISABLED = 3;
+    public static final int SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER;
+    public static final int SHOW_AS_ACTION_IF_ROOM = MenuItem.SHOW_AS_ACTION_IF_ROOM;
+    public static final int SHOW_AS_ACTION_ALWAYS = MenuItem.SHOW_AS_ACTION_ALWAYS;
+    public static final int MENU_DISABLED = 3;
+
+    public @Nullable Integer getByMenuResourceId(int resourceId) {
+        if (!mCustomButtons.containsKey(resourceId)) {
+            Timber.w("Invalid resource lookup: %d", resourceId);
+            return SHOW_AS_ACTION_NEVER;
+        }
+        return mCustomButtons.get(resourceId);
+    }
+
 
     public ActionButtonStatus(ReviewerUi reviewerUi) {
         this.mReviewerUi = reviewerUi;

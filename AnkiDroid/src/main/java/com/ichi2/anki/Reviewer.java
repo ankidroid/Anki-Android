@@ -55,6 +55,8 @@ import java.lang.ref.WeakReference;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
+
 public class Reviewer extends AbstractFlashcardViewer {
     private boolean mHasDrawerSwipeConflicts = false;
     private boolean mShowWhiteboard = true;
@@ -111,6 +113,33 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         startLoadingCollection();
+    }
+
+
+    @Override
+    protected int getFlagToDisplay() {
+        int actualValue = super.getFlagToDisplay();
+        if (actualValue == FLAG_NONE) {
+            return FLAG_NONE;
+        }
+        Boolean isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_FLAG);
+        if (isShownInActionBar != null && isShownInActionBar) {
+            return FLAG_NONE;
+        }
+        return actualValue;
+    }
+
+
+    @Override
+    protected boolean shouldDisplayMark() {
+        boolean markValue = super.shouldDisplayMark();
+        if (!markValue) {
+            return false;
+        }
+        Boolean isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_MARK);
+        //If we don't know, show it.
+        //Otherwise, if it's in the action bar, don't show it again.
+        return isShownInActionBar == null || !isShownInActionBar;
     }
 
     private void selectDeckFromExtra() {
@@ -372,7 +401,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     public boolean onCreateOptionsMenu(Menu menu) {
         // NOTE: This is called every time a new question is shown via invalidate options menu
         getMenuInflater().inflate(R.menu.reviewer, menu);
-        mActionButtons.setCustomButtons(menu);
+        mActionButtons.setCustomButtonsStatus(menu);
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
         } else {
