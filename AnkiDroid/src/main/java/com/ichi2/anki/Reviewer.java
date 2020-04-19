@@ -40,7 +40,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.anki.reviewer.ActionButtonStatus;
+import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
@@ -61,11 +61,12 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
+
     // Deck picker reset scheduler before opening the reviewer. So
     // first reset is useless.
     private boolean mSchedResetDone = false;
 
-    private ActionButtonStatus mActionButtonStatus = new ActionButtonStatus(this);
+    private ActionButtons mActionButtons = new ActionButtons(this);
 
 
     private CollectionTask.TaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
@@ -371,7 +372,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     public boolean onCreateOptionsMenu(Menu menu) {
         // NOTE: This is called every time a new question is shown via invalidate options menu
         getMenuInflater().inflate(R.menu.reviewer, menu);
-        mActionButtonStatus.setCustomButtons(menu);
+        mActionButtons.setCustomButtons(menu);
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
         } else {
@@ -414,10 +415,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mPrefWhiteboard) {
             // Configure the whiteboard related items in the action bar
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.disable_whiteboard);
-            if (!mActionButtonStatus.hideWhiteboardIsDisabled()) {
+            if (!mActionButtons.getStatus().hideWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
             }
-            if (!mActionButtonStatus.clearWhiteboardIsDisabled()) {
+            if (!mActionButtons.getStatus().clearWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             }
 
@@ -437,7 +438,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (colIsOpen() && getCol().getDecks().isDyn(getParentDid())) {
             menu.findItem(R.id.action_open_deck_options).setVisible(false);
         }
-        if (mSpeakText && !mActionButtonStatus.selectTtsIsDisabled()) {
+        if (mSpeakText && !mActionButtons.getStatus().selectTtsIsDisabled()) {
             menu.findItem(R.id.action_select_tts).setVisible(true);
         }
         // Setup bury / suspend providers
@@ -626,7 +627,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) > 0;
-        mActionButtonStatus.setup(preferences);
+        mActionButtons.setup(preferences);
         return preferences;
     }
 
