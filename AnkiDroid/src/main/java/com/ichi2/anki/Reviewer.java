@@ -364,36 +364,11 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
-    private void setCustomButtons(Menu menu) {
-        for(int itemId : mCustomButtons.keySet()) {
-            if(mCustomButtons.get(itemId) != MENU_DISABLED) {
-                MenuItem item = menu.findItem(itemId);
-                item.setShowAsAction(mCustomButtons.get(itemId));
-                Drawable icon = item.getIcon();
-                if (getControlBlocked()) {
-                    item.setEnabled(false);
-                    if (icon != null) {
-                        icon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
-                    }
-                } else {
-                    item.setEnabled(true);
-                    if (icon != null) {
-                        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
-                    }
-                }
-            }
-            else {
-                menu.findItem(itemId).setVisible(false);
-            }
-        }
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // NOTE: This is called every time a new question is shown via invalidate options menu
         getMenuInflater().inflate(R.menu.reviewer, menu);
-        setCustomButtons(menu);
+        mActionButtonStatus.setCustomButtons(menu);
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
         } else {
@@ -436,10 +411,12 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mPrefWhiteboard) {
             // Configure the whiteboard related items in the action bar
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.disable_whiteboard);
-            if(mCustomButtons.get(R.id.action_hide_whiteboard) != MENU_DISABLED)
+            if (!mActionButtonStatus.hideWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
-            if(mCustomButtons.get(R.id.action_clear_whiteboard) != MENU_DISABLED)
+            }
+            if (!mActionButtonStatus.clearWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
+            }
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp);
             if (mShowWhiteboard) {
@@ -457,8 +434,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (colIsOpen() && getCol().getDecks().isDyn(getParentDid())) {
             menu.findItem(R.id.action_open_deck_options).setVisible(false);
         }
-        if (mSpeakText && mCustomButtons.get(R.id.action_select_tts) != MENU_DISABLED) {
-                menu.findItem(R.id.action_select_tts).setVisible(true);
+        if (mSpeakText && !mActionButtonStatus.selectTtsIsDisabled()) {
+            menu.findItem(R.id.action_select_tts).setVisible(true);
         }
         // Setup bury / suspend providers
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_suspend), new SuspendProvider(this));
