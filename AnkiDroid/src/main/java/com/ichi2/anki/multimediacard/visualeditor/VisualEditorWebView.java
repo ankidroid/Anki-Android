@@ -260,6 +260,13 @@ public class VisualEditorWebView extends WebView {
     }
 
 
+    public void pasteHtml(String html) {
+        Timber.v("pasting: %s", html);
+        ExecEscaped safeString = ExecEscaped.fromString(html);
+        execUnsafe("pasteHTML('" + safeString.getEscapedValue() + "');");
+    }
+
+
     public static class ExecEscaped {
         private final String escapedValue;
 

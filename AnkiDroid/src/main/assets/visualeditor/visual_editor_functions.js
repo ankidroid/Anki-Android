@@ -36,6 +36,10 @@ var cloze = function(clozeId) {
     insertAtPoint(endPoint, clozeSuffix, clozePrefix.length);
 };
 
+var pasteHTML = function(data) {
+    $("#summernote").summernote("pasteHTML", data);
+};
+
 var clearHistory = function() {
     //TODO: for Undo, probably not going to be implemented.
 };

@@ -12,11 +12,14 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.IField;
+import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.ExecEscaped;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.SelectionType;
+import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
@@ -24,6 +27,7 @@ import com.ichi2.utils.AssetReader;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.WebViewDebugging;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
@@ -31,8 +35,11 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
 import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import timber.log.Timber;
+
+import static com.ichi2.anki.NoteEditor.REQUEST_MULTIMEDIA_EDIT;
 
 //BUG: Initial undo will undo the initial text
 //BUG: <hr/> is  less thick in the editor
@@ -58,6 +65,8 @@ public class VisualEditorActivity extends AnkiActivity {
     @NonNull
     private SelectionType mSelectionType = SelectionType.REGULAR;
     private AssetReader mAssetReader = new AssetReader(this);
+    //Unsure if this is needed, or whether getCol will block until onCollectionLoaded completes.
+    private boolean mHasLoadedCol;
 
 
     @Override
@@ -100,9 +109,74 @@ public class VisualEditorActivity extends AnkiActivity {
         setJsAction.apply(R.id.editor_button_align_justify, "setAlignJustify");
         setJsAction.apply(R.id.editor_button_view_html, "editHtml"); //this is a toggle.
 
+        findViewById(R.id.editor_button_add_image).setOnClickListener(v -> this.openAdvancedViewerForAddImage());
 
 
         findViewById(R.id.editor_button_cloze).setOnClickListener(v -> cloze(clozeId++));
+    }
+
+
+    private void openAdvancedViewerForAddImage() {
+        //TODO; Copied from NoteEditor
+        if (mModelId == 0 || !mHasLoadedCol) {
+            //Haven't loaded yet.
+            UIUtils.showThemedToast(this, "Unable to add image", false);
+            return;
+        }
+
+        IField field = new ImageField();
+        IMultimediaEditableNote mNote = NoteService.createEmptyNote(getCol().getModels().get(mModelId));
+        mNote.setField(0, field);
+        Intent editCard = new Intent(this, MultimediaEditFieldActivity.class);
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, 0);
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field);
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, mNote);
+        startActivityForResultWithoutAnimation(editCard, REQUEST_MULTIMEDIA_EDIT);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (data == null) {
+            Timber.d("data was null");
+            return;
+        }
+        if (requestCode == REQUEST_MULTIMEDIA_EDIT) {
+
+            if (resultCode != RESULT_OK) {
+                return;
+            }
+            if (data.getExtras() == null) {
+                return;
+            }
+            IField field = (IField) data.getExtras().get(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD);
+
+            if (field == null) {
+                return;
+            }
+
+            if (!registerMediaForWebView(field.getImagePath())) {
+                return;
+            }
+
+            this.mWebView.pasteHtml(field.getFormattedValue());
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @CheckResult
+    private boolean registerMediaForWebView(String imagePath) {
+        //TODO: this is a little too early, ideally should be in a temp file which can't be cleared until we exit.
+        Timber.i("Adding media to collection: %s", imagePath);
+        File f = new File(imagePath);
+        try {
+            getCol().getMedia().addFile(f);
+            return true;
+        } catch (IOException e) {
+            Timber.e(e, "Failed to add file");
+            return false;
+        }
     }
 
 
@@ -212,6 +286,7 @@ public class VisualEditorActivity extends AnkiActivity {
         }
 
         mWebView.injectCss(css);
+        mHasLoadedCol = true;
     }
 
 
