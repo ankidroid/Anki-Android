@@ -2397,12 +2397,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
-            if (result != null && result.getBoolean()) {
+            if (result != null && result.getBoolean() && result.getObjArray() != null && result.getObjArray().length > 0) {
                 String msg;
-                long shrunk = Math.round(result.getLong() / 1024.0);
+                Collection.CheckDatabaseResult databaseResult = (Collection.CheckDatabaseResult) result.getObjArray()[0];
+
+                int count = databaseResult.getCardsWithFixedHomeDeckCount();
+                if (count != 0) {
+                    String message = getResources().getString(R.string.integrity_check_fixed_no_home_deck, count);
+                    UIUtils.showThemedToast(DeckPicker.this,  message, false);
+                }
+
+                long shrunk = Math.round(databaseResult.getSizeChangeInKb() / 1024.0);
                 if (shrunk > 0.0) {
                     msg = String.format(Locale.getDefault(),
-                            getResources().getString(R.string.check_db_acknowledge_shrunk), (int) shrunk);
+                    getResources().getString(R.string.check_db_acknowledge_shrunk), (int) shrunk);
                 } else {
                     msg = getResources().getString(R.string.check_db_acknowledge);
                 }
