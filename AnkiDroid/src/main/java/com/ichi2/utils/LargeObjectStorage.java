@@ -98,6 +98,11 @@ public class LargeObjectStorage {
     }
 
 
+    public <T extends Serializable> boolean hasKey(StorageKey<T> storageCurrentField, Bundle bundle) {
+        return bundle != null && bundle.containsKey(storageCurrentField.getBundleKey());
+    }
+
+
     public static class StorageData<T extends Serializable> {
         private final StorageKey<T> mKey;
         private final T mData;
