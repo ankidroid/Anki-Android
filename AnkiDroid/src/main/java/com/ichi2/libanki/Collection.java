@@ -1486,7 +1486,7 @@ public class Collection {
 
 
     /** Fix possible problems and rebuild caches. */
-    public long fixIntegrity(CollectionTask.ProgressCallback progressCallback) {
+    public CheckDatabaseResult fixIntegrity(CollectionTask.ProgressCallback progressCallback) {
         File file = new File(mPath);
         CheckDatabaseResult result = new CheckDatabaseResult(file.length());
         final int[] currentTask = {1};
@@ -1517,13 +1517,13 @@ public class Collection {
             notifyProgress.run();
 
             if (!mDb.getDatabase().isDatabaseIntegrityOk()) {
-                return -1;
+                return result.markAsFailed();
             }
             mDb.getDatabase().setTransactionSuccessful();
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
-            return -1;
+            return result.markAsFailed();
         } finally {
             mDb.getDatabase().endTransaction();
         }
@@ -1559,17 +1559,13 @@ public class Collection {
         }
         file = new File(mPath);
         long newSize = file.length();
+        result.setNewSize(newSize);
         // if any problems were found, force a full sync
         if (result.hasProblems()) {
             modSchemaNoCheck();
         }
         logProblems(result.getProblems());
-        int count = result.getCardsWithFixedHomeDeckCount();
-        if (count != 0) {
-            String message = mContext.getResources().getString(R.string.integrity_check_fixed_no_home_deck, count);
-            UIUtils.showThemedToast(mContext,  message, false);
-        }
-        return (result.getOldSize() - newSize) / 1024;
+        return result;
     }
 
 
@@ -2154,10 +2150,12 @@ public class Collection {
         return mSched;
     }
 
-    private static class CheckDatabaseResult {
+    public static class CheckDatabaseResult {
         private final List<String> mProblems = new ArrayList<>();
         private long mOldSize;
         private int mFixedCardsWithNoHomeDeckCount;
+        private long mNewSize;
+        private boolean mFailed = false;
 
 
         public CheckDatabaseResult(long oldSize) {
@@ -2166,10 +2164,6 @@ public class Collection {
 
         public void addAll(List<String> strings) {
             mProblems.addAll(strings);
-        }
-
-        public long getOldSize() {
-            return mOldSize;
         }
 
         public void setCardsWithFixedHomeDeckCount(int count) {
@@ -2188,6 +2182,29 @@ public class Collection {
 
         public int getCardsWithFixedHomeDeckCount() {
             return mFixedCardsWithNoHomeDeckCount;
+        }
+
+        public void setNewSize(long size) {
+            this.mNewSize = size;
+        }
+
+        public long getSizeChangeInKb() {
+            return (mOldSize - mNewSize) / 1024;
+        }
+
+
+        public void setFailed(boolean failedIntegrity) {
+            this.mFailed = failedIntegrity;
+        }
+
+        public CheckDatabaseResult markAsFailed() {
+            this.setFailed(true);
+            return this;
+        }
+
+
+        public boolean getFailed() {
+            return mFailed;
         }
     }
 }

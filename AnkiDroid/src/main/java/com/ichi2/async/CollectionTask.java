@@ -989,13 +989,13 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             return new TaskData(false);
         }
 
-        long result = col.fixIntegrity(new ProgressCallback(this, AnkiDroidApp.getAppResources()));
-        if (result == -1) {
+        Collection.CheckDatabaseResult result = col.fixIntegrity(new ProgressCallback(this, AnkiDroidApp.getAppResources()));
+        if (result.getFailed()) {
             return new TaskData(false);
         } else {
             // Close the collection and we restart the app to reload
             CollectionHelper.getInstance().closeCollection(true, "Check Database Completed");
-            return new TaskData(0, result, true);
+            return new TaskData(true, new Object[] { result });
         }
     }
 
