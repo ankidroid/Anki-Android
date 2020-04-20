@@ -109,6 +109,7 @@ import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.KeyUtils;
 import com.ichi2.utils.MapUtil;
+import com.ichi2.utils.LargeObjectStorage;
 import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.utils.NoteFieldDecorator;
 import com.ichi2.utils.TextViewUtil;
@@ -261,6 +262,8 @@ public class NoteEditor extends AnkiActivity {
         SAME_NUMBER,
         INCREMENT_NUMBER
     }
+
+    LargeObjectStorage mLargeObjectStorage = new LargeObjectStorage(this);
 
     private static class SaveNoteHandler extends TaskListenerWithContext<NoteEditor, Integer, Boolean> {
         private boolean mCloseAfter = false;
@@ -1642,12 +1645,16 @@ public class NoteEditor extends AnkiActivity {
             try {
                 String value = mEditFields.get(index).getText().toString();
                 Intent i = new Intent(this, VisualEditorActivity.class);
-                i.putExtra(VisualEditorActivity.EXTRA_FIELD, value);
+                //Note: Intent.getExtras is a copy of the bundle.
+                Bundle b = new Bundle();
+                mLargeObjectStorage.storeSingleInstance(VisualEditorActivity.STORAGE_CURRENT_FIELD.asData(value), b);
+                mLargeObjectStorage.storeSingleInstance(VisualEditorActivity.STORAGE_EXTRA_FIELDS.asData(mEditorNote.getFields()), b);
+                i.replaceExtras(b);
+                i.putExtra(VisualEditorActivity.EXTRA_MODEL_ID, getModelId());
                 i.putExtra(VisualEditorActivity.EXTRA_FIELD_INDEX, index);
-                i.putExtra(VisualEditorActivity.EXTRA_ALL_FIELDS, mEditorNote.getFields());
-                i.putExtra(VisualEditorActivity.EXTRA_MODEL_ID, mEditorNote.model().getLong("id"));
                 startActivityForResultWithoutAnimation(i, REQUEST_VISUAL_EDIT);
             } catch (Exception e) {
+                Timber.e(e, "Unable to open Visual Editor");
                 UIUtils.showThemedToast(this, "Unable to open Visual Editor", false);
             }
         });
