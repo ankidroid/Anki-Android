@@ -1343,41 +1343,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void performIntegrityCheck() {
         Timber.i("performIntegrityCheck()");
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CHECK_DATABASE, new CollectionTask.TaskListener() {
-            @Override
-            public void onPreExecute() {
-                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, AnkiDroidApp.getAppResources().getString(R.string.app_name),
-                        getResources().getString(R.string.check_db_message), false);
-            }
-
-
-            @Override
-            public void onPostExecute(TaskData result) {
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                }
-                if (result != null && result.getBoolean()) {
-                    String msg;
-                    long shrunk = Math.round(result.getLong() / 1024.0);
-                    if (shrunk > 0.0) {
-                        msg = String.format(Locale.getDefault(),
-                                getResources().getString(R.string.check_db_acknowledge_shrunk), (int) shrunk);
-                    } else {
-                        msg = getResources().getString(R.string.check_db_acknowledge);
-                    }
-                    // Show result of database check and restart the app
-                    showSimpleMessageDialog(msg, true);
-                } else {
-                    handleDbError();
-                }
-            }
-
-
-            @Override
-            public void onProgressUpdate(TaskData... values) {
-                mProgressDialog.setContent(values[0].getString());
-            }
-        });
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CHECK_DATABASE, new CheckDatabaseListener());
     }
 
 
@@ -2415,5 +2381,42 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
         });
+    }
+
+
+    private class CheckDatabaseListener extends CollectionTask.TaskListener {
+        @Override
+        public void onPreExecute() {
+            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, AnkiDroidApp.getAppResources().getString(R.string.app_name),
+                    getResources().getString(R.string.check_db_message), false);
+        }
+
+
+        @Override
+        public void onPostExecute(TaskData result) {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+            if (result != null && result.getBoolean()) {
+                String msg;
+                long shrunk = Math.round(result.getLong() / 1024.0);
+                if (shrunk > 0.0) {
+                    msg = String.format(Locale.getDefault(),
+                            getResources().getString(R.string.check_db_acknowledge_shrunk), (int) shrunk);
+                } else {
+                    msg = getResources().getString(R.string.check_db_acknowledge);
+                }
+                // Show result of database check and restart the app
+                showSimpleMessageDialog(msg, true);
+            } else {
+                handleDbError();
+            }
+        }
+
+
+        @Override
+        public void onProgressUpdate(TaskData... values) {
+            mProgressDialog.setContent(values[0].getString());
+        }
     }
 }
