@@ -31,7 +31,7 @@ public class CardMarker {
     public void displayMark(boolean markStatus) {
         if (markStatus) {
             markView.setVisibility(View.VISIBLE);
-            markView.setImageResource(R.drawable.ic_star_white_24dp);
+            markView.setImageResource(R.drawable.ic_star_white_bordered_24dp);
         } else {
             markView.setVisibility(View.INVISIBLE);
         }
