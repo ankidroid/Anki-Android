@@ -1315,7 +1315,7 @@ public class NoteEditor extends AnkiActivity {
                 Intent i = new Intent(this, VisualEditorActivity.class);
                 //Note: Intent.getExtras is a copy of the bundle.
                 Bundle b = new Bundle();
-                mLargeObjectStorage.storeSingleInstance(VisualEditorActivity.STORAGE_CURRENT_FIELD.asData(field), b);
+                mLargeObjectStorage.storeSingleInstance(VisualEditorActivity.STORAGE_CURRENT_FIELD.asData(value), b);
                 mLargeObjectStorage.storeSingleInstance(VisualEditorActivity.STORAGE_EXTRA_FIELDS.asData(mEditorNote.getFields()), b);
                 i.replaceExtras(b);
                 i.putExtra(VisualEditorActivity.EXTRA_MODEL_ID, getModelId());

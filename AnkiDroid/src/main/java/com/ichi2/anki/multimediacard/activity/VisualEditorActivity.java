@@ -20,6 +20,7 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
+import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.ExecEscaped;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
@@ -73,7 +74,7 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
     /** All fields in a (string[])  */
     public static final String EXTRA_ALL_FIELDS = "visual.card.ed.extra.all.fields";
 
-    public static final StorageKey<IField> STORAGE_CURRENT_FIELD = new StorageKey<>(
+    public static final StorageKey<String> STORAGE_CURRENT_FIELD = new StorageKey<>(
             "visual.card.ed.extra.current.field",
             "visualed_current_field",
             "bin");
@@ -85,7 +86,6 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
 
 
     private String mCurrentText;
-    private IField mField;
     private int mIndex;
     private VisualEditorWebView mWebView;
     private long mModelId;
@@ -354,13 +354,13 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
         webView.setOnTextChangeListener(s -> this.mCurrentText = s);
         webView.setSelectionChangedListener(this::handleSelectionChanged);
 
-        webView.setHtml(mField.getText());
+        webView.setHtml(mCurrentText);
         //reset the note history so we can't undo the above action.
         webView.execFunction("clearHistory");
         webView.execFunction("resizeImages"); //This is called on window.onload in the card viewer.
 
         //Could be better, this is done per card in AbstractFlashCardViewer
-        webView.getSettings().setDefaultFontSize(CardAppearance.calculateDynamicFontSize(mField.getText()));
+        webView.getSettings().setDefaultFontSize(CardAppearance.calculateDynamicFontSize(mCurrentText));
 
         webView.setNightMode(cardAppearance.isNightMode());
     }
@@ -383,13 +383,13 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
             return false;
         }
 
-        mField = mLargeObjectStorage.getSingleInstance(STORAGE_CURRENT_FIELD, extras);
+        mCurrentText = mLargeObjectStorage.getSingleInstance(STORAGE_CURRENT_FIELD, extras);
         Integer index = (Integer) extras.getSerializable(VisualEditorActivity.EXTRA_FIELD_INDEX);
 
         this.mFields = mLargeObjectStorage.getSingleInstance (STORAGE_EXTRA_FIELDS, extras);
         Long modelId = (Long) extras.getSerializable(VisualEditorActivity.EXTRA_MODEL_ID);
 
-        if (mField == null) {
+        if (mCurrentText == null) {
             Timber.w("Failed to find mField");
             return false;
         }
@@ -602,9 +602,10 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
 
 
     private void finishWithSuccess() {
-        this.mField.setText(mCurrentText);
+        IField f = new TextField();
+        f.setText(mCurrentText);
         Intent resultData = new Intent();
-        resultData.putExtra(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD, this.mField);
+        resultData.putExtra(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD, f);
         resultData.putExtra(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX, this.mIndex);
         setResult(RESULT_OK, resultData);
         finishActivityWithFade(this);
