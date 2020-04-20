@@ -32,6 +32,8 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.AssetReader;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.LargeObjectStorage;
+import com.ichi2.utils.LargeObjectStorage.StorageKey;
 import com.ichi2.utils.WebViewDebugging;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
@@ -71,6 +73,16 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
     /** All fields in a (string[])  */
     public static final String EXTRA_ALL_FIELDS = "visual.card.ed.extra.all.fields";
 
+    public static final StorageKey<IField> STORAGE_CURRENT_FIELD = new StorageKey<>(
+            "visual.card.ed.extra.current.field",
+            "visualed_current_field",
+            "bin");
+
+    public static final StorageKey<String[]> STORAGE_EXTRA_FIELDS = new StorageKey<>(
+            "visual.card.ed.extra.extra.fields",
+            "visualed_extra_fields",
+            "bin");
+
 
     private String mCurrentText;
     private IField mField;
@@ -83,6 +95,7 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
     private AssetReader mAssetReader = new AssetReader(this);
     //Unsure if this is needed, or whether getCol will block until onCollectionLoaded completes.
     private boolean mHasLoadedCol;
+    private LargeObjectStorage mLargeObjectStorage = new LargeObjectStorage(this);
 
 
     @Override
@@ -370,10 +383,10 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
             return false;
         }
 
-        mField = (IField) extras.getSerializable(VisualEditorActivity.EXTRA_FIELD);
+        mField = mLargeObjectStorage.getSingleInstance(STORAGE_CURRENT_FIELD, extras);
         Integer index = (Integer) extras.getSerializable(VisualEditorActivity.EXTRA_FIELD_INDEX);
 
-        this.mFields = (String[]) extras.getSerializable(VisualEditorActivity.EXTRA_ALL_FIELDS);
+        this.mFields = mLargeObjectStorage.getSingleInstance (STORAGE_EXTRA_FIELDS, extras);
         Long modelId = (Long) extras.getSerializable(VisualEditorActivity.EXTRA_MODEL_ID);
 
         if (mField == null) {

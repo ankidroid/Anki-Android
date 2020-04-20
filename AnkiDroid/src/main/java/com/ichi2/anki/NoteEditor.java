@@ -87,6 +87,7 @@ import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.LargeObjectStorage;
 import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.widget.WidgetStatus;
 
@@ -207,6 +208,8 @@ public class NoteEditor extends AnkiActivity {
     // A bundle that maps field ords to the text content of that field for use in
     // restoring the Activity.
     private Bundle mSavedFields;
+
+    LargeObjectStorage mLargeObjectStorage = new LargeObjectStorage(this);
 
     private CollectionTask.TaskListener mSaveNoteHandler = new CollectionTask.TaskListener() {
         private boolean mCloseAfter = false;
@@ -1304,19 +1307,22 @@ public class NoteEditor extends AnkiActivity {
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index);
             try {
                 final Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
-
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
                 IField field = new TextField();
                 String value = mEditFields.get(index).getText().toString();
                 field.setFormattedString(col, value);
                 Intent i = new Intent(this, VisualEditorActivity.class);
-                i.putExtra(VisualEditorActivity.EXTRA_FIELD, field);
-                i.putExtra(VisualEditorActivity.EXTRA_ALL_FIELDS, mEditorNote.getFields());
+                //Note: Intent.getExtras is a copy of the bundle.
+                Bundle b = new Bundle();
+                mLargeObjectStorage.storeSingleInstance(VisualEditorActivity.STORAGE_CURRENT_FIELD.asData(field), b);
+                mLargeObjectStorage.storeSingleInstance(VisualEditorActivity.STORAGE_EXTRA_FIELDS.asData(mEditorNote.getFields()), b);
+                i.replaceExtras(b);
                 i.putExtra(VisualEditorActivity.EXTRA_MODEL_ID, getModelId());
                 i.putExtra(VisualEditorActivity.EXTRA_FIELD_INDEX, index);
                 startActivityForResultWithoutAnimation(i, REQUEST_VISUAL_EDIT);
             } catch (Exception e) {
+                Timber.e(e, "Unable to open Visual Editor");
                 UIUtils.showThemedToast(this, "Unable to open Visual Editor", false);
             }
         });
