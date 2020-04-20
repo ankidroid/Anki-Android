@@ -34,6 +34,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.utils.AssetReader;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.LargeObjectStorage;
+import com.ichi2.utils.LargeObjectStorage.StorageData;
 import com.ichi2.utils.LargeObjectStorage.StorageKey;
 import com.ichi2.utils.WebViewDebugging;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
@@ -42,6 +43,7 @@ import com.jaredrummler.android.colorpicker.ColorShape;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -103,7 +105,7 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
         super.onCreate(savedInstanceState);
         setContentView(R.layout.visual_editor);
 
-        if (!setFieldsOnStartup()) {
+        if (!setFieldsOnStartup(savedInstanceState)) {
             failStartingVisualEditor();
             return;
         }
@@ -376,17 +378,23 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
     }
 
 
-    private boolean setFieldsOnStartup() {
+    private boolean setFieldsOnStartup(Bundle savedInstanceState) {
+
+        tryDeserializeSavedState(savedInstanceState);
         Bundle extras = this.getIntent().getExtras();
         if (extras == null) {
             Timber.w("No Extras in Bundle");
             return false;
         }
 
-        mCurrentText = mLargeObjectStorage.getSingleInstance(STORAGE_CURRENT_FIELD, extras);
+        if (mCurrentText == null) {
+            mCurrentText = mLargeObjectStorage.getSingleInstance(STORAGE_CURRENT_FIELD, extras);
+        }
         Integer index = (Integer) extras.getSerializable(VisualEditorActivity.EXTRA_FIELD_INDEX);
 
-        this.mFields = mLargeObjectStorage.getSingleInstance (STORAGE_EXTRA_FIELDS, extras);
+        if (mFields == null) {
+            this.mFields = mLargeObjectStorage.getSingleInstance (STORAGE_EXTRA_FIELDS, extras);
+        }
         Long modelId = (Long) extras.getSerializable(VisualEditorActivity.EXTRA_MODEL_ID);
 
         if (mCurrentText == null) {
@@ -416,6 +424,19 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
         }
 
         return true;
+    }
+
+
+    private void tryDeserializeSavedState(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            return;
+        }
+        if (mLargeObjectStorage.hasKey(STORAGE_CURRENT_FIELD, savedInstanceState)) {
+            mCurrentText = mLargeObjectStorage.getSingleInstance(STORAGE_CURRENT_FIELD, savedInstanceState);
+        }
+        if (mLargeObjectStorage.hasKey(STORAGE_EXTRA_FIELDS, savedInstanceState)) {
+            mFields = mLargeObjectStorage.getSingleInstance(STORAGE_EXTRA_FIELDS, savedInstanceState);
+        }
     }
 
 
@@ -598,6 +619,23 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
     private void resetSelectionType() {
         mSelectionType = SelectionType.REGULAR;
         invalidateOptionsMenu();
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        storeDataNoException(outState, STORAGE_CURRENT_FIELD.asData(mCurrentText));
+        storeDataNoException(outState, STORAGE_EXTRA_FIELDS.asData(mFields));
+    }
+
+
+    private <T extends Serializable> void storeDataNoException(@NonNull Bundle outState, StorageData<T> data) {
+        try {
+            mLargeObjectStorage.storeSingleInstance(data, outState);
+        } catch (Exception e) {
+            Timber.e(e, "failed to store '%s'", STORAGE_CURRENT_FIELD.getBundleKey());
+        }
     }
 
 
