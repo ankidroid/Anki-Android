@@ -34,6 +34,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -111,6 +113,7 @@ import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.KeyUtils;
+import com.ichi2.utils.LargeObjectStorage;
 import com.ichi2.utils.MapUtil;
 import com.ichi2.utils.NoteFieldDecorator;
 import com.ichi2.utils.TextViewUtil;
@@ -262,6 +265,8 @@ public class NoteEditor extends AnkiActivity implements
     private HashMap<Integer, String> mToggleStickyText = new HashMap<>();
 
     private final Onboarding.NoteEditor mOnboarding = new Onboarding.NoteEditor(this);
+
+    LargeObjectStorage mLargeObjectStorage = new LargeObjectStorage(this);
 
     private SaveNoteHandler saveNoteHandler() {
         return new SaveNoteHandler(this);
@@ -1553,17 +1558,31 @@ public class NoteEditor extends AnkiActivity implements
             try {
                 String value = mEditFields.get(index).getText().toString();
                 Intent i = new Intent(this, VisualEditorActivity.class);
-                i.putExtra(VisualEditorActivity.EXTRA_FIELD, value);
+                //Note: Intent.getExtras is a copy of the bundle.
+                Bundle b = new Bundle();
+                mLargeObjectStorage.storeSingleInstance(VisualEditorActivity.STORAGE_CURRENT_FIELD.asData(value), b);
+                mLargeObjectStorage.storeSingleInstance(VisualEditorActivity.STORAGE_EXTRA_FIELDS.asData(mEditorNote.getFields()), b);
+                i.replaceExtras(b);
+                i.putExtra(VisualEditorActivity.EXTRA_MODEL_ID, getModelId());
                 i.putExtra(VisualEditorActivity.EXTRA_FIELD_INDEX, index);
-                i.putExtra(VisualEditorActivity.EXTRA_ALL_FIELDS, mEditorNote.getFields());
-                i.putExtra(VisualEditorActivity.EXTRA_MODEL_ID, mEditorNote.model().getLong("id"));
-                startActivityForResultWithoutAnimation(i, REQUEST_VISUAL_EDIT);
+                launchActivityForResultWithAnimation(i, mVisualEditorLauncher, START);
             } catch (Exception e) {
-                UIUtils.showThemedToast(this, "Unable to open Visual Editor", false);
+                Timber.w(e, getString(R.string.unable_to_open_visual_editor));
+                UIUtils.showThemedToast(this, getString(R.string.unable_to_open_visual_editor), false);
             }
         });
     }
 
+    ActivityResultLauncher<Intent> mVisualEditorLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        Timber.d("VisualEditorActivityResult: resultCode=%d", result.getResultCode());
+        if (result.getResultCode() != RESULT_OK) {
+            return;
+        }
+        Intent data = result.getData();
+        if (data != null) {
+            requestEdit(REQUEST_VISUAL_EDIT, result.getResultCode(), data);
+        }
+    });
 
     private boolean onImagePaste(EditText editText, Uri uri) {
         String imageTag = mMediaRegistration.onImagePaste(uri);

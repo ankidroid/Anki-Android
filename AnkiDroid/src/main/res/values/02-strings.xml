@@ -204,6 +204,7 @@
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+    <string name="unable_to_open_visual_editor">Unable to open Visual Editor</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s second</item>
