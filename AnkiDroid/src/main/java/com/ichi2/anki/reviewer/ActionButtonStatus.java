@@ -44,6 +44,7 @@ public class ActionButtonStatus {
     }
 
     public void setup(SharedPreferences preferences) {
+        // NOTE: the default values below should be in sync with preferences_custom_buttons.xml and reviewer.xml
         setupButton(preferences, R.id.action_undo, "customButtonUndo", SHOW_AS_ACTION_ALWAYS);
         setupButton(preferences, R.id.action_schedule, "customButtonScheduleCard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_flag, "customButtonFlag", SHOW_AS_ACTION_ALWAYS);
