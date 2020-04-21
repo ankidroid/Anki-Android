@@ -129,6 +129,7 @@ import java.util.regex.Pattern;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
+import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi {
@@ -295,27 +296,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int mGestureTapTop;
     private int mGestureTapBottom;
     private int mGestureLongclick;
-
-    protected static final int GESTURE_NOTHING = 0;
-    private static final int GESTURE_SHOW_ANSWER = 1;
-    private static final int GESTURE_ANSWER_EASE1 = 2;
-    private static final int GESTURE_ANSWER_EASE2 = 3;
-    private static final int GESTURE_ANSWER_EASE3 = 4;
-    private static final int GESTURE_ANSWER_EASE4 = 5;
-    private static final int GESTURE_ANSWER_RECOMMENDED = 6;
-    private static final int GESTURE_ANSWER_BETTER_THAN_RECOMMENDED = 7;
-    private static final int GESTURE_UNDO = 8;
-    public static final int GESTURE_EDIT = 9;
-    protected static final int GESTURE_MARK = 10;
-    protected static final int GESTURE_LOOKUP = 11;
-    private static final int GESTURE_BURY_CARD = 12;
-    private static final int GESTURE_SUSPEND_CARD = 13;
-    protected static final int GESTURE_DELETE = 14;
-    protected static final int GESTURE_PLAY_MEDIA = 16;
-    protected static final int GESTURE_EXIT = 17;
-    private static final int GESTURE_BURY_NOTE = 18;
-    private static final int GESTURE_SUSPEND_NOTE = 19;
-
 
     private Spanned mCardContent;
     private String mBaseUrl;
