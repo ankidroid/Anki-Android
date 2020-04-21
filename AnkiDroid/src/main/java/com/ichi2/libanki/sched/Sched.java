@@ -1766,22 +1766,6 @@ public class Sched extends SchedV2 {
         return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
     }
 
-    /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
-    @Override
-    public int[] recalculateCounts() {
-        _resetLrnCount();
-        _resetNewCount();
-        _resetRevCount();
-        return new int[] { mNewCount, mLrnCount, mRevCount };
-    }
-
-    @Override
-    public void setReportLimit(int reportLimit) {
-        this.mReportLimit = reportLimit;
-    }
-
-    /** End #5666 */
-
 
     @Override
     public void setContext(WeakReference<Activity> contextReference) {
