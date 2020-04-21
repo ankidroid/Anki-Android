@@ -2382,22 +2382,22 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     displayCardAnswer();
                 }
                 break;
-            case GESTURE_ANSWER_EASE1:
+            case GESTURE_FLIP_OR_ANSWER_EASE1:
                 flipOrAnswerCard(EASE_1);
                 break;
-            case GESTURE_ANSWER_EASE2:
+            case GESTURE_FLIP_OR_ANSWER_EASE2:
                 flipOrAnswerCard(EASE_2);
                 break;
-            case GESTURE_ANSWER_EASE3:
+            case GESTURE_FLIP_OR_ANSWER_EASE3:
                 flipOrAnswerCard(EASE_3);
                 break;
-            case GESTURE_ANSWER_EASE4:
+            case GESTURE_FLIP_OR_ANSWER_EASE4:
                 flipOrAnswerCard(EASE_4);
                 break;
-            case GESTURE_ANSWER_RECOMMENDED:
+            case GESTURE_FLIP_OR_ANSWER_RECOMMENDED:
                 flipOrAnswerCard(getRecommendedEase(false));
                 break;
-            case GESTURE_ANSWER_BETTER_THAN_RECOMMENDED:
+            case GESTURE_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED:
                 flipOrAnswerCard(getRecommendedEase(true));
                 break;
             case GESTURE_EXIT:

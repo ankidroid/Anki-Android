@@ -20,12 +20,12 @@ package com.ichi2.anki.cardviewer;
 public class ViewerCommand {
     public static final int GESTURE_NOTHING = 0;
     public static final int GESTURE_SHOW_ANSWER = 1;
-    public static final int GESTURE_ANSWER_EASE1 = 2;
-    public static final int GESTURE_ANSWER_EASE2 = 3;
-    public static final int GESTURE_ANSWER_EASE3 = 4;
-    public static final int GESTURE_ANSWER_EASE4 = 5;
-    public static final int GESTURE_ANSWER_RECOMMENDED = 6;
-    public static final int GESTURE_ANSWER_BETTER_THAN_RECOMMENDED = 7;
+    public static final int GESTURE_FLIP_OR_ANSWER_EASE1 = 2;
+    public static final int GESTURE_FLIP_OR_ANSWER_EASE2 = 3;
+    public static final int GESTURE_FLIP_OR_ANSWER_EASE3 = 4;
+    public static final int GESTURE_FLIP_OR_ANSWER_EASE4 = 5;
+    public static final int GESTURE_FLIP_OR_ANSWER_RECOMMENDED = 6;
+    public static final int GESTURE_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED = 7;
     public static final int GESTURE_UNDO = 8;
     public static final int GESTURE_EDIT = 9;
     public static final int GESTURE_MARK = 10;
