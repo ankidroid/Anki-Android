@@ -2375,64 +2375,64 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return;
         }
         switch (which) {
-            case GESTURE_NOTHING:
+            case COMMAND_NOTHING:
                 break;
-            case GESTURE_SHOW_ANSWER:
+            case COMMAND_SHOW_ANSWER:
                 if (!sDisplayAnswer) {
                     displayCardAnswer();
                 }
                 break;
-            case GESTURE_FLIP_OR_ANSWER_EASE1:
+            case COMMAND_FLIP_OR_ANSWER_EASE1:
                 flipOrAnswerCard(EASE_1);
                 break;
-            case GESTURE_FLIP_OR_ANSWER_EASE2:
+            case COMMAND_FLIP_OR_ANSWER_EASE2:
                 flipOrAnswerCard(EASE_2);
                 break;
-            case GESTURE_FLIP_OR_ANSWER_EASE3:
+            case COMMAND_FLIP_OR_ANSWER_EASE3:
                 flipOrAnswerCard(EASE_3);
                 break;
-            case GESTURE_FLIP_OR_ANSWER_EASE4:
+            case COMMAND_FLIP_OR_ANSWER_EASE4:
                 flipOrAnswerCard(EASE_4);
                 break;
-            case GESTURE_FLIP_OR_ANSWER_RECOMMENDED:
+            case COMMAND_FLIP_OR_ANSWER_RECOMMENDED:
                 flipOrAnswerCard(getRecommendedEase(false));
                 break;
-            case GESTURE_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED:
+            case COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED:
                 flipOrAnswerCard(getRecommendedEase(true));
                 break;
-            case GESTURE_EXIT:
+            case COMMAND_EXIT:
                 closeReviewer(RESULT_DEFAULT, false);
                 break;
-            case GESTURE_UNDO:
+            case COMMAND_UNDO:
                 if (getCol().undoAvailable()) {
                     undo();
                 }
                 break;
-            case GESTURE_EDIT:
+            case COMMAND_EDIT:
                 editCard();
                 break;
-            case GESTURE_MARK:
+            case COMMAND_MARK:
                 onMark(mCurrentCard);
                 break;
-            case GESTURE_LOOKUP:
+            case COMMAND_LOOKUP:
                 lookUpOrSelectText();
                 break;
-            case GESTURE_BURY_CARD:
+            case COMMAND_BURY_CARD:
                 dismiss(Collection.DismissType.BURY_CARD);
                 break;
-            case GESTURE_BURY_NOTE:
+            case COMMAND_BURY_NOTE:
                 dismiss(Collection.DismissType.BURY_NOTE);
                 break;
-            case GESTURE_SUSPEND_CARD:
+            case COMMAND_SUSPEND_CARD:
                 dismiss(Collection.DismissType.SUSPEND_CARD);
                 break;
-            case GESTURE_SUSPEND_NOTE:
+            case COMMAND_SUSPEND_NOTE:
                 dismiss(Collection.DismissType.SUSPEND_NOTE);
                 break;
-            case GESTURE_DELETE:
+            case COMMAND_DELETE:
                 showDeleteNoteDialog();
                 break;
-            case GESTURE_PLAY_MEDIA:
+            case COMMAND_PLAY_MEDIA:
                 playSounds(true);
                 break;
             default:

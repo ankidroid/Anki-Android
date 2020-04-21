@@ -18,23 +18,23 @@ package com.ichi2.anki.cardviewer;
 
 /** Abstraction: Discuss moving many of these to 'Reviewer' */
 public class ViewerCommand {
-    public static final int GESTURE_NOTHING = 0;
-    public static final int GESTURE_SHOW_ANSWER = 1;
-    public static final int GESTURE_FLIP_OR_ANSWER_EASE1 = 2;
-    public static final int GESTURE_FLIP_OR_ANSWER_EASE2 = 3;
-    public static final int GESTURE_FLIP_OR_ANSWER_EASE3 = 4;
-    public static final int GESTURE_FLIP_OR_ANSWER_EASE4 = 5;
-    public static final int GESTURE_FLIP_OR_ANSWER_RECOMMENDED = 6;
-    public static final int GESTURE_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED = 7;
-    public static final int GESTURE_UNDO = 8;
-    public static final int GESTURE_EDIT = 9;
-    public static final int GESTURE_MARK = 10;
-    public static final int GESTURE_LOOKUP = 11;
-    public static final int GESTURE_BURY_CARD = 12;
-    public static final int GESTURE_SUSPEND_CARD = 13;
-    public static final int GESTURE_DELETE = 14;
-    public static final int GESTURE_PLAY_MEDIA = 16;
-    public static final int GESTURE_EXIT = 17;
-    public static final int GESTURE_BURY_NOTE = 18;
-    public static final int GESTURE_SUSPEND_NOTE = 19;
+    public static final int COMMAND_NOTHING = 0;
+    public static final int COMMAND_SHOW_ANSWER = 1;
+    public static final int COMMAND_FLIP_OR_ANSWER_EASE1 = 2;
+    public static final int COMMAND_FLIP_OR_ANSWER_EASE2 = 3;
+    public static final int COMMAND_FLIP_OR_ANSWER_EASE3 = 4;
+    public static final int COMMAND_FLIP_OR_ANSWER_EASE4 = 5;
+    public static final int COMMAND_FLIP_OR_ANSWER_RECOMMENDED = 6;
+    public static final int COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED = 7;
+    public static final int COMMAND_UNDO = 8;
+    public static final int COMMAND_EDIT = 9;
+    public static final int COMMAND_MARK = 10;
+    public static final int COMMAND_LOOKUP = 11;
+    public static final int COMMAND_BURY_CARD = 12;
+    public static final int COMMAND_SUSPEND_CARD = 13;
+    public static final int COMMAND_DELETE = 14;
+    public static final int COMMAND_PLAY_MEDIA = 16;
+    public static final int COMMAND_EXIT = 17;
+    public static final int COMMAND_BURY_NOTE = 18;
+    public static final int COMMAND_SUSPEND_NOTE = 19;
 }
