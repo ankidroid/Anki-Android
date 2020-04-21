@@ -1001,7 +1001,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (mAnswerField == null || mAnswerField.isFocused()) {
+        if (answerFieldIsFocused()) {
             return super.onKeyUp(keyCode, event);
         }
         if (!sDisplayAnswer) {
@@ -1011,6 +1011,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
         return super.onKeyUp(keyCode, event);
+    }
+
+
+    protected boolean answerFieldIsFocused() {
+        //NOTE: The null check seems reversed - we previously inverted second condition, so likely an oversight.
+        //But, it's always true for now.
+        return mAnswerField == null || mAnswerField.isFocused();
     }
 
 
