@@ -56,7 +56,10 @@ public class ViewerCommand {
         /**
          *
          * @param which The command (defined in {@code ViewerCommand}) to execute
+         * @return Whether the action was successfully processed.
+         * <p>example failure: answering an ease on the front of the card</p>
          */
-        void executeCommand(@ViewerCommandDef int which);
+        @SuppressWarnings("UnusedReturnValue")
+        boolean executeCommand(@ViewerCommandDef int which);
     }
 }

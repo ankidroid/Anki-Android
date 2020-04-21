@@ -2370,74 +2370,76 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    public void executeCommand(@ViewerCommandDef int which) {
+    public boolean executeCommand(@ViewerCommandDef int which) {
         if (mControlBlocked) {
-            return;
+            return false;
         }
         switch (which) {
             case COMMAND_NOTHING:
-                break;
+                return true;
             case COMMAND_SHOW_ANSWER:
-                if (!sDisplayAnswer) {
-                    displayCardAnswer();
+                if (sDisplayAnswer) {
+                    return false;
                 }
-                break;
+                displayCardAnswer();
+                return true;
             case COMMAND_FLIP_OR_ANSWER_EASE1:
                 flipOrAnswerCard(EASE_1);
-                break;
+                return true;
             case COMMAND_FLIP_OR_ANSWER_EASE2:
                 flipOrAnswerCard(EASE_2);
-                break;
+                return true;
             case COMMAND_FLIP_OR_ANSWER_EASE3:
                 flipOrAnswerCard(EASE_3);
-                break;
+                return true;
             case COMMAND_FLIP_OR_ANSWER_EASE4:
                 flipOrAnswerCard(EASE_4);
-                break;
+                return true;
             case COMMAND_FLIP_OR_ANSWER_RECOMMENDED:
                 flipOrAnswerCard(getRecommendedEase(false));
-                break;
+                return true;
             case COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED:
                 flipOrAnswerCard(getRecommendedEase(true));
-                break;
+                return true;
             case COMMAND_EXIT:
                 closeReviewer(RESULT_DEFAULT, false);
-                break;
+                return true;
             case COMMAND_UNDO:
-                if (getCol().undoAvailable()) {
-                    undo();
+                if (!getCol().undoAvailable()) {
+                    return false;
                 }
-                break;
+                undo();
+                return true;
             case COMMAND_EDIT:
                 editCard();
-                break;
+                return true;
             case COMMAND_MARK:
                 onMark(mCurrentCard);
-                break;
+                return true;
             case COMMAND_LOOKUP:
                 lookUpOrSelectText();
-                break;
+                return true;
             case COMMAND_BURY_CARD:
                 dismiss(Collection.DismissType.BURY_CARD);
-                break;
+                return true;
             case COMMAND_BURY_NOTE:
                 dismiss(Collection.DismissType.BURY_NOTE);
-                break;
+                return true;
             case COMMAND_SUSPEND_CARD:
                 dismiss(Collection.DismissType.SUSPEND_CARD);
-                break;
+                return true;
             case COMMAND_SUSPEND_NOTE:
                 dismiss(Collection.DismissType.SUSPEND_NOTE);
-                break;
+                return true;
             case COMMAND_DELETE:
                 showDeleteNoteDialog();
-                break;
+                return true;
             case COMMAND_PLAY_MEDIA:
                 playSounds(true);
-                break;
+                return true;
             default:
                 Timber.w("Unknown command requested: %s", which);
-                break;
+                return false;
         }
     }
 
