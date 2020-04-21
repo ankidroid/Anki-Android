@@ -29,6 +29,7 @@ import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -43,6 +44,7 @@ import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 
+import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
@@ -1402,14 +1404,52 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
     /**
-     * Regenerate all the cards in a model
+     * Handles everything for a model change at once - template add / deletes as well as content updates
      */
     private TaskData doInBackgroundSaveModel(TaskData... params) {
         Timber.d("doInBackgroundSaveModel");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object [] args = params[0].getObjArray();
         JSONObject model = (JSONObject) args[0];
+        ArrayList<Object[]> templateChanges = (ArrayList<Object[]>)args[1];
+        JSONObject  oldModel = col.getModels().get(model.getLong("id"));
+
+        // TODO need to save all the cards that will go away, for undo
+        //  (do I need to remove them from graves during undo also?)
+        //    - undo (except for cards) could just be Models.update(model) / Models.flush() / Collection.reset() (that was prior "undo")
+        JSONArray oldTemplates = oldModel.getJSONArray("tmpls");
+        JSONArray newTemplates = model.getJSONArray("tmpls");
+
+        // Template add/deletes always arrive all deletes first, to be processed in order
+        // After that since templates can't be repositioned, any "extra" templates in newTemplates must be adds
+        for (Object[] change : templateChanges) {
+            switch ((TemporaryModel.ChangeType) change[1]) {
+                case ADD:
+                    Timber.d("doInBackgroundSaveModel() adding template %s", change[0]);
+                    try {
+                        col.getModels().addTemplate(oldModel, newTemplates.getJSONObject((int) change[0]));
+                    } catch (ConfirmModSchemaException e) {
+                        Timber.e("Unable to add template %s to model %s", change[0], model.getLong("id"));
+                        return new TaskData(false);
+                    }
+                    break;
+                case DELETE:
+                    Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0]);
+                    try {
+                        col.getModels().remTemplate(oldModel, oldTemplates.getJSONObject((int) change[0]));
+                    } catch (ConfirmModSchemaException e) {
+                        Timber.e("Unable to delete template %s from model %s", change[0], model.getLong("id"));
+                        return new TaskData(false);
+                    }
+                    break;
+                default:
+                    Timber.w("Unknown change type? %s", change[1]);
+                    break;
+            }
+        }
+
         col.getModels().save(model, true);
+        col.getModels().update(model);
         col.reset();
         col.save();
         return new TaskData(true);

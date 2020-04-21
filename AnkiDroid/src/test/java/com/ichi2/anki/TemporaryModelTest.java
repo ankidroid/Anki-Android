@@ -1,7 +1,23 @@
+/****************************************************************************************
+ * Copyright (c) 2020 Mike Hardy <mike@mikehardy.net>                                   *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.anki;
 
-import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import android.os.Bundle;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,13 +38,12 @@ public class TemporaryModelTest extends RobolectricTest {
 
     @Test
     public void testTempModelStorage() throws Exception {
-        Context context = getTargetContext();
 
         // Start off with clean state in the cache dir
         TemporaryModel.clearTempModelFiles();
 
         // Make sure save / retrieve works
-        String tempModelPath = TemporaryModel.saveTempModel(context, new JSONObject("{foo: bar}"));
+        String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), new JSONObject("{foo: bar}"));
         Assert.assertNotNull("Saving temp model unsuccessful", tempModelPath);
         JSONObject tempModel = TemporaryModel.getTempModel(tempModelPath);
         Assert.assertNotNull("Temp model not read successfully", tempModel);
@@ -47,7 +62,7 @@ public class TemporaryModelTest extends RobolectricTest {
         // Assume you start with a 2 template model (like "Basic (and reversed)")
         // Add a 3rd new template, remove the 2nd, remove the 1st, add a new now-2nd, remove 1st again
         // ...and it should reduce to just removing the original 1st/2nd and adding the final as first
-        TemporaryModel tempModel = new TemporaryModel();
+        TemporaryModel tempModel = new TemporaryModel(new JSONObject("{ foo: bar }"));
 
         tempModel.addTemplateChange(ADD, 3);
         Object[][] expected1 = {{3, ADD}};
@@ -59,6 +74,10 @@ public class TemporaryModelTest extends RobolectricTest {
         tempModel.addTemplateChange(ADD, 2);
         Object[][] expected3 = {{3, ADD}, {2, DELETE}, {1, DELETE}, {2, ADD}};
         assertTemplateChangesEqual(expected3, tempModel.getTemplateChanges());
+
+        // Make sure we can resurrect these changes across lifecycle
+        Bundle outBundle = tempModel.toBundle();
+        assertTemplateChangesEqual(expected3, outBundle.getSerializable("mTemplateChanges"));
 
         // This is the hard part. We will delete a template we added so everything shifts.
         // The template currently at ordinal 1 was added as template 3 at the start before it slid down on the deletes

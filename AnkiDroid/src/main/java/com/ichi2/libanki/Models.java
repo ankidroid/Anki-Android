@@ -22,12 +22,13 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Pair;
+import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
@@ -41,8 +42,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import androidx.annotation.Nullable;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
@@ -336,6 +335,8 @@ public class Models {
             setCurrent(mModels.values().iterator().next());
         }
     }
+
+
     public void add(JSONObject m) {
         _setID(m);
         update(m);
@@ -730,7 +731,9 @@ public class Models {
      * @throws ConfirmModSchemaException 
      */
     public boolean remTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
-        assert (m.getJSONArray("tmpls").length() > 1);
+        if (m.getJSONArray("tmpls").length() <= 1) {
+            return false;
+        }
         // find cards using this template
         JSONArray ja = m.getJSONArray("tmpls");
         int ord = -1;
@@ -741,7 +744,7 @@ public class Models {
             }
         }
         // the code in "isRemTemplateSafe" was in place here in libanki. It is extracted to a method for reuse
-        long[] cids = isRemTemplateSafe(mCol, m, ord);
+        long[] cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
         if (cids == null) {
             return false;
         }
@@ -753,7 +756,7 @@ public class Models {
         mCol.getDb()
             .execute(
                      "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
-                     new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id"), ord });
+                     new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id"), new int[]{ord} });
         JSONArray tmpls = m.getJSONArray("tmpls");
         JSONArray ja2 = new JSONArray();
         for (int i = 0; i < tmpls.length(); ++i) {
@@ -770,20 +773,33 @@ public class Models {
 
 
     /**
-     * Extracted from remTemplate so we can test if removing a template is safe without actually removing it
-     * Verifies all notes with this template have at least two cards, to guard against creating orphaned notes
+     * Extracted from remTemplate so we can test if removing templates is safe without actually removing them
+     * Verifies all notes with these templates have at least two cards, to guard against creating orphaned notes
      * @return null if not safe, long[] of card ids to delete if it is safe
      */
-    public static @Nullable long[] isRemTemplateSafe(Collection col, JSONObject m, int ord) throws JSONException {
-        String sql = "select c.id from cards c, notes f where c.nid=f.id and mid = " +
-                m.getLong("id") + " and ord = " + ord;
-        long[] cids = Utils.toPrimitive(col.getDb().queryColumn(Long.class, sql, 0));
+    public @Nullable long[] getCardIdsForModel(long modelId, int[] ords) {
+        String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = " +
+                modelId + " and c2.ord  in " + Utils.ids2str(ords);
+        long[] cids = Utils.toPrimitive(mCol.getDb().queryColumn(Long.class, cardIdsToDeleteSql, 0));
+        Timber.d("cardIdsToDeleteSql was '" + cardIdsToDeleteSql + "' and got %s", Utils.ids2str(cids));
+        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.length, modelId, Utils.ids2str(ords));
+
         // all notes with this template must have at least two cards, or we could end up creating orphaned notes
-        sql = "select nid, count() from cards where nid in (select nid from cards where id in " +
-                Utils.ids2str(cids) + ") group by nid having count() < 2 limit 1";
-        if (col.getDb().queryScalar(sql) != 0) {
+        String noteCountPreDeleteSql = "select count() from notes where mid = " + modelId;
+        int preDeleteNoteCount = mCol.getDb().queryScalar(noteCountPreDeleteSql);
+        Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql);
+        Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount);
+        // FIXME not sure about this one - want to make sure I only count notes, but link them correctly
+        String noteCountPostDeleteSql = "select count(n.id) from cards c, notes n where c.nid=n.id and n.mid = " + modelId + " and c.id not in (" + cardIdsToDeleteSql + ")";
+        Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql);
+        int postDeleteNoteCount = mCol.getDb().queryScalar(noteCountPostDeleteSql);
+        Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount);
+
+        if (preDeleteNoteCount != postDeleteNoteCount) {
+            Timber.d("There will be orphan notes if these cards are deleted.");
             return null;
         }
+        Timber.d("Deleting these cards will not orphan notes.");
         return cids;
     }
 
