@@ -56,7 +56,7 @@ import java.lang.ref.WeakReference;
 import timber.log.Timber;
 
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
-import static com.ichi2.anki.cardviewer.ViewerCommand.GESTURE_NOTHING;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 
 public class Reviewer extends AbstractFlashcardViewer {
     private boolean mHasDrawerSwipeConflicts = false;
@@ -749,9 +749,9 @@ public class Reviewer extends AbstractFlashcardViewer {
             int gestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
             int gestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
             int gestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
-            if (gestureSwipeUp != GESTURE_NOTHING ||
-                    gestureSwipeDown != GESTURE_NOTHING ||
-                    gestureSwipeRight != GESTURE_NOTHING) {
+            if (gestureSwipeUp != COMMAND_NOTHING ||
+                    gestureSwipeDown != COMMAND_NOTHING ||
+                    gestureSwipeRight != COMMAND_NOTHING) {
                 mHasDrawerSwipeConflicts = true;
                 super.disableDrawerSwipe();
             }
