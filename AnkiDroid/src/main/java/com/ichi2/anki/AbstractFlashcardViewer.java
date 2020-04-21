@@ -132,7 +132,7 @@ import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor {
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -2370,7 +2370,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    protected void executeCommand(int which) {
+    public void executeCommand(@ViewerCommandDef int which) {
         if (mControlBlocked) {
             return;
         }

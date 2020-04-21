@@ -16,6 +16,11 @@
 
 package com.ichi2.anki.cardviewer;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
+
 /** Abstraction: Discuss moving many of these to 'Reviewer' */
 public class ViewerCommand {
     public static final int COMMAND_NOTHING = 0;
@@ -37,4 +42,21 @@ public class ViewerCommand {
     public static final int COMMAND_EXIT = 17;
     public static final int COMMAND_BURY_NOTE = 18;
     public static final int COMMAND_SUSPEND_NOTE = 19;
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({COMMAND_NOTHING, COMMAND_SHOW_ANSWER, COMMAND_FLIP_OR_ANSWER_EASE1, COMMAND_FLIP_OR_ANSWER_EASE2,
+            COMMAND_FLIP_OR_ANSWER_EASE3, COMMAND_FLIP_OR_ANSWER_EASE4, COMMAND_FLIP_OR_ANSWER_RECOMMENDED,
+            COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED, COMMAND_UNDO, COMMAND_EDIT, COMMAND_MARK, COMMAND_LOOKUP,
+            COMMAND_BURY_CARD, COMMAND_SUSPEND_CARD, COMMAND_DELETE, COMMAND_PLAY_MEDIA, COMMAND_EXIT,
+            COMMAND_BURY_NOTE, COMMAND_SUSPEND_NOTE
+    })
+    public @interface ViewerCommandDef {}
+
+    public interface CommandProcessor {
+        /**
+         *
+         * @param which The command (defined in {@code ViewerCommand}) to execute
+         */
+        void executeCommand(@ViewerCommandDef int which);
+    }
 }
