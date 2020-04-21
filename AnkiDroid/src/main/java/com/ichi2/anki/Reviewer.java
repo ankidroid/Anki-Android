@@ -56,6 +56,7 @@ import java.lang.ref.WeakReference;
 import timber.log.Timber;
 
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.GESTURE_NOTHING;
 
 public class Reviewer extends AbstractFlashcardViewer {
     private boolean mHasDrawerSwipeConflicts = false;
