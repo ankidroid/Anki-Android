@@ -33,6 +33,7 @@ import android.util.Pair;
 
 import com.ichi2.anki.R;
 import com.ichi2.async.CancelListener;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -3007,14 +3008,6 @@ public class SchedV2 extends AbstractSched {
     }
 
     /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
-    @Override
-    public @NonNull int[] recalculateCounts() {
-        _resetLrnCount();
-        _resetNewCount();
-        _resetRevCount();
-        return new int[] { mNewCount, mLrnCount, mRevCount };
-    }
-
     @Override
     public void setReportLimit(int reportLimit) {
         this.mReportLimit = reportLimit;
