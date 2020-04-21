@@ -36,6 +36,7 @@ import com.ichi2.libanki.Utils;
 
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.sched.Counts;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -414,9 +415,11 @@ public class Syncer {
             //#5666 - not in libAnki
             //We modified mReportLimit inside the scheduler, and this causes issues syncing dynamic decks.
             AbstractSched syncScheduler = mCol.createScheduler(SYNC_SCHEDULER_REPORT_LIMIT);
-            for (int c : syncScheduler.recalculateCounts()) {
-                counts.put(c);
-            }
+            syncScheduler.resetCounts();
+            Counts counts_ = syncScheduler.counts();
+            counts.put(counts_.getNew());
+            counts.put(counts_.getLrn());
+            counts.put(counts_.getRev());
             check.put(counts);
             check.put(mCol.getDb().queryScalar("SELECT count() FROM cards"));
             check.put(mCol.getDb().queryScalar("SELECT count() FROM notes"));

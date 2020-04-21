@@ -442,11 +442,6 @@ public abstract class AbstractSched {
     public abstract void setContext(@Nullable WeakReference<Activity> contextReference);
 
     /**
-     * @return The counts, after having reseted them
-     */
-    public abstract @NonNull int[] recalculateCounts();
-
-    /**
      * Change the maximal number shown in counts.
      * @param reportLimit A maximal number of cards added in the queue at once.
      */
