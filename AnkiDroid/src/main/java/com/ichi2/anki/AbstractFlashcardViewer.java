@@ -995,9 +995,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected boolean answerFieldIsFocused() {
-        //NOTE: The null check seems reversed - we previously inverted second condition, so likely an oversight.
-        //But, it's always true for now.
-        return mAnswerField == null || mAnswerField.isFocused();
+        return mAnswerField != null && mAnswerField.isFocused();
     }
 
 
