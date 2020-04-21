@@ -28,9 +28,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import timber.log.Timber;
 
+import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -45,10 +47,6 @@ public class TemporaryModel {
     private String mEditedModelFileName = null;
     private JSONObject mEditedModel;
 
-
-    public TemporaryModel() {
-        // default constructor is only really useful for testing template change tracking
-    }
 
     public TemporaryModel(JSONObject model) {
         Timber.d("Constructor called with model");
@@ -67,6 +65,7 @@ public class TemporaryModel {
 
         Timber.d("onCreate() loading saved model file %s", mEditedModelFileName);
         TemporaryModel model = new TemporaryModel((getTempModel(mEditedModelFileName)));
+        model.loadTemplateChanges(bundle);
         return model;
     }
 
@@ -75,7 +74,71 @@ public class TemporaryModel {
         Bundle outState = new Bundle();
         outState.putString(INTENT_MODEL_FILENAME,
                 saveTempModel(AnkiDroidApp.getInstance().getApplicationContext(), mEditedModel));
+        outState.putSerializable("mTemplateChanges", mTemplateChanges);
         return outState;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private void loadTemplateChanges(Bundle bundle) {
+        try {
+            mTemplateChanges = (ArrayList<Object[]>) bundle.getSerializable("mTemplateChanges");
+        } catch (ClassCastException e) {
+            Timber.e(e, "Unexpected cast failure");
+        }
+    }
+
+
+    public JSONObject getTemplate(int ord) {
+        Timber.d("getTemplate() on ordinal %s", ord);
+        return mEditedModel.getJSONArray("tmpls").getJSONObject(ord);
+    }
+
+
+    public int getTemplateCount() {
+        return mEditedModel.getJSONArray("tmpls").length();
+    }
+
+
+    public long getModelId() {
+        return mEditedModel.getLong("id");
+    }
+
+
+    public void updateCss(String css) {
+        mEditedModel.put("css", css);
+    }
+
+
+    public String getCss() {
+        return mEditedModel.getString("css");
+    }
+
+
+    public void updateTemplate(int ordinal, JSONObject template) {
+        mEditedModel.getJSONArray("tmpls").put(ordinal, template);
+    }
+
+
+    public void addNewTemplate(JSONObject newTemplate) {
+        Timber.d("addNewTemplate()");
+        addTemplateChange(ChangeType.ADD, newTemplate.getInt("ord"));
+        mEditedModel.getJSONArray("tmpls").put(newTemplate);
+    }
+
+
+    public void removeTemplate(int ord) {
+        Timber.d("removeTemplate() on ordinal %s", ord);
+        addTemplateChange(ChangeType.DELETE, ord);
+    }
+
+
+    public void saveToDatabase(CollectionTask.TaskListener listener) {
+        Timber.d("saveToDatabase() called");
+        TemporaryModel.clearTempModelFiles();
+        CollectionTask.TaskData args = new CollectionTask.TaskData(new Object[] {mEditedModel, getTemplateChanges()});
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_SAVE_MODEL, listener, args);
+
     }
 
 
@@ -188,6 +251,96 @@ public class TemporaryModel {
 
         Timber.d("addTemplateChange() added ord/type: %s/%s", change[0], change[1]);
         mTemplateChanges.add(change);
+    }
+
+
+    /**
+     * Check if the given ordinal is an addition from this editing session (and thus is not in the database)
+     * @param ord the ordinal to check
+     * @return boolean true if the given ordinal was added this session (and is not in the database yet)
+     */
+    public boolean isTemplatePendingAdd(int ord) {
+        int ordinalAdjustment = 0;
+        for (int i = mTemplateChanges.size() - 1; i >= 0; i--) {
+            Object[] oldChange = mTemplateChanges.get(i);
+            switch ((ChangeType) oldChange[1]) {
+                case DELETE: {
+                    // Deleting an ordinal at or below us? Adjust our comparison basis...
+                    if ((Integer) oldChange[0] - ordinalAdjustment <= ord) {
+                        ordinalAdjustment++;
+                        continue;
+                    }
+                    break;
+                }
+                case ADD:
+                    if (ord == (Integer) oldChange[0] - ordinalAdjustment) {
+                        // something we added this session?
+                        return true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Return an int[] containing the collection-relative ordinals of all the currently pending deletes,
+     * including the ordinal passed in, as opposed to the changelist-relative ordinals
+     *
+     * @return int[] of all ordinals currently in the database, pending delete
+     */
+    public int[] getDeleteDbOrds(int ord) {
+        dumpChanges();
+        Timber.d("getDeleteDbOrds()");
+
+        // array containing the original / db-relative ordinals for all pending deletes plus the proposed one
+        int[] deletedDbOrds = new int[0];
+
+        // For each entry in the changes list - and the proposed delete - scan for deletes to get original ordinal
+        for (int i = 0; i <= mTemplateChanges.size(); i++) {
+            int ordinalAdjustment = 0;
+
+            // We need an initializer. Though proposed change is checked last, it's a reasonable default initializer.
+            Object[] currentChange = { ord, ChangeType.DELETE };
+            if (i < mTemplateChanges.size()) {
+                // Until we exhaust the pending change list we will use them
+                currentChange = mTemplateChanges.get(i);
+            }
+
+            // If the current pending change isn't a delete, it is unimportant here
+            if (currentChange[1] != ChangeType.DELETE) {
+                continue;
+            }
+
+            // If it is a delete, scan previous deletes and shift as necessary for original ord
+            for (int j = 0; j < i; j++) {
+                Object[] previousChange = mTemplateChanges.get(j);
+
+                // Is previous change a delete? Lower ordinal than current change?
+                if ((previousChange[1] == ChangeType.DELETE) && ((int)previousChange[0] <= (int)currentChange[0])) {
+                    // If so, that is the case where things shift. It means our ordinals moved and original ord is higher
+                    ordinalAdjustment++;
+                }
+            }
+
+            // We know how many times ordinals smaller than the current were deleted so we have the total adjustment
+            // Save this pending delete into an expanded array at it's original / db-relative position
+            deletedDbOrds = Arrays.copyOf(deletedDbOrds, deletedDbOrds.length + 1);
+            deletedDbOrds[deletedDbOrds.length-1] = (int)currentChange[0] + ordinalAdjustment;
+        }
+
+        return deletedDbOrds;
+    }
+
+
+    private void dumpChanges() {
+        for (int i = 0; i < mTemplateChanges.size(); i++) {
+            Object[] change = mTemplateChanges.get(i);
+            Timber.d("dumpChanges() Change %s is type/ord %s/%s", i, change[0], change[1]);
+        }
     }
 
 
