@@ -1001,12 +1001,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (mAnswerField != null && !mAnswerField.isFocused()) {
-            if (!sDisplayAnswer) {
-                if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-                    displayCardAnswer();
-                    return true;
-                }
+        if (mAnswerField == null || mAnswerField.isFocused()) {
+            return super.onKeyUp(keyCode, event);
+        }
+        if (!sDisplayAnswer) {
+            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+                displayCardAnswer();
+                return true;
             }
         }
         return super.onKeyUp(keyCode, event);

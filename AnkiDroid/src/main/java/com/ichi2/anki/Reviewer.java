@@ -495,70 +495,70 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         char keyPressed = (char) event.getUnicodeChar();
-        if (mAnswerField != null && !mAnswerField.isFocused()) {
-	        if (sDisplayAnswer) {
-	            if (keyPressed == '1' || keyCode == KeyEvent.KEYCODE_BUTTON_Y) {
-	                answerCard(EASE_1);
-	                return true;
-	            }
-	            if (keyPressed == '2' || keyCode == KeyEvent.KEYCODE_BUTTON_X) {
-	                answerCard(EASE_2);
-	                return true;
-	            }
-	            if (keyPressed == '3' || keyCode == KeyEvent.KEYCODE_BUTTON_B) {
-	                answerCard(EASE_3);
-	                return true;
-	            }
-	            if (keyPressed == '4' || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
-	                answerCard(EASE_4);
-	                return true;
-	            }
-	            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-	                answerCard(getDefaultEase());
-	                return true;
-	            }
-	        }
-                else {
-                    if (keyCode == KeyEvent.KEYCODE_BUTTON_Y || keyCode == KeyEvent.KEYCODE_BUTTON_X
-                            || keyCode == KeyEvent.KEYCODE_BUTTON_B || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
-                        displayCardAnswer();
-                        return true;
-                    }
-                }
-	        if (keyPressed == 'e') {
-	            editCard();
-	            return true;
-	        }
-	        if (keyPressed == '*') {
-                onMark(mCurrentCard);
-	            return true;
-	        }
-	        if (keyPressed == '-') {
-                dismiss(DismissType.BURY_CARD);
-	            return true;
-	        }
-	        if (keyPressed == '=') {
-                dismiss(DismissType.BURY_NOTE);
-	            return true;
-	        }
-	        if (keyPressed == '@') {
-                dismiss(DismissType.SUSPEND_CARD);
-	            return true;
-	        }
-	        if (keyPressed == '!') {
-                dismiss(DismissType.SUSPEND_NOTE);
-	            return true;
-	        }
-	        if (keyPressed == 'r' || keyCode == KeyEvent.KEYCODE_F5) {
-	            playSounds(true);
-	            return true;
-	        }
-
-            // different from Anki Desktop
-            if (keyPressed == 'z') {
-                undo();
+        if (mAnswerField == null || mAnswerField.isFocused()) {
+            return super.onKeyUp(keyCode, event);
+        }
+        if (sDisplayAnswer) {
+            if (keyPressed == '1' || keyCode == KeyEvent.KEYCODE_BUTTON_Y) {
+                answerCard(EASE_1);
                 return true;
             }
+            if (keyPressed == '2' || keyCode == KeyEvent.KEYCODE_BUTTON_X) {
+                answerCard(EASE_2);
+                return true;
+            }
+            if (keyPressed == '3' || keyCode == KeyEvent.KEYCODE_BUTTON_B) {
+                answerCard(EASE_3);
+                return true;
+            }
+            if (keyPressed == '4' || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
+                answerCard(EASE_4);
+                return true;
+            }
+            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+                answerCard(getDefaultEase());
+                return true;
+            }
+        } else {
+            if (keyCode == KeyEvent.KEYCODE_BUTTON_Y || keyCode == KeyEvent.KEYCODE_BUTTON_X
+                || keyCode == KeyEvent.KEYCODE_BUTTON_B || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
+                    displayCardAnswer();
+                    return true;
+            }
+        }
+        if (keyPressed == 'e') {
+            editCard();
+            return true;
+        }
+        if (keyPressed == '*') {
+            onMark(mCurrentCard);
+            return true;
+        }
+        if (keyPressed == '-') {
+            dismiss(DismissType.BURY_CARD);
+            return true;
+        }
+        if (keyPressed == '=') {
+            dismiss(DismissType.BURY_NOTE);
+            return true;
+        }
+        if (keyPressed == '@') {
+            dismiss(DismissType.SUSPEND_CARD);
+            return true;
+        }
+        if (keyPressed == '!') {
+            dismiss(DismissType.SUSPEND_NOTE);
+            return true;
+        }
+        if (keyPressed == 'r' || keyCode == KeyEvent.KEYCODE_F5) {
+            playSounds(true);
+            return true;
+        }
+
+        // different from Anki Desktop
+        if (keyPressed == 'z') {
+            undo();
+            return true;
         }
         return super.onKeyUp(keyCode, event);
     }
