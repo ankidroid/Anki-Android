@@ -48,7 +48,7 @@ import static org.robolectric.Shadows.shadowOf;
 @LooperMode(LooperMode.Mode.PAUSED)
 public class CardTemplateEditorTest extends RobolectricTest {
 
-    private static int robolectricQuiesceMillis = 300;
+    private static int robolectricQuiesceMillis = 500;
 
     @Test
     @SuppressWarnings("PMD.NPathComplexity")
@@ -149,6 +149,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         ActivityController templateEditorController = Robolectric.buildActivity(NonPagingCardTemplateEditor.class, intent).create().start().resume().visible();
         CardTemplateEditor testEditor = (CardTemplateEditor)templateEditorController.get();
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
+        Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());
 
         // Try to delete the template - click delete, click confirm for card delete, click confirm again for full sync
         ShadowActivity shadowTestEditor = shadowOf(testEditor);
@@ -160,6 +161,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         try { Thread.sleep(robolectricQuiesceMillis); } catch (Exception e) { Timber.e(e); }
         shadowOf(getMainLooper()).idle();
         Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
+        Assert.assertEquals("Model should have 1 template now", 1, testEditor.getTempModel().getTemplateCount());
 
         // Try to delete the template again, but there's only one
         shadowTestEditor.clickMenuItem(R.id.action_delete);
@@ -214,6 +216,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         //Assert.assertEquals("Wrong dialog shown?", "This will create NN cards. Proceed?", getDialogText());
         //clickDialogButton(DialogAction.POSITIVE);
         Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
+        Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());
 
         // Make sure we pass the new template to the Previewer
         shadowTestEditor.clickMenuItem(R.id.action_preview);
@@ -265,6 +268,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         ActivityController templateEditorController = Robolectric.buildActivity(NonPagingCardTemplateEditor.class, intent).create().start().resume().visible();
         CardTemplateEditor testEditor = (CardTemplateEditor)templateEditorController.get();
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
+        Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());
 
         // Try to delete Card 1 template - click delete, check confirm for card delete popup indicating it was possible, then dismiss it
         ShadowActivity shadowTestEditor = shadowOf(testEditor);
