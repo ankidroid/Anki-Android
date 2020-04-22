@@ -47,6 +47,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
+import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
@@ -296,6 +297,7 @@ public class CardTemplateEditor extends AnkiActivity {
 
     // Testing Android apps is hard, and pager adapters in fragments is nearly impossible.
     // In order to make this object testable we have to allow for some plumbing pass through
+    @VisibleForTesting
     protected TemplatePagerAdapter getNewTemplatePagerAdapter(FragmentManager fm) {
         return new TemplatePagerAdapter(fm);
     }
@@ -378,7 +380,7 @@ public class CardTemplateEditor extends AnkiActivity {
             final int position = getArguments().getInt("position");
             TemporaryModel tempModel = mTemplateEditor.getTempModel();
             // Load template
-            final JSONObject template = mTemplateEditor.getTempModel().getTemplate(position);
+            final JSONObject template = tempModel.getTemplate(position);
             // Load EditText Views
             mFront = ((EditText) mainView.findViewById(R.id.front_edit));
             mCss = ((EditText) mainView.findViewById(R.id.styling_edit));
@@ -438,6 +440,10 @@ public class CardTemplateEditor extends AnkiActivity {
             if (mTemplateEditor.getTempModel().getModel().getInt("type") == Consts.MODEL_CLOZE) {
                 Timber.d("Editing cloze model, disabling add/delete card template functionality");
                 menu.findItem(R.id.action_add).setVisible(false);
+            }
+
+            // It is invalid to delete if there is only one card template, remove the option from UI
+            if (mTemplateEditor.getTempModel().getTemplateCount() < 2) {
                 menu.findItem(R.id.action_delete).setVisible(false);
             }
 
@@ -463,28 +469,12 @@ public class CardTemplateEditor extends AnkiActivity {
                     final JSONObject template = tempModel.getTemplate(position);
                     // Don't do anything if only one template
                     if (tempModel.getTemplateCount() < 2) {
-                        UIUtils.showThemedToast(mTemplateEditor, res.getString(R.string.card_template_editor_cant_delete), false);
+                        mTemplateEditor.showSimpleMessageDialog(res.getString(R.string.card_template_editor_cant_delete));
                         return true;
                     }
 
-                    // For existing templates, make sure we won't leave orphaned notes if we delete the template
-                    //
-                    // Note: we are in-memory, so the database is unaware of previous but unsaved deletes.
-                    // If it we were deleting a template we just added, we don't care. If not, then for every
-                    // template delete queued up, we check the database to see if this delete in combo with any other
-                    // pending deletes could orphan cards
-                    if (!tempModel.isTemplatePendingAdd(position)) {
-                        int[] currentDeletes = tempModel.getDeleteDbOrds(position);
-                        // TODO - this is a SQL query on GUI thread - should see a DeckTask conversion ideally
-                        if (col.getModels().getCardIdsForModel(tempModel.getModelId(), currentDeletes) == null) {
-
-                            // It is possible but unlikely that a user has an in-memory template addition that would
-                            // generate cards making the deletion safe, but we don't handle that. All users who do
-                            // not already have cards generated making it safe will see this error message:
-                            String message = getResources().getString(R.string.card_template_editor_would_delete_note);
-                            UIUtils.showThemedToast(mTemplateEditor, message, false);
-                            return true;
-                        }
+                    if (deletionWouldOrphanNote(col, tempModel, position)) {
+                        return true;
                     }
 
                     // Show confirmation dialog
@@ -556,6 +546,29 @@ public class CardTemplateEditor extends AnkiActivity {
         private int getCurrentCardTemplateIndex() {
             //COULD_BE_BETTER: Lots of duplicate code could call this. Hold off on the refactor until #5151 goes in.
             return getArguments().getInt("position");
+        }
+
+
+        private boolean deletionWouldOrphanNote(Collection col, TemporaryModel tempModel, int position) {
+            // For existing templates, make sure we won't leave orphaned notes if we delete the template
+            //
+            // Note: we are in-memory, so the database is unaware of previous but unsaved deletes.
+            // If we were deleting a template we just added, we don't care. If not, then for every
+            // template delete queued up, we check the database to see if this delete in combo with any other
+            // pending deletes could orphan cards
+            if (!tempModel.isTemplatePendingAdd(position)) {
+                int[] currentDeletes = tempModel.getDeleteDbOrds(position);
+                // TODO - this is a SQL query on GUI thread - should see a DeckTask conversion ideally
+                if (col.getModels().getCardIdsForModel(tempModel.getModelId(), currentDeletes) == null) {
+
+                    // It is possible but unlikely that a user has an in-memory template addition that would
+                    // generate cards making the deletion safe, but we don't handle that. All users who do
+                    // not already have cards generated making it safe will see this error message:
+                    mTemplateEditor.showSimpleMessageDialog(getResources().getString(R.string.card_template_editor_would_delete_note));
+                    return true;
+                }
+            }
+            return false;
         }
 
 

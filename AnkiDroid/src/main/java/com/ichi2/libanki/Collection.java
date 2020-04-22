@@ -841,6 +841,7 @@ public class Collection {
     // This contains the original libanki implementation of _newCard, with the added parameter that
     // you pass the Card object in. This allows you to work on 'Card' subclasses that may not have
     // actual backing store (for instance, if you are previewing unsaved changes on templates)
+    // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
     public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         long nid = note.getId();
         int ord = -1;

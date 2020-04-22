@@ -28,13 +28,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import timber.log.Timber;
 
 import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 
@@ -45,7 +43,7 @@ public class TemporaryModel {
     public static final String INTENT_MODEL_FILENAME = "editedModelFilename";
     private ArrayList<Object[]> mTemplateChanges = new ArrayList<>();
     private String mEditedModelFileName = null;
-    private JSONObject mEditedModel;
+    private final @NonNull JSONObject mEditedModel;
 
 
     public TemporaryModel(JSONObject model) {
@@ -185,7 +183,7 @@ public class TemporaryModel {
         try (ByteArrayOutputStream target = new ByteArrayOutputStream()) {
             CompatHelper.getCompat().copyFile(tempModelFileName, target);
             return new JSONObject(target.toString());
-        } catch (IOException | JSONException e) {
+        } catch (Exception e) {
             Timber.e(e, "Unable to read+parse tempModel from file %s", tempModelFileName);
             return null;
         }
@@ -297,7 +295,7 @@ public class TemporaryModel {
         Timber.d("getDeleteDbOrds()");
 
         // array containing the original / db-relative ordinals for all pending deletes plus the proposed one
-        int[] deletedDbOrds = new int[0];
+        ArrayList<Integer> deletedDbOrds = new ArrayList<>();
 
         // For each entry in the changes list - and the proposed delete - scan for deletes to get original ordinal
         for (int i = 0; i <= mTemplateChanges.size(); i++) {
@@ -327,12 +325,15 @@ public class TemporaryModel {
             }
 
             // We know how many times ordinals smaller than the current were deleted so we have the total adjustment
-            // Save this pending delete into an expanded array at it's original / db-relative position
-            deletedDbOrds = Arrays.copyOf(deletedDbOrds, deletedDbOrds.length + 1);
-            deletedDbOrds[deletedDbOrds.length-1] = (int)currentChange[0] + ordinalAdjustment;
+            // Save this pending delete at it's original / db-relative position
+            deletedDbOrds.add((int)currentChange[0] + ordinalAdjustment);
         }
 
-        return deletedDbOrds;
+        int[] deletedDbOrdInts = new int[deletedDbOrds.size()];
+        for (int i = 0; i < deletedDbOrdInts.length; i++) {
+            deletedDbOrdInts[i] = (deletedDbOrds.get(i));
+        }
+        return deletedDbOrdInts;
     }
 
 
