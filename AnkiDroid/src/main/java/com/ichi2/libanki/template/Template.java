@@ -118,31 +118,32 @@ public class Template {
      * Expands sections.
      */
     private String render_sections(String template, Map<String, String> context) {
-        while (true) {
-            Matcher match = sSection_re.matcher(template);
-            if (!match.find()) {
-                break;
-            }
-
+        StringBuffer sb = new StringBuffer();
+        Matcher match = sSection_re.matcher(template);
+        while (match.find()) {
             String section = match.group(0);
             String section_name = match.group(1);
             String inner = match.group(2);
             section_name = section_name.trim();
             String it = get_or_attr(context, section_name, null);
             String replacer = "";
-            if (!TextUtils.isEmpty(it)) {
+            boolean field_is_empty = TextUtils.isEmpty(it);
+
+            if (!field_is_empty) {
                 it = Utils.stripHTMLMedia(it).trim();
             }
-            if (!TextUtils.isEmpty(it)) {
+            field_is_empty = TextUtils.isEmpty(it);
+            if (!field_is_empty) {
                 if (section.charAt(2) != '^') {
-                    replacer = inner;
+                    replacer = render_sections(inner, context);
                 }
-            } else if (TextUtils.isEmpty(it) && section.charAt(2) == '^') {
-                replacer = inner;
+            } else if (field_is_empty && section.charAt(2) == '^') {
+                replacer = render_sections(inner, context);
             }
-            template = template.replace(section, replacer);
+            match.appendReplacement(sb, Matcher.quoteReplacement(replacer));
         }
-        return template;
+        match.appendTail(sb);
+        return sb.toString();
     }
 
 
