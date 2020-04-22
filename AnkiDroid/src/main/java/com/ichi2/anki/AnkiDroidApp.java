@@ -228,8 +228,6 @@ public class AnkiDroidApp extends Application {
             UsageAnalytics.setDryRun(true);
         }
 
-        WebViewDebugging.initializeDebugging(preferences);
-
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         NotificationChannels.setup(getApplicationContext());
 
