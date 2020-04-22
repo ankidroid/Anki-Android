@@ -128,22 +128,7 @@ public class Template {
             String section_name = match.group(1);
             String inner = match.group(2);
             section_name = section_name.trim();
-            String it;
-
-            // check for cloze
-            Matcher m = fClozeSection.matcher(section_name);
-            if (m.find()) {
-                // get full field text
-                String txt = get_or_attr(context, m.group(2), null);
-                Matcher mm = Pattern.compile(String.format(clozeReg, m.group(1))).matcher(txt);
-                if (mm.find()) {
-                    it = mm.group(1);
-                } else {
-                    it = null;
-                }
-            } else {
-                it = get_or_attr(context, section_name, null);
-            }
+            String it = get_or_attr(context, section_name, null);
             String replacer = "";
             if (!TextUtils.isEmpty(it)) {
                 it = Utils.stripHTMLMedia(it).trim();
