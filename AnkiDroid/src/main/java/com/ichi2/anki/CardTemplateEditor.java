@@ -47,7 +47,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
-import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
@@ -674,7 +673,6 @@ public class CardTemplateEditor extends AnkiActivity {
         }
 
         /**
-         * Launch background task to delete tmpl from model
          * @param tmpl template to remove
          * @param model model to remove from
          */

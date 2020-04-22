@@ -121,7 +121,6 @@ public class TemporaryModel {
     public void addNewTemplate(JSONObject newTemplate) {
         Timber.d("addNewTemplate()");
         addTemplateChange(ChangeType.ADD, newTemplate.getInt("ord"));
-        mEditedModel.getJSONArray("tmpls").put(newTemplate);
     }
 
 
