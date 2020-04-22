@@ -160,6 +160,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     public static final int EASE_4 = 4;
 
     /** Maximum time in milliseconds to wait before accepting answer button presses. */
+    @VisibleForTesting
     protected static final int DOUBLE_TAP_IGNORE_THRESHOLD = 200;
 
     /** Time to wait in milliseconds before resuming fullscreen mode **/
@@ -284,6 +285,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * A record of the last time the "show answer" or ease buttons were pressed. We keep track
      * of this time to ignore accidental button presses.
      */
+    @VisibleForTesting
     protected long mLastClickTime;
 
     /**

@@ -32,7 +32,6 @@ import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.LooperMode;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowIntent;
-import org.robolectric.shadows.ShadowToast;
 
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
@@ -162,13 +161,13 @@ public class CardTemplateEditorTest extends RobolectricTest {
         shadowOf(getMainLooper()).idle();
         Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
 
-        // Try to delete the template again, but there's only one so we should toast
+        // Try to delete the template again, but there's only one
         shadowTestEditor.clickMenuItem(R.id.action_delete);
         try { Thread.sleep(robolectricQuiesceMillis); } catch (Exception e) { Timber.e(e); }
         shadowOf(getMainLooper()).idle();
-        Assert.assertEquals("Did not show toast about deleting only card?",
+        Assert.assertEquals("Did not show dialog about deleting only card?",
                 getResourceString(R.string.card_template_editor_cant_delete),
-                ShadowToast.getTextOfLatestToast());
+                getDialogText());
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
 
         // Related to Robolectric ViewPager support, see below
@@ -297,18 +296,18 @@ public class CardTemplateEditorTest extends RobolectricTest {
         }
         Assert.assertEquals("selective generation should result in one card", 1, cardCount);
 
-        // Try to delete the template again, but there's selective generation means it would orphan the note so we should toast
+        // Try to delete the template again, but there's selective generation means it would orphan the note
         shadowTestEditor.clickMenuItem(R.id.action_delete);
         try { Thread.sleep(robolectricQuiesceMillis); } catch (Exception e) { Timber.e(e); }
         shadowOf(getMainLooper()).idle();
-        Assert.assertEquals("Did not show toast about deleting only card?",
+        Assert.assertEquals("Did not show dialog about deleting only card?",
                 getResourceString(R.string.card_template_editor_would_delete_note),
-                ShadowToast.getTextOfLatestToast());
+                getDialogText());
         Assert.assertNull("Can delete used template?", getCol().getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
 
         // Assert can delete 'Card 2'
-        Assert.assertNotNull("Can delete unused template?", getCol().getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
+        Assert.assertNotNull("Cannot delete unused template?", getCol().getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
 
         // Edit note to have Add Reverse set to 'y'
         selectiveGeneratedNote.setField(2, "y");

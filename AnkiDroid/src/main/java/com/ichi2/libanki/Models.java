@@ -267,7 +267,7 @@ public class Models {
 
 
     /** get model with ID, or null. */
-    public JSONObject get(long id) {
+    public @Nullable JSONObject get(long id) {
         if (mModels.containsKey(id)) {
             return mModels.get(id);
         } else {
@@ -774,8 +774,12 @@ public class Models {
 
     /**
      * Extracted from remTemplate so we can test if removing templates is safe without actually removing them
-     * Verifies all notes with these templates have at least two cards, to guard against creating orphaned notes
-     * @return null if not safe, long[] of card ids to delete if it is safe
+     * This method will either give you all the card ids for the ordinals sent in related to the model sent in *or*
+     * it will return null if the result of deleting the ordinals is unsafe because it would leave notes with no cards
+     *
+     * @param modelId long id of the JSON model
+     * @param ords array of ints, each one is the ordinal a the card template in the given model
+     * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
     public @Nullable long[] getCardIdsForModel(long modelId, int[] ords) {
         String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = " +
@@ -785,14 +789,13 @@ public class Models {
         Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.length, modelId, Utils.ids2str(ords));
 
         // all notes with this template must have at least two cards, or we could end up creating orphaned notes
-        String noteCountPreDeleteSql = "select count() from notes where mid = " + modelId;
-        int preDeleteNoteCount = mCol.getDb().queryScalar(noteCountPreDeleteSql);
+        String noteCountPreDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?)";
+        int preDeleteNoteCount = mCol.getDb().queryScalar(noteCountPreDeleteSql, new Long[] {modelId});
         Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql);
         Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount);
-        // FIXME not sure about this one - want to make sure I only count notes, but link them correctly
-        String noteCountPostDeleteSql = "select count(n.id) from cards c, notes n where c.nid=n.id and n.mid = " + modelId + " and c.id not in (" + cardIdsToDeleteSql + ")";
+        String noteCountPostDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in " + Utils.ids2str(ords);
         Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql);
-        int postDeleteNoteCount = mCol.getDb().queryScalar(noteCountPostDeleteSql);
+        int postDeleteNoteCount = mCol.getDb().queryScalar(noteCountPostDeleteSql, new Long[] {modelId});
         Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount);
 
         if (preDeleteNoteCount != postDeleteNoteCount) {
