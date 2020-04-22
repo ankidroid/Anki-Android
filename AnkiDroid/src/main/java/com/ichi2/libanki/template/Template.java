@@ -107,11 +107,10 @@ public class Template {
         String otag = Pattern.quote(sOtag);
         String ctag = Pattern.quote(sCtag);
 
-        String section = String.format(Locale.US,
-                "%s[\\#|^]([^\\}]*)%s(.+?)%s/\\1%s", otag, ctag, otag, ctag);
+        String section = otag + "[\\#|^]([^\\}]*)" + ctag + "(.+?)" + otag + "/\\1" + ctag;
         sSection_re = Pattern.compile(section, Pattern.MULTILINE | Pattern.DOTALL);
 
-        String tag = String.format(Locale.US, "%s(#|=|&|!|>|\\{)?(.+?)\\1?%s+", otag, ctag);
+        String tag = otag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + ctag + "+";
         sTag_re = Pattern.compile(tag);
     }
 
