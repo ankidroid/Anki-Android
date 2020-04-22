@@ -166,13 +166,9 @@ public class Template {
      * Renders all the tags in a template for a context.
      */
     private String render_tags(String template, Map<String, String> context) {
-        while (true) {
-            Matcher match = sTag_re.matcher(template);
-            if (!match.find()) {
-                break;
-            }
-
-            String tag = match.group(0);
+        StringBuffer sb = new StringBuffer();
+        Matcher match = sTag_re.matcher(template);
+        while (match.find()) {
             String tag_type = match.group(1);
             String tag_name = match.group(2).trim();
             String replacement;
@@ -187,9 +183,10 @@ public class Template {
             } else {
                 return "{{invalid template}}";
             }
-            template = template.replace(tag, replacement);
+            match.appendReplacement(sb, Matcher.quoteReplacement(replacement));
         }
-        return template;
+        match.appendTail(sb);
+        return sb.toString();
     }
 
     /**
