@@ -621,7 +621,10 @@ public class CardTemplateEditor extends AnkiActivity {
             } catch (ConfirmModSchemaException e) {
                 ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                Runnable confirm = () -> deleteTemplate(tmpl, model);
+                Runnable confirm = () -> {
+                    mTemplateEditor.getCol().modSchemaNoCheck();
+                    deleteTemplate(tmpl, model);
+                };
                 Runnable cancel = () -> mTemplateEditor.dismissAllDialogFragments();
                 d.setConfirm(confirm);
                 d.setCancel(cancel);
@@ -667,7 +670,10 @@ public class CardTemplateEditor extends AnkiActivity {
             } catch (ConfirmModSchemaException e) {
                 ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                Runnable confirm = () -> addNewTemplate(model);
+                Runnable confirm = () -> {
+                    mTemplateEditor.getCol().modSchemaNoCheck();
+                    addNewTemplate(model);
+                };
                 d.setConfirm(confirm);
                 mTemplateEditor.showDialogFragment(d);
             }
