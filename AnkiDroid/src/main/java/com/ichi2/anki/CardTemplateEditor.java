@@ -18,7 +18,6 @@
 
 package com.ichi2.anki;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -40,7 +39,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -52,6 +50,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Models;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.SlidingTabLayout;
 
 import com.ichi2.utils.JSONArray;
@@ -84,35 +83,6 @@ public class CardTemplateEditor extends AnkiActivity {
     // Listeners
     // ----------------------------------------------------------------------------
 
-    /* Used for updating the collection when a reverse card is added or a template is deleted */
-    private CollectionTask.TaskListener mAddRemoveTemplateHandler = new CollectionTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-        @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
-            hideProgressBar();
-            if (result.getBoolean()) {
-                // Refresh the GUI -- setting the last template as the active tab
-                selectTemplate(getCol().getModels().get(mModelId).getJSONArray("tmpls").length());
-            } else if (result.getString() != null && "removeTemplateFailed".equals(result.getString())) {
-                // Failed to remove template
-                String message = getResources().getString(R.string.card_template_editor_would_delete_note);
-                UIUtils.showThemedToast(CardTemplateEditor.this, message, false);
-            } else {
-                // RuntimeException occurred
-                setResult(RESULT_CANCELED);
-                finishWithoutAnimation();
-            }
-        }
-
-        @Override
-        public void onCancelled() {
-            hideProgressBar();
-        }
-    };
 
 
     // ----------------------------------------------------------------------------
@@ -178,20 +148,6 @@ public class CardTemplateEditor extends AnkiActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public void showProgressBar() {
-        super.showProgressBar();
-        findViewById(R.id.progress_description).setVisibility(View.VISIBLE);
-        findViewById(R.id.fragment_parent).setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void hideProgressBar() {
-        super.hideProgressBar();
-        findViewById(R.id.progress_description).setVisibility(View.INVISIBLE);
-        findViewById(R.id.fragment_parent).setVisibility(View.VISIBLE);
     }
 
     /**
@@ -605,15 +561,18 @@ public class CardTemplateEditor extends AnkiActivity {
 
         /* Used for updating the collection when a model has been edited */
         private CollectionTask.TaskListener mSaveModelAndExitHandler = new CollectionTask.TaskListener() {
+            private MaterialDialog mProgressDialog = null;
             @Override
             public void onPreExecute() {
-                mTemplateEditor.showProgressBar();
-                final InputMethodManager imm = (InputMethodManager) mTemplateEditor.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                mProgressDialog = StyledProgressDialog.show(mTemplateEditor, AnkiDroidApp.getAppResources().getString(R.string.saving_model),
+                        getResources().getString(R.string.saving_changes), false);
             }
 
             @Override
             public void onPostExecute(CollectionTask.TaskData result) {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                }
                 mTemplateEditor.mTempModel = null;
                 if (result.getBoolean()) {
                     mTemplateEditor.finishWithAnimation(ActivityTransitionAnimation.RIGHT);
