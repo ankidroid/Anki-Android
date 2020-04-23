@@ -73,6 +73,7 @@ public class AbstractFlashcardViewerKeyboardInputTest {
 
 
         public static KeyboardInputTestCardViewer create() {
+            AbstractFlashcardViewer.sDisplayAnswer = false;
             return new KeyboardInputTestCardViewer();
         }
 
@@ -102,7 +103,9 @@ public class AbstractFlashcardViewerKeyboardInputTest {
                 Timber.e(e);
             }
         }
-        @Override protected void setTitle() { }
+        @Override protected void setTitle() {
+            //required for interface. Intentionally left blank
+        }
 
 
         public void focusTextField() {

@@ -796,11 +796,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected int mPrefWaitQuestionSecond;
 
     protected int getDefaultEase() {
-        if (getCol().getSched().answerButtons(mCurrentCard) == 4) {
+        if (getAnswerButtonCount() == 4) {
             return EASE_3;
         } else {
             return EASE_2;
         }
+    }
+
+
+    protected int getAnswerButtonCount() {
+        return getCol().getSched().answerButtons(mCurrentCard);
     }
 
 
