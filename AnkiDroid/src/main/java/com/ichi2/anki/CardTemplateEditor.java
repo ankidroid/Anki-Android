@@ -442,14 +442,12 @@ public class CardTemplateEditor extends AnkiActivity {
                     // Create intent for the previewer and add some arguments
                     Intent i = new Intent(mTemplateEditor, CardTemplatePreviewer.class);
                     int pos = getArguments().getInt("position");
-                    if (getArguments().getLong("noteId") != -1L && pos <
-                            col.getNote(getArguments().getLong("noteId")).cards().size()) {
-                        // Give the card ID if we started from an actual note and it has a card generated in this pos
-                        i.putExtra("cardList", new long[] { col.getNote(getArguments().getLong("noteId")).cards().get(pos).getId() });
-                        i.putExtra("index", 0);
-                    } else {
-                        // Otherwise send the template index but no cardList, and Previewer will show a blank to preview formatting
-                        i.putExtra("index", pos);
+                    long noteId = getArguments().getLong("noteId");
+                    i.putExtra("index", pos);
+
+                    // If we have a card for this position, send it, otherwise an empty cardlist signals to show a blank
+                    if (noteId != -1L && pos < col.getNote(noteId).cards().size()) {
+                        i.putExtra("cardList", new long[] { col.getNote(noteId).cards().get(pos).getId() });
                     }
                     // Save the model and pass the filename if updated
                     tempModel.setEditedModelFileName(TemporaryModel.saveTempModel(mTemplateEditor, tempModel.getModel()));
