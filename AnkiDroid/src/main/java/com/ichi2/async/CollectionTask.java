@@ -1420,38 +1420,53 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         JSONArray oldTemplates = oldModel.getJSONArray("tmpls");
         JSONArray newTemplates = model.getJSONArray("tmpls");
 
-        // Template add/deletes always arrive all deletes first, to be processed in order
-        // After that since templates can't be repositioned, any "extra" templates in newTemplates must be adds
-        for (Object[] change : templateChanges) {
-            switch ((TemporaryModel.ChangeType) change[1]) {
-                case ADD:
-                    Timber.d("doInBackgroundSaveModel() adding template %s", change[0]);
-                    try {
-                        col.getModels().addTemplate(oldModel, newTemplates.getJSONObject((int) change[0]));
-                    } catch (ConfirmModSchemaException e) {
-                        Timber.e("Unable to add template %s to model %s", change[0], model.getLong("id"));
-                        return new TaskData(false);
-                    }
-                    break;
-                case DELETE:
-                    Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0]);
-                    try {
-                        col.getModels().remTemplate(oldModel, oldTemplates.getJSONObject((int) change[0]));
-                    } catch (ConfirmModSchemaException e) {
-                        Timber.e("Unable to delete template %s from model %s", change[0], model.getLong("id"));
-                        return new TaskData(false);
-                    }
-                    break;
-                default:
-                    Timber.w("Unknown change type? %s", change[1]);
-                    break;
+        col.getDb().getDatabase().beginTransaction();
+
+        try {
+            // Template add/deletes always arrive all deletes first, to be processed in order
+            // After that since templates can't be repositioned, any "extra" templates in newTemplates must be adds
+            for (Object[] change : templateChanges) {
+                switch ((TemporaryModel.ChangeType) change[1]) {
+                    case ADD:
+                        Timber.d("doInBackgroundSaveModel() adding template %s", change[0]);
+                        try {
+                            col.getModels().addTemplate(oldModel, newTemplates.getJSONObject((int) change[0]));
+                        } catch (Exception e) {
+                            Timber.e(e, "Unable to add template %s to model %s", change[0], model.getLong("id"));
+                            return new TaskData(e.getLocalizedMessage(), false);
+                        }
+                        break;
+                    case DELETE:
+                        Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0]);
+                        try {
+                            col.getModels().remTemplate(oldModel, oldTemplates.getJSONObject((int) change[0]));
+                        } catch (Exception e) {
+                            Timber.e(e, "Unable to delete template %s from model %s", change[0], model.getLong("id"));
+                            return new TaskData(e.getLocalizedMessage(), false);
+                        }
+                        break;
+                    default:
+                        Timber.w("Unknown change type? %s", change[1]);
+                        break;
+                }
+            }
+
+            col.getModels().save(model, true);
+            col.getModels().update(model);
+            col.reset();
+            col.save();
+            if (col.getDb().getDatabase().inTransaction()) {
+                col.getDb().getDatabase().setTransactionSuccessful();
+            } else {
+                Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot mark transaction successful.");
+            }
+        } finally {
+            if (col.getDb().getDatabase().inTransaction()) {
+                col.getDb().getDatabase().endTransaction();
+            } else {
+                Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot end transaction.");
             }
         }
-
-        col.getModels().save(model, true);
-        col.getModels().update(model);
-        col.reset();
-        col.save();
         return new TaskData(true);
     }
 

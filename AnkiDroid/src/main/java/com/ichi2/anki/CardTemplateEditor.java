@@ -460,6 +460,7 @@ public class CardTemplateEditor extends AnkiActivity {
                     if (modelHasChanged()) {
                         tempModel.saveToDatabase(mSaveModelAndExitHandler);
                     } else {
+                        Timber.d("CardTemplateEditor:: model has not changed, exiting");
                         mTemplateEditor.finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                     }
 
@@ -575,7 +576,8 @@ public class CardTemplateEditor extends AnkiActivity {
                 if (result.getBoolean()) {
                     mTemplateEditor.finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                 } else {
-                    // RuntimeException occurred
+                    Timber.w("CardTemplateEditor:: save model task failed: %s", result.getString());
+                    UIUtils.showThemedToast(mTemplateEditor, mTemplateEditor.getString(R.string.card_template_editor_save_error, result.getString()), false);
                     mTemplateEditor.finishWithoutAnimation();
                 }
             }
