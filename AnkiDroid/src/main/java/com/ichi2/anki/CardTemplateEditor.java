@@ -232,7 +232,7 @@ public class CardTemplateEditor extends AnkiActivity {
 
     /**
      * Refresh list of templates and select position
-     * @param idx index of template to select
+     * @param idx index of template to select - 0-based
      */
     public void selectTemplate(int idx) {
         // invalidate all existing fragments
@@ -652,7 +652,7 @@ public class CardTemplateEditor extends AnkiActivity {
             }
             model.put("tmpls", newTemplates);
             Models._updateTemplOrds(model);
-            mTemplateEditor.selectTemplate(model.length());
+            mTemplateEditor.selectTemplate(newTemplates.length() - 1);
 
             if (getActivity() != null) {
                 ((CardTemplateEditor) getActivity()).dismissAllDialogFragments();
@@ -706,7 +706,7 @@ public class CardTemplateEditor extends AnkiActivity {
             newTemplate.put("ord", lastExistingOrd + 1);
             templates.put(newTemplate);
             mTemplateEditor.getTempModel().addNewTemplate(newTemplate);
-            mTemplateEditor.selectTemplate(model.length());
+            mTemplateEditor.selectTemplate(templates.length() - 1);
         }
 
         /**
