@@ -35,6 +35,7 @@ import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
@@ -45,7 +46,9 @@ import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
 import timber.log.Timber;
 
+import static android.os.Looper.getMainLooper;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.robolectric.Shadows.shadowOf;
 
 public class RobolectricTest {
 
@@ -78,15 +81,38 @@ public class RobolectricTest {
     }
 
 
-    protected void clickDialogButton(DialogAction button) {
+    protected void clickDialogButton(DialogAction button, boolean checkDismissed) {
         MaterialDialog dialog = (MaterialDialog)ShadowDialog.getLatestDialog();
         dialog.getActionButton(button).performClick();
+        if (checkDismissed) {
+            Assert.assertTrue("Dialog not dismissed?", shadowOf(dialog).hasBeenDismissed());
+        }
     }
 
-
-    protected String getDialogText() {
+    /**
+     * Get the current dialog text. Will return null if no dialog visible *or* if you check for dismissed and it has been dismissed
+     *
+     * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
+     */
+    protected String getDialogText(boolean checkDismissed) {
         MaterialDialog dialog = (MaterialDialog)ShadowDialog.getLatestDialog();
-        return dialog == null || dialog.getContentView() == null ? null : dialog.getContentView().getText().toString();
+        if (dialog == null || dialog.getContentView() == null) {
+            return null;
+        }
+
+        if (shadowOf(dialog).hasBeenDismissed()) {
+            Timber.e("The latest dialog has already been dismissed.");
+            return null;
+        }
+
+        return dialog.getContentView().getText().toString();
+    }
+
+    // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
+    protected void advanceRobolectricLooper() {
+        shadowOf(getMainLooper()).idle();
+        try { Thread.sleep(500); } catch (Exception e) { Timber.e(e); }
+
     }
 
 
@@ -97,6 +123,10 @@ public class RobolectricTest {
 
     protected String getResourceString(int res) {
         return getTargetContext().getString(res);
+    }
+
+    protected String getQuantityString(int res, int quantity, Object... formatArgs) {
+        return getTargetContext().getResources().getQuantityString(res, quantity, formatArgs);
     }
 
 
