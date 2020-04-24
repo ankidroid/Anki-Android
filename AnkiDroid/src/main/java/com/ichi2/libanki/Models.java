@@ -746,17 +746,19 @@ public class Models {
         // the code in "isRemTemplateSafe" was in place here in libanki. It is extracted to a method for reuse
         long[] cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
         if (cids == null) {
+            Timber.d("remTemplate getCardIdsForModel determined it was unsafe to delete the template");
             return false;
         }
 
         // ok to proceed; remove cards
+        Timber.d("remTemplate proceeding to delete the template and %d cards", cids.length);
         mCol.modSchema();
         mCol.remCards(cids);
         // shift ordinals
         mCol.getDb()
             .execute(
                      "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
-                     new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id"), new int[]{ord} });
+                     new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id"), ord });
         JSONArray tmpls = m.getJSONArray("tmpls");
         JSONArray ja2 = new JSONArray();
         for (int i = 0; i < tmpls.length(); ++i) {
@@ -768,6 +770,7 @@ public class Models {
         m.put("tmpls", ja2);
         _updateTemplOrds(m);
         save(m);
+        Timber.d("remTemplate done working");
         return true;
     }
 
@@ -785,7 +788,7 @@ public class Models {
         String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = " +
                 modelId + " and c2.ord  in " + Utils.ids2str(ords);
         long[] cids = Utils.toPrimitive(mCol.getDb().queryColumn(Long.class, cardIdsToDeleteSql, 0));
-        Timber.d("cardIdsToDeleteSql was '" + cardIdsToDeleteSql + "' and got %s", Utils.ids2str(cids));
+        //Timber.d("cardIdsToDeleteSql was '" + cardIdsToDeleteSql + "' and got %s", Utils.ids2str(cids));
         Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.length, modelId, Utils.ids2str(ords));
 
         // all notes with this template must have at least two cards, or we could end up creating orphaned notes
