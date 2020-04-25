@@ -45,7 +45,7 @@ public class ReviewerKeyboardInputTest {
 
         underTest.handleUnicodeKeyPress('1');
 
-        assertThat("Answer should not be displayed", !underTest.isDisplayingAnswer());
+        assertThat("Answer should not be displayed", !underTest.didDisplayAnswer());
         assertThat("Answer should not be performed", !underTest.hasBeenAnswered());
     }
 
@@ -225,7 +225,7 @@ public class ReviewerKeyboardInputTest {
         underTest.handleSpacebar();
 
         assertThat("When text field is focused, space should not display answer",
-                !underTest.isDisplayingAnswer());
+                !underTest.didDisplayAnswer());
     }
 
     @Test
@@ -243,11 +243,11 @@ public class ReviewerKeyboardInputTest {
 
     private void assertGamepadButtonAnswers(int keycodeButton, int ease) {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingQuestion();
-        assertThat("Assume: Initially should not display answer", !underTest.isDisplayingAnswer());
+        assertThat("Assume: Initially should not display answer", !underTest.didDisplayAnswer());
 
         underTest.handleGamepadPress(keycodeButton);
 
-        assertThat("Initial button should display answer", underTest.isDisplayingAnswer());
+        assertThat("Initial button should display answer", underTest.didDisplayAnswer());
 
         underTest.displayAnswerForTest();
 
@@ -311,7 +311,7 @@ public class ReviewerKeyboardInputTest {
             mDisplayAnswer = true;
         }
 
-        public boolean isDisplayingAnswer() { return mDisplayAnswer; }
+        public boolean didDisplayAnswer() { return mDisplayAnswer; }
 
         public void handleUnicodeKeyPress(char unicodeChar) {
             KeyEvent key = mock(KeyEvent.class);

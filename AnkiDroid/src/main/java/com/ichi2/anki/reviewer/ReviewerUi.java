@@ -32,4 +32,6 @@ public interface ReviewerUi {
     }
     ControlBlock getControlBlocked();
     boolean isControlBlocked();
+
+    boolean isDisplayingAnswer();
 }

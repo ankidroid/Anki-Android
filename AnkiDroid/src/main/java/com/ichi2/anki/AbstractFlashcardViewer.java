@@ -3262,6 +3262,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return mControlBlocked;
     }
 
+    public boolean isDisplayingAnswer() {
+        return sDisplayAnswer;
+    }
 
     public boolean isControlBlocked() {
         return getControlBlocked() != ControlBlock.UNBLOCKED;
