@@ -459,6 +459,10 @@ public class CardTemplateEditor extends AnkiActivity {
                 case R.id.action_confirm:
                     Timber.i("CardTemplateEditor:: Save model button pressed");
                     if (modelHasChanged()) {
+                        View confirmButton = mTemplateEditor.findViewById(R.id.action_confirm);
+                        if (confirmButton != null) {
+                            confirmButton.setEnabled(false);
+                        }
                         tempModel.saveToDatabase(mSaveModelAndExitHandler);
                     } else {
                         Timber.d("CardTemplateEditor:: model has not changed, exiting");
@@ -564,12 +568,18 @@ public class CardTemplateEditor extends AnkiActivity {
             private MaterialDialog mProgressDialog = null;
             @Override
             public void onPreExecute() {
+                Timber.d("mSaveModelAndExitHandler::preExecute called");
                 mProgressDialog = StyledProgressDialog.show(mTemplateEditor, AnkiDroidApp.getAppResources().getString(R.string.saving_model),
                         getResources().getString(R.string.saving_changes), false);
             }
 
             @Override
             public void onPostExecute(CollectionTask.TaskData result) {
+                Timber.d("mSaveModelAndExitHandler::postExecute called");
+                View button = mTemplateEditor.findViewById(R.id.action_confirm);
+                if (button != null) {
+                    button.setEnabled(true);
+                }
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
