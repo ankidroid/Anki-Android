@@ -18,22 +18,44 @@ package com.ichi2.anki.reviewer;
 
 import android.view.KeyEvent;
 
-import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.cardviewer.ViewerCommand.CommandProcessor;
-import com.ichi2.anki.cardviewer.ViewerCommand.ViewerCommandDef;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer. */
 public class PeripheralKeymap {
 
-    private final CommandProcessor mCommandProcessor;
     private final ReviewerUi mReviewerUI;
+    private final KeyMap mAnswerKeyMap;
+    private final KeyMap mQuestionKeyMap;
 
+    private boolean mHasSetup = false;
 
     public PeripheralKeymap(ReviewerUi reviewerUi, CommandProcessor commandProcessor) {
         this.mReviewerUI = reviewerUi;
-        this.mCommandProcessor = commandProcessor;
+        this.mQuestionKeyMap = new KeyMap(commandProcessor);
+        this.mAnswerKeyMap = new KeyMap(commandProcessor);
     }
+
+    public void setup() {
+        List<PeripheralCommand> commands = PeripheralCommand.getDefaultCommands();
+
+        for (PeripheralCommand command : commands) {
+            //NOTE: Can be both
+            if (command.isQuestion()) {
+                mQuestionKeyMap.addCommand(command);
+            }
+            if (command.isAnswer()) {
+                mAnswerKeyMap.addCommand(command);
+            }
+         }
+
+        mHasSetup = true;
+    }
+
 
     @SuppressWarnings("unused")
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -41,75 +63,69 @@ public class PeripheralKeymap {
     }
 
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        char keyPressed = (char) event.getUnicodeChar();
-
+        if (!mHasSetup) {
+            return false;
+        }
         if (mReviewerUI.isDisplayingAnswer()) {
-            if (keyPressed == '1' || keyCode == KeyEvent.KEYCODE_BUTTON_Y) {
-                executeCommand(ViewerCommand.COMMAND_ANSWER_FIRST_BUTTON);
-                return true;
-            }
-            if (keyPressed == '2' || keyCode == KeyEvent.KEYCODE_BUTTON_X) {
-                executeCommand(ViewerCommand.COMMAND_ANSWER_SECOND_BUTTON);
-                return true;
-            }
-            if (keyPressed == '3' || keyCode == KeyEvent.KEYCODE_BUTTON_B) {
-                executeCommand(ViewerCommand.COMMAND_ANSWER_THIRD_BUTTON);
-                return true;
-            }
-            if (keyPressed == '4' || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
-                executeCommand(ViewerCommand.COMMAND_ANSWER_FOURTH_BUTTON);
-                return true;
-            }
-            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-                executeCommand(ViewerCommand.COMMAND_ANSWER_RECOMMENDED);
-                return true;
-            }
+            return mAnswerKeyMap.onKeyUp(keyCode, event);
         } else {
-            if (keyCode == KeyEvent.KEYCODE_BUTTON_Y || keyCode == KeyEvent.KEYCODE_BUTTON_X
-                    || keyCode == KeyEvent.KEYCODE_BUTTON_B || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
-                executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER);
-                return true;
-            }
+            return mQuestionKeyMap.onKeyUp(keyCode, event);
         }
-        if (keyPressed == 'e') {
-            executeCommand(ViewerCommand.COMMAND_EDIT);
-            return true;
-        }
-        if (keyPressed == '*') {
-            executeCommand(ViewerCommand.COMMAND_MARK);
-            return true;
-        }
-        if (keyPressed == '-') {
-            executeCommand(ViewerCommand.COMMAND_BURY_CARD);
-            return true;
-        }
-        if (keyPressed == '=') {
-            executeCommand(ViewerCommand.COMMAND_BURY_NOTE);
-            return true;
-        }
-        if (keyPressed == '@') {
-            executeCommand(ViewerCommand.COMMAND_SUSPEND_CARD);
-            return true;
-        }
-        if (keyPressed == '!') {
-            executeCommand(ViewerCommand.COMMAND_SUSPEND_NOTE);
-            return true;
-        }
-        if (keyPressed == 'r' || keyCode == KeyEvent.KEYCODE_F5) {
-            executeCommand(ViewerCommand.COMMAND_PLAY_MEDIA);
-            return true;
-        }
-
-        // different from Anki Desktop
-        if (keyPressed == 'z') {
-            executeCommand(ViewerCommand.COMMAND_UNDO);
-            return true;
-        }
-        return false;
     }
 
+    private static class KeyMap {
+        public HashMap<Integer, List<Integer>> mKeyCodeToCommand = new HashMap<>();
+        public HashMap<Integer, List<Integer>> mUnicodeToCommand = new HashMap<>();
+        private final CommandProcessor mProcessor;
 
-    private void executeCommand(@ViewerCommandDef int command) {
-        this.mCommandProcessor.executeCommand(command);
+        private KeyMap(CommandProcessor commandProcessor) {
+            this.mProcessor = commandProcessor;
+        }
+
+        public boolean onKeyUp(int keyCode, KeyEvent event) {
+            boolean ret = false;
+
+            {
+                List<Integer> a = mKeyCodeToCommand.get(keyCode);
+                if (a != null) {
+                    for (Integer command : a) {
+                        ret |= mProcessor.executeCommand(command);
+                    }
+                }
+            }
+            {
+                List<Integer> unicodeLookup = mUnicodeToCommand.get(event.getUnicodeChar());
+                if (unicodeLookup != null) {
+                    for (Integer command : unicodeLookup) {
+                        ret |= mProcessor.executeCommand(command);
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+
+        public void addCommand(PeripheralCommand command) {
+            //COULD_BE_BETTER: DefaultDict
+            if (command.getUnicodeCharacter() != null) {
+                //NB: Int is correct here, the value from KeyCode is an int.
+                int unicodeChar = command.getUnicodeCharacter();
+                if (!mUnicodeToCommand.containsKey(unicodeChar)) {
+                    mUnicodeToCommand.put(unicodeChar, new ArrayList<>());
+                }
+                //noinspection ConstantConditions
+                mUnicodeToCommand.get(unicodeChar).add(command.getCommand());
+            }
+
+            if (command.getKeycode() != null) {
+                Integer c = command.getKeycode();
+                if (!mKeyCodeToCommand.containsKey(c)) {
+                    mKeyCodeToCommand.put(c, new ArrayList<>());
+                }
+                //noinspection ConstantConditions
+                mKeyCodeToCommand.get(c).add(command.getCommand());
+            }
+        }
     }
 }

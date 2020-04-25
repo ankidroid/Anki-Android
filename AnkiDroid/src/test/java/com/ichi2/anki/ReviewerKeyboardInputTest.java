@@ -281,6 +281,7 @@ public class ReviewerKeyboardInputTest {
         public static KeyboardInputTestReviewer displayingAnswer() {
             KeyboardInputTestReviewer keyboardInputTestReviewer = new KeyboardInputTestReviewer();
             KeyboardInputTestReviewer.sDisplayAnswer = true;
+            keyboardInputTestReviewer.mProcessor.setup();
             return keyboardInputTestReviewer;
         }
 
@@ -288,6 +289,7 @@ public class ReviewerKeyboardInputTest {
         public static KeyboardInputTestReviewer displayingQuestion() {
             KeyboardInputTestReviewer keyboardInputTestReviewer = new KeyboardInputTestReviewer();
             KeyboardInputTestReviewer.sDisplayAnswer = false;
+            keyboardInputTestReviewer.mProcessor.setup();
             return keyboardInputTestReviewer;
         }
 
