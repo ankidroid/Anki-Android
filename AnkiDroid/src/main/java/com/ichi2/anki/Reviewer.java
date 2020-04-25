@@ -39,9 +39,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
+import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.compat.CompatHelper;
@@ -87,6 +87,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             return R.plurals.reset_cards_dialog_acknowledge;
         }
     };
+
+    private PeripheralKeymap mProcessor = new PeripheralKeymap(this,this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
     abstract class ScheduleCollectionTaskListener extends NextCardHandler {
@@ -503,71 +505,16 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return mProcessor.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        char keyPressed = (char) event.getUnicodeChar();
         if (answerFieldIsFocused()) {
             return super.onKeyUp(keyCode, event);
         }
-        if (sDisplayAnswer) {
-            if (keyPressed == '1' || keyCode == KeyEvent.KEYCODE_BUTTON_Y) {
-                executeCommand(ViewerCommand.COMMAND_ANSWER_FIRST_BUTTON);
-                return true;
-            }
-            if (keyPressed == '2' || keyCode == KeyEvent.KEYCODE_BUTTON_X) {
-                executeCommand(ViewerCommand.COMMAND_ANSWER_SECOND_BUTTON);
-                return true;
-            }
-            if (keyPressed == '3' || keyCode == KeyEvent.KEYCODE_BUTTON_B) {
-                executeCommand(ViewerCommand.COMMAND_ANSWER_THIRD_BUTTON);
-                return true;
-            }
-            if (keyPressed == '4' || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
-                executeCommand(ViewerCommand.COMMAND_ANSWER_FOURTH_BUTTON);
-                return true;
-            }
-            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-                executeCommand(ViewerCommand.COMMAND_ANSWER_RECOMMENDED);
-                return true;
-            }
-        } else {
-            if (keyCode == KeyEvent.KEYCODE_BUTTON_Y || keyCode == KeyEvent.KEYCODE_BUTTON_X
-                || keyCode == KeyEvent.KEYCODE_BUTTON_B || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
-                    executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER);
-                    return true;
-            }
-        }
-        if (keyPressed == 'e') {
-            executeCommand(ViewerCommand.COMMAND_EDIT);
-            return true;
-        }
-        if (keyPressed == '*') {
-            executeCommand(ViewerCommand.COMMAND_MARK);
-            return true;
-        }
-        if (keyPressed == '-') {
-            executeCommand(ViewerCommand.COMMAND_BURY_CARD);
-            return true;
-        }
-        if (keyPressed == '=') {
-            executeCommand(ViewerCommand.COMMAND_BURY_NOTE);
-            return true;
-        }
-        if (keyPressed == '@') {
-            executeCommand(ViewerCommand.COMMAND_SUSPEND_CARD);
-            return true;
-        }
-        if (keyPressed == '!') {
-            executeCommand(ViewerCommand.COMMAND_SUSPEND_NOTE);
-            return true;
-        }
-        if (keyPressed == 'r' || keyCode == KeyEvent.KEYCODE_F5) {
-            executeCommand(ViewerCommand.COMMAND_PLAY_MEDIA);
-            return true;
-        }
-
-        // different from Anki Desktop
-        if (keyPressed == 'z') {
-            executeCommand(ViewerCommand.COMMAND_UNDO);
+        if (mProcessor.onKeyUp(keyCode, event)) {
             return true;
         }
         return super.onKeyUp(keyCode, event);
