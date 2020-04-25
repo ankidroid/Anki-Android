@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
@@ -88,7 +89,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     };
 
-    private PeripheralKeymap mProcessor = new PeripheralKeymap(this,this);
+    @VisibleForTesting
+    protected PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
     abstract class ScheduleCollectionTaskListener extends NextCardHandler {
@@ -609,6 +611,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected SharedPreferences restorePreferences() {
         super.restorePreferences();
+        this.mProcessor.setup();
         //Is this line necessary? Can we not use the return value from the call to super?
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
