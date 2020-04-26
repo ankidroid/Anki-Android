@@ -1049,7 +1049,7 @@ public class SchedV2 extends AbstractSched {
     protected void _rescheduleAsRev(Card card, JSONObject conf, boolean early) {
         boolean lapse = (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING);
         if (lapse) {
-            _rescheduleGraduatingLapse(card);
+            _rescheduleGraduatingLapse(card, early);
         } else {
             _rescheduleNew(card, conf, early);
         }
@@ -1059,7 +1059,10 @@ public class SchedV2 extends AbstractSched {
         }
     }
 
-    private void _rescheduleGraduatingLapse(Card card) {
+    private void _rescheduleGraduatingLapse(Card card, boolean early) {
+        if (early) {
+            card.setIvl(card.getIvl() + 1);
+        }
         card.setDue(mToday + card.getIvl());
         card.setQueue(Consts.QUEUE_TYPE_REV);
         card.setType(Consts.CARD_TYPE_REV);
@@ -1109,7 +1112,8 @@ public class SchedV2 extends AbstractSched {
 
     private int _graduatingIvl(Card card, JSONObject conf, boolean early, boolean fuzz) {
         if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
-            return card.getIvl();
+            int bonus = early ? 1 : 0;
+            return card.getIvl() + bonus;
         }
         int ideal;
         JSONArray ja;
