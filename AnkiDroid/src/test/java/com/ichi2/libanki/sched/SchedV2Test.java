@@ -109,8 +109,7 @@ public class SchedV2Test extends RobolectricTest {
         assertThat("Again should pick the current step", one, is(1200L));      // 20 mins
         assertThat("Repeating single step - 20 minutes * 1.5", two, is(1800L));      // 30 mins
         assertThat("Good should take the reduced interval (25 * 0.7)", three, is(1468800L)); // 17 days
-        //TODO: the below is not complete
-        //assertThat("Easy should have a bonus day over good", four, is(1555200L));  // 18 days
+        assertThat("Easy should have a bonus day over good", four, is(1555200L));  // 18 days
     }
 
 
