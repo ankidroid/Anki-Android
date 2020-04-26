@@ -40,6 +40,8 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.Hooks;
 
+import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -60,6 +62,7 @@ import java.util.Locale;
 import java.util.Random;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -105,6 +108,8 @@ public class SchedV2 extends AbstractSched {
     // Not in libanki
     protected WeakReference<Activity> mContextReference;
 
+    // Not in libAnki.
+    private final Time mTime;
 
     /**
      * card types: 0=new, 1=lrn, 2=rev, 3=relrn
@@ -117,7 +122,15 @@ public class SchedV2 extends AbstractSched {
      */
 
     public SchedV2(Collection col) {
+        this(col, new SystemTime());
+    }
+
+    /** we need a constructor as the constructor performs work
+     * involving the dependency, so we can't use setter injection */
+    @VisibleForTesting
+    SchedV2(Collection col, Time time) {
         super();
+        this.mTime = time;
         mCol = col;
         mQueueLimit = 50;
         mReportLimit = 99999;
@@ -1833,13 +1846,13 @@ public class SchedV2 extends AbstractSched {
             rolloverTime = 24 + rolloverTime;
         }
         Calendar date = Calendar.getInstance();
-        date.setTime(new Date());
+        date.setTime(mTime.getCurrentDate());
         date.set(Calendar.HOUR_OF_DAY, rolloverTime);
         date.set(Calendar.MINUTE, 0);
         date.set(Calendar.SECOND, 0);
         date.set(Calendar.MILLISECOND, 0);
         Calendar today = Calendar.getInstance();
-        today.setTime(new Date());
+        today.setTime(mTime.getCurrentDate());
         if (date.before(today)) {
             date.add(Calendar.DAY_OF_MONTH, 1);
         }
@@ -1857,7 +1870,7 @@ public class SchedV2 extends AbstractSched {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
 
-        return (int) ((new Date().getTime() - c.getTimeInMillis()) / 1000) / 86400;
+        return (int) ((mTime.time() - c.getTimeInMillis()) / 1000) / 86400;
     }
 
 
