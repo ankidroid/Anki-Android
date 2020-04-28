@@ -25,6 +25,7 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
@@ -56,7 +57,11 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
         if (mEditedModelFileName != null) {
             Timber.d("onCreate() loading edited model from %s", mEditedModelFileName);
-            mEditedModel = TemporaryModel.getTempModel(mEditedModelFileName);
+            try {
+                mEditedModel = TemporaryModel.getTempModel(mEditedModelFileName);
+            } catch (IOException e) {
+                Timber.w(e, "Unable to load temp model from file %s", mEditedModelFileName);
+            }
         }
 
         if (mEditedModel != null && mIndex != -1) {

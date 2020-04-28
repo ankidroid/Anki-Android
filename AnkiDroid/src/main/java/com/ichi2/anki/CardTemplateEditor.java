@@ -515,7 +515,7 @@ public class CardTemplateEditor extends AnkiActivity {
             // If we were deleting a template we just added, we don't care. If not, then for every
             // template delete queued up, we check the database to see if this delete in combo with any other
             // pending deletes could orphan cards
-            if (!tempModel.isTemplatePendingAdd(position)) {
+            if (!TemporaryModel.isOrdinalPendingAdd(tempModel, position)) {
                 int[] currentDeletes = tempModel.getDeleteDbOrds(position);
                 // TODO - this is a SQL query on GUI thread - should see a DeckTask conversion ideally
                 if (col.getModels().getCardIdsForModel(tempModel.getModelId(), currentDeletes) == null) {

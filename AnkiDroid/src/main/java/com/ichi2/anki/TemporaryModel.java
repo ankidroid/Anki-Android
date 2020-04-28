@@ -36,7 +36,6 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.JSONObject;
 
 
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
 public class TemporaryModel {
 
     public enum ChangeType { ADD, DELETE }
@@ -46,23 +45,36 @@ public class TemporaryModel {
     private final @NonNull JSONObject mEditedModel;
 
 
-    public TemporaryModel(JSONObject model) {
+    public TemporaryModel(@NonNull JSONObject model) {
         Timber.d("Constructor called with model");
         mEditedModel = model;
     }
 
 
+    /**
+     * Load the TemporaryModel from the filename included in a Bundle
+     *
+     * @param bundle a Bundle that should contain persisted JSON under INTENT_MODEL_FILENAME key
+     * @return re-hydrated TemporaryModel or null if there was a problem, null means should reload from database
+     */
     public static TemporaryModel fromBundle(Bundle bundle) {
         String mEditedModelFileName = bundle.getString(INTENT_MODEL_FILENAME);
         // Bundle.getString is @Nullable, so we have to check.
-        // If we return null then onCollectionLoaded() just will load original from database
         if (mEditedModelFileName == null) {
             Timber.d("fromBundle() - model file name under key %s", INTENT_MODEL_FILENAME);
             return null;
         }
 
         Timber.d("onCreate() loading saved model file %s", mEditedModelFileName);
-        TemporaryModel model = new TemporaryModel((getTempModel(mEditedModelFileName)));
+        JSONObject tempModelJSON;
+        try {
+            tempModelJSON = getTempModel((mEditedModelFileName));
+        } catch (IOException e) {
+            Timber.w(e, "Unable to load saved model file");
+            return null;
+        }
+
+        TemporaryModel model = new TemporaryModel(tempModelJSON);
         model.loadTemplateChanges(bundle);
         return model;
     }
@@ -132,8 +144,9 @@ public class TemporaryModel {
 
     public void saveToDatabase(CollectionTask.TaskListener listener) {
         Timber.d("saveToDatabase() called");
+        dumpChanges();
         TemporaryModel.clearTempModelFiles();
-        CollectionTask.TaskData args = new CollectionTask.TaskData(new Object[] {mEditedModel, getTemplateChanges()});
+        CollectionTask.TaskData args = new CollectionTask.TaskData(new Object[] {mEditedModel, getAdjustedTemplateChanges()});
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_SAVE_MODEL, listener, args);
 
     }
@@ -177,14 +190,14 @@ public class TemporaryModel {
      * Get the model temporarily saved into the file represented by the given path
      * @return JSONObject holding the model, or null if there was a problem
      */
-    public static @Nullable JSONObject getTempModel(@NonNull String tempModelFileName) {
+    public static JSONObject getTempModel(@NonNull String tempModelFileName) throws IOException {
         Timber.d("getTempModel() fetching tempModel %s", tempModelFileName);
         try (ByteArrayOutputStream target = new ByteArrayOutputStream()) {
             CompatHelper.getCompat().copyFile(tempModelFileName, target);
             return new JSONObject(target.toString());
-        } catch (Exception e) {
+        } catch (IOException e) {
             Timber.e(e, "Unable to read+parse tempModel from file %s", tempModelFileName);
-            return null;
+            throw e;
         }
     }
 
@@ -248,38 +261,68 @@ public class TemporaryModel {
 
         Timber.d("addTemplateChange() added ord/type: %s/%s", change[0], change[1]);
         mTemplateChanges.add(change);
+        dumpChanges();
     }
 
+    /**
+     * Check if the given ordinal from the current UI state (which includes all pending changes) is a pending add
+     *
+     * @param ord int representing an ordinal in the model, that might be an unsaved addition
+     * @return boolean true if it is a pending addition from this editing session
+     */
+    public static boolean isOrdinalPendingAdd(TemporaryModel model, int ord) {
+        for (int i = 0; i < model.getTemplateChanges().size(); i++) {
+            Object[] change = model.getTemplateChanges().get(i);
+            int adjustedOrdinal = isChangePendingAdd(model, i);
+            if (adjustedOrdinal == ord) {
+                Timber.d("isOrdinalPendingAdd() found ord %s was pending add (would adjust to %s)", ord, adjustedOrdinal);
+                return true;
+            }
+        }
+
+        Timber.d("isOrdinalPendingAdd() ord %s is not a pending add", ord);
+        return false;
+    }
 
     /**
-     * Check if the given ordinal is an addition from this editing session (and thus is not in the database)
-     * @param ord the ordinal to check
-     * @return boolean true if the given ordinal was added this session (and is not in the database yet)
+     * Check if the change at the given index in the changes array is an addition from this editing session
+     * (and thus is not in the database yet, and possibly needing ordinal adjustment from subsequent deletes)
+     * @param changesIndex the index of the template in the changes array
+     * @return either ordinal adjusted by any pending deletes if it is a pending add, or -1 if the ordinal is not an add
      */
-    public boolean isTemplatePendingAdd(int ord) {
+    public static int isChangePendingAdd(TemporaryModel model, int changesIndex) {
+        if (changesIndex >= model.getTemplateChanges().size()) {
+            return -1;
+        }
         int ordinalAdjustment = 0;
-        for (int i = mTemplateChanges.size() - 1; i >= 0; i--) {
-            Object[] oldChange = mTemplateChanges.get(i);
+        Object[] change = model.getTemplateChanges().get(changesIndex);
+        int changeOrdinal =  (Integer) change[0];
+
+        for (int i = model.getTemplateChanges().size() - 1; i >= changesIndex; i--) {
+            Object[] oldChange = model.getTemplateChanges().get(i);
             switch ((ChangeType) oldChange[1]) {
                 case DELETE: {
                     // Deleting an ordinal at or below us? Adjust our comparison basis...
-                    if ((Integer) oldChange[0] - ordinalAdjustment <= ord) {
+                    if ((Integer) oldChange[0] - ordinalAdjustment <= changeOrdinal) {
                         ordinalAdjustment++;
                         continue;
                     }
+                    Timber.d("isChangePendingAdd() contemplating delete at index %s, current ord adj %s", i, ordinalAdjustment);
                     break;
                 }
                 case ADD:
-                    if (ord == (Integer) oldChange[0] - ordinalAdjustment) {
-                        // something we added this session?
-                        return true;
+                    if (changesIndex == i) {
+                        // something we added this session
+                        Timber.d("isChangePendingAdd() pending add found at at index %s, old ord/adjusted ord %s/%s", i, oldChange[0], ((Integer)oldChange[0] - ordinalAdjustment));
+                        return ((Integer) oldChange[0] - ordinalAdjustment);
                     }
                     break;
                 default:
                     break;
             }
         }
-        return false;
+        Timber.d("isChangePendingAdd() determined changesIndex %s was not a pending add", changesIndex);
+        return -1;
     }
 
 
@@ -287,6 +330,7 @@ public class TemporaryModel {
      * Return an int[] containing the collection-relative ordinals of all the currently pending deletes,
      * including the ordinal passed in, as opposed to the changelist-relative ordinals
      *
+     * @param ord int UI-relative ordinal to check database for delete safety along with existing deletes
      * @return int[] of all ordinals currently in the database, pending delete
      */
     public int[] getDeleteDbOrds(int ord) {
@@ -337,9 +381,12 @@ public class TemporaryModel {
 
 
     private void dumpChanges() {
+        ArrayList<Object[]> adjustedChanges = getAdjustedTemplateChanges();
         for (int i = 0; i < mTemplateChanges.size(); i++) {
             Object[] change = mTemplateChanges.get(i);
-            Timber.d("dumpChanges() Change %s is type/ord %s/%s", i, change[0], change[1]);
+            Object[] adjustedChange = adjustedChanges.get(i);
+            Timber.d("dumpChanges() Change %s is ord/type %s/%s", i, change[0], change[1]);
+            Timber.d("dumpChanges() During save change %s will be ord/type %s/%s", i, adjustedChange[0], adjustedChange[1]);
         }
     }
 
@@ -349,6 +396,38 @@ public class TemporaryModel {
             mTemplateChanges = new ArrayList<>();
         }
         return mTemplateChanges;
+    }
+
+
+    /**
+     * Adjust the ordinals in our accrued change list so that any pending adds have the correct
+     * ordinal after taking into account any pending deletes
+     *
+     * @return ArrayList<Object[2]> of [ordinal][ChangeType] entries
+     */
+    public @NonNull ArrayList<Object[]> getAdjustedTemplateChanges() {
+        ArrayList<Object[]> changes = getTemplateChanges();
+        ArrayList<Object[]> adjustedChanges = new ArrayList<>();
+
+        // In order to save the changes into the database, the ordinals in the changelist must correspond to the
+        // ordinals in the database (for deletes) or the correct index in the changes array (for adds)
+        // It is not possible to know what those will be until the user requests a save, so they are stored in the
+        // change list as-is until the save time comes, then the adjustment is made all at once
+        for (int i = 0; i < changes.size(); i++) {
+            Object[] change = changes.get(i);
+            Object[] adjustedChange = {change[0], change[1]};
+            switch ((ChangeType)adjustedChange[1]) {
+                case ADD:
+                    adjustedChange[0] = TemporaryModel.isChangePendingAdd(this, i);
+                    Timber.d("getAdjustedTemplateChanges() change %s ordinal adjusted from %s to %s", i, change[0], adjustedChange[0]);
+                    break;
+                case DELETE:
+                default:
+                    // no adjustment necessary for deletes - ephemeral deletes are already compacted out
+            }
+            adjustedChanges.add(adjustedChange);
+        }
+        return adjustedChanges;
     }
 
 
