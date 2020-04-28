@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki.utils;
 
+import com.ichi2.libanki.Utils;
+
 import java.util.Date;
 
 public class SystemTime implements Time {
@@ -28,5 +30,15 @@ public class SystemTime implements Time {
     @Override
     public Date getCurrentDate() {
         return new Date();
+    }
+
+    @Override
+    public long intTime() {
+        return Utils.intTime();
+    }
+
+    @Override
+    public double now() {
+        return Utils.now();
     }
 }
