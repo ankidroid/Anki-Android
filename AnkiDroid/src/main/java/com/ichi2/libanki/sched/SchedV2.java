@@ -47,6 +47,7 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -1776,7 +1777,7 @@ public class SchedV2 extends AbstractSched {
         dict.put("leechFails", oconf.getJSONObject("lapse").getInt("leechFails"));
         dict.put("leechAction", oconf.getJSONObject("lapse").getInt("leechAction"));
         dict.put("mult", oconf.getJSONObject("lapse").getDouble("mult"));
-        dict.put("delays", oconf.getJSONObject("lapse").getJSONArray("delays"));
+        dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"));
         // overrides
         dict.put("resched", conf.getBoolean("resched"));
         return dict;
