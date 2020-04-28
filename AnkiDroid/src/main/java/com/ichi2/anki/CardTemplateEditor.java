@@ -454,6 +454,10 @@ public class CardTemplateEditor extends AnkiActivity {
                     if (modelHasChanged()) {
                         View confirmButton = mTemplateEditor.findViewById(R.id.action_confirm);
                         if (confirmButton != null) {
+                            if (!confirmButton.isEnabled()) {
+                                Timber.d("CardTemplateEditor::discarding extra click after button disabled");
+                                return true;
+                            }
                             confirmButton.setEnabled(false);
                         }
                         tempModel.saveToDatabase(mSaveModelAndExitHandler);
