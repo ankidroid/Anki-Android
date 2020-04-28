@@ -132,7 +132,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
-        ActivityController templateEditorController = Robolectric.buildActivity(NonPagingCardTemplateEditor.class, intent).create().start().resume().visible();
+        ActivityController templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
         CardTemplateEditor testEditor = (CardTemplateEditor)templateEditorController.get();
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
         Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());
@@ -154,9 +154,6 @@ public class CardTemplateEditorTest extends RobolectricTest {
                 getResourceString(R.string.card_template_editor_cant_delete),
                 getDialogText(true));
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
-
-        // Related to Robolectric ViewPager support, see below
-        NonPagingCardTemplateEditor.pagerCount = 1;
 
         // Kill and restart the Activity, make sure model edit is preserved
         // The saveInstanceState test would be useful but we can't run it without Robolectric ViewPager support
@@ -185,8 +182,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
-        NonPagingCardTemplateEditor.pagerCount = 1;
-        ActivityController templateEditorController = Robolectric.buildActivity(NonPagingCardTemplateEditor.class, intent).create().start().resume().visible();
+        ActivityController templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
         CardTemplateEditor testEditor = (CardTemplateEditor)templateEditorController.get();
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 0));
 
@@ -209,7 +205,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         ShadowIntent shadowIntent = shadowOf(startedIntent);
         Assert.assertEquals("Previewer not started?", CardTemplatePreviewer.class.getName(), shadowIntent.getIntentClass().getName());
         Assert.assertNotNull("intent did not have model JSON filename?", startedIntent.getStringExtra(TemporaryModel.INTENT_MODEL_FILENAME));
-        Assert.assertEquals("intent did not have ordinal?", startedIntent.getIntExtra("index", -1), 0);
+        Assert.assertEquals("intent did not have ordinal?", 1, startedIntent.getIntExtra("index", -1));
         Assert.assertNotEquals("Model sent to Previewer is unchanged?", testEditor.getTempModel().getModel(), TemporaryModel.getTempModel(startedIntent.getStringExtra(TemporaryModel.INTENT_MODEL_FILENAME)));
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
 
@@ -249,7 +245,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
-        ActivityController templateEditorController = Robolectric.buildActivity(NonPagingCardTemplateEditor.class, intent).create().start().resume().visible();
+        ActivityController templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
         CardTemplateEditor testEditor = (CardTemplateEditor)templateEditorController.get();
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
         Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());
@@ -331,8 +327,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
-        NonPagingCardTemplateEditor.pagerCount = 1; // Needed because Robolectric's ViewPager support was rough when writing this
-        ActivityController templateEditorController = Robolectric.buildActivity(NonPagingCardTemplateEditor.class, intent).create().start().resume().visible();
+        ActivityController templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
         CardTemplateEditor testEditor = (CardTemplateEditor)templateEditorController.get();
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
         Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());
@@ -378,8 +373,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         // Start the CardTemplateEditor back up after saving (which closes the thing...)
         intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
-        NonPagingCardTemplateEditor.pagerCount = 2; // Robolectric ViewPager rough support workaround
-        templateEditorController = Robolectric.buildActivity(NonPagingCardTemplateEditor.class, intent).create().start().resume().visible();
+        templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
         testEditor = (CardTemplateEditor)templateEditorController.get();
         shadowTestEditor = shadowOf(testEditor);
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
@@ -402,6 +396,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
 
         // Delete a template now for real now - but still without saving it out, should work fine
         advanceRobolectricLooper();
+        testEditor.selectTemplate(0);
         Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete));
         advanceRobolectricLooper();
         Assert.assertEquals("Did not show dialog about deleting template and it's card?",
