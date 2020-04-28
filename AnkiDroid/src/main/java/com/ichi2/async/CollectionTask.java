@@ -125,7 +125,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
 
     /**
-     * Starts a new {@link CollectionTask}.
+     * Starts a new {@link CollectionTask}, with no listener
      * <p>
      * Tasks will be executed serially, in the order in which they are started.
      * <p>
@@ -139,6 +139,18 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         return launchCollectionTask(type, null, params);
     }
 
+    /**
+     * Starts a new {@link CollectionTask}, with a listener provided for callbacks during execution
+     * <p>
+     * Tasks will be executed serially, in the order in which they are started.
+     * <p>
+     * This method must be called on the main thread.
+     *
+     * @param type of the task to start
+     * @param listener to the status and result of the task, may be null
+     * @param params to pass to the task
+     * @return the newly created task
+     */
     public static CollectionTask launchCollectionTask(int type, @Nullable Listener listener, TaskData... params) {
         // Start new task
         CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
@@ -1412,7 +1424,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Object [] args = params[0].getObjArray();
         JSONObject model = (JSONObject) args[0];
         ArrayList<Object[]> templateChanges = (ArrayList<Object[]>)args[1];
-        JSONObject  oldModel = col.getModels().get(model.getLong("id"));
+        JSONObject oldModel = col.getModels().get(model.getLong("id"));
 
         // TODO need to save all the cards that will go away, for undo
         //  (do I need to remove them from graves during undo also?)
@@ -1423,8 +1435,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         col.getDb().getDatabase().beginTransaction();
 
         try {
-            // Template add/deletes always arrive all deletes first, to be processed in order
-            // After that since templates can't be repositioned, any "extra" templates in newTemplates must be adds
             for (Object[] change : templateChanges) {
                 switch ((TemporaryModel.ChangeType) change[1]) {
                     case ADD:

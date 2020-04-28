@@ -25,6 +25,7 @@ import org.junit.runner.RunWith;
 
 import com.ichi2.utils.JSONObject;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -52,12 +53,17 @@ public class TemporaryModelTest extends RobolectricTest {
         // Make sure clearing works
         Assert.assertEquals(1, TemporaryModel.clearTempModelFiles());
         Timber.i("The following logged NoSuchFileException is an expected part of verifying a file delete.");
-        Assert.assertNull("tempModel not correctly deleted", TemporaryModel.getTempModel(tempModelPath));
+        try {
+            TemporaryModel.getTempModel(tempModelPath);
+            Assert.fail("Should have caught an exception here because the file is missing");
+        } catch (IOException e) {
+            // this is expected
+        }
     }
 
 
     @Test
-    public void testAddDeleteTracking() throws Exception {
+    public void testAddDeleteTracking() {
 
         // Assume you start with a 2 template model (like "Basic (and reversed)")
         // Add a 3rd new template, remove the 2nd, remove the 1st, add a new now-2nd, remove 1st again
@@ -66,31 +72,73 @@ public class TemporaryModelTest extends RobolectricTest {
 
         tempModel.addTemplateChange(ADD, 3);
         Object[][] expected1 = {{3, ADD}};
+        // 3 templates and one change now
         assertTemplateChangesEqual(expected1, tempModel.getTemplateChanges());
+        assertTemplateChangesEqual(expected1, tempModel.getAdjustedTemplateChanges());
+        Assert.assertArrayEquals(new int[]{3}, tempModel.getDeleteDbOrds(3));
+
         tempModel.addTemplateChange(DELETE, 2);
-        tempModel.addTemplateChange(DELETE, 1);
-        Object[][] expected2 = {{3, ADD}, {2, DELETE}, {1, DELETE}};
+        // 2 templates and two changes now
+        Object[][] expected2 = {{3, ADD}, {2, DELETE}};
+        Object[][] adjExpected2 = {{2, ADD}, {2, DELETE}};
         assertTemplateChangesEqual(expected2, tempModel.getTemplateChanges());
-        tempModel.addTemplateChange(ADD, 2);
-        Object[][] expected3 = {{3, ADD}, {2, DELETE}, {1, DELETE}, {2, ADD}};
+        assertTemplateChangesEqual(adjExpected2, tempModel.getAdjustedTemplateChanges());
+        Assert.assertArrayEquals(new int[]{2, 4}, tempModel.getDeleteDbOrds(3));
+
+        tempModel.addTemplateChange(DELETE, 1);
+        // 1 template and three changes now
+        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Object[][] expected3 = {{3, ADD}, {2, DELETE}, {1, DELETE}};
+        Object[][] adjExpected3 = {{1, ADD}, {2, DELETE}, {1, DELETE}};
         assertTemplateChangesEqual(expected3, tempModel.getTemplateChanges());
+        assertTemplateChangesEqual(adjExpected3, tempModel.getAdjustedTemplateChanges());
+
+        tempModel.addTemplateChange(ADD, 2);
+        // 2 templates and 4 changes now
+        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Object[][] expected4 = {{3, ADD}, {2, DELETE}, {1, DELETE}, {2, ADD}};
+        Object[][] adjExpected4 = {{1, ADD}, {2, DELETE}, {1, DELETE}, {2, ADD}};
+        assertTemplateChangesEqual(expected4, tempModel.getTemplateChanges());
+        assertTemplateChangesEqual(adjExpected4, tempModel.getAdjustedTemplateChanges());
 
         // Make sure we can resurrect these changes across lifecycle
         Bundle outBundle = tempModel.toBundle();
-        assertTemplateChangesEqual(expected3, outBundle.getSerializable("mTemplateChanges"));
+        assertTemplateChangesEqual(expected4, outBundle.getSerializable("mTemplateChanges"));
 
         // This is the hard part. We will delete a template we added so everything shifts.
         // The template currently at ordinal 1 was added as template 3 at the start before it slid down on the deletes
         // So the first template add should be negated by this delete, and the second template add should slide down to 1
         tempModel.addTemplateChange(DELETE, 1);
-        Object[][] expected4 = {{2, DELETE}, {1, DELETE}, {1, ADD}};
-        assertTemplateChangesEqual(expected4, tempModel.getTemplateChanges());
-        tempModel.addTemplateChange(ADD, 2);
-        Object[][] expected5 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}};
+        // 1 template and 3 changes now (the delete just cancelled out one of the adds)
+        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Object[][] expected5 = {{2, DELETE}, {1, DELETE}, {1, ADD}};
+        Object[][] adjExpected5 = {{2, DELETE}, {1, DELETE}, {1, ADD}};
         assertTemplateChangesEqual(expected5, tempModel.getTemplateChanges());
-        tempModel.addTemplateChange(DELETE, 2);
-        Object[][] expected6 = {{2, DELETE}, {1, DELETE}, {1, ADD}};
+        assertTemplateChangesEqual(adjExpected5, tempModel.getAdjustedTemplateChanges());
+
+        tempModel.addTemplateChange(ADD, 2);
+        // 2 template and 4 changes now (the delete just cancelled out one of the adds)
+        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Object[][] expected6 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}};
+        Object[][] adjExpected6 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}};
         assertTemplateChangesEqual(expected6, tempModel.getTemplateChanges());
+        assertTemplateChangesEqual(adjExpected6, tempModel.getAdjustedTemplateChanges());
+
+        tempModel.addTemplateChange(ADD, 3);
+        // 2 template and 4 changes now (the delete just cancelled out one of the adds)
+        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Object[][] expected7 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}, {3, ADD}};
+        Object[][] adjExpected7 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}, {3, ADD}};
+        assertTemplateChangesEqual(expected7, tempModel.getTemplateChanges());
+        assertTemplateChangesEqual(adjExpected7, tempModel.getAdjustedTemplateChanges());
+
+        tempModel.addTemplateChange(DELETE, 3);
+        // 1 template and 3 changes now (two deletes cancelled out adds)
+        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Object[][] expected8 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}};
+        Object[][] adjExpected8 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}};
+        assertTemplateChangesEqual(expected8, tempModel.getTemplateChanges());
+        assertTemplateChangesEqual(adjExpected8, tempModel.getAdjustedTemplateChanges());
     }
 
 
