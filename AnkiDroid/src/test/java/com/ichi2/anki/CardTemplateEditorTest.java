@@ -394,13 +394,23 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertTrue("Ordinal not pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 3));
         Assert.assertEquals("Change added but not adjusted correctly?", 3, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 0));
 
-        // Delete a template now for real now - but still without saving it out, should work fine
+        // Delete two pre-existing templates for real now - but still without saving it out, should work fine
         advanceRobolectricLooper();
         testEditor.selectTemplate(0);
         Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete));
         advanceRobolectricLooper();
         Assert.assertEquals("Did not show dialog about deleting template and it's card?",
                 getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
+                getDialogText(true));
+        clickDialogButton(DialogAction.POSITIVE, true);
+        advanceRobolectricLooper();
+
+        advanceRobolectricLooper();
+        testEditor.selectTemplate(0);
+        Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete));
+        advanceRobolectricLooper();
+        Assert.assertEquals("Did not show dialog about deleting template and it's card?",
+                getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
                 getDialogText(true));
         clickDialogButton(DialogAction.POSITIVE, true);
         advanceRobolectricLooper();
@@ -415,17 +425,16 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertNull("Can delete all templates?", getCol().getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1, 2}));
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
 
-        Assert.assertEquals("Change added but not adjusted correctly?", 2, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 0));
+        Assert.assertEquals("Change added but not adjusted correctly?", 1, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 0));
         Assert.assertEquals("Change incorrectly pending add?", -1, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 1));
+        Assert.assertEquals("Change incorrectly pending add?", -1, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 2));
 
         // Now confirm everything to persist it to the database
         Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm));
         advanceRobolectricLooper();
-        advanceRobolectricLooper();
-        advanceRobolectricLooper();
         Assert.assertNotEquals("Change not in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
-        Assert.assertEquals("Model should have 3 templates now", 3, getCurrentDatabaseModelCopy(modelName).getJSONArray("tmpls").length());
-        Assert.assertEquals("should be three cards", 3, getModelCardCount(collectionBasicModelOriginal));
+        Assert.assertEquals("Model should have 2 templates now", 2, getCurrentDatabaseModelCopy(modelName).getJSONArray("tmpls").length());
+        Assert.assertEquals("should be two cards", 2, getModelCardCount(collectionBasicModelOriginal));
     }
 
     private int getModelCardCount(JSONObject model) {
