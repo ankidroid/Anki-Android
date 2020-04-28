@@ -1429,13 +1429,13 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         // TODO need to save all the cards that will go away, for undo
         //  (do I need to remove them from graves during undo also?)
         //    - undo (except for cards) could just be Models.update(model) / Models.flush() / Collection.reset() (that was prior "undo")
-        JSONArray oldTemplates = oldModel.getJSONArray("tmpls");
         JSONArray newTemplates = model.getJSONArray("tmpls");
 
         col.getDb().getDatabase().beginTransaction();
 
         try {
             for (Object[] change : templateChanges) {
+                JSONArray oldTemplates = oldModel.getJSONArray("tmpls");
                 switch ((TemporaryModel.ChangeType) change[1]) {
                     case ADD:
                         Timber.d("doInBackgroundSaveModel() adding template %s", change[0]);

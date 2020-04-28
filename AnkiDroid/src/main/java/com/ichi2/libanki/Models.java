@@ -743,6 +743,10 @@ public class Models {
                 break;
             }
         }
+
+        if (ord == -1) {
+            throw new IllegalArgumentException("Invalid template proposed for delete");
+        }
         // the code in "isRemTemplateSafe" was in place here in libanki. It is extracted to a method for reuse
         long[] cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
         if (cids == null) {
