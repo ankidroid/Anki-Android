@@ -160,7 +160,7 @@ public class CardTemplateEditor extends AnkiActivity {
         super.onCollectionLoaded(col);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mTemplateAdapter = getNewTemplatePagerAdapter(getSupportFragmentManager());
+        mTemplateAdapter = new TemplatePagerAdapter(getSupportFragmentManager());
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
         if (getTempModel() == null) {
@@ -250,13 +250,6 @@ public class CardTemplateEditor extends AnkiActivity {
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
-
-    // Testing Android apps is hard, and pager adapters in fragments is nearly impossible.
-    // In order to make this object testable we have to allow for some plumbing pass through
-    @VisibleForTesting
-    protected TemplatePagerAdapter getNewTemplatePagerAdapter(FragmentManager fm) {
-        return new TemplatePagerAdapter(fm);
-    }
 
 
     /**
