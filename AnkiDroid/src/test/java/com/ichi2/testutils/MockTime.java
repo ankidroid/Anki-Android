@@ -38,4 +38,17 @@ public class MockTime implements Time {
     public Date getCurrentDate() {
         return new Date(mTime);
     }
+
+    /**These need confirmation */
+
+    @Override
+    public long intTime() {
+        return (long) now();
+    }
+
+
+    @Override
+    public double now() {
+        return (double)mTime / 1000.0d;
+    }
 }

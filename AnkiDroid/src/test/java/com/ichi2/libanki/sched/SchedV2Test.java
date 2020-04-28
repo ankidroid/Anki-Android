@@ -84,8 +84,9 @@ public class SchedV2Test extends RobolectricTest {
         Card schedCard = v2.getCard();
         assertThat(schedCard, Matchers.notNullValue());
         v2.answerCard(schedCard, Consts.BUTTON_ONE);
-
+        assertThat("The lapsed card should now be counted as lrn", v2.mLrnCount, is(1));
         Card after = v2.getCard();
+        assertThat("A card should be returned ", after, Matchers.notNullValue());
 
         /* Data from Anki - pp(self.reviewer.card)
         {'data': '', 'did': 1587939535230, 'due': 1587941137, 'factor': 1300,
