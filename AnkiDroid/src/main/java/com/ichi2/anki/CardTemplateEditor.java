@@ -172,7 +172,10 @@ public class CardTemplateEditor extends AnkiActivity {
         mViewPager.setAdapter(mTemplateAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(final int position, final float v, final int i2) { /* do nothing */ }
+            public void onPageScrolled(final int position, final float v, final int i2) {
+                Timber.d("onPageScrolled - mOrdId to %d", mOrdId);
+                mOrdId = position;
+            }
 
             @Override
             public void onPageSelected(final int position) {
@@ -180,6 +183,8 @@ public class CardTemplateEditor extends AnkiActivity {
                 if (fragment != null) {
                     fragment.updateCss();
                 }
+                Timber.d("onPageSelected mOrdId to %d", mOrdId);
+                mOrdId = position;
             }
 
             @Override
@@ -196,8 +201,9 @@ public class CardTemplateEditor extends AnkiActivity {
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId);
 
         // Set the tab to the current template if an ord id was provided
+        Timber.d("Setting mOrdId to %d", mOrdId);
         if (mOrdId != -1) {
-            mViewPager.setCurrentItem(mOrdId);
+            selectTemplate(mOrdId);
         }
     }
 
@@ -384,6 +390,7 @@ public class CardTemplateEditor extends AnkiActivity {
 
         @Override
         public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
+            menu.clear();
             inflater.inflate(R.menu.card_template_editor, menu);
 
             if (mTemplateEditor.getTempModel().getModel().getInt("type") == Consts.MODEL_CLOZE) {
@@ -414,7 +421,7 @@ public class CardTemplateEditor extends AnkiActivity {
                 case R.id.action_delete: {
                     Timber.i("CardTemplateEditor:: Delete template button pressed");
                     Resources res = getResources();
-                    int position = getArguments().getInt("position");
+                    int position = mTemplateEditor.mOrdId;
                     final JSONObject template = tempModel.getTemplate(position);
                     // Don't do anything if only one template
                     if (tempModel.getTemplateCount() < 2) {
@@ -435,7 +442,7 @@ public class CardTemplateEditor extends AnkiActivity {
                     Timber.i("CardTemplateEditor:: Preview model button pressed");
                     // Create intent for the previewer and add some arguments
                     Intent i = new Intent(mTemplateEditor, CardTemplatePreviewer.class);
-                    int pos = getArguments().getInt("position");
+                    int pos = mTemplateEditor.mOrdId;
                     long noteId = getArguments().getLong("noteId");
                     i.putExtra("index", pos);
 
