@@ -153,6 +153,10 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     mValues.put("reminderTime", TimePreference.DEFAULT_VALUE);
                 }
             } catch (JSONException e) {
+                Timber.e(e, "DeckOptions - cacheValues");
+                AnkiDroidApp.sendExceptionReport(e, "DeckOptions: cacheValues");
+                Resources r = DeckOptions.this.getResources();
+                UIUtils.showThemedToast(DeckOptions.this, r.getString(R.string.deck_options_corrupt, e.getLocalizedMessage()), false);
                 finish();
             }
         }
@@ -650,6 +654,10 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             finish();
         } else {
             mPref = new DeckPreferenceHack();
+            //#6068 - constructor can call finish()
+            if (this.isFinishing()) {
+                return;
+            }
             mPref.registerOnSharedPreferenceChangeListener(this);
 
             this.addPreferencesFromResource(R.xml.deck_options);
