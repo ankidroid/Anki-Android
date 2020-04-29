@@ -57,7 +57,7 @@ public class TemporaryModel {
      * @param bundle a Bundle that should contain persisted JSON under INTENT_MODEL_FILENAME key
      * @return re-hydrated TemporaryModel or null if there was a problem, null means should reload from database
      */
-    public static TemporaryModel fromBundle(Bundle bundle) {
+    public static @Nullable TemporaryModel fromBundle(Bundle bundle) {
         String mEditedModelFileName = bundle.getString(INTENT_MODEL_FILENAME);
         // Bundle.getString is @Nullable, so we have to check.
         if (mEditedModelFileName == null) {
@@ -206,7 +206,8 @@ public class TemporaryModel {
     public static int clearTempModelFiles() {
         int deleteCount = 0;
         for (File c : AnkiDroidApp.getInstance().getCacheDir().listFiles()) {
-            if (c.getAbsolutePath().endsWith("json") && c.getAbsolutePath().contains("editedTemplate")) {
+            String absolutePath = c.getAbsolutePath();
+            if (absolutePath.contains("editedTemplate") && absolutePath.endsWith("json") ) {
                 if (!c.delete()) {
                     Timber.w("Unable to delete temp file %s", c.getAbsolutePath());
                 } else {
@@ -226,16 +227,15 @@ public class TemporaryModel {
      */
     public void addTemplateChange(ChangeType type, int ordinal) {
         Timber.d("addTemplateChange() type %s for ordinal %s", type, ordinal);
-        if (mTemplateChanges == null) {
-            mTemplateChanges = new ArrayList<>();
-        }
+        ArrayList<Object[]> templateChanges = getTemplateChanges();
+
         Object[] change = new Object[] {ordinal, type};
 
         // If we are deleting something we added but have not saved, edit it out of the change list
         if (type == ChangeType.DELETE) {
             int ordinalAdjustment = 0;
-            for (int i = mTemplateChanges.size() - 1; i >= 0; i--) {
-                Object[] oldChange = mTemplateChanges.get(i );
+            for (int i = templateChanges.size() - 1; i >= 0; i--) {
+                Object[] oldChange = templateChanges.get(i );
                 switch ((ChangeType)oldChange[1]) {
                     case DELETE: {
                         // Deleting an ordinal at or below us? Adjust our comparison basis...
@@ -260,7 +260,7 @@ public class TemporaryModel {
         }
 
         Timber.d("addTemplateChange() added ord/type: %s/%s", change[0], change[1]);
-        mTemplateChanges.add(change);
+        templateChanges.add(change);
         dumpChanges();
     }
 
@@ -273,7 +273,7 @@ public class TemporaryModel {
     public static boolean isOrdinalPendingAdd(TemporaryModel model, int ord) {
         for (int i = 0; i < model.getTemplateChanges().size(); i++) {
             Object[] change = model.getTemplateChanges().get(i);
-            int adjustedOrdinal = isChangePendingAdd(model, i);
+            int adjustedOrdinal = getAdjustedAddOrdinalAtChangeIndex(model, i);
             if (adjustedOrdinal == ord) {
                 Timber.d("isOrdinalPendingAdd() found ord %s was pending add (would adjust to %s)", ord, adjustedOrdinal);
                 return true;
@@ -290,38 +290,39 @@ public class TemporaryModel {
      * @param changesIndex the index of the template in the changes array
      * @return either ordinal adjusted by any pending deletes if it is a pending add, or -1 if the ordinal is not an add
      */
-    public static int isChangePendingAdd(TemporaryModel model, int changesIndex) {
+    public static int getAdjustedAddOrdinalAtChangeIndex(TemporaryModel model, int changesIndex) {
         if (changesIndex >= model.getTemplateChanges().size()) {
             return -1;
         }
         int ordinalAdjustment = 0;
         Object[] change = model.getTemplateChanges().get(changesIndex);
-        int changeOrdinal =  (Integer) change[0];
+        int ordinalToInspect = (Integer) change[0];
 
         for (int i = model.getTemplateChanges().size() - 1; i >= changesIndex; i--) {
             Object[] oldChange = model.getTemplateChanges().get(i);
+            int currentOrdinal = (Integer) change[0];
             switch ((ChangeType) oldChange[1]) {
                 case DELETE: {
                     // Deleting an ordinal at or below us? Adjust our comparison basis...
-                    if ((Integer) oldChange[0] - ordinalAdjustment <= changeOrdinal) {
+                    if (currentOrdinal - ordinalAdjustment <= ordinalToInspect) {
                         ordinalAdjustment++;
                         continue;
                     }
-                    Timber.d("isChangePendingAdd() contemplating delete at index %s, current ord adj %s", i, ordinalAdjustment);
+                    Timber.d("getAdjustedAddOrdinalAtChangeIndex() contemplating delete at index %s, current ord adj %s", i, ordinalAdjustment);
                     break;
                 }
                 case ADD:
                     if (changesIndex == i) {
                         // something we added this session
-                        Timber.d("isChangePendingAdd() pending add found at at index %s, old ord/adjusted ord %s/%s", i, oldChange[0], ((Integer)oldChange[0] - ordinalAdjustment));
-                        return ((Integer) oldChange[0] - ordinalAdjustment);
+                        Timber.d("getAdjustedAddOrdinalAtChangeIndex() pending add found at at index %s, old ord/adjusted ord %s/%s", i, currentOrdinal, (currentOrdinal - ordinalAdjustment));
+                        return (currentOrdinal - ordinalAdjustment);
                     }
                     break;
                 default:
                     break;
             }
         }
-        Timber.d("isChangePendingAdd() determined changesIndex %s was not a pending add", changesIndex);
+        Timber.d("getAdjustedAddOrdinalAtChangeIndex() determined changesIndex %s was not a pending add", changesIndex);
         return -1;
     }
 
@@ -381,6 +382,9 @@ public class TemporaryModel {
 
 
     private void dumpChanges() {
+        if (!BuildConfig.DEBUG) {
+            return;
+        }
         ArrayList<Object[]> adjustedChanges = getAdjustedTemplateChanges();
         for (int i = 0; i < mTemplateChanges.size(); i++) {
             Object[] change = mTemplateChanges.get(i);
@@ -418,7 +422,7 @@ public class TemporaryModel {
             Object[] adjustedChange = {change[0], change[1]};
             switch ((ChangeType)adjustedChange[1]) {
                 case ADD:
-                    adjustedChange[0] = TemporaryModel.isChangePendingAdd(this, i);
+                    adjustedChange[0] = TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(this, i);
                     Timber.d("getAdjustedTemplateChanges() change %s ordinal adjusted from %s to %s", i, change[0], adjustedChange[0]);
                     break;
                 case DELETE:

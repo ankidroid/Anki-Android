@@ -154,17 +154,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
                 getResourceString(R.string.card_template_editor_cant_delete),
                 getDialogText(true));
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
-
-        // Kill and restart the Activity, make sure model edit is preserved
-        // The saveInstanceState test would be useful but we can't run it without Robolectric ViewPager support
-//        Bundle outBundle = new Bundle();
-//        templateEditorController.saveInstanceState(outBundle);
-//        templateEditorController.pause().stop().destroy();
-//        templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class).create(outBundle).start().resume().visible();
-//        testEditor = (CardTemplateEditor)templateEditorController.get();
-//        Assert.assertTrue("model change not preserved across activity lifecycle?", testEditor.modelHasChanged());
-//        Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
-
+        
         // Save the change to the database and make sure there's only one template after
         JSONObject testEditorModelEdited = testEditor.getTempModel().getModel();
         Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm));
@@ -194,7 +184,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         //Assert.assertEquals("Wrong dialog shown?", "This will create NN cards. Proceed?", getDialogText());
         //clickDialogButton(DialogAction.POSITIVE);
         Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
-        Assert.assertEquals("Change not pending add?", 1, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 0));
+        Assert.assertEquals("Change not pending add?", 1, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 0));
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 0));
         Assert.assertTrue("Ordinal not pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 1));
         Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());
@@ -360,7 +350,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         shadowTestEditor.clickMenuItem(R.id.action_add);
         advanceRobolectricLooper();
         Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
-        Assert.assertEquals("Change added but not adjusted correctly?", 2, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 0));
+        Assert.assertEquals("Change added but not adjusted correctly?", 2, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 0));
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 0));
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 1));
         Assert.assertTrue("Ordinal not pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 2));
@@ -385,14 +375,14 @@ public class CardTemplateEditorTest extends RobolectricTest {
         // Add another template - but we work in memory for a while before saving
         shadowTestEditor.clickMenuItem(R.id.action_add);
         advanceRobolectricLooper();
-        Assert.assertEquals("Change added but not adjusted correctly?", 3, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 0));
+        Assert.assertEquals("Change added but not adjusted correctly?", 3, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 0));
         Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
         Assert.assertEquals("Model should have 4 templates now", 4, testEditor.getTempModel().getTemplateCount());
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 0));
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 1));
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 2));
         Assert.assertTrue("Ordinal not pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 3));
-        Assert.assertEquals("Change added but not adjusted correctly?", 3, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 0));
+        Assert.assertEquals("Change added but not adjusted correctly?", 3, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 0));
 
         // Delete two pre-existing templates for real now - but still without saving it out, should work fine
         advanceRobolectricLooper();
@@ -425,9 +415,9 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertNull("Can delete all templates?", getCol().getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1, 2}));
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
 
-        Assert.assertEquals("Change added but not adjusted correctly?", 1, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 0));
-        Assert.assertEquals("Change incorrectly pending add?", -1, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 1));
-        Assert.assertEquals("Change incorrectly pending add?", -1, TemporaryModel.isChangePendingAdd(testEditor.getTempModel(), 2));
+        Assert.assertEquals("Change added but not adjusted correctly?", 1, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 0));
+        Assert.assertEquals("Change incorrectly pending add?", -1, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 1));
+        Assert.assertEquals("Change incorrectly pending add?", -1, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 2));
 
         // Now confirm everything to persist it to the database
         Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm));
