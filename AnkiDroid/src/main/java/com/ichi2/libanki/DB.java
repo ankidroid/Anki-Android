@@ -60,7 +60,7 @@ public class DB {
     private boolean mMod = false;
 
     /**
-     * Open a database connection to an ".anki" SQLite file.
+     * Open a database connection to an ".anki2" SQLite file.
      */
     public DB(String ankiFilename) {
 
