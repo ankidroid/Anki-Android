@@ -339,6 +339,8 @@ public class NoteEditor extends AnkiActivity {
             mCurrentDid = savedInstanceState.getLong("did");
             mSelectedTags = new ArrayList<>(Arrays.asList(savedInstanceState.getStringArray("tags")));
             mSavedFields = savedInstanceState.getBundle("editFields");
+            mReloadRequired = savedInstanceState.getBoolean("reloadRequired");
+            mChanged = savedInstanceState.getBoolean("changed");
         } else {
             mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
             if (mCaller == CALLER_NOCALLER) {
@@ -358,7 +360,9 @@ public class NoteEditor extends AnkiActivity {
         savedInstanceState.putInt("caller", mCaller);
         savedInstanceState.putBoolean("addNote", mAddNote);
         savedInstanceState.putLong("did", mCurrentDid);
-        if(mSelectedTags == null){
+        savedInstanceState.putBoolean("changed", mChanged);
+        savedInstanceState.putBoolean("reloadRequired", mReloadRequired);
+        if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<>();
         }
         savedInstanceState.putStringArray("tags", mSelectedTags.toArray(new String[0]));
@@ -1499,6 +1503,12 @@ public class NoteEditor extends AnkiActivity {
         StringBuilder cardsList = new StringBuilder();
         // Build comma separated list of card names
         Timber.d("updateCards() template count is %s", tmpls.length());
+
+        // This can happen if an Activity result is coming in across a NoteEditor Activity restart
+        if (!mEditorNote.cards().contains(mCurrentEditedCard)) {
+            Timber.d("trying to updateCards but our card seems to have disappeared...");
+            return;
+        }
         for (int i = 0; i < tmpls.length(); i++) {
             String name = tmpls.getJSONObject(i).optString("name");
             // If more than one card then make currently selected card underlined
