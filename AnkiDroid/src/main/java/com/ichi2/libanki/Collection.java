@@ -1490,7 +1490,7 @@ public class Collection {
         File file = new File(mPath);
         CheckDatabaseResult result = new CheckDatabaseResult(file.length());
         final int[] currentTask = {1};
-        int totalTasks = (mModels.all().size() * 4) + 25; // a few fixes are in all-models loops, the rest are one-offs
+        int totalTasks = (mModels.all().size() * 4) + 26; // a few fixes are in all-models loops, the rest are one-offs
         Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
         FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
                 (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
@@ -1549,6 +1549,7 @@ public class Collection {
         executeIntegrityTask.consume(this::fixDecimalRevLogData);
         executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
         executeIntegrityTask.consume(this::ensureModelsAreNotEmpty);
+        executeIntegrityTask.consume(this::fixDeckOptionsTimer);
         executeIntegrityTask.consume((progressNotifier) -> this.ensureCardsHaveHomeDeck(progressNotifier, result));
         // and finally, optimize (unable to be done inside transaction).
         try {
@@ -1566,6 +1567,47 @@ public class Collection {
         }
         logProblems(result.getProblems());
         return result;
+    }
+
+
+    private List<String> fixDeckOptionsTimer(Runnable notifyProgress) {
+        Timber.d("fixDeckOptionsTimer()");
+
+        //Anki 2.1.24 introduced a schema change: 'timer' was converted from an int to a boolean.
+        //See: #6089
+        notifyProgress.run();
+
+        List<String> problems = new ArrayList<>();
+
+        int problemCount = 0;
+        for (JSONObject dconf : getDecks().allConf()) {
+            if (!dconf.has("timer")) {
+                continue;
+            }
+
+            try {
+                dconf.getInt("timer");
+            } catch (Exception e) {
+                //We've probably got a boolean
+                try {
+                    boolean timer = dconf.getBoolean("timer");
+                    dconf.remove("timer");
+                    dconf.put("timer", timer ? 1 : 0);
+                    problemCount++;
+                } catch (Exception ex) {
+                    Timber.e(ex, "failed to fix dconf");
+                }
+            }
+        }
+
+        //COULD_BE_BETTER: does a bit too much work here, only needs to save dconf
+        getDecks().flush();
+
+        if (problemCount != 0) {
+            problems.add(String.format(Locale.US, "Fixed %d corrupt deck option definitions", problemCount));
+        }
+
+        return problems;
     }
 
 
