@@ -45,6 +45,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
@@ -105,7 +106,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("deckConf", mDeck.getString("conf"));
                 // general
                 mValues.put("maxAnswerTime", mOptions.getString("maxTaken"));
-                mValues.put("showAnswerTimer", Boolean.toString(mOptions.getInt("timer") == 1));
+                mValues.put("showAnswerTimer", Boolean.toString(parseTimerValue(mOptions)));
                 mValues.put("autoPlayAudio", Boolean.toString(mOptions.getBoolean("autoplay")));
                 mValues.put("replayQuestion", Boolean.toString(mOptions.optBoolean("replayq", true)));
                 // new
@@ -148,6 +149,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 finish();
             }
         }
+
+
+        private boolean parseTimerValue(JSONObject options) {
+            return DeckConfig.parseTimerOpt(options, true);
+        }
+
 
         public class Editor implements SharedPreferences.Editor {
 
