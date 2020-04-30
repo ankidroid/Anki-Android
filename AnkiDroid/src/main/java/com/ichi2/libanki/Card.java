@@ -336,11 +336,6 @@ public class Card implements Cloneable {
     }
 
 
-    public boolean shouldShowTimer() {
-        return mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid).getInt("timer") != 0;
-    }
-
-
     /*
      * Time taken to answer card, in integer MS.
      */
@@ -588,7 +583,8 @@ public class Card implements Cloneable {
 
 
     public boolean showTimer() {
-        return mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid).optInt("timer", 1) != 0;
+        JSONObject options = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
+        return DeckConfig.parseTimerOpt(options, true);
     }
 
 
