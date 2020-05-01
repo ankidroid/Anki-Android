@@ -42,7 +42,7 @@ After installing all these dependencies, the project should build successfully.
 ## Installing an emulator for testing
 Provided you are able to use hardware acceleration for the Android emulators, [setup an emulator](https://developer.android.com/tools/devices/managing-avds.html) is a very effective method for testing code and running the connected android tests. If possible, verify your work periodically against both the newest version of the emulator available and the oldest version we support that you can run (at this time API18 is the oldest emulator easy to run though [it is possible to run all the way down to API15 on linux at least with some effort](https://issuetracker.google.com/issues/37138030#comment13).
 
-## Connecting your device to Android studio via abd to use for testing
+## Connecting your device to Android studio via adb to use for testing
 In order to run a custom build of AnkiDroid on your device or attach the debugger, you'll need to connect your device over the adb protocol. Open your Android device, and [enable](https://developer.android.com/studio/debug/dev-options.html) developer options and `USB debugging`. Finally when you connect your device to your computer over USB, it should get recognized by Android Studio and you should start to see output from it in the logcat section of Android studio.
 
 ## Running AnkiDroid from within Android studio
