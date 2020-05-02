@@ -38,7 +38,7 @@ public class TypedAnswer {
         if (answer == null || "".equals(answer)) {
             return "";
         }
-        Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer.trim()));
+        Matcher matcher = sSpanPattern.matcher(Utils.stripHTML(answer.trim()));
         String answerText = matcher.replaceAll("");
         matcher = sBrPattern.matcher(answerText);
         answerText = matcher.replaceAll("\n");
