@@ -88,6 +88,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
+import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
@@ -156,10 +157,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** Time to wait in milliseconds before resuming fullscreen mode **/
     protected static final int INITIAL_HIDE_DELAY = 200;
-
-    /** Regex pattern used in removing tags from text before diff */
-    private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
-    private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
 
     // Type answer patterns
     private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
@@ -1893,16 +1890,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
      */
     protected String cleanCorrectAnswer(String answer) {
-        if (answer == null || "".equals(answer)) {
-            return "";
-        }
-        Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer.trim()));
-        String answerText = matcher.replaceAll("");
-        matcher = sBrPattern.matcher(answerText);
-        answerText = matcher.replaceAll("\n");
-        matcher = Sound.sSoundPattern.matcher(answerText);
-        answerText = matcher.replaceAll("");
-        return Utils.nfcNormalized(answerText);
+        return TypedAnswer.cleanCorrectAnswer(answer);
     }
 
 
