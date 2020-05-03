@@ -1894,6 +1894,22 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         public Object[] getObjArray() {
             return mObjects;
         }
+
+
+        public <T> boolean objAtIndexIs(int i, Class<T> clazz) {
+            if (getObjArray() == null) {
+                return false;
+            }
+            if (getObjArray().length <= i) {
+                return false;
+            }
+            Object val = getObjArray()[i];
+            if (val == null) {
+                return false;
+            }
+
+            return clazz.isAssignableFrom(val.getClass());
+        }
     }
 
     public static synchronized CollectionTask getInstance() {

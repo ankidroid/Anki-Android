@@ -18,11 +18,9 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 
-import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.libanki.Collection.CheckDatabaseResult;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -68,27 +66,19 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
     }
 
     @Test
-    public void validResultWithEmptyDataWillDisplayFailedDialog() {
+    public void validResultWithEmptyDataWillDoNothing() {
         TaskData result = validResultWithData();
 
         execute(result);
 
-        assertThat("Load Failed dialog should be shown if empty data is supplied", impl.didDisplayDialogLoadFailed());
+        assertThat("Nothing should be shown if valid, but no data supplied", !impl.didDisplayDialogLoadFailed());
+        assertThat("Nothing should be shown if valid, but no data supplied", !impl.didDisplayLockedDialog());
+        assertThat("Nothing should be shown if valid, but no data supplied", !impl.didDisplayMessage());
     }
 
     @Test
     public void failedResultWithInvalidDataWillDisplayFailedDialog() {
         TaskData result = failedResultWithData(1);
-
-        execute(result);
-
-        assertThat("Load Failed dialog should be shown if invalid data is supplied", impl.didDisplayDialogLoadFailed());
-    }
-
-    @Test
-    @Ignore("Currently failing")
-    public void validResultWithInvalidDataWillDisplayFailedDialog() {
-        TaskData result = validResultWithData(1);
 
         execute(result);
 
@@ -104,6 +94,40 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
         assertThat("Load Failed dialog should not be shown if invalid data is supplied", !impl.didDisplayDialogLoadFailed());
         assertThat("Dialog should be displayed", impl.didDisplayMessage());
+    }
+
+    @Test
+    public void validResultWithFailedDatabaseWillShowFailedDialog() {
+        CheckDatabaseResult failedDb = failedDatabase();
+        TaskData result = validResultWithData(failedDb);
+
+        execute(result);
+
+        assertThat("Load Failed dialog should be shown if failed data is supplied", impl.didDisplayDialogLoadFailed());
+        assertThat("Locked Database dialog should be shown if Db was locked", !impl.didDisplayLockedDialog());
+        assertThat("Dialog should not be displayed", !impl.didDisplayMessage());
+    }
+
+    @Test
+    public void validResultWithLockedDatabaseWillShowLockedDialog() {
+        CheckDatabaseResult lockedDb = lockedDatabase();
+        TaskData result = validResultWithData(lockedDb);
+
+        execute(result);
+
+        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !impl.didDisplayDialogLoadFailed());
+        assertThat("Locked Database dialog should be shown if Db was locked", impl.didDisplayLockedDialog());
+        assertThat("Dialog should not be displayed", !impl.didDisplayMessage());
+    }
+
+    @NonNull
+    private CheckDatabaseResult lockedDatabase() {
+        return new CheckDatabaseResult(1).markAsLocked();
+    }
+
+    @NonNull
+    private CheckDatabaseResult failedDatabase() {
+        return new CheckDatabaseResult(1).markAsFailed();
     }
 
 
@@ -145,6 +169,7 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
         private boolean mDidDisplayDialogLoadFailed;
         private boolean mDidDisplayMessage = false;
+        private boolean mDidDisplayDbLocked = false;
 
 
         public boolean didDisplayDialogLoadFailed() {
@@ -155,12 +180,18 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
         public void handleDbError() {
             this.mDidDisplayDialogLoadFailed = true;
             super.handleDbError();
-            showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
+        }
+
+        @Override
+        public void handleDbLocked() {
+            this.mDidDisplayDbLocked = true;
+            super.handleDbLocked();
         }
 
         public void resetVariables() {
             mDidDisplayMessage = false;
             mDidDisplayDialogLoadFailed = false;
+            mDidDisplayDbLocked = false;
         }
 
         @Override
@@ -172,6 +203,11 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
         public boolean didDisplayMessage() {
             return mDidDisplayMessage;
+        }
+
+
+        public boolean didDisplayLockedDialog() {
+            return mDidDisplayDbLocked;
         }
     }
 }

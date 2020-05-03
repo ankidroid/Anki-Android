@@ -1391,6 +1391,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     public void handleDbError() {
+        Timber.i("Displaying Database Error");
+        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
+    }
+
+    public void handleDbLocked() {
+        //COULD_BE_BETTER: Do something different
+        Timber.i("Displaying Database Locked");
         showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
     }
 
@@ -2398,13 +2405,31 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 mProgressDialog.dismiss();
             }
 
-            if (result == null || !result.getBoolean() || result.getObjArray() == null || result.getObjArray().length <= 0) {
+            if (result == null) {
                 handleDbError();
                 return;
             }
 
-            String msg;
+            if (!result.objAtIndexIs(0, Collection.CheckDatabaseResult.class)) {
+                if (result.getBoolean()) {
+                    Timber.w("Expected result data, got nothing");
+                } else {
+                    handleDbError();
+                }
+                return;
+            }
+
             Collection.CheckDatabaseResult databaseResult = (Collection.CheckDatabaseResult) result.getObjArray()[0];
+
+            if (!result.getBoolean() || databaseResult.getFailed()) {
+                if (databaseResult.getDatabaseLocked()) {
+                    handleDbLocked();
+                } else {
+                    handleDbError();
+                }
+                return;
+            }
+
 
             int count = databaseResult.getCardsWithFixedHomeDeckCount();
             if (count != 0) {
@@ -2412,6 +2437,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 UIUtils.showThemedToast(DeckPicker.this,  message, false);
             }
 
+            String msg;
             long shrunkInMb = Math.round(databaseResult.getSizeChangeInKb() / 1024.0);
             if (shrunkInMb > 0.0) {
                 msg = String.format(Locale.getDefault(),
