@@ -427,6 +427,83 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertEquals("should be two cards", 2, getModelCardCount(collectionBasicModelOriginal));
     }
 
+    /**
+     * Deleting a template you just added - but in the same ordinal as a previous pending delete - should get it's card count correct
+     */
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
+    @Test
+    public void testDeletePendingAddExistingCardCount() {
+
+        String modelName = "Basic (optional reversed card)";
+        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+
+        // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
+        ActivityController templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
+        CardTemplateEditor testEditor = (CardTemplateEditor) templateEditorController.get();
+        Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
+        Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());
+        Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 0));
+        Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 1));
+
+        // Create note with forward and back info
+        Note selectiveGeneratedNote = getCol().newNote(collectionBasicModelOriginal);
+        selectiveGeneratedNote.setField(0, "TestFront");
+        selectiveGeneratedNote.setField(1, "TestBack");
+        selectiveGeneratedNote.setField(2, "y");
+        getCol().addNote(selectiveGeneratedNote);
+        Assert.assertEquals("card generation should result in two cards", 2, getModelCardCount(collectionBasicModelOriginal));
+
+        // Delete ord 1 / 'Card 2' and check the message
+        ShadowActivity shadowTestEditor = shadowOf(testEditor);
+        testEditor.selectTemplate(1);
+        Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete));
+        advanceRobolectricLooper();
+        Assert.assertEquals("Did not show dialog about deleting template and it's card?",
+                getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
+                getDialogText(true));
+        clickDialogButton(DialogAction.POSITIVE, true);
+        advanceRobolectricLooper();
+        Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
+        Assert.assertNotNull("Cannot delete template?", getCol().getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
+        Assert.assertNotNull("Cannot delete template?", getCol().getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
+        Assert.assertNull("Can delete both templates?", getCol().getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
+        Assert.assertEquals("Change in database despite no save?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
+        Assert.assertEquals("Model should have 1 template", 1, testEditor.getTempModel().getTemplateCount());
+
+        // Add a template - click add, click confirm for card add, click confirm again for full sync
+        shadowTestEditor.clickMenuItem(R.id.action_add);
+        advanceRobolectricLooper();
+        Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
+        Assert.assertEquals("Change added but not adjusted correctly?", 1, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 1));
+        Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 0));
+        Assert.assertTrue("Ordinal not pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 1));
+        Assert.assertEquals("Model should have 2 templates", 2, testEditor.getTempModel().getTemplateCount());
+
+        // Delete ord 1 / 'Card 2' again and check the message - it's in the same spot as the pre-existing template but there are no cards actually associated
+        testEditor.selectTemplate(1);
+        Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete));
+        advanceRobolectricLooper();
+        Assert.assertEquals("Did not show dialog about deleting template and it's card?",
+                getQuantityString(R.plurals.card_template_editor_confirm_delete, 0, 0, "Card 2"),
+                getDialogText(true));
+        clickDialogButton(DialogAction.POSITIVE, true);
+        advanceRobolectricLooper();
+        Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
+        Assert.assertNotNull("Cannot delete template?", getCol().getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0}));
+        Assert.assertNotNull("Cannot delete template?", getCol().getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {1}));
+        Assert.assertNull("Can delete both templates?", getCol().getModels().getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), new int[] {0, 1}));
+        Assert.assertEquals("Change in database despite no save?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
+        Assert.assertEquals("Model should have 1 template", 1, testEditor.getTempModel().getTemplateCount());
+
+        // Save it out and make some assertions
+        Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm));
+        advanceRobolectricLooper();
+        Assert.assertFalse("Model should now be unchanged", testEditor.modelHasChanged());
+        Assert.assertEquals("card generation should result in 1 card", 1, getModelCardCount(collectionBasicModelOriginal));
+    }
+
     private int getModelCardCount(JSONObject model) {
         int cardCount = 0;
         for (Long noteId : getCol().getModels().nids(model)) {
