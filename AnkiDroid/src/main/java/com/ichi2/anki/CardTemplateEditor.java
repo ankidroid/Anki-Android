@@ -55,6 +55,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.SlidingTabLayout;
 
 import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.regex.Matcher;
@@ -127,6 +128,10 @@ public class CardTemplateEditor extends AnkiActivity {
         outState.putLong("modelId", mModelId);
         outState.putLong("noteId", mNoteId);
         outState.putInt("ordId", mOrdId);
+
+        // Clear out any stale fragments laying around, or we have problems with state across Activity restarts
+        getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
         super.onSaveInstanceState(outState);
     }
 
@@ -335,7 +340,13 @@ public class CardTemplateEditor extends AnkiActivity {
             final int position = getArguments().getInt("position");
             TemporaryModel tempModel = mTemplateEditor.getTempModel();
             // Load template
-            final JSONObject template = tempModel.getTemplate(position);
+            final JSONObject template;
+            try {
+                template = tempModel.getTemplate(position);
+            } catch (JSONException e) {
+                Timber.d(e, "Exception loading template in CardTemplateFragment. Probably stale fragment.");
+                return mainView;
+            }
             // Load EditText Views
             mFront = ((EditText) mainView.findViewById(R.id.front_edit));
             mCss = ((EditText) mainView.findViewById(R.id.styling_edit));
