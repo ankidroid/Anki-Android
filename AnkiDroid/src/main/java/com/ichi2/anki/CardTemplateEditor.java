@@ -434,7 +434,11 @@ public class CardTemplateEditor extends AnkiActivity {
                     }
 
                     // Show confirmation dialog
-                    int numAffectedCards = col.getModels().tmplUseCount(tempModel.getModel(), position);
+                    int numAffectedCards = 0;
+                    if (!TemporaryModel.isOrdinalPendingAdd(tempModel, position)) {
+                        Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation");
+                        numAffectedCards = col.getModels().tmplUseCount(tempModel.getModel(), position);
+                    }
                     confirmDeleteCards(template, tempModel.getModel(), numAffectedCards);
                     return true;
                 }
