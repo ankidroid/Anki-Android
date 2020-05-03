@@ -1396,9 +1396,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleDbLocked() {
-        //COULD_BE_BETTER: Do something different
         Timber.i("Displaying Database Locked");
-        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
+        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED);
     }
 
 
