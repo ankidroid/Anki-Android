@@ -47,6 +47,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.debug.DatabaseLock;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
@@ -330,6 +331,18 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         return true;
                     });
                     screen.addPreference(analyticsDebugMode);
+                }
+                if (BuildConfig.DEBUG) {
+                    Timber.i("Debug mode, allowing database lock preference");
+                    Preference lockDbPreference = new Preference(this);
+                    lockDbPreference.setKey("debug_lock_database");
+                    lockDbPreference.setTitle("Lock Database");
+                    lockDbPreference.setSummary("Touch here to lock the database (all threads block in-process, exception if using second process)");
+                    lockDbPreference.setOnPreferenceClickListener(preference -> {
+                        DatabaseLock.engage(this);
+                        return true;
+                    });
+                    screen.addPreference(lockDbPreference);
                 }
                 // Force full sync option
                 ConfirmationPreference fullSyncPreference = (ConfirmationPreference)screen.findPreference("force_full_sync");
