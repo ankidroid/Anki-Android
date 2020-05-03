@@ -172,4 +172,8 @@
 
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+
+    <!-- Database Errors-->
+    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
 </resources>
