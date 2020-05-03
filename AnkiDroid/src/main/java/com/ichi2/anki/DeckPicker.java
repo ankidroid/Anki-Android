@@ -2383,8 +2383,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         });
     }
 
-
-    private class CheckDatabaseListener extends CollectionTask.TaskListener {
+    @VisibleForTesting
+    class CheckDatabaseListener extends CollectionTask.TaskListener {
         @Override
         public void onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(DeckPicker.this, AnkiDroidApp.getAppResources().getString(R.string.app_name),
