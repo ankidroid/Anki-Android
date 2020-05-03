@@ -2397,28 +2397,30 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
-            if (result != null && result.getBoolean() && result.getObjArray() != null && result.getObjArray().length > 0) {
-                String msg;
-                Collection.CheckDatabaseResult databaseResult = (Collection.CheckDatabaseResult) result.getObjArray()[0];
 
-                int count = databaseResult.getCardsWithFixedHomeDeckCount();
-                if (count != 0) {
-                    String message = getResources().getString(R.string.integrity_check_fixed_no_home_deck, count);
-                    UIUtils.showThemedToast(DeckPicker.this,  message, false);
-                }
-
-                long shrunkInMb = Math.round(databaseResult.getSizeChangeInKb() / 1024.0);
-                if (shrunkInMb > 0.0) {
-                    msg = String.format(Locale.getDefault(),
-                    getResources().getString(R.string.check_db_acknowledge_shrunk), (int) shrunkInMb);
-                } else {
-                    msg = getResources().getString(R.string.check_db_acknowledge);
-                }
-                // Show result of database check and restart the app
-                showSimpleMessageDialog(msg, true);
-            } else {
+            if (result == null || !result.getBoolean() || result.getObjArray() == null || result.getObjArray().length <= 0) {
                 handleDbError();
+                return;
             }
+
+            String msg;
+            Collection.CheckDatabaseResult databaseResult = (Collection.CheckDatabaseResult) result.getObjArray()[0];
+
+            int count = databaseResult.getCardsWithFixedHomeDeckCount();
+            if (count != 0) {
+                String message = getResources().getString(R.string.integrity_check_fixed_no_home_deck, count);
+                UIUtils.showThemedToast(DeckPicker.this,  message, false);
+            }
+
+            long shrunkInMb = Math.round(databaseResult.getSizeChangeInKb() / 1024.0);
+            if (shrunkInMb > 0.0) {
+                msg = String.format(Locale.getDefault(),
+                getResources().getString(R.string.check_db_acknowledge_shrunk), (int) shrunkInMb);
+            } else {
+                msg = getResources().getString(R.string.check_db_acknowledge);
+            }
+            // Show result of database check and restart the app
+            showSimpleMessageDialog(msg, true);
         }
 
 
