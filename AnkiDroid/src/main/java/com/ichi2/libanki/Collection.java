@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.text.TextUtils;
 import android.util.Pair;
 
@@ -63,6 +64,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
@@ -1520,12 +1522,18 @@ public class Collection {
                 return result.markAsFailed();
             }
             mDb.getDatabase().setTransactionSuccessful();
+        } catch (SQLiteDatabaseLockedException ex) {
+            Timber.e("doInBackgroundCheckDatabase - Database locked");
+            return result.markAsLocked();
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return result.markAsFailed();
         } finally {
-            mDb.getDatabase().endTransaction();
+            //if the database was locked, we never got the transaction.
+            if (mDb.getDatabase().inTransaction()) {
+                mDb.getDatabase().endTransaction();
+            }
         }
 
         executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
@@ -2154,11 +2162,20 @@ public class Collection {
         return mSched;
     }
 
+    /** Allows a mock db to be inserted for testing */
+    @VisibleForTesting
+    public void setDb(DB database) {
+        this.mDb = database;
+    }
+
     public static class CheckDatabaseResult {
         private final List<String> mProblems = new ArrayList<>();
         private long mOldSize;
         private int mFixedCardsWithNoHomeDeckCount;
         private long mNewSize;
+        /** When the database was locked */
+        private boolean mLocked = false;
+        /** When the check failed with an error (or was locked) */
         private boolean mFailed = false;
 
 
@@ -2204,6 +2221,19 @@ public class Collection {
         public CheckDatabaseResult markAsFailed() {
             this.setFailed(true);
             return this;
+        }
+
+        public CheckDatabaseResult markAsLocked() {
+            this.setLocked(true);
+            return markAsFailed();
+        }
+
+        private void setLocked(boolean value) {
+            mLocked = value;
+        }
+
+        public boolean getDatabaseLocked() {
+            return mLocked;
         }
 
 
