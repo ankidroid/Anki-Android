@@ -29,6 +29,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
@@ -233,7 +234,7 @@ public class NoteEditor extends AnkiActivity {
                 UIUtils.showThemedToast(NoteEditor.this,
                         getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
             } else {
-                UIUtils.showThemedToast(NoteEditor.this, getResources().getString(R.string.factadder_saving_error), true);
+                displayErrorSavingNote();
             }
             if (!mAddNote || mCaller == CALLER_CARDEDITOR || mAedictIntent) {
                 mChanged = true;
@@ -286,6 +287,26 @@ public class NoteEditor extends AnkiActivity {
             }
         }
     };
+
+    private void displayErrorSavingNote() {
+        int errorMessageId = getAddNoteErrorResource();
+        UIUtils.showThemedToast(this, getResources().getString(errorMessageId), true);
+    }
+
+
+    protected @StringRes int getAddNoteErrorResource() {
+        //COULD_BE_BETTER: We currently don't perform edits inside this class (wat), so we only handle adds.
+        if (this.isClozeType()) {
+            return R.string.note_editor_no_cloze_delations;
+        }
+
+        if (TextUtils.isEmpty(getCurrentFieldText(0))) {
+            return R.string.note_editor_no_first_field;
+        }
+
+        //Otherwise, display "no cards created".
+        return R.string.note_editor_no_cards_created;
+    }
 
 
     // ----------------------------------------------------------------------------
@@ -692,8 +713,8 @@ public class NoteEditor extends AnkiActivity {
         return mTagsEdited;
     }
 
-
-    private void saveNote() {
+    @VisibleForTesting
+    void saveNote() {
         final Resources res = getResources();
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<>();
@@ -1709,7 +1730,7 @@ public class NoteEditor extends AnkiActivity {
         }
         return ClozeUtils.getNextClozeIndex(fieldValues);
     }
-    
+
     private boolean isClozeType() {
         return getCurrentlySelectedModel().getInt("type") == Consts.MODEL_CLOZE;
     }

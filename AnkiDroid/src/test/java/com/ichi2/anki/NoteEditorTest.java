@@ -5,6 +5,7 @@ import android.content.Intent;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.libanki.Note;
+import com.ichi2.utils.JSONObject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +36,68 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat("Provided value should be the updated value", actualField.getFormattedValue(), is("Good Afternoon"));
     }
 
+    @Test
+    public void errorSavingNoteWithNoFirstFieldDisplaysNoFirstField() {
+        NoteEditor noteEditor = getNoteEditorAdding(NoteType.BASIC)
+                .withNoFirstField()
+                .build();
+
+        int actualResourceId = noteEditor.getAddNoteErrorResource();
+
+        assertThat(actualResourceId, is(R.string.note_editor_no_first_field));
+    }
+
+
+    @Test
+    public void errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() {
+        NoteEditor noteEditor = getNoteEditorAdding(NoteType.CLOZE)
+                .withNoFirstField()
+                .build();
+
+        int actualResourceId = noteEditor.getAddNoteErrorResource();
+
+        assertThat(actualResourceId, is(R.string.note_editor_no_cloze_delations));
+    }
+
+    @Test
+    public void errorSavingClozeNoteWithNoClozeDeletionsDisplaysClozeError() {
+        NoteEditor noteEditor = getNoteEditorAdding(NoteType.CLOZE)
+                .withFirstField("NoCloze")
+                .build();
+
+        int actualResourceId = noteEditor.getAddNoteErrorResource();
+
+        assertThat(actualResourceId, is(R.string.note_editor_no_cloze_delations));
+    }
+
+    @Test
+    public void errorSavingNoteWithNoTemplatesShowsNoCardsCreated() {
+        NoteEditor noteEditor = getNoteEditorAdding(NoteType.BACKTOFRONT)
+                .withFirstField("front is not enough")
+                .build();
+
+        int actualResourceId = noteEditor.getAddNoteErrorResource();
+
+        assertThat(actualResourceId, is(R.string.note_editor_no_cards_created));
+    }
+
+    private NoteEditorTestBuilder getNoteEditorAdding(NoteType noteType) {
+        JSONObject n = makeNoteForType(noteType);
+        return new NoteEditorTestBuilder(n);
+    }
+
+
+    private JSONObject makeNoteForType(NoteType noteType) {
+        switch (noteType) {
+            case BASIC: return getCol().getModels().byName("Basic");
+            case CLOZE: return getCol().getModels().byName("Cloze");
+            case BACKTOFRONT:
+                String name = super.addNonClozeModel("Reversed", new String[] {"Front", "Back"}, "{{Back}}", "{{Front}}");
+                return getCol().getModels().byName(name);
+            default: throw new IllegalStateException(String.format("unexpected value: %s", noteType));
+        }
+    }
+
 
     private void openAdvancedTextEditor(NoteEditor n, int fieldIndex) {
         n.startAdvancedTextEditor(fieldIndex);
@@ -45,22 +108,79 @@ public class NoteEditorTest extends RobolectricTest {
         n.setFieldValueFromUi(i, newText);
     }
 
+    private <T extends NoteEditor> T getNoteEditorAddingNote(FromScreen from, Class<T> clazz) {
+        Intent i = new Intent();
+        if (from == FromScreen.REVIEWER) {
+            i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD);
+        } else {
+            throw new IllegalStateException(" unhandled");
+        }
 
-    private NoteEditor getNoteEditorEditingExistingBasicNote(String front, String back, FromScreen reviewer) {
+        return super.startActivityNormallyOpenCollectionWithIntent(clazz, i);
+    }
+
+    private NoteEditor getNoteEditorEditingExistingBasicNote(String front, String back, FromScreen from) {
         Note n = super.addNoteUsingBasicModel(front, back);
+        return getNoteEditorEditingExistingBasicNote(n, from, NoteEditor.class);
+    }
+
+    private <T extends NoteEditor> T getNoteEditorEditingExistingBasicNote(Note n, FromScreen from, Class<T> clazz) {
 
         Intent i = new Intent();
-        if (reviewer == FromScreen.REVIEWER) {
+        if (from == FromScreen.REVIEWER) {
             i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
             AbstractFlashcardViewer.setEditorCard(n.cards().get(0));
         } else {
-            throw new IllegalStateException(reviewer.toString() + " unhandled");
+            throw new IllegalStateException(from.toString() + " unhandled");
         }
 
-        return super.startActivityNormallyOpenCollectionWithIntent(NoteEditor.class, i);
+        return super.startActivityNormallyOpenCollectionWithIntent(clazz, i);
     }
 
     private enum FromScreen {
         REVIEWER
+    }
+
+    /** We don't use constants here to allow for additional note types to be defined */
+    private enum NoteType {
+        BASIC,
+        CLOZE,
+        /**Basic, but Back is on the front */
+        BACKTOFRONT,
+    }
+
+    public class NoteEditorTestBuilder {
+
+        private final JSONObject mModel;
+        private String mFirstField;
+
+
+        public NoteEditorTestBuilder(JSONObject model) {
+            if (model == null) {
+                throw new IllegalArgumentException("model was null");
+            }
+            this.mModel = model;
+        }
+
+        public NoteEditor build() {
+            return build(NoteEditor.class);
+        }
+
+        public <T extends NoteEditor> T build(Class<T> clazz) {
+            getCol().getModels().setCurrent(mModel);
+            T noteEditor = getNoteEditorAddingNote(FromScreen.REVIEWER, clazz);
+            noteEditor.setFieldValueFromUi(0, mFirstField);
+            return noteEditor;
+        }
+
+        public NoteEditorTestBuilder withNoFirstField() {
+            return this;
+        }
+
+
+        public NoteEditorTestBuilder withFirstField(String text) {
+            this.mFirstField = text;
+            return this;
+        }
     }
 }
