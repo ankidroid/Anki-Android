@@ -721,6 +721,12 @@ public class NoteEditor extends AnkiActivity {
         }
         // treat add new note and edit existing note independently
         if (mAddNote) {
+            //Different from libAnki, block if there are no cloze deletions.
+            if (isClozeType() && !hasClozeDeletions()) {
+                displayErrorSavingNote();
+                return;
+            }
+
             // load all of the fields into the note
             for (FieldEditText f : mEditFields) {
                 updateField(f);
@@ -1719,7 +1725,9 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 
-
+    private boolean hasClozeDeletions() {
+        return getNextClozeIndex() > 1;
+    }
 
     private int getNextClozeIndex() {
         List<String> fieldValues = new ArrayList<>(mEditFields.size());
