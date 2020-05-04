@@ -1692,17 +1692,6 @@ public class NoteEditor extends AnkiActivity {
         }
 
 
-        private int getNextClozeIndex() {
-            List<String> fieldValues = new ArrayList<>(mEditFields.size());
-            for (FieldEditText e : mEditFields) {
-                Editable editable = e.getText();
-                String fieldValue = editable == null ? "" : editable.toString();
-                fieldValues.add(fieldValue);
-            }
-            return ClozeUtils.getNextClozeIndex(fieldValues);
-        }
-
-
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             // Left empty on purpose
@@ -1710,6 +1699,17 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
+
+    private int getNextClozeIndex() {
+        List<String> fieldValues = new ArrayList<>(mEditFields.size());
+        for (FieldEditText e : mEditFields) {
+            Editable editable = e.getText();
+            String fieldValue = editable == null ? "" : editable.toString();
+            fieldValues.add(fieldValue);
+        }
+        return ClozeUtils.getNextClozeIndex(fieldValues);
+    }
+    
     private boolean isClozeType() {
         return getCurrentlySelectedModel().getInt("type") == Consts.MODEL_CLOZE;
     }
