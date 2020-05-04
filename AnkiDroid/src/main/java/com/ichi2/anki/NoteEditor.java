@@ -1079,7 +1079,7 @@ public class NoteEditor extends AnkiActivity {
         }
         String[] ret = new String[mEditFields.size()];
         for (int i = 0; i < mEditFields.size(); i++) {
-            ret[i] = mEditFields.get(i).getText().toString();
+            ret[i] = getCurrentFieldText(i);
         }
         return ret;
     }
@@ -1347,9 +1347,15 @@ public class NoteEditor extends AnkiActivity {
     private String getFieldsText() {
         String[] fields = new String[mEditFields.size()];
         for (int i = 0; i < mEditFields.size(); i++) {
-            fields[i] = mEditFields.get(i).getText().toString();
+            int i1 = i;
+            fields[i] = getCurrentFieldText(i1);
         }
         return Utils.joinFields(fields);
+    }
+
+    /** Returns the value of the field at the given index */
+    private String getCurrentFieldText(int index) {
+        return mEditFields.get(index).getText().toString();
     }
 
 
@@ -1559,7 +1565,7 @@ public class NoteEditor extends AnkiActivity {
                 int size = mEditFields.size();
                 String[] oldValues = new String[size];
                 for (int i = 0; i < size; i++) {
-                    oldValues[i] = mEditFields.get(i).getText().toString();
+                    oldValues[i] = getCurrentFieldText(i);
                 }
                 setNote();
                 resetEditFields(oldValues);
@@ -1712,7 +1718,7 @@ public class NoteEditor extends AnkiActivity {
     @VisibleForTesting
     void startAdvancedTextEditor(int index) {
         TextField field = new TextField();
-        field.setText(mEditFields.get(index).getText().toString());
+        field.setText(getCurrentFieldText(index));
         startMultimediaFieldEditorForField(index, field);
     }
 
