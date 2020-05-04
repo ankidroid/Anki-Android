@@ -152,7 +152,8 @@ An apk file signed with a standard "debug" key will be generated named `"AnkiDro
 ## Handling translations
 As described in the [contributing wiki](https://github.com/ankidroid/Anki-Android/wiki/Contributing#translate-ankidroid), AnkiDroid localization is done through the Crowdin platform. Developers should basically ignore all resource folders that have non-English locales. Edit the English strings only, and one of the project owners will handle the syncing of the translations. The process works as follows:
 
-* Developers can freely add, delete, or modify strings in English to the resources folder and commit to git
+* Developers can freely add, delete, or modify strings in English to the resources folder (`values/`) and commit to git.
+  * Renaming translation keys should be avoided if at all possible if the use is the same as it causes re-translation (appears as a delete-old/add-new to translators).
 * A project owner will run a script that pushes those changes to the crowdin platform
 * Translators will see any new untranslated strings on crowdin and submit their translations
 * Before release a project owner will run another script which pulls all the current translations from crowdin and overwrites the existing files
