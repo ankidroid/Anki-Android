@@ -7,6 +7,7 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.shadows.ShadowActivity;
@@ -105,6 +106,20 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(getCardCount(), is(initialCards + 1));
     }
 
+    @Test
+    @Ignore("Not yet implemented")
+    public void clozeNoteWithClozeInWrongFieldDoesNotSave() {
+        //Anki Desktop blocks with "Continue?", we sould just block to match the above test
+        int initialCards = getCardCount();
+        NoteEditor editor = getNoteEditorAdding(NoteType.CLOZE)
+                .withSecondField("{{c1::AnkiDroid}} is fantastic")
+                .build();
+
+        editor.saveNote();
+
+        assertThat(getCardCount(), is(initialCards));
+    }
+
     private int getCardCount() {
         return getCol().cardCount();
     }
@@ -181,6 +196,7 @@ public class NoteEditorTest extends RobolectricTest {
 
         private final JSONObject mModel;
         private String mFirstField;
+        private String mSecondField;
 
 
         public NoteEditorTestBuilder(JSONObject model) {
@@ -198,6 +214,9 @@ public class NoteEditorTest extends RobolectricTest {
             getCol().getModels().setCurrent(mModel);
             T noteEditor = getNoteEditorAddingNote(FromScreen.REVIEWER, clazz);
             noteEditor.setFieldValueFromUi(0, mFirstField);
+            if (mSecondField != null) {
+                noteEditor.setFieldValueFromUi(1, mSecondField);
+            }
             return noteEditor;
         }
 
@@ -208,6 +227,12 @@ public class NoteEditorTest extends RobolectricTest {
 
         public NoteEditorTestBuilder withFirstField(String text) {
             this.mFirstField = text;
+            return this;
+        }
+
+
+        public NoteEditorTestBuilder withSecondField(String text) {
+            this.mSecondField = text;
             return this;
         }
     }
