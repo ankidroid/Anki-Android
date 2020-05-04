@@ -1705,13 +1705,7 @@ public class NoteEditor extends AnkiActivity {
 
 
     private boolean isClozeType() {
-        int noteModelType;
-        try {
-            noteModelType = getCurrentlySelectedModel().getInt("type");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        return noteModelType == Consts.MODEL_CLOZE;
+        return getCurrentlySelectedModel().getInt("type") == Consts.MODEL_CLOZE;
     }
 
 
