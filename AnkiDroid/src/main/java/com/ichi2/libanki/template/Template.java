@@ -153,25 +153,41 @@ public class Template {
     private String render_tags(String template, Map<String, String> context) {
         StringBuffer sb = new StringBuffer();
         Matcher match = sTag_re.matcher(template);
-        while (match.find()) {
-            String tag_type = match.group(1);
-            String tag_name = match.group(2).trim();
-            String replacement;
-            if (tag_type == null) {
-                replacement = render_unescaped(tag_name, context);
-            } else if ("{".equals(tag_type)) {
-                replacement = render_tag(tag_name, context);
-            } else if ("!".equals(tag_type)) {
-                replacement = render_comment();
-            } else if ("=".equals(tag_type)) {
-                replacement = render_delimiter(tag_name);
-            } else {
-                return "{{invalid template}}";
+        // Whether the whole search/replace should be restarted. This would occur only if the field delimiter where changed.
+        boolean restart = true;
+        while(restart) {
+            restart = false;
+            while (match.find()) {
+                String tag_type = match.group(1);
+                String tag_name = match.group(2).trim();
+                String replacement;
+                if (tag_type == null) {
+                    replacement = render_unescaped(tag_name, context);
+                } else if ("{".equals(tag_type)) {
+                    replacement = render_tag(tag_name, context);
+                } else if ("!".equals(tag_type)) {
+                    replacement = render_comment();
+                } else if ("=".equals(tag_type)) {
+                    replacement = render_delimiter(tag_name);
+                    /* Fields delimiter are now changed. We must
+                     * restart the search/replace process.
+
+                     * The new search/replace is executed on the whole
+                     * field.  This means that the previous field
+                     * delimiter was applied up to the change, and the
+                     * new field delimiter is applied everywhere.*/
+                    match.appendReplacement(sb, Matcher.quoteReplacement(replacement));
+                    restart = true;
+                    break;
+                } else {
+                    return "{{invalid template}}";
+                }
+                match.appendReplacement(sb, Matcher.quoteReplacement(replacement));
             }
-            match.appendReplacement(sb, Matcher.quoteReplacement(replacement));
+            match.appendTail(sb);
+            template = sb.toString();
         }
-        match.appendTail(sb);
-        return sb.toString();
+        return template;
     }
 
     /**
