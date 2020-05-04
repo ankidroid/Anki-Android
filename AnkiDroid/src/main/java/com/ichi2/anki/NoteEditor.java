@@ -722,6 +722,7 @@ public class NoteEditor extends AnkiActivity {
         // treat add new note and edit existing note independently
         if (mAddNote) {
             //Different from libAnki, block if there are no cloze deletions.
+            //DEFECT: This does not block addition if cloze transpositions are in non-cloze fields.
             if (isClozeType() && !hasClozeDeletions()) {
                 displayErrorSavingNote();
                 return;
@@ -1730,6 +1731,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
     private int getNextClozeIndex() {
+        /** BUG: This assumes all fields are inserted as: {{cloze:Text}} */
         List<String> fieldValues = new ArrayList<>(mEditFields.size());
         for (FieldEditText e : mEditFields) {
             Editable editable = e.getText();
