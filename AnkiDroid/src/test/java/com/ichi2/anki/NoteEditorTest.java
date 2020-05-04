@@ -81,6 +81,34 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(actualResourceId, is(R.string.note_editor_no_cards_created));
     }
 
+    @Test
+    public void clozeNoteWithNoClozeDeletionsDoesNotSave() {
+        int initialCards = getCardCount();
+        NoteEditor editor = getNoteEditorAdding(NoteType.CLOZE)
+                .withFirstField("no cloze deletions")
+                .build();
+
+        editor.saveNote();
+
+        assertThat(getCardCount(), is(initialCards));
+    }
+
+    @Test
+    public void clozeNoteWithClozeDeletionsDoesSave() {
+        int initialCards = getCardCount();
+        NoteEditor editor = getNoteEditorAdding(NoteType.CLOZE)
+                .withFirstField("{{c1::AnkiDroid}} is fantastic")
+                .build();
+
+        editor.saveNote();
+
+        assertThat(getCardCount(), is(initialCards + 1));
+    }
+
+    private int getCardCount() {
+        return getCol().cardCount();
+    }
+
     private NoteEditorTestBuilder getNoteEditorAdding(NoteType noteType) {
         JSONObject n = makeNoteForType(noteType);
         return new NoteEditorTestBuilder(n);
