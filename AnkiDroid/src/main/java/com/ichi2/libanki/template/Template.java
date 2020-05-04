@@ -48,7 +48,6 @@ import java.util.regex.Pattern;
 public class Template {
     public static final String clozeReg = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
-    private static final Pattern fClozeSection = Pattern.compile("c[qa]:(\\d+):(.+)");
     private static final String TAG = Template.class.getName();
 
     // The regular expression used to find a #section
