@@ -71,6 +71,8 @@ public class Template {
     private String mTemplate;
     private Map<String, String> mContext;
 
+    private static String ALT_HANDLEBAR_DIRECTIVE = "{{=<% %>=}}";
+
     private static String get_or_attr(Map<String, String> obj, String name) {
         return get_or_attr(obj, name, null);
     }
@@ -150,6 +152,9 @@ public class Template {
      * Renders all the tags in a template for a context.
      */
     private String render_tags(String template, Map<String, String> context) {
+        if (template.indexOf(ALT_HANDLEBAR_DIRECTIVE) != -1) {
+            template = template.replace(ALT_HANDLEBAR_DIRECTIVE, "").replace("<%", "{{").replace("%>", "}}");
+        }
         StringBuffer sb = new StringBuffer();
         Matcher match = sTag_re.matcher(template);
         while (match.find()) {
