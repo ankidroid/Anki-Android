@@ -49,6 +49,8 @@ import java.util.regex.Pattern;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
+
+//NICE_TO_HAVE: Abstract, then add tests fir #6111
 /**
  * Class used to parse, load and play sound files on AnkiDroid.
  */
@@ -381,12 +383,9 @@ public class Sound {
 
         @Override
         public void onCompletion(MediaPlayer mp) {
-            try {
-                //We call onCompletion first, as we release the media player in releaseSound()
-                if (userCallback != null) {
-                    userCallback.onCompletion(mp);
-                }
-            } finally {
+            if (userCallback != null) {
+                userCallback.onCompletion(mp);
+            } else {
                 releaseSound();
             }
         }
