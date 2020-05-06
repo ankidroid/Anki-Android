@@ -50,17 +50,17 @@ public class Template {
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
     private static final String TAG = Template.class.getName();
 
-    // The regular expression used to find a #section
-    private Pattern sSection_re = null;
-
-    // The regular expression used to find a tag.
-    private Pattern sTag_re = null;
-
     // Opening tag delimiter
     private static final String sOtag = Pattern.quote("{{");
 
     // Closing tag delimiter
     private static final String sCtag = Pattern.quote("}}");
+
+    // The regular expression used to find a #section
+    private Pattern sSection_re = null;
+
+    // The regular expression used to find a tag.
+    private Pattern sTag_re = null;
 
     // MathJax opening delimiters
     private static String sMathJaxOpenings[] = {"\\(", "\\["};
