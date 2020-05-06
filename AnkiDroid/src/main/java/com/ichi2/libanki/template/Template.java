@@ -57,10 +57,10 @@ public class Template {
     private Pattern sTag_re = null;
 
     // Opening tag delimiter
-    private String sOtag = "{{";
+    private String sOtag = Pattern.quote("{{");
 
     // Closing tag delimiter
-    private String sCtag = "}}";
+    private String sCtag = Pattern.quote("}}");
 
     // MathJax opening delimiters
     private static String sMathJaxOpenings[] = {"\\(", "\\["};
@@ -105,13 +105,10 @@ public class Template {
      * Compiles our section and tag regular expressions.
      */
     private void compile_regexps() {
-        String otag = Pattern.quote(sOtag);
-        String ctag = Pattern.quote(sCtag);
-
-        String section = otag + "[\\#|^]([^\\}]*)" + ctag + "(.+?)" + otag + "/\\1" + ctag;
+        String section = sOtag + "[\\#|^]([^\\}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag;
         sSection_re = Pattern.compile(section, Pattern.MULTILINE | Pattern.DOTALL);
 
-        String tag = otag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + ctag + "+";
+        String tag = sOtag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + sCtag + "+";
         sTag_re = Pattern.compile(tag);
     }
 
