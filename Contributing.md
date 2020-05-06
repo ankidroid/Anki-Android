@@ -123,7 +123,7 @@ It's sometimes possible for core and non-core developers to help with troublesho
 <tr><td> Docomo Market </td><td> Nicolas Raoul     </td><td> Facade to Google's market </td><td> Published     </td><td> Can't be known   </td></tr>
 <tr><td> Ndoo (aka nduao, N多市场) </td><td> Nicolas Raoul     </td><td> <a href='http://www.nduoa.com/apk/detail/234425'>1.1beta21</a> </td><td> Published     </td><td> 13,131           </td></tr>
 <tr><td> <a href='http://www.telefon.de/apps_detail.asp?app_id=86373'>telefon.de</a> </td><td> Nicolas Raoul     </td><td> Facade to Google's market </td><td> Published     </td><td> Can't be known   </td></tr>
-<tr><td> <a href='http://f-droid.org/repository/browse/?fdfilter=ankidroid&fdid=com.ichi2.anki'>F-Droid</a> </td><td> Anyone            </td><td> 2.8.4                    </td><td> Published     </td><td> Can't be known   </td></tr>
+<tr><td> <a href='https://f-droid.org/en/packages/com.ichi2.anki/'>F-Droid</a> </td><td> Anyone            </td><td> 2.9.6<sup></sup>                    </td><td> Published (Auto-updating from GitHub releases)</td><td> Can't be known   </td></tr>
 <tr><td> <a href='https://github.com/ankidroid/Anki-Android/releases'>Direct APK download</a> </td><td> Nicolas Raoul and Tim </td><td> all versions             </td><td> Published     </td><td> Thousands        </td></tr></tbody></table>
 
 # Administration
