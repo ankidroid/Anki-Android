@@ -272,7 +272,7 @@
     <string name="deck_conf_cram_limit">الحد إلى</string>
     <string name="deck_conf_cram_order">بطاقات مختارة من قبل</string>
     <string name="deck_conf_cram_reschedule">إعادة جدولة</string>
-    <string name="deck_conf_cram_reschedule_summ">إعادة جدولة بطاقات استناداً إلى إجاباتي في هذه الرزمة</string>
+    <string name="deck_conf_cram_reschedule_summ">إعادة جدولة بطاقات استناداً إلى إجاباتي في شَدّة الأوراق هذه</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">تحديد الخطوات مخصصة</string>
     <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>

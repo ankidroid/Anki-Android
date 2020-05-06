@@ -64,12 +64,12 @@
         <item quantity="other">%d minutos restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d hora %d restante</item>
+        <item quantity="other">%d horas %d restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d dia %d restante</item>
+        <item quantity="other">%d dias %d restantes</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -111,13 +111,13 @@
     <string name="menu_bury">Ocultar</string>
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Excluir nota</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag">Sinalizar</string>
+    <string name="menu_flag_card">Sinalizar cartão</string>
+    <string name="menu_flag_card_zero">Sem sinalização</string>
+    <string name="menu_flag_card_one">Sinalização vermelha</string>
+    <string name="menu_flag_card_two">Sinalização laranja</string>
+    <string name="menu_flag_card_three">Sinalização verde</string>
+    <string name="menu_flag_card_four">Sinalização azul</string>
     <string name="delete_note_message">Deseja realmente excluir esta nota e todos seus cartões?\n%s</string>
     <string name="menu_select">Selecionar texto</string>
     <string name="menu_search">Pesquisar em %1$s</string>

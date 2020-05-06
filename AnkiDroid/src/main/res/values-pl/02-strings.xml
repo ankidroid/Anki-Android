@@ -91,10 +91,10 @@
         <item>Powtórki</item>
         <item>Przerwa</item>
         <item>Łatwość</item>
-        <item>Due</item>
-        <item>Changed</item>
-        <item>Created</item>
-        <item>Edited</item>
+        <item>Do przejrzenia</item>
+        <item>Zmieniona</item>
+        <item>Stworzona</item>
+        <item>Zmieniona</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Zwiększ dzisiejszy limit nowych kart</string>
@@ -108,9 +108,11 @@
     <string name="cardeditor_title_add_note">Dodaj notatkę</string>
     <string name="cardeditor_title_edit_card">Edytuj notatkę</string>
     <string name="discard_unsaved_changes">Zamknąć i utracić bieżący wkład?</string>
-    <string name="factadder_saving_error">Błąd podczas zapisywania notatki</string>
+    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="saving_facts">Zapisywanie notatki</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Zapis typu notatki</string>
     <string name="add">Dodaj</string>
     <string name="save">Zapisz</string>
     <string name="close">Zamknij</string>
@@ -134,8 +136,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">Witamy w AnkiDroid</string>
     <string name="fact_adder_intent_title">Karta AnkiDroida</string>
-    <string name="note_editor_add_note">Add note</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_add_note">Zapisz notatkę</string>
+    <string name="note_editor_copy_note">Kopiuj notatkę</string>
     <string name="card_editor_copy_card">Kopiuj kartę</string>
     <string name="card_editor_reposition_card">Przestawianie</string>
     <string name="card_editor_reset_card">Resetuj postępy</string>
@@ -167,12 +169,12 @@
     <string name="import_message_replace_confirm">Istniejąca kolekcja zostanie usunięta i zastąpiona danymi z pliku %s. Czy na pewno?</string>
     <string name="import_message_add_confirm">Dodać \"%s\" do kolekcji? To może trwać bardzo długo</string>
     <string name="import_log_no_apkg">To nie jest prawidłowy plik pakietu Anki</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_unhandled_request">Nie udało się przetworzyć żądania importu</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Nazwa pliku \"%s\" nie ma rozszerzenia .apkg lub .colpkg</string>
     <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
     <string name="import_replacing">Zamiana kolekcji&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Import przerwany</string>
     <string name="export_include_schedule">Włącznie z zaplanowanymi powtórkami</string>
     <string name="export_include_media">Włącznie z plikami mediów</string>
     <string name="confirm_apkg_export">Wyeksportować kolekcję jako pakiet Anki?</string>
@@ -266,9 +268,11 @@
     <string name="export_v2_dummy_note">Ten plik wymaga nowszej wersji Anki.</string>
     <string name="export_v2_forbidden">Wybierz program planujący V1 przed eksportowaniem jednej talii z informacjami planowania.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
+    <string name="activity_start_failed_load_url">Ładowanie \'%s\' nie powiodło się.</string>
+    <string name="activity_start_failed">System nie ma zainstalowanej aplikacji, która może wykonać tę czynność.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="no_browser_notification">Nie znaleziono przeglądarki, odwiedź stronę przez komputer lub telefon komórkowy: </string>
+    <string name="no_outgoing_link_in_cardbrowser">Linki zewnętrzne w kartach nie są obsługiwane.</string>
+    <!-- The name of the deck which corrupt cards will be moved to -->
+    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
 </resources>

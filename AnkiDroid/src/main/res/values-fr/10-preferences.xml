@@ -141,9 +141,9 @@
     <string name="select_locale_title">Sélectionnez la langue</string>
     <string name="safe_display">Mode d’affichage protégé</string>
     <string name="safe_display_summ">Désactiver toutes les animations et utiliser le mode sécurisé pour afficher les cartes. Les appareils à encre électronique peuvent nécessiter ceci.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">Désactiver le mode d\'édition à champ unique</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Autorise le menu contextuel « Texte à trous » dans le mode paysage.</string>
     <string name="vertical_centering">Aligner au centre</string>
     <string name="vertical_centering_summ">Centrer verticalement le contenu des cartes</string>
     <string name="pref_backup_max">Nombre de sauvegarde max</string>
@@ -222,8 +222,8 @@
     <string name="deck_conf_new_bury_summ">Les nouvelles cartes similaires sont enterrées jusqu’au prochain jour</string>
     <string name="deck_conf_rev_bury">Enterrer les révisions similaires</string>
     <string name="deck_conf_rev_bury_summ">Les révisions similaires sont enterrées jusqu’au prochain jour</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings">Utiliser les paramètres généraux</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Utiliser les paramètres généraux d’affichage automatique de la réponse au lieu d\'utiliser les paramètres de ce groupe.</string>
     <string name="deck_conf_easy_bonus">Bonus de facilité</string>
     <string name="deck_conf_ivl_fct">Modificateur d’intervalle</string>
     <string name="deck_conf_max_ivl">Intervalle maximal</string>

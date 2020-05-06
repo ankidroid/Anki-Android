@@ -161,11 +161,11 @@
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Początek kolejnego dnia</string>
     <string name="day_offset_summ">XXX godzin po północy</string>
-    <string name="sched_ver">Eksperymentalny program planujący V2</string>
+    <string name="sched_ver">Eksperymentalny planista V2</string>
     <string name="sched_ver_summ">Włącz eksperymentalny program planujący. Wymusza zmiany w jednym kierunku przy następnej synchronizacji</string>
     <string name="sched_ver_toggle_title">Potwierdź</string>
     <string name="sched_ver_2to1">To zresetuje wszystkie karty uczone, wyczyści filtrowane talie i zmieni wersję programu planującego. Kontynuować?</string>
-    <string name="sched_ver_1to2">Eksperymentalny program planujący może powodować nieprawidłowe planowanie. Upewnij się, że przeczytałeś wcześniej dokumentację. Kontynuować?</string>
+    <string name="sched_ver_1to2">Eksperymentalny planista może powodować nieprawidłowe planowanie. Upewnij się, że przeczytałeś wcześniej dokumentację. Kontynuować?</string>
     <string name="pref_keep_screen_on">Utrzymuj włączony ekran</string>
     <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
     <string name="convert_fen_text">Obsługa notacji szachowej</string>

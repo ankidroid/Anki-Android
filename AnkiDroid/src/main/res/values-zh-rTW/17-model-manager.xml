@@ -53,6 +53,7 @@
     <string name="model_field_editor_rename">重新命名欄位</string>
     <string name="model_field_editor_reposition_menu">修改字段位置</string>
     <string name="model_field_editor_reposition">修改字段位置（輸入%1$d~%2$d的數值）</string>
+    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">更新欄位</string>
     <string name="model_field_editor_sort_field">按此字段排序</string>
     <string name="model_clone_suffix">複本</string>

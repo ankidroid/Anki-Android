@@ -39,81 +39,83 @@
 -->
 <resources>
     <!-- Navigation drawer items-->
-    <string name="decks">Decks</string>
-    <string name="card_browser">Card browser</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="studyoptions_title">Deck overview</string>
-    <string name="studyoptions_due_today">Due today:</string>
-    <string name="studyoptions_new_total">Total new cards:</string>
-    <string name="studyoptions_total_cards">Total cards:</string>
+    <string name="decks">สำรับ</string>
+    <string name="card_browser">ตัวเลือกการ์ด</string>
+    <string name="statistics">สถิติ</string>
+    <string name="settings">การตั้งค่า</string>
+    <string name="help">วิธีใช้</string>
+    <string name="send_feedback">ส่งคำติชม</string>
+    <string name="studyoptions_title">สำรับทั้งหมด</string>
+    <string name="studyoptions_due_today">ภายในวันนี้:</string>
+    <string name="studyoptions_new_total">การ์ดใหม่ทั้งหมด:</string>
+    <string name="studyoptions_total_cards">การ์ดทั้งหมด:</string>
     <string name="studyoptions_eta">เวลาโดยประมาณ (นาที) :</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="studyoptions_start">เริ่มเรียน</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">ขยาย</string>
+    <string name="collapse">ซ่อน</string>
+    <string name="study_more">เรียนเพิ่ม</string>
     <plurals name="deckpicker_title">
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="other">%1$d การ์ด ภายใน (%2$s)
+%1$d การ์ด ภายใน (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">เหลืออีก %d นาที
+เหลืออีก %d นาที</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">เหลืออีก %d ชั่วโมง %d</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">เหลืออีก %d day %d </item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="other">วันนี้เรียนไป %1$d การ์ดภายใน %2$s </item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
+    <string name="type_answer_hint">พิมพ์คำตอบ</string>
     <string name="show_answer">แสดงคำตอบ</string>
     <string name="ease_button_again">อีกครั้ง</string>
     <string name="ease_button_hard">ยาก</string>
     <string name="ease_button_good">ดี</string>
     <string name="ease_button_easy">ง่าย</string>
-    <string name="studyoptions_congrats_undo">Undo %s</string>
-    <string name="menu_import">Import</string>
+    <string name="studyoptions_congrats_undo">ยกเลิก %s</string>
+    <string name="menu_import">นําเข้า</string>
     <string name="undo">เรียกคืน</string>
-    <string name="undo_action_review">last review</string>
-    <string name="undo_action_bury_card">bury card</string>
-    <string name="undo_action_bury_note">bury note</string>
-    <string name="undo_action_suspend_card">suspend card</string>
-    <string name="undo_action_suspend_note">suspend note</string>
-    <string name="undo_action_delete">delete note</string>
-    <string name="undo_action_delete_multi">delete notes</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
-    <string name="move_all_to_deck">Move all to deck</string>
-    <string name="unbury">Unbury</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="menu_add">Add</string>
-    <string name="menu_add_note">Add note</string>
-    <string name="menu_my_account">Sync account</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
-    <string name="menu_bury_card">Bury card</string>
-    <string name="menu_bury_note">Bury note</string>
+    <string name="undo_action_review">ทบทวนครั้งล่าสุด</string>
+    <string name="undo_action_bury_card">ซ่อนการ์ด</string>
+    <string name="undo_action_bury_note">ซ่อนโน้ต</string>
+    <string name="undo_action_suspend_card">ระงับการ์ด</string>
+    <string name="undo_action_suspend_note">ระงับโน้ต</string>
+    <string name="undo_action_delete">ลบโน้ต</string>
+    <string name="undo_action_delete_multi">ลบโน้ต</string>
+    <string name="undo_action_change_deck_multi">เปลี่ยนสำรับ</string>
+    <string name="undo_action_reschedule_card">ตั้งเวลาใหม่</string>
+    <string name="undo_action_reset_card">ตั้งค่าความคืบหน้าใหม่</string>
+    <string name="undo_action_reposition_card">เคลื่อนย้าย</string>
+    <string name="move_all_to_deck">ย้ายทั้งหมดไปที่สำรับ</string>
+    <string name="unbury">ยกเลิกการซ่อน</string>
+    <string name="rename_deck">เปลี่ยนชื่อสำรับ</string>
+    <string name="menu_add">เพิ่ม</string>
+    <string name="menu_add_note">เพิ่มโน้ต</string>
+    <string name="menu_my_account">เชื่อมบัญชีผู้ใช้</string>
+    <string name="menu_dismiss_note">ซ่อน / ลบ</string>
+    <string name="menu_bury_card">ซ่อนการ์ด</string>
+    <string name="menu_bury_note">ซ่อนโน้ต</string>
     <string name="menu_suspend_card">ระงับบัตร</string>
-    <string name="menu_suspend_note">Suspend note</string>
-    <string name="menu_bury">Bury</string>
-    <string name="menu_suspend">Suspend</string>
-    <string name="menu_delete_note">Delete note</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+    <string name="menu_suspend_note">ระงับโน้ต</string>
+    <string name="menu_bury">ซ่อน</string>
+    <string name="menu_suspend">ระงับ</string>
+    <string name="menu_delete_note">ลบโน้ต</string>
+    <string name="menu_flag">เครื่องหมาย</string>
+    <string name="menu_flag_card">เครื่องหมายการ์ด</string>
+    <string name="menu_flag_card_zero">ไม่มีเครื่องหมาย</string>
+    <string name="menu_flag_card_one">เครื่อมหมายสีแดง</string>
+    <string name="menu_flag_card_two">เครื่องหมายสีส้ม</string>
+    <string name="menu_flag_card_three">เครื่องหมายสีเขียว</string>
+    <string name="menu_flag_card_four">เครื่องหมายสีน้ำเงิน</string>
+    <string name="delete_note_message">คุณต้องการจะลบโน้ตนี้และการ์ดภายในทั้งหมดหรือไม่?\n%s</string>
     <string name="menu_select">เลือกข้อความ</string>
     <string name="menu_search">ค้นหาใน %1$s</string>
     <string name="menu_mark_note">Mark note</string>

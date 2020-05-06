@@ -39,13 +39,13 @@
 -->
 <resources>
     <!-- Navigation drawer items-->
-    <string name="decks">الرزم</string>
+    <string name="decks">شَدّة أوراق</string>
     <string name="card_browser">متصفح البطاقات</string>
     <string name="statistics">الإحصائيات</string>
     <string name="settings">الإعدادات</string>
     <string name="help">المساعدة</string>
     <string name="send_feedback">إرسال الآراء والاقتراحات</string>
-    <string name="studyoptions_title">نظرة عامة عن الرزمة</string>
+    <string name="studyoptions_title">نظرة عامة عن شَدّة الأوراق</string>
     <string name="studyoptions_due_today">المستحق اليوم:</string>
     <string name="studyoptions_new_total">مجموع البطاقات الجديدة:</string>
     <string name="studyoptions_total_cards">مجموع البطاقات:</string>
@@ -113,13 +113,13 @@
     <string name="undo_action_suspend_note">علق الملاحظة</string>
     <string name="undo_action_delete">احذف الملاحظة</string>
     <string name="undo_action_delete_multi">حذف الملاحظات</string>
-    <string name="undo_action_change_deck_multi">تغيير المجاميع</string>
+    <string name="undo_action_change_deck_multi">تغيير شَدّات الأوراق</string>
     <string name="undo_action_reschedule_card">إعادة الجدولة</string>
     <string name="undo_action_reset_card">إعادة تعيين التقدم</string>
     <string name="undo_action_reposition_card">إعادة التوضيع</string>
-    <string name="move_all_to_deck">نقل الكل إلى المجاميع</string>
+    <string name="move_all_to_deck">نقل الكل إلى شَدّة الأوراق</string>
     <string name="unbury">إلغِ الدفن</string>
-    <string name="rename_deck">أعِد تسمية المجموعة</string>
+    <string name="rename_deck">إعادة تسمية شَدّة الأوراق</string>
     <string name="menu_add">اضافة</string>
     <string name="menu_add_note">إضافة ملاحظة</string>
     <string name="menu_my_account">حساب المزامنة</string>
@@ -143,9 +143,9 @@
     <string name="menu_search">البحث في %1$s</string>
     <string name="menu_mark_note">أشِّر الملاحظة</string>
     <string name="menu_unmark_note">الغِ تأشير الملاحظة</string>
-    <string name="new_deck">إنشاء داك</string>
+    <string name="new_deck">إنشاء شَدّة أوراق</string>
     <string name="create">إنشاء</string>
-    <string name="new_dynamic_deck">انشئ مجموعة مُفَلتَرة</string>
+    <string name="new_dynamic_deck">انشئ شَدّة أوراق مُفَلتَرة</string>
     <string name="night_mode">وضع ليلي</string>
     <string name="directory_inaccessible">لا يمكن الوصول لدليل آنكيدرويد</string>
     <!--
@@ -162,14 +162,14 @@
     <string name="time_quantity_months">%.1f شهر</string>
     <string name="time_quantity_years">%.1f سنة</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">إعادة بناء حزمة المراجعة المركزة.\n يرجى الانتظار...</string>
+    <string name="rebuild_cram_deck">إعادة بناء المراجعة المركزة لشَدّة الأوراق.\n يرجى الانتظار...</string>
     <string name="rebuild_cram_label">إعادة بناء</string>
     <string name="empty_cram_label">فارغ</string>
-    <string name="empty_cram_deck">إفراغ حزمة المراجعة المركزة.\n يرجى الانتظار...</string>
+    <string name="empty_cram_deck">إفراغ المراجعة المركزة لشَدّة الأوراق.\n يرجى الانتظار...</string>
     <string name="custom_study_deck_name">دورة دراسية مخصصة</string>
-    <string name="custom_study_deck_exists">الرجاء إعادة تسمية قاعدة الدراسة المخصصة الحالية اولاً.</string>
-    <string name="empty_deck">هذه المجموعة فارغة</string>
-    <string name="studyoptions_empty">هذه المجموعة فارغة. اضغط الزر + لاضافة محتوى جديد.</string>
+    <string name="custom_study_deck_exists">الرجاء إعادة تسمية شَدّة الأوراق المدرسة المخصصة الحالية اولاً.</string>
+    <string name="empty_deck">شَدّة الأوراق هذه فارغة</string>
+    <string name="studyoptions_empty">شَدّة الأوراق هذه فارغة. اضغط الزر + لإضافة محتوى جديد.</string>
     <string name="studyoptions_limit_reached">تم الوصول لحد الدراسة اليومي</string>
     <string name="studyoptions_empty_schedule">لا توجد بطاقات مُجَدْوَلة للدراسة</string>
     <string name="studyoptions_congrats_finished">تهانينا! لقد انتهيت لهذا الوقت.</string>
@@ -186,7 +186,7 @@
     <string name="sync_cancel_message">إلغاء&#8230;\nقد يستغرق الامر بعض الوقت.</string>
     <string name="export">تصدير</string>
     <string name="export_collection">صَدِّر التجميعة</string>
-    <string name="export_deck">صَدِّرِ المجموعة</string>
+    <string name="export_deck">تصدير شَدّة الأوراق</string>
     <string name="nothing">فارغ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">أنواع البطاقة</string>
@@ -208,5 +208,5 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة البيانات أنكيدرويد</string>
-    <string name="read_write_permission_description">حصل على ملاحظات، وبطاقات، وأنواع الملاحظات، ورزما وأنشأ جديدة</string>
+    <string name="read_write_permission_description">حصل على ملاحظات، وبطاقات، وأنواع الملاحظات، وشَدّات أوراق، كما يمكن أيضاً إنشاء شَدّات أوراق جديدة.</string>
 </resources>

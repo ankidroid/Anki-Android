@@ -59,6 +59,7 @@
     <string name="model_field_editor_rename">שינוי שם שדה</string>
     <string name="model_field_editor_reposition_menu">שינוי מיקום שדה</string>
     <string name="model_field_editor_reposition">שינוי מיקום שדה (נא להקליד ערך %1$d–%2$d)</string>
+    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">השדות מעודכנים</string>
     <string name="model_field_editor_sort_field">סידור לפי השדה הזה</string>
     <string name="model_clone_suffix">העתק</string>

@@ -41,7 +41,7 @@
     <string name="check_db_title">Проверить базу данных?</string>
     <string name="check_db_warning">Это может занять много времени</string>
     <string name="check_db_acknowledge">База данных проверена</string>
-    <string name="check_db_acknowledge_shrunk">База проверена, оптимизирована\nи сжата на %d кБ.</string>
+    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
     <string name="delete_deck_default_deck">Нельзя удалить колоду по умолчанию</string>
     <string name="delete_deck_title">Удалить колоду?</string>
@@ -116,7 +116,7 @@
     <string name="custom_study_ahead">На сколько дней опередить повторение:</string>
     <string name="custom_study_random">Сколько случайных карточек отобрать:</string>
     <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_rebuild_deck_corrupt">Не удалось перестроить пользовательскую обучающую колоду</string>
     <string name="rebuild_custom_study_deck">Дополнительная колода пересобирается&#8230;</string>
     <string name="importing_collection">Коллекция импортируется&#8230;</string>
     <string name="import_media_count">Импортируются медиафайлы %1$d%%&#8230;</string>
@@ -171,8 +171,8 @@
     <string name="multimedia_editor_audio_permission_denied">Не удалось получить разрешение на запись звука</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">AnkiDroid приветствует вас!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid требует разрешения на хранение, которое мы используем исключительно для хранения вашей коллекции AnkiDroid, флэш-карт и резервных копий. Наш код с открытым исходным кодом, написан добровольцами и пользуется доверием миллионов людей.\n\nЕсли у вас есть вопросы, пожалуйста, зайдите в наше руководство в приложении или посетите наши форумы поддержки.\n\nСпасибо за то, что попробовали AnkiDroid!\n-Команда разработчиков AnkiDroid.</string>
+    <string name="mutimedia_editor_assertion_failed">Произошла неизвестная ошибка при отображении расширенного редактора</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid обновлён</string>
     <string name="integrity_check_startup_content">AnkiDroid был обновлён. Это обновление включает в себя исправления возможных проблем с базой данных, и мы рекомендуем вам запустить проверку базы данных.</string>
@@ -180,9 +180,15 @@
     <string name="integrity_check_continue_anyway">Всё равно продолжить</string>
     <string name="integrity_check_insufficient_space">Проверка базы данных использует большое количество временного хранилища.\n\nЖелательно иметь по крайней мере %s свободного места на вашем устройстве, прежде чем продолжить.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nСейчас свободно %s.</string>
-    <string name="video_creation_error">Could not play video</string>
+    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
+    <string name="video_creation_error">Не удалось воспроизвести видео</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">Не удалось изменить колоду</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">Ошибка декодирования данных с карты</string>
+    <!-- Deck Options -->
+    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <!-- Database Errors-->
+    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
 </resources>

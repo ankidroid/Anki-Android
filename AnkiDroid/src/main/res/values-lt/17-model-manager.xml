@@ -59,6 +59,7 @@
     <string name="model_field_editor_rename">Pervardinti laukelį</string>
     <string name="model_field_editor_reposition_menu">Keisti laukelio vietą</string>
     <string name="model_field_editor_reposition">Keisti laukelio vietą (įveskite reikšmę %1$d–%2$d)</string>
+    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Atnaujinami laukeliai</string>
     <string name="model_field_editor_sort_field">Rūšiuoti pagal šį lauką</string>
     <string name="model_clone_suffix">kopijuoti</string>

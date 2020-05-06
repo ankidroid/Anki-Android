@@ -47,7 +47,7 @@
         <item quantity="many">%d cards shown</item>
         <item quantity="other">%d cards shown</item>
     </plurals>
-    <string name="card_browser_all_decks">كل الرزم</string>
+    <string name="card_browser_all_decks">كل شَدّات الأوراق</string>
     <string name="card_browser_delete_card">حذف الملاحظات</string>
     <string name="card_browser_suspend_card">Suspend cards</string>
     <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>

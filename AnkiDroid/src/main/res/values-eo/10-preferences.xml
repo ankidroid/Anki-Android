@@ -141,9 +141,9 @@
     <string name="select_locale_title">Elekti lingvon</string>
     <string name="safe_display">Sekura vidiga reĝimo</string>
     <string name="safe_display_summ">Malaktivigi ĉiujn movbildojn kaj uzi pli sekuran manieron por bildigi kartojn. Elektronik-paperaj aparatoj povas bezoni tion ĉi.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">Malaktivigi unukampan redakt‑reĝimon</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Montri la kuntekstan menuon “truteksta malpleno” kiam en horizontala orientiĝo.</string>
     <string name="vertical_centering">Centrigi vertikale</string>
     <string name="vertical_centering_summ">Centrigi enhavon de kartoj vertikale</string>
     <string name="pref_backup_max">Maksimuma nombro da sekurkopioj</string>
@@ -222,8 +222,8 @@
     <string name="deck_conf_new_bury_summ">Rilataj novaj kartoj estas prokrastataj ĝis la sekva tago</string>
     <string name="deck_conf_rev_bury">Kaŝi rilatajn ripetitajn kartojn por tago</string>
     <string name="deck_conf_rev_bury_summ">Rilataj ripetitaj kartoj estas kaŝitaj ĝis la sekva tago</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings">Uzi ĝeneralajn agordojn</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Uzi ĝeneralajn agordojn pri “aŭtomate montri respondon” anstataŭ uzi agordojn por tiu ĉi grupo.</string>
     <string name="deck_conf_easy_bonus">Premio por facileco</string>
     <string name="deck_conf_ivl_fct">Obligi intertempon je</string>
     <string name="deck_conf_max_ivl">Maksimuma intertempo</string>

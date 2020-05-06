@@ -108,7 +108,9 @@
     <string name="cardeditor_title_add_note">添加笔记</string>
     <string name="cardeditor_title_edit_card">编辑笔记</string>
     <string name="discard_unsaved_changes">确定直接关闭吗？您将丢失所有已输入的内容。</string>
-    <string name="factadder_saving_error">保存笔记时出现错误</string>
+    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="saving_facts">保存笔记</string>
     <string name="saving_model">保存卡牌记录类型</string>
     <string name="add">添加</string>
@@ -128,8 +130,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid卡片</string>
-    <string name="note_editor_add_note">Add note</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_add_note">添加笔记</string>
+    <string name="note_editor_copy_note">复制笔记</string>
     <string name="card_editor_copy_card">复制卡片</string>
     <string name="card_editor_reposition_card">更改位置</string>
     <string name="card_editor_reset_card">重设学习进度</string>
@@ -158,8 +160,8 @@
     <string name="import_message_replace_confirm">这将删除你当前的所有记忆库，并用文件%s中的内容加以替换。你确定吗？</string>
     <string name="import_message_add_confirm">要添加 \"%s\" 到记忆库吗？</string>
     <string name="import_log_no_apkg">这不是一个有效的 Anki 包文件</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
+    <string name="import_error_unhandled_request">无法处理导入请求</string>
+    <string name="import_error_exception">无法导入软件包\n\n%s</string>
     <string name="import_error_not_apkg_extension">\"%s\" 并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
     <string name="import_replacing">正在导入牌组集合&#8230;</string>
@@ -239,6 +241,8 @@
     <string name="activity_start_failed_load_url">加载 “%s” 失败。</string>
     <string name="activity_start_failed">系统中没有安装可以执行此操作的应用程序。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相机图像可能偏大。您可能希望在媒体目录中压缩并调整图像大小]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="no_browser_notification">未找到浏览器，请通过 PC 或移动设备访问网页： </string>
+    <string name="no_outgoing_link_in_cardbrowser">不支持卡片中的外部页面链接。</string>
+    <!-- The name of the deck which corrupt cards will be moved to -->
+    <string name="check_integrity_recovered_deck_name">已恢复的卡片</string>
 </resources>

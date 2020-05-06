@@ -108,7 +108,9 @@
     <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
     <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
     <string name="discard_unsaved_changes">Schließen und Eingaben verwerfen?</string>
-    <string name="factadder_saving_error">Fehler beim Speichern der Notiz</string>
+    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="saving_facts">Notiz speichern</string>
     <string name="saving_model">Speichere Notiztyp</string>
     <string name="add">Hinzufügen</string>
@@ -130,8 +132,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">Willkommen bei AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid Karte</string>
-    <string name="note_editor_add_note">Add note</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_add_note">Notiz hinzufügen</string>
+    <string name="note_editor_copy_note">Notiz kopieren</string>
     <string name="card_editor_copy_card">Karte kopieren</string>
     <string name="card_editor_reposition_card">Position ändern</string>
     <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
@@ -251,4 +253,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerabilder können groß sein. Sie können Bilder im Medienverzeichnis komprimieren und verkleinern]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <!-- The name of the deck which corrupt cards will be moved to -->
+    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
 </resources>

@@ -108,7 +108,9 @@
     <string name="cardeditor_title_add_note">Додај белешку</string>
     <string name="cardeditor_title_edit_card">Уреди белешку</string>
     <string name="discard_unsaved_changes">Да затворим и искористим текући унос?</string>
-    <string name="factadder_saving_error">Грешка при чувању белешке</string>
+    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="saving_facts">Сачуване белешке</string>
     <string name="saving_model">Saving note type</string>
     <string name="add">Додаj</string>
@@ -261,4 +263,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <!-- The name of the deck which corrupt cards will be moved to -->
+    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
 </resources>

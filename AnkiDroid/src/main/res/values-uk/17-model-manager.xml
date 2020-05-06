@@ -59,6 +59,7 @@
     <string name="model_field_editor_rename">Перейменувати поля</string>
     <string name="model_field_editor_reposition_menu">Перемістити поле</string>
     <string name="model_field_editor_reposition">Перемістіть поле (введіть значення %1$d–%2$d)</string>
+    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Оновлення полів</string>
     <string name="model_field_editor_sort_field">Сортувати по цьому полю</string>
     <string name="model_clone_suffix">Копіювати</string>

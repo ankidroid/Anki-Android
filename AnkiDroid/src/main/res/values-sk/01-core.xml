@@ -68,16 +68,16 @@
         <item quantity="other">zostáva %d minút</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="few">%d hours %d left</item>
-        <item quantity="many">%d hours %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d hodina %d zostáva</item>
+        <item quantity="few">%d hodiny %d zostávajú</item>
+        <item quantity="many">%d hodín %d zostáva</item>
+        <item quantity="other">%d hodín %d zostáva</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="few">%d days %d left</item>
-        <item quantity="many">%d days %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d deň %d zostáva</item>
+        <item quantity="few">%d dni %d zostávajú</item>
+        <item quantity="many">%d dní %d zostáva</item>
+        <item quantity="other">%d dní %d zostáva</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -121,13 +121,13 @@
     <string name="menu_bury">Skryť</string>
     <string name="menu_suspend">Pozastaviť</string>
     <string name="menu_delete_note">Vymazať poznámku</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag">Vlajočka</string>
+    <string name="menu_flag_card">Červená vlajočka</string>
+    <string name="menu_flag_card_zero">Bez vlajočky</string>
+    <string name="menu_flag_card_one">Červená vlajočka</string>
+    <string name="menu_flag_card_two">Oranžová vlajočka</string>
+    <string name="menu_flag_card_three">Zelená vlajočka</string>
+    <string name="menu_flag_card_four">Modrá vlajočka</string>
     <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>
     <string name="menu_select">Zvoliť text</string>
     <string name="menu_search">Vyhľadať v %1$s</string>
@@ -193,7 +193,7 @@
     </plurals>
     <string name="invalid_template">Kartičku nie je možné vygenerovať</string>
     <string name="card_template_editor_would_delete_note">Odstránením tejto kartičky spôsobíte, že jedna alebo viac poznámok budú vymazané. Predtým si vytvorte, prosím, nový typ kartičky.</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">Typ kartičky pre aktuálnu kartičku bol vymazaný.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Čítať a písať do databázy AnkiDroid</string>
     <string name="read_write_permission_description">prístup k existujúcim poznámkam, kartičkám, typom poznámok, balíčkom ako aj vytváranie nových</string>

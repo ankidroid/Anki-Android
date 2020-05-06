@@ -141,9 +141,9 @@
     <string name="select_locale_title">Выберите язык</string>
     <string name="safe_display">Статический режим экрана</string>
     <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экраноов на электронных чернилах</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">Отключить режим редактирования одного поля</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Позволяет контекстное меню \'Cloze Deletion\' в альбомном режиме.</string>
     <string name="vertical_centering">Выравнивать по центру</string>
     <string name="vertical_centering_summ">Выравнивает содержимое карточек по вертикали</string>
     <string name="pref_backup_max">Число резервных копий</string>
@@ -225,7 +225,7 @@
     <string name="deck_conf_rev_bury">Отложить связанные повторения</string>
     <string name="deck_conf_rev_bury_summ">Связанные повторения отложены до завтра</string>
     <string name="deck_conf_use_general_timeout_settings">Использовать общие настройки</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Использовать общие настройки «Автоматически показывать ответ» вместо настроек для этой группы.</string>
     <string name="deck_conf_easy_bonus">Множитель для \"Легко\"</string>
     <string name="deck_conf_ivl_fct">Множитель интервалов</string>
     <string name="deck_conf_max_ivl">Максимальный интервал</string>
