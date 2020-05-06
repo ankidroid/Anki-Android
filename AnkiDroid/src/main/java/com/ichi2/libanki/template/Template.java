@@ -57,10 +57,10 @@ public class Template {
     private Pattern sTag_re = null;
 
     // Opening tag delimiter
-    private String sOtag = Pattern.quote("{{");
+    private static final String sOtag = Pattern.quote("{{");
 
     // Closing tag delimiter
-    private String sCtag = Pattern.quote("}}");
+    private static final String sCtag = Pattern.quote("}}");
 
     // MathJax opening delimiters
     private static String sMathJaxOpenings[] = {"\\(", "\\["};
