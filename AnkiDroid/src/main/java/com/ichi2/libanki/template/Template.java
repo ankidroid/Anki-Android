@@ -89,7 +89,6 @@ public class Template {
     public Template(String template, Map<String, String> context) {
         mTemplate = template;
         mContext = context == null ? new HashMap<String, String>() : context;
-        compile_regexps();
     }
 
 
@@ -99,12 +98,6 @@ public class Template {
     public String render() {
         String template = render_sections(mTemplate, mContext);
         return render_tags(template, mContext);
-    }
-
-    /**
-     * Compiles our section and tag regular expressions.
-     */
-    private void compile_regexps() {
     }
 
     /**
