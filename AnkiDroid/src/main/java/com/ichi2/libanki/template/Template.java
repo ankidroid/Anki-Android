@@ -159,8 +159,6 @@ public class Template {
                 replacement = render_tag(tag_name, context);
             } else if ("!".equals(tag_type)) {
                 replacement = render_comment();
-            } else if ("=".equals(tag_type)) {
-                replacement = render_delimiter(tag_name);
             } else {
                 return "{{invalid template}}";
             }
@@ -397,22 +395,5 @@ public class Template {
             m.appendReplacement(repl, Matcher.quoteReplacement(m.group(0)));
         }
         return m.appendTail(repl).toString();
-    }
-
-
-    /**
-     * Changes the Mustache delimiter.
-     */
-    private String render_delimiter(String tag_name) {
-        try {
-            String[] split = tag_name.split(" ");
-            sOtag = split[0];
-            sCtag = split[1];
-        } catch (IndexOutOfBoundsException e) {
-            // invalid
-            return null;
-        }
-        compile_regexps();
-        return "";
     }
 }
