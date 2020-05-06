@@ -171,7 +171,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        //If we're being restored, don't launch deck options again.
+        if (savedInstanceState == null && getArguments() != null) {
             mLoadWithDeckOptions = getArguments().getBoolean("withDeckOptions");
         }
     }
