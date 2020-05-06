@@ -57,10 +57,10 @@ public class Template {
     private static final String sCtag = Pattern.quote("}}");
 
     // The regular expression used to find a #section
-    private Pattern sSection_re = null;
+    private static final Pattern sSection_re = Pattern.compile(sOtag + "[\\#|^]([^\\}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
 
     // The regular expression used to find a tag.
-    private Pattern sTag_re = null;
+    private static final Pattern sTag_re = Pattern.compile(sOtag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + sCtag + "+");
 
     // MathJax opening delimiters
     private static String sMathJaxOpenings[] = {"\\(", "\\["};
@@ -105,9 +105,6 @@ public class Template {
      * Compiles our section and tag regular expressions.
      */
     private void compile_regexps() {
-        sSection_re = Pattern.compile(sOtag + "[\\#|^]([^\\}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
-
-        sTag_re = Pattern.compile(sOtag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + sCtag + "+");
     }
 
     /**
