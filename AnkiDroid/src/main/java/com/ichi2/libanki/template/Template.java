@@ -105,11 +105,9 @@ public class Template {
      * Compiles our section and tag regular expressions.
      */
     private void compile_regexps() {
-        String section = sOtag + "[\\#|^]([^\\}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag;
-        sSection_re = Pattern.compile(section, Pattern.MULTILINE | Pattern.DOTALL);
+        sSection_re = Pattern.compile(sOtag + "[\\#|^]([^\\}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
 
-        String tag = sOtag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + sCtag + "+";
-        sTag_re = Pattern.compile(tag);
+        sTag_re = Pattern.compile(sOtag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + sCtag + "+");
     }
 
     /**
