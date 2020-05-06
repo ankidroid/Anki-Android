@@ -267,7 +267,7 @@
     <string name="deck_conf_reminders_enabled">このグループのデッキをリマインダー通知</string>
     <string name="deck_conf_reminders_time">リマインダー通知時刻</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
+    <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title">設定の情報提供を許可する</string>
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます。</string>
 </resources>

@@ -170,8 +170,8 @@
     <string name="nothing">Nenio</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipo de karto</string>
-    <string name="card_template_editor_front">Ŝablono antaŭa</string>
-    <string name="card_template_editor_back">Ŝablono malantaŭa</string>
+    <string name="card_template_editor_front">Ŝablono fronta</string>
+    <string name="card_template_editor_back">Ŝablono dorsa</string>
     <string name="card_template_editor_styling">Stilo</string>
     <string name="card_template_editor_menu_delete">Forigi</string>
     <string name="card_template_editor_cant_delete">Almenaŭ unu karto estas postulata</string>

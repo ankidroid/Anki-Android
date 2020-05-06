@@ -50,7 +50,7 @@
     <string name="card_browser_change_deck">Mudar Baralho</string>
     <string name="card_browser_unsuspend_card">Cancelar suspensão dos cartões</string>
     <string name="card_browser_mark_card">Marcar notas</string>
-    <string name="card_browser_flag">Flag</string>
+    <string name="card_browser_flag">Sinalizar</string>
     <string name="card_browser_toggle_mark_card">Desmarcar notas</string>
     <string name="card_browser_unmark_card">Desmarcar notas</string>
     <string name="delete_card_title">Excluir nota?</string>
@@ -94,7 +94,7 @@
     <string name="card_browser_select_all">Selecionar todos</string>
     <string name="card_browser_select_none">Desselecionar todos</string>
     <string name="card_browser_interval_new_card">(novo)</string>
-    <string name="card_browser_ease_new_card">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
+    <string name="card_browser_ease_new_card">(novo)</string>
+    <string name="card_browser_due_filtered_card">(filtrada)</string>
     <string name="card_browser_interval_learning_card">(aprendizado)</string>
 </resources>

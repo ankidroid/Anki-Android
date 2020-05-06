@@ -67,14 +67,14 @@
     <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
     <string name="leech_notification">Carte marquée « encombrante »</string>
     <string name="corrupt_font">Fichier de police corrompu %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_unknown">Erreur inconnue</string>
+    <string name="webview_crash_unknwon_detailed">Crash provoqué par une erreur interne dans la WebView</string>
+    <string name="webview_crash_oom">Mémoire saturée</string>
+    <string name="webview_crash_oom_details">La WebView a été arrêté par le système. Cela arrive généralement quand la mémoire est saturée, généralement par de larges polices de charactères ou fichiers media.</string>
+    <string name="webview_crash_nonfatal">Plantage du moteur de rendu Webview. Cause : %s</string>
+    <string name="webview_crash_fatal">Erreur Fatale : Crash du moteur de rendu Webview. Cause : %s</string>
+    <string name="webview_crash_loop_dialog_title">Échec de rendu du système WebView</string>
+    <string name="webview_crash_loop_dialog_content">Le système WebView n\'a pas réussi à afficher la carte \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Question</item>
@@ -90,11 +90,11 @@
         <item>Échecs</item>
         <item>Révisions</item>
         <item>Intervalle</item>
-        <item>Ease</item>
+        <item>Aisance</item>
         <item>Due</item>
-        <item>Changed</item>
-        <item>Created</item>
-        <item>Edited</item>
+        <item>Modifiée</item>
+        <item>Créée</item>
+        <item>Éditée</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Augmenter la limite de nouvelles cartes pour aujourd\'hui</string>
@@ -108,9 +108,11 @@
     <string name="cardeditor_title_add_note">Ajouter une note</string>
     <string name="cardeditor_title_edit_card">Modifier la note</string>
     <string name="discard_unsaved_changes">Fermer et perdre la saisie en cours ?</string>
-    <string name="factadder_saving_error">Erreur lors de l\'enregistrement de la note</string>
+    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="saving_facts">Enregistrer la note</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Enregistrement du type de note</string>
     <string name="add">Ajouter</string>
     <string name="save">Enregistrer</string>
     <string name="close">Fermer</string>
@@ -130,8 +132,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">Bienvenue sur AnkiDroid</string>
     <string name="fact_adder_intent_title">Carte AnkiDroid</string>
-    <string name="note_editor_add_note">Add note</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_add_note">Ajouter une note</string>
+    <string name="note_editor_copy_note">Copier la note</string>
     <string name="card_editor_copy_card">Copier la carte</string>
     <string name="card_editor_reposition_card">Repositionner</string>
     <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
@@ -161,12 +163,12 @@
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
     <string name="import_message_add_confirm">Ajouter « %s » à la collection ? Ceci peut prendre un long moment</string>
     <string name="import_log_no_apkg">Ceci n\'est pas un fichier Anki valide</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
+    <string name="import_error_unhandled_request">Incapable de traiter cette requête d\'import</string>
+    <string name="import_error_exception">Échec de l\'import du paquet\n\n%s</string>
     <string name="import_error_not_apkg_extension">Le nom de fichier “%s” n\'a pas d\'extension .apkg ou .colpkg</string>
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
     <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Import interrompu</string>
     <string name="export_include_schedule">Inclure la planification</string>
     <string name="export_include_media">Inclure les médias</string>
     <string name="confirm_apkg_export">Exporter la collection sous forme de paquet Anki ?</string>
@@ -246,9 +248,11 @@
     <string name="export_v2_dummy_note">Ce fichier nécessite une version plus récente d\'Anki.</string>
     <string name="export_v2_forbidden">Veuillez passer au planificateur V1 avant d\'exporter un paquet de cartes avec les informations de planification.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="activity_start_failed_load_url">Échec du chargement de \'%s\'</string>
+    <string name="activity_start_failed">Le système n\'a pas d\'application pouvant effectuer cette action.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Les photos d\'appareils sont potentiellement lourdes. Envisager les compresser et redimensionner dans le dossier "media"]]></string>
+    <string name="no_browser_notification">Aucun navigateur internet trouvé, merci de visiter cette page sur un PC ou smartphone.</string>
+    <string name="no_outgoing_link_in_cardbrowser">Le lien vers les pages externes n\'est pas autorisé dans les cartes.</string>
+    <!-- The name of the deck which corrupt cards will be moved to -->
+    <string name="check_integrity_recovered_deck_name">Cartes récupérées</string>
 </resources>

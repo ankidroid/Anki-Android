@@ -65,11 +65,11 @@
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">%d horas %d restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">%d días %d restantes</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -94,9 +94,9 @@
     <string name="undo_action_delete">eliminar nota</string>
     <string name="undo_action_delete_multi">eliminar notas</string>
     <string name="undo_action_change_deck_multi">cambiar mazos</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
+    <string name="undo_action_reschedule_card">reagendar</string>
+    <string name="undo_action_reset_card">reiniciar progreso</string>
+    <string name="undo_action_reposition_card">reposición</string>
     <string name="move_all_to_deck">Mover todo al mazo</string>
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Renombrar mazo</string>

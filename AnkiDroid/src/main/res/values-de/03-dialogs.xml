@@ -41,7 +41,7 @@
     <string name="check_db_title">Datenbank überprüfen</string>
     <string name="check_db_warning">Dies kann lange dauern</string>
     <string name="check_db_acknowledge">Datenbank überprüft</string>
-    <string name="check_db_acknowledge_shrunk">Datenbank überprüft und optimiert.\nUm %d kB verkleinert.</string>
+    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
     <string name="delete_deck_default_deck">Der Standardstapel kann nicht gelöscht werden</string>
     <string name="delete_deck_title">Stapel löschen?</string>
@@ -168,9 +168,15 @@
     <string name="integrity_check_continue_anyway">Trotzdem fortfahren</string>
     <string name="integrity_check_insufficient_space">Prüfe Datenbank verwendet eine große Menge an temporären Speicher.\n\nEs wird dringend empfohlen, dass Sie mindestens %s freien Speicherplatz auf Ihrem Gerät haben, bevor Sie fortfahren.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nDu hast derzeit %s kostenlos.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
     <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <!-- Deck Options -->
+    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <!-- Database Errors-->
+    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
 </resources>

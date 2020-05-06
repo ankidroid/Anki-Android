@@ -73,8 +73,8 @@
     <string name="webview_crash_oom_details">La komponanto WebView estis fermita de la sistemo. Tio ĉi kutime okazas kiam mankas memoro al la aplikaĵo, ofte pro grandaj tiparoj aŭ aŭdvidaĵoj.</string>
     <string name="webview_crash_nonfatal">Eraro pri WebView. Kaŭzo: %s</string>
     <string name="webview_crash_fatal">Neriparebla eraro pri WebView. Kaŭzo: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_loop_dialog_title">Eraro bildigi per sistema WebView</string>
+    <string name="webview_crash_loop_dialog_content">La sistema komponanto WebView fiaskis bildigi la karton “%1$s”.\n%2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Demando</item>
@@ -90,11 +90,11 @@
         <item>Misrespondoj</item>
         <item>Ripetoj</item>
         <item>Intertempo</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Changed</item>
-        <item>Created</item>
-        <item>Edited</item>
+        <item>Facileco</item>
+        <item>Lernenda</item>
+        <item>Ŝanĝita</item>
+        <item>Kreita</item>
+        <item>Redaktita</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Pliigi hodiaŭan limigon de novaj kartoj</string>
@@ -108,9 +108,11 @@
     <string name="cardeditor_title_add_note">Aldoni noton</string>
     <string name="cardeditor_title_edit_card">Redakti noton</string>
     <string name="discard_unsaved_changes">Ĉu fermi kaj perdi entajpitan tekston?</string>
-    <string name="factadder_saving_error">Okazis eraro dum konservi noton</string>
+    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="saving_facts">Konservado de noto</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Konservado de nototipo</string>
     <string name="add">Aldoni</string>
     <string name="save">Konservi</string>
     <string name="close">Fermi</string>
@@ -130,8 +132,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">Bonvenon al AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid-karto</string>
-    <string name="note_editor_add_note">Add note</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_add_note">Aldoni noton</string>
+    <string name="note_editor_copy_note">Kopii noton</string>
     <string name="card_editor_copy_card">Kopii karton</string>
     <string name="card_editor_reposition_card">Repozicii</string>
     <string name="card_editor_reset_card">Nuligi progreson</string>
@@ -161,12 +163,12 @@
     <string name="import_message_replace_confirm">Tio ĉi forigos vian ekzistan kolekton kaj anstataŭigos ĝin per datumoj de dosiero %s</string>
     <string name="import_message_add_confirm">Ĉu aldoni “%s” al kolekto? Tio ĉi povas okupi multan tempon</string>
     <string name="import_log_no_apkg">Tio-ĉi ne estas valida Anki-pakaĵa dosiero</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
+    <string name="import_error_unhandled_request">Fiaskis pritrakti peton pri enporto</string>
+    <string name="import_error_exception">Fiaskis enporti pakaĵon\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dosiernomo \"%s\" ne finiĝas per .apkg aŭ .colpkg</string>
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti anki-dosierojn:\n%s</string>
     <string name="import_replacing">Anstataŭigado de kolekto&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Enportado interrompita</string>
     <string name="export_include_schedule">Inkluzivi lern-planon</string>
     <string name="export_include_media">Inkluzivi aŭdvidaĵojn</string>
     <string name="confirm_apkg_export">Ĉu elporti kolekton kiel Anki‑pakaĵon?</string>
@@ -246,9 +248,11 @@
     <string name="export_v2_dummy_note">Ĉi tiu dosiero postulas pli novan version de Anki.</string>
     <string name="export_v2_forbidden">Bonvolu ŝanĝi al planilo V1 antaŭ elporti unuopan kartaron kun lern-plano.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="activity_start_failed_load_url">Fiaskis enlegi “%s”.</string>
+    <string name="activity_start_failed">Mankas instalita aplikaĵo por plenumi tiun ĉi agon.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Bildoj el la fotilo povas esti grandaj. Konsideru densigi bildojn kaj malpliigi iliajn dimensiojn]]></string>
+    <string name="no_browser_notification">Ne trovis retumilon, vizitu la retpaĝon per via komputilo: </string>
+    <string name="no_outgoing_link_in_cardbrowser">Ekstera ligilo en karto ne estas subtenata.</string>
+    <!-- The name of the deck which corrupt cards will be moved to -->
+    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
 </resources>

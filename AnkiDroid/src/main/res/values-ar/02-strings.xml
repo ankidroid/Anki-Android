@@ -44,8 +44,8 @@
     <string name="drawer_open">فتح القائمة</string>
     <string name="drawer_close">أغلق القائمة</string>
     <string name="CardEditorLaterMessage">حفظ المعلومات لوقت لاحق</string>
-    <string name="CardEditorCardDeck">مجلد البطاقات:</string>
-    <string name="CardEditorNoteDeck">مجاميع:</string>
+    <string name="CardEditorCardDeck">بطاقة:</string>
+    <string name="CardEditorNoteDeck">شَدّة أوراق:</string>
     <string name="CardEditorModel">النوع:</string>
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
@@ -55,7 +55,7 @@
     <string name="check_all_tags">الاختيار/إلغاء تحديد كافة الوسوم</string>
     <string name="filter_tags">تصفية الوسوم</string>
     <string name="no_tags">لم تقم بإضافة أية وسوم بعد</string>
-    <string name="sdcard_missing_message">بطاقة التخزين المؤمنة غير متوفرة بسبب أنها مستخدمة كوحدة تخزين USB . افصل USB للوصول إلى رزمك.</string>
+    <string name="sdcard_missing_message">بطاقة التخزين المؤمنة غير متوفرة بسبب أنها مستخدمة كوحدة تخزين USB . افصل USB للوصول إلى شَدّات أوراقك.</string>
     <string name="updated_version">تحديث للإصدار %s</string>
     <!-- Reviewer.java -->
     <string name="enable_whiteboard">تمكين السبورة</string>
@@ -83,7 +83,7 @@
     <string-array name="browser_column2_headings">
         <item>الجواب</item>
         <item>بطاقة</item>
-        <item>ورق اللعب</item>
+        <item>شَدّة أوراق</item>
         <item>ملاحظة</item>
         <item>سؤال</item>
         <item>وسوم</item>
@@ -108,7 +108,9 @@
     <string name="cardeditor_title_add_note">أضف ملاحظة</string>
     <string name="cardeditor_title_edit_card">حرر الملاحظة</string>
     <string name="discard_unsaved_changes">Close and lose current input?</string>
-    <string name="factadder_saving_error">حدث خطأ أثناء حفظ الملاحظة</string>
+    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="saving_facts">حفظ الملاحظة</string>
     <string name="saving_model">Saving note type</string>
     <string name="add">أضف</string>
@@ -163,7 +165,7 @@
     <string name="check_db_message">فحص قاعدة البيانات.\nالرجاء الانتظار...</string>
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck">جاري حذف المجلد&#8230;</string>
+    <string name="delete_deck">جاري حذف شَدّة الأوراق&#8230;</string>
     <string name="show_hint">إظهار %s</string>
     <string name="info_rate">قيم أنكيدرويد</string>
     <string name="col_load_failed">فشل تحميل المجموعة-\nاضغط تراجع لإغلاق أنكيدرويد.</string>
@@ -204,7 +206,7 @@
     <string name="select_tts">تعيين اللّغة</string>
     <string name="custom_study">دراسة مخصصة</string>
     <string name="more_options">المزيد</string>
-    <string name="dyn_deck_desc">هذه قاعدة خاصة للدراسة خارج الجدول الزمني الاعتيادي. البطاقات سوف تعود الى حالة القاعدة الاصلية تلقائياً بعد مراجعتها منك. حذف هذه القاعدة من قائمة القاعدة سوف يعيد كل البطاقات المتبقية إلى حالة القاعدة الاصلية.</string>
+    <string name="dyn_deck_desc">هذه قاعدة خاصة للدراسة خارج الجدول الزمني الاعتيادي. البطاقات سوف تعود الى شَداتها الأصلية تلقائياً بعد مراجعتها منك. حذف شَدّة الأوراق هذه من قائمة الشَّدّات سوف يعيد كل البطاقات المتبقية إلى حالة شَدّاتها الأصلية.</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>
     <string name="sched_end">(النهاية)</string>
@@ -266,9 +268,9 @@
          languages which apparently use the other symbol to mean less
          than. -->
     <string name="less_than_time">&lt; %s</string>
-    <string name="decks_rename_exists">هذا المجلد موجود بالفعل</string>
+    <string name="decks_rename_exists">شَدّة الأوراق هذه موجودة بالفعل</string>
     <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-    <string name="filtered_deck_name">مجلد مصُفى</string>
+    <string name="filtered_deck_name">شَدّة الأوراق مُفلترة</string>
     <string name="reminder_title">لا تنسى بالمراجعة اليوم!</string>
     <plurals name="reminder_text">
         <item quantity="zero">%2$d cards to review in %1$s</item>
@@ -291,4 +293,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <!-- The name of the deck which corrupt cards will be moved to -->
+    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
 </resources>

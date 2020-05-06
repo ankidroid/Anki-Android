@@ -49,5 +49,5 @@
     <string name="feedback_copy_debug">Kopii senerarigajn informojn</string>
     <string name="feedback_report">Raporti</string>
     <string name="feedback_report_automatically">Aŭtomate sendi erar-raportojn</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="feedback_no_suitable_app_found">Ne trovis kongruan aplikaĵon</string>
 </resources>

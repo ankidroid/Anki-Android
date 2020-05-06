@@ -55,6 +55,7 @@
     <string name="model_field_editor_rename">Mező átnevezése</string>
     <string name="model_field_editor_reposition_menu">Áthelyezési mező</string>
     <string name="model_field_editor_reposition">Áthelyezési mező (írd be a következő értéket: %1$d–%2$d)</string>
+    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">A mezők frissítése</string>
     <string name="model_field_editor_sort_field">Rendezd ezt a mezőt</string>
     <string name="model_clone_suffix">másolás</string>

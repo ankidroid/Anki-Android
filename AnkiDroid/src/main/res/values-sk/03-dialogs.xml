@@ -41,7 +41,7 @@
     <string name="check_db_title">Skontrolovať databázu?</string>
     <string name="check_db_warning">Toto môže chvíľu trvať</string>
     <string name="check_db_acknowledge">Databáza skontrolovaná</string>
-    <string name="check_db_acknowledge_shrunk">Databáza skontrolovaná a optimalizovaná.\nZmenšená o %d kB.</string>
+    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Vymazať balíček</string>
     <string name="delete_deck_default_deck">Východiskový balíček sa nemôže vymazať.</string>
     <string name="delete_deck_title">Vymazať balíček?</string>
@@ -82,16 +82,16 @@
     </plurals>
     <string name="reschedule_card_dialog_title">Preplánovať kartičku</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="few">Reschedule cards</item>
-        <item quantity="many">Reschedule cards</item>
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="one">Preplánovať kartičku</item>
+        <item quantity="few">Preplánovať kartičky</item>
+        <item quantity="many">Preplánovať kartičky</item>
+        <item quantity="other">Preplánovať kartičky</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="few">Current interval: %d days</item>
-        <item quantity="many">Current interval: %d days</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Súčasný interval: %d deň</item>
+        <item quantity="few">Súčasný interval: %d dni</item>
+        <item quantity="many">Súčasný interval: %d dní</item>
+        <item quantity="other">Súčasný interval: %d dní</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Preplánovať opakovanie pre x dní:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
@@ -116,7 +116,7 @@
     <string name="custom_study_ahead">Opakovať dopredu o x dní:</string>
     <string name="custom_study_random">Náhodne vybrať x kartičiek z balíčka:</string>
     <string name="custom_study_preview">Ukážka nových kartičiek pridaných za posledných x dní:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_rebuild_deck_corrupt">Nepodarilo sa obnoviť balíček vlastného štúdia</string>
     <string name="rebuild_custom_study_deck">Obnovujem balíček vlastného štúdia.\nProsím počkajte...</string>
     <string name="importing_collection">Zbierka sa importuje&#8230;</string>
     <string name="import_media_count">Importujú sa mediálne súbory %1$d%%&#8230;</string>
@@ -165,24 +165,30 @@
     <string name="empty_cards_count">Počet kartičiek, ktoré budú vymazané: %d</string>
     <string name="empty_cards_deleted">Počet vymazaných kartičiek: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_audio_permission_refused">Nepodarilo sa získať povolenie k mikrofónu.</string>
+    <string name="multimedia_editor_camera_permission_refused">Nepodarilo sa získať povolenie k fotoaparátu. Funkcionalita bola zakázaná.</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Povolenie pre audio nahrávanie bolo zamietnuté</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_title">Vitajte v AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid vyžaduje povolenie pre prístup k úložisku, ktoré výlučne používame na uloženie vašej AnkiDroid kolekcie, médií pre kartičky a zálohy. Náš kód je open-source, napísaný dobrovoľníkmi, ktorému dôverujú milióny.\n\nAk máte nejaké otázky, použijte prosím náš manuál v aplikácii alebo navštívte naše fórum.\n\nĎakujeme, že ste sa rozhodli vyskúšať AnkiDroid!\n—AnkiDroid Development Team</string>
+    <string name="mutimedia_editor_assertion_failed">Nastala neznáma chyba pri zobrazení rozšíreného editora</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="video_creation_error">Could not play video</string>
+    <string name="integrity_check_startup_title">AnkiDroid aktualizovaný</string>
+    <string name="integrity_check_startup_content">AnkiDroid bol aktualizovaný. Táto aktualizácia zahŕňa opravy súvisiace s možnými databázovými problémami, a preto teraz odporúčame vykonať kontrolu databázy.</string>
+    <string name="integrity_check_positive">Skontrolovať databázu</string>
+    <string name="integrity_check_continue_anyway">Napriek tomu pokračovať</string>
+    <string name="integrity_check_insufficient_space">Kontrola databázy využíva veľké množstvo dočasného úložiska.\n\nPredtým než budete pokračovať, odporúčame, aby ste mali aspoň %s voľného miesta vo vašom zariadení.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nMomentálne máte %s voľného miesta.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
+    <string name="video_creation_error">Nepodarilo sa prehrať video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">Nepodarilo sa zmeniť balíček</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">Chyba pri dekódovaní dát z kartičky</string>
+    <!-- Deck Options -->
+    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <!-- Database Errors-->
+    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
 </resources>

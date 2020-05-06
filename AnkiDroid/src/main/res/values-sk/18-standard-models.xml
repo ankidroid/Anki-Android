@@ -20,19 +20,19 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
+    <string name="front_field_name">Predná strana</string>
+    <string name="back_field_name">Zadná strana</string>
     <string name="text_field_name">Text</string>
     <string name="extra_field_name">Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
+    <string name="field_to_ask_front_name">Pridať obrátenú stranu kartičky</string>
     <!--Card type-->
-    <string name="card_one_name">Card 1</string>
-    <string name="card_two_name">Card 2</string>
-    <string name="card_cloze_name">Cloze</string>
+    <string name="card_one_name">Kartička 1</string>
+    <string name="card_two_name">Kartička 2</string>
+    <string name="card_cloze_name">Doplňovačka</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
-    <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_model_name">Základná</string>
+    <string name="cloze_model_name">Doplňovačka</string>
+    <string name="basic_typing_model_name">Základná (zadajte odpoveď)</string>
+    <string name="forward_reverse_model_name">Základná (a obrátená kartička)</string>
+    <string name="forward_optional_reverse_model_name">Základná (voliteľná obrátená kartička)</string>
 </resources>

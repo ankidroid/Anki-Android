@@ -74,10 +74,10 @@
         <item quantity="other">%d час %d осталось</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="few">%d days %d left</item>
-        <item quantity="many">%d days %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d день %d остался</item>
+        <item quantity="few">%d дней %d осталось</item>
+        <item quantity="many">%d дней %d осталось</item>
+        <item quantity="other">%d дней %d осталось</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">

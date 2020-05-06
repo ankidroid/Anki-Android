@@ -41,7 +41,7 @@
     <string name="check_db_title">Sprawdź bazę danych</string>
     <string name="check_db_warning">To może zająć dużo czasu.</string>
     <string name="check_db_acknowledge">Baza danych sprawdzona</string>
-    <string name="check_db_acknowledge_shrunk">Baza danych sprawdzona i zoptymalizowana.\nZaoszczędzono %d kB.</string>
+    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
     <string name="delete_deck_default_deck">Domyślna talia nie może zostać usunięta</string>
     <string name="delete_deck_title">Skasuj talię</string>
@@ -82,9 +82,9 @@
     </plurals>
     <string name="reschedule_card_dialog_title">Ponownie ustal czas dla karty</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="few">Reschedule cards</item>
-        <item quantity="many">Reschedule cards</item>
+        <item quantity="one">Zaktualizuj harmonogram kart</item>
+        <item quantity="few">Zaktualizuj harmonogram kart</item>
+        <item quantity="many">Zaktualizuj harmonogram kart</item>
         <item quantity="other">Reschedule cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
@@ -180,9 +180,15 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
     <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <!-- Deck Options -->
+    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <!-- Database Errors-->
+    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
 </resources>

@@ -41,7 +41,7 @@
     <string name="check_db_title">Ĉu kontroli datumbazon?</string>
     <string name="check_db_warning">Tio ĉi povas okupi multan tempon</string>
     <string name="check_db_acknowledge">Kontrolis datumbazon</string>
-    <string name="check_db_acknowledge_shrunk">Datumbazo kontrolita kaj plejbonigita.\nEtigita je %d kB.</string>
+    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Forigi kartaron</string>
     <string name="delete_deck_default_deck">La ĉefa kartaro ne povas esti forigita</string>
     <string name="delete_deck_title">Ĉu forigi kartaron?</string>
@@ -76,14 +76,14 @@
     </plurals>
     <string name="reschedule_card_dialog_title">Replani karton</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="one">Replani karton</item>
+        <item quantity="other">Replani kartojn</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Nuna intertempo: %d tago</item>
+        <item quantity="other">Nuna intertempo: %d tagoj</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Replani ripeton de karton post tiom da tagoj:</string>
+    <string name="reschedule_card_dialog_message">Replani ripeton de karto post tiom da tagoj:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d karto estas replanita</item>
         <item quantity="other">%d kartoj estas replanitaj</item>
@@ -104,7 +104,7 @@
     <string name="custom_study_ahead">Anticipe ripeti kartojn je tiom da tagoj:</string>
     <string name="custom_study_random">Elekti tiom da hazardaj kartoj el la kartaro:</string>
     <string name="custom_study_preview">Antaŭrigardi novajn kartojn aldonitajn dum tiom da antaŭaj tagoj:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_rebuild_deck_corrupt">Ne povis rekrei kartaron por propra lernado</string>
     <string name="rebuild_custom_study_deck">Rekreado de kartaro por propra lernado&#8230;</string>
     <string name="importing_collection">Enportado de kolekto&#8230;</string>
     <string name="import_media_count">Enportado de aŭdvidaĵoj %1$d%%&#8230;</string>
@@ -153,24 +153,30 @@
     <string name="empty_cards_count">Kartoj por forigi: %d</string>
     <string name="empty_cards_deleted">Forigis kartojn: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_audio_permission_refused">Ne povis akiri permeson al la mikrofono.</string>
+    <string name="multimedia_editor_camera_permission_refused">Ne povis akiri permeson al la fotilo. Iuj funkcioj ne eblos.</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Permeso al registri sonon rifuzita</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_title">Bonvenon al AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid bezonas aliron al la konservejo, kiu estos uzata nur por konservi viajn kolektojn, aŭdvidaĵojn de kartaroj kaj sekurkopiojn. La fontkodo de la aplikaĵo AnkiDroid estas malferma, kreata de volontuloj kaj konfidata de milionoj.\n\nSe vi havas iujn demandojn, bonvolu legi la enaplikaĵan manlibron aŭ vizitu niajn forumojn.\n\nDankon por provi AnkiDroid!\n–AnkiDroid-teamo</string>
+    <string name="mutimedia_editor_assertion_failed">Nekonata eraro okazis dum montri la altnivelan redaktilon</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="video_creation_error">Could not play video</string>
+    <string name="integrity_check_startup_title">AnkiDroid aktualigita</string>
+    <string name="integrity_check_startup_content">AnkiDroid estis aktualigita. Tiu ĉi aktualigo liveras riparojn al eblaj problemoj pri datumbazo, estas konsilinde kontroli la datumbazon nun.</string>
+    <string name="integrity_check_positive">Kontroli datumbazon</string>
+    <string name="integrity_check_continue_anyway">Pluigi malgraŭ tio</string>
+    <string name="integrity_check_insufficient_space">Kontrolado de datumbazo uzos multon da provizora memoro.\n\nEstas tre konsilinde por ke vi havu almenaŭ %s da libera spaco en via aparato antaŭ pluigi.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nLibera spaco: %s.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
+    <string name="video_creation_error">Ne povis ludi filmeton</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">Ne povis ŝanĝi kartaron</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">Eraro dum malkodi datumojn el la karto</string>
+    <!-- Deck Options -->
+    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <!-- Database Errors-->
+    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
 </resources>
