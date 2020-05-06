@@ -87,7 +87,6 @@ import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
@@ -1225,7 +1224,7 @@ public class NoteEditor extends AnkiActivity {
                             return false;
                     }
                 });
-                if (AdaptionUtil.hasReducedPreferences()) {
+                if (AdaptionUtil.isRestrictedLearningDevice()) {
                     popup.getMenu().findItem(R.id.menu_multimedia_photo).setVisible(false);
                     popup.getMenu().findItem(R.id.menu_multimedia_text).setVisible(false);
                 }
