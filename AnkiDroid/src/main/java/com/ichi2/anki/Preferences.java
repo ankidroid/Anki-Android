@@ -133,7 +133,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         Iterator iterator = target.iterator();
         while (iterator.hasNext()) {
             Header header = (Header)iterator.next();
-            if ((header.titleRes == R.string.pref_cat_advanced) && AdaptionUtil.hasReducedPreferences()){
+            if ((header.titleRes == R.string.pref_cat_advanced) && AdaptionUtil.isRestrictedLearningDevice()){
                 iterator.remove();
             }
         }
@@ -202,7 +202,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             case "com.ichi2.anki.prefs.general":
                 listener.addPreferencesFromResource(R.xml.preferences_general);
                 screen = listener.getPreferenceScreen();
-                if (AdaptionUtil.hasReducedPreferences()) {
+                if (AdaptionUtil.isRestrictedLearningDevice()) {
                     CheckBoxPreference mCheckBoxPref_Vibrate = (CheckBoxPreference) screen.findPreference("widgetVibrate");
                     CheckBoxPreference mCheckBoxPref_Blink = (CheckBoxPreference) screen.findPreference("widgetBlink");
                     PreferenceCategory mCategory = (PreferenceCategory) screen.findPreference("category_general_notification_pref");
