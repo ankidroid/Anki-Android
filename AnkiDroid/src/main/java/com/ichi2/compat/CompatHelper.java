@@ -96,7 +96,7 @@ public class CompatHelper {
 
     public static boolean isChromebook() {
         return "chromium".equalsIgnoreCase(Build.BRAND) || "chromium".equalsIgnoreCase(Build.MANUFACTURER)
-                || Build.DEVICE.equalsIgnoreCase("novato_cheets");
+                || "novato_cheets".equalsIgnoreCase(Build.DEVICE);
     }
 
     public static boolean isKindle() {

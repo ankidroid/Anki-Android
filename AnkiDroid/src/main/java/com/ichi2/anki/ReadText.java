@@ -307,7 +307,7 @@ public class ReadText {
                             final AnkiActivity ankiActivity = (AnkiActivity) mReviewer.get();
                             ankiActivity.mayOpenUrl(helpUrl);
                             UIUtils.showSnackbar(ankiActivity, R.string.no_tts_available_message, false, R.string.help,
-                                    v -> ankiActivity.openUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
+                                    v -> openTtsHelpUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
                                     new Snackbar.Callback());
                         }
                         @Override
@@ -324,6 +324,13 @@ public class ReadText {
         // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
         Toast.makeText(context, context.getString(R.string.initializing_tts), Toast.LENGTH_LONG).show();
     }
+
+
+    private static void openTtsHelpUrl(Uri helpUrl) {
+        AnkiActivity activity =  (AnkiActivity) mReviewer.get();
+        activity.openUrl(helpUrl);
+    }
+
 
     public static void buildAvailableLanguages() {
         availableTtsLocales.clear();

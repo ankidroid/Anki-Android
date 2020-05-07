@@ -50,8 +50,8 @@ public class FullSyncer extends HttpSyncer {
     private Connection mCon;
 
 
-    public FullSyncer(Collection col, String hkey, Connection con) {
-        super(hkey, con);
+    public FullSyncer(Collection col, String hkey, Connection con, HostNum hostNum) {
+        super(hkey, con, hostNum);
         mPostVars = new HashMap<>();
         mPostVars.put("k", hkey);
         mPostVars.put("v",
@@ -59,20 +59,6 @@ public class FullSyncer extends HttpSyncer {
         mCol = col;
         mCon = con;
     }
-
-
-    @Override
-    public String syncURL() {
-        // Allow user to specify custom sync server
-        SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        if (userPreferences!= null && userPreferences.getBoolean("useCustomSyncServer", false)) {
-            Uri syncBase = Uri.parse(userPreferences.getString("syncBaseUrl", Consts.SYNC_BASE));
-            return syncBase.buildUpon().appendPath("sync").toString() + "/";
-        }
-        // Usual case
-        return Consts.SYNC_BASE + "sync/";
-    }
-
 
     @Override
     public Object[] download() throws UnknownHttpResponseException {
@@ -124,7 +110,7 @@ public class FullSyncer extends HttpSyncer {
         DB tempDb = null;
         try {
             tempDb = new DB(tpath);
-            if (!tempDb.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+            if (!"ok".equalsIgnoreCase(tempDb.queryString("PRAGMA integrity_check"))) {
                 Timber.e("Full sync - downloaded file corrupt");
                 return new Object[] { "remoteDbError" };
             }
@@ -150,7 +136,7 @@ public class FullSyncer extends HttpSyncer {
     public Object[] upload() throws UnknownHttpResponseException {
         // make sure it's ok before we try to upload
         mCon.publishProgress(R.string.sync_check_upload_file);
-        if (!mCol.getDb().queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+        if (!"ok".equalsIgnoreCase(mCol.getDb().queryString("PRAGMA integrity_check"))) {
             return new Object[] { "dbError" };
         }
         if (!mCol.basicCheck()) {

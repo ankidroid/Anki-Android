@@ -20,6 +20,8 @@ import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+
+import androidx.test.annotation.UiThreadTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
@@ -51,6 +53,7 @@ public class NotificationChannelTest {
     private NotificationManager mManager = null;
 
     @Before
+    @UiThreadTest
     public void setUp() {
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         ((AnkiDroidApp)targetContext.getApplicationContext()).onCreate();

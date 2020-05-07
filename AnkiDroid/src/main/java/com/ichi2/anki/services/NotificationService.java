@@ -29,7 +29,6 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
-import com.ichi2.utils.IntentTopNewTask;
 import com.ichi2.widget.WidgetStatus;
 
 import timber.log.Timber;
@@ -72,8 +71,8 @@ public class NotificationService extends BroadcastReceiver {
                 builder.setLights(Color.BLUE, 1000, 1000);
             }
             // Creates an explicit intent for an Activity in your app
-            Intent resultIntent = new IntentTopNewTask(context, DeckPicker.class);
-            resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            Intent resultIntent = new Intent(context, DeckPicker.class);
+            resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(resultPendingIntent);

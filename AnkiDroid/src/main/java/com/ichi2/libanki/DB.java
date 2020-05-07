@@ -54,13 +54,13 @@ public class DB {
     private static SupportSQLiteOpenHelper.Factory sqliteOpenHelperFactory = null;
 
     /**
-     * The deck, which is actually an SQLite database.
+     * The collection, which is actually an SQLite database.
      */
     private SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
 
     /**
-     * Open a database connection to an ".anki" SQLite file.
+     * Open a connection to the SQLite collection database.
      */
     public DB(String ankiFilename) {
 
@@ -120,7 +120,7 @@ public class DB {
         public void onCorruption(SupportSQLiteDatabase db) {
             Timber.e("The database has been corrupted: %s", db.getPath());
             AnkiDroidApp.sendExceptionReport(new RuntimeException("Database corrupted"), "DB.MyDbErrorHandler.onCorruption", "Db has been corrupted: " + db.getPath());
-            CollectionHelper.getInstance().closeCollection(false);
+            CollectionHelper.getInstance().closeCollection(false, "Database corrupted");
             DatabaseErrorDialog.databaseCorruptFlag = true;
         }
     }
@@ -176,8 +176,7 @@ public class DB {
         return queryScalar(query, null);
     }
 
-
-    public int queryScalar(String query, String[] selectionArgs) {
+    public int queryScalar(String query, Object[] selectionArgs) {
         Cursor cursor = null;
         int scalar;
         try {
@@ -196,34 +195,30 @@ public class DB {
 
 
     public String queryString(String query) throws SQLException {
-        Cursor cursor = null;
-        try {
-            cursor = mDatabase.query(query, null);
+        return queryString(query, null);
+    }
+
+    public String queryString(String query, Object[] bindArgs) throws SQLException {
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             if (!cursor.moveToNext()) {
                 throw new SQLException("No result for query: " + query);
             }
             return cursor.getString(0);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
     }
 
 
     public long queryLongScalar(String query) {
-        Cursor cursor = null;
+        return queryLongScalar(query, null);
+    }
+
+    public long queryLongScalar(String query, Object[] bindArgs) {
         long scalar;
-        try {
-            cursor = mDatabase.query(query, null);
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             if (!cursor.moveToNext()) {
                 return 0;
             }
             scalar = cursor.getLong(0);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
 
         return scalar;
@@ -232,7 +227,7 @@ public class DB {
 
     /**
      * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
-     * the specified class. See Deck.initUndo() for a usage example.
+     * the specified class.
      *
      * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
@@ -240,13 +235,15 @@ public class DB {
      * @return An ArrayList with the contents of the specified column.
      */
     public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
+        return queryColumn(type, query, column, null);
+    }
+
+    public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column, Object[] bindArgs) {
         int nullExceptionCount = 0;
         InvocationTargetException nullException = null; // to catch the null exception for reporting
         ArrayList<T> results = new ArrayList<>();
-        Cursor cursor = null;
 
-        try {
-            cursor = mDatabase.query(query, null);
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             String methodName = getCursorMethodName(type.getSimpleName());
             while (cursor.moveToNext()) {
                 try {
@@ -269,9 +266,6 @@ public class DB {
             // This is really coding error, so it should be revealed if it ever happens
             throw new RuntimeException(e);
         } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
             if (nullExceptionCount > 0) {
                 if (nullException != null) {
                     StringBuilder sb = new StringBuilder();

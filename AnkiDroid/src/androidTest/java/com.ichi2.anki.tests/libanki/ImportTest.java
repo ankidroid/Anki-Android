@@ -29,7 +29,7 @@ import com.ichi2.libanki.importer.Anki2Importer;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.importer.Importer;
 
-import org.json.JSONException;
+import com.ichi2.utils.JSONException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

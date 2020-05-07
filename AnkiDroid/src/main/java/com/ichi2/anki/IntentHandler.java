@@ -8,7 +8,6 @@ import android.os.Message;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.utils.ImportUtils;
-import com.ichi2.utils.IntentTop;
 
 import timber.log.Timber;
 
@@ -28,11 +27,11 @@ public class IntentHandler extends Activity {
         setContentView(R.layout.progress_bar);
         Intent intent = getIntent();
         Timber.v(intent.toString());
-        Intent reloadIntent = new IntentTop(this, DeckPicker.class);
+        Intent reloadIntent = new Intent(this, DeckPicker.class);
         reloadIntent.setDataAndType(getIntent().getData(), getIntent().getType());
         String action = intent.getAction();
         if (Intent.ACTION_VIEW.equals(action)) {
-
+            Timber.i("Handling file import");
             String errorMessage = ImportUtils.handleFileImport(this, intent);
             // Start DeckPicker if we correctly processed ACTION_VIEW
             if (errorMessage == null) {
@@ -42,29 +41,31 @@ public class IntentHandler extends Activity {
                 startActivity(reloadIntent);
                 AnkiActivity.finishActivityWithFade(this);
             } else {
+                Timber.i("File import failed");
                 // Don't import the file if it didn't load properly or doesn't have apkg extension
                 //Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
                 ImportUtils.showImportUnsuccessfulDialog(this, errorMessage, true);
             }
         } else if ("com.ichi2.anki.DO_SYNC".equals(action)) {
+            Timber.i("Handling Sync Intent");
             sendDoSyncMsg();
             reloadIntent.setAction(action);
             reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(reloadIntent);
             AnkiActivity.finishActivityWithFade(this);
         } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
-            // Intent and not IntentTop, because you may want to
-            // actually review the remainded deck and then go back to
-            // current deck.
+            long deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0);
+            Timber.i("Handling intent to review deck '%d'", deckId);
             final Intent reviewIntent = new Intent(this, Reviewer.class);
 
-            CollectionHelper.getInstance().getCol(this).getDecks().select(intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0));
+            CollectionHelper.getInstance().getCol(this).getDecks().select(deckId);
             startActivity(reviewIntent);
             AnkiActivity.finishActivityWithFade(this);
         } else {
             // Launcher intents should start DeckPicker if no other task exists,
             // otherwise go to previous task
             Timber.d("onCreate() performing default action");
+            Timber.i("Launching DeckPicker");
             reloadIntent.setAction(Intent.ACTION_MAIN);
             reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

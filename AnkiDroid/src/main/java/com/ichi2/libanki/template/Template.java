@@ -48,7 +48,6 @@ import java.util.regex.Pattern;
 public class Template {
     public static final String clozeReg = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
-    private static final Pattern fClozeSection = Pattern.compile("c[qa]:(\\d+):(.+)");
     private static final String TAG = Template.class.getName();
 
     // The regular expression used to find a #section
@@ -71,6 +70,8 @@ public class Template {
 
     private String mTemplate;
     private Map<String, String> mContext;
+
+    private static String ALT_HANDLEBAR_DIRECTIVE = "{{=<% %>=}}";
 
     private static String get_or_attr(Map<String, String> obj, String name) {
         return get_or_attr(obj, name, null);
@@ -107,11 +108,10 @@ public class Template {
         String otag = Pattern.quote(sOtag);
         String ctag = Pattern.quote(sCtag);
 
-        String section = String.format(Locale.US,
-                "%s[\\#|^]([^\\}]*)%s(.+?)%s/\\1%s", otag, ctag, otag, ctag);
+        String section = otag + "[\\#|^]([^\\}]*)" + ctag + "(.+?)" + otag + "/\\1" + ctag;
         sSection_re = Pattern.compile(section, Pattern.MULTILINE | Pattern.DOTALL);
 
-        String tag = String.format(Locale.US, "%s(#|=|&|!|>|\\{)?(.+?)\\1?%s+", otag, ctag);
+        String tag = otag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + ctag + "+";
         sTag_re = Pattern.compile(tag);
     }
 
@@ -119,46 +119,32 @@ public class Template {
      * Expands sections.
      */
     private String render_sections(String template, Map<String, String> context) {
-        while (true) {
-            Matcher match = sSection_re.matcher(template);
-            if (!match.find()) {
-                break;
-            }
-
+        StringBuffer sb = new StringBuffer();
+        Matcher match = sSection_re.matcher(template);
+        while (match.find()) {
             String section = match.group(0);
             String section_name = match.group(1);
             String inner = match.group(2);
             section_name = section_name.trim();
-            String it;
-
-            // check for cloze
-            Matcher m = fClozeSection.matcher(section_name);
-            if (m.find()) {
-                // get full field text
-                String txt = get_or_attr(context, m.group(2), null);
-                Matcher mm = Pattern.compile(String.format(clozeReg, m.group(1))).matcher(txt);
-                if (mm.find()) {
-                    it = mm.group(1);
-                } else {
-                    it = null;
-                }
-            } else {
-                it = get_or_attr(context, section_name, null);
-            }
+            String it = get_or_attr(context, section_name, null);
             String replacer = "";
-            if (!TextUtils.isEmpty(it)) {
+            boolean field_is_empty = TextUtils.isEmpty(it);
+
+            if (!field_is_empty) {
                 it = Utils.stripHTMLMedia(it).trim();
             }
-            if (!TextUtils.isEmpty(it)) {
+            field_is_empty = TextUtils.isEmpty(it);
+            if (!field_is_empty) {
                 if (section.charAt(2) != '^') {
-                    replacer = inner;
+                    replacer = render_sections(inner, context);
                 }
-            } else if (TextUtils.isEmpty(it) && section.charAt(2) == '^') {
-                replacer = inner;
+            } else if (field_is_empty && section.charAt(2) == '^') {
+                replacer = render_sections(inner, context);
             }
-            template = template.replace(section, replacer);
+            match.appendReplacement(sb, Matcher.quoteReplacement(replacer));
         }
-        return template;
+        match.appendTail(sb);
+        return sb.toString();
     }
 
 
@@ -166,13 +152,12 @@ public class Template {
      * Renders all the tags in a template for a context.
      */
     private String render_tags(String template, Map<String, String> context) {
-        while (true) {
-            Matcher match = sTag_re.matcher(template);
-            if (!match.find()) {
-                break;
-            }
-
-            String tag = match.group(0);
+        if (template.indexOf(ALT_HANDLEBAR_DIRECTIVE) != -1) {
+            template = template.replace(ALT_HANDLEBAR_DIRECTIVE, "").replace("<%", "{{").replace("%>", "}}");
+        }
+        StringBuffer sb = new StringBuffer();
+        Matcher match = sTag_re.matcher(template);
+        while (match.find()) {
             String tag_type = match.group(1);
             String tag_name = match.group(2).trim();
             String replacement;
@@ -187,9 +172,10 @@ public class Template {
             } else {
                 return "{{invalid template}}";
             }
-            template = template.replace(tag, replacement);
+            match.appendReplacement(sb, Matcher.quoteReplacement(replacement));
         }
-        return template;
+        match.appendTail(sb);
+        return sb.toString();
     }
 
     /**

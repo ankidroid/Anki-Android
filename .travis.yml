@@ -41,7 +41,9 @@ env:
    - API=27
    - API=28
    - API=29
-   - API=24 JDK="1.11" # make sure we work in the future
+   - API=R EMU_FLAVOR=google_apis # This will be API30 when it is released, until now it is R and it is failing unfortunately
+   - API=24 JDK="1.11" # make sure we work in future dev environments
+   - API=24 JDK="1.14" # make sure we work in future dev environments
 
 jobs:
   fast_finish: true  # Report success without waiting for jobs that allowed to fail.
@@ -68,7 +70,9 @@ jobs:
       install: skip
       script: echo finalize codacy coverage uploads
   allow_failures:
+    - env: API=R EMU_FLAVOR=google_apis # unreleased Android API30 is failing in local builds, let's expose that on Travis
     - env: API=24 JDK="1.11" # non-default JDKs should not hold up success reporting
+    - env: API=24 JDK="1.14" # non-default JDKs should not hold up success reporting
     - env: FINALIZE_COVERAGE=TRUE API=NONE # finalizing coverage should not hold up success reporting
 
 before_install:
