@@ -132,9 +132,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
             }
 
             // Copy file contents into new temp file. Possibly check file size first and warn if large?
-            InputStream inputStream = null;
-            try {
-                inputStream = mActivity.getContentResolver().openInputStream(selectedClip);
+            try (InputStream inputStream = mActivity.getContentResolver().openInputStream(selectedClip)) {
                 CompatHelper.getCompat().copyFile(inputStream, clipCopy.getAbsolutePath());
 
                 // If everything worked, hand off the information
@@ -146,13 +144,6 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
                 Timber.e(e, "Unable to copy audio file from ContentProvider");
                 UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
                         AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
-            }
-            finally {
-                try {
-                    inputStream.close();
-                } catch (IOException ioe) {
-                    // nothing
-                }
             }
         }
     }

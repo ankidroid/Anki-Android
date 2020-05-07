@@ -42,17 +42,18 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.FlashCardsContract.CardTemplate;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.Utils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -349,16 +350,15 @@ public class CardContentProvider extends ContentProvider {
                 for (int k = 0; k< limit; k++){
                     Card currentCard = col.getSched().getCard();
 
-                    if (currentCard != null) {
-                        int buttonCount = col.getSched().answerButtons(currentCard);
-                        JSONArray buttonTexts = new JSONArray();
-                        for (int i = 0; i < buttonCount; i++) {
-                            buttonTexts.put(col.getSched().nextIvlStr(mContext, currentCard, i + 1));
-                        }
-                        addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns);
-                    }else{
+                    if (currentCard == null) {
                         break;
                     }
+                    int buttonCount = col.getSched().answerButtons(currentCard);
+                    JSONArray buttonTexts = new JSONArray();
+                    for (int i = 0; i < buttonCount; i++) {
+                        buttonTexts.put(col.getSched().nextIvlStr(mContext, currentCard, i + 1));
+                    }
+                    addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns);
                 }
 
                 if (deckIdOfTemporarilySelectedDeck != -1) {//if the selected deck was changed
@@ -961,14 +961,10 @@ public class CardContentProvider extends ContentProvider {
                 String bafmt = values.getAsString(CardTemplate.BROWSER_ANSWER_FORMAT);
                 try {
                     JSONObject t = models.newTemplate(name);
-                    try {
-                        t.put("qfmt", qfmt);
-                        t.put("afmt", afmt);
-                        t.put("bqfmt", bqfmt);
-                        t.put("bafmt", bafmt);
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
+                    t.put("qfmt", qfmt);
+                    t.put("afmt", afmt);
+                    t.put("bqfmt", bqfmt);
+                    t.put("bafmt", bafmt);
                     models.addTemplate(existingModel, t);
                     models.save(existingModel);
                     col.save();
@@ -1163,7 +1159,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void answerCard(Collection col, Sched sched, Card cardToAnswer, int ease, long timeTaken) {
+    private void answerCard(Collection col, AbstractSched sched, Card cardToAnswer, int ease, long timeTaken) {
         try {
             DB db = col.getDb();
             db.getDatabase().beginTransaction();
@@ -1186,7 +1182,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
 
-    private void buryOrSuspendCard(Collection col, Sched sched, Card card, boolean bury) {
+    private void buryOrSuspendCard(Collection col, AbstractSched sched, Card card, boolean bury) {
         try {
             DB db = col.getDb();
             db.getDatabase().beginTransaction();

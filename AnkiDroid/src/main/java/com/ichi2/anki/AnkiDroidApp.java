@@ -37,12 +37,15 @@ import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
+import com.ichi2.anki.exception.ManuallyReportedException;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.utils.Permissions;
+import com.ichi2.utils.WebViewDebugging;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
@@ -157,7 +160,7 @@ public class AnkiDroidApp extends Application {
      * collections being upgraded to (or after) this version must run an integrity check as it will contain fixes that
      * all collections should have.
      */
-    public static final int CHECK_DB_AT_VERSION = 20900148;
+    public static final int CHECK_DB_AT_VERSION = 21000172;
 
     /**
      * The latest package version number that included changes to the preferences that requires handling. All
@@ -194,6 +197,14 @@ public class AnkiDroidApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (sInstance != null) {
+            Timber.i("onCreate() called multiple times");
+            //5887 - fix crash.
+            if (sInstance.getResources() == null) {
+                Timber.w("Skipping re-initialisation - no resources. Maybe uninstalling app?");
+                return;
+            }
+        }
         sInstance = this;
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
@@ -235,7 +246,7 @@ public class AnkiDroidApp extends Application {
         CardBrowser.clearLastDeckId();
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
-        if (CollectionHelper.hasStorageAccessPermission(this)) {
+        if (Permissions.hasStorageAccessPermission(this)) {
             try {
                 String dir = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                 CollectionHelper.initializeAnkiDroidDirectory(dir);
@@ -295,6 +306,10 @@ public class AnkiDroidApp extends Application {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
+    /** Used when we don't have an exception to throw, but we know something is wrong and want to diagnose it */
+    public static void sendExceptionReport(@NonNull String message, String origin) {
+        sendExceptionReport(new ManuallyReportedException(message), origin, null);
+    }
 
     public static void sendExceptionReport(Throwable e, String origin) {
         sendExceptionReport(e, origin, null);
@@ -521,4 +536,5 @@ public class AnkiDroidApp extends Application {
             }
         }
     }
+
 }

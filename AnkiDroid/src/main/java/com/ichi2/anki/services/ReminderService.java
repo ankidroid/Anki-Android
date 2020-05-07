@@ -29,7 +29,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
-import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.sched.Sched;
 
 public class ReminderService extends BroadcastReceiver {
 

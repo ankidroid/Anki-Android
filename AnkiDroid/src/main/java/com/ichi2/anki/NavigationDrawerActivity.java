@@ -36,8 +36,6 @@ import android.view.View;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
-import com.ichi2.utils.IntentTop;
-import com.ichi2.utils.IntentTopNewTask;
 
 import timber.log.Timber;
 
@@ -239,7 +237,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 }
             } else {
                 // collection path has changed so kick the user back to the DeckPicker
-                CollectionHelper.getInstance().closeCollection(true);
+                CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed");
                 restartActivityInvalidateBackstack(this);
             }
         } else {
@@ -285,32 +283,39 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             // Take action if a different item selected
             switch (item.getItemId()) {
                 case R.id.nav_decks: {
-                    Intent deckPicker = new IntentTopNewTask(NavigationDrawerActivity.this, DeckPicker.class);
-                    // opening DeckPicker should clear back history
+                    Timber.i("Navigating to decks");
+                    Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
+                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
                     startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.RIGHT);
                     break;
                 }
                 case R.id.nav_browser:
+                    Timber.i("Navigating to card browser");
                     openCardBrowser();
                     break;
                 case R.id.nav_stats: {
-                    Intent intent = new IntentTop(NavigationDrawerActivity.this, Statistics.class);
+                    Timber.i("Navigating to stats");
+                    Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
                     startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, ActivityTransitionAnimation.LEFT);
                     break;
                 }
                 case R.id.nav_night_mode:
+                    Timber.i("Toggling Night Mode");
                     mNightModeSwitch.performClick();
                     break;
                 case R.id.nav_settings:
+                    Timber.i("Navigating to settings");
                     mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
                     // Remember the theme we started with so we can restart the Activity if it changes
                     mOldTheme = Themes.getCurrentTheme(getApplicationContext());
-                    startActivityForResultWithAnimation(new IntentTop(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
+                    startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
                     break;
                 case R.id.nav_help:
+                    Timber.i("Navigating to help");
                     openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
                     break;
                 case R.id.nav_feedback:
+                    Timber.i("Navigating to feedback");
                     openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
                     break;
                 default:
@@ -323,7 +328,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
     protected void openCardBrowser() {
-        Intent intent = new IntentTop(NavigationDrawerActivity.this, CardBrowser.class);
+        Intent intent = new Intent(NavigationDrawerActivity.this, CardBrowser.class);
         Long currentCardId = getCurrentCardId();
         if (currentCardId != null) {
             intent.putExtra("currentCard", currentCardId);

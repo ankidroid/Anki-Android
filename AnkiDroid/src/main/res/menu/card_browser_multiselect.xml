@@ -73,6 +73,13 @@
         android:title="@string/card_browser_select_all"
         android:icon="@drawable/ic_select_all_white_24dp"/>
 
+    <!-- For now: don't display 'select none' as action as we don't have an icon -->
+    <item
+        ankidroid:showAsAction="never"
+        android:id="@+id/action_select_none"
+        android:title="@string/card_browser_select_none"
+        android:icon="@drawable/ic_select_all_white_24dp"/>
+
     <item
         ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_undo"

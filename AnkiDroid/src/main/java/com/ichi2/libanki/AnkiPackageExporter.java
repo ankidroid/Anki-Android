@@ -18,13 +18,14 @@ package com.ichi2.libanki;
 
 import android.content.Context;
 
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.compat.CompatHelper;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -192,11 +193,13 @@ class AnkiExporter extends Exporter {
                     dconfs.put(Long.toString(d.getLong("conf")), true);
                 }
             }
+
+            JSONObject destinationDeck = d.deepClone();
             if (!mIncludeSched) {
                 // scheduling not included, so reset deck settings to default
-                d.put("conf", 1);
+                destinationDeck.put("conf", 1);
             }
-            dst.getDecks().update(d);
+            dst.getDecks().update(destinationDeck);
         }
         // copy used deck confs
         Timber.d("Copy deck options");
@@ -231,8 +234,8 @@ class AnkiExporter extends Exporter {
                     String fname = f.getName();
                     if (fname.startsWith("_")) {
                         // Loop through every model that will be exported, and check if it contains a reference to f
-                        for (int idx = 0; idx < mid.size(); idx++) {
-                            if (_modelHasMedia(mSrc.getModels().get(idx), fname)) {
+                        for (JSONObject model : mSrc.getModels().all()) {
+                            if (_modelHasMedia(model, fname)) {
                                 media.put(fname, true);
                                 break;
                             }
@@ -350,7 +353,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         mCount = mCol.cardCount();
         mCol.close();
         if (!_v2sched) {
-            z.write(mCol.getPath(), "collection.anki2");
+            z.write(mCol.getPath(), CollectionHelper.COLLECTION_FILENAME);
         } else {
             _addDummyCollection(z, context);
             z.write(mCol.getPath(), "collection.anki21");
@@ -406,7 +409,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         }
 
         super.exportInto(colfile, context);
-        z.write(colfile, "collection.anki2");
+        z.write(colfile, CollectionHelper.COLLECTION_FILENAME);
         // and media
         prepareMedia();
     	JSONObject media = _exportMedia(z, mMediaFiles, mCol.getMedia().dir());
@@ -444,7 +447,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         c.addNote(n);
         c.save();
         c.close();
-        zip.write(f.getAbsolutePath(), "collection.anki2");
+        zip.write(f.getAbsolutePath(), CollectionHelper.COLLECTION_FILENAME);
     }
 }
 

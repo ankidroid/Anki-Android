@@ -36,9 +36,9 @@ import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.ImportUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -228,7 +228,21 @@ public class Utils {
      *
      * @param context The application's environment.
      * @param time_s The time to format, in seconds
-     * @return The formatted, localized time string. The time is always a float.
+     * @return The formatted, localized time string. The time is always a float. E.g. "27.0 days"
+     */
+    public static String roundedTimeSpanUnformatted(Context context, long time_s) {
+        // As roundedTimeSpan, but without tags; for place where you don't use HTML
+        return roundedTimeSpan(context, time_s).replace("<b>", "").replace("</b>", "");
+    }
+
+    /**
+     * Return a proper string for a time value in seconds
+     *
+     * Similar to Anki anki/utils.py's fmtTimeSpan.
+     *
+     * @param context The application's environment.
+     * @param time_s The time to format, in seconds
+     * @return The formatted, localized time string. The time is always a float. E.g. "<b>27.0</b> days"
      */
     public static String roundedTimeSpan(Context context, long time_s) {
         if (Math.abs(time_s) < TIME_DAY) {
@@ -412,7 +426,7 @@ public class Utils {
     }
 
     public static Long[] list2ObjectArray(List<Long> list) {
-        return list.toArray(new Long[list.size()]);
+        return list.toArray(new Long[0]);
     }
 
     /** Return a non-conflicting timestamp for table. */
@@ -420,7 +434,7 @@ public class Utils {
         // be careful not to create multiple objects without flushing them, or they
         // may share an ID.
         long t = intTime(1000);
-        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = " + t) != 0) {
+        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = ?", new Object[] {t}) != 0) {
             t += 1;
         }
         return t;
@@ -441,7 +455,7 @@ public class Utils {
         String table = ALL_CHARACTERS + extra;
         int len = table.length();
         String buf = "";
-        int mod = 0;
+        int mod;
         while (num != 0) {
             mod = num % len;
             buf = buf + table.substring(mod, mod + 1);
@@ -462,6 +476,7 @@ public class Utils {
     }
 
     // increment a guid by one, for note type conflicts
+    @SuppressWarnings({"unused"}) //used in Anki
     public static String incGuid(String guid) {
         return new StringBuffer(_incGuid(new StringBuffer(guid).reverse().toString())).reverse().toString();
     }
@@ -471,9 +486,9 @@ public class Utils {
         int idx = table.indexOf(guid.substring(0, 1));
         if (idx + 1 == table.length()) {
             // overflow
-            guid = table.substring(0, 1) + _incGuid(guid.substring(1, guid.length()));
+            guid = table.substring(0, 1) + _incGuid(guid.substring(1));
         } else {
-            guid = table.substring(idx + 1) + guid.substring(1, guid.length());
+            guid = table.substring(idx + 1) + guid.substring(1);
         }
         return guid;
     }
@@ -491,11 +506,7 @@ public class Utils {
     public static Object[] jsonArray2Objects(JSONArray array) {
         Object[] o = new Object[array.length()];
         for (int i = 0; i < array.length(); i++) {
-            try {
-                o[i] = array.get(i);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            o[i] = array.get(i);
         }
         return o;
     }
@@ -796,7 +807,7 @@ public class Utils {
         // Use android.net.Uri class to ensure whole path is properly encoded
         // File.toURL() does not work here, and URLEncoder class is not directly usable
         // with existing slashes
-        if (mediaDir.length() != 0 && !mediaDir.equalsIgnoreCase("null")) {
+        if (mediaDir.length() != 0 && !"null".equalsIgnoreCase(mediaDir)) {
             Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
             return mediaDirUri.toString() +"/";
         }
