@@ -67,7 +67,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -398,7 +397,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         String pathName = preferences.getString("deck_background_path","");
         View view = findViewById(R.id.root_layout);
         //Toast.makeText(this, pathName, Toast.LENGTH_LONG).show();
-        if (pathName == "default" || pathName == "") {
+        if (pathName.equals("default") || pathName.isEmpty()) {
             view.setBackgroundResource(0);
         } else {
             Resources res = getResources();
