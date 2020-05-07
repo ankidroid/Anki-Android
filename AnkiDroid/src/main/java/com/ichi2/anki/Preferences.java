@@ -442,6 +442,25 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     }
 
 
+    private void addThirdPartyAppsListener(PreferenceScreen screen) {
+        //#5864 - some people don't have a browser so we can't use <intent>
+        //and need to handle the keypress ourself.
+        Preference showThirdParty = screen.findPreference("thirdpartyapps_link");
+        final String githubThirdPartyAppsUrl = "https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps";
+        showThirdParty.setOnPreferenceClickListener((preference) -> {
+            try {
+                Intent openThirdPartyAppsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(githubThirdPartyAppsUrl));
+                super.startActivity(openThirdPartyAppsIntent);
+            } catch (ActivityNotFoundException e) {
+                //We use a different message here. We have limited space in the snackbar
+                String error = getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl);
+                UIUtils.showSimpleSnackbar(this, error, false);
+            }
+            return true;
+        });
+    }
+
+
     /**
      * Loop over every preference in the list and set the summary text
      */
