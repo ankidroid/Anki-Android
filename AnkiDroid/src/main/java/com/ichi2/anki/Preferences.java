@@ -400,10 +400,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
                 Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 cursor.moveToFirst();
-
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 imgPathString = cursor.getString(columnIndex);
                 //Toast.makeText(this, imgPathString, Toast.LENGTH_LONG).show();
@@ -418,7 +416,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         } catch (Exception e) {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
         }
-
     }
 
     private void addThirdPartyAppsListener(PreferenceScreen screen) {
