@@ -395,12 +395,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         View mainView = findViewById(android.R.id.content);
 
         //Add background to Deckpicker activity
-        //String pathName = "/sdcard/gif001.gif";
         String pathName = preferences.getString("deck_background_path","");
         View view = findViewById(R.id.root_layout);
-
         //Toast.makeText(this, pathName, Toast.LENGTH_LONG).show();
-
         if (pathName == "default" || pathName == "") {
             view.setBackgroundResource(0);
         } else {
