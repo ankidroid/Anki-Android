@@ -470,9 +470,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void applyDeckPickerBackground() {
-        View view = findViewById(R.id.root_layout);
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
         File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
+        View view = findViewById(R.id.root_layout);
         if (!imgFile.exists()) {
             view.setBackgroundResource(0);
         } else {
