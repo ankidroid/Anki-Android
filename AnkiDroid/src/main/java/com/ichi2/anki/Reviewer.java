@@ -39,7 +39,6 @@ import android.widget.FrameLayout;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
-import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.compat.CompatHelper;
