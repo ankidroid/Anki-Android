@@ -259,6 +259,8 @@ public class AnkiDroidApp extends Application {
                 }
             }
         }
+
+        Timber.i("AnkiDroidApp: Starting Services");
         new BootService().onReceive(this, new Intent(this, BootService.class));
 
         // Register BroadcastReceiver NotificationService

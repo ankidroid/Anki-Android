@@ -1005,6 +1005,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundRepairDeck");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col != null) {
+            Timber.i("RepairDeck: Closing collection");
             col.close(false);
         }
         return new TaskData(BackupManager.repairCollection(col));
