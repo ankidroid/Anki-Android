@@ -86,6 +86,7 @@ import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
+import com.ichi2.anki.reviewer.CardMarker.FlagDef;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
@@ -2698,12 +2699,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected int getFlagToDisplay() {
+    protected @FlagDef int getFlagToDisplay() {
         return mCurrentCard.getUserFlag();
     }
 
 
-    protected void onFlag(Card card, int flag) {
+    protected void onFlag(Card card, @FlagDef int flag) {
         if (card == null) {
             return;
         }
