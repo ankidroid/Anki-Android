@@ -32,6 +32,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+
 /**
  * This class renders the card content by parsing the card template and replacing all marked sections
  * and tags with their respective data. The data is derived from a context object that is given to
@@ -103,10 +105,41 @@ public class Template {
     /**
      * Expands sections.
      */
-    private String render_sections(String template, Map<String, String> context) {
+    private String render_sections(@NonNull String template, @NonNull Map<String, String> context) {
+        /* Apply render_some_section to the templates, until
+           render_some_section states that it does not find sections
+           anymore. Return the last template found. */
+        String previous_template = null;
+        while (template != null) {
+            previous_template = template;
+            template = render_some_sections(template, context);
+        }
+        return previous_template;
+    }
+
+    /** Deal with conditionals that are found. If no conditionals are
+     * found, return null.
+
+     It is not guaranteed that are conditionals are found. For example, on
+     {{#field1}}
+       {{#field2}}
+     {{/field1}}
+       {{/field2}}, the regexp only finds {{field1}} and ignore {{field2}}.
+
+     Note that all conditionals are found, unless a conditional
+     appears inside itself, or conditionals are not properly
+     closed. Both cases leads to error for some values of fields so
+     should not appear in template anyways.
+
+     If some change is done, the function should be called again to
+     remove those new pairs of conditionals.
+     */
+    private String render_some_sections(@NonNull String template, @NonNull Map<String, String> context) {
         StringBuffer sb = new StringBuffer();
         Matcher match = sSection_re.matcher(template);
+        boolean found = false;
         while (match.find()) {
+            found = true;
             String section = match.group(0);
             String section_name = match.group(1).trim();
             String inner = match.group(2);
@@ -119,6 +152,10 @@ public class Template {
             boolean show_inner = field_is_empty == conditional_is_negative;
             String replacer = (show_inner) ? render_sections(inner, context) : "";
             match.appendReplacement(sb, Matcher.quoteReplacement(replacer));
+        }
+        if (!found) {
+            // There were no replacement. We can halt the computation
+            return null;
         }
         match.appendTail(sb);
         return sb.toString();
