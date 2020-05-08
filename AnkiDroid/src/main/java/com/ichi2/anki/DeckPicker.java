@@ -33,10 +33,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.SQLException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -473,17 +470,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void applyDeckPickerBackground(SharedPreferences preferences) {
-        String pathName = preferences.getString("deck_background_path","default");
         View view = findViewById(R.id.root_layout);
-        if ("default".equals(pathName)) {
+        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+        File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
+        if (!imgFile.exists()) {
             view.setBackgroundResource(0);
         } else {
-            Resources res = getResources();
-            Bitmap bitmap = BitmapFactory.decodeFile(pathName);
-            BitmapDrawable bd = new BitmapDrawable(res, bitmap);
-            view = findViewById(R.id.root_layout);
+            Drawable drawable = Drawable.createFromPath(imgFile.getAbsolutePath());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                view.setBackground(bd);
+                view.setBackground(drawable);
             }
         }
     }
