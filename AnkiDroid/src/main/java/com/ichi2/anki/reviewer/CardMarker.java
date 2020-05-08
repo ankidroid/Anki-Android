@@ -5,7 +5,11 @@ import android.widget.ImageView;
 
 import com.ichi2.anki.R;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 
 /** Handles the star and flag marker for the card viewer */
@@ -16,6 +20,10 @@ public class CardMarker {
     public static final int FLAG_ORANGE = 2;
     public static final int FLAG_GREEN = 3;
     public static final int FLAG_BLUE = 4;
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({FLAG_NONE, FLAG_RED, FLAG_ORANGE, FLAG_GREEN, FLAG_BLUE})
+    public @interface FlagDef {}
 
     @NonNull
     private final ImageView markView;
@@ -38,7 +46,7 @@ public class CardMarker {
     }
 
     /** Sets the flag icon on the card */
-    public void displayFlag(int flagStatus) {
+    public void displayFlag(@FlagDef int flagStatus) {
         switch (flagStatus) {
             case FLAG_RED:
                 setFlagView(R.drawable.ic_flag_red);
