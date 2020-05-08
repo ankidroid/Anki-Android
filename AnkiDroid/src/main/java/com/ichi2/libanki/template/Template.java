@@ -132,8 +132,8 @@ public class Template {
 
             if (!field_is_empty) {
                 it = Utils.stripHTMLMedia(it).trim();
+                field_is_empty = TextUtils.isEmpty(it);
             }
-            field_is_empty = TextUtils.isEmpty(it);
             if (!field_is_empty) {
                 if (section.charAt(2) != '^') {
                     replacer = render_sections(inner, context);
