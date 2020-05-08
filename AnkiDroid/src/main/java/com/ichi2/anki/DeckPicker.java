@@ -475,7 +475,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void applyDeckPickerBackground(SharedPreferences preferences) {
         String pathName = preferences.getString("deck_background_path","default");
         View view = findViewById(R.id.root_layout);
-        if (pathName.equals("default")) {
+        if ("default".equals(pathName)) {
             view.setBackgroundResource(0);
         } else {
             Resources res = getResources();
