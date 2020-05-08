@@ -330,6 +330,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
     @Override
     public void exportInto(String path, Context context) throws IOException, JSONException, ImportExportException {
         // sched info+v2 scheduler not compatible w/ older clients
+        Timber.i("Starting export into %s", path);
         _v2sched = mCol.schedVer() != 1 && mIncludeSched;
 
         // open a zip file

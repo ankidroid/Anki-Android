@@ -463,6 +463,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             }
             return data;
         } finally {
+            Timber.i("Sync Finished - Closing Collection");
             // don't bump mod time unless we explicitly save
             if (col != null) {
                 col.close(false);

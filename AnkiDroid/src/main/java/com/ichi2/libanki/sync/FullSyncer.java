@@ -79,6 +79,7 @@ public class FullSyncer extends HttpSyncer {
         }
         String path;
         if (mCol != null) {
+            Timber.i("Closing collection for full sync");
             // Usual case where collection is non-null
             path = mCol.getPath();
             mCol.close();
