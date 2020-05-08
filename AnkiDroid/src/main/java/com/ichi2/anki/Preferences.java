@@ -422,7 +422,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     cursor.close();
                 } catch (Exception ex1) {
                     Timber.e("%s",ex1.getLocalizedMessage());
-                };
+                }
                 Timber.v(imgPathString);
                 File sourceFile = new File(imgPathString);
                 String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
