@@ -74,6 +74,10 @@ import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -111,7 +115,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer"};
 
     private static int RESULT_LOAD_IMG = 111;
-    private static String imgPathString = "default";
+    private String imgPathString = "default";
+    private String copyImagePathString = "default";
     // ----------------------------------------------------------------------------
     // Overridden methods
     // ----------------------------------------------------------------------------
@@ -247,15 +252,19 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 CheckBoxPreference backgroundImage = (CheckBoxPreference) screen.findPreference("deckPickerBackground");
                 SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
                 backgroundImage.setOnPreferenceClickListener(preference -> {
-                    if ( backgroundImage.isChecked()) {
-                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-                        backgroundImage.setChecked(true);
-                        Timber.i("Image added!" + imgPathString);
-                        preferences.edit().putString("deck_background_path", imgPathString).apply();
+                    if (backgroundImage.isChecked()) {
+                        try {
+                            Intent galleryIntent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+                            backgroundImage.setChecked(true);
+                        } catch (Exception ex) {
+                            Timber.e("%s",ex.toString());
+                        }
                     } else {
-                        preferences.edit().putString("deck_background_path", "default").apply();
+                        copyImagePathString = "default";
+                        preferences.edit().putString("deck_background_path", copyImagePathString).apply();
                         backgroundImage.setChecked(false);
+                        Toast.makeText(this, "Background image removed", Toast.LENGTH_LONG).show();
                     }
                     return true;
                 });
@@ -402,17 +411,43 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 imgPathString = cursor.getString(columnIndex);
-                //Toast.makeText(this, imgPathString, Toast.LENGTH_LONG).show();
-                Timber.i(imgPathString);
-                preferences.edit().putString("deck_background_path", imgPathString);
-                preferences.edit().apply();
-                Timber.i(imgPathString);
                 cursor.close();
+                Timber.e(imgPathString);
+                File sourceFile = new File(imgPathString);
+
+                String imgName = sourceFile.getName();
+                String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+                copyImagePathString = currentAnkiDroidDirectory + "/" + imgName;
+
+                File destFile = new File(copyImagePathString);
+                if (!destFile.getParentFile().exists())
+                    destFile.getParentFile().mkdirs();
+                if (!destFile.exists()) {
+                    destFile.createNewFile();
+                }
+
+                FileChannel sourceChannel = null;
+                FileChannel destChannel = null;
+                try {
+                   sourceChannel  = new FileInputStream(sourceFile).getChannel();
+                   destChannel  = new FileOutputStream(destFile).getChannel();
+                   destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+                } finally {
+                    if (sourceChannel != null) {
+                        sourceChannel.close();
+                    }
+                    if (destChannel != null) {
+                        destChannel.close();
+                    }
+                }
+                preferences.edit().putString("deck_background_path", copyImagePathString).apply();
+                Toast.makeText(this, "Background image applied", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
+                preferences.edit().putString("deck_background_path", "default").apply();
+                Toast.makeText(this, "You haven't picked any image", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+            Timber.e("Error copying file %s",e.toString());
         }
     }
 

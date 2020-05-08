@@ -394,20 +394,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         View mainView = findViewById(android.R.id.content);
 
         //Add background to Deckpicker activity
-        String pathName = preferences.getString("deck_background_path","");
-        View view = findViewById(R.id.root_layout);
-        //Toast.makeText(this, pathName, Toast.LENGTH_LONG).show();
-        if (pathName.equals("default") || pathName.isEmpty()) {
-            view.setBackgroundResource(0);
-        } else {
-            Resources res = getResources();
-            Bitmap bitmap = BitmapFactory.decodeFile(pathName);
-            BitmapDrawable bd = new BitmapDrawable(res, bitmap);
-            view = findViewById(R.id.root_layout);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                view.setBackground(bd);
-            }
-        }
+        applyDeckPickerBackground(preferences);
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
@@ -481,6 +468,22 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     Timber.i("Displaying database error");
                     showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
                 }
+            }
+        }
+    }
+
+    private void applyDeckPickerBackground(SharedPreferences preferences) {
+        String pathName = preferences.getString("deck_background_path","default");
+        View view = findViewById(R.id.root_layout);
+        if (pathName.equals("default")) {
+            view.setBackgroundResource(0);
+        } else {
+            Resources res = getResources();
+            Bitmap bitmap = BitmapFactory.decodeFile(pathName);
+            BitmapDrawable bd = new BitmapDrawable(res, bitmap);
+            view = findViewById(R.id.root_layout);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                view.setBackground(bd);
             }
         }
     }
