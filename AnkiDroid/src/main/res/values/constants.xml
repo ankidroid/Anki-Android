@@ -105,6 +105,11 @@
         <item>17</item>
         <item>18</item>
         <item>19</item>
+        <item>20</item> <!-- Red Flag -->
+        <item>21</item> <!-- Orange Flag -->
+        <item>22</item> <!-- Green Flag -->
+        <item>23</item> <!-- Blue Flag -->
+        <item>24</item> <!-- Unset Flag -->
     </string-array>
     <string-array name="custom_button_values">
         <item>2</item>
