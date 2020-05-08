@@ -412,16 +412,20 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         String imgPathString = "";
         try {
             if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
+                Cursor cursor = null;
                 try {
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     imgPathString = cursor.getString(columnIndex);
-                    cursor.close();
                 } catch (Exception ex1) {
                     Timber.e("%s",ex1.getLocalizedMessage());
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
                 }
                 Timber.v(imgPathString);
                 File sourceFile = new File(imgPathString);
@@ -437,7 +441,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             } else {
                 UIUtils.showThemedToast(this, getString(R.string.no_image_selected), false);
             }
-        } catch (OutOfMemoryError | IOException e) {
+        } catch (OutOfMemoryError | Exception e) {
             UIUtils.showThemedToast(this, getString(R.string.error_selecting_image), false);
         }
     }
