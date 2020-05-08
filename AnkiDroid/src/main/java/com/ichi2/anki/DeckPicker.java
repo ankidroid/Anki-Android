@@ -391,7 +391,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         View mainView = findViewById(android.R.id.content);
 
         //Add background to Deckpicker activity
-        applyDeckPickerBackground(preferences);
+        applyDeckPickerBackground();
 
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
@@ -469,7 +469,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private void applyDeckPickerBackground(SharedPreferences preferences) {
+    private void applyDeckPickerBackground() {
         View view = findViewById(R.id.root_layout);
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
         File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
