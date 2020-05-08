@@ -408,7 +408,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String imgPathString = "";
         try {
             if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
                 Cursor cursor = null;
@@ -418,24 +417,24 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    imgPathString = cursor.getString(columnIndex);
+                    String imgPathString = cursor.getString(columnIndex);
+                    File sourceFile = new File(imgPathString);
+
+                    String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+                    String imageName = "DeckPickerBackground.png";
+                    File destFile = new File(currentAnkiDroidDirectory, imageName);
+
+                    try (FileChannel sourceChannel = new FileInputStream(sourceFile).getChannel();
+                         FileChannel destChannel = new FileOutputStream(destFile).getChannel()) {
+                        destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+                        UIUtils.showThemedToast(this, getString(R.string.background_image_applied), false);
+                    }
                 } catch (Exception ex1) {
                     Timber.e("%s",ex1.getLocalizedMessage());
                 } finally {
                     if (cursor != null) {
                         cursor.close();
                     }
-                }
-                Timber.v(imgPathString);
-                File sourceFile = new File(imgPathString);
-                String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
-                String imageName = "DeckPickerBackground.png";
-                File destFile = new File(currentAnkiDroidDirectory, imageName);
-
-                try (FileChannel sourceChannel = new FileInputStream(sourceFile).getChannel();
-                     FileChannel destChannel = new FileOutputStream(destFile).getChannel()) {
-                    destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-                    UIUtils.showThemedToast(this, getString(R.string.background_image_applied), false);
                 }
             } else {
                 UIUtils.showThemedToast(this, getString(R.string.no_image_selected), false);
