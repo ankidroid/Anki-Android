@@ -443,7 +443,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         try {
             applyDeckPickerBackground(view);
         } catch (Exception e) {
-            UIUtils.showThemedToast(this, getString(R.string.background_image_apply_failed, e.getLocalizedMessage()), false);
+            UIUtils.showThemedToast(this, getString(R.string.failed_to_apply_background_image, e.getLocalizedMessage()), false);
         }
 
         // Hide the fragment until the counts have been loaded so that the Toolbar fills the whole screen on tablets
