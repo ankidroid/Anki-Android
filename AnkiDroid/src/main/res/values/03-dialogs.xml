@@ -183,4 +183,5 @@
     <string name="no_image_selected">No image selected</string>
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">Error deleting image</string>
+    <string name="background_image_apply_failed">Background image apply failed %s</string>
 </resources>
