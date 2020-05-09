@@ -13,7 +13,10 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.utils.ImportUtils;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class ImportDialog extends AsyncDialogFragment {
 
@@ -97,8 +100,9 @@ public class ImportDialog extends AsyncDialogFragment {
                 }
             }
             case DIALOG_IMPORT_ADD_CONFIRM: {
+                String displayFileName = convertToDisplayName(getArguments().getString("dialogMessage"));
                 return builder.title(res.getString(R.string.import_title))
-                        .content(res.getString(R.string.import_message_add_confirm, filenameFromPath(getArguments().getString("dialogMessage"))))
+                        .content(res.getString(R.string.import_message_add_confirm, filenameFromPath(displayFileName)))
                         .positiveText(res.getString(R.string.import_message_add))
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
@@ -108,8 +112,9 @@ public class ImportDialog extends AsyncDialogFragment {
                         .show();
             }
             case DIALOG_IMPORT_REPLACE_CONFIRM: {
+                String displayFileName = convertToDisplayName(getArguments().getString("dialogMessage"));
                 return builder.title(res.getString(R.string.import_title))
-                        .content(res.getString(R.string.import_message_replace_confirm, getArguments().getString("dialogMessage")))
+                        .content(res.getString(R.string.import_message_replace_confirm, displayFileName))
                         .positiveText(res.getString(R.string.dialog_positive_replace))
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
@@ -122,6 +127,19 @@ public class ImportDialog extends AsyncDialogFragment {
                 return null;
         }
     }
+
+
+    private String convertToDisplayName(String name) {
+        //ImportUtils URLEncodes names, which isn't great for display.
+        //NICE_TO_HAVE: Pass in the DisplayFileName closer to the source of the bad data, rather than fixing it here.
+        try {
+            return URLDecoder.decode(name, "UTF-8");
+        } catch (Exception e) {
+            Timber.w("Failed to convert filename to displayable string");
+            return name;
+        }
+    }
+
 
     @Override
     public String getNotificationMessage() {
