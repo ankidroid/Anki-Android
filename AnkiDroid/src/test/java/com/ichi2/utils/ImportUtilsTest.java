@@ -35,6 +35,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.spy;
 
@@ -53,6 +54,22 @@ public class ImportUtilsTest extends RobolectricTest {
 
         assertThat("Unicode character should be stripped", actualFilePath, not(containsString("好")));
         assertThat("Unicode character should be urlencoded", actualFilePath, endsWith("%E5%A5%BD.apkg"));
+    }
+
+    @Test
+    public void fileNamesAreLimitedTo100Chars() {
+        //#6137 - We URLEncode due to the above. Therefore: 好 -> %E5%A5%BD
+        //This caused filenames to be too long.
+        String inputFileName = "好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好好.apkg";
+
+        String actualFilePath = importValidFile(inputFileName);
+
+        assertThat(actualFilePath, endsWith(".apkg"));
+        assertThat(actualFilePath, containsString("..."));
+        //Obtain the filename from the path
+        assertThat(actualFilePath, containsString("%E5%A5%BD"));
+        String fileName = actualFilePath.substring(actualFilePath.indexOf("%E5%A5%BD"));
+        assertThat(fileName.length(), lessThanOrEqualTo(100));
     }
 
     private String importValidFile(String fileName) {
