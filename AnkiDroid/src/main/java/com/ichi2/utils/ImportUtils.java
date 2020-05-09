@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public class ImportUtils {
@@ -78,7 +79,7 @@ public class ImportUtils {
         }
 
         //Added to remove exception handlers
-        private static String handleFileImportInternal(Context context, Intent intent) {
+        private String handleFileImportInternal(Context context, Intent intent) {
             String errorMessage = null;
 
             if (intent.getData() == null) {
@@ -112,18 +113,12 @@ public class ImportUtils {
         }
 
 
-        private static String handleContentProviderFile(Context context, Intent intent, Uri data) {
+        private String handleContentProviderFile(Context context, Intent intent, Uri data) {
             //Note: intent.getData() can be null. Use data instead.
 
             // Get the original filename from the content provider URI
             String errorMessage = null;
-            String filename = null;
-            try (Cursor cursor = context.getContentResolver().query(data, new String[] {OpenableColumns.DISPLAY_NAME}, null, null, null)) {
-                if (cursor != null && cursor.moveToFirst()) {
-                    filename = cursor.getString(0);
-                    Timber.d("handleFileImport() Importing from content provider: %s", filename);
-                }
-            }
+            String filename = getFileNameFromContentProvider(context, data);
 
             // Hack to fix bug where ContentResolver not returning filename correctly
             if (filename == null) {
@@ -153,6 +148,18 @@ public class ImportUtils {
                 }
             }
             return errorMessage;
+        }
+
+        @Nullable
+        protected String getFileNameFromContentProvider(Context context, Uri data) {
+            String filename = null;
+            try (Cursor cursor = context.getContentResolver().query(data, new String[] {OpenableColumns.DISPLAY_NAME}, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    filename = cursor.getString(0);
+                    Timber.d("handleFileImport() Importing from content provider: %s", filename);
+                }
+            }
+            return filename;
         }
 
 
@@ -252,7 +259,7 @@ public class ImportUtils {
          * @param tempPath temporary path to store the cached file
          * @return whether or not copy was successful
          */
-        private static boolean copyFileToCache(Context context, Uri data, String tempPath) {
+        protected boolean copyFileToCache(Context context, Uri data, String tempPath) {
             // Get an input stream to the data in ContentProvider
             InputStream in;
             try {
