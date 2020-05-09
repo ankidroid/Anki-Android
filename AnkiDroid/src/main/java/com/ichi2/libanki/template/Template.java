@@ -56,8 +56,12 @@ public class Template {
     // Closing tag delimiter
     private static final String sCtag = Pattern.quote("}}");
 
+    // Opening section
+    private static final String sSectionOpening = sOtag + "[\\#|^]([^\\}]*)" + sCtag;
+    private static final Pattern sSectionOpeningPattern = Pattern.compile(sSectionOpening, Pattern.MULTILINE | Pattern.DOTALL);
+
     // The regular expression used to find a #section
-    private static final Pattern sSection_re = Pattern.compile(sOtag + "[\\#|^]([^\\}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
+    private static final Pattern sSection_re = Pattern.compile(sSectionOpening + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
 
     // The regular expression used to find a tag.
     private static final Pattern sTag_re = Pattern.compile(sOtag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + sCtag + "+");
@@ -102,26 +106,51 @@ public class Template {
 
     /**
      * Expands sections.
+     *
+     * The process is as follow:
+     * it search for the first pair {{#field_name}}inner{{/field_name}} replace it,
+     * and do it again until there is no such pair.
+     *
+     * If the new first new pair is in the String inner, it will be found and replaced by the recursive call on inner.
+     * If the new first new pair starts in inner and ends after it, we need to restart the process.
+     * Otherwise if the first new pair is after inner, it will be replaced by the next iteration of the inner loop.
      */
     private String render_sections(String template, Map<String, String> context) {
-        StringBuffer sb = new StringBuffer();
-        Matcher match = sSection_re.matcher(template);
-        while (match.find()) {
-            String section = match.group(0);
-            String section_name = match.group(1).trim();
-            String inner = match.group(2);
-            String it = get_or_attr(context, section_name, null);
-            boolean field_is_empty = TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
-            boolean conditional_is_negative = section.charAt(2) == '^';
-            // Showing inner content if either field is empty and the
-            // conditional is a ^; or if the field is non-empty and
-            // the conditional is not ^.
-            boolean show_inner = field_is_empty == conditional_is_negative;
-            String replacer = (show_inner) ? render_sections(inner, context) : "";
-            match.appendReplacement(sb, Matcher.quoteReplacement(replacer));
+        boolean potentially_remaining_conditional = true;
+        while (potentially_remaining_conditional) {
+            potentially_remaining_conditional = false;
+            StringBuffer sb = new StringBuffer();
+            Matcher match = sSection_re.matcher(template);
+            while (match.find()) {
+                String section = match.group(0);
+                String section_name = match.group(1).trim();
+                String inner = match.group(2);
+                String it = get_or_attr(context, section_name, null);
+                boolean field_is_empty = TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
+                boolean conditional_is_negative = section.charAt(2) == '^';
+                // Showing inner content if either field is empty and the
+                // conditional is a ^; or if the field is non-empty and
+                // the conditional is not ^.
+                boolean show_inner = field_is_empty == conditional_is_negative;
+                String replacer = (show_inner) ? render_sections(inner, context) : "";
+                match.appendReplacement(sb, Matcher.quoteReplacement(replacer));
+                if (sSectionOpeningPattern.matcher(replacer).find()) {
+                    // The replacer contains the opening of a
+                    // conditional. This conditional is the new first
+                    // conditional, but it has not been found in the
+                    // current matcher. So we must halt this
+                    // replacement and restart.
+                    //
+                    // This process halts, since each iteration of the inner
+                    // loop reduces the size of the text.
+                    potentially_remaining_conditional = true;
+                    break;
+                }
+            }
+            match.appendTail(sb);
+            template = sb.toString();
         }
-        match.appendTail(sb);
-        return sb.toString();
+        return template;
     }
 
 
