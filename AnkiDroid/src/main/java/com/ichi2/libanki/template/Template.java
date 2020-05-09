@@ -123,9 +123,8 @@ public class Template {
         Matcher match = sSection_re.matcher(template);
         while (match.find()) {
             String section = match.group(0);
-            String section_name = match.group(1);
+            String section_name = match.group(1).trim();
             String inner = match.group(2);
-            section_name = section_name.trim();
             String it = get_or_attr(context, section_name, null);
             boolean field_is_empty = TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
             boolean conditional_is_negative = section.charAt(2) == '^';
