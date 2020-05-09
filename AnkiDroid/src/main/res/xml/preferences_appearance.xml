@@ -40,13 +40,13 @@
             android:key="nightTheme"
             android:title="@string/night_theme" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Background">
+    <PreferenceCategory android:title="@string/background_image_title" >
         <CheckBoxPreference
             android:checked="false"
             android:defaultValue="0"
             android:key="deckPickerBackground"
             android:shouldDisableView="true"
-            android:title="Choose an Image" />
+            android:title="@string/choose_an_image" />
     </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_fonts" >
             <ListPreference

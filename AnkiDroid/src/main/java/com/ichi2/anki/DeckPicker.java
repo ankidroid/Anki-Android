@@ -439,12 +439,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mReviewSummaryTextView = (TextView) findViewById(R.id.today_stats_text_view);
 
         //Add background to Deckpicker activity
-        if (mFragmented) {
-            View view = findViewById(R.id.deckpicker_view);
+        View view = mFragmented ? findViewById(R.id.deckpicker_view) : findViewById(R.id.root_layout);
+        try {
             applyDeckPickerBackground(view);
-        } else {
-            View view = findViewById(R.id.root_layout);
-            applyDeckPickerBackground(view);
+        } catch (Exception e) {
+            Timber.e(e,"Background image apply failed" );
         }
 
         // Hide the fragment until the counts have been loaded so that the Toolbar fills the whole screen on tablets

@@ -262,8 +262,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         backgroundImage.setChecked(false);
                         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                         File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
-                        if(imgFile.exists()) {
-                            if(imgFile.delete()) {
+                        if (imgFile.exists()) {
+                            if (imgFile.delete()) {
                                 UIUtils.showThemedToast(this, getString(R.string.background_image_removed), false);
                             } else {
                                 UIUtils.showThemedToast(this, getString(R.string.error_deleting_image), false);
@@ -408,12 +408,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // DEFECT #5973: Does not handle Google Drive downloads
         try {
             if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
                 Cursor cursor = null;
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
                 try {
-                    Uri selectedImage = data.getData();
-                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
                     cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
@@ -429,8 +430,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
                         UIUtils.showThemedToast(this, getString(R.string.background_image_applied), false);
                     }
-                } catch (Exception ex1) {
-                    Timber.e("%s",ex1.getLocalizedMessage());
                 } finally {
                     if (cursor != null) {
                         cursor.close();
@@ -440,7 +439,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 UIUtils.showThemedToast(this, getString(R.string.no_image_selected), false);
             }
         } catch (OutOfMemoryError | Exception e) {
-            UIUtils.showThemedToast(this, getString(R.string.error_selecting_image), false);
+            UIUtils.showThemedToast(this, getString(R.string.error_selecting_image, e.getLocalizedMessage()), false);
         }
     }
 
