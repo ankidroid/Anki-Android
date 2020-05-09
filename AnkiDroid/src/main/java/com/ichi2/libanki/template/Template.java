@@ -131,11 +131,11 @@ public class Template {
             // Whether the field is empty directly. Test the string directly (simple to test) or when media are removed (takes longer)
             boolean field_is_empty = TextUtils.isEmpty(it) || TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
             boolean conditional_is_negative = section.charAt(2) == '^';
-            if (!field_is_empty) {
-                if (!conditional_is_negative) {
-                    replacer = render_sections(inner, context);
-                }
-            } else if (field_is_empty && conditional_is_negative) {
+            // Showing inner content if either field is empty and the
+            // conditional is a ^; or if the field is non-empty and
+            // the conditional is not ^.
+            boolean show_inner = field_is_empty == conditional_is_negative;
+            if (show_inner) {
                 replacer = render_sections(inner, context);
             }
             match.appendReplacement(sb, Matcher.quoteReplacement(replacer));
