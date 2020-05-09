@@ -390,9 +390,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         setContentView(R.layout.homescreen);
         View mainView = findViewById(android.R.id.content);
 
-        //Add background to Deckpicker activity
-        applyDeckPickerBackground();
-
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
         // set protected variable from NavigationDrawerActivity
@@ -465,20 +462,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     Timber.i("Displaying database error");
                     showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
                 }
-            }
-        }
-    }
-
-    private void applyDeckPickerBackground() {
-        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
-        File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
-        View view = findViewById(R.id.root_layout);
-        if (!imgFile.exists()) {
-            view.setBackgroundResource(0);
-        } else {
-            Drawable drawable = Drawable.createFromPath(imgFile.getAbsolutePath());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                view.setBackground(drawable);
             }
         }
     }
