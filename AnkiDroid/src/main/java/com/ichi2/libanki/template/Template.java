@@ -150,7 +150,7 @@ public class Template {
             // conditional is a ^; or if the field is non-empty and
             // the conditional is not ^.
             boolean show_inner = field_is_empty == conditional_is_negative;
-            String replacer = (show_inner) ? render_sections(inner, context) : "";
+            String replacer = (show_inner) ? inner : "";
             match.appendReplacement(sb, Matcher.quoteReplacement(replacer));
         }
         if (!found) {
