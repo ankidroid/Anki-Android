@@ -128,12 +128,9 @@ public class Template {
             section_name = section_name.trim();
             String it = get_or_attr(context, section_name, null);
             String replacer = "";
-            boolean field_is_empty = TextUtils.isEmpty(it);
+            // Whether the field is empty directly. Test the string directly (simple to test) or when media are removed (takes longer)
+            boolean field_is_empty = TextUtils.isEmpty(it) || TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
 
-            if (!field_is_empty) {
-                it = Utils.stripHTMLMedia(it).trim();
-                field_is_empty = TextUtils.isEmpty(it);
-            }
             if (!field_is_empty) {
                 if (section.charAt(2) != '^') {
                     replacer = render_sections(inner, context);
