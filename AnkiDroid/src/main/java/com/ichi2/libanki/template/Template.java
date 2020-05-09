@@ -130,12 +130,12 @@ public class Template {
             String replacer = "";
             // Whether the field is empty directly. Test the string directly (simple to test) or when media are removed (takes longer)
             boolean field_is_empty = TextUtils.isEmpty(it) || TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
-
+            boolean conditional_is_negative = section.charAt(2) == '^';
             if (!field_is_empty) {
-                if (section.charAt(2) != '^') {
+                if (!conditional_is_negative) {
                     replacer = render_sections(inner, context);
                 }
-            } else if (field_is_empty && section.charAt(2) == '^') {
+            } else if (field_is_empty && conditional_is_negative) {
                 replacer = render_sections(inner, context);
             }
             match.appendReplacement(sb, Matcher.quoteReplacement(replacer));
