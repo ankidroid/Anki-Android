@@ -127,8 +127,7 @@ public class Template {
             String inner = match.group(2);
             section_name = section_name.trim();
             String it = get_or_attr(context, section_name, null);
-            // Whether the field is empty directly. Test the string directly (simple to test) or when media are removed (takes longer)
-            boolean field_is_empty = TextUtils.isEmpty(it) || TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
+            boolean field_is_empty = TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
             boolean conditional_is_negative = section.charAt(2) == '^';
             // Showing inner content if either field is empty and the
             // conditional is a ^; or if the field is non-empty and
