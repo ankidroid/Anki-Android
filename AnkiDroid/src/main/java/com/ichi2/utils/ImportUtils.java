@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
+import android.webkit.MimeTypeMap;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
@@ -22,13 +23,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public class ImportUtils {
+
+    /* A filename should be shortened if over this threshold */
+    private static final int fileNameShorteningThreshold = 100;
 
 
     /**
@@ -138,6 +145,7 @@ public class ImportUtils {
                 errorMessage = context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
             } else if (filename != null) {
                 // Copy to temporary file
+                filename = ensureValidLength(filename);
                 String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
                 errorMessage = copyFileToCache(context, data, tempOutDir) ? null : "copyFileToCache() failed (possibly out of storage space)";
                 // Show import dialog
@@ -149,6 +157,37 @@ public class ImportUtils {
             }
             return errorMessage;
         }
+
+
+        private String ensureValidLength(String fileName) {
+            //#6137 - filenames can be too long when URLEncoded
+            try {
+                String encoded = URLEncoder.encode(fileName, "UTF-8");
+
+                if (encoded.length() <= fileNameShorteningThreshold) {
+                    Timber.d("No filename truncation necessary");
+                    return fileName;
+                } else {
+                    Timber.d("Filename was longer than %d, shortening", fileNameShorteningThreshold);
+                    //take 90 instead of 100 so we don't get the extension
+                    int substringLength = fileNameShorteningThreshold - 10;
+                    String shortenedFileName = encoded.substring(0, substringLength) + "..." + getExtension(fileName);
+                    Timber.d("Shortened filename '%s' to '%s'", fileName, shortenedFileName);
+                    //if we don't decode, % is double-encoded
+                    return URLDecoder.decode(shortenedFileName, "UTF-8");
+                }
+            } catch (Exception e) {
+                Timber.w(e, "Failed to shorten file: %s", fileName);
+                return fileName;
+            }
+        }
+
+        @CheckResult
+        private String getExtension(String fileName) {
+            Uri file = Uri.fromFile(new File(fileName));
+            return MimeTypeMap.getFileExtensionFromUrl(file.toString());
+        }
+
 
         @Nullable
         protected String getFileNameFromContentProvider(Context context, Uri data) {
