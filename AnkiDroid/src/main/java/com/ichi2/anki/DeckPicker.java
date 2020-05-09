@@ -390,9 +390,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         setContentView(R.layout.homescreen);
         View mainView = findViewById(android.R.id.content);
 
-        //Add background to Deckpicker activity
-        applyDeckPickerBackground();
-
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
         // set protected variable from NavigationDrawerActivity
@@ -441,6 +438,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         mReviewSummaryTextView = (TextView) findViewById(R.id.today_stats_text_view);
 
+        //Add background to Deckpicker activity
+        if (mFragmented) {
+            View view = findViewById(R.id.deckpicker_view);
+            applyDeckPickerBackground(view);
+        } else {
+            View view = findViewById(R.id.root_layout);
+            applyDeckPickerBackground(view);
+        }
+
         // Hide the fragment until the counts have been loaded so that the Toolbar fills the whole screen on tablets
         if (mFragmented) {
             mStudyoptionsFrame.setVisibility(View.GONE);
@@ -469,10 +475,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private void applyDeckPickerBackground() {
+    private void applyDeckPickerBackground(View view) {
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
         File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
-        View view = findViewById(R.id.root_layout);
         if (!imgFile.exists()) {
             view.setBackgroundResource(0);
         } else {
