@@ -20,6 +20,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 
@@ -65,7 +66,6 @@ public class DialogHandler extends Handler {
         // Use weak reference to main activity to prevent leaking the activity when it's closed
         mActivity = new WeakReference<>(activity);
     }
-
 
     @Override
     public void handleMessage(Message msg) {
@@ -153,6 +153,11 @@ public class DialogHandler extends Handler {
             Timber.i("Dispatching persistent message: %d", sStoredMessage.what);
             sendMessage(sStoredMessage);
         }
+        sStoredMessage = null;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public static void discardMessage() {
         sStoredMessage = null;
     }
 }

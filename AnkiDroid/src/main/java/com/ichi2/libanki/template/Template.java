@@ -32,6 +32,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+
 /**
  * This class renders the card content by parsing the card template and replacing all marked sections
  * and tags with their respective data. The data is derived from a context object that is given to
@@ -50,17 +52,17 @@ public class Template {
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
     private static final String TAG = Template.class.getName();
 
-    // The regular expression used to find a #section
-    private Pattern sSection_re = null;
-
-    // The regular expression used to find a tag.
-    private Pattern sTag_re = null;
-
     // Opening tag delimiter
-    private String sOtag = "{{";
+    private static final String sOtag = Pattern.quote("{{");
 
     // Closing tag delimiter
-    private String sCtag = "}}";
+    private static final String sCtag = Pattern.quote("}}");
+
+    // The regular expression used to find a #section
+    private static final Pattern sSection_re = Pattern.compile(sOtag + "[\\#|^]([^\\}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
+
+    // The regular expression used to find a tag.
+    private static final Pattern sTag_re = Pattern.compile(sOtag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + sCtag + "+");
 
     // MathJax opening delimiters
     private static String sMathJaxOpenings[] = {"\\(", "\\["};
@@ -89,7 +91,6 @@ public class Template {
     public Template(String template, Map<String, String> context) {
         mTemplate = template;
         mContext = context == null ? new HashMap<String, String>() : context;
-        compile_regexps();
     }
 
 
@@ -102,46 +103,59 @@ public class Template {
     }
 
     /**
-     * Compiles our section and tag regular expressions.
-     */
-    private void compile_regexps() {
-        String otag = Pattern.quote(sOtag);
-        String ctag = Pattern.quote(sCtag);
-
-        String section = otag + "[\\#|^]([^\\}]*)" + ctag + "(.+?)" + otag + "/\\1" + ctag;
-        sSection_re = Pattern.compile(section, Pattern.MULTILINE | Pattern.DOTALL);
-
-        String tag = otag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + ctag + "+";
-        sTag_re = Pattern.compile(tag);
-    }
-
-    /**
      * Expands sections.
      */
-    private String render_sections(String template, Map<String, String> context) {
+    private String render_sections(@NonNull String template, @NonNull Map<String, String> context) {
+        /* Apply render_some_section to the templates, until
+           render_some_section states that it does not find sections
+           anymore. Return the last template found. */
+        String previous_template = null;
+        while (template != null) {
+            previous_template = template;
+            template = render_some_sections(template, context);
+        }
+        return previous_template;
+    }
+
+    /** Deal with conditionals that are found. If no conditionals are
+     * found, return null.
+
+     It is not guaranteed that are conditionals are found. For example, on
+     {{#field1}}
+       {{#field2}}
+     {{/field1}}
+       {{/field2}}, the regexp only finds {{field1}} and ignore {{field2}}.
+
+     Note that all conditionals are found, unless a conditional
+     appears inside itself, or conditionals are not properly
+     closed. Both cases leads to error for some values of fields so
+     should not appear in template anyways.
+
+     If some change is done, the function should be called again to
+     remove those new pairs of conditionals.
+     */
+    private String render_some_sections(@NonNull String template, @NonNull Map<String, String> context) {
         StringBuffer sb = new StringBuffer();
         Matcher match = sSection_re.matcher(template);
+        boolean found = false;
         while (match.find()) {
+            found = true;
             String section = match.group(0);
-            String section_name = match.group(1);
+            String section_name = match.group(1).trim();
             String inner = match.group(2);
-            section_name = section_name.trim();
             String it = get_or_attr(context, section_name, null);
-            String replacer = "";
-            boolean field_is_empty = TextUtils.isEmpty(it);
-
-            if (!field_is_empty) {
-                it = Utils.stripHTMLMedia(it).trim();
-            }
-            field_is_empty = TextUtils.isEmpty(it);
-            if (!field_is_empty) {
-                if (section.charAt(2) != '^') {
-                    replacer = render_sections(inner, context);
-                }
-            } else if (field_is_empty && section.charAt(2) == '^') {
-                replacer = render_sections(inner, context);
-            }
+            boolean field_is_empty = TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
+            boolean conditional_is_negative = section.charAt(2) == '^';
+            // Showing inner content if either field is empty and the
+            // conditional is a ^; or if the field is non-empty and
+            // the conditional is not ^.
+            boolean show_inner = field_is_empty == conditional_is_negative;
+            String replacer = (show_inner) ? inner : "";
             match.appendReplacement(sb, Matcher.quoteReplacement(replacer));
+        }
+        if (!found) {
+            // There were no replacement. We can halt the computation
+            return null;
         }
         match.appendTail(sb);
         return sb.toString();
@@ -167,8 +181,6 @@ public class Template {
                 replacement = render_tag(tag_name, context);
             } else if ("!".equals(tag_type)) {
                 replacement = render_comment();
-            } else if ("=".equals(tag_type)) {
-                replacement = render_delimiter(tag_name);
             } else {
                 return "{{invalid template}}";
             }
@@ -405,22 +417,5 @@ public class Template {
             m.appendReplacement(repl, Matcher.quoteReplacement(m.group(0)));
         }
         return m.appendTail(repl).toString();
-    }
-
-
-    /**
-     * Changes the Mustache delimiter.
-     */
-    private String render_delimiter(String tag_name) {
-        try {
-            String[] split = tag_name.split(" ");
-            sOtag = split[0];
-            sCtag = split[1];
-        } catch (IndexOutOfBoundsException e) {
-            // invalid
-            return null;
-        }
-        compile_regexps();
-        return "";
     }
 }

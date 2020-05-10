@@ -30,6 +30,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -40,6 +41,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.WindowManager.BadTokenException;
@@ -72,6 +74,10 @@ import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -108,6 +114,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     private static final String [] sCollectionPreferences = {"showEstimates", "showProgress",
             "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer"};
 
+    private static final int RESULT_LOAD_IMG = 111;
 
     // ----------------------------------------------------------------------------
     // Overridden methods
@@ -241,6 +248,32 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             case "com.ichi2.anki.prefs.appearance":
                 listener.addPreferencesFromResource(R.xml.preferences_appearance);
                 screen = listener.getPreferenceScreen();
+                CheckBoxPreference backgroundImage = (CheckBoxPreference) screen.findPreference("deckPickerBackground");
+                backgroundImage.setOnPreferenceClickListener(preference -> {
+                    if (backgroundImage.isChecked()) {
+                        try {
+                            Intent galleryIntent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+                            backgroundImage.setChecked(true);
+                        } catch (Exception ex) {
+                            Timber.e("%s",ex.getLocalizedMessage());
+                        }
+                    } else {
+                        backgroundImage.setChecked(false);
+                        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+                        File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
+                        if (imgFile.exists()) {
+                            if (imgFile.delete()) {
+                                UIUtils.showThemedToast(this, getString(R.string.background_image_removed), false);
+                            } else {
+                                UIUtils.showThemedToast(this, getString(R.string.error_deleting_image), false);
+                            }
+                        } else {
+                            UIUtils.showThemedToast(this, getString(R.string.background_image_removed), false);
+                        }
+                    }
+                    return true;
+                });
                 initializeCustomFontsDialog(screen);
                 break;
             case "com.ichi2.anki.prefs.gestures":
@@ -372,6 +405,43 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // DEFECT #5973: Does not handle Google Drive downloads
+        try {
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
+                Cursor cursor = null;
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                try {
+                    cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String imgPathString = cursor.getString(columnIndex);
+                    File sourceFile = new File(imgPathString);
+
+                    String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+                    String imageName = "DeckPickerBackground.png";
+                    File destFile = new File(currentAnkiDroidDirectory, imageName);
+
+                    try (FileChannel sourceChannel = new FileInputStream(sourceFile).getChannel();
+                         FileChannel destChannel = new FileOutputStream(destFile).getChannel()) {
+                        destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+                        UIUtils.showThemedToast(this, getString(R.string.background_image_applied), false);
+                    }
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
+                }
+            } else {
+                UIUtils.showThemedToast(this, getString(R.string.no_image_selected), false);
+            }
+        } catch (OutOfMemoryError | Exception e) {
+            UIUtils.showThemedToast(this, getString(R.string.error_selecting_image, e.getLocalizedMessage()), false);
+        }
+    }
 
     private void addThirdPartyAppsListener(PreferenceScreen screen) {
         //#5864 - some people don't have a browser so we can't use <intent>

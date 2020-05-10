@@ -438,6 +438,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         mReviewSummaryTextView = (TextView) findViewById(R.id.today_stats_text_view);
 
+        //Add background to Deckpicker activity
+        View view = mFragmented ? findViewById(R.id.deckpicker_view) : findViewById(R.id.root_layout);
+        try {
+            applyDeckPickerBackground(view);
+        } catch (Exception e) {
+            UIUtils.showThemedToast(this, getString(R.string.failed_to_apply_background_image, e.getLocalizedMessage()), false);
+        }
+
         // Hide the fragment until the counts have been loaded so that the Toolbar fills the whole screen on tablets
         if (mFragmented) {
             mStudyoptionsFrame.setVisibility(View.GONE);
@@ -462,6 +470,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     Timber.i("Displaying database error");
                     showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
                 }
+            }
+        }
+    }
+
+    private void applyDeckPickerBackground(View view) {
+        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+        File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
+        if (!imgFile.exists()) {
+            view.setBackgroundResource(0);
+        } else {
+            Drawable drawable = Drawable.createFromPath(imgFile.getAbsolutePath());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                view.setBackground(drawable);
             }
         }
     }
