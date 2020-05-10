@@ -94,6 +94,11 @@ function buttonAnswerEase4() {
     window.location.href = "signal:answer_ease4";
 }
 
+/* Reload card.html */
+function reloadPage() {
+    window.location.href = "signal:reload_card_html";
+}
+
 /* Tell the app the text in the input box when it loses focus */
 function taBlur(itag) {
     //#5944 - percent wasn't encoded, but Mandarin was.

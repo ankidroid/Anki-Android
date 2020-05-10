@@ -2831,6 +2831,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mFlipCardLayout.performClick();
                 return true;
             }
+            // card.html reload
+            if (url.startsWith("signal:reload_card_html")) {
+                redrawCard();
+                return true;
+            }
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
             switch (signalOrdinal) {
                 case WebViewSignalParserUtils.SIGNAL_UNHANDLED:
