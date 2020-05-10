@@ -112,7 +112,7 @@ android {
 
 play {
     serviceAccountCredentials = file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json")
-    track = 'alpha'
+    track = 'beta'
 }
 
 // Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
