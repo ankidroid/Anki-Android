@@ -17,6 +17,9 @@ package com.ichi2.compat.customtabs;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabsClient;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.browser.customtabs.CustomTabsServiceConnection;
@@ -32,8 +35,11 @@ import timber.log.Timber;
  */
 public class CustomTabActivityHelper implements ServiceConnectionCallback {
     private static boolean sCustomTabsFailed = false;
+    @Nullable
     private CustomTabsSession mCustomTabsSession;
+    @Nullable
     private CustomTabsClient mClient;
+    @Nullable
     private CustomTabsServiceConnection mConnection;
 
     /**
@@ -158,4 +164,8 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
         void openUri(Activity activity, Uri uri);
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public static void resetFailed() {
+        sCustomTabsFailed = false;
+    }
 }
