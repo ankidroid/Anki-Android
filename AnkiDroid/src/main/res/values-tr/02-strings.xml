@@ -127,8 +127,8 @@
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="one">%1$d dakika</item>
+        <item quantity="other">%1$d dakika</item>
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid\'e Hoşgeldiniz</string>
     <string name="fact_adder_intent_title">AnkiDroid Kartı</string>
@@ -254,4 +254,7 @@
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <!-- Deckpicker Background -->
+    <string name="background_image_title">Background</string>
+    <string name="choose_an_image">Choose an Image</string>
 </resources>

@@ -140,7 +140,7 @@
     <string name="timeout_question_seconds_summ">XXX с</string>
     <string name="select_locale_title">Выберите язык</string>
     <string name="safe_display">Статический режим экрана</string>
-    <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экраноов на электронных чернилах</string>
+    <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экранов на электронных чернилах</string>
     <string name="disable_extended_text_ui">Отключить режим редактирования одного поля</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Позволяет контекстное меню \'Cloze Deletion\' в альбомном режиме.</string>

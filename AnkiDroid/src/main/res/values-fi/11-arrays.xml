@@ -59,6 +59,11 @@
         <item>Keskeytä oppiminen</item>
         <item>Piilota merkintä</item>
         <item>Jäädytä merkintä</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Jäädytä kortti</item>
