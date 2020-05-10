@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabsClient;
@@ -124,7 +125,6 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
         mConnection = null;
     }
 
-
     /**
      * @see {@link CustomTabsSession#mayLaunchUrl(Uri, Bundle, List)}.
      * @return true if call to mayLaunchUrl was accepted.
@@ -141,15 +141,22 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
 
     @Override
     public void onServiceConnected(CustomTabsClient client) {
-        mClient = client;
         try {
-            mClient.warmup(0L);
-        } catch (IllegalStateException e) {
-            // Issue 5337 - some browsers like TorBrowser don't adhere to Android 8 background limits
-            // They will crash as they attempt to start services. warmup failure shouldn't be fatal though.
-            Timber.w(e, "Ignoring CustomTabs implementation that doesn't conform to Android 8 background limits");
+            mClient = client;
+            try {
+                mClient.warmup(0L);
+            } catch (IllegalStateException e) {
+                // Issue 5337 - some browsers like TorBrowser don't adhere to Android 8 background limits
+                // They will crash as they attempt to start services. warmup failure shouldn't be fatal though.
+                Timber.w(e, "Ignoring CustomTabs implementation that doesn't conform to Android 8 background limits");
+            }
+            getSession();
+        } catch (SecurityException e) {
+            //#6142 - A securityException here means that we're not able to load the CustomTabClient at all, whereas
+            //the IllegalStateException was a failure, but could be continued from
+            Timber.w(e, "CustomTabsService bind attempt failed, using fallback");
+            disableCustomTabHandler();
         }
-        getSession();
     }
 
     @Override
@@ -169,6 +176,11 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
          * @param uri The uri to be opened by the fallback.
          */
         void openUri(Activity activity, Uri uri);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE) @CheckResult
+    boolean isFailed() {
+        return sCustomTabsFailed && mClient == null;
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
