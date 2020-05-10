@@ -111,12 +111,19 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
             CustomTabsClient.bindCustomTabsService(activity, packageName, mConnection);
         } catch (SecurityException e) {
             Timber.w(e, "CustomTabsService bind attempt failed, using fallback");
-            sCustomTabsFailed = true;
-            mClient = null;
-            mCustomTabsSession = null;
-            mConnection = null;
+            disableCustomTabHandler();
         }
     }
+
+
+    private void disableCustomTabHandler() {
+        Timber.i("Disabling custom tab handler and using fallback");
+        sCustomTabsFailed = true;
+        mClient = null;
+        mCustomTabsSession = null;
+        mConnection = null;
+    }
+
 
     /**
      * @see {@link CustomTabsSession#mayLaunchUrl(Uri, Bundle, List)}.
