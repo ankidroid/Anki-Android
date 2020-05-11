@@ -144,7 +144,7 @@ public class Template {
             String section_name = match.group(1).trim();
             String inner = match.group(2);
             String it = get_or_attr(context, section_name, null);
-            boolean field_is_empty = TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
+            boolean field_is_empty =  it == null || TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
             boolean conditional_is_negative = section.charAt(2) == '^';
             // Showing inner content if either field is empty and the
             // conditional is a ^; or if the field is non-empty and
