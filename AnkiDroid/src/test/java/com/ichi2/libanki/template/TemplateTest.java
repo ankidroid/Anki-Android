@@ -18,6 +18,7 @@ package com.ichi2.libanki.template;
 
 import com.ichi2.anki.RobolectricTest;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -31,6 +32,18 @@ import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
 public class TemplateTest extends RobolectricTest {
+
+    @Test
+    public void testNotFoundWillRender() {
+        String maybeBad = "{{#NotFound}}{{NotFound}}{{/NotFound}}";
+
+        HashMap<String, String> context = new HashMap<>();
+
+        Template template = new Template(maybeBad, context);
+        String result = template.render();
+
+        assertThat(result, Matchers.isEmptyString());
+    }
 
     @Test
     public void nestedTemplatesRenderWell() {
