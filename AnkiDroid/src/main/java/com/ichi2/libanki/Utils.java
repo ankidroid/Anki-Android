@@ -295,7 +295,7 @@ public class Utils {
     /**
      * Strip HTML but keep media filenames
      */
-    public static String stripHTMLMedia(String s) {
+    public static String stripHTMLMedia(@NonNull String s) {
         Matcher imgMatcher = imgPattern.matcher(s);
         return stripHTML(imgMatcher.replaceAll(" $1 "));
     }
