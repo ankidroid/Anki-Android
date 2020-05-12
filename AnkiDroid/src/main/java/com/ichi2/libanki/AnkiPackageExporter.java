@@ -22,7 +22,6 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.compat.CompatHelper;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -444,7 +443,9 @@ public final class AnkiPackageExporter extends AnkiExporter {
         f.delete();
         Collection c = Storage.Collection(context, path);
         Note n = c.newNote();
-        n.setItem("Front", context.getString(R.string.export_v2_dummy_note));
+        //The created dummy collection only contains the StdModels.
+        //The field names for those are localised during creation, so we need to consider that when creating dummy note
+        n.setItem(context.getString(R.string.front_field_name), context.getString(R.string.export_v2_dummy_note));
         c.addNote(n);
         c.save();
         c.close();
