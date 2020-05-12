@@ -47,8 +47,6 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
-
-import android.speech.tts.UtteranceProgressListener;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -83,14 +81,15 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
-import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
+import com.ichi2.anki.reviewer.CardMarker.FlagDef;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
+import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
@@ -130,11 +129,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
-import android.speech.tts.TextToSpeech;
-import android.widget.Toast;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
+import static com.ichi2.anki.reviewer.CardMarker.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor {
@@ -161,10 +159,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** Time to wait in milliseconds before resuming fullscreen mode **/
     protected static final int INITIAL_HIDE_DELAY = 200;
-
-    /** Regex pattern used in removing tags from text before diff */
-    private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
-    private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
 
     // Type answer patterns
     private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
@@ -205,8 +199,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected boolean mOptUseGeneralTimerSettings;
 
     protected boolean mUseTimer;
-    protected static int mWaitAnswerSecond;
-    protected static int mWaitQuestionSecond;
+    protected int mWaitAnswerSecond;
+    protected int mWaitQuestionSecond;
 
     protected boolean mPrefUseTimer;
 
@@ -255,8 +249,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected TextView mEase2;
     protected TextView mEase3;
     protected TextView mEase4;
-    protected static LinearLayout mFlipCardLayout;
-    protected static LinearLayout mEase1Layout;
+    protected LinearLayout mFlipCardLayout;
+    protected LinearLayout mEase1Layout;
     protected LinearLayout mEase2Layout;
     protected LinearLayout mEase3Layout;
     protected LinearLayout mEase4Layout;
@@ -332,12 +326,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** Handle Mark/Flag state of cards */
     private CardMarker mCardMarker;
     // private int zEase;
-
-
-    public boolean ismSpeakText() {
-        return mSpeakText;
-    }
-
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -477,6 +465,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected CollectionTask.TaskListener mDismissCardHandler = new NextCardHandler() { /* superclass is sufficient */ };
+
 
     private CollectionTask.TaskListener mUpdateCardHandler = new CollectionTask.TaskListener() {
         private boolean mNoMoreCards;
@@ -852,80 +841,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected abstract void setTitle();
 
-    private static void openTtsHelpUrl(Uri helpUrl) {
-        AnkiActivity activity =  (AnkiActivity) ReadText.getmReviewer().get();
-        activity.openUrl(helpUrl);
-    }
-    public static void showQuestionTask(){
-        long delay = mWaitQuestionSecond * 1000;
-        if (delay > 0) {
-            mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
-        }
-    }
-    public static void showAnswerTask(){
-        long delay = mWaitAnswerSecond * 1000;
-        if (delay > 0) {
-            mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
-        }
-    }
-    public static void initializeTts(Context context) {
-        // Store weak reference to Activity to prevent memory leak
-        ReadText.setmReviewer(new WeakReference<>(context));
-        // Create new TTS object and setup its onInit Listener
-        ReadText.setmTts(new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    // build list of available languages
-                    ReadText.buildAvailableLanguages();
-                    if (ReadText.getAvailableTtsLocales().size() > 0) {
-                        // notify the reviewer that TTS has been initialized
-                        Timber.d("TTS initialized and available languages found");
-                        ((AbstractFlashcardViewer) ReadText.getmReviewer().get()).ttsInitialized();
-                    } else {
-                        Toast.makeText(ReadText.getmReviewer().get(), ReadText.getmReviewer().get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
-                        Timber.w("TTS initialized but no available languages found");
-                    }
-                    ReadText.getmTts().setOnUtteranceProgressListener(new UtteranceProgressListener() {
-                        @Override
-                        public void onDone(String arg0) {
-                            if (ReadText.sTextQueue.size() > 0) {
-                                String[] text = ReadText.sTextQueue.remove(0);
-                                ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
-                            }
-                            if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_QUESTION){
-                                showAnswerTask();
-                            }else if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_ANSWER){
-                                showQuestionTask();
-                            }
-                        }
-                        @Override
-                        @Deprecated
-                        public void onError(String utteranceId) {
-                            Timber.v("Andoid TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
 
-                            final Uri helpUrl = Uri.parse(ReadText.getmReviewer().get().getString(R.string.link_faq_tts));
-                            final AnkiActivity ankiActivity = (AnkiActivity) ReadText.getmReviewer().get();
-                            ankiActivity.mayOpenUrl(helpUrl);
-                            UIUtils.showSnackbar(ankiActivity, R.string.no_tts_available_message, false, R.string.help,
-                                    v -> openTtsHelpUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
-                                    new Snackbar.Callback());
-                        }
-                        @Override
-                        public void onStart(String arg0) {
-                            // nothing
-                        }
-
-                    });
-                } else {
-                    Toast.makeText(ReadText.getmReviewer().get(), ReadText.getmReviewer().get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
-                    Timber.w("TTS not successfully initialized");
-                }
-            }
-        }));
-        // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
-        Toast.makeText(context, context.getString(R.string.initializing_tts), Toast.LENGTH_LONG).show();
-    }
     // Finish initializing the activity after the collection has been correctly loaded
     @Override
     protected void onCollectionLoaded(Collection col) {
@@ -954,7 +870,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Initialize text-to-speech. This is an asynchronous operation.
         if (mSpeakText) {
-            initializeTts(this);
+            ReadText.initializeTts(this);
         }
 
         // Initialize dictionary lookup feature
@@ -1632,7 +1548,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void displayAnswerBottomBar() {
         // hide flipcard button
-
         mFlipCardLayout.setVisibility(View.GONE);
     }
 
@@ -1859,9 +1774,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * Handler for the delay in auto showing question and/or answer One toggle for both question and answer, could set
      * longer delay for auto next question
      */
-    protected static Handler mTimeoutHandler = new Handler();
+    protected Handler mTimeoutHandler = new Handler();
 
-    protected static Runnable mShowQuestionTask = new Runnable() {
+    protected Runnable mShowQuestionTask = new Runnable() {
         @Override
         public void run() {
             // Assume hitting the "Again" button when auto next question
@@ -1871,7 +1786,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    protected static Runnable mShowAnswerTask = new Runnable() {
+    protected Runnable mShowAnswerTask = new Runnable() {
         @Override
         public void run() {
             if (mFlipCardLayout.isEnabled() && mFlipCardLayout.getVisibility() == View.VISIBLE) {
@@ -1962,15 +1877,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             long delay = mWaitAnswerSecond * 1000 + mUseTimerDynamicMS;
             if (delay > 0) {
                 mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-                if(!mSpeakText){
-                    mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
-                }
+                mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
             }
         }
 
         Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard.getId());
     }
-
 
 
     /**
@@ -1980,16 +1892,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
      */
     protected String cleanCorrectAnswer(String answer) {
-        if (answer == null || "".equals(answer)) {
-            return "";
-        }
-        Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer.trim()));
-        String answerText = matcher.replaceAll("");
-        matcher = sBrPattern.matcher(answerText);
-        answerText = matcher.replaceAll("\n");
-        matcher = Sound.sSoundPattern.matcher(answerText);
-        answerText = matcher.replaceAll("");
-        return Utils.nfcNormalized(answerText);
+        return TypedAnswer.cleanCorrectAnswer(answer);
     }
 
 
@@ -2051,19 +1954,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
             if (delay > 0) {
                 mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-                if(!mSpeakText) {
-                    mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
-                }
+                mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
             }
         }
     }
 
-    public void postShowQuestionTask(){
-        long delay = mWaitQuestionSecond * 1000;
-        if(delay>0){
-            mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
-        }
-    }
+
     /** Scroll the currently shown flashcard vertically
      *
      * @param dy amount to be scrolled
@@ -2258,6 +2154,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.w("Unrecognised cardSide");
             return;
         }
+
         ReadText.readCardSide(cardSide, cardSideContent, getDeckIdForCard(card), card.getOrd());
     }
 
@@ -2467,7 +2364,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     public boolean executeCommand(@ViewerCommandDef int which) {
-        if (mControlBlocked) {
+        if (getControlBlocked()) {
             return false;
         }
         switch (which) {
@@ -2533,9 +2430,35 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_PLAY_MEDIA:
                 playSounds(true);
                 return true;
+            case COMMAND_TOGGLE_FLAG_RED:
+                toggleFlag(FLAG_RED);
+                return true;
+            case COMMAND_TOGGLE_FLAG_ORANGE:
+                toggleFlag(FLAG_ORANGE);
+                return true;
+            case COMMAND_TOGGLE_FLAG_GREEN:
+                toggleFlag(FLAG_GREEN);
+                return true;
+            case COMMAND_TOGGLE_FLAG_BLUE:
+                toggleFlag(FLAG_BLUE);
+                return true;
+            case COMMAND_UNSET_FLAG:
+                onFlag(mCurrentCard, FLAG_NONE);
+                return true;
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;
+        }
+    }
+
+
+    private void toggleFlag(@FlagDef int flag) {
+        if (mCurrentCard.getUserFlag() == flag) {
+            Timber.i("Toggle flag: unsetting flag");
+            onFlag(mCurrentCard, FLAG_NONE);
+        } else {
+            Timber.i("Toggle flag: Setting flag to %d", flag);
+            onFlag(mCurrentCard, flag);
         }
     }
 
@@ -2803,12 +2726,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected int getFlagToDisplay() {
+    protected @FlagDef int getFlagToDisplay() {
         return mCurrentCard.getUserFlag();
     }
 
 
-    protected void onFlag(Card card, int flag) {
+    protected void onFlag(Card card, @FlagDef int flag) {
         if (card == null) {
             return;
         }
@@ -2934,6 +2857,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mTypeInput = decodeUrl(url.replaceFirst("typeentertext:", ""));
                 // … and show the answer.
                 mFlipCardLayout.performClick();
+                return true;
+            }
+            // card.html reload
+            if (url.startsWith("signal:reload_card_html")) {
+                redrawCard();
                 return true;
             }
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
