@@ -59,11 +59,11 @@
         <item>Прервать обучение</item>
         <item>Отложить запись</item>
         <item>Исключить запись</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
+        <item>Красный флажок</item>
+        <item>Оранжевый флажок</item>
+        <item>Зелёный флажок</item>
+        <item>Синий флажок</item>
+        <item>Убрать флажок</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Исключить карточку</item>

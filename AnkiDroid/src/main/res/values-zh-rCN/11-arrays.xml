@@ -59,11 +59,11 @@
         <item>终止学习</item>
         <item>隐藏笔记</item>
         <item>暂停笔记</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
+        <item>切换红色标识</item>
+        <item>切换橙色标识</item>
+        <item>切换绿色标识</item>
+        <item>切换蓝色标识</item>
+        <item>移除标识</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>暂停卡片</item>
