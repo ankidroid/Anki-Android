@@ -108,8 +108,8 @@
     <string name="cardeditor_title_add_note">Dodaj notatkę</string>
     <string name="cardeditor_title_edit_card">Edytuj notatkę</string>
     <string name="discard_unsaved_changes">Zamknąć i utracić bieżący wkład?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cards_created">Nie stworzono żadnych kart. Wypełnij więcej pól.</string>
+    <string name="note_editor_no_first_field">Pierwsze pole jest puste</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="saving_facts">Zapisywanie notatki</string>
     <string name="saving_model">Zapis typu notatki</string>
@@ -274,8 +274,8 @@
     <string name="no_browser_notification">Nie znaleziono przeglądarki, odwiedź stronę przez komputer lub telefon komórkowy: </string>
     <string name="no_outgoing_link_in_cardbrowser">Linki zewnętrzne w kartach nie są obsługiwane.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Odzyskane karty</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="background_image_title">Tło</string>
+    <string name="choose_an_image">Wybierz obraz</string>
 </resources>

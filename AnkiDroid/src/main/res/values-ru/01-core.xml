@@ -75,8 +75,8 @@
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="one">%d день %d остался</item>
-        <item quantity="few">%d дней %d осталось</item>
-        <item quantity="many">%d дней %d осталось</item>
+        <item quantity="few">%d дня %d остались</item>
+        <item quantity="many">%d дней %d остались</item>
         <item quantity="other">%d дней %d осталось</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -121,13 +121,13 @@
     <string name="menu_bury">Отложить</string>
     <string name="menu_suspend">Исключить</string>
     <string name="menu_delete_note">Удалить запись</string>
-    <string name="menu_flag">Флаг</string>
-    <string name="menu_flag_card">Поставить флаг</string>
-    <string name="menu_flag_card_zero">Без флага</string>
-    <string name="menu_flag_card_one">Красный флаг</string>
-    <string name="menu_flag_card_two">Оранжевый флаг</string>
-    <string name="menu_flag_card_three">Зелёный флаг</string>
-    <string name="menu_flag_card_four">Синий флаг</string>
+    <string name="menu_flag">Флажок</string>
+    <string name="menu_flag_card">Поставить флажок</string>
+    <string name="menu_flag_card_zero">Без флажка</string>
+    <string name="menu_flag_card_one">Красный флажок</string>
+    <string name="menu_flag_card_two">Оранжевый флажок</string>
+    <string name="menu_flag_card_three">Зелёный флажок</string>
+    <string name="menu_flag_card_four">Синий флажок</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
     <string name="menu_select">Выделить текст</string>
     <string name="menu_search">Посмотреть в %1$s</string>

@@ -141,9 +141,9 @@
     <string name="select_locale_title">Выберите язык</string>
     <string name="safe_display">Статический режим экрана</string>
     <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экранов на электронных чернилах</string>
-    <string name="disable_extended_text_ui">Отключить режим редактирования одного поля</string>
+    <string name="disable_extended_text_ui">Отключить режим одного поля</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Позволяет контекстное меню \'Cloze Deletion\' в альбомном режиме.</string>
+    <string name="disable_extended_text_ui_summ">Включает контекстное меню «Задание с пропусками» в альбомном режиме</string>
     <string name="vertical_centering">Выравнивать по центру</string>
     <string name="vertical_centering_summ">Выравнивает содержимое карточек по вертикали</string>
     <string name="pref_backup_max">Число резервных копий</string>

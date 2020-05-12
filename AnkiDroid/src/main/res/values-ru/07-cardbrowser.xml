@@ -52,7 +52,7 @@
     <string name="card_browser_change_deck">Сменить колоду</string>
     <string name="card_browser_unsuspend_card">Включить карточки</string>
     <string name="card_browser_mark_card">Отметить записи</string>
-    <string name="card_browser_flag">Флаг</string>
+    <string name="card_browser_flag">Флажок</string>
     <string name="card_browser_toggle_mark_card">отметить записи</string>
     <string name="card_browser_unmark_card">Снять отметку</string>
     <string name="delete_card_title">Удалить запись?</string>
