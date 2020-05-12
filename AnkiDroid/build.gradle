@@ -149,10 +149,10 @@ dependencies {
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
 
     // May need a resolution strategy for support libs to our versions
-    implementation'ch.acra:acra-http:5.2.1'
-    implementation'ch.acra:acra-dialog:5.2.1'
-    implementation'ch.acra:acra-toast:5.2.1'
-    implementation'ch.acra:acra-limiter:5.2.1'
+    implementation'ch.acra:acra-http:5.5.1'
+    implementation'ch.acra:acra-dialog:5.5.1'
+    implementation'ch.acra:acra-toast:5.5.1'
+    implementation'ch.acra:acra-limiter:5.5.1'
 
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     //noinspection GradleDependency
