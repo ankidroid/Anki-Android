@@ -31,21 +31,7 @@ public class IntentHandler extends Activity {
         reloadIntent.setDataAndType(getIntent().getData(), getIntent().getType());
         String action = intent.getAction();
         if (Intent.ACTION_VIEW.equals(action)) {
-            Timber.i("Handling file import");
-            String errorMessage = ImportUtils.handleFileImport(this, intent);
-            // Start DeckPicker if we correctly processed ACTION_VIEW
-            if (errorMessage == null) {
-                Timber.d("onCreate() import successful");
-                reloadIntent.setAction(action);
-                reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(reloadIntent);
-                AnkiActivity.finishActivityWithFade(this);
-            } else {
-                Timber.i("File import failed");
-                // Don't import the file if it didn't load properly or doesn't have apkg extension
-                //Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
-                ImportUtils.showImportUnsuccessfulDialog(this, errorMessage, true);
-            }
+            handleFileImport(intent, reloadIntent, action);
         } else if ("com.ichi2.anki.DO_SYNC".equals(action)) {
             Timber.i("Handling Sync Intent");
             sendDoSyncMsg();
@@ -64,6 +50,25 @@ public class IntentHandler extends Activity {
         } else {
             Timber.d("onCreate() performing default action");
             launchDeckPickerIfNoOtherTasks(reloadIntent);
+        }
+    }
+
+
+    private void handleFileImport(Intent intent, Intent reloadIntent, String action) {
+        Timber.i("Handling file import");
+        String errorMessage = ImportUtils.handleFileImport(this, intent);
+        // Start DeckPicker if we correctly processed ACTION_VIEW
+        if (errorMessage == null) {
+            Timber.d("onCreate() import successful");
+            reloadIntent.setAction(action);
+            reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(reloadIntent);
+            AnkiActivity.finishActivityWithFade(this);
+        } else {
+            Timber.i("File import failed");
+            // Don't import the file if it didn't load properly or doesn't have apkg extension
+            //Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
+            ImportUtils.showImportUnsuccessfulDialog(this, errorMessage, true);
         }
     }
 
