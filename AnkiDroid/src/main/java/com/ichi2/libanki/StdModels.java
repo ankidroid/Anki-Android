@@ -81,7 +81,9 @@ public class StdModels {
         ( (Models mm, String name) -> {
         JSONObject m = basicModel._new(mm, name);
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
-        t.put("afmt", "{{"+"Front"+"}}\n\n<hr id=answer>\n\n{{type:"+"Back"+"}}");
+        String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
+        String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
+        t.put("afmt", "{{" + frontName + "}}\n\n<hr id=answer>\n\n{{type:" + backName + "}}");
         return m;
     },
         R.string.basic_typing_model_name);
