@@ -155,13 +155,13 @@ public class MediaTest {
         testCol.getMedia().addFile(file);
         // add a note which references it
         Note f = testCol.newNote();
-        f.setItem("Front", "one");
-        f.setItem("Back", "<img src='fake.png'>");
+        f.setField(0, "one");
+        f.setField(1, "<img src='fake.png'>");
         testCol.addNote(f);
         // and one which references a non-existent file
         f = testCol.newNote();
-        f.setItem("Front", "one");
-        f.setItem("Back", "<img src='fake2.png'>");
+        f.setField(0, "one");
+        f.setField(1, "<img src='fake2.png'>");
         testCol.addNote(f);
         // and add another file which isn't used
         FileOutputStream os;
