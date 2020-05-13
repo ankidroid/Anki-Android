@@ -73,7 +73,7 @@
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
+    <string name="webview_crash_loop_dialog_title">Errore di restituzione grafica del sistema WebView</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
@@ -112,7 +112,7 @@
     <string name="note_editor_no_first_field">Il primo campo è vuoto</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="saving_facts">Salvataggio nota</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Salvataggio tipo di nota</string>
     <string name="add">Aggiungi</string>
     <string name="save">Salva</string>
     <string name="close">Chiudi</string>
@@ -248,14 +248,14 @@
     <string name="export_v2_dummy_note">Questo file richiede una versione più recente di Anki.</string>
     <string name="export_v2_forbidden">Passa al pianificatore V1 prima di esportare un singolo mazzo con le informazioni di pianificazione.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
+    <string name="activity_start_failed_load_url">Caricamento di %s fallito.</string>
     <string name="activity_start_failed">Il sistema non ha un\'applicazione installata che può eseguire questa azione.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">Nessun browser trovato, visita la pagina web tramite pc o cellulare: </string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="no_outgoing_link_in_cardbrowser">Collegamento di pagina esterna nella carta non è supportato.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Carte recuperate</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="background_image_title">Sfondo</string>
+    <string name="choose_an_image">Scegli un\'immagine</string>
 </resources>

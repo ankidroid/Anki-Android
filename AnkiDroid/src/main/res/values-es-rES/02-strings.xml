@@ -67,14 +67,14 @@
     <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
     <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
     <string name="corrupt_font">Archivo de fuentes %s corrupto</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_unknown">Error desconocido</string>
+    <string name="webview_crash_unknwon_detailed">Esto fue causado por un error interno en WebView</string>
+    <string name="webview_crash_oom">Memoria Insuficiente</string>
+    <string name="webview_crash_oom_details">El sistema terminó el WebView, lo que suele ocurrir cuando la aplicación se queda con memoria insuficiente, a menudo debido a fuentes o multimedias grandes.</string>
+    <string name="webview_crash_nonfatal">El renderizador de WebView se cayó. Causa: %s</string>
+    <string name="webview_crash_fatal">Error fatal: El renderizador de WebView se cayó. Causa: %s</string>
+    <string name="webview_crash_loop_dialog_title">Fallo de procesamiento de WebView del sistema</string>
+    <string name="webview_crash_loop_dialog_content">WebView del sistema no pudo procesar la tarjeta \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Pregunta</item>
@@ -90,11 +90,11 @@
         <item>Fallos</item>
         <item>Repasos</item>
         <item>Intervalo</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Changed</item>
-        <item>Created</item>
-        <item>Edited</item>
+        <item>Facilidad</item>
+        <item>Programadas</item>
+        <item>Cambiado</item>
+        <item>Creado</item>
+        <item>Editado</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Aumentar el límite de tarjetas nuevas para hoy</string>
@@ -108,11 +108,11 @@
     <string name="cardeditor_title_add_note">Añadir nota</string>
     <string name="cardeditor_title_edit_card">Editar nota</string>
     <string name="discard_unsaved_changes">¿Cerrar y perder la entrada actual?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="note_editor_no_cards_created">No se han creado tarjetas. Por favor, rellena más campos</string>
+    <string name="note_editor_no_first_field">El primer campo está vacío</string>
+    <string name="note_editor_no_cloze_delations">Este tipo de nota debe contener huecos</string>
     <string name="saving_facts">Guardando nota</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Guardando tipo de nota</string>
     <string name="add">Añadir</string>
     <string name="save">Guardar</string>
     <string name="close">Cerrar</string>
@@ -127,13 +127,13 @@
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="one">%1$d minuto</item>
+        <item quantity="other">%1$d minutos</item>
     </plurals>
     <string name="studyoptions_welcome_title">Bienvenido a AnkiDroid</string>
     <string name="fact_adder_intent_title">Tarjeta de AnkiDroid</string>
-    <string name="note_editor_add_note">Add note</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_add_note">Añadir nota</string>
+    <string name="note_editor_copy_note">Copiar nota</string>
     <string name="card_editor_copy_card">Copiar tarjeta</string>
     <string name="card_editor_reposition_card">Reposición</string>
     <string name="card_editor_reset_card">Reiniciar el progreso</string>
@@ -162,24 +162,24 @@
     <string name="import_message_add">Añadir</string>
     <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s</string>
     <string name="import_message_add_confirm">¿Añadir \"%s\" a la colección? Esto puede tardar</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+    <string name="import_log_no_apkg">Este no es un archivo de paquete Anki válido</string>
+    <string name="import_error_unhandled_request">No se puede procesar la solicitud de importación</string>
+    <string name="import_error_exception">Error al importar el paquete\n\n%s</string>
+    <string name="import_error_not_apkg_extension">El nombre de archivo “%s” no tiene extensión .apkg o .colpkg</string>
     <string name="import_error_content_provider">AnkiDroid no ha podido importar automáticamente el archivo seleccionado. Por favor, lee el manual de usuario sobre como importar manualmente anki files:  \n %s</string>
     <string name="import_replacing">Reemplazando colección&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Importación interrumpida</string>
     <string name="export_include_schedule">Incluir programación</string>
     <string name="export_include_media">Incluir multimedia</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
+    <string name="confirm_apkg_export">¿Exportar colección como paquete Anki?</string>
     <string name="confirm_apkg_export_deck">¿Exportar \"%s\" como archivo apkg?</string>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Send Anki package?</string>
+    <string name="export_in_progress">Exportando archivo de paquete Anki&#8230;</string>
+    <string name="export_successful_title">¿Enviar paquete Anki?</string>
     <string name="export_send_button">Enviar</string>
     <string name="export_save_button">Guardar en un archivo</string>
     <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando...</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
+    <string name="export_save_apkg_successful">Paquete Anki guardado correctamente</string>
+    <string name="export_save_apkg_unsuccessful">Error al guardar el paquete Anki</string>
     <string name="export_successful">Se exportó el archivo \"%s\". ¿Quieres enviarlo con otra aplicación?</string>
     <string name="export_email_subject">Tarjetas AnkiDroid exportadas: %s</string>
     <string name="export_email_text"><![CDATA[        Hola!
@@ -237,25 +237,25 @@
     <string name="filtered_deck_name">Mazo filtrado</string>
     <string name="reminder_title">¡No te olvides de estudiar hoy!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d nuevas tarjetas para revisar en %1$s</item>
+        <item quantity="one">%2$d tarjeta para revisar en %1$s</item>
+        <item quantity="other">%2$d tarjetas para revisar en %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error al compartir el archivo apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">El programador de V2 debe estar habilitado para importar este archivo.</string>
+    <string name="import_cannot_with_v2">El programador de V2 no puede importar mazos V1 con la programación incluida.</string>
+    <string name="export_v2_dummy_note">Este archivo requiere una versión más reciente de Anki.</string>
+    <string name="export_v2_forbidden">Por favor, cambie al programador de V1 antes de exportar un solo mazo con información de programación.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="activity_start_failed_load_url">Error al cargar \'%s\'.</string>
+    <string name="activity_start_failed">El sistema no tiene una aplicación instalada que pueda realizar esta acción.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Las imágenes de la cámara pueden ser grandes. Puede que desee comprimir y cambiar el tamaño de las imágenes en el directorio de medios]]></string>
+    <string name="no_browser_notification">No hay ningún browser, por favor visite la página web por PC o móvil: </string>
+    <string name="no_outgoing_link_in_cardbrowser">Enlaces de páginas externas no son soportados en la tarjeta.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Tarjetas recuperadas</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="background_image_title">Fondo</string>
+    <string name="choose_an_image">Elige una imagen</string>
 </resources>

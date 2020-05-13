@@ -41,8 +41,8 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Tarjetas programadas</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d tarjetas AnkiDroid pendientes</item>
+        <item quantity="other">%d tarjetas AnkiDroid pendientes</item>
     </plurals>
     <string name="widget_no_cards_due">No hay tarjetas programadas</string>
     <string name="widget_loading">Cargando widget&#8230;</string>

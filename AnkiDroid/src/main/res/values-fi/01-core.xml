@@ -64,12 +64,12 @@
         <item quantity="other">%d minuuttia jäljellä</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d tunti %d jäljellä</item>
+        <item quantity="other">%d tuntia %d jäljellä</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d päivä %d jäljellä</item>
+        <item quantity="other">%d päivää %d jäljellä</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -111,13 +111,13 @@
     <string name="menu_bury">Piilota</string>
     <string name="menu_suspend">Keskeytä</string>
     <string name="menu_delete_note">Poista merkintä</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag">Lippu</string>
+    <string name="menu_flag_card">Lisää lippu</string>
+    <string name="menu_flag_card_zero">Ei lippua</string>
+    <string name="menu_flag_card_one">Punainen lippu</string>
+    <string name="menu_flag_card_two">Oranssi lippu</string>
+    <string name="menu_flag_card_three">Vihreä lippu</string>
+    <string name="menu_flag_card_four">Sininen lippu</string>
     <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
     <string name="menu_select">Valitse teksti</string>
     <string name="menu_search">Haku %1$s</string>
@@ -176,12 +176,12 @@
     <string name="card_template_editor_menu_delete">Poista</string>
     <string name="card_template_editor_cant_delete">Valitse ainakin yksi korttityyppi</string>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Poista \"%2$s\" korttityyppi ja sen %1$d. kortti?</item>
-        <item quantity="other">Poista \"%2$s\" korttityyppi ja sen %1$d. kortit?</item>
+        <item quantity="one">Poista ”%2$s” korttityyppi ja sen %1$d. kortti?</item>
+        <item quantity="other">Poista ”%2$s” korttityyppi ja sen %1$d. kortit?</item>
     </plurals>
     <string name="invalid_template">Korttia ei voitu luoda</string>
     <string name="card_template_editor_would_delete_note">Korttityypin poistaminen aiheuttaisi yhden tai useamman kortin poistamisen. Luo uusi korttityyppi.</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">Tämän kortin korttityyppi poistettiin.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lue ja kirjoita AnkiDroidi-tietokantaan</string>
     <string name="read_write_permission_description">lupa päästä olemassaoleviin merkintöihin, kortteihin, merkintätyyppeihin ja pakkoihin, sekä luoda uusia</string>
