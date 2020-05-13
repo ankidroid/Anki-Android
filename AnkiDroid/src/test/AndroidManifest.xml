@@ -12,5 +12,8 @@
         <activity
             android:name="com.ichi2.anki.NullCollectionReviewer">
         </activity>
+        <activity
+            android:name="com.ichi2.anki.NullCollectionNoteEditor">
+        </activity>
     </application>
 </manifest>
