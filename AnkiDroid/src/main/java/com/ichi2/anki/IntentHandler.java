@@ -33,12 +33,7 @@ public class IntentHandler extends Activity {
         if (Intent.ACTION_VIEW.equals(action)) {
             handleFileImport(intent, reloadIntent, action);
         } else if ("com.ichi2.anki.DO_SYNC".equals(action)) {
-            Timber.i("Handling Sync Intent");
-            sendDoSyncMsg();
-            reloadIntent.setAction(action);
-            reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(reloadIntent);
-            AnkiActivity.finishActivityWithFade(this);
+            handleSyncIntent(reloadIntent, action);
         } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
             long deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0);
             Timber.i("Handling intent to review deck '%d'", deckId);
@@ -51,6 +46,16 @@ public class IntentHandler extends Activity {
             Timber.d("onCreate() performing default action");
             launchDeckPickerIfNoOtherTasks(reloadIntent);
         }
+    }
+
+
+    private void handleSyncIntent(Intent reloadIntent, String action) {
+        Timber.i("Handling Sync Intent");
+        sendDoSyncMsg();
+        reloadIntent.setAction(action);
+        reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(reloadIntent);
+        AnkiActivity.finishActivityWithFade(this);
     }
 
 
