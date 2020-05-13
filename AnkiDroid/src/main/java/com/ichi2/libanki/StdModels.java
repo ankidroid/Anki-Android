@@ -2,10 +2,6 @@ package com.ichi2.libanki;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Models;
-
 import com.ichi2.utils.JSONObject;
 
 import androidx.annotation.StringRes;
