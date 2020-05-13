@@ -83,6 +83,7 @@ public class StdModels {
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
         String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
         String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
+        t.put("qfmt", "{{" + frontName + "}}\n\n{{type:" + backName + "}}");
         t.put("afmt", "{{" + frontName + "}}\n\n<hr id=answer>\n\n{{type:" + backName + "}}");
         return m;
     },
