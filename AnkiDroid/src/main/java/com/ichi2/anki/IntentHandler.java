@@ -35,17 +35,22 @@ public class IntentHandler extends Activity {
         } else if ("com.ichi2.anki.DO_SYNC".equals(action)) {
             handleSyncIntent(reloadIntent, action);
         } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
-            long deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0);
-            Timber.i("Handling intent to review deck '%d'", deckId);
-            final Intent reviewIntent = new Intent(this, Reviewer.class);
-
-            CollectionHelper.getInstance().getCol(this).getDecks().select(deckId);
-            startActivity(reviewIntent);
-            AnkiActivity.finishActivityWithFade(this);
+            handleReviewIntent(intent);
         } else {
             Timber.d("onCreate() performing default action");
             launchDeckPickerIfNoOtherTasks(reloadIntent);
         }
+    }
+
+
+    private void handleReviewIntent(Intent intent) {
+        long deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0);
+        Timber.i("Handling intent to review deck '%d'", deckId);
+        final Intent reviewIntent = new Intent(this, Reviewer.class);
+
+        CollectionHelper.getInstance().getCol(this).getDecks().select(deckId);
+        startActivity(reviewIntent);
+        AnkiActivity.finishActivityWithFade(this);
     }
 
 
