@@ -1,5 +1,7 @@
 package com.ichi2.anki;
 
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Intent;
 
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
@@ -12,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.shadows.ShadowActivity;
 
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -118,6 +121,19 @@ public class NoteEditorTest extends RobolectricTest {
         editor.saveNote();
 
         assertThat(getCardCount(), is(initialCards));
+    }
+
+    @Test
+    public void verifyStartupAndCloseWithNoCollectionDoesNotCrash() {
+        try (ActivityScenario<NullCollectionNoteEditor> scenario = ActivityScenario.launch(NullCollectionNoteEditor.class)) {
+            scenario.onActivity(noteEditor -> {
+                noteEditor.onBackPressed();
+                assertThat("Pressing back should finish the activity", noteEditor.isFinishing());
+            });
+
+            Instrumentation.ActivityResult result = scenario.getResult();
+            assertThat("Activity should be cancelled as no changes were made", result.getResultCode(), is(Activity.RESULT_CANCELED));
+        }
     }
 
     private int getCardCount() {

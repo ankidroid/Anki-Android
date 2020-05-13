@@ -692,6 +692,10 @@ public class NoteEditor extends AnkiActivity {
 
 
     private boolean hasUnsavedChanges() {
+        if (!collectionHasLoaded()) {
+            return false;
+        }
+
         // changed note type?
         if (!mAddNote) {
             final JSONObject newModel = getCurrentlySelectedModel();
@@ -711,6 +715,12 @@ public class NoteEditor extends AnkiActivity {
         // changed tags?
         return mTagsEdited;
     }
+
+
+    private boolean collectionHasLoaded() {
+        return mAllModelIds != null;
+    }
+
 
     @VisibleForTesting
     void saveNote() {
