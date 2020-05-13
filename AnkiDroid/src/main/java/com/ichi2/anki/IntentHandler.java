@@ -62,16 +62,21 @@ public class IntentHandler extends Activity {
             startActivity(reviewIntent);
             AnkiActivity.finishActivityWithFade(this);
         } else {
-            // Launcher intents should start DeckPicker if no other task exists,
-            // otherwise go to previous task
             Timber.d("onCreate() performing default action");
-            Timber.i("Launching DeckPicker");
-            reloadIntent.setAction(Intent.ACTION_MAIN);
-            reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivityIfNeeded(reloadIntent, 0);
-            AnkiActivity.finishActivityWithFade(this);
+            launchDeckPickerIfNoOtherTasks(reloadIntent);
         }
+    }
+
+
+    private void launchDeckPickerIfNoOtherTasks(Intent reloadIntent) {
+        // Launcher intents should start DeckPicker if no other task exists,
+        // otherwise go to previous task
+        Timber.i("Launching DeckPicker");
+        reloadIntent.setAction(Intent.ACTION_MAIN);
+        reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivityIfNeeded(reloadIntent, 0);
+        AnkiActivity.finishActivityWithFade(this);
     }
 
 
