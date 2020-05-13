@@ -17,6 +17,7 @@ env:
     - ANDROID_HOME=${HOME}/android-sdk
     - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
+    - LOCALE="NONE"
     - GRAVIS="https://raw.githubusercontent.com/DanySK/Gravis-CI/master/"
     - JDK="1.8"
     - TOOLS=${ANDROID_HOME}/tools
@@ -26,21 +27,21 @@ env:
     - LINT=FALSE # by default we don't lint, they are run only in specific builds
     - FINALIZE_COVERAGE=FALSE # by default we don't finalize coverage, it is done in one specific build
   matrix:
-   - API=16 ABI=x86 AUDIO=-no-audio
-   - API=17 ABI=x86
+   - API=16 ABI=x86 AUDIO=-no-audio LOCALE="ko_KR"
+   - API=17 ABI=x86 LOCALE="it_IT"
    #- API=18 ABI=x86 # frequently flaky: test run failed: 'Instrumentation run failed due to 'java.lang.SecurityException''
-   - API=19 ABI=x86
+   - API=19 ABI=x86 LOCALE="vi_VN"
    # API 20 was Android Wear only
-   - API=21
-   - API=22
-   - API=23
-   - API=24
-   - API=25
+   - API=21 LOCALE="pl_PL"
+   - API=22 LOCALE="ja_JP"
+   - API=23 LOCALE="ru_RU"
+   - API=24 LOCALE="zh_CN"
+   - API=25 LOCALE="es_ES"
    #- API=26 # Fails with unrecognized tests? orchestrator change or something?
-   - API=27
-   - API=28
-   - API=29
-   - API=R EMU_FLAVOR=google_apis # This will be API30 when it is released, until now it is R and it is failing unfortunately
+   - API=27 LOCALE="fr_FR"
+   - API=28 # API28 does not handle locale changes for some reason, so it is our default locale test
+   - API=29 LOCALE="pt_BR"
+   - API=R EMU_FLAVOR=google_apis LOCALE="de_DE" # This will be API30 when released, until now it is R, with intermittent failure
    - API=24 JDK="1.11" # make sure we work in future dev environments
    - API=24 JDK="1.14" # make sure we work in future dev environments
 
@@ -122,6 +123,9 @@ install:
   # Wait for emulator to be ready
   - ./tools/android-wait-for-emulator.sh
   - adb shell input keyevent 82 &
+
+  # Switch locale
+  - if [ "$LOCALE" != "NONE" ]; then adb shell am broadcast -a com.android.intent.action.SET_LOCALE --es com.android.intent.extra.LOCALE "$LOCALE" com.android.customlocale2; fi
 
   # Switch back to our target JDK version to build and run tests
   - JDK="${TARGET_JDK}"
