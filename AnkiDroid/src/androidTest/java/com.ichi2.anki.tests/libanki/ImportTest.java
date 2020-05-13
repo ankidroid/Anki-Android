@@ -87,7 +87,7 @@ public class ImportTest {
 
         // add a note that references a sound
         Note n = testCol.newNote();
-        n.setItem("Front", "[sound:foo.mp3]");
+        n.setField(0, "[sound:foo.mp3]");
         long mid = n.model().getLong("id");
         testCol.addNote(n);
         // add that sound to the media folder
