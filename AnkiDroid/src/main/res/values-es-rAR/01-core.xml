@@ -64,11 +64,11 @@
         <item quantity="other">%d minutos restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
+        <item quantity="one">%d hora %d restante</item>
         <item quantity="other">%d horas %d restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
+        <item quantity="one">%d día %d restante</item>
         <item quantity="other">%d días %d restantes</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -111,13 +111,13 @@
     <string name="menu_bury">Enterrar</string>
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Eliminar nota</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag">Marca</string>
+    <string name="menu_flag_card">Marcar tarjeta</string>
+    <string name="menu_flag_card_zero">Sin marca</string>
+    <string name="menu_flag_card_one">Marca roja</string>
+    <string name="menu_flag_card_two">Marca naranja</string>
+    <string name="menu_flag_card_three">Marca verde</string>
+    <string name="menu_flag_card_four">Marca azul</string>
     <string name="delete_note_message">¿Realmente eliminar esta nota y todas sus tarjetas?\n%s</string>
     <string name="menu_select">Seleccione el texto</string>
     <string name="menu_search">Revisión en %1$s</string>
@@ -158,7 +158,7 @@
     <string name="studyoptions_congrats_custom">Para estudiar por fuera de la programación normal, haga click en el botón de \"Estudio Personalizado\"</string>
     <string name="studyoptions_no_cards_due">Aún no hay tarjetas programadas.</string>
     <string name="sd_card_not_mounted">El almacenamiento del dispositivo no se encuentra montado</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Editar esta nota y añadir algunos huecos (%1$s)</string>
     <string name="button_sync">Sincronizar</string>
     <string name="cancel_sync_confirm">¿Desea cancelar la sincronización?</string>
     <string name="continue_sync">Continuar la sincronización</string>
@@ -181,7 +181,7 @@
     </plurals>
     <string name="invalid_template">Una tarjeta no pudo ser generada</string>
     <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta podría causar la eliminación de una o más notas. Por favor, cree primero un nuevo tipo de tarjeta.</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">El tipo de tarjeta para la tarjeta actual fue eliminado.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
     <string name="read_write_permission_description">acceder a las notas existentes, tarjetas, tipos de nota y mazos, así como crear nuevos</string>

@@ -89,13 +89,13 @@
         <item quantity="other">%d korttia ajastettu uudelleen</item>
     </plurals>
     <string name="answering_error_title">Tietokantavirhe</string>
-    <string name="answering_error_message">Kokoelmaan kirjoittaminen epäonnistui. Tämä voi aiheutua viallisesta tietokannasta tai liian vähäisestä levytilasta.\n\nJos tämä tapahtuu usein, yritä tarkistaa tietokanta, korjata kokoelma tai palauttaa se varmuuskopioista. Voit tehdä tämän napauttamalla \"Asetukset\"-painiketta.\n\nKyseessä voi olla myös vika AnkiDroidissa, joten ilmoita tästä meille jotta voimme tarkastaa asian.</string>
+    <string name="answering_error_message">Kokoelmaan kirjoittaminen epäonnistui. Tämä voi aiheutua viallisesta tietokannasta tai liian vähäisestä levytilasta.\n\nJos tämä tapahtuu usein, yritä tarkistaa tietokanta, korjata kokoelma tai palauttaa se varmuuskopioista. Voit tehdä tämän napauttamalla ”Asetukset”-painiketta.\n\nKyseessä voi olla myös vika AnkiDroidissa, joten ilmoita tästä meille jotta voimme tarkastaa asian.</string>
     <string name="answering_error_report">Ilmoita viasta</string>
-    <string name="repair_deck_dialog">Haluatko varmasti yrittää korjata tietokannan?\n\nEnnen yritystä kopio tietokannasta luodaan alihakemistoon \"%s\".</string>
+    <string name="repair_deck_dialog">Haluatko varmasti yrittää korjata tietokannan?\n\nEnnen yritystä kopio tietokannasta luodaan alihakemistoon ”%s”.</string>
     <string name="intent_add_saved_information">Tallennetut tiedot</string>
     <string name="intent_add_clear_all">Tyhjennä kaikki</string>
-    <string name="intent_aedict_empty">Luokka \"oletus\" on tyhjä</string>
-    <string name="intent_aedict_category">Lisätäksesi kortteja AnkiDroidiin poista kaikki Notepad-kategoriat tai lisää uusi nimellä \"default\"</string>
+    <string name="intent_aedict_empty">Oletus-luokka on tyhjä</string>
+    <string name="intent_aedict_category">Lisätäksesi kortteja AnkiDroidiin poista kaikki Notepad-kategoriat tai lisää uusi nimellä ”default”</string>
     <string name="custom_study_new_total_new">Uusia kortteja pakassa: %d</string>
     <string name="custom_study_rev_total_rev">Opiskeltavia kortteja pakassa: %d</string>
     <string name="custom_study_new_extend">Lisää tämän päivän uusien korttien rajoitusta</string>

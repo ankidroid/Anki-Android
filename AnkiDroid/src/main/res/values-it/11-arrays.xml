@@ -59,11 +59,11 @@
         <item>Interrompi l\'apprendimento</item>
         <item>Seppellisci nota</item>
         <item>Sospendi nota</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
+        <item>Attiva/disattiva contrassegno rosso</item>
+        <item>Attiva/disattiva contrassegno arancione</item>
+        <item>Attiva/disattiva contrassegno verde</item>
+        <item>Attiva/disattiva contrassegno blu</item>
+        <item>Rimuovi contrassegno</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Sospendi carta</item>
