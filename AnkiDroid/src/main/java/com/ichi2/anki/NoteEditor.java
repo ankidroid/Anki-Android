@@ -998,15 +998,15 @@ public class NoteEditor extends AnkiActivity {
         }
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mSelectedTags);
-        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags,
-                tags);
-        dialog.setTagsDialogListener((selectedTags, option) -> {
+        TagsDialog.TagsDialogListener tagsDialogListener = (selectedTags, option) -> {
             if (!mSelectedTags.equals(selectedTags)) {
                 mTagsEdited = true;
             }
             mSelectedTags = selectedTags;
             updateTags();
-        });
+        };
+        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags, tags);
+        dialog.setTagsDialogListener(tagsDialogListener);
         showDialogFragment(dialog);
     }
 
