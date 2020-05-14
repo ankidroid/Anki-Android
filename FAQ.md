@@ -9,20 +9,6 @@ Please first try uninstalling / re-installing the application, as this often fix
 
 No AnkiDroid is not restricted in any way, see the [[installation guide|Installation]] for help with installing.
 
---
-
-## Parallel Release:
-
-This release includes parallel builds so you can simulate having multiple profiles on one android device. For more information see this: https://github.com/ankidroid/Anki-Android/wiki/FAQ#how-to-use-different-anki-profiles
-
-*Please Note:* if you have installed builds from other places (like from @mikehardy) these are using the official AnkiDroid Open Source Project APK Signing Keys now as opposed to the previous personal keys so they will appear incompatible. You will need to uninstall the old parallel build(s) first, then install the parallel builds from here that you want, then go into Advanced Preferences and alter the storage directory again to match your parallel storage directory. This is an Android security requirement. Enjoy!
---
-
-## Parallel Release:
-
-This release includes parallel builds so you can simulate having multiple profiles on one android device. For more information see this: https://github.com/ankidroid/Anki-Android/wiki/FAQ#how-to-use-different-anki-profiles
-
-*Please Note:* if you have installed builds from other places (like from @mikehardy) these are using the official AnkiDroid Open Source Project APK Signing Keys now as opposed to the previous personal keys so they will appear incompatible. You will need to uninstall the old parallel build(s) first, then install the parallel builds from here that you want, then go into Advanced Preferences and alter the storage directory again to match your parallel storage directory. This is an Android security requirement. Enjoy!
 ### I don't like the last update of AnkiDroid, how can I return to a previous version?
 
 All versions are available as APK files, see the [[installation guide|Installation]]. Don't forget to [let us know](http://ankidroid.org/help.html) what bothers you, and we will try to fix it.
