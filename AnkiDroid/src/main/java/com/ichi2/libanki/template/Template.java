@@ -17,14 +17,12 @@
 package com.ichi2.libanki.template;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.Hooks;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
+import timber.log.Timber;
 
 /**
  * This class renders the card content by parsing the card template and replacing all marked sections
@@ -50,7 +49,6 @@ import androidx.annotation.NonNull;
 public class Template {
     public static final String clozeReg = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
-    private static final String TAG = Template.class.getName();
 
     // Opening tag delimiter
     private static final String sOtag = Pattern.quote("{{");
@@ -59,16 +57,16 @@ public class Template {
     private static final String sCtag = Pattern.quote("}}");
 
     // The regular expression used to find a #section
-    private static final Pattern sSection_re = Pattern.compile(sOtag + "[\\#|^]([^\\}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
+    private static final Pattern sSection_re = Pattern.compile(sOtag + "[#|^]([^}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
 
     // The regular expression used to find a tag.
-    private static final Pattern sTag_re = Pattern.compile(sOtag + "(#|=|&|!|>|\\{)?(.+?)\\1?" + sCtag + "+");
+    private static final Pattern sTag_re = Pattern.compile(sOtag + "([#=&!>{])?(.+?)\\1?" + sCtag + "+");
 
     // MathJax opening delimiters
-    private static String sMathJaxOpenings[] = {"\\(", "\\["};
+    private static String[] sMathJaxOpenings = {"\\(", "\\["};
 
     // MathJax closing delimiters
-    private static String sMathJaxClosings[] = {"\\)", "\\]"};
+    private static String[] sMathJaxClosings = {"\\)", "\\]"};
 
     private String mTemplate;
     private Map<String, String> mContext;
@@ -76,21 +74,17 @@ public class Template {
     private static String ALT_HANDLEBAR_DIRECTIVE = "{{=<% %>=}}";
 
     private static String get_or_attr(Map<String, String> obj, String name) {
-        return get_or_attr(obj, name, null);
-    }
-
-    private static String get_or_attr(Map<String, String> obj, String name, String _default) {
         if (obj.containsKey(name)) {
             return obj.get(name);
         } else {
-            return _default;
+            return null;
         }
     }
 
 
     public Template(String template, Map<String, String> context) {
         mTemplate = template;
-        mContext = context == null ? new HashMap<String, String>() : context;
+        mContext = context == null ? new HashMap<>() : context;
     }
 
 
@@ -143,7 +137,7 @@ public class Template {
             String section = match.group(0);
             String section_name = match.group(1).trim();
             String inner = match.group(2);
-            String it = get_or_attr(context, section_name, null);
+            String it = get_or_attr(context, section_name);
             boolean field_is_empty =  it == null || TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
             boolean conditional_is_negative = section.charAt(2) == '^';
             // Showing inner content if either field is empty and the
@@ -235,16 +229,14 @@ public class Template {
         // For type:, we return directly since no other mod than cloze (or other
         // pre-defined mods) can be present and those are treated separately
         Collections.reverse(mods);
-        Collections.sort(mods, new Comparator<String>() {
-            // This comparator ensures "type:" mods are ordered first in the list. The rest of
-            // the list remains in the same order.
-            @Override
-            public int compare(String lhs, String rhs) {
-                if ("type".equals(lhs)) {
-                    return 0;
-                } else {
-                    return 1;
-                }
+        // This comparator ensures "type:" mods are ordered first in the list. The rest of
+        // the list remains in the same order.
+        //noinspection ComparatorMethodParameterNotUsed
+        Collections.sort(mods, (lhs, rhs) -> {
+            if ("type".equals(lhs)) {
+                return 0;
+            } else {
+                return 1;
             }
         });
 
@@ -378,13 +370,12 @@ public class Template {
         boolean in_mathjax = false;
 
         // The following regex matches one of 3 things, noted below:
-        String regex = new StringBuilder("(?si)")
-            .append("(\\\\[(\\[])|")  // group 1, MathJax opening
-            .append("(\\\\[\\])])|")  // group 2, MathJax close
-            .append("(")              // group 3, Cloze deletion number `ord`
-            .append(String.format(Locale.US, creg, ord))
-            .append(")")
-            .toString();
+        String regex = "(?si)" +
+                "(\\\\[(\\[])|" +  // group 1, MathJax opening
+                "(\\\\[])])|" +  // group 2, MathJax close
+                "(" +              // group 3, Cloze deletion number `ord`
+                String.format(Locale.US, creg, ord) +
+                ")";
 
         Matcher m = Pattern.compile(regex).matcher(txt);
 
@@ -392,12 +383,12 @@ public class Template {
         while (m.find()) {
             if (m.group(1) != null) {
                 if (in_mathjax) {
-                    Log.d(TAG, "MathJax opening found while already in MathJax");
+                    Timber.d("MathJax opening found while already in MathJax");
                 }
                 in_mathjax = true;
             } else if (m.group(2) != null) {
                 if (!in_mathjax) {
-                    Log.d(TAG, "MathJax close found while not in MathJax");
+                    Timber.d("MathJax close found while not in MathJax");
                 }
                 in_mathjax = false;
             } else if (m.group(3) != null) {
@@ -405,13 +396,13 @@ public class Template {
                     // appendReplacement has an issue with backslashes, so...
                     m.appendReplacement(
                         repl,
-                        m.quoteReplacement(
+                        Matcher.quoteReplacement(
                             m.group(0).replace(
                                 "{{c" + ord + "::", "{{C" + ord + "::")));
                     continue;
                 }
             } else {
-                Log.d(TAG, "Unexpected: no expected capture group is present");
+                Timber.d("Unexpected: no expected capture group is present");
             }
             // appendReplacement has an issue with backslashes, so...
             m.appendReplacement(repl, Matcher.quoteReplacement(m.group(0)));
