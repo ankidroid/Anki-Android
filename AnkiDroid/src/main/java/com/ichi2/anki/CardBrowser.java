@@ -1130,7 +1130,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void showTagsDialog() {
         TagsDialog dialog = TagsDialog.newInstance(
                 TagsDialog.TYPE_FILTER_BY_TAG,
-                new ArrayList<String>(), new ArrayList<>(getCol().getTags().all()),
+                new ArrayList<>(), new ArrayList<>(getCol().getTags().all()),
                 this::filterByTag);
         showDialogFragment(dialog);
     }

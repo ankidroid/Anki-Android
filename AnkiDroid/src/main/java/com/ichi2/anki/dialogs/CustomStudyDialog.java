@@ -148,7 +148,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                                 long currentDeck = getArguments().getLong("did");
                                 TagsDialog dialogFragment = TagsDialog.newInstance(
                                         TagsDialog.TYPE_CUSTOM_STUDY_TAGS,
-                                        new ArrayList<String>(),
+                                        new ArrayList<>(),
                                         new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)),
                                         CustomStudyDialog.this::customStudyFromTags);
                                 activity.showDialogFragment(dialogFragment);
