@@ -1264,6 +1264,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private void filterByTag(List<String> selectedTags, int option) {
+        //TODO: Duplication between here and CustomStudyDialog:customStudyFromTags
         mSearchView.setQuery("", false);
         String tags = selectedTags.toString();
         mSearchView.setQueryHint(getResources().getString(R.string.card_browser_tags_shown,
