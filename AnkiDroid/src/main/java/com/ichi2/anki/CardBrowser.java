@@ -1130,42 +1130,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void showTagsDialog() {
         TagsDialog dialog = TagsDialog.newInstance(
                 TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<>(getCol().getTags().all()));
-        dialog.setTagsDialogListener(new TagsDialogListener() {
-            @Override
-            public void onPositive(List<String> selectedTags, int option) {
-                mSearchView.setQuery("", false);
-                String tags = selectedTags.toString();
-                mSearchView.setQueryHint(getResources().getString(R.string.card_browser_tags_shown,
-                        tags.substring(1, tags.length() - 1)));
-                StringBuilder sb = new StringBuilder();
-                switch (option) {
-                    case 1:
-                        sb.append("is:new ");
-                        break;
-                    case 2:
-                        sb.append("is:due ");
-                        break;
-                    default:
-                        // Logging here might be appropriate : )
-                        break;
-                }
-                int i = 0;
-                for (String tag : selectedTags) {
-                    if (i != 0) {
-                        sb.append("or ");
-                    } else {
-                        sb.append("("); // Only if we really have selected tags
-                    }
-                    sb.append("tag:").append(tag).append(" ");
-                    i++;
-                }
-                if (i > 0) {
-                    sb.append(")"); // Only if we added anything to the tag list
-                }
-                mSearchTerms = sb.toString();
-                searchCards();
-            }
-        });
+        dialog.setTagsDialogListener(this::filterByTag);
         showDialogFragment(dialog);
     }
 
@@ -1296,6 +1261,42 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         return nonDynamicDecks;
     }
+
+
+    private void filterByTag(List<String> selectedTags, int option) {
+        mSearchView.setQuery("", false);
+        String tags = selectedTags.toString();
+        mSearchView.setQueryHint(getResources().getString(R.string.card_browser_tags_shown,
+                tags.substring(1, tags.length() - 1)));
+        StringBuilder sb = new StringBuilder();
+        switch (option) {
+            case 1:
+                sb.append("is:new ");
+                break;
+            case 2:
+                sb.append("is:due ");
+                break;
+            default:
+                // Logging here might be appropriate : )
+                break;
+        }
+        int i = 0;
+        for (String tag : selectedTags) {
+            if (i != 0) {
+                sb.append("or ");
+            } else {
+                sb.append("("); // Only if we really have selected tags
+            }
+            sb.append("tag:").append(tag).append(" ");
+            i++;
+        }
+        if (i > 0) {
+            sb.append(")"); // Only if we added anything to the tag list
+        }
+        mSearchTerms = sb.toString();
+        searchCards();
+    }
+
 
     private abstract class ListenerWithProgressBar extends CollectionTask.TaskListener {
         @Override
