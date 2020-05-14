@@ -34,6 +34,17 @@ import static org.hamcrest.Matchers.not;
 public class TemplateTest extends RobolectricTest {
 
     @Test
+    public void typeInFieldRenders() {
+        HashMap<String, String> context = new HashMap<>();
+        context.put("Front", "AA{{type:Back}}");
+        Template t = new Template("{{Front}}", context);
+
+        String rendered = t.render();
+
+        assertThat(rendered, is("AA[[type:Back]]"));
+    }
+
+    @Test
     public void testNotFoundWillRender() {
         String maybeBad = "{{#NotFound}}{{NotFound}}{{/NotFound}}";
 

@@ -71,7 +71,6 @@ public class Template {
     private String mTemplate;
     private Map<String, String> mContext;
 
-    private static String ALT_HANDLEBAR_DIRECTIVE = "{{=<% %>=}}";
 
     private static String get_or_attr(Map<String, String> obj, String name) {
         if (obj.containsKey(name)) {
@@ -155,17 +154,34 @@ public class Template {
         return sb.toString();
     }
 
+    /**
+     * Expands all tags, iteratively until all tags (even tags that are replaced by tags) are resolved.
+     */
+    private String render_tags(@NonNull String template, @NonNull Map<String, String> context) {
+        /* Apply render_some_tags to the tags, until
+           render_some_tags states that it does not find tags to replace anymore
+           anymore. Return the last template state */
+        String previous_template = null;
+        while (template != null) {
+            previous_template = template;
+            template = render_some_tags(template, context);
+        }
+        return previous_template;
+    }
 
     /**
-     * Renders all the tags in a template for a context.
+     * Replaces all the tags in a template in a single pass for the values in the given context map.
      */
-    private String render_tags(String template, Map<String, String> context) {
-        if (template.indexOf(ALT_HANDLEBAR_DIRECTIVE) != -1) {
+    private String render_some_tags(String template, Map<String, String> context) {
+        String ALT_HANDLEBAR_DIRECTIVE = "{{=<% %>=}}";
+        if (template.contains(ALT_HANDLEBAR_DIRECTIVE)) {
             template = template.replace(ALT_HANDLEBAR_DIRECTIVE, "").replace("<%", "{{").replace("%>", "}}");
         }
         StringBuffer sb = new StringBuffer();
         Matcher match = sTag_re.matcher(template);
+        boolean found = false;
         while (match.find()) {
+            found = true;
             String tag_type = match.group(1);
             String tag_name = match.group(2).trim();
             String replacement;
@@ -179,6 +195,9 @@ public class Template {
                 return "{{invalid template}}";
             }
             match.appendReplacement(sb, Matcher.quoteReplacement(replacement));
+        }
+        if (!found) {
+            return null;
         }
         match.appendTail(sb);
         return sb.toString();
