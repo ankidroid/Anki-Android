@@ -53,7 +53,8 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private String mPositiveText;
     private String mDialogTitle;
-    private TagsDialogListener mTagsDialogListener = null;
+    @NonNull
+    private TagsDialogListener mTagsDialogListener;
     private TagsArrayAdapter mTagsArrayAdapter;
     private int mSelectedOption = -1;
 
@@ -65,9 +66,13 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
 
+    public TagsDialog(@NonNull TagsDialogListener onPositive) {
+        this.mTagsDialogListener = onPositive;
+    }
+
     public static TagsDialog newInstance(int type, ArrayList<String> checked_tags,
-                                            ArrayList<String> all_tags) {
-        TagsDialog t = new TagsDialog();
+                                            ArrayList<String> all_tags, @NonNull TagsDialogListener onPositive) {
+        TagsDialog t = new TagsDialog(onPositive);
 
         Bundle args = new Bundle();
         args.putInt(DIALOG_TYPE_KEY, type);
@@ -267,10 +272,6 @@ public class TagsDialog extends AnalyticsDialogFragment {
             UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,
                     mDialog.getView().findViewById(R.id.tags_dialog_snackbar), null);
         }
-    }
-
-    public void setTagsDialogListener(TagsDialogListener selectedTagsListener) {
-        mTagsDialogListener = selectedTagsListener;
     }
 
     public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
