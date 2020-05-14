@@ -149,36 +149,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                                 TagsDialog dialogFragment = TagsDialog.newInstance(
                                         TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
                                         new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
-                                dialogFragment.setTagsDialogListener(new TagsDialog.TagsDialogListener() {
-                                    @Override
-                                    public void onPositive(List<String> selectedTags, int option) {
-                                        /*
-                                         * Here's the method that gathers the final selection of tags, type of cards and
-                                         * generates the search screen for the custom study deck.
-                                         */
-                                        StringBuilder sb = new StringBuilder();
-                                        switch (option) {
-                                            case 1:
-                                                sb.append("is:new ");
-                                                break;
-                                            case 2:
-                                                sb.append("is:due ");
-                                                break;
-                                            default:
-                                                // Logging here might be appropriate : )
-                                                break;
-                                        }
-                                        List<String> arr = new ArrayList<>();
-                                        if (selectedTags.size() > 0) {
-                                            for (String tag : selectedTags) {
-                                                arr.add(String.format("tag:'%s'", tag));
-                                            }
-                                            sb.append("(").append(TextUtils.join(" or ", arr)).append(")");
-                                        }
-                                        createCustomStudySession(new JSONArray(), new Object[]{sb.toString(),
-                                                Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, true);
-                                    }
-                                });
+                                dialogFragment.setTagsDialogListener(CustomStudyDialog.this::customStudyFromTags);
                                 activity.showDialogFragment(dialogFragment);
                                 break;
                             }
@@ -326,6 +297,29 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         return keyValueMap;
     }
 
+    private void customStudyFromTags(List<String> selectedTags, int option) {
+        StringBuilder sb = new StringBuilder();
+        switch (option) {
+            case 1:
+                sb.append("is:new ");
+                break;
+            case 2:
+                sb.append("is:due ");
+                break;
+            default:
+                // Logging here might be appropriate : )
+                break;
+        }
+        List<String> arr = new ArrayList<>();
+        if (selectedTags.size() > 0) {
+            for (String tag : selectedTags) {
+                arr.add(String.format("tag:'%s'", tag));
+            }
+            sb.append("(").append(TextUtils.join(" or ", arr)).append(")");
+        }
+        createCustomStudySession(new JSONArray(), new Object[] {sb.toString(),
+                Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, true);
+    }
 
     /**
      * Retrieve the list of ids to put in the context menu list
