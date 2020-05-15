@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="5" by="lint 3.6.3" client="gradle" variant="debug" version="3.6.3">
+
+    <issue
+        id="OldTargetApi"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details."
+        errorLine1="        targetSdkVersion 28"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="16"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="MinSdkTooLow"
+        message="The value of minSdkVersion is too low. It can be incremented without noticeably reducing the number of supported devices."
+        errorLine1="        minSdkVersion 8"
+        errorLine2="        ~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="15"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="FieldGetter"
+        message="Calling getter method `getFields()` on self is slower than field access (`mFields`)"
+        errorLine1="        return getFields()[0];"
+        errorLine2="               ~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/NoteInfo.java"
+            line="87"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` member of class `CompatV1` requires synthetic accessor"
+        errorLine1="        return getApiHostSpecVersion() &lt; 2 ? new CompatV1() : new CompatV2();"
+        errorLine2="                                             ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="594"
+            column="46"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` member of class `CompatV2` requires synthetic accessor"
+        errorLine1="        return getApiHostSpecVersion() &lt; 2 ? new CompatV1() : new CompatV2();"
+        errorLine2="                                                              ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="594"
+            column="63"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` field `PROJECTION` of class `AddContentApi` requires synthetic accessor"
+        errorLine1="            return mResolver.query(Note.CONTENT_URI, PROJECTION, queryFormat, null, null);"
+        errorLine2="                                                     ~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="630"
+            column="54"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` field `mResolver` of class `AddContentApi` requires synthetic accessor"
+        errorLine1="            return mResolver.query(Note.CONTENT_URI, PROJECTION, queryFormat, null, null);"
+        errorLine2="                   ~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="630"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` method `addNoteForContentValues` of class `AddContentApi` requires synthetic accessor"
+        errorLine1="                Uri noteUri = addNoteForContentValues(deckId, values);"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="637"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` field `PROJECTION` of class `AddContentApi` requires synthetic accessor"
+        errorLine1="                Cursor cursor = mResolver.query(Note.CONTENT_URI, PROJECTION, selection, null, null);"
+        errorLine2="                                                                  ~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="658"
+            column="67"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` field `mResolver` of class `AddContentApi` requires synthetic accessor"
+        errorLine1="                Cursor cursor = mResolver.query(Note.CONTENT_URI, PROJECTION, selection, null, null);"
+        errorLine2="                                ~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="658"
+            column="33"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` field `PROJECTION` of class `AddContentApi` requires synthetic accessor"
+        errorLine1="            return mResolver.query(Note.CONTENT_URI_V2, PROJECTION,"
+        errorLine2="                                                        ~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="690"
+            column="57"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` field `mResolver` of class `AddContentApi` requires synthetic accessor"
+        errorLine1="            return mResolver.query(Note.CONTENT_URI_V2, PROJECTION,"
+        errorLine2="                   ~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="690"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` field `mResolver` of class `AddContentApi` requires synthetic accessor"
+        errorLine1="            return mResolver.bulkInsert(builder.build(), valuesArr);"
+        errorLine2="                   ~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="698"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` field `PROJECTION` of class `AddContentApi` requires synthetic accessor"
+        errorLine1="            Cursor notesTableCursor = mResolver.query(Note.CONTENT_URI_V2, PROJECTION, sel, null, null);"
+        errorLine2="                                                                           ~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="717"
+            column="76"/>
+    </issue>
+
+    <issue
+        id="SyntheticAccessor"
+        message="Access to `private` field `mResolver` of class `AddContentApi` requires synthetic accessor"
+        errorLine1="            Cursor notesTableCursor = mResolver.query(Note.CONTENT_URI_V2, PROJECTION, sel, null, null);"
+        errorLine2="                                      ~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="717"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public AddContentApi(Context context) {"
+        errorLine2="                         ~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="67"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNote(long modelId, long deckId, String[] fields, Set&lt;String> tags) {"
+        errorLine2="           ~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="81"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNote(long modelId, long deckId, String[] fields, Set&lt;String> tags) {"
+        errorLine2="                                                   ~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="81"
+            column="52"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNote(long modelId, long deckId, String[] fields, Set&lt;String> tags) {"
+        errorLine2="                                                                    ~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="81"
+            column="69"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public int addNotes(long modelId, long deckId, List&lt;String[]&gt; fieldsList, List&lt;Set&lt;String>> tagsList) {"
+        errorLine2="                                                   ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="133"
+            column="52"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public int addNotes(long modelId, long deckId, List&lt;String[]&gt; fieldsList, List&lt;Set&lt;String>> tagsList) {"
+        errorLine2="                                                                              ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="133"
+            column="79"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public List&lt;NoteInfo> findDuplicateNotes(long mid, String key) {"
+        errorLine2="           ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="161"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public List&lt;NoteInfo> findDuplicateNotes(long mid, String key) {"
+        errorLine2="                                                       ~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="161"
+            column="56"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public SparseArray&lt;List&lt;NoteInfo>> findDuplicateNotes(long mid, List&lt;String> keys) {"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="176"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public SparseArray&lt;List&lt;NoteInfo>> findDuplicateNotes(long mid, List&lt;String> keys) {"
+        errorLine2="                                                                    ~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="176"
+            column="69"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public boolean updateNoteTags(long noteId, Set&lt;String> tags) {"
+        errorLine2="                                               ~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="204"
+            column="48"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public boolean updateNoteFields(long noteId, String[] fields) {"
+        errorLine2="                                                 ~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="215"
+            column="50"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public NoteInfo getNote(long noteId) {"
+        errorLine2="           ~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="224"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Map&lt;String, Map&lt;String, String>> previewNewNote(long mid, String[] flds) {"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="262"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Map&lt;String, Map&lt;String, String>> previewNewNote(long mid, String[] flds) {"
+        errorLine2="                                                                     ~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="262"
+            column="70"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNewBasicModel(String name) {"
+        errorLine2="           ~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="299"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNewBasicModel(String name) {"
+        errorLine2="                                 ~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="299"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNewBasic2Model(String name) {"
+        errorLine2="           ~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="311"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNewBasic2Model(String name) {"
+        errorLine2="                                  ~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="311"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,"
+        errorLine2="           ~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="329"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,"
+        errorLine2="                                  ~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="329"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,"
+        errorLine2="                                               ~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="329"
+            column="48"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,"
+        errorLine2="                                                                ~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="329"
+            column="65"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,"
+        errorLine2="                                                                                ~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="329"
+            column="81"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="                                  String[] afmt, String css, Long did, Integer sortf) {"
+        errorLine2="                                  ~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="330"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="                                  String[] afmt, String css, Long did, Integer sortf) {"
+        errorLine2="                                                 ~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="330"
+            column="50"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="                                  String[] afmt, String css, Long did, Integer sortf) {"
+        errorLine2="                                                             ~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="330"
+            column="62"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="                                  String[] afmt, String css, Long did, Integer sortf) {"
+        errorLine2="                                                                       ~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="330"
+            column="72"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public String[] getFieldList(long modelId) {"
+        errorLine2="           ~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="388"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Map&lt;Long, String> getModelList() {"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="411"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Map&lt;Long, String> getModelList(int minNumFields) {"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="420"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public String getModelName(Long mid) {"
+        errorLine2="           ~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="449"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public String getModelName(Long mid) {"
+        errorLine2="                               ~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="449"
+            column="32"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNewDeck(String deckName) {"
+        errorLine2="           ~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="466"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Long addNewDeck(String deckName) {"
+        errorLine2="                           ~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="466"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public String getSelectedDeckName() {"
+        errorLine2="           ~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="482"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Map&lt;Long, String> getDeckList() {"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="502"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public String getDeckName(Long did) {"
+        errorLine2="           ~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="527"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public String getDeckName(Long did) {"
+        errorLine2="                              ~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="527"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public static String getAnkiDroidPackageName(Context context) {"
+        errorLine2="                  ~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="547"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public static String getAnkiDroidPackageName(Context context) {"
+        errorLine2="                                                 ~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/AddContentApi.java"
+            line="547"
+            column="50"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public NoteInfo(NoteInfo parent) {"
+        errorLine2="                    ~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/NoteInfo.java"
+            line="64"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public String[] getFields() {"
+        errorLine2="           ~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/NoteInfo.java"
+            line="76"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public Set&lt;String> getTags() {"
+        errorLine2="           ~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/NoteInfo.java"
+            line="81"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnknownNullness"
+        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
+        errorLine1="    public String getKey() {"
+        errorLine2="           ~~~~~~">
+        <location
+            file="src/main/java/com/ichi2/anki/api/NoteInfo.java"
+            line="86"
+            column="12"/>
+    </issue>
+
+</issues>

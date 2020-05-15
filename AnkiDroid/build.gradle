@@ -31,10 +31,6 @@ android {
             DdmPreferences.setTimeOut(120000) // apparently if not multidex you do this
         }
     }
-    lintOptions {
-        abortOnError false
-        disable 'TypographyEllipsis'
-    }
     signingConfigs {
         release {
             storeFile file("${homePath}/src/android-keystore")
@@ -103,10 +99,6 @@ android {
             manifest.srcFile 'src/test/AndroidManifest.xml'
         }
     }
-    lintOptions {
-        check 'NewApi'
-        abortOnError true
-    }
     ndkVersion "21.1.6352462"
 }
 
@@ -127,6 +119,7 @@ tasks.withType(JavaCompile) {
 }
 
 apply from: "./jacoco.gradle"
+apply from: "../lint.gradle"
 
 dependencies {
     compileOnly 'org.jetbrains:annotations:16.0.1'
