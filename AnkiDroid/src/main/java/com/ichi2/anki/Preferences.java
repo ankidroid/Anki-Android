@@ -31,8 +31,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -423,21 +421,22 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     String imgPathString = cursor.getString(columnIndex);
                     File sourceFile = new File(imgPathString);
 
+                    // file size in MB
+                    long fileLength = sourceFile.length() / (1024 * 1024);
+
                     String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                     String imageName = "DeckPickerBackground.png";
                     File destFile = new File(currentAnkiDroidDirectory, imageName);
-
-                    try (FileChannel sourceChannel = new FileInputStream(sourceFile).getChannel();
-                         FileChannel destChannel = new FileOutputStream(destFile).getChannel()) {
-                        destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-
-                        File newImage = compressedImage(destFile);
-
-                        if (newImage != null) {
+                    // Image size less than 10 MB copied to AnkiDroid folder
+                    if (fileLength < 10) {
+                        try (FileChannel sourceChannel = new FileInputStream(sourceFile).getChannel();
+                             FileChannel destChannel = new FileOutputStream(destFile).getChannel()) {
+                            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
                             UIUtils.showThemedToast(this, getString(R.string.background_image_applied), false);
-                        } else {
-                            UIUtils.showThemedToast(this, getString(R.string.error_selecting_image), false);
                         }
+                    } else {
+                        backgroundImage.setChecked(false);
+                        UIUtils.showThemedToast(this, getString(R.string.image_max_size_10_mb), false);
                     }
                 } finally {
                     if (cursor != null) {
@@ -452,45 +451,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             UIUtils.showThemedToast(this, getString(R.string.error_selecting_image, e.getLocalizedMessage()), false);
         }
     }
-
-    private File compressedImage(File file) {
-        try {
-            BitmapFactory.Options bitmap = new BitmapFactory.Options();
-            bitmap.inJustDecodeBounds = true;
-            bitmap.inSampleSize = 6;
-
-            FileInputStream inputStream = new FileInputStream(file);
-            BitmapFactory.decodeStream(inputStream, null, bitmap);
-            inputStream.close();
-
-            final int REQUIRED_SIZE=75;
-
-            int scale = 1;
-            while(bitmap.outWidth / scale / 2 >= REQUIRED_SIZE &&
-                    bitmap.outHeight / scale / 2 >= REQUIRED_SIZE) {
-                scale *= 2;
-            }
-
-            BitmapFactory.Options bitmap2 = new BitmapFactory.Options();
-            bitmap2.inSampleSize = scale;
-            inputStream = new FileInputStream(file);
-
-            Bitmap selectedBitmap = BitmapFactory.decodeStream(inputStream, null, bitmap2);
-            inputStream.close();
-
-            file.createNewFile();
-
-            FileOutputStream outputStream = new FileOutputStream(file);
-
-            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100 , outputStream);
-
-            return file;
-        } catch (Exception e) {
-            UIUtils.showThemedToast(this, getString(R.string.error_selecting_image, e.getLocalizedMessage()), false);
-            return null;
-        }
-    }
-
 
     private void addThirdPartyAppsListener(PreferenceScreen screen) {
         //#5864 - some people don't have a browser so we can't use <intent>
