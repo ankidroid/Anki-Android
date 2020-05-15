@@ -200,9 +200,9 @@ print "\nRemoving Crowdin file\n"
 zip.close()
 os.remove(zipname)
 
+print "Checking translations for known classes of error."
+subprocess.check_call("./tools/find-broken-strings-variables.sh", shell=True)
+
 print "Committing updates. Please add any fixes as another commit."
 subprocess.call("git add docs/marketing/localized_description AnkiDroid/src/main/res/values*", shell=True)
 subprocess.call("git commit -m 'Updated strings from Crowdin'", shell=True)
-
-print "Checking with Lint."
-subprocess.call("lint . --config lint.xml --nowarn --exitcode", shell=True)

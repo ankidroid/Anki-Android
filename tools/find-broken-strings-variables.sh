@@ -1,17 +1,22 @@
-#! /bin/sh
+#!/bin/bash
 # Spot malformed string replacement patterns in Android localization files.
 # Hopefully it will prevent this kind of bugs: https://code.google.com/p/ankidroid/issues/detail?id=359
 
-grep -R "%1$ s" res/values*
-grep -R "%1$ d" res/values*
-grep -R "%1" res/values* | grep -v "%1\\$"
+ # shellcheck disable=SC2016
+ EXIT_STATUS=0
 
-grep -RH '%' res/values* | 
+pushd AnkiDroid/src/main || exit 1
+if grep -R "%1$ s" res/values*; then ((EXIT_STATUS + 1)); fi
+if grep -R "%1$ d" res/values*; then ((EXIT_STATUS + 1)); fi
+if grep -R "%1" res/values* | grep -v "%1\\$"; then ((EXIT_STATUS + 1)); fi
+
+if grep -RH '%' res/values* |
  sed -e 's/%/\n%/g' | # Split lines that contain several expressions
  grep '%'           | # Filter out lines that do not contain expressions
- grep -v ' % '      | # Lone % character, not a variable
- grep -v '%<'       | # Same, at the end of the string
- #grep -v '% '       | # Same, at the beginning of the string
+ grep -v ' n% '     | # Lone % character, not a variable
+ grep -v '(n%)'   | # Lone % character, not a variable
+ grep -v 'n%<'      | # Same, at the end of the string
+ grep -v '>n% '     | # Same, at the beginning of the string
  grep -v '%で'      | # Same, no spaces in Japanese
  grep -v '%s'       | # Single string variable
  grep -v '%d'       | # Single decimal variable
@@ -20,9 +25,14 @@ grep -RH '%' res/values* |
  grep -v '%1$.1f'   | # ?
  grep -v '%.1f'     |
  grep -v '%\\n'
+then
+ exit 1
+fi
 
-grep -R '％' res/values*
+if grep -R '％' res/values*; then ((EXIT_STATUS + 1)); fi
 
-grep -R "CDATA " res/values*
+if grep -R "CDATA " res/values*; then ((EXIT_STATUS + 1)); fi
 
 lint --check StringFormatInvalid ./res
+popd || exit 1
+exit $EXIT_STATUS
