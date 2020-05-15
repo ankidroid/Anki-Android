@@ -17,7 +17,10 @@
 
 package com.ichi2.utils;
 
+import org.jetbrains.annotations.Contract;
+
 public class Assert {
+    @Contract("false, _, _ -> fail")
     public static void that(boolean condition, String message, Object... args) {
         if (!condition) {
             String msg = String.format(message, args);
