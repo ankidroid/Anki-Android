@@ -167,6 +167,10 @@ and [here is the plugin for the Zeemote controller](https://www.google.com/url?q
 ### Can I use a hardware controller?
 Basic keyboard shortcuts that exist on Anki Desktop should already work with a bluetooth keyboard. It should be possible to use other controllers by using a third party app to remap the controller buttons to keyboard events. See [here](https://github.com/ankidroid/Anki-Android/issues/3600) and [here](https://github.com/ankidroid/Anki-Android/issues/3021#issuecomment-160243369) for more information.
 
+### How do I remove my DeckPicker background?
+
+Delete `deckPickerBackground.png` in the AnkiDroid folder
+
 ### Error: copyFileToCache() failed (possibly out of storage space)
 
 Older versions of AnkiDroid do not correctly handle long Unicode file names. Try renaming the file to English and trying again. [#6137](https://github.com/ankidroid/Anki-Android/issues/6137)
