@@ -28,6 +28,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -189,6 +190,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         // Give EditText focus and show keyboard
         mEditText.setSelectAllOnFocus(true);
         mEditText.requestFocus();
+        if (dialogId == CUSTOM_STUDY_NEW || dialogId == CUSTOM_STUDY_REV) {
+            mEditText.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
+        }
         // deck id
         final long did = getArguments().getLong("did");
         // Whether or not to jump straight to the reviewer
@@ -205,7 +209,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                     try {
                         n = Integer.parseInt(mEditText.getText().toString());
                     } catch (Exception ignored) {
-                        n = Integer.MAX_VALUE;
+                        // This should never happen because we disable positive button for non-parsable inputs
+                        return;
                     }
 
                     // Set behavior when clicking OK button
@@ -269,10 +274,11 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.length() == 0) {
-                    dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
-                } else {
+                try {
+                    Integer.parseInt(mEditText.getText().toString());
                     dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
+                } catch (Exception ignored) {
+                    dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
                 }
             }
         });
