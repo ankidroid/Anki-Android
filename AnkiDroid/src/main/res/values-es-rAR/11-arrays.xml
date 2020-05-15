@@ -59,6 +59,11 @@
         <item>Detener el aprendizaje</item>
         <item>Enterrar nota</item>
         <item>Suspender nota</item>
+        <item>Cambiar Marca Roja</item>
+        <item>Cambiar Marca Naranja</item>
+        <item>Cambiar Marca Verde</item>
+        <item>Cambiar Marca Azul</item>
+        <item>Quitar Marca</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Suspender tarjeta</item>

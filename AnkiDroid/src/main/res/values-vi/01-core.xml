@@ -62,7 +62,7 @@
         <item quantity="other">còn %d phút</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">%d giờ còn lại</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="other">%d days %d left</item>

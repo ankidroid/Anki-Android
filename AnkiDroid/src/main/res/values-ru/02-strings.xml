@@ -72,9 +72,9 @@
     <string name="webview_crash_oom">Нехватка памяти</string>
     <string name="webview_crash_oom_details">WebView был завершён системой. Это обычно происходит, когда у приложения заканчивается память, часто из-за больших шрифтов или медиафайлов.</string>
     <string name="webview_crash_nonfatal">Ошибка WebView. Причина: %s</string>
-    <string name="webview_crash_fatal">Критическая ошибка: обработчик WebView завершился. Причина: %s</string>
-    <string name="webview_crash_loop_dialog_title">Сбой отображения системного WebView</string>
-    <string name="webview_crash_loop_dialog_content">Системному модулю WebView не удалось отобразить карту \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_fatal">Критическая ошибка: WebView завершился. Причина: %s</string>
+    <string name="webview_crash_loop_dialog_title">Сбой системного WebView</string>
+    <string name="webview_crash_loop_dialog_content">Системному WebView не удалось отрисовать карточку \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Вопрос</item>
@@ -108,9 +108,9 @@
     <string name="cardeditor_title_add_note">Добавить запись</string>
     <string name="cardeditor_title_edit_card">Править запись</string>
     <string name="discard_unsaved_changes">Закрыть и отказаться от изменений?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="note_editor_no_cards_created">Карточки не созданы. Заполните больше полей</string>
+    <string name="note_editor_no_first_field">Первое поле пусто</string>
+    <string name="note_editor_no_cloze_delations">Этот тип записи должен содержать задание с пропусками</string>
     <string name="saving_facts">Запись сохраняется</string>
     <string name="saving_model">Тип записи сохраняется</string>
     <string name="add">Добавить</string>
@@ -136,8 +136,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid приветствует вас</string>
     <string name="fact_adder_intent_title">Карточка AnkiDroid</string>
-    <string name="note_editor_add_note">Добавить заметку</string>
-    <string name="note_editor_copy_note">Копировать заметку</string>
+    <string name="note_editor_add_note">Добавить запись</string>
+    <string name="note_editor_copy_note">Копировать запись</string>
     <string name="card_editor_copy_card">Копировать карточку</string>
     <string name="card_editor_reposition_card">Переместить</string>
     <string name="card_editor_reset_card">Сбросить прогресс</string>
@@ -170,7 +170,7 @@
     <string name="import_message_add_confirm">Добавить \"%s\" в коллекцию? Это может занять много времени</string>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
     <string name="import_error_unhandled_request">Не удается обработать запрос на импорт</string>
-    <string name="import_error_exception">Пакет импортировать не удалось\n\n%s</string>
+    <string name="import_error_exception">Не удалось импортировать пакет\n\n%s</string>
     <string name="import_error_not_apkg_extension">У файла “%s” должно быть расширение .apkg или .colpkg</string>
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
     <string name="import_replacing">Коллекция заменяется&#8230;</string>
@@ -268,10 +268,13 @@
     <string name="export_v2_forbidden">Переключитесь на планировщик 1-й версии перед экспортом колоды с расписанием.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Не удалось загрузить \"%s\".</string>
-    <string name="activity_start_failed">В системе не установлено приложение, которое может выполнить это действие.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Изображения с камеры могут быть большими. Вы можете сжимать и изменять размер изображений в каталоге мультимедиа.]]></string>
-    <string name="no_browser_notification">Браузер не найден, пожалуйста, посетите веб-страницу с компьютера или телефона: </string>
-    <string name="no_outgoing_link_in_cardbrowser">Ссылка на внешнюю страницу в карте не поддерживается.</string>
+    <string name="activity_start_failed">В системе нет приложения, которое может выполнить это действие.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Фотографии могут быть большими. Возможно, вы захотите сжать или изменить размер изображений в папке медиаданных]]></string>
+    <string name="no_browser_notification">Браузер не найден. Посетите сайт с компьютера или телефона: </string>
+    <string name="no_outgoing_link_in_cardbrowser">В карточках не поддерживаются внешние ссылки</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Восстановленные карточки</string>
+    <!-- Deckpicker Background -->
+    <string name="background_image_title">Фон</string>
+    <string name="choose_an_image">Выберите изображение</string>
 </resources>

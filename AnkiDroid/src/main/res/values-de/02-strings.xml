@@ -108,8 +108,8 @@
     <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
     <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
     <string name="discard_unsaved_changes">Schließen und Eingaben verwerfen?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cards_created">Keine Karten erstellt. Bitte füllen Sie weitere Felder aus</string>
+    <string name="note_editor_no_first_field">Das erste Feld ist leer</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="saving_facts">Notiz speichern</string>
     <string name="saving_model">Speichere Notiztyp</string>
@@ -163,9 +163,9 @@
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
     <string name="import_message_add_confirm">»%s« zu Ihrer Sammlung hinzufügen? Das kann lange dauern</string>
     <string name="import_log_no_apkg">Dies ist keine gültige Anki-Paket-Datei</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_unhandled_request">Importanfrage kann nicht verarbeitet werden</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Dateiname »%s« muß auf .apkg oder .colpkg enden</string>
+    <string name="import_error_not_apkg_extension">Dateiname »%s« muss auf .apkg oder .colpkg enden</string>
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
     <string name="import_replacing">Ersetze Sammlung&#8230;</string>
     <string name="import_interrupted">Import unterbrochen</string>
@@ -251,8 +251,11 @@
     <string name="activity_start_failed_load_url">Laden von \'%s\' fehlgeschlagen.</string>
     <string name="activity_start_failed">Das System hat keine App installiert, die diese Aktion ausführen kann.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerabilder können groß sein. Sie können Bilder im Medienverzeichnis komprimieren und verkleinern]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="no_browser_notification">Kein Browser gefunden, besuchen Sie bitte die Webseite per PC oder Mobil: </string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <!-- Deckpicker Background -->
+    <string name="background_image_title">Hintergrund</string>
+    <string name="choose_an_image">Bild auswählen</string>
 </resources>

@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.ichi2.anki"
-        minSdkVersion 15
+        minSdkVersion 16
         //noinspection OldTargetApi
         targetSdkVersion 28
         testApplicationId "com.ichi2.anki.tests"
@@ -30,10 +30,6 @@ android {
             timeOutInMs 20 * 60 * 1000  // 20 minutes
             DdmPreferences.setTimeOut(120000) // apparently if not multidex you do this
         }
-    }
-    lintOptions {
-        abortOnError false
-        disable 'TypographyEllipsis'
     }
     signingConfigs {
         release {
@@ -103,10 +99,6 @@ android {
             manifest.srcFile 'src/test/AndroidManifest.xml'
         }
     }
-    lintOptions {
-        check 'NewApi'
-        abortOnError true
-    }
     ndkVersion "21.1.6352462"
 }
 
@@ -127,31 +119,34 @@ tasks.withType(JavaCompile) {
 }
 
 apply from: "./jacoco.gradle"
+apply from: "../lint.gradle"
 
 dependencies {
-    compileOnly "com.google.auto.service:auto-service-annotations:1.0-rc6"
-    annotationProcessor "com.google.auto.service:auto-service:1.0-rc6"
+    compileOnly 'org.jetbrains:annotations:16.0.1'
+    compileOnly "com.google.auto.service:auto-service-annotations:1.0-rc7"
+    annotationProcessor "com.google.auto.service:auto-service:1.0-rc7"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //noinspection GradleDependency
-    implementation 'androidx.appcompat:appcompat:1.2.0-beta01'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0-rc01'
+    implementation 'androidx.browser:browser:1.2.0'
     implementation 'androidx.exifinterface:exifinterface:1.2.0'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.sqlite:sqlite-framework:2.1.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation 'io.requery:sqlite-android:3.31.0'
-    implementation 'android.arch.persistence:db-framework:1.1.1'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
-    implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
 
     // May need a resolution strategy for support libs to our versions
-    implementation'ch.acra:acra-http:5.2.1'
-    implementation'ch.acra:acra-dialog:5.2.1'
-    implementation'ch.acra:acra-toast:5.2.1'
-    implementation'ch.acra:acra-limiter:5.2.1'
+    implementation'ch.acra:acra-http:5.5.1'
+    implementation'ch.acra:acra-dialog:5.5.1'
+    implementation'ch.acra:acra-toast:5.5.1'
+    implementation'ch.acra:acra-limiter:5.5.1'
 
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     //noinspection GradleDependency

@@ -221,6 +221,7 @@ public class BackupManager {
     public static boolean repairCollection(Collection col) {
         String deckPath = col.getPath();
         File deckFile = new File(deckPath);
+        Timber.i("BackupManager - RepairCollection - Closing Collection");
         col.close();
 
         // repair file

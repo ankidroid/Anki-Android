@@ -21,7 +21,9 @@ import android.content.Intent;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
@@ -49,6 +51,12 @@ public class RobolectricTest {
 
         // Robolectric can't handle our default sqlite implementation of requery, it needs the framework
         DB.setSqliteOpenHelperFactory(new FrameworkSQLiteOpenHelperFactory());
+
+        //Reset static variable for custom tabs failure.
+        CustomTabActivityHelper.resetFailed();
+
+        //See: #6140 - This global ideally shouldn't exist, but it will cause crashes if set.
+        DialogHandler.discardMessage();
     }
 
     @After

@@ -382,7 +382,7 @@ public class Collection {
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
             }
             if (!mServer) {
-                CompatHelper.getCompat().disableDatabaseWriteAheadLogging(mDb.getDatabase());
+                mDb.getDatabase().disableWriteAheadLogging();
             }
             mDb.close();
             mDb = null;
@@ -394,6 +394,7 @@ public class Collection {
 
 
     public void reopen() {
+        Timber.i("Reopening Database");
         if (mDb == null) {
             mDb = new DB(mPath);
             mMedia.connect();
@@ -460,6 +461,7 @@ public class Collection {
         mDecks.beforeUpload();
         modSchemaNoCheck();
         mLs = mScm;
+        Timber.i("Compacting database before full upload");
         // ensure db is compacted before upload
         mDb.execute("vacuum");
         mDb.execute("analyze");

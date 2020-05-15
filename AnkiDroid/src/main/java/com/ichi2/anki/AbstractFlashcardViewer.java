@@ -86,6 +86,7 @@ import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
+import com.ichi2.anki.reviewer.CardMarker.FlagDef;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
@@ -131,6 +132,7 @@ import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
+import static com.ichi2.anki.reviewer.CardMarker.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor {
@@ -2362,7 +2364,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     public boolean executeCommand(@ViewerCommandDef int which) {
-        if (mControlBlocked) {
+        if (getControlBlocked()) {
             return false;
         }
         switch (which) {
@@ -2428,9 +2430,35 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_PLAY_MEDIA:
                 playSounds(true);
                 return true;
+            case COMMAND_TOGGLE_FLAG_RED:
+                toggleFlag(FLAG_RED);
+                return true;
+            case COMMAND_TOGGLE_FLAG_ORANGE:
+                toggleFlag(FLAG_ORANGE);
+                return true;
+            case COMMAND_TOGGLE_FLAG_GREEN:
+                toggleFlag(FLAG_GREEN);
+                return true;
+            case COMMAND_TOGGLE_FLAG_BLUE:
+                toggleFlag(FLAG_BLUE);
+                return true;
+            case COMMAND_UNSET_FLAG:
+                onFlag(mCurrentCard, FLAG_NONE);
+                return true;
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;
+        }
+    }
+
+
+    private void toggleFlag(@FlagDef int flag) {
+        if (mCurrentCard.getUserFlag() == flag) {
+            Timber.i("Toggle flag: unsetting flag");
+            onFlag(mCurrentCard, FLAG_NONE);
+        } else {
+            Timber.i("Toggle flag: Setting flag to %d", flag);
+            onFlag(mCurrentCard, flag);
         }
     }
 
@@ -2698,12 +2726,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected int getFlagToDisplay() {
+    protected @FlagDef int getFlagToDisplay() {
         return mCurrentCard.getUserFlag();
     }
 
 
-    protected void onFlag(Card card, int flag) {
+    protected void onFlag(Card card, @FlagDef int flag) {
         if (card == null) {
             return;
         }
@@ -2829,6 +2857,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mTypeInput = decodeUrl(url.replaceFirst("typeentertext:", ""));
                 // … and show the answer.
                 mFlipCardLayout.performClick();
+                return true;
+            }
+            // card.html reload
+            if (url.startsWith("signal:reload_card_html")) {
+                redrawCard();
                 return true;
             }
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);

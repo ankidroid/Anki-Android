@@ -60,8 +60,7 @@
 %1$d การ์ด ภายใน (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="other">เหลืออีก %d นาที
-เหลืออีก %d นาที</item>
+        <item quantity="other">เหลืออีก %d นาที</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="other">เหลืออีก %d ชั่วโมง %d</item>

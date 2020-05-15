@@ -55,6 +55,7 @@ import java.lang.ref.WeakReference;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 
@@ -337,23 +338,23 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_flag_zero:
                 Timber.i("Reviewer:: No flag");
-                onFlag(mCurrentCard, 0);
+                onFlag(mCurrentCard, FLAG_NONE);
                 break;
             case R.id.action_flag_one:
                 Timber.i("Reviewer:: Flag one");
-                onFlag(mCurrentCard, 1);
+                onFlag(mCurrentCard, FLAG_RED);
                 break;
             case R.id.action_flag_two:
                 Timber.i("Reviewer:: Flag two");
-                onFlag(mCurrentCard, 2);
+                onFlag(mCurrentCard, FLAG_ORANGE);
                 break;
             case R.id.action_flag_three:
                 Timber.i("Reviewer:: Flag three");
-                onFlag(mCurrentCard, 3);
+                onFlag(mCurrentCard, FLAG_GREEN);
                 break;
             case R.id.action_flag_four:
                 Timber.i("Reviewer:: Flag four");
-                onFlag(mCurrentCard, 4);
+                onFlag(mCurrentCard, FLAG_BLUE);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

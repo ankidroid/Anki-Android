@@ -173,4 +173,11 @@
     <!-- Database Errors-->
     <string name="database_locked_title">数据库已锁定</string>
     <string name="database_locked_summary">AnkiDroid 数据库正在被另一个应用程序使用。请关闭另一个应用程序然后重新打开 AnkiDroid。</string>
+    <!-- Deck Picker Background-->
+    <string name="background_image_applied">已应用背景图片</string>
+    <string name="background_image_removed">已移除背景图片</string>
+    <string name="no_image_selected">没有选定的图片</string>
+    <string name="error_selecting_image">选择图片时出错。请查看手册。%s</string>
+    <string name="error_deleting_image">删除图片时出错</string>
+    <string name="failed_to_apply_background_image">未能应用背景图片 %s</string>
 </resources>

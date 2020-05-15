@@ -29,11 +29,6 @@ public class HttpTest {
     @Test
     public void testLogin() {
 
-        // The component under test is a BaseAsyncTask, which has problematic threading below targetSdkVersion API16
-        if (CompatHelper.getSdkVersion() < Build.VERSION_CODES.JELLY_BEAN) {
-            return;
-        }
-
         String username = "AnkiDroidInstrumentedTestUser";
         String password = "AnkiDroidInstrumentedTestInvalidPass";
         Connection.Payload invalidPayload = new Connection.Payload(new Object[]{username, password, new HostNum(null)});

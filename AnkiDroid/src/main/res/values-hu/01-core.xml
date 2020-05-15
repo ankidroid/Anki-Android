@@ -64,8 +64,8 @@
         <item quantity="other">%d perc van hátra</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d óra %d maradt</item>
+        <item quantity="other">%d óra maradt</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="one">%d day %d left</item>

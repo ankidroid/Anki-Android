@@ -2672,6 +2672,7 @@ public class SchedV2 extends AbstractSched {
     /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
     @Override
     public int[] recalculateCounts() {
+        _updateLrnCutoff(true);
         _resetLrnCount();
         _resetNewCount();
         _resetRevCount();

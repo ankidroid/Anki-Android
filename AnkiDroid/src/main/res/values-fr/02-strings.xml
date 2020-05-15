@@ -108,9 +108,9 @@
     <string name="cardeditor_title_add_note">Ajouter une note</string>
     <string name="cardeditor_title_edit_card">Modifier la note</string>
     <string name="discard_unsaved_changes">Fermer et perdre la saisie en cours ?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="note_editor_no_cards_created">Aucune carte créée. Veuillez remplir plus de champs</string>
+    <string name="note_editor_no_first_field">Le premier champ est vide</string>
+    <string name="note_editor_no_cloze_delations">Ce type de note doit contenir des textes à trous</string>
     <string name="saving_facts">Enregistrer la note</string>
     <string name="saving_model">Enregistrement du type de note</string>
     <string name="add">Ajouter</string>
@@ -165,7 +165,7 @@
     <string name="import_log_no_apkg">Ceci n\'est pas un fichier Anki valide</string>
     <string name="import_error_unhandled_request">Incapable de traiter cette requête d\'import</string>
     <string name="import_error_exception">Échec de l\'import du paquet\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Le nom de fichier “%s” n\'a pas d\'extension .apkg ou .colpkg</string>
+    <string name="import_error_not_apkg_extension">Le nom de fichier « %s » n\'a pas d\'extension .apkg ou .colpkg</string>
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
     <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
     <string name="import_interrupted">Import interrompu</string>
@@ -200,7 +200,7 @@
     <string name="sched_end">(fin)</string>
     <string name="sched_unbury_action">Pour les voir maintenant appuyez sur « Déterrer » dans le menu</string>
     <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
-    <string name="tag_editor_add_feedback">Appuyez sur «%2$s» pour confirmer l\'addition de «%1$s»</string>
+    <string name="tag_editor_add_feedback">Appuyez sur « %2$s » pour confirmer l\'addition de « %1$s »</string>
     <string name="tag_editor_add_feedback_existing">Étiquette existante «%1$s» sélectionnée</string>
     <string name="lookup_hint">Après avoir copié le texte, appuyez n’importe où sur la carte pour afficher l’icône de recherche</string>
     <!-- Time spans -->
@@ -255,4 +255,7 @@
     <string name="no_outgoing_link_in_cardbrowser">Le lien vers les pages externes n\'est pas autorisé dans les cartes.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Cartes récupérées</string>
+    <!-- Deckpicker Background -->
+    <string name="background_image_title">Arrière-plan</string>
+    <string name="choose_an_image">Choisir une image</string>
 </resources>

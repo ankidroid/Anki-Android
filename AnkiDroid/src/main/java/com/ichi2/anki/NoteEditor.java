@@ -692,6 +692,10 @@ public class NoteEditor extends AnkiActivity {
 
 
     private boolean hasUnsavedChanges() {
+        if (!collectionHasLoaded()) {
+            return false;
+        }
+
         // changed note type?
         if (!mAddNote) {
             final JSONObject newModel = getCurrentlySelectedModel();
@@ -711,6 +715,12 @@ public class NoteEditor extends AnkiActivity {
         // changed tags?
         return mTagsEdited;
     }
+
+
+    private boolean collectionHasLoaded() {
+        return mAllModelIds != null;
+    }
+
 
     @VisibleForTesting
     void saveNote() {
@@ -998,15 +1008,14 @@ public class NoteEditor extends AnkiActivity {
         }
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mSelectedTags);
-        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags,
-                tags);
-        dialog.setTagsDialogListener((selectedTags, option) -> {
+        TagsDialog.TagsDialogListener tagsDialogListener = (selectedTags, option) -> {
             if (!mSelectedTags.equals(selectedTags)) {
                 mTagsEdited = true;
             }
             mSelectedTags = selectedTags;
             updateTags();
-        });
+        };
+        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags, tags, tagsDialogListener);
         showDialogFragment(dialog);
     }
 

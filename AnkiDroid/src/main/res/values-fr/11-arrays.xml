@@ -59,6 +59,11 @@
         <item>Interrompre l’apprentissage</item>
         <item>Enterrer la note</item>
         <item>Suspendre la note</item>
+        <item>Activer/désactiver le marqueur rouge</item>
+        <item>Activer/désactiver le marqueur orange</item>
+        <item>Activer/désactiver le marqueur vert</item>
+        <item>Activer/désactiver le marqueur bleu</item>
+        <item>Retirer le marqueur</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Suspendre la carte</item>

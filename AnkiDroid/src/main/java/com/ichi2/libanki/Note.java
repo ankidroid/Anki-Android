@@ -197,7 +197,11 @@ public class Note implements Cloneable {
 
 
     private int _fieldOrd(String key) {
-        return mFMap.get(key).first;
+        Pair<Integer, JSONObject> fieldPair = mFMap.get(key);
+        if (fieldPair == null) {
+            throw new IllegalArgumentException(String.format("No field named '%s' found", key));
+        }
+        return fieldPair.first;
     }
 
 

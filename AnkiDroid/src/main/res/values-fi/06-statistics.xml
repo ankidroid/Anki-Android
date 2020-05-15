@@ -86,10 +86,10 @@
     <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
     <string name="stats_overview_average_interval">"Average interval: "</string>
     <string name="stats_overview_longest_interval">"Longest interval: "</string>
-    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
-    <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; months</string>
-    <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; days</string>
-    <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hours</string>
+    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; vuotta</string>
+    <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; kuukautta</string>
+    <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; päivää</string>
+    <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; tuntia</string>
     <string name="deck_summary_all_decks">Kaikki pakat</string>
     <string name="stats_select_time_scale">Valitse aikaskaala</string>
     <string-array name="due_x_axis_title">
@@ -98,11 +98,11 @@
         <item>Kuukaudet</item>
     </string-array>
     <string name="stats_today">Tänään</string>
-    <string name="stats_overview">Overview</string>
+    <string name="stats_overview">Yleiskatsaus</string>
     <string name="stats_forecast">Ennuste</string>
     <string name="stats_review_count">Läpikäyntimäärä</string>
     <string name="stats_review_time">Läpikäyntiaika</string>
-    <string name="stats_added">Added</string>
+    <string name="stats_added">Lisätty</string>
     <string name="stats_review_intervals">Intervallit</string>
     <string name="stats_breakdown">Tunneittain</string>
     <string name="stats_weekly_breakdown">Viikottain</string>

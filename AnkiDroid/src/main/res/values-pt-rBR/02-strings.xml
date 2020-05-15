@@ -108,9 +108,9 @@
     <string name="cardeditor_title_add_note">Adicionar Nota</string>
     <string name="cardeditor_title_edit_card">Editar nota</string>
     <string name="discard_unsaved_changes">Fechar e perder a entrada atual?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="note_editor_no_cards_created">Nenhum cartão criado. Por favor, preencha mais campos</string>
+    <string name="note_editor_no_first_field">O primeiro campo está vazio</string>
+    <string name="note_editor_no_cloze_delations">Este tipo de nota deve conter uma omissão de lacuna</string>
     <string name="saving_facts">Salvando nota</string>
     <string name="saving_model">Saving note type</string>
     <string name="add">Adicionar</string>
@@ -255,4 +255,7 @@
     <string name="no_outgoing_link_in_cardbrowser">Link de página externa não é suportado no cartão.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Cartões recuperados</string>
+    <!-- Deckpicker Background -->
+    <string name="background_image_title">Background</string>
+    <string name="choose_an_image">Choose an Image</string>
 </resources>

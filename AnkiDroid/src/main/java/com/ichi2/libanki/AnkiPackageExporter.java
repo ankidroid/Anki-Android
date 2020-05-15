@@ -17,12 +17,12 @@
 package com.ichi2.libanki;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.compat.CompatHelper;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -330,6 +330,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
     @Override
     public void exportInto(String path, Context context) throws IOException, JSONException, ImportExportException {
         // sched info+v2 scheduler not compatible w/ older clients
+        Timber.i("Starting export into %s", path);
         _v2sched = mCol.schedVer() != 1 && mIncludeSched;
 
         // open a zip file
@@ -414,8 +415,8 @@ public final class AnkiPackageExporter extends AnkiExporter {
         prepareMedia();
     	JSONObject media = _exportMedia(z, mMediaFiles, mCol.getMedia().dir());
         // tidy up intermediate files
-        CompatHelper.getCompat().deleteDatabase(new File(colfile));
-        CompatHelper.getCompat().deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));
+        SQLiteDatabase.deleteDatabase(new File(colfile));
+        SQLiteDatabase.deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));
         String tempPath = path.replace(".apkg", ".media");
         File file = new File(tempPath);
         if (file.exists()) {
@@ -443,7 +444,9 @@ public final class AnkiPackageExporter extends AnkiExporter {
         f.delete();
         Collection c = Storage.Collection(context, path);
         Note n = c.newNote();
-        n.setItem("Front", context.getString(R.string.export_v2_dummy_note));
+        //The created dummy collection only contains the StdModels.
+        //The field names for those are localised during creation, so we need to consider that when creating dummy note
+        n.setItem(context.getString(R.string.front_field_name), context.getString(R.string.export_v2_dummy_note));
         c.addNote(n);
         c.save();
         c.close();

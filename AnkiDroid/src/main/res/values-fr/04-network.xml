@@ -57,7 +57,7 @@
     <string name="log_in">Se connecter</string>
     <string name="sign_up_description">Vous n\'avez pas de compte AnkiWeb ? C\'est gratuit !</string>
     <string name="sign_up_not_affiliated">Remarque : AnkiWeb n’est pas affilié à AnkiDroid</string>
-    <string name="sign_up">Inscrivez-vous</string>
+    <string name="sign_up">S\'inscrire</string>
     <string name="logged_as">Connecté en tant que</string>
     <string name="log_out">Se déconnecter</string>
     <string name="alert_logging_message">Connexion, patientez s’il vous plaît &#8230;</string>

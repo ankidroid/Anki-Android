@@ -39,7 +39,7 @@
 -->
 <resources>
     <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
+    <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Avaa laatikosto</string>
     <string name="drawer_close">Sulje laatikosto</string>
@@ -92,9 +92,9 @@
         <item>Kertausväli</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Changed</item>
-        <item>Created</item>
-        <item>Edited</item>
+        <item>Muutettu</item>
+        <item>Luotu</item>
+        <item>Muokattu</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Lisää tämän päivän uusien korttien rajoitusta</string>
@@ -119,7 +119,7 @@
     <string name="select">Valitse</string>
     <string name="saving_changes">Tallennetaan muutoksia&#8230;</string>
     <string name="reordering_cards">Uudelleenjärjestetään kortteja...</string>
-    <string name="field_remapping">%1$s (\"%2$s\":sta)</string>
+    <string name="field_remapping">%1$s (”%2$s”:sta)</string>
     <string name="confirm_map_cards_to_nothing">Kortit, joita ei ole liitetty mihinkään, poistetaan. Jos muistiinpanoon ei liity jäljelle jääviä kortteja, se katoaa. Oletko varma, että haluat jatkaa?</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d korttia opiskeltu ajassa %2$s</item>
@@ -151,7 +151,7 @@
     <string name="check_media">Tarkista media</string>
     <string name="empty_cards">Tyhjät kortit</string>
     <string name="check_db_message">Tarkistetaan tietokantaa&#8230;</string>
-    <string name="empty_card_warning">Tämä kortti on tyhjä. Käytä \"Tyhjät kortit\" vaihtoehtoa pakka-luettelon -valikosta.</string>
+    <string name="empty_card_warning">Tämä kortti on tyhjä. Käytä ”Tyhjät kortit” vaihtoehtoa pakka-luettelon -valikosta.</string>
     <string name="unknown_type_field_warning">Kirjoita vastaus: tuntematon kenttä %s</string>
     <string name="delete_deck">Poistetaan pakkaa&#8230;</string>
     <string name="show_hint">Näytä %s</string>
@@ -161,18 +161,18 @@
     <string name="import_select_title">Valitse tuotava tiedosto</string>
     <string name="import_message_add">Lisää</string>
     <string name="import_message_replace_confirm">Poistetaan nykyinen kokoelma ja korvataan se tiedoston %s tiedoilla. Haluatko varmasti jatkaa?</string>
-    <string name="import_message_add_confirm">Lisää \"%s\" kokoelmaan? Se voi kestää pitkään</string>
+    <string name="import_message_add_confirm">Lisää ”%s” kokoelmaan? Se voi kestää pitkään</string>
     <string name="import_log_no_apkg">Tämä ei ole salittu Anki-tiedosto</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Tiedostolla \"%s\" ei ole .apkg tai .colpkg päätettä</string>
+    <string name="import_error_not_apkg_extension">Tiedostolla ”%s” ei ole .apkg tai .colpkg päätettä</string>
     <string name="import_error_content_provider">Valittua tiedostoa ei voitu tuoda automaattisesti AnkiDroidiin. Katso käyttöohjeesta, kuinka tuoda manuaalisesti anki-tiedostoja: \n%s</string>
     <string name="import_replacing">Korvataan kokoelmaa&#8230;</string>
     <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">Myös ajoitukset</string>
     <string name="export_include_media">Myös media</string>
     <string name="confirm_apkg_export">Tuo kokoelma Anki-tiedostona?</string>
-    <string name="confirm_apkg_export_deck">Tallenna \"%s\" apkg-tiedostona?</string>
+    <string name="confirm_apkg_export_deck">Tallenna ”%s” apkg-tiedostona?</string>
     <string name="export_in_progress">Tuodaan Anki-tiedostoa...</string>
     <string name="export_successful_title">Lähetä Anki-tiedosto?</string>
     <string name="export_send_button">Lähetä</string>
@@ -180,7 +180,7 @@
     <string name="export_send_no_handlers">Sovellusta apkg:n käsittelyyn ei ole olemassa. Tallennetaan...</string>
     <string name="export_save_apkg_successful">Anki-tiedosto tallennettu.</string>
     <string name="export_save_apkg_unsuccessful">Anki-tiedoston tallennus epäonnistui.</string>
-    <string name="export_successful">Tiedosto \"%s\" tuotiin. Haluatko lähettää sen toisella sovelluksella?</string>
+    <string name="export_successful">Tiedosto ”%s” tuotiin. Haluatko lähettää sen toisella sovelluksella?</string>
     <string name="export_email_subject">AnkiDroid toi kortit: %s</string>
     <string name="export_email_text"><![CDATA[        Hei!
         <br/><br/>
@@ -200,8 +200,8 @@
     <string name="sched_end">(loppu)</string>
     <string name="sched_unbury_action">Nähdäksesi ne nyt, klikkaa alla olevaa Poista piilotus -painetta</string>
     <string name="sched_has_buried">Liittyviä tai piilotettuja kortteja on viivästetty myöhempään istuntoon.</string>
-    <string name="tag_editor_add_feedback">Paina \"%2$s\" vahvistaaksesi \"%1$s\":n lisääminen</string>
-    <string name="tag_editor_add_feedback_existing">Olemassa oleva tunniste \"%1$s\" valittu</string>
+    <string name="tag_editor_add_feedback">Paina ”%2$s” vahvistaaksesi ”%1$s”:n lisääminen</string>
+    <string name="tag_editor_add_feedback_existing">Olemassa oleva tunniste ”%1$s” valittu</string>
     <string name="lookup_hint">Kun olet kopioinut tekstin, napauta korttia nähdäksesi hakuikonin</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
@@ -255,4 +255,7 @@
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <!-- Deckpicker Background -->
+    <string name="background_image_title">Background</string>
+    <string name="choose_an_image">Valitse kuva</string>
 </resources>

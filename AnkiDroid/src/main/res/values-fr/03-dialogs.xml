@@ -41,7 +41,7 @@
     <string name="check_db_title">Vérifier la base de données ?</string>
     <string name="check_db_warning">Cela peut prendre du temps</string>
     <string name="check_db_acknowledge">Base de données vérifiée</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">Base de données vérifiée et optimisée.\nRéduite de %d Mo.</string>
     <string name="contextmenu_deckpicker_delete_deck">Supprimer le jeu de cartes</string>
     <string name="delete_deck_default_deck">Le parquet par défaut ne peut pas être supprimé.</string>
     <string name="delete_deck_title">Supprimer le paquet ?</string>
@@ -94,7 +94,7 @@
     <string name="repair_deck_dialog">Voulez-vous vraiment essayer de réparer la base de données ?\n\nAvant de commencer, une copie sera créée dans le sous-dossier « %s ».</string>
     <string name="intent_add_saved_information">Données sauvegardées</string>
     <string name="intent_add_clear_all">Effacer tout</string>
-    <string name="intent_aedict_empty">La catégorie \'default\' est vide</string>
+    <string name="intent_aedict_empty">La catégorie « default » est vide</string>
     <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie « default »</string>
     <string name="custom_study_new_total_new">Nouvelles cartes dans le paquet: %d</string>
     <string name="custom_study_rev_total_rev">Révisions dues dans le paquet: %d</string>
@@ -168,15 +168,22 @@
     <string name="integrity_check_continue_anyway">Continuer quand même</string>
     <string name="integrity_check_insufficient_space">La vérification de la base de données exige beaucoup d’espace de stockage temporaire. \n\n Il est fortement recommandé d’avoir au moins %s d’espace libre sur votre appareil avant de continuer.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nVous avez actuellement %s libres.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d cartes avec des paquets incorrects ont été récupérées. Veuillez consulter le manuel pour plus d\'informations.</string>
     <string name="video_creation_error">Impossible de lire la vidéo.</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Impossible de changer de paquet</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Erreur lors de la lecture des données de la carte.</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <string name="deck_options_corrupt">Impossible de traiter les options du paquet : %s</string>
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <string name="database_locked_title">Base de données verrouillée</string>
+    <string name="database_locked_summary">La base de données AnkiDroid est utilisée par une autre application. Veuillez fermer l\'autre application puis rouvrir AnkiDroid.</string>
+    <!-- Deck Picker Background-->
+    <string name="background_image_applied">Image d\'arrière-plan appliquée</string>
+    <string name="background_image_removed">Image d\'arrière-plan retirée</string>
+    <string name="no_image_selected">Aucune image sélectionnée</string>
+    <string name="error_selecting_image">Erreur lors de la sélection de l\'image. Veuillez consulter le manuel. %s</string>
+    <string name="error_deleting_image">Erreur lors de la suppression de l\'image</string>
+    <string name="failed_to_apply_background_image">Impossible d\'appliquer l\'image d\'arrière-plan %s</string>
 </resources>
