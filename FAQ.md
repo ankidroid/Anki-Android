@@ -222,7 +222,7 @@ While not officially supported, another possible solution may be to organize you
 ### Why doesn't my sound or image work on AnkiDroid
 The most likely reason is that the media files are not in the main AnkiDroid `collection.media` folder. If you are using sync then please make sure that the "fetch media on sync" preference is enabled in all of your Anki clients, and if not then re-sync from all your clients.
 
-If the files are loaded from the internet, try loading them via `https` URLs, rather than `http`.
+If the files are loaded from the internet over `http`, load them via `https` URLs. If HTTPS is not available, you can automatically convert these links to local files via an Anki Desktop Addon: https://ankiweb.net/shared/info/1293255374
 
 If that doesn't work then please check if the media works correctly on both AnkiWeb and Anki Desktop. If you synced correctly with media sync enabled, and the media does not play on either AnkiWeb or Anki Desktop, then there is probably a problem with the cards themselves. Please read the Anki Desktop manual, or ask on the [Anki Desktop support site](http://ankisrs.net/docs/help.html) for help resolving this problem.
 
