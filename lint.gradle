@@ -1,34 +1,23 @@
-android {
-    lintOptions {
-        // move the baseline by deleting api/baseline.xml and AnkiDroid/baseline.xml then ./gradlew lintDebug
-        baseline file('./lint-baseline.xml')
-        // if true, stop the gradle build if errors are found
-        abortOnError true
-        // if true, only report errors
-        //ignoreWarnings true
-        // if true, check all issues, including those that are off by default
-        checkAllWarnings true
-        // if true, treat all warnings as errors
-        warningsAsErrors true
-        // turn off checking the given issue id's
-        //disable 'TypographyFractions','TypographyQuotes'
-        // turn on the given issue id's
-        enable 'RtlHardcoded','RtlCompat', 'RtlEnabled', 'WrongThreadInterprocedural'
-        // check *only* the given issue id's
-        //check 'NewApi', 'InlinedApi'
-        // if true, don't include source code lines in the error output
-        //noLines true
-        // if true, show all locations for an error, do not truncate lists, etc.
-        showAll true
-        // if true, generate a text report of issues (false by default)
-        textReport true
-        // location to write the output; can be a file or 'stdout'
-        textOutput 'stdout'
-        // if true, generate an HTML report (with issue explanations, sourcecode, etc)
-        htmlReport true
-        // Set the severity of the given issues to error
-        error 'NewApi', 'InlinedApi', 'Wakelock', 'TextViewEdits'
-        // Set the severity of the given issues to warning
-        //warning 'ResourceAsColor', 'RtlHardcoded','RtlCompat', 'RtlEnabled'
+tasks.whenTaskAdded { task ->
+    if (task.name.startsWith("lint")) {
+        if (task.name.toLowerCase().endsWith("release")) {
+            task.doFirst {
+                android.lintOptions.abortOnError = true
+                android.lintOptions.warningsAsErrors true
+                android.lintOptions.check 'NewApi', 'InlinedApi'
+            }
+        } else {
+            task.doFirst {
+                // move the baseline by deleting api/baseline.xml and AnkiDroid/baseline.xml then ./gradlew lintDebug
+                android.lintOptions.baseline file('./lint-baseline.xml')
+                android.lintOptions.abortOnError true
+                android.lintOptions.checkAllWarnings true
+                android.lintOptions.warningsAsErrors true
+                android.lintOptions.showAll true
+                android.lintOptions.textReport true
+                android.lintOptions.textOutput 'stdout'
+                android.lintOptions.htmlReport true
+            }
+        }
     }
 }

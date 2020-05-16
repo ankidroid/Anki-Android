@@ -5,7 +5,7 @@
         id="ObsoleteLintCustomCheck"
         message="Lint found an issue registry (`androidx.appcompat.AppCompatIssueRegistry`) which requires a newer API level. That means that the custom lint checks are intended for a newer lint version; please upgrade">
         <location
-            file="../../../../.gradle/caches/transforms-2/files-2.1/77f5580fbfc4c470a544230bafa54842/appcompat-1.2.0-beta01/jars/lint.jar"/>
+            file="../../../../.gradle/caches/transforms-2/files-2.1/78f743f337d429e40fb508a05b8cd048/appcompat-1.2.0-rc01/jars/lint.jar"/>
     </issue>
 
     <issue
@@ -653,28 +653,6 @@
     </issue>
 
     <issue
-        id="GradleDependency"
-        message="A newer version of androidx.appcompat:appcompat than 1.2.0-beta01 is available: 1.2.0-rc01"
-        errorLine1="    implementation &apos;androidx.appcompat:appcompat:1.2.0-beta01&apos;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="build.gradle"
-            line="133"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="GradleDependency"
-        message="A newer version of com.afollestad.material-dialogs:core than 0.9.6.0 is available: 3.3.0"
-        errorLine1="    implementation &apos;com.afollestad.material-dialogs:core:0.9.6.0&apos;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="build.gradle"
-            line="141"
-            column="5"/>
-    </issue>
-
-    <issue
         id="NewerVersionAvailable"
         message="A newer version of org.jetbrains:annotations than 16.0.1 is available: 19.0.0"
         errorLine1="    compileOnly &apos;org.jetbrains:annotations:16.0.1&apos;"
@@ -682,28 +660,6 @@
         <location
             file="build.gradle"
             line="125"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="NewerVersionAvailable"
-        message="A newer version of com.google.auto.service:auto-service-annotations than 1.0-rc6 is available: 1.0-rc7"
-        errorLine1="    compileOnly &quot;com.google.auto.service:auto-service-annotations:1.0-rc6&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="build.gradle"
-            line="126"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="NewerVersionAvailable"
-        message="A newer version of com.google.auto.service:auto-service than 1.0-rc6 is available: 1.0-rc7"
-        errorLine1="    annotationProcessor &quot;com.google.auto.service:auto-service:1.0-rc6&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="build.gradle"
-            line="127"
             column="5"/>
     </issue>
 
@@ -63109,9 +63065,9 @@
         <location
             file="src/main/res/drawable-xhdpi/ic_remove_circle_grey600_24dp.png"/>
         <location
-            file="src/main/res/drawable-mdpi/ic_remove_circle_grey600_24dp.png"/>
-        <location
             file="src/main/res/drawable-xxhdpi/ic_remove_circle_grey600_24dp.png"/>
+        <location
+            file="src/main/res/drawable-mdpi/ic_remove_circle_grey600_24dp.png"/>
         <location
             file="src/main/res/drawable-hdpi/ic_remove_circle_grey600_24dp.png"/>
     </issue>
