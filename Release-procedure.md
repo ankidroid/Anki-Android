@@ -7,25 +7,26 @@ We use a simple branching model where "master" (the default branch) contains the
 
 When we move into the "beta" phase of the development cycle, we implement a feature freeze, and a temporary branch "release-N.n" (N.n being the version code) is created which is only for important bug fixes. During this period, important bug fixes are merged by the development team into "release-N.n" (see below). 
 
-If an urgent bug is discovered shortly after a major release, a special "hotfix-N.n" branch will be created from the tag from the [latest stable release code found here](https://github.com/ankidroid/Anki-Android/releases/latest).
+If an urgent bug is discovered shortly after a major release, commits will be added to that "release-N.n" branch and releases will be made from it.
 
 # Alpha or beta release procedure
   * Always use this repository: https://github.com/ankidroid/Anki-Android
-  * Checkout the branch to release ("master" for an alpha, or for instance "release-2.9" or maybe "hotfix-2.9.4" for a beta)
+  * Checkout the branch to release ("master" for an alpha, or for instance "release-2.9" for a beta)
   * In AndroidManifest.xml change android:versionName from 2.9beta11 to 2.9beta12 (for instance), and change android:versionCode accordingly.
-    * As a special case, when creating a new hotfix branch (e.g., hotfix-2.9.4, you will start by calling your first beta hotfix-2.9.4beta0 with release version code ending 00 - the release script will bump those 0's to 1's for the first beta of the hotfix)
+    * As a special case, when creating a new patch release (e.g., v2.9.4, you will start by calling your first beta 2.9.4beta0 with release version code ending 00 - the release script will bump those 0's to 1's for the first beta of the new patch release)
   * The tools/release.sh script will bump the versions, compile and upload to Google Play + Github and tag and push
     * The release script makes use of the [github-release](https://github.com/aktau/github-release) tool and gawk
-    * As a special case, when creating a new release or hotfix branch, will have to set the branch (`git push --set-upstream origin hotfix-2.9.4` for example) and then run `git push --tags` to get the new branch contents correct in github
+    * As a special case, when creating a new release branch, will have to set the branch (`git push --set-upstream origin release-2.11` for example) and then run `git push --tags` to get the new branch contents correct in github
 
 
 
 # Stable release procedure
 
 ## Build
-  * Update the changelog and/or the manual (in the docs repository) with notable changes
+  * Update the changelog in the ankidroiddocs repository and/or the manual with notable changes - the tools/release.sh script will help you by enforcing this
   * Always use this repository: https://github.com/ankidroid/Anki-Android
-  * Switch to the branch to release, for instance "release-2.10" or "hotfix-2.9.4"
+  * Consider syncing translations from crowdin if they are still backwards compatible (no strings were deleted) - do this on master and `cherry-pick -x commit-hash` to the release branch
+  * Switch to the branch to release, for instance "release-2.10"
   * Run `./tools/release.sh public` to compile/upload/tag and push to github and Play Console
     * The release script makes use of the [github-release](https://github.com/aktau/github-release) tool and gawk
   * After the release script is finished, the stable build will be in the beta channel. Manually promote it to production using the web interface of the Play Console
@@ -40,19 +41,12 @@ Title and Description for each language:
 
 Send an email to the mailing list announcing the new version, link to APK, new features, localizations, and thanking the developers, translators, testers.
 
-## Chrome Web Store
-
-The following instructions are left for posterity, but after the 2.9alpha commit that converted AnkiDroid to AndroidX, Chrome Web Store uploads no longer seem possible.
-
-This makes the new build available to Chromebook users that do not have access to the Play Store. You must be a member of the google group "AnkiDroid Web Store Publishers".
-* Download the release (e.g., "AnkiDroid-2.8.4.apk") from the [Releases page](https://github.com/ankidroid/Anki-Android/releases)
-* Grab [the APK to CRX conversion script](https://storage.cloud.google.com/arc-sdk/apk_to_crx-54.5021.629.0.zip)
-* Use [the release script in the chromeos tools directory](https://github.com/ankidroid/Anki-Android/blob/master/tools/chromeos/release.sh) to transform the APK to the CRX file needed for ChromeOS
-  * ` ./release.sh <FULL PATH TO THE APK-TO-CRX SCRIPT>/apk_to_crx.py <FULL PATH TO THE APK>/AnkiDroid-2.8.4.apk`
-* Go to the [Chrome Web Store developer dashboard](https://chrome.google.com/webstore/developer/dashboard)
-* Upload the new crx file and publish it, with any notes that seem necessary
-
 ## Merging new changes from master into a release or hotfix branch
+
+Check out the release branch and using git on the command line `cherry-pick -x commit-hash` the commits from master that you want
+
+The following instructions have been left for posterity, but are not currently used:
+
 The following procedure can be used to go through all of the new commits in the master branch, and choose one by one whether or not to merge them into a release branch. Commit messages including the tag `@branch-specific` (such as version bump commits generated by the release script) can be skipped automatically.
 
 ```bash
