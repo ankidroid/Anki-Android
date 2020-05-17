@@ -107,7 +107,7 @@ public class CardAppearance {
 
         if (mNightMode) {
             // Enable the night-mode class
-            cardClass.append(" night_mode");
+            cardClass.append(" night_mode nightMode");
 
             // Emit the dark_mode selector to allow dark theme overrides
             if (currentTheme == Themes.THEME_NIGHT_DARK) {
