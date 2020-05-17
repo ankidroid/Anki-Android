@@ -42,6 +42,7 @@ import android.os.SystemClock;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
@@ -2612,6 +2613,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 delayedHide(INITIAL_HIDE_DELAY);
                 return true;
             }
+            return executeTouchCommand(e);
+        }
+
+
+        private boolean executeTouchCommand(@NonNull MotionEvent e) {
             if (mGesturesEnabled && !mIsSelecting) {
                 int height = mTouchLayer.getHeight();
                 int width = mTouchLayer.getWidth();
