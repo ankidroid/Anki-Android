@@ -116,6 +116,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     private static final int RESULT_LOAD_IMG = 111;
     private CheckBoxPreference backgroundImage;
+    private static long fileLength;
     // ----------------------------------------------------------------------------
     // Overridden methods
     // ----------------------------------------------------------------------------
@@ -422,7 +423,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     File sourceFile = new File(imgPathString);
 
                     // file size in MB
-                    long fileLength = sourceFile.length() / (1024 * 1024);
+                    fileLength = sourceFile.length() / (1024 * 1024);
 
                     String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                     String imageName = "DeckPickerBackground.png";
@@ -436,7 +437,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         }
                     } else {
                         backgroundImage.setChecked(false);
-                        UIUtils.showThemedToast(this, getString(R.string.image_max_size_10_mb), false);
+                        UIUtils.showThemedToast(this, getString(R.string.image_max_size_allowed, 10), false);
                     }
                 } finally {
                     if (cursor != null) {
