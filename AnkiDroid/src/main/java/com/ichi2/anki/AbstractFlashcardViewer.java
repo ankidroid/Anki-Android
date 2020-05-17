@@ -70,6 +70,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
+import android.webkit.WebView.HitTestResult;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -121,6 +122,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -279,6 +281,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * Swipe Detection
      */
     private GestureDetectorCompat gestureDetector;
+    private MyGestureDetector mGestureDetectorImpl;
+    private boolean mLinkOverridesTouchGesture;
 
     private boolean mIsXScrolling = false;
     private boolean mIsYScrolling = false;
@@ -436,6 +440,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                         break;
                 }
             }
+
+            if (!mGestureDetectorImpl.eventCanBeSentToWebView(event)) {
+                return false;
+            }
             //Gesture listener is added before mCard is set
             processCardAction(card -> {
                 if (card == null) return;
@@ -446,7 +454,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     };
 
     @SuppressLint("CheckResult")
-    private void processCardAction(Consumer<WebView> cardConsumer) {
+    //This is intentionally package-private as it removes the need for synthetic accessors
+    void processCardAction(Consumer<WebView> cardConsumer) {
         processCardFunction(card -> {
             cardConsumer.consume(card);
             return true;
@@ -1343,7 +1352,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mCardFrame.removeAllViews();
 
         // Initialize swipe
-        gestureDetector = new GestureDetectorCompat(this, new MyGestureDetector());
+        mGestureDetectorImpl = mLinkOverridesTouchGesture ? new LinkDetectingGestureDetector() : new MyGestureDetector();
+        gestureDetector = new GestureDetectorCompat(this, mGestureDetectorImpl);
 
         mEase1 = (TextView) findViewById(R.id.ease1);
         mEase1.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
@@ -1644,6 +1654,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
+        mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
         if (mGesturesEnabled) {
             mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
             mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
@@ -1709,6 +1720,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mCard = createWebView();
             WebViewDebugging.initializeDebugging(AnkiDroidApp.getSharedPrefs(this));
             mCardFrame.addView(mCard);
+            mGestureDetectorImpl.onWebViewCreated(mCard);
         }
         if (mCard.getVisibility() != View.VISIBLE) {
             mCard.setVisibility(View.VISIBLE);
@@ -2207,6 +2219,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
         final String cardContent = mCardContent.toString();
         processCardAction(card -> loadContentIntoCard(card, cardContent));
+        mGestureDetectorImpl.onFillFlashcard();
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
             switchTopBarVisibility(View.VISIBLE);
         }
@@ -2617,7 +2630,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
 
-        private boolean executeTouchCommand(@NonNull MotionEvent e) {
+        protected boolean executeTouchCommand(@NonNull MotionEvent e) {
             if (mGesturesEnabled && !mIsSelecting) {
                 int height = mTouchLayer.getHeight();
                 int width = mTouchLayer.getWidth();
@@ -2641,8 +2654,104 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             showLookupButtonIfNeeded();
             return false;
         }
+
+        public void onWebViewCreated(@NonNull WebView webView) {
+            //intentionally blank
+        }
+
+        public void onFillFlashcard() {
+            //intentionally blank
+        }
+
+        public boolean eventCanBeSentToWebView(@NonNull MotionEvent event) {
+            return true;
+        }
     }
 
+    /** #6141 - blocks clicking links from executing "touch" gestures.
+     * COULD_BE_BETTER: Make base class static and move this out of the CardViewer */
+    class LinkDetectingGestureDetector extends AbstractFlashcardViewer.MyGestureDetector {
+        /** A list of events to process when listening to WebView touches  */
+        private HashSet<MotionEvent> mDesiredTouchEvents = new HashSet<>();
+        /** A list of events we sent to the WebView (to block double-processing) */
+        private HashSet<MotionEvent> mDispatchedTouchEvents = new HashSet<>();
+
+        @Override
+        public void onFillFlashcard() {
+            Timber.d("Removing pending touch events for gestures");
+            mDesiredTouchEvents.clear();
+            mDispatchedTouchEvents.clear();
+        }
+
+        @Override
+        public boolean eventCanBeSentToWebView(@NonNull MotionEvent event) {
+            //if we processed the event, we don't want to perform it again
+            return !mDispatchedTouchEvents.remove(event);
+        }
+
+
+        @Override
+        protected boolean executeTouchCommand(@NonNull MotionEvent downEvent) {
+            downEvent.setAction(MotionEvent.ACTION_DOWN);
+            MotionEvent upEvent = MotionEvent.obtainNoHistory(downEvent);
+            upEvent.setAction(MotionEvent.ACTION_UP);
+
+            //mark the events we want to process
+            mDesiredTouchEvents.add(downEvent);
+            mDesiredTouchEvents.add(upEvent);
+
+            //mark the events to can guard against double-processing
+            mDispatchedTouchEvents.add(downEvent);
+            mDispatchedTouchEvents.add(upEvent);
+
+            Timber.d("Dispatching touch events");
+            processCardAction(card -> {
+                card.dispatchTouchEvent(downEvent);
+                card.dispatchTouchEvent(upEvent);
+            });
+            return false;
+        }
+
+
+        @SuppressLint("ClickableViewAccessibility")
+        @Override
+        public void onWebViewCreated(@NonNull WebView webView) {
+            Timber.d("Initializing WebView touch handler");
+            webView.setOnTouchListener((webViewAsView, motionEvent) -> {
+                if (!mDesiredTouchEvents.remove(motionEvent)) {
+                    return false;
+                }
+
+                //We need an associated up event so the WebView doesn't keep a selection
+                //But we don't want to handle this as a touch event.
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    return true;
+                }
+
+                WebView card = (WebView) webViewAsView;
+                HitTestResult result = card.getHitTestResult();
+
+                if (isLinkClick(result)) {
+                    Timber.v("Detected link click - ignoring gesture dispatch");
+                    return true;
+                }
+
+                Timber.v("Executing continuation for click type: %d", result == null ? -178 : result.getType());
+                super.executeTouchCommand(motionEvent);
+                return true;
+            });
+        }
+
+
+        private boolean isLinkClick(HitTestResult result) {
+            if (result == null) {
+                return false;
+            }
+            int type = result.getType();
+            return type == HitTestResult.SRC_ANCHOR_TYPE
+                    || type == HitTestResult.SRC_IMAGE_ANCHOR_TYPE;
+        }
+    }
 
     protected final Handler mFullScreenHandler = new Handler() {
         @Override
