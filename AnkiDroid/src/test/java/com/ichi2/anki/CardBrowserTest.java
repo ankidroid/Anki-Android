@@ -260,16 +260,6 @@ public class CardBrowserTest extends RobolectricTest {
         getCol().getDecks().select(1);
     }
 
-
-    private long addDynamicDeck(String name) {
-        return getCol().getDecks().newDyn(name);
-    }
-
-
-    private long addDeck(String deckName) {
-        return getCol().getDecks().id(deckName, true);
-    }
-
     private void deleteCardAtPosition(CardBrowser browser, int positionToCorrupt) {
         removeCardFromCollection(browser.getCardIds()[positionToCorrupt]);
         browser.clearCardData(positionToCorrupt);

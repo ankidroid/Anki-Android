@@ -152,4 +152,12 @@ public class RobolectricTest {
             throw new RuntimeException(e);
         }
     }
+
+    protected long addDeck(String deckName) {
+        return getCol().getDecks().id(deckName, true);
+    }
+
+    protected long addDynamicDeck(String name) {
+        return getCol().getDecks().newDyn(name);
+    }
 }
