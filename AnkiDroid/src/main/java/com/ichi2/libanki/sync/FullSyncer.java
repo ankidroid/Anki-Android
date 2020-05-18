@@ -16,9 +16,7 @@
 
 package com.ichi2.libanki.sync;
 
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
-import android.net.Uri;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -26,7 +24,6 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
