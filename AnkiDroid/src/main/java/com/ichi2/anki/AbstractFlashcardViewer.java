@@ -47,9 +47,6 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
-
-import android.speech.tts.TextToSpeech;
-import android.speech.tts.UtteranceProgressListener;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -81,11 +78,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
-import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.CardAppearance;
@@ -368,7 +363,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     // Handler for the "show answer" button
-    private OnClickListener mFlipCardListener = new OnClickListener() {
+    private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Timber.i("AbstractFlashcardViewer:: Show answer button pressed");
@@ -382,7 +377,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    private OnClickListener mSelectEaseHandler = new OnClickListener() {
+    private View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             // Ignore what is most likely an accidental double-tap.
@@ -875,7 +870,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Initialize text-to-speech. This is an asynchronous operation.
         if (mSpeakText) {
-            initializeTts(this);
+            ReadText.initializeTts(this, new ReadTextListener());
         }
 
         // Initialize dictionary lookup feature
@@ -1490,8 +1485,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** If a card is displaying the question, flip it, otherwise answer it */
     private void flipOrAnswerCard(int cardOrdinal) {
         if (!sDisplayAnswer) {
-           displayCardAnswer();
-           return;
+            displayCardAnswer();
+            return;
         }
         answerCard(cardOrdinal);
     }
@@ -1800,6 +1795,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
+    class ReadTextListener implements ReadText.ReadTextListener{
+        public void onDone(){
+            if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_QUESTION){
+                long delay = mWaitAnswerSecond * 1000;
+                if (delay > 0) {
+                    mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
+                }
+            }else if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_ANSWER){
+                long delay = mWaitQuestionSecond * 1000;
+                if (delay > 0) {
+                    mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
+                }
+            }
+        }
+    }
 
     protected void initTimer() {
         final TypedValue typedValue = new TypedValue();
@@ -2691,83 +2701,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         startActivityWithoutAnimation(videoPlayer);
     }
 
-
-    public void showQuestionTask(){
-        long delay = mWaitQuestionSecond * 1000;
-        if (delay > 0) {
-            mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
-        }
-    }
-    public void showAnswerTask(){
-        long delay = mWaitAnswerSecond * 1000;
-        if (delay > 0) {
-            mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
-        }
-    }
     /** Callback for when TTS has been initialized. */
-    public void initializeTts(Context context) {
-        // Store weak reference to Activity to prevent memory leak
-        ReadText.setmReviewer(new WeakReference<>(context));
-        // Create new TTS object and setup its onInit Listener
-        ReadText.setmTts(new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    // build list of available languages
-                    ReadText.buildAvailableLanguages();
-                    if (ReadText.getAvailableTtsLocales().size() > 0) {
-                        // notify the reviewer that TTS has been initialized
-                        Timber.d("TTS initialized and available languages found");
-                        ((AbstractFlashcardViewer) ReadText.getmReviewer().get()).ttsInitialized();
-                    } else {
-                        Toast.makeText(ReadText.getmReviewer().get(), ReadText.getmReviewer().get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
-                        Timber.w("TTS initialized but no available languages found");
-                    }
-                    ReadText.getmTts().setOnUtteranceProgressListener(new UtteranceProgressListener() {
-                        @Override
-                        public void onDone(String arg0) {
-                            if (ReadText.sTextQueue.size() > 0) {
-                                String[] text = ReadText.sTextQueue.remove(0);
-                                ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
-                            }
-                            if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_QUESTION){
-                                showAnswerTask();
-                            }else if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_ANSWER){
-                                showQuestionTask();
-                            }
-                        }
-                        @Override
-                        @Deprecated
-                        public void onError(String utteranceId) {
-                            Timber.v("Andoid TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
-
-                            final Uri helpUrl = Uri.parse(ReadText.getmReviewer().get().getString(R.string.link_faq_tts));
-                            final AnkiActivity ankiActivity = (AnkiActivity) ReadText.getmReviewer().get();
-                            ankiActivity.mayOpenUrl(helpUrl);
-                            UIUtils.showSnackbar(ankiActivity, R.string.no_tts_available_message, false, R.string.help,
-                                    v -> openTtsHelpUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
-                                    new Snackbar.Callback());
-                        }
-                        @Override
-                        public void onStart(String arg0) {
-                            // no nothing
-                        }
-                    });
-                } else {
-                    UIUtils.showThemedToast(context, context.getString(R.string.no_tts_available_message), false);
-                    Timber.w("TTS not successfully initialized");
-                }
-            }
-        }));
-        // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
-        Toast.makeText(context, context.getString(R.string.initializing_tts), Toast.LENGTH_LONG).show();
-    }
-
-
-    private static void openTtsHelpUrl(Uri helpUrl) {
-        AnkiActivity activity =  (AnkiActivity) ReadText.getmReviewer().get();
-        activity.openUrl(helpUrl);
-    }
     public void ttsInitialized() {
         mTtsInitialized = true;
         if (mReplayOnTtsInit) {
@@ -2817,7 +2751,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void onFlag(Card card, @FlagDef int flag) {
-
         if (card == null) {
             return;
         }
@@ -3197,3 +3130,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         sEditorCard = card;
     }
 }
+
+
+
+
