@@ -39,6 +39,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+
+import androidx.annotation.CheckResult;
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GestureDetectorCompat;
+import androidx.appcompat.app.ActionBar;
+
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.text.SpannableString;
@@ -80,22 +89,22 @@ import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.CardAppearance;
-import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.anki.reviewer.CardMarker.FlagDef;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
+import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
@@ -103,6 +112,7 @@ import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
+
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -123,47 +133,11 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.annotation.CheckResult;
-import androidx.annotation.IdRes;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.ActionBar;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GestureDetectorCompat;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_BURY_CARD;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_BURY_NOTE;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_DELETE;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_EDIT;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_EXIT;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE3;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE4;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_RECOMMENDED;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_LOOKUP;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_MARK;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_PLAY_MEDIA;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SHOW_ANSWER;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SUSPEND_CARD;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SUSPEND_NOTE;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_RED;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_UNDO;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_UNSET_FLAG;
-import static com.ichi2.anki.cardviewer.ViewerCommand.CommandProcessor;
-import static com.ichi2.anki.cardviewer.ViewerCommand.ViewerCommandDef;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_BLUE;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_GREEN;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_ORANGE;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_RED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.*;
+import static com.ichi2.anki.reviewer.CardMarker.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor {
@@ -2837,13 +2811,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected @FlagDef
-    int getFlagToDisplay() {
+    protected @FlagDef int getFlagToDisplay() {
         return mCurrentCard.getUserFlag();
     }
 
 
     protected void onFlag(Card card, @FlagDef int flag) {
+
         if (card == null) {
             return;
         }
