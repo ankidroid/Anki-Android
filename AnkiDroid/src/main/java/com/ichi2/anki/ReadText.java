@@ -18,17 +18,13 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
-
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 
@@ -51,18 +47,12 @@ public class ReadText {
     private static Compat compat = CompatHelper.getCompat();
     private static Object mTtsParams = compat.initTtsParams();
 
-    public static int getmQuestionAnswer() { return mQuestionAnswer; }
-
-    public static void setmTts(TextToSpeech mTts) {
-        ReadText.mTts = mTts;
-    }
-
     public static TextToSpeech getmTts() {
         return mTts;
     }
 
-    public static WeakReference<Context> getmReviewer() {
-        return mReviewer;
+    public static void setmTts(TextToSpeech mTts) {
+        ReadText.mTts = mTts;
     }
 
     public static void setmReviewer(WeakReference<Context> mReviewer) {
@@ -72,6 +62,16 @@ public class ReadText {
     public static ArrayList<Locale> getAvailableTtsLocales() {
         return availableTtsLocales;
     }
+
+    public static WeakReference<Context> getmReviewer() {
+        return mReviewer;
+    }
+
+    public static int getmQuestionAnswer() {
+        return mQuestionAnswer;
+    }
+
+
     public static void speak(String text, String loc, int queueMode) {
         int result = mTts.setLanguage(localeFromStringIgnoringScriptAndExtensions(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {

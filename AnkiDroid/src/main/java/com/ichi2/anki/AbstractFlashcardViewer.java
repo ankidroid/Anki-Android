@@ -39,15 +39,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.IdRes;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GestureDetectorCompat;
-import androidx.appcompat.app.ActionBar;
-
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.text.SpannableString;
@@ -89,20 +80,22 @@ import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.CardAppearance;
+import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
+import com.ichi2.anki.reviewer.CardMarker.FlagDef;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
@@ -110,7 +103,6 @@ import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -131,10 +123,47 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GestureDetectorCompat;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
-import static com.ichi2.anki.cardviewer.ViewerCommand.*;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_BURY_CARD;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_BURY_NOTE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_DELETE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_EDIT;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_EXIT;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE3;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE4;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_RECOMMENDED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_LOOKUP;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_MARK;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_PLAY_MEDIA;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SHOW_ANSWER;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SUSPEND_CARD;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SUSPEND_NOTE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_RED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_UNDO;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_UNSET_FLAG;
+import static com.ichi2.anki.cardviewer.ViewerCommand.CommandProcessor;
+import static com.ichi2.anki.cardviewer.ViewerCommand.ViewerCommandDef;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_BLUE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_GREEN;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_ORANGE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_RED;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor {
@@ -161,10 +190,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** Time to wait in milliseconds before resuming fullscreen mode **/
     protected static final int INITIAL_HIDE_DELAY = 200;
-
-    /** Regex pattern used in removing tags from text before diff */
-    private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
-    private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
 
     // Type answer patterns
     private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
@@ -369,7 +394,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     // Handler for the "show answer" button
-    private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
+    private OnClickListener mFlipCardListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
             Timber.i("AbstractFlashcardViewer:: Show answer button pressed");
@@ -383,7 +408,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    private View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
+    private OnClickListener mSelectEaseHandler = new OnClickListener() {
         @Override
         public void onClick(View view) {
             // Ignore what is most likely an accidental double-tap.
@@ -847,79 +872,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected abstract void setTitle();
 
-    public void showQuestionTask(){
-        long delay = mWaitQuestionSecond * 1000;
-        if (delay > 0) {
-            mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
-        }
-    }
-    public void showAnswerTask(){
-        long delay = mWaitAnswerSecond * 1000;
-        if (delay > 0) {
-            mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
-        }
-    }
-    private static void openTtsHelpUrl(Uri helpUrl) {
-        AnkiActivity activity =  (AnkiActivity) ReadText.getmReviewer().get();
-        activity.openUrl(helpUrl);
-    }
-    public void initializeTts(Context context) {
-        // Store weak reference to Activity to prevent memory leak
-        ReadText.setmReviewer(new WeakReference<>(context));
-        // Create new TTS object and setup its onInit Listener
-        ReadText.setmTts( new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    // build list of available languages
-                    ReadText.buildAvailableLanguages();
-                    if (ReadText.getAvailableTtsLocales().size() > 0) {
-                        // notify the reviewer that TTS has been initialized
-                        Timber.d("TTS initialized and available languages found");
-                        ((AbstractFlashcardViewer) ReadText.getmReviewer().get()).ttsInitialized();
-                    } else {
-                        Toast.makeText(ReadText.getmReviewer().get(), ReadText.getmReviewer().get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
-                        Timber.w("TTS initialized but no available languages found");
-                    }
-                    ReadText.getmTts().setOnUtteranceProgressListener(new UtteranceProgressListener() {
-                        @Override
-                        public void onDone(String arg0) {
-                            if (ReadText.sTextQueue.size() > 0) {
-                                String[] text = ReadText.sTextQueue.remove(0);
-                                ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
-                            }
-                            if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_QUESTION){
-                                showAnswerTask();
-                            }else if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_ANSWER){
-                                showQuestionTask();
-                            }
-                        }
-                        @Override
-                        @Deprecated
-                        public void onError(String utteranceId) {
-                            Timber.v("Andoid TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
-
-                            final Uri helpUrl = Uri.parse(ReadText.getmReviewer().get().getString(R.string.link_faq_tts));
-                            final AnkiActivity ankiActivity = (AnkiActivity) ReadText.getmReviewer().get();
-                            ankiActivity.mayOpenUrl(helpUrl);
-                            UIUtils.showSnackbar(ankiActivity, R.string.no_tts_available_message, false, R.string.help,
-                                    v -> openTtsHelpUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
-                                    new Snackbar.Callback());
-                        }
-                        @Override
-                        public void onStart(String arg0) {
-                            // no nothing
-                        }
-                    });
-                } else {
-                    Toast.makeText(ReadText.getmReviewer().get(), ReadText.getmReviewer().get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
-                    Timber.w("TTS not successfully initialized");
-                }
-            }
-        }));
-        // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
-        Toast.makeText(context, context.getString(R.string.initializing_tts), Toast.LENGTH_LONG).show();
-    }
 
     // Finish initializing the activity after the collection has been correctly loaded
     @Override
@@ -1973,16 +1925,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
      */
     protected String cleanCorrectAnswer(String answer) {
-        if (answer == null || "".equals(answer)) {
-            return "";
-        }
-        Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer.trim()));
-        String answerText = matcher.replaceAll("");
-        matcher = sBrPattern.matcher(answerText);
-        answerText = matcher.replaceAll("\n");
-        matcher = Sound.sSoundPattern.matcher(answerText);
-        answerText = matcher.replaceAll("");
-        return Utils.nfcNormalized(answerText);
+        return TypedAnswer.cleanCorrectAnswer(answer);
     }
 
 
@@ -2044,7 +1987,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
             if (delay > 0) {
                 mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-                if(!mSpeakText) {
+                if(!mSpeakText){
                     mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
                 }
             }
@@ -2456,7 +2399,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     public boolean executeCommand(@ViewerCommandDef int which) {
-        if (mControlBlocked) {
+        if (getControlBlocked()) {
             return false;
         }
         switch (which) {
@@ -2522,9 +2465,35 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_PLAY_MEDIA:
                 playSounds(true);
                 return true;
+            case COMMAND_TOGGLE_FLAG_RED:
+                toggleFlag(FLAG_RED);
+                return true;
+            case COMMAND_TOGGLE_FLAG_ORANGE:
+                toggleFlag(FLAG_ORANGE);
+                return true;
+            case COMMAND_TOGGLE_FLAG_GREEN:
+                toggleFlag(FLAG_GREEN);
+                return true;
+            case COMMAND_TOGGLE_FLAG_BLUE:
+                toggleFlag(FLAG_BLUE);
+                return true;
+            case COMMAND_UNSET_FLAG:
+                onFlag(mCurrentCard, FLAG_NONE);
+                return true;
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;
+        }
+    }
+
+
+    private void toggleFlag(@FlagDef int flag) {
+        if (mCurrentCard.getUserFlag() == flag) {
+            Timber.i("Toggle flag: unsetting flag");
+            onFlag(mCurrentCard, FLAG_NONE);
+        } else {
+            Timber.i("Toggle flag: Setting flag to %d", flag);
+            onFlag(mCurrentCard, flag);
         }
     }
 
@@ -2748,7 +2717,83 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         startActivityWithoutAnimation(videoPlayer);
     }
 
+
+    public void showQuestionTask(){
+        long delay = mWaitQuestionSecond * 1000;
+        if (delay > 0) {
+            mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
+        }
+    }
+    public void showAnswerTask(){
+        long delay = mWaitAnswerSecond * 1000;
+        if (delay > 0) {
+            mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
+        }
+    }
     /** Callback for when TTS has been initialized. */
+    public void initializeTts(Context context) {
+        // Store weak reference to Activity to prevent memory leak
+        ReadText.setmReviewer(new WeakReference<>(context));
+        // Create new TTS object and setup its onInit Listener
+        ReadText.setmTts(new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    // build list of available languages
+                    ReadText.buildAvailableLanguages();
+                    if (ReadText.getAvailableTtsLocales().size() > 0) {
+                        // notify the reviewer that TTS has been initialized
+                        Timber.d("TTS initialized and available languages found");
+                        ((AbstractFlashcardViewer) ReadText.getmReviewer().get()).ttsInitialized();
+                    } else {
+                        Toast.makeText(ReadText.getmReviewer().get(), ReadText.getmReviewer().get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
+                        Timber.w("TTS initialized but no available languages found");
+                    }
+                    ReadText.getmTts().setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                        @Override
+                        public void onDone(String arg0) {
+                            if (ReadText.sTextQueue.size() > 0) {
+                                String[] text = ReadText.sTextQueue.remove(0);
+                                ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
+                            }
+                            if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_QUESTION){
+                                showAnswerTask();
+                            }else if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_ANSWER){
+                                showQuestionTask();
+                            }
+                        }
+                        @Override
+                        @Deprecated
+                        public void onError(String utteranceId) {
+                            Timber.v("Andoid TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
+
+                            final Uri helpUrl = Uri.parse(ReadText.getmReviewer().get().getString(R.string.link_faq_tts));
+                            final AnkiActivity ankiActivity = (AnkiActivity) ReadText.getmReviewer().get();
+                            ankiActivity.mayOpenUrl(helpUrl);
+                            UIUtils.showSnackbar(ankiActivity, R.string.no_tts_available_message, false, R.string.help,
+                                    v -> openTtsHelpUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
+                                    new Snackbar.Callback());
+                        }
+                        @Override
+                        public void onStart(String arg0) {
+                            // no nothing
+                        }
+                    });
+                } else {
+                    UIUtils.showThemedToast(context, context.getString(R.string.no_tts_available_message), false);
+                    Timber.w("TTS not successfully initialized");
+                }
+            }
+        }));
+        // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
+        Toast.makeText(context, context.getString(R.string.initializing_tts), Toast.LENGTH_LONG).show();
+    }
+
+
+    private static void openTtsHelpUrl(Uri helpUrl) {
+        AnkiActivity activity =  (AnkiActivity) ReadText.getmReviewer().get();
+        activity.openUrl(helpUrl);
+    }
     public void ttsInitialized() {
         mTtsInitialized = true;
         if (mReplayOnTtsInit) {
@@ -2792,12 +2837,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected int getFlagToDisplay() {
+    protected @FlagDef
+    int getFlagToDisplay() {
         return mCurrentCard.getUserFlag();
     }
 
 
-    protected void onFlag(Card card, int flag) {
+    protected void onFlag(Card card, @FlagDef int flag) {
         if (card == null) {
             return;
         }
@@ -2923,6 +2969,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mTypeInput = decodeUrl(url.replaceFirst("typeentertext:", ""));
                 // … and show the answer.
                 mFlipCardLayout.performClick();
+                return true;
+            }
+            // card.html reload
+            if (url.startsWith("signal:reload_card_html")) {
+                redrawCard();
                 return true;
             }
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
