@@ -201,6 +201,7 @@ zip.close()
 os.remove(zipname)
 
 print "Checking translations for known classes of error."
+print "(Note that if errors are found and you correct on crowdin, they make you wait 30 minutes for a new zip build)"
 subprocess.check_call("./tools/find-broken-strings-variables.sh", shell=True)
 
 print "Committing updates. Please add any fixes as another commit."
