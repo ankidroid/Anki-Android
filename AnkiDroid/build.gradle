@@ -149,7 +149,7 @@ dependencies {
     implementation'ch.acra:acra-limiter:5.5.1'
 
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
-    //noinspection GradleDependency
+    //noinspection GradleDependency NewerVersionAvailable
     implementation 'com.squareup.okhttp3:okhttp:3.12.11'
     implementation 'com.arcao:slf4j-timber:3.1'
 
