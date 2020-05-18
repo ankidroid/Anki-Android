@@ -3130,7 +3130,3 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         sEditorCard = card;
     }
 }
-
-
-
-
