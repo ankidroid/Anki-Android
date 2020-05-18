@@ -80,6 +80,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.LanguageUtil;
+import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONException;
@@ -449,6 +450,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Timber.d("onCreate()");
+        if (wasLoadedFromExternalTextActionItem() && !Permissions.hasStorageAccessPermission(this)) {
+            Timber.w("'Card Browser' Action item pressed before storage permissions granted.");
+            UIUtils.showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false);
+            displayDeckPickerForPermissionsDialog();
+            return;
+        }
         setContentView(R.layout.card_browser);
         initNavigationDrawer(findViewById(android.R.id.content));
         startLoadingCollection();
@@ -785,6 +792,29 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } else {
             super.onNavigationPressed();
         }
+    }
+
+
+    private void displayDeckPickerForPermissionsDialog() {
+        //TODO: Combine this with class: IntentHandler after both are well-tested
+        Intent deckPicker = new Intent(this, DeckPicker.class);
+        deckPicker.setAction(Intent.ACTION_MAIN);
+        deckPicker.addCategory(Intent.CATEGORY_LAUNCHER);
+        deckPicker.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.FADE);
+        AnkiActivity.finishActivityWithFade(this);
+        finishActivityWithFade(this);
+        this.setResult(RESULT_CANCELED);
+    }
+
+
+    private boolean wasLoadedFromExternalTextActionItem() {
+        Intent intent = this.getIntent();
+        if (intent == null) {
+            return false;
+        }
+        //API 23: Replace with Intent.ACTION_PROCESS_TEXT
+        return "android.intent.action.PROCESS_TEXT".equalsIgnoreCase(intent.getAction());
     }
 
     private void updatePreviewMenuItem() {
