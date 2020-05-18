@@ -1704,9 +1704,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     }
                 }
             } else {
-                // Sync was successful!
+                Timber.i("Sync was successful");
                 if (data.data[2] != null && !"".equals(data.data[2])) {
+                    Timber.i("Syncing had additional information");
                     // There was a media error, so show it
+                    // Note: Do not log this data. May contain user email.
                     String message = res.getString(R.string.sync_database_acknowledge) + "\n\n" + data.data[2];
                     showSimpleMessageDialog(message);
                 } else if (data.data.length > 0 && data.data[0] instanceof String
@@ -1715,17 +1717,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     String dataString = (String) data.data[0];
                     switch (dataString) {
                         case "upload":
+                            Timber.i("Full Upload Completed");
                             showSyncLogMessage(R.string.sync_log_uploading_message, syncMessage);
                             break;
                         case "download":
+                            Timber.i("Full Download Completed");
                             showSyncLogMessage(R.string.sync_log_downloading_message, syncMessage);
                             break;
                         default:
+                            Timber.i("Full Sync Completed (Unknown Direction)");
                             showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
                             break;
                     }
                 } else {
-                    // Regular sync completed successfully
+                    Timber.i("Regular sync completed successfully");
                     showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
                 }
                 updateDeckList();
@@ -2094,6 +2099,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @Override
             public void onPostExecute(TaskData result) {
+                Timber.i("Updating deck list UI");
                 hideProgressBar();
                 // Make sure the fragment is visible
                 if (mFragmented) {

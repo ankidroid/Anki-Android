@@ -92,8 +92,10 @@ public class FullSyncer extends HttpSyncer {
         String tpath = path + ".tmp";
         try {
             super.writeToFile(cont, tpath);
+            Timber.d("Full Sync - Downloaded temp file");
             FileInputStream fis = new FileInputStream(tpath);
             if ("upgradeRequired".equals(super.stream2String(fis, 15))) {
+                Timber.w("Full Sync - 'Upgrade Required' message received");
                 return new Object[]{"upgradeRequired"};
             }
         } catch (FileNotFoundException e) {
@@ -123,11 +125,14 @@ public class FullSyncer extends HttpSyncer {
                 tempDb.close();
             }
         }
+        Timber.d("Full Sync: Downloaded file was not corrupt");
         // overwrite existing collection
         File newFile = new File(tpath);
         if (newFile.renameTo(new File(path))) {
+            Timber.i("Full Sync Success: Overwritten collection with downloaded file");
             return new Object[] { "success" };
         } else {
+            Timber.w("Full Sync: Error overwriting collection with downloaded file");
             return new Object[] { "overwriteError" };
         }
     }
