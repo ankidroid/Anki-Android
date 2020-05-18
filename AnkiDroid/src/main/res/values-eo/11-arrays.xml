@@ -59,11 +59,11 @@
         <item>Ĉesi lernadon</item>
         <item>Kaŝi noton por tago</item>
         <item>Kaŝi noton por daŭre</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
+        <item>Baskuli ruĝan flagon</item>
+        <item>Baskuli oranĝkoloran flagon</item>
+        <item>Baskuli verdan flagon</item>
+        <item>Baskuli bluan flagon</item>
+        <item>Forigi flagon</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Kaŝi karton por daŭre</item>

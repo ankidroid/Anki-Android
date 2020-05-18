@@ -92,6 +92,8 @@
     </string-array>
     <string name="gestures">Gesten aktivieren</string>
     <string name="gestures_summ">Weise Aktionen, wie zum Beispiel Beantworten oder Bearbeiten der Karten, Gesten zu.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Nach oben wischen</string>
     <string name="gestures_swipe_down">Nach unten wischen</string>
     <string name="gestures_swipe_left">Nach links wischen</string>

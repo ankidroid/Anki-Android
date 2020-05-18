@@ -41,7 +41,7 @@
     <string name="check_db_title">डेटाबेस की जाँच करें?</string>
     <string name="check_db_warning">इसमें बहुत समय लग सकता है</string>
     <string name="check_db_acknowledge">डेटाबेस की जाँच की गई</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">डेटाबेस जाँची और अनुकूलित की गई।\n%d kB से घटाया गया।</string>
     <string name="contextmenu_deckpicker_delete_deck">डेक मिटाएँ</string>
     <string name="delete_deck_default_deck">डिफ़ॉल्ट डेक को मिटाया नहीं जा सकता।</string>
     <string name="delete_deck_title">डेक मिटाएँ?</string>
@@ -61,32 +61,32 @@
         <item><![CDATA[AnkiDroid <a href=\"%1$s\"> v3 GNU-GPL लाइसेंस</a> के तहत जारी किया गया है और स्रोत कोड <a href=\"%2$s\"> GitHub पर</a>उपलब्ध है।]]></item>
     </string-array>
     <string name="preview_title">पूर्वावलोकन</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">नया कार्ड पुन: प्रस्तुत करें</string>
+    <string name="reposition_card_dialog_message">शुरू करने की स्थिति:</string>
+    <string name="reposition_card_not_new_error">केवल नए कार्डों को बदला जा सकता है</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d कार्डों का स्थान बदल दिया गया है</item>
+        <item quantity="other">%d कार्डों का स्थान बदल दिया गया है</item>
     </plurals>
     <string name="reset_card_dialog_title">पत्ता प्रगति रीसेट करें</string>
     <string name="reset_card_dialog_message">इस पत्ते को नए पत्तों के कतार के अंत में रखा जाएगा</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">कार्ड रीसेट हुआ</item>
+        <item quantity="other">%d कार्ड रीसेट हुआ</item>
     </plurals>
     <string name="reschedule_card_dialog_title">कार्ड पुनर्निर्धारित करें</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="one">कार्ड पुनर्निर्धारित करें</item>
+        <item quantity="other">कार्ड पुनर्निर्धारित करें</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">वर्तमान अंतराल: %d दिन</item>
+        <item quantity="other">वर्तमान अंतराल: %d दिन</item>
     </plurals>
     <string name="reschedule_card_dialog_message">X दिनों में समीक्षा के लिए पुनर्निर्धारित करें:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d पत्ता पुनर्निर्धारित</item>
+        <item quantity="other">%d पत्ता पुनर्निर्धारित</item>
     </plurals>
     <string name="answering_error_title">डेटाबेस त्रुटि</string>
     <string name="answering_error_message">संग्रह में लेखन असफल रहा। डाटाबेस भ्रष्ट हो सकता है या डिस्क पर पर्याप्त रिक्त स्थान नहीं हो सकता है। \ N \ n यदि यह अधिक बार होता है, तो डेटाबेस की जांच करने, संग्रह की मरम्मत करने या इसे बैकअप से पुनर्स्थापित करने का प्रयास करें। उस के लिए \"विकल्प\" को स्पर्श करें। \ N \ या यह एक AnkiDroid बग भी हो सकता है; कृपया त्रुटि की रिपोर्ट करें ताकि हम इसे जांच सकें।</string>
@@ -96,15 +96,15 @@
     <string name="intent_add_clear_all">सभी साफ़ करें</string>
     <string name="intent_aedict_empty">श्रेणी \"डिफ़ॉल्ट\" रिक्त है</string>
     <string name="intent_aedict_category">AnkiDroid में कार्ड जोड़ने के लिए सभी नोटपैड श्रेणियों को हटाएँ या एक \"डिफ़ॉल्ट\" नामक पत्ता जोड़ें</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">डेक में नए पत्ते: %d</string>
+    <string name="custom_study_rev_total_rev">डेक में समीक्षा के लिए बाकी: %d</string>
     <string name="custom_study_new_extend">आज के समीक्षा कार्ड की सीमा बढ़ाएं</string>
     <string name="custom_study_rev_extend">आज के समीक्षा कार्ड की सीमा बढ़ाएं</string>
     <string name="custom_study_forgotten">पिछले x दिनों में भूल गए कार्ड की समीक्षा करें:</string>
     <string name="custom_study_ahead">X दिनों से आगे की समीक्षा करें:</string>
     <string name="custom_study_random">डेक से यादृच्छिक रूप से एक्स कार्ड का चयन करें:</string>
     <string name="custom_study_preview">पिछले x दिनों में जोड़े गए नए कार्ड का पूर्वावलोकन करें:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_rebuild_deck_corrupt">कस्टम अध्ययन डेक का पुनर्निर्माण नहीं किया जा सका</string>
     <string name="rebuild_custom_study_deck">कस्टम अध्ययन डेक के पुनर्निर्माण.. ।</string>
     <string name="importing_collection">संग्रह आयात कर रहा है.. ।</string>
     <string name="import_media_count">मीडिया फ़ाइलें आयात कर रहा है %1$d%%.. ।</string>
@@ -153,37 +153,40 @@
     <string name="empty_cards_count">कार्ड हटाने के लिए: %d</string>
     <string name="empty_cards_deleted">हटाई गई फ़ाइलें: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_audio_permission_refused">माइक्रोफ़ोन अनुमति प्राप्त नहीं कर सका।</string>
+    <string name="multimedia_editor_camera_permission_refused">कैमरा अनुमति प्राप्त नहीं कर सका। कार्यक्षमता अक्षम कर दी गई है।</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">ऑडियो रिकॉर्डिंग की अनुमति से इनकार किया</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_title">AnkiDroid में आपका स्वागत है!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid को storage permission की आवश्यकता होती है, जिसका उपयोग हम विशेष रूप से आपके AnkiDroid संग्रह, फ्लैशकार्ड मीडिया और बैकअप को संग्रहीत करने के लिए करते हैं। हमारा कोड open-source है, जो स्वयंसेवकों द्वारा लिखा गया है, और लाखों लोगों द्वारा भरोसेमंद है। \n \n यदि आपके कोई प्रश्न हैं, तो कृपया हमारे इन-ऐप मैनुअल का उपयोग करें या हमारे support forums पर जाएं। \n \n आप को AnkiDroid की इस्तेमाल करने के लिए धन्यवाद! \n—AnkiDroid Development Team</string>
+    <string name="mutimedia_editor_assertion_failed">Advanced Editor प्रदर्शित करने में अज्ञात त्रुटि हुई</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">Could not play video</string>
+    <string name="integrity_check_startup_title">AnkiDroid अपग्रेड किया गया</string>
+    <string name="integrity_check_startup_content">AnkiDroid को अपग्रेड किया गया है। इस अपग्रेड में संभावित डेटाबेस समस्याओं के लिए फ़िक्सेस शामिल हैं, और हम आपको चेक डेटाबेस चलाने की सलाह देते हैं।</string>
+    <string name="integrity_check_positive">डेटाबेस चेक करें</string>
+    <string name="integrity_check_continue_anyway">किसी तरह से जारी रखें</string>
+    <string name="integrity_check_insufficient_space">चेक डेटाबेस बड़ी मात्रा में अस्थायी storage का उपयोग करता है। \n \n यह दृढ़ता से अनुशंसा की जाती है कि आपके डिवाइस पर कम से कम %s खाली स्थान हो।</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\n आपके पास वर्तमान में %s खाली स्थान है।</string>
+    <string name="integrity_check_fixed_no_home_deck">गलत होम डेक वाले %d कार्ड वापिस किए गए। कृपया अधिक जानकारी के लिए मैनुअल देखें।</string>
+    <string name="video_creation_error">वीडियो नहीं चला सका</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">डेक नहीं बदल सका</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">कार्ड से डेटा डिकोड करने में त्रुटि</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <string name="deck_options_corrupt">डेक विकल्पों को संसाधित करने में विफल: %s</string>
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <string name="database_locked_title">डेटाबेस लॉक है</string>
+    <string name="database_locked_summary">AnkiDroid डेटाबेस किसी अन्य एप्लिकेशन द्वारा उपयोग में है। कृपया अन्य एप्लिकेशन को बंद करें और फिर AnkiDroid को फिर से खोलें।</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="background_image_applied">पृष्ठभूमि छवि लागू की गई</string>
+    <string name="background_image_removed">पृष्ठभूमि छवि हटा दी गई है</string>
+    <string name="no_image_selected">कोई छवि चयनित नहीं है.</string>
+    <string name="error_selecting_image">छवि का चयन करने में त्रुटि। कृपया मैनुअल देखें। %s</string>
+    <string name="error_deleting_image">चित्र हटाने में त्रुटि</string>
+    <string name="failed_to_apply_background_image">पृष्ठभूमि छवि लागू करने में विफल %s</string>
+    <!-- Global Intent handler -->
+    <!-- Also used by Card Browser, not renaming to save translators effort -->
+    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
 </resources>

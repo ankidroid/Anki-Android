@@ -92,6 +92,8 @@
     </string-array>
     <string name="gestures">Aktifkan gerakan</string>
     <string name="gestures_summ">Menetapkan gerakan-gerakan menjadi tindakan-tindakan seperti menjawab dan mengedit kartu-kartu.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Sapu ke atas</string>
     <string name="gestures_swipe_down">Sapu ke bawah</string>
     <string name="gestures_swipe_left">Sapu ke kiri</string>

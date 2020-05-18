@@ -92,6 +92,8 @@
     </string-array>
     <string name="gestures">Bewegingen inschakelen</string>
     <string name="gestures_summ">Bewegingen toewijzen aan acties zoals het beantwoorden en bewerken van kaarten.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Omhoog vegen</string>
     <string name="gestures_swipe_down">Omlaag vegen</string>
     <string name="gestures_swipe_left">Naar links vegen</string>

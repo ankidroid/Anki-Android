@@ -92,6 +92,8 @@
     </string-array>
     <string name="gestures">Gesztusvezérlés engedélyezése</string>
     <string name="gestures_summ">Gesztusok hozzárendelése olyan műveletekhez, mint a kártyák megválaszolása és szerkesztése.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Felfelé csúsztatás</string>
     <string name="gestures_swipe_down">Lefelé csúsztatás</string>
     <string name="gestures_swipe_left">Balra csúsztatás</string>

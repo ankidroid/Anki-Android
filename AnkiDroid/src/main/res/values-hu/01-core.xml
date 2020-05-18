@@ -68,7 +68,7 @@
         <item quantity="other">%d óra maradt</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
+        <item quantity="one">%d nap %d van hátra</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -111,13 +111,13 @@
     <string name="menu_bury">Holnapra halasztás</string>
     <string name="menu_suspend">Felfüggesztés</string>
     <string name="menu_delete_note">Jegyzet törlése</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag">Jelölő</string>
+    <string name="menu_flag_card">Kártya megjelölése</string>
+    <string name="menu_flag_card_zero">Jelölő nélküli</string>
+    <string name="menu_flag_card_one">Piros jelölő</string>
+    <string name="menu_flag_card_two">Narancs jelölő</string>
+    <string name="menu_flag_card_three">Zöld jelölő</string>
+    <string name="menu_flag_card_four">Kék jelölő</string>
     <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
     <string name="menu_select">Szöveg kijelölése</string>
     <string name="menu_search">Keresés itt: %1$s</string>
@@ -181,7 +181,7 @@
     </plurals>
     <string name="invalid_template">A kártya nem hozható létre</string>
     <string name="card_template_editor_would_delete_note">A kártyatípus eltávolítása egy vagy több megjegyzés törlését okozhatja. Először hozz létre egy új kártyatípust.</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">A kártya típusa törölve lett.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid adatbázist olvasás/írás</string>
     <string name="read_write_permission_description">meglévő jegyzetek, kártyák, jegyzetfajták és paklik elérése, valamint újak létrehozása</string>
