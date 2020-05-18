@@ -67,9 +67,9 @@
     <string name="leech_suspend_notification">Kártya megjelölve piócaként és felfüggesztésre került</string>
     <string name="leech_notification">Kártya megjelölve piócaként</string>
     <string name="corrupt_font">Sérült font fájl %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="webview_crash_unknown">Ismeretlen hiba</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom">Kevés a memória</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>

@@ -92,6 +92,8 @@
     </string-array>
     <string name="gestures">Омогући гестове</string>
     <string name="gestures_summ">Додели гестове за дејства као одговарње и уређивање картица.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Пребацити горе</string>
     <string name="gestures_swipe_down">Пребацити доле</string>
     <string name="gestures_swipe_left">Пребацити лево</string>

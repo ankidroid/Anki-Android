@@ -92,6 +92,8 @@
     </string-array>
     <string name="gestures">Activar xestos</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Esvarar cara arriba</string>
     <string name="gestures_swipe_down">Evarar cara abaixo</string>
     <string name="gestures_swipe_left">Esvara á esquerda</string>

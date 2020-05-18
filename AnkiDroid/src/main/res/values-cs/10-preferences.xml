@@ -92,6 +92,8 @@
     </string-array>
     <string name="gestures">Povolit gesta</string>
     <string name="gestures_summ">Přiřazení gest jednotlivým akcím.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Tažení nahoru</string>
     <string name="gestures_swipe_down">Tažení dolů</string>
     <string name="gestures_swipe_left">Tažení doleva</string>

@@ -92,6 +92,8 @@
     </string-array>
     <string name="gestures">启用手势</string>
     <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">向上滑动</string>
     <string name="gestures_swipe_down">向下滑动</string>
     <string name="gestures_swipe_left">向左滑动</string>

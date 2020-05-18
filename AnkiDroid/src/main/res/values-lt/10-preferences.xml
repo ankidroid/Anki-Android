@@ -92,6 +92,8 @@
     </string-array>
     <string name="gestures">Įjungti gestus</string>
     <string name="gestures_summ">Nustatykite kokiais gestais atsakinėsite į klausimus ir redaguosite korteles.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Braukiant aukštyn</string>
     <string name="gestures_swipe_down">Braukiant žemyn</string>
     <string name="gestures_swipe_left">Braukiant į kairę</string>

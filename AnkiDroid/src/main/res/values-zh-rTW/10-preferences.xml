@@ -92,6 +92,8 @@
     </string-array>
     <string name="gestures">開啓手勢</string>
     <string name="gestures_summ">替動作設定手勢，像是回答問題和編輯卡片。</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">向上撥動</string>
     <string name="gestures_swipe_down">向下撥動</string>
     <string name="gestures_swipe_left">向左撥動</string>

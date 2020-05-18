@@ -92,6 +92,8 @@
     </string-array>
     <string name="gestures">Povoliť gestá</string>
     <string name="gestures_summ">Prideliť gestá k akciám ako sú odpoveď či editovanie kartičiek.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Posun hore</string>
     <string name="gestures_swipe_down">Posun dole</string>
     <string name="gestures_swipe_left">Posun doľava</string>
