@@ -10,6 +10,10 @@ tasks.whenTaskAdded { task ->
             task.doFirst {
                 // move the baseline by deleting api/baseline.xml and AnkiDroid/baseline.xml then ./gradlew lintDebug
                 android.lintOptions.baseline file('./lint-baseline.xml')
+                // Disable 'SyntheticAccessor' -
+                // See discussion on #6205 - we should fix these for performance, but low priority
+                // compared to other more significant warnings.
+                android.lintOptions.disable 'SyntheticAccessor'
                 android.lintOptions.abortOnError true
                 android.lintOptions.checkAllWarnings true
                 android.lintOptions.warningsAsErrors true
