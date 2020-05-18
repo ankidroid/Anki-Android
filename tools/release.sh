@@ -60,8 +60,6 @@ else
   echo "Performing testing release."
 fi
 
-exit 1
-
 if [ "$PUBLIC" != "public" ]; then
   # Increment version name
   # Ex: 2.1beta7 to 2.1beta8
