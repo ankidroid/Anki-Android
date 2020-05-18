@@ -350,6 +350,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         publishProgress(R.string.sync_downloading_message);
                         Object[] ret = server.download();
                         if (ret == null) {
+                            Timber.w("Sync - fullsync - unknown error");
                             data.success = false;
                             data.result = new Object[] { "genericError" };
                             return data;
@@ -359,6 +360,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                             col.reopen();
                         }
                         if (!"success".equals(ret[0])) {
+                            Timber.w("Sync - fullsync - download failed");
                             data.success = false;
                             data.result = ret;
                             if (!colCorruptFullSync) {
@@ -399,6 +401,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server, this);
                 String ret;
                 try {
+                    Timber.i("Sync - Performing media sync");
                     ret = mediaClient.sync();
                     if (ret == null) {
                         mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
