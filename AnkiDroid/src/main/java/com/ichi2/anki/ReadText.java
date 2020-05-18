@@ -51,7 +51,27 @@ public class ReadText {
     private static Compat compat = CompatHelper.getCompat();
     private static Object mTtsParams = compat.initTtsParams();
 
+    public static int getmQuestionAnswer() { return mQuestionAnswer; }
 
+    public static void setmTts(TextToSpeech mTts) {
+        ReadText.mTts = mTts;
+    }
+
+    public static TextToSpeech getmTts() {
+        return mTts;
+    }
+
+    public static WeakReference<Context> getmReviewer() {
+        return mReviewer;
+    }
+
+    public static void setmReviewer(WeakReference<Context> mReviewer) {
+        ReadText.mReviewer = mReviewer;
+    }
+
+    public static ArrayList<Locale> getAvailableTtsLocales() {
+        return availableTtsLocales;
+    }
     public static void speak(String text, String loc, int queueMode) {
         int result = mTts.setLanguage(localeFromStringIgnoringScriptAndExtensions(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -271,66 +291,6 @@ public class ReadText {
         return mTts.isLanguageAvailable(localeFromStringIgnoringScriptAndExtensions(localeCode)) >=
                 TextToSpeech.LANG_AVAILABLE;
     }
-
-    public static void initializeTts(Context context) {
-        // Store weak reference to Activity to prevent memory leak
-        mReviewer = new WeakReference<>(context);
-        // Create new TTS object and setup its onInit Listener
-        mTts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    // build list of available languages
-                    buildAvailableLanguages();
-                    if (availableTtsLocales.size() > 0) {
-                        // notify the reviewer that TTS has been initialized
-                        Timber.d("TTS initialized and available languages found");
-                        ((AbstractFlashcardViewer) mReviewer.get()).ttsInitialized();
-                    } else {
-                        Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
-                        Timber.w("TTS initialized but no available languages found");
-                    }
-                    mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
-                        @Override
-                        public void onDone(String arg0) {
-                            if (ReadText.sTextQueue.size() > 0) {
-                                String[] text = ReadText.sTextQueue.remove(0);
-                                ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
-                            }
-                        }
-                        @Override
-                        @Deprecated
-                        public void onError(String utteranceId) {
-                            Timber.v("Andoid TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
-
-                            final Uri helpUrl = Uri.parse(mReviewer.get().getString(R.string.link_faq_tts));
-                            final AnkiActivity ankiActivity = (AnkiActivity) mReviewer.get();
-                            ankiActivity.mayOpenUrl(helpUrl);
-                            UIUtils.showSnackbar(ankiActivity, R.string.no_tts_available_message, false, R.string.help,
-                                    v -> openTtsHelpUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
-                                    new Snackbar.Callback());
-                        }
-                        @Override
-                        public void onStart(String arg0) {
-                            // no nothing
-                        }
-                    });
-                } else {
-                    Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
-                    Timber.w("TTS not successfully initialized");
-                }
-            }
-        });
-        // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
-        Toast.makeText(context, context.getString(R.string.initializing_tts), Toast.LENGTH_LONG).show();
-    }
-
-
-    private static void openTtsHelpUrl(Uri helpUrl) {
-        AnkiActivity activity =  (AnkiActivity) mReviewer.get();
-        activity.openUrl(helpUrl);
-    }
-
 
     public static void buildAvailableLanguages() {
         availableTtsLocales.clear();
