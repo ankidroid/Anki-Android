@@ -35,74 +35,74 @@
 -->
 <resources>
     <string-array name="error_reporting_choice_labels">
-        <item>Raportoi aina</item>
-        <item>Älä raportoi koskaan</item>
-        <item>Kysy</item>
+        <item>Laging iulat</item>
+        <item>Huwag kailanman mag-ulat</item>
+        <item>Tanungin mo ako</item>
     </string-array>
     <string-array name="gestures_labels">
-        <item>Ei toimintoa</item>
-        <item>Näytä vastaus</item>
-        <item>Vastauspainike 1</item>
-        <item>Vastauspainike 2</item>
-        <item>Vastauspainike 3</item>
-        <item>Vastauspainike 4</item>
-        <item>Vastaa ehdotettu (vihreä)</item>
-        <item>Vastaa paremmin kuin ehdotettu</item>
-        <item>Kumoa</item>
-        <item>Muokkaa merkintää</item>
-        <item>Merkitse merkintä</item>
-        <item>Hakutermi</item>
-        <item>Piilota kortti</item>
-        <item>Keskeytä kortti</item>
-        <item>Poista merkintä</item>
-        <item>Toista media</item>
-        <item>Keskeytä oppiminen</item>
-        <item>Piilota merkintä</item>
-        <item>Jäädytä merkintä</item>
+        <item>Walang aksyon</item>
+        <item>Ipakita ang sagot</item>
+        <item>Sagot na pindutan 1</item>
+        <item>Sagot na pindutan 2</item>
+        <item>Sagot na pindutan 3</item>
+        <item>Sagot na pindutan 4</item>
+        <item>Sagot inirerekomenda (berde)</item>
+        <item>Sagutin nang mas mabuti kaysa sa inirekomenda</item>
+        <item>Pawalang-bisa</item>
+        <item>I-edit ang tala</item>
+        <item>Markahan ang tala</item>
+        <item>Hanapin ang expression</item>
+        <item>Bury card</item>
+        <item>Suspend ang card</item>
+        <item>Tanggalin ang tala</item>
+        <item>I-play ang media</item>
+        <item>Abort sa pag-aaral</item>
+        <item>Bury note</item>
+        <item>Suspindihin ang tala</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>
         <item>Toggle Blue Flag</item>
-        <item>Poista lippu</item>
+        <item>Remove Flag</item>
     </string-array>
     <string-array name="leech_action_labels">
-        <item>Jäädytä kortti</item>
-        <item>Vain tunniste</item>
+        <item>Suspindihin ang card</item>
+        <item>Tag lamang</item>
     </string-array>
     <string-array name="new_order_labels">
-        <item>Uusia kortteja satunnaisessa järjestyksessä</item>
-        <item>Uudet kortit lisäysjärjestyksessä</item>
+        <item>Bagong mga card sa random order</item>
+        <item>Bagong mga card sa random na pagkakasunud-sunod</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
-        <item>Vanhimmat nähdyt ensin</item>
-        <item>Satunnainen</item>
-        <item>Kasvavin välein</item>
-        <item>Vähentyvin välein</item>
-        <item>Eniten unohdetut</item>
-        <item>Lisäysjärjestyksessä</item>
-        <item>Näyttöjärjestyksessä</item>
-        <item>Viimeisimmät lisätyt ensin</item>
-        <item>Suhteellinen erääntyneisyys</item>
+        <item>Pinakalumang nakita muna</item>
+        <item>Pinakalumang nakita muna</item>
+        <item>Ang pagpapataas ng agwat</item>
+        <item>Pagpapababa ng mga agwat</item>
+        <item>Karamihan ay natapos na</item>
+        <item>Idinagdag ang order</item>
+        <item>Order due</item>
+        <item>Pinakabagong inaidagdag muna</item>
+        <item>Relative overdueness</item>
     </string-array>
     <string-array name="add_to_cur_labels">
-        <item>Käytä tätä pakkaa</item>
-        <item>Valitse korttityyppi</item>
+        <item>Gumamit ng kasalukuyang deck</item>
+        <item>Magpasya ayon sa uri ng tala</item>
     </string-array>
     <string-array name="new_spread_labels">
-        <item>Sekoita uusiakortteja ja kertauksia</item>
-        <item>Uudet kortit kertauksien jälkeen</item>
-        <item>Uudet kortit ennen kertauksia</item>
+        <item>Paghaluin ang mga bagong card at mga review</item>
+        <item>Mga bagong card pagkatapos ng mga review</item>
+        <item>Bagong mga card bago ang mga review</item>
     </string-array>
     <string-array name="override_font_labels">
-        <item>Kun korteille ei ole määritelty kirjasintyyppiä</item>
-        <item>Aina</item>
+        <item>Kapag walang tinukoy na font sa flashcards</item>
+        <item>Palagi</item>
     </string-array>
     <string-array name="day_theme_labels">
-        <item>Vaalea</item>
-        <item>Pelkistetty</item>
+        <item>Banayad</item>
+        <item>Plain</item>
     </string-array>
     <string-array name="night_theme_labels">
-        <item>Musta</item>
-        <item>Tumma</item>
+        <item>Itim</item>
+        <item>Madilim</item>
     </string-array>
 </resources>

@@ -38,43 +38,44 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="check_db_title">Tarkista tietokanta?</string>
-    <string name="check_db_warning">Tähän voi mennä vähän aikaa</string>
-    <string name="check_db_acknowledge">Tietokanta tarkistettu</string>
+    <string name="check_db_title">I-tsek ang database?</string>
+    <string name="check_db_warning">It ay maaaring tumagal ng mahabang oras</string>
+    <string name="check_db_acknowledge">Sinuri ang database</string>
     <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Poista korttipakka</string>
-    <string name="delete_deck_default_deck">Oletuspakkaa ei voida poistaa</string>
-    <string name="delete_deck_title">Poista korttipakka?</string>
+    <string name="contextmenu_deckpicker_delete_deck">Burahin ang deck</string>
+    <string name="delete_deck_default_deck">Ang default na deck ay hindi maaaring matanggal</string>
+    <string name="delete_deck_title">Tanggalin ang deck?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Poista kaikki kortit %1$s-pakassa? Se sisältää %2$d kortin.</item>
-        <item quantity="other">Poista kaikki kortit %1$s-pakassa? Se sisältää %2$d korttia.</item>
+        <item quantity="one">Tanggalin ang lahat ng mga kard sa %1$s? Naglalaman ito ng %2$d kard.</item>
+        <item quantity="other">Tanggalin ang lahat ng mga kard sa %1$s? Naglalaman ito ng %2$d kard.</item>
     </plurals>
-    <string name="delete_cram_deck_message">Haluatko varmasti lähettää kaikki pakan %s kortit niiden alkuperäisiin pakkoihin?</string>
-    <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
-    <string name="initializing_tts">Valmistellaan TTS:ää&#8230;</string>
-    <string name="tts_no_tts">Älä puhu</string>
+    <string name="delete_cram_deck_message">Ipadala lahat ng mga kard sa %s pabalik sa kanilang mga orihinal na deck?</string>
+    <string name="no_tts_available_message">Walang available na wika sa text-to-speech</string>
+    <string name="initializing_tts">Initializing TTS&#8230;</string>
+    <string name="tts_no_tts">Huwag magsalita</string>
     <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Kääntökorttisovellus Androidille</h2>AnkiDroid on ohjelma opiskeluun kääntökorttien (flashcard) avulla. Se on täysin yhteensopiva <a href=\"%2$s\">Anki</a> -työpöytäsovelluksen kanssa. Voit luoda kortteja, ladata niitä ja opiskella sekä AnkiDroidilla, että Ankilla ja synkronoida ne helposti toistensa kanssa.]]></item>
-        <item><![CDATA[Auta tekemään AnkiDroidista parempi, raportoi löytämäsi virheet <a href=\"%1$s\">täällä</a>. Ideoita uusiksi ominaisuuksiksi otetaan myös vastaan, käytä <a href=\"%2$s\">wikiä</a> ja käy <a href=\"%3$s\">foorumilla</a>.]]></item>
-        <item><![CDATA[AnkiDroid on <a href=\"%1$s\">avoimen lähdekoodin ohjelma<a/>, joten kaikki ovat <a href=\"%2$s\">tervetulleita vaikuttamaan</a> :-)]]></item>
-        <item><![CDATA[Muutkin kuin ohjelmistokehittäjät voivat auttaa. Esimerkiksi, voit <a href=\"%1$s\">auttaa Ankidroidin käännöstyössä</a>, päivittää wikiä, jakaa kuvakaappauksia tai kertoa Ankidroidista sosiaalisessa mediassa.]]></item>
-        <item><![CDATA[Ankidroid on julkaistu <a href=\"%1$s\">GNU-GPL v3-lisenssin</a> alaisena ja lähdekoodi on saatavilla <a href=\"%2$s\">GitHub:ssa</a>.]]></item>
+        <item><![CDATA[<h2>%1$s:<br/> Flashcards for Android </h2> AnkiDroid ay isang flashcard application na ganap na katugma sa desktop software <a href=\"%2$s\"> Anki </a>. Maaari kang lumikha, mag-download at matuto ng materyal sa parehong AnkiDroid o Anki Desktop, at madaling i-synchronize ang mga ito sa AnkiWeb.]]></item>
+        <item><![CDATA[Upang tulungan kaming gawing mas mahusay ang AnkiDroid, paki-ulat ang mga bug sa <a href=\"%1$s\"> ang isyu ng tracker </a>; Ang mga bagong tampok na ideya ay malugod na tatanggapin din. Maghanap ng mga kasagutan<a href=\"%2$s\"> ang wiki </a> o simulan ang isang diskusyon sa <a href=\"%3$s\"> ang forum </a>.]]></item>
+        <item><![CDATA[Ang AnkiDroid ay <a href=\"%1$s\"> open source software <a/>, kaya lahat ay hinihikayat na <a href=\"%2$s\"> maging isang kontribyutor </a>: - )]]></item>
+        <item><![CDATA[Ang mga hindi developer ay makakatulong din. Halimbawa, maaari mong <a href=\"%1$s\"> i-translate ang tulong </a> AnkiDroid, i-update ang wiki, magbigay ng mga screenshot, o di kaya`y 
+ magblog tungkol sa AnkiDroid.]]></item>
+        <item><![CDATA[Inilabas ang AnkiDroid sa ilalim ng <a href=\"%1$s\"> lisensya ng GNU-GPL v3 </a> at magagamit ang source code <a href=\"%2$s\"> sa GitHub </a>.]]></item>
     </string-array>
-    <string name="preview_title">Esikatselu</string>
-    <string name="reposition_card_dialog_title">Siirrä uusi kortti</string>
-    <string name="reposition_card_dialog_message">Aloituspiste:</string>
-    <string name="reposition_card_not_new_error">Ainoastaan uudet kortit voidaan siirtää</string>
+    <string name="preview_title">I-preview</string>
+    <string name="reposition_card_dialog_title">Reposition new card</string>
+    <string name="reposition_card_dialog_message">Start position:</string>
+    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d kortti siirretty</item>
-        <item quantity="other">%d korttia siirretty</item>
+        <item quantity="one">%d card repositioned</item>
+        <item quantity="other">%d cards repositioned</item>
     </plurals>
-    <string name="reset_card_dialog_title">Nollaa kortin edistyminen</string>
-    <string name="reset_card_dialog_message">Tämä kortti laitetaan uusien korttien jonon viimeiseksi.</string>
+    <string name="reset_card_dialog_title">I-reset ang progreso ng kard</string>
+    <string name="reset_card_dialog_message">Ang kard na ito ay ilalagay sa dulo ng bagong queue kard</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d alusta kortti</item>
-        <item quantity="other">%d alusta kortit</item>
+        <item quantity="one">%d card reset</item>
+        <item quantity="other">%d cards reset</item>
     </plurals>
-    <string name="reschedule_card_dialog_title">Toista kortti</string>
+    <string name="reschedule_card_dialog_title">I - reeschedule ang kard</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -83,77 +84,76 @@
         <item quantity="one">Current interval: %d day</item>
         <item quantity="other">Current interval: %d days</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Toista uudestaan x päivän päästä:</string>
+    <string name="reschedule_card_dialog_message">I - reeschedule para sa pag - aaral sa mga x araw:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d kortti ajastettu uudelleen</item>
-        <item quantity="other">%d korttia ajastettu uudelleen</item>
+        <item quantity="one">%d card rescheduled</item>
+        <item quantity="other">%d cards rescheduled</item>
     </plurals>
-    <string name="answering_error_title">Tietokantavirhe</string>
-    <string name="answering_error_message">Kokoelmaan kirjoittaminen epäonnistui. Tämä voi aiheutua viallisesta tietokannasta tai liian vähäisestä levytilasta.\n\nJos tämä tapahtuu usein, yritä tarkistaa tietokanta, korjata kokoelma tai palauttaa se varmuuskopioista. Voit tehdä tämän napauttamalla ”Asetukset”-painiketta.\n\nKyseessä voi olla myös vika AnkiDroidissa, joten ilmoita tästä meille jotta voimme tarkastaa asian.</string>
-    <string name="answering_error_report">Ilmoita viasta</string>
-    <string name="repair_deck_dialog">Haluatko varmasti yrittää korjata tietokannan?\n\nEnnen yritystä kopio tietokannasta luodaan alihakemistoon ”%s”.</string>
-    <string name="intent_add_saved_information">Tallennetut tiedot</string>
-    <string name="intent_add_clear_all">Tyhjennä kaikki</string>
-    <string name="intent_aedict_empty">Oletus-luokka on tyhjä</string>
-    <string name="intent_aedict_category">Lisätäksesi kortteja AnkiDroidiin poista kaikki Notepad-kategoriat tai lisää uusi nimellä ”default”</string>
-    <string name="custom_study_new_total_new">Uusia kortteja pakassa: %d</string>
-    <string name="custom_study_rev_total_rev">Opiskeltavia kortteja pakassa: %d</string>
-    <string name="custom_study_new_extend">Lisää tämän päivän uusien korttien rajoitusta</string>
-    <string name="custom_study_rev_extend">Kasvata tämän päivän kertausten määrää</string>
-    <string name="custom_study_forgotten">Kortteja unohdettu edellisenä x päivänä:</string>
-    <string name="custom_study_ahead">Kertaa etukäteen x päivää:</string>
-    <string name="custom_study_random">Valitse x korttia satunnaisesti pakasta:</string>
-    <string name="custom_study_preview">Esikatsele viimeisinä x päivänä lisättyjä kortteja:</string>
+    <string name="answering_error_title">Database error</string>
+    <string name="answering_error_message">Ang pagsulat sa koleksyon ay nabigo. Maaaring sira ang database o di kaya`y hindi sapat ang bakanteng espasyo sa disk. \n\n Kung ito ay nangyayari ng madalas, subukang i-tsek ang database, i-ayos ng koleksyon o ibalik ito mula sa isang backup. Pindutin ang \"options\" para diyan. \n\ O maaaring ito ay isang AnkiDroid bug din; paki-ulat ang mali upang maiayos namin ito.</string>
+    <string name="answering_error_report">Maling ulat</string>
+    <string name="repair_deck_dialog">Gusto mo ba talagang subukan ang pag-aayos ng database? \n\n Bago mo simulan ang pagtatangka, isang kopya ang lilikhain sa mga subfolder \"%s\".</string>
+    <string name="intent_add_saved_information">Nai-save na data</string>
+    <string name="intent_add_clear_all">Alisin lahat</string>
+    <string name="intent_aedict_empty">Ang kategoryang \"default\" ay walng laman</string>
+    <string name="intent_aedict_category">Upang magdagdag ng mga kard sa AnkiDroid alisin lahat ng mga kategorya ng Notepad o magdagdag ng isa na pinangalanang \"default\"</string>
+    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_extend">Taasan ang limitasyon ng ngayong bagong kard ng</string>
+    <string name="custom_study_rev_extend">Taasan ang limitasyon ng ngayong review ng</string>
+    <string name="custom_study_forgotten">Ang mga review kard na nakalimutan sa huling x araw:</string>
+    <string name="custom_study_ahead">Suriin nang maaga ng x araw:</string>
+    <string name="custom_study_random">Pumili ng x kard sa pamamagitan ng random mula sa deck:</string>
+    <string name="custom_study_preview">I-preview ang mga bagong kjard na naidagdag sa mga huling x araw:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Kasataan mukautettua pakkaa&#8230;</string>
-    <string name="importing_collection">Tuodaan kokoelmaa.\nOdota&#8230;</string>
-    <string name="import_media_count">Tuodaan mediatiedostoja %1$d%%\nOdota&#8230;</string>
-    <string name="import_progress">Tuodaan merkintöjä: %1$d%%\n
-Tuodaan kortteja: %2$d%%\n
-Jälkikäsittely: %3$d%%</string>
-    <string name="import_update_details">Päivitettiin %1$d %2$d :sta merkinnästä.</string>
-    <string name="import_update_ignored">Osa päivityksistä ohitettiin koska merkintätyyppi on muuttunut</string>
-    <string name="import_complete_count">Tuodot kortit: %d</string>
-    <string name="sd_card_full_title">SD-kortti on täysi</string>
-    <string name="sd_card_almost_full_title">SD-kortti on lähes täysi</string>
-    <string name="restore_backup_title">Palauta varmuuskopio?</string>
-    <string name="restore_backup">Kokoelmasi korvataan vanhemmalla kopiolla. Mahdolliset tallentamattomat tiedot menetetään.</string>
-    <string name="dialog_cancel">Peruuta</string>
+    <string name="rebuild_custom_study_deck">Muling pagtatayo ng pasadyang pag-aaral ng deck&#8230;</string>
+    <string name="importing_collection">Pag-import ng koleksyon&#8230;</string>
+    <string name="import_media_count">Ang pag-import ng mga file ng media %1$d%%&#8230;</string>
+    <string name="import_progress">• Pag-import ng mga tala:%1$d%%\n • Pag-import ng mga card:%2$d%%\n • Post-processing:%3$d%%</string>
+    <string name="import_update_details">Nai-update na %1$d ng %2$d umiiral na mga tala.</string>
+    <string name="import_update_ignored">Ang mga ilang update ay hindi pinansin dahil ang uri ng tala ay nabago</string>
+    <string name="import_complete_count">Mga kard na naimport:%d</string>
+    <string name="sd_card_full_title">Ang SD card ay puno</string>
+    <string name="sd_card_almost_full_title">Ang SD card ay malapit ng mapuno</string>
+    <string name="restore_backup_title">Ibalik ang backup?</string>
+    <string name="restore_backup">Ang iyong koleksyon ay mapapalitan ng mas lumang kopya. Ang anumang pag-unlad na hindi na - isave ay mawawala.</string>
+    <string name="dialog_cancel">Kanselahin</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_continue">Jatka</string>
-    <string name="dialog_positive_create">Luo</string>
-    <string name="dialog_positive_delete">Poista</string>
-    <string name="dialog_positive_disable">Poista käytöstä</string>
-    <string name="dialog_positive_overwrite">Korvaa</string>
-    <string name="dialog_positive_remove">Poista</string>
-    <string name="dialog_positive_repair">Korjaa</string>
-    <string name="dialog_positive_replace">Korvaa</string>
-    <string name="dialog_positive_restore">Palauta</string>
-    <string name="dialog_positive_set">Aseta</string>
-    <string name="lookup_button_content">Etsi</string>
-    <string name="dialog_collection_path_not_dir">Annettu hakemistopolku ei ole pätevä</string>
+    <string name="dialog_continue">Magpatuloy</string>
+    <string name="dialog_positive_create">Gumawa</string>
+    <string name="dialog_positive_delete">Burahin</string>
+    <string name="dialog_positive_disable">Huwag paganahin</string>
+    <string name="dialog_positive_overwrite">I-overwrite</string>
+    <string name="dialog_positive_remove">Tanggalin</string>
+    <string name="dialog_positive_repair">Isaayos</string>
+    <string name="dialog_positive_replace">Palitan</string>
+    <string name="dialog_positive_restore">Ibalik</string>
+    <string name="dialog_positive_set">Itakda</string>
+    <string name="lookup_button_content">Hanapin</string>
+    <string name="dialog_collection_path_not_dir">Ang path na tinukoy ay hindi isang wastong direktoryo</string>
     <!-- Media checking -->
-    <string name="check_media_title">Tarkista media?</string>
-    <string name="check_media_warning">Jos sinulla on suuri mediakokoelma, tämä voi kestää pitkään</string>
-    <string name="check_media_message">Tarkistetaan mediaa&#8230;</string>
-    <string name="check_media_acknowledge">Media tarkistettu</string>
-    <string name="check_media_failed">Median tarkistaminen epäonnistui</string>
-    <string name="check_media_invalid">%d tiedostoa virheellisellä koodauksella</string>
-    <string name="check_media_unused">%d käyttämätöntä tiedostoa mediakansiossa</string>
-    <string name="check_media_nohave">%d tiedostoa, joita käytetään korteissa, mutta jotka eivät ole mediakansiossa</string>
-    <string name="check_media_no_unused_missing">Käyttämättömiä tai puuttuvia tiedostoja ei löytynyt.</string>
-    <string name="check_media_db_updated">Mediatietokanta rakennettiin uudelleen.</string>
-    <string name="check_media_delete_unused">Poista käyttämättömät</string>
-    <string name="check_media_deleted">%d tiedostoa poistettiin</string>
+    <string name="check_media_title">I - tsek ang media?</string>
+    <string name="check_media_warning">Ito ay maaaring tumagal ng mahabang oras kasama ang malalaking koleksyon ng media</string>
+    <string name="check_media_message">Sinusuri ang media&#8230;</string>
+    <string name="check_media_acknowledge">Ang media ay sinuri</string>
+    <string name="check_media_failed">Ang pagsusuri ng media ay nabigo</string>
+    <string name="check_media_invalid">60/5000
+Mga file na may di-wastong pag-encode:%d</string>
+    <string name="check_media_unused">Mga file sa folder ng media ngunit hindi ginamit ng anumang mga kard:%d</string>
+    <string name="check_media_nohave">Mga file na ginamit sa mga kard ngunit hindi sa folder ng media:%d</string>
+    <string name="check_media_no_unused_missing">Walang nagamit o nawawalang file na nahanap</string>
+    <string name="check_media_db_updated">Itinayo muli ang database ng media</string>
+    <string name="check_media_delete_unused">Tanggalin ang hindi ginagamit</string>
+    <string name="check_media_deleted">Ang file ay natanggal na:%d</string>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">Kaikki kortit</string>
-    <string name="tags_dialog_option_new_cards">Uusi</string>
-    <string name="tags_dialog_option_due_cards">Erääntyy</string>
+    <string name="tags_dialog_option_all_cards">Lahat ng mga kard</string>
+    <string name="tags_dialog_option_new_cards">Bago</string>
+    <string name="tags_dialog_option_due_cards">Nakatakda</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Etsitään tyhjiä kortteja&#8230;</string>
-    <string name="empty_cards_none">Ei tyhjiä kortteja</string>
-    <string name="empty_cards_count">Poistettavat kortit: %d</string>
-    <string name="empty_cards_deleted">Poistetut kortit: %d</string>
+    <string name="emtpy_cards_finding">Paghahanap ng mga walang laman na kard&#8230;</string>
+    <string name="empty_cards_none">Walang mga kard na walang laman</string>
+    <string name="empty_cards_count">Mga kard na tatanggalin:%d</string>
+    <string name="empty_cards_deleted">Ang mga kard ay tinanggal na%d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
     <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>

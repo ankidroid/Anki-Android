@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<resources>
+    <string name="youre_offline">Aktiv deyilsiniz</string>
+    <string name="sync_error">Sinxronizasiya xətası</string>
+    <string name="vague_error">Xəta</string>
+    <string name="retry">yeniden</string>
+    <string name="cancel">Ləğv etmək</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Şərtlər və Qaydalar</a></string>
+    <string name="menu_get_shared_decks">Paylaşılan katları alın</string>
+    <string name="connection_error_message">Bir səhv baş verdi</string>
+    <string name="not_logged_in_title">AnkiWeb-ə daxil olun</string>
+    <string name="login_create_account_message">Bulud senkronizasyon xidmətindən istifadə etmək üçün üçüncü tərəf hesabına daxil olmalısınız.Bir sonrakı addımda bir yarada bilərsiniz.</string>
+    <!-- MyAccount.java -->
+    <string name="username">E-poçt ünvanı</string>
+    <string name="username_repeat">E-poçt ünvanını təkrarlayın</string>
+    <string name="password">parol</string>
+    <string name="password_repeat">Parolu təkrarlayın</string>
+    <string name="log_in">Daxil olmaq</string>
+    <string name="sign_up_description">AnkiWeb hesabınız yoxdur? Bu pulsuzdur!</string>
+    <string name="sign_up_not_affiliated">Qeyd: AnkiWeb AnkiDroid ilə əlaqəli deyil</string>
+    <string name="sign_up">Qeydiyyatdan keç</string>
+    <string name="logged_as">Daxil olundu:</string>
+    <string name="log_out">Çıxış</string>
+    <string name="alert_logging_message">Giriş edilir...</string>
+    <string name="invalid_username_password">Yanlış e-poçt ünvanı və ya şifrə</string>
+    <string name="reset_password">Şifrəni dəyiş</string>
+    <!-- AndroidManifest.xml -->
+    <string name="downloaddeck_search">Axtarmaq</string>
+    <string name="preferences_title">Seçimlərimiz</string>
+    <string name="deckpreferences_title">XXX seçimləri</string>
+    <string name="sync_conflict_message">Bu koleksiyanı yükləyin və ya Ankiweb-dan yükləyin,çünki onlar birləşdirilə bilməz.Bir tərəfdən toplanan siyahının üzərində yazılacaq.</string>
+    <string name="sync_conflict_local">Yükləmək</string>
+    <string name="sync_conflict_remote">Endirilənlər</string>
+    <string name="sync_conflict_remote_confirm">Yerli toplusunu yenidən yazmalısınız?</string>
+    <string name="sync_conflict_local_confirm">Serverdə kolleksiyanızın üzərində yazmaq?</string>
+    <string name="sync_prepare_syncing">Sinxronlaşdırma hazırlanılır...</string>
+    <string name="sync_preparing_full_sync_message">Tam sinxronizasiya hazırlanır...</string>
+    <string name="sync_uploading_message">Yüklənilir...</string>
+    <string name="sync_downloading_message">Endirilir....</string>
+    <string name="sync_title">Sinxronizasiya</string>
+    <string name="sync_downloading_media">Media yüklənir...</string>
+    <string name="sync_log_uploading_message">Yerli tam sync</string>
+    <string name="sync_log_downloading_message">Yerli tam sync</string>
+    <string name="sync_log_clocks_unsynchronized">Saatiniz saniyə tərəfindən silinir.Telefonunuzdakı tarix,vaxt və vaxt zolağının düzgün quraşdırıldığından əmin olun,sonra yenidən eşitdirin.</string>
+    <string name="sync_log_clocks_unsynchronized_tz">, saat diliminin ehtimal yanlışdır.</string>
+    <string name="sync_log_clocks_unsynchronized_date">, saat diliminin ehtimal yanlışdır</string>
+    <string name="sync_conflict_title">Münaqişənin sinxronlaşdırılması</string>
+    <string name="sync_no_changes_message">Heç bir dəyişiklik yoxdur</string>
+    <string name="sync_database_acknowledge">Kolleksiya sinxronizasiya olunmuşdur</string>
+    <string name="sync_log_error_specific">Sinxronizasiya səhvi növü: , mesaj: </string>
+    <string name="sync_corrupt_database">Verilənlər bazası xarabdır.Yenidən sinxronlaşdırmağı sınamadan əvvəl düzəldin.Verilənlər bazasını təmiri haqqında məlumat üçün gözləyin.</string>
+    <string name="sync_too_busy">Server məşğuldur.Biraz sonra yenidən cəhd edin.</string>
+    <string name="sync_remote_db_error">Endirilen verilənlər bazası xarab olubdur.Zəhmət olmasa bir daha cəhd edin.</string>
+    <string name="sync_overwrite_error">Mövcud kolleksiyanız yüklənmiş fayl tərəfindən yazıla bilmədi</string>
+    <string name="sync_connection_error">Əlaqəyə vaxt verildi.Ya internet bağlantınızda problem yaşanır və ya media qovluğunuzda çox böyük bir fayl var.</string>
+    <string name="sync_write_access_error">Yükləilən fayl SD karta qeyd edilə bilmədi.Kart yalnız oxumaq üçün quraşdırılmışdır və ya kifayət qədər yer yoxdur.</string>
+    <string name="sync_deletions_message">Sinxrozasiya silinməsi...</string>
+    <string name="sync_small_objects_message">Kiçik obyektləri sinxronizasiya etmək...</string>
+    <string name="sync_finish_message">Sinxronlaşdırma bitir...</string>
+    <string name="sync_log_finish_error">Serverə bitiş istiqamətini göndərərkən səhv baş verdi</string>
+    <string name="sync_writing_db">Verilənlər bazasında dəyişiklik yazma...</string>
+    <string name="sync_download_chunk">Dəyişiklikləri endirmək...</string>
+    <string name="sync_upload_chunk">Dəyişiklikləri endirmək...</string>
+    <string name="sync_up_down_size">Up: kB, aşağı: kB</string>
+    <string name="sync_generic_error">Bir səhv baş verdi.Biraz sonra yenidən cəhd edin.</string>
+    <string name="sync_check_upload_file">Yüklənmədən əvvəl faylı yoxlanyın...</string>
+    <string name="sync_check_download_file">Yüklənilən fayl yoxlanılır...</string>
+    <string name="sync_media_find">Dəyişən medyanı tapmaq...</string>
+    <string name="sync_media_no_changes">Medya fayllarında dəyişiklik yoxdur</string>
+    <string name="sync_media_success">Sinxronlaşdırılmış medya</string>
+    <string name="sync_media_changes_count">medya yükləmək üçün dəyişikliklər</string>
+    <string name="sync_media_downloaded_count">medya fayllar endirilir</string>
+    <string name="sync_sanity_failed">Sinxronlaşdırıldıqdan sonra,kolleksiya qeyri-sabit vəziyyətdə idi.Bu problemi həll etmək üçün AnkiDroid tam bir senkronizasiya edəcək. Saxlamaq istəyən tərəfi seçin.</string>
+    <string name="sync_media_sanity_failed">Medya sinxronlaşdırma başa çatdı,lakin medya saytı server ilə razı deyil.Növbəti medya senkronizasiyası səhvləri düzəltmək üçün tam olacaq.</string>
+    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
+    <string name="sync_media_error">Mediya məlumatlarını sinxronlaşdıran səhv</string>
+    <string name="sync_media_error_check">Kütləvi sinxronlaşdırma zamanı səhv.Media yoxlaması tövsiyə olunur.</string>
+    <string name="sync_sanity_local">Yerli</string>
+    <string name="sync_sanity_remote">Uzaqdan</string>
+    <string name="force_full_sync_title">Tam sinxronlaşdırmanı zorla</string>
+    <string name="force_full_sync_summary">Növbəti senkronda, dəyişiklikləri bir istiqamətdə gücləndirin</string>
+    <string name="full_sync_confirmation">İstənilən dəyişiklik sonradan kolleksiyanı sinxronlaşdırdığınız zaman bazanın tam yüklənməsini tələb edəcək.Hal hazirda buradakı sinxronizasiya edilməmiş başqa bir cihazda gözdən keçirmə və ya digər dəyişiklikləriniz varsa, onlar itirilmiş olacaq.Davam?</string>
+    <string name="full_sync_confirmation_upgrade">Daha əvvəl quraşdırılmış AnkiDroid versiyasında bir səhv səbəbiylə,tam bir sinxronlaşdırma məcburiyyətindədir.</string>
+    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_409">Yalnız bir müştəri bir anda AnkiWeb-ə daxil ola bilər.Əvvəlki sinxronlaşdırma uğursuz olarsa,bir neçə dəqiqə ərzində yenidən cəhd edə bilərsiniz.</string>
+    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
+    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_501_upgrade_required">Xahiş edirik, AnkiDroid-in ən son versiyasına yüksəltin</string>
+    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
+    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+</resources>

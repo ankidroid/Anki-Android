@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="backup_deck_no_space_left">காப்பு சேமிக்கப்படவில்லை. ஸ் டி கார்டில் போதுமான இடம் இல்லை. காப்பு ஆழத்தை குறைக்க அல்லது வேறு சில கோப்புகளை மீட்டெடுக்கவும்.</string>
+    <string name="sd_space_warning">ஸ் டி கார்டில் ம் பி %d இடம் விட குறைவாக உள்ளது. தரவு இழப்பைத் தவிர்க்க சில இடங்களை இலவசமாகப் பயன்படுத்தவும் \n.</string>
+    <string name="backup_delete">காப்புப்பிரதிகளை நீக்குகிறது</string>
+    <string name="backup_restore">காப்பு இருந்து மீட்க</string>
+    <string name="backup_new_collection">புதிய தொகுப்பு</string>
+    <string name="backup_del_collection">சேகரிப்பை நீக்கி புதிய ஒன்றை உருவாக்குங்கள்</string>
+    <string name="backup_del_collection_question">சேகரிப்பை நீக்கி புதிய ஒன்றை உருவாக்குங்கள்? இது உங்கள் கற்றல் முன்னேற்றத்தை கைவிட்டு அனைத்து கார்டுகளையும் நீக்கும்.</string>
+    <string name="backup_full_sync_from_server">சேவையகத்திலிருந்து முழு ஒத்திசைவு</string>
+    <string name="backup_full_sync_from_server_question">AnkiWeb இலிருந்து உங்கள் சேகரிப்பை மேலெழுதவா? இது உங்கள் கற்றல் முன்னேற்றத்தை கைவிட்டு, உங்கள் கடைசி ஒத்திசைவின் பின்னர் தகவல்களை சேர்த்தது.</string>
+    <string name="error_handling_title">பிழை கையாளுதல்</string>
+    <string name="error_handling_options">விருப்பங்கள்</string>
+    <string name="backup_retry_opening">மீண்டும் திறக்க</string>
+    <string name="backup_error_menu_repair">பழுதுபார்க்கும் தரவுத்தளம்</string>
+    <string name="backup_repair_deck">பழுது</string>
+    <string name="backup_repair_deck_progress">பழுதுபார்க்கும் தரவுத்தளம்...</string>
+    <string name="backup_error">பிழை</string>
+    <string name="backup_invalid_file_error">தேர்ந்தெடுக்கப்பட்ட காப்புப் பிரதி தவறானது</string>
+    <string name="backup_restore_select_title">மீட்டமைக்க காப்புப் பிரதி எடுக்கவும்</string>
+    <string name="backup_restore_no_backups">மறுபிரதிகள் எதுவும் இல்லை இந்த சாதனத்திற்கு. உங்கள் டெஸ்க்டாப் கணினியில் மறுபிரதிகள் இருந்தால், அவற்றை கைமுறையாக AnkiDroid கோப்புறைக்கு நகலெடு.</string>
+    <string name="open_collection_failed_title">தொகுப்பு திறக்கப்படவில்லை</string>
+    <string name="corrupt_db_message">\n\n உங்கள் சேகரிப்பு சிதைந்துள்ளது. ஒரு காப்புப்பிரதியை மீட்டெடுக்க \"விருப்பங்களை\" தொடவும், அல்லது அது இயங்கவில்லையெனில், தரவுத்தளத்தை கைமுறையாக சரிசெய்வதற்கான பின்வரும் வழிமுறைகளைப் பார்க்கவும்:\n%1$s</string>
+    <string name="access_collection_failed_message">உங்கள் சேகரிப்பை அணுகும்போது பிழை ஏற்பட்டது. இது ஒரு பாதிப்பில்லாத பிழையானால் ஏற்பட்டிருக்கலாம், அல்லது அதில் சிக்கல் இருக்கலாம். \n\n \"தரவுத்தள\" பொத்தானை அழுத்துவதன் மூலம் காசோலை தரவுத்தளத்தை இயக்குதல் அல்லது காப்புப்பதிவிலிருந்து மீட்டெடுக்க முயற்சிக்கவும். இந்தச் செய்தியை நீங்கள் தொடர்ந்து பார்த்தால், தயவுசெய்து ஒரு பிழையை அறிக்கையிடவும்:\n%1$s</string>
+    <string name="deck_repair_error">சேகரிப்பு சரி செய்ய முடியவில்லை</string>
+</resources>
