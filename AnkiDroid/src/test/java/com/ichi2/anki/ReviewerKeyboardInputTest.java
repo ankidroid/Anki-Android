@@ -39,6 +39,16 @@ import static org.mockito.Mockito.when;
 public class ReviewerKeyboardInputTest {
 
     @Test
+    public void whenDisplayingQuestionTyping1DoesNothing() {
+        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingQuestion();
+
+        underTest.handleUnicodeKeyPress('1');
+
+        assertThat("Answer should not be displayed", !underTest.isDisplayingAnswer());
+        assertThat("Answer should not be performed", !underTest.hasBeenAnswered());
+    }
+
+    @Test
     public void whenDisplayingAnswerTyping1AnswersFarLeftButton() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
 
@@ -190,12 +200,21 @@ public class ReviewerKeyboardInputTest {
     }
 
     @Test
-    public void pressingZShouldUndo() {
-        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
+    public void pressingZShouldUndoIfAvailable() {
+        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(true);
 
         underTest.handleUnicodeKeyPress('z');
 
         assertThat("Undo should be called", underTest.getUndoCalled());
+    }
+
+    @Test
+    public void pressingZShouldNotUndoIfNotAvailable() {
+        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(false);
+
+        underTest.handleUnicodeKeyPress('z');
+
+        assertThat("Undo is not available so should not be called", !underTest.getUndoCalled());
     }
 
     @Test
@@ -206,6 +225,18 @@ public class ReviewerKeyboardInputTest {
 
         assertThat("When text field is focused, space should not display answer",
                 !underTest.isDisplayingAnswer());
+    }
+
+    @Test
+    public void pressingUndoDoesNothingIfControlsAreBlocked() {
+        //We pick an arbitrary action to ensure that nothing happens if controls are blocked
+        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingQuestion()
+                .withUndoAvailable(true)
+                .withControlsBlocked(true);
+
+        underTest.handleUnicodeKeyPress('z');
+
+        assertThat("Undo should not be called as control are blocked", !underTest.getUndoCalled());
     }
 
 
@@ -236,7 +267,14 @@ public class ReviewerKeyboardInputTest {
         private Collection.DismissType mDismissType;
         private boolean mUndoCalled;
         private boolean mReplayAudioCalled;
+        private boolean mControlsAreBlocked = false;
+        private boolean mUndoAvailable;
 
+
+        @Override
+        public boolean getControlBlocked() {
+            return mControlsAreBlocked;
+        }
 
         @CheckResult
         public static KeyboardInputTestReviewer displayingAnswer() {
@@ -245,11 +283,16 @@ public class ReviewerKeyboardInputTest {
             return keyboardInputTestReviewer;
         }
 
-
+        @CheckResult
         public static KeyboardInputTestReviewer displayingQuestion() {
             KeyboardInputTestReviewer keyboardInputTestReviewer = new KeyboardInputTestReviewer();
             KeyboardInputTestReviewer.sDisplayAnswer = false;
             return keyboardInputTestReviewer;
+        }
+
+        public KeyboardInputTestReviewer withControlsBlocked(boolean value) {
+            mControlsAreBlocked = value;
+            return this;
         }
 
         public void displayAnswerForTest() {
@@ -424,6 +467,21 @@ public class ReviewerKeyboardInputTest {
 
         public boolean getReplayAudioCalled() {
             return mReplayAudioCalled;
+        }
+
+        @Override
+        protected boolean isUndoAvailable() {
+            return mUndoAvailable;
+        }
+
+        public KeyboardInputTestReviewer withUndoAvailable(boolean value) {
+            this.mUndoAvailable = value;
+            return this;
+        }
+
+
+        public boolean hasBeenAnswered() {
+            return mAnswered != null;
         }
     }
 }
