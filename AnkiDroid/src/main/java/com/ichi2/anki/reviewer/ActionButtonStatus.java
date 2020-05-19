@@ -72,17 +72,10 @@ public class ActionButtonStatus {
             if (mCustomButtons.get(itemId) != MENU_DISABLED) {
                 MenuItem item = menu.findItem(itemId);
                 item.setShowAsAction(mCustomButtons.get(itemId));
-                Drawable icon = item.getIcon();
                 if (mReviewerUi.getControlBlocked()) {
                     item.setEnabled(false);
-                    if (icon != null) {
-                        icon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
-                    }
                 } else {
                     item.setEnabled(true);
-                    if (icon != null) {
-                        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
-                    }
                 }
             } else {
                 menu.findItem(itemId).setVisible(false);
