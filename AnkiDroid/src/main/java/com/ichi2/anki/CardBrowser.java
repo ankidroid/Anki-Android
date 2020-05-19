@@ -29,6 +29,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -1457,7 +1459,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         // put all of the fields in except for those that have already been pulled out straight from the
         // database
-        item.put(ANSWER, formatQA(a));
+        item.put(ANSWER, formatQA(a, context));
         item.put(CARD, c.template().optString("name"));
         item.put(DUE, c.getDueString());
         if (c.getType() == Consts.CARD_TYPE_NEW) {
@@ -1483,12 +1485,25 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         item.put(LAPSES, Integer.toString(c.getLapses()));
         item.put(NOTE, c.model().optString("name"));
-        item.put(QUESTION, formatQA(q));
+        item.put(QUESTION, formatQA(q, context));
         item.put(REVIEWS, Integer.toString(c.getReps()));
     }
 
+    @CheckResult
+    private static String formatQA(String text, Context context) {
+        boolean showFilenames = AnkiDroidApp.getSharedPrefs(context).getBoolean("card_browser_show_media_filenames", false);
+        return formatQAInternal(text, showFilenames);
+    }
 
-    private static String formatQA(String txt) {
+
+    /**
+     * @param txt The text to strip HTML, comments, tags and media from
+     * @param showFileNames Whether [sound:foo.mp3] should be rendered as " foo.mp3 " or  " "
+     * @return The formatted string
+     */
+    @VisibleForTesting
+    @CheckResult
+    static String formatQAInternal(String txt, boolean showFileNames) {
         /* Strips all formatting from the string txt for use in displaying question/answer in browser */
         String s = txt;
         s = s.replaceAll("<!--.*?-->", "");
@@ -1496,9 +1511,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         s = s.replace("<br />", " ");
         s = s.replace("<div>", " ");
         s = s.replace("\n", " ");
-        s = Utils.stripSoundMedia(s);
+        s = showFileNames ? Utils.stripSoundMedia(s) : Utils.stripSoundMedia(s, " ");
         s = s.replaceAll("\\[\\[type:[^]]+\\]\\]", "");
-        s = Utils.stripHTMLMedia(s);
+        s = showFileNames ? Utils.stripHTMLMedia(s) : Utils.stripHTMLMedia(s, " ");
         s = s.trim();
         return s;
     }
