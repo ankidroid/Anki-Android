@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Widget -->
+    <string name="widget_minimum_cards_due_notification_ticker_title">Картак для паўтарэння</string>
+    <plurals name="widget_minimum_cards_due_notification_ticker_text">
+        <item quantity="one">Засталася %d картка</item>
+        <item quantity="few">Засталося %d карткі</item>
+        <item quantity="many">Засталося %d картак</item>
+        <item quantity="other">Засталося %d карткі</item>
+    </plurals>
+    <string name="widget_no_cards_due">Няма картак для паўтору</string>
+    <string name="widget_loading">Загрузка віджэта&#8230;</string>
+    <plurals name="widget_cards_in_decks_due">
+        <item quantity="one">Засталася %1$d картка ў %2$s</item>
+        <item quantity="few">Засталося %1$d карткі ў %2$s</item>
+        <item quantity="many">Засталося %1$d картак у %2$s</item>
+        <item quantity="other">Засталося %1$d карткі ў %2$s</item>
+    </plurals>
+    <plurals name="widget_decks">
+        <item quantity="one">%1$d калода</item>
+        <item quantity="few">%1$d калоды</item>
+        <item quantity="many">%1$d калод</item>
+        <item quantity="other">%1$d калоды</item>
+    </plurals>
+    <string name="widget_small">Маленькі AnkiDroid</string>
+    <string name="widget_small_button">AnkiDroid</string>
+    <plurals name="widget_cards_due">
+        <item quantity="one">%d картка ў чарзе</item>
+        <item quantity="few">%d карткі ў чарзе</item>
+        <item quantity="many">%d картак у чарзе</item>
+        <item quantity="other">%d карткі ў чарзе</item>
+    </plurals>
+    <plurals name="widget_eta">
+        <item quantity="one">Засталася %d хвіліна</item>
+        <item quantity="few">Засталося %d хвіліны</item>
+        <item quantity="many">Засталося %d хвілін</item>
+        <item quantity="other">Засталося %d хвіліны</item>
+    </plurals>
+    <string name="widget_add_note">Дадаць нататку</string>
+    <string name="widget_add_note_button">Дадаць новую нататку AnkiDroid</string>
+</resources>

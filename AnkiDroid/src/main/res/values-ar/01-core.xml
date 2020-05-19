@@ -80,7 +80,7 @@
         <item quantity="other">باقي %d ساعة</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="zero">‏يتبقى %d يومًا</item>
+        <item quantity="zero">%d أيام متبقية %d</item>
         <item quantity="one">%d day %d left</item>
         <item quantity="two">%d days %d left</item>
         <item quantity="few">%d days %d left</item>
