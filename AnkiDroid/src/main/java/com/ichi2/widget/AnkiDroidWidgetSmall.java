@@ -155,7 +155,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                         @Override
                         public void onReceive(Context context, Intent intent) {
                             String action = intent.getAction();
-                            if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                            if (action != null && action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
                                 Timber.d("mMountReceiver - Action = Media Mounted");
                                 if (remounted) {
                                     WidgetStatus.update(getBaseContext());
