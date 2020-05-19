@@ -5,6 +5,8 @@ This document contains a list of frequently asked questions, it is intended to g
 ### After installing the latest version of AnkiDroid, it starts crashing
 Please first try uninstalling / re-installing the application, as this often fixes such problems. If the issue persists, see the [bug reports help page](https://ankidroid.org/docs/help.html).
 
+If a deck background image was set, remove `DeckBackgroundImage.png` from the /AnkiDroid/ folder and try again.
+
 ### I cannot find AnkiDroid on Google Play. Is the app restricted in some way?
 
 No AnkiDroid is not restricted in any way, see the [[installation guide|Installation]] for help with installing.
