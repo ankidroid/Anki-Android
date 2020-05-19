@@ -1795,14 +1795,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    class ReadTextListener implements ReadText.ReadTextListener{
-        public void onDone(){
-            if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_QUESTION){
+    class ReadTextListener implements ReadText.ReadTextListener {
+        public void onDone() {
+            if (ReadText.getmQuestionAnswer() == Sound.SOUNDS_QUESTION) {
                 long delay = mWaitAnswerSecond * 1000;
                 if (delay > 0) {
                     mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
                 }
-            }else if(ReadText.getmQuestionAnswer()==Sound.SOUNDS_ANSWER){
+            } else if (ReadText.getmQuestionAnswer() == Sound.SOUNDS_ANSWER) {
                 long delay = mWaitQuestionSecond * 1000;
                 if (delay > 0) {
                     mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
