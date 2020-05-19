@@ -216,7 +216,7 @@ public class Sound {
                     .append("<span>").append(button)
                     .append("</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
-            Timber.d("Content left = %s", contentLeft);
+            Timber.v("Content left = %s", contentLeft);
         }
 
         // unused code related to tts support taken out after v2.2alpha55
