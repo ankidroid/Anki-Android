@@ -804,14 +804,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected int mPrefWaitAnswerSecond;
     protected int mPrefWaitQuestionSecond;
 
-    protected int getDefaultEase() {
-        if (getAnswerButtonCount() == 4) {
-            return EASE_3;
-        } else {
-            return EASE_2;
-        }
-    }
-
 
     protected int getAnswerButtonCount() {
         return getCol().getSched().answerButtons(mCurrentCard);
@@ -1171,7 +1163,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void undo() {
-        if (getCol().undoAvailable()) {
+        if (isUndoAvailable()) {
             blockControls();
             CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UNDO, mAnswerCardHandler);
         }
@@ -1264,7 +1256,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private int getRecommendedEase(boolean easy) {
         try {
-            switch (mSched.answerButtons(mCurrentCard)) {
+            switch (getAnswerButtonCount()) {
                 case 2:
                     return EASE_2;
                 case 3:
@@ -2413,7 +2405,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 closeReviewer(RESULT_DEFAULT, false);
                 return true;
             case COMMAND_UNDO:
-                if (!getCol().undoAvailable()) {
+                if (!isUndoAvailable()) {
                     return false;
                 }
                 undo();
@@ -2460,6 +2452,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_UNSET_FLAG:
                 onFlag(mCurrentCard, FLAG_NONE);
                 return true;
+            case COMMAND_ANSWER_FIRST_BUTTON:
+                return answerCardIfVisible(EASE_1);
+            case COMMAND_ANSWER_SECOND_BUTTON:
+                return answerCardIfVisible(EASE_2);
+            case COMMAND_ANSWER_THIRD_BUTTON:
+                return answerCardIfVisible(EASE_3);
+            case COMMAND_ANSWER_FOURTH_BUTTON:
+                return answerCardIfVisible(EASE_4);
+            case COMMAND_ANSWER_RECOMMENDED:
+                return answerCardIfVisible(getRecommendedEase(false));
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;
@@ -2475,6 +2477,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.i("Toggle flag: Setting flag to %d", flag);
             onFlag(mCurrentCard, flag);
         }
+    }
+
+    private boolean answerCardIfVisible(int ease) {
+        if (!sDisplayAnswer) {
+            return false;
+        }
+        answerCard(ease);
+        return true;
+    }
+
+
+    @VisibleForTesting
+    protected boolean isUndoAvailable() {
+        return getCol().undoAvailable();
     }
 
     // ----------------------------------------------------------------------------
