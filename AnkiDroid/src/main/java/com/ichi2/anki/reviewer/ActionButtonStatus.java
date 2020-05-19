@@ -67,7 +67,7 @@ public class ActionButtonStatus {
     }
 
 
-    public void setCustomButtons(Menu menu) {
+    public void refreshButtonStatuses(Menu menu) {
         for(int itemId : mCustomButtons.keySet()) {
             if (mCustomButtons.get(itemId) != MENU_DISABLED) {
                 MenuItem item = menu.findItem(itemId);

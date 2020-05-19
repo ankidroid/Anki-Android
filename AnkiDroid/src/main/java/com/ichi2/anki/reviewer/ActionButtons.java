@@ -32,7 +32,7 @@ public class ActionButtons
 
     /** Sets the order of the Action Buttons in the action bar */
     public void setCustomButtonsStatus(Menu menu) {
-        this.mActionButtonStatus.setCustomButtons(menu);
+        this.mActionButtonStatus.refreshButtonStatuses(menu);
         this.mMenu = menu;
     }
 
