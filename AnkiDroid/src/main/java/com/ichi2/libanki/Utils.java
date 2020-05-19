@@ -296,16 +296,27 @@ public class Utils {
      * Strip HTML but keep media filenames
      */
     public static String stripHTMLMedia(@NonNull String s) {
-        Matcher imgMatcher = imgPattern.matcher(s);
-        return stripHTML(imgMatcher.replaceAll(" $1 "));
+        return stripHTMLMedia(s, " $1 ");
     }
+
+
+    public static String stripHTMLMedia(@NonNull String s, String replacement) {
+        Matcher imgMatcher = imgPattern.matcher(s);
+        return stripHTML(imgMatcher.replaceAll(replacement));
+    }
+
 
     /**
      * Strip sound but keep media filenames
      */
     public static String stripSoundMedia(String s) {
+        return stripSoundMedia(s, " $1 ");
+    }
+
+
+    public static String stripSoundMedia(String s, String replacement) {
         Matcher soundMatcher = soundPattern.matcher(s);
-        return soundMatcher.replaceAll(" $1 ");
+        return soundMatcher.replaceAll(replacement);
     }
 
 
