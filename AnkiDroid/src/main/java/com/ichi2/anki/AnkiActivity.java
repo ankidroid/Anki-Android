@@ -264,6 +264,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     public void startLoadingCollection() {
         Timber.d("AnkiActivity.startLoadingCollection()");
         if (colIsOpen()) {
+            Timber.d("Synchronously calling onCollectionLoaded");
             onCollectionLoaded(getCol());
             return;
         }
@@ -271,6 +272,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         showProgressBar();
         CollectionLoader.load(this, col -> {
             if (col != null) {
+                Timber.d("Asynchronously calling onCollectionLoaded");
                 onCollectionLoaded(col);
             } else {
                 Intent deckPicker = new Intent(this, DeckPicker.class);
