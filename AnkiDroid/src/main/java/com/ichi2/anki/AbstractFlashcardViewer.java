@@ -2306,7 +2306,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private void blockControls() {
+    @VisibleForTesting
+    protected void blockControls() {
         mControlBlocked = true;
         mCardFrame.setEnabled(false);
         mFlipCardLayout.setEnabled(false);
@@ -2378,7 +2379,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     public boolean executeCommand(@ViewerCommandDef int which) {
-        if (getControlBlocked()) {
+        if (getControlBlocked() && which != COMMAND_EXIT) {
             return false;
         }
         switch (which) {

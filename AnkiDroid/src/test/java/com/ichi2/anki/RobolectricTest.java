@@ -160,4 +160,10 @@ public class RobolectricTest {
     protected long addDynamicDeck(String name) {
         return getCol().getDecks().newDyn(name);
     }
+
+    protected void ensureCollectionLoadIsSynchronous() {
+        //HACK: We perform this to ensure that onCollectionLoaded is performed synchronously when startLoadingCollection
+        //is called.
+        getCol();
+    }
 }
