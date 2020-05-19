@@ -1971,7 +1971,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
             if (delay > 0) {
                 mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-                if(!mSpeakText){
+                if (!mSpeakText) {
                     mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
                 }
             }
