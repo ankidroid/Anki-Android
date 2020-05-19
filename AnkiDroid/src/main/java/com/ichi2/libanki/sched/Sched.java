@@ -197,7 +197,7 @@ public class Sched extends SchedV2 {
 
     private void unburyCardsForDeck(List<Long> allDecks) {
         // Refactored to allow unburying an arbitrary deck
-        String sids = _deckLimit();
+        String sids = Utils.ids2str(allDecks);
         mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids, 0));
         mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids,
                 new Object[] { Utils.intTime(), mCol.usn() });
