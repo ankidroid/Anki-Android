@@ -272,7 +272,7 @@ public class ReviewerKeyboardInputTest {
 
 
         @Override
-        public boolean getControlBlocked() {
+        public boolean isControlBlocked() {
             return mControlsAreBlocked;
         }
 
