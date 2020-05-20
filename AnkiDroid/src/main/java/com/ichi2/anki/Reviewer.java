@@ -247,7 +247,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_undo:
                 Timber.i("Reviewer:: Undo button pressed");
-                if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.undoSize() > 0) {
+                if (mShowWhiteboard && mWhiteboard != null && !mWhiteboard.undoEmpty()) {
                     mWhiteboard.undo();
                 } else {
                     undo();
@@ -436,7 +436,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Undo button
         @DrawableRes int undoIcon;
         boolean undoEnabled;
-        if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.undoSize() > 0) {
+        if (mShowWhiteboard && mWhiteboard != null && !mWhiteboard.undoEmpty()) {
             // Whiteboard undo queue non-empty. Switch the undo icon to a whiteboard specific one.
             undoIcon = R.drawable.ic_eraser_variant_white_24dp;
             undoEnabled = true;
