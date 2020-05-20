@@ -474,10 +474,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected CollectionTask.TaskListener mDismissCardHandler = new NextCardHandler() { /* superclass is sufficient */ };
+    protected final CollectionTask.TaskListener mDismissCardHandler = new NextCardHandler() { /* superclass is sufficient */ };
 
 
-    private CollectionTask.TaskListener mUpdateCardHandler = new CollectionTask.TaskListener() {
+    private final CollectionTask.TaskListener mUpdateCardHandler = new CollectionTask.TaskListener() {
         private boolean mNoMoreCards;
 
 
@@ -618,9 +618,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected CollectionTask.TaskListener mAnswerCardHandler = new NextCardHandler() {
-
-
+    protected final CollectionTask.TaskListener mAnswerCardHandler = new NextCardHandler() {
         @Override
         public void onPreExecute() {
             blockControls();
