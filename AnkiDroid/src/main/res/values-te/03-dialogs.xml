@@ -49,7 +49,7 @@
         <item quantity="one">%1$s లో అన్ని కార్డ్లను తొలగించాలా? ఇది %2$d కార్డును కలిగి ఉంది.</item>
         <item quantity="other">%1$s లో అన్ని కార్డులు తొలగించాలా? ఇది %2$d కార్డును కలిగి ఉంది.</item>
     </plurals>
-    <string name="delete_cram_deck_message">%S లో అన్ని కార్డులనూ వారి అసలు డెక్స్లోకి పంపాలా?</string>
+    <string name="delete_cram_deck_message">%s లో అన్ని కార్డులనూ వారి అసలు డెక్స్లోకి పంపాలా?</string>
     <string name="no_tts_available_message">టెక్స్ట్-టు-స్పీచ్ లాంగ్వేజ్ అందుబాటులో లేదు</string>
     <string name="initializing_tts">TTS ను ప్రారంభిస్తోంది&#8230;</string>
     <string name="tts_no_tts">మాట్లాడకండి</string>

@@ -49,16 +49,16 @@
         <item>Рекомендована відповідь (зелений)</item>
         <item>Краще, ніж рекомендовано</item>
         <item>Скасувати</item>
-        <item>Редагувати нотатку</item>
-        <item>Міткувати нотатку</item>
+        <item>Редагувати запис</item>
+        <item>Позначити запис</item>
         <item>Пошук виразу</item>
         <item>Приховати картку</item>
-        <item>Відкласти картку</item>
-        <item>Видалити нотатку</item>
+        <item>Приховати картку</item>
+        <item>Видалити запис</item>
         <item>Відтворити медіа</item>
         <item>Перервати навчання</item>
-        <item>Приховати нотатку</item>
-        <item>Відкласти нотатку</item>
+        <item>Відкласти запис</item>
+        <item>Сховати запис</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>
@@ -66,7 +66,7 @@
         <item>Remove Flag</item>
     </string-array>
     <string-array name="leech_action_labels">
-        <item>Відкласти картку</item>
+        <item>Сховати картку</item>
         <item>Тільки мітки</item>
     </string-array>
     <string-array name="new_order_labels">
@@ -86,7 +86,7 @@
     </string-array>
     <string-array name="add_to_cur_labels">
         <item>Використовувати поточну колоду</item>
-        <item>Вирішити за типом примітки</item>
+        <item>Вирішувати за типом записів</item>
     </string-array>
     <string-array name="new_spread_labels">
         <item>Змішати нові карти і повторювані</item>

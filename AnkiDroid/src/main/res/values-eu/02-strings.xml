@@ -39,7 +39,7 @@
 -->
 <resources>
     <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">%XXX</string>
+    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Itxi Kutxa</string>

@@ -122,7 +122,7 @@
     <string name="menu_suspend">Vyřadit</string>
     <string name="menu_delete_note">Odstranit poznámku</string>
     <string name="menu_flag">Příznak</string>
-    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card">Příznak</string>
     <string name="menu_flag_card_zero">Žádný příznak</string>
     <string name="menu_flag_card_one">Červený příznak</string>
     <string name="menu_flag_card_two">Oranžový příznak</string>

@@ -92,8 +92,8 @@
     </string-array>
     <string name="gestures">Activer les gestes</string>
     <string name="gestures_summ">Assigner des gestes à des actions comme répondre et éditer des cartes.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links">Ignorer les gestes sur les liens</string>
+    <string name="gestures_allow_links_summary">Les gestes tactiles ne seront pas traités si un lien/indice est pressé.  </string>
     <string name="gestures_swipe_up">Glissez vers le haut</string>
     <string name="gestures_swipe_down">Glissez vers le bas</string>
     <string name="gestures_swipe_left">Faites glisser vers la gauche</string>

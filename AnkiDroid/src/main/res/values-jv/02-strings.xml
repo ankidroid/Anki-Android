@@ -47,8 +47,8 @@
     <string name="CardEditorCardDeck">Dek kartu:</string>
     <string name="CardEditorNoteDeck">Dek:</string>
     <string name="CardEditorModel">Mengetik:</string>
-    <string name="CardEditorTags">Tag:% 1 $ s</string>
-    <string name="CardEditorCards">Kartu:% 1 $ s</string>
+    <string name="CardEditorTags">Tags: %1$s</string>
+    <string name="CardEditorCards">Kartu: %1$s</string>
     <string name="tag_name">Nama tag</string>
     <string name="add_new_filter_tags">Tambahkan / filter tag</string>
     <string name="add_tag">Tambahkan tag</string>
@@ -122,7 +122,7 @@
     <string name="field_remapping">%1$s (dari \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Setiap kartu yang dipetakan ke tidak akan dihapus. Jika sebuah catatan tidak memiliki kartu yang tersisa, kartu tersebut akan hilang. Apakah anda yakin ingin melanjutkan?</string>
     <plurals name="timebox_reached">
-        <item quantity="other">Kartu% 1 $ d dipelajari di% 2 $ s</item>
+        <item quantity="other">Kartu %1$d dipelajari di %2$s</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
@@ -141,9 +141,7 @@
     <string name="rename">Ganti nama</string>
     <string name="default_conf_delete_error">Grup opsi default tidak dapat dihapus</string>
     <plurals name="factadder_cards_added">
-        <item quantity="other">% d kartu ditambahkan
-Untuk ibu
-% d kartu ditambahkan</item>
+        <item quantity="other">%d kartu ditambahkan</item>
     </plurals>
     <string name="help_title">Membantu</string>
     <string name="check_db">Periksa database</string>
@@ -165,7 +163,7 @@ Untuk ibu
     <string name="import_error_unhandled_request">Unable to process import request</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
-    <string name="import_error_content_provider">File yang dipilih tidak bisa diimpor secara otomatis oleh AnkiDroid. Silakan lihat manual pengguna tentang cara mengimpor file anki secara manual: \n %s</string>
+    <string name="import_error_content_provider">File yang dipilih tidak bisa diimpor secara otomatis oleh AnkiDroid. Silakan lihat manual pengguna tentang cara mengimpor file anki secara manual: \n%s</string>
     <string name="import_replacing">Mengganti koleksi&#8230;</string>
     <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">Sertakan penjadwalan</string>
@@ -204,34 +202,22 @@ Untuk ibu
     <string name="lookup_hint">Setelah menyalin teks, sentuh di manapun di flashcard untuk menampilkan ikon pencarian</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
-        <item quantity="other">% s detik
-Untuk ibu
-% s detik</item>
+        <item quantity="other">%s detik</item>
     </plurals>
     <plurals name="time_span_minutes">
-        <item quantity="other">% s menit
-Untuk ibu
-% s menit</item>
+        <item quantity="other">%s menit</item>
     </plurals>
     <plurals name="time_span_hours">
-        <item quantity="other">% s jam
-Untuk ibu
-jam% s</item>
+        <item quantity="other">%s jam</item>
     </plurals>
     <plurals name="time_span_days">
-        <item quantity="other">% s hari
-Untuk ibu
-% s hari</item>
+        <item quantity="other">%s hari</item>
     </plurals>
     <plurals name="time_span_months">
-        <item quantity="other">bulan% s
-Untuk ibu
-bulan%</item>
+        <item quantity="other">bulan %s</item>
     </plurals>
     <plurals name="time_span_years">
-        <item quantity="other">tahun% s
-Untuk ibu
-% s tahun</item>
+        <item quantity="other">tahun %s</item>
     </plurals>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less

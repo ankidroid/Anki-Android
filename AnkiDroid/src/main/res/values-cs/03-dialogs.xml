@@ -41,7 +41,7 @@
     <string name="check_db_title">Zkontrolovat databázi</string>
     <string name="check_db_warning">Toto může trvat dlouhou dobu</string>
     <string name="check_db_acknowledge">Databáze zkontrolována</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">Databáze zkontrolována a optimalizována.\nZmenšena o %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Smazat balíček</string>
     <string name="delete_deck_default_deck">Nelze odstranit výchozí balíček</string>
     <string name="delete_deck_title">Smazat balíček</string>
