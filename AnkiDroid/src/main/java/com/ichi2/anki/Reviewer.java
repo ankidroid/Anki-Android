@@ -448,11 +448,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             // We can arrive here even if `mShowWhiteboard &&
             // mWhiteboard != null` if no stroke had ever been made
             undoIcon = R.drawable.ic_undo_white_24dp;
-            if (colIsOpen() && getCol().undoAvailable()) {
-                undoEnabled = true;
-            } else {
-                undoEnabled = false;
-            }
+            undoEnabled = (colIsOpen() && getCol().undoAvailable());
         }
         int alpha = (undoEnabled) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         menu.findItem(R.id.action_undo).setIcon(undoIcon);
