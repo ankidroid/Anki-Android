@@ -16,13 +16,17 @@
 
 package com.ichi2.libanki.sched;
 
+import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.sched.AbstractSched.DeckDueTreeNode;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -50,6 +54,51 @@ public class SchedTest extends RobolectricTest {
         sched.unburyCardsForDeck(Consts.DEFAULT_DECK_ID);
 
         assertThat("Card should no longer be buried", getCardInDefaultDeck(sched), notNullValue());
+    }
+
+    @Test
+    public void learnCardsAreNotFiltered() {
+        //Replicates Anki commit: 13c54e02d8fd2b35f6c2f4b796fc44dec65043b8
+
+        addNoteUsingBasicModel("Hello", "World");
+
+        Sched sched = new Sched(getCol());
+
+        markNextCardAsGood(sched);
+
+        long dynDeck = addDynamicDeck("Hello");
+
+        //Act
+        sched.rebuildDyn(dynDeck);
+
+        //Assert
+        DeckDueTreeNode dynamicDeck = getCountsForDid(dynDeck);
+
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.lrnCount, is(0));
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.newCount, is(0));
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.revCount, is(0));
+    }
+
+
+    private void markNextCardAsGood(Sched sched) {
+        Card toAnswer = sched.getCard();
+        assertThat(toAnswer, notNullValue());
+
+        sched.answerCard(toAnswer, AbstractFlashcardViewer.EASE_2); //Good
+    }
+
+
+    @NonNull
+    private DeckDueTreeNode getCountsForDid(double didToFind) {
+        List<DeckDueTreeNode> tree =  getCol().getSched().deckDueTree();
+
+        for (DeckDueTreeNode node: tree) {
+            if (node.did == didToFind) {
+                return node;
+            }
+        }
+
+        throw new IllegalStateException(String.format("Could not find deck %s", didToFind));
     }
 
 
