@@ -73,11 +73,7 @@ public class ActionButtonStatus {
                 MenuItem item = menu.findItem(itemId);
                 item.setShowAsAction(mCustomButtons.get(itemId));
                 Drawable icon = item.getIcon();
-                if (mReviewerUi.isControlBlocked()) {
-                    item.setEnabled(false);
-                } else {
-                    item.setEnabled(true);
-                }
+                item.setEnabled(!mReviewerUi.isControlBlocked());
                 if (icon != null) {
                     if (mReviewerUi.isControlBlocked()) {
                         icon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
