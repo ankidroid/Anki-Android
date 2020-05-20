@@ -197,9 +197,22 @@
                 android:value="com.ichi2.anki.DeckPicker"
                 />
         </activity>
+
+        <!-- Context menu item name is the label, context is the system language -->
+        <!-- Note: This appears to require that the target label is variable -->
+        <activity-alias
+            android:name="com.ichi2.anki.CardBrowserContextMenuAction"
+            android:label="@string/card_browser_context_menu"
+            android:targetActivity="com.ichi2.anki.CardBrowser">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
         <activity
             android:name="com.ichi2.anki.CardBrowser"
-            android:label="Card Browser"
+            android:label="@string/card_browser_label"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:parentActivityName=".DeckPicker"
@@ -209,11 +222,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ichi2.anki.DeckPicker"
                 />
-            <intent-filter>
-                <action android:name="android.intent.action.PROCESS_TEXT" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ModelBrowser"
