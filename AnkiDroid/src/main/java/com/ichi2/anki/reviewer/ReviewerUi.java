@@ -17,5 +17,5 @@
 package com.ichi2.anki.reviewer;
 
 public interface ReviewerUi {
-    boolean getControlBlocked();
+    boolean isControlBlocked();
 }

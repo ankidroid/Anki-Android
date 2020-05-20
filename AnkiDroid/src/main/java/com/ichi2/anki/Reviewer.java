@@ -786,7 +786,7 @@ public class Reviewer extends AbstractFlashcardViewer {
      * @return true if there is another card of same note that could be dismissed
      */
     private boolean suspendNoteAvailable() {
-        if (mCurrentCard == null || getControlBlocked()) {
+        if (mCurrentCard == null || isControlBlocked()) {
             return false;
         }
         // whether there exists a sibling not buried.
@@ -795,7 +795,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     private boolean buryNoteAvailable() {
-        if (mCurrentCard == null || getControlBlocked()) {
+        if (mCurrentCard == null || isControlBlocked()) {
             return false;
         }
         // Whether there exists a sibling which is neither susbended nor buried
