@@ -436,14 +436,17 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Undo button
         @DrawableRes int undoIcon;
         boolean undoEnabled;
-        if (mShowWhiteboard && mWhiteboard != null && !mWhiteboard.undoEmpty()) {
-            // Whiteboard undo queue non-empty. Switch the undo icon to a whiteboard specific one.
-            undoIcon = R.drawable.ic_eraser_variant_white_24dp;
-            undoEnabled = true;
-        } else if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.isUndoModeActive()) {
-            // Whiteboard undo queue empty, but user has added strokes to it for current card. Disable undo button.
-            undoIcon = R.drawable.ic_eraser_variant_white_24dp;
-            undoEnabled = false;
+        if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.isUndoModeActive()) {
+            // Whiteboard is here and strokes have been added at some point
+            if (!mWhiteboard.undoEmpty()) {
+                // Whiteboard undo queue non-empty. Switch the undo icon to a whiteboard specific one.
+                undoIcon = R.drawable.ic_eraser_variant_white_24dp;
+                undoEnabled = true;
+            } else  {
+                // All strokes have been erased. Show a disabled eraser
+                undoIcon = R.drawable.ic_eraser_variant_white_24dp;
+                undoEnabled = false;
+            }
         } else {
             // We can arrive here even if `mShowWhiteboard &&
             // mWhiteboard != null` if no stroke had ever been made
