@@ -2368,7 +2368,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     public boolean executeCommand(@ViewerCommandDef int which) {
-        if (getControlBlocked() && which != COMMAND_EXIT) {
+        if (isControlBlocked() && which != COMMAND_EXIT) {
             return false;
         }
         switch (which) {
@@ -3229,7 +3229,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 new CollectionTask.TaskData(null, 0));
     }
 
-    public boolean getControlBlocked() {
+    public boolean isControlBlocked() {
         return mControlBlocked;
     }
 
