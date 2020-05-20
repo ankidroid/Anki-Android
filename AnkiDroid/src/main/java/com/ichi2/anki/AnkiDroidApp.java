@@ -37,6 +37,7 @@ import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
+import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.exception.ManuallyReportedException;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
@@ -45,7 +46,6 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
-import com.ichi2.utils.WebViewDebugging;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
@@ -228,6 +228,7 @@ public class AnkiDroidApp extends Application {
             UsageAnalytics.setDryRun(true);
         }
 
+        CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         NotificationChannels.setup(getApplicationContext());
 

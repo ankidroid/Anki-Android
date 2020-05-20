@@ -49,6 +49,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.debug.DatabaseLock;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.StorageAccessException;
@@ -339,6 +340,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     startActivity(i);
                     return true;
                 });
+                // FIXME: The menu is named in the system language (as it's defined in the manifest which may be
+                //  different than the app language
+                CheckBoxPreference cardBrowserContextMenuPreference = (CheckBoxPreference) screen.findPreference(CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY);
+                String menuName = getString(R.string.card_browser_context_menu);
+                cardBrowserContextMenuPreference.setTitle(getString(R.string.card_browser_enable_external_context_menu, menuName));
+                cardBrowserContextMenuPreference.setSummary(getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
+
                 // Make it possible to test crash reporting, but only for DEBUG builds
                 if (BuildConfig.DEBUG) {
                     Timber.i("Debug mode, allowing for test crashes");
@@ -732,6 +740,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     builder.show();
                     break;
                 }
+                case CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY:
+                    CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
             }
             // Update the summary text to reflect new value
             updateSummary(pref);
