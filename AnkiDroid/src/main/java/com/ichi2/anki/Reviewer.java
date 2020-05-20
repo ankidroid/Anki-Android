@@ -431,6 +431,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             }
         }
 
+        // Undo button
         if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.undoSize() > 0) {
             // Whiteboard undo queue non-empty. Switch the undo icon to a whiteboard specific one.
             menu.findItem(R.id.action_undo).setIcon(R.drawable.ic_eraser_variant_white_24dp);
@@ -446,6 +447,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_undo).setIcon(R.drawable.ic_undo_white_24dp);
             menu.findItem(R.id.action_undo).setEnabled(false).getIcon().setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
         }
+
+        // White board button
         if (mPrefWhiteboard) {
             // Configure the whiteboard related items in the action bar
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.disable_whiteboard);
