@@ -53,7 +53,7 @@ public class CardBrowserContextMenu {
         try {
             return getPackageManager().getComponentEnabledSetting(getComponentName()) == COMPONENT_ENABLED_STATE_ENABLED;
         } catch (Exception e) {
-            Timber.w("Failed to read context menu status setting");
+            Timber.w(e, "Failed to read context menu status setting");
             return null;
         }
     }
