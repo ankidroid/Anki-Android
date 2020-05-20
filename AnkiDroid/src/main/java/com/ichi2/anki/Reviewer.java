@@ -444,12 +444,15 @@ public class Reviewer extends AbstractFlashcardViewer {
             // Whiteboard undo queue empty, but user has added strokes to it for current card. Disable undo button.
             undoIcon = R.drawable.ic_eraser_variant_white_24dp;
             undoEnabled = false;
-        } else if (colIsOpen() && getCol().undoAvailable()) {
-            undoIcon = R.drawable.ic_undo_white_24dp;
-            undoEnabled = true;
         } else {
+            // We can arrive here even if `mShowWhiteboard &&
+            // mWhiteboard != null` if no stroke had ever been made
             undoIcon = R.drawable.ic_undo_white_24dp;
-            undoEnabled = false;
+            if (colIsOpen() && getCol().undoAvailable()) {
+                undoEnabled = true;
+            } else {
+                undoEnabled = false;
+            }
         }
         int alpha = (undoEnabled) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         menu.findItem(R.id.action_undo).setIcon(undoIcon);
