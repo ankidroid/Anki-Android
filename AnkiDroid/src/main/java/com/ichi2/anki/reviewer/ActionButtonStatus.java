@@ -75,12 +75,13 @@ public class ActionButtonStatus {
                 Drawable icon = item.getIcon();
                 if (mReviewerUi.isControlBlocked()) {
                     item.setEnabled(false);
-                    if (icon != null) {
-                        icon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
-                    }
                 } else {
                     item.setEnabled(true);
-                    if (icon != null) {
+                }
+                if (icon != null) {
+                    if (mReviewerUi.isControlBlocked()) {
+                        icon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
+                    } else {
                         icon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
                     }
                 }
