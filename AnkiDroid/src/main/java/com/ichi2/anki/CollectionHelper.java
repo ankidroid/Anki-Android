@@ -110,8 +110,9 @@ public class CollectionHelper {
                 return null;
             }
             // Open the database
-            Timber.i("openCollection: %s", path);
+            Timber.i("Begin openCollection: %s", path);
             mCollection = Storage.Collection(context, path, false, true);
+            Timber.i("End openCollection: %s", path);
         }
         return mCollection;
     }
