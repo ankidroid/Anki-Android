@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.view.KeyEvent;
 
+import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 
@@ -232,7 +233,7 @@ public class ReviewerKeyboardInputTest {
         //We pick an arbitrary action to ensure that nothing happens if controls are blocked
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingQuestion()
                 .withUndoAvailable(true)
-                .withControlsBlocked(true);
+                .withControlsBlocked(ReviewerUi.ControlBlock.SLOW);
 
         underTest.handleUnicodeKeyPress('z');
 
@@ -267,12 +268,12 @@ public class ReviewerKeyboardInputTest {
         private Collection.DismissType mDismissType;
         private boolean mUndoCalled;
         private boolean mReplayAudioCalled;
-        private boolean mControlsAreBlocked = false;
+        private ControlBlock mControlsAreBlocked = ControlBlock.UNBLOCKED;
         private boolean mUndoAvailable;
 
 
         @Override
-        public boolean isControlBlocked() {
+        public ControlBlock getControlBlocked() {
             return mControlsAreBlocked;
         }
 
@@ -290,7 +291,7 @@ public class ReviewerKeyboardInputTest {
             return keyboardInputTestReviewer;
         }
 
-        public KeyboardInputTestReviewer withControlsBlocked(boolean value) {
+        public KeyboardInputTestReviewer withControlsBlocked(ControlBlock value) {
             mControlsAreBlocked = value;
             return this;
         }

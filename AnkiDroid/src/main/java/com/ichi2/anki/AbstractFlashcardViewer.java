@@ -325,8 +325,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** Lock to allow thread-safe regeneration of mCard */
     private ReadWriteLock mCardLock = new ReentrantReadWriteLock();
 
-    /** whether controls are currently blocked */
-    private boolean mControlBlocked = true;
+    /** whether controls are currently blocked, and how long we expect them to be */
+    private ReviewerUi.ControlBlock mControlBlocked = ControlBlock.SLOW;
 
     /** Handle Mark/Flag state of cards */
     private CardMarker mCardMarker;
@@ -618,12 +618,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected final CollectionTask.TaskListener mAnswerCardHandler = new NextCardHandler() {
-        @Override
-        public void onPreExecute() {
-            blockControls();
-        }
-    };
+    protected CollectionTask.TaskListener mAnswerCardHandler (boolean quick) {
+        return new NextCardHandler() {
+            @Override
+            public void onPreExecute() {
+                blockControls(quick);
+            }
+        };
+    }
 
 
     /**
@@ -1056,7 +1058,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
            note type could have lead to the card being deleted */
         if (data != null && data.hasExtra("reloadRequired")) {
             getCol().getSched().reset();
-            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(false),
                     new CollectionTask.TaskData(null, 0));
         }
 
@@ -1072,7 +1074,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
             getCol().getSched().reset();
-            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(false),
                     new CollectionTask.TaskData(null, 0));
         }
         if (!mDisableClipboard) {
@@ -1162,7 +1164,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UNDO, mAnswerCardHandler);
+            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UNDO, mAnswerCardHandler(false));
         }
     }
 
@@ -1315,7 +1317,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(true),
                 new CollectionTask.TaskData(mCurrentCard, mCurrentEase));
     }
 
@@ -2241,7 +2243,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     private void unblockControls() {
-        mControlBlocked = false;
+        mControlBlocked = ControlBlock.UNBLOCKED;
         mCardFrame.setEnabled(true);
         mFlipCardLayout.setEnabled(true);
 
@@ -2296,8 +2298,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     @VisibleForTesting
-    protected void blockControls() {
-        mControlBlocked = true;
+    /** *
+     * @param quick Whether we expect the control to come back quickly
+     */
+    protected void blockControls(boolean quick) {
+        if (quick) {
+            mControlBlocked = ControlBlock.QUICK;
+        } else {
+            mControlBlocked = ControlBlock.SLOW;
+        }
         mCardFrame.setEnabled(false);
         mFlipCardLayout.setEnabled(false);
         mTouchLayer.setVisibility(View.INVISIBLE);
@@ -2883,7 +2892,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected void dismiss(Collection.DismissType type) {
-        blockControls();
+        blockControls(false);
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DISMISS, mDismissCardHandler,
                 new CollectionTask.TaskData(new Object[]{mCurrentCard, type}));
     }
@@ -3225,14 +3234,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(false),
                 new CollectionTask.TaskData(null, 0));
     }
 
-    public boolean isControlBlocked() {
+    public ReviewerUi.ControlBlock getControlBlocked() {
         return mControlBlocked;
     }
 
+
+    public boolean isControlBlocked() {
+        return getControlBlocked() != ControlBlock.UNBLOCKED;
+    }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     static void setEditorCard(Card card) {
