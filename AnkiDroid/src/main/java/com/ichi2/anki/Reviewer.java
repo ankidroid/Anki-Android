@@ -217,7 +217,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             mSched.reset();     // Reset schedule in case card was previously loaded
             mSchedResetDone = false;
         }
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(false),
                 new CollectionTask.TaskData(null, 0));
 
         disableDrawerSwipeOnConflicts();
