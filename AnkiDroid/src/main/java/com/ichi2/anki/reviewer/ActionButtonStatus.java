@@ -75,7 +75,17 @@ public class ActionButtonStatus {
                 Drawable icon = item.getIcon();
                 item.setEnabled(!mReviewerUi.isControlBlocked());
                 if (icon != null) {
-                    if (mReviewerUi.isControlBlocked()) {
+                    /* Ideally, we want to give feedback to users that
+                    buttons are disabled.  However, some actions are
+                    expected to be so quick that the visual feedback
+                    is useless and is only seen as a flickering.
+
+                    We use a heuristic to decide whether the next card
+                    will appear quickly or slowly.  We change the
+                    color only if the buttons are blocked and we
+                    expect the next card to take time to arrive.
+                    */
+                    if (mReviewerUi.getControlBlocked() == ReviewerUi.ControlBlock.SLOW) {
                         icon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
                     } else {
                         icon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);

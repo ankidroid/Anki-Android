@@ -43,7 +43,7 @@ public class ReviewerTest extends RobolectricTest {
             scenario.moveToState(Lifecycle.State.CREATED);
             shadowOf(getMainLooper()).idle();
             scenario.onActivity(reviewer -> {
-                reviewer.blockControls();
+                reviewer.blockControls(true);
                 reviewer.executeCommand(ViewerCommand.COMMAND_EXIT);
             });
             assertThat(scenario.getResult().getResultCode(), is(RESULT_DEFAULT));
