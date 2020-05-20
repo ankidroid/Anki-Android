@@ -402,5 +402,9 @@ public class Whiteboard extends View {
             }
             invalidate();
         }
+
+        public boolean empty() {
+            return mWhichStack.empty();
+        }
     }
 }
