@@ -438,13 +438,12 @@ public class Reviewer extends AbstractFlashcardViewer {
         boolean undoEnabled;
         if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.isUndoModeActive()) {
             // Whiteboard is here and strokes have been added at some point
+            undoIcon = R.drawable.ic_eraser_variant_white_24dp;
             if (!mWhiteboard.undoEmpty()) {
                 // Whiteboard undo queue non-empty. Switch the undo icon to a whiteboard specific one.
-                undoIcon = R.drawable.ic_eraser_variant_white_24dp;
                 undoEnabled = true;
             } else  {
                 // All strokes have been erased. Show a disabled eraser
-                undoIcon = R.drawable.ic_eraser_variant_white_24dp;
                 undoEnabled = false;
             }
         } else {
