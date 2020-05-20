@@ -1019,7 +1019,7 @@ public class Sched extends SchedV2 {
         if (!TextUtils.isEmpty(search.trim())) {
             search = String.format(Locale.US, "(%s)", search);
         }
-        search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered", search);
+        search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered -is:learn", search);
         ids = mCol.findCards(search, orderlimit);
         if (ids.isEmpty()) {
             return ids;
