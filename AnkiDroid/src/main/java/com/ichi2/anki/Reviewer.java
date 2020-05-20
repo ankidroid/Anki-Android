@@ -435,22 +435,25 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         // Undo button
         @DrawableRes int undoIcon;
+        boolean undoEnabled;
         if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.undoSize() > 0) {
             // Whiteboard undo queue non-empty. Switch the undo icon to a whiteboard specific one.
             undoIcon = R.drawable.ic_eraser_variant_white_24dp;
-            menu.findItem(R.id.action_undo).setEnabled(true).getIcon().setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
+            undoEnabled = true;
         } else if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.isUndoModeActive()) {
             // Whiteboard undo queue empty, but user has added strokes to it for current card. Disable undo button.
             undoIcon = R.drawable.ic_eraser_variant_white_24dp;
-            menu.findItem(R.id.action_undo).setEnabled(false).getIcon().setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
+            undoEnabled = false;
         } else if (colIsOpen() && getCol().undoAvailable()) {
             undoIcon = R.drawable.ic_undo_white_24dp;
-            menu.findItem(R.id.action_undo).setEnabled(true).getIcon().setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
+            undoEnabled = true;
         } else {
             undoIcon = R.drawable.ic_undo_white_24dp;
-            menu.findItem(R.id.action_undo).setEnabled(false).getIcon().setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
+            undoEnabled = false;
         }
+        int alpha = (undoEnabled) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         menu.findItem(R.id.action_undo).setIcon(undoIcon);
+        menu.findItem(R.id.action_undo).setEnabled(undoEnabled).getIcon().setAlpha(alpha);
 
         // White board button
         if (mPrefWhiteboard) {
