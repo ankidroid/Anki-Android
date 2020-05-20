@@ -63,7 +63,7 @@
     <string name="pref_cat_workarounds">Penyelesaian sementara</string>
     <string name="pref_cat_plugins">Plugin</string>
     <string name="about_title">Kira-Kira Apa Yang Anda Perlu Lakukan</string>
-    <string name="about_version">Versi: %@: </string>
+    <string name="about_version">Versi: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Strok lebar</string>
     <string name="whiteboard_black">Pukulan hitam</string>
