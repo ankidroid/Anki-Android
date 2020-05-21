@@ -14,6 +14,8 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -494,6 +496,24 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         intent.putExtras(new Bundle());
         this.startActivityWithoutAnimation(intent);
         this.finishWithoutAnimation();
+    }
+
+    protected void enableToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+    }
+
+    protected void enableToolbar(@Nullable View view) {
+        if (view == null) {
+            Timber.w("Unable to enable toolbar - invalid view supplied");
+            return;
+        }
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
     }
 }
 
