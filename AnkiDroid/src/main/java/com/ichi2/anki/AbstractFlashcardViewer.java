@@ -42,7 +42,6 @@ import android.os.SystemClock;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
