@@ -615,13 +615,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     onCheck(position, view);
                 } else {
                     // load up the card selected on the list
-                    mCurrentCardId = Long.parseLong(getCards().get(position).get(ID));
-                    sCardBrowserCard = getCol().getCard(mCurrentCardId);
-                    // start note editor using the card we just loaded
-                    Intent editCard = new Intent(CardBrowser.this, NoteEditor.class);
-                    editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
-                    editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
-                    startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
+                    long clickedCardId = Long.parseLong(getCards().get(position).get(ID));
+                    openNoteEditorForCard(clickedCardId);
                 }
             }
         });
@@ -652,6 +647,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
             selectDeckById(getCol().getDecks().selected());
         }
     }
+
+    /** Opens the note editor for a card.
+     * We use the Card ID to specify the preview target */
+    public void openNoteEditorForCard(long cardId) {
+        mCurrentCardId = cardId;
+        sCardBrowserCard = getCol().getCard(mCurrentCardId);
+        // start note editor using the card we just loaded
+        Intent editCard = new Intent(this, NoteEditor.class);
+        editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
+        editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
+        startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
+    }
+
 
     @Override
     protected void onStop() {
