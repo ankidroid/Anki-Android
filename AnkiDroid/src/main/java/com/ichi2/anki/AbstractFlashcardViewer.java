@@ -42,6 +42,7 @@ import android.os.SystemClock;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
@@ -1797,6 +1798,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     class ReadTextListener implements ReadText.ReadTextListener {
         public void onDone() {
+            if(!mUseTimer) {
+                return;
+            }
             if (ReadText.getmQuestionAnswer() == Sound.SOUNDS_QUESTION) {
                 long delay = mWaitAnswerSecond * 1000;
                 if (delay > 0) {

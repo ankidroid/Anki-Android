@@ -36,6 +36,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class ReadText {
@@ -275,7 +276,7 @@ public class ReadText {
                 TextToSpeech.LANG_AVAILABLE;
     }
 
-    public static void initializeTts(Context context, ReadTextListener listener) {
+    public static void initializeTts(Context context, @NonNull ReadTextListener listener) {
         // Store weak reference to Activity to prevent memory leak
         mReviewer = new WeakReference<>(context);
         // Create new TTS object and setup its onInit Listener
