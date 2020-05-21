@@ -31,17 +31,21 @@ public class BootService extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (sWasRun) {
+            Timber.d("BootService - Already run");
             return;
         }
         if (!Permissions.hasStorageAccessPermission(context)) {
+            Timber.w("Boot Service did not execute - no permissions");
             return;
         }
         // There are cases where the app is installed, and we have access, but nothing exist yet
         Collection col = getColSafe(context);
         if (col == null || col.getDecks() == null) {
+            Timber.w("Boot Service did not execute - error loading collection");
             return;
         }
 
+        Timber.i("Executing Boot Service");
         scheduleDeckReminder(context);
         scheduleNotification(context);
         sWasRun = true;
