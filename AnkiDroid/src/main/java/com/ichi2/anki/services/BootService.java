@@ -17,6 +17,8 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.Calendar;
 
+import timber.log.Timber;
+
 public class BootService extends BroadcastReceiver {
 
     /**
@@ -35,7 +37,7 @@ public class BootService extends BroadcastReceiver {
             return;
         }
         // There are cases where the app is installed, and we have access, but nothing exist yet
-        Collection col = getCol(context);
+        Collection col = getColSafe(context);
         if (col == null || col.getDecks() == null) {
             return;
         }
@@ -46,8 +48,15 @@ public class BootService extends BroadcastReceiver {
     }
 
 
-    private Collection getCol(Context context) {
-        return CollectionHelper.getInstance().getCol(context);
+    private Collection getColSafe(Context context) {
+        //#6239 - previously would crash if ejecting, we don't want a report if this happens so don't use
+        //getInstance().getColSafe
+        try {
+            return CollectionHelper.getInstance().getCol(context);
+        } catch (Exception e) {
+            Timber.e(e, "Failed to get collection for boot service - possibly media ejecting");
+            return null;
+        }
     }
 
 
