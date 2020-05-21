@@ -35,8 +35,8 @@ public class BootService extends BroadcastReceiver {
             return;
         }
         // There are cases where the app is installed, and we have access, but nothing exist yet
-        if (CollectionHelper.getInstance().getCol(context) == null
-                || CollectionHelper.getInstance().getCol(context).getDecks() == null) {
+        Collection col = getCol(context);
+        if (col == null || col.getDecks() == null) {
             return;
         }
 
@@ -44,6 +44,12 @@ public class BootService extends BroadcastReceiver {
         scheduleNotification(context);
         sWasRun = true;
     }
+
+
+    private Collection getCol(Context context) {
+        return CollectionHelper.getInstance().getCol(context);
+    }
+
 
     private void scheduleDeckReminder(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
