@@ -21,6 +21,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -74,6 +78,7 @@ public class CardTemplateEditor extends AnkiActivity {
     private long mNoteId;
     private int mOrdId;
     private static final int REQUEST_PREVIEWER = 0;
+    private static final int REQUEST_CARD_BROWSER_APPEARANCE = 1;
     private static final String DUMMY_TAG = "DUMMY_NOTE_TO_DELETE_x0-90-fa";
 
 
@@ -505,10 +510,43 @@ public class CardTemplateEditor extends AnkiActivity {
                     }
 
                     return true;
+                case R.id.action_card_browser_appearance:
+                    Timber.i("CardTemplateEditor::Card Browser Template button pressed");
+                    launchCardBrowserAppearance(getCurrentTemplate());
                 default:
                     return super.onOptionsItemSelected(item);
             }
         }
+
+
+        private void launchCardBrowserAppearance(JSONObject currentTemplate) {
+            Context context = AnkiDroidApp.getInstance().getBaseContext();
+            if (context == null) {
+                //Catch-22, we can't notify failure as there's no context. Shouldn't happen anyway
+                Timber.w("Context was null - couldn't launch Card Browser Appearance window");
+                return;
+            }
+            Intent browserAppearanceIntent = CardTemplateBrowserAppearanceEditor.getIntentFromTemplate(context, currentTemplate);
+            startActivityForResult(browserAppearanceIntent, REQUEST_CARD_BROWSER_APPEARANCE);
+        }
+
+
+        @CheckResult @NonNull
+        private JSONObject getCurrentTemplate() {
+            int currentCardTemplateIndex = getCurrentCardTemplateIndex();
+            return (JSONObject) getModel().getJSONArray("tmpls").get(currentCardTemplateIndex);
+        }
+
+
+        /**
+         * @return The index of the card template which is currently referred to by the fragment
+         */
+        @CheckResult
+        private int getCurrentCardTemplateIndex() {
+            //COULD_BE_BETTER: Lots of duplicate code could call this. Hold off on the refactor until #5151 goes in.
+            return getArguments().getInt("position");
+        }
+
 
         /**
          * Get a dummy card
@@ -544,9 +582,35 @@ public class CardTemplateEditor extends AnkiActivity {
         }
 
         @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
-            deleteDummyCards();
+            if (requestCode == REQUEST_CARD_BROWSER_APPEARANCE) {
+                onCardBrowserAppearanceResult(resultCode, data);
+                return;
+            }
+
+            if (requestCode == REQUEST_PREVIEWER) {
+                deleteDummyCards();
+            }
+        }
+
+
+        private void onCardBrowserAppearanceResult(int resultCode, @Nullable Intent data) {
+            if (resultCode != RESULT_OK) {
+                Timber.i("Activity Cancelled: Card Template Browser Appearance");
+                return;
+            }
+
+            CardTemplateBrowserAppearanceEditor.Result result = CardTemplateBrowserAppearanceEditor.Result.fromIntent(data);
+            if (result == null) {
+                Timber.w("Error processing Card Template Browser Appearance result");
+                return;
+            }
+
+            Timber.i("Applying Card Template Browser Appearance result");
+
+            JSONObject currentTemplate = getCurrentTemplate();
+            result.applyTo(currentTemplate);
         }
 
         /* Used for updating the collection when a model has been edited */

@@ -429,6 +429,12 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             >
         </activity>
+        <activity
+            android:name=".CardTemplateBrowserAppearanceEditor"
+            android:label="@string/card_template_browser_appearance_title"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            />
         <!-- stuff for Samsung Multi-Window -->
         <uses-library
             android:name="com.sec.android.app.multiwindow"
