@@ -27,7 +27,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -91,10 +90,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         setContentView(R.layout.multimedia_edit_field_activity);
         View mainView = findViewById(android.R.id.content);
-        Toolbar toolbar = mainView.findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
+        enableToolbar(mainView);
 
         Intent intent = this.getIntent();
         mField = getFieldFromIntent(intent);

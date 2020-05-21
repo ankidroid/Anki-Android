@@ -26,7 +26,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -146,12 +145,10 @@ public class CardTemplateEditor extends AnkiActivity {
         }
 
         // Disable the home icon
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
+        enableToolbar();
         startLoadingCollection();
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

@@ -32,7 +32,6 @@ import android.os.Bundle;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -380,10 +379,7 @@ public class NoteEditor extends AnkiActivity {
 
         View mainView = findViewById(android.R.id.content);
 
-        Toolbar toolbar = mainView.findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
+        enableToolbar(mainView);
 
         mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout);
 
