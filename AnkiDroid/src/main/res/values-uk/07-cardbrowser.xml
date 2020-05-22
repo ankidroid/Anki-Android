@@ -95,8 +95,10 @@
     </string-array>
     <string name="card_browser_select_all">Обрати все</string>
     <string name="card_browser_select_none">Зняти виділення</string>
+    <string name="card_browser_edit_note">Edit note</string>
     <string name="card_browser_interval_new_card">(нова)</string>
     <string name="card_browser_ease_new_card">(нова)</string>
     <string name="card_browser_due_filtered_card">(фільтрована)</string>
     <string name="card_browser_interval_learning_card">(вивчається)</string>
+    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
 </resources>

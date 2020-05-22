@@ -79,6 +79,8 @@
     <string name="image_zoom">Vaizdo priartinimas</string>
     <string name="button_size">Atsakymo mygtuko dydis</string>
     <string name="card_browser_font_size">Kortelių naršyklės šrifto dydis</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">„AnkiDroid“ katalogas</string>
     <string name="fullscreen_review">Viso ekrano režimas</string>
     <string name="full_screen_off">Išjungta</string>
@@ -105,6 +107,8 @@
     <string name="gestures_tap_right">Liesti dešinėje</string>
     <string name="more_scrolling_buttons">el. skaityklė</string>
     <string name="more_scrolling_buttons_summ">Naršymui taip pat naudoti kandži/katakanos, emoji/kao-moji mygtukus</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Dvigubas slinkimas</string>
     <string name="double_scrolling_gap_summ">Padvigubinkite slinkimo tarpą naudodami el. knygų skaityklę</string>
     <string name="swipe_sensitivity">Braukimo jautrumas</string>

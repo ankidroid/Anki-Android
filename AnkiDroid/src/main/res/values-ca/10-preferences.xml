@@ -79,6 +79,8 @@
     <string name="image_zoom">Zoom d\'imatge</string>
     <string name="button_size">Mida de botó de resposta</string>
     <string name="card_browser_font_size">Tamany de lletra al cercador de targetes</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">Directori de l\'AnkiDroid</string>
     <string name="fullscreen_review">Mode de pantalla completa</string>
     <string name="full_screen_off">Desactivat</string>
@@ -105,6 +107,8 @@
     <string name="gestures_tap_right">Toqueu a la dreta</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">També utilitzar els botons kanji/katakana, emoji/kao-moji per moure\'s</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Desplaçament doble</string>
     <string name="double_scrolling_gap_summ">Doble el scrolling amb l\'eReader</string>
     <string name="swipe_sensitivity">Sensibilitat de lliscar</string>

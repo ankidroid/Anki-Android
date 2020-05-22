@@ -79,6 +79,8 @@
     <string name="image_zoom">Görüntü yakınlaştırma</string>
     <string name="button_size">Cevap düğmesi büyüklüğü</string>
     <string name="card_browser_font_size">Kart tarayıcısı font ölçeği</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid dizini</string>
     <string name="fullscreen_review">Tamekran modu</string>
     <string name="full_screen_off">Devre Dışı</string>
@@ -105,6 +107,8 @@
     <string name="gestures_tap_right">Sağa dokunma</string>
     <string name="more_scrolling_buttons">eOkuyucu</string>
     <string name="more_scrolling_buttons_summ">Kaydırma için Kanji/Katakana, Emoji/Kao-moji düğmelerini de kullan</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Hızlı kaydırma</string>
     <string name="double_scrolling_gap_summ">eOkuyucu\'yla kaydırma mesafesini iki katına çıkarmak istiyorsanız bunu etkinleştirin</string>
     <string name="swipe_sensitivity">Kaydırma duyarlılığı</string>

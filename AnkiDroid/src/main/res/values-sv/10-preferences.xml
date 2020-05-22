@@ -79,6 +79,8 @@
     <string name="image_zoom">Bild-zoom</string>
     <string name="button_size">Storlek på svarsknapp</string>
     <string name="card_browser_font_size">Typsnittsstorlek i kortbläddrare</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid sökväg</string>
     <string name="fullscreen_review">Fullskärmsläge</string>
     <string name="full_screen_off">Av</string>
@@ -105,6 +107,8 @@
     <string name="gestures_tap_right">Klicka till höger</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Använd även Kanji/Katakana, Emoji/Kao-moji-knapparna för att scrolla</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Dubbelrullning</string>
     <string name="double_scrolling_gap_summ">Aktivera detta om du vill dubbla scroll gap med eReader</string>
     <string name="swipe_sensitivity">Svepkänslighet</string>

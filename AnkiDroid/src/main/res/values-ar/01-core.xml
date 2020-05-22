@@ -209,4 +209,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة البيانات أنكيدرويد</string>
     <string name="read_write_permission_description">حصل على ملاحظات، وبطاقات، وأنواع الملاحظات، وشَدّات أوراق، كما يمكن أيضاً إنشاء شَدّات أوراق جديدة.</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

@@ -79,6 +79,8 @@
     <string name="image_zoom">చిత్రం జూమ్</string>
     <string name="button_size">సమాధానం బటన్ పరిమాణం</string>
     <string name="card_browser_font_size">కార్డ్ బ్రౌజర్ ఫాంట్ స్కేలింగ్</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid డైరెక్టరీ</string>
     <string name="fullscreen_review">పూర్తి స్క్రీన్ మోడ్</string>
     <string name="full_screen_off">ఆఫ్</string>
@@ -105,6 +107,8 @@
     <string name="gestures_tap_right">కుడివైపు తాకండి</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">కూడా స్క్రోలింగ్ కోసం కంజి / కటన, ఎమోజి / కావో మోజి బటన్లను ఉపయోగించండి</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">డబుల్ స్క్రోలింగ్</string>
     <string name="double_scrolling_gap_summ">eReader తో డబుల్ స్క్రోల్ స్పేస్</string>
     <string name="swipe_sensitivity">స్వైప్ సున్నితత్వం</string>

@@ -79,6 +79,8 @@
     <string name="image_zoom">छवि ज़ूम</string>
     <string name="button_size">उत्तर बटन आकार</string>
     <string name="card_browser_font_size">कार्ड ब्राउज़र फ़ॉन्ट स्केलिंग</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid निर्देशिका</string>
     <string name="fullscreen_review">फुल स्क्रीन मोड</string>
     <string name="full_screen_off">ऑफ</string>
@@ -105,6 +107,8 @@
     <string name="gestures_tap_right">दाएं स्पर्श करें</string>
     <string name="more_scrolling_buttons">ई-रीडर</string>
     <string name="more_scrolling_buttons_summ">साथ ही स्क्रॉलिंग के लिए कांजी/कतकान, इमोजी/काओ-मोजी बटन का उपयोग करें</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">डबल स्क्रॉल</string>
     <string name="double_scrolling_gap_summ">ई-रीडर के साथ स्क्रॉल गैप डबल</string>
     <string name="swipe_sensitivity">उच्च संवेदनशीलता</string>

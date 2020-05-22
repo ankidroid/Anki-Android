@@ -79,6 +79,8 @@
     <string name="image_zoom">Zoom imej</string>
     <string name="button_size">Butang jawab saiz</string>
     <string name="card_browser_font_size">Kad pelayar font bersisik</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">Direktori AnkiDroid</string>
     <string name="fullscreen_review">Mod skrin penuh</string>
     <string name="full_screen_off">Matikan</string>
@@ -105,6 +107,8 @@
     <string name="gestures_tap_right">Menyentuh hak</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Juga menggunakan kanji/betul, smiley/kao-moji butang untuk bergulir</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Double bergulir</string>
     <string name="double_scrolling_gap_summ">Dua gulungan jurang dengan kandungan</string>
     <string name="swipe_sensitivity">Sapu kepekaan</string>
