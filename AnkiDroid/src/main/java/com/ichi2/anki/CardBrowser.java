@@ -384,6 +384,23 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return ids;
     }
 
+    private boolean hasSelectedSingleNoteId() {
+        //Heuristic to skip a large array copy
+        if (checkedCardCount() > 50) {
+            return false;
+        }
+        //copy to array to ensure threadsafe iteration
+        Integer[] checkedPositions = mCheckedCardPositions.toArray(new Integer[0]);
+        HashSet<String> notes = new HashSet<>();
+        for (Integer position : checkedPositions) {
+            String noteId = mCards.get(position).get(NOTE);
+            if (notes.add(noteId) && notes.size() > 1) {
+                return false;
+            }
+        }
+        return notes.size() == 1;
+    }
+
     @VisibleForTesting
     void changeDeck(int deckPosition) {
         long[] ids = getSelectedCardIds();
@@ -660,6 +677,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
         startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
     }
 
+    private void openNoteEditorForCurrentlySelectedNote() {
+        try {
+            //Just select the first one. It doesn't particularly matter if there's a multiselect occurring.
+            openNoteEditorForCard(getSelectedCardIds()[0]);
+        } catch (Exception e) {
+            Timber.w(e, "Error Opening Note Editor");
+            UIUtils.showThemedToast(this, getString(R.string.card_browser_note_editor_error), false);
+        }
+    }
+
 
     @Override
     protected void onStop() {
@@ -848,6 +875,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mActionBarMenu.findItem(R.id.action_select_all).setVisible(!hasSelectedAllCards());
         //Note: Theoretically should not happen, as this should kick us back to the menu
         mActionBarMenu.findItem(R.id.action_select_none).setVisible(hasSelectedCards());
+        mActionBarMenu.findItem(R.id.action_edit_note).setVisible(hasSelectedSingleNoteId());
     }
 
 
@@ -1106,6 +1134,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 );
                 showDialogFragment(repositionDialog);
                 return true;
+            }
+            case R.id.action_edit_note: {
+                openNoteEditorForCurrentlySelectedNote();
             }
 
             default:
@@ -2100,6 +2131,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mActionBarTitle.setVisibility(View.GONE);
     }
 
+    @VisibleForTesting
+    public int checkedCardCount() {
+        return mCheckedCardPositions.size();
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     boolean isInMultiSelectMode() {
         return mInMultiSelectMode;
@@ -2162,11 +2198,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     boolean hasCheckedCardAtPosition(int i) {
         return mCheckedCardPositions.contains(i);
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public int checkedCardCount() {
-        return mCheckedCardPositions.size();
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
