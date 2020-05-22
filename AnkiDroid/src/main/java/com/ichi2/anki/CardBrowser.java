@@ -657,13 +657,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
         if (getLastDeckId() != null && getLastDeckId() == ALL_DECKS_ID) {
-            selectDropDownItem(0);
+            selectAllDecks();
         } else  if (getLastDeckId() != null && getCol().getDecks().get(getLastDeckId(), false) != null) {
             selectDeckById(getLastDeckId());
         } else {
             selectDeckById(getCol().getDecks().selected());
         }
     }
+
+
+    private void selectAllDecks() {
+        selectDropDownItem(0);
+    }
+
 
     /** Opens the note editor for a card.
      * We use the Card ID to specify the preview target */
