@@ -185,4 +185,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Կարդալ և գրել AnkiDroid-ի շտեմարանի մեջ</string>
     <string name="read_write_permission_description">մատչել առկա գրառումները, քարտերը, գրառումների տեսակները և կապուկները, ինչպես նաև նորերը ստեղծելը</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

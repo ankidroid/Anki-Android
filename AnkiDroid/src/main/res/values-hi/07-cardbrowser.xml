@@ -93,8 +93,10 @@
     </string-array>
     <string name="card_browser_select_all">सभी चुनें</string>
     <string name="card_browser_select_none">कोई नहीं चुनें</string>
+    <string name="card_browser_edit_note">Edit note</string>
     <string name="card_browser_interval_new_card">(नया)</string>
     <string name="card_browser_ease_new_card">(नया)</string>
     <string name="card_browser_due_filtered_card">(छाना हुआ)</string>
     <string name="card_browser_interval_learning_card">(अध्ययन)</string>
+    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
 </resources>

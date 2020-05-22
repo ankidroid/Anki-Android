@@ -93,8 +93,10 @@
     </string-array>
     <string name="card_browser_select_all">Seleccionar todo</string>
     <string name="card_browser_select_none">No seleccionar nada</string>
+    <string name="card_browser_edit_note">Edit note</string>
     <string name="card_browser_interval_new_card">(nuevo)</string>
     <string name="card_browser_ease_new_card">(nuevo)</string>
     <string name="card_browser_due_filtered_card">(filtrado)</string>
     <string name="card_browser_interval_learning_card">(aprendiendo)</string>
+    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
 </resources>

@@ -79,6 +79,8 @@
     <string name="image_zoom">Ampliar imaxe</string>
     <string name="button_size">Tamaño do botón de resposta</string>
     <string name="card_browser_font_size">Tamaño da fonte do buscador de cartóns</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid directory</string>
     <string name="fullscreen_review">Modo pantalla completa</string>
     <string name="full_screen_off">Desactivado</string>
@@ -105,6 +107,8 @@
     <string name="gestures_tap_right">Tocar á dereita</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Tamén podes empregar os botóns kanji/katakana e emoji/kao-moji para desprazamento</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Desprazamento duplo</string>
     <string name="double_scrolling_gap_summ">Duplicar a distancia de desprazamento co eReader</string>
     <string name="swipe_sensitivity">Sensibilidade do esvarado</string>

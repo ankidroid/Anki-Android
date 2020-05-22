@@ -79,6 +79,8 @@
     <string name="image_zoom">이미지 확대</string>
     <string name="button_size">정답 버튼 크기</string>
     <string name="card_browser_font_size">카드 탐색기 글꼴 크기 조정</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid 디렉토리</string>
     <string name="fullscreen_review">전체 화면 모드</string>
     <string name="full_screen_off">끔</string>
@@ -105,6 +107,8 @@
     <string name="gestures_tap_right">오른쪽 탭하기</string>
     <string name="more_scrolling_buttons">e리더</string>
     <string name="more_scrolling_buttons_summ">한자/가타카나, 이모지/카오모지 버튼도 스크롤링에 사용</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">이중 스크롤</string>
     <string name="double_scrolling_gap_summ">eReader 사용시 스크롤 간격 두배로 늘리기</string>
     <string name="swipe_sensitivity">밀기 동작 민감도</string>

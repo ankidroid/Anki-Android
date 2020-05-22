@@ -93,8 +93,10 @@
     </string-array>
     <string name="card_browser_select_all">Elekti ĉiujn</string>
     <string name="card_browser_select_none">Elekti neniujn</string>
+    <string name="card_browser_edit_note">Edit note</string>
     <string name="card_browser_interval_new_card">(nova)</string>
     <string name="card_browser_ease_new_card">(nova)</string>
     <string name="card_browser_due_filtered_card">(filtrita)</string>
     <string name="card_browser_interval_learning_card">(lernata)</string>
+    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
 </resources>

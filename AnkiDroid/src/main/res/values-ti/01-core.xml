@@ -188,4 +188,6 @@ s,min,h,d, እዚኦም ከም ልሙድ(ISO 31-1) መዐቀኒታት ከምኡ 
     <!-- Permissions -->
     <string name="read_write_permission_label">ምጽሓፍን ምንባብን ናብ AnkiDroid database</string>
     <string name="read_write_permission_description">ዝነበሩ ጽሑፋት፣ ካርድታት፣ ዓይነት ጽሑፋት፣ ባይታታት ከምኡ ውን ሓደሽቲ ከምዚኣቶም ዝኣመሰሉ ርከቦም።</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

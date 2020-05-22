@@ -197,4 +197,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Читати і записувати в базу даних AnkiDroid</string>
     <string name="read_write_permission_description">доступ до існуючих карток, колод, записам та їх типам, а також створення нових</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

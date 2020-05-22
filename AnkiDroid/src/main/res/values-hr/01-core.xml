@@ -191,4 +191,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Čitanje i pisanje u AnkiDroid bazu podataka</string>
     <string name="read_write_permission_description">Pristupi postojećim bilješkama, karticama, tipovima kartica i špilovima, te kreiranju novih</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

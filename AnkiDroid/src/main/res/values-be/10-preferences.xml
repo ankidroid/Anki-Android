@@ -79,6 +79,8 @@
     <string name="image_zoom">Маштаб малюнкаў</string>
     <string name="button_size">Памер кнопкі адказу</string>
     <string name="card_browser_font_size">Маштаб шрыфту аглядальніка картак</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">Каталог AnkiDroid</string>
     <string name="fullscreen_review">Поўнаэкранны рэжым</string>
     <string name="full_screen_off">Выключаны</string>
@@ -105,6 +107,8 @@
     <string name="gestures_tap_right">Дотык справа</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Таксама выкарыстоўваць кнопкі kanji/katakana, emoji/kao-moji для прагорткі</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Падвоеная прагортка</string>
     <string name="double_scrolling_gap_summ">Падвоены разрыў прагорткі ў eReader</string>
     <string name="swipe_sensitivity">Адчувальнасць чыркання</string>

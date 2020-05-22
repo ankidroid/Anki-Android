@@ -179,4 +179,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">读取并写入 AnkiDroid 数据库</string>
     <string name="read_write_permission_description">浏览现有的笔记、 卡片、 笔记类型和牌组，或者自己动手创建新的~</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>
