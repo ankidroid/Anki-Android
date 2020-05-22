@@ -1023,23 +1023,30 @@ public class Collection {
     public HashMap<String, String> _renderQA(Object[] data, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
-        String[] flist = Utils.splitFields((String) data[6]);
-        Map<String, String> fields = new HashMap<>();
+        long cid = (Long) data[0];
+        long nid = (Long) data[1];
         JSONObject model = (JSONObject)data[2];
+        long did = (Long) data[3];
+        int ord = (Integer) data[4];
+        String tags = (String) data[5];
+        String packedFields = (String) data[6];
+        int flags = (Integer) data[7];
+        String[] flist = Utils.splitFields(packedFields);
+        Map<String, String> fields = new HashMap<>();
         Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
         for (String name : fmap.keySet()) {
             fields.put(name, flist[fmap.get(name).first]);
         }
-        int cardNum = ((Integer) data[4]) + 1;
-        fields.put("Tags", ((String) data[5]).trim());
+        int cardNum = ord + 1;
+        fields.put("Tags", tags.trim());
         fields.put("Type", (String) model.get("name"));
-        fields.put("Deck", mDecks.name((Long) data[3]));
+        fields.put("Deck", mDecks.name(did));
         String baseName = Decks.basename(fields.get("Deck"));
         fields.put("Subdeck", baseName);
-        fields.put("CardFlag", _flagNameFromCardFlags((Integer) data[7]));
+        fields.put("CardFlag", _flagNameFromCardFlags(flags));
         JSONObject template;
         if (model.getInt("type") == Consts.MODEL_STD) {
-            template = model.getJSONArray("tmpls").getJSONObject((Integer) data[4]);
+            template = model.getJSONArray("tmpls").getJSONObject(ord);
         } else {
             template = model.getJSONArray("tmpls").getJSONObject(0);
         }
@@ -1047,7 +1054,7 @@ public class Collection {
         fields.put(String.format(Locale.US, "c%d", cardNum), "1");
         // render q & a
         HashMap<String, String> d = new HashMap<>();
-        d.put("id", Long.toString((Long) data[0]));
+        d.put("id", Long.toString(cid));
         qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
         afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
         for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>("a", afmt)}) {
@@ -1071,7 +1078,7 @@ public class Collection {
             d.put(type, html);
             // empty cloze?
             if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
-                if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
+                if (getModels()._availClozeOrds(model, packedFields, false).size() == 0) {
                     String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
                     d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
                 }
