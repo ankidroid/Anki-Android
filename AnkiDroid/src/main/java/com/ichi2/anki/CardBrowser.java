@@ -857,8 +857,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (mPreviewItem == null) {
             return;
         }
-        mPreviewItem.setVisible(getCards().size() > 0);
+        mPreviewItem.setVisible(getCardCount() > 0);
     }
+
+    /** Returns the number of cards that are visible on the screen */
+    public int getCardCount() {
+        return getCards().size();
+    }
+
 
     private void updateMultiselectMenu() {
         Timber.d("updateMultiselectMenu()");
@@ -884,7 +890,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private boolean hasSelectedAllCards() {
-        return mCheckedCardPositions.size() >= getCards().size(); //must handle 0.
+        return mCheckedCardPositions.size() >= getCardCount(); //must handle 0.
     }
 
 
@@ -1283,7 +1289,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * @return text to be used in the subtitle of the drop-down deck selector
      */
     public String getSubtitleText() {
-        int count = getCards().size();
+        int count = getCardCount();
         return getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count);
     }
 
@@ -1411,7 +1417,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             Note note = c.note();
             // get position in the mCards search results HashMap
             int pos = idToPos.containsKey(c.getId()) ? idToPos.get(c.getId()) : -1;
-            if (pos < 0 || pos >= getCards().size()) {
+            if (pos < 0 || pos >= getCardCount()) {
                 continue;
             }
             Map<String, String> card = getCards().get(pos);
@@ -1784,7 +1790,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
             int lastVisibleItem = firstVisibleItem + visibleItemCount;
-            int size = getCards().size();
+            int size = getCardCount();
             if ((size > 0) && (firstVisibleItem < size) && ((lastVisibleItem - 1) < size)) {
                 String firstAns = getCards().get(firstVisibleItem).get("answer");
                 // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
@@ -1959,7 +1965,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public int getCount() {
-            return getCards().size();
+            return getCardCount();
         }
 
 
