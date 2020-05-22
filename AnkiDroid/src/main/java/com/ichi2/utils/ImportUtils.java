@@ -146,8 +146,14 @@ public class ImportUtils {
             }
 
             if (!isValidPackageName(filename)) {
-                // Don't import if file doesn't have an Anki package extension
-                return context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
+                if (isAnkiDatabase(filename)) {
+                    //.anki2 files aren't supported by Anki Desktop, we should eventually support them, because we can
+                    //but for now, show a "nice" error.
+                    return context.getResources().getString(R.string.import_error_load_imported_database);
+                } else {
+                    // Don't import if file doesn't have an Anki package extension
+                    return context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
+                }
             } else {
                 // Copy to temporary file
                 filename = ensureValidLength(filename);
@@ -161,6 +167,11 @@ public class ImportUtils {
                 }
             }
             return errorMessage;
+        }
+
+
+        private boolean isAnkiDatabase(String filename) {
+            return filename != null && hasExtension(filename, "anki2");
         }
 
 
