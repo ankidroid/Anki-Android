@@ -872,7 +872,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Initialize text-to-speech. This is an asynchronous operation.
         if (mSpeakText) {
-            ReadText.initializeTts(this);
+            ReadText.initializeTts(this, new ReadTextListener());
         }
 
         // Initialize dictionary lookup feature
@@ -1487,8 +1487,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** If a card is displaying the question, flip it, otherwise answer it */
     private void flipOrAnswerCard(int cardOrdinal) {
         if (!sDisplayAnswer) {
-           displayCardAnswer();
-           return;
+            displayCardAnswer();
+            return;
         }
         answerCard(cardOrdinal);
     }
@@ -1799,6 +1799,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
+    class ReadTextListener implements ReadText.ReadTextListener {
+        public void onDone() {
+            if(!mUseTimer) {
+                return;
+            }
+            if (ReadText.getmQuestionAnswer() == Sound.SOUNDS_QUESTION) {
+                long delay = mWaitAnswerSecond * 1000;
+                if (delay > 0) {
+                    mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
+                }
+            } else if (ReadText.getmQuestionAnswer() == Sound.SOUNDS_ANSWER) {
+                long delay = mWaitQuestionSecond * 1000;
+                if (delay > 0) {
+                    mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
+                }
+            }
+        }
+    }
 
     protected void initTimer() {
         final TypedValue typedValue = new TypedValue();
@@ -1881,7 +1899,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             long delay = mWaitAnswerSecond * 1000 + mUseTimerDynamicMS;
             if (delay > 0) {
                 mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-                mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
+                if (!mSpeakText) {
+                    mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
+                }
             }
         }
 
@@ -1958,7 +1978,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
             if (delay > 0) {
                 mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-                mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
+                if (!mSpeakText) {
+                    mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
+                }
             }
         }
     }
