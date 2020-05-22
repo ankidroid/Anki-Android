@@ -59,6 +59,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Timber.i("AnkiActivity::onCreate");
         // The hardware buttons should control the music volume
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         // Set the theme
@@ -69,25 +70,43 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     @Override
     protected void onStart() {
+        Timber.i("AnkiActivity::onStart");
         super.onStart();
         mCustomTabActivityHelper.bindCustomTabsService(this);
     }
 
     @Override
     protected void onStop() {
+        Timber.i("AnkiActivity::onStop");
         super.onStop();
         mCustomTabActivityHelper.unbindCustomTabsService(this);
     }
 
 
     @Override
+    protected void onPause() {
+        Timber.i("AnkiActivity::onPause");
+        super.onPause();
+    }
+
+
+
+    @Override
     protected void onResume() {
+        Timber.i("AnkiActivity::onResume");
         super.onResume();
         UsageAnalytics.sendAnalyticsScreenView(this);
         ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(SIMPLE_NOTIFICATION_ID);
         // Show any pending dialogs which were stored persistently
         mHandler.readMessage();
     }
+
+    @Override
+    protected void onDestroy() {
+        Timber.i("AnkiActivity::onDestroy");
+        super.onDestroy();
+    }
+
 
 
     @Override
@@ -210,12 +229,14 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     public void finishWithoutAnimation() {
+        Timber.i("finishWithoutAnimation");
         super.finish();
         disableActivityAnimation();
     }
 
 
     public void finishWithAnimation(int animation) {
+        Timber.i("finishWithAnimation %d", animation);
         super.finish();
         enableActivityAnimation(animation);
     }
