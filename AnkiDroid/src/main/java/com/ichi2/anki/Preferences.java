@@ -846,7 +846,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             Map<String, String> items = new TreeMap<>();
             for (String localeCode : LanguageUtil.APP_LANGUAGES) {
                 Locale loc = LanguageUtil.getLocale(localeCode);
-                items.put(loc.getDisplayName(), loc.toString());
+                items.put(loc.getDisplayName(loc), loc.toString());
             }
             CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
             CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
