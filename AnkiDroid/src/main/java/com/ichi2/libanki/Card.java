@@ -278,8 +278,7 @@ public class Card implements Cloneable {
             Note f = note(reload);
             JSONObject m = model();
             JSONObject t = template();
-            Object[] data;
-            data = new Object[] { mId, f.getId(), m, mODid != 0L ? mODid : mDid, mOrd, f.stringTags(), f.joinedFields(), mFlags};
+            Object[] data = new Object[] { mId, f.getId(), m, mODid != 0L ? mODid : mDid, mOrd, f.stringTags(), f.joinedFields(), mFlags};
 
             if (browser) {
                 String bqfmt = t.getString("bqfmt");
