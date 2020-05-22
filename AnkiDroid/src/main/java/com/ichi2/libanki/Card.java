@@ -279,14 +279,12 @@ public class Card implements Cloneable {
             JSONObject m = model();
             JSONObject t = template();
             long did = mODid != 0L ? mODid : mDid;
-            Object[] data = new Object[] { mId, f.getId(), m, did, mOrd, f.stringTags(), f.joinedFields(), mFlags};
-
             if (browser) {
                 String bqfmt = t.getString("bqfmt");
                 String bafmt = t.getString("bafmt");
-                mQA = mCol._renderQA(data, browser, bqfmt, bafmt);
+                mQA = mCol._renderQA(mId, f.getId(), m, did, mOrd, f.stringTags(), f.joinedFields(), mFlags, browser, bqfmt, bafmt);
             } else {
-                mQA = mCol._renderQA(data);
+                mQA = mCol._renderQA(mId, f.getId(), m, did, mOrd, f.stringTags(), f.joinedFields(), mFlags);
             }
         }
         return mQA;

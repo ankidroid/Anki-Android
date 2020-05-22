@@ -1029,12 +1029,9 @@ public class Models {
             a.add("ankiflag");
             b.add("");
         }
-        Object[] data;
         int ord = t.getInt("ord");
-        data = new Object[] {1L, 1L, m, 1L, ord, "", Utils.joinFields(a.toArray(new String[a.size()]))packedFields, 0};
-        String full = mCol._renderQA(data).get("q");
-        data = new Object[] {1L, 1L, m, 1L, ord, "", Utils.joinFields(b.toArray(new String[b.size()])), 0};
-        String empty = mCol._renderQA(data).get("q");
+        String full = mCol._renderQA(1L, 1L, m, 1L, ord, "", Utils.joinFields(a.toArray(new String[a.size()])), 0).get("q");
+        String empty = mCol._renderQA(1L, 1L, m, 1L, ord, "", Utils.joinFields(b.toArray(new String[b.size()])), 0).get("q");
         // if full and empty are the same, the template is invalid and there is no way to satisfy it
         if (full.equals(empty)) {
             return new Object[] { "none", new JSONArray(), new JSONArray() };
@@ -1046,9 +1043,9 @@ public class Models {
             tmp.clear();
             tmp.addAll(a);
             tmp.set(i, "");
-            data[6] = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
+            packedFields = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
             // if no field content appeared, field is required
-            if (!mCol._renderQA(data).get("q").contains("ankiflag")) {
+            if (!mCol._renderQA(1L, 1L, m, 1L, ord, "", packedFields, 0).get("q").contains("ankiflag")) {
                 req.put(i);
             }
         }
@@ -1062,9 +1059,9 @@ public class Models {
             tmp.clear();
             tmp.addAll(b);
             tmp.set(i, "1");
-            data[6] = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
+            packedFields = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
             // if not the same as empty, this field can make the card non-blank
-            if (!mCol._renderQA(data).get("q").equals(empty)) {
+            if (!mCol._renderQA(1L, 1L, m, 1L, ord, "", packedFields, 0).get("q").equals(empty)) {
                 req.put(i);
             }
         }
