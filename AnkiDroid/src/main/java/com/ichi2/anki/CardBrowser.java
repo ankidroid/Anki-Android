@@ -1676,14 +1676,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onPostExecute(TaskData result) {
             if (result != null && mCards != null) {
-                Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfully");
-                updateList();
-                if ((mSearchView != null) && !mSearchView.isIconified()) {
-                    UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), true);
-                }
+                handleSearchResult();
             }
             updatePreviewMenuItem();
             hideProgressBar();
+        }
+
+
+        private void handleSearchResult() {
+            Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfully");
+            updateList();
+            if ((mSearchView != null) && !mSearchView.isIconified()) {
+                UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), true);
+            }
         }
     };
 
