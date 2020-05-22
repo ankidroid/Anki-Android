@@ -1217,7 +1217,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         showDialogFragment(dialog);
     }
 
-
+    /** Selects the given position in the deck list */
     public void selectDropDownItem(int position) {
         mActionBarSpinner.setSelection(position);
         deckDropDownItemChanged(position);
@@ -1699,10 +1699,53 @@ public class CardBrowser extends NavigationDrawerActivity implements
             Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfully");
             updateList();
             if ((mSearchView != null) && !mSearchView.isIconified()) {
-                UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), true);
+                if (getCardCount() == 0 && !hasSelectedAllDecks()) {
+                    View root = CardBrowser.this.findViewById(R.id.root_layout);
+                    UIUtils.showSnackbar(CardBrowser.this,
+                            getString(R.string.card_browser_no_cards_in_deck, getSelectedDeckNameForUi()),
+                            SNACKBAR_DURATION,
+                            R.string.card_browser_search_all_decks,
+                            (v) -> searchAllDecks(),
+                            root,
+                            null);
+                } else {
+                    UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), true);
+                }
             }
         }
     };
+
+    public boolean hasSelectedAllDecks() {
+        Long lastDeckId = getLastDeckId();
+        return lastDeckId != null && lastDeckId == ALL_DECKS_ID;
+    }
+
+
+    public void searchAllDecks() {
+        //all we need to do is select all decks
+        selectAllDecks();
+    }
+
+    /**
+     * Returns the current deck name, "All Decks" if all decks are selected, or "Unknown"
+     * Do not use this for any business logic, as this will return inconsistent data
+     * with the collection.
+     */
+    public String getSelectedDeckNameForUi() {
+        try {
+            Long lastDeckId = getLastDeckId();
+            if (lastDeckId == null) {
+                return getString(R.string.card_browser_unknown_deck_name);
+            }
+            if (lastDeckId == ALL_DECKS_ID) {
+                return getString(R.string.card_browser_all_decks);
+            }
+            return getCol().getDecks().name(lastDeckId);
+        } catch (Exception e) {
+            Timber.w(e, "Unable to get selected deck name");
+            return getString(R.string.card_browser_unknown_deck_name);
+        }
+    }
 
     private CollectionTask.TaskListener mRenderQAHandler = new CollectionTask.TaskListener() {
         @Override
