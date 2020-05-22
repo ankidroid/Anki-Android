@@ -23,6 +23,9 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 /**
  * Utility call for proving language related functionality.
  */
@@ -43,6 +46,7 @@ public class LanguageUtil {
      *
      * @return The {@link Locale} for the given code
      */
+    @NonNull
     public static Locale getLocale() {
         return getLocale("");
     }
@@ -53,7 +57,8 @@ public class LanguageUtil {
      * @param localeCode The locale code of the language
      * @return The {@link Locale} for the given code
      */
-    public static Locale getLocale(String localeCode) {
+    @NonNull
+    public static Locale getLocale(@Nullable String localeCode) {
         Locale locale;
         if (localeCode == null || TextUtils.isEmpty(localeCode)) {
 
@@ -76,10 +81,14 @@ public class LanguageUtil {
         return locale;
     }
 
+
+    @NonNull
     public static String getShortDateFormatFromMs(long ms) {
         return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(ms));
     }
 
+
+    @NonNull
     public static String getShortDateFormatFromS(long s) {
         return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(s * 1000L));
     }
