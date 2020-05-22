@@ -1016,21 +1016,14 @@ public class Collection {
     /**
      * Returns hash of id, question, answer.
      */
-    public HashMap<String, String> _renderQA(Object[] data) {
-        return _renderQA(data, false, null, null);
+    public HashMap<String, String> _renderQA(long cid, long nid, JSONObject model, long did, int ord, String tags, String packedFields, int flags) {
+        return _renderQA(cid, nid, model, did, ord, tags, packedFields, flags, false, null, null);
     }
 
-    public HashMap<String, String> _renderQA(Object[] data, boolean browser, String qfmt, String afmt) {
+
+    public HashMap<String, String> _renderQA(long cid, long nid, JSONObject model, long did, int ord, String tags, String packedFields, int flags, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
-        long cid = (Long) data[0];
-        long nid = (Long) data[1];
-        JSONObject model = (JSONObject)data[2];
-        long did = (Long) data[3];
-        int ord = (Integer) data[4];
-        String tags = (String) data[5];
-        String packedFields = (String) data[6];
-        int flags = (Integer) data[7];
         String[] flist = Utils.splitFields(packedFields);
         Map<String, String> fields = new HashMap<>();
         Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
