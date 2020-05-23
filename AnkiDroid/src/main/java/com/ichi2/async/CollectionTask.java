@@ -1723,19 +1723,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
 
 
-        public TaskData(int value, Card card) {
-            this(value);
-            mCard = card;
-        }
-
-
-        public TaskData(int value, long cardId, boolean bool) {
-            this(value);
-            mLong = cardId;
-            mBool = bool;
-        }
-
-
         public TaskData(Card card) {
             mCard = card;
         }
@@ -1752,22 +1739,8 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             mInteger = integer;
         }
 
-
-        public TaskData(Context context, int type, int period) {
-            mContext = context;
-            mType = type;
-            mInteger = period;
-        }
-
-
         public TaskData(List<Map<String, String>> cards) {
             mCards = cards;
-        }
-
-
-        public TaskData(List<Map<String, String>> cards, Comparator comparator) {
-            mCards = cards;
-            mComparator = comparator;
         }
 
 
@@ -1785,17 +1758,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             mBool = bool;
         }
 
-
-        public TaskData(long value, boolean bool) {
-            mLong = value;
-            mBool = bool;
-        }
-
-
-        public TaskData(int value, boolean bool) {
-            mInteger = value;
-            mBool = bool;
-        }
 
 
         public TaskData(Card card, boolean bool) {
@@ -1824,31 +1786,8 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
 
 
-        public TaskData(int value, String msg) {
-            mMsg = msg;
-            mInteger = value;
-        }
-
-
-        public TaskData(String msg, long cardId, boolean bool) {
-            mMsg = msg;
-            mLong = cardId;
-            mBool = bool;
-        }
-
-
         public List<Map<String, String>> getCards() {
             return mCards;
-        }
-
-
-        public void setCards(List<Map<String, String>> cards) {
-            mCards = cards;
-        }
-
-
-        public Comparator getComparator() {
-            return mComparator;
         }
 
 
