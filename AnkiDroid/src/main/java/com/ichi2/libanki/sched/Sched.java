@@ -1166,7 +1166,7 @@ public class Sched extends SchedV2 {
             // notify UI
             if (mContextReference != null) {
                 Context context = mContextReference.get();
-                new Leech.LeechHook().runHook(card, context);
+                new Leech().runHook(card, context);
             }
             return true;
         }
