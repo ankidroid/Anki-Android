@@ -1000,11 +1000,6 @@ public class Finder {
     }
 
 
-    public List<Map<String, String>> findCardsForCardBrowser(String query, String _order, Map<String, String> deckNames) {
-        return _findCardsForCardBrowser(query, _order, deckNames);
-    }
-
-
     /** Return a list of card ids for QUERY */
     private List<Map<String, String>> _findCardsForCardBrowser(String query, Object _order, Map<String, String> deckNames) {
         String[] tokens = _tokenize(query);
