@@ -47,16 +47,6 @@ public class MethodLogger {
 
     /**
      * Logs the method being called.
-     * 
-     * @param message to add to the logged statement
-     */
-    public static void log(String message) {
-        logInternal(message);
-    }
-
-
-    /**
-     * Logs the method being called.
      */
     public static void log() {
         logInternal("");
