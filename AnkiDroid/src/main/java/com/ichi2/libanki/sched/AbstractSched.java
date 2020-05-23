@@ -54,7 +54,6 @@ public abstract class AbstractSched {
     public abstract int totalRevForCurrentDeck();
     public abstract int[] _fuzzedIvlRange(int ivl);
     /** Rebuild a dynamic deck. */
-    public abstract void rebuildDyn();
     public abstract List<Long> rebuildDyn(long did);
     public abstract void emptyDyn(long did);
     public abstract void emptyDyn(long did, String lim);

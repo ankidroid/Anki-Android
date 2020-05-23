@@ -1521,12 +1521,6 @@ public class SchedV2 extends AbstractSched {
      * *****************************
      */
 
-    /** Rebuild a dynamic deck. */
-    public void rebuildDyn() {
-        rebuildDyn(0);
-    }
-
-
     // Note: The original returns an integer result. We return List<Long> with that number to satisfy the
     // interface requirements. The result isn't used anywhere so this isn't a problem.
     public List<Long> rebuildDyn(long did) {
