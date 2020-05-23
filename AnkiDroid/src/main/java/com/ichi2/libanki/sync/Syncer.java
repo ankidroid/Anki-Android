@@ -86,12 +86,6 @@ public class Syncer {
     }
 
 
-    /** Returns 'noChanges', 'fullSync', 'success', etc */
-    public Object[] sync() throws UnknownHttpResponseException {
-        return sync(null);
-    }
-
-
     public Object[] sync(Connection con) throws UnknownHttpResponseException {
         mSyncMsg = "";
         // if the deck has any pending changes, flush them first and bump mod time
