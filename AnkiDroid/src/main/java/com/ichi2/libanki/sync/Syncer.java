@@ -183,7 +183,7 @@ public class Syncer {
                 throwExceptionIfCancelled(con);
                 Timber.i("Sync: merging small changes");
                 try {
-                    mergeChanges(lchg, rchg);
+                    mergeChanges(rchg);
                 } catch (UnexpectedSchemaChange e) {
                     mServer.abort();
                     _forceFullSync();
@@ -309,12 +309,12 @@ public class Syncer {
         mRChg = changes;
         JSONObject lchg = changes();
         // merge our side before returning
-        mergeChanges(lchg, mRChg);
+        mergeChanges(mRChg);
         return lchg;
     }
 
 
-    public void mergeChanges(JSONObject lchg, JSONObject rchg) throws UnexpectedSchemaChange {
+    public void mergeChanges(JSONObject rchg) throws UnexpectedSchemaChange {
         // then the other objects
         mergeModels(rchg.getJSONArray("models"));
         mergeDecks(rchg.getJSONArray("decks"));
