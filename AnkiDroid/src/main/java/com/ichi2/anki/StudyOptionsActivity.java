@@ -114,7 +114,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         super.onStop();
         if (colIsOpen()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground(this);
+            UIUtils.saveCollectionInBackground();
         }
     }
 
