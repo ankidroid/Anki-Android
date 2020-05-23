@@ -303,21 +303,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
          * here only the translations to the destination language.
          */
 
-        List<Tuc> tucs = null;
-
-        if (tucs == null) {
-            return res;
-        }
-
-        String desiredLang = LanguagesListerGlosbe.requestToResponseLangCode(languageCodeTo);
-
-        for (Tuc tuc : tucs) {
-            if (tuc == null) {
-                continue;
-            }
-        }
-
-        return res;
+         return res;
     }
 
 
