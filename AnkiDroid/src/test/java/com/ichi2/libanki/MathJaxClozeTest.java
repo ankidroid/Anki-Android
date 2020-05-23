@@ -58,7 +58,7 @@ public class MathJaxClozeTest extends RobolectricTest {
 
         assertTrue(cards.get(0).q().contains("class=cloze"));
         assertTrue(cards.get(1).q().contains("class=cloze"));
-        String s = cards.get(2).q();
+        cards.get(2).q();
         assertFalse(cards.get(2).q().contains("class=cloze"));
         assertTrue(cards.get(3).q().contains("class=cloze"));
         assertTrue(cards.get(4).q().contains("class=cloze"));
