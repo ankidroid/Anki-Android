@@ -36,7 +36,6 @@ public abstract class Importer {
     protected String mFile;
     protected List<String> mLog;
     protected Collection mCol;
-    protected int mTotal;
 
     private long mTs;
     protected Collection mDst;
@@ -49,7 +48,6 @@ public abstract class Importer {
         mFile = file;
         mLog = new ArrayList<>();
         mCol = col;
-        mTotal = 0;
         mContext = col.getContext();
     }
 
