@@ -685,18 +685,11 @@ public class Decks {
     }
 
 
-    public void setDeck(long[] cids, long did) {
-        mCol.getDb().execute("update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-                new Object[] { did, mCol.usn(), Utils.intTime() });
-    }
-
-
     private void maybeAddToActive() {
         // reselect current deck, or default if current has disappeared
         JSONObject c = current();
         select(c.getLong("id"));
     }
-
 
     public Long[] cids(long did, boolean children) {
         if (!children) {
