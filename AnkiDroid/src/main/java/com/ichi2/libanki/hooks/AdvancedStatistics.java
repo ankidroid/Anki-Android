@@ -1707,15 +1707,6 @@ public class AdvancedStatistics extends Hook  {
             }
         }
 
-        private void writeLog(Card newCard, double outcomeProb) {
-            String tabs = "";
-            for(int d = 0; d<nPrevRevs; d++)
-                tabs += "\t";
-            Timber.d(tabs + "t=" + tElapsed + " p=" + prob + " * " + outcomeProb);
-            Timber.d(tabs + prevCard);
-            Timber.d(tabs + newCard);
-        }
-
         /**
          * Schedule the current review at another time (will re-use current Review).
          */
