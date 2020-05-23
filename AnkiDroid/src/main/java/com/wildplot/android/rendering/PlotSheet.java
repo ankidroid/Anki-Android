@@ -460,17 +460,6 @@ public class PlotSheet implements Drawable {
     }
 
 
-    /**
-     * set the title of the plot
-     *
-     * @param title title string shown above plot
-     */
-    public void setTitle(String title) {
-        this.title = title;
-        this.hasTitle = true;
-    }
-
-
     @Override
     public boolean isClusterable() {
         return true;
