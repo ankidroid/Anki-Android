@@ -482,7 +482,6 @@ public class Anki2Importer extends Importer {
                 if (!mNotes.containsKey(guid)) {
                     continue;
                 }
-                Object[] dnid = mNotes.get(guid);
                 // does the card already exist in the dst col?
                 int ord = (Integer) card[5];
                 if (mCards.containsKey(guid) && mCards.get(guid).containsKey(ord)) {
