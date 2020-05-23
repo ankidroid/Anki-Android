@@ -49,9 +49,4 @@ public class Response {
     public void setResult(String result) {
         this.result = result;
     }
-
-
-    public List<Tuc> getTuc() {
-        return null;
-    }
 }
