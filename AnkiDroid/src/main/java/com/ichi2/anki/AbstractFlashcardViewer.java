@@ -2546,7 +2546,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         AbstractFlashcardViewer.this.setResult(result);
 
         if (saveDeck) {
-            UIUtils.saveCollectionInBackground(this);
+            UIUtils.saveCollectionInBackground();
         }
         finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }

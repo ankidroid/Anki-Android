@@ -861,7 +861,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         super.onStop();
         if (colIsOpen()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground(this);
+            UIUtils.saveCollectionInBackground();
         }
     }
 

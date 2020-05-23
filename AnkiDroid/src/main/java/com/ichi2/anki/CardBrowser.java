@@ -703,7 +703,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground(this);
+            UIUtils.saveCollectionInBackground();
         }
     }
 

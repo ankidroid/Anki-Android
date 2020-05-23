@@ -643,7 +643,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (!isFinishing() && colIsOpen() && mSched != null) {
             WidgetStatus.update(this);
         }
-        UIUtils.saveCollectionInBackground(this);
+        UIUtils.saveCollectionInBackground();
     }
 
 

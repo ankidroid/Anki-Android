@@ -577,7 +577,7 @@ public class NoteEditor extends AnkiActivity {
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground(this);
+            UIUtils.saveCollectionInBackground();
         }
     }
 
