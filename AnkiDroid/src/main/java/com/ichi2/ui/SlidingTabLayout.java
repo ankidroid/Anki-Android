@@ -47,8 +47,7 @@ import android.widget.TextView;
 public class SlidingTabLayout extends HorizontalScrollView {
  
     /**
-     * Allows complete control over the colors drawn in the tab layout. Set with
-     * {@link #setCustomTabColorizer(TabColorizer)}.
+     * Allows complete control over the colors drawn in the tab layout.
      */
     public interface TabColorizer {
  
@@ -98,17 +97,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
  
         mTabStrip = new SlidingTabStrip(context);
         addView(mTabStrip, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-    }
- 
-    /**
-     * Set the custom {@link TabColorizer} to be used.
-     *
-     * If you only require simple custmisation then you can use
-     * {@link #setSelectedIndicatorColors(int...)} and {@link #setDividerColors(int...)} to achieve
-     * similar effects.
-     */
-    public void setCustomTabColorizer(TabColorizer tabColorizer) {
-        mTabStrip.setCustomTabColorizer(tabColorizer);
     }
  
  

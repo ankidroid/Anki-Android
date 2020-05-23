@@ -87,11 +87,6 @@ class SlidingTabStrip extends LinearLayout {
         mDividerPaint.setStrokeWidth((int) (DEFAULT_DIVIDER_THICKNESS_DIPS * density));
     }
  
-    void setCustomTabColorizer(SlidingTabLayout.TabColorizer customTabColorizer) {
-        mCustomTabColorizer = customTabColorizer;
-        invalidate();
-    }
- 
     void setDividerColors(int... colors) {
         // Make sure that the custom colorizer is removed
         mCustomTabColorizer = null;
