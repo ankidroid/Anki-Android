@@ -252,14 +252,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /**
-     * Return counts over next DAYS. Includes today.
-     */
-    public int dueForecast() {
-        return dueForecast(7);
-    }
-
-
     public int dueForecast(int days) {
         // TODO:...
         return 0;

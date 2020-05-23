@@ -28,7 +28,6 @@ public abstract class AbstractSched {
     /**
      * Return counts over next DAYS. Includes today.
      */
-    public abstract int dueForecast();
     public abstract int dueForecast(int days);
     public abstract int countIdx(Card card);
     public abstract int answerButtons(Card card);
