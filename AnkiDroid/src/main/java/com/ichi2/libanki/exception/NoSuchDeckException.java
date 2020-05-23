@@ -6,6 +6,6 @@ package com.ichi2.libanki.exception;
  * Remarks: We use this checked exception to mimic an Optional before Java 1.8.
  */
 public class NoSuchDeckException extends Exception {
-    public NoSuchDeckException(long deckId) {
+    public NoSuchDeckException() {
     }
 }

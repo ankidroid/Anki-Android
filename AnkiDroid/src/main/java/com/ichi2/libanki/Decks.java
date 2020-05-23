@@ -1020,7 +1020,7 @@ public class Decks {
     private JSONObject getDeckOrFail(long deckId) throws NoSuchDeckException {
         JSONObject deck = get(deckId, false);
         if (deck == null) {
-            throw new NoSuchDeckException(deckId);
+            throw new NoSuchDeckException();
         }
         return deck;
     }
