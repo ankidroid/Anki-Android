@@ -328,16 +328,11 @@ public class Collection {
      * Flush, commit DB, and take out another write lock.
      */
     public synchronized void save() {
-        save(null, 0);
+        save(0);
     }
 
 
     public synchronized void save(long mod) {
-        save(null, mod);
-    }
-
-
-    public synchronized void save(String name, long mod) {
         // let the managers conditionally flush
         mModels.flush();
         mDecks.flush();

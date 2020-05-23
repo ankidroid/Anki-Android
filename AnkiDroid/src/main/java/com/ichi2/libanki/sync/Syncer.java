@@ -461,7 +461,7 @@ public class Syncer {
         mCol.setUsnAfterSync(mMaxUsn + 1);
         // ensure we save the mod time even if no changes made
         mCol.getDb().setMod(true);
-        mCol.save(null, mod);
+        mCol.save(mod);
         return mod;
     }
 
