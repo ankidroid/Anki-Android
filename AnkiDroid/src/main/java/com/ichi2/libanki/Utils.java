@@ -347,19 +347,6 @@ public class Utils {
      */
 
     /** Given a list of integers, return a string '(int1,int2,...)'. */
-    public static String ids2str(int[] ids) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("(");
-        if (ids != null) {
-            String s = Arrays.toString(ids);
-            sb.append(s.substring(1, s.length() - 1));
-        }
-        sb.append(")");
-        return sb.toString();
-    }
-
-
-    /** Given a list of integers, return a string '(int1,int2,...)'. */
     public static String ids2str(long[] ids) {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
