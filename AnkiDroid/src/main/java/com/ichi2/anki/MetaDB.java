@@ -338,35 +338,7 @@ public class MetaDB {
             }
         }
     }
-
-
-    /**
-     * Stores a custom dictionary for a given deck.
-     * 
-     * @param dictionary integer number of dictionary, -1 if not set (standard dictionary will be used)
-     */
-    public static void storeLookupDictionary(Context context, long did, int dictionary) {
-        openDBIfClosed(context);
-        Cursor cur = null;
-        try {
-            cur = mMetaDb.rawQuery("SELECT _id FROM customDictionary" + " WHERE did = " + did, null);
-            if (cur.moveToNext()) {
-                mMetaDb.execSQL("UPDATE customDictionary " + "SET did = " + did + ", " + "dictionary="
-                        + Integer.toString(dictionary) + " " + "WHERE _id=" + cur.getString(0) + ";");
-                Timber.i("MetaDB:: Store custom dictionary (%d) for deck %d", dictionary, did);
-            } else {
-                mMetaDb.execSQL("INSERT INTO customDictionary (did, dictionary) VALUES (?, ?)", new Object[] { did,
-                        dictionary });
-                Timber.i("MetaDB:: Store custom dictionary (%d) for deck %d", dictionary, did);
-            }
-        } catch (Exception e) {
-            Timber.e(e, "Error storing custom dictionary to MetaDB ");
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-    }
+    
 
 
     /**
