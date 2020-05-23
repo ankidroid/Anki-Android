@@ -64,28 +64,4 @@ public class StyledProgressDialog extends Dialog {
                 .cancelListener(cancelListener)
                 .show();
     }
-
-
-    private static boolean animationEnabled(Context context) {
-        if (context instanceof AnkiActivity) {
-            return ((AnkiActivity) context).animationEnabled();
-        } else {
-            return true;
-        }
-    }
-
-    public void setMax(int max) {
-        // TODO
-    }
-
-
-    public void setProgress(int progress) {
-        // TODO
-    }
-
-
-    public void setProgressStyle(int style) {
-        // TODO
-    }
-
 }
