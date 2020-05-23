@@ -409,15 +409,6 @@ public class Models {
      * Copying ***********************************************************************************************
      */
 
-    /** Copy, save and return. */
-    public JSONObject copy(JSONObject m) {
-        JSONObject m2 = null;
-        m2 = m.deepClone();
-        m2.put("name", m2.getString("name") + " copy");
-        add(m2);
-        return m2;
-    }
-
 
     /**
      * Fields ***********************************************************************************************
