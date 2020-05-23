@@ -44,14 +44,6 @@ public class MetaDB {
     private static SQLiteDatabase mMetaDb = null;
 
 
-    /** Remove any pairs of quotes from the given text. */
-    private static String stripQuotes(String text) {
-        Matcher matcher = quotePattern.matcher(text);
-        text = matcher.replaceAll("");
-        return text;
-    }
-
-
     /** Open the meta-db */
     private static void openDB(Context context) {
         try {
