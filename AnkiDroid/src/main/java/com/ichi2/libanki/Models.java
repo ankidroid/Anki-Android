@@ -97,7 +97,6 @@ public class Models {
     private HashMap<Long, JSONObject> mModels;
 
     // BEGIN SQL table entries
-    private int mId;
     private String mName = "";
     //private long mCrt = Utils.intTime();
     //private long mMod = Utils.intTime();
