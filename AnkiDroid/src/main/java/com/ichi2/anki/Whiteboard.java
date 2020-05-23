@@ -211,13 +211,6 @@ public class Whiteboard extends View {
         }
     }
 
-    /**
-     * @return the number of strokes currently on the undo queue
-     */
-    public int undoSize() {
-        return mUndo.size();
-    }
-
     /** @return Whether there are strokes to undo */
     public boolean undoEmpty() {
         return mUndo.empty();
