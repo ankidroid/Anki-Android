@@ -111,7 +111,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         Button buttonLoadPronunciation = new Button(this);
         buttonLoadPronunciation.setText(gtxt(R.string.multimedia_editor_pron_load));
         linearLayout.addView(buttonLoadPronunciation);
-        buttonLoadPronunciation.setOnClickListener(v -> onLoadPronunciation(v));
+        buttonLoadPronunciation.setOnClickListener(v -> onLoadPronunciation());
         Button mSaveButton = new Button(this);
         mSaveButton.setText("Save");
         mSaveButton.setOnClickListener(v -> { });
@@ -128,10 +128,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     }
 
 
-    /**
-     * @param v Start of the story.
-     */
-    protected void onLoadPronunciation(View v) {
+    protected void onLoadPronunciation() {
         if(!Connection.isOnline()) {
             showToast(gtxt(R.string.network_no_connection));
             return;
