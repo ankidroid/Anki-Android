@@ -245,23 +245,6 @@ public class MetaDB {
     }
 
 
-    /**
-     * Resets all the language associates for a given deck.
-     * 
-     * @return whether an error occurred while resetting the language for the deck
-     */
-    public static boolean resetDeckLanguages(Context context, long did) {
-        openDBIfClosed(context);
-        try {
-            mMetaDb.execSQL("DELETE FROM languages WHERE did = " + did + ";");
-            Timber.i("MetaDB:: Resetting language assignment for deck %d", did);
-            return true;
-        } catch (Exception e) {
-            Timber.e(e, "Error resetting deck language");
-        }
-        return false;
-    }
-
 
     /**
      * Returns the state of the whiteboard for the given deck.
