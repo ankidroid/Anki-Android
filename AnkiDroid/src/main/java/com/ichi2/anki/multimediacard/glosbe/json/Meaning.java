@@ -23,12 +23,4 @@ package com.ichi2.anki.multimediacard.glosbe.json;
  * This is one of the classes, automatically generated to transform json replies from glosbe.com
  */
 public class Meaning {
-    public String getLanguage() {
-        return null;
-    }
-
-
-    public String getText() {
-        return null;
-    }
 }
