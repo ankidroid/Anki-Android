@@ -136,11 +136,6 @@ public class TopLevelParser implements Function2D, Function3D, Cloneable {
     }
 
 
-    public boolean isValid() {
-        return isValid;
-    }
-
-
     @Override
     public double f(double x, double y) {
         this.x = x;
