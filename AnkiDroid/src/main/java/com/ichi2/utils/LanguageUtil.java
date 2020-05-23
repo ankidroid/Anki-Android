@@ -14,6 +14,7 @@
 
 package com.ichi2.utils;
 
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -42,7 +43,7 @@ public class LanguageUtil {
 
 
     /**
-     * Returns the {@link Locale} for the given code or the default locale, if no code is given.
+     * Returns the {@link Locale} for the given code or the default locale, if no code or preferences are given.
      *
      * @return The {@link Locale} for the given code
      */
@@ -52,24 +53,35 @@ public class LanguageUtil {
     }
 
     /**
+     * Returns the {@link Locale} for the given code or the default locale, if no preferences are given.
+     *
+     * @return The {@link Locale} for the given code
+     */
+    @NonNull
+    public static Locale getLocale(@Nullable String localeCode) {
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        return getLocale(localeCode, prefs);
+    }
+
+    /**
      * Returns the {@link Locale} for the given code or the default locale, if no code is given.
      *
      * @param localeCode The locale code of the language
      * @return The {@link Locale} for the given code
      */
     @NonNull
-    public static Locale getLocale(@Nullable String localeCode) {
+    public static Locale getLocale(@Nullable String localeCode, @NonNull SharedPreferences prefs) {
         Locale locale;
         if (localeCode == null || TextUtils.isEmpty(localeCode)) {
 
-            localeCode = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getString(
-                    Preferences.LANGUAGE, "");
+            localeCode = prefs.getString(Preferences.LANGUAGE, "");
             // If no code provided use the app language.
         }
         if (TextUtils.isEmpty(localeCode)) {
-            locale = Locale.getDefault();
             // Fall back to (system) default only if that fails.
-        } else if (localeCode.length() > 2) {
+            localeCode = Locale.getDefault().toString();
+        }
+        if (localeCode.length() > 2) {
             try {
                 locale = new Locale(localeCode.substring(0, 2), localeCode.substring(3, 5));
             } catch (StringIndexOutOfBoundsException e) {

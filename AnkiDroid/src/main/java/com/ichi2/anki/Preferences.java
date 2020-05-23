@@ -128,6 +128,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         // Add a home button to the actionbar
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle(getResources().getText(R.string.preferences_title));
     }
 
     private Collection getCol() {
@@ -842,11 +843,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     private void initializeLanguageDialog(PreferenceScreen screen) {
         ListPreference languageSelection = (ListPreference) screen.findPreference(LANGUAGE);
+        Locale currentAppLocale = LanguageUtil.getLocale(AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+                .getString(Preferences.LANGUAGE, ""));
         if (languageSelection != null) {
             Map<String, String> items = new TreeMap<>();
             for (String localeCode : LanguageUtil.APP_LANGUAGES) {
                 Locale loc = LanguageUtil.getLocale(localeCode);
-                items.put(loc.getDisplayName(), loc.toString());
+                items.put(loc.getDisplayName(currentAppLocale), loc.toString());
             }
             CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
             CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];

@@ -69,6 +69,11 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(AnkiDroidApp.updateContextWithLanguage(base));
+    }
+
+    @Override
     protected void onStart() {
         Timber.i("AnkiActivity::onStart");
         super.onStart();
