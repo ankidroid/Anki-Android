@@ -68,7 +68,7 @@ public class ChessFilter extends Hook {
         h.remHook("mungeQA", new ChessFilter());
     }
 
-    private String fenToChessboard(String text) {
+    public static String fenToChessboard(String text) {
         Boolean showBlack = false;
         Matcher mf = fFenPattern.matcher(text);
         StringBuffer sb = new StringBuffer();
