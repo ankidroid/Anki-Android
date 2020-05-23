@@ -429,10 +429,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         showSimpleMessageDialog(message, false);
     }
 
-    protected void showSimpleMessageDialog(String title, String message){
-        showSimpleMessageDialog(title, message, false);
-    }
-
 
 
     /**
