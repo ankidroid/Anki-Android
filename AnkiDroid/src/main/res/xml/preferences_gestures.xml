@@ -31,6 +31,12 @@
         android:key="gestures"
         android:summary="@string/gestures_summ"
         android:title="@string/gestures" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:disableDependentsState="false"
+        android:key="linkOverridesTouchGesture"
+        android:summary="@string/gestures_allow_links_summary"
+        android:title="@string/gestures_allow_links" />
     <com.ichi2.ui.SeekBarPreference
         android:defaultValue="100"
         android:dependency="gestures"

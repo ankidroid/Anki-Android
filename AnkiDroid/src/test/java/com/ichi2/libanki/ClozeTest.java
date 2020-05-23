@@ -5,7 +5,7 @@ import android.content.Context;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.template.Template;
 
-import org.json.JSONException;
+import com.ichi2.utils.JSONException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

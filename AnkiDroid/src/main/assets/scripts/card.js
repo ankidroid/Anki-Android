@@ -58,15 +58,52 @@ var resizeImages = function() {
     resizeDone = true;
 };
 
+/* Tell the app that we no longer want to focus the WebView and should instead return keyboard
+ * focus to a native answer input method.
+ * Naming subject to change.
+ */
+function _relinquishFocus() {
+    // Clicking on a hint set the Android mouse cursor to a text entry bar, even after navigating
+    // away. This fixes the issue.
+    document.body.style.cursor = "default";
+    window.location.href = "signal:relinquishFocus";
+}
+
 /* Tell the app that the input box got focus. See also
  * AbstractFlashcardViewer and CompatV15 */
 function taFocus() {
     window.location.href = "signal:typefocus";
 }
 
+/*  Call displayCardAnswer() and answerCard() from anki deck template using javascript
+ *  See also AbstractFlashcardViewer.
+ */
+function showAnswer() {
+    window.location.href = "signal:show_answer";
+}
+function buttonAnswerEase1() {
+    window.location.href = "signal:answer_ease1";
+}
+function buttonAnswerEase2() {
+    window.location.href = "signal:answer_ease2";
+}
+function buttonAnswerEase3() {
+    window.location.href = "signal:answer_ease3";
+}
+function buttonAnswerEase4() {
+    window.location.href = "signal:answer_ease4";
+}
+
+/* Reload card.html */
+function reloadPage() {
+    window.location.href = "signal:reload_card_html";
+}
+
 /* Tell the app the text in the input box when it loses focus */
 function taBlur(itag) {
-    window.location.href = "typeblurtext:" + itag.value;
+    //#5944 - percent wasn't encoded, but Mandarin was.
+    var encodedVal = encodeURI(itag.value);
+    window.location.href = "typeblurtext:" + encodedVal;
 }
 
 /* Look at the text entered into the input box and send the text on a return */
@@ -81,7 +118,9 @@ function taKey(itag, e) {
     }
 
     if (keycode == 13) {
-        window.location.href = "typeentertext:" + itag.value;
+        //#5944 - percent wasn't encoded, but Mandarin was.
+        var encodedVal = encodeURI(itag.value);
+        window.location.href = "typeentertext:" + encodedVal;
         return false;
     } else {
         return true;

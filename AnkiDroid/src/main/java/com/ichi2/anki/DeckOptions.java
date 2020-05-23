@@ -43,22 +43,24 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
-import com.ichi2.async.DeckTask;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.NamedJSONComparator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -105,7 +107,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("deckConf", mDeck.getString("conf"));
                 // general
                 mValues.put("maxAnswerTime", mOptions.getString("maxTaken"));
-                mValues.put("showAnswerTimer", Boolean.toString(mOptions.getInt("timer") == 1));
+                mValues.put("showAnswerTimer", Boolean.toString(parseTimerValue(mOptions)));
                 mValues.put("autoPlayAudio", Boolean.toString(mOptions.getBoolean("autoplay")));
                 mValues.put("replayQuestion", Boolean.toString(mOptions.optBoolean("replayq", true)));
                 // new
@@ -124,6 +126,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("revIvlFct", Integer.toString((int) (revOptions.getDouble("ivlFct") * 100)));
                 mValues.put("revMaxIvl", revOptions.getString("maxIvl"));
                 mValues.put("revBury", Boolean.toString(revOptions.optBoolean("bury", true)));
+
+                mValues.put("revUseGeneralTimeoutSettings", Boolean.toString(revOptions.optBoolean("useGeneralTimeoutSettings", true)));
+                mValues.put("revTimeoutAnswer", Boolean.toString(revOptions.optBoolean("timeoutAnswer", false)));
+                mValues.put("revTimeoutAnswerSeconds", Integer.toString(revOptions.optInt("timeoutAnswerSeconds", 6)));
+                mValues.put("revTimeoutQuestionSeconds", Integer.toString(revOptions.optInt("timeoutQuestionSeconds", 60)));
+
                 // lapse
                 JSONObject lapOptions = mOptions.getJSONObject("lapse");
                 mValues.put("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")));
@@ -145,9 +153,19 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     mValues.put("reminderTime", TimePreference.DEFAULT_VALUE);
                 }
             } catch (JSONException e) {
+                Timber.e(e, "DeckOptions - cacheValues");
+                AnkiDroidApp.sendExceptionReport(e, "DeckOptions: cacheValues");
+                Resources r = DeckOptions.this.getResources();
+                UIUtils.showThemedToast(DeckOptions.this, r.getString(R.string.deck_options_corrupt, e.getLocalizedMessage()), false);
                 finish();
             }
         }
+
+
+        private boolean parseTimerValue(JSONObject options) {
+            return DeckConfig.parseTimerOpt(options, true);
+        }
+
 
         public class Editor implements SharedPreferences.Editor {
 
@@ -185,8 +203,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 int oldValue = mOptions.getJSONObject("new").getInt("order");
                                 if (oldValue != newValue) {
                                     mOptions.getJSONObject("new").put("order", newValue);
-                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REORDER, mConfChangeHandler,
-                                            new DeckTask.TaskData(new Object[] {mOptions}));
+                                    CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REORDER, mConfChangeHandler,
+                                            new CollectionTask.TaskData(new Object[] {mOptions}));
                                 }
                                 mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
                                 break;
@@ -228,6 +246,18 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "revBury":
                                 mOptions.getJSONObject("rev").put("bury", value);
                                 break;
+                            case "revUseGeneralTimeoutSettings":
+                                mOptions.getJSONObject("rev").put("useGeneralTimeoutSettings", value);
+                                break;
+                            case "revTimeoutAnswer":
+                                mOptions.getJSONObject("rev").put("timeoutAnswer", value);
+                                break;
+                            case "revTimeoutAnswerSeconds":
+                                mOptions.getJSONObject("rev").put("timeoutAnswerSeconds", value);
+                                break;
+                            case "revTimeoutQuestionSeconds":
+                                mOptions.getJSONObject("rev").put("timeoutQuestionSeconds", value);
+                                break;
                             case "lapMinIvl":
                                 mOptions.getJSONObject("lapse").put("minInt", value);
                                 break;
@@ -263,8 +293,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "deckConf": {
                                 long newConfId = Long.parseLong((String) value);
                                 mOptions = mCol.getDecks().getConf(newConfId);
-                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_CHANGE, mConfChangeHandler,
-                                        new DeckTask.TaskData(new Object[] {mDeck, mOptions}));
+                                CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CONF_CHANGE, mConfChangeHandler,
+                                        new CollectionTask.TaskData(new Object[] {mDeck, mOptions}));
                                 break;
                             }
                             case "confRename": {
@@ -276,8 +306,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             }
                             case "confReset":
                                 if ((Boolean) value) {
-                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_RESET, mConfChangeHandler,
-                                            new DeckTask.TaskData(new Object[] {mOptions}));
+                                    CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CONF_RESET, mConfChangeHandler,
+                                            new CollectionTask.TaskData(new Object[] {mOptions}));
                                 }
                                 break;
                             case "confAdd": {
@@ -322,8 +352,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "confSetSubdecks":
                                 if ((Boolean) value) {
-                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_SET_SUBDECKS, mConfChangeHandler,
-                                            new DeckTask.TaskData(new Object[] {mDeck, mOptions}));
+                                    CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CONF_SET_SUBDECKS, mConfChangeHandler,
+                                            new CollectionTask.TaskData(new Object[] {mDeck, mOptions}));
                                 }
                                 break;
                             case "reminderEnabled": {
@@ -487,7 +517,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 return null;
             }
 
-            private DeckTask.TaskListener mConfChangeHandler = new DeckTask.TaskListener() {
+            private CollectionTask.TaskListener mConfChangeHandler = new CollectionTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
                     Resources res = getResources();
@@ -497,7 +527,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
 
                 @Override
-                public void onPostExecute(DeckTask.TaskData result) {
+                public void onPostExecute(CollectionTask.TaskData result) {
                     cacheValues();
                     buildLists();
                     updateSummaries();
@@ -511,16 +541,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
              * Remove the currently selected options group
              */
             private void remConf() throws ConfirmModSchemaException {
-                try {
-                    // Remove options group, asking user to confirm full sync if necessary
-                    mCol.getDecks().remConf(mOptions.getLong("id"));
-                    // Run the CPU intensive re-sort operation in a background thread
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_REMOVE, mConfChangeHandler,
-                            new DeckTask.TaskData(new Object[] { mOptions }));
-                    mDeck.put("conf", 1);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                // Remove options group, asking user to confirm full sync if necessary
+                mCol.getDecks().remConf(mOptions.getLong("id"));
+                // Run the CPU intensive re-sort operation in a background thread
+                CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CONF_REMOVE, mConfChangeHandler,
+                                        new CollectionTask.TaskData(new Object[] { mOptions }));
+                mDeck.put("conf", 1);
             }
         }
 
@@ -628,6 +654,10 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             finish();
         } else {
             mPref = new DeckPreferenceHack();
+            //#6068 - constructor can call finish()
+            if (this.isFinishing()) {
+                return;
+            }
             mPref.registerOnSharedPreferenceChangeListener(this);
 
             this.addPreferencesFromResource(R.xml.deck_options);
@@ -763,17 +793,13 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     protected void buildLists() {
         ListPreference deckConfPref = (ListPreference) findPreference("deckConf");
         ArrayList<JSONObject> confs = mCol.getDecks().allConf();
-        Collections.sort(confs, new JSONNameComparator());
+        Collections.sort(confs, NamedJSONComparator.instance);
         String[] confValues = new String[confs.size()];
         String[] confLabels = new String[confs.size()];
-        try {
-            for (int i = 0; i < confs.size(); i++) {
-                JSONObject o = confs.get(i);
-                confValues[i] = o.getString("id");
-                confLabels[i] = o.getString("name");
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        for (int i = 0; i < confs.size(); i++) {
+            JSONObject o = confs.get(i);
+            confValues[i] = o.getString("id");
+            confLabels[i] = o.getString("name");
         }
         deckConfPref.setEntries(confLabels);
         deckConfPref.setEntryValues(confValues);
@@ -787,7 +813,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         ListPreference leechActPref = (ListPreference) findPreference("lapLeechAct");
         leechActPref.setEntries(R.array.leech_action_labels);
         leechActPref.setEntryValues(R.array.leech_action_values);
-        leechActPref.setValue(mPref.getString("lapLeechAct", "0"));
+        leechActPref.setValue(mPref.getString("lapLeechAct", new Integer(Consts.LEECH_SUSPEND).toString()));
     }
 
 
@@ -796,18 +822,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
      */
     private int getOptionsGroupCount() {
         int count = 0;
-        try {
-            long conf = mDeck.getLong("conf");
-            for (JSONObject deck : mCol.getDecks().all()) {
-                if (deck.getInt("dyn") == 1) {
-                    continue;
-                }
-                if (deck.getLong("conf") == conf) {
-                    count++;
-                }
+        long conf = mDeck.getLong("conf");
+        for (JSONObject deck : mCol.getDecks().all()) {
+            if (deck.getInt("dyn") == 1) {
+                continue;
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            if (deck.getLong("conf") == conf) {
+                count++;
+            }
         }
         return count;
     }
@@ -818,11 +840,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
      */
     private String getOptionsGroupName() {
         long confId = mPref.getLong("deckConf", 0);
-        try {
-            return mCol.getDecks().getConf(confId).getString("name");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        return mCol.getDecks().getConf(confId).getString("name");
     }
 
 
@@ -830,37 +848,17 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
      * Get the number of (non-dynamic) subdecks for the current deck
      */
     private int getSubdeckCount() {
-        try {
-            int count = 0;
-            long did = mDeck.getLong("id");
-            TreeMap<String, Long> children = mCol.getDecks().children(did);
-            for (Map.Entry<String, Long> entry : children.entrySet()) {
-                JSONObject child = mCol.getDecks().get(entry.getValue());
-                if (child.getInt("dyn") == 1) {
-                    continue;
-                }
-                count++;
+        int count = 0;
+        long did = mDeck.getLong("id");
+        TreeMap<String, Long> children = mCol.getDecks().children(did);
+        for (Map.Entry<String, Long> entry : children.entrySet()) {
+            JSONObject child = mCol.getDecks().get(entry.getValue());
+            if (child.getInt("dyn") == 1) {
+                continue;
             }
-            return count;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+            count++;
         }
-    }
-
-
-    public class JSONNameComparator implements Comparator<JSONObject> {
-        @Override
-        public int compare(JSONObject lhs, JSONObject rhs) {
-            String o1;
-            String o2;
-            try {
-                o1 = lhs.getString("name");
-                o2 = rhs.getString("name");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            return o1.compareToIgnoreCase(o2);
-        }
+        return count;
     }
 
 

@@ -19,17 +19,26 @@ import android.text.TextUtils;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Preferences;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Utility call for proving language related functionality.
  */
 public class LanguageUtil {
 
-    /** A list of all languages supported by AnkiDroid */
-    public static final String[] APP_LANGUAGES = { "ar", "bg", "ca", "cs", "de", "el", "en", "eo", "es-AR", "es-ES", "et", "fa",
-            "fi", "fr", "got", "gl", "hi", "hu", "id", "it", "ja", "ko", "lt", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru",
-            "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_TW" };
+    /** A list of all languages supported by AnkiDroid
+     * Please modify LanguageUtilsLanguageRegressionTest if changing */
+    public static final String[] APP_LANGUAGES = {"af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
+            "de", "el", "en", "eo", "es-AR", "es-ES", "et", "eu", "fa", "fi", "fil", "fr", "fy-NL", "ga-IE", "gl", "got",
+            "gu-IN", "he", "hi", "hr", "hu", "hy-AM", "id", "is", "it", "ja", "jv", "ka", "kk", "km", "ko", "ku",
+            "ky", "lt", "lv", "mk", "mn", "mr", "ms", "my", "nl", "nn-NO", "no", "pa-IN", "pl", "pt-BR", "pt-PT",
+            "ro", "ru", "sk", "sl", "sq", "sr", "ss", "sv-SE", "sw", "ta", "te", "tg", "th", "ti", "tl", "tn", "tr",
+            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yu", "zh-CN", "zh-TW", "zu" };
 
 
     /**
@@ -37,6 +46,7 @@ public class LanguageUtil {
      *
      * @return The {@link Locale} for the given code
      */
+    @NonNull
     public static Locale getLocale() {
         return getLocale("");
     }
@@ -47,7 +57,8 @@ public class LanguageUtil {
      * @param localeCode The locale code of the language
      * @return The {@link Locale} for the given code
      */
-    public static Locale getLocale(String localeCode) {
+    @NonNull
+    public static Locale getLocale(@Nullable String localeCode) {
         Locale locale;
         if (localeCode == null || TextUtils.isEmpty(localeCode)) {
 
@@ -68,6 +79,18 @@ public class LanguageUtil {
             locale = new Locale(localeCode);
         }
         return locale;
+    }
+
+
+    @NonNull
+    public static String getShortDateFormatFromMs(long ms) {
+        return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(ms));
+    }
+
+
+    @NonNull
+    public static String getShortDateFormatFromS(long s) {
+        return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(s * 1000L));
     }
 
 }

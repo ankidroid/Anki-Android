@@ -19,36 +19,42 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
 import android.text.TextUtils;
+import android.text.format.Formatter;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
+import com.ichi2.utils.Permissions;
 
 import org.acra.util.ToastSender;
 
@@ -60,17 +66,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.annotation.VisibleForTesting;
+import androidx.core.content.FileProvider;
 import timber.log.Timber;
 
 public class BasicImageFieldController extends FieldControllerBase implements IFieldController {
 
-    private static final int ACTIVITY_SELECT_IMAGE = 1;
+    @VisibleForTesting
+    static final int ACTIVITY_SELECT_IMAGE = 1;
     private static final int ACTIVITY_TAKE_PICTURE = 2;
     private static final int ACTIVITY_CROP_PICTURE = 3;
     private static final int IMAGE_SAVE_MAX_WIDTH = 1920;
 
     private ImageView mImagePreview;
     private LinearLayout mLinearLayout;
+    private TextView mImageFileSize;
+    private TextView mImageFileSizeWarning;
 
     private String mImagePath;
     private String mLatestImagePath; //save the latest path to prevent from cropping or taking photo action canceled
@@ -91,26 +102,20 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
+    // The NewApi deprecation should be removed with API21. UnsupportedChromeOsCameraSystemFeature can be fixed in API16
+    @SuppressLint( {"UnsupportedChromeOsCameraSystemFeature", "NewApi"})
     @Override
     public void createUI(Context context, LinearLayout layout) {
-        mImagePreview = new ImageView(mActivity);
+        LinearLayout.LayoutParams p = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         mLinearLayout = layout;
-        DisplayMetrics metrics = getDisplayMetrics();
-
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
         File externalCacheDir = context.getExternalCacheDir();
         if (externalCacheDir != null) {
             ankiCacheDirectory = externalCacheDir.getAbsolutePath();
         }
-        LinearLayout.LayoutParams p = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-        setPreviewImage(mField.getImagePath(), getMaxImageSize());
-        mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        mImagePreview.setAdjustViewBounds(true);
+        drawUIComponents(context);
 
-        mImagePreview.setMaxHeight((int) Math.round(height * 0.4));
-        mImagePreview.setMaxWidth((int) Math.round(width * 0.6));
+        setPreviewImage(mField.getImagePath(), getMaxImageSize());
 
         Button mBtnGallery = new Button(mActivity);
         mBtnGallery.setText(gtxt(R.string.multimedia_editor_image_field_editing_galery));
@@ -138,6 +143,16 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                     uriSavedImage = Uri.fromFile(image);
                 }
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+
+                // Until Android API21 (maybe 22) you must manually handle permissions for image capture w/FileProvider
+                // It does not exist on API15 so they will still crash sadly. This can be removed once minSDK is >= 22
+                // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
+                if (CompatHelper.getSdkVersion() <= Build.VERSION_CODES.LOLLIPOP &&
+                        CompatHelper.getSdkVersion() >= Build.VERSION_CODES.JELLY_BEAN) {
+                    cameraIntent.setClipData(ClipData.newRawUri("", uriSavedImage));
+                    cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                }
+
                 if (cameraIntent.resolveActivity(context.getPackageManager()) != null) {
                     mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
                 } else {
@@ -148,7 +163,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
         });
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (!Permissions.canUseCamera(context)) {
             mBtnCamera.setVisibility(View.INVISIBLE);
         }
 
@@ -160,6 +175,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
 
         layout.addView(mImagePreview, ViewGroup.LayoutParams.MATCH_PARENT, p);
+        layout.addView(mImageFileSize, ViewGroup.LayoutParams.MATCH_PARENT);
+        layout.addView(mImageFileSizeWarning, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
 
@@ -173,6 +190,46 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         storageDir = new File(ankiCacheDirectory);
         image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
         return image;
+    }
+
+
+    @SuppressLint("NewApi") //Conditionally called anything which requires API 16+.
+    private void drawUIComponents(Context context) {
+        mImagePreview = new ImageView(mActivity);
+
+        DisplayMetrics metrics = getDisplayMetrics();
+
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+
+
+        mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        mImagePreview.setAdjustViewBounds(true);
+
+        mImagePreview.setMaxHeight((int) Math.round(height * 0.4));
+        mImagePreview.setMaxWidth((int) Math.round(width * 0.6));
+
+        mImageFileSize = new EditText(context);
+        mImageFileSize.setMaxWidth((int) Math.round(width * 0.6));
+        mImageFileSize.setEnabled(false);
+        mImageFileSize.setGravity(Gravity.CENTER_HORIZONTAL);
+        if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.JELLY_BEAN) {
+            mImageFileSize.setBackground(null);
+        }
+        mImageFileSize.setVisibility(View.GONE);
+
+        //#5513 - Image compression failed, but we'll confuse most users if we tell them that. Instead, just imply that
+        //there's an action that they can take.
+        mImageFileSizeWarning = new EditText(context);
+        mImageFileSizeWarning.setMaxWidth((int) Math.round(width * 0.6));
+        mImageFileSizeWarning.setEnabled(false);
+        mImageFileSizeWarning.setTextColor(Color.parseColor("#FF4500")); //Orange-Red
+        mImageFileSizeWarning.setGravity(Gravity.CENTER_HORIZONTAL);
+        mImageFileSizeWarning.setVisibility(View.GONE);
+        if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.JELLY_BEAN) {
+            mImageFileSize.setBackground(null);
+        }
+        mImageFileSizeWarning.setText(R.string.multimedia_editor_image_compression_failed);
     }
 
 
@@ -205,15 +262,36 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
             return;
         }
-        if (requestCode == ACTIVITY_SELECT_IMAGE) {
-            handleSelectImageResult(data);
-        } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
-            handleTakePictureResult();
-        } else if (requestCode == ACTIVITY_CROP_PICTURE) {
-            handleCropResult();
+        mImageFileSizeWarning.setVisibility(View.GONE);
+        Uri imgUri = null;
+        switch (requestCode) {
+            case ACTIVITY_SELECT_IMAGE:
+                try {
+                    imgUri = getImageUri(mActivity, data);
+                    mImageFileSizeWarning.setVisibility(View.GONE);
+                } catch (Exception e) {
+                    AnkiDroidApp.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent");
+                    Timber.e(e, "Failed to select image");
+                    showSomethingWentWrong();
+                    return;
+                }
+                break;
+
+            case ACTIVITY_TAKE_PICTURE:
+                mImageFileSizeWarning.setVisibility(View.GONE);
+                imgUri = handleTakePictureResult();
+                break;
+            case ACTIVITY_CROP_PICTURE:
+                handleCropResult();
+                break;
+            default:
+                Timber.w("Unhandled request code: %d", requestCode);
+                break;
         }
-
-
+        setPreviewImage(mField.getImagePath(), getMaxImageSize());
+        if (imgUri != null) {
+            showCropDialog(imgUri);
+        }
         if (!showCropButton) {
             Button cropBtn = new Button(mActivity);
             cropBtn.setText(gtxt(R.string.crop_button));
@@ -227,7 +305,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    @Override
+    private void showSomethingWentWrong() {
+        UIUtils.showThemedToast(mActivity, mActivity.getResources().getString(R.string.multimedia_editor_something_wrong), false);
+    }
+
+
     public void onFocusLost() {
         // do nothing
 
@@ -240,12 +322,19 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private Bitmap rotateAndCompress() {
+    private void rotateAndCompress() {
         // Set the rotation of the camera image and save as png
         File f = new File(mImagePath);
         // use same filename but with png extension for output file
         // Load into a bitmap with max size of 1920 pixels and rotate if necessary
         Bitmap b = BitmapUtil.decodeFile(f, IMAGE_SAVE_MAX_WIDTH);
+        if (b == null) {
+            //#5513 - if we can't decode a bitmap, return the original image
+            //And display a warning to push users to compress manually.
+            mImageFileSizeWarning.setVisibility(View.VISIBLE);
+            return;
+        }
+
         FileOutputStream out = null;
         try {
             File outFile = createNewFile();
@@ -255,7 +344,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             f.delete();
             mImagePath = outFile.getAbsolutePath();
         } catch (FileNotFoundException e) {
-            Timber.e(e, "Find file failed");
+            Timber.e(e, "Error in BasicImageFieldController.rotateAndCompress()");
         } catch (IOException e) {
             Timber.e(e, "Create file failed");
         } finally {
@@ -267,17 +356,28 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 e.printStackTrace();
             }
         }
-        return b;
     }
 
 
     private void setPreviewImage(String imagePath, int maxsize) {
-        if (imagePath != null && !imagePath.equals("")) {
+        if (imagePath != null && !"".equals(imagePath)) {
             File f = new File(imagePath);
-            Bitmap b = BitmapUtil.decodeFile(f, maxsize);
-            b = ExifUtil.rotateFromCamera(f, b);
-            mImagePreview.setImageBitmap(b);
+            setImagePreview(f, maxsize);
         }
+    }
+
+
+    @VisibleForTesting
+    void setImagePreview(File f, int maxsize) {
+        Bitmap b = BitmapUtil.decodeFile(f, maxsize);
+        if (b == null) {
+            Timber.i("Not displaying preview: Could not process image %s", f.getPath());
+            return;
+        }
+        b = ExifUtil.rotateFromCamera(f, b);
+        mImagePreview.setImageBitmap(b);
+        mImageFileSize.setVisibility(View.VISIBLE);
+        mImageFileSize.setText(Formatter.formatFileSize(mActivity, f.length()));
     }
 
 
@@ -301,8 +401,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             try {
                 image.createNewFile();
             } catch (IOException e) {
+                showSomethingWentWrong();
                 Timber.e("Create cropped file failed: %s", e.getMessage());
                 e.printStackTrace();
+                return;
             }
         }
         mLatestImagePath = mImagePath;
@@ -337,28 +439,15 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private void handleSelectImageResult(Intent data) {
-        Uri selectedImage = getImageUri(mActivity, data);
-        setPreviewImage(mImagePath, getMaxImageSize());
-        showCropDialog(selectedImage);
-    }
-
-
-    private void handleTakePictureResult() {
-        Bitmap bitmap = rotateAndCompress();
-        if (bitmap != null) {
-            //Invoke setImageBitmap directly instead of setPreviewImage that would load bitmap again
-            mImagePreview.setImageBitmap(bitmap);
-        }
+    private Uri handleTakePictureResult() {
+        rotateAndCompress();
         mField.setImagePath(mImagePath);
         mField.setHasTemporaryMedia(true);
-        Uri uri = getCropUri();
-        showCropDialog(uri);
+        return getCropUri();
     }
 
 
     private void handleCropResult() {
-        setPreviewImage(mImagePath, getMaxImageSize());
         rotateAndCompress();//this is a long-running operation.
         mField.setImagePath(mImagePath);
         mField.setHasTemporaryMedia(true);
@@ -445,5 +534,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             cursor.close();
         }
         return path;
+    }
+
+
+    public boolean isShowingPreview() {
+        return mImageFileSize.getVisibility() == View.VISIBLE;
     }
 }

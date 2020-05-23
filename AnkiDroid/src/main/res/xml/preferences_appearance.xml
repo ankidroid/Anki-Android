@@ -40,6 +40,14 @@
             android:key="nightTheme"
             android:title="@string/night_theme" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/background_image_title" >
+        <CheckBoxPreference
+            android:checked="false"
+            android:defaultValue="0"
+            android:key="deckPickerBackground"
+            android:shouldDisableView="true"
+            android:title="@string/choose_an_image" />
+    </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_fonts" >
             <ListPreference
                 android:defaultValue="@string/empty_string"
@@ -66,4 +74,12 @@
                 app:interval="10"
                 app:min="10" />
         </PreferenceCategory>
+    <PreferenceCategory android:title="@string/card_browser">
+        <CheckBoxPreference
+            android:checked="false"
+            android:defaultValue="false"
+            android:key="card_browser_show_media_filenames"
+            android:title="@string/card_browser_hide_media"
+            android:summary="@string/card_browser_hide_media_summary"/>
+    </PreferenceCategory>
 </PreferenceScreen>

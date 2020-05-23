@@ -141,7 +141,7 @@
             android:summary="@string/timeout_answer_summ"
             android:title="@string/timeout_answer_text" />
         <com.ichi2.ui.SeekBarPreference
-            android:defaultValue="6"
+            android:defaultValue="20"
             android:dependency="timeoutAnswer"
             android:key="timeoutAnswerSeconds"
             android:max="30"

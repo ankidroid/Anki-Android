@@ -21,9 +21,9 @@
 # Below is the list of official AnkiDroid localizations.
 # Add a language if 01-core.xml is translated
 # Do not remove languages.
-# When you add a language, please also add it to mAppLanguages in Preferences.java
+# When you add a language, please also add it to mAppLanguages in LanguageUtil.java
 
-languages = ['ar', 'bg', 'ca', 'cs', 'de', 'el', 'es-AR', 'es-ES', 'et', 'fa', 'fi', 'fr', 'gl', 'he', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'nl', 'no', 'pl', 'pt-PT', 'pt-BR', 'ro', 'ru', 'sk', 'sl', 'sr', 'sv-SE', 'th', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW', 'got', 'eo'];
+languages = ['af', 'am', 'ar', 'az', 'be', 'bg', 'bn', 'ca', 'ckb', 'cs', 'da', 'de', 'el', 'eo', 'es-AR', 'es-ES', 'et', 'eu', 'fa', 'fi', 'fil', 'fr', 'fy-NL', 'ga-IE', 'gl', 'got', 'gu-IN', 'he', 'hi', 'hr', 'hu', 'hy-AM', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kk', 'km', 'ko', 'ku', 'ky', 'lt', 'lv', 'mk', 'mn', 'mr', 'ms', 'my', 'nl', 'nn-NO', 'no', 'pa-IN', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sk', 'sl', 'sq', 'sr', 'ss', 'sv-SE', 'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tl', 'tn', 'tr', 'ts', 'tt-RU', 'uk', 'ur-PK', 'uz', 've', 'vi', 'wo', 'xh', 'yu', 'zh-CN', 'zh-TW', 'zu'];
 # languages which are localized for more than one region
 localizedRegions = ['es', 'pt', 'zh']
 
@@ -200,9 +200,10 @@ print "\nRemoving Crowdin file\n"
 zip.close()
 os.remove(zipname)
 
+print "Checking translations for known classes of error."
+print "(Note that if errors are found and you correct on crowdin, they make you wait 30 minutes for a new zip build)"
+subprocess.check_call("./tools/find-broken-strings-variables.sh", shell=True)
+
 print "Committing updates. Please add any fixes as another commit."
 subprocess.call("git add docs/marketing/localized_description AnkiDroid/src/main/res/values*", shell=True)
 subprocess.call("git commit -m 'Updated strings from Crowdin'", shell=True)
-
-print "Checking with Lint."
-subprocess.call("lint . --config lint.xml --nowarn --exitcode", shell=True)

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2016 Timothy Rae <perceptualchaos2@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center"
+    android:id="@+id/flashcard_frame"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <FrameLayout
+        android:layout_gravity="center"
+        android:id="@+id/flashcard"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+    <FrameLayout
+        android:layout_gravity="center"
+        android:id="@+id/touch_layer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:longClickable="true" />
+    <FrameLayout
+        android:layout_gravity="center"
+        android:id="@+id/whiteboard"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+    <ImageView
+        android:id="@+id/lookup_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:clickable="true"
+        android:padding="5dip"
+        android:src="@drawable/ic_lookup"
+        android:visibility="gone"
+        android:contentDescription="@string/lookup_button_content" />
+</FrameLayout>

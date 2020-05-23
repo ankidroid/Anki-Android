@@ -46,8 +46,11 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
+
+//NICE_TO_HAVE: Abstract, then add tests fir #6111
 /**
  * Class used to parse, load and play sound files on AnkiDroid.
  */
@@ -213,7 +216,7 @@ public class Sound {
                     .append("<span>").append(button)
                     .append("</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
-            Timber.d("Content left = %s", contentLeft);
+            Timber.v("Content left = %s", contentLeft);
         }
 
         // unused code related to tts support taken out after v2.2alpha55
@@ -232,10 +235,10 @@ public class Sound {
     public void playSounds(int qa) {
         // If there are sounds to play for the current card, start with the first one
         if (mSoundPaths != null && mSoundPaths.containsKey(qa)) {
-            playSound(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa));
+            playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null);
         } else if (mSoundPaths != null && qa == Sound.SOUNDS_QUESTION_AND_ANSWER) {
             if (makeQuestionAnswerList()) {
-                playSound(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa));
+                playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null);
             }
         }
     }
@@ -253,8 +256,8 @@ public class Sound {
                 try {
                     metaRetriever.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
                     length += Long.parseLong(metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-                } catch (IllegalArgumentException iae) {
-                    Timber.e(iae, "metaRetriever - Error setting Data Source for mediaRetriever (media doesn't exist).");
+                } catch (Exception e) {
+                    Timber.e(e, "metaRetriever - Error setting Data Source for mediaRetriever (media doesn't exist or forbidden?).");
                 }
             }
         }
@@ -272,12 +275,18 @@ public class Sound {
      * Plays the given sound or video and sets playAllListener if available on media player to start next media.
      * If videoView is null and the media is a video, then a request is sent to start the VideoPlayer Activity
      */
-    @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements","deprecation"}) // audio API deprecation tracked on github as #5022
     public void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView) {
+        SingleSoundCompletionListener completionListener = new SingleSoundCompletionListener(playAllListener);
+        playSoundInternal(soundPath, completionListener, videoView);
+    }
+
+    /** Plays a sound without ensuring that the playAllListener will release the audio */
+    @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements","deprecation"}) // audio API deprecation tracked on github as #5022
+    private void playSoundInternal(String soundPath, OnCompletionListener playAllListener, VideoView videoView) {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
         Uri soundUri = Uri.parse(soundPath);
 
-        if (soundPath.substring(0, 3).equals("tts")) {
+        if ("tts".equals(soundPath.substring(0, 3))) {
             // TODO: give information about did
 //            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
 //                    Integer.parseInt(soundPath.substring(3, 4)));
@@ -363,6 +372,25 @@ public class Sound {
         }
     }
 
+    /** #5414 - Ensures playing a single sound performs cleanup */
+    private final class SingleSoundCompletionListener implements OnCompletionListener {
+        @Nullable
+        private final OnCompletionListener userCallback;
+
+        public SingleSoundCompletionListener(@Nullable OnCompletionListener userCallback) {
+            this.userCallback = userCallback;
+        }
+
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            if (userCallback != null) {
+                userCallback.onCompletion(mp);
+            } else {
+                releaseSound();
+            }
+        }
+    }
+
     /**
      * Class used to play all sounds for a given card side
      */
@@ -400,6 +428,7 @@ public class Sound {
      */
     @SuppressWarnings("deprecation") // Tracked on github as #5022
     private void releaseSound() {
+        Timber.d("Releasing sounds and abandoning audio focus");
         if (mMediaPlayer != null) {
             mMediaPlayer.release();
             mMediaPlayer = null;

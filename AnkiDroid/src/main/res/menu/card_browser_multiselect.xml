@@ -2,6 +2,13 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
     <item
+        ankidroid:showAsAction="never"
+        android:visible="false"
+        android:id="@+id/action_edit_note"
+        android:title="@string/card_browser_edit_note"
+        android:icon="@drawable/ic_mode_edit_white_24dp"/>
+
+    <item
         android:id="@+id/action_delete_card"
         android:icon="@drawable/ic_delete_white_24dp"
         android:title="@string/card_browser_delete_card" />
@@ -10,7 +17,7 @@
         ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_flag"
         android:title="@string/menu_flag_card"
-        android:icon="@drawable/flag_transparent">
+        android:icon="@drawable/ic_flag_transparent">
       <menu>
         <item
             android:id="@+id/action_flag_zero"
@@ -18,19 +25,19 @@
         <item
             android:id="@+id/action_flag_one"
             android:title="@string/menu_flag_card_one"
-            android:icon="@drawable/flag_red"/>
+            android:icon="@drawable/ic_flag_red"/>
         <item
             android:id="@+id/action_flag_two"
             android:title="@string/menu_flag_card_two"
-            android:icon="@drawable/flag_orange"/>
+            android:icon="@drawable/ic_flag_orange"/>
         <item
             android:id="@+id/action_flag_three"
             android:title="@string/menu_flag_card_three"
-            android:icon="@drawable/flag_green"/>
+            android:icon="@drawable/ic_flag_green"/>
         <item
             android:id="@+id/action_flag_four"
             android:title="@string/menu_flag_card_four"
-            android:icon="@drawable/flag_blue"/>
+            android:icon="@drawable/ic_flag_blue"/>
       </menu>
     </item>
 
@@ -71,6 +78,13 @@
         ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_select_all"
         android:title="@string/card_browser_select_all"
+        android:icon="@drawable/ic_select_all_white_24dp"/>
+
+    <!-- For now: don't display 'select none' as action as we don't have an icon -->
+    <item
+        ankidroid:showAsAction="never"
+        android:id="@+id/action_select_none"
+        android:title="@string/card_browser_select_none"
         android:icon="@drawable/ic_select_all_white_24dp"/>
 
     <item

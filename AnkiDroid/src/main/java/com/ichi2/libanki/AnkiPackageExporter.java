@@ -17,14 +17,15 @@
 package com.ichi2.libanki;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.compat.CompatHelper;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -46,6 +47,7 @@ import timber.log.Timber;
 class Exporter {
     protected Collection mCol;
     protected Long mDid;
+    protected int mCount;
 
 
     public Exporter(Collection col) {
@@ -58,6 +60,18 @@ class Exporter {
         mCol = col;
         mDid = did;
     }
+
+    /** card ids of cards in deck self.did if it is set, all ids otherwise. */
+    public Long[] cardIds() {
+        Long[] cids;
+        if (mDid == null) {
+            cids = Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards", 0));
+        } else {
+            cids = mCol.getDecks().cids(mDid, true);
+        }
+        mCount = cids.length;
+        return cids;
+    }
 }
 
 
@@ -69,7 +83,6 @@ class AnkiExporter extends Exporter {
     protected boolean mIncludeMedia;
     private Collection mSrc;
     String mMediaDir;
-    int mCount;
     ArrayList<String> mMediaFiles = new ArrayList<>();
     boolean _v2sched;
 
@@ -97,12 +110,7 @@ class AnkiExporter extends Exporter {
         Collection dst = Storage.Collection(context, path);
         mSrc = mCol;
         // find cards
-        Long[] cids;
-        if (mDid == null) {
-            cids = Utils.list2ObjectArray(mSrc.getDb().queryColumn(Long.class, "SELECT id FROM cards", 0));
-        } else {
-            cids = mSrc.getDecks().cids(mDid, true);
-        }
+        Long[] cids = cardIds();
         // attach dst to src so we can copy data between them. This isn't done in original libanki as Python more
         // flexible
         dst.close();
@@ -112,6 +120,8 @@ class AnkiExporter extends Exporter {
         Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
                 .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
+        mSrc.getDb().getDatabase()
+                .execSQL("UPDATE DST_DB.cards SET flags = 0 where id in " + Utils.ids2str(cids));
         Set<Long> nids = new HashSet<>(mSrc.getDb().queryColumn(Long.class,
                 "select nid from cards where id in " + Utils.ids2str(cids), 0));
         // notes
@@ -172,7 +182,7 @@ class AnkiExporter extends Exporter {
         }
         JSONObject dconfs = new JSONObject();
         for (JSONObject d : mSrc.getDecks().all()) {
-            if (d.getString("id").equals("1")) {
+            if ("1".equals(d.getString("id"))) {
                 continue;
             }
             if (mDid != null && !dids.contains(d.getLong("id"))) {
@@ -183,11 +193,13 @@ class AnkiExporter extends Exporter {
                     dconfs.put(Long.toString(d.getLong("conf")), true);
                 }
             }
+
+            JSONObject destinationDeck = d.deepClone();
             if (!mIncludeSched) {
                 // scheduling not included, so reset deck settings to default
-                d.put("conf", 1);
+                destinationDeck.put("conf", 1);
             }
-            dst.getDecks().update(d);
+            dst.getDecks().update(destinationDeck);
         }
         // copy used deck confs
         Timber.d("Copy deck options");
@@ -222,8 +234,8 @@ class AnkiExporter extends Exporter {
                     String fname = f.getName();
                     if (fname.startsWith("_")) {
                         // Loop through every model that will be exported, and check if it contains a reference to f
-                        for (int idx = 0; idx < mid.size(); idx++) {
-                            if (_modelHasMedia(mSrc.getModels().get(idx), fname)) {
+                        for (JSONObject model : mSrc.getModels().all()) {
+                            if (_modelHasMedia(model, fname)) {
                                 media.put(fname, true);
                                 break;
                             }
@@ -318,6 +330,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
     @Override
     public void exportInto(String path, Context context) throws IOException, JSONException, ImportExportException {
         // sched info+v2 scheduler not compatible w/ older clients
+        Timber.i("Starting export into %s", path);
         _v2sched = mCol.schedVer() != 1 && mIncludeSched;
 
         // open a zip file
@@ -341,7 +354,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         mCount = mCol.cardCount();
         mCol.close();
         if (!_v2sched) {
-            z.write(mCol.getPath(), "collection.anki2");
+            z.write(mCol.getPath(), CollectionHelper.COLLECTION_FILENAME);
         } else {
             _addDummyCollection(z, context);
             z.write(mCol.getPath(), "collection.anki21");
@@ -397,13 +410,13 @@ public final class AnkiPackageExporter extends AnkiExporter {
         }
 
         super.exportInto(colfile, context);
-        z.write(colfile, "collection.anki2");
+        z.write(colfile, CollectionHelper.COLLECTION_FILENAME);
         // and media
         prepareMedia();
     	JSONObject media = _exportMedia(z, mMediaFiles, mCol.getMedia().dir());
         // tidy up intermediate files
-        CompatHelper.getCompat().deleteDatabase(new File(colfile));
-        CompatHelper.getCompat().deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));
+        SQLiteDatabase.deleteDatabase(new File(colfile));
+        SQLiteDatabase.deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));
         String tempPath = path.replace(".apkg", ".media");
         File file = new File(tempPath);
         if (file.exists()) {
@@ -431,11 +444,13 @@ public final class AnkiPackageExporter extends AnkiExporter {
         f.delete();
         Collection c = Storage.Collection(context, path);
         Note n = c.newNote();
-        n.setItem("Front", context.getString(R.string.export_v2_dummy_note));
+        //The created dummy collection only contains the StdModels.
+        //The field names for those are localised during creation, so we need to consider that when creating dummy note
+        n.setItem(context.getString(R.string.front_field_name), context.getString(R.string.export_v2_dummy_note));
         c.addNote(n);
         c.save();
         c.close();
-        zip.write(f.getAbsolutePath(), "collection.anki2");
+        zip.write(f.getAbsolutePath(), CollectionHelper.COLLECTION_FILENAME);
     }
 }
 

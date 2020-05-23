@@ -36,14 +36,15 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.sched.AbstractSched;
+import com.ichi2.libanki.StdModels;
 import com.ichi2.libanki.Utils;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -71,7 +72,7 @@ public class ContentProviderTest {
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
             GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    com.ichi2.anki.Manifest.permission.READ_WRITE_DATABASE);
+                    FlashCardsContract.READ_WRITE_PERMISSION);
 
 
 
@@ -96,6 +97,10 @@ public class ContentProviderTest {
     private ArrayList<Uri> mCreatedNotes;
     private long mModelId = 0;
     private String[] mDummyFields = new String[1];
+
+    private Collection getCol() {
+        return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+    }
     /**
      * Initially create one note for each model.
      */
@@ -103,9 +108,9 @@ public class ContentProviderTest {
     public void setUp() throws Exception {
         Log.i(AnkiDroidApp.TAG, "setUp()");
         mCreatedNotes = new ArrayList<>();
-        final Collection col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        final Collection col = getCol();
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        JSONObject model = Models.addBasicModel(col, BASIC_MODEL_NAME);
+        JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         mModelId = model.getLong("id");
         ArrayList<String> flds = col.getModels().fieldNames(model);
         // Use the names of the fields as test values for the notes which will be added
@@ -141,7 +146,7 @@ public class ContentProviderTest {
     @After
     public void tearDown() throws Exception {
         Log.i(AnkiDroidApp.TAG, "tearDown()");
-        final Collection col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        final Collection col = getCol();
         // Delete all notes
         List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);
         if (remnantNotes.size() > 0) {
@@ -160,7 +165,7 @@ public class ContentProviderTest {
         col.getDecks().flush();
         assertEquals("Check that all created decks have been deleted", mNumDecksBeforeTest, col.getDecks().count());
         // Delete test model
-        col.modSchema(false);
+        col.modSchemaNoCheck();
 
         removeAllModelsByName(col, BASIC_MODEL_NAME);
         removeAllModelsByName(col, TEST_MODEL_NAME);
@@ -215,9 +220,9 @@ public class ContentProviderTest {
     public void testInsertTemplate() throws Exception {
         // Get required objects for test
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
-        Collection col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        Collection col = getCol();
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        JSONObject model = Models.addBasicModel(col, BASIC_MODEL_NAME);
+        JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
         // Add the note
         Uri modelUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId);
@@ -251,8 +256,8 @@ public class ContentProviderTest {
     public void testInsertField() throws Exception {
         // Get required objects for test
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
-        Collection col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
-        JSONObject model = Models.addBasicModel(col, BASIC_MODEL_NAME);
+        Collection col = getCol();
+        JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
         JSONArray initialFldsArr = model.getJSONArray("flds");
         int initialFieldCount = initialFldsArr.length();
@@ -388,16 +393,13 @@ public class ContentProviderTest {
             cv.put(FlashCardsContract.Note.FLDS, Utils.joinFields(dummyFields2));
             cr.update(uri, cv, null, null);
             // Query the table again
-            Cursor noteCursor = cr.query(uri, FlashCardsContract.Note.DEFAULT_PROJECTION, null, null, null);
-            try {
+            try (Cursor noteCursor = cr.query(uri, FlashCardsContract.Note.DEFAULT_PROJECTION, null, null, null)) {
                 assertNotNull("Check that there is a valid cursor for detail data after update", noteCursor);
                 assertEquals("Check that there is one and only one entry after update", 1, noteCursor.getCount());
                 assertTrue("Move to first item in cursor", noteCursor.moveToFirst());
                 String[] newFlds = Utils.splitFields(
                         noteCursor.getString(noteCursor.getColumnIndex(FlashCardsContract.Note.FLDS)));
                 assertTrue("Check that the flds have been updated correctly", Arrays.equals(newFlds, dummyFields2));
-            } finally {
-                noteCursor.close();
             }
         }
     }
@@ -453,8 +455,8 @@ public class ContentProviderTest {
             }
         } finally {
             // Delete the model (this will force a full-sync)
+            col.modSchemaNoCheck();
             try {
-                col.modSchema(false);
                 col.getModels().rem(col.getModels().get(mid));
             } catch (ConfirmModSchemaException e) {
                 // This will never happen
@@ -649,7 +651,7 @@ public class ContentProviderTest {
     @Test
     public void testQueryAllDecks() throws Exception{
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         Decks decks = col.getDecks();
 
         Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver()
@@ -677,12 +679,11 @@ public class ContentProviderTest {
     @Test
     public void testQueryCertainDeck() throws Exception {
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
 
         long deckId = mTestDeckIds[0];
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
-        Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(deckUri, null, null, null, null);
-        try {
+        try (Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(deckUri, null, null, null, null)) {
             if (decksCursor == null || !decksCursor.moveToFirst()) {
                 fail("No deck received. Should have delivered deck with id " + deckId);
             } else {
@@ -693,8 +694,6 @@ public class ContentProviderTest {
                 assertEquals("Check that received deck ID equals real deck ID", deckId, returnedDeckID);
                 assertEquals("Check that received deck name equals real deck name", realDeck.getString("name"), returnedDeckName);
             }
-        } finally {
-            decksCursor.close();
         }
     }
 
@@ -704,8 +703,8 @@ public class ContentProviderTest {
     @Test
     public void testQueryNextCard(){
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
-        Sched sched = col.getSched();
+        col = getCol();
+        AbstractSched sched = col.getSched();
 
         Cursor reviewInfoCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(
                 FlashCardsContract.ReviewInfo.CONTENT_URI, null, null, null, null);
@@ -738,8 +737,8 @@ public class ContentProviderTest {
         String deckSelector = "deckID=?";
         String deckArguments[] = {Long.toString(deckToTest)};
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
-        Sched sched = col.getSched();
+        col = getCol();
+        AbstractSched sched = col.getSched();
         long selectedDeckBeforeTest = col.getDecks().selected();
         col.getDecks().select(1); //select Default deck
 
@@ -791,14 +790,14 @@ public class ContentProviderTest {
     @Test
     public void testAnswerCard(){
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         long deckId = mTestDeckIds[0];
         col.getDecks().select(deckId);
         Card card = col.getSched().getCard();
         long cardId = card.getId();
 
         // the card starts out being new
-        assertEquals("card is initial new", Card.TYPE_NEW, card.getQueue());
+        assertEquals("card is initial new", Consts.CARD_TYPE_NEW, card.getQueue());
 
         ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
@@ -838,13 +837,13 @@ public class ContentProviderTest {
         // get the first card due
         // ----------------------
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         long deckId = mTestDeckIds[0];
         col.getDecks().select(deckId);
         Card card = col.getSched().getCard();
 
         // verify that the card is not already user-buried
-        Assert.assertNotEquals("Card is not user-buried before test", Card.QUEUE_USER_BRD, card.getQueue());
+        Assert.assertNotEquals("Card is not user-buried before test", Consts.QUEUE_TYPE_SIBLING_BURIED, card.getQueue());
 
         // retain the card id, we will lookup the card after the update
         long cardId = card.getId();
@@ -869,7 +868,7 @@ public class ContentProviderTest {
         // -----------------------------
 
         Card cardAfterUpdate = col.getCard(cardId);
-        assertEquals("Card is user-buried", Card.QUEUE_USER_BRD, cardAfterUpdate.getQueue());
+        assertEquals("Card is user-buried", Consts.QUEUE_TYPE_SIBLING_BURIED, cardAfterUpdate.getQueue());
 
         // cleanup, unbury cards
         // ---------------------
@@ -886,13 +885,13 @@ public class ContentProviderTest {
         // get the first card due
         // ----------------------
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         long deckId = mTestDeckIds[0];
         col.getDecks().select(deckId);
         Card card = col.getSched().getCard();
 
         // verify that the card is not already suspended
-        Assert.assertNotEquals("Card is not suspended before test", Card.QUEUE_SUSP, card.getQueue());
+        Assert.assertNotEquals("Card is not suspended before test", Consts.QUEUE_TYPE_SUSPENDED, card.getQueue());
 
         // retain the card id, we will lookup the card after the update
         long cardId = card.getId();
@@ -917,7 +916,7 @@ public class ContentProviderTest {
         // --------------------------------
 
         Card cardAfterUpdate = col.getCard(cardId);
-        assertEquals("Card is suspended", Card.QUEUE_SUSP, cardAfterUpdate.getQueue());
+        assertEquals("Card is suspended", Consts.QUEUE_TYPE_SUSPENDED, cardAfterUpdate.getQueue());
 
         // cleanup, unsuspend card and reschedule
         // --------------------------------------
@@ -935,7 +934,7 @@ public class ContentProviderTest {
         // get the first card due
         // ----------------------
         Collection col;
-        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        col = getCol();
         long deckId = mTestDeckIds[0];
         col.getDecks().select(deckId);
         Card card = col.getSched().getCard();
@@ -976,8 +975,8 @@ public class ContentProviderTest {
     }
 
     private Collection reopenCol() {
-        CollectionHelper.getInstance().closeCollection(false);
-        return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
+        return getCol();
     }
 
 }

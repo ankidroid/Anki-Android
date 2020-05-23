@@ -2,6 +2,10 @@ body {
   margin: 0px;
   padding: 0px;
 }
+.night_mode .latex {
+    background-color: white;
+}
+
 
 body.night_mode {
   color: white;

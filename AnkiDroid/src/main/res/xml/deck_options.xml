@@ -135,6 +135,36 @@
                 android:key="revBury"
                 android:summary="@string/deck_conf_rev_bury_summ"
                 android:title="@string/deck_conf_rev_bury" />
+
+            <PreferenceCategory android:title="@string/pref_cat_automatic_display" >
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:disableDependentsState="true"
+                    android:key="revUseGeneralTimeoutSettings"
+                    android:title="@string/deck_conf_use_general_timeout_settings"
+                    android:summary="@string/deck_conf_use_general_timeout_settings_summ" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:disableDependentsState="false"
+                    android:dependency="revUseGeneralTimeoutSettings"
+                    android:key="revTimeoutAnswer"
+                    android:summary="@string/timeout_answer_summ"
+                    android:title="@string/timeout_answer_text" />
+                <com.ichi2.ui.SeekBarPreference
+                    android:defaultValue="20"
+                    android:dependency="revTimeoutAnswer"
+                    android:key="revTimeoutAnswerSeconds"
+                    android:max="30"
+                    android:summary="@string/timeout_answer_seconds_summ"
+                    android:title="@string/timeout_answer_seconds" />
+                <com.ichi2.ui.SeekBarPreference
+                    android:defaultValue="60"
+                    android:dependency="revTimeoutAnswer"
+                    android:key="revTimeoutQuestionSeconds"
+                    android:max="60"
+                    android:summary="@string/timeout_question_seconds_summ"
+                    android:title="@string/timeout_question_seconds" />
+            </PreferenceCategory>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/deck_conf_lps_cards" >
             <com.ichi2.preferences.StepsPreference

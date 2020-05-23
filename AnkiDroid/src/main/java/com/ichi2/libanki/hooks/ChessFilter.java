@@ -75,7 +75,7 @@ public class ChessFilter extends Hook {
         while (mf.find()) {
             if (mf.group(1) != null) {
                 Matcher mo = fFenOrientationPattern.matcher(mf.group(1));
-                if (mo.find() && mo.group(1) != null && mo.group(1).equalsIgnoreCase("black")) {
+                if (mo.find() && mo.group(1) != null && "black".equalsIgnoreCase(mo.group(1))) {
                     showBlack = true;
                 }
             }

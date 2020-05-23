@@ -21,14 +21,15 @@ import android.database.Cursor;
 
 import android.util.Pair;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
@@ -73,14 +74,10 @@ public class Note implements Cloneable {
             mId = Utils.timestampID(mCol.getDb(), "notes");
             mGuId = Utils.guid64();
             mModel = model;
-            try {
-                mMid = model.getLong("id");
-                mTags = new ArrayList<>();
-                mFields = new String[model.getJSONArray("flds").length()];
-                Arrays.fill(mFields, "");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            mMid = model.getLong("id");
+            mTags = new ArrayList<>();
+            mFields = new String[model.getJSONArray("flds").length()];
+            Arrays.fill(mFields, "");
             mFlags = 0;
             mData = "";
             mFMap = mCol.getModels().fieldMap(mModel);
@@ -91,10 +88,8 @@ public class Note implements Cloneable {
 
     public void load() {
         Timber.d("load()");
-        Cursor cursor = null;
-        try {
-            cursor = mCol.getDb().getDatabase()
-                    .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null);
+        try (Cursor cursor = mCol.getDb().getDatabase()
+                .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null)) {
             if (!cursor.moveToFirst()) {
                 throw new RuntimeException("Notes.load(): No result from query for note " + mId);
             }
@@ -109,10 +104,6 @@ public class Note implements Cloneable {
             mModel = mCol.getModels().get(mMid);
             mFMap = mCol.getModels().fieldMap(mModel);
             mScm = mCol.getScm();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
     }
 
@@ -162,16 +153,10 @@ public class Note implements Cloneable {
 
     public ArrayList<Card> cards() {
         ArrayList<Card> cards = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase()
-                    .query("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null);
+        try (Cursor cur = mCol.getDb().getDatabase()
+                .query("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null)) {
             while (cur.moveToNext()) {
                 cards.add(mCol.getCard(cur.getLong(0)));
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         return cards;
@@ -212,7 +197,11 @@ public class Note implements Cloneable {
 
 
     private int _fieldOrd(String key) {
-        return mFMap.get(key).first;
+        Pair<Integer, JSONObject> fieldPair = mFMap.get(key);
+        if (fieldPair == null) {
+            throw new IllegalArgumentException(String.format("No field named '%s' found", key));
+        }
+        return fieldPair.first;
     }
 
 
@@ -289,8 +278,8 @@ public class Note implements Cloneable {
         // find any matching csums and compare
         for (String flds : mCol.getDb().queryColumn(
                 String.class,
-                "SELECT flds FROM notes WHERE csum = " + csum + " AND id != " + (mId != 0 ? mId : 0) + " AND mid = "
-                        + mMid, 0)) {
+                "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
+                0, new Object[] {csum, (mId != 0 ? mId : 0), mMid})) {
             if (Utils.stripHTMLMedia(
                     Utils.splitFields(flds)[0]).equals(Utils.stripHTMLMedia(mFields[0]))) {
                 return 2;
@@ -309,7 +298,7 @@ public class Note implements Cloneable {
      * have we been added yet?
      */
     private void _preFlush() {
-        mNewlyAdded = mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE nid = " + mId) == 0;
+        mNewlyAdded = mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE nid = ?", new Object[] {mId}) == 0;
     }
 
 
@@ -348,7 +337,7 @@ public class Note implements Cloneable {
 
 
     public String getSFld() {
-        return mCol.getDb().queryString("SELECT sfld FROM notes WHERE id = " + mId);
+        return mCol.getDb().queryString("SELECT sfld FROM notes WHERE id = ?", new Object [] {mId});
     }
 
 
@@ -393,5 +382,35 @@ public class Note implements Cloneable {
     @Override
     public int hashCode() {
         return (int) (mId ^ (mId >>> 32));
+    }
+
+
+    public static class ClozeUtils {
+        private static final Pattern mClozeRegexPattern = Pattern.compile("\\{\\{c(\\d+)::");
+
+        /**
+         * Calculate the next number that should be used if inserting a new cloze deletion.
+         * Per the manual the next number should be greater than any existing cloze deletion
+         * even if there are gaps in the sequence, and regardless of existing cloze ordering
+         *
+         * @param fieldValues Iterable of field values that may contain existing cloze deletions
+         * @return the next index that a cloze should be inserted at
+         */
+        public static int getNextClozeIndex(Iterable<String> fieldValues) {
+
+            int highestClozeId = 0;
+            // Begin looping through the fields
+            for (String fieldLiteral : fieldValues) {
+                // Begin searching in the current field for cloze references
+                Matcher matcher = mClozeRegexPattern.matcher(fieldLiteral);
+                while (matcher.find()) {
+                    int detectedClozeId = Integer.parseInt(matcher.group(1));
+                    if (detectedClozeId > highestClozeId) {
+                        highestClozeId = detectedClozeId;
+                    }
+                }
+            }
+            return highestClozeId + 1;
+        }
     }
 }

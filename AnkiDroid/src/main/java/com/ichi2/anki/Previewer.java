@@ -43,6 +43,12 @@ public class Previewer extends AbstractFlashcardViewer {
 
         mCardList = getIntent().getLongArrayExtra("cardList");
         mIndex = getIntent().getIntExtra("index", -1);
+
+        if (savedInstanceState != null){
+            mIndex = savedInstanceState.getInt("index", mIndex);
+            mShowingAnswer = savedInstanceState.getBoolean("showingAnswer", mShowingAnswer);
+        }
+
         if (mCardList.length == 0 || mIndex < 0 || mIndex > mCardList.length - 1) {
             Timber.e("Previewer started with empty card list or invalid index");
             finishWithoutAnimation();
@@ -58,7 +64,12 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         mCurrentCard = col.getCard(mCardList[mIndex]);
-        displayCardQuestion();
+        if (mShowingAnswer){
+            displayCardQuestion();
+            displayCardAnswer();
+        } else {
+            displayCardQuestion();
+        }
         showBackIcon();
     }
 
@@ -73,6 +84,14 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void initLayout() {
         super.initLayout();
         mTopBarLayout.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("index", mIndex);
+        outState.putBoolean("showingAnswer", mShowingAnswer);
     }
 
 
@@ -98,9 +117,11 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void updateScreenCounts() { /* do nothing */ }
 
 
-    // No Gestures!
     @Override
-    protected void executeCommand(int which) { /* do nothing */ }
+    public boolean executeCommand(int which) {
+        /* do nothing */
+        return false;
+    }
 
     private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override
