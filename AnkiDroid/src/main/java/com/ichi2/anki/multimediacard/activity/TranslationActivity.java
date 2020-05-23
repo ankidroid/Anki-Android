@@ -317,7 +317,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             if (tuc == null) {
                 continue;
             }
-            List<Meaning> meanings = tuc.getMeanings();
+            List<Meaning> meanings = null;
             if (meanings != null) {
                 for (Meaning meaning : meanings) {
                     if (meaning == null) {
@@ -327,7 +327,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                 }
             }
 
-            Phrase phrase = tuc.getPhrase();
+            Phrase phrase = null;
             if (phrase != null) {
                 if (phrase.getLanguage() == null) {
                     continue;
