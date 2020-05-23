@@ -34,6 +34,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.exception.NoSuchDeckException;
+import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
@@ -1058,6 +1059,7 @@ public class Collection {
             fields = (Map<String, String>) Hooks.runFilter("mungeFields", fields, model, data, this);
             String html = new Template(format, fields).render();
             html = (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this);
+            html = ChessFilter.fenToChessboard(html, getContext());
             d.put(type, html);
             // empty cloze?
             if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
