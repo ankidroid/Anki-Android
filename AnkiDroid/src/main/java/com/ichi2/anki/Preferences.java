@@ -59,8 +59,8 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.AdvancedStatistics;
-import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.hooks.Hooks;
+import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
@@ -568,7 +568,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     if (((CheckBoxPreference) pref).isChecked()) {
                         AdvancedStatistics.install();
                     } else {
-                        AdvancedStatistics.uninstall(Hooks.getInstance(getApplicationContext()));
+                        AdvancedStatistics.uninstall();
                     }
                     break;
                 case "showProgress":

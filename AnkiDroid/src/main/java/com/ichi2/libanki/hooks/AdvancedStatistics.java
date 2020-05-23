@@ -150,7 +150,7 @@ public class AdvancedStatistics extends Hook  {
     public static void install() {
         sInstalled = true;
     }
-    public static void uninstall(Hooks h) {
+    public static void uninstall() {
         sInstalled = false;
     }
 
