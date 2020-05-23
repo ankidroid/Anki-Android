@@ -512,7 +512,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
             //are height and width checks still necessary without bitmaps?
             if (height != 0 && width != 0) {
-                Collection col = CollectionHelper.getInstance().getCol(getActivity());
+                CollectionHelper.getInstance().getCol(getActivity());
                 if (mHeight != height || mWidth != width ||
                         mType != (((Statistics) getActivity()).getTaskHandler()).getStatType() ||
                         mDeckId != ((Statistics) getActivity()).getDeckId()) {
@@ -622,7 +622,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             if (!mIsCreated) {
                 return;
             }
-            Collection col = CollectionHelper.getInstance().getCol(getActivity());
+            CollectionHelper.getInstance().getCol(getActivity());
             if (mType != (((Statistics) getActivity()).getTaskHandler()).getStatType() ||
                     mDeckId != ((Statistics) getActivity()).getDeckId()) {
                 mType = (((Statistics) getActivity()).getTaskHandler()).getStatType();
