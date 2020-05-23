@@ -174,8 +174,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mTtsInitialized = false;
     private boolean mReplayOnTtsInit = false;
 
-    protected static final int MENU_DISABLED = 3;
-
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
