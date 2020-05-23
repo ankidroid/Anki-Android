@@ -54,7 +54,7 @@ public class Tls12SocketFactory extends SSLSocketFactory {
 
 
     public static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
-        if (Build.VERSION.SDK_INT >= 16 && Build.VERSION.SDK_INT < 22) {
+        if (Build.VERSION.SDK_INT < 22) {
 
             try {
                 TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(

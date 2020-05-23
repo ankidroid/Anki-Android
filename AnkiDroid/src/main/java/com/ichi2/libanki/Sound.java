@@ -26,7 +26,6 @@ import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.MediaStore;
 
 import android.view.Display;
@@ -37,7 +36,6 @@ import android.widget.VideoView;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
-import com.ichi2.compat.CompatHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -202,12 +200,7 @@ public class Sound {
             // Construct the new content, appending the substring from the beginning of the content left until the
             // beginning of the sound marker
             // and then appending the html code to add the play button
-            String button;
-            if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.HONEYCOMB) {
-                button = "<svg viewBox=\"0 0 32 32\"><polygon points=\"11,25 25,16 11,7\"/>Replay</svg>";
-            } else {
-                button = "<img src='file:///android_asset/inline_play_button.png' />";
-            }
+            String button = "<svg viewBox=\"0 0 32 32\"><polygon points=\"11,25 25,16 11,7\"/>Replay</svg>";
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));

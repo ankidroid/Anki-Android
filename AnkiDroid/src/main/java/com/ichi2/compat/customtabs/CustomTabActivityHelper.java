@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabsClient;
@@ -51,7 +52,7 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
      * @param uri the Uri to be opened.
      * @param fallback a CustomTabFallback to be used if Custom Tabs is not available.
      */
-    public static void openCustomTab(Activity activity,
+    public static void openCustomTab(@NonNull Activity activity,
                                      CustomTabsIntent customTabsIntent,
                                      Uri uri,
                                      CustomTabFallback fallback) {
