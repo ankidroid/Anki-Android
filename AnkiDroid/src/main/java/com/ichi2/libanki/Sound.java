@@ -443,6 +443,9 @@ public class Sound {
     private void releaseSound() {
         Timber.d("Releasing sounds and abandoning audio focus");
         if (mMediaPlayer != null) {
+            //Required to remove warning: "mediaplayer went away with unhandled events"
+            //https://stackoverflow.com/questions/9609479/android-mediaplayer-went-away-with-unhandled-events
+            mMediaPlayer.reset();
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
