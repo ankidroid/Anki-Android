@@ -477,33 +477,6 @@ public class Decks {
     }
 
 
-    public void renameForDragAndDrop(Long draggedDeckDid, Long ontoDeckDid) throws DeckRenameException {
-        JSONObject draggedDeck = get(draggedDeckDid);
-        String draggedDeckName = draggedDeck.getString("name");
-        String ontoDeckName = get(ontoDeckDid).getString("name");
-
-        String draggedBasename = basename(draggedDeckName);
-        if (ontoDeckDid == null) {
-            if (!draggedBasename.equals(draggedDeckName)) {
-                rename(draggedDeck, draggedBasename);
-            }
-        } else if (_canDragAndDrop(draggedDeckName, ontoDeckName)) {
-            rename(draggedDeck, ontoDeckName + "::" + draggedBasename);
-        }
-    }
-
-
-    private boolean _canDragAndDrop(String draggedDeckName, String ontoDeckName) {
-        if (draggedDeckName.equals(ontoDeckName)
-                || _isParent(ontoDeckName, draggedDeckName)
-                || _isAncestor(draggedDeckName, ontoDeckName)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-
     private boolean _isParent(String parentDeckName, String childDeckName) {
         String[] parentDeckPath = path(parentDeckName);
         String[] childDeckPath = path(childDeckName);
