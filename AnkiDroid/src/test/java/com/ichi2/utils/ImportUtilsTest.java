@@ -166,6 +166,7 @@ public class ImportUtilsTest extends RobolectricTest {
     }
 
 
+    @SuppressWarnings("WeakerAccess")
     public static class TestFileImporter extends ImportUtils.FileImporter {
         private String mCacheFileName;
         private final String mFileName;
