@@ -1138,25 +1138,6 @@ public class AdvancedStatistics extends Hook  {
             return matrix;
         }
 
-        public<T> T[] append(T[] arr, T element, int n) {
-            final int N0 = arr.length;
-            final int N1 = N0 + n;
-            arr = Arrays.copyOf(arr, N1);
-            for(int N = N0; N < N1; N++)
-                arr[N] = element;
-            return arr;
-        }
-
-        public int nRows(int[][] matrix) {
-            return matrix.length;
-        }
-
-        public int nCols(int[][] matrix) {
-            if(matrix.length == 0)
-                return 0;
-            return matrix[0].length;
-        }
-
         public long[] stringToLongArray(String s) {
 
             String[] split = s.substring(1, s.length() - 1).split(", ");
