@@ -67,6 +67,7 @@ public class ImportUtils {
         return FileImporter.isDeckPackage(filename) || isCollectionPackage(filename);
     }
 
+    @SuppressWarnings("WeakerAccess")
     protected static class FileImporter {
         /**
          * This code is used in multiple places to handle package imports
@@ -254,7 +255,7 @@ public class ImportUtils {
         }
 
 
-        private static boolean hasExtension(@NonNull String filename, String extension) {
+        public static boolean hasExtension(@NonNull String filename, String extension) {
             String[] fileParts = filename.split("\\.");
             if (fileParts.length < 2) {
                 return false;
