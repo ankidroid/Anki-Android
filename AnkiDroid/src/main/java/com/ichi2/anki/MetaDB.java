@@ -143,31 +143,6 @@ public class MetaDB {
     }
 
 
-    /** Reset the content of the meta-db, erasing all its content. */
-    public static boolean resetDB(Context context) {
-        openDBIfClosed(context);
-        try {
-            mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
-            Timber.i("MetaDB:: Resetting all language assignment");
-            mMetaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
-            Timber.i("MetaDB:: Resetting whiteboard state");
-            mMetaDb.execSQL("DROP TABLE IF EXISTS customDictionary;");
-            Timber.i("MetaDB:: Resetting custom Dictionary");
-            mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
-            Timber.i("MetaDB:: Resetting widget status");
-            mMetaDb.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;");
-            Timber.i("MetaDB:: Resetting small widget status");
-            mMetaDb.execSQL("DROP TABLE IF EXISTS intentInformation;");
-            Timber.i("MetaDB:: Resetting intentInformation");
-            upgradeDB(mMetaDb, DATABASE_VERSION);
-            return true;
-        } catch (Exception e) {
-            Timber.e(e, "Error resetting MetaDB ");
-        }
-        return false;
-    }
-
-
     /** Reset the language associations for all the decks and card models. */
     public static boolean resetLanguages(Context context) {
         if (mMetaDb == null || !mMetaDb.isOpen()) {
