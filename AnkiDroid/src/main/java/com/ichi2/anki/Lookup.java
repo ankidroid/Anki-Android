@@ -96,7 +96,7 @@ public class Lookup {
                 mLookupText = text;
                 // localisation is needless here since leo.org translates only into or out of German
                 final CharSequence[] itemValues = { "en", "fr", "es", "it", "ch", "ru" };
-                String language = getLanguage(MetaDB.LANGUAGES_QA_UNDEFINED);
+                String language = "";
                 if (language.length() > 0) {
                     for (CharSequence itemValue : itemValues) {
                         if (language.equals(itemValue)) {
@@ -176,22 +176,10 @@ public class Lookup {
         return mIsDictionaryAvailable;
     }
 
-
-    private static String getLanguage(int questionAnswer) {
-        // if (mCurrentCard == null) {
-        return "";
-        // } else {
-        // return MetaDB.getLanguage(mContext, mDeckFilename, Models.getModel(DeckManager.getMainDeck(),
-        // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer);
-        // }
-    }
-
-
     private static void storeLanguage(String language, int questionAnswer) {
         // if (mCurrentCard != null) {
         // MetaDB.storeLanguage(mContext, mDeckFilename, Models.getModel(DeckManager.getMainDeck(),
         // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);
         // }
     }
-
 }
