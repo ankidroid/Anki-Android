@@ -145,7 +145,7 @@ public class ImportUtils {
             if (!isValidPackageName(filename)) {
                 // Don't import if file doesn't have an Anki package extension
                 errorMessage = context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
-            } else if (filename != null) {
+            } else {
                 // Copy to temporary file
                 filename = ensureValidLength(filename);
                 String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
