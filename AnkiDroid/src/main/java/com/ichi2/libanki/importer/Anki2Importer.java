@@ -83,7 +83,6 @@ public class Anki2Importer extends Importer {
 
     public Anki2Importer(Collection col, String file) {
         super(col, file);
-        mNeedMapper = false;
         mDeckPrefix = null;
         mAllowUpdate = true;
     }
