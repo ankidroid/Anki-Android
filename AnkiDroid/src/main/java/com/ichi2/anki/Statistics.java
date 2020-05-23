@@ -382,7 +382,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
         }
 
-        public abstract void invalidateView();
         public abstract void checkAndUpdate();
     }
 
@@ -539,14 +538,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
 
         @Override
-        public void invalidateView() {
-            if (mChart != null) {
-                mChart.invalidate();
-            }
-        }
-
-
-        @Override
         public void onDestroy() {
             super.onDestroy();
             if (mCreateChartTask != null && !mCreateChartTask.isCancelled()) {
@@ -623,14 +614,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         private void createStatisticOverview(){
             AnkiStatsTaskHandler handler = (((Statistics)getActivity()).getTaskHandler());
             mCreateStatisticsOverviewTask = handler.createStatisticsOverview(mWebView, mProgressBar);
-        }
-
-
-        @Override
-        public void invalidateView() {
-            if (mWebView != null) {
-                mWebView.invalidate();
-            }
         }
 
 
