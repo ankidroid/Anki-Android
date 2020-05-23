@@ -393,13 +393,6 @@ public class Decks {
     }
 
 
-    public void collapseBrowser(long did) {
-        JSONObject deck = get(did);
-        boolean collapsed = deck.optBoolean("browserCollapsed", false);
-        deck.put("browserCollapsed", !collapsed);
-        save(deck);
-    }
-
 
     /**
      * Return the number of decks.
