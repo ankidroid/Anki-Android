@@ -455,17 +455,10 @@ public class AdvancedStatistics extends Hook  {
             return factor;
         }
 
-        public void setFactor(double factor) {
-            this.factor = factor;
-        }
-
         public int getDue() {
             return due;
         }
 
-        public void setDue(int due) {
-            this.due = due;
-        }
 
         /**
          * Type of the card, based on the interval.
