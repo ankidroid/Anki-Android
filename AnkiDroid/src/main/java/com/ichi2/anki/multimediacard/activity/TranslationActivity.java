@@ -323,13 +323,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                     if (meaning == null) {
                         continue;
                     }
-                    if (meaning.getLanguage() == null) {
-                        continue;
-                    }
-                    if (meaning.getLanguage().contentEquals(desiredLang)) {
-                        String unescappedString = Utils.unescape(meaning.getText());
-                        res.add(unescappedString);
-                    }
+                    continue;
                 }
             }
 
