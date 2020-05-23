@@ -144,7 +144,6 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     /** Sets various properties required for IFieldController to be in a valid state */
     private void setupUIController(IFieldController fieldController) {
         fieldController.setField(mField);
-        fieldController.setFieldIndex(mFieldIndex);
         fieldController.setNote(mNote);
         fieldController.setEditingActivity(this);
     }

@@ -45,11 +45,6 @@ public interface IFieldController {
     void setNote(IMultimediaEditableNote note);
 
 
-    // This is guaranteed to be called before create UI, so that the controller
-    // is aware of the field index in the note.
-    void setFieldIndex(int index);
-
-
     // Called before other
     void setEditingActivity(MultimediaEditFieldActivity activity);
 

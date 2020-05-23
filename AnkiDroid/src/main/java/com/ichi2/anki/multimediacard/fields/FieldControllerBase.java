@@ -42,11 +42,6 @@ public abstract class FieldControllerBase implements IFieldController {
 
 
     @Override
-    public void setFieldIndex(int index) {
-    }
-
-
-    @Override
     public void setEditingActivity(MultimediaEditFieldActivity activity) {
         mActivity = activity;
     };
