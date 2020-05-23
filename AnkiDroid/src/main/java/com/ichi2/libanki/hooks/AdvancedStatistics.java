@@ -171,7 +171,7 @@ public class AdvancedStatistics extends Hook  {
      * @param dids Deck id's
      * @return @see #metaInfo
      */
-    private StatsMetaInfo calculateDueAsMetaInfo(StatsMetaInfo metaInfo, Stats.AxisType type, Context context, String dids) {
+    public StatsMetaInfo calculateDueAsMetaInfo(StatsMetaInfo metaInfo, Stats.AxisType type, Context context, String dids) {
 
         //To indicate that we calculated the statistics so that Stats.java knows that it shouldn't display the standard Forecast chart.
         Settings = new Settings(context);
