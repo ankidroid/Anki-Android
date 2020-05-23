@@ -225,65 +225,6 @@ public class ImportTest {
         assertTrue(testCol.getDb().queryString("select flds from notes").startsWith("goodbye"));
     }
 
-    // Exchange @Suppress for @Test when csv importer is implemented
-//    @Suppress
-//    public void testCsv() throws IOException {
-//        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-2fields.txt");
-//        TextImporter i = new TextImporter(testCol, file);
-//        i.initMapping();
-//        i.run();
-//        // four problems - too many & too few fields, a missing front, and a
-//        // duplicate entry
-//        assertTrue(i.getLog().size() == 5);
-//        assertTrue(i.getTotal() == 5);
-//        // if we run the import again, it should update instead
-//        i.run();
-//        assertTrue(i.getLog().size() == 10);
-//        assertTrue(i.getTotal() == 5);
-//        // but importing should not clobber tags if they're unmapped
-//        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
-//        n.addTag("test");
-//        n.flush();
-//        i.run();
-//        n.load();
-//        assertTrue((n.getTags().size() == 1) && (n.getTags().get(0) == "test"));
-//        // if add-only mode, count will be 0
-//        i.setImportMode(1);
-//        i.run();
-//        assertTrue(i.getTotal() == 0);
-//        // and if dupes mode, will reimport everything
-//        assertTrue(testCol.cardCount() == 5);
-//        i.setImportMode(2);
-//        i.run();
-//        // includes repeated field
-//        assertTrue(i.getTotal() == 6);
-//        assertTrue(testCol.cardCount() == 11);
-//    }
-//
-//    // Exchange @Suppress for @Test when csv importer is implemented
-//    @Suppress
-//    public void testCsv2() throws  IOException, ConfirmModSchemaException {
-//        Models mm = testCol.getModels();
-//        JSONObject m = mm.current();
-//        JSONObject f = mm.newField("Three");
-//        mm.addField(m, f);
-//        mm.save(m);
-//        Note n = deck.newNote();
-//        n.setItem("Front", "1");
-//        n.setItem("Back", "2");
-//        n.setItem("Three", "3");
-//        testCol.addNote(n);
-//        // an update with unmapped fields should not clobber those fields
-//        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-update.txt");
-//        TextImporter i = new TextImporter(testCol, file);
-//        i.initMapping();
-//        i.run();
-//        n.load();
-//        assertTrue("1".equals(n.getItem("Front")));
-//        assertTrue("x".equals(n.getItem("Back")));
-//        assertTrue("3".equals(n.getItem("Three")));
-//    }
-
     /**
      * Custom tests for AnkiDroid.
      */
