@@ -52,6 +52,30 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(actualResourceId, is(R.string.note_editor_no_first_field));
     }
 
+    @Test
+    public void errorSavingInvalidNoteWithAllFieldsDisplaysInvalidTemplate() {
+        NoteEditor noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
+                .withFirstField("A")
+                .withSecondField("B")
+                .withThirdField("C")
+                .build();
+
+        int actualResourceId = noteEditor.getAddNoteErrorResource();
+
+        assertThat(actualResourceId, is(R.string.note_editor_no_cards_created_all_fields));
+    }
+
+    @Test
+    public void errorSavingInvalidNoteWitSomeFieldsDisplaysEnterMore() {
+        NoteEditor noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
+                .withFirstField("A")
+                .withThirdField("C")
+                .build();
+
+        int actualResourceId = noteEditor.getAddNoteErrorResource();
+
+        assertThat(actualResourceId, is(R.string.note_editor_no_cards_created));
+    }
 
     @Test
     public void errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() {
@@ -151,9 +175,14 @@ public class NoteEditorTest extends RobolectricTest {
         switch (noteType) {
             case BASIC: return getCol().getModels().byName("Basic");
             case CLOZE: return getCol().getModels().byName("Cloze");
-            case BACKTOFRONT:
+            case BACKTOFRONT: {
                 String name = super.addNonClozeModel("Reversed", new String[] {"Front", "Back"}, "{{Back}}", "{{Front}}");
                 return getCol().getModels().byName(name);
+            }
+            case THREE_FIELD_INVALID_TEMPLATE: {
+                String name = super.addNonClozeModel("Invalid", new String[] {"Front", "Back", "Side"}, "", "");
+                return getCol().getModels().byName(name);
+            }
             default: throw new IllegalStateException(String.format("unexpected value: %s", noteType));
         }
     }
@@ -207,6 +236,7 @@ public class NoteEditorTest extends RobolectricTest {
         CLOZE,
         /**Basic, but Back is on the front */
         BACKTOFRONT,
+        THREE_FIELD_INVALID_TEMPLATE
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -215,6 +245,7 @@ public class NoteEditorTest extends RobolectricTest {
         private final JSONObject mModel;
         private String mFirstField;
         private String mSecondField;
+        private String mThirdField;
 
 
         public NoteEditorTestBuilder(JSONObject model) {
@@ -235,6 +266,9 @@ public class NoteEditorTest extends RobolectricTest {
             if (mSecondField != null) {
                 noteEditor.setFieldValueFromUi(1, mSecondField);
             }
+            if (mThirdField != null) {
+                noteEditor.setFieldValueFromUi(2, mThirdField);
+            }
             return noteEditor;
         }
 
@@ -251,6 +285,12 @@ public class NoteEditorTest extends RobolectricTest {
 
         public NoteEditorTestBuilder withSecondField(String text) {
             this.mSecondField = text;
+            return this;
+        }
+
+
+        public NoteEditorTestBuilder withThirdField(String text) {
+            this.mThirdField = text;
             return this;
         }
     }
