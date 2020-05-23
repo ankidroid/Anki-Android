@@ -21,6 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.robolectric.Shadows.shadowOf;
 
+@SuppressWarnings("SameParameterValue")
 @RunWith(AndroidJUnit4.class)
 public class NoteEditorTest extends RobolectricTest {
 
@@ -208,6 +209,7 @@ public class NoteEditorTest extends RobolectricTest {
         BACKTOFRONT,
     }
 
+    @SuppressWarnings("WeakerAccess")
     public class NoteEditorTestBuilder {
 
         private final JSONObject mModel;
