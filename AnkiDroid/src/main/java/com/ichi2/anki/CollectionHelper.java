@@ -44,7 +44,6 @@ public class CollectionHelper {
     // Collection instance belonging to sInstance
     private Collection mCollection;
     // Path to collection, cached for the reopenCollection() method
-    private String mPath;
     // Name of anki2 file
     public static final String COLLECTION_FILENAME = "collection.anki2";
 
@@ -104,7 +103,6 @@ public class CollectionHelper {
             // Check that the directory has been created and initialized
             try {
                 initializeAnkiDroidDirectory(getParentDirectory(path));
-                mPath = path;
             } catch (StorageAccessException e) {
                 Timber.e(e, "Could not initialize AnkiDroid directory");
                 return null;
