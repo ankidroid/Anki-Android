@@ -12,17 +12,8 @@ public class JSONException extends RuntimeException {
         super(s);
     }
 
-    public JSONException() {
-        super();
-    }
-
     public JSONException(Throwable e) {
         super(e);
-    }
-
-    public JSONException(JSONException e) {
-        super(e);
-        exc = e;
     }
 
     public JSONException asException() {
@@ -31,9 +22,5 @@ public class JSONException extends RuntimeException {
         } else {
             return new JSONException(toString());
         }
-    }
-
-    public void throwAsException() throws JSONException {
-        throw asException();
     }
 }

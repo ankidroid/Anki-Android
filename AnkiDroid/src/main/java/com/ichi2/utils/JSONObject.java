@@ -251,22 +251,6 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
-    public JSONArray toJSONArray(JSONArray names) {
-        try {
-            return JSONArray.arrayToArray(super.toJSONArray(names));
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public static String numberToString(Number number) {
-        try {
-            return org.json.JSONObject.numberToString(number);
-        } catch (org.json.JSONException e) {
-            throw new RuntimeException (e);
-        }
-    }
-
     public JSONArray names() {
         org.json.JSONArray ar = super.names();
         if (ar == null) {
