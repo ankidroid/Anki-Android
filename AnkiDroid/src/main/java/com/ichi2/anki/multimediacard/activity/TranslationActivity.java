@@ -272,7 +272,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             return;
         }
 
-        mPossibleTranslations = parseJson(resp, mLangCodeTo);
+        mPossibleTranslations = new ArrayList<>();
 
         if (mPossibleTranslations.size() == 0) {
             if (!mSource.toLowerCase(Locale.getDefault()).contentEquals(mSource)) {
@@ -290,12 +290,6 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         fragment.setTitle(getText(R.string.multimedia_editor_trans_pick_translation).toString());
 
         fragment.show(this.getSupportFragmentManager(), "pick.translation");
-
-    }
-
-
-    private static ArrayList<String> parseJson(Response resp, String languageCodeTo) {
-        return new ArrayList<>();
     }
 
 
