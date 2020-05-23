@@ -37,8 +37,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
-import com.ichi2.anki.multimediacard.glosbe.json.Meaning;
-import com.ichi2.anki.multimediacard.glosbe.json.Phrase;
 import com.ichi2.anki.multimediacard.glosbe.json.Response;
 import com.ichi2.anki.multimediacard.glosbe.json.Tuc;
 import com.ichi2.anki.multimediacard.language.LanguagesListerGlosbe;
