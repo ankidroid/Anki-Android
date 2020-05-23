@@ -441,11 +441,6 @@ public class Syncer {
     }
 
 
-    public long finish() {
-        return finish(0);
-    }
-
-
     private long finish(long mod) {
         if (mod == 0) {
             // server side; we decide new mod time
