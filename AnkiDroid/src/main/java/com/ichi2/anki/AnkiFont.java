@@ -95,9 +95,7 @@ public class AnkiFont {
         boolean overrideFont = "1".equals(preferences.getString("overrideFontBehavior", "0"));
         if (defaultFont.equalsIgnoreCase(name)) {
             if (overrideFont) {
-                createdFont.setAsOverride();
             } else{
-                createdFont.setAsDefault();
             }
         }
         return createdFont;
@@ -161,13 +159,5 @@ public class AnkiFont {
             }
             return null;
         }
-    }
-
-
-    private void setAsDefault() {
-    }
-
-
-    private void setAsOverride() {
     }
 }
