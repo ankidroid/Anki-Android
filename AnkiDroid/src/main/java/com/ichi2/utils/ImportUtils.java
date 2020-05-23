@@ -126,7 +126,7 @@ public class ImportUtils {
             //Note: intent.getData() can be null. Use data instead.
 
             // Get the original filename from the content provider URI
-            String errorMessage = null;
+            String errorMessage;
             String filename = getFileNameFromContentProvider(context, data);
 
             // Hack to fix bug where ContentResolver not returning filename correctly
@@ -138,13 +138,13 @@ public class ImportUtils {
                 } else {
                     Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile");
                     AnkiDroidApp.sendExceptionReport(new RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed");
-                    errorMessage = AnkiDroidApp.getAppResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing");
+                    return AnkiDroidApp.getAppResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing");
                 }
             }
 
             if (!isValidPackageName(filename)) {
                 // Don't import if file doesn't have an Anki package extension
-                errorMessage = context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
+                return context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
             } else {
                 // Copy to temporary file
                 filename = ensureValidLength(filename);
