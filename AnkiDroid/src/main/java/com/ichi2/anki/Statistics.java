@@ -335,7 +335,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
         //track current settings for each individual fragment
         protected long mDeckId;
-        protected SectionsPagerAdapter mActivitySectionPagerAdapter;
 
         /**
          * The fragment argument representing the section number for this
@@ -445,7 +444,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             mType = (((Statistics) getActivity()).getTaskHandler()).getStatType();
             mIsCreated = true;
             ((Statistics) getActivity()).getViewPager();
-            mActivitySectionPagerAdapter = ((Statistics) getActivity()).getSectionsPagerAdapter();
+            ((Statistics) getActivity()).getSectionsPagerAdapter();
             mDeckId = ((Statistics) getActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
                 Collection col = CollectionHelper.getInstance().getCol(getActivity());
@@ -601,7 +600,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             mType = handler.getStatType();
             mIsCreated = true;
             ((Statistics) getActivity()).getViewPager();
-            mActivitySectionPagerAdapter = ((Statistics) getActivity()).getSectionsPagerAdapter();
+            ((Statistics) getActivity()).getSectionsPagerAdapter();
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
             mDeckId = ((Statistics) getActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
