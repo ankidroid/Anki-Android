@@ -1727,7 +1727,7 @@ public class SchedV2 extends AbstractSched {
             // notify UI
             if (mContextReference != null) {
                 Context context = mContextReference.get();
-                new Leech.LeechHook().runHook(card, context);
+                new Leech().runHook(card, context);
             }
             return true;
         }
