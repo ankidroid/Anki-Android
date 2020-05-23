@@ -810,22 +810,25 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     private void initializeLanguageDialog(PreferenceScreen screen) {
         ListPreference languageSelection = (ListPreference) screen.findPreference(LANGUAGE);
-        Locale currentAppLocale = LanguageUtil.getLocale(AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
-                .getString(Preferences.LANGUAGE, ""));
         if (languageSelection != null) {
-            Map<String, String> items = new TreeMap<>();
+            Map<String, List<String>> items = new TreeMap<>();
             for (String localeCode : LanguageUtil.APP_LANGUAGES) {
                 Locale loc = LanguageUtil.getLocale(localeCode);
-                items.put(loc.getDisplayName(currentAppLocale), loc.toString());
+                //TreeMap always sorted by key.
+                //      Key is a String: all display names converted to lower case for correct display order.
+                //      Value is list of 2 strings:
+                //          1st element is display name with unmodified case
+                //          2nd element is locale code
+                items.put(loc.getDisplayName(loc).toLowerCase(), Arrays.asList(loc.getDisplayName(loc), loc.toString()));
             }
             CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
             CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
             languageDialogLabels[0] = getResources().getString(R.string.language_system);
             languageDialogValues[0] = "";
             int i = 1;
-            for (Map.Entry<String, String> e : items.entrySet()) {
-                languageDialogLabels[i] = e.getKey();
-                languageDialogValues[i] = e.getValue();
+            for (Map.Entry<String, List<String>> e : items.entrySet()) {
+                languageDialogLabels[i] = e.getValue().get(0); //display name
+                languageDialogValues[i] = e.getValue().get(1); //locale code
                 i++;
             }
 
