@@ -1821,16 +1821,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
 
 
-        public Context getContext() {
-            return mContext;
-        }
-
-
-        public int getType() {
-            return mType;
-        }
-
-
         public Object[] getObjArray() {
             return mObjects;
         }
