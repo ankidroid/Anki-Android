@@ -17,10 +17,7 @@
 package com.ichi2.compat;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.view.KeyCharacterMap;
 
 public class CompatHelper {
@@ -92,10 +89,5 @@ public class CompatHelper {
 
     public static boolean hasScrollKeys() {
         return KeyCharacterMap.deviceHasKey(92) || KeyCharacterMap.deviceHasKey(93);
-    }
-
-    public static void removeHiddenPreferences(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        preferences.edit().remove("fixHebrewText").apply();
     }
 }
