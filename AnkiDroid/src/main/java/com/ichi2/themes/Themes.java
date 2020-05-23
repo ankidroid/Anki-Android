@@ -90,11 +90,6 @@ public class Themes {
     }
 
 
-    public static int getResFromAttr(Context context, int resAttr) {
-        int[] attrs = new int[] {resAttr};
-        return getResFromAttr(context, attrs)[0];
-    }
-
     public static int[] getResFromAttr(Context context, int[] attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs);
         for (int i = 0; i < attrs.length; i++) {
