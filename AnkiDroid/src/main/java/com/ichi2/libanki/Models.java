@@ -818,9 +818,8 @@ public class Models {
                              new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id") });
     }
 
-    @SuppressWarnings("PMD.UnusedLocalVariable") // unused upstream as well
     private void _syncTemplates(JSONObject m) {
-        ArrayList<Long> rem = mCol.genCards(Utils.arrayList2array(nids(m)));
+        mCol.genCards(Utils.arrayList2array(nids(m)));
     }
 
 
