@@ -525,7 +525,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         public boolean success;
         public int returnType;
         public String message;
-        public Collection col;
 
 
         public Payload(Object[] data) {
