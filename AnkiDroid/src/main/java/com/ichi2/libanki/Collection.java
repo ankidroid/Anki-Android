@@ -1018,33 +1018,6 @@ public class Collection {
     }
 
 
-    /**
-     * Return [cid, nid, mid, did, ord, tags, flds, flags] db query
-     */
-    public ArrayList<Object[]> _qaData() {
-        return _qaData("");
-    }
-
-
-    public ArrayList<Object[]> _qaData(String where) {
-        ArrayList<Object[]> data = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query(
-                    "SELECT c.id, n.id, n.mid, c.did, c.ord, "
-                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where, null);
-            while (cur.moveToNext()) {
-                data.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getLong(2), cur.getLong(3), cur.getInt(4),
-                        cur.getString(5), cur.getString(6), cur.getInt(7)});
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-        return data;
-    }
-
 	public String _flagNameFromCardFlags(int flags){
 		int flag = flags & 0b111;
 		if (flag == 0) {
