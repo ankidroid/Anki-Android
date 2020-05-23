@@ -31,18 +31,6 @@ public class TopLevelParser implements Function2D, Function3D, Cloneable {
     private String xName = "x", yName = "y";
 
 
-    public TopLevelParser(String expressionString, HashMap<String, TopLevelParser> parserRegister) {
-        initVarMap();
-        this.parserRegister = parserRegister;
-        this.expressionString = expressionString;
-        boolean isValidExpressionString = initExpressionString();
-
-        this.expression = new Expression(this.expressionString, this);
-        this.isValid = (expression.getExpressionType() != Expression.ExpressionType.INVALID) && isValidExpressionString;
-
-    }
-
-
     private void initVarMap() {
         varMap.put("e", Math.E);
         varMap.put("pi", Math.PI);
