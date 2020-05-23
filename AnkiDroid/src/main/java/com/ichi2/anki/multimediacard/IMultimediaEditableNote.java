@@ -35,7 +35,4 @@ public interface IMultimediaEditableNote extends Serializable {
 
 
     boolean setField(int index, IField field);
-
-
-    boolean isModified();
 }

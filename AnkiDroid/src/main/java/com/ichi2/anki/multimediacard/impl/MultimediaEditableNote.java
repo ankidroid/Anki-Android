@@ -42,12 +42,6 @@ public class MultimediaEditableNote implements IMultimediaEditableNote {
     }
 
 
-    @Override
-    public boolean isModified() {
-        return mIsModified;
-    }
-
-
     // package
     public void setNumFields(int numberOfFields) {
         getFieldsPrivate().clear();
