@@ -1223,17 +1223,6 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;link_hebrew_font&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;tt&quot; (Tatar), &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;no&quot; (Norwegian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;pt&quot; (Portuguese), &quot;bg&quot; (Bulgarian), &quot;lt&quot; (Lithuanian), &quot;lv&quot; (Latvian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;id&quot; (Indonesian), &quot;ca&quot; (Catalan), &quot;sr&quot; (Serbian), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;el&quot; (Greek), &quot;go&quot;, &quot;eo&quot; (Esperanto), &quot;it&quot; (Italian), &quot;es&quot; (Spanish), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;cs&quot; (Czech), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;th&quot; (Thai), &quot;ja&quot; (Japanese), &quot;fa&quot; (Persian), &quot;pl&quot; (Polish), &quot;he&quot; (Hebrew), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)"
-        errorLine1="    &lt;string name=&quot;link_hebrew_font&quot;>https://github.com/ankidroid/Anki-Android/releases/download/tohu-font/Tohu.ttf&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/constants.xml"
-            line="143"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
         message="&quot;link_faq_tts&quot; is not translated in &quot;nn&quot; (Norwegian Nynorsk), &quot;tt&quot; (Tatar), &quot;de&quot; (German), &quot;hi&quot; (Hindi), &quot;no&quot; (Norwegian), &quot;fi&quot; (Finnish), &quot;ru&quot; (Russian), &quot;pt&quot; (Portuguese), &quot;bg&quot; (Bulgarian), &quot;lt&quot; (Lithuanian), &quot;lv&quot; (Latvian), &quot;fr&quot; (French), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;id&quot; (Indonesian), &quot;ca&quot; (Catalan), &quot;sr&quot; (Serbian), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;el&quot; (Greek), &quot;go&quot;, &quot;eo&quot; (Esperanto), &quot;it&quot; (Italian), &quot;es&quot; (Spanish), &quot;zh&quot; (Chinese), &quot;et&quot; (Estonian), &quot;cs&quot; (Czech), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;th&quot; (Thai), &quot;ja&quot; (Japanese), &quot;fa&quot; (Persian), &quot;pl&quot; (Polish), &quot;he&quot; (Hebrew), &quot;ro&quot; (Romanian), &quot;nl&quot; (Dutch), &quot;tr&quot; (Turkish)"
         errorLine1="    &lt;string name=&quot;link_faq_tts&quot;>https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~">
@@ -62108,17 +62097,6 @@
 
     <issue
         id="TypographyQuotes"
-        message="Replace straight quotes (&quot;) with directional quotes (“”, &amp;#8220; and &amp;#8221;) ?"
-        errorLine1="    &lt;string name=&quot;fix_hebrew_instructions&quot;>Pengaturan ini melewati algoritma RTL Android untuk menampilkan teks Ibrani dengan vokal dengan benar.\n\nAgar ini berhasil, Anda perlu mendownload font Tohu.ttf dan menyalinnya secara manual ke\n\&quot;%s/fonts/\&quot;\n\nAnda tidak perlu memodifikasi kartu Anda.&lt;/string>"
-        errorLine2="                                           ^">
-        <location
-            file="src/main/res/values-id/10-preferences.xml"
-            line="121"
-            column="44"/>
-    </issue>
-
-    <issue
-        id="TypographyQuotes"
         message="Replace straight quotes (&apos;&apos;) with directional quotes (‘’, &amp;#8216; and &amp;#8217;) ?"
         errorLine1="    &lt;string name=&quot;disable_extended_text_ui_summ&quot;>Allows \&apos;Cloze Deletion\&apos; context menu when in landscape mode.&lt;/string>"
         errorLine2="                                                 ^">
@@ -79105,61 +79083,6 @@
             file="src/main/java/com/wildplot/android/rendering/graphics/wrapper/GraphicsWrap.java"
             line="167"
             column="12"/>
-    </issue>
-
-    <issue
-        id="UnknownNullness"
-        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
-        errorLine1="    public Object runFilter(Object arg, Object... args) {"
-        errorLine2="           ~~~~~~">
-        <location
-            file="src/main/java/com/ichi2/libanki/hooks/HebrewFixFilter.java"
-            line="26"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnknownNullness"
-        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
-        errorLine1="    public Object runFilter(Object arg, Object... args) {"
-        errorLine2="                            ~~~~~~">
-        <location
-            file="src/main/java/com/ichi2/libanki/hooks/HebrewFixFilter.java"
-            line="26"
-            column="29"/>
-    </issue>
-
-    <issue
-        id="UnknownNullness"
-        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
-        errorLine1="    public Object runFilter(Object arg, Object... args) {"
-        errorLine2="                                        ~~~~~~~~~">
-        <location
-            file="src/main/java/com/ichi2/libanki/hooks/HebrewFixFilter.java"
-            line="26"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="UnknownNullness"
-        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
-        errorLine1="    public static void install(Hooks h) {"
-        errorLine2="                               ~~~~~">
-        <location
-            file="src/main/java/com/ichi2/libanki/hooks/HebrewFixFilter.java"
-            line="31"
-            column="32"/>
-    </issue>
-
-    <issue
-        id="UnknownNullness"
-        message="Unknown nullability; explicitly declare as `@Nullable` or `@NonNull` to improve Kotlin interoperability; see https://android.github.io/kotlin-guides/interop.html#nullability-annotations"
-        errorLine1="    public static void uninstall(Hooks h) {"
-        errorLine2="                                 ~~~~~">
-        <location
-            file="src/main/java/com/ichi2/libanki/hooks/HebrewFixFilter.java"
-            line="36"
-            column="34"/>
     </issue>
 
     <issue

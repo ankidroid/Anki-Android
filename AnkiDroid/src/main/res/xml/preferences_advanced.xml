@@ -62,11 +62,6 @@
                 android:key="useInputTag"
                 android:summary="@string/use_input_tag_summ"
                 android:title="@string/use_input_tag" />
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="fixHebrewText"
-                android:summary="@string/fix_hebrew_text_summ"
-                android:title="@string/fix_hebrew_text" />
             <!-- Workaround for #5533 -->
             <CheckBoxPreference
                 android:defaultValue="false"

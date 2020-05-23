@@ -1086,7 +1086,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if ((!skipDbCheck && previous < upgradeDbVersion) || previous < upgradePrefsVersion) {
                 if (previous < upgradePrefsVersion) {
                     Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
-                    CompatHelper.removeHiddenPreferences(this.getApplicationContext());
                     upgradePreferences(previous);
                 }
                 // Integrity check loads asynchronously and then restart deck picker when finished

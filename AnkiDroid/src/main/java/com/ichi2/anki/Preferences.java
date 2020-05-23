@@ -29,7 +29,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -61,7 +60,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.AdvancedStatistics;
 import com.ichi2.libanki.hooks.ChessFilter;
-import com.ichi2.libanki.hooks.HebrewFixFilter;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.Themes;
@@ -101,8 +99,6 @@ interface PreferenceContext {
  * Preferences dialog.
  */
 public class Preferences extends AppCompatPreferenceActivity implements PreferenceContext, OnSharedPreferenceChangeListener {
-
-    private static final int DIALOG_HEBREW_FONT = 3;
 
     /** Key of the language preference */
     public static final String LANGUAGE = "language";
@@ -162,27 +158,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 return true;
         }
         return false;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation") // Tracked as #5019 on github - convert to fragments
-    protected MaterialDialog onCreateDialog(int id) {
-        Resources res = getResources();
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
-        switch (id) {
-            case DIALOG_HEBREW_FONT:
-                builder.title(res.getString(R.string.fix_hebrew_text));
-                builder.content(res.getString(R.string.fix_hebrew_instructions,
-                        CollectionHelper.getCurrentAnkiDroidDirectory(this)));
-                builder.onPositive((dialog, which) -> {
-                        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(
-                                R.string.link_hebrew_font)));
-                        startActivity(intent);
-                    });
-                builder.positiveText(res.getString(R.string.fix_hebrew_download_font));
-                builder.negativeText(R.string.dialog_cancel);
-        }
-        return builder.show();
     }
 
     @Override
@@ -588,14 +563,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         ChessFilter.uninstall(Hooks.getInstance(getApplicationContext()));
                     }
                     break;
-                case "fixHebrewText":
-                    if (((CheckBoxPreference) pref).isChecked()) {
-                        HebrewFixFilter.install(Hooks.getInstance(getApplicationContext()));
-                        showDialog(DIALOG_HEBREW_FONT);
-                    } else {
-                        HebrewFixFilter.uninstall(Hooks.getInstance(getApplicationContext()));
-                    }
-                    break;
                 case "advanced_statistics_enabled":
                     if (((CheckBoxPreference) pref).isChecked()) {
                         AdvancedStatistics.install(Hooks.getInstance(getApplicationContext()));
@@ -879,14 +846,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             if (doubleScrolling != null && plugins != null) {
                 plugins.removePreference(doubleScrolling);
             }
-        }
-
-        PreferenceCategory workarounds = (PreferenceCategory) screen.findPreference("category_workarounds");
-        if (workarounds != null) {
-            CheckBoxPreference fixHebrewText = (CheckBoxPreference) screen.findPreference("fixHebrewText");
-            CompatHelper.removeHiddenPreferences(this.getApplicationContext());
-
-            workarounds.removePreference(fixHebrewText);
         }
     }
 

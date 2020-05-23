@@ -53,9 +53,6 @@ public class Hooks {
         new Leech().installHook(this);
 
         // Preferences activated hooks
-        if (prefs.getBoolean("fixHebrewText", false)) {
-            HebrewFixFilter.install(this);
-        }
         if (prefs.getBoolean("convertFenText", false)) {
             ChessFilter.install(this);
         }
