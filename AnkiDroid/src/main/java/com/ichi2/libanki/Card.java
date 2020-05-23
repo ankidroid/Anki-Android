@@ -576,12 +576,6 @@ public class Card implements Cloneable {
     }
 
 
-    // Needed for tests
-    public void setCol(Collection col) {
-        mCol = col;
-    }
-
-
     public boolean showTimer() {
         JSONObject options = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
         return DeckConfig.parseTimerOpt(options, true);
