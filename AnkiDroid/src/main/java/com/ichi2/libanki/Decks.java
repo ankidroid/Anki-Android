@@ -264,11 +264,6 @@ public class Decks {
     }
 
 
-    public void rem(long did) {
-        rem(did, false);
-    }
-
-
     public void rem(long did, boolean cardsToo) {
         rem(did, cardsToo, true);
     }
