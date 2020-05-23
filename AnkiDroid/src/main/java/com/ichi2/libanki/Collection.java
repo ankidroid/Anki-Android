@@ -1057,8 +1057,8 @@ public class Collection {
                 fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
             String html = new Template(format, fields).render();
-            html = (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this);
             html = ChessFilter.fenToChessboard(html, getContext());
+            html = LaTeX.mungeQA(html, this, model);
             d.put(type, html);
             // empty cloze?
             if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
