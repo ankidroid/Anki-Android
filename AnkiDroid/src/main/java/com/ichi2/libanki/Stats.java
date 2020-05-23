@@ -25,7 +25,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.stats.OverviewStatsBuilder;
 import com.ichi2.anki.stats.StatsMetaInfo;
-import com.ichi2.libanki.hooks.Hooks;
+import com.ichi2.libanki.hooks.AdvancedStatistics;
 
 import com.ichi2.utils.JSONObject;
 
@@ -305,7 +305,7 @@ public class Stats {
     public boolean calculateDue(Context context, AxisType type) {
         // Not in libanki
         StatsMetaInfo metaInfo = new StatsMetaInfo();
-        metaInfo = (StatsMetaInfo) Hooks.getInstance(context).runFilter("advancedStatistics", metaInfo, type, context, _limit());
+        metaInfo = new AdvancedStatistics().calculateDueAsMetaInfo(metaInfo, type, context, _limit());
         if (metaInfo.isStatsCalculated()) {
             mDynamicAxis = metaInfo.ismDynamicAxis();
             mHasColoredCumulative = metaInfo.ismHasColoredCumulative();
