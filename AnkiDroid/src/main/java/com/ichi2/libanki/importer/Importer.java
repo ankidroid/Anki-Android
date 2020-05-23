@@ -68,12 +68,6 @@ public abstract class Importer {
     }
 
 
-    protected long ts() {
-        mTs++;
-        return mTs;
-    }
-
-
     /**
      * The methods below are not in LibAnki.
      * ***********************************************************
