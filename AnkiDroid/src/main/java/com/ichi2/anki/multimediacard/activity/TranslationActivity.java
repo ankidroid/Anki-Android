@@ -295,15 +295,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
 
     private static ArrayList<String> parseJson(Response resp, String languageCodeTo) {
-        ArrayList<String> res = new ArrayList<>();
-
-        /*
-         * The algorithm below includes the parsing of glosbe results. Glosbe.com returns a list of different phrases in
-         * source and destination languages. This is done, probably, to improve the reader's understanding. We leave
-         * here only the translations to the destination language.
-         */
-
-         return res;
+        return new ArrayList<>();
     }
 
 
