@@ -27,10 +27,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -56,7 +58,7 @@ public class ImportUtils {
     }
 
     public static boolean isCollectionPackage(String filename) {
-        return filename != null && (filename.toLowerCase().endsWith(".colpkg") || "collection.apkg".equals(filename));
+        return filename != null && (FileImporter.hasExtension(filename, "colpkg") || filename.startsWith("collection.apkg"));
     }
 
     /** @return Whether the file is either a deck, or a collection package */
@@ -247,9 +249,22 @@ public class ImportUtils {
             DialogHandler.storeMessage(handlerMessage);
         }
 
-        private static boolean isDeckPackage(String filename) {
-            return filename != null && filename.toLowerCase().endsWith(".apkg") && !"collection.apkg".equals(filename);
+        public static boolean isDeckPackage(String filename) {
+            return filename != null && hasExtension(filename, "apkg") && !filename.startsWith("collection.apkg");
         }
+
+
+        private static boolean hasExtension(@NonNull String filename, String extension) {
+            String[] fileParts = filename.split("\\.");
+            if (fileParts.length < 2) {
+                return false;
+            }
+            String extensionSegment = fileParts[fileParts.length - 1];
+            //either "apkg", or "apkg (1)".
+            // COULD_BE_BETTE: accepts .apkgaa"
+            return extensionSegment.toLowerCase(Locale.US).startsWith(extension);
+        }
+
 
         /**
          * Check if the InputStream is to a valid non-empty zip file
