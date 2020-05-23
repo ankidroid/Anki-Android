@@ -209,11 +209,6 @@ public class Note implements Cloneable {
     public void setItem(String key, String value) {
         mFields[_fieldOrd(key)] = value;
     }
-    
-    public boolean contains(String key) {
-    	return mFMap.containsKey(key);
-    }
-
 
     /**
      * Tags
