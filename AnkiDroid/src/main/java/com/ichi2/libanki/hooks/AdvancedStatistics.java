@@ -144,7 +144,6 @@ public class AdvancedStatistics extends Hook  {
     public Object runFilter(Object arg, Object... args) {
         Context context = (Context) args[1];
 
-        Settings = new Settings(context);
         return calculateDueAsMetaInfo((StatsMetaInfo) arg, (Stats.AxisType) args[0], context, (String) args[2]);
     }
     public static void install(Hooks h) {
@@ -175,6 +174,7 @@ public class AdvancedStatistics extends Hook  {
     private StatsMetaInfo calculateDueAsMetaInfo(StatsMetaInfo metaInfo, Stats.AxisType type, Context context, String dids) {
 
         //To indicate that we calculated the statistics so that Stats.java knows that it shouldn't display the standard Forecast chart.
+        Settings = new Settings(context);
         metaInfo.setStatsCalculated(true);
 
         Collection mCol = CollectionHelper.getInstance().getCol(context);
