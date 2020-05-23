@@ -1079,37 +1079,6 @@ public class Collection {
         return new Finder(this).findNotes(query);
     }
 
-
-    public int findReplace(List<Long> nids, String src, String dst) {
-        return Finder.findReplace(this, nids, src, dst);
-    }
-
-
-    public int findReplace(List<Long> nids, String src, String dst, boolean regex) {
-        return Finder.findReplace(this, nids, src, dst, regex);
-    }
-
-
-    public int findReplace(List<Long> nids, String src, String dst, String field) {
-        return Finder.findReplace(this, nids, src, dst, field);
-    }
-
-
-    public int findReplace(List<Long> nids, String src, String dst, boolean regex, String field, boolean fold) {
-        return Finder.findReplace(this, nids, src, dst, regex, field, fold);
-    }
-
-
-    public List<Pair<String, List<Long>>> findDupes(String fieldName) {
-        return Finder.findDupes(this, fieldName, "");
-    }
-
-
-    public List<Pair<String, List<Long>>> findDupes(String fieldName, String search) {
-        return Finder.findDupes(this, fieldName, search);
-    }
-
-
     /**
      * Stats ******************************************************************** ***************************
      */
