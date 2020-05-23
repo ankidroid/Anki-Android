@@ -139,6 +139,7 @@ public class AdvancedStatistics extends Hook  {
     private final ArrayUtils ArrayUtils = new ArrayUtils();
     private final DeckFactory Decks = new DeckFactory();
     private Settings Settings;
+    private static boolean sInstalled = false;
 
     @Override
     public Object runFilter(Object arg, Object... args) {
@@ -147,10 +148,10 @@ public class AdvancedStatistics extends Hook  {
         return calculateDueAsMetaInfo((StatsMetaInfo) arg, (Stats.AxisType) args[0], context, (String) args[2]);
     }
     public static void install(Hooks h) {
-        h.addHook("advancedStatistics", new AdvancedStatistics());
+        sInstalled = true;
     }
     public static void uninstall(Hooks h) {
-        h.remHook("advancedStatistics", new AdvancedStatistics());
+        sInstalled = false;
     }
 
     /**
@@ -172,6 +173,9 @@ public class AdvancedStatistics extends Hook  {
      * @return @see #metaInfo
      */
     public StatsMetaInfo calculateDueAsMetaInfo(StatsMetaInfo metaInfo, Stats.AxisType type, Context context, String dids) {
+        if (!sInstalled) {
+            return metaInfo;
+        }
 
         //To indicate that we calculated the statistics so that Stats.java knows that it shouldn't display the standard Forecast chart.
         Settings = new Settings(context);
