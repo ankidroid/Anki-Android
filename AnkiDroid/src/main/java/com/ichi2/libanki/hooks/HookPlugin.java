@@ -1,8 +1,6 @@
 package com.ichi2.libanki.hooks;
 
-public interface HookPlugin { 
-    public void install(Hooks h);
-    public void uninstall(Hooks h);   
+public interface HookPlugin {
     public int hashCode();
     public boolean equals(Object obj);
 }
