@@ -810,11 +810,6 @@ public class Collection {
         return _newCard(note, template, due, flush);
     }
 
-    private Card _newCard(Note note, JSONObject template, int due, int did) {
-        boolean flush = true;
-        return _newCard(note, template, due, did, flush);
-    }
-
     private Card _newCard(Note note, JSONObject template, int due, boolean flush) {
         int did = 0;
         return _newCard(note, template, due, did, flush);
