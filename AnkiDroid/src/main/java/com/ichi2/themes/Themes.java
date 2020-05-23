@@ -29,7 +29,6 @@ import com.ichi2.anki.R;
 public class Themes {
     public final static int ALPHA_ICON_ENABLED_LIGHT = 255; // 100%
     public final static int ALPHA_ICON_DISABLED_LIGHT = 76; // 31%
-    public final static int ALPHA_ICON_ENABLED_DARK = 138; // 54%
 
     // Day themes
     public final static int THEME_DAY_LIGHT = 0;
