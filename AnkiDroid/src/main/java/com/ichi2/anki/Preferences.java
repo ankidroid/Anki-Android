@@ -566,7 +566,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     break;
                 case "advanced_statistics_enabled":
                     if (((CheckBoxPreference) pref).isChecked()) {
-                        AdvancedStatistics.install(Hooks.getInstance(getApplicationContext()));
+                        AdvancedStatistics.install();
                     } else {
                         AdvancedStatistics.uninstall(Hooks.getInstance(getApplicationContext()));
                     }

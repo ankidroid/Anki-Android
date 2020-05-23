@@ -147,7 +147,7 @@ public class AdvancedStatistics extends Hook  {
 
         return calculateDueAsMetaInfo((StatsMetaInfo) arg, (Stats.AxisType) args[0], context, (String) args[2]);
     }
-    public static void install(Hooks h) {
+    public static void install() {
         sInstalled = true;
     }
     public static void uninstall(Hooks h) {

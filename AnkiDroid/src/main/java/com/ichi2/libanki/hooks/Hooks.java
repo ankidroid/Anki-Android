@@ -57,7 +57,7 @@ public class Hooks {
             ChessFilter.install(this);
         }
         if (prefs.getBoolean("advanced_statistics_enabled", false)) {
-            AdvancedStatistics.install(this);
+            AdvancedStatistics.install();
         }
     }
 
