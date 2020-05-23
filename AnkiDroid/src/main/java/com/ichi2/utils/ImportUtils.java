@@ -18,6 +18,8 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.compat.CompatHelper;
 
+import org.jetbrains.annotations.Contract;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -56,7 +58,9 @@ public class ImportUtils {
         return filename != null && (filename.toLowerCase().endsWith(".colpkg") || "collection.apkg".equals(filename));
     }
 
-    public static boolean isValidPackageName(String filename) {
+    /** @return Whether the file is either a deck, or a collection package */
+    @Contract("null -> false")
+    public static boolean isValidPackageName(@Nullable String filename) {
         return FileImporter.isDeckPackage(filename) || isCollectionPackage(filename);
     }
 
