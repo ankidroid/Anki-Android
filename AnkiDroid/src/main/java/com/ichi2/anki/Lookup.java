@@ -96,16 +96,6 @@ public class Lookup {
                 mLookupText = text;
                 // localisation is needless here since leo.org translates only into or out of German
                 final CharSequence[] itemValues = { "en", "fr", "es", "it", "ch", "ru" };
-                String language = "";
-                if (language.length() > 0) {
-                    for (CharSequence itemValue : itemValues) {
-                        if (language.equals(itemValue)) {
-                            lookupLeo(language, mLookupText);
-                            mLookupText = "";
-                            return true;
-                        }
-                    }
-                }
                 final String[] items = { "Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch" };
                 new MaterialDialog.Builder(mContext)
                         .title("\"" + mLookupText + "\" nachschlagen")
