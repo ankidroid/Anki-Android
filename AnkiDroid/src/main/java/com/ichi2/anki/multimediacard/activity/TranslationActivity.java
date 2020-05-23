@@ -274,22 +274,12 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
         mPossibleTranslations = new ArrayList<>();
 
-        if (mPossibleTranslations.size() == 0) {
-            if (!mSource.toLowerCase(Locale.getDefault()).contentEquals(mSource)) {
-                showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case));
-            }
-
-            returnFailure(getText(R.string.multimedia_editor_error_word_not_found).toString());
-            return;
+        if (!mSource.toLowerCase(Locale.getDefault()).contentEquals(mSource)) {
+            showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case));
         }
 
-        PickStringDialogFragment fragment = new PickStringDialogFragment();
-
-        fragment.setChoices(mPossibleTranslations);
-        fragment.setOnclickListener(this);
-        fragment.setTitle(getText(R.string.multimedia_editor_trans_pick_translation).toString());
-
-        fragment.show(this.getSupportFragmentManager(), "pick.translation");
+        returnFailure(getText(R.string.multimedia_editor_error_word_not_found).toString());
+        return;
     }
 
 
