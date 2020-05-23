@@ -339,31 +339,6 @@ public class MetaDB {
         }
     }
 
-    /**
-     * Returns a custom dictionary associated to a deck
-     * 
-     * @return integer number of dictionary, -1 if not set (standard dictionary will be used)
-     */
-    public static int getLookupDictionary(Context context, long did) {
-        openDBIfClosed(context);
-        Cursor cur = null;
-        try {
-            cur = mMetaDb.rawQuery("SELECT dictionary FROM customDictionary" + " WHERE did = " + did, null);
-            if (cur.moveToNext()) {
-                return cur.getInt(0);
-            } else {
-                return -1;
-            }
-        } catch (Exception e) {
-            Timber.e(e, "Error retrieving custom dictionary from MetaDB ");
-            return -1;
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-    }
-
 
     /**
      * Stores a custom dictionary for a given deck.
