@@ -671,10 +671,6 @@ public class Sched extends SchedV2 {
     }
 
 
-    private void removeLrn() {
-    	removeLrn(null);
-    }
-
     /** Remove cards from the learning queues. */
     private void removeLrn(long[] ids) {
         String extra;
