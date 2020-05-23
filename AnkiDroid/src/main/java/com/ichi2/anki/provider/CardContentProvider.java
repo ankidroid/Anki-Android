@@ -254,7 +254,7 @@ public class CardContentProvider extends ContentProvider {
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Card.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
                 for (Card currentCard : currentNote.cards()) {
-                    addCardToCursor(currentCard, rv, col, columns);
+                    addCardToCursor(currentCard, rv, columns);
                 }
                 return rv;
             }
@@ -262,7 +262,7 @@ public class CardContentProvider extends ContentProvider {
                 Card currentCard = getCardFromUri(uri, col);
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Card.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
-                addCardToCursor(currentCard, rv, col, columns);
+                addCardToCursor(currentCard, rv, columns);
                 return rv;
             }
             case MODELS: {
@@ -1104,7 +1104,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void addCardToCursor(Card currentCard, MatrixCursor rv, Collection col, String[] columns) {
+    private void addCardToCursor(Card currentCard, MatrixCursor rv, String[] columns) {
         String cardName;
         try {
             cardName = currentCard.template().getString("name");
