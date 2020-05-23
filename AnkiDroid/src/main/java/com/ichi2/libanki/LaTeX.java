@@ -18,9 +18,6 @@
 
 package com.ichi2.libanki;
 
-import com.ichi2.libanki.hooks.Hook;
-import com.ichi2.libanki.hooks.Hooks;
-
 import com.ichi2.utils.JSONObject;
 
 import java.util.regex.Matcher;
@@ -112,17 +109,5 @@ public class LaTeX {
         latex = latex.replaceAll("<br( /)?>|<div>", "\n");
         latex = Utils.stripHTML(latex);
         return latex;
-    }
-
-    public class LaTeXFilter extends Hook {
-        @Override
-        public Object runFilter(Object arg, Object... args) {
-            return LaTeX.mungeQA((String) arg, (Collection) args[4], (JSONObject) args[2]);
-        }
-    }
-
-
-    public void installHook(Hooks h) {
-        h.addHook("mungeQA", new LaTeXFilter());
     }
 }
