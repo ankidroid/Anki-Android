@@ -27,7 +27,6 @@ public abstract class FieldControllerBase implements IFieldController {
     protected MultimediaEditFieldActivity mActivity;
     protected IField mField;
     protected IMultimediaEditableNote mNote;
-    protected int mIndex;
 
 
     @Override
@@ -44,7 +43,6 @@ public abstract class FieldControllerBase implements IFieldController {
 
     @Override
     public void setFieldIndex(int index) {
-        mIndex = index;
     }
 
 
