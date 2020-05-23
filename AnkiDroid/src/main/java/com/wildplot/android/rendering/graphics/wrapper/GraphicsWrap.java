@@ -159,7 +159,4 @@ public class GraphicsWrap {
     }
 
 
-    public Typeface getTypeface() {
-        return paint.getTypeface();
-    }
 }
