@@ -30,7 +30,6 @@ public class Response {
     private String from;
     private String phrase;
     private String result;
-    private List<Tuc> tuc;
 
     public String getFrom() {
         return this.from;
@@ -53,6 +52,6 @@ public class Response {
 
 
     public List<Tuc> getTuc() {
-        return this.tuc;
+        return null;
     }
 }
