@@ -24,7 +24,6 @@ public class AnkiFont {
     private String mFamily;
     private List<String> mAttributes;
     private String mPath;
-    private Boolean mIsOverride;
     private static final String fAssetPathPrefix = "/android_asset/fonts/";
     private static Set<String> corruptFonts = new HashSet<>();
 
@@ -34,7 +33,6 @@ public class AnkiFont {
         mFamily = family;
         mAttributes = attributes;
         mPath = path;
-        mIsOverride = false;
     }
 
 
@@ -167,11 +165,9 @@ public class AnkiFont {
 
 
     private void setAsDefault() {
-        mIsOverride = false;
     }
 
 
     private void setAsOverride() {
-        mIsOverride = true;
     }
 }
