@@ -36,9 +36,7 @@ import android.widget.TextView;
  * {@link android.app.Activity} or {@link androidx.fragment.app.Fragment} call
  * {@link #setViewPager(ViewPager)} providing it the ViewPager this layout is being used for.
  * <p>
- * The colors can be customized in two ways. The first and simplest is to provide an array of colors
- * via {@link #setDividerColors(int...)}. The
- * alternative is via the {@link TabColorizer} interface which provides you complete control over
+ * The colors can be customized in via the {@link TabColorizer} interface which provides you complete control over
  * which color is used for any individual position.
  * <p>
  * The views used as tabs can be customized by calling {@link #setCustomTabView(int, int)},
@@ -98,15 +96,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         mTabStrip = new SlidingTabStrip(context);
         addView(mTabStrip, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     }
- 
- 
-    /**
-     * Sets the colors to be used for tab dividers. These colors are treated as a circular array.
-     * Providing one color will mean that all tabs are indicated with the same color.
-     */
-    public void setDividerColors(int... colors) {
-        mTabStrip.setDividerColors(colors);
-    }
+
  
     /**
      * Set the {@link ViewPager.OnPageChangeListener}. When using {@link SlidingTabLayout} you are
