@@ -276,7 +276,6 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         }
 
         returnFailure(getText(R.string.multimedia_editor_error_word_not_found).toString());
-        return;
     }
 
 
