@@ -20,47 +20,6 @@ public class ViewAnimation {
     public static final int FADE_OUT = 1;
 
 
-    public static Animation slide(int type, int duration, int offset) {
-        Animation animation;
-        switch (type) {
-            case SLIDE_IN_FROM_RIGHT:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new DecelerateInterpolator());
-                break;
-            case SLIDE_OUT_TO_RIGHT:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, +1.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new AccelerateInterpolator());
-                break;
-            case SLIDE_IN_FROM_LEFT:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new DecelerateInterpolator());
-                break;
-            case SLIDE_OUT_TO_LEFT:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new AccelerateInterpolator());
-                break;
-            case SLIDE_IN_FROM_BOTTOM:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new DecelerateInterpolator());
-                break;
-            case SLIDE_IN_FROM_TOP:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new DecelerateInterpolator());
-                break;
-            default:
-                animation = null;
-        }
-        animation.setDuration(duration);
-        animation.setStartOffset(offset);
-        return animation;
-    }
-
 
     public static Animation fade(int type, int duration, int offset) {
         float startValue = type;
