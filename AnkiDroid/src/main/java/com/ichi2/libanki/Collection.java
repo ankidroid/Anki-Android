@@ -763,19 +763,6 @@ public class Collection {
     }
 
 
-	/**
-	 * Return cards of a note, without saving them
-	 * @param note The note whose cards are going to be previewed
-     * @param type 0 - when previewing in add dialog, only non-empty
-     *             1 - when previewing edit, only existing
-     *             2 - when previewing in models dialog, all templates
-     * @return list of cards
-	 */
-	public List<Card> previewCards(Note note, int type) {
-        int did = 0;
-        return previewCards(note, type, did);
-    }
-
     public List<Card> previewCards(Note note, int type, int did) {
 	    ArrayList<JSONObject> cms = null;
 	    if (type == Consts.CARD_TYPE_NEW) {
