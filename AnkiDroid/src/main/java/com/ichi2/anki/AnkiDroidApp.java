@@ -367,6 +367,7 @@ public class AnkiDroidApp extends Application {
             }
         } catch (Exception e) {
             Timber.e(e, "failed to update context with new language");
+            //during AnkiDroidApp.attachBaseContext() ACRA is not initialized, so the exception report will not be sent
             sendExceptionReport(e,"AnkiDroidApp.updateContextWithLanguage");
             return remoteContext;
         }
