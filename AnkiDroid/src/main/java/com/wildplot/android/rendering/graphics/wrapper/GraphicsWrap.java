@@ -124,11 +124,6 @@ public class GraphicsWrap {
     }
 
 
-    public Object getFont() {
-        return null;
-    }
-
-
     public FontMetricsWrap getFontMetrics() {
         return new FontMetricsWrap(this);
     }
