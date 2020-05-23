@@ -27,11 +27,7 @@ public class Phrase {
         return null;
     }
 
-
-    public void setLanguage(String l) {
-    }
-
-
+    
     public String getText() {
         return null;
     }
