@@ -47,37 +47,6 @@ public class Threads {
 
 
     /**
-     * Creates a {@link ThreadChecker} that validates all access are done on the given thread.
-     * 
-     * @param thread on which accesses should occur
-     */
-    public static ThreadChecker newSingleThreadChecker(@NonNull Thread thread) {
-        if (thread == null) {
-            throw new IllegalArgumentException("thread should not be null");
-        }
-        return new SingleThreadChecker(thread);
-    }
-
-
-    /**
-     * Creates a {@link ThreadChecker} that validates all access are done on the calling thread.
-     */
-    public static ThreadChecker newCurrentThreadChecker() {
-        return new SingleThreadChecker(Thread.currentThread());
-    }
-
-
-    /**
-     * Creates a {@link ThreadChecker} that validates all access on the same thread, without specifying which thread.
-     * <p>
-     * The thread will be determined by the first call to {@link ThreadChecker#checkThread()} and enforced thereafter.
-     */
-    public static ThreadChecker newLazySingleThreadChecker() {
-        return new SingleThreadChecker(null);
-    }
-
-
-    /**
      * @return true if called from the application main thread
      */
     public static boolean isOnMainThread() {
