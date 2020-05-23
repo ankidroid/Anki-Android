@@ -18,10 +18,6 @@ package com.wildplot.android.parsing;
 
 public class ExpressionFormatException extends IllegalArgumentException {
 
-    public ExpressionFormatException() {
-        super();
-    }
-
 
     public ExpressionFormatException(String detailMessage) {
         super(detailMessage);
