@@ -442,9 +442,6 @@ public class AdvancedStatistics extends Hook  {
             this.lastReview = card.lastReview;
         }
 
-        public long getId() {
-            return id;
-        }
 
         public int getIvl() {
             return ivl;
