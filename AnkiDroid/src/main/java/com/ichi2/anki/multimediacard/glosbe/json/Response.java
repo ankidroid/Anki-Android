@@ -26,27 +26,10 @@ import java.util.List;
  *         the root class, from which response starts.
  */
 public class Response {
-    private String dest;
     private String from;
-    private String phrase;
     private String result;
-
-    public String getFrom() {
-        return this.from;
-    }
-
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
 
     public String getResult() {
         return this.result;
-    }
-
-
-    public void setResult(String result) {
-        this.result = result;
     }
 }
