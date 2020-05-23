@@ -592,11 +592,6 @@ public class Decks {
     }
 
 
-    public long confId(String name) {
-        return confId(name, defaultConf);
-    }
-
-
     /**
      * Create a new configuration and return id.
      */
