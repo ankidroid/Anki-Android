@@ -90,28 +90,6 @@ public class NoteService {
 
 
     /**
-     * Updates the JsonNote field values from MultimediaEditableNote When both notes are using the same Model, it updaes
-     * the destination field values with source values. If models are different it throws an Exception
-     * 
-     * @param noteSrc
-     * @param editorNoteDst
-     */
-    public static void updateJsonNoteFromMultimediaNote(final IMultimediaEditableNote noteSrc, final Note editorNoteDst) {
-        if (noteSrc instanceof MultimediaEditableNote) {
-            MultimediaEditableNote mmNote = (MultimediaEditableNote) noteSrc;
-            if (mmNote.getModelId() != editorNoteDst.getMid()) {
-                throw new RuntimeException("Source and Destination Note ID do not match.");
-            }
-
-            int totalFields = mmNote.getNumberOfFields();
-            for (int i = 0; i < totalFields; i++) {
-                editorNoteDst.values()[i] = mmNote.getField(i).getFormattedValue();
-            }
-        }
-    }
-
-
-    /**
      * Saves the multimedia associated with this card to proper path inside anki folder. For each field associated with
      * the note it checks for the following condition a. The field content should have changed b. The field content does
      * not already point to a media inside anki media path If both condition satisfies then it copies the file inside
