@@ -47,10 +47,6 @@ public class StyledProgressDialog extends Dialog {
     }
 
 
-    public static MaterialDialog show(Context context, CharSequence title, CharSequence message) {
-        return show(context, title, message, false, null);
-    }
-
 
     public static MaterialDialog show(Context context, CharSequence title, CharSequence message,
             boolean cancelable) {
