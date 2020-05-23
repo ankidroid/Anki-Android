@@ -93,11 +93,6 @@ public class AnkiFont {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(ctx);
         String defaultFont = preferences.getString("defaultFont", "");
         boolean overrideFont = "1".equals(preferences.getString("overrideFontBehavior", "0"));
-        if (defaultFont.equalsIgnoreCase(name)) {
-            if (overrideFont) {
-            } else{
-            }
-        }
         return createdFont;
     }
 
