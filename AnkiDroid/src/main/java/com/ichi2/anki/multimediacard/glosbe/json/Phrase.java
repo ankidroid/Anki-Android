@@ -27,12 +27,8 @@ public class Phrase {
         return null;
     }
 
-    
+
     public String getText() {
         return null;
-    }
-
-
-    public void setText(String text) {
     }
 }
