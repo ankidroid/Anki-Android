@@ -140,6 +140,7 @@ public class Sound {
             String sound = matcher.group(1).trim();
 
             // Construct the sound path and store it
+            Timber.d("Adding Sound to side: %d", qa);
             mSoundPaths.get(qa).add(getSoundPath(soundDir, sound));
         }
     }
@@ -235,10 +236,14 @@ public class Sound {
     public void playSounds(int qa) {
         // If there are sounds to play for the current card, start with the first one
         if (mSoundPaths != null && mSoundPaths.containsKey(qa)) {
+            Timber.d("playSounds %d", qa);
             playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null);
         } else if (mSoundPaths != null && qa == Sound.SOUNDS_QUESTION_AND_ANSWER) {
             if (makeQuestionAnswerList()) {
+                Timber.d("playSounds: playing both question and answer");
                 playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null);
+            } else {
+                Timber.d("playSounds: No question answer list, not playing sound");
             }
         }
     }
@@ -276,6 +281,7 @@ public class Sound {
      * If videoView is null and the media is a video, then a request is sent to start the VideoPlayer Activity
      */
     public void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView) {
+        Timber.d("Playing single sound");
         SingleSoundCompletionListener completionListener = new SingleSoundCompletionListener(playAllListener);
         playSoundInternal(soundPath, completionListener, videoView);
     }
@@ -305,6 +311,7 @@ public class Sound {
             // If video file but no SurfaceHolder provided then ask AbstractFlashcardViewer to provide a VideoView
             // holder
             if (isVideo && videoView == null && mCallingActivity != null && mCallingActivity.get() != null) {
+                Timber.d("Requesting AbstractFlashcardViewer play video - no SurfaceHolder");
                 mPlayAllListener = playAllListener;
                 ((AbstractFlashcardViewer) mCallingActivity.get()).playVideo(soundPath);
                 return;
@@ -313,8 +320,10 @@ public class Sound {
             try {
                 // Create media player
                 if (mMediaPlayer == null) {
+                    Timber.d("Creating media player for playback");
                     mMediaPlayer = new MediaPlayer();
                 } else {
+                    Timber.d("Resetting media for playback");
                     mMediaPlayer.reset();
                 }
                 if (mAudioManager == null) {
@@ -325,14 +334,22 @@ public class Sound {
                     mMediaPlayer.setDisplay(videoView.getHolder());
                     mMediaPlayer.setOnVideoSizeChangedListener((mp, width, height) -> configureVideo(videoView, width, height));
                 }
+                mMediaPlayer.setOnErrorListener((mp, what, extra) -> {
+                    Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra);
+                    return false;
+                });
                 // Setup the MediaPlayer
                 mMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
                 mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mMediaPlayer.setOnPreparedListener(mp -> mMediaPlayer.start());
+                mMediaPlayer.setOnPreparedListener(mp -> {
+                    Timber.d("Starting media player");
+                    mMediaPlayer.start();
+                });
                 if (playAllListener != null) {
                     mMediaPlayer.setOnCompletionListener(playAllListener);
                 }
                 mMediaPlayer.prepareAsync();
+                Timber.d("Requesting audio focus");
                 mAudioManager.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC,
                         AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
             } catch (Exception e) {
@@ -383,6 +400,7 @@ public class Sound {
 
         @Override
         public void onCompletion(MediaPlayer mp) {
+            Timber.d("Single Sound completed");
             if (userCallback != null) {
                 userCallback.onCompletion(mp);
             } else {
@@ -416,8 +434,10 @@ public class Sound {
         public void onCompletion(MediaPlayer mp) {
             // If there is still more sounds to play for the current card, play the next one
             if (mSoundPaths.containsKey(mQa) && mNextToPlay < mSoundPaths.get(mQa).size()) {
+                Timber.i("Play all: Playing next sound");
                 playSound(mSoundPaths.get(mQa).get(mNextToPlay++), this);
             } else {
+                Timber.i("Play all: Completed - releasing sound");
                 releaseSound();
             }
         }
