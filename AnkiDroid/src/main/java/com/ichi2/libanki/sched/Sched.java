@@ -634,7 +634,7 @@ public class Sched extends SchedV2 {
             ideal = ja.getInt(1);
         }
         if (adj) {
-            return _adjRevIvl(card, ideal);
+            return _adjRevIvl(ideal);
         } else {
             return ideal;
         }
@@ -957,7 +957,7 @@ public class Sched extends SchedV2 {
             int idealIvl = _nextRevIvl(card, ease);
             JSONObject conf = _revConf(card);
             card.setIvl(Math.min(
-                    Math.max(_adjRevIvl(card, idealIvl), card.getIvl() + 1),
+                    Math.max(_adjRevIvl(idealIvl), card.getIvl() + 1),
                     conf.getInt("maxIvl")));
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -966,7 +966,7 @@ public class Sched extends SchedV2 {
     }
 
     @SuppressWarnings("PMD.UnusedFormalParameter") // it's unused upstream as well
-    private int _adjRevIvl(Card card, int idealIvl) {
+    private int _adjRevIvl(int idealIvl) {
         if (mSpreadRev) {
             idealIvl = _fuzzedIvl(idealIvl);
         }
