@@ -317,27 +317,6 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             if (tuc == null) {
                 continue;
             }
-            List<Meaning> meanings = null;
-            if (meanings != null) {
-                for (Meaning meaning : meanings) {
-                    if (meaning == null) {
-                        continue;
-                    }
-                    continue;
-                }
-            }
-
-            Phrase phrase = null;
-            if (phrase != null) {
-                if (phrase.getLanguage() == null) {
-                    continue;
-                }
-                if (phrase.getLanguage().contentEquals(desiredLang)) {
-                    String unescappedString = Utils.unescape(phrase.getText());
-                    res.add(unescappedString);
-                }
-            }
-
         }
 
         return res;
