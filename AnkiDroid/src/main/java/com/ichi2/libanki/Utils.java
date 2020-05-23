@@ -388,28 +388,6 @@ public class Utils {
     }
 
 
-    /** Given a list of integers, return a string '(int1,int2,...)'. */
-    public static String ids2str(JSONArray ids) {
-        StringBuilder str = new StringBuilder(512);
-        str.append("(");
-        if (ids != null) {
-            int len = ids.length();
-            for (int i = 0; i < len; i++) {
-                try {
-                    if (i == (len - 1)) {
-                        str.append(ids.get(i));
-                    } else {
-                        str.append(ids.get(i)).append(",");
-                    }
-                } catch (JSONException e) {
-                    Timber.e(e, "ids2str :: JSONException");
-                }
-            }
-        }
-        str.append(")");
-        return str.toString();
-    }
-
 
     /** LIBANKI: not in libanki */
     public static long[] arrayList2array(List<Long> list) {
