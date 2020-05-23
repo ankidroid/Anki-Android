@@ -483,11 +483,6 @@ public class PlotSheet implements Drawable {
     }
 
 
-    public void setTypeface(Typeface typeface) {
-        this.typeface = typeface;
-    }
-
-
     /**
      * Show the legend items in reverse order of the order in which they were added.
      *
