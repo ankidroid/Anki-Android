@@ -707,11 +707,6 @@ public class Decks {
     }
 
 
-    public Long[] cids(long did) {
-        return cids(did, false);
-    }
-
-
     public Long[] cids(long did, boolean children) {
         if (!children) {
             return Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards where did=?", 0, new Object[] {did}));
