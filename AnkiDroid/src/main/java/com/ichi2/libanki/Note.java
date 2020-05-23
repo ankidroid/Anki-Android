@@ -173,10 +173,6 @@ public class Note implements Cloneable {
      * ***********************************************************
      */
 
-    public String[] keys() {
-        return (String[])mFMap.keySet().toArray();
-    }
-
 
     public String[] values() {
         return mFields;
