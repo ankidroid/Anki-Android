@@ -31,8 +31,6 @@ import java.util.List;
 @SuppressWarnings({"PMD.MethodNamingConventions"})
 public abstract class Importer {
 
-    protected boolean mNeedMapper = false;
-    protected boolean mNeedDelimiter = false;
     protected String mFile;
     protected List<String> mLog;
     protected Collection mCol;
