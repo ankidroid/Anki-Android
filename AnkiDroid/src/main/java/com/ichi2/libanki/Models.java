@@ -1164,22 +1164,6 @@ public class Models {
     }
 
 
-    /**
-     * @return the ID
-     */
-    public int getId() {
-        return mId;
-    }
-
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return mName;
-    }
-
-
     public HashMap<Long, JSONObject> getModels() {
         return mModels;
     }
