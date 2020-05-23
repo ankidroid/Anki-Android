@@ -163,11 +163,6 @@ public class HttpSyncer {
 
     /** Note: Return value must be closed */
     public Response req(String method, InputStream fobj, int comp) throws UnknownHttpResponseException {
-        return req(method, fobj, comp, null);
-    }
-
-    /** Note: Return value must be closed */
-    private Response req(String method, InputStream fobj, int comp, JSONObject registerData) throws UnknownHttpResponseException {
         File tmpFileBuffer = null;
         try {
             String bdry = "--" + BOUNDARY;
