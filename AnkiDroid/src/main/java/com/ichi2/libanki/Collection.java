@@ -801,9 +801,6 @@ public class Collection {
 	    }
 	    return cards;
 	}
-    public List<Card> previewCards(Note note) {
-        return previewCards(note, 0);
-    }
 
     /**
      * Create a new card.
