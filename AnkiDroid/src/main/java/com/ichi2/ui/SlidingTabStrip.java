@@ -92,13 +92,6 @@ class SlidingTabStrip extends LinearLayout {
         invalidate();
     }
  
-    void setSelectedIndicatorColors(int... colors) {
-        // Make sure that the custom colorizer is removed
-        mCustomTabColorizer = null;
-        mDefaultTabColorizer.setIndicatorColors(colors);
-        invalidate();
-    }
- 
     void setDividerColors(int... colors) {
         // Make sure that the custom colorizer is removed
         mCustomTabColorizer = null;
