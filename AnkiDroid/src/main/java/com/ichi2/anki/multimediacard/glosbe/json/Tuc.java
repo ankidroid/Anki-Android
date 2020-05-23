@@ -30,11 +30,11 @@ public class Tuc {
     private List<Meaning> meanings;
     private Phrase phrase;
     public List<Meaning> getMeanings() {
-        return this.meanings;
+        return null;
     }
 
 
     public Phrase getPhrase() {
-        return this.phrase;
+        return null;
     }
 }
