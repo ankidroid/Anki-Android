@@ -30,11 +30,6 @@ public class ConfirmationPreference extends DialogPreference {
     }
 
 
-    public void setCancelHandler(Runnable cancelHandler) {
-        this.cancelHandler = cancelHandler;
-    }
-
-
     public void setOkHandler(Runnable okHandler) {
         this.okHandler = okHandler;
     }
