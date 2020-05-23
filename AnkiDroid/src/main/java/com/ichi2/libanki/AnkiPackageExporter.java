@@ -55,12 +55,6 @@ class Exporter {
         mDid = null;
     }
 
-
-    public Exporter(Collection col, Long did) {
-        mCol = col;
-        mDid = did;
-    }
-
     /** card ids of cards in deck self.did if it is set, all ids otherwise. */
     public Long[] cardIds() {
         Long[] cids;
