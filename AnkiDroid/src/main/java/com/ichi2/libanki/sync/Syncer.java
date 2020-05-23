@@ -628,16 +628,6 @@ public class Syncer {
     }
 
 
-    public JSONObject start(int minUsn, boolean lnewer, JSONObject graves) {
-        mMaxUsn = mCol.getUsnForSync();
-        mMinUsn = minUsn;
-        mLNewer = !lnewer;
-        JSONObject lgraves = removed();
-        remove(graves);
-        return lgraves;
-    }
-
-
     private void remove(JSONObject graves) {
         // pretend to be the server so we don't set usn = -1
         boolean wasServer = mCol.getServer();
