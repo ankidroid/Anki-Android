@@ -49,7 +49,6 @@ public class Hooks {
         // Always-ON hooks
         new FuriganaFilters().install(this);
         new HintFilter().install(this);
-        new Leech().installHook(this);
 
         // Preferences activated hooks
     }

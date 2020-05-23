@@ -55,9 +55,4 @@ public class Leech {
             }
         }
     }
-
-
-    public void installHook(Hooks h) {
-        h.addHook("leech", new LeechHook());
-    }
 }
