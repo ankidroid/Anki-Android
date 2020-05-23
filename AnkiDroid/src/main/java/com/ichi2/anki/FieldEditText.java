@@ -79,11 +79,6 @@ public class FieldEditText extends AppCompatEditText {
     }
 
 
-    public String getName() {
-        return mName;
-    }
-
-
     public void init(int ord, String name, String content) {
         mOrd = ord;
         mName = name;
