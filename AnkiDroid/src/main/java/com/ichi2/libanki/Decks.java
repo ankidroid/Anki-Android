@@ -685,15 +685,6 @@ public class Decks {
     }
 
 
-    public String nameOrNone(long did) {
-        JSONObject deck = get(did, false);
-        if (deck != null) {
-            return deck.getString("name");
-        }
-        return null;
-    }
-
-
     public void setDeck(long[] cids, long did) {
         mCol.getDb().execute("update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
                 new Object[] { did, mCol.usn(), Utils.intTime() });
