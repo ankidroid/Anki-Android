@@ -32,17 +32,6 @@ public class Response {
     private String result;
     private List<Tuc> tuc;
 
-
-    public String getDest() {
-        return this.dest;
-    }
-
-
-    public void setDest(String dest) {
-        this.dest = dest;
-    }
-
-
     public String getFrom() {
         return this.from;
     }
@@ -50,16 +39,6 @@ public class Response {
 
     public void setFrom(String from) {
         this.from = from;
-    }
-
-
-    public String getPhrase() {
-        return this.phrase;
-    }
-
-
-    public void setPhrase(String phrase) {
-        this.phrase = phrase;
     }
 
 
@@ -75,10 +54,5 @@ public class Response {
 
     public List<Tuc> getTuc() {
         return this.tuc;
-    }
-
-
-    public void setTuc(List<Tuc> tuc) {
-        this.tuc = tuc;
     }
 }
