@@ -384,17 +384,6 @@ public class HttpSyncer {
         private long mLength;
 
 
-        public ProgressByteEntity(File file) {
-            super();
-            mLength = file.length();
-            try {
-                mInputStream = new BufferedInputStream(new FileInputStream(file));
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-
         @Override
         public void writeTo(OutputStream outstream) throws IOException {
             try {
