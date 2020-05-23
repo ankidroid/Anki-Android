@@ -185,12 +185,10 @@ public class ImportTest {
         // import the first version of the model
         String tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "diffmodeltemplates-1.apkg");
         AnkiPackageImporter imp = new AnkiPackageImporter(testCol, tmp);
-        imp.setDupeOnSchemaChange(true);
         imp.run();
         // then the version with updated template
         tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "diffmodeltemplates-2.apkg");
         imp = new AnkiPackageImporter(testCol, tmp);
-        imp.setDupeOnSchemaChange(true);
         imp.run();
         // collection should contain the note we imported
         assertEquals(1, testCol.noteCount());

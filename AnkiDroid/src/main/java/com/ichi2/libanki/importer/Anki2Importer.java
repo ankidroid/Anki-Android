@@ -62,7 +62,6 @@ public class Anki2Importer extends Importer {
 
     private String mDeckPrefix;
     private boolean mAllowUpdate;
-    private boolean mDupeOnSchemaChange;
 
     private Map<String, Object[]> mNotes;
 
@@ -87,7 +86,6 @@ public class Anki2Importer extends Importer {
         mNeedMapper = false;
         mDeckPrefix = null;
         mAllowUpdate = true;
-        mDupeOnSchemaChange = false;
     }
 
 
@@ -756,10 +754,6 @@ public class Anki2Importer extends Importer {
 
 
     /* The methods below are only used for testing. */
-
-    public void setDupeOnSchemaChange(boolean b) {
-        mDupeOnSchemaChange = b;
-    }
 
 
     public int getDupes() {
