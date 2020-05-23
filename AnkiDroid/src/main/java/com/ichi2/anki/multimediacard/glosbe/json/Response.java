@@ -26,10 +26,7 @@ import java.util.List;
  *         the root class, from which response starts.
  */
 public class Response {
-    private String from;
-    private String result;
-
     public String getResult() {
-        return this.result;
+        return null;
     }
 }
