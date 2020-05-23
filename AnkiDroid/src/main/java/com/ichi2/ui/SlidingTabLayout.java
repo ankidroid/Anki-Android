@@ -38,9 +38,6 @@ import android.widget.TextView;
  * <p>
  * The colors can be customized in via the {@link TabColorizer} interface which provides you complete control over
  * which color is used for any individual position.
- * <p>
- * The views used as tabs can be customized by calling {@link #setCustomTabView(int, int)},
- * providing the layout ID of your custom layout.
  */
 public class SlidingTabLayout extends HorizontalScrollView {
  
@@ -99,17 +96,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
  
     /**
-     * Set the custom layout to be inflated for the tab views.
-     *
-     * @param layoutResId Layout id to be inflated
-     * @param textViewId id of the {@link TextView} in the inflated view
-     */
-    public void setCustomTabView(int layoutResId, int textViewId) {
-        mTabViewLayoutId = layoutResId;
-        mTabViewTextViewId = textViewId;
-    }
- 
-    /**
      * Sets the associated view pager. Note that the assumption here is that the pager content
      * (number of tabs and tab titles) does not change after this call has been made.
      */
@@ -124,8 +110,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
  
     /**
-     * Create a default view to be used for tabs. This is called if a custom tab view is not set via
-     * {@link #setCustomTabView(int, int)}.
+     * Create a default view to be used for tabs.
      */
 	protected TextView createDefaultTabView(Context context) {
         TextView textView = new TextView(context);
