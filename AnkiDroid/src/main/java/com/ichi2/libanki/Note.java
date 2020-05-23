@@ -321,12 +321,6 @@ public class Note implements Cloneable {
         return mId;
     }
 
-
-    public Collection getCol() {
-        return mCol;
-    }
-
-
     public String getSFld() {
         return mCol.getDb().queryString("SELECT sfld FROM notes WHERE id = ?", new Object [] {mId});
     }
