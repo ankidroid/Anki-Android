@@ -38,8 +38,8 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.hooks.Hooks;
 
+import com.ichi2.libanki.hooks.Leech;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
@@ -1727,7 +1727,7 @@ public class SchedV2 extends AbstractSched {
             // notify UI
             if (mContextReference != null) {
                 Context context = mContextReference.get();
-                Hooks.getInstance(context).runHook("leech", card, context);
+                new Leech.LeechHook().runHook(card, context);
             }
             return true;
         }
