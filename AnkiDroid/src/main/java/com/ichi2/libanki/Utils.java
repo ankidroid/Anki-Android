@@ -111,8 +111,6 @@ public class Utils {
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String BASE91_EXTRA_CHARS = "!#$%&()*+,-./:;<=>?@[]^_`{|}~";
 
-    private static final int FILE_COPY_BUFFER_SIZE = 1024 * 32;
-
     /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
     public static double now() {
         return (System.currentTimeMillis() / 1000.0);
