@@ -61,11 +61,6 @@ public class BackupManager {
     }
 
 
-    public static boolean isActivated() {
-        return true;
-    }
-
-
     private static File getBackupDirectory(File ankidroidDir) {
         File directory = new File(ankidroidDir, BACKUP_SUFFIX);
         if (!directory.isDirectory() && !directory.mkdirs()) {
