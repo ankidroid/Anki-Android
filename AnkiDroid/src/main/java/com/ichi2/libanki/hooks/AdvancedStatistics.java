@@ -1107,17 +1107,6 @@ public class AdvancedStatistics extends Hook  {
     }
 
     private class ArrayUtils {
-        public int[][] createIntMatrix(int m, int n) {
-            int[][] matrix = new int[m][];
-            for(int i=0; i<m; i++) {
-                matrix[i] = new int[n];
-                for(int j=0; j<n; j++)
-                    matrix[i][j] = 0;
-            }
-
-            return matrix;
-        }
-
         public int[][] toIntMatrix(double[][] doubleMatrix, int doubleToIntMode) {
             int m = doubleMatrix.length;
             if(m == 0)
