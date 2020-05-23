@@ -129,8 +129,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 // Until Android API21 (maybe 22) you must manually handle permissions for image capture w/FileProvider
                 // It does not exist on API15 so they will still crash sadly. This can be removed once minSDK is >= 22
                 // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
-                if (CompatHelper.getSdkVersion() <= Build.VERSION_CODES.LOLLIPOP &&
-                    CompatHelper.getSdkVersion() >= Build.VERSION_CODES.JELLY_BEAN) {
+                if (CompatHelper.getSdkVersion() <= Build.VERSION_CODES.LOLLIPOP) {
                     cameraIntent.setClipData(ClipData.newRawUri("", uriSavedImage));
                     cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 }
@@ -185,9 +184,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mImageFileSize.setMaxWidth((int) Math.round(width * 0.6));
         mImageFileSize.setEnabled(false);
         mImageFileSize.setGravity(Gravity.CENTER_HORIZONTAL);
-        if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.JELLY_BEAN) {
-            mImageFileSize.setBackground(null);
-        }
+        mImageFileSize.setBackground(null);
         mImageFileSize.setVisibility(View.GONE);
 
         //#5513 - Image compression failed, but we'll confuse most users if we tell them that. Instead, just imply that
@@ -198,9 +195,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mImageFileSizeWarning.setTextColor(Color.parseColor("#FF4500")); //Orange-Red
         mImageFileSizeWarning.setGravity(Gravity.CENTER_HORIZONTAL);
         mImageFileSizeWarning.setVisibility(View.GONE);
-        if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.JELLY_BEAN) {
-            mImageFileSize.setBackground(null);
-        }
+        mImageFileSize.setBackground(null);
         mImageFileSizeWarning.setText(R.string.multimedia_editor_image_compression_failed);
     }
 

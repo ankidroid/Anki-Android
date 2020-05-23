@@ -16,8 +16,15 @@
 
 package com.ichi2.compat.customtabs;
 
+import android.app.Activity;
+import android.content.pm.PackageManager;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
+import java.util.Collections;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
@@ -25,13 +32,16 @@ import androidx.browser.customtabs.CustomTabsClient;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@RunWith(RobolectricTestRunner.class)
 public class CustomTabActivityHelperTest {
 
     @Before
@@ -58,7 +68,13 @@ public class CustomTabActivityHelperTest {
         customTabActivityHelper.onServiceConnected(badClient);
 
         CustomTabActivityHelper.CustomTabFallback fallback = mock(CustomTabActivityHelper.CustomTabFallback.class);
-        CustomTabActivityHelper.openCustomTab(null, null, null, fallback);
+        Activity activity = mock(Activity.class);
+        PackageManager packageManager = mock(PackageManager.class);
+
+        when(activity.getPackageManager()).thenReturn(packageManager);
+        when(packageManager.queryIntentActivities(any(), anyInt())).thenReturn(Collections.emptyList());
+
+        CustomTabActivityHelper.openCustomTab(activity, null, null, fallback);
 
         verify(fallback, times(1)).openUri(any(), any());
     }

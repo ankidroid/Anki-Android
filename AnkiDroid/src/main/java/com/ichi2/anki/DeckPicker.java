@@ -482,9 +482,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             view.setBackgroundResource(0);
         } else {
             Drawable drawable = Drawable.createFromPath(imgFile.getAbsolutePath());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                view.setBackground(drawable);
-            }
+            view.setBackground(drawable);
         }
     }
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.OpenableColumns;
@@ -91,8 +90,7 @@ public class ImportUtils {
 
             if (intent.getData() == null) {
                 Timber.i("No intent data. Attempting to read clip data.");
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN
-                        || intent.getClipData() == null
+                if (intent.getClipData() == null
                         || intent.getClipData().getItemCount() == 0) {
                     return context.getString(R.string.import_error_unhandled_request);
                 }

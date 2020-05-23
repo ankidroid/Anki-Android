@@ -96,8 +96,6 @@ public class CompatHelper {
 
     public static void removeHiddenPreferences(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (getSdkVersion() >= 16) {
-            preferences.edit().remove("fixHebrewText").apply();
-        }
+        preferences.edit().remove("fixHebrewText").apply();
     }
 }

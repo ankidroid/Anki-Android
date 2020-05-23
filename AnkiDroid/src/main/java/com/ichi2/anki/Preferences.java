@@ -886,9 +886,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             CheckBoxPreference fixHebrewText = (CheckBoxPreference) screen.findPreference("fixHebrewText");
             CompatHelper.removeHiddenPreferences(this.getApplicationContext());
 
-            if (CompatHelper.getSdkVersion() >= 16) {
-                workarounds.removePreference(fixHebrewText);
-            }
+            workarounds.removePreference(fixHebrewText);
         }
     }
 
