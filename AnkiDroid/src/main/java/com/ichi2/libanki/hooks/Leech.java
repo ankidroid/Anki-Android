@@ -30,7 +30,7 @@ import timber.log.Timber;
  * Class used to display toast when leech is made
  */
 public class Leech {
-    public class LeechHook extends Hook {
+    public static class LeechHook extends Hook {
         @Override
         public void runHook(Object... args) {
             Card card = (Card) args[0];
