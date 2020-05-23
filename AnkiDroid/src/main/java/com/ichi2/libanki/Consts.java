@@ -48,14 +48,6 @@ public class Consts {
     public static final int REM_NOTE = 1;
     public static final int REM_DECK = 2;
 
-    // count display
-    public static final int COUNT_ANSWERED = 0;
-    public static final int COUNT_REMAINING = 1;
-
-    // media log
-    public static final int MEDIA_ADD = 0;
-    public static final int MEDIA_REM = 1;
-
     // dynamic deck order
     public static final int DYN_OLDEST = 0;
     public static final int DYN_RANDOM = 1;
