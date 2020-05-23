@@ -792,52 +792,6 @@ public class Finder {
     }
 
 
-    public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName) {
-        return findDupes(col, fieldName, "");
-    }
-
-
-    /**
-     * @return List of Pair("dupestr", List[nids])
-     */
-    public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName, String search) {
-        // limit search to notes with applicable field name
-    	if (!TextUtils.isEmpty(search)) {
-            search = "(" + search + ") ";
-    	}
-        search += "'" + fieldName + ":*'";
-        // go through notes
-        Map<String, List<Long>> vals = new HashMap<>();
-        List<Pair<String, List<Long>>> dupes = new ArrayList<>();
-        Map<Long, Integer> fields = new HashMap<>();
-        try (Cursor cur = col.getDb().getDatabase().query(
-                "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)), null)) {
-            while (cur.moveToNext()) {
-                long nid = cur.getLong(0);
-                long mid = cur.getLong(1);
-                String[] flds = Utils.splitFields(cur.getString(2));
-                Integer ord = ordForMid(col, fields, mid, fieldName);
-                if (ord == null) {
-                    continue;
-                }
-                String val = flds[fields.get(mid)];
-                val = Utils.stripHTMLMedia(val);
-                // empty does not count as duplicate
-                if (TextUtils.isEmpty(val)) {
-                    continue;
-                }
-                if (!vals.containsKey(val)) {
-                    vals.put(val, new ArrayList<Long>());
-                }
-                vals.get(val).add(nid);
-                if (vals.get(val).size() == 2) {
-                    dupes.add(new Pair<>(val, vals.get(val)));
-                }
-            }
-        }
-        return dupes;
-    }
-
     /*
      * ***********************************************************
      * The methods below are not in LibAnki.
