@@ -567,13 +567,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 case LANGUAGE:
                     closePreferences();
                     break;
-                case "convertFenText":
-                    if (((CheckBoxPreference) pref).isChecked()) {
-                        ChessFilter.install(Hooks.getInstance(getApplicationContext()));
-                    } else {
-                        ChessFilter.uninstall(Hooks.getInstance(getApplicationContext()));
-                    }
-                    break;
                 case "advanced_statistics_enabled":
                     if (((CheckBoxPreference) pref).isChecked()) {
                         AdvancedStatistics.install(Hooks.getInstance(getApplicationContext()));
