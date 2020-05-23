@@ -299,15 +299,6 @@ public class Syncer {
     }
 
 
-    public JSONObject applyChanges(JSONObject changes) throws UnexpectedSchemaChange {
-        mRChg = changes;
-        JSONObject lchg = changes();
-        // merge our side before returning
-        mergeChanges(mRChg);
-        return lchg;
-    }
-
-
     public void mergeChanges(JSONObject rchg) throws UnexpectedSchemaChange {
         // then the other objects
         mergeModels(rchg.getJSONArray("models"));
