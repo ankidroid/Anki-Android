@@ -38,17 +38,14 @@ import com.google.gson.Gson;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.glosbe.json.Response;
-import com.ichi2.anki.multimediacard.glosbe.json.Tuc;
 import com.ichi2.anki.multimediacard.language.LanguagesListerGlosbe;
 import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.async.Connection;
-import com.ichi2.libanki.Utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 /**
