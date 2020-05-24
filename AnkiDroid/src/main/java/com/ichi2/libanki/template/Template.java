@@ -303,7 +303,7 @@ public class Template {
                 try {
                     switch (mod) {
                         case "hint" :
-                            hook = new Hint();
+                            txt = Hint.run(txt, tag);
                             break;
                         case "kanji" :
                             hook = new FuriganaFilters.Kanji();
