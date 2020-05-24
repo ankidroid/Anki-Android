@@ -228,6 +228,12 @@ public class AnkiDroidApp extends Application {
             UsageAnalytics.setDryRun(true);
         }
 
+        //Stop after analytics and logging are initialised.
+        if (ACRA.isACRASenderServiceProcess()) {
+            Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process");
+            return;
+        }
+
         CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         NotificationChannels.setup(getApplicationContext());
