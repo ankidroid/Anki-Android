@@ -2062,7 +2062,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         if (isInNightMode()) {
-            if (!mCardAppearance.customNightMode(mCurrentCard)) {
+            if (!mCardAppearance.hasUserDefinedNightMode(mCurrentCard)) {
                 content = HtmlColors.invertColors(content);
             }
         }
