@@ -2062,9 +2062,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         if (isInNightMode()) {
-            // If card styling doesn't contain any mention of the night_mode class then do color inversion as fallback
-            // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
-            if (!mCurrentCard.css().contains(".night_mode")) {
+            if (!mCardAppearance.customNightMode(mCurrentCard)) {
                 content = HtmlColors.invertColors(content);
             }
         }

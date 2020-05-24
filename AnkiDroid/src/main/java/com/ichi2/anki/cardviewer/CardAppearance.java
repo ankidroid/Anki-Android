@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
+import com.ichi2.libanki.Card;
 import com.ichi2.themes.Themes;
 
 import java.util.regex.Matcher;
@@ -43,6 +44,15 @@ public class CardAppearance {
 
     public boolean isNightMode() {
         return mNightMode;
+    }
+
+
+    /**
+     * customNightMode finds out if the user has included class .night_mode in card's stylesheet
+     */
+    public boolean customNightMode(Card card) {
+        // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
+        return card.css().contains(".night_mode") || card.css().contains(".nightMode");
     }
 
     public static CardAppearance create(ReviewerCustomFonts customFonts, SharedPreferences preferences) {
