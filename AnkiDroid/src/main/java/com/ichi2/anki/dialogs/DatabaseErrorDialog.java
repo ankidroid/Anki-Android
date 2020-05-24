@@ -223,7 +223,16 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                                         return true;
                                     });
                 }
-                return builder.show();
+                MaterialDialog materialDialog = builder.build();
+                materialDialog.setOnKeyListener((dialog, keyCode, event) -> {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        Timber.i("catch");
+                        dismissAllDialogFragments();
+                        return true;
+                    }
+                    return false;
+                });
+                return materialDialog;
             }
             case DIALOG_NEW_COLLECTION: {
                 // Allow user to create a new empty collection
