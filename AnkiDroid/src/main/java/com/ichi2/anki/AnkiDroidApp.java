@@ -229,6 +229,13 @@ public class AnkiDroidApp extends Application {
         }
 
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
+
+        //Stop after analytics and logging are initialised.
+        if (ACRA.isACRASenderServiceProcess()) {
+            Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process");
+            return;
+        }
+
         NotificationChannels.setup(getApplicationContext());
 
         // Configure WebView to allow file scheme pages to access cookies.
