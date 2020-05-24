@@ -264,12 +264,13 @@ Because, by default, Android does not have complete support of the full Unicode 
 
 In the 2.8 version of AnkiDroid the reminder notifications are connected to the widget. In order to receive notifications you have to place the widget in your launcher home screen somewhere. After installing the widget, if you configure reminders in the preferences, you should start receiving notifications.
 
-In the 2.9 version notifications should work with or without the widget. However, you may need to configure "per deck group" notifications to receive them in 2.9
+In the 2.9 version notifications should work with or without the widget. Additionally, there is an option to enable "per deck group" notifications. Unlike the general notifications which will be triggered upon a user-set minimum number of due card, the per-deck notifications are a one-time alarm type notification set at a specific time of day. To enable these notifications:
 
 1. Open the deck list
-1. Long-press on the deck you want notifications for
-1. Choose "deck options" from the popup menu for that deck
-1. Configure notifications as you like
+2. Long-press on the deck you want notifications for
+3. Go to Options->Reminders and you can enable/disable this feature as well as set the time for the reminder
+
+Some users have noted [issues](https://github.com/ankidroid/Anki-Android/issues/5535) with notifications on version 2.9. As of version 2.10.2, these issues appear to be resolved. If having issues, be sure to update to the most recent version. 
 
 ### How can I use custom fonts?
 See the [AnkiDroid manual](http://ankidroid.org/manual.html#customFonts) for the new method of adding fonts.
