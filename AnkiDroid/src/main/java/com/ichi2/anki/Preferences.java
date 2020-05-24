@@ -566,9 +566,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     break;
                 case "advanced_statistics_enabled":
                     if (((CheckBoxPreference) pref).isChecked()) {
-                        AdvancedStatistics.install();
+                        AdvancedStatistics.enable();
                     } else {
-                        AdvancedStatistics.uninstall();
+                        AdvancedStatistics.disable();
                     }
                     break;
                 case "showProgress":

@@ -139,7 +139,7 @@ public class AdvancedStatistics extends Hook  {
     private final ArrayUtils ArrayUtils = new ArrayUtils();
     private final DeckFactory Decks = new DeckFactory();
     private Settings Settings;
-    private static boolean sInstalled = false;
+    private static boolean sEnabled = false;
 
     @Override
     public Object runFilter(Object arg, Object... args) {
@@ -147,11 +147,11 @@ public class AdvancedStatistics extends Hook  {
 
         return calculateDueAsMetaInfo((StatsMetaInfo) arg, (Stats.AxisType) args[0], context, (String) args[2]);
     }
-    public static void install() {
-        sInstalled = true;
+    public static void enable() {
+        sEnabled = true;
     }
-    public static void uninstall() {
-        sInstalled = false;
+    public static void disable() {
+        sEnabled = false;
     }
 
     /**
@@ -173,7 +173,7 @@ public class AdvancedStatistics extends Hook  {
      * @return @see #metaInfo
      */
     public StatsMetaInfo calculateDueAsMetaInfo(StatsMetaInfo metaInfo, Stats.AxisType type, Context context, String dids) {
-        if (!sInstalled) {
+        if (!sEnabled) {
             return metaInfo;
         }
 
