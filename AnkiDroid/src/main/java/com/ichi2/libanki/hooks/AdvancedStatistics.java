@@ -99,7 +99,7 @@ import timber.log.Timber;
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.ExcessiveClassLength","PMD.ExcessiveMethodLength",
                     "PMD.AvoidReassigningParameters","PMD.FieldDeclarationsShouldBeAtStartOfClass","PMD.SwitchStatementsShouldHaveDefault",
                     "PMD.NPathComplexity","PMD.OneDeclarationPerLine","PMD.SwitchStmtsShouldHaveDefault"})
-public class AdvancedStatistics extends Hook  {
+public class AdvancedStatistics {
 
     private static final int TIME = 0;
 
@@ -141,7 +141,6 @@ public class AdvancedStatistics extends Hook  {
     private Settings Settings;
     private static boolean sEnabled = false;
 
-    @Override
     public Object runFilter(Object arg, Object... args) {
         Context context = (Context) args[1];
 
