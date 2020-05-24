@@ -24,13 +24,6 @@ public class FuriganaFilters {
 
     private static final String RUBY = "<ruby><rb>$1</rb><rt>$2</rt></ruby>";
 
-    public void install(Hooks h) {
-        h.addHook("fmod_kanji", new Kanji());
-        h.addHook("fmod_kana", new Kana());
-        h.addHook("fmod_furigana", new Furigana());
-    }
-
-
     private static String noSound(Matcher match, String repl) {
         if (match.group(2).startsWith("sound:")) {
             // return without modification

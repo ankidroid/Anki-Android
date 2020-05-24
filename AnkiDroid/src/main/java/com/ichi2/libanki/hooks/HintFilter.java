@@ -22,10 +22,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 public class HintFilter {
-    public void install(Hooks h) {
-        h.addHook("fmod_hint", new Hint());
-    }
-
     public static class Hint extends Hook {
         @Override
         public String runFilter(String arg, String tag) {
