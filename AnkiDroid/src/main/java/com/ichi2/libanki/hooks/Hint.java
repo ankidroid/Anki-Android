@@ -21,9 +21,8 @@ import android.content.res.Resources;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
-public class Hint extends Hook {
-    @Override
-    public String runFilter(String txt, String tag) {
+public class Hint {
+    public static String run(String txt, String tag) {
         if (txt.trim().length() == 0) {
             return "";
         }
