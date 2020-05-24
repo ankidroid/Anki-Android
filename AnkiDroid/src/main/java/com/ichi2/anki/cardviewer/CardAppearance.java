@@ -48,9 +48,9 @@ public class CardAppearance {
 
 
     /**
-     * customNightMode finds out if the user has included class .night_mode in card's stylesheet
+     * hasUserDefinedNightMode finds out if the user has included class .night_mode in card's stylesheet
      */
-    public boolean customNightMode(Card card) {
+    public boolean hasUserDefinedNightMode(Card card) {
         // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
         return card.css().contains(".night_mode") || card.css().contains(".nightMode");
     }
