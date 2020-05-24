@@ -1010,11 +1010,10 @@ public class Collection {
      * Returns hash of id, question, answer.
      */
     public HashMap<String, String> _renderQA(Object[] data) {
-        return _renderQA(data, null, null);
+        return _renderQA(data, false, null, null);
     }
 
-
-    public HashMap<String, String> _renderQA(Object[] data, String qfmt, String afmt) {
+    public HashMap<String, String> _renderQA(Object[] data, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
         String[] flist = Utils.splitFields((String) data[6]);
@@ -1058,7 +1057,10 @@ public class Collection {
             }
             String html = new Template(format, fields).render();
             html = ChessFilter.fenToChessboard(html, getContext());
-            html = LaTeX.mungeQA(html, this, model);
+            if (!browser) {
+                // browser don't show image. So compiling LaTeX actually remove information.
+                html = LaTeX.mungeQA(html, this, model);
+            }
             d.put(type, html);
             // empty cloze?
             if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {

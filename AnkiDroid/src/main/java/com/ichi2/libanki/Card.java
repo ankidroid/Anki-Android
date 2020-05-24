@@ -285,7 +285,7 @@ public class Card implements Cloneable {
             if (browser) {
                 String bqfmt = t.getString("bqfmt");
                 String bafmt = t.getString("bafmt");
-                mQA = mCol._renderQA(data, bqfmt, bafmt);
+                mQA = mCol._renderQA(data, browser, bqfmt, bafmt);
             } else {
                 mQA = mCol._renderQA(data);
             }
