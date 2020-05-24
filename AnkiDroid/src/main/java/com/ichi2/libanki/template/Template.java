@@ -22,7 +22,6 @@ import android.text.TextUtils;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.hooks.FuriganaFilters;
 
 import java.util.Arrays;
 import java.util.Collections;
