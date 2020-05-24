@@ -19,7 +19,9 @@ package com.ichi2.libanki.template;
 import android.text.TextUtils;
 
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.hooks.Hooks;
+import com.ichi2.libanki.hooks.FuriganaFilters;
+import com.ichi2.libanki.hooks.HintFilter;
+import com.ichi2.libanki.hooks.Hook;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -295,8 +297,32 @@ public class Template {
                 if (txt == null) {
                     txt = "";
                 }
-                txt = Hooks.runFilter("fmod_" + mod,
-                        txt, tag);
+                Hook hook = null;
+                try {
+                    switch (mod) {
+                        case "hint" :
+                            hook = new HintFilter.Hint();
+                            break;
+                        case "kanji" :
+                            hook = new FuriganaFilters.Kanji();
+                            break;
+                        case "kana" :
+                            hook = new FuriganaFilters.Kana();
+                            break;
+                        case "furigana" :
+                            hook = new FuriganaFilters.Furigana();
+                            break;
+                        default :
+                            break;
+                    }
+                    if (hook != null) {
+                        txt = hook.runFilter(txt, tag);
+                    }
+                } catch (Exception e) {
+                    String funcName = hook.getClass().getCanonicalName();
+                    Timber.e(e, "Exception while running hook fmod_%s : %s", mod, funcName);
+                    return "Error in filter " + hook + ":" + funcName;
+                }
                 if (txt == null) {
                     return String.format("{unknown field %s}", tag_name);
                 }
