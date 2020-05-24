@@ -35,7 +35,7 @@ public class FuriganaFilters {
 
     public static class Kanji extends Hook {
         @Override
-        public String runFilter(String txt, String tag) {
+        public String runFilter(String txt) {
             Matcher m = r.matcher(txt);
             StringBuffer sb = new StringBuffer();
             while (m.find()) {
@@ -48,7 +48,7 @@ public class FuriganaFilters {
 
     public static class Kana extends Hook {
         @Override
-        public String runFilter(String txt, String tag) {
+        public String runFilter(String txt) {
             Matcher m = r.matcher(txt);
             StringBuffer sb = new StringBuffer();
             while (m.find()) {
@@ -61,7 +61,7 @@ public class FuriganaFilters {
 
     public static class Furigana extends Hook {
         @Override
-        public String runFilter(String txt, String tag) {
+        public String runFilter(String txt) {
             Matcher m = r.matcher(txt);
             StringBuffer sb = new StringBuffer();
             while (m.find()) {
