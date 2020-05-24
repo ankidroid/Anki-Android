@@ -123,9 +123,8 @@ public class Hooks {
      *
      * @param hook The name of the hook.
      * @param arg The input to the filter on hook.
-     * @param args Variable arguments to be passed to the method runHook of each function on this hook.
      */
-    public static Object runFilter(String hook, Object arg, Object... args) {
+    public static String runFilter(String hook, String arg, String tag) {
         if (hooks == null) {
             Timber.e("Hooks object has not been initialized");
             AnkiDroidApp.sendExceptionReport(new IllegalStateException("Hooks object uninitialized"), "Hooks.runFilter");
@@ -137,7 +136,7 @@ public class Hooks {
             try {
                 for (Hook func : _hook) {
                     funcName = func.getClass().getCanonicalName();
-                    arg = func.runFilter(arg, args);
+                    arg = func.runFilter(arg, tag);
                 }
             } catch (Exception e) {
                 Timber.e(e, "Exception while running hook %s : %s", hook, funcName);

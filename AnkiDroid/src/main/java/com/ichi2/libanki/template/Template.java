@@ -292,10 +292,8 @@ public class Template {
                     extra = m.group(2);
                 }
 
-                txt = (String) Hooks.runFilter("fmod_" + mod,
-                        txt == null ? "" : txt,
-                        extra == null ? "" : extra,
-                        context, tag, tag_name);
+                txt = Hooks.runFilter("fmod_" + mod,
+                        txt == null ? "" : txt, tag);
                 if (txt == null) {
                     return String.format("{unknown field %s}", tag_name);
                 }

@@ -28,7 +28,7 @@ public class HintFilter {
 
     public class Hint extends Hook {
         @Override
-        public Object runFilter(Object arg, Object... args) {
+        public String runFilter(String arg, String tag) {
             String txt = (String) arg;
             if (txt.trim().length() == 0) {
                 return "";
@@ -38,7 +38,7 @@ public class HintFilter {
             String domid = "hint" + txt.hashCode();
             return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
                     domid + "').style.display='block';_relinquishFocus();return false;\">" +
-                    res.getString(R.string.show_hint, (String) args[2]) + "</a><div id=\"" +
+                    res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
                     domid + "\" class=hint style=\"display: none\">" + txt + "</div>";
         }
     }
