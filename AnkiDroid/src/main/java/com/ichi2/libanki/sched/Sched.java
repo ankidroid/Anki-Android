@@ -37,7 +37,6 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 
-import com.ichi2.libanki.hooks.Leech;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -1165,8 +1164,8 @@ public class Sched extends SchedV2 {
             }
             // notify UI
             if (mContextReference != null) {
-                Context context = mContextReference.get();
-                new Leech().runHook(card, context);
+                Activity context = mContextReference.get();
+                leech(card, context);
             }
             return true;
         }
