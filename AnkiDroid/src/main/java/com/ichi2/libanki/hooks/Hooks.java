@@ -122,13 +122,13 @@ public class Hooks {
      * Apply all functions on hook to arg and return the result.
      *
      * @param hook The name of the hook.
-     * @param arg The input to the filter on hook.
+     * @param txt The input to the filter on hook.
      */
-    public static String runFilter(String hook, String arg, String tag) {
+    public static String runFilter(String hook, String txt, String tag) {
         if (hooks == null) {
             Timber.e("Hooks object has not been initialized");
             AnkiDroidApp.sendExceptionReport(new IllegalStateException("Hooks object uninitialized"), "Hooks.runFilter");
-            return arg;
+            return txt;
         }
         List<Hook> _hook = hooks.get(hook);
         String funcName = "";
@@ -136,14 +136,14 @@ public class Hooks {
             try {
                 for (Hook func : _hook) {
                     funcName = func.getClass().getCanonicalName();
-                    arg = func.runFilter(arg, tag);
+                    txt = func.runFilter(txt, tag);
                 }
             } catch (Exception e) {
                 Timber.e(e, "Exception while running hook %s : %s", hook, funcName);
                 return "Error in filter " + hook + ":" + funcName;
             }
         }
-        return arg;
+        return txt;
     }
 }
 

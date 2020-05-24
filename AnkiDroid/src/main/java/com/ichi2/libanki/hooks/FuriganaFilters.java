@@ -42,8 +42,8 @@ public class FuriganaFilters {
 
     public class Kanji extends Hook {
         @Override
-        public String runFilter(String arg, String tag) {
-            Matcher m = r.matcher(arg);
+        public String runFilter(String txt, String tag) {
+            Matcher m = r.matcher(txt);
             StringBuffer sb = new StringBuffer();
             while (m.find()) {
                 m.appendReplacement(sb, noSound(m, "$1"));
@@ -55,8 +55,8 @@ public class FuriganaFilters {
 
     public class Kana extends Hook {
         @Override
-        public String runFilter(String arg, String tag) {
-            Matcher m = r.matcher(arg);
+        public String runFilter(String txt, String tag) {
+            Matcher m = r.matcher(txt);
             StringBuffer sb = new StringBuffer();
             while (m.find()) {
                 m.appendReplacement(sb, noSound(m, "$2"));
@@ -68,8 +68,8 @@ public class FuriganaFilters {
 
     public class Furigana extends Hook {
         @Override
-        public String runFilter(String arg, String tag) {
-            Matcher m = r.matcher(arg);
+        public String runFilter(String txt, String tag) {
+            Matcher m = r.matcher(txt);
             StringBuffer sb = new StringBuffer();
             while (m.find()) {
                 m.appendReplacement(sb, noSound(m, RUBY));
