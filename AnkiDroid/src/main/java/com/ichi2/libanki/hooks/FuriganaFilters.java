@@ -40,7 +40,7 @@ public class FuriganaFilters {
         }
     }
 
-    public class Kanji extends Hook {
+    public static class Kanji extends Hook {
         @Override
         public String runFilter(String txt, String tag) {
             Matcher m = r.matcher(txt);
@@ -53,7 +53,7 @@ public class FuriganaFilters {
         }
     }
 
-    public class Kana extends Hook {
+    public static class Kana extends Hook {
         @Override
         public String runFilter(String txt, String tag) {
             Matcher m = r.matcher(txt);
@@ -66,7 +66,7 @@ public class FuriganaFilters {
         }
     }
 
-    public class Furigana extends Hook {
+    public static class Furigana extends Hook {
         @Override
         public String runFilter(String txt, String tag) {
             Matcher m = r.matcher(txt);

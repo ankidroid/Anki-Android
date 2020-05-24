@@ -26,7 +26,7 @@ public class HintFilter {
         h.addHook("fmod_hint", new Hint());
     }
 
-    public class Hint extends Hook {
+    public static class Hint extends Hook {
         @Override
         public String runFilter(String arg, String tag) {
             String txt = (String) arg;
