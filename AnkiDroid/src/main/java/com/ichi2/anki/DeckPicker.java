@@ -476,11 +476,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void applyDeckPickerBackground(View view) {
+        //Allow the user to clear data and get back to a good state if they provide an invalid background.
+        if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("deckPickerBackground", false)) {
+            Timber.d("No DeckPicker background preference");
+            view.setBackgroundResource(0);
+            return;
+        }
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
         File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
         if (!imgFile.exists()) {
+            Timber.d("No DeckPicker background image");
             view.setBackgroundResource(0);
         } else {
+            Timber.i("Applying background");
             Drawable drawable = Drawable.createFromPath(imgFile.getAbsolutePath());
             view.setBackground(drawable);
         }
