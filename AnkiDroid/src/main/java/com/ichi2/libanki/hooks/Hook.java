@@ -65,7 +65,7 @@ public class Hook {
         // do nothing
     }
 
-    public String runFilter(String arg, String tag) {
-        return arg;
+    public String runFilter(String txt, String tag) {
+        return txt;
     }
 }
