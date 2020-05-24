@@ -23,15 +23,13 @@ import android.webkit.WebView;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Stats;
+import com.ichi2.libanki.stats.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import timber.log.Timber;
 
 public class OverviewStatsBuilder {
     private static final int CARDS_INDEX = 0;
