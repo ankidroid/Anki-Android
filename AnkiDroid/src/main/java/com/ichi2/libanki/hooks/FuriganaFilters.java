@@ -33,42 +33,33 @@ public class FuriganaFilters {
         }
     }
 
-    public static class Kanji extends Hook {
-        @Override
-        public String runFilter(String txt) {
-            Matcher m = r.matcher(txt);
-            StringBuffer sb = new StringBuffer();
-            while (m.find()) {
-                m.appendReplacement(sb, noSound(m, "$1"));
-            }
-            m.appendTail(sb);
-            return sb.toString();
+    public static String kanjiFilter(String txt) {
+        Matcher m = r.matcher(txt);
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            m.appendReplacement(sb, noSound(m, "$1"));
         }
+        m.appendTail(sb);
+        return sb.toString();
     }
 
-    public static class Kana extends Hook {
-        @Override
-        public String runFilter(String txt) {
-            Matcher m = r.matcher(txt);
-            StringBuffer sb = new StringBuffer();
-            while (m.find()) {
-                m.appendReplacement(sb, noSound(m, "$2"));
-            }
-            m.appendTail(sb);
-            return sb.toString();
+    public static String kanaFilter(String txt) {
+        Matcher m = r.matcher(txt);
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            m.appendReplacement(sb, noSound(m, "$2"));
         }
+        m.appendTail(sb);
+        return sb.toString();
     }
 
-    public static class Furigana extends Hook {
-        @Override
-        public String runFilter(String txt) {
-            Matcher m = r.matcher(txt);
-            StringBuffer sb = new StringBuffer();
-            while (m.find()) {
-                m.appendReplacement(sb, noSound(m, RUBY));
-            }
-            m.appendTail(sb);
-            return sb.toString();
+    public static String furiganaFilter(String txt) {
+        Matcher m = r.matcher(txt);
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            m.appendReplacement(sb, noSound(m, RUBY));
         }
+        m.appendTail(sb);
+        return sb.toString();
     }
 }
