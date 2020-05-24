@@ -316,7 +316,7 @@ public class Template {
                             break;
                     }
                     if (hook != null) {
-                        txt = hook.runFilter(txt, tag);
+                        txt = hook.runFilter(txt);
                     }
                 } catch (Exception e) {
                     String funcName = hook.getClass().getCanonicalName();
