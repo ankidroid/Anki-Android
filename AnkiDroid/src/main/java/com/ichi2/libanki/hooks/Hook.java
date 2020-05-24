@@ -64,8 +64,4 @@ public class Hook {
     public void runHook(Object... args) {
         // do nothing
     }
-
-    public String runFilter(String txt) {
-        return txt;
-    }
 }
