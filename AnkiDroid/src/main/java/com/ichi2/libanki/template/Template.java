@@ -16,11 +16,13 @@
 
 package com.ichi2.libanki.template;
 
+import android.content.res.Resources;
 import android.text.TextUtils;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.FuriganaFilters;
-import com.ichi2.libanki.hooks.Hint;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -299,7 +301,7 @@ public class Template {
                 try {
                     switch (mod) {
                     case "hint" :
-                        txt = Hint.run(txt, tag);
+                        txt = runHint(txt, tag);
                         break;
                     case "kanji" :
                         txt = FuriganaFilters.kanjiFilter(txt);
@@ -324,6 +326,20 @@ public class Template {
         }
         return txt != null ? txt : "";
     }
+
+    private String runHint(String txt, String tag) {
+        if (txt.trim().length() == 0) {
+            return "";
+        }
+        Resources res = AnkiDroidApp.getAppResources();
+        // random id
+        String domid = "hint" + txt.hashCode();
+        return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
+                domid + "').style.display='block';_relinquishFocus();return false;\">" +
+                res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
+                domid + "\" class=hint style=\"display: none\">" + txt + "</div>";
+    }
+
 
     private static @NonNull String clozeText(@NonNull String txt, @NonNull String ord, char type) {
         if (!Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt).find()) {
