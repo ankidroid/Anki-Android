@@ -18,8 +18,11 @@ package com.ichi2.libanki;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.libanki.hooks.AdvancedStatistics;
 import com.ichi2.libanki.hooks.Hooks;
 
 import com.ichi2.utils.JSONArray;
@@ -47,6 +50,11 @@ public class Storage {
         assert path.endsWith(".anki2");
         // Since this is the entry point into libanki, initialize the hooks here.
         Hooks.getInstance(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        // Preferences activated hooks
+        if (prefs.getBoolean("advanced_statistics_enabled", false)) {
+            AdvancedStatistics.enable();
+        }
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
         // connect
