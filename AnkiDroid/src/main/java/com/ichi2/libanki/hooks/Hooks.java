@@ -46,10 +46,6 @@ public class Hooks {
     private Hooks(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         hooks = new HashMap<>();
-        // Always-ON hooks
-        new FuriganaFilters().install(this);
-        new HintFilter().install(this);
-
         // Preferences activated hooks
     }
 
