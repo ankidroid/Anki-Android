@@ -43,15 +43,13 @@ import com.ichi2.anki.stats.ChartView;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Stats;
+import com.ichi2.libanki.stats.Stats;
 import com.ichi2.ui.SlidingTabLayout;
 
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 import timber.log.Timber;

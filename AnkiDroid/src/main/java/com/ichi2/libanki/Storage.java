@@ -22,7 +22,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.libanki.hooks.AdvancedStatistics;
+import com.ichi2.libanki.stats.AdvancedStatistics;
 import com.ichi2.libanki.hooks.Hooks;
 
 import com.ichi2.utils.JSONArray;

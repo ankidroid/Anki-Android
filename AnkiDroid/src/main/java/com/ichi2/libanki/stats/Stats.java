@@ -15,7 +15,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki;
+package com.ichi2.libanki.stats;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -25,7 +25,9 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.stats.OverviewStatsBuilder;
 import com.ichi2.anki.stats.StatsMetaInfo;
-import com.ichi2.libanki.hooks.AdvancedStatistics;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Utils;
 
 import com.ichi2.utils.JSONObject;
 
