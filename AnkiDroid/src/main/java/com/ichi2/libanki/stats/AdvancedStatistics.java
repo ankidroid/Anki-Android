@@ -141,11 +141,6 @@ public class AdvancedStatistics {
     private Settings Settings;
     private static boolean sEnabled = false;
 
-    public Object runFilter(Object arg, Object... args) {
-        Context context = (Context) args[1];
-
-        return calculateDueAsMetaInfo((StatsMetaInfo) arg, (Stats.AxisType) args[0], context, (String) args[2]);
-    }
     public static void enable() {
         sEnabled = true;
     }
