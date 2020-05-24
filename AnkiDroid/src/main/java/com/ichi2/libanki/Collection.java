@@ -1055,7 +1055,6 @@ public class Collection {
                 // the following line differs from libanki // TODO: why?
                 fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
-            fields = (Map<String, String>) Hooks.runFilter("mungeFields", fields, model, data, this);
             String html = new Template(format, fields).render();
             d.put(type, (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this));
             // empty cloze?
