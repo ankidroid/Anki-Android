@@ -1057,7 +1057,8 @@ public class Collection {
             }
             fields = (Map<String, String>) Hooks.runFilter("mungeFields", fields, model, data, this);
             String html = new Template(format, fields).render();
-            d.put(type, (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this));
+            html = (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this);
+            d.put(type, html);
             // empty cloze?
             if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
                 if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
