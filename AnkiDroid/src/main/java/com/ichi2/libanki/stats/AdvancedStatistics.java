@@ -141,12 +141,6 @@ public class AdvancedStatistics {
     private final DeckFactory Decks = new DeckFactory();
     private Settings Settings;
 
-    public Object runFilter(Object arg, Object... args) {
-        Context context = (Context) args[1];
-
-        return calculateDueAsMetaInfo((StatsMetaInfo) arg, (Stats.AxisType) args[0], context, (String) args[2]);
-    }
-
     /**
      * Determine forecast statistics based on a computation or simulation of future reviews.
      * Returns all information required by stats.java to plot the 'forecast' chart based on these statistics.
