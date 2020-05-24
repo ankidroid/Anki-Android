@@ -21,21 +21,18 @@ import android.content.res.Resources;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
-public class HintFilter {
-    public static class Hint extends Hook {
-        @Override
-        public String runFilter(String arg, String tag) {
-            String txt = (String) arg;
-            if (txt.trim().length() == 0) {
-                return "";
-            }
-            Resources res = AnkiDroidApp.getAppResources();
-            // random id
-            String domid = "hint" + txt.hashCode();
-            return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
-                    domid + "').style.display='block';_relinquishFocus();return false;\">" +
-                    res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
-                    domid + "\" class=hint style=\"display: none\">" + txt + "</div>";
+public class Hint extends Hook {
+    @Override
+    public String runFilter(String txt, String tag) {
+        if (txt.trim().length() == 0) {
+            return "";
         }
+        Resources res = AnkiDroidApp.getAppResources();
+        // random id
+        String domid = "hint" + txt.hashCode();
+        return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
+                domid + "').style.display='block';_relinquishFocus();return false;\">" +
+                res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
+                domid + "\" class=hint style=\"display: none\">" + txt + "</div>";
     }
 }

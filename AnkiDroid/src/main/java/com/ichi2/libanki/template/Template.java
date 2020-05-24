@@ -20,7 +20,7 @@ import android.text.TextUtils;
 
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.FuriganaFilters;
-import com.ichi2.libanki.hooks.HintFilter;
+import com.ichi2.libanki.hooks.Hint;
 import com.ichi2.libanki.hooks.Hook;
 
 import java.util.Arrays;
@@ -301,7 +301,7 @@ public class Template {
                 try {
                     switch (mod) {
                         case "hint" :
-                            hook = new HintFilter.Hint();
+                            hook = new Hint();
                             break;
                         case "kanji" :
                             hook = new FuriganaFilters.Kanji();
