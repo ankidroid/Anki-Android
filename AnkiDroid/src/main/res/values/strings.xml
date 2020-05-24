@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ga_trackingId" translatable="false">UA-125800786-1</string>
+    <string name="pref_cat_auto_easing">Automatic easing</string>
+    <string name="ease_timer_summ">Automatically choose easing type based on review time.</string>
+    <string name="ease_timer_text">Automatic easing</string>
+    <string name="ease_timer_easy">Maximum easy time</string>
+    <string name="ease_timer_good">Maximum good time</string>
+    <string name="ease_timer_good_summ">Maximum time in seconds for the question to be considered good.</string>
+    <string name="ease_timer_easy_summ">Maximum time in seconds for the question to be considered easy.</string>
     <!-- If you go over limits, further hits are dropped, setting a sampling percentage can help -->
     <!-- Current limits: 10MM/month globally, 200K/user && 500/session, 1 ever 2s + 60 in a session -->
     <!-- https://developers.google.com/analytics/devguides/collection/android/v4/limits-quotas -->

@@ -211,6 +211,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected int mOptWaitAnswerSecond;
     protected int mOptWaitQuestionSecond;
 
+    protected boolean mUseEaseTimer;
+    protected long mEase4AnswerMS;
+    protected long mEase3AnswerMS;
+
     protected boolean mUseInputTag;
 
     // Preferences from the collection
@@ -1284,6 +1288,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (buttonNumber < ease) {
             return;
         }
+
         // Set the dots appearing below the toolbar
         switch (ease) {
             case EASE_1:
@@ -1641,6 +1646,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
         mPrefWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
         mPrefWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
+        mUseEaseTimer = preferences.getBoolean("easeTimer", false);
+        mEase4AnswerMS = preferences.getInt("ease4AnswerSeconds", 3) * 1000;
+        mEase3AnswerMS = preferences.getInt("ease3AnswerSeconds", 6) * 1000;
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
 
@@ -1934,6 +1942,34 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
+    /**
+     * Hide certain answer buttons based on how long it took to think of the answer
+     * "Again" will always be visible, but only one of the other 3 possible buttons
+     * will be visible. The timeouts for each button are configurable.
+     */
+    protected void hideEaseButtonsBasedOnReviewTime() {
+        if (!mUseEaseTimer) {
+            return;
+        }
+
+        long elapsedTime = SystemClock.elapsedRealtime() - mCardTimer.getBase();
+        if (elapsedTime <= mEase4AnswerMS && mEase4Layout.getVisibility() == View.VISIBLE) {
+            mEase3Layout.setVisibility(View.GONE);
+            mEase2Layout.setVisibility(View.GONE);
+        }
+
+        if (elapsedTime <= mEase3AnswerMS && mEase3Layout.getVisibility() == View.VISIBLE) {
+            mEase4Layout.setVisibility(View.GONE);
+            mEase2Layout.setVisibility(View.GONE);
+        }
+
+        if (elapsedTime > mEase3AnswerMS) {
+            mEase4Layout.setVisibility(View.GONE);
+            mEase3Layout.setVisibility(View.GONE);
+        }
+    }
+
+
     protected void displayCardAnswer() {
         Timber.d("displayCardAnswer()");
 
@@ -1973,6 +2009,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mIsSelecting = false;
         updateCard(CardAppearance.enrichWithQADiv(answer, true));
         displayAnswerBottomBar();
+        hideEaseButtonsBasedOnReviewTime();
+
         // If the user wants to show the next question automatically
         if (mUseTimer) {
             long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;

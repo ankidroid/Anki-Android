@@ -155,4 +155,26 @@
             android:summary="@string/timeout_question_seconds_summ"
             android:title="@string/timeout_question_seconds" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_auto_easing">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:disableDependentsState="false"
+            android:key="easeTimer"
+            android:summary="@string/ease_timer_summ"
+            android:title="@string/ease_timer_text" />
+        <com.ichi2.ui.SeekBarPreference
+            android:defaultValue="3"
+            android:dependency="easeTimer"
+            android:key="ease4AnswerSeconds"
+            android:max="20"
+            android:summary="@string/ease_timer_easy_summ"
+            android:title="@string/ease_timer_easy" />
+        <com.ichi2.ui.SeekBarPreference
+            android:defaultValue="6"
+            android:dependency="easeTimer"
+            android:key="ease3AnswerSeconds"
+            android:max="60"
+            android:summary="@string/ease_timer_good_summ"
+            android:title="@string/ease_timer_good" />
+    </PreferenceCategory>
 </PreferenceScreen>
