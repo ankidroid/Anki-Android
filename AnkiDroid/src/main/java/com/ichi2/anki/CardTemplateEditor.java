@@ -44,6 +44,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.ui.SlidingTabLayout;
@@ -427,6 +428,13 @@ public class CardTemplateEditor extends AnkiActivity {
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
             inflater.inflate(R.menu.card_template_editor, menu);
+
+            if (mModel.getInt("type") == Consts.MODEL_CLOZE) {
+                Timber.d("Editing cloze model, disabling add/delete card template functionality");
+                menu.findItem(R.id.action_add).setVisible(false);
+                menu.findItem(R.id.action_delete).setVisible(false);
+            }
+
             super.onCreateOptionsMenu(menu, inflater);
         }
 
