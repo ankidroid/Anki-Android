@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.hooks;
+package com.ichi2.libanki.template;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

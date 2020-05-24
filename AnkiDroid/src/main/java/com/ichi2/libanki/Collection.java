@@ -32,7 +32,6 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.hooks.Hooks;
