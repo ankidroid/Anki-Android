@@ -112,7 +112,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer"};
 
     private static final int RESULT_LOAD_IMG = 111;
-
+    private CheckBoxPreference backgroundImage;
+    private static long fileLength;
     // ----------------------------------------------------------------------------
     // Overridden methods
     // ----------------------------------------------------------------------------
@@ -225,7 +226,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             case "com.ichi2.anki.prefs.appearance":
                 listener.addPreferencesFromResource(R.xml.preferences_appearance);
                 screen = listener.getPreferenceScreen();
-                CheckBoxPreference backgroundImage = (CheckBoxPreference) screen.findPreference("deckPickerBackground");
+                backgroundImage = (CheckBoxPreference) screen.findPreference("deckPickerBackground");
                 backgroundImage.setOnPreferenceClickListener(preference -> {
                     if (backgroundImage.isChecked()) {
                         try {
@@ -405,14 +406,22 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     String imgPathString = cursor.getString(columnIndex);
                     File sourceFile = new File(imgPathString);
 
+                    // file size in MB
+                    fileLength = sourceFile.length() / (1024 * 1024);
+
                     String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                     String imageName = "DeckPickerBackground.png";
                     File destFile = new File(currentAnkiDroidDirectory, imageName);
-
-                    try (FileChannel sourceChannel = new FileInputStream(sourceFile).getChannel();
-                         FileChannel destChannel = new FileOutputStream(destFile).getChannel()) {
-                        destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-                        UIUtils.showThemedToast(this, getString(R.string.background_image_applied), false);
+                    // Image size less than 10 MB copied to AnkiDroid folder
+                    if (fileLength < 10) {
+                        try (FileChannel sourceChannel = new FileInputStream(sourceFile).getChannel();
+                             FileChannel destChannel = new FileOutputStream(destFile).getChannel()) {
+                            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+                            UIUtils.showThemedToast(this, getString(R.string.background_image_applied), false);
+                        }
+                    } else {
+                        backgroundImage.setChecked(false);
+                        UIUtils.showThemedToast(this, getString(R.string.image_max_size_allowed, 10), false);
                     }
                 } finally {
                     if (cursor != null) {
@@ -420,6 +429,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     }
                 }
             } else {
+                backgroundImage.setChecked(false);
                 UIUtils.showThemedToast(this, getString(R.string.no_image_selected), false);
             }
         } catch (OutOfMemoryError | Exception e) {
