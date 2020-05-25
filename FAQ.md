@@ -319,11 +319,17 @@ There are few reasons this can happen.
 
 ### How do I create sub-decks or folders?
 
+**AnkiDroid 2.11**: You can long-press a deck and choose 'Create subdeck' from the context menu
+
+**Before Anki 2.11**
+
 AnkiDroid supports sub-decks / folders very well except creating them is a little bit of a trick.
 
 What you do is use a special naming style for the child deck name, like this 'Parent::Child'.
 
 As a specific example, if you have what folders to learn 'English', you would create a deck named 'English', then you could have 'English::Verbs', 'English::Nouns', and so on. And you would see 'Verbs' and 'Nouns' as child decks of the English parent deck.
+
+_search terms: subdeck, sub deck_
 
 # Advanced formatting tips
 The [formatting wiki page](https://github.com/ankidroid/Anki-Android/wiki/Advanced-formatting) gives examples of how to achieve advanced flashcard formatting such as:
