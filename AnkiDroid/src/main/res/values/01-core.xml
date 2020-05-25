@@ -129,6 +129,7 @@
     <string name="rebuild_cram_deck">Rebuilding cram deck…</string>
     <string name="rebuild_cram_label">Rebuild</string>
     <string name="empty_cram_label">Empty</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Emptying cram deck…</string>
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>

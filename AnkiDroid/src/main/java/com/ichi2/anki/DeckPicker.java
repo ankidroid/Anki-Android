@@ -539,9 +539,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     .customView(mDialogEditText, true)
                     .onPositive((dialog, which) -> {
                         String deckName = mDialogEditText.getText().toString();
-                        Timber.i("DeckPicker:: Creating new deck...");
-                        getCol().getDecks().id(deckName, true);
-                        updateDeckList();
+                        createNewDeck(deckName);
                     })
                     .negativeText(R.string.dialog_cancel)
                     .show();
@@ -557,6 +555,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
             addNote();
         });
     }
+
+
+    private void createNewDeck(String deckName) {
+        Timber.i("DeckPicker:: Creating new deck...");
+        getCol().getDecks().id(deckName, true);
+        updateDeckList();
+    }
+
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -2413,6 +2419,42 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         });
     }
+
+
+    public void createSubdeckDialog() {
+        createSubDeckDialog(mContextMenuDid);
+    }
+
+
+    private void createSubDeckDialog(long did) {
+        final Resources res = getResources();
+        mDialogEditText = new EditText(this);
+        mDialogEditText.setSingleLine();
+        mDialogEditText.setSelection(mDialogEditText.getText().length());
+        new MaterialDialog.Builder(DeckPicker.this)
+                .title(R.string.create_subdeck)
+                .customView(mDialogEditText, true)
+                .positiveText(R.string.dialog_ok)
+                .negativeText(res.getString(R.string.dialog_cancel))
+                .onPositive((dialog, which) -> {
+                    String textValue = mDialogEditText.getText().toString();
+                    String newName = getCol().getDecks().getSubdeckName(did, textValue);
+                    if (newName != null) {
+                        createNewDeck(newName);
+                    } else {
+                        Timber.d("Failed to obtain subdeck name");
+                    }
+                    dismissAllDialogFragments();
+                    mDeckListAdapter.notifyDataSetChanged();
+                    updateDeckList();
+                    if (mFragmented) {
+                        loadStudyOptionsFragment(false);
+                    }
+                })
+                .onNegative((dialog, which) -> dismissAllDialogFragments())
+                .build().show();
+    }
+
 
     @VisibleForTesting
     class CheckDatabaseListener extends CollectionTask.TaskListener {

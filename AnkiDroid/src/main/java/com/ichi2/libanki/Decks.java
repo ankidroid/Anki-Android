@@ -59,6 +59,9 @@ import timber.log.Timber;
         "PMD.MethodNamingConventions","PMD.AvoidReassigningParameters","PMD.SimplifyBooleanReturns"})
 public class Decks {
 
+    //not in libAnki
+    @SuppressWarnings("WeakerAccess")
+    public static final String DECK_SEPARATOR = "::";
 
     public static final String defaultDeck = ""
             + "{"
@@ -1079,5 +1082,22 @@ public class Decks {
 
     public static boolean isDynamic(JSONObject deck) {
         return deck.getInt("dyn") != 0;
+    }
+
+    /** Retruns the fully qualified name of the subdeck, or null if unavailable */
+    @Nullable
+    public String getSubdeckName(long did, @Nullable String subdeckName) {
+        if (TextUtils.isEmpty(subdeckName)) {
+            return null;
+        }
+        String newName = subdeckName.replaceAll("\"", "");
+        if (TextUtils.isEmpty(newName)) {
+            return null;
+        }
+        JSONObject deck = get(did, false);
+        if (deck == null) {
+            return null;
+        }
+        return deck.get("name") + DECK_SEPARATOR + subdeckName;
     }
 }
