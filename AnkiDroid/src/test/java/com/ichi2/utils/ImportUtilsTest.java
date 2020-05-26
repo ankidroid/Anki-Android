@@ -120,35 +120,6 @@ public class ImportUtilsTest extends RobolectricTest {
         assertFalse(ImportUtils.isValidPackageName("test.docx"));
     }
 
-    @Test
-    public void duplicateFileIsAccepted() {
-        assertTrue(ImportUtils.isValidPackageName(getInvalidDuplicateFileExtension("collection.apkg")));
-    }
-
-    @Test
-    public void duplicateFileWithDotIsAccepted() {
-        assertTrue(ImportUtils.isValidPackageName(getInvalidDuplicateFileExtension("collection.dot.apkg")));
-    }
-
-    @Test
-    public void duplicateCollectionIsNotDeckPackage() {
-        assertFalse(ImportUtils.FileImporter.isDeckPackage(getInvalidDuplicateFileExtension("collection.apkg")));
-    }
-
-    @Test
-    public void encodedCollectionIsStillCollection() {
-        assertTrue(ImportUtils.isCollectionPackage("col.colpkg%20(1)"));
-    }
-
-    @Test
-    public void encodedDeckCollectionIsStillCollection() {
-        assertTrue(ImportUtils.isCollectionPackage("collection.apkg%20(1)"));
-    }
-
-    private String getInvalidDuplicateFileExtension(String s) {
-        //6259 - SAF Issue will cause this: https://stackoverflow.com/q/32849387
-        return s + " (1)";
-    }
 
     @CheckResult
     private Intent getValidClipDataUri(String fileName) {
