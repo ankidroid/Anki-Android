@@ -99,6 +99,12 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         mFieldIndex = intent.getIntExtra(EXTRA_FIELD_INDEX, 0);
 
+        if (mField == null) {
+            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_failed), false);
+            finishCancel();
+            return;
+        }
+
         recreateEditingUi(ChangeUIRequest.init(mField));
     }
 
@@ -413,7 +419,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return newField;
         }
 
-        private static ChangeUIRequest init(IField field) {
+        private static ChangeUIRequest init(@NonNull IField field) {
             return new ChangeUIRequest(field, ACTIVITY_LOAD);
         }
 
