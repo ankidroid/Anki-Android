@@ -53,6 +53,8 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
 import com.ichi2.utils.Permissions;
@@ -61,9 +63,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import timber.log.Timber;
 
@@ -80,6 +79,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private String mTempCameraImagePath;
     private DisplayMetrics mMetrics = null;
+    private SystemTime mTime = new SystemTime();
 
 
     private int getMaxImageSize() {
@@ -115,7 +115,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             File image;
             File storageDir;
-            String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
+            String timeStamp = TimeUtils.getTimestamp(mTime);
             try {
                 storageDir = mActivity.getCacheDir();
                 image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
