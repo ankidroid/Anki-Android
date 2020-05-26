@@ -106,6 +106,9 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
+import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Permissions;
@@ -206,6 +209,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     /** If we have accepted the "We will show you permissions" dialog, don't show it again on activity rebirth */
     private boolean mClosedWelcomeMessage;
+
+    private Time mTime = new SystemTime();
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -1850,19 +1855,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
         File exportDir = new File(getExternalCacheDir(), "export");
         exportDir.mkdirs();
         File exportPath;
+        String timeStampSuffix = "-" + TimeUtils.getTimestamp(mTime);
         if (filename != null) {
             // filename has been explicitly specified
             exportPath = new File(exportDir, filename);
         } else if (did != null) {
             // filename not explicitly specified, but a deck has been specified so use deck name
-            exportPath = new File(exportDir, getCol().getDecks().get(did).getString("name").replaceAll("\\W+", "_") + ".apkg");
+            exportPath = new File(exportDir, getCol().getDecks().get(did).getString("name").replaceAll("\\W+", "_") + timeStampSuffix + ".apkg");
         } else if (!includeSched) {
             // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
-            exportPath = new File(exportDir, "All Decks.apkg");
+            exportPath = new File(exportDir, "All Decks" + timeStampSuffix + ".apkg");
         } else {
             // full collection export -- use "collection.colpkg"
             File colPath = new File(getCol().getPath());
-            exportPath = new File(exportDir, colPath.getName().replace(".anki2", ".colpkg"));
+            String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
+            exportPath = new File(exportDir, newFileName);
         }
         // add input arguments to new generic structure
         Object[] inputArgs = new Object[5];
