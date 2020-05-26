@@ -19,6 +19,7 @@ package com.ichi2.libanki.template;
 import com.ichi2.anki.RobolectricTest;
 
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -79,5 +80,20 @@ public class TemplateTest extends RobolectricTest {
         assertThat(result, not("{{invalid template}}"));
         //Actual value (may be subject to change).
         assertThat(result, is("\n    \n        Card1 - One<br>\n    \n    \n        Card1 - Two\n    \n"));
+    }
+
+    @Test
+    @Ignore("GitHub: 6284")
+    public void fieldNamesHaveTrailingSpacesIgnored() {
+        //#6284
+        String templateWithSpaces = "{{#IllustrationExample }}Illustration Example: {{IllustrationExample }}{{/IllustrationExample}}";
+
+        HashMap<String, String> context = new HashMap<>();
+        context.put("IllustrationExample", "ilex");
+        Template template = new Template(templateWithSpaces, context);
+
+        String result = template.render();
+
+        assertThat(result, is("Illustration Example: ilex"));
     }
 }
