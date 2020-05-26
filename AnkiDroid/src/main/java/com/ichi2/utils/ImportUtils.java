@@ -57,7 +57,7 @@ public class ImportUtils {
     }
 
     public static boolean isCollectionPackage(String filename) {
-        return filename != null && (FileImporter.hasExtension(filename, "colpkg") || filename.startsWith("collection.apkg"));
+        return filename != null && (filename.toLowerCase().endsWith(".colpkg") || "collection.apkg".equals(filename));
     }
 
     /** @return Whether the file is either a deck, or a collection package */
@@ -259,8 +259,8 @@ public class ImportUtils {
             DialogHandler.storeMessage(handlerMessage);
         }
 
-        public static boolean isDeckPackage(String filename) {
-            return filename != null && hasExtension(filename, "apkg") && !filename.startsWith("collection.apkg");
+        private static boolean isDeckPackage(String filename) {
+            return filename != null && filename.toLowerCase().endsWith(".apkg") && !"collection.apkg".equals(filename);
         }
 
 
