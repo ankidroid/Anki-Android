@@ -76,8 +76,8 @@
     </plurals>
     <string name="reschedule_card_dialog_title">Karte neu planen</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Karte neu planen</item>
-        <item quantity="other">Karten neu planen</item>
+        <item quantity="one">Karte neu terminieren</item>
+        <item quantity="other">Karten neu terminieren</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Aktuelles Intervall: %d Tag</item>
@@ -85,8 +85,8 @@
     </plurals>
     <string name="reschedule_card_dialog_message">Neues Intervall: In x Tagen Lernen:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d Karte neu geplant</item>
-        <item quantity="other">%d Karten neu geplant</item>
+        <item quantity="one">%d Karte neu terminiert</item>
+        <item quantity="other">%d Karten neu terminiert</item>
     </plurals>
     <string name="answering_error_title">Datenbankfehler</string>
     <string name="answering_error_message">Beim Zugriff auf die Datenbank ist ein Fehler aufgetreten. Dies kann an einer defekten Datenbank oder an unzureichendem Speicherplatz liegen.\n\nWenn dies öfter vorkommt, versuchen Sie bitte, die Sammlung zu reparieren oder von einem Backup wiederherzustellen. Klicken Sie dafür auf »Optionen«.\n\nEs könnte aber auch ein AnkiDroid-Fehler sein; bitte melden Sie den Fehler deshalb, damit wir das überprüfen können.</string>
@@ -98,16 +98,16 @@
     <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie »Standard« hinzu</string>
     <string name="custom_study_new_total_new">Neue Karten im Stapel: %d</string>
     <string name="custom_study_rev_total_rev">Fällige Wiederholungen im Stapel: %d</string>
-    <string name="custom_study_new_extend">Limit für neue Karten für heute erhöhen um</string>
-    <string name="custom_study_rev_extend">Limit für Wiederholungen für heute erhöhen um</string>
+    <string name="custom_study_new_extend">Heutiges Limit für neue Karten erhöhen um</string>
+    <string name="custom_study_rev_extend">Heutiges Limit für Wiederholungen erhöhen um</string>
     <string name="custom_study_forgotten">Karten wiederholen, die in den letzten x Tagen vergessen wurden:</string>
     <string name="custom_study_ahead">x Tage im Voraus lernen:</string>
     <string name="custom_study_random">x Karten zufällig aus dem Stapel wählen:</string>
     <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Erstelle neuen Stapel für eine benutzerdefinierte Sitzung&#8230;</string>
-    <string name="importing_collection">Importiere Sammlung&#8230;</string>
-    <string name="import_media_count">Importiere Mediendateien %1$d%%&#8230;</string>
+    <string name="custom_study_rebuild_deck_corrupt">Personalisierter Stapel konnte nicht neu aufgebaut werden</string>
+    <string name="rebuild_custom_study_deck">Personalisierter Stapel wird neu aufgebaut &#8230;</string>
+    <string name="importing_collection">Sammlung wird importiert &#8230;</string>
+    <string name="import_media_count">Mediendateien %1$d%% werden importiert &#8230;</string>
     <string name="import_progress">• Importiere Notizen: %1$d%%\n• Importiere Karten: %2$d%%\n• Nachbearbeitung: %3$d%%</string>
     <string name="import_update_details">%1$d von %2$d bestehenden Notizen aktualisiert.</string>
     <string name="import_update_ignored">Manche Aktualisierungen wurden ignoriert, da der Notiztyp verändert wurde</string>
@@ -115,7 +115,7 @@
     <string name="sd_card_full_title">SD-Karte voll</string>
     <string name="sd_card_almost_full_title">SD-Karte fast voll</string>
     <string name="restore_backup_title">Sicherung wiederherstellen?</string>
-    <string name="restore_backup">Ihre Sammlung wird durch eine ältere ersetzt. Nicht gesicherter Lernfortschritt geht verloren.</string>
+    <string name="restore_backup">Ihre Sammlung wird durch eine ältere Kopie ersetzt. Nicht gespeicherte Lernfortschritte gehen verloren.</string>
     <string name="dialog_cancel">Abbrechen</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_continue">Weiter</string>
@@ -133,14 +133,14 @@
     <!-- Media checking -->
     <string name="check_media_title">Medien überprüfen?</string>
     <string name="check_media_warning">Bei großen Mediensammlungen kann dies lange dauern</string>
-    <string name="check_media_message">Überprüfe Medien&#8230;</string>
+    <string name="check_media_message">Medien werden überprüft &#8230;</string>
     <string name="check_media_acknowledge">Medien überprüft</string>
     <string name="check_media_failed">Überprüfen der Medien gescheitert</string>
     <string name="check_media_invalid">Dateien mit ungültiger Codierung: %d</string>
     <string name="check_media_unused">Dateien im Medien-Ordner, die von keiner Karte benutzt werden: %d</string>
     <string name="check_media_nohave">Dateien, die von Karten benutzt werden, aber im Medien-Ordner fehlen: %d</string>
     <string name="check_media_no_unused_missing">Keine unbenutzten oder fehlenden Dateien gefunden.</string>
-    <string name="check_media_db_updated">Mediendatenbank neu gebaut.</string>
+    <string name="check_media_db_updated">Mediendatenbank neu aufgebaut</string>
     <string name="check_media_delete_unused">Unbenutzte löschen</string>
     <string name="check_media_deleted">Gelöschte Dateien: %d</string>
     <!-- Tags Dialog Options -->
@@ -148,18 +148,18 @@
     <string name="tags_dialog_option_new_cards">Neue</string>
     <string name="tags_dialog_option_due_cards">Fällige</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Suche leere Karten&#8230;</string>
+    <string name="emtpy_cards_finding">Leere Karten werden gesucht &#8230;</string>
     <string name="empty_cards_none">Keine leere Karten</string>
     <string name="empty_cards_count">%d Karten zu löschen</string>
     <string name="empty_cards_deleted">%d Karten gelöscht</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Zugriff auf das Mikrofon nicht möglich.</string>
-    <string name="multimedia_editor_camera_permission_refused">Konnte keine Kamera-Berechtigung erhalten. Funktion wurde deaktiviert.</string>
+    <string name="multimedia_editor_audio_permission_refused">Zugriffsberechtigung für das Mikrofon konnte nicht erlangt werden.</string>
+    <string name="multimedia_editor_camera_permission_refused">Zugriffsberechtigung für die Kamera konnte nicht erlangt werden. Funktion wurde deaktiviert.</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Berechtigung zur Aufnahme von Audio verweigert</string>
+    <string name="multimedia_editor_audio_permission_denied">Berechtigung für Audioaufnahme verweigert</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">Willkommen bei AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid benötigt eine Speichergenehmigung, die wir ausschließlich zur Speicherung Ihrer AnkiDroid-Sammlung, Flashcard Medien und Sicherungen verwenden. Unser Code ist Open-Source, geschrieben von Freiwilligen und vertrauenswürdig von Millionen Menschen.\n\nWenn Sie Fragen haben, besuchen Sie bitte unser In-App-Handbuch oder besuchen Sie unsere Support-Foren.\n\nVielen Dank, dass Sie AnkiDroid ausprobieren!\n—AnkiDroid Entwicklerteam</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid benötigt eine Zugriffsberechtigung für den Speicher, die wir ausschließlich zur Speicherung Ihrer AnkiDroid-Sammlung, Flashcard-Medien und Sicherungen verwenden. Unser Code ist quelloffen, geschrieben von Freiwilligen, und Millionen Menschen vertrauen ihm.\n\nFalls Sie Fragen haben, schauen Sie bitte in unser In-App-Handbuch oder besuchen Sie unsere Supportforen.\n\nVielen Dank, dass Sie AnkiDroid ausprobieren!\n—AnkiDroid-Entwicklerteam</string>
     <string name="mutimedia_editor_assertion_failed">Unbekannter Fehler beim Anzeigen des Erweiterten Editors</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualisiert</string>
@@ -175,7 +175,7 @@
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fehler beim Dekodieren der Daten von Karte</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <string name="deck_options_corrupt">Stapeloptionen konnten nicht verarbeitet werden: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Datenbank gesperrt</string>
     <string name="database_locked_summary">Die AnkiDroid-Datenbank wird von einer anderen Anwendung verwendet. Bitte schließen Sie die andere Anwendung und öffnen Sie AnkiDroid erneut.</string>
@@ -185,5 +185,8 @@
     <string name="no_image_selected">Kein Bild ausgewählt</string>
     <string name="error_selecting_image">Fehler beim Auswählen des Bildes. Bitte lesen Sie das Handbuch. %s</string>
     <string name="error_deleting_image">Fehler beim Löschen des Bildes</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="failed_to_apply_background_image">Hintergrundbild %s konnte nicht angewendet werden</string>
+    <!-- Global Intent handler -->
+    <!-- Also used by Card Browser, not renaming to save translators effort -->
+    <string name="intent_handler_failed_no_storage_permission">Erforderliche Zugriffsberechtigung für den Speicher fehlt. Bitte erteilen Sie diese Zugriffsberechtigung und versuchen Sie Ihre Aktion dann erneut.</string>
 </resources>

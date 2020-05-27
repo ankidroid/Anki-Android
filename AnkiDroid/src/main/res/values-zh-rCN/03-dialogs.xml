@@ -180,4 +180,7 @@
     <string name="error_selecting_image">选择图片时出错。请查看手册。%s</string>
     <string name="error_deleting_image">删除图片时出错</string>
     <string name="failed_to_apply_background_image">未能应用背景图片 %s</string>
+    <!-- Global Intent handler -->
+    <!-- Also used by Card Browser, not renaming to save translators effort -->
+    <string name="intent_handler_failed_no_storage_permission">缺少所需的存储权限。请授予存储权限，然后重试您的操作。</string>
 </resources>

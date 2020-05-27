@@ -79,6 +79,8 @@
     <string name="image_zoom">图片缩放</string>
     <string name="button_size">“显示答案”按钮大小</string>
     <string name="card_browser_font_size">卡片浏览器字体缩放</string>
+    <string name="card_browser_hide_media">在卡牌浏览器中显示文件名</string>
+    <string name="card_browser_hide_media_summary">在卡牌浏览器问题/回答字段中显示媒体文件名</string>
     <string name="col_path">AnkiDroid路径</string>
     <string name="fullscreen_review">全屏显示</string>
     <string name="full_screen_off">关闭</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">启用手势</string>
     <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
+    <string name="gestures_allow_links">忽略链接上的触摸手势</string>
+    <string name="gestures_allow_links_summary">如果按下链接/提示，触摸手势将不会被处理。</string>
     <string name="gestures_swipe_up">向上滑动</string>
     <string name="gestures_swipe_down">向下滑动</string>
     <string name="gestures_swipe_left">向左滑动</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">点击右侧</string>
     <string name="more_scrolling_buttons">电子书阅读器</string>
     <string name="more_scrolling_buttons_summ">也使用 kanji/katakana， emoji/kao-moji 按钮来滚动</string>
+    <string name="card_browser_enable_external_context_menu">“%s” 菜单</string>
+    <string name="card_browser_enable_external_context_menu_summary">全局启用 “%s” 上下文菜单</string>
     <string name="double_scrolling_gap">双滚动</string>
     <string name="double_scrolling_gap_summ">电子阅读器中使用双滚动</string>
     <string name="swipe_sensitivity">滑动灵敏度</string>

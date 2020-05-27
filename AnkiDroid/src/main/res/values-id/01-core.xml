@@ -179,4 +179,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Baca dan tulis ke database AnkiDroid</string>
     <string name="read_write_permission_description">mengakses catatan, kartu, jenis catatan, dan susunan, serta membuat yang baru</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

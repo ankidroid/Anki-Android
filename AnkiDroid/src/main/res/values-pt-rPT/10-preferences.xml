@@ -79,6 +79,8 @@
     <string name="image_zoom">Zoom da imagem</string>
     <string name="button_size">Tamanho dos botões de resposta</string>
     <string name="card_browser_font_size">Dimensionamento do texto no navegador de fichas</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">Diretoria do AnkiDroid</string>
     <string name="fullscreen_review">Modo de ecrã completo</string>
     <string name="full_screen_off">Desligado</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">Ativar gestos</string>
     <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar fichas.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Deslizar para cima</string>
     <string name="gestures_swipe_down">Deslizar para baixo</string>
     <string name="gestures_swipe_left">Deslizar à esquerda</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">Toque à direita</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Também usar os botões kanji/katakana, emoji/kao-moji para fazer scroll</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Scroll duplo</string>
     <string name="double_scrolling_gap_summ">Duplicar a velocidade de scroll com o eReader</string>
     <string name="swipe_sensitivity">Sensibilidade dos gestos</string>

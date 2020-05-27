@@ -79,6 +79,8 @@
     <string name="image_zoom">Képek nagyítása</string>
     <string name="button_size">Válasz gombok mérete</string>
     <string name="card_browser_font_size">Kártya böngésző betűméretezése</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid könyvtár</string>
     <string name="fullscreen_review">Teljes képernyős mód</string>
     <string name="full_screen_off">Kikapcsol</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">Gesztusvezérlés engedélyezése</string>
     <string name="gestures_summ">Gesztusok hozzárendelése olyan műveletekhez, mint a kártyák megválaszolása és szerkesztése.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Felfelé csúsztatás</string>
     <string name="gestures_swipe_down">Lefelé csúsztatás</string>
     <string name="gestures_swipe_left">Balra csúsztatás</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">Jobboldali rész érintése</string>
     <string name="more_scrolling_buttons">e-Olvasó</string>
     <string name="more_scrolling_buttons_summ">Kanji/Katakana használata is, az Emoji/Kao-moji gombok görgetéséhez</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Dupla görgetés</string>
     <string name="double_scrolling_gap_summ">Görgess a kétszeres méretű e-Olvasó méretre</string>
     <string name="swipe_sensitivity">Törlés érzékenysége</string>

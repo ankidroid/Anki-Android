@@ -237,7 +237,7 @@
     <string name="filtered_deck_name">Suodatettu Pakka</string>
     <string name="reminder_title">Älä unohda opiskella tänään!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d kortti kerrattavana %1s :ssa</item>
+        <item quantity="one">%2$d kortti kerrattavana %1$s :ssa</item>
         <item quantity="other">%2$d korttia kerrattavana %1$s :ssa</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->

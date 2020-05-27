@@ -20,19 +20,19 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
-    <string name="text_field_name">Text</string>
-    <string name="extra_field_name">Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
+    <string name="front_field_name"> Лицьовий бік</string>
+    <string name="back_field_name">Зворотний бік</string>
+    <string name="text_field_name">Текст</string>
+    <string name="extra_field_name">Додатково</string>
+    <string name="field_to_ask_front_name">Додати зворотний бік</string>
     <!--Card type-->
-    <string name="card_one_name">Card 1</string>
-    <string name="card_two_name">Card 2</string>
-    <string name="card_cloze_name">Cloze</string>
+    <string name="card_one_name">Картка 1</string>
+    <string name="card_two_name">Картка 2</string>
+    <string name="card_cloze_name">З пропусками</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
-    <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_model_name">Основний</string>
+    <string name="cloze_model_name">З пропусками</string>
+    <string name="basic_typing_model_name">Основний (ввести відповідь)</string>
+    <string name="forward_reverse_model_name">Основний (з оберненою карткою)</string>
+    <string name="forward_optional_reverse_model_name">Основний (з оберненою карткою на вибір)</string>
 </resources>

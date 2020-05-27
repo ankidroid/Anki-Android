@@ -197,4 +197,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Branje in pisanje v podatkovno zbirko AnkiDroid</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

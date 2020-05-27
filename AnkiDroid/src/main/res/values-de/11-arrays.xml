@@ -57,13 +57,13 @@
         <item>Notiz löschen</item>
         <item>Medien abspielen</item>
         <item>Lernen beenden</item>
-        <item>Notiz vorläufig aussetzen</item>
-        <item>Notiz dauerhaft aussetzen</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
+        <item>Notiz aufschieben</item>
+        <item>Notiz ausschließen</item>
+        <item>Rote Flagge umschalten</item>
+        <item>Orange Flagge umschalten</item>
+        <item>Grüne Flagge umschalten</item>
+        <item>Blaue Flagge umschalten</item>
+        <item>Flagge entfernen</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Karte dauerhaft aussetzen</item>

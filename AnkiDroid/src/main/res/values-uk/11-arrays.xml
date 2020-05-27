@@ -49,25 +49,25 @@
         <item>Рекомендована відповідь (зелений)</item>
         <item>Краще, ніж рекомендовано</item>
         <item>Скасувати</item>
-        <item>Редагувати нотатку</item>
-        <item>Міткувати нотатку</item>
+        <item>Редагувати запис</item>
+        <item>Позначити запис</item>
         <item>Пошук виразу</item>
         <item>Приховати картку</item>
-        <item>Відкласти картку</item>
-        <item>Видалити нотатку</item>
+        <item>Призупинити картку</item>
+        <item>Видалити запис</item>
         <item>Відтворити медіа</item>
         <item>Перервати навчання</item>
-        <item>Приховати нотатку</item>
-        <item>Відкласти нотатку</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
+        <item>Відкласти запис</item>
+        <item>Призупинити запис</item>
+        <item>переключити червоний прапорець</item>
+        <item>переключити помаранчевий прапорець</item>
+        <item>переключити зелений прапорець</item>
+        <item>переключити синій прапорець</item>
+        <item>Прибрати прапорець</item>
     </string-array>
     <string-array name="leech_action_labels">
-        <item>Відкласти картку</item>
-        <item>Тільки мітки</item>
+        <item>Призупинити картку</item>
+        <item>Тільки позначки</item>
     </string-array>
     <string-array name="new_order_labels">
         <item>Нові картки у випадковому порядку</item>
@@ -78,7 +78,7 @@
         <item>Випадковий порядок</item>
         <item>Зростаючі інтервали</item>
         <item>Спадні інтервали</item>
-        <item>З найбільшою кількістю ляпсів</item>
+        <item>Найскладніші</item>
         <item>В порядку додавання</item>
         <item>В порядку черги</item>
         <item>Остання додана іде першою</item>
@@ -86,7 +86,7 @@
     </string-array>
     <string-array name="add_to_cur_labels">
         <item>Використовувати поточну колоду</item>
-        <item>Вирішити за типом примітки</item>
+        <item>Вирішувати за типом записів</item>
     </string-array>
     <string-array name="new_spread_labels">
         <item>Змішати нові карти і повторювані</item>

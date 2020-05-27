@@ -79,6 +79,8 @@
     <string name="image_zoom">Bild-Zoom</string>
     <string name="button_size">Größe der Antwortschaltflächen</string>
     <string name="card_browser_font_size">Schriftskalierung in der Kartenübersicht</string>
+    <string name="card_browser_hide_media">Dateinamen in der Kartenübersicht anzeigen</string>
+    <string name="card_browser_hide_media_summary">Mediendateinamen anzeigen in den Frage-/Antwortfeldern der Kartenübersicht</string>
     <string name="col_path">AnkiDroid-Verzeichnis</string>
     <string name="fullscreen_review">Vollbildmodus</string>
     <string name="full_screen_off">Aus</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">Gesten aktivieren</string>
     <string name="gestures_summ">Weise Aktionen, wie zum Beispiel Beantworten oder Bearbeiten der Karten, Gesten zu.</string>
+    <string name="gestures_allow_links">Berührungsgesten auf Weblinks ignorieren</string>
+    <string name="gestures_allow_links_summary">Berührungsgesten werden nicht verarbeitet, falls ein Weblink/Hinweis angetippt wird.</string>
     <string name="gestures_swipe_up">Nach oben wischen</string>
     <string name="gestures_swipe_down">Nach unten wischen</string>
     <string name="gestures_swipe_left">Nach links wischen</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">Rechts antippen</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Auch mit Kanji/Katakana-, Emoji/Kao-moji-Tasten scrollen</string>
+    <string name="card_browser_enable_external_context_menu">»%s«-Menü</string>
+    <string name="card_browser_enable_external_context_menu_summary">Aktiviert global das »%s«-Kontextmenü</string>
     <string name="double_scrolling_gap">Doppeltes scrollen</string>
     <string name="double_scrolling_gap_summ">Auf eReadern mit doppelter Schrittgröße scrollen</string>
     <string name="swipe_sensitivity">Wischempfindlichkeit</string>
@@ -141,9 +147,9 @@
     <string name="select_locale_title">Sprache wählen</string>
     <string name="safe_display">Sicherer Anzeigemodus</string>
     <string name="safe_display_summ">Alle Animationen deaktivieren und Karten mit sichererer Methode darstellen. E-Ink-Geräte können dies benötigen.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">Einzelfeldbearbeitungsmodus deaktivieren</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Erlaubt das Kontextmenü »Lückentext löschen« im Querformat.</string>
     <string name="vertical_centering">Zentriert</string>
     <string name="vertical_centering_summ">Den Inhalt der Karten vertikal zentrieren</string>
     <string name="pref_backup_max">Maximale Anzahl an Sicherungen</string>
@@ -161,11 +167,11 @@
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Anfang des nächsten Tages</string>
     <string name="day_offset_summ">XXX Stunden nach Mitternacht</string>
-    <string name="sched_ver">Experimenteller V2-Zeitplaner</string>
-    <string name="sched_ver_summ">Experimentellen Zeitplaner aktivieren. Fordert Änderungen in einer Richtung bei der nächsten Synchronisation</string>
+    <string name="sched_ver">Experimenteller Terminplaner V2</string>
+    <string name="sched_ver_summ">Experimentellen Terminplaner aktivieren. Erzwingt bei der nächsten Synchronisation Änderungen in einer Richtung</string>
     <string name="sched_ver_toggle_title">Bestätigen</string>
-    <string name="sched_ver_2to1">Dieser Vorgang wird alle bereits im Lernmodus befindlichen Karten zurücksetzen, gefilterte Stapel löschen und die Version des Zeitplaners ändern. Möchten Sie fortfahren?</string>
-    <string name="sched_ver_1to2">Der experimentelle Zeitplaner kann eine inkorrekte Zeitplanung für die Fälligkeit der Karten verursachen. Bitte lesen Sie unbedingt zuerst die entsprechende Dokumentation. Möchten Sie fortfahren?</string>
+    <string name="sched_ver_2to1">Dies wird alle in der Lernphase befindlichen Karten zurücksetzen, gefilterte Stapel löschen und die Version des Terminplaners ändern. Möchten Sie fortfahren?</string>
+    <string name="sched_ver_1to2">Der experimentelle Terminplaner könnte eine falsche Terminierung verursachen. Bitte lesen Sie zuerst die Dokumentation. Möchten Sie fortfahren?</string>
     <string name="pref_keep_screen_on">Bildschirm nicht ausschalten</string>
     <string name="pref_keep_screen_on_summ">Bildschirm-Timeout deaktivieren</string>
     <string name="convert_fen_text">Unterstützung für Schach-Notation</string>
@@ -185,7 +191,7 @@
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Erweiterte Statistik</string>
     <string name="enable_advanced_statistics_title">Erweiterte Statistik aktivieren</string>
-    <string name="enable_advanced_statistics_summ">Für die Prognose in der Statistik-Ansicht zukünftige Wiederholungen simulieren (aktiviert) oder nur schon geplante Wiederholungen benutzen (deaktiviert).</string>
+    <string name="enable_advanced_statistics_summ">Anzeige von Prognosestatistiken, basierend auf einer Berechnung oder Simulation zukünftiger Wiederholungen (aktiviert) oder auf bereits terminierten zukünftigen Wiederholungen (deaktiviert).</string>
     <string name="advanced_forecast_stats_compute_n_days_title">Die ersten n Tage berechnen, den Rest simulieren</string>
     <string name="advanced_forecast_stats_compute_precision_title">Genauigkeit der Berechnung</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title">Zahl der Iterationen der Simulation</string>
@@ -197,7 +203,7 @@
     <string name="custom_sync_server_media_url_title">Medien-Sync-URL</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Änderungen an Stapelgruppen-Optionen beeinflussen mehrere Stapel. Wenn Sie nur den aktuellen Stapel ändern möchten, fügen Sie bitte zuerst eine neue Optionsgruppe hinzu</string>
-    <string name="studyoptions_limit_select_tags">Schlagworte wählen</string>
+    <string name="studyoptions_limit_select_tags">Schlagwörter auswählen</string>
     <!-- Deck configurations -->
     <string name="deck_conf_deck_description">Stapelbeschreibung (nur aktueller Stapel)</string>
     <string name="deck_conf_group">Optionengruppe</string>
@@ -213,7 +219,7 @@
     <string name="deck_conf_steps">Schritte (in Minuten)</string>
     <string name="deck_conf_order">Reihenfolge</string>
     <string name="deck_conf_new_cards_day">Neue Karten/Tag</string>
-    <string name="deck_conf_graduating_ivl">Abschluss-Intervall</string>
+    <string name="deck_conf_graduating_ivl">Intervall bei Abschluss</string>
     <string name="deck_conf_days">XXX Tag(e)</string>
     <string name="deck_conf_easy_ivl">Intervall für einfache Karten</string>
     <string name="deck_conf_start_ease">Anfänglicher Leichtigkeitsbonus</string>

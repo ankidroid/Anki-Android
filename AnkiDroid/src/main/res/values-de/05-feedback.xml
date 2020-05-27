@@ -42,9 +42,9 @@
     <string name="empty_string"></string>
     <string name="error_reporting_choice">Fehlermeldungs-Modus</string>
     <string name="feedback_disclaimer">Hinweis: Es werden keine persönlichen Daten wie Ihre E-Mail-Adresse, Telefonnummer oder IMEI übertragen. Gesendet werden lediglich einige Informationen über Ihr Gerät wie Hersteller, Modell und Android-Version sowie Näheres über die aufgetretenen Fehler selbst.</string>
-    <string name="feedback_title">AnkiDroid Feedback</string>
+    <string name="feedback_title">AnkiDroid-Feedback</string>
     <string name="feedback_default_text">Bitte geben Sie Ihr Feedback bzw. Informationen über die Art der Fehler, über die berichtet werden soll, hier ein.</string>
-    <string name="feedback_auto_toast_text">In AnkiDroid ist ein Problem aufgetreten; ein Bericht wird an die Entwickler gesendet&#8230;</string>
+    <string name="feedback_auto_toast_text">In AnkiDroid ist ein Problem aufgetreten; ein Bericht wird an die Entwickler gesendet &#8230;</string>
     <string name="feedback_manual_toast_text">In AnkiDroid ist ein Problem aufgetreten; ein Bericht wird erstellt&#8230;</string>
     <string name="feedback_copy_debug">Debug&#173;in&#173;for&#173;ma&#173;tio&#173;nen kopieren</string>
     <string name="feedback_report">Berichten</string>

@@ -32,6 +32,6 @@ Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid 
 • Navigation durch Gesten
 • Anpassbar
 • Dynamische Stapel
-• Nacht-Modus
+• Nachtmodus
 • In 27 Sprachen übersetzt
 • Alle vorherigen AnkiDroid-Version können von der Website heruntergeladen werden

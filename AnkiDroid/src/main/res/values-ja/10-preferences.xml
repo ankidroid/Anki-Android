@@ -79,6 +79,8 @@
     <string name="image_zoom">画像の拡大・縮小</string>
     <string name="button_size">解答表示ボタン・回答ボタンのサイズ</string>
     <string name="card_browser_font_size">ブラウザ用フォントサイズ</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroidディレクトリ</string>
     <string name="fullscreen_review">フルスクリーンモード</string>
     <string name="full_screen_off">オフ</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">ジェスチャーを有効にする</string>
     <string name="gestures_summ">回答やカード編集などの操作にジェスチャーを割り当てます</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">上にスワイプ</string>
     <string name="gestures_swipe_down">下にスワイプ</string>
     <string name="gestures_swipe_left">左にスワイプ</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">右をタップ</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">ダブルスクロール</string>
     <string name="double_scrolling_gap_summ">eReader とのスクロールのギャップを 2 倍にする場合、これを有効にします</string>
     <string name="swipe_sensitivity">スワイプ感度</string>

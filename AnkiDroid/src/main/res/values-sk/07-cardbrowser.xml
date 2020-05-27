@@ -95,8 +95,10 @@
     </string-array>
     <string name="card_browser_select_all">Vybrať všetko</string>
     <string name="card_browser_select_none">Nevybrať nič</string>
+    <string name="card_browser_edit_note">Edit note</string>
     <string name="card_browser_interval_new_card">(nové)</string>
     <string name="card_browser_ease_new_card">(nové)</string>
     <string name="card_browser_due_filtered_card">(filtrované)</string>
     <string name="card_browser_interval_learning_card">(novonaučené)</string>
+    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
 </resources>

@@ -68,8 +68,8 @@
         <item quantity="other">%d Stunden %d übrig</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d Stunden %d übrig</item>
-        <item quantity="other">%d Tage %d verbleiben</item>
+        <item quantity="one">%d Tag %d übrig</item>
+        <item quantity="other">%d Tage %d übrig</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -184,5 +184,7 @@
     <string name="template_for_current_card_deleted">Der Kartentyp der aktuellen Karte wurde gelöscht.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid-Datenbank lesen und schreiben</string>
-    <string name="read_write_permission_description">Zugriff auf bereits vorhandene Notizen, Karten, Hinweis-Typen und Stapel, sowie Neuerstellung</string>
+    <string name="read_write_permission_description">Zugriff auf bereits vorhandene Notizen, Karten, Notiztypen und Stapel, sowie deren Neuerstellung</string>
+    <string name="card_browser_label">Kartenübersicht</string>
+    <string name="card_browser_context_menu">Kartenübersicht</string>
 </resources>

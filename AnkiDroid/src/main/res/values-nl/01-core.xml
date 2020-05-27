@@ -185,4 +185,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Lees en schrijf naar de AnkiDroid database</string>
     <string name="read_write_permission_description">toegang tot bestaande notities, kaarten, notitietypen en dekken (ook nieuwe maken)</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

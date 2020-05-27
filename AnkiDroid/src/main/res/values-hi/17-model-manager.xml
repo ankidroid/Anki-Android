@@ -23,7 +23,7 @@
     <string name="model_browser_label">नोटों के प्रकार प्रबंधित करें</string>
     <string name="model_editor_label">फ़ील्ड प्रबंधित करें</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">आप अपने अंतिम मॉडल को मिटा नहीं सकते</string>
     <string name="toast_last_field">नोट प्रकार में कम से कम एक फ़ील्ड होना चाहिए।</string>
     <string name="toast_empty_name">आपको एक नाम दर्ज करना होगा</string>
     <string name="toast_duplicate_field">फ़ील्ड का नाम पहले से उपयोग में है</string>
@@ -46,7 +46,7 @@
     <string name="model_browser_template">पत्ते संपादित करें</string>
     <string name="model_browser_add">नोट प्रकार जोड़ें</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">नोट प्रकार का नाम बदलें</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">फ़ील्ड संपादित करें</string>
     <string name="model_field_editor_add">फ़ील्ड जोड़ें</string>
@@ -55,12 +55,12 @@
     <string name="model_field_editor_rename">फ़ील्ड का नाम बदलें</string>
     <string name="model_field_editor_reposition_menu">फ़ील्ड का स्थान बदलें</string>
     <string name="model_field_editor_reposition">फ़ील्ड का स्थान बदलें (%1$d-%2$d के बीच का मूल्य दर्ज करें)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_toggle_sticky">जोड़ते समय अंतिम इनपुट याद रखें</string>
     <string name="model_field_editor_changing">फ़ील्ड अद्यतित हो रहे हैं</string>
     <string name="model_field_editor_sort_field">इस फ़ील्ड के अनुसार क्रम में रखें</string>
     <string name="model_clone_suffix">प्रतिलिपि</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">आप सुनिश्चित करें कि आप इस नोटों को हटाना चाहते हैं?</string>
     <string name="field_delete_warning">क्या आप सचमुच इस फ़ील्ड को मिटाना चाहते हैं?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">जोड़ें: %1$s </string>

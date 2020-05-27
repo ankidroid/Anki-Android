@@ -197,4 +197,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Skaitykite ir rašykite į „AnkiDroid“ duomenų bazę</string>
     <string name="read_write_permission_description">prisijunkite prie turimų užrašų, kortelių, užrašų tipų ir rinkinių bei kurkite naujus</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

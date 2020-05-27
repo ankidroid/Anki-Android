@@ -93,8 +93,10 @@
     </string-array>
     <string name="card_browser_select_all">Valitse kaikki</string>
     <string name="card_browser_select_none">Älä valitse mitään</string>
+    <string name="card_browser_edit_note">Edit note</string>
     <string name="card_browser_interval_new_card">(uusi)</string>
     <string name="card_browser_ease_new_card">(uusi)</string>
     <string name="card_browser_due_filtered_card">(suodatettu)</string>
     <string name="card_browser_interval_learning_card">(opiskelussa)</string>
+    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
 </resources>

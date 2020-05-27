@@ -74,7 +74,7 @@
     <string name="webview_crash_nonfatal">WebView-Renderer ist abgestürzt. Grund: %s</string>
     <string name="webview_crash_fatal">Schwerer Fehler: WebView Renderer abgestürzt. Grund: %s</string>
     <string name="webview_crash_loop_dialog_title">System-WebView-Rendering-Fehler</string>
-    <string name="webview_crash_loop_dialog_content">System WebView konnte die Karte \'%1$s\' nicht rendern.\n %2$s</string>
+    <string name="webview_crash_loop_dialog_content">System-WebView konnte die Karte »%1$s« nicht rendern.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Frage</item>
@@ -87,7 +87,7 @@
         <item>Notiz</item>
         <item>Frage</item>
         <item>Schlagwörter</item>
-        <item>Fehlschläge</item>
+        <item>Fehler</item>
         <item>Wiederholungen</item>
         <item>Intervall</item>
         <item>Leicht</item>
@@ -157,29 +157,29 @@
     <string name="show_hint">%s anzeigen</string>
     <string name="info_rate">AnkiDroid bewerten</string>
     <string name="col_load_failed">Laden der Sammlung fehlgeschlagen.\nDrücken Sie \"zurück\", um AnkiDroid zu schließen.</string>
-    <string name="import_title">Importiere</string>
+    <string name="import_title">Importieren</string>
     <string name="import_select_title">Zu importierende Datei auswählen</string>
     <string name="import_message_add">Hinzufügen</string>
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
     <string name="import_message_add_confirm">»%s« zu Ihrer Sammlung hinzufügen? Das kann lange dauern</string>
-    <string name="import_log_no_apkg">Dies ist keine gültige Anki-Paket-Datei</string>
+    <string name="import_log_no_apkg">Dies ist keine gültige Anki-Paketdatei</string>
     <string name="import_error_unhandled_request">Importanfrage kann nicht verarbeitet werden</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
+    <string name="import_error_exception">Paket konnte nicht importiert werden\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dateiname »%s« muss auf .apkg oder .colpkg enden</string>
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
-    <string name="import_replacing">Ersetze Sammlung&#8230;</string>
+    <string name="import_replacing">Sammlung wird ersetzt &#8230;</string>
     <string name="import_interrupted">Import unterbrochen</string>
     <string name="export_include_schedule">Zeitabstände einbeziehen</string>
     <string name="export_include_media">Medien einbeziehen</string>
     <string name="confirm_apkg_export">Sammlung als Anki-Paket exportieren?</string>
     <string name="confirm_apkg_export_deck">»%s« als apkg-Datei exportieren?</string>
-    <string name="export_in_progress">Exportiere Anki-Paketdatei&#8230;</string>
+    <string name="export_in_progress">Anki-Paketdatei wird exportiert &#8230;</string>
     <string name="export_successful_title">Anki-Paket senden?</string>
     <string name="export_send_button">Senden</string>
     <string name="export_save_button">In Datei speichern</string>
     <string name="export_send_no_handlers">Keine Anwendungen verfügbar, um apkg zu öffnen. Speichern...</string>
     <string name="export_save_apkg_successful">Anki-Paket erfolgreich gespeichert</string>
-    <string name="export_save_apkg_unsuccessful">Speichern des Anki-Paketes fehlgeschlagen</string>
+    <string name="export_save_apkg_unsuccessful">Anki-Paket konnte nicht gespeichert werden</string>
     <string name="export_successful">Datei \"%s\" wurde exportiert. Möchten Sie sie mit einer anderen App senden?</string>
     <string name="export_email_subject">AnkiDroid exportierte Karteikarten: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -194,7 +194,7 @@
     <string name="select_tts">Vorlesesprache festlegen</string>
     <string name="custom_study">Benutzer&#173;de&#173;fi&#173;nier&#173;tes Lernen</string>
     <string name="more_options">Mehr</string>
-    <string name="dyn_deck_desc">Dies ist ein besonderer Stapel, um außerhalb des normalen Lehrplans zu lernen. Karten werden nach dem Lernen automatisch in ihren ursprünglichen Stapel zurückgeschickt. Beim Löschen dieses Stapels werden alle verbleibenden Karten in ihren ursprünglichen Stapel zurückgeschickt.</string>
+    <string name="dyn_deck_desc">Dies ist ein besonderer Stapel, um außerhalb des normalen Lernplans zu lernen. Karten werden nach dem Wiederholen automatisch in ihren ursprünglichen Stapel zurückgelegt. Beim Löschen dieses Stapels aus der Stapelliste werden alle verbleibenden Karten in ihren ursprünglichen Stapel zurückgelegt.</string>
     <string name="steps_error">Die Schrittanzahl muss größer als 0 sein</string>
     <string name="steps_min_error">Mindestens ein Schritt ist erforderlich</string>
     <string name="sched_end">(Ende)</string>
@@ -232,29 +232,29 @@
          languages which apparently use the other symbol to mean less
          than. -->
     <string name="less_than_time">&lt; %s</string>
-    <string name="decks_rename_exists">Diesen Stapel gibt es schon</string>
+    <string name="decks_rename_exists">Dieser Stapel ist bereits vorhanden</string>
     <string name="decks_rename_filtered_nosubdecks">Ein gefilterter Stapel kann keine Unterstapel enthalten.</string>
     <string name="filtered_deck_name">Gefilterter Stapel</string>
     <string name="reminder_title">Vergessen Sie nicht heute zu lernen!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d Karte in %1$s zu lernen</item>
-        <item quantity="other">%2$d Karten in %1$s zu lernen</item>
+        <item quantity="other">%2$d zu wiederholende Karten in %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fehler beim Teilen der apkg-Datei</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2-Zeitplan muss aktiviert sein, um diese Datei zu importieren.</string>
-    <string name="import_cannot_with_v2">V2-Terminplaner kann keine V1-Decks mit Zeitplan importieren.</string>
+    <string name="import_needs_v2">Terminplaner V2 muss aktiviert sein, um diese Datei zu importieren.</string>
+    <string name="import_cannot_with_v2">Terminplaner V2 kann keine V1-Stapel mit enthaltener Terminierung importieren.</string>
     <string name="export_v2_dummy_note">Diese Datei benötigt eine neuere Version von Anki.</string>
-    <string name="export_v2_forbidden">Bitte wechseln Sie zum V1-Zeitplan, bevor Sie ein einzelnes Deck mit Zeitplanung exportieren.</string>
+    <string name="export_v2_forbidden">Bitte wechseln Sie zum Terminplaner V1, bevor Sie einen einzelnen Stapel  mit Terminierungsinformationen exportieren.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Laden von \'%s\' fehlgeschlagen.</string>
+    <string name="activity_start_failed_load_url">»%s« konnte nicht geladen werden.</string>
     <string name="activity_start_failed">Das System hat keine App installiert, die diese Aktion ausführen kann.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerabilder können groß sein. Sie können Bilder im Medienverzeichnis komprimieren und verkleinern]]></string>
     <string name="no_browser_notification">Kein Browser gefunden, besuchen Sie bitte die Webseite per PC oder Mobil: </string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Wiederhergestellte Karten</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Hintergrund</string>
     <string name="choose_an_image">Bild auswählen</string>
