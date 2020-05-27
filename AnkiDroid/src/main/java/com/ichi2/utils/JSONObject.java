@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class JSONObject extends org.json.JSONObject implements Iterable<String> {
 
-    public static final Object NULL = JSONObject.NULL;
+    public static final Object NULL = org.json.JSONObject.NULL;
 
     public JSONObject() {
         super();
