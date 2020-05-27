@@ -171,6 +171,8 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.3.1"
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'androidx.test.ext:junit:1.1.1'
+    // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
+    debugImplementation 'androidx.fragment:fragment-testing:1.2.4'
 
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation 'com.azimolabs.conditionwatcher:conditionwatcher:0.2'
