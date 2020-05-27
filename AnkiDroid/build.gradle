@@ -20,9 +20,11 @@ android {
         minSdkVersion 16
         //noinspection OldTargetApi
         targetSdkVersion 28
+        multiDexEnabled true
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        // This is a custom class, in androidx to override package-level functions
+        testInstrumentationRunner 'androidx.test.runner.MultiDexJUnitRunner'
 
         // This enables long timeouts required on slow ARM emulators, e.g. Travis
         adbOptions {
@@ -141,6 +143,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
+    implementation "androidx.multidex:multidex:2.0.1"
 
     // May need a resolution strategy for support libs to our versions
     implementation'ch.acra:acra-http:5.5.1'
@@ -175,4 +178,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'org.smali:dexlib2:2.0.3'
 }
