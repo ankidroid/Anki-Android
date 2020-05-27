@@ -65,6 +65,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.multidex.MultiDexApplication;
 import timber.log.Timber;
 import static timber.log.Timber.DebugTree;
 
@@ -137,7 +138,7 @@ import static timber.log.Timber.DebugTree;
         exceptionClassLimit = 1000,
         stacktraceLimit = 1
 )
-public class AnkiDroidApp extends Application {
+public class AnkiDroidApp extends MultiDexApplication {
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
 
