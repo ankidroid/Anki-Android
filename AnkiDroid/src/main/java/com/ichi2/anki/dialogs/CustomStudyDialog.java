@@ -21,6 +21,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import android.text.Editable;
@@ -63,7 +64,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     private static final int CUSTOM_STUDY_NEW = 100;
     private static final int CUSTOM_STUDY_REV = 101;
     private static final int CUSTOM_STUDY_FORGOT = 102;
-    private static final int CUSTOM_STUDY_AHEAD = 103;
+    @VisibleForTesting
+    static final int CUSTOM_STUDY_AHEAD = 103;
     private static final int CUSTOM_STUDY_RANDOM = 104;
     private static final int CUSTOM_STUDY_PREVIEW = 105;
     private static final int CUSTOM_STUDY_TAGS = 106;
@@ -501,7 +503,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         activity.dismissAllDialogFragments();
     }
 
-    private AnkiActivity getAnkiActivity() {
+    protected AnkiActivity getAnkiActivity() {
         return (AnkiActivity) getActivity();
     }
 }
