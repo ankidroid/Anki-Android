@@ -520,6 +520,7 @@ public class NoteEditor extends AnkiActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos));
                 mCurrentDid = mAllDeckIds.get(pos);
+		    updateCardCurrentDid(mCurrentEditedCard);
             }
 
             @Override
