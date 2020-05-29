@@ -26,6 +26,7 @@ env:
     - UNIT_TEST=FALSE # by default we don't run the unit tests, they are run only in specific builds
     - LINT=FALSE # by default we don't lint, they are run only in specific builds
     - FINALIZE_COVERAGE=FALSE # by default we don't finalize coverage, it is done in one specific build
+    - TERM=dumb
   matrix:
    - API=16 ABI=x86 AUDIO=-no-audio LOCALE="ko_KR"
    - API=17 ABI=x86 LOCALE="it_IT"
