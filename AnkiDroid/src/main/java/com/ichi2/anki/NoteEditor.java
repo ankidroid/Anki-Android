@@ -197,8 +197,6 @@ public class NoteEditor extends AnkiActivity {
 
     private String[] mSourceText;
 
-    private boolean mTest;
-
     // A bundle that maps field ords to the text content of that field for use in
     // restoring the Activity.
     private Bundle mSavedFields;
