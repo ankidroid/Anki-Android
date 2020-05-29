@@ -152,6 +152,13 @@ public class SchedV2 extends AbstractSched {
         if (card != null) {
             mCol.log(card);
             mReps += 1;
+            // In upstream, counts are decremented when the card is
+            // gotten; i.e. in _getLrnCard, _getRevCard and
+            // _getNewCard. This can not be done anymore since we use
+            // those methods to pre-fetch the next card. Instead we
+            // decrement the counts here, when the card is returned to
+            // the reviewer.
+            decrementCounts(card);
             card.startTimer();
         }
         return card;
@@ -603,7 +610,7 @@ public class SchedV2 extends AbstractSched {
 
     protected Card _getNewCard() {
         if (_fillNew()) {
-            mNewCount -= 1;
+            // mNewCount -= 1; see decrementCounts()
             return mCol.getCard(mNewQueue.remove());
         }
         return null;
@@ -798,7 +805,7 @@ public class SchedV2 extends AbstractSched {
             if (mLrnQueue.getFirst()[0] < cutoff) {
                 long id = mLrnQueue.remove()[1];
                 Card card = mCol.getCard(id);
-                mLrnCount -= 1;
+                // mLrnCount -= 1; see decrementCounts()
                 return card;
             }
         }
@@ -854,7 +861,7 @@ public class SchedV2 extends AbstractSched {
 
     protected Card _getLrnDayCard() {
         if (_fillLrnDay()) {
-            mLrnCount -= 1;
+            // mLrnCount -= 1; see decrementCounts()
             return mCol.getCard(mLrnDayQueue.remove());
         }
         return null;
@@ -1264,7 +1271,7 @@ public class SchedV2 extends AbstractSched {
 
     protected Card _getRevCard() {
         if (_fillRev()) {
-            mRevCount -= 1;
+            // mRevCount -= 1; see decrementCounts()
             return mCol.getCard(mRevQueue.remove());
         } else {
             return null;

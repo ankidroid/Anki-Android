@@ -403,7 +403,7 @@ public class Sched extends SchedV2 {
             if (mLrnQueue.getFirst()[0] < cutoff) {
                 long id = mLrnQueue.remove()[1];
                 Card card = mCol.getCard(id);
-                mLrnCount -= card.getLeft() / 1000;
+                // mLrnCount -= card.getLeft() / 1000; See decrementCount()
                 return card;
             }
         }
