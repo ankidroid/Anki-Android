@@ -1,5 +1,9 @@
 package com.ichi2.anki;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.Application;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,13 +20,16 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowApplication;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.CheckReturnValue;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
@@ -31,6 +38,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -248,6 +256,28 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("The card flag value should be reflected in the UI", actualFlag, is(1));
     }
 
+    @Test
+    public void startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
+        Application application = ApplicationProvider.getApplicationContext();
+        ShadowApplication app = shadowOf(application);
+        app.denyPermissions(Manifest.permission.READ_EXTERNAL_STORAGE);
+        app.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        Intent inputIntent = new Intent("android.intent.action.PROCESS_TEXT");
+
+        CardBrowser cardBrowser = Robolectric.buildActivity(CardBrowser.class, inputIntent).create().get();
+
+        ShadowActivity shadowActivity = shadowOf(cardBrowser);
+        Intent outputIntent = shadowActivity.getNextStartedActivity();
+        ComponentName component = outputIntent.getComponent();
+
+        assertThat(component, notNullValue());
+        ComponentName componentName = Objects.requireNonNull(component);
+
+        assertThat("Deck Picker currently handles permissions, so should be called", componentName.getClassName(), is("com.ichi2.anki.DeckPicker"));
+        assertThat("Activity should be finishing", cardBrowser.isFinishing());
+        assertThat("Activity should be cancelled as it did nothing", shadowActivity.getResultCode(), is(Activity.RESULT_CANCELED));
+    }
+
 
     private void flagCardForNote(Note n, int flag) {
         Card c = n.cards().get(0);
@@ -258,16 +288,6 @@ public class CardBrowserTest extends RobolectricTest {
 
     private void selectDefaultDeck() {
         getCol().getDecks().select(1);
-    }
-
-
-    private long addDynamicDeck(String name) {
-        return getCol().getDecks().newDyn(name);
-    }
-
-
-    private long addDeck(String deckName) {
-        return getCol().getDecks().id(deckName, true);
     }
 
     private void deleteCardAtPosition(CardBrowser browser, int positionToCorrupt) {

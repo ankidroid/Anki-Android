@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.view.KeyEvent;
 
+import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 
@@ -37,6 +38,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ReviewerKeyboardInputTest {
+
+    @Test
+    public void whenDisplayingQuestionTyping1DoesNothing() {
+        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingQuestion();
+
+        underTest.handleUnicodeKeyPress('1');
+
+        assertThat("Answer should not be displayed", !underTest.didDisplayAnswer());
+        assertThat("Answer should not be performed", !underTest.hasBeenAnswered());
+    }
 
     @Test
     public void whenDisplayingAnswerTyping1AnswersFarLeftButton() {
@@ -190,12 +201,21 @@ public class ReviewerKeyboardInputTest {
     }
 
     @Test
-    public void pressingZShouldUndo() {
-        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
+    public void pressingZShouldUndoIfAvailable() {
+        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(true);
 
         underTest.handleUnicodeKeyPress('z');
 
         assertThat("Undo should be called", underTest.getUndoCalled());
+    }
+
+    @Test
+    public void pressingZShouldNotUndoIfNotAvailable() {
+        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(false);
+
+        underTest.handleUnicodeKeyPress('z');
+
+        assertThat("Undo is not available so should not be called", !underTest.getUndoCalled());
     }
 
     @Test
@@ -205,17 +225,29 @@ public class ReviewerKeyboardInputTest {
         underTest.handleSpacebar();
 
         assertThat("When text field is focused, space should not display answer",
-                !underTest.isDisplayingAnswer());
+                !underTest.didDisplayAnswer());
+    }
+
+    @Test
+    public void pressingUndoDoesNothingIfControlsAreBlocked() {
+        //We pick an arbitrary action to ensure that nothing happens if controls are blocked
+        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingQuestion()
+                .withUndoAvailable(true)
+                .withControlsBlocked(ReviewerUi.ControlBlock.SLOW);
+
+        underTest.handleUnicodeKeyPress('z');
+
+        assertThat("Undo should not be called as control are blocked", !underTest.getUndoCalled());
     }
 
 
     private void assertGamepadButtonAnswers(int keycodeButton, int ease) {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingQuestion();
-        assertThat("Assume: Initially should not display answer", !underTest.isDisplayingAnswer());
+        assertThat("Assume: Initially should not display answer", !underTest.didDisplayAnswer());
 
         underTest.handleGamepadPress(keycodeButton);
 
-        assertThat("Initial button should display answer", underTest.isDisplayingAnswer());
+        assertThat("Initial button should display answer", underTest.didDisplayAnswer());
 
         underTest.displayAnswerForTest();
 
@@ -236,20 +268,34 @@ public class ReviewerKeyboardInputTest {
         private Collection.DismissType mDismissType;
         private boolean mUndoCalled;
         private boolean mReplayAudioCalled;
+        private ControlBlock mControlsAreBlocked = ControlBlock.UNBLOCKED;
+        private boolean mUndoAvailable;
 
+
+        @Override
+        public ControlBlock getControlBlocked() {
+            return mControlsAreBlocked;
+        }
 
         @CheckResult
         public static KeyboardInputTestReviewer displayingAnswer() {
             KeyboardInputTestReviewer keyboardInputTestReviewer = new KeyboardInputTestReviewer();
             KeyboardInputTestReviewer.sDisplayAnswer = true;
+            keyboardInputTestReviewer.mProcessor.setup();
             return keyboardInputTestReviewer;
         }
 
-
+        @CheckResult
         public static KeyboardInputTestReviewer displayingQuestion() {
             KeyboardInputTestReviewer keyboardInputTestReviewer = new KeyboardInputTestReviewer();
             KeyboardInputTestReviewer.sDisplayAnswer = false;
+            keyboardInputTestReviewer.mProcessor.setup();
             return keyboardInputTestReviewer;
+        }
+
+        public KeyboardInputTestReviewer withControlsBlocked(ControlBlock value) {
+            mControlsAreBlocked = value;
+            return this;
         }
 
         public void displayAnswerForTest() {
@@ -267,7 +313,7 @@ public class ReviewerKeyboardInputTest {
             mDisplayAnswer = true;
         }
 
-        public boolean isDisplayingAnswer() { return mDisplayAnswer; }
+        public boolean didDisplayAnswer() { return mDisplayAnswer; }
 
         public void handleUnicodeKeyPress(char unicodeChar) {
             KeyEvent key = mock(KeyEvent.class);
@@ -424,6 +470,21 @@ public class ReviewerKeyboardInputTest {
 
         public boolean getReplayAudioCalled() {
             return mReplayAudioCalled;
+        }
+
+        @Override
+        protected boolean isUndoAvailable() {
+            return mUndoAvailable;
+        }
+
+        public KeyboardInputTestReviewer withUndoAvailable(boolean value) {
+            this.mUndoAvailable = value;
+            return this;
+        }
+
+
+        public boolean hasBeenAnswered() {
+            return mAnswered != null;
         }
     }
 }

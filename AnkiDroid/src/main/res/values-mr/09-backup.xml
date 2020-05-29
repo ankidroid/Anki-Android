@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="backup_deck_no_space_left">Bĕka\'apa jatana kēlēlā nāhī. SD kārḍavara purēsē sthāna śillaka nāhī. Bĕka\'apa sakhōla kamī karā kinvā kāhī itara phāyalī kāḍhūna ṭākā.</string>
+    <string name="sd_space_warning">Āpalyā SD kārḍavarīla %d MB pēkṣā kamī jāgā śillaka āhēta.\n ḍēṭācē nukasāna ṭāḷaṇyāsāṭhī kāhī jāgā.</string>
+    <string name="backup_delete">Bĕka\'apa haṭavita āhē&#8230;</string>
+    <string name="backup_restore">Bĕka\'apamadhūna punarsan̄cayita karā</string>
+    <string name="backup_new_collection">Navina saṅgraha</string>
+    <string name="backup_del_collection">Saṅgraha haṭavā āṇi navīna tayāra karā</string>
+    <string name="backup_del_collection_question">Saṅgraha haṭavāyacē āṇi ēka navīna tayāra karāyacē? Hē āpalyā sarva śikṣaṇa pragatī ḍrŏpa karēla āṇi sarva kārḍa haṭavēla.</string>
+    <string name="backup_full_sync_from_server">Sarvharavarūna pūrṇa samakramaṇa</string>
+    <string name="backup_full_sync_from_server_question">AnkiWeb madhūna āpalē saṅgraha adhilikhita karā hē āpalē antima saṅkālana jhālyāpāsūna āpalyā sarva śikaṇyācyā pragatī āṇi jōḍalēlyā māhitī khālī sōḍēla.</string>
+    <string name="error_handling_title">Truṭī hātāḷaṇī</string>
+    <string name="error_handling_options">Paryāya</string>
+    <string name="backup_retry_opening">Ughaḍaṇyācā prayatna punhā karā</string>
+    <string name="backup_error_menu_repair">Ḍēṭābēsacī durustī karā</string>
+    <string name="backup_repair_deck">Durustī karā</string>
+    <string name="backup_repair_deck_progress">Ḍēṭābēsacī durustī karaṇē&#8230;</string>
+    <string name="backup_error">Truṭī</string>
+    <string name="backup_invalid_file_error">Nivaḍalēlī bĕka\'apa phā\'īla avaidha hōtī</string>
+    <string name="backup_restore_select_title">Punarsan̄cayita karaṇyāsāṭhī bĕka\'apa nivaḍā</string>
+    <string name="backup_restore_no_backups">Yā ḍivhā\'isavara kōṇatēhī bĕka\'apa upalabdha nāhīta āpaṇa āpalyā ḍēskaṭŏpa saṅgaṇakāvara bĕka\'apa asalyāsa, āpalyā AnkiDroid phōlḍaramadhyē tyānnā svataḥ kŏpī.</string>
+    <string name="open_collection_failed_title">Saṅgraha ughaḍalā nāhī</string>
+    <string name="corrupt_db_message">Āpalā saṅgraha dūṣita jhālā āhē.\n\nbĕka\'apamadhūna punarsan̄cayita karaṇyāsāṭhī\"paryāya\" lā sparśa karā kinvā tē kārya karata nasalyāsa, ḍēṭābēsa mĕn\'yu\'ala rī\'ara karaṇyāsāṭhī khālīla sūcanā pahā:\n%1$s</string>
+    <string name="access_collection_failed_message">Āpalyā saṅgrahāta pravēśa karatānā truṭī ālī. Hē nirupadravī bagamuḷē jhālē asāvē, kinvā tyācyāśī kāhī samasyā asū śakatē.\n\n\"paryāya\" baṭaṇa dābūna bĕka\'apamadhūna punhā tapāsaṇyācā prayatna karā kinvā punarsan̄cayita karā. Āpaṇa hā sandēśa pahāṇē surū ṭhēvalyāsa, kr̥payā ēka dōṣa ahavāla dākhala karā:\n%1$s</string>
+    <string name="deck_repair_error">Saṅgraha durusta kēlā jā\'ū śakalā nāhī</string>
+</resources>

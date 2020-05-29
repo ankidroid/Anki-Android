@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="backup_deck_no_space_left">బ్యాకప్ లేదు. SD కార్డ్లో తగినంత స్థలం లేదు. బ్యాకప్ లోతు లేదా కొన్ని ఇతర ఫైళ్లను తొలగించండి.</string>
+    <string name="sd_space_warning">మీ SD కార్డ్లో %d MB స్పేస్ కంటే తక్కువ. \n డేటా నష్టంని నివారించడానికి కొంత స్థలం ఖాళీగా ఉంది.</string>
+    <string name="backup_delete">బ్యాకప్లను తొలగిస్తోంది&#8230;</string>
+    <string name="backup_restore">బ్యాకప్ నుండి పునరుద్ధరించండి</string>
+    <string name="backup_new_collection">సరికొత్త సేకరణ</string>
+    <string name="backup_del_collection">సేకరణను తీసివేసి, క్రొత్తదాన్ని సృష్టించండి</string>
+    <string name="backup_del_collection_question">సేకరణను తొలగించి, క్రొత్తదాన్ని సృష్టించాలా? ఇది అన్ని మీ అభ్యాస పురోగతిని వదలండి మరియు అన్ని కార్డులను తొలగించండి.</string>
+    <string name="backup_full_sync_from_server">సర్వర్ నుండి పూర్తి సమకాలీకరణ</string>
+    <string name="backup_full_sync_from_server_question">AnkiWeb నుండి మీ సేకరణని ఓవర్రైట్ చేయాలా? ఇది మీ అభ్యాస పురోగతిని తగ్గిస్తుంది మరియు మీ చివరి సమకాలీకరణ నుండి సమాచారాన్ని జోడించవచ్చు.</string>
+    <string name="error_handling_title">లోపం నిర్వహణ</string>
+    <string name="error_handling_options">ఎంపికలు</string>
+    <string name="backup_retry_opening">దీన్ని తెరవడానికి మళ్ళీ ప్రయత్నించండి</string>
+    <string name="backup_error_menu_repair">రిపేర్ డేటాబేస్</string>
+    <string name="backup_repair_deck">బాగు చేయు</string>
+    <string name="backup_repair_deck_progress">డేటాబేస్ మరమత్తు&#8230;</string>
+    <string name="backup_error">తప్పు</string>
+    <string name="backup_invalid_file_error">ఎంచుకున్న బ్యాకప్ ఫైల్ చెల్లనిది</string>
+    <string name="backup_restore_select_title">పునరుద్ధరించడానికి బ్యాకప్ను ఎంచుకోండి</string>
+    <string name="backup_restore_no_backups">ఈ పరికరంలో బ్యాకప్లు అందుబాటులో లేవు. మీరు మీ డెస్క్టాప్ కంప్యూటర్లో బ్యాకప్లను కలిగి ఉంటే, మీ AnkiDroid ఫోల్డర్లో వాటిని మానవీయంగా కాపీ చేయండి.</string>
+    <string name="open_collection_failed_title">సేకరణ తెరవబడలేదు</string>
+    <string name="corrupt_db_message">మీ సేకరణ పాడైంది. \n\n బ్యాకప్ నుండి పునరుద్ధరించడానికి \"ఎంపికల\" తిరగండి లేదా అది పనిచేయకపోతే, డేటాబేస్ను మాన్యువల్గా సరిచేయడానికి క్రింది సూచనలను చూడండి: \n%1$s</string>
+    <string name="access_collection_failed_message">మీ సేకరణను ప్రాప్యత చేస్తున్నప్పుడు లోపం సంభవించింది. ఇది ఒక అసహ్యకరమైన బగ్ వలన సంభవించవచ్చు లేదా దానితో సమస్య ఉండవచ్చు. \n\n తనిఖీ డేటాబేస్ తనిఖీ చేయడం ద్వారా బ్యాకప్ నుండి పునరుద్ధరించు లేదా \"ఐచ్ఛికాలు\" బటన్ను నొక్కడం. మీరు ఈ సందేశాన్ని చూడడం కొనసాగితే, దయచేసి ఒక దోష నివేదనను సమర్పించండి: \n%1$s</string>
+    <string name="deck_repair_error">సేకరణ మరమ్మత్తు చేయబడలేదు</string>
+</resources>

@@ -79,6 +79,8 @@
     <string name="image_zoom">Image zoom</string>
     <string name="button_size">Kích thước nút trả lời </string>
     <string name="card_browser_font_size">Thẻ trình duyệt font rộng</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid directory</string>
     <string name="fullscreen_review">Chế độ toàn màn hình</string>
     <string name="full_screen_off">Off</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">Kích hoạt Cử chỉ</string>
     <string name="gestures_summ">Chỉ định các cử chỉ để hành động như trả lời và chỉnh sửa thẻ.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Kéo lên</string>
     <string name="gestures_swipe_down">Kéo xuống</string>
     <string name="gestures_swipe_left">Kéo trái</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">Chạm bên phải</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Cũng sử dung nút kanji/katakana, emoji/kao-moji để di chuyển</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Bấm phím scrolling (chuột giữa) hai lần</string>
     <string name="double_scrolling_gap_summ">bấm hai lần chuột giữa với eReader </string>
     <string name="swipe_sensitivity">Độ nhạy của chạm vuốt</string>

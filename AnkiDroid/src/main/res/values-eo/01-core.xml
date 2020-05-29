@@ -185,4 +185,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Legi kaj skribi al datumbazo de AnkiDroid</string>
     <string name="read_write_permission_description">aliri ekzistajn notojn, kartojn, tipojn de notoj kaj kartarojn kaj krei novajn</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

@@ -79,6 +79,8 @@
     <string name="image_zoom">הגדלת תצוגת התמונות</string>
     <string name="button_size">גודל כפתורי התשובה</string>
     <string name="card_browser_font_size">Card browser font scaling</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">ספריית AnkiDroid</string>
     <string name="fullscreen_review">מצב מסך מלא</string>
     <string name="full_screen_off">Off</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">הפעלת מחוות</string>
     <string name="gestures_summ">שיוך מחוות לפעולות, דוגמת תשובה לשאלות ועריכת כרטיסים.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">החלקת אצבע כלפי מעלה</string>
     <string name="gestures_swipe_down">החלקת אצבע כלפי מטה</string>
     <string name="gestures_swipe_left">החלקת אצבע שמאלה</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">נגיעה בצד ימין</string>
     <string name="more_scrolling_buttons">קורא ספרים אלקטרוני</string>
     <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">גלילה כפולה</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
     <string name="swipe_sensitivity">רגישות להחלקת האצבע</string>

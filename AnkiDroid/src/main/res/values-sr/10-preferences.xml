@@ -79,6 +79,8 @@
     <string name="image_zoom">Зумирање слике</string>
     <string name="button_size">Величина дугмета за одговор</string>
     <string name="card_browser_font_size">Величина фонта прегледача картица</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid directory</string>
     <string name="fullscreen_review">Пуноекрански режим</string>
     <string name="full_screen_off">Off</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">Омогући гестове</string>
     <string name="gestures_summ">Додели гестове за дејства као одговарње и уређивање картица.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Пребацити горе</string>
     <string name="gestures_swipe_down">Пребацити доле</string>
     <string name="gestures_swipe_left">Пребацити лево</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">Куцкање десно</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Користи Канџи/Катакана, Емоџи/Као-моџи јапанску дугмад за проклизавање</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Дупло проклизавање</string>
     <string name="double_scrolling_gap_summ">Удвостручи међупросторе између клизаче на е-Читалацу</string>
     <string name="swipe_sensitivity">Осетљивост пребацивање</string>

@@ -20,7 +20,9 @@ import android.content.Context;
 import android.preference.EditTextPreference;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
+import android.widget.EditText;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -62,7 +64,9 @@ public class StepsPreference extends EditTextPreference {
      */
     private void updateSettings() {
         // Use the number pad but still allow normal text for spaces and decimals.
-        getEditText().setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_CLASS_TEXT);
+        EditText editText = getEditText();
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_CLASS_TEXT);
+        editText.setKeyListener(DigitsKeyListener.getInstance("0123456789 "));
     }
 
 

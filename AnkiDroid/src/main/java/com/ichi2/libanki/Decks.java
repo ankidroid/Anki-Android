@@ -36,10 +36,8 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +57,9 @@ import timber.log.Timber;
         "PMD.MethodNamingConventions","PMD.AvoidReassigningParameters","PMD.SimplifyBooleanReturns"})
 public class Decks {
 
+    //not in libAnki
+    @SuppressWarnings("WeakerAccess")
+    public static final String DECK_SEPARATOR = "::";
 
     public static final String defaultDeck = ""
             + "{"
@@ -105,7 +106,7 @@ public class Decks {
                     + "'order': " + Consts.NEW_CARDS_DUE + ","
                     + "'perDay': 20,"
                     // may not be set on old decks
-                    + "'bury': True"
+                    + "'bury': False"
                 + "},"
                 + "'lapse': {"
                     + "'delays': [10],"
@@ -123,7 +124,7 @@ public class Decks {
                     + "'ivlFct': 1,"
                     + "'maxIvl': 36500,"
                     // may not be set on old decks
-                    + "'bury': True"
+                    + "'bury': False"
                 + "},"
                 + "'maxTaken': 60,"
                 + "'timer': 0,"
@@ -1079,5 +1080,22 @@ public class Decks {
 
     public static boolean isDynamic(JSONObject deck) {
         return deck.getInt("dyn") != 0;
+    }
+
+    /** Retruns the fully qualified name of the subdeck, or null if unavailable */
+    @Nullable
+    public String getSubdeckName(long did, @Nullable String subdeckName) {
+        if (TextUtils.isEmpty(subdeckName)) {
+            return null;
+        }
+        String newName = subdeckName.replaceAll("\"", "");
+        if (TextUtils.isEmpty(newName)) {
+            return null;
+        }
+        JSONObject deck = get(did, false);
+        if (deck == null) {
+            return null;
+        }
+        return deck.get("name") + DECK_SEPARATOR + subdeckName;
     }
 }

@@ -37,6 +37,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
 
 @RunWith(AndroidJUnit4.class)
@@ -88,6 +90,36 @@ public class ImportUtilsTest extends RobolectricTest {
         return cacheFileName;
     }
 
+    @Test
+    public void collectionApkgIsValid() {
+        assertTrue(ImportUtils.isValidPackageName("collection.apkg"));
+    }
+
+    @Test
+    public void collectionColPkgIsValid() {
+        assertTrue(ImportUtils.isValidPackageName("collection.colpkg"));
+    }
+
+    @Test
+    public void deckApkgIsValid() {
+        assertTrue(ImportUtils.isValidPackageName("deckName.apkg"));
+    }
+
+    @Test
+    public void deckColPkgIsValid() {
+        assertTrue(ImportUtils.isValidPackageName("deckName.colpkg"));
+    }
+
+    @Test
+    public void nullIsNotValidPackage() {
+        assertFalse(ImportUtils.isValidPackageName(null));
+    }
+
+    @Test
+    public void docxIsNotValidForImport() {
+        assertFalse(ImportUtils.isValidPackageName("test.docx"));
+    }
+
 
     @CheckResult
     private Intent getValidClipDataUri(String fileName) {
@@ -105,6 +137,7 @@ public class ImportUtilsTest extends RobolectricTest {
     }
 
 
+    @SuppressWarnings("WeakerAccess")
     public static class TestFileImporter extends ImportUtils.FileImporter {
         private String mCacheFileName;
         private final String mFileName;

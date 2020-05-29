@@ -180,10 +180,13 @@
     <string name="database_locked_title">Datumbazo ŝlosita</string>
     <string name="database_locked_summary">La datumbazo de AnkiDroid estas uzata de alia aplikaĵo. Bonvolu fermi la alian aplikaĵon kaj remalfermi AnkiDroid.</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="background_image_applied">Aplikis fonan bildon</string>
+    <string name="background_image_removed">Forigis fonan bildon</string>
+    <string name="no_image_selected">Neniu bildo elektita</string>
+    <string name="error_selecting_image">Eraro dum elekti bildon. Legu la manlibron de uzanto. %s</string>
+    <string name="error_deleting_image">Eraro dum forigi bildon</string>
+    <string name="failed_to_apply_background_image">Fiaskis apliki fonan bildon %s</string>
+    <!-- Global Intent handler -->
+    <!-- Also used by Card Browser, not renaming to save translators effort -->
+    <string name="intent_handler_failed_no_storage_permission">Mankas permeso al konservejo. Donu permeson al konservejo kaj sekve reprovu.</string>
 </resources>

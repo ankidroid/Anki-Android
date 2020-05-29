@@ -183,8 +183,13 @@ public class AbstractFlashcardViewerCommandTest {
 
 
         @Override
-        public boolean getControlBlocked() {
-            return false;
+        public ControlBlock getControlBlocked() {
+            return ControlBlock.UNBLOCKED;
+        }
+
+        @Override
+        public boolean isControlBlocked() {
+            return getControlBlocked() != ControlBlock.UNBLOCKED;
         }
 
         @Override

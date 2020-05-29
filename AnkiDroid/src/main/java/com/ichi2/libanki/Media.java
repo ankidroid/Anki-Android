@@ -665,7 +665,7 @@ public class Media {
         Pair<List<String>, List<String>> result = _changes();
         List<String> added = result.first;
         List<String> removed = result.second;
-        ArrayList<Object[]> media = new ArrayList<>();
+        ArrayList<Object[]> media = new ArrayList<>(added.size() + removed.size());
         for (String f : added) {
             String path = new File(dir(), f).getAbsolutePath();
             long mt = _mtime(path);

@@ -40,12 +40,12 @@
 <resources>
     <string name="statistics_young">Молоді</string>
     <string name="statistics_mature">Зрілі</string>
-    <string name="statistics_young_and_learn">Початі+Вивчаємі</string>
+    <string name="statistics_young_and_learn">Нові і нещодавні</string>
     <string name="statistics_unlearned">Не переглядане</string>
     <string name="statistics_suspended_and_buried">Приховані+Відкладені</string>
-    <string name="statistics_relearn">Перевчити</string>
+    <string name="statistics_relearn">Знову вивчені</string>
     <string name="statistics_learn">Вчити</string>
-    <string name="statistics_cram">Зубріння</string>
+    <string name="statistics_cram">Зазубрені</string>
     <string name="stats_cards">Картки</string>
     <string name="stats_cards_intervals">Картки з заданим інтервалом</string>
     <string name="stats_cumulative_cards">Сукупність карток</string>
@@ -70,9 +70,12 @@
     <string name="stats_answer_type">Тип відповіді</string>
     <string name="stats_today_again_count">Кількість повернень: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; правильно)</string>
-    <string name="stats_today_type_breakdown">Вивчаються: &lt;b&gt;%1$d&lt;/b&gt;, переглянуті: &lt;b&gt;%2$d&lt;/b&gt;, у повторенні: &lt;b&gt;%3$d&lt;/b&gt;, відфільтрованих: &lt;b&gt;%4$d&lt;/b&gt;</string>
-    <string name="stats_today_mature_cards">Правильних відповідей у розвинених картах: %1$d/%2$d (%3$.1f%%)</string>
-    <string name="stats_today_no_mature_cards">Сьогодні не було вивчено жодної розвиненої карти.</string>
+    <string name="stats_today_type_breakdown">Вивчено: &lt;b&gt;%1$d&lt;/b&gt;, 
+повторено : &lt;b&gt;%2$d&lt;/b&gt;, 
+повторно вивчено: &lt;b&gt;%3$d&lt;/b&gt;, 
+відфільтровано: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_mature_cards">Правильних відповідей у закріплених картах: %1$d/%2$d (%3$.1f%%)</string>
+    <string name="stats_today_no_mature_cards">Сьогодні не було вивчено жодної закріпленої картки.</string>
     <string name="stats_overview_forecast_total">Загалом: &lt;b&gt;%1$d&lt;/b&gt; переглядів</string>
     <string name="stats_overview_forecast_average">Пересічно: &lt;b&gt;%1$.1f&lt;/b&gt; перегл./день</string>
     <string name="stats_overview_forecast_due_tomorrow">На завтра: &lt;b&gt;%1$d&lt;/b&gt;</string>

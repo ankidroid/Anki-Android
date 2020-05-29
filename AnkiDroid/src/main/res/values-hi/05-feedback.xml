@@ -42,12 +42,12 @@
     <string name="empty_string"></string>
     <string name="error_reporting_choice">त्रुटि सूचक मोड</string>
     <string name="feedback_disclaimer">अस्वीकरण: हम कोई भी व्यक्तिगत जानकारी जैसे आपका ईमेल पता, फ़ोन नंबर, या अपने फोन IMEI इकट्ठा नहीं करते। हम आपके उपकरण की जानकारी इकट्ठा करते हैं जैसे निर्माता, मॉडल और एंड्रॉइड का संस्करण, और साथ ही सूचित त्रुटियाँ और उनके होने का कारण।</string>
-    <string name="feedback_title">AnkiDroid Feedback</string>
+    <string name="feedback_title">AnkiDroid प्रतिक्रिया</string>
     <string name="feedback_default_text">आप जिन त्रुटियों की सूचना दे रहे हैं उनके स्वरूप पर जानकारी या सुझाव दें।</string>
     <string name="feedback_auto_toast_text">AnkiDroid को एक समस्या का सामना करना पड़ा है; विकासकों को सूचना भेजी जा रही है...</string>
     <string name="feedback_manual_toast_text">AnkiDroid को एक समस्या का सामना करना पड़ा है; सूचना तैयार की जा रही है...</string>
     <string name="feedback_copy_debug">डीबग जानकारी की प्रतिलिपि बनाएँ</string>
     <string name="feedback_report">सूचित करें</string>
     <string name="feedback_report_automatically">स्वतः त्रुटि सूचनाएँ भेजें</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="feedback_no_suitable_app_found">कोई उपयुक्त ऐप नहीं पाया गया</string>
 </resources>

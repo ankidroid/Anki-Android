@@ -92,12 +92,12 @@
     <string name="undo_action_suspend_card">कार्ड को निलंबित</string>
     <string name="undo_action_suspend_note">नोट निलंबित</string>
     <string name="undo_action_delete">नोट हटाएँ</string>
-    <string name="undo_action_delete_multi">delete notes</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_delete_multi">नोट हटाएँ</string>
+    <string name="undo_action_change_deck_multi">डेक बदलें</string>
+    <string name="undo_action_reschedule_card">पुनः शेड्यूल करें</string>
+    <string name="undo_action_reset_card">प्रगति रीसेट करें</string>
+    <string name="undo_action_reposition_card">स्थानांतरित करे </string>
+    <string name="move_all_to_deck">सभी को डेक में ले जाएं</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">डेक का नाम बदलें</string>
     <string name="menu_add">जोड़ें</string>
@@ -111,13 +111,13 @@
     <string name="menu_bury">दफनाना</string>
     <string name="menu_suspend">निलंबित</string>
     <string name="menu_delete_note">नोट हटाएँ</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag">झंडा</string>
+    <string name="menu_flag_card">कार्ड को ध्वजांकित करें</string>
+    <string name="menu_flag_card_zero">कोई झंडा नहीं</string>
+    <string name="menu_flag_card_one">लाल झंडा</string>
+    <string name="menu_flag_card_two">नारंगी झंडा</string>
+    <string name="menu_flag_card_three">हरा झंडा</string>
+    <string name="menu_flag_card_four">नीला झंडा</string>
     <string name="delete_note_message">वास्तव में इस नोट और उसके सभी cards?\n%s को हटाना</string>
     <string name="menu_select">पाठ का चयन करें</string>
     <string name="menu_search">लुकअप में %1$s</string>
@@ -158,7 +158,7 @@
     <string name="studyoptions_congrats_custom">सामान्य समय के बाहर का अध्ययन करने के लिए, कस्टम अध्ययन बटन नीचे क्लिक करें।</string>
     <string name="studyoptions_no_cards_due">कोई कार्ड अभी तक देय नहीं है</string>
     <string name="sd_card_not_mounted">डिवाइस संग्रह माउंट नहीं</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">इस नोट को संपादित करें और कुछ cloze विलोपन जोड़ें। (%1$s)</string>
     <string name="button_sync">सिंक</string>
     <string name="cancel_sync_confirm">क्या आप सिंक्रनाइज़ेशन रद्द करना चाहते हैं?</string>
     <string name="continue_sync">सिंक जारी रखें</string>
@@ -181,8 +181,10 @@
     </plurals>
     <string name="invalid_template">कोई कार्ड जनरेट नहीं किया जा सका</string>
     <string name="card_template_editor_would_delete_note">इस कार्ड प्रकार को निकालने से एक या अधिक नोट्स हटाए जा सकेंगे । कृपया पहले एक नया कार्ड प्रकार बनाएं ।</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">वर्तमान कार्ड का कार्ड प्रकार हटा दिया गया</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">पढ़ें और AnkiDroid डेटाबेस के लिए लिखें</string>
     <string name="read_write_permission_description">मौजूदा नोट्स, कार्ड, नोट प्रकार, और डेक तक पहुंचें, साथ ही नए बनाएं</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

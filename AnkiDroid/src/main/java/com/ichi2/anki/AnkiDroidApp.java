@@ -26,7 +26,9 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Environment;
+import android.os.LocaleList;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +39,7 @@ import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
+import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.exception.ManuallyReportedException;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
@@ -45,7 +48,6 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
-import com.ichi2.utils.WebViewDebugging;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
@@ -190,6 +192,13 @@ public class AnkiDroidApp extends Application {
         ACRA.init(this, acraCoreConfigBuilder);
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        //update base context with preferred app language before attach
+        //possible since API 17, only supported way since API 25
+        //for API < 17 we update the configuration directly
+        super.attachBaseContext(updateContextWithLanguage(base));
+    }
 
     /**
      * On application creation.
@@ -228,7 +237,13 @@ public class AnkiDroidApp extends Application {
             UsageAnalytics.setDryRun(true);
         }
 
-        setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
+        //Stop after analytics and logging are initialised.
+        if (ACRA.isACRASenderServiceProcess()) {
+            Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process");
+            return;
+        }
+
+        CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
         NotificationChannels.setup(getApplicationContext());
 
         // Configure WebView to allow file scheme pages to access cookies.
@@ -268,15 +283,6 @@ public class AnkiDroidApp extends Application {
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
         lbm.registerReceiver(ns, new IntentFilter(NotificationService.INTENT_ACTION));
     }
-
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Preserve the language from the settings, e.g. when the device is rotated
-        setLanguage(getSharedPrefs(this).getString(Preferences.LANGUAGE, ""));
-    }
-
 
 
     /**
@@ -336,23 +342,83 @@ public class AnkiDroidApp extends Application {
         context.getFileStreamPath("ACRA-limiter.json").delete();
     }
 
+    /**
+     *  Returns a Context with the correct, saved language, to be attached using attachBase().
+     *  For old APIs directly sets language using deprecated functions
+     *
+     * @param remoteContext The base context offered by attachBase() to be passed to super.attachBase().
+     *                      Can be modified here to set correct GUI language.
+     */
+    @SuppressWarnings("deprecation")
+    @NonNull
+    public static Context updateContextWithLanguage(@NonNull Context remoteContext) {
+        try {
+            SharedPreferences preferences;
+            //sInstance (returned by getInstance() ) set during application OnCreate()
+            //if getInstance() is null, the method is called during applications attachBaseContext()
+            // and preferences need mBase directly (is provided by remoteContext during attachBaseContext())
+            if (getInstance() != null) {
+                preferences = getSharedPrefs(getInstance().getBaseContext());
+            } else {
+                preferences = getSharedPrefs(remoteContext);
+            }
+            Configuration langConfig = getLanguageConfig(remoteContext.getResources().getConfiguration(), preferences);
+            //API level >= 25: supported since API 17
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                return remoteContext.createConfigurationContext(langConfig);
+            } else {
+                //API level < 25:
+                remoteContext.getResources().updateConfiguration(langConfig, remoteContext.getResources().getDisplayMetrics());
+                return remoteContext;
+            }
+        } catch (Exception e) {
+            Timber.e(e, "failed to update context with new language");
+            //during AnkiDroidApp.attachBaseContext() ACRA is not initialized, so the exception report will not be sent
+            sendExceptionReport(e,"AnkiDroidApp.updateContextWithLanguage");
+            return remoteContext;
+        }
+    }
 
     /**
-     * Sets the user language.
+     *  Creates and returns a new configuration with the chosen GUI language that is saved in the preferences
      *
-     * @param localeCode The locale code of the language to set, system language if empty
+     * @param remoteConfig The configuration of the remote context to set the language for
+     * @param prefs
      */
-    @SuppressWarnings("deprecation") // Tracked as #4729 in github
-    public static void setLanguage(String localeCode) {
-        Configuration config = getInstance().getResources().getConfiguration();
-        Locale newLocale = LanguageUtil.getLocale(localeCode);
-        config.locale = newLocale;
-        getInstance().getResources().updateConfiguration(config, getInstance().getResources().getDisplayMetrics());
+    @SuppressWarnings("deprecation")
+    @NonNull
+    private static Configuration getLanguageConfig(@NonNull Configuration remoteConfig, @NonNull SharedPreferences prefs) {
+        Configuration newConfig = new Configuration(remoteConfig);
+        Locale newLocale = LanguageUtil.getLocale(prefs.getString(Preferences.LANGUAGE, ""), prefs);
+        //API level >=24
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //Build list of locale strings, separated by commas: newLocale as first element
+            String strLocaleList = newLocale.toLanguageTag();
+            //if Anki locale from settings is no equal to system default, add system default as second item
+            //LocaleList must not contain language tags twice, will crash otherwise!
+            if (!strLocaleList.contains(Locale.getDefault().toLanguageTag())) {
+                strLocaleList = strLocaleList + "," + Locale.getDefault().toLanguageTag();
+            }
+
+            LocaleList newLocaleList = LocaleList.forLanguageTags(strLocaleList);
+            //first element of setLocales() is automatically setLocal()
+            newConfig.setLocales(newLocaleList);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                //API level >=17 but <24
+                newConfig.setLocale(newLocale);
+            } else {
+                //Legacy, API level <17
+                newConfig.locale = newLocale;
+            }
+        }
+
+        return newConfig;
     }
 
 
     public static boolean initiateGestures(SharedPreferences preferences) {
-        Boolean enabled = preferences.getBoolean("gestures", false);
+        boolean enabled = preferences.getBoolean("gestures", false);
         if (enabled) {
             int sensitivity = preferences.getInt("swipeSensitivity", 100);
             if (sensitivity != 100) {
@@ -427,12 +493,14 @@ public class AnkiDroidApp extends Application {
      * @return
      */
     public static String getFeedbackUrl() {
+        //TODO actually this can be done by translating "link_help" string for each language when the App is
+        // properly translated
         if (isCurrentLanguage("ja")) {
-            return sInstance.getResources().getString(R.string.link_help_ja);
+            return getAppResources().getString(R.string.link_help_ja);
         } else if (isCurrentLanguage("zh")) {
-            return sInstance.getResources().getString(R.string.link_help_zh);
+            return getAppResources().getString(R.string.link_help_zh);
         } else {
-            return sInstance.getResources().getString(R.string.link_help);
+            return getAppResources().getString(R.string.link_help);
         }
     }
 
@@ -441,12 +509,14 @@ public class AnkiDroidApp extends Application {
      * @return
      */
     public static String getManualUrl() {
+        //TODO actually this can be done by translating "link_manual" string for each language when the App is
+        // properly translated
         if (isCurrentLanguage("ja")) {
-            return sInstance.getResources().getString(R.string.link_manual_ja);
+            return getAppResources().getString(R.string.link_manual_ja);
         } else if (isCurrentLanguage("zh")) {
-            return sInstance.getResources().getString(R.string.link_manual_zh);
+            return getAppResources().getString(R.string.link_manual_zh);
         } else {
-            return sInstance.getResources().getString(R.string.link_manual);
+            return getAppResources().getString(R.string.link_manual);
         }
     }
 

@@ -32,7 +32,7 @@ public class AbstractFlashcardViewerKeyboardInputTest {
 
         underTest.handleKeyPress(KeyEvent.KEYCODE_SPACE);
 
-        assertThat("Space should display answer on any card viewer",  underTest.isDisplayingAnswer());
+        assertThat("Space should display answer on any card viewer",  underTest.didDisplayAnswer());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class AbstractFlashcardViewerKeyboardInputTest {
 
         underTest.handleKeyPress(KeyEvent.KEYCODE_ENTER);
 
-        assertThat("Enter should display answer on any card viewer",  underTest.isDisplayingAnswer());
+        assertThat("Enter should display answer on any card viewer",  underTest.didDisplayAnswer());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class AbstractFlashcardViewerKeyboardInputTest {
 
         underTest.handleKeyPress(KeyEvent.KEYCODE_NUMPAD_ENTER);
 
-        assertThat("NumPad Enter should display answer on any card viewer",  underTest.isDisplayingAnswer());
+        assertThat("NumPad Enter should display answer on any card viewer",  underTest.didDisplayAnswer());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class AbstractFlashcardViewerKeyboardInputTest {
         underTest.handleKeyPress(KeyEvent.KEYCODE_SPACE);
 
         assertThat("When text field is focused, space should not display answer",
-                !underTest.isDisplayingAnswer());
+                !underTest.didDisplayAnswer());
 
     }
 
@@ -87,7 +87,7 @@ public class AbstractFlashcardViewerKeyboardInputTest {
             mDisplayAnswer = true;
         }
 
-        public boolean isDisplayingAnswer() { return mDisplayAnswer; }
+        public boolean didDisplayAnswer() { return mDisplayAnswer; }
 
         public void handleKeyPress(int keycode) {
             //COULD_BE_BETTER: Saves 20 seconds on tests to remove AndroidJUnit4,

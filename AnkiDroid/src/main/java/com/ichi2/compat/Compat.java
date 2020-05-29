@@ -17,6 +17,7 @@
 package com.ichi2.compat;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.os.StatFs;
 import android.speech.tts.TextToSpeech;
 import android.text.Spanned;
@@ -83,5 +84,6 @@ public interface Compat {
     /** TextToSpeech API. {@link Compat#initTtsParams} should be called before calling {@link Compat#speak*/
     Object initTtsParams();
     int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId);
+    long getVersionCode(PackageInfo pInfo);
 }
 

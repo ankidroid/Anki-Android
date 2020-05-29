@@ -62,11 +62,6 @@
                 android:key="useInputTag"
                 android:summary="@string/use_input_tag_summ"
                 android:title="@string/use_input_tag" />
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="fixHebrewText"
-                android:summary="@string/fix_hebrew_text_summ"
-                android:title="@string/fix_hebrew_text" />
             <!-- Workaround for #5533 -->
             <CheckBoxPreference
                 android:defaultValue="false"
@@ -131,6 +126,12 @@
                 android:key="html_javascript_debugging"
                 android:summary="@string/html_javascript_debugging_summ"
                 android:title="@string/html_javascript_debugging"/>
+            <!-- Title and summary are variable, handled in string:
+            card_browser_enable_external_context_menu -->
+            <CheckBoxPreference
+                android:id="@+id/card_browser_external_context_menu"
+                android:defaultValue="true"
+                android:key="card_browser_enable_external_context_menu"/>
         </PreferenceCategory>
 
 

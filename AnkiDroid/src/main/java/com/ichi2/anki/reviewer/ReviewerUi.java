@@ -17,5 +17,21 @@
 package com.ichi2.anki.reviewer;
 
 public interface ReviewerUi {
-    boolean getControlBlocked();
+    /** How to block UI buttons. */
+    enum ControlBlock {
+        /** Buttons are functional*/
+        UNBLOCKED,
+        /**Don't record click; as it's ambiguous whether it would apply to next or previous card.
+         * We expect the next card load quickly, so no need to give visual feedback to user,
+         * which would be considered as flickering. */
+        QUICK,
+        /**Don't record click; as it's ambiguous whether it would apply to next or previous card.
+         * We expect the next card may take time to load, as scheduler needs to recompute its queues;
+         * so we show the button get deactivated. */
+        SLOW
+    }
+    ControlBlock getControlBlocked();
+    boolean isControlBlocked();
+
+    boolean isDisplayingAnswer();
 }

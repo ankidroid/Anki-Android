@@ -60,6 +60,8 @@
     <string name="image_zoom">Image zoom</string>
     <string name="button_size">Answer button size</string>
     <string name="card_browser_font_size">Card browser font scaling</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid directory</string>
     <string name="fullscreen_review">Fullscreen mode</string>
     <string name="full_screen_off">Off</string>
@@ -73,6 +75,8 @@
     </string-array>
     <string name="gestures">Enable gestures</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Swipe up</string>
     <string name="gestures_swipe_down">Swipe down</string>
     <string name="gestures_swipe_left">Swipe left</string>
@@ -84,6 +88,8 @@
     <string name="gestures_tap_right">Touch right</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Double scrolling</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
     <string name="swipe_sensitivity">Swipe sensitivity</string>
@@ -97,10 +103,6 @@
     <string name="automatic_sync_choice">Automatic synchronization</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
-    <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
-    <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
-    <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to\n“%s/fonts/”\n\nYou won’t have to modify your cards.</string>
-    <string name="fix_hebrew_download_font">Download font</string>
     <string name="day_theme">Day theme</string>
     <string name="night_theme">Night theme</string>
     <string name="default_font">Default font</string>

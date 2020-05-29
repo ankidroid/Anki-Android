@@ -226,7 +226,7 @@ public class AnkiStatsTaskHandler {
                         cur.close();
                     }
                 }
-                Resources res = collection.getContext().getResources();
+                Resources res = mTextView.getResources();
                 final String span = res.getQuantityString(R.plurals.in_minutes, minutes, minutes);
                 return res.getQuantityString(R.plurals.studied_cards_today, cards, cards, span);
             } finally {

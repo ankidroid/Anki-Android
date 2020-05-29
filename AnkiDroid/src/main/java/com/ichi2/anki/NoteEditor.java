@@ -32,7 +32,6 @@ import android.os.Bundle;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -289,7 +288,7 @@ public class NoteEditor extends AnkiActivity {
 
     private void displayErrorSavingNote() {
         int errorMessageId = getAddNoteErrorResource();
-        UIUtils.showThemedToast(this, getResources().getString(errorMessageId), true);
+        UIUtils.showThemedToast(this, getResources().getString(errorMessageId), false);
     }
 
 
@@ -303,8 +302,22 @@ public class NoteEditor extends AnkiActivity {
             return R.string.note_editor_no_first_field;
         }
 
+        if (allFieldsHaveContent()) {
+            return R.string.note_editor_no_cards_created_all_fields;
+        }
+
         //Otherwise, display "no cards created".
         return R.string.note_editor_no_cards_created;
+    }
+
+
+    private boolean allFieldsHaveContent() {
+        for (String s : this.getCurrentFieldStrings()) {
+            if (TextUtils.isEmpty(s)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -380,10 +393,7 @@ public class NoteEditor extends AnkiActivity {
 
         View mainView = findViewById(android.R.id.content);
 
-        Toolbar toolbar = mainView.findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
+        enableToolbar(mainView);
 
         mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout);
 

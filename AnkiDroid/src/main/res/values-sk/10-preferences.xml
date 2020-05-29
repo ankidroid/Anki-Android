@@ -79,6 +79,8 @@
     <string name="image_zoom">Priblíženie obrázka</string>
     <string name="button_size">Veľkosť tlačidla pre odpoveď</string>
     <string name="card_browser_font_size">Veľkosť písma v prehliadači kartičiek</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">Adresár AnkiDroid</string>
     <string name="fullscreen_review">Celoobrazovkový režim</string>
     <string name="full_screen_off">Vypnúť</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">Povoliť gestá</string>
     <string name="gestures_summ">Prideliť gestá k akciám ako sú odpoveď či editovanie kartičiek.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Posun hore</string>
     <string name="gestures_swipe_down">Posun dole</string>
     <string name="gestures_swipe_left">Posun doľava</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">Kliknutie vpravo</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Použiť tiež tlačidlá kanji/katakana, emoji/kao-moji pre posúvanie</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Dvojitý posun</string>
     <string name="double_scrolling_gap_summ">Zdvojnásobiť posúvanie s eReader</string>
     <string name="swipe_sensitivity">Citlivosť posunu</string>

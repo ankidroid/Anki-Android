@@ -29,7 +29,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -49,6 +48,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.debug.DatabaseLock;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.StorageAccessException;
@@ -60,7 +60,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.AdvancedStatistics;
 import com.ichi2.libanki.hooks.ChessFilter;
-import com.ichi2.libanki.hooks.HebrewFixFilter;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.Themes;
@@ -101,8 +100,6 @@ interface PreferenceContext {
  */
 public class Preferences extends AppCompatPreferenceActivity implements PreferenceContext, OnSharedPreferenceChangeListener {
 
-    private static final int DIALOG_HEBREW_FONT = 3;
-
     /** Key of the language preference */
     public static final String LANGUAGE = "language";
 
@@ -128,6 +125,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         // Add a home button to the actionbar
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle(getResources().getText(R.string.preferences_title));
     }
 
     private Collection getCol() {
@@ -162,27 +160,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 return true;
         }
         return false;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation") // Tracked as #5019 on github - convert to fragments
-    protected MaterialDialog onCreateDialog(int id) {
-        Resources res = getResources();
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
-        switch (id) {
-            case DIALOG_HEBREW_FONT:
-                builder.title(res.getString(R.string.fix_hebrew_text));
-                builder.content(res.getString(R.string.fix_hebrew_instructions,
-                        CollectionHelper.getCurrentAnkiDroidDirectory(this)));
-                builder.onPositive((dialog, which) -> {
-                        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(
-                                R.string.link_hebrew_font)));
-                        startActivity(intent);
-                    });
-                builder.positiveText(res.getString(R.string.fix_hebrew_download_font));
-                builder.negativeText(R.string.dialog_cancel);
-        }
-        return builder.show();
     }
 
     @Override
@@ -340,6 +317,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     startActivity(i);
                     return true;
                 });
+                // FIXME: The menu is named in the system language (as it's defined in the manifest which may be
+                //  different than the app language
+                CheckBoxPreference cardBrowserContextMenuPreference = (CheckBoxPreference) screen.findPreference(CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY);
+                String menuName = getString(R.string.card_browser_context_menu);
+                cardBrowserContextMenuPreference.setTitle(getString(R.string.card_browser_enable_external_context_menu, menuName));
+                cardBrowserContextMenuPreference.setSummary(getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
+
                 // Make it possible to test crash reporting, but only for DEBUG builds
                 if (BuildConfig.DEBUG) {
                     Timber.i("Debug mode, allowing for test crashes");
@@ -590,14 +574,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         ChessFilter.uninstall(Hooks.getInstance(getApplicationContext()));
                     }
                     break;
-                case "fixHebrewText":
-                    if (((CheckBoxPreference) pref).isChecked()) {
-                        HebrewFixFilter.install(Hooks.getInstance(getApplicationContext()));
-                        showDialog(DIALOG_HEBREW_FONT);
-                    } else {
-                        HebrewFixFilter.uninstall(Hooks.getInstance(getApplicationContext()));
-                    }
-                    break;
                 case "advanced_statistics_enabled":
                     if (((CheckBoxPreference) pref).isChecked()) {
                         AdvancedStatistics.install(Hooks.getInstance(getApplicationContext()));
@@ -742,6 +718,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     builder.show();
                     break;
                 }
+                case CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY:
+                    CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
             }
             // Update the summary text to reflect new value
             updateSummary(pref);
@@ -843,10 +821,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     private void initializeLanguageDialog(PreferenceScreen screen) {
         ListPreference languageSelection = (ListPreference) screen.findPreference(LANGUAGE);
         if (languageSelection != null) {
-            Map<String, String> items = new TreeMap<>();
+            Map<String, String> items = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
             for (String localeCode : LanguageUtil.APP_LANGUAGES) {
                 Locale loc = LanguageUtil.getLocale(localeCode);
-                items.put(loc.getDisplayName(), loc.toString());
+                items.put(loc.getDisplayName(loc), loc.toString());
             }
             CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
             CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
@@ -878,16 +856,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             CheckBoxPreference doubleScrolling = (CheckBoxPreference) screen.findPreference("double_scrolling");
             if (doubleScrolling != null && plugins != null) {
                 plugins.removePreference(doubleScrolling);
-            }
-        }
-
-        PreferenceCategory workarounds = (PreferenceCategory) screen.findPreference("category_workarounds");
-        if (workarounds != null) {
-            CheckBoxPreference fixHebrewText = (CheckBoxPreference) screen.findPreference("fixHebrewText");
-            CompatHelper.removeHiddenPreferences(this.getApplicationContext());
-
-            if (CompatHelper.getSdkVersion() >= 16) {
-                workarounds.removePreference(fixHebrewText);
             }
         }
     }

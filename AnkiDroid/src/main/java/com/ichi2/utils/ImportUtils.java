@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.OpenableColumns;
@@ -19,16 +18,20 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.compat.CompatHelper;
 
+import org.jetbrains.annotations.Contract;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -57,10 +60,13 @@ public class ImportUtils {
         return filename != null && (filename.toLowerCase().endsWith(".colpkg") || "collection.apkg".equals(filename));
     }
 
-    public static boolean isValidPackageName(String filename) {
+    /** @return Whether the file is either a deck, or a collection package */
+    @Contract("null -> false")
+    public static boolean isValidPackageName(@Nullable String filename) {
         return FileImporter.isDeckPackage(filename) || isCollectionPackage(filename);
     }
 
+    @SuppressWarnings("WeakerAccess")
     protected static class FileImporter {
         /**
          * This code is used in multiple places to handle package imports
@@ -91,8 +97,7 @@ public class ImportUtils {
 
             if (intent.getData() == null) {
                 Timber.i("No intent data. Attempting to read clip data.");
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN
-                        || intent.getClipData() == null
+                if (intent.getClipData() == null
                         || intent.getClipData().getItemCount() == 0) {
                     return context.getString(R.string.import_error_unhandled_request);
                 }
@@ -124,7 +129,7 @@ public class ImportUtils {
             //Note: intent.getData() can be null. Use data instead.
 
             // Get the original filename from the content provider URI
-            String errorMessage = null;
+            String errorMessage;
             String filename = getFileNameFromContentProvider(context, data);
 
             // Hack to fix bug where ContentResolver not returning filename correctly
@@ -136,14 +141,20 @@ public class ImportUtils {
                 } else {
                     Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile");
                     AnkiDroidApp.sendExceptionReport(new RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed");
-                    errorMessage = AnkiDroidApp.getAppResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing");
+                    return AnkiDroidApp.getAppResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing");
                 }
             }
 
             if (!isValidPackageName(filename)) {
-                // Don't import if file doesn't have an Anki package extension
-                errorMessage = context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
-            } else if (filename != null) {
+                if (isAnkiDatabase(filename)) {
+                    //.anki2 files aren't supported by Anki Desktop, we should eventually support them, because we can
+                    //but for now, show a "nice" error.
+                    return context.getResources().getString(R.string.import_error_load_imported_database);
+                } else {
+                    // Don't import if file doesn't have an Anki package extension
+                    return context.getResources().getString(R.string.import_error_not_apkg_extension, filename);
+                }
+            } else {
                 // Copy to temporary file
                 filename = ensureValidLength(filename);
                 String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
@@ -156,6 +167,11 @@ public class ImportUtils {
                 }
             }
             return errorMessage;
+        }
+
+
+        private boolean isAnkiDatabase(String filename) {
+            return filename != null && hasExtension(filename, "anki2");
         }
 
 
@@ -246,6 +262,19 @@ public class ImportUtils {
         private static boolean isDeckPackage(String filename) {
             return filename != null && filename.toLowerCase().endsWith(".apkg") && !"collection.apkg".equals(filename);
         }
+
+
+        public static boolean hasExtension(@NonNull String filename, String extension) {
+            String[] fileParts = filename.split("\\.");
+            if (fileParts.length < 2) {
+                return false;
+            }
+            String extensionSegment = fileParts[fileParts.length - 1];
+            //either "apkg", or "apkg (1)".
+            // COULD_BE_BETTE: accepts .apkgaa"
+            return extensionSegment.toLowerCase(Locale.US).startsWith(extension);
+        }
+
 
         /**
          * Check if the InputStream is to a valid non-empty zip file

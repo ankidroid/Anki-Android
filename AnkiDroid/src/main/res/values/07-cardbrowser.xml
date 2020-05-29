@@ -75,8 +75,13 @@
     </string-array>
     <string name="card_browser_select_all">Select all</string>
     <string name="card_browser_select_none">Select none</string>
+    <string name="card_browser_edit_note">Edit note</string>
     <string name="card_browser_interval_new_card">(new)</string>
     <string name="card_browser_ease_new_card">(new)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(learning)</string>
+    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
+    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
+    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_unknown_deck_name">Unknown</string>
 </resources>

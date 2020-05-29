@@ -170,7 +170,7 @@
     <string name="import_message_add_confirm">Přidat \"%s\" do kolekce? To může trvat dlouhou dobu</string>
     <string name="import_log_no_apkg">Toto není platný Anki balíček</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
+    <string name="import_error_exception">Nepodařilo se importovat balíček\n\n%s</string>
     <string name="import_error_not_apkg_extension">Název souboru „%s“ nemá příponu .apkg nebo .colpkg</string>
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
     <string name="import_replacing">Nahrazuji kolekci&#8230;</string>

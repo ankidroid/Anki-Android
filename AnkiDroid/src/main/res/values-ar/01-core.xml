@@ -80,7 +80,7 @@
         <item quantity="other">باقي %d ساعة</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="zero">%d days %d left</item>
+        <item quantity="zero">%d أيام متبقية %d</item>
         <item quantity="one">%d day %d left</item>
         <item quantity="two">%d days %d left</item>
         <item quantity="few">%d days %d left</item>
@@ -205,8 +205,10 @@
     </plurals>
     <string name="invalid_template">لا يمكن إنشاء بطاقة</string>
     <string name="card_template_editor_would_delete_note">سوف يسبب حذف نوع هذه البطاقة حذف ملاحظة أو أكثر. الرجاء انشاء نوع بطاقة جديدة أولاً.</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">تم حذف نوع البطاقة للبطاقة الحالية.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة البيانات أنكيدرويد</string>
     <string name="read_write_permission_description">حصل على ملاحظات، وبطاقات، وأنواع الملاحظات، وشَدّات أوراق، كما يمكن أيضاً إنشاء شَدّات أوراق جديدة.</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

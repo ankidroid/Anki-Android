@@ -79,6 +79,8 @@
     <string name="image_zoom">Увеличение на изображение</string>
     <string name="button_size">Размер на бутона за отговор</string>
     <string name="card_browser_font_size">Мащабиране на шрифта при разглеждане на картите</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">Директория на AnkiDroid</string>
     <string name="fullscreen_review">Режим на цял екран</string>
     <string name="full_screen_off">Изкл.</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">Разреши жестове</string>
     <string name="gestures_summ">Използване на жестове за такива действия като отговор и редактиране на карти.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Натискане нагоре</string>
     <string name="gestures_swipe_down">Натискане надолу</string>
     <string name="gestures_swipe_left">Натискане наляво</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">Натиснете надясно</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Също така използване на канджи/катакана, емоджи/као-моджи бутони за превъртане</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Двойно превъртане</string>
     <string name="double_scrolling_gap_summ">Удвояване на разстоянието при превъртането при е-четци</string>
     <string name="swipe_sensitivity">Чувствителност на натиска</string>

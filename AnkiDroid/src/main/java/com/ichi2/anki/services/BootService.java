@@ -17,6 +17,8 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.Calendar;
 
+import timber.log.Timber;
+
 public class BootService extends BroadcastReceiver {
 
     /**
@@ -29,21 +31,38 @@ public class BootService extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (sWasRun) {
+            Timber.d("BootService - Already run");
             return;
         }
         if (!Permissions.hasStorageAccessPermission(context)) {
+            Timber.w("Boot Service did not execute - no permissions");
             return;
         }
         // There are cases where the app is installed, and we have access, but nothing exist yet
-        if (CollectionHelper.getInstance().getCol(context) == null
-                || CollectionHelper.getInstance().getCol(context).getDecks() == null) {
+        Collection col = getColSafe(context);
+        if (col == null || col.getDecks() == null) {
+            Timber.w("Boot Service did not execute - error loading collection");
             return;
         }
 
+        Timber.i("Executing Boot Service");
         scheduleDeckReminder(context);
         scheduleNotification(context);
         sWasRun = true;
     }
+
+
+    private Collection getColSafe(Context context) {
+        //#6239 - previously would crash if ejecting, we don't want a report if this happens so don't use
+        //getInstance().getColSafe
+        try {
+            return CollectionHelper.getInstance().getCol(context);
+        } catch (Exception e) {
+            Timber.e(e, "Failed to get collection for boot service - possibly media ejecting");
+            return null;
+        }
+    }
+
 
     private void scheduleDeckReminder(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

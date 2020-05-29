@@ -79,6 +79,8 @@
     <string name="image_zoom">圖片縮放</string>
     <string name="button_size">答案按鈕尺寸</string>
     <string name="card_browser_font_size">卡片瀏覽器字體縮放</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid路徑</string>
     <string name="fullscreen_review">全螢幕模式</string>
     <string name="full_screen_off">關閉</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">開啓手勢</string>
     <string name="gestures_summ">替動作設定手勢，像是回答問題和編輯卡片。</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">向上撥動</string>
     <string name="gestures_swipe_down">向下撥動</string>
     <string name="gestures_swipe_left">向左撥動</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">輕觸右邊</string>
     <string name="more_scrolling_buttons">電子書閱讀器</string>
     <string name="more_scrolling_buttons_summ">也使用漢字/片假名，emoji/kao-moji 按鈕來捲動</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">加速捲動</string>
     <string name="double_scrolling_gap_summ">加倍 eReader 的滾動間距</string>
     <string name="swipe_sensitivity">滑動靈敏度</string>

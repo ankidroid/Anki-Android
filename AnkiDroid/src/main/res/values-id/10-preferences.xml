@@ -79,6 +79,8 @@
     <string name="image_zoom">Zoom gambar</string>
     <string name="button_size">Ukuran tombol jawaban</string>
     <string name="card_browser_font_size">Kartu browser penskalaan huruf</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">Direktori AnkiDroid</string>
     <string name="fullscreen_review">Mode layar penuh</string>
     <string name="full_screen_off">Mati</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">Aktifkan gerakan</string>
     <string name="gestures_summ">Menetapkan gerakan-gerakan menjadi tindakan-tindakan seperti menjawab dan mengedit kartu-kartu.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Sapu ke atas</string>
     <string name="gestures_swipe_down">Sapu ke bawah</string>
     <string name="gestures_swipe_left">Sapu ke kiri</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">Sentuh kanan</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Juga gunakan kanji/katakana, emoji/kao-moji tombol untuk bergulir</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">Skroling ganda</string>
     <string name="double_scrolling_gap_summ">Gandakan jarak skroling dengan eReader</string>
     <string name="swipe_sensitivity">Sensitivitas usapan</string>

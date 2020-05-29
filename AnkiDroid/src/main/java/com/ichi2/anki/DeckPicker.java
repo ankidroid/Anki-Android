@@ -106,6 +106,9 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
+import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Permissions;
@@ -137,6 +140,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public static final int RESULT_MEDIA_EJECTED = 202;
     public static final int RESULT_DB_ERROR = 203;
 
+    protected static final String UPGRADE_VERSION_KEY = "lastUpgradeVersion";
 
     /**
      * Available options performed by other activities (request codes for onActivityResult())
@@ -205,6 +209,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     /** If we have accepted the "We will show you permissions" dialog, don't show it again on activity rebirth */
     private boolean mClosedWelcomeMessage;
+
+    private Time mTime = new SystemTime();
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -476,15 +482,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void applyDeckPickerBackground(View view) {
+        //Allow the user to clear data and get back to a good state if they provide an invalid background.
+        if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("deckPickerBackground", false)) {
+            Timber.d("No DeckPicker background preference");
+            view.setBackgroundResource(0);
+            return;
+        }
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
         File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
         if (!imgFile.exists()) {
+            Timber.d("No DeckPicker background image");
             view.setBackgroundResource(0);
         } else {
+            Timber.i("Applying background");
             Drawable drawable = Drawable.createFromPath(imgFile.getAbsolutePath());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                view.setBackground(drawable);
-            }
+            view.setBackground(drawable);
         }
     }
 
@@ -541,9 +553,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     .customView(mDialogEditText, true)
                     .onPositive((dialog, which) -> {
                         String deckName = mDialogEditText.getText().toString();
-                        Timber.i("DeckPicker:: Creating new deck...");
-                        getCol().getDecks().id(deckName, true);
-                        updateDeckList();
+                        createNewDeck(deckName);
                     })
                     .negativeText(R.string.dialog_cancel)
                     .show();
@@ -559,6 +569,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
             addNote();
         });
     }
+
+
+    private void createNewDeck(String deckName) {
+        Timber.i("DeckPicker:: Creating new deck...");
+        getCol().getDecks().id(deckName, true);
+        updateDeckList();
+    }
+
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -996,32 +1014,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // to a version that contains additions to the database integrity check routine that we would
             // like to run on all collections. A missing version number is assumed to be a fresh
             // installation of AnkiDroid and we don't run the check.
-            // FIXME to use new API and change from int to long is very problematic. It's strongly typed in the XML and needs handling
-            // FIXME or it isn't backwards compatible - blows up development and may hurt users
-            int current = VersionUtils.getPkgVersionCode();
+            long current = VersionUtils.getPkgVersionCode();
             Timber.i("Current AnkiDroid version: %s", current);
-            int previous;
-            if (!preferences.contains("lastUpgradeVersion")) {
+            long previous;
+            if (preferences.contains(UPGRADE_VERSION_KEY)) {
+                // Upgrading currently installed app
+                previous = getPreviousVersion(preferences, current);
+            } else {
                 // Fresh install
                 previous = current;
-            } else {
-                try {
-                    previous = preferences.getInt("lastUpgradeVersion", current);
-                    Timber.i("Previous AnkiDroid version: %s", previous);
-                } catch (ClassCastException e) {
-                    // Previous versions stored this as a string.
-                    String s = preferences.getString("lastUpgradeVersion", "");
-                    // The last version of AnkiDroid that stored this as a string was 2.0.2.
-                    // We manually set the version here, but anything older will force a DB
-                    // check.
-                    if ("2.0.2".equals(s)) {
-                        previous = 40;
-                    } else {
-                        previous = 0;
-                    }
-                }
             }
-            preferences.edit().putInt("lastUpgradeVersion", current).apply();
+            preferences.edit().putLong(UPGRADE_VERSION_KEY, current).apply();
 
             // New version, clear out old exception report limits
             AnkiDroidApp.deleteACRALimiterData(this);
@@ -1088,7 +1091,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if ((!skipDbCheck && previous < upgradeDbVersion) || previous < upgradePrefsVersion) {
                 if (previous < upgradePrefsVersion) {
                     Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
-                    CompatHelper.removeHiddenPreferences(this.getApplicationContext());
                     upgradePreferences(previous);
                 }
                 // Integrity check loads asynchronously and then restart deck picker when finished
@@ -1146,6 +1148,32 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    protected long getPreviousVersion(SharedPreferences preferences, long current) {
+        long previous;
+        try {
+            previous = preferences.getLong(UPGRADE_VERSION_KEY, current);
+        } catch (ClassCastException e) {
+            try {
+                // set 20900203 to default value, as it's the latest version that stores integer in shared prefs
+                previous = preferences.getInt(UPGRADE_VERSION_KEY, 20900203);
+            } catch (ClassCastException cce) {
+                // Previous versions stored this as a string.
+                String s = preferences.getString(UPGRADE_VERSION_KEY, "");
+                // The last version of AnkiDroid that stored this as a string was 2.0.2.
+                // We manually set the version here, but anything older will force a DB check.
+                if ("2.0.2".equals(s)) {
+                    previous = 40;
+                } else {
+                    previous = 0;
+                }
+            }
+            Timber.d("Updating shared preferences stored key %s type to long", UPGRADE_VERSION_KEY);
+            // Expected Editor.putLong to be called later to update the value in shared prefs
+            preferences.edit().remove(UPGRADE_VERSION_KEY).apply();
+        }
+        Timber.i("Previous AnkiDroid version: %s", previous);
+        return previous;
+    }
 
     private void upgradePreferences(long previousVersionCode) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
@@ -1704,9 +1732,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     }
                 }
             } else {
-                // Sync was successful!
+                Timber.i("Sync was successful");
                 if (data.data[2] != null && !"".equals(data.data[2])) {
+                    Timber.i("Syncing had additional information");
                     // There was a media error, so show it
+                    // Note: Do not log this data. May contain user email.
                     String message = res.getString(R.string.sync_database_acknowledge) + "\n\n" + data.data[2];
                     showSimpleMessageDialog(message);
                 } else if (data.data.length > 0 && data.data[0] instanceof String
@@ -1715,17 +1745,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     String dataString = (String) data.data[0];
                     switch (dataString) {
                         case "upload":
+                            Timber.i("Full Upload Completed");
                             showSyncLogMessage(R.string.sync_log_uploading_message, syncMessage);
                             break;
                         case "download":
+                            Timber.i("Full Download Completed");
                             showSyncLogMessage(R.string.sync_log_downloading_message, syncMessage);
                             break;
                         default:
+                            Timber.i("Full Sync Completed (Unknown Direction)");
                             showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
                             break;
                     }
                 } else {
-                    // Regular sync completed successfully
+                    Timber.i("Regular sync completed successfully");
                     showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
                 }
                 updateDeckList();
@@ -1822,19 +1855,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
         File exportDir = new File(getExternalCacheDir(), "export");
         exportDir.mkdirs();
         File exportPath;
+        String timeStampSuffix = "-" + TimeUtils.getTimestamp(mTime);
         if (filename != null) {
             // filename has been explicitly specified
             exportPath = new File(exportDir, filename);
         } else if (did != null) {
             // filename not explicitly specified, but a deck has been specified so use deck name
-            exportPath = new File(exportDir, getCol().getDecks().get(did).getString("name").replaceAll("\\W+", "_") + ".apkg");
+            exportPath = new File(exportDir, getCol().getDecks().get(did).getString("name").replaceAll("\\W+", "_") + timeStampSuffix + ".apkg");
         } else if (!includeSched) {
             // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
-            exportPath = new File(exportDir, "All Decks.apkg");
+            exportPath = new File(exportDir, "All Decks" + timeStampSuffix + ".apkg");
         } else {
             // full collection export -- use "collection.colpkg"
             File colPath = new File(getCol().getPath());
-            exportPath = new File(exportDir, colPath.getName().replace(".anki2", ".colpkg"));
+            String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
+            exportPath = new File(exportDir, newFileName);
         }
         // add input arguments to new generic structure
         Object[] inputArgs = new Object[5];
@@ -2094,6 +2129,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @Override
             public void onPostExecute(TaskData result) {
+                Timber.i("Updating deck list UI");
                 hideProgressBar();
                 // Make sure the fragment is visible
                 if (mFragmented) {
@@ -2410,6 +2446,42 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         });
     }
+
+
+    public void createSubdeckDialog() {
+        createSubDeckDialog(mContextMenuDid);
+    }
+
+
+    private void createSubDeckDialog(long did) {
+        final Resources res = getResources();
+        mDialogEditText = new EditText(this);
+        mDialogEditText.setSingleLine();
+        mDialogEditText.setSelection(mDialogEditText.getText().length());
+        new MaterialDialog.Builder(DeckPicker.this)
+                .title(R.string.create_subdeck)
+                .customView(mDialogEditText, true)
+                .positiveText(R.string.dialog_ok)
+                .negativeText(res.getString(R.string.dialog_cancel))
+                .onPositive((dialog, which) -> {
+                    String textValue = mDialogEditText.getText().toString();
+                    String newName = getCol().getDecks().getSubdeckName(did, textValue);
+                    if (newName != null) {
+                        createNewDeck(newName);
+                    } else {
+                        Timber.d("Failed to obtain subdeck name");
+                    }
+                    dismissAllDialogFragments();
+                    mDeckListAdapter.notifyDataSetChanged();
+                    updateDeckList();
+                    if (mFragmented) {
+                        loadStudyOptionsFragment(false);
+                    }
+                })
+                .onNegative((dialog, which) -> dismissAllDialogFragments())
+                .build().show();
+    }
+
 
     @VisibleForTesting
     class CheckDatabaseListener extends CollectionTask.TaskListener {

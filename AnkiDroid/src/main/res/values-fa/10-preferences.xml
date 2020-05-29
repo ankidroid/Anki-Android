@@ -79,6 +79,8 @@
     <string name="image_zoom">بزرگ نمایی عکس</string>
     <string name="button_size">اندازه دکمه پاسخ</string>
     <string name="card_browser_font_size">تغییر اندازه فونت مرورگر کارت</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">مسیر قرارگیری AnkiDroid</string>
     <string name="fullscreen_review">حالت تمام‌صفحه</string>
     <string name="full_screen_off">خاموش</string>
@@ -92,6 +94,8 @@
     </string-array>
     <string name="gestures">فعالسازی حرکات لمسی</string>
     <string name="gestures_summ">استفاده از حرکات و ضربات لمسی برای انجام کارهایی مثل پاسخ دادن و ویرایش کارت‌ها.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">ضربه به سمت بالا</string>
     <string name="gestures_swipe_down">ضربه به سمت پایین</string>
     <string name="gestures_swipe_left">ضربه سمت چپ</string>
@@ -103,6 +107,8 @@
     <string name="gestures_tap_right">به راست ضربه بزنید</string>
     <string name="more_scrolling_buttons">خبرخوان</string>
     <string name="more_scrolling_buttons_summ">از دکمه‌های Kanji/Katakana, Emoji/Kao-moji هم برای پیمایش استفاده کن</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">پیمایش دو برابری</string>
     <string name="double_scrolling_gap_summ">فعال کنید اگر می‌خواهید فاصله پیمایش را در کتابخوان دیجیتالی دو برابر کنید</string>
     <string name="swipe_sensitivity">حساسیت حرکت لمسی</string>

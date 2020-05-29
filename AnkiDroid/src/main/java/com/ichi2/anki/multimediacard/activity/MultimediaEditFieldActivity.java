@@ -27,7 +27,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -91,10 +90,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         setContentView(R.layout.multimedia_edit_field_activity);
         View mainView = findViewById(android.R.id.content);
-        Toolbar toolbar = mainView.findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
+        enableToolbar(mainView);
 
         Intent intent = this.getIntent();
         mField = getFieldFromIntent(intent);
@@ -102,6 +98,12 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         mNote = (IMultimediaEditableNote) intent.getSerializableExtra(EXTRA_WHOLE_NOTE);
 
         mFieldIndex = intent.getIntExtra(EXTRA_FIELD_INDEX, 0);
+
+        if (mField == null) {
+            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_failed), false);
+            finishCancel();
+            return;
+        }
 
         recreateEditingUi(ChangeUIRequest.init(mField));
     }
@@ -417,7 +419,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return newField;
         }
 
-        private static ChangeUIRequest init(IField field) {
+        private static ChangeUIRequest init(@NonNull IField field) {
             return new ChangeUIRequest(field, ACTIVITY_LOAD);
         }
 

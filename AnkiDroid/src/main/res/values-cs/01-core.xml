@@ -122,7 +122,7 @@
     <string name="menu_suspend">Vyřadit</string>
     <string name="menu_delete_note">Odstranit poznámku</string>
     <string name="menu_flag">Příznak</string>
-    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card">Příznak</string>
     <string name="menu_flag_card_zero">Žádný příznak</string>
     <string name="menu_flag_card_one">Červený příznak</string>
     <string name="menu_flag_card_two">Oranžový příznak</string>
@@ -197,4 +197,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Čtení a zápis do AnkiDroid databáze</string>
     <string name="read_write_permission_description">spravovat stávající poznámky, karty, typy poznámek a balíčky, a také vytvářet nové</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>
