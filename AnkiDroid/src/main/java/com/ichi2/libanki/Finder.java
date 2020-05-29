@@ -614,7 +614,6 @@ public class Finder {
         return res;
     }
 
-
     public String _findDeck(String val) {
         // if searching for all decks, skip
         if ("*".equals(val)) {
@@ -632,20 +631,26 @@ public class Finder {
             ids = dids(mCol.getDecks().id(val, false));
         } else {
             // wildcard
-            ids = new ArrayList<>();
-            val = val.replace("*", ".*");
-            val = val.replace("+", "\\+");
-            for (JSONObject d : mCol.getDecks().all()) {
-                String deckName = d.getString("name");
-                deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
-                if (deckName.matches("(?i)" + val)) {
-                    for (long id : dids(d.getLong("id"))) {
-                        if (!ids.contains(id)) {
-                            ids.add(id);
+            try{
+                ids = dids(mCol.getDecks().id(val, false));
+            }catch(Exception e){
+                ids = new ArrayList<>();
+                val = val.replace("*", ".*");
+                val = val.replace("+", "\\+");
+
+                for (JSONObject d : mCol.getDecks().all()) {
+                    String deckName = d.getString("name");
+                    deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
+                    if (deckName.matches("(?i)" + val)) {
+                        for (long id : dids(d.getLong("id"))) {
+                            if (!ids.contains(id)) {
+                                ids.add(id);
+                            }
                         }
                     }
                 }
             }
+
         }
         if (ids == null || ids.size() == 0) {
             return null;
