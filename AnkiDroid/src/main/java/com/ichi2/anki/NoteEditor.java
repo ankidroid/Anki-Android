@@ -379,6 +379,17 @@ public class NoteEditor extends AnkiActivity {
         return fields;
     }
 
+    /**Update Deck ID of current cards.
+     * @param card the card need to update Deck ID.
+     * @Retrun If success, return current Deck ID. Otherwise, return -1.
+     * */
+    private long updateCardCurrentDid(Card card) {
+        if(card == null) {
+            return -1;
+        }
+        card.setDid(mCurrentDid);
+        return mCurrentDid;
+    }
 
     // Finish initializing the activity after the collection has been correctly loaded
     @Override
