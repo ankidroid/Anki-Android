@@ -459,225 +459,355 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>AnkiDroid Changelog</h1>
 </div>
 <div id="content">
-  <div class="sect1">
-    <h2 id="_version_2_10_2_2020_05_14"><a class="anchor" href="#_version_2_10_2_2020_05_14"></a>Version 2.10.1 (2020-05-13)</h2>
-    <div class="sectionbody">
-    <div class="ulist">
-    <ul>
-      <li><p>Fix type answer cards not rendering correctly</p></li>
-      <li><p>Fix type answer card template creation on non-English new installs</p></li>
-      <li><p>Fix frequent full sync caused by incorrect learning card counts</p></li>
-      <li><p>Fix crash importing into fresh install with no storage permission</p></li>
-    </ul>
-    </div>
-    </div>
-  </div>
-  <div class="sect1">
-    <h2 id="_version_2_10_1_2020_05_13"><a class="anchor" href="#_version_2_10_1_2020_05_13"></a>Version 2.10.1 (2020-05-13)</h2>
-    <div class="sectionbody">
-    <div class="ulist">
-    <ul>
-      <li><p>Updated all translations from crowdin translators</p></li>
-      <li><p>Fix crash note editor on rapid back button</p></li>
-      <li><p>Fix crash from incorrect Thai translation</p></li>
-    </ul>
-    </div>
-    </div>
-  </div>
-  <div class="sect1">
-    <h2 id="_version_2_10_2020_05_12"><a class="anchor" href="#_version_2_10_2020_05_12"></a>Version 2.10 (2020-05-12)</h2>
-    <div class="sectionbody">
-    <div class="ulist">
-    <ul>
-      <li><p>Add welcome dialog explaining need for storage permission</p></li>
-      <li><p>Add support for Flags on cards (including flagging by gesture)</p></li>
-      <li><p>Add ability to set background image in Deck Picker</p></li>
-      <li><p>Add localization of standard templates created in fresh install</p></li>
-      <li><p>Add support for card javascript to reload current card programmatically</p></li>
-      <li><p>Add support for restricted learning / classroom devices</p></li>
-      <li><p>Add preference to disable "Extended Text UI" full-screen editor</p></li>
-      <li><p>Add CSS style capability to heavy checkmark and down arrow in card</p></li>
-      <li><p>Add display of current interval on reschedule dialog</p></li>
-      <li><p>Add support for card javascript to answer cards programmatically</p></li>
-      <li><p>Add ability to toggle sticky field in field editor</p></li>
-      <li><p>Improve deck list newline, style, script tag handling in deck descriptions</p></li>
-      <li><p>Improve whiteboard on/off state handling, especially between day/night mode</p></li>
-      <li><p>Improve multi-selection options in CardBrowser</p></li>
-      <li><p>Improve performance (systematic optimization process, lots of improvements!)</p></li>
-      <li><p>Improve handling of erroneous notes (missing fields, improper clozes)</p></li>
-      <li><p>Improve user messaging on network connection failures</p></li>
-      <li><p>Improve counting of suspended/buried cards in advanced statistics</p></li>
-      <li><p>Improve v2 scheduler compatibility with Anki ecosystem</p></li>
-      <li><p>Improve handling / detection of full sync need</p></li>
-      <li><p>Improve Anki compatibility by allowing more field/model/deck name characters</p></li>
-      <li><p>Improve deck list estimated review times with human scale times</p></li>
-      <li><p>Fix text scaling bug in card browser</p></li>
-      <li><p>Fix crash in export while using v2 scheduler</p></li>
-      <li><p>Fix Custom Tabs crash with non-default system web browser</p></li>
-      <li><p>Fix issues with import of packages with long Unicode names</p></li>
-      <li><p>Fix incorrect intervals on lapsed filtered v2 scheduler cards</p></li>
-      <li><p>Fix multimedia editor save/cancel behavior</p></li>
-      <li><p>Fix incorrect button/gesture availability while existing task is still active</p></li>
-      <li><p>Fix type answer crash on invalid characters</p></li>
-      <li><p>Fix cloze references not being recognized in all fields</p></li>
-      <li><p>Fix invalid ability to change deck to a filtered deck</p></li>
-      <li><p>Fix crashes on adding invalid images, audios, and videos</p></li>
-      <li><p>Fix CardBrowser crash after deleting card</p></li>
-      <li><p>Fix crash and help user if no browser detected</p></li>
-      <li><p>Fix Reviewer crash if card not available</p></li>
-      <li><p>Fix crash / improve import of pasted decks</p></li>
-      <li><p>Fix clicking hint field blocks key input in Reviewer</p></li>
-      <li><p>Fix Previewer forgetting which card to show on device rotation</p></li>
-      <li><p>Fix Mathjax/cloze interactions</p></li>
-      <li><p>Fix vertical alignment of touch area in full-screen review</p></li>
-      <li><p>Fix handling of ':::' in deck names</p></li>
-      <li><p>Fix incorrect display of HTML comments in card browser</p></li>
-    </ul>
-    </div>
-    </div>
-  </div>
-  <div class="sect1">
-    <h2 id="_version_2_9_7_2020_04_30"><a class="anchor" href="#_version_2_9_7_2020_04_30"></a>Version 2.9.7 (2020-04-30)</h2>
-    <div class="sectionbody">
-    <div class="ulist">
-    <ul>
-    <li>
-    <p>Fix crash / workaround deck options timer config regression in AnkiDesktop</p>
-    </li>
-    </ul>
-    </div>
-    </div>
-  </div>
-  <div class="sect1">
-    <h2 id="_version_2_9_6_2020_04_03"><a class="anchor" href="#_version_2_9_6_2020_04_03"></a>Version 2.9.6 (2020-04-03)</h2>
-    <div class="sectionbody">
-    <div class="ulist">
-    <ul>
-    <li>
-    <p>Fix multimedia crashes (permissions handling, image add, preview)</p>
-    </li>
-    <li>
-    <p>Fix UI and crashes in database check (user dialog + exception handling)</p>
-    </li>
-    <li>
-    <p>Fix Windows 10 image compatibility issue with image paths</p>
-    </li>
-    <li>
-    <p>Fix AnkiDesktop sync compatibility issue if more than 1000 cards due</p>
-    </li>
-    <li>
-    <p>Fix crash in card browser render</p>
-    </li>
-    <li>
-    <p>Fix parsing of image tags in card browser</p>
-    </li>
-    <li>
-    <p>Fix crash in StudyOptionsFragment</p>
-    </li>
-    <li>
-    <p>Fix issue with deck options group changing on export</p>
-    </li>
-    <li>
-    <p>Fix issue with exports containing unexpected media</p>
-    </li>
-    <li>
-    <p>Fix issue with dynamic decks (crash fix, export fix)</p>
-    </li>
-    <li>
-    <p>Fix high frequency issue "AnkiDroid directory is inaccessible"</p>
-    </li>
-    <li>
-    <p>Fix high frequency WebView (card viewer) crash</p>
-    </li>
-    <li>
-    <p>Add columns to card browser (due, ease, changed, created, edited)</p>
-    </li>
-    <li>
-    <p>Fix card scheduler not respecting maximum intervals</p>
-    </li>
-    <li>
-    <p>Fix card browser spins forever on images or empty strings</p>
-    </li>
-    </ul>
-    </div>
-    </div>
-    </div>
-  <div class="sect1">
-    <h2 id="_version_2_9_5_2020_03_15"><a class="anchor" href="#_version_2_9_5_2020_03_15"></a>Version 2.9.5 (2020-03-15)</h2>
-    <div class="sectionbody">
-    <div class="ulist">
-    <ul>
-    <li>
-    <p>Fix crash rendering card list while updating card browser search</p>
-    </li>
-    <li>
-    <p>Fix case-sensitivity issue with pronunciation words not being found</p>
-    </li>
-    <li>
-    <p>Fix crash caused by auto-sync on startup showing dialog too soon</p>
-    </li>
-    <li>
-    <p>Fix crash on preview of TTS cards showing language selectiond dialog too slowly</p>
-    </li>
-    <li>
-    <p>Fix crash on import if collection not found</p>
-    </li>
-    <li>
-    <p>Fix Anki ecosystem deck configuration issue for Anki Desktop users <= 2.16</p>
-    </li>
-    <li>
-    <p>Fix crash if user attempts to open camera or gallery and no app is available</p>
-    </li>
-    <li>
-    <p>Fix crash building deck reminders while deck is synchronizing</p>
-    </li>
-    <li>
-    <p>Fix crash related to audio recording stop</p>
-    </li>
-    <li>
-    <p>Show helpful messages if import fails because device is out of space</p>
-    </li>
-    <li>
-    <p>Fix crash when taking pictures on devices with Lollipop and older</p>
-    </li>
-    </ul>
-    </div>
-    </div>
-    </div>
-  <div class="sect1">
-    <h2 id="_version_2_9_4_2020_02_18"><a class="anchor" href="#_version_2_9_4_2020_02_18"></a>Version 2.9.4 (2020-02-18)</h2>
-    <div class="sectionbody">
-    <div class="ulist">
-    <ul>
-    <li>
-    <p>Fix crash when fetching pronunciations in note editor</p>
-    </li>
-    <li>
-    <p>Fix issue with pronunciation words not being found</p>
-    </li>
-    <li>
-    <p>Fix crash on startup for users with auto-sync on startup</p>
-    </li>
-    <li>
-    <p>Fix crash on deck import when app is in background</p>
-    </li>
-    <li>
-    <p>Fix crash for users of Google Chrome Canary</p>
-    </li>
-    <li>
-    <p>Fix crash when adding certain audio clips</p>
-    </li>
-    <li>
-    <p>Fix crash related to fetching Sound metadata</p>
-    </li>
-    <li>
-    <p>Fix issue where audio plays twice</p>
-    </li>
-    </ul>
-    </div>
-    </div>
-    </div>
-    <div class="sect1">
+<div class="sect1">
+<h2 id="_version_2_10_3_2020_05_29"><a class="anchor" href="#_version_2_10_3_2020_05_29"></a>Version 2.10.3 (2020-05-29)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Fix crash on no permissions on Card Browser system text menu entry</p>
+</li>
+<li>
+<p>Fix crash in widget if external storage unmounts</p>
+</li>
+<li>
+<p>Fix crash on device reboot if no permissions</p>
+</li>
+<li>
+<p>Fix crash if deck picker background image too large</p>
+</li>
+<li>
+<p>Fix crash in tags dialog</p>
+</li>
+<li>
+<p>Fix bad data generated for null objects (Anki compatability)</p>
+</li>
+<li>
+<p>Details here: <a href="https://github.com/ankidroid/Anki-Android/milestone/21?closed=1" class="bare">https://github.com/ankidroid/Anki-Android/milestone/21?closed=1</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_10_2_2020_05_14"><a class="anchor" href="#_version_2_10_2_2020_05_14"></a>Version 2.10.2 (2020-05-14)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Fix type answer cards not rendering correctly</p>
+</li>
+<li>
+<p>Fix type answer card template creation on non-English new installs</p>
+</li>
+<li>
+<p>Fix frequent full sync caused by incorrect learning card counts</p>
+</li>
+<li>
+<p>Fix crash importing into fresh install with no storage permission</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_10_1_2020_05_13"><a class="anchor" href="#_version_2_10_1_2020_05_13"></a>Version 2.10.1 (2020-05-13)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Updated all translations from crowdin translators</p>
+</li>
+<li>
+<p>Fix crash note editor on rapid back button</p>
+</li>
+<li>
+<p>Fix crash from incorrect Thai translation</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_10_2020_05_12"><a class="anchor" href="#_version_2_10_2020_05_12"></a>Version 2.10 (2020-05-12)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Add welcome dialog explaining need for storage permission</p>
+</li>
+<li>
+<p>Add support for Flags on cards (including flagging by gesture)</p>
+</li>
+<li>
+<p>Add ability to set background image in Deck Picker</p>
+</li>
+<li>
+<p>Add localization of standard templates created in fresh install</p>
+</li>
+<li>
+<p>Add support for card javascript to reload current card programmatically</p>
+</li>
+<li>
+<p>Add support for restricted learning / classroom devices</p>
+</li>
+<li>
+<p>Add preference to disable "Extended Text UI" full-screen editor</p>
+</li>
+<li>
+<p>Add CSS style capability to heavy checkmark and down arrow in card</p>
+</li>
+<li>
+<p>Add display of current interval on reschedule dialog</p>
+</li>
+<li>
+<p>Add support for card javascript to answer cards programmatically</p>
+</li>
+<li>
+<p>Add ability to toggle sticky field in field editor</p>
+</li>
+<li>
+<p>Improve deck list newline, style, script tag handling in deck descriptions</p>
+</li>
+<li>
+<p>Improve whiteboard on/off state handling, especially between day/night mode</p>
+</li>
+<li>
+<p>Improve multi-selection options in CardBrowser</p>
+</li>
+<li>
+<p>Improve performance (systematic optimization process, lots of improvements!)</p>
+</li>
+<li>
+<p>Improve handling of erroneous notes (missing fields, improper clozes)</p>
+</li>
+<li>
+<p>Improve user messaging on network connection failures</p>
+</li>
+<li>
+<p>Improve counting of suspended/buried cards in advanced statistics</p>
+</li>
+<li>
+<p>Improve v2 scheduler compatibility with Anki ecosystem</p>
+</li>
+<li>
+<p>Improve handling / detection of full sync need</p>
+</li>
+<li>
+<p>Improve Anki compatibility by allowing more field/model/deck name characters</p>
+</li>
+<li>
+<p>Improve deck list estimated review times with human scale times</p>
+</li>
+<li>
+<p>Fix text scaling bug in card browser</p>
+</li>
+<li>
+<p>Fix crash in export while using v2 scheduler</p>
+</li>
+<li>
+<p>Fix Custom Tabs crash with non-default system web browser</p>
+</li>
+<li>
+<p>Fix issues with import of packages with long Unicode names</p>
+</li>
+<li>
+<p>Fix incorrect intervals on lapsed filtered v2 scheduler cards</p>
+</li>
+<li>
+<p>Fix multimedia editor save/cancel behavior</p>
+</li>
+<li>
+<p>Fix incorrect button/gesture availability while existing task is still active</p>
+</li>
+<li>
+<p>Fix type answer crash on invalid characters</p>
+</li>
+<li>
+<p>Fix cloze references not being recognized in all fields</p>
+</li>
+<li>
+<p>Fix invalid ability to change deck to a filtered deck</p>
+</li>
+<li>
+<p>Fix crashes on adding invalid images, audios, and videos</p>
+</li>
+<li>
+<p>Fix CardBrowser crash after deleting card</p>
+</li>
+<li>
+<p>Fix crash and help user if no browser detected</p>
+</li>
+<li>
+<p>Fix Reviewer crash if card not available</p>
+</li>
+<li>
+<p>Fix crash / improve import of pasted decks</p>
+</li>
+<li>
+<p>Fix clicking hint field blocks key input in Reviewer</p>
+</li>
+<li>
+<p>Fix Previewer forgetting which card to show on device rotation</p>
+</li>
+<li>
+<p>Fix Mathjax/cloze interactions</p>
+</li>
+<li>
+<p>Fix vertical alignment of touch area in full-screen review</p>
+</li>
+<li>
+<p>Fix handling of ':::' in deck names</p>
+</li>
+<li>
+<p>Fix incorrect display of HTML comments in card browser</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_9_7_2020_04_30"><a class="anchor" href="#_version_2_9_7_2020_04_30"></a>Version 2.9.7 (2020-04-30)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Fix crash / workaround deck options timer config regression in AnkiDesktop</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_9_6_2020_04_03"><a class="anchor" href="#_version_2_9_6_2020_04_03"></a>Version 2.9.6 (2020-04-03)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Fix multimedia crashes (permissions handling, image add, preview)</p>
+</li>
+<li>
+<p>Fix UI and crashes in database check (user dialog + exception handling)</p>
+</li>
+<li>
+<p>Fix Windows 10 image compatibility issue with image paths</p>
+</li>
+<li>
+<p>Fix AnkiDesktop sync compatibility issue if more than 1000 cards due</p>
+</li>
+<li>
+<p>Fix crash in card browser render</p>
+</li>
+<li>
+<p>Fix parsing of image tags in card browser</p>
+</li>
+<li>
+<p>Fix crash in StudyOptionsFragment</p>
+</li>
+<li>
+<p>Fix issue with deck options group changing on export</p>
+</li>
+<li>
+<p>Fix issue with exports containing unexpected media</p>
+</li>
+<li>
+<p>Fix issue with dynamic decks (crash fix, export fix)</p>
+</li>
+<li>
+<p>Fix high frequency issue "AnkiDroid directory is inaccessible"</p>
+</li>
+<li>
+<p>Fix high frequency WebView (card viewer) crash</p>
+</li>
+<li>
+<p>Add columns to card browser (due, ease, changed, created, edited)</p>
+</li>
+<li>
+<p>Fix card scheduler not respecting maximum intervals</p>
+</li>
+<li>
+<p>Fix card browser spins forever on images or empty strings</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_9_5_2020_03_15"><a class="anchor" href="#_version_2_9_5_2020_03_15"></a>Version 2.9.5 (2020-03-15)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Fix crash rendering card list while updating card browser search</p>
+</li>
+<li>
+<p>Fix case-sensitivity issue with pronunciation words not being found</p>
+</li>
+<li>
+<p>Fix crash caused by auto-sync on startup showing dialog too soon</p>
+</li>
+<li>
+<p>Fix crash on preview of TTS cards showing language selectiond dialog too slowly</p>
+</li>
+<li>
+<p>Fix crash on import if collection not found</p>
+</li>
+<li>
+<p>Fix Anki ecosystem deck configuration issue for Anki Desktop users &#8656; 2.16</p>
+</li>
+<li>
+<p>Fix crash if user attempts to open camera or gallery and no app is available</p>
+</li>
+<li>
+<p>Fix crash building deck reminders while deck is synchronizing</p>
+</li>
+<li>
+<p>Fix crash related to audio recording stop</p>
+</li>
+<li>
+<p>Show helpful messages if import fails because device is out of space</p>
+</li>
+<li>
+<p>Fix crash when taking pictures on devices with Lollipop and older</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_9_4_2020_02_18"><a class="anchor" href="#_version_2_9_4_2020_02_18"></a>Version 2.9.4 (2020-02-18)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Fix crash when fetching pronunciations in note editor</p>
+</li>
+<li>
+<p>Fix issue with pronunciation words not being found</p>
+</li>
+<li>
+<p>Fix crash on startup for users with auto-sync on startup</p>
+</li>
+<li>
+<p>Fix crash on deck import when app is in background</p>
+</li>
+<li>
+<p>Fix crash for users of Google Chrome Canary</p>
+</li>
+<li>
+<p>Fix crash when adding certain audio clips</p>
+</li>
+<li>
+<p>Fix crash related to fetching Sound metadata</p>
+</li>
+<li>
+<p>Fix issue where audio plays twice</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_version_2_9_3_2020_02_09"><a class="anchor" href="#_version_2_9_3_2020_02_09"></a>Version 2.9.3 (2020-02-09)</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -1857,7 +1987,7 @@ essentially rewritten from scratch to be compatible with the new Anki Desktop v2
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-02 21:06:39 UTC
+Last updated 2020-05-29 16:01:02 -0500
 </div>
 </div>
 </body>
