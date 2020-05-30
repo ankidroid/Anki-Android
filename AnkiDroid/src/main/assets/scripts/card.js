@@ -99,6 +99,33 @@ function reloadPage() {
     window.location.href = "signal:reload_card_html";
 }
 
+// Mark current card
+function markCard() {
+    window.location.href = "signal:mark_current_card";
+}
+
+// Get new card, learn card, review card count in ankidroid webview. It should be accessible via javascript
+function CardCount(newCount, lrnCount, revCount) {
+    window.newCountVar = newCount;
+    window.lrnCountVar = lrnCount;
+    window.revCountVar = revCount;
+}
+
+// Get Current Deck Name
+function DeckName(title) {
+   window.title = title;
+}
+
+// Get estimated time
+function getETA(eta) {
+   window.eta = eta;
+}
+
+// Card Mark
+function CardMark(mark) {
+   window.mark = mark;
+}
+
 /* Tell the app the text in the input box when it loses focus */
 function taBlur(itag) {
     //#5944 - percent wasn't encoded, but Mandarin was.

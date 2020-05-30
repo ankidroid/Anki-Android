@@ -176,6 +176,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected static final int MENU_DISABLED = 3;
 
+    // Deckname
+    private String title;
+
+    // Card counts
+    private SpannableString newCount;
+    private SpannableString lrnCount;
+    private SpannableString revCount;
+
+    // ETA
+    private int eta;
+
+    // Card Mark
+    private boolean isCardMarked;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -1739,17 +1752,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         int[] counts = mSched.counts(mCurrentCard);
 
         if (actionBar != null) {
-            String title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
+            title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
             actionBar.setTitle(title);
             if (mPrefShowETA) {
-                int eta = mSched.eta(counts, false);
+                eta = mSched.eta(counts, false);
                 actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));
             }
         }
 
-        SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
-        SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));
-        SpannableString revCount = new SpannableString(String.valueOf(counts[2]));
+        newCount = new SpannableString(String.valueOf(counts[0]));
+        lrnCount = new SpannableString(String.valueOf(counts[1]));
+        revCount = new SpannableString(String.valueOf(counts[2]));
         if (mPrefHideDueCount) {
             revCount = new SpannableString("???");
         }
@@ -2852,7 +2865,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (mCurrentCard == null) {
             return;
         }
-        mCardMarker.displayMark(shouldDisplayMark());
+        isCardMarked = shouldDisplayMark();
+        mCardMarker.displayMark(isCardMarked);
     }
 
 
@@ -3020,6 +3034,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // card.html reload
             if (url.startsWith("signal:reload_card_html")) {
                 redrawCard();
+                onMark(mCurrentCard);
+                return true;
+            }
+            // mark card using javascript
+            if (url.startsWith("signal:mark_current_card")) {
+                onMark(mCurrentCard);
                 return true;
             }
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
@@ -3135,6 +3155,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             drawFlag();
             drawMark();
             view.loadUrl("javascript:onPageFinished();");
+
+            // cards count, deckname, estimated time to be accessible in android webview
+            view.loadUrl("javascript:CardCount(" + newCount.toString() +  "," + lrnCount.toString() + "," + revCount.toString()  + ")" );
+            view.loadUrl("javascript:DeckName('" + title + "')");
+            view.loadUrl("javascript:getETA(" + eta +")");
+            view.loadUrl("javascript:CardMark(" + isCardMarked +")");
         }
 
 
