@@ -175,6 +175,7 @@ public class NoteEditor extends AnkiActivity {
     public static Card mCurrentEditedCard;
     private List<String> mSelectedTags;
     private long mCurrentDid;
+    private long mLastDid;
     private ArrayList<Long> mAllDeckIds;
     private ArrayList<Long> mAllModelIds;
     private Map<Integer, Integer> mModelChangeFieldMap;
@@ -387,6 +388,7 @@ public class NoteEditor extends AnkiActivity {
         if(card == null) {
             return -1;
         }
+        mLastDid = card.getDid();
         card.setDid(mCurrentDid);
         return mCurrentDid;
     }
@@ -520,7 +522,7 @@ public class NoteEditor extends AnkiActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos));
                 mCurrentDid = mAllDeckIds.get(pos);
-		    updateCardCurrentDid(mCurrentEditedCard);
+                updateCardCurrentDid(mCurrentEditedCard);
             }
 
             @Override
@@ -752,19 +754,13 @@ public class NoteEditor extends AnkiActivity {
         }
         // treat add new note and edit existing note independently
         if (mAddNote) {
-            //Different from libAnki, block if there are no cloze deletions.
-            //DEFECT: This does not block addition if cloze transpositions are in non-cloze fields.
-            if (isClozeType() && !hasClozeDeletions()) {
-                displayErrorSavingNote();
-                return;
-            }
-
             // load all of the fields into the note
             for (FieldEditText f : mEditFields) {
                 updateField(f);
             }
             // Save deck to model
             mEditorNote.model().put("did", mCurrentDid);
+
             // Save tags to model
             mEditorNote.setTagsFromStr(tagsAsString(mSelectedTags));
             JSONArray ja = new JSONArray();
@@ -775,31 +771,12 @@ public class NoteEditor extends AnkiActivity {
             getCol().getModels().setChanged();
             CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ADD_NOTE, mSaveNoteHandler, new CollectionTask.TaskData(mEditorNote));
         } else {
-            // Check whether note type has been changed
-            final JSONObject newModel = getCurrentlySelectedModel();
-            final JSONObject oldModel = mCurrentEditedCard.model();
-            if (!newModel.equals(oldModel)) {
-                mReloadRequired = true;
-                if (mModelChangeCardMap.size() < mEditorNote.cards().size() || mModelChangeCardMap.containsKey(null)) {
-                    // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
-                    ConfirmationDialog dialog = new ConfirmationDialog ();
-                    dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing));
-                    Runnable confirm = () -> {
-                        // Bypass the check once the user confirms
-                        changeNoteTypeWithErrorHandling(oldModel, newModel);
-                    };
-                    dialog.setConfirm(confirm);
-                    showDialogFragment(dialog);
-                } else {
-                    // Otherwise go straight to changing note type
-                    changeNoteTypeWithErrorHandling(oldModel, newModel);
-                }
-                return;
-            }
+            // Change the content first, then change the type if modified.
             // Regular changes in note content
             boolean modified = false;
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
-            if (mCurrentEditedCard.getDid() != mCurrentDid) {
+
+            if (mCurrentEditedCard.getDid() != mLastDid) {
                 mReloadRequired = true;
                 // remove card from filtered deck first (if relevant)
                 getCol().getSched().remFromDyn(new long[] { mCurrentEditedCard.getId() });
@@ -826,6 +803,28 @@ public class NoteEditor extends AnkiActivity {
                 // set a flag so that changes to card object will be written to DB later via onActivityResult() in
                 // CardBrowser
                 mChanged = true;
+            }
+
+            final JSONObject newModel = getCurrentlySelectedModel();
+            final JSONObject oldModel = mCurrentEditedCard.model();
+
+            if (!newModel.equals(oldModel) ) {
+                mReloadRequired = true;
+                if (mModelChangeCardMap.size() < mEditorNote.cards().size() || mModelChangeCardMap.containsKey(null)) {
+                    // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
+                    ConfirmationDialog dialog = new ConfirmationDialog ();
+                    dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing));
+                    Runnable confirm = () -> {
+                        // Bypass the check once the user confirms
+                        changeNoteTypeWithErrorHandling(oldModel, newModel);
+                    };
+                    dialog.setConfirm(confirm);
+                    showDialogFragment(dialog);
+                } else {
+                    // Otherwise go straight to changing note type
+                    changeNoteTypeWithErrorHandling(oldModel, newModel);
+                }
+                return;
             }
             closeNoteEditor();
         }
@@ -1517,7 +1516,7 @@ public class NoteEditor extends AnkiActivity {
 
     private boolean updateField(FieldEditText field) {
         String newValue = field.getText().toString().replace(FieldEditText.NEW_LINE, "<br>");
-        if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {
+        if (field.getOrd()<mEditorNote.values().length && !mEditorNote.values()[field.getOrd()].equals(newValue)) {
             mEditorNote.values()[field.getOrd()] = newValue;
             return true;
         }
@@ -1669,7 +1668,7 @@ public class NoteEditor extends AnkiActivity {
                 updateTags();
                 findViewById(R.id.CardEditorTagButton).setEnabled(false);
                 //((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
-                mNoteDeckSpinner.setEnabled(false);
+                mNoteDeckSpinner.setEnabled(true);
                 int position = mAllDeckIds.indexOf(mCurrentEditedCard.getDid());
                 if (position != -1) {
                     mNoteDeckSpinner.setSelection(position, false);
