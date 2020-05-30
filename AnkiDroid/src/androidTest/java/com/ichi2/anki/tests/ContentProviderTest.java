@@ -780,15 +780,18 @@ public class ContentProviderTest {
         assertEquals("Check that the selected deck has been correctly set", deckId, col.getDecks().selected());
     }
 
+    private Card getFirstCardFromScheduler(Collection col) {
+        long deckId = mTestDeckIds[0];
+        col.getDecks().select(deckId);
+        return col.getSched().getCard();
+    }
     /**
      * Test giving the answer for a reviewed card
      */
     @Test
     public void testAnswerCard(){
         Collection col = getCol();
-        long deckId = mTestDeckIds[0];
-        col.getDecks().select(deckId);
-        Card card = col.getSched().getCard();
+        Card card = getFirstCardFromScheduler(col);
         long cardId = card.getId();
 
         // the card starts out being new
@@ -832,9 +835,7 @@ public class ContentProviderTest {
         // get the first card due
         // ----------------------
         Collection col = getCol();
-        long deckId = mTestDeckIds[0];
-        col.getDecks().select(deckId);
-        Card card = col.getSched().getCard();
+        Card card = getFirstCardFromScheduler(col);
 
         // verify that the card is not already user-buried
         Assert.assertNotEquals("Card is not user-buried before test", Consts.QUEUE_TYPE_SIBLING_BURIED, card.getQueue());
@@ -879,9 +880,7 @@ public class ContentProviderTest {
         // get the first card due
         // ----------------------
         Collection col = getCol();
-        long deckId = mTestDeckIds[0];
-        col.getDecks().select(deckId);
-        Card card = col.getSched().getCard();
+        Card card = getFirstCardFromScheduler(col);
 
         // verify that the card is not already suspended
         Assert.assertNotEquals("Card is not suspended before test", Consts.QUEUE_TYPE_SUSPENDED, card.getQueue());
@@ -927,9 +926,7 @@ public class ContentProviderTest {
         // get the first card due
         // ----------------------
         Collection col = getCol();
-        long deckId = mTestDeckIds[0];
-        col.getDecks().select(deckId);
-        Card card = col.getSched().getCard();
+        Card card = getFirstCardFromScheduler(col);
         Note note = card.note();
         long noteId = note.getId();
 
