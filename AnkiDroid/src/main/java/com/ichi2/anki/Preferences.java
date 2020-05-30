@@ -58,7 +58,6 @@ import com.ichi2.anki.web.CustomSyncServer;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.hooks.AdvancedStatistics;
 import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.preferences.NumberRangePreference;
@@ -566,13 +565,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 }
                 case LANGUAGE:
                     closePreferences();
-                    break;
-                case "advanced_statistics_enabled":
-                    if (((CheckBoxPreference) pref).isChecked()) {
-                        AdvancedStatistics.install(Hooks.getInstance(getApplicationContext()));
-                    } else {
-                        AdvancedStatistics.uninstall(Hooks.getInstance(getApplicationContext()));
-                    }
                     break;
                 case "showProgress":
                     getCol().getConf().put("dueCounts", ((CheckBoxPreference) pref).isChecked());
