@@ -2488,10 +2488,32 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return answerCardIfVisible(EASE_4);
             case COMMAND_ANSWER_RECOMMENDED:
                 return answerCardIfVisible(getRecommendedEase(false));
+            case COMMAND_PAGE_UP:
+                onPageUp();
+                return true;
+            case COMMAND_PAGE_DOWN:
+                onPageDown();
+                return true;
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;
         }
+    }
+
+
+    private void onPageUp() {
+        //pageUp performs a half scroll, we want a full page
+        processCardAction(card -> {
+            card.pageUp(false);
+            card.pageUp(false);
+        });
+    }
+
+    private void onPageDown() {
+        processCardAction(card -> {
+            card.pageDown(false);
+            card.pageDown(false);
+        });
     }
 
 

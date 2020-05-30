@@ -110,6 +110,8 @@
         <item>22</item> <!-- Green Flag -->
         <item>23</item> <!-- Blue Flag -->
         <item>24</item> <!-- Unset Flag -->
+        <item>30</item> <!-- Page Up -->
+        <item>31</item> <!-- Page Down -->
     </string-array>
     <string-array name="custom_button_values">
         <item>2</item>
