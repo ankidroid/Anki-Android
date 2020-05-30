@@ -56,7 +56,6 @@ public class Finder {
 
     private Collection mCol;
 
-
     public Finder(Collection col) {
         mCol = col;
     }
@@ -631,26 +630,24 @@ public class Finder {
             ids = dids(mCol.getDecks().id(val, false));
         } else {
             // wildcard
-            try{
-                ids = dids(mCol.getDecks().id(val, false));
-            }catch(Exception e){
+            ids = dids(mCol.getDecks().id(val, false));
+            if (ids == null) {
                 ids = new ArrayList<>();
-            }
-            val = val.replace("*", ".*");
-            val = val.replace("+", "\\+");
+                val = val.replace("*", ".*");
+                val = val.replace("+", "\\+");
 
-            for (JSONObject d : mCol.getDecks().all()) {
-                String deckName = d.getString("name");
-                deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
-                if (deckName.matches("(?i)" + val)) {
-                    for (long id : dids(d.getLong("id"))) {
-                        if (!ids.contains(id)) {
-                            ids.add(id);
+                for (JSONObject d : mCol.getDecks().all()) {
+                    String deckName = d.getString("name");
+                    deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
+                    if (deckName.matches("(?i)" + val)) {
+                        for (long id : dids(d.getLong("id"))) {
+                            if (!ids.contains(id)) {
+                                ids.add(id);
+                            }
                         }
                     }
                 }
             }
-
         }
         if (ids == null || ids.size() == 0) {
             return null;
