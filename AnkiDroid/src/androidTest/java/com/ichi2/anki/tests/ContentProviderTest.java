@@ -783,6 +783,7 @@ public class ContentProviderTest {
     private Card getFirstCardFromScheduler(Collection col) {
         long deckId = mTestDeckIds[0];
         col.getDecks().select(deckId);
+        col.getSched().reset();
         return col.getSched().getCard();
     }
     /**
