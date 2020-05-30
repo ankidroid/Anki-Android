@@ -30,14 +30,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 /**
@@ -58,23 +58,23 @@ class MultiDexClassPathScanner extends ClassPathScanner {
     }
 
     @Override
-    @VisibleForTesting
-    //dalvik.system.DexFile
-    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
-    Enumeration<String> getDexEntries(dalvik.system.DexFile dexFile) {
-        List<String> ret = new ArrayList<>();
+    public Set<String> getClassPathEntries(ClassNameFilter filter) {
+        Set<String> ret = new LinkedHashSet<>();
         String absolutePath = targetContext.getCacheDir().getAbsolutePath();
 
         for (String classPath : classPathEntries) {
             for (String dexPath: extractDexFilesFromApk(classPath, absolutePath)) {
                 List<String> classes = extractClassesFromDexPath(dexPath);
-                ret.addAll(classes);
+                for (String name: classes) {
+                    if (filter.accept(name)) {
+                        ret.add(name);
+                    }
+                }
             }
         }
 
-        return Collections.enumeration(ret);
+        return ret;
     }
-
 
     private List<String> extractClassesFromDexPath(String dexPath) {
         List<String> ret = new ArrayList<>();
