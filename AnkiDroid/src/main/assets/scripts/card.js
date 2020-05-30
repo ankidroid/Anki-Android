@@ -100,30 +100,59 @@ function reloadPage() {
 }
 
 // Mark current card
-function markCard() {
+function ankiMarkCard() {
     window.location.href = "signal:mark_current_card";
 }
 
-// Get new card, learn card, review card count in ankidroid webview. It should be accessible via javascript
-function CardCount(newCount, lrnCount, revCount) {
-    window.newCountVar = newCount;
-    window.lrnCountVar = lrnCount;
-    window.revCountVar = revCount;
+// Get new card, learn card, review card counts in ankidroid webview. It will be accessible via javascript
+function ankiGetCardCount(ankiNewCount, ankiLrnCount, ankiRevCount) {
+    window.ankiNewCount = ankiNewCount;
+    window.ankiLrnCount = ankiLrnCount;
+    window.ankiRevCount = ankiRevCount;
 }
 
 // Get Current Deck Name
-function DeckName(title) {
-   window.title = title;
+function ankiGetDeckName(ankiDeckName) {
+   window.ankiDeckName = ankiDeckName;
 }
 
 // Get estimated time
-function getETA(eta) {
-   window.eta = eta;
+function ankiGetETA(ankiETA) {
+   window.ankiETA = ankiETA;
 }
 
 // Card Mark
-function CardMark(mark) {
-   window.mark = mark;
+function ankiGetCardMark(ankiMark) {
+   window.ankiMark = ankiMark;
+}
+
+/**
+* card flagged or not
+* (none = 0, red = 1, orange = 2, green = 3 blue = 4)
+**/
+function ankiGetCardFlag(ankiFlagStatus) {
+    window.ankiFlagStatus = ankiFlagStatus;
+}
+
+// Flag the card from AnkiDroid Webview using JavaScript
+function ankiToggleFlagRed() {
+    window.location.href = "signal:card_toggle_flag_red";
+}
+
+function ankiToggleFlagGreen() {
+    window.location.href = "signal:card_toggle_flag_green";
+}
+
+function ankiToggleFlagBlue() {
+    window.location.href = "signal:card_toggle_flag_blue";
+}
+
+function ankiToggleFlagOrange() {
+    window.location.href = "signal:card_toggle_flag_orange";
+}
+
+function ankiUnsetFlag() {
+    window.location.href = "signal:card_unset_flag";
 }
 
 /* Tell the app the text in the input box when it loses focus */

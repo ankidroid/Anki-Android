@@ -190,6 +190,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // Card Mark
     private boolean isCardMarked;
 
+    // card flag status
+    private int currentCardFlagStatus;
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -2894,7 +2897,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (mCurrentCard == null) {
             return;
         }
-        mCardMarker.displayFlag(getFlagToDisplay());
+        currentCardFlagStatus = getFlagToDisplay();
+        mCardMarker.displayFlag(currentCardFlagStatus);
     }
 
 
@@ -3034,7 +3038,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // card.html reload
             if (url.startsWith("signal:reload_card_html")) {
                 redrawCard();
-                onMark(mCurrentCard);
                 return true;
             }
             // mark card using javascript
@@ -3042,6 +3045,29 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 onMark(mCurrentCard);
                 return true;
             }
+            // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
+            if (url.startsWith("signal:card_toggle_flag_red")) {
+                toggleFlag(FLAG_RED);
+                return true;
+            }
+            if (url.startsWith("signal:card_toggle_flag_green")) {
+                toggleFlag(FLAG_GREEN);
+                return true;
+            }
+            if (url.startsWith("signal:card_toggle_flag_blue")) {
+                toggleFlag(FLAG_BLUE);
+                return true;
+            }
+            if (url.startsWith("signal:card_toggle_flag_orange")) {
+                toggleFlag(FLAG_ORANGE);
+                return true;
+            }
+            // Unset flag
+            if (url.startsWith("signal:card_unset_flag")) {
+                toggleFlag(FLAG_NONE);
+                return true;
+            }
+
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
             switch (signalOrdinal) {
                 case WebViewSignalParserUtils.SIGNAL_UNHANDLED:
@@ -3156,11 +3182,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             drawMark();
             view.loadUrl("javascript:onPageFinished();");
 
-            // cards count, deckname, estimated time to be accessible in android webview
-            view.loadUrl("javascript:CardCount(" + newCount.toString() +  "," + lrnCount.toString() + "," + revCount.toString()  + ")" );
-            view.loadUrl("javascript:DeckName('" + title + "')");
-            view.loadUrl("javascript:getETA(" + eta +")");
-            view.loadUrl("javascript:CardMark(" + isCardMarked +")");
+            // cards count, deckname, estimated time, mark, flag to be accessible in AnkiDroid WebView
+            view.loadUrl("javascript:ankiGetCardCount(" + newCount.toString() +  "," + lrnCount.toString() + "," + revCount.toString()  + ")" );
+            view.loadUrl("javascript:ankiGetDeckName('" + title + "')");
+            view.loadUrl("javascript:ankiGetETA(" + eta +")");
+            view.loadUrl("javascript:ankiGetCardMark(" + isCardMarked +")");
+            view.loadUrl("javascript:ankiGetCardFlag(" + currentCardFlagStatus +")");
         }
 
 
