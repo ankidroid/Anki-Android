@@ -3034,7 +3034,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // card.html reload
             if (url.startsWith("signal:reload_card_html")) {
                 redrawCard();
-                onMark(mCurrentCard);
                 return true;
             }
             // mark card using javascript
