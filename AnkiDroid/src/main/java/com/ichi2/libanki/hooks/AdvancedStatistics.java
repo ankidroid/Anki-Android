@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.stats.StatsMetaInfo;
@@ -173,6 +174,9 @@ public class AdvancedStatistics extends Hook  {
      */
     public StatsMetaInfo calculateDueAsMetaInfo(StatsMetaInfo metaInfo, Stats.AxisType type, Context context, String dids) {
 
+        if (!AnkiDroidApp.getSharedPrefs(context).getBoolean("advanced_statistics_enabled", false)) {
+            return metaInfo;
+        }
         //To indicate that we calculated the statistics so that Stats.java knows that it shouldn't display the standard Forecast chart.
         Settings = new Settings(context);
         metaInfo.setStatsCalculated(true);
