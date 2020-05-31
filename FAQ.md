@@ -2,7 +2,7 @@ This document contains a list of frequently asked questions, it is intended to g
 
 # Installing AnkiDroid
 
-### After installing the latest version of AnkiDroid, it starts crashing
+### After installing the latest version of AnkiDroid, ithttps://github.com/ankidroid/Anki-Android/releases starts crashing
 Please first try uninstalling / re-installing the application, as this often fixes such problems. If the issue persists, see the [bug reports help page](https://ankidroid.org/docs/help.html).
 
 If a deck background image was set, remove `DeckBackgroundImage.png` from the /AnkiDroid/ folder and try again.
@@ -109,7 +109,7 @@ This is an Android problem and AnkiDroid needs to be reset. Go to system prefere
 ### How to use different Anki profiles
 On Anki desktop, if several people want to use the same computer (or if one person wants to separate their collection into several groups), they can use different profiles. AnkiDroid doesn't currently officially support using Anki profiles (though it's a [commonly requested feature](https://github.com/ankidroid/Anki-Android/issues/2545)), however you can achieve a similar effect by installing several parallel versions of AnkiDroid besides the normal AnkiDroid and setting a unique collection path in each one. 
 
-Official parallel versions of AnkiDroid are made available from time to time, with the most current being a set for version [v2.10.2](https://github.com/ankidroid/Anki-Android/releases/tag/v2.10.2) in the releases section.
+Official parallel versions of AnkiDroid are made available from time to time, with most stable release versions having a set of parallel releases attached. You may find the releases here: https://github.com/ankidroid/Anki-Android/releases
 
 Note that we will not provide any support for these pre-built parallel versions, but they should work well and are in daily use by many.
 
