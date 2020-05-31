@@ -17,20 +17,25 @@
 package com.ichi2.utils;
 
 import com.google.common.collect.Sets;
+import com.ichi2.anki.RobolectricTest;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItem;
 
-public class LanguageUtilsLanguageRegressionTest {
+@RunWith(AndroidJUnit4.class)
+public class LanguageUtilsTest extends RobolectricTest {
 
     private static final String[] PREVIOUS_LANGUAGES = { "ar", "bg", "ca", "cs", "de", "el", "en", "eo", "es-AR", "es-ES", "et", "fa",
             "fi", "fr", "got", "gl", "hi", "hu", "id", "it", "ja", "ko", "lt", "nl", "nn-NO", "no", "pl", "pt_PT", "pt_BR", "ro", "ru",
@@ -41,7 +46,7 @@ public class LanguageUtilsLanguageRegressionTest {
             "gu-IN", "he", "hi", "hr", "hu", "hy-AM", "id", "is", "it", "ja", "jv", "ka", "kk", "km", "ko", "ku",
             "ky", "lt", "lv", "mk", "mn", "mr", "ms", "my", "nl", "nn-NO", "no", "pa-IN", "pl", "pt-BR", "pt-PT",
             "ro", "ru", "sk", "sl", "sq", "sr", "ss", "sv-SE", "sw", "ta", "te", "tg", "th", "ti", "tl", "tn", "tr",
-            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yu", "zh-CN", "zh-TW", "zu" };
+            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yue", "zh-CN", "zh-TW", "zu" };
 
     /** Languages which were removed for good reason */
     private static final HashSet<String> previousLanguageExclusions = Sets.newHashSet(
@@ -70,5 +75,33 @@ public class LanguageUtilsLanguageRegressionTest {
         List<String> actual = asList(LanguageUtil.APP_LANGUAGES);
         assertThat("Languages have been updated, please modify test variables: " +
                 "PREVIOUS_LANGUAGES and CURRENT_LANGUAGES", actual, contains(CURRENT_LANGUAGES));
+    }
+
+    @Test
+    public void localeTwoLetterCodeResolves() {
+        assertThat("A locale with a 2-letter code resolves correctly",
+                LanguageUtil.getLocale("af").getDisplayLanguage().equals("Afrikaans"));
+    }
+
+    @Test
+    public void localeThreeLetterCodeResolves() {
+        assertThat("A locale with a 3-letter code resolves correctly",
+                LanguageUtil.getLocale("fil").getDisplayLanguage().equals("Filipino"));
+    }
+
+    @Test
+    public void localeTwoLetterRegionalVariantResolves() {
+        assertThat("A locale with a 2-letter code and regional variant resolves correctly",
+                LanguageUtil.getLocale("pt-BR").getDisplayName().equals("Portuguese (Brazil)"));
+        assertThat("A locale with a 2-letter code and regional variant resolves correctly",
+                LanguageUtil.getLocale("pt_BR").getDisplayName().equals("Portuguese (Brazil)"));
+    }
+
+    @Test
+    public void localeThreeLetterRegionalVariantResolves() {
+        assertThat("A locale with a 3-letter coe and regional variant resolves correctly",
+                LanguageUtil.getLocale("yue_TW").getDisplayName().equals("yue (Taiwan)"));
+        assertThat("A locale with a 3-letter coe and regional variant resolves correctly",
+                LanguageUtil.getLocale("yue-TW").getDisplayName().equals("yue (Taiwan)"));
     }
 }
