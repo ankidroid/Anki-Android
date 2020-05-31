@@ -11,6 +11,9 @@ import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Permissions;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 /**
@@ -36,17 +39,42 @@ public class IntentHandler extends Activity {
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
         Consumer<Runnable> runIfStoragePermissions = (runnable) -> performActionIfStoragePermission(runnable, reloadIntent, action);
-        if (Intent.ACTION_VIEW.equals(action)) {
-            runIfStoragePermissions.consume(() -> handleFileImport(intent, reloadIntent, action));
-        } else if ("com.ichi2.anki.DO_SYNC".equals(action)) {
-            runIfStoragePermissions.consume(() -> handleSyncIntent(reloadIntent, action));
-        } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
-            runIfStoragePermissions.consume(() -> handleReviewIntent(intent));
-        } else {
-            Timber.d("onCreate() performing default action");
-            launchDeckPickerIfNoOtherTasks(reloadIntent);
+        LaunchType launchType = getLaunchType(intent);
+        switch (launchType) {
+            case FILE_IMPORT:
+                runIfStoragePermissions.consume(() -> handleFileImport(intent, reloadIntent, action));
+                break;
+            case SYNC:
+                runIfStoragePermissions.consume(() -> handleSyncIntent(reloadIntent, action));
+                break;
+            case REVIEW:
+                runIfStoragePermissions.consume(() -> handleReviewIntent(intent));
+                break;
+            case DEFAULT_START_APP_IF_NEW:
+                Timber.d("onCreate() performing default action");
+                launchDeckPickerIfNoOtherTasks(reloadIntent);
+                break;
+            default:
+                Timber.w("Unknown launch type: %s. Performing default action", launchType);
+                launchDeckPickerIfNoOtherTasks(reloadIntent);
         }
     }
+
+    @VisibleForTesting
+    @CheckResult
+    static LaunchType getLaunchType(@NonNull Intent intent) {
+        String action = intent.getAction();
+        if (Intent.ACTION_VIEW.equals(action)) {
+            return LaunchType.FILE_IMPORT;
+        } else if ("com.ichi2.anki.DO_SYNC".equals(action)) {
+            return LaunchType.SYNC;
+        } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
+            return LaunchType.REVIEW;
+        } else {
+            return LaunchType.DEFAULT_START_APP_IF_NEW;
+        }
+    }
+
 
     private void performActionIfStoragePermission(Runnable runnable, Intent reloadIntent, String action) {
         if (Permissions.hasStorageAccessPermission(this)) {
@@ -123,5 +151,14 @@ public class IntentHandler extends Activity {
         handlerMessage.what = DialogHandler.MSG_DO_SYNC;
         // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
         DialogHandler.storeMessage(handlerMessage);
+    }
+
+    //COULD_BE_BETTER: Also extract the parameters into here to reduce coupling
+    @VisibleForTesting
+    enum LaunchType {
+        DEFAULT_START_APP_IF_NEW,
+        FILE_IMPORT,
+        SYNC,
+        REVIEW
     }
 }
