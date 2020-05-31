@@ -51,7 +51,7 @@ import timber.log.Timber;
  * @see SSLSocketFactory
  */
 public class Tls12SocketFactory extends SSLSocketFactory {
-    private static final String[] TLS_V12_ONLY = {"TLSv1", "TLSv1.1", "TLSv1.2"};
+    private static final String[] TLS_V12_ONLY =  {"TLSv1.2"};
 
     private final SSLSocketFactory delegate;
 
