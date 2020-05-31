@@ -140,6 +140,7 @@
     <string name="rebuild_cram_deck">フィルターデッキを再構築しています...</string>
     <string name="rebuild_cram_label">再構築</string>
     <string name="empty_cram_label">空にする</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">カードを元のデッキへ戻しています...</string>
     <string name="custom_study_deck_name">カスタム学習セッション</string>
     <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
@@ -169,6 +170,7 @@
     <string name="card_template_editor_back">裏面のテンプレート</string>
     <string name="card_template_editor_styling">書式</string>
     <string name="card_template_editor_menu_delete">削除</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">カードタイプは少なくとも１種類必要です。</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
@@ -176,6 +178,8 @@
     <string name="invalid_template">カードを作成できませんでした</string>
     <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１つ以上のノートが削除されます。まずは新しいカードタイプを追加してください。</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid データベースの読み書き</string>
     <string name="read_write_permission_description">ノート、カード、ノートタイプ、デッキへのアクセスや、それらの新規作成を行います。</string>

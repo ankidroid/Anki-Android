@@ -111,6 +111,7 @@
     <string name="note_editor_no_cards_created">Карточки не созданы. Заполните больше полей</string>
     <string name="note_editor_no_first_field">Первое поле пусто</string>
     <string name="note_editor_no_cloze_delations">Этот тип записи должен содержать задание с пропусками</string>
+    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="saving_facts">Запись сохраняется</string>
     <string name="saving_model">Тип записи сохраняется</string>
     <string name="add">Добавить</string>
@@ -172,6 +173,7 @@
     <string name="import_error_unhandled_request">Не удается обработать запрос на импорт</string>
     <string name="import_error_exception">Не удалось импортировать пакет\n\n%s</string>
     <string name="import_error_not_apkg_extension">У файла “%s” должно быть расширение .apkg или .colpkg</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
     <string name="import_replacing">Коллекция заменяется&#8230;</string>
     <string name="import_interrupted">Импорт прерван</string>
@@ -277,4 +279,6 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>
     <string name="choose_an_image">Выберите изображение</string>
+    <!-- Card Template Browser Appearance -->
+    <string name="restore_default">Restore Default</string>
 </resources>

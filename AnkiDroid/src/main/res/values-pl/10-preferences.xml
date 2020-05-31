@@ -79,7 +79,7 @@
     <string name="image_zoom">Powiększenie obrazów/grafiki</string>
     <string name="button_size">Rozmiar przycisku odpowiedzi</string>
     <string name="card_browser_font_size">Skalowanie fontu przeglądania kart</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media">Wyświetlaj nazwy plików w przeglądarce kart</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">Katalog AnkiDroid</string>
     <string name="fullscreen_review">Tryb pełnoekranowy</string>
@@ -121,10 +121,6 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Synchronizacja automatyczna</string>
     <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zakończenia aplikacji jeżeli ostatnia synchronizacja była później niż 10 minut.</string>
-    <string name="fix_hebrew_text">Poprawka dla samogłosek hebrajskich</string>
-    <string name="fix_hebrew_text_summ">Obejście dla prawidłowego renderowania hebrajskich samogłosek.</string>
-    <string name="fix_hebrew_instructions">To ustawienie omija algorytm RTL Androida aby poprawnie wyświetlać hebrajskie samogłoski.\n\nMusisz jednak najpierw pobrać plik Tohu.ttf i skopiować go ręcznie do:\n%s/fonts/\n\nNie musisz modyfikować swoich kart.</string>
-    <string name="fix_hebrew_download_font">Pobierz czcionkę</string>
     <string name="day_theme">Motyw na dzień</string>
     <string name="night_theme">Motyw na noc</string>
     <string name="default_font">Domyślna czcionka</string>

@@ -122,10 +122,6 @@
     <string name="automatic_sync_choice">Automatická synchronizácia</string>
     <string name="automatic_sync_choice_summ">Synchronizovať automaticky pri štarte/ukončení aplikácie, ak posledná synchronizácia bola pred viac než 10
         minútami.</string>
-    <string name="fix_hebrew_text">Prispôsobiť hebrejským samohláskam</string>
-    <string name="fix_hebrew_text_summ">Riešenie správneho zobrazovania Hebrejských samohlások.</string>
-    <string name="fix_hebrew_instructions">Toto nastavenie obchádza RTL algoritmus Androidu, aby sa správne zobrazil hebrejský text so samohláskami.\n\nAby to fungovalo, musíte stiahnuť font Tohu.ttf a manuálne ho skopírovať do\n“%s/fonts/”\n\nVaše kartičky nebudete musieť modifikovať.</string>
-    <string name="fix_hebrew_download_font">Stiahnuť font</string>
     <string name="day_theme">Denný motív</string>
     <string name="night_theme">Nočný motív</string>
     <string name="default_font">Predvolené písmo</string>

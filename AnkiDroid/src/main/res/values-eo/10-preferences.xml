@@ -79,8 +79,8 @@
     <string name="image_zoom">Bilda pligrandigo</string>
     <string name="button_size">Grando de responda butono</string>
     <string name="card_browser_font_size">Skalado de tiparo de kart-foliumilo</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media">Vidigi dosiernomojn en kart‑foliumilo</string>
+    <string name="card_browser_hide_media_summary">Vidigi dosiernomojn de aŭdvidaĵoj en la kampoj “demando”/“respondo” de la kart‑foliumilo</string>
     <string name="col_path">Dosierujo de AnkiDroid</string>
     <string name="fullscreen_review">Plenekrana reĝimo</string>
     <string name="full_screen_off">Malaktiva</string>
@@ -107,8 +107,8 @@
     <string name="gestures_tap_right">Frapeti dekstre</string>
     <string name="more_scrolling_buttons">Elektronika legilo</string>
     <string name="more_scrolling_buttons_summ">Ankaŭ uzi butonojn de kanji/katakana aŭ emoĝioj por rulumi</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">Menuo “%s”</string>
+    <string name="card_browser_enable_external_context_menu_summary">Aktivigi la kuntekstan menuon “%s” tutaplikaĵe</string>
     <string name="double_scrolling_gap">Duobla rulumado</string>
     <string name="double_scrolling_gap_summ">Duobligi distancon de rulumado kun elektronika legilo</string>
     <string name="swipe_sensitivity">Ŝovuma sentemo</string>
@@ -121,10 +121,6 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Aŭtomata samtempigado</string>
     <string name="automatic_sync_choice_summ">Aŭtomate sinkronigi je aplikaĵa starto/ĉeso nur se la antaŭa samtempigo okazis antaŭ pli ol 10 minutoj.</string>
-    <string name="fix_hebrew_text">Ripari hebreajn vokalojn</string>
-    <string name="fix_hebrew_text_summ">Provizoraĵo por ĝuste vidigi hebreajn vokalojn.</string>
-    <string name="fix_hebrew_instructions">Tiu ĉi agordo preterpasas la RTL-algoritmon de Android por ĝuste vidigi hebrean tekston kun vokaloj.\n\nPor fari tion, elŝutu la tiparon Tohu.ttf kaj permane kopiu ĝin al \n“%s/fonts/”\n\nVi ne devas modifi viajn kartojn.</string>
-    <string name="fix_hebrew_download_font">Elŝuti tiparon</string>
     <string name="day_theme">Taga etoso</string>
     <string name="night_theme">Nokta etoso</string>
     <string name="default_font">Implicita tiparo</string>

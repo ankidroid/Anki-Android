@@ -165,6 +165,7 @@
     <string name="rebuild_cram_deck">إعادة بناء المراجعة المركزة لشَدّة الأوراق.\n يرجى الانتظار...</string>
     <string name="rebuild_cram_label">إعادة بناء</string>
     <string name="empty_cram_label">فارغ</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">إفراغ المراجعة المركزة لشَدّة الأوراق.\n يرجى الانتظار...</string>
     <string name="custom_study_deck_name">دورة دراسية مخصصة</string>
     <string name="custom_study_deck_exists">الرجاء إعادة تسمية شَدّة الأوراق المدرسة المخصصة الحالية اولاً.</string>
@@ -194,6 +195,7 @@
     <string name="card_template_editor_back">قالب الجهة الخلفية</string>
     <string name="card_template_editor_styling">النمط</string>
     <string name="card_template_editor_menu_delete">احذف</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">مطلوب نوع بطاقة واحد على الأقل</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="zero">حذف نوع البطاقة \"%2$s\"، والبطاقات %1$d؟</item>
@@ -206,6 +208,8 @@
     <string name="invalid_template">لا يمكن إنشاء بطاقة</string>
     <string name="card_template_editor_would_delete_note">سوف يسبب حذف نوع هذه البطاقة حذف ملاحظة أو أكثر. الرجاء انشاء نوع بطاقة جديدة أولاً.</string>
     <string name="template_for_current_card_deleted">تم حذف نوع البطاقة للبطاقة الحالية.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة البيانات أنكيدرويد</string>
     <string name="read_write_permission_description">حصل على ملاحظات، وبطاقات، وأنواع الملاحظات، وشَدّات أوراق، كما يمكن أيضاً إنشاء شَدّات أوراق جديدة.</string>

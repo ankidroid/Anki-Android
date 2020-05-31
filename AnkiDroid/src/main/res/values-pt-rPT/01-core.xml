@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">A reconstruir o baralho de estudo intensivo&#8230;</string>
     <string name="rebuild_cram_label">Reconstruir</string>
     <string name="empty_cram_label">Esvaziar</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">A limpar o baralho de estudo intensivo&#8230;</string>
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
     <string name="custom_study_deck_exists">Renomear primeiro o baralho de estudo personalizado existente</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Modelo de trás</string>
     <string name="card_template_editor_styling">Estilo</string>
     <string name="card_template_editor_menu_delete">Eliminar</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Pelo menos um tipo de ficha é necessário.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Remover o tipo de ficha “%2$s” e a sua %1$d ficha?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">Não foi possível gerar uma ficha</string>
     <string name="card_template_editor_would_delete_note">Ao remover este tipo de ficha resultará na eliminação de uma ou mais notas. Por favor, crie primeiro um novo tipo de ficha.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever na base de dados do AnkiDroid</string>
     <string name="read_write_permission_description">aceder às notas, fichas, modelos e baralhos existentes, bem como criar novos</string>

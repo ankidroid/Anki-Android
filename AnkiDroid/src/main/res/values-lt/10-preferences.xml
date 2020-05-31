@@ -122,10 +122,6 @@
     <string name="automatic_sync_choice">Automatinis sinchronizavimas</string>
     <string name="automatic_sync_choice_summ">Sinchronizuoti automatiškai įjungiant/išjungiant programą, jei paskutinis sinchronizavimas vyko prieš daugiau nei 10
         minučių.</string>
-    <string name="fix_hebrew_text">Atvaizduoti hebrajų kalbos balses</string>
-    <string name="fix_hebrew_text_summ">Alternatyvus būdas teisingai atvaizduoti hebrajų kalbos balses.</string>
-    <string name="fix_hebrew_instructions">Šis nustatymas apeis „Android“ iš dešinės į kairę rašymo algoritmą, siekiant, kad hebrajų tekste būtų teisingai atvaizduojamos balsės.\n\nTam, kad tai pavyktų, turite parsisiųsti Tohu.ttf šriftą ir jį rankiniu būdu įkelti tarp\n“%s/šriftų/”\n\nSavo kortelių keisti neturėsite.</string>
-    <string name="fix_hebrew_download_font">Parsisiųsti šriftą</string>
     <string name="day_theme">Dieninis apipavidalinimas</string>
     <string name="night_theme">Naktinis apipavidalinimas</string>
     <string name="default_font">Numatytasis šriftas</string>

@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">Magolós pakli újraépítése.\nKérlek, várj&#8230;</string>
     <string name="rebuild_cram_label">Újraépítés</string>
     <string name="empty_cram_label">Kiürítés</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Magolós pakli ürítése.\nKérlek, várj&#8230;</string>
     <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
     <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglévő, Egyéni tanulás paklit</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Sablon vissza</string>
     <string name="card_template_editor_styling">Stílus</string>
     <string name="card_template_editor_menu_delete">Törlés</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Legalább egy kártya típus szükséges</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Törlöd a “%2$s” és a %1$d kártya típusát?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">A kártya nem hozható létre</string>
     <string name="card_template_editor_would_delete_note">A kártyatípus eltávolítása egy vagy több megjegyzés törlését okozhatja. Először hozz létre egy új kártyatípust.</string>
     <string name="template_for_current_card_deleted">A kártya típusa törölve lett.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid adatbázist olvasás/írás</string>
     <string name="read_write_permission_description">meglévő jegyzetek, kártyák, jegyzetfajták és paklik elérése, valamint újak létrehozása</string>

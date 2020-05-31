@@ -68,8 +68,8 @@
     <string name="leech_notification">Karta oznaczona jako pijawka</string>
     <string name="corrupt_font">Uszkodzony plik czcionki %s</string>
     <string name="webview_crash_unknown">Nieznany błąd</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_unknwon_detailed">To było spowodowane przez wewnętrzny błąd w WebView</string>
+    <string name="webview_crash_oom">Brak pamięci</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
@@ -111,6 +111,7 @@
     <string name="note_editor_no_cards_created">Nie stworzono żadnych kart. Wypełnij więcej pól.</string>
     <string name="note_editor_no_first_field">Pierwsze pole jest puste</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="saving_facts">Zapisywanie notatki</string>
     <string name="saving_model">Zapis typu notatki</string>
     <string name="add">Dodaj</string>
@@ -170,8 +171,9 @@
     <string name="import_message_add_confirm">Dodać \"%s\" do kolekcji? To może trwać bardzo długo</string>
     <string name="import_log_no_apkg">To nie jest prawidłowy plik pakietu Anki</string>
     <string name="import_error_unhandled_request">Nie udało się przetworzyć żądania importu</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
+    <string name="import_error_exception">Nie udało się zaimportować pakietu\n\n%s</string>
     <string name="import_error_not_apkg_extension">Nazwa pliku \"%s\" nie ma rozszerzenia .apkg lub .colpkg</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
     <string name="import_replacing">Zamiana kolekcji&#8230;</string>
     <string name="import_interrupted">Import przerwany</string>
@@ -278,4 +280,6 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Tło</string>
     <string name="choose_an_image">Wybierz obraz</string>
+    <!-- Card Template Browser Appearance -->
+    <string name="restore_default">Restore Default</string>
 </resources>

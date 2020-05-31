@@ -159,6 +159,7 @@ Forma: Digər
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
     <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
     <!-- Initial collection load -->
@@ -190,7 +191,10 @@ Forma: Digər
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">Error deleting image</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <!-- Browser Appearance -->
+    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
 </resources>

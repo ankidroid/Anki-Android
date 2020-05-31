@@ -121,10 +121,6 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Sincronització automàtica</string>
     <string name="automatic_sync_choice_summ">Sincronitza automàticament en l\'app al Inici/sortir si el sync anterior va ser fa més de 10 minuts.</string>
-    <string name="fix_hebrew_text">Solució per a les vocals Hebrees</string>
-    <string name="fix_hebrew_text_summ">Solució per a mostra correctament les vocals de l\'Hebreu.</string>
-    <string name="fix_hebrew_instructions">Aquesta configuració evita l\'algorisme d\'Android per mostrar el text hebraic amb vocals correctament.\n\nPer que funcioni, heu de baixar el tipus de lletra Tohu.ttf i copiar-lo manualment a:\n%s/fonts/\n\nNo haureu de modificar les vostres fitxes.</string>
-    <string name="fix_hebrew_download_font">Descarrega el tipus de lletra</string>
     <string name="day_theme">Tema diürn</string>
     <string name="night_theme">Tema nocturn</string>
     <string name="default_font">Tipus de lletra per omissió</string>

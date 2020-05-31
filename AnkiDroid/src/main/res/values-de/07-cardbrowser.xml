@@ -45,13 +45,13 @@
     </plurals>
     <string name="card_browser_all_decks">Alle Stapel</string>
     <string name="card_browser_delete_card">Notizen löschen</string>
-    <string name="card_browser_suspend_card">Karten aussetzen</string>
-    <string name="card_browser_toggle_suspend_card">Karten (nicht mehr) aussetzen</string>
-    <string name="card_browser_change_deck">Verschieben</string>
-    <string name="card_browser_unsuspend_card">Karten nicht mehr aussetzen</string>
+    <string name="card_browser_suspend_card">Karten ausschließen</string>
+    <string name="card_browser_toggle_suspend_card">Karten ein-/ausschließen</string>
+    <string name="card_browser_change_deck">Stapel wechseln</string>
+    <string name="card_browser_unsuspend_card">Karten einschließen</string>
     <string name="card_browser_mark_card">Notizen markieren</string>
-    <string name="card_browser_flag">Flagge</string>
-    <string name="card_browser_toggle_mark_card">(De)markiere Notizen</string>
+    <string name="card_browser_flag">Markieren</string>
+    <string name="card_browser_toggle_mark_card">Notizen (ent-)markieren</string>
     <string name="card_browser_unmark_card">Markierung entfernen</string>
     <string name="delete_card_title">Notiz löschen?</string>
     <string name="delete_cards_title">Notizen löschen?</string>
@@ -59,9 +59,9 @@
     <string name="delete_card_mult_message">Alle Karten aller ausgewählten Notizen löschen?\n(Nicht nur ausgewählte Karten)</string>
     <string name="deleted_message">Notizen gelöscht</string>
     <string name="changed_deck_message">Verschoben nach %s</string>
-    <string name="card_browser_suspended_cards">Karten (nicht mehr) ausgesetzt</string>
+    <string name="card_browser_suspended_cards">Ein-/ausgeschlossene Karten</string>
     <string name="card_browser_show_marked">Markierte herausfiltern</string>
-    <string name="card_browser_show_suspended">Ausgesetzte herausfiltern</string>
+    <string name="card_browser_show_suspended">Nach Ausgeschlossenen filtern</string>
     <string name="card_browser_search_by_tag">Nach Schlagwort filtern</string>
     <string name="card_browser_tags_shown">Schlagworte: %1$s</string>
     <string name="card_browser_list_my_searches">Meine Suchen</string>
@@ -73,11 +73,11 @@
     <string name="card_browser_list_my_searches_remove_content">»%1$s« löschen?</string>
     <string name="card_browser_change_display_order">Anzeigereihenfolge ändern</string>
     <string name="card_browser_change_display_order_title">Anzeigereihenfolge auswählen</string>
-    <string name="card_browser_change_display_order_reverse">Um die Reihenfolge umzukehren, das Feld nochmals auswählen</string>
+    <string name="card_browser_change_display_order_reverse">Wählen Sie zum Umkehren der Reihenfolge ein Feld zweifach aus</string>
     <string name="card_details_question">Frage</string>
     <string name="card_details_answer">Antwort</string>
     <string name="card_details_due">Fällig</string>
-    <string name="card_details_tags">Schlagworte</string>
+    <string name="card_details_tags">Schlagwörter</string>
     <string name="card_browser_filtering_cards">Filtere Karten&#8230; \nAbbrechen mit »Zurück«</string>
     <string-array name="card_browser_order_labels">
         <item>Keine Sortierung (schneller)</item>
@@ -89,14 +89,17 @@
         <item>Nach Intervall</item>
         <item>Nach Leichtigkeit</item>
         <item>Nach Wiederholungen</item>
-        <item>Nach Anzahl falscher Antworten</item>
+        <item>Nach Vergessenen</item>
     </string-array>
     <string name="card_browser_select_all">Alle auswählen</string>
     <string name="card_browser_select_none">Keine auswählen</string>
-    <string name="card_browser_edit_note">Edit note</string>
+    <string name="card_browser_edit_note">Notiz bearbeiten</string>
     <string name="card_browser_interval_new_card">(neu)</string>
     <string name="card_browser_ease_new_card">(neu)</string>
     <string name="card_browser_due_filtered_card">(gefiltert)</string>
     <string name="card_browser_interval_learning_card">(lernen)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
+    <string name="card_browser_note_editor_error">Fehler beim Öffnen des Notizeditors</string>
+    <string name="card_browser_no_cards_in_deck">Keine Karten im Stapel »%s« gefunden</string>
+    <string name="card_browser_search_all_decks">In allen Stapeln suchen</string>
+    <string name="card_browser_unknown_deck_name">Unbekannt</string>
 </resources>

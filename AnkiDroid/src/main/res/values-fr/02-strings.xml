@@ -111,6 +111,7 @@
     <string name="note_editor_no_cards_created">Aucune carte créée. Veuillez remplir plus de champs</string>
     <string name="note_editor_no_first_field">Le premier champ est vide</string>
     <string name="note_editor_no_cloze_delations">Ce type de note doit contenir des textes à trous</string>
+    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="saving_facts">Enregistrer la note</string>
     <string name="saving_model">Enregistrement du type de note</string>
     <string name="add">Ajouter</string>
@@ -166,6 +167,7 @@
     <string name="import_error_unhandled_request">Incapable de traiter cette requête d\'import</string>
     <string name="import_error_exception">Échec de l\'import du paquet\n\n%s</string>
     <string name="import_error_not_apkg_extension">Le nom de fichier « %s » n\'a pas d\'extension .apkg ou .colpkg</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
     <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
     <string name="import_interrupted">Import interrompu</string>
@@ -258,4 +260,6 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Arrière-plan</string>
     <string name="choose_an_image">Choisir une image</string>
+    <!-- Card Template Browser Appearance -->
+    <string name="restore_default">Restore Default</string>
 </resources>

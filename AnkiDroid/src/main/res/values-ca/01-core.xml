@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">S\'està reconstruïnt el paquet cram \nEspereu...</string>
     <string name="rebuild_cram_label">Reconstrueix</string>
     <string name="empty_cram_label">Buit</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">S\'està buidant el paquet cram. \nEspereu...</string>
     <string name="custom_study_deck_name">Sessió d\'estudi personalitzat</string>
     <string name="custom_study_deck_exists">Si us plau, primer canvieu de nom el paquet d\'estudi a mida</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Plantilla del darrere</string>
     <string name="card_template_editor_styling">Estilitzar</string>
     <string name="card_template_editor_menu_delete">Eliminar</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Com a mínim un tipus de carta és necessari.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Voleu eliminar el tipus de carta \"%2$s\", i la seva %1$d carta?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">Una carta no s\'ha pogut generar</string>
     <string name="card_template_editor_would_delete_note">Treient aquest tipus de carta faria que una o més anotacions s\'eliminessin. Si us plau, creeu un nou tipus de carta.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Llegir i escriure a la base de dades d\'AnkiDroid</string>
     <string name="read_write_permission_description">accés a notes, targetes, tipus de nota i malls existents, així com crear-ne de nous</string>

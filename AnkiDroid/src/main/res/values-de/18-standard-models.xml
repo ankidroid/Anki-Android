@@ -20,19 +20,19 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Vorne</string>
-    <string name="back_field_name">Hinten</string>
+    <string name="front_field_name">Vorderseite</string>
+    <string name="back_field_name">Rückseite</string>
     <string name="text_field_name">Text</string>
-    <string name="extra_field_name">Extra</string>
+    <string name="extra_field_name">Zusätzlich</string>
     <string name="field_to_ask_front_name">Gegenrichtung hinzufügen</string>
     <!--Card type-->
     <string name="card_one_name">Karte 1</string>
     <string name="card_two_name">Karte 2</string>
     <string name="card_cloze_name">Lückentext</string>
     <!--Note type-->
-    <string name="basic_model_name">Grundlagen</string>
+    <string name="basic_model_name">Standard</string>
     <string name="cloze_model_name">Lückentext</string>
-    <string name="basic_typing_model_name">Basis (geben Sie die Antwort ein)</string>
-    <string name="forward_reverse_model_name">Grundlegende (und umgekehrte Karte)</string>
-    <string name="forward_optional_reverse_model_name">Basis (optionale umgekehrte Karte)</string>
+    <string name="basic_typing_model_name">Standard (Eintippen der Antwort)</string>
+    <string name="forward_reverse_model_name">Standard (und umgekehrte Karte)</string>
+    <string name="forward_optional_reverse_model_name">Standard (optionale umgekehrte Karte)</string>
 </resources>

@@ -35,10 +35,10 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Bild hinzufügen</string>
-    <string name="multimedia_editor_popup_audio_clip">Audio-Clip hinzufügen</string>
+    <string name="multimedia_editor_popup_audio_clip">Audioclip hinzufügen</string>
     <string name="multimedia_editor_popup_audio">Ton aufnehmen</string>
     <string name="multimedia_editor_popup_text">Erweiterter Editor</string>
-    <string name="multimedia_editor_popup_cloze">Lückentext löschen</string>
+    <string name="multimedia_editor_popup_cloze">Auslassung erzeugen</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -69,7 +69,7 @@
     <string name="multimedia_editor_field_editing_text">Text</string>
     <string name="multimedia_editor_field_editing_image">Bild</string>
     <string name="multimedia_editor_field_editing_audio">Audioaufnahme</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio-Clip</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Audioclip</string>
     <string name="multimedia_editor_field_editing_done">Fertig</string>
     <!-- Text field editing -->
     <!-- buttons -->

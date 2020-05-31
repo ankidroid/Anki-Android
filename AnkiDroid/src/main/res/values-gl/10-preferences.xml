@@ -122,10 +122,6 @@
     <string name="automatic_sync_choice">Sincronización automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar autom. ao iniciar/saír da aplicación se pasaron máis de 10
         minutos dende a última sincronización.</string>
-    <string name="fix_hebrew_text">Corrección para vogais hebraicas</string>
-    <string name="fix_hebrew_text_summ">Solución para amosar as vogais hebraicas correctamente.</string>
-    <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to\n“%s/fonts/”\n\nYou won’t have to modify your cards.</string>
-    <string name="fix_hebrew_download_font">Descargar fonte</string>
     <string name="day_theme">Day theme</string>
     <string name="night_theme">Night theme</string>
     <string name="default_font">Fonte por defecto</string>

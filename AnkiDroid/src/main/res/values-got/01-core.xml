@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">Aftra gatimrjand fulla wikon&#8230;</string>
     <string name="rebuild_cram_label">Gatimrei aftra</string>
     <string name="empty_cram_label">Laus</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Lausjand fulla wikon&#8230;</string>
     <string name="custom_study_deck_name">Anþara laiseinasaisjo</string>
     <string name="custom_study_deck_exists">Gif þata frumist niujata namo du wisandon laiseinawikon</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Hindarwlits</string>
     <string name="card_template_editor_styling">Wlits</string>
     <string name="card_template_editor_menu_delete">Usnim</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Mais þau ain kartahaidus ganauhiþ.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Fraqistei \"%2$s\" kartahaidau, jah þis %1$d kartai?</item>
@@ -183,6 +185,8 @@
     <string name="card_template_editor_would_delete_note"> Usniman þis kartahaidaus tawidedi aina fawanda aiþþau 
         managizo fawandaizo meleine. Skapei þata frumist niujata kartahaidu.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>

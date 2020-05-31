@@ -61,8 +61,8 @@
         <item quantity="other">%d Karten fällig</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d Minute verbleibt</item>
-        <item quantity="other">%d Minuten verbleiben</item>
+        <item quantity="one">%d verbleibende Minute</item>
+        <item quantity="other">%d verbleibende Minuten</item>
     </plurals>
     <string name="widget_add_note">Notiz hinzufügen</string>
     <string name="widget_add_note_button">Neue AnkiDroid-Notiz hinzufügen</string>

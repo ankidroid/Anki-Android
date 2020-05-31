@@ -122,10 +122,6 @@
     <string name="automatic_sync_choice">Аутоматска синхронизација</string>
     <string name="automatic_sync_choice_summ">Синхронизуј аутоматски на старт/излаз, ако је од последње синхронизације прошло више
         од 10 минута.</string>
-    <string name="fix_hebrew_text">Исправке за хебрејске гласове</string>
-    <string name="fix_hebrew_text_summ">Трик за правилно приказивање самогласника у хебрејском.</string>
-    <string name="fix_hebrew_instructions">Овај параметар превазилази RTL алгоритам система Android, да би приказао правилно гласове у тексту на хебрејском,.\n\nДа би то радило, морате преузети фонт Tohu.ttf и ручно га копирати у:\n%s/fonts/\n\nНе морате да модификујете ваше карте.</string>
-    <string name="fix_hebrew_download_font">Преузми фонт</string>
     <string name="day_theme">Day theme</string>
     <string name="night_theme">Night theme</string>
     <string name="default_font">Подразумевани фонт</string>

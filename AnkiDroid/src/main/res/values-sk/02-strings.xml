@@ -111,6 +111,7 @@
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
     <string name="note_editor_no_first_field">The first field is empty</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="saving_facts">Poznámka sa ukladá</string>
     <string name="saving_model">Typ poznámky sa ukladá</string>
     <string name="add">Pridať</string>
@@ -172,6 +173,7 @@
     <string name="import_error_unhandled_request">Nedá sa spracovať požiadavka na import</string>
     <string name="import_error_exception">Nepodarilo sa importovať balík\n\n%s</string>
     <string name="import_error_not_apkg_extension">Názov súboru “%s” nemá príponu .apkg alebo .colpkg</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Zvolený súbor nemohol byť importovaný automaticky AnkiDroidom. Pozrite si, prosím, používateľský manuál ako manuálne importovať anki súbory: \n%s</string>
     <string name="import_replacing">Zbierka sa nahrádza&#8230;</string>
     <string name="import_interrupted">Import prerušený</string>
@@ -278,4 +280,6 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
     <string name="choose_an_image">Choose an Image</string>
+    <!-- Card Template Browser Appearance -->
+    <string name="restore_default">Restore Default</string>
 </resources>

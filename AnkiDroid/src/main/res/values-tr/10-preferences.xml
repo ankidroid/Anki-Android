@@ -121,10 +121,6 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Otomatik eşleme</string>
     <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son eşleme 10 dakikadan daha önce idiyse otomatik olarak eşle.</string>
-    <string name="fix_hebrew_text">İbranice ünlüler için düzeltme</string>
-    <string name="fix_hebrew_text_summ">İbranice sesli harflerin düzgün gözükmesi için çözüm.</string>
-    <string name="fix_hebrew_instructions">Bu ayar İbrânice yazılarda sesli harflerin düzgün gösterilmesi için Android\'in RTL algoritmasını atlar.\n\nBunun işe yaraması için, Tohu.tff fontunu indirip kendiniz şu klasöre kopyalamanız gerekiyor:\n%s/fonts/\n\nKartlarınızda bir değişiklik yapmanız gerekmez.</string>
-    <string name="fix_hebrew_download_font">Font İndir</string>
     <string name="day_theme">Gündüz teması</string>
     <string name="night_theme">Gece teması</string>
     <string name="default_font">Varsayılan yazı tipi</string>
