@@ -20,13 +20,10 @@ package com.ichi2.anki;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Layout;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.ichi2.libanki.Card;
+import android.widget.LinearLayout;
+
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
 
