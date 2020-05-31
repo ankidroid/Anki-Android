@@ -59,6 +59,7 @@ import org.acra.config.DialogConfigurationBuilder;
 import org.acra.config.ToastConfigurationBuilder;
 import org.acra.sender.HttpSender;
 
+import java.io.InputStream;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -170,6 +171,12 @@ public class AnkiDroidApp extends Application {
 
     /** Our ACRA configurations, initialized during onCreate() */
     private CoreConfigurationBuilder acraCoreConfigBuilder;
+
+
+    @NonNull
+    public static InputStream getResourceAsStream(@NonNull String name) {
+        return sInstance.getApplicationContext().getClassLoader().getResourceAsStream(name);
+    }
 
 
     /**
