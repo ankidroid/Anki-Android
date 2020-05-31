@@ -3054,6 +3054,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     case "blue": executeCommand(COMMAND_TOGGLE_FLAG_BLUE);
                         return true;
                     default:
+                        Timber.d("No such Flag found.");
                         return true;
                 }
             }
