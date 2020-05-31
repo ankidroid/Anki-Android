@@ -4,6 +4,7 @@ package com.ichi2.anki.dialogs;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.KeyEvent;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -16,6 +17,8 @@ import com.ichi2.anki.R;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import timber.log.Timber;
 
 public class DatabaseErrorDialog extends AsyncDialogFragment {
     private int[] mRepairValues;
