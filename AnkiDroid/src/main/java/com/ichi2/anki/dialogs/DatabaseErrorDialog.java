@@ -226,7 +226,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 MaterialDialog materialDialog = builder.build();
                 materialDialog.setOnKeyListener((dialog, keyCode, event) -> {
                     if (keyCode == KeyEvent.KEYCODE_BACK) {
-                        Timber.i("catch");
+                        Timber.i("DIALOG_RESTORE_BACKUP caught hardware back button");
                         dismissAllDialogFragments();
                         return true;
                     }
