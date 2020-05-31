@@ -3040,8 +3040,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return true;
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
-            if (url.startsWith("signal:")) {
-                String mFlag = url.replaceFirst("signal:","");
+            if (url.startsWith("signal:flag_")) {
+                String mFlag = url.replaceFirst("signal:flag_","");
                 switch (mFlag) {
                     case "none": executeCommand(COMMAND_UNSET_FLAG);
                         return true;

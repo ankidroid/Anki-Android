@@ -109,7 +109,21 @@ function ankiMarkCard() {
     See AnkiDroid Manual for Usage
 */
 function ankiToggleFlag(flag) {
-    window.location.href = "signal:" + flag;
+    var flagVal = isNaN(flag);
+
+    if (flagVal) {
+        window.location.href = "signal:flag_" + flag;
+    } else {
+        var flagInt = parseInt(flag);
+        switch (flagInt) {
+            case 0: window.location.href = "signal:flag_none"; break;
+            case 1: window.location.href = "signal:flag_red"; break;
+            case 2: window.location.href = "signal:flag_orange"; break;
+            case 3: window.location.href = "signal:flag_green"; break;
+            case 4: window.location.href = "signal:flag_blue"; break;
+            default: console.log('No Flag Found'); break;
+        }
+    }
 }
 
 /* Tell the app the text in the input box when it loses focus */
