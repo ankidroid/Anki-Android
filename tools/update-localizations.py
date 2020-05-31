@@ -178,12 +178,16 @@ t.write(titleString)
 t.close()
 
 for language in languages:
-    if language[:2] in localizedRegions:
-        androidLanguage = string.replace(language, '-', '-r')
+    # Regional files need a marker in Android
+    if language.split('-', 1)[0] in localizedRegions:
+        androidLanguage = string.replace(language, '-', '-r') # zh-CW becomes zh-rCW
     else:
-        androidLanguage = language[:2] # Example: es-ES becomes es
+        androidLanguage = language.split('-', 1)[0] # Example: es-ES becomes es
 
-    print "\nCopying language files for: " + androidLanguage
+    if language == 'yu':
+        androidLanguage = 'yue'
+
+    print "\nCopying language files from " + language + " to " + androidLanguage
     valuesDirectory = "AnkiDroid/src/main/res/values-" + androidLanguage + "/"
     createIfNotExisting(valuesDirectory)
 

@@ -398,6 +398,7 @@ public class AnkiDroidApp extends MultiDexApplication {
     private static Configuration getLanguageConfig(@NonNull Configuration remoteConfig, @NonNull SharedPreferences prefs) {
         Configuration newConfig = new Configuration(remoteConfig);
         Locale newLocale = LanguageUtil.getLocale(prefs.getString(Preferences.LANGUAGE, ""), prefs);
+        Timber.d("AnkiDroidApp::getLanguageConfig - setting locale to %s", newLocale.toString());
         //API level >=24
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //Build list of locale strings, separated by commas: newLocale as first element
