@@ -64,6 +64,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.RenderProcessGoneDetail;
 import android.webkit.WebChromeClient;
@@ -176,9 +177,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected static final int MENU_DISABLED = 3;
 
-    // Deckname
-    private String title;
-
     // Card counts
     private SpannableString newCount;
     private SpannableString lrnCount;
@@ -186,12 +184,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // ETA
     private int eta;
-
-    // Card Mark
-    private boolean isCardMarked;
-
-    // card flag status
-    private int currentCardFlagStatus;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -1497,6 +1489,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         webView.setWebViewClient(new CardViewerWebClient());
         // Set transparent color to prevent flashing white when night mode enabled
         webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
+
+        // Javascript interface for calling AnkiDroid functions in webview, see card.js
+        webView.addJavascriptInterface(new JavaScriptFunction(), "AnkiDroidJS");
         return webView;
     }
 
@@ -1755,7 +1750,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         int[] counts = mSched.counts(mCurrentCard);
 
         if (actionBar != null) {
-            title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
+            String title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
             actionBar.setTitle(title);
             if (mPrefShowETA) {
                 eta = mSched.eta(counts, false);
@@ -2868,8 +2863,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (mCurrentCard == null) {
             return;
         }
-        isCardMarked = shouldDisplayMark();
-        mCardMarker.displayMark(isCardMarked);
+
+        mCardMarker.displayMark(shouldDisplayMark());
     }
 
 
@@ -2897,8 +2892,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (mCurrentCard == null) {
             return;
         }
-        currentCardFlagStatus = getFlagToDisplay();
-        mCardMarker.displayFlag(currentCardFlagStatus);
+        mCardMarker.displayFlag(getFlagToDisplay());
     }
 
 
@@ -3042,30 +3036,26 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // mark card using javascript
             if (url.startsWith("signal:mark_current_card")) {
-                onMark(mCurrentCard);
+                executeCommand(COMMAND_MARK);
                 return true;
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
-            if (url.startsWith("signal:card_toggle_flag_red")) {
-                toggleFlag(FLAG_RED);
-                return true;
-            }
-            if (url.startsWith("signal:card_toggle_flag_green")) {
-                toggleFlag(FLAG_GREEN);
-                return true;
-            }
-            if (url.startsWith("signal:card_toggle_flag_blue")) {
-                toggleFlag(FLAG_BLUE);
-                return true;
-            }
-            if (url.startsWith("signal:card_toggle_flag_orange")) {
-                toggleFlag(FLAG_ORANGE);
-                return true;
-            }
-            // Unset flag
-            if (url.startsWith("signal:card_unset_flag")) {
-                toggleFlag(FLAG_NONE);
-                return true;
+            if (url.startsWith("flag:")) {
+                String mFlag = url.replaceFirst("flag:","");
+                switch (mFlag) {
+                    case "none": executeCommand(COMMAND_UNSET_FLAG);
+                        return true;
+                    case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
+                        return true;
+                    case "orange": executeCommand(COMMAND_TOGGLE_FLAG_ORANGE);
+                        return true;
+                    case "green": executeCommand(COMMAND_TOGGLE_FLAG_GREEN);
+                        return true;
+                    case "blue": executeCommand(COMMAND_TOGGLE_FLAG_BLUE);
+                        return true;
+                    default:
+                        return true;
+                }
             }
 
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
@@ -3181,13 +3171,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             drawFlag();
             drawMark();
             view.loadUrl("javascript:onPageFinished();");
-
-            // cards count, deckname, estimated time, mark, flag to be accessible in AnkiDroid WebView
-            view.loadUrl("javascript:ankiGetCardCount(" + newCount.toString() +  "," + lrnCount.toString() + "," + revCount.toString()  + ")" );
-            view.loadUrl("javascript:ankiGetDeckName('" + title + "')");
-            view.loadUrl("javascript:ankiGetETA(" + eta +")");
-            view.loadUrl("javascript:ankiGetCardMark(" + isCardMarked +")");
-            view.loadUrl("javascript:ankiGetCardFlag(" + currentCardFlagStatus +")");
         }
 
 
@@ -3327,5 +3310,42 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     static void setEditorCard(Card card) {
         //I don't see why we don't do this by intent.
         sEditorCard = card;
+    }
+
+ /*
+ Javascript Interface class for calling Java function from AnkiDroid WebView
+see card.js for available functions
+ */
+    public class JavaScriptFunction {
+
+        @JavascriptInterface
+        public String ankiGetNewCardCount() {
+            return newCount.toString();
+        }
+
+        @JavascriptInterface
+        public String ankiGetLrnCardCount() {
+            return lrnCount.toString();
+        }
+
+        @JavascriptInterface
+        public String ankiGetRevCardCount() {
+            return revCount.toString();
+        }
+
+        @JavascriptInterface
+        public int ankiGetETA() {
+            return eta;
+        }
+
+        @JavascriptInterface
+        public boolean ankiGetCardMark() {
+            return shouldDisplayMark();
+        }
+
+        @JavascriptInterface
+        public int ankiGetCardFlag() {
+            return mCurrentCard.getUserFlag();
+        }
     }
 }

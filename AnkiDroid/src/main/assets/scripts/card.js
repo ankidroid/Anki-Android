@@ -104,55 +104,9 @@ function ankiMarkCard() {
     window.location.href = "signal:mark_current_card";
 }
 
-// Get new card, learn card, review card counts in ankidroid webview. It will be accessible via javascript
-function ankiGetCardCount(ankiNewCount, ankiLrnCount, ankiRevCount) {
-    window.ankiNewCount = ankiNewCount;
-    window.ankiLrnCount = ankiLrnCount;
-    window.ankiRevCount = ankiRevCount;
-}
-
-// Get Current Deck Name
-function ankiGetDeckName(ankiDeckName) {
-   window.ankiDeckName = ankiDeckName;
-}
-
-// Get estimated time
-function ankiGetETA(ankiETA) {
-   window.ankiETA = ankiETA;
-}
-
-// Card Mark
-function ankiGetCardMark(ankiMark) {
-   window.ankiMark = ankiMark;
-}
-
-/**
-* card flagged or not
-* (none = 0, red = 1, orange = 2, green = 3 blue = 4)
-**/
-function ankiGetCardFlag(ankiFlagStatus) {
-    window.ankiFlagStatus = ankiFlagStatus;
-}
-
-// Flag the card from AnkiDroid Webview using JavaScript
-function ankiToggleFlagRed() {
-    window.location.href = "signal:card_toggle_flag_red";
-}
-
-function ankiToggleFlagGreen() {
-    window.location.href = "signal:card_toggle_flag_green";
-}
-
-function ankiToggleFlagBlue() {
-    window.location.href = "signal:card_toggle_flag_blue";
-}
-
-function ankiToggleFlagOrange() {
-    window.location.href = "signal:card_toggle_flag_orange";
-}
-
-function ankiUnsetFlag() {
-    window.location.href = "signal:card_unset_flag";
+// Toggle flag on card from AnkiDroid Webview using JavaScript
+function ankiToggleFlag(flag) {
+    window.location.href = "flag:" + flag;
 }
 
 /* Tell the app the text in the input box when it loses focus */
