@@ -122,10 +122,6 @@
     <string name="automatic_sync_choice">Samodejna sinhronizacija</string>
     <string name="automatic_sync_choice_summ">Samodejni sinhroniziraj ob zagonu/zapiranju programa, če je bila
         zadnja sinhronizacija pred več kot 10-mi minutami.</string>
-    <string name="fix_hebrew_text">Popravek za hebrejske samoglasnike</string>
-    <string name="fix_hebrew_text_summ">Zaobidenje za pravilen izris hebrejskih samoglasnikov.</string>
-    <string name="fix_hebrew_instructions">Ta nastavitev zaobide Androidov algoritem RTL, da pravilno prikaže hebrejsko besedilo s samoglasniki.\n\nDa bi to delovalo, morate prejeti pisavo Tohu.ttf in jo ročno kopirati v\n\"%s/fonts/”\n\nSvojih kartic vam ne bo treba spremeniti.</string>
-    <string name="fix_hebrew_download_font">Prejmi pisavo</string>
     <string name="day_theme">Dnevna tema</string>
     <string name="night_theme">Nočna tema</string>
     <string name="default_font">Privzeta pisava</string>

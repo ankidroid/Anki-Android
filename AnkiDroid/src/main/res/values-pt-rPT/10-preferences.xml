@@ -122,10 +122,6 @@
     <string name="automatic_sync_choice">Sincronização automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automaticalmente ao iniciar/sair da aplicação, se a última sicnronização foi há mais 
         de 10 minutos.</string>
-    <string name="fix_hebrew_text">Correção para vogais em Hebraico</string>
-    <string name="fix_hebrew_text_summ">Solução alternativa para processar correctamente as vogais em hebraico.</string>
-    <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo RTL do Android para mostrar correctamente o texto hebraico com vogais.\n\nPara isto funcionar, precisa de descarregar o tipo de letra Tohu.ttf e copiá-lo manualmente para:\n%s/fonts/\n\nNão terá de modificar as suas fichas.</string>
-    <string name="fix_hebrew_download_font">Transferir tipo de letra</string>
     <string name="day_theme">Tema do dia</string>
     <string name="night_theme">Tema noturno</string>
     <string name="default_font">Letra predefinida</string>

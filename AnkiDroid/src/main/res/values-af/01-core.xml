@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">Herbou cram kaartpak&#8230;</string>
     <string name="rebuild_cram_label">Herbou</string>
     <string name="empty_cram_label">Maak leeg</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Maak cram kaartpak leeg&#8230;</string>
     <string name="custom_study_deck_name">Pasmaak studie sessie</string>
     <string name="custom_study_deck_exists">Hernoem die bestaande pasmaak kaartpak eers</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Back template</string>
     <string name="card_template_editor_styling">Styl</string>
     <string name="card_template_editor_menu_delete">Verwyder</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Ten minste een kaarttipe word benodig.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Skrap die \"%2$s\" kaarttipe en die samegaande %1$d kaart?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">A card could not be generated</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>

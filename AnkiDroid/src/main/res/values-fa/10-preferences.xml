@@ -121,10 +121,6 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">همگام سازی خودکار</string>
     <string name="automatic_sync_choice_summ">همگام سازی خودکار موقع ورود و خروج از برنامه اگر از آخرین همگام سازی بیشتر از 10 دقیقه گذشته باشد.</string>
-    <string name="fix_hebrew_text">تعمیر برای اصوات عبری</string>
-    <string name="fix_hebrew_text_summ">راه حل ارائه شده برای تصحیح ترجمه اصوات عبری.</string>
-    <string name="fix_hebrew_instructions">این تنظیمات مسیر فرعی قالب چیدمان راست به چپ اندروید است که برای تصحیح نمایش متن با صوت عبری بکار می رود .\n\nبرای انجام این کارk, شما باید قلم Tohu.ttf  را  بارگیری کنید و آن را بصورت دستی به:\n%s/fonts/\n\n کپی کنید.شما مجبور به تغییر کارت نیستید.</string>
-    <string name="fix_hebrew_download_font">بارگیری قلم</string>
     <string name="day_theme">پس زمینه روز</string>
     <string name="night_theme">پس زمینه شب</string>
     <string name="default_font">قلم پیش فرض</string>

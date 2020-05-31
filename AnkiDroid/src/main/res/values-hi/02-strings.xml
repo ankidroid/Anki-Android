@@ -111,6 +111,7 @@
     <string name="note_editor_no_cards_created">कोई कार्ड नहीं बनाया गया। कृपया अधिक फ़ील्ड भरें</string>
     <string name="note_editor_no_first_field">पहला फील्ड खाली है</string>
     <string name="note_editor_no_cloze_delations">इस नोट प्रकार में क्लॉज विलोपन होना चाहिए</string>
+    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="saving_facts">नोट सहेजने</string>
     <string name="saving_model">नोट प्रकार सहेज रहा है</string>
     <string name="add">जोड़ें</string>
@@ -166,6 +167,7 @@
     <string name="import_error_unhandled_request">आयात अनुरोध संसाधित करने में असमर्थ</string>
     <string name="import_error_exception">पैकेज आयात करने में विफल \n\n%s</string>
     <string name="import_error_not_apkg_extension">फ़ाइल नाम \"%s\" में .apkg या .colpkg एक्सटेंशन नहीं है</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
     <string name="import_replacing">संग्रह की जगह.. ।</string>
     <string name="import_interrupted">आयात बाधित हुआ</string>
@@ -258,4 +260,6 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">पृष्ठभूमि</string>
     <string name="choose_an_image">चित्र चुनें</string>
+    <!-- Card Template Browser Appearance -->
+    <string name="restore_default">Restore Default</string>
 </resources>

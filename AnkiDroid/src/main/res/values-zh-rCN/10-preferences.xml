@@ -79,8 +79,8 @@
     <string name="image_zoom">图片缩放</string>
     <string name="button_size">“显示答案”按钮大小</string>
     <string name="card_browser_font_size">卡片浏览器字体缩放</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media">在卡牌浏览器中显示文件名</string>
+    <string name="card_browser_hide_media_summary">在卡牌浏览器问题/回答字段中显示媒体文件名</string>
     <string name="col_path">AnkiDroid路径</string>
     <string name="fullscreen_review">全屏显示</string>
     <string name="full_screen_off">关闭</string>
@@ -107,8 +107,8 @@
     <string name="gestures_tap_right">点击右侧</string>
     <string name="more_scrolling_buttons">电子书阅读器</string>
     <string name="more_scrolling_buttons_summ">也使用 kanji/katakana， emoji/kao-moji 按钮来滚动</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">“%s” 菜单</string>
+    <string name="card_browser_enable_external_context_menu_summary">全局启用 “%s” 上下文菜单</string>
     <string name="double_scrolling_gap">双滚动</string>
     <string name="double_scrolling_gap_summ">电子阅读器中使用双滚动</string>
     <string name="swipe_sensitivity">滑动灵敏度</string>
@@ -121,10 +121,6 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">自动同步</string>
     <string name="automatic_sync_choice_summ">如果距离上次同步了超过10分钟，在应用程序启动/退出自动同步。</string>
-    <string name="fix_hebrew_text">希伯来元音的修补程序</string>
-    <string name="fix_hebrew_text_summ">正确显示希伯来语元音的临时解决方法。</string>
-    <string name="fix_hebrew_instructions">此设置将绕过Android的 RTL 算法 ，以正确显示希伯来语的元音。\n\n使用此设置，需要下载Tohu.ttf字体，并手动拷贝到:\n%s/fonts/\n\n目录中。不需要修改卡牌。</string>
-    <string name="fix_hebrew_download_font">下载字体</string>
     <string name="day_theme">白天主题</string>
     <string name="night_theme">夜间主题</string>
     <string name="default_font">默认字体</string>

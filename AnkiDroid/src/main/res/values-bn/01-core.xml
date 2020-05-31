@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">ক্রাম ডেক পুনঃতৈরি করা হচ্ছে&#8230;</string>
     <string name="rebuild_cram_label">নতুন করে তৈরি করো</string>
     <string name="empty_cram_label">খালি</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">ক্রাম ডেক ফাঁকা করা হচ্ছে&#8230;</string>
     <string name="custom_study_deck_name">নিজস্ব গবেষণা অধিবেশন</string>
     <string name="custom_study_deck_exists">বর্তমান স্বনির্ধারিত গবেষণা ডেক প্রথম পুনঃনামকরণ করুন</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">পশ্চাৎ খসড়া</string>
     <string name="card_template_editor_styling">স্টাইলিং</string>
     <string name="card_template_editor_menu_delete">মুছুন</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">কমপক্ষে একটি কার্ড টাইপ প্রয়োজন</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\'%2$s\' কার্ডের ধরন, আর তার %1$d কার্ড মুছে ফেলতে চান?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">কার্ড তৈরি করা যায় নি</string>
     <string name="card_template_editor_would_delete_note">এই কার্ডের ধরন অপসারণ মুছার কারণে এক বা একাধিক নোট মুছে ফেলা হতে পারে। অনুগ্রহ করে আগে কোন নতুন কার্ডের ধরন তৈরি করুন।</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ডাটাবেস থেকে পড়ুন এবং লিখুন</string>
     <string name="read_write_permission_description">বিদ্যমান নোট, কার্ড, নোটের ধরন এবং ডেক এ প্রবেশের পাশাপাশি নতুন একটি তৈরি করুন</string>

@@ -58,7 +58,7 @@
     <string name="backup_restore_select_title">Wählen Sie die Sicherungskopie, die wiederhergestellt werden soll</string>
     <string name="backup_restore_no_backups">Keine Sicherungen gefunden. Wenn Sie Sicherungen auf Ihrem Desktop-Computer haben, kopieren Sie sie manuell ins AnkiDroid-Verzeichnis.</string>
     <string name="open_collection_failed_title">Sammlung nicht geöffnet</string>
-    <string name="corrupt_db_message">Ihre Sammlung ist beschädigt.\n\nBerühren Sie »Optionen«, um eine Sammlung aus einer Sicherung wiederherzustellen. Sollte das nicht funktionieren, finden Sie weitere Informationen zum Reparieren der Datenbank unter: \n%1$s</string>
+    <string name="corrupt_db_message">Ihre Sammlung ist beschädigt.\n\nTippen Sie auf »Optionen« zum Wiederherstellen aus einer Sicherung oder - sollte dies nicht funktionieren - lesen Sie die folgenden Anweisungen zum manuellen Reparieren der Datenbank: \n%1$s</string>
     <string name="access_collection_failed_message">Fehler beim Zugriff auf Ihre Sammlung. Es kann ein harmloser Fehler sein, oder es gibt ein Problem mit Ihrer Sammlung. \n\nVersuchen Sie es mit  »Datenbank prüfen« oder stellen Sie sie durch Berühren der »Optionen«-Schaltfläche aus einer Sicherung wieder her. Wenn Sie diese Meldung weiterhin sehen, senden Sie bitte einen Fehlerbericht: \n%1$s</string>
     <string name="deck_repair_error">Sammlung konnte nicht repariert werden</string>
 </resources>

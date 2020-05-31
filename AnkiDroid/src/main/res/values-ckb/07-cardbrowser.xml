@@ -40,6 +40,7 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
+        <item quantity="one">%d card shown</item>
         <item quantity="other">%d cards shown</item>
     </plurals>
     <string name="card_browser_all_decks">All decks</string>
@@ -63,18 +64,18 @@
     <string name="card_browser_show_suspended">Filter suspended</string>
     <string name="card_browser_search_by_tag">Filter by tag</string>
     <string name="card_browser_tags_shown">Tags: %1$s</string>
-    <string name="card_browser_list_my_searches">My searches</string>
-    <string name="card_browser_list_my_searches_save">Save search</string>
-    <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-    <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-    <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+    <string name="card_browser_list_my_searches">Lêgerînên min</string>
+    <string name="card_browser_list_my_searches_save">Lêgerînê tomar bike</string>
+    <string name="card_browser_list_my_searches_title">Lêgerîneka tomarkirî hilbijêre</string>
+    <string name="card_browser_list_my_searches_new_name">Navê bo lêgerîna niha</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Hûn nikarin lêgerîneke bênas tomar bikin</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">!Ev nav heye</string>
+    <string name="card_browser_list_my_searches_remove_content">\?Bila \"%s$s\" bê jêbirin</string>
     <string name="card_browser_change_display_order">Change display order</string>
     <string name="card_browser_change_display_order_title">Choose display order</string>
     <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
-    <string name="card_details_question">Question</string>
-    <string name="card_details_answer">Answer</string>
+    <string name="card_details_question">Pirs</string>
+    <string name="card_details_answer">Bersiv</string>
     <string name="card_details_due">Due</string>
     <string name="card_details_tags">Tags</string>
     <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
@@ -82,12 +83,12 @@
         <item>No sorting (faster)</item>
         <item>By sort field</item>
         <item>By created time</item>
-        <item>By edited time</item>
+        <item>Ligorî dema guherandinê</item>
         <item>By changed time</item>
         <item>By due time</item>
         <item>By interval</item>
-        <item>By ease</item>
-        <item>By reviews</item>
+        <item>Li gorî hêsaniyê</item>
+        <item>Li gorî dubarekirinan</item>
         <item>By lapses</item>
     </string-array>
     <string name="card_browser_select_all">Select all</string>
@@ -98,4 +99,7 @@
     <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(learning)</string>
     <string name="card_browser_note_editor_error">Error opening Note Editor</string>
+    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
+    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_unknown_deck_name">Unknown</string>
 </resources>

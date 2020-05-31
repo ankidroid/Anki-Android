@@ -121,10 +121,6 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">स्वचालित सिंक्रनाइज़ेशन</string>
     <string name="automatic_sync_choice_summ">यदि अंतिम सिंक्रनाइज़ेशन 10 मिनट पहले से अधिक था, तो अनुप्रयोग प्रारंभ/निकास पर स्वचालित रूप से सिंक्रनाइज़ करें ।</string>
-    <string name="fix_hebrew_text">हिब्रू स्वर के लिए फिक्स</string>
-    <string name="fix_hebrew_text_summ">हिब्रू स्वर ठीक से रेंडरिंग के लिए समाधान ।</string>
-    <string name="fix_hebrew_instructions">यह सेटिंग सही ढंग से स्वर के साथ हिब्रू पाठ दिखाने के लिए Android के बाएँ एल्गोरिथ्म बाईपास. \ n \ कोउ यह काम करने के लिए, आप फ़ॉन्ट Tohu. ttf डाउनलोड करने और इसे मैन्युअल रूप से to\n \"%s/फोंट/\n\nYou अपने कार्ड को संशोधित करने की जरूरत नहीं होगी.</string>
-    <string name="fix_hebrew_download_font">डाउनलोडिंग फॉन्ट</string>
     <string name="day_theme">दिवस थीम</string>
     <string name="night_theme">रात विषय</string>
     <string name="default_font">डिफ़ॉल्ट फ़ॉंट</string>

@@ -122,10 +122,6 @@
     <string name="automatic_sync_choice">Penyegerakkan sari kata</string>
     <string name="automatic_sync_choice_summ">Sync secara automatik pada aplikasi mula/keluar jika sync terakhir itu lebih dari 10
 minit yang lalu.</string>
-    <string name="fix_hebrew_text">Fix untuk vokal ibrani</string>
-    <string name="fix_hebrew_text_summ">Penyelesaian untuk terjemahan bahasa ibrani vokal dengan betul.</string>
-    <string name="fix_hebrew_instructions">Tetapan ini memintas algoritma RTL Android untuk menunjukkan teks Ibrani dengan huruf vokal dengan betul.\n\nUntuk berfungsi, anda perlu memuat turun fon Tohu.ttf dan menyalinnya secara manual ke\n“%s/fonts/”\n\nAnda tidak perlu mengubah suai kad anda.</string>
-    <string name="fix_hebrew_download_font">Muat turun fon</string>
     <string name="day_theme">Tema hari</string>
     <string name="night_theme">Tema malam</string>
     <string name="default_font">Fon lalai</string>

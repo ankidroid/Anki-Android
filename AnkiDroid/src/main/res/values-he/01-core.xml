@@ -155,6 +155,7 @@
     <string name="rebuild_cram_deck">השיקום cram הסיפון. \nPlease רגע...</string>
     <string name="rebuild_cram_label">בניה מחדש</string>
     <string name="empty_cram_label">ריקון</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">מרקן את חפיסת הדחיסה.‏\nנא להמתין...‏</string>
     <string name="custom_study_deck_name">שיעור למידה מותאם</string>
     <string name="custom_study_deck_exists">ראשית, ערוך שם חפיסה חדשה</string>
@@ -184,6 +185,7 @@
     <string name="card_template_editor_back">תבנית אחורית</string>
     <string name="card_template_editor_styling">סגנון</string>
     <string name="card_template_editor_menu_delete">מחיקה</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
@@ -194,6 +196,8 @@
     <string name="invalid_template">לא ניתן לייצר קלף</string>
     <string name="card_template_editor_would_delete_note">הסרת סוג הכרטסיה תגרום לרשימה אחת או יותר להימחק. אנא צור סוג כרטיסיות חדש קודם.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
     <string name="read_write_permission_description">תן לאפליקציה גישה להערות, כרטיסים, סוגי הערות, וחפיסות, וכן גישה ליצור חדשים</string>

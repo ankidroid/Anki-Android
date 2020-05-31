@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
     <string name="rebuild_cram_label">Rebuild</string>
     <string name="empty_cram_label">Vala</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Back template</string>
     <string name="card_template_editor_styling">Styling</string>
     <string name="card_template_editor_menu_delete">Jê bibe</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">At least one card type is required</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">A card could not be generated</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>

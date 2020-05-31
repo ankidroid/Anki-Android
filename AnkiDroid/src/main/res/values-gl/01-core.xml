@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">Reconstruíndo baralla de chapar.\nAgarde por favor...</string>
     <string name="rebuild_cram_label">Reconstruír</string>
     <string name="empty_cram_label">Baleirar</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Baleirando baralla de chapar.\nAgarde por favor...</string>
     <string name="custom_study_deck_name">Sesión de estudo personalizado</string>
     <string name="custom_study_deck_exists">Por favor, renomee a baralla de estudo personalizado existente primeiro.</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Modelo posterior</string>
     <string name="card_template_editor_styling">Estilo</string>
     <string name="card_template_editor_menu_delete">Eliminar</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Cando menos un tipo de cartón é obrigatorio.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Eliminar o tipo de cartón “%2$s” e o seu %1$d cartón?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">Non foi posible xerar un cartón</string>
     <string name="card_template_editor_would_delete_note">Ao eliminar este tipo de cartón poderíanse eliminar unha ou máis notas. Por favor, crea primeiro un novo tipo de cartón.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escribir na bases de datos do AnkiDroid</string>
     <string name="read_write_permission_description">acceder as notas, cartóns, tipos de notas e barallas existentes así como crear novos</string>

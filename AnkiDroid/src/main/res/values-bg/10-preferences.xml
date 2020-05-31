@@ -121,10 +121,6 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Автоматична синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронизиране пи стариране/изход от приложението, ако последното синхронизиране е от повече от 10        минути.</string>
-    <string name="fix_hebrew_text">Поправка за гласните на иврит</string>
-    <string name="fix_hebrew_text_summ">Позволява правилно показване гласните на иврит.</string>
-    <string name="fix_hebrew_instructions">Тази настройка заобикаля алгоритъм RTL на Android, за да се покаже правилно гласните в текст на иврит. \n\nЗа да работи правилно, трябва да изтеглите шрифта Tohu.ttf и да го копирате ръчно в \n“%s/fonts/”\n\nНяма нужда да модифицирате картите.</string>
-    <string name="fix_hebrew_download_font">Изтегляне на шрифт</string>
     <string name="day_theme">Дневна тема</string>
     <string name="night_theme">Нощна тема</string>
     <string name="default_font">Шрифт по подразбиране</string>

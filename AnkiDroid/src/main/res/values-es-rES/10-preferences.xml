@@ -121,10 +121,6 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Sincronización automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automáticamente al abrir/cerrar la aplicación si hace        más de 10 minutos desde la última sincronización.</string>
-    <string name="fix_hebrew_text">Corrección para vocales hebreas</string>
-    <string name="fix_hebrew_text_summ">Solución para mostrar las vocales Hebreas correctamente.</string>
-    <string name="fix_hebrew_instructions">Esta opción evade el algoritmo RTL de Android para mostrar correctamente texto hebreo con vocales.\n\nPara que esto funcione, necesitas descargar la fuente Tohu.ttf y copiarla manualmente a:\n%s/fonts/\n\nNo necesitarás hacer ninguna modificación a tus tarjetas.</string>
-    <string name="fix_hebrew_download_font">Descargar Fuente</string>
     <string name="day_theme">Tema del día</string>
     <string name="night_theme">Tema nocturno</string>
     <string name="default_font">Fuente predeterminada</string>

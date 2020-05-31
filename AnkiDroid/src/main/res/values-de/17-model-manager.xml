@@ -55,15 +55,21 @@
     <string name="model_field_editor_rename">Feld umbenennen</string>
     <string name="model_field_editor_reposition_menu">Feld neu positionieren</string>
     <string name="model_field_editor_reposition">Feld neu positionieren (Wert von %1$d bis %2$d eingeben)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_toggle_sticky">Beim Hinzufügen letzte Eingabe merken</string>
     <string name="model_field_editor_changing">Aktualisierung der Felder</string>
     <string name="model_field_editor_sort_field">Nach diesem Feld sortieren</string>
     <string name="model_clone_suffix">Kopie</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Sind Sie sicher, dass Sie diesen Notiztyp löschen möchten?</string>
+    <string name="model_delete_warning">Möchten Sie diesen Notiztyp wirklich löschen?</string>
     <string name="field_delete_warning">Möchten Sie dieses Feld wirklich löschen?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Hinzufügen: %1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Klonen: %1$s </string>
+    <!--Browser Appearance-->
+    <string name="card_template_browser_appearance_summary">Geben Sie die Vorlage ein, die die Kartenübersicht zum Anzeigen Ihrer Karten verwendet, um eine kürzere Antwort anzuzeigen.\n\nEine Vorderseitenvorlage von\n»Die Hauptstadt von {{Country}} ist:«\nkönnte in der Kartenübersicht komprimiert werden zu\n»Hauptstadt: {{Country}}«</string>
+    <string name="card_template_browser_appearance_question_format">Frageformat</string>
+    <string name="card_template_browser_appearance_answer_format">Antwortformat</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Standardwerte wiederherstellen?</string>
+    <string name="card_template_browser_appearance_saving_note">Diese Änderungen werden beim Speichern der Kartenvorlage angewendet</string>
 </resources>

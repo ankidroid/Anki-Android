@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">درحال بازسازی دسته کارت آزمون.\nلطفا صبر کنید...</string>
     <string name="rebuild_cram_label">بازسازی</string>
     <string name="empty_cram_label">خالی</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">در حال خالی کردن دسته مطالعه فشرده .\nلطفا صبر کنید...</string>
     <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
     <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">قالب پشت</string>
     <string name="card_template_editor_styling">طراحی</string>
     <string name="card_template_editor_menu_delete">حذف</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">حداقل یک کارت وارد کنید.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">حذف نوع کارت %2$s ،و %1$d کارت آن؟</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">کارت جدید نمی تواند ساخته شود</string>
     <string name="card_template_editor_would_delete_note">پاکسازی این نوع کارت ممکن است منجر به پاک شدن یک یا تعدادی یادداشت شود.لطفاً در ابتدا یک نوع کارت بسازید. </string>
     <string name="template_for_current_card_deleted">نوع کارت برای کارت فعلی حذف شد.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">خواندن و نوشتن داده ها روی AnkiDroid</string>
     <string name="read_write_permission_description">به یادداشتهای موجود، کارت ها، نوع یادداشتها و دسته ها و همچنین ایجاد موارد جدید دسترسی داشته باشید</string>

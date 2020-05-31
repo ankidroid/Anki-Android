@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">Обнова на натрупaните deck&#8230;</string>
     <string name="rebuild_cram_label">Обнова</string>
     <string name="empty_cram_label">Празно</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Празни натрупани deck&#8230;</string>
     <string name="custom_study_deck_name">Прилагодена студиска сесија</string>
     <string name="custom_study_deck_exists">Прво преименувајте ја постоечката прилагодена студија на deck</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Заден образец</string>
     <string name="card_template_editor_styling">Стајлинг</string>
     <string name="card_template_editor_menu_delete">Избришете</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Барем еден тип на картичка е потребен</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Избришете тип на картичка \"%2$s\" и нејзината %1$d картичка?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">Не може да се генерира картичката</string>
     <string name="card_template_editor_would_delete_note">Отстранувањето на оваа картичка тип ќе предизвика еден или повеќе белешки да бидат избришани. Ве молиме креирајте нов тип на картичка.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читајте и пишувајте на базата на податоци на AnkiDroid</string>
     <string name="read_write_permission_description">да пристапите до постоечките белешки, картички, типови белешки и decks, како и креирање нови</string>

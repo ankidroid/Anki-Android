@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">மீளக் cram கட்டு...</string>
     <string name="rebuild_cram_label">மீண்டும்</string>
     <string name="empty_cram_label">காலி</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Cram கட்டு காலிசெய்வதால்...</string>
     <string name="custom_study_deck_name">தனிப்பயன் ஆய்வு கூட்டம்</string>
     <string name="custom_study_deck_exists">தற்போதுள்ள விருப்ப ஆய்வு கட்டு முதலில் மறுபெயரிடு</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">பின் வார்ப்புரு</string>
     <string name="card_template_editor_styling">ஸ்டைலிங்</string>
     <string name="card_template_editor_menu_delete">அழி</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">குறைந்தது ஒரு கார்டு வகை தேவை</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">அட்டை வகை %2$s மற்றும் அதன் அட்டை %1$d நீக்க வேண்டுமா?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">ஒரு கார்டை உருவாக்க முடியவில்லை</string>
     <string name="card_template_editor_would_delete_note">இந்த கார்டை நீக்குவது ஒன்று அல்லது அதற்கு மேற்பட்ட குறிப்புகள் நீக்கப்படும். முதலில் ஒரு புதிய கார்டு வகை ஒன்றை உருவாக்கவும்.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid டேட்டாபேஸ் எழுதப்</string>
     <string name="read_write_permission_description">தற்போதுள்ள குறிப்புகள், அட்டைகள், குறிப்பு வகைகள் மற்றும் அடுக்குகள் அணுக, அத்துடன் புதிய ஒன்றை உருவாக்க</string>
