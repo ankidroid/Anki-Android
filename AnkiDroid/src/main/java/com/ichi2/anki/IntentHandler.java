@@ -60,11 +60,17 @@ public class IntentHandler extends Activity {
         }
     }
 
+    private static boolean isValidViewIntent(@NonNull Intent intent) {
+        // Negating a negative because we want to call specific attention to the fact that it's invalid
+        // #6312 - Smart Launcher provided an empty ACTION_VIEW, no point in importing here.
+        return !ImportUtils.isInvalidViewIntent(intent);
+    }
+
     @VisibleForTesting
     @CheckResult
     static LaunchType getLaunchType(@NonNull Intent intent) {
         String action = intent.getAction();
-        if (Intent.ACTION_VIEW.equals(action)) {
+        if (Intent.ACTION_VIEW.equals(action) && isValidViewIntent(intent)) {
             return LaunchType.FILE_IMPORT;
         } else if ("com.ichi2.anki.DO_SYNC".equals(action)) {
             return LaunchType.SYNC;

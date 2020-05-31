@@ -72,4 +72,15 @@ public class IntentHandlerTest {
 
         assertThat(expected, is(LaunchType.DEFAULT_START_APP_IF_NEW));
     }
+
+    @Test
+    public void viewWithNoDataPerformsDefaultAction() {
+        // #6312 - Smart Launcher double-tap launches us with this. No data at all in the intent
+        // so we can only perform the default action
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+        LaunchType expected = IntentHandler.getLaunchType(intent);
+
+        assertThat(expected, is(LaunchType.DEFAULT_START_APP_IF_NEW));
+    }
 }
