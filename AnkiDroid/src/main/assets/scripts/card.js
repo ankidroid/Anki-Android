@@ -109,13 +109,10 @@ function ankiMarkCard() {
     See AnkiDroid Manual for Usage
 */
 function ankiToggleFlag(flag) {
-    var flagVal = isNaN(flag);
+    var flagVal = Number.isInteger(flag);
 
     if (flagVal) {
-        window.location.href = "signal:flag_" + flag;
-    } else {
-        var flagInt = parseInt(flag);
-        switch (flagInt) {
+        switch (flag) {
             case 0: window.location.href = "signal:flag_none"; break;
             case 1: window.location.href = "signal:flag_red"; break;
             case 2: window.location.href = "signal:flag_orange"; break;
@@ -123,6 +120,8 @@ function ankiToggleFlag(flag) {
             case 4: window.location.href = "signal:flag_blue"; break;
             default: console.log('No Flag Found'); break;
         }
+    } else {
+        window.location.href = "signal:flag_" + flag;
     }
 }
 
