@@ -48,9 +48,9 @@
     <string name="CardEditorNoteDeck">دسته:</string>
     <string name="CardEditorModel">نوع:</string>
     <string name="CardEditorTags">برچسب ها: %1$s</string>
-    <string name="CardEditorCards">کارت ها: %1$s</string>
+    <string name="CardEditorCards">کارت‌ها: %1$s</string>
     <string name="tag_name">نام برچسب</string>
-    <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب ها</string>
+    <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب‌ها</string>
     <string name="add_tag">اضافه نمودن برچسب</string>
     <string name="check_all_tags">علامت زدن/نزدن همه برچسب ها</string>
     <string name="filter_tags">فیلترکردن برچسب ها</string>
@@ -67,10 +67,10 @@
     <string name="leech_suspend_notification">کارت به عنوان مزاحم مشخص و تعلیق شده است</string>
     <string name="leech_notification">کارت به عنوان مزاحم مشخص شده است</string>
     <string name="corrupt_font">فونت فایل خراب %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
+    <string name="webview_crash_unknown">خطای ناشناخته</string>
+    <string name="webview_crash_unknwon_detailed">خطای داخلی در نمایش وب باعث این خطا شده است</string>
+    <string name="webview_crash_oom">حافظه کافی نیست</string>
+    <string name="webview_crash_oom_details">نمای وب به وسیلۀ سیستم پایان یافت. این معمولاً زمانی رخ می‌دهد که حافظۀ نرم افزار به دلیل فونت‌ها یا فایل‌های بزرگ پر شود. </string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
