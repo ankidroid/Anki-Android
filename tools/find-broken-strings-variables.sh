@@ -6,9 +6,18 @@
 EXIT_STATUS=0
 
 pushd AnkiDroid/src/main > /dev/null || exit 1
-if grep -RHn "%1$ s" res/values*; then EXIT_STATUS=$((EXIT_STATUS + 1)); fi
-if grep -RHn "%1$ d" res/values*; then EXIT_STATUS=$((EXIT_STATUS + 1)); fi
-if grep -RHn "%1" res/values* | grep -v "%1\\$"; then EXIT_STATUS=$((EXIT_STATUS + 1)); fi
+if grep -RHn "%1$ s" res/values*; then
+  echo "Found '%1$ s'-related error"
+  EXIT_STATUS=$((EXIT_STATUS + 1));
+fi
+if grep -RHn "%1$ d" res/values*; then
+  echo "Found '%1$ s'-related error"
+  EXIT_STATUS=$((EXIT_STATUS + 1));
+fi
+if grep -RHn "%1" res/values* | grep -v "%1\\$"; then
+  echo "Found '%1'-related error"
+  EXIT_STATUS=$((EXIT_STATUS + 1));
+fi
 
 # This is currently not working and I'm not sure why? It worked a couple days ago as of 20200516
 echo "The next test will likely only run correctly on macOS. On Ubuntu it does not work well."
@@ -28,13 +37,21 @@ if grep -RHn '%' res/values* |
  grep -v '%.1f'     |
  grep -v '%\\n'
 then
- echo "Found errors but if you are not on macOS they might be false positive." #EXIT_STATUS=$((EXIT_STATUS + 1))
+ echo "Found grep errors but if you are not on macOS they are likely false positive. Ignoring"
+ #EXIT_STATUS=$((EXIT_STATUS + 1))
 fi
 
-if grep -RHn '％' res/values*; then EXIT_STATUS=$((EXIT_STATUS + 1)); fi
+if grep -RHn '％' res/values*; then
+  echo "Found errors in simple '%' grep"
+  EXIT_STATUS=$((EXIT_STATUS + 1));
+  fi
 
-if grep -RHn "CDATA " res/values*; then EXIT_STATUS=$((EXIT_STATUS + 1)); fi
+if grep -RHn "CDATA " res/values*; then
+  echo "Found CDATA-related errors"
+  EXIT_STATUS=$((EXIT_STATUS + 1));
+fi
 
 lint --check StringFormatInvalid ./res
 popd > /dev/null || exit 1
+echo "Exiting with status $EXIT_STATUS"
 exit $EXIT_STATUS
