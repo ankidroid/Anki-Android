@@ -89,7 +89,7 @@ public class LanguageUtil {
                 String[] localeParts = localeCode.split("[_-]", 2);
                 locale = new Locale(localeParts[0], localeParts[1]);
             } catch (ArrayIndexOutOfBoundsException e) {
-                Timber.w(e, "LanguageUtil::getLocale regional variant split failed. Using code raw.");
+                Timber.w(e, "LanguageUtil::getLocale variant split fail, using code '%s' raw.", localeCode);
                 locale = new Locale(localeCode);
             }
         } else {

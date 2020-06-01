@@ -16,11 +16,14 @@
 
 package com.ichi2.utils;
 
+import android.os.Build;
+
 import com.google.common.collect.Sets;
 import com.ichi2.anki.RobolectricTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,8 +36,12 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
+@Config(sdk = { Build.VERSION_CODES.JELLY_BEAN,
+                Build.VERSION_CODES.JELLY_BEAN_MR1,
+                Build.VERSION_CODES.N })
 public class LanguageUtilsTest extends RobolectricTest {
 
     private static final String[] PREVIOUS_LANGUAGES = { "ar", "bg", "ca", "cs", "de", "el", "en", "eo", "es-AR", "es-ES", "et", "fa",
@@ -78,30 +85,40 @@ public class LanguageUtilsTest extends RobolectricTest {
     }
 
     @Test
+    @Config(qualifiers = "en")
     public void localeTwoLetterCodeResolves() {
-        assertThat("A locale with a 2-letter code resolves correctly",
-                LanguageUtil.getLocale("af").getDisplayLanguage().equals("Afrikaans"));
+        assertThat("A locale with a 3-letter code resolves correctly",
+                "Afrikaans",
+                is(LanguageUtil.getLocale("af").getDisplayLanguage()));
     }
 
     @Test
+    @Config(qualifiers = "en")
     public void localeThreeLetterCodeResolves() {
         assertThat("A locale with a 3-letter code resolves correctly",
-                LanguageUtil.getLocale("fil").getDisplayLanguage().equals("Filipino"));
+                "Filipino",
+                is(LanguageUtil.getLocale("fil").getDisplayLanguage()));
     }
 
     @Test
+    @Config(qualifiers = "en")
     public void localeTwoLetterRegionalVariantResolves() {
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                LanguageUtil.getLocale("pt-BR").getDisplayName().equals("Portuguese (Brazil)"));
+                "Portuguese (Brazil)",
+                is(LanguageUtil.getLocale("pt-BR").getDisplayName()));
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                LanguageUtil.getLocale("pt_BR").getDisplayName().equals("Portuguese (Brazil)"));
+                "Portuguese (Brazil)",
+                is(LanguageUtil.getLocale("pt_BR").getDisplayName()));
     }
 
     @Test
+    @Config(qualifiers = "en")
     public void localeThreeLetterRegionalVariantResolves() {
-        assertThat("A locale with a 3-letter coe and regional variant resolves correctly",
-                LanguageUtil.getLocale("yue_TW").getDisplayName().equals("yue (Taiwan)"));
-        assertThat("A locale with a 3-letter coe and regional variant resolves correctly",
-                LanguageUtil.getLocale("yue-TW").getDisplayName().equals("yue (Taiwan)"));
+        assertThat("A locale with a 2-letter code and regional variant resolves correctly",
+                "yue (Taiwan)",
+                is(LanguageUtil.getLocale("yue-TW").getDisplayName()));
+        assertThat("A locale with a 2-letter code and regional variant resolves correctly",
+                "yue (Taiwan)",
+                is(LanguageUtil.getLocale("yue_TW").getDisplayName()));
     }
 }
