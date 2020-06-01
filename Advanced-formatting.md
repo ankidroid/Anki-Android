@@ -103,3 +103,81 @@ Add the [following CSS](https://groups.google.com/d/topic/anki-android/TjakbVGJL
 With some JavaScript it's possible to draw shapes on the front card and display what was drawn on the back card for reference. This is quite convenient to practice writing Kanji!
 
 A third party AnkiDroid user made his code open source: you can get it, along with an example deck on [anki-canvas' project page](https://github.com/pigoz/anki-canvas)
+
+
+### Designing custom cards layout for buttons
+The AnkiDroid answers buttons <b>(Again/Hard/Good/Easy)</b> can be called using <b>JavaScript</b> functions.
+The following functions are available after AnkiDroid 2.11 .
+
+```javascript
+showAnswer()
+buttonAnswerEase1()
+buttonAnswerEase2()
+buttonAnswerEase3()
+buttonAnswerEase4()
+ankiMarkCard()
+ankiToggleFlag()
+```
+<b>_showAnswer()_</b>
+<br><b>Usage:</b> Perform Show Answer Click using this function
+```javascript
+<button onclick="showAnswer();">Show Answer From JS</button>
+```
+<b>_buttonAnswerEase1()_</b>
+<br><b>Usage:</b> Perform Show Answer Click using this function
+```javascript
+<button onclick="buttonAnswerEase1();">Again</button>
+```
+Same for other buttonAnswerEase
+
+<b>_ankiMarkCard()_</b>
+<br><b>Usage:</b> Mark / Unmark current card using JavaScript
+```javascript
+<button onclick="ankiMarkCard();">Mark / Unmark Current Card</button>
+```
+#### ankiToggleCard()
+<b>Usage:</b> pass the arguments ```none```, ```"red"```, ```"orange"```, ```"green"```, ```"blue"``` for flagging respective flag.
+This function used to flag the current card.
+
+For flagging <b>red</b> in current card.
+```javascript
+<button onclick="ankiToggleCard("red");">Red Flag</button>
+```
+Number from ```0...4``` can be used to flag.
+0 - none
+1 - red
+2 - orange
+3 - green
+4 - blue
+
+<b>Usage:</b> pass ```0``` to ```4``` in <b>ankiToggleCard()</b>
+<br>For flagging <b>green</b> in current card
+```javascript
+<button onclick="ankiToggleCard(3);">Green Flag</button>
+```
+### Following information is available in Card
+```
+New Card Count
+Learn Card Count
+Review Card Count
+ETA
+Mark
+Flag
+``` 
+To access those values use <b>```AnkiDroidJS.```</b> followed by respective functions
+<br>For accessing <b>remaining time</b> use
+```javascript
+AnkiDroidJS.ankiGetETA();
+```
+
+To get all information about current card / deck
+```javascript
+ <script>
+        console.log(AnkiDroidJS.ankiGetNewCardCount());
+        console.log(AnkiDroidJS.ankiGetLrnCardCount());
+        console.log(AnkiDroidJS.ankiGetRevCardCount());
+        console.log(AnkiDroidJS.ankiGetCardMark());
+        console.log(AnkiDroidJS.ankiGetCardFlag());
+        console.log(AnkiDroidJS.ankiGetETA());
+ </script>
+```
