@@ -1411,6 +1411,12 @@ public class Sched extends SchedV2 {
 
     @Override
     public void buryCards(long[] cids) {
+        buryCards(cids, false);
+    }
+
+    @Override
+    public void buryCards(long[] cids, boolean manual) {
+        // The boolean is useless here. However, it ensures that we are override the method with same parameter in SchedV2.
         mCol.log(cids);
         remFromDyn(cids);
         removeLrn(cids);
