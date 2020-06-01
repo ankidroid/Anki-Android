@@ -151,6 +151,22 @@ public class MyAccount extends AnkiActivity {
         mUsername = mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = mLoginToMyAccountView.findViewById(R.id.password);
 
+        mPassword.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN)
+            {
+                switch (keyCode)
+                {
+                    case KeyEvent.KEYCODE_DPAD_CENTER:
+                    case KeyEvent.KEYCODE_ENTER:
+                        login();
+                        return true;
+                    default:
+                        break;
+                }
+            }
+            return false;
+        });
+
         Button loginButton = mLoginToMyAccountView.findViewById(R.id.login_button);
         loginButton.setOnClickListener(v -> login());
 
