@@ -176,7 +176,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mReplayOnTtsInit = false;
 
     protected static final int MENU_DISABLED = 3;
-
+    // TODO: Consider extracting to ViewModel
     // Card counts
     private SpannableString newCount;
     private SpannableString lrnCount;
