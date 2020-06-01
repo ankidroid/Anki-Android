@@ -19,11 +19,21 @@
 # http://crowdin.net/download/project/ankidroid.zip
 
 # Below is the list of official AnkiDroid localizations.
-# Add a language if 01-core.xml is translated
-# Do not remove languages.
-# When you add a language, please also add it to mAppLanguages in LanguageUtil.java
-
-languages = ['af', 'am', 'ar', 'az', 'be', 'bg', 'bn', 'ca', 'ckb', 'cs', 'da', 'de', 'el', 'eo', 'es-AR', 'es-ES', 'et', 'eu', 'fa', 'fi', 'fil', 'fr', 'fy-NL', 'ga-IE', 'gl', 'got', 'gu-IN', 'he', 'hi', 'hr', 'hu', 'hy-AM', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kk', 'km', 'ko', 'ku', 'ky', 'lt', 'lv', 'mk', 'mn', 'mr', 'ms', 'my', 'nl', 'nn-NO', 'no', 'pa-IN', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sk', 'sl', 'sq', 'sr', 'ss', 'sv-SE', 'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tl', 'tn', 'tr', 'ts', 'tt-RU', 'uk', 'ur-PK', 'uz', 've', 'vi', 'wo', 'xh', 'yu', 'zh-CN', 'zh-TW', 'zu'];
+#
+# The rules for making changes here:
+# 1) Add a language if 01-core.xml is translated
+# 2) Do not remove languages.
+# 3) When you add a language, please also add it to mAppLanguages in LanguageUtil.java
+# 4) If you add a language with a regional variant (anything with a hyphen) and a different variant
+#    with the same root exists, you must add the root to 'localizedRegions'
+#    e.g., 'ga-IE' exists with no other 'ga-' entries yet, to add 'ga-EN', also add ga to localizedRegions
+languages = ['af', 'am', 'ar', 'az', 'be', 'bg', 'bn', 'ca', 'ckb', 'cs', 'da', 'de', 'el', 'eo',
+             'es-AR', 'es-ES', 'et', 'eu', 'fa', 'fi', 'fil', 'fr', 'fy-NL', 'ga-IE', 'gl', 'got',
+             'gu-IN', 'he', 'hi', 'hr', 'hu', 'hy-AM', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kk',
+             'km', 'ko', 'ku', 'ky', 'lt', 'lv', 'mk', 'mn', 'mr', 'ms', 'my', 'nl', 'nn-NO', 'no',
+             'pa-IN', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sk', 'sl', 'sq', 'sr', 'ss', 'sv-SE',
+             'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tl', 'tn', 'tr', 'ts', 'tt-RU', 'uk', 'ur-PK',
+             'uz', 've', 'vi', 'wo', 'xh', 'yu', 'zh-CN', 'zh-TW', 'zu'];
 # languages which are localized for more than one region
 localizedRegions = ['es', 'pt', 'zh']
 
@@ -179,6 +189,10 @@ t.close()
 
 for language in languages:
     # Regional files need a marker in Android
+    # https://developer.android.com/guide/topics/resources/providing-resources#AlternativeResources -
+    # The language is defined by a two-letter ISO 639-1 language code, optionally followed by a two letter ISO 3166-1-alpha-2 region code (preceded by lowercase r).
+    #
+    # The codes are not case-sensitive; the r prefix is used to distinguish the region portion. You cannot specify a region alone.
     if language.split('-', 1)[0] in localizedRegions:
         androidLanguage = string.replace(language, '-', '-r') # zh-CW becomes zh-rCW
     else:
