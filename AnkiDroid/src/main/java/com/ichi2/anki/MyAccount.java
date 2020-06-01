@@ -152,10 +152,8 @@ public class MyAccount extends AnkiActivity {
         mPassword = mLoginToMyAccountView.findViewById(R.id.password);
 
         mPassword.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN)
-            {
-                switch (keyCode)
-                {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                switch (keyCode) {
                     case KeyEvent.KEYCODE_DPAD_CENTER:
                     case KeyEvent.KEYCODE_ENTER:
                     case KeyEvent.KEYCODE_NUMPAD_ENTER:
