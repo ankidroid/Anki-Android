@@ -99,6 +99,32 @@ function reloadPage() {
     window.location.href = "signal:reload_card_html";
 }
 
+// Mark current card
+function ankiMarkCard() {
+    window.location.href = "signal:mark_current_card";
+}
+
+/* Toggle flag on card from AnkiDroid Webview using JavaScript
+    Possible values: "none", "red", "orange", "green", "blue"
+    See AnkiDroid Manual for Usage
+*/
+function ankiToggleFlag(flag) {
+    var flagVal = Number.isInteger(flag);
+
+    if (flagVal) {
+        switch (flag) {
+            case 0: window.location.href = "signal:flag_none"; break;
+            case 1: window.location.href = "signal:flag_red"; break;
+            case 2: window.location.href = "signal:flag_orange"; break;
+            case 3: window.location.href = "signal:flag_green"; break;
+            case 4: window.location.href = "signal:flag_blue"; break;
+            default: console.log('No Flag Found'); break;
+        }
+    } else {
+        window.location.href = "signal:flag_" + flag;
+    }
+}
+
 /* Tell the app the text in the input box when it loses focus */
 function taBlur(itag) {
     //#5944 - percent wasn't encoded, but Mandarin was.
