@@ -105,7 +105,7 @@ function ankiMarkCard() {
 }
 
 /* Toggle flag on card from AnkiDroid Webview using JavaScript
-    none, red, orange, green, blue
+    Possible values: "none", "red", "orange", "green", "blue"
     See AnkiDroid Manual for Usage
 */
 function ankiToggleFlag(flag) {
