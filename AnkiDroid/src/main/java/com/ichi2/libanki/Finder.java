@@ -180,13 +180,25 @@ public class Finder {
                 // nesting
             } else if (c == '(' || c == ')') {
                 if (inQuote != 0) {
-                    token += c;
-                } else {
-                    if (c == ')' && token.length() != 0) {
-                        tokens.add(token);
-                        token = "";
+                    if ('(' == inQuote) {
+                        inQuote = 0;
                     }
-                    tokens.add(String.valueOf(c));
+                    token += c;
+                }else {
+                    if (c == '('){
+                        if(i == 0 | (query.charAt(i-1) != ' ' && query.charAt(i-1) != '-')){ //'(' as a card name
+                            inQuote = c;
+                            token += c;
+                        }else{ //'(' as an alternative function
+                            tokens.add(String.valueOf(c));
+                        }
+                    }else{
+                        if (c == ')' && token.length() != 0) {
+                            tokens.add(token);
+                            token = "";
+                        }
+                        tokens.add(String.valueOf(c));
+                    }
                 }
                 // negation
             } else if (c == '-') {
