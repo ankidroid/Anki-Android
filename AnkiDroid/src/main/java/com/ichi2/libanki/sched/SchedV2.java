@@ -2203,19 +2203,21 @@ public class SchedV2 extends AbstractSched {
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
+                List<Long> queue_object;
                 if (queue == Consts.QUEUE_TYPE_REV) {
+                    queue_object = mRevQueue;
                     if (buryRev) {
                         toBury.add(cid);
                     }
-                    // if bury disabled, we still discard to give same-day spacing
-                    mRevQueue.remove(cid);
                 } else {
-                    // if bury is disabled, we still discard to give same-day spacing
+                    queue_object = mNewQueue;
                     if (buryNew) {
                         toBury.add(cid);
                     }
-                    mNewQueue.remove(cid);
                 }
+                // even if burying disabled, we still discard to give
+                // same-day spacing
+                queue_object.remove(cid);
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
