@@ -36,9 +36,9 @@ public class CardBrowserOrderDialog extends AnalyticsDialogFragment {
         for (int i = 0; i < items.length; ++i) {
             if (i != CardBrowser.CARD_ORDER_NONE && i == getArguments().getInt("order")) {
                 if (getArguments().getBoolean("isOrderAsc")) {
-                    items[i] = items[i] + " (\u25b2)";
-                } else {
                     items[i] = items[i] + " (\u25bc)";
+                } else {
+                    items[i] = items[i] + " (\u25b2)";
 
                 }
             }
