@@ -2168,7 +2168,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @param card     The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
-    private static void readCardText(final Card card, final int cardSide) {
+    private void readCardText(final Card card, final int cardSide) {
         final String cardSideContent;
         if (Sound.SOUNDS_QUESTION == cardSide) {
             cardSideContent = card.q(true);
@@ -2178,8 +2178,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.w("Unrecognised cardSide");
             return;
         }
-
-        ReadText.readCardSide(cardSide, cardSideContent, getDeckIdForCard(card), card.getOrd());
+        String clozeReplacement = this.getString(R.string.reviewer_tts_cloze_spoken_replacement);
+        ReadText.readCardSide(cardSide, cardSideContent, getDeckIdForCard(card), card.getOrd(), clozeReplacement);
     }
 
     /**
@@ -2188,13 +2188,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void showSelectTtsDialogue() {
         if (mTtsInitialized) {
             if (!sDisplayAnswer) {
-                ReadText.selectTts(Utils.stripHTML(mCurrentCard.q(true)), getDeckIdForCard(mCurrentCard), mCurrentCard.getOrd(),
+                ReadText.selectTts(getTextForTts(mCurrentCard.q(true)), getDeckIdForCard(mCurrentCard), mCurrentCard.getOrd(),
                         Sound.SOUNDS_QUESTION);
             } else {
-                ReadText.selectTts(Utils.stripHTML(mCurrentCard.getPureAnswer()), getDeckIdForCard(mCurrentCard),
+                ReadText.selectTts(getTextForTts(mCurrentCard.getPureAnswer()), getDeckIdForCard(mCurrentCard),
                         mCurrentCard.getOrd(), Sound.SOUNDS_ANSWER);
             }
         }
+    }
+
+
+    private String getTextForTts(String text) {
+        String clozeReplacement = this.getString(R.string.reviewer_tts_cloze_spoken_replacement);
+        String clozeReplaced = text.replace(Template.CLOZE_DELETION_REPLACEMENT, clozeReplacement);
+        return Utils.stripHTML(clozeReplaced);
     }
 
 
