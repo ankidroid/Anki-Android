@@ -60,8 +60,4 @@ public class Hook {
         }
         return true;
     }
-
-    public void runHook(Object... args) {
-        // do nothing
-    }
 }
