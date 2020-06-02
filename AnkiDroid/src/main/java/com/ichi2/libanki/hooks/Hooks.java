@@ -34,7 +34,6 @@ import timber.log.Timber;
 @SuppressWarnings({"PMD.AvoidReassigningParameters","PMD.AssignmentToNonFinalStatic"})
 public class Hooks {
     private static Hooks sInstance;
-    private static Map<String, List<Hook>> hooks;
 
     public static synchronized Hooks getInstance(Context context) {
         if (sInstance == null) {
@@ -45,7 +44,6 @@ public class Hooks {
 
     private Hooks(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-        hooks = new HashMap<>();
         // Preferences activated hooks
     }
 }
