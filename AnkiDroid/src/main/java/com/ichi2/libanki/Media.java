@@ -344,7 +344,7 @@ public class Media {
                 if (!TextUtils.isEmpty(m.group(4))) {
                     m.appendReplacement(buf, "[$4]");
                 } else {
-                    m.appendReplacement(buf, "[...]");
+                    m.appendReplacement(buf, Template.CLOZE_DELETION_REPLACEMENT);
                 }
             }
             m.appendTail(buf);
