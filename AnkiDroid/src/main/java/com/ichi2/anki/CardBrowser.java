@@ -534,10 +534,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         //upgradeJSONIfNecessary during setConf, which means the
         //conf saved may still have this bug.
         mOrderAsc = Upgrade.upgradeJSONIfNecessary(getCol(), getCol().getConf(), "sortBackwards", false);
-        // default to descending for non-text fields
-        if ("noteFld".equals(fSortTypes[mOrder])) {
-            mOrderAsc = !mOrderAsc;
-        }
 
         mCards = new ArrayList<>();
         mCardsListView = (ListView) findViewById(R.id.card_browser_list);
