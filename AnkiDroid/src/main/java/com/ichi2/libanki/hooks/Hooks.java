@@ -41,8 +41,5 @@ public class Hooks {
         }
         return sInstance;
     }
-
-    private Hooks() {
-    }
 }
 
