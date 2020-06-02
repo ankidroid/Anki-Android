@@ -37,12 +37,12 @@ public class Hooks {
 
     public static synchronized Hooks getInstance(Context context) {
         if (sInstance == null) {
-            sInstance = new Hooks(context);
+            sInstance = new Hooks();
         }
         return sInstance;
     }
 
-    private Hooks(Context context) {
+    private Hooks() {
     }
 }
 
