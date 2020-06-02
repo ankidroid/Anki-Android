@@ -257,7 +257,7 @@ public abstract class AbstractSched {
             });
 
         } else {
-            Timber.e("LeechHook :: could not show leech toast as activity was null");
+            Timber.w("LeechHook :: could not show leech toast as activity was null");
         }
     }
 }
