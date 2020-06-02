@@ -20,8 +20,8 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.libanki.hooks.Hooks;
 
+import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
