@@ -64,6 +64,8 @@
         <item>переключити зелений прапорець</item>
         <item>переключити синій прапорець</item>
         <item>Прибрати прапорець</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Призупинити картку</item>

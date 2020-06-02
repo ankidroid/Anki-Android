@@ -263,4 +263,5 @@
     <string name="choose_an_image">Kies een afbeelding</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Herstel Standaardinstellingen</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
 </resources>

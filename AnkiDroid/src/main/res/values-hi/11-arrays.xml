@@ -64,6 +64,8 @@
         <item>हरा झंडा टॉगल करें</item>
         <item>नीला झंडा टॉगल करें</item>
         <item>झंडा हटाये</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>पत्ता निलंबित करें</item>

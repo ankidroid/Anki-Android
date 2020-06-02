@@ -252,4 +252,5 @@
     <string name="choose_an_image">选择图片</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">恢复初始设置</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
 </resources>
