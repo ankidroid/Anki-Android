@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-public class ChessFilter extends Hook {
+public class ChessFilter {
     private static final Pattern fFenPattern = Pattern.compile("\\[fen ?([^\\]]*)\\]([^\\[]+)\\[/fen\\]");
     private static final Pattern fFenOrientationPattern = Pattern.compile("orientation *= *\"?(black|white)\"?");
     private static final String fRenderFen =
