@@ -43,8 +43,6 @@ public class Hooks {
     }
 
     private Hooks(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-        // Preferences activated hooks
     }
 }
 
