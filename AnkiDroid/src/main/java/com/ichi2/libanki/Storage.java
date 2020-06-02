@@ -46,7 +46,7 @@ public class Storage {
     public static Collection Collection(Context context, String path, boolean server, boolean log) {
         assert path.endsWith(".anki2");
         // Since this is the entry point into libanki, initialize the hooks here.
-        Hooks.getInstance(context);
+        Hooks.getInstance();
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
         // connect
