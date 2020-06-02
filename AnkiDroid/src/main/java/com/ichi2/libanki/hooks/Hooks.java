@@ -35,7 +35,7 @@ import timber.log.Timber;
 public class Hooks {
     private static Hooks sInstance;
 
-    public static synchronized Hooks getInstance(Context context) {
+    public static synchronized Hooks getInstance() {
         if (sInstance == null) {
             sInstance = new Hooks();
         }
