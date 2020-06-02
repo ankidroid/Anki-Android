@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public class ReadText {
@@ -88,6 +90,7 @@ public class ReadText {
      * @param qa   The card question or card answer
      */
     public static void selectTts(String text, long did, int ord, int qa) {
+        //TODO: Consolidate with ReadText.readCardSide
         mTextToSpeak = text;
         mQuestionAnswer = qa;
         mDid = did;
@@ -162,9 +165,9 @@ public class ReadText {
      * @param did              Index of the deck containing the card.
      * @param ord              The card template ordinal.
      */
-    public static void readCardSide(int cardSide, String cardSideContents, long did, int ord) {
+    public static void readCardSide(int cardSide, String cardSideContents, long did, int ord, String clozeReplacement) {
         boolean isFirstText = true;
-        for (TtsParser.LocalisedText textToRead : TtsParser.getTextsToRead(cardSideContents)) {
+        for (TtsParser.LocalisedText textToRead : TtsParser.getTextsToRead(cardSideContents, clozeReplacement)) {
             if (!textToRead.getText().isEmpty()) {
                 textToSpeech(textToRead.getText(), did, ord, cardSide,
                         textToRead.getLocaleCode(),
@@ -374,5 +377,11 @@ public class ReadText {
 
     interface ReadTextListener{
         public void onDone();
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @Nullable
+    public static String getTextToSpeak() {
+        return mTextToSpeak;
     }
 }
