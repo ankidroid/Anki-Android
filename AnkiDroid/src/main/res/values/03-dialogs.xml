@@ -193,4 +193,8 @@
 
     <!-- Browser Appearance -->
     <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+
+    <!-- Boot Service -->
+    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
+    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
 </resources>

@@ -10,6 +10,8 @@ import android.preference.PreferenceManager;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.Preferences;
+import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Collection;
 import com.ichi2.utils.Permissions;
 
@@ -17,6 +19,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.Calendar;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class BootService extends BroadcastReceiver {
@@ -27,6 +30,7 @@ public class BootService extends BroadcastReceiver {
      */
     private static boolean sWasRun = false;
 
+    private boolean mFailedToShowNotifications = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -46,9 +50,29 @@ public class BootService extends BroadcastReceiver {
         }
 
         Timber.i("Executing Boot Service");
-        scheduleDeckReminder(context);
-        scheduleNotification(context);
+        catchAlarmManagerErrors(context, () -> scheduleDeckReminder(context));
+        catchAlarmManagerErrors(context, () -> scheduleNotification(context));
+        mFailedToShowNotifications = false;
         sWasRun = true;
+    }
+
+    private void catchAlarmManagerErrors(@NonNull Context context, @NonNull Runnable runnable) {
+        //#6332 - Too Many Alarms on Samsung Devices - this stops a fatal startup crash.
+        //We warn the user if they breach this limit
+        Integer error = null;
+        try {
+            runnable.run();
+        } catch (SecurityException ex) {
+            error = R.string.boot_service_too_many_notifications;
+        } catch (Exception e) {
+            error = R.string.boot_service_failed_to_schedule_notifications;
+        }
+        if (error != null) {
+            if (!mFailedToShowNotifications) {
+                UIUtils.showThemedToast(context, context.getString(error), false);
+            }
+            mFailedToShowNotifications = true;
+        }
     }
 
 
