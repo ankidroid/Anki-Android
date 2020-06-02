@@ -51,29 +51,6 @@ public class Hooks {
 
 
     /**
-     * Add a function to hook. Ignore if already on hook.
-     *
-     * @param hook The name of the hook.
-     * @param func A class implements interface Hook and contains the function to add.
-     */
-    public void addHook(String hook, Hook func) {
-        if (!hooks.containsKey(hook) || hooks.get(hook) == null) {
-            hooks.put(hook, new ArrayList<Hook>());
-        }
-        boolean found = false;
-        for (Hook h : hooks.get(hook)) {
-            if (func.equals(h)) {
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            hooks.get(hook).add(func);
-        }
-    }
-
-
-    /**
      * Remove a function if is on hook.
      *
      * @param hook The name of the hook.
