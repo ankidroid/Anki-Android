@@ -51,24 +51,6 @@ public class Hooks {
 
 
     /**
-     * Remove a function if is on hook.
-     *
-     * @param hook The name of the hook.
-     * @param func A class implements interface Hook and contains the function to remove.
-     */
-    public void remHook(String hook, Hook func) {
-        if (hooks.containsKey(hook) && hooks.get(hook) != null) {
-            for (Hook h : hooks.get(hook)) {
-                if (func.equals(h)) {
-                    hooks.get(hook).remove(h);
-                    break;
-                }
-            }
-        }
-    }
-
-
-    /**
      * Run all functions on hook.
      *
      * @param hook The name of the hook.
