@@ -49,6 +49,8 @@ import timber.log.Timber;
 @SuppressWarnings({"PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 public class Template {
     public static final String clozeReg = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
+    public static final String CLOZE_DELETION_REPLACEMENT = "[...]";
+
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
 
     // Opening tag delimiter
@@ -320,7 +322,7 @@ public class Template {
                 if (!TextUtils.isEmpty(m.group(4))) {
                     buf = "[" + m.group(4) + "]";
                 } else {
-                    buf = "[...]";
+                    buf = CLOZE_DELETION_REPLACEMENT;
                 }
             } else {
                 buf = m.group(2);
