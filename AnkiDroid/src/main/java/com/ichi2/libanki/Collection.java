@@ -34,7 +34,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.hooks.ChessFilter;
-import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;

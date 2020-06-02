@@ -59,7 +59,6 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.ChessFilter;
-import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
