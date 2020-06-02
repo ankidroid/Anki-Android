@@ -48,28 +48,5 @@ public class Hooks {
         hooks = new HashMap<>();
         // Preferences activated hooks
     }
-
-
-    /**
-     * Run all functions on hook.
-     *
-     * @param hook The name of the hook.
-     * @param args Variable arguments to be passed to the method runHook of each function on this hook.
-     */
-    public void runHook(String hook, Object... args) {
-        List<Hook> _hook = hooks.get(hook);
-        String funcName = "";
-        if (_hook != null) {
-            try {
-                for (Hook func : _hook) {
-                    funcName = func.getClass().getCanonicalName();
-                    func.runHook(args);
-                }
-            } catch (Exception e) {
-                Timber.e(e, "Exception while running hook %s : %s", hook, funcName);
-                return;
-            }
-        }
-    }
 }
 
