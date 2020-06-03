@@ -150,8 +150,8 @@ CREATE TABLE notes (
       --   includes space at the beginning and end, for LIKE "% tag %" queries
     flds            text not null,
       -- the values of the fields in this note. separated by 0x1f (31) character.
-    sfld            text not null,
-      -- sort field: used for quick sorting and duplicate check
+    sfld            integer not null,
+      -- sort field: used for quick sorting and duplicate check. The sort field is an integer so that when users are sorting on a field that contains only numbers, they are sorted in numeric instead of lexical order. Text is stored in this integer field.
     csum            integer not null,
       -- field checksum used for duplicate check.
       --   integer representation of first 8 digits of sha1 hash of the first field
