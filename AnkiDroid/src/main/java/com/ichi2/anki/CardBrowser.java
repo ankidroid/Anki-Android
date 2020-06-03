@@ -1697,29 +1697,32 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private void handleSearchResult() {
             Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfully");
             updateList();
-            if ((mSearchView != null) && !mSearchView.isIconified()) {
-                if (hasSelectedAllDecks()) {
-                    UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), true);
-                    return;
-                }
-
-                //If we haven't selected all decks, allow the user the option to search all decks.
-                String displayText;
-                if (getCardCount() == 0) {
-                    displayText = getString(R.string.card_browser_no_cards_in_deck, getSelectedDeckNameForUi());
-                } else {
-                    displayText = getSubtitleText();
-                }
-                View root = CardBrowser.this.findViewById(R.id.root_layout);
-                UIUtils.showSnackbar(CardBrowser.this,
-                        displayText,
-                        SNACKBAR_DURATION,
-                        R.string.card_browser_search_all_decks,
-                        (v) -> searchAllDecks(),
-                        root,
-                        null);
-
+            
+            if ((mSearchView == null) || mSearchView.isIconified()) {
+                return;
             }
+
+            if (hasSelectedAllDecks()) {
+                UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), true);
+                return;
+            }
+
+            //If we haven't selected all decks, allow the user the option to search all decks.
+            String displayText;
+            if (getCardCount() == 0) {
+                displayText = getString(R.string.card_browser_no_cards_in_deck, getSelectedDeckNameForUi());
+            } else {
+                displayText = getSubtitleText();
+            }
+            View root = CardBrowser.this.findViewById(R.id.root_layout);
+            UIUtils.showSnackbar(CardBrowser.this,
+                    displayText,
+                    SNACKBAR_DURATION,
+                    R.string.card_browser_search_all_decks,
+                    (v) -> searchAllDecks(),
+                    root,
+                    null);
+
         }
     };
 
