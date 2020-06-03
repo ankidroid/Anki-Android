@@ -71,6 +71,7 @@
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Database error</string>
     <string name="answering_error_message">Writing to the collection failed. The databese could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Report error</string>
