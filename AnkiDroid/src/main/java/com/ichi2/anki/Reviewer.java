@@ -43,6 +43,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
+import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.compat.CompatHelper;
@@ -112,6 +113,12 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
+
+        if (FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser(getIntent(), this)) {
+            this.setResult(RESULT_CANCELED);
+            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+            return;
+        }
 
         if (getIntent().hasExtra("com.ichi2.anki.SchedResetDone")) {
             mSchedResetDone = true;
