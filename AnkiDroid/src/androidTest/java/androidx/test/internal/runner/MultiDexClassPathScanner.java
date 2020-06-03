@@ -22,6 +22,7 @@ import android.os.Build;
 import com.ichi2.libanki.Utils;
 
 import org.jf.dexlib2.DexFileFactory;
+import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.dexbacked.DexBackedDexFile;
 import org.jf.dexlib2.iface.ClassDef;
 
@@ -79,7 +80,7 @@ class MultiDexClassPathScanner extends ClassPathScanner {
     private List<String> extractClassesFromDexPath(String dexPath) {
         List<String> ret = new ArrayList<>();
         try {
-            DexBackedDexFile dex = DexFileFactory.loadDexFile(dexPath, Build.VERSION.SDK_INT);
+            DexBackedDexFile dex = DexFileFactory.loadDexFile(new File(dexPath), Opcodes.forApi(Build.VERSION.SDK_INT));
             for (ClassDef classDef: dex.getClasses()) {
                 String typeName = extractTypeNameFromDef(classDef);
                 ret.add(typeName);
