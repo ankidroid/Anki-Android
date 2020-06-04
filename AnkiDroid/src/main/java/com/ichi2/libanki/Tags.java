@@ -372,10 +372,16 @@ public class Tags {
      */
 
     public void beforeUpload() {
+        boolean changed = false;
         for (String k : mTags.keySet()) {
-            mTags.put(k, 0);
+            if (mTags.get(k) != 0) {
+                mTags.put(k, 0);
+                changed = true;
+            }
         }
-        save();
+        if (changed) {
+            save();
+        }
     }
 
     /*
