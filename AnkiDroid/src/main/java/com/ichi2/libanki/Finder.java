@@ -1004,13 +1004,8 @@ public class Finder {
      * ***********************************************************
      */
 
-    public List<Map<String, String>> findCardsForCardBrowser(String query, boolean _order) {
-        return _findCardsForCardBrowser(query, _order);
-    }
-
-
     /** Return a list of card ids for QUERY */
-    private List<Map<String, String>> _findCardsForCardBrowser(String query, Object _order) {
+    public List<Map<String, String>> findCardsForCardBrowser(String query, boolean _order) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
@@ -1019,7 +1014,7 @@ public class Finder {
         if (preds == null) {
             return res;
         }
-        Pair<String, Boolean> res2 = _order instanceof Boolean ? _order((Boolean) _order) : _order((String) _order);
+        Pair<String, Boolean> res2 = _order(_order);
         String order = res2.first;
         boolean rev = res2.second;
         String sql = _queryForCardBrowser(preds, order);
