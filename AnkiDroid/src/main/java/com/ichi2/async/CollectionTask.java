@@ -896,7 +896,9 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Boolean order = (Boolean) params[0].getObjArray()[1];
         int numCardsToRender = (int) params[0].getObjArray()[2];
         List<Long> searchResult_ = col.findCards(query, order);
-        List<Map<String,String>> searchResult = new ArrayList<>(searchResult_.size());
+        int resultSize = searchResult_.size();
+        List<Map<String,String>> searchResult = new ArrayList<>(resultSize);
+        Timber.d("The search found %d cards", resultSize);
         for (Long cid: searchResult_) {
             Map<String, String> card = new HashMap<>();
             card.put(CardBrowser.ID, cid.toString());
