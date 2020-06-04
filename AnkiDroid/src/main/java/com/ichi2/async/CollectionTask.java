@@ -908,7 +908,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         } else {
             publishProgress(new TaskData(searchResult));
         }
-        return new TaskData(col.cardCount(col.getDecks().allIds()));
+        return new TaskData(1);
     }
 
 
