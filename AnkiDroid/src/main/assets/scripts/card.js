@@ -124,6 +124,15 @@ function ankiToggleFlag(flag) {
         window.location.href = "signal:flag_" + flag;
     }
 }
+// Options menu
+function ankiShowOptionsMenu() {
+    window.location.href = "signal:show_options_menu";
+}
+
+// Navigation Drawer
+function ankiShowNavDrawer() {
+    window.location.href = "signal:show_navigation_drawer";
+}
 
 /* Tell the app the text in the input box when it loses focus */
 function taBlur(itag) {
