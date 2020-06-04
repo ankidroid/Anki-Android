@@ -1050,7 +1050,6 @@ public class Finder {
                 card.put(CardBrowser.ANSWER, null);
                 card.put(CardBrowser.FLAGS, (new Integer(Card.intToFlag(cur.getInt(5)))).toString());
                 card.put(CardBrowser.SUSPENDED, queue == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
-                card.put(CardBrowser.MARKED, (tags.matches(".*[Mm]arked.*"))?"marked": null);
             }
         } catch (SQLException e) {
             // invalid grouping

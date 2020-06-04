@@ -1531,6 +1531,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put(NOTE, c.model().optString("name"));
         item.put(QUESTION, formatQA(q, context));
         item.put(REVIEWS, Integer.toString(c.getReps()));
+        item.put(MARKED, (item.get(TAGS).matches(".*[Mm]arked.*"))?"marked": null);
     }
 
     @CheckResult
