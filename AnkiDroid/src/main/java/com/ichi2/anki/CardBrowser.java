@@ -382,28 +382,26 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private boolean hasSelectedSingleNoteId() {
         //Heuristic to skip a large array copy
-        if (checkedCardCount() > 50) {
+        int count = checkedCardCount();
+        if (count == 0 || count > 50) {
             return false;
         }
         //copy to array to ensure threadsafe iteration
         Integer[] checkedPositions = mCheckedCardPositions.toArray(new Integer[0]);
-        List<Map<String, String>> cards = mCards;
-
-        HashSet<String> notes = new HashSet<>();
-        for (Integer position : checkedPositions) {
-            String noteId;
-            try {
-                noteId = cards.get(position).get(NOTE);
-            } catch (IndexOutOfBoundsException e) {
-                //#6384
-                Timber.w(e, "concurrent modification of mCards array - assume more than one note selected");
-                return false;
+        String firstId = mCards.get(checkedPositions[0]).get(NOTE);
+        try {
+            for (Integer position : checkedPositions) {
+                String noteId = mCards.get(position).get(NOTE);
+                if (noteId != firstId) {
+                    return false;
+                }
             }
-            if (notes.add(noteId) && notes.size() > 1) {
-                return false;
-            }
+        } catch (IndexOutOfBoundsException e) {
+            //#6384
+            Timber.w(e, "concurrent modification of mCards array - assume more than one note selected");
+            return false;
         }
-        return mCards == cards && notes.size() == 1;
+        return true;
     }
 
     @VisibleForTesting
