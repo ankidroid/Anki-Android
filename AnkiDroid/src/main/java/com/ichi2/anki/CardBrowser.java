@@ -127,6 +127,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public static final String LAPSES = "lapses";
     public static final String NOTE = "note";
     public static final String REVIEWS = "reviews";
+    private static Pattern sMarkedPattern = Pattern.compile(".*[Mm]arked.*");
 
     private List<Map<String, String>> mCards;
     private ArrayList<JSONObject> mDropDownDecks;
@@ -1531,7 +1532,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put(NOTE, c.model().optString("name"));
         item.put(QUESTION, formatQA(q, context));
         item.put(REVIEWS, Integer.toString(c.getReps()));
-        item.put(MARKED, (item.get(TAGS).matches(".*[Mm]arked.*"))?"marked": null);
+        item.put(MARKED, (sMarkedPattern.matcher(item.get(TAGS)).matches())?"marked": null);
     }
 
     @CheckResult
