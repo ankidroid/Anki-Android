@@ -1671,17 +1671,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mSearchCardsHandler = new ListenerWithProgressBar() {
         @Override
-        public void onProgressUpdate(TaskData... values) {
-            if (values[0] != null) {
-                mCards = values[0].getCards();
-                updateList();
-            }
-        }
-
-
-        @Override
         public void onPostExecute(TaskData result) {
-            if (result != null && mCards != null) {
+            if (result != null) {
+                mCards = result.getCards();
+                updateList();
                 handleSearchResult();
             }
             updatePreviewMenuItem();
