@@ -1423,7 +1423,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             String sfld = note.getSFld();
             card.put(SFLD, sfld);
             // update Q & A etc
-            updateSearchItemQA(getBaseContext(), card, c);
+            updateSearchItemQA(getBaseContext(), card, c, getCol());
             // update deck
             String deckName;
             deckName = getCol().getDecks().get(c.getDid()).getString("name");
@@ -1474,7 +1474,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    public static void updateSearchItemQA(Context context, Map<String, String> item, Card c) {
+    public static void updateSearchItemQA(Context context, Map<String, String> item, Card c, Collection col) {
         // render question and answer
         Map<String, String> qa = c._getQA(true, true);
         // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
