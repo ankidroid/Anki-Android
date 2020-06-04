@@ -126,12 +126,12 @@ function ankiToggleFlag(flag) {
 }
 
 // Options menu
-function showOptionsMenu() {
+function ankiShowOptionsMenu() {
     window.location.href = "signal:show_options_menu";
 }
 
 // Navigation Drawer
-function showNavDrawer() {
+function ankiShowNavDrawer() {
     window.location.href = "signal:show_navigation_drawer";
 }
 
