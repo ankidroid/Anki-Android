@@ -129,7 +129,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public static final String REVIEWS = "reviews";
 
     private List<Map<String, String>> mCards;
-    private HashMap<String, String> mDeckNames;
     private ArrayList<JSONObject> mDropDownDecks;
     private ListView mCardsListView;
     private SearchView mSearchView;
@@ -485,10 +484,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         Timber.d("onCollectionLoaded()");
-        mDeckNames = new HashMap<>();
-        for (long did : getCol().getDecks().allIds()) {
-            mDeckNames.put(String.valueOf(did), getCol().getDecks().name(did));
-        }
         registerExternalStorageListener();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
