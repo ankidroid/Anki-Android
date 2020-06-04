@@ -1004,18 +1004,18 @@ public class Finder {
      * ***********************************************************
      */
 
-    public List<Map<String, String>> findCardsForCardBrowser(String query, boolean _order, Map<String, String> deckNames) {
-        return _findCardsForCardBrowser(query, _order, deckNames);
+    public List<Map<String, String>> findCardsForCardBrowser(String query, boolean _order) {
+        return _findCardsForCardBrowser(query, _order);
     }
 
 
-    public List<Map<String, String>> findCardsForCardBrowser(String query, String _order, Map<String, String> deckNames) {
-        return _findCardsForCardBrowser(query, _order, deckNames);
+    public List<Map<String, String>> findCardsForCardBrowser(String query, String _order) {
+        return _findCardsForCardBrowser(query, _order);
     }
 
 
     /** Return a list of card ids for QUERY */
-    private List<Map<String, String>> _findCardsForCardBrowser(String query, Object _order, Map<String, String> deckNames) {
+    private List<Map<String, String>> _findCardsForCardBrowser(String query, Object _order) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;

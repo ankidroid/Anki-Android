@@ -1123,8 +1123,8 @@ public class Collection {
     }
 
 
-    public List<Map<String, String>> findCardsForCardBrowser(String search, boolean order, Map<String, String> deckNames) {
-        return new Finder(this).findCardsForCardBrowser(search, order, deckNames);
+    public List<Map<String, String>> findCardsForCardBrowser(String search, boolean order) {
+        return new Finder(this).findCardsForCardBrowser(search, order);
     }
 
 
