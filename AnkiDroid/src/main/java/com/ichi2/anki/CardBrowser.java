@@ -1525,6 +1525,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put(NOTE, c.model().optString("name"));
         item.put(QUESTION, formatQA(q, context));
         item.put(REVIEWS, Integer.toString(c.getReps()));
+        String tags = note.stringTags();
+        item.put(TAGS, tags);
         item.put(MARKED, (sMarkedPattern.matcher(item.get(TAGS)).matches())?"marked": null);
         item.put(FLAGS, (new Integer(c.getUserFlag())).toString());
     }
