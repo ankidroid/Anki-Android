@@ -1505,9 +1505,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
             item.put(EASE, (c.getFactor()/10)+"%");
         }
 
+        Note note = c.note();
         item.put(CHANGED, LanguageUtil.getShortDateFormatFromS(c.getMod()));
-        item.put(CREATED, LanguageUtil.getShortDateFormatFromMs(c.note().getId()));
-        item.put(EDITED, LanguageUtil.getShortDateFormatFromS(c.note().getMod()));
+        item.put(CREATED, LanguageUtil.getShortDateFormatFromMs(note.getId()));
+        item.put(EDITED, LanguageUtil.getShortDateFormatFromS(note.getMod()));
         // interval
         switch (c.getType()) {
             case Consts.CARD_TYPE_NEW:
