@@ -179,15 +179,15 @@ public class Models {
      */
     public void save(JSONObject m, boolean templates) {
         if (m != null && m.has("id")) {
-			m.put("mod", Utils.intTime());
-			m.put("usn", mCol.usn());
-			// TODO: fix empty id problem on _updaterequired (needed for model adding)
-			if (!isModelNew(m)) {
-				_updateRequired(m);
-			}
-			if (templates) {
-				_syncTemplates(m);
-			}
+            m.put("mod", Utils.intTime());
+            m.put("usn", mCol.usn());
+            // TODO: fix empty id problem on _updaterequired (needed for model adding)
+            if (!isModelNew(m)) {
+                _updateRequired(m);
+            }
+            if (templates) {
+                _syncTemplates(m);
+            }
         }
         mChanged = true;
         // The following hook rebuilds the tree in the Anki Desktop browser -- we don't need it
