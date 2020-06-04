@@ -1026,12 +1026,10 @@ public class Finder {
                 card.put(CardBrowser.SFLD, cur.getString(1));
                 long did = cur.getLong(2);
                 card.put(CardBrowser.DECK, mCol.getDecks().name(did));
-                int queue = cur.getInt(3);
                 res.add(card);
                 // add placeholder for question and answer
                 card.put(CardBrowser.QUESTION, null);
                 card.put(CardBrowser.ANSWER, null);
-                card.put(CardBrowser.SUSPENDED, queue == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
             }
         } catch (SQLException e) {
             // invalid grouping
@@ -1048,7 +1046,7 @@ public class Finder {
      * A copy of _query() with a custom SQL query specific to the AnkiDroid card browser.
      */
     private String _queryForCardBrowser(String preds, String order) {
-        String sql = "select c.id, n.sfld, c.did, c.queue from cards c, notes n where c.nid=n.id and ";
+        String sql = "select c.id, n.sfld, c.did from cards c, notes n where c.nid=n.id and ";
         // combine with preds
         if (!TextUtils.isEmpty(preds)) {
             sql += "(" + preds + ")";
