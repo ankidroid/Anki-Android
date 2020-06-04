@@ -61,10 +61,12 @@ import org.acra.config.DialogConfigurationBuilder;
 import org.acra.config.ToastConfigurationBuilder;
 import org.acra.sender.HttpSender;
 
+import java.io.InputStream;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.multidex.MultiDexApplication;
 import timber.log.Timber;
 import static timber.log.Timber.DebugTree;
 
@@ -137,7 +139,7 @@ import static timber.log.Timber.DebugTree;
         exceptionClassLimit = 1000,
         stacktraceLimit = 1
 )
-public class AnkiDroidApp extends Application {
+public class AnkiDroidApp extends MultiDexApplication {
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
 
@@ -172,6 +174,12 @@ public class AnkiDroidApp extends Application {
 
     /** Our ACRA configurations, initialized during onCreate() */
     private CoreConfigurationBuilder acraCoreConfigBuilder;
+
+
+    @NonNull
+    public static InputStream getResourceAsStream(@NonNull String name) {
+        return sInstance.getApplicationContext().getClassLoader().getResourceAsStream(name);
+    }
 
 
     /**
@@ -390,6 +398,7 @@ public class AnkiDroidApp extends Application {
     private static Configuration getLanguageConfig(@NonNull Configuration remoteConfig, @NonNull SharedPreferences prefs) {
         Configuration newConfig = new Configuration(remoteConfig);
         Locale newLocale = LanguageUtil.getLocale(prefs.getString(Preferences.LANGUAGE, ""), prefs);
+        Timber.d("AnkiDroidApp::getLanguageConfig - setting locale to %s", newLocale);
         //API level >=24
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //Build list of locale strings, separated by commas: newLocale as first element

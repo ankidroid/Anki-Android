@@ -2,8 +2,11 @@ package com.ichi2.libanki.sched;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.widget.Toast;
 
 
+import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.utils.JSONObject;
@@ -13,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import timber.log.Timber;
 
 public abstract class AbstractSched {
     /**
@@ -233,5 +238,26 @@ public abstract class AbstractSched {
 
     public interface CountMethod {
         int operation(long did, int lim);
+    }
+
+    protected static void leech(Card card, Activity activity) {
+        if (activity != null) {
+            Resources res = activity.getResources();
+            final String leechMessage;
+            if (card.getQueue() < 0) {
+                leechMessage = res.getString(R.string.leech_suspend_notification);
+            } else {
+                leechMessage = res.getString(R.string.leech_notification);
+            }
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(activity, leechMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else {
+            Timber.w("LeechHook :: could not show leech toast as activity was null");
+        }
     }
 }

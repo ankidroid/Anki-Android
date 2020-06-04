@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">Återskapar kortlek för råplugg.\nVänligen vänta...</string>
     <string name="rebuild_cram_label">Bygg om</string>
     <string name="empty_cram_label">Töm</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Tömmer kortleken för råplugg.\nVar god vänta...</string>
     <string name="custom_study_deck_name">Anpassad studiesession</string>
     <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Kortmall för baksida</string>
     <string name="card_template_editor_styling">Formgivning</string>
     <string name="card_template_editor_menu_delete">Ta bort</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Minst en korttyp krävs.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Ta bort korttypen \"%2$s\" och dess %1$d kort?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">Ett kort kunde inte genereras</string>
     <string name="card_template_editor_would_delete_note">Att ta bort den här korttypen skulle göra att en eller flera noter tas bort. Vänligen skapa en ny korttyp först.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Läs och skriv till AnkiDroid-databasen</string>
     <string name="read_write_permission_description">åtkomst till befintliga noter, kort, nottyper och kortlekar, samt att skapa nya</string>

@@ -456,8 +456,16 @@ public class Decks {
      */
     public void rename(JSONObject g, String newName) throws DeckRenameException {
         // make sure target node doesn't already exist
-        if (byName(newName) != null) {
-            throw new DeckRenameException(DeckRenameException.ALREADY_EXISTS);
+        JSONObject deckWithThisName = byName(newName);
+        if (deckWithThisName != null) {
+            if (deckWithThisName.getLong("id") != g.getLong("id")) {
+                throw new DeckRenameException(DeckRenameException.ALREADY_EXISTS);
+            }
+            /* else: We are renaming the deck to the "same"
+             * name. I.e. case may varie, normalization may be
+             * different, but anki essentially consider that the name
+             * did not change. We still need to run the remaining of
+             * the code in order do this change. */
         }
         // ensure we have parents
         newName = _ensureParents(newName);

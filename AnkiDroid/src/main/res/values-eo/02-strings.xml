@@ -111,6 +111,7 @@
     <string name="note_editor_no_cards_created">Neniu karto kreita. Bonvolu plenigi pliajn kampojn</string>
     <string name="note_editor_no_first_field">La unua kampo estas malplena</string>
     <string name="note_editor_no_cloze_delations">Tiu ĉi noto enhavu “malplenojn” en la teksto</string>
+    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="saving_facts">Konservado de noto</string>
     <string name="saving_model">Konservado de nototipo</string>
     <string name="add">Aldoni</string>
@@ -166,6 +167,7 @@
     <string name="import_error_unhandled_request">Fiaskis pritrakti peton pri enporto</string>
     <string name="import_error_exception">Fiaskis enporti pakaĵon\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dosiernomo \"%s\" ne finiĝas per .apkg aŭ .colpkg</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti anki-dosierojn:\n%s</string>
     <string name="import_replacing">Anstataŭigado de kolekto&#8230;</string>
     <string name="import_interrupted">Enportado interrompita</string>
@@ -258,4 +260,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Fono</string>
     <string name="choose_an_image">Elekti bildon</string>
+    <!-- Card Template Browser Appearance -->
+    <string name="restore_default">Restore Default</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
 </resources>

@@ -20,6 +20,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
@@ -84,7 +86,7 @@ public class ReminderService extends BroadcastReceiver {
                     .setContentIntent(PendingIntent.getActivity(
                             context,
                             (int) deckId,
-                            new Intent(context, IntentHandler.class).putExtra(EXTRA_DECK_ID, deckId),
+                            getReviewDeckIntent(context, deckId),
                             PendingIntent.FLAG_UPDATE_CURRENT
                     ))
                     .setAutoCancel(true)
@@ -92,6 +94,13 @@ public class ReminderService extends BroadcastReceiver {
             notificationManager.notify((int) deckId, notification);
         }
     }
+
+
+    @NonNull
+    public static Intent getReviewDeckIntent(@NonNull Context context, long deckId) {
+        return new Intent(context, IntentHandler.class).putExtra(EXTRA_DECK_ID, deckId);
+    }
+
 
     // getDeckDue information, will recur one time to workaround collection close if recur is true
     private Sched.DeckDueTreeNode getDeckDue(Context context, long deckId, boolean recur) {

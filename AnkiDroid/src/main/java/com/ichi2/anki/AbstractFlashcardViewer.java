@@ -2179,7 +2179,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @param card     The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
-    private static void readCardText(final Card card, final int cardSide) {
+    private void readCardText(final Card card, final int cardSide) {
         final String cardSideContent;
         if (Sound.SOUNDS_QUESTION == cardSide) {
             cardSideContent = card.q(true);
@@ -2189,8 +2189,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.w("Unrecognised cardSide");
             return;
         }
-
-        ReadText.readCardSide(cardSide, cardSideContent, getDeckIdForCard(card), card.getOrd());
+        String clozeReplacement = this.getString(R.string.reviewer_tts_cloze_spoken_replacement);
+        ReadText.readCardSide(cardSide, cardSideContent, getDeckIdForCard(card), card.getOrd(), clozeReplacement);
     }
 
     /**
@@ -2199,13 +2199,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void showSelectTtsDialogue() {
         if (mTtsInitialized) {
             if (!sDisplayAnswer) {
-                ReadText.selectTts(Utils.stripHTML(mCurrentCard.q(true)), getDeckIdForCard(mCurrentCard), mCurrentCard.getOrd(),
+                ReadText.selectTts(getTextForTts(mCurrentCard.q(true)), getDeckIdForCard(mCurrentCard), mCurrentCard.getOrd(),
                         Sound.SOUNDS_QUESTION);
             } else {
-                ReadText.selectTts(Utils.stripHTML(mCurrentCard.getPureAnswer()), getDeckIdForCard(mCurrentCard),
+                ReadText.selectTts(getTextForTts(mCurrentCard.getPureAnswer()), getDeckIdForCard(mCurrentCard),
                         mCurrentCard.getOrd(), Sound.SOUNDS_ANSWER);
             }
         }
+    }
+
+
+    private String getTextForTts(String text) {
+        String clozeReplacement = this.getString(R.string.reviewer_tts_cloze_spoken_replacement);
+        String clozeReplaced = text.replace(Template.CLOZE_DELETION_REPLACEMENT, clozeReplacement);
+        return Utils.stripHTML(clozeReplaced);
     }
 
 
@@ -2499,10 +2506,32 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return answerCardIfVisible(EASE_4);
             case COMMAND_ANSWER_RECOMMENDED:
                 return answerCardIfVisible(getRecommendedEase(false));
+            case COMMAND_PAGE_UP:
+                onPageUp();
+                return true;
+            case COMMAND_PAGE_DOWN:
+                onPageDown();
+                return true;
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;
         }
+    }
+
+
+    private void onPageUp() {
+        //pageUp performs a half scroll, we want a full page
+        processCardAction(card -> {
+            card.pageUp(false);
+            card.pageUp(false);
+        });
+    }
+
+    private void onPageDown() {
+        processCardAction(card -> {
+            card.pageDown(false);
+            card.pageDown(false);
+        });
     }
 
 
@@ -2605,9 +2634,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     class MyGestureDetector extends SimpleOnGestureListener {
+        //Android design spec for the size of the status bar.
+        private final int NO_GESTURE_BORDER_DIP = 24;
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Timber.d("onFling");
+
+            //#5741 - A swipe from the top caused delayedHide to be triggered,
+            //accepting a gesture and quickly disabling the status bar, which wasn't ideal.
+            //it would be lovely to use e1.getEdgeFlags(), but alas, it doesn't work.
+            if (isTouchingEdge(e1)) {
+                Timber.d("ignoring edge fling");
+                return false;
+            }
+
             // Go back to immersive mode if the user had temporarily exited it (and then execute swipe gesture)
             if (mPrefFullscreenReview > 0 &&
                     CompatHelper.getCompat().isImmersiveSystemUiVisible(AbstractFlashcardViewer.this)) {
@@ -2651,6 +2692,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             return false;
         }
+
+
+        private boolean isTouchingEdge(MotionEvent e1) {
+            int height = mTouchLayer.getHeight();
+            int width = mTouchLayer.getWidth();
+            float margin = NO_GESTURE_BORDER_DIP * getResources().getDisplayMetrics().density + 0.5f;
+            return e1.getX() < margin || e1.getY() < margin || height - e1.getY() < margin || width - e1.getX() < margin;
+        }
+
 
 
         @Override
@@ -2817,6 +2867,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     };
 
     protected void delayedHide(int delayMillis) {
+        Timber.d("Fullscreen delayed hide in %dms", delayMillis);
         mFullScreenHandler.removeMessages(0);
         mFullScreenHandler.sendEmptyMessageDelayed(0, delayMillis);
     }

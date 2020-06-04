@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">İnekleme destesi yeniden oluşturuluyor.\nLütfen bekleyin...</string>
     <string name="rebuild_cram_label">Yeniden Oluştur</string>
     <string name="empty_cram_label">Boş</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">İnekleme destesi boşaltılıyor.\nLütfen bekleyin...</string>
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
     <string name="custom_study_deck_exists">Lütfen mevcut özelleştirilmiş çalışma destesini yeniden adlandırın.</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Şablon Arka Yüz</string>
     <string name="card_template_editor_styling">Stil</string>
     <string name="card_template_editor_menu_delete">Sil</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">En az bir kart türü gerekiyor.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">Bir kart oluşturulamadı</string>
     <string name="card_template_editor_would_delete_note"> Bu kart tipini kaldırmak bir veya daha fazla notun silinmesine neden olur. Lütfen önce yeni bir kart türü oluşturun.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid veritabanını oku ve yaz</string>
     <string name="read_write_permission_description">varolan notlara, kartlara, not türlerine ve destelere erişmek, ve yenilerini oluşturmek</string>

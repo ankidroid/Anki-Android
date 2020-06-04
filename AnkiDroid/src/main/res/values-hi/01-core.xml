@@ -50,9 +50,9 @@
     <string name="studyoptions_new_total">कुल नए कार्ड:</string>
     <string name="studyoptions_total_cards">कुल कार्ड:</string>
     <string name="studyoptions_eta">अनुमानित समय (मिनट):</string>
-    <string name="studyoptions_start">सीखें</string>
+    <string name="studyoptions_start">पढ़ाई करें</string>
     <!-- DeckPicker.java -->
-    <string name="expand">वोस्तर करें</string>
+    <string name="expand">विस्तार करें</string>
     <string name="collapse">संक्षिप्त करें</string>
     <string name="study_more">अधिक अध्ययन करें</string>
     <plurals name="deckpicker_title">
@@ -77,8 +77,8 @@
         <item quantity="other">%2$s में %1$d पत्तों का अध्ययन किया</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">प्रकार उत्तर</string>
-    <string name="show_answer">जवाब दिखाना</string>
+    <string name="type_answer_hint">उतर टाइप करें</string>
+    <string name="show_answer">जवाब देखें</string>
     <string name="ease_button_again">फिर से</string>
     <string name="ease_button_hard">कठिन</string>
     <string name="ease_button_good">अच्छा</string>
@@ -98,16 +98,16 @@
     <string name="undo_action_reset_card">प्रगति रीसेट करें</string>
     <string name="undo_action_reposition_card">स्थानांतरित करे </string>
     <string name="move_all_to_deck">सभी को डेक में ले जाएं</string>
-    <string name="unbury">Unbury</string>
+    <string name="unbury">निकालें</string>
     <string name="rename_deck">डेक का नाम बदलें</string>
     <string name="menu_add">जोड़ें</string>
     <string name="menu_add_note">नोट जोड़ें</string>
-    <string name="menu_my_account">सिंक्रनाइज़ेशन खाता</string>
+    <string name="menu_my_account">खाता को तुल्यकालन करें</string>
     <string name="menu_dismiss_note">छुपाएं/हटाना</string>
     <string name="menu_bury_card">कार्ड दफनाना</string>
     <string name="menu_bury_note">नोट दफनाना</string>
     <string name="menu_suspend_card">कार्ड को निलंबित</string>
-    <string name="menu_suspend_note">नोट को निलंबित</string>
+    <string name="menu_suspend_note">नोट निलंबित करें</string>
     <string name="menu_bury">दफनाना</string>
     <string name="menu_suspend">निलंबित</string>
     <string name="menu_delete_note">नोट हटाएँ</string>
@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">पुनर्निर्माण रटना डेक. \nPlease रुको...</string>
     <string name="rebuild_cram_label">पुनर्निर्माण</string>
     <string name="empty_cram_label">खाली</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Emptying रटना डेक. \nPlease रुको...</string>
     <string name="custom_study_deck_name">कस्टम अध्ययन सत्र</string>
     <string name="custom_study_deck_exists">कृपया पहले मौजूदा कस्टम अध्ययन डेक का नाम बदलें।</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">वापस टेंपलेट</string>
     <string name="card_template_editor_styling">स्टाइल</string>
     <string name="card_template_editor_menu_delete">हटाएँ</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">कम से कम एक कार्ड की आवश्यकता है</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\"%2$s\" कार्ड प्रकार और उसके%1$d कार्ड को हटाएं?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">कोई कार्ड जनरेट नहीं किया जा सका</string>
     <string name="card_template_editor_would_delete_note">इस कार्ड प्रकार को निकालने से एक या अधिक नोट्स हटाए जा सकेंगे । कृपया पहले एक नया कार्ड प्रकार बनाएं ।</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्ड का कार्ड प्रकार हटा दिया गया</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">पढ़ें और AnkiDroid डेटाबेस के लिए लिखें</string>
     <string name="read_write_permission_description">मौजूदा नोट्स, कार्ड, नोट प्रकार, और डेक तक पहुंचें, साथ ही नए बनाएं</string>

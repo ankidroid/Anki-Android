@@ -57,7 +57,7 @@
         <item><![CDATA[<h2>%1$s: <br/> Flashcards per Android</h2>AnkiDroid és una aplicació de flashcards que és totalment compatible amb el programari d\'escriptori <a href=\"%2$s\"> Anki</a>. Podeu crear, descarregar i aprendre sobre aquest material en tant AnkiDroid o Anki i sincronitzar-los fàcilment amb AnkiWeb.]]></item>
         <item><![CDATA[Per ajudar-nos a fer millor la AnkiDroid, si us plau informeu els errors al <a href=\"%1$s\"> buscador d\'incidències</a>; noves idees són molt benvingudes. Trobeu respostes a la <a href=\"%2$s\"> wiki</a> o comenceu un debat al <a href=\"%3$s\"> fòrum</a>.]]></item>
         <item><![CDATA[AnkiDroid és <a href=\"%1$s\"> programari de font oberta <a/>, així que tothom es animat a <a href=\"%2$s\"> ser col·laborador</a> :-)]]></item>
-        <item><![CDATA[Le spersones que no saben programar també poden ajudar. Per exemple, pots <a href=\"%1$s\"> ajudar a traduir</a> AnkiDroid, actualitzar la wiki, proporcionar captures de pantalla o escriure en blog sobre AnkiDroid.]]></item>
+        <item><![CDATA[Les persones que no saben programar també poden ajudar. Per exemple, pots <a href=\"%1$s\"> ajudar a traduir</a> AnkiDroid, actualitzar la wiki, proporcionar captures de pantalla o escriure en blog sobre AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid és alliberat sota la <a href=\"%1$s\"> llicència de GNU-GPL v3</a> i el codi font està disponible <a href=\"%2$s\"> a GitHub</a>.]]></item>
     </string-array>
     <string name="preview_title">Previsualització</string>
@@ -155,6 +155,7 @@
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
     <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
     <!-- Initial collection load -->
@@ -186,7 +187,13 @@
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">Error deleting image</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <!-- Browser Appearance -->
+    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <!-- Boot Service -->
+    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
+    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
 </resources>

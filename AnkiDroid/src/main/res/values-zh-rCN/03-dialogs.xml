@@ -149,6 +149,7 @@
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">无法获取麦克风权限。</string>
     <string name="multimedia_editor_camera_permission_refused">无法获取相机权限。功能已被禁用。</string>
+    <string name="multimedia_editor_failed">打开多媒体编辑器失败</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音频录制权限被拒绝</string>
     <!-- Initial collection load -->
@@ -180,7 +181,13 @@
     <string name="error_selecting_image">选择图片时出错。请查看手册。%s</string>
     <string name="error_deleting_image">删除图片时出错</string>
     <string name="failed_to_apply_background_image">未能应用背景图片 %s</string>
+    <string name="image_max_size_allowed">允许最大图像大小 %d MB</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">缺少所需的存储权限。请授予存储权限，然后重试您的操作。</string>
+    <!-- Browser Appearance -->
+    <string name="card_template_editor_card_browser_appearance_failed">无法加载卡牌浏览器外观</string>
+    <!-- Boot Service -->
+    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
+    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
 </resources>

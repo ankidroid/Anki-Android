@@ -40,63 +40,66 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d card ipinapakita</item>
-        <item quantity="other">%d na mga card ipinapakita</item>
+        <item quantity="one">%d kortti näytetään</item>
+        <item quantity="other">%d korttia näytetään</item>
     </plurals>
-    <string name="card_browser_all_decks">Lahat ng decks</string>
+    <string name="card_browser_all_decks">Kaikki pakat</string>
     <string name="card_browser_delete_card">Delete notes</string>
     <string name="card_browser_suspend_card">Suspend cards</string>
     <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
-    <string name="card_browser_change_deck">Change deck</string>
+    <string name="card_browser_change_deck">Vaihda pakkoja</string>
     <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-    <string name="card_browser_mark_card">Mark notes</string>
-    <string name="card_browser_flag">Flag</string>
-    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
-    <string name="card_browser_unmark_card">Unmark notes</string>
-    <string name="delete_card_title">Burahin ang tala?</string>
-    <string name="delete_cards_title">Delete notes?</string>
-    <string name="delete_card_message">Burahin ang lahat ng cards sa talang ito? \n Search field:%s</string>
-    <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
-    <string name="deleted_message">Notes deleted</string>
-    <string name="changed_deck_message">Moved to %s</string>
-    <string name="card_browser_suspended_cards">(un)suspended cards</string>
-    <string name="card_browser_show_marked">I-filter ang mga minarkahan</string>
-    <string name="card_browser_show_suspended">I-filter ang mga suspendido</string>
-    <string name="card_browser_search_by_tag">I-filter ayon sa tag</string>
-    <string name="card_browser_tags_shown">Tags: %1$s</string>
-    <string name="card_browser_list_my_searches">Aking mga paghahanap</string>
-    <string name="card_browser_list_my_searches_save">I-save ang paghahanap</string>
-    <string name="card_browser_list_my_searches_title">Mamili na nai-save na na paghahanap</string>
-    <string name="card_browser_list_my_searches_new_name">Pangalan ng kasalukuyang paghahanap</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">Hindi maaring magsave ng paghahanap na walang pangalan</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Umiiral na ang pangalan</string>
-    <string name="card_browser_list_my_searches_remove_content">Burahin “%1$s”?</string>
-    <string name="card_browser_change_display_order">Baguhin ang display order</string>
-    <string name="card_browser_change_display_order_title">Pumili ng display order</string>
-    <string name="card_browser_change_display_order_reverse">Pumili ng isang patlang ng dalawang beses upang baligtarin</string>
-    <string name="card_details_question">Tanong</string>
-    <string name="card_details_answer">Sagot</string>
-    <string name="card_details_due">Nakatakda</string>
-    <string name="card_details_tags">Tags</string>
-    <string name="card_browser_filtering_cards">Pag-filter ng mga card... \nPindutin ang pindutan ng pabalik upang kanselahin</string>
+    <string name="card_browser_mark_card">Merkitse merkintä</string>
+    <string name="card_browser_flag">Lippu</string>
+    <string name="card_browser_toggle_mark_card">Merkitse/poista merkintä.</string>
+    <string name="card_browser_unmark_card">Poista merkinnät</string>
+    <string name="delete_card_title">Poista merkintä</string>
+    <string name="delete_cards_title">Poista merkinnät?</string>
+    <string name="delete_card_message">Poistetaanko tämän merkinnän kaikki kortit? \nhakukenttä: %s</string>
+    <string name="delete_card_mult_message">Poistetaanko kaikki valittujen merkintöjen kortit?\n(Ei ainoastaan valitut kortit).</string>
+    <string name="deleted_message">Merkinnät poistettu</string>
+    <string name="changed_deck_message">Siirretty %s :ään</string>
+    <string name="card_browser_suspended_cards">jäädytetty/jäädyttämättömät kortit</string>
+    <string name="card_browser_show_marked">Suodata merkityt</string>
+    <string name="card_browser_show_suspended">Suodata jäädytetyt</string>
+    <string name="card_browser_search_by_tag">Suodata kentän mukaan</string>
+    <string name="card_browser_tags_shown">Tunnisteet: %1$s</string>
+    <string name="card_browser_list_my_searches">Hakuni</string>
+    <string name="card_browser_list_my_searches_save">Tallenna haku</string>
+    <string name="card_browser_list_my_searches_title">Valitse tallennettu haku</string>
+    <string name="card_browser_list_my_searches_new_name">Nimi aktiiviselle haulle</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Et voi tallentaa hakua ilman nimeä</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Nimi on jo olemassa</string>
+    <string name="card_browser_list_my_searches_remove_content">Poista ”%1$s”?</string>
+    <string name="card_browser_change_display_order">Muuta näytön järjestys</string>
+    <string name="card_browser_change_display_order_title">Valitse näytön järjestys</string>
+    <string name="card_browser_change_display_order_reverse">Valitse kenttä kahdesti kääntääksesi päinvastoin.</string>
+    <string name="card_details_question">Kysymys</string>
+    <string name="card_details_answer">Vastaus</string>
+    <string name="card_details_due">Määrä</string>
+    <string name="card_details_tags">Tunnisteet</string>
+    <string name="card_browser_filtering_cards">Suodatetaan kortteja&#8230;\nPeruuta painamalla Takaisin-painiketta</string>
     <string-array name="card_browser_order_labels">
-        <item>No sorting (mas mabilis)</item>
-        <item>Sa pamamagitan ng uri ng field</item>
-        <item>Sa pamamagitan ng oras</item>
-        <item>Sa pamamagitan ng oras ng paggawa</item>
-        <item>Sa pamamagitan ng pagbago</item>
-        <item>Sa pamamagitan ng oras na nakatakda</item>
-        <item>Sa pamamagitan ng agwat</item>
-        <item>Sa pamamagitan ng kagaanan</item>
-        <item>Sa pamamagitan ng pagrepaso</item>
-        <item>Sa pamamagitan ng pagdaan ng panahon</item>
+        <item>Ei lajittelua (nopeampi)</item>
+        <item>By sort field</item>
+        <item>Luomisajan mukaan</item>
+        <item>Muokkausajan mukaan</item>
+        <item>Muutosajan mukaan</item>
+        <item>Eräpäivän mukaan</item>
+        <item>Aikaväleittäin</item>
+        <item>Helpotuksien mukaan</item>
+        <item>Kertauksien mukaan</item>
+        <item>Unohduksien mukaan</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
-    <string name="card_browser_select_none">Select none</string>
+    <string name="card_browser_select_all">Valitse kaikki</string>
+    <string name="card_browser_select_none">Älä valitse mitään</string>
     <string name="card_browser_edit_note">Edit note</string>
-    <string name="card_browser_interval_new_card">(new)</string>
-    <string name="card_browser_ease_new_card">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
+    <string name="card_browser_interval_new_card">(uusi)</string>
+    <string name="card_browser_ease_new_card">(uusi)</string>
+    <string name="card_browser_due_filtered_card">(suodatettu)</string>
+    <string name="card_browser_interval_learning_card">(opiskelussa)</string>
     <string name="card_browser_note_editor_error">Error opening Note Editor</string>
+    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
+    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_unknown_deck_name">Unknown</string>
 </resources>

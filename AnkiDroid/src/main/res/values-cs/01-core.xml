@@ -155,6 +155,7 @@
     <string name="rebuild_cram_deck">Rekonstrukce balíčku šprtání.\nProsím čekejte...</string>
     <string name="rebuild_cram_label">Znovu sestavit</string>
     <string name="empty_cram_label">Vyprázdnit</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Vyprazdňování balíčku šprtání.\nProsím čekejte...</string>
     <string name="custom_study_deck_name">Dodatečné procvičování</string>
     <string name="custom_study_deck_exists">Nejdříve prosím přejmenujte balíček dodatečného tréninku.</string>
@@ -184,6 +185,7 @@
     <string name="card_template_editor_back">Šablona rubu</string>
     <string name="card_template_editor_styling">Styl</string>
     <string name="card_template_editor_menu_delete">Odstranit</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Je vyžadován alespoň jeden typ karty.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Odstranit typ karty \'%2$s\' a jeho %1$d kartu?</item>
@@ -194,6 +196,8 @@
     <string name="invalid_template">Karta nemůže být vytvořena</string>
     <string name="card_template_editor_would_delete_note"> Odstraněním tohoto typu karty můžete způsobit, že jedna nebo         více poznámek budou odstraněny. Nejprve vytvořte nový typ karty.</string>
     <string name="template_for_current_card_deleted">Typ karty současné karty byl odstraněn.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Čtení a zápis do AnkiDroid databáze</string>
     <string name="read_write_permission_description">spravovat stávající poznámky, karty, typy poznámek a balíčky, a také vytvářet nové</string>

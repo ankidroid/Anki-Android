@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">Վերակառուցվում է սովորելու կապուկը&#8230;</string>
     <string name="rebuild_cram_label">Վերակառուցել</string>
     <string name="empty_cram_label">Դատարկ</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Դատարկվում է սովորելու կապուկը&#8230;</string>
     <string name="custom_study_deck_name">Ուսուցման լրացուցիչ աշխատաշրջան</string>
     <string name="custom_study_deck_exists">Սկզբում վերանվանել լրացուցիչ ուսուցման առկա կապուկը</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Պատասխանի կաղապար</string>
     <string name="card_template_editor_styling">Ոճավորում</string>
     <string name="card_template_editor_menu_delete">Ջնջել</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Անհրաժեշտ է քարտի առնվազն մեկ տեսակ</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Ջնջե՞լ «%2$s» քարտերի տեսակը և նրա «%1$d» քարտը:</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">Չստացվեց արարել քարտը</string>
     <string name="card_template_editor_would_delete_note">Քարտի այս տեսակի հեռացումը կբերի մեկ կամ մի քանի գրառումների ջնջմանը: Սկզբում քարտի նոր տեսակ ստեղծեք:</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Կարդալ և գրել AnkiDroid-ի շտեմարանի մեջ</string>
     <string name="read_write_permission_description">մատչել առկա գրառումները, քարտերը, գրառումների տեսակները և կապուկները, ինչպես նաև նորերը ստեղծելը</string>

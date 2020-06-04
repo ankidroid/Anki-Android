@@ -1,0 +1,13 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: 'Hello! 👋 Thanks for logging this issue. Please remember we are all volunteers here, so some patience may be required before we can get to the issue. Also remember that the fastest way to get resolution on an issue is to propose a change directly, https://github.com/ankidroid/Anki-Android/wiki/Contributing'
+        pr-message: 'First PR! 🚀 We sincerely appreciate that you have taken the time to propose a change to AnkiDroid! Please have patience with us as we are all volunteers - we will get to this as soon as possible.'

@@ -121,10 +121,6 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">స్వయంచాలక సమకాలీకరణ</string>
     <string name="automatic_sync_choice_summ">గత సమకాలీకరణ 10         నిముషాల కంటే ఎక్కువగా ఉంటే అనువర్తనం ప్రారంభించండి / నిష్క్రమణలో స్వయంచాలకంగా సమకాలీకరించండి.</string>
-    <string name="fix_hebrew_text">హిబ్రూ అచ్చులను పరిష్కరించండి</string>
-    <string name="fix_hebrew_text_summ">హీబ్రూ అచ్చులను సరిగ్గా అనువదించడానికి ప్రత్యామ్నాయం.</string>
-    <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to\n“%s/fonts/”\n\nYou won’t have to modify your cards.</string>
-    <string name="fix_hebrew_download_font">ఫాంట్ డౌన్లోడ్</string>
     <string name="day_theme">డే థీమ్</string>
     <string name="night_theme">నైట్ థీమ్</string>
     <string name="default_font">డిఫాల్ట్ ఫాంట్</string>

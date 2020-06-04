@@ -20,7 +20,6 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.libanki.hooks.Hooks;
 
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
@@ -46,7 +45,6 @@ public class Storage {
     public static Collection Collection(Context context, String path, boolean server, boolean log) {
         assert path.endsWith(".anki2");
         // Since this is the entry point into libanki, initialize the hooks here.
-        Hooks.getInstance(context);
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
         // connect

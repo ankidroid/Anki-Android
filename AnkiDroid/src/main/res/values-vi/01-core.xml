@@ -140,6 +140,7 @@
     <string name="rebuild_cram_deck">Đang dựng lại bộ thẻ ôn thi&#8230;</string>
     <string name="rebuild_cram_label">Dựng lại</string>
     <string name="empty_cram_label">Dọn trống</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Đang dọn trống bộ thẻ ôn thi&#8230;</string>
     <string name="custom_study_deck_name">Phiên học tuỳ chọn</string>
     <string name="custom_study_deck_exists">Đổi tên bộ thẻ học tuỳ chọn hiện hữu trước nhất</string>
@@ -169,6 +170,7 @@
     <string name="card_template_editor_back">Mẫu định dạng mặt sau</string>
     <string name="card_template_editor_styling">Phong cách</string>
     <string name="card_template_editor_menu_delete">Xoá</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Cần tối thiểu một loại thẻ</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Xoá loại thẻ \"%2$s\" và (các) thẻ %1$d của nó?</item>
@@ -176,6 +178,8 @@
     <string name="invalid_template">Không thể tạo thẻ</string>
     <string name="card_template_editor_would_delete_note">Xoá bỏ loại thẻ này có thể dẫn đến việc một hay nhiều ghi chú bị xoá. Xin tạo loại thẻ mới trước đã.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Đọc và ghi vào cơ sở dữ liệu AnkiDroid</string>
     <string name="read_write_permission_description">truy cập các ghi chú, thẻ, loại ghi chú và các bộ thẻ đang tồn tại, cũng như tạo mới chúng</string>

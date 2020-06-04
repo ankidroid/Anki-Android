@@ -122,10 +122,6 @@
     <string name="automatic_sync_choice">Automatikus szinkronizálás</string>
     <string name="automatic_sync_choice_summ">Automatikus szinkronizálás az applikáció indításakor/kilépéskor, ha az utolsó több mint 10
         perce volt.</string>
-    <string name="fix_hebrew_text">Átmeneti megoldás a héber magánhangzók számára</string>
-    <string name="fix_hebrew_text_summ">Átmeneti megoldás a héber magánhangzók megfelelő megjelenítéséhez.</string>
-    <string name="fix_hebrew_instructions">Ez a beállítás megkerüli az Android RTL algoritmust, hogy helyesen jelenítse meg a héber szöveget magánhangzókkal.\n\nEzzel le kell tölteni a Tohu.ttf betűtípust, és manuálisan át kell másolni a könyvtárba:\n“%s/fonts/”\n\nNem kell megváltoztatnod.</string>
-    <string name="fix_hebrew_download_font">Betűtípus letöltése</string>
     <string name="day_theme">Nappali téma</string>
     <string name="night_theme">Éjszakai téma</string>
     <string name="default_font">Alapértelmezett betűtípus</string>

@@ -38,27 +38,28 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Hindi nai-save ang backup. Hindi sapat na puwang na naiwan sa SD card. Ibaba ang backup na depth o remone ang ibang mga file.</string>
-    <string name="sd_space_warning">Mas mababa sa %d MB na espasyo sa iyong SD card na natitira. \n Linisin ang ilang espasyo upang maiwasan ang pagkawala ng data.</string>
-    <string name="backup_delete">Binubura ang mga backup&#8230;</string>
-    <string name="backup_restore">Ibalik mula sa backup</string>
-    <string name="backup_new_collection">Bagong koleksyon</string>
-    <string name="backup_del_collection">Burahin ang koleksyon at gumawa ng bago</string>
-    <string name="backup_del_collection_question">Tanggalin ang koleksyon at lumikha ng bago? Buburahin nito ang lahat ng iyong progreso sa pag-aaral at tanggalin ang lahat ng baraha.</string>
-    <string name="backup_full_sync_from_server">Buong pag-sync mula sa server</string>
-    <string name="backup_full_sync_from_server_question">I-overwrite ang iyong koleksyon sa isa mula sa AnkiWeb? Ibababa nito ang lahat ng iyong progreso sa pag-aaral at idinagdag ang impormasyon mula noong huling pag-sync mo.</string>
-    <string name="error_handling_title">Error handling</string>
-    <string name="error_handling_options">Mga opsyon</string>
-    <string name="backup_retry_opening">Muling buksan</string>
-    <string name="backup_error_menu_repair">Ayosin ang database</string>
-    <string name="backup_repair_deck">Ayosin</string>
-    <string name="backup_repair_deck_progress">Inaayos ang database&#8230;</string>
-    <string name="backup_error">Error</string>
-    <string name="backup_invalid_file_error">Ang napiling file ay invalid</string>
-    <string name="backup_restore_select_title">Mamili ng back up na i-rerestore</string>
-    <string name="backup_restore_no_backups">Walang available na backup sa device na ito. Kung mayroon kang mga pag-backup sa iyong desktop computer, kopyahin ang mga ito nang manu-mano sa iyong folder na AnkiDroid.</string>
-    <string name="open_collection_failed_title">Hindi binuksan ang koleksyon</string>
-    <string name="corrupt_db_message">Ang iyong koleksyon ay naging masama. \n\nTouch \"options\" upang ibalik mula sa isang backup, o kung hindi ito gumagana, tingnan ang sumusunod na mga tagubilin para sa pag-aayos ng database nang manu-mano: \n%1$s</string>
-    <string name="access_collection_failed_message">Naganap ang isang error habang ina-access ang iyong koleksyon. Maaaring ito ay sanhi ng isang hindi nakakapinsalang bug, o maaaring may problema dito. \n\nSubukan ang pagpapatakbo ng check database, o ibalik mula sa backup sa pamamagitan ng pagpindot sa pindutan ng \"options\". Kung patuloy mong makita ang mensaheng ito, mangyaring mag-file ng ulat ng bug: \n%1$s</string>
-    <string name="deck_repair_error">Hindi maayos ang koleksyon</string>
+    <string name="backup_deck_no_space_left">Viimeisin varmuuskopiointi epäonnistui, koska sd-kortillasi ei ollut tarpeeksi vapaata tilaa.\n\nVapauta tilaa tai pienennä varmuuskipoinnin syvyyttä.</string>
+    <string name="sd_space_warning">Alle %d mb vapaata tilaa sd-kortillasi.\nVapauta tilaa välttyäksesi tietojen menetykseltä.</string>
+    <string name="backup_delete">Poistetaan varmuuskopioita.\nOdota hetki...</string>
+    <string name="backup_restore">Palauta varmuuskopiosta</string>
+    <string name="backup_new_collection">Uusi kokoelma</string>
+    <string name="backup_del_collection">Poista kokoelma ja luo uusi</string>
+    <string name="backup_del_collection_question">Haluatko varmasti poistaa kokoelman ja luoda uuden?
+Tämä nollaa edistymisesi ja poistaa kaikki kortit!</string>
+    <string name="backup_full_sync_from_server">Täydellinen synkronointi palvelimelta</string>
+    <string name="backup_full_sync_from_server_question">Haluatko todella korvata kokoelmasi AnkiWebistä? Kaikki edellisen synkronoinnin jälkeen tapahtunyt opiskelu ja lisätyt tiedot unohdetaan!</string>
+    <string name="error_handling_title">Virheidenkäsittely</string>
+    <string name="error_handling_options">Asetukset</string>
+    <string name="backup_retry_opening">Yritä uudelleen avaamista</string>
+    <string name="backup_error_menu_repair">Korjaa tietokanta</string>
+    <string name="backup_repair_deck">Korjaus</string>
+    <string name="backup_repair_deck_progress">Korjataan tietokantaa.\nOdota hetki...</string>
+    <string name="backup_error">Virhe</string>
+    <string name="backup_invalid_file_error">Valittu varmuuskopio oli viallinen</string>
+    <string name="backup_restore_select_title">Valitse varmuuskopio palauttaaksesi</string>
+    <string name="backup_restore_no_backups">Ei varmuuskopioita käytettävissä tälle kokoelmalle tällä laitteella. Jos sinulla on varmuuskopioita pöytätietokoneella, kopioi ne manuaalisesti AnkiDroid-kansioon</string>
+    <string name="open_collection_failed_title">Kokoelman avaus epäonnistui</string>
+    <string name="corrupt_db_message">Kokoelmasi on vioittunut.\n\n Valitse \"valinnat\" kokoelman palauttamiseksi varmuuskopiosta. Jos tämä ei toimi, katso ohjeet kokoelman korjaamiseksi:\n%1$s</string>
+    <string name="access_collection_failed_message">Kokoelman hakemisessa tapahtui virhe. Syynä voi olla harmiton bugi tai kokoelmassa on ongelma. \n\n Kokeile tarkistaa tietokanta tai palauttaa kokoelma varmuuskopiosta, \"valinnat\" nappulan avulla. Jos virheilmoitus toistuu, raportoi bugista:\n$1$s . Kiitos.</string>
+    <string name="deck_repair_error">Kokoelman korjaus epäonnistui</string>
 </resources>

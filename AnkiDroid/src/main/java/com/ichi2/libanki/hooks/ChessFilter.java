@@ -18,13 +18,17 @@ package com.ichi2.libanki.hooks;
 
 
 
+import android.content.Context;
+
+import com.ichi2.anki.AnkiDroidApp;
+
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-public class ChessFilter extends Hook {
+public class ChessFilter {
     private static final Pattern fFenPattern = Pattern.compile("\\[fen ?([^\\]]*)\\]([^\\[]+)\\[/fen\\]");
     private static final Pattern fFenOrientationPattern = Pattern.compile("orientation *= *\"?(black|white)\"?");
     private static final String fRenderFen =
@@ -57,18 +61,11 @@ public class ChessFilter extends Hook {
     		"    fentxt=fentxt.replace(/p/g,'<td>&#9823;</td>');" +
     		"    return '<div align=\"center\" width=\"100%%\"><table class=\"chess_board\" cellspacing=\"0\" cellpadding=\"0\"><tr>'+fentxt+'</tr></table></div>';" +
     		"})('%s', %b)";
-    @Override
-    public Object runFilter(Object arg, Object... args) {
-        return fenToChessboard((String) arg);
-    }
-    public static void install(Hooks h) {
-        h.addHook("mungeQA", new ChessFilter());
-    }
-    public static void uninstall(Hooks h) {
-        h.remHook("mungeQA", new ChessFilter());
-    }
 
-    private String fenToChessboard(String text) {
+    public static String fenToChessboard(String text, Context context) {
+        if (!AnkiDroidApp.getSharedPrefs(context).getBoolean("convertFenText", false)) {
+            return text;
+        }
         Boolean showBlack = false;
         Matcher mf = fFenPattern.matcher(text);
         StringBuffer sb = new StringBuffer();

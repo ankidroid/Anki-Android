@@ -155,6 +155,7 @@
     <string name="rebuild_cram_deck">Atkuriamas mokymosi mintinai rinkinys&#8230;</string>
     <string name="rebuild_cram_label">Atkurti</string>
     <string name="empty_cram_label">Išvalyti</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Išvalomas mokymosi mintinai rinkinys&#8230;</string>
     <string name="custom_study_deck_name">Individualus mokymosi seansas</string>
     <string name="custom_study_deck_exists">Prašome pirmiausiai pervadinti esamą individualaus mokymosi rinkinį</string>
@@ -184,6 +185,7 @@
     <string name="card_template_editor_back">Galinė pusė</string>
     <string name="card_template_editor_styling">Išvaizdos keitimas</string>
     <string name="card_template_editor_menu_delete">Ištrinti</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Reikalingas bent vienas kortelės tipas</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Ar tikrai ištrinti “%2$s” kortelių tipą ir su juo susijusią %1$d kortelę?</item>
@@ -194,6 +196,8 @@
     <string name="invalid_template">Kortelės sukurti nepavyko</string>
     <string name="card_template_editor_would_delete_note">Ištrynus šį kortelių tipą, kartu bus ištrintas vienas ar keli užrašai. Prašome pirmiausiai sukurti naują kortelių tipą.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Skaitykite ir rašykite į „AnkiDroid“ duomenų bazę</string>
     <string name="read_write_permission_description">prisijunkite prie turimų užrašų, kortelių, užrašų tipų ir rinkinių bei kurkite naujus</string>

@@ -43,6 +43,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
+import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.compat.CompatHelper;
@@ -112,6 +113,12 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
+
+        if (FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser(getIntent(), this)) {
+            this.setResult(RESULT_CANCELED);
+            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+            return;
+        }
 
         if (getIntent().hasExtra("com.ichi2.anki.SchedResetDone")) {
             mSchedResetDone = true;
@@ -674,8 +681,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         fl.addView(mWhiteboard);
 
         mWhiteboard.setOnTouchListener((v, event) -> {
-            if (!mShowWhiteboard || (mPrefFullscreenReview
-                    && CompatHelper.getCompat().isImmersiveSystemUiVisible(Reviewer.this))) {
+            //If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
+            if (!mWhiteboard.isCurrentlyDrawing() && (!mShowWhiteboard || (mPrefFullscreenReview
+                    && CompatHelper.getCompat().isImmersiveSystemUiVisible(Reviewer.this)))) {
                 // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended
                 v.performClick();
                 return getGestureDetector().onTouchEvent(event);

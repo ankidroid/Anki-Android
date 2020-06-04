@@ -650,8 +650,7 @@ public class ContentProviderTest {
      */
     @Test
     public void testQueryAllDecks() throws Exception{
-        Collection col;
-        col = getCol();
+        Collection col = getCol();
         Decks decks = col.getDecks();
 
         Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver()
@@ -678,8 +677,7 @@ public class ContentProviderTest {
      */
     @Test
     public void testQueryCertainDeck() throws Exception {
-        Collection col;
-        col = getCol();
+        Collection col = getCol();
 
         long deckId = mTestDeckIds[0];
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
@@ -702,8 +700,7 @@ public class ContentProviderTest {
      */
     @Test
     public void testQueryNextCard(){
-        Collection col;
-        col = getCol();
+        Collection col = getCol();
         AbstractSched sched = col.getSched();
 
         Cursor reviewInfoCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(
@@ -736,8 +733,7 @@ public class ContentProviderTest {
         long deckToTest = mTestDeckIds[0];
         String deckSelector = "deckID=?";
         String deckArguments[] = {Long.toString(deckToTest)};
-        Collection col;
-        col = getCol();
+        Collection col = getCol();
         AbstractSched sched = col.getSched();
         long selectedDeckBeforeTest = col.getDecks().selected();
         col.getDecks().select(1); //select Default deck
@@ -784,16 +780,19 @@ public class ContentProviderTest {
         assertEquals("Check that the selected deck has been correctly set", deckId, col.getDecks().selected());
     }
 
+    private Card getFirstCardFromScheduler(Collection col) {
+        long deckId = mTestDeckIds[0];
+        col.getDecks().select(deckId);
+        col.getSched().reset();
+        return col.getSched().getCard();
+    }
     /**
      * Test giving the answer for a reviewed card
      */
     @Test
     public void testAnswerCard(){
-        Collection col;
-        col = getCol();
-        long deckId = mTestDeckIds[0];
-        col.getDecks().select(deckId);
-        Card card = col.getSched().getCard();
+        Collection col = getCol();
+        Card card = getFirstCardFromScheduler(col);
         long cardId = card.getId();
 
         // the card starts out being new
@@ -836,11 +835,8 @@ public class ContentProviderTest {
     public void testBuryCard(){
         // get the first card due
         // ----------------------
-        Collection col;
-        col = getCol();
-        long deckId = mTestDeckIds[0];
-        col.getDecks().select(deckId);
-        Card card = col.getSched().getCard();
+        Collection col = getCol();
+        Card card = getFirstCardFromScheduler(col);
 
         // verify that the card is not already user-buried
         Assert.assertNotEquals("Card is not user-buried before test", Consts.QUEUE_TYPE_SIBLING_BURIED, card.getQueue());
@@ -884,11 +880,8 @@ public class ContentProviderTest {
 
         // get the first card due
         // ----------------------
-        Collection col;
-        col = getCol();
-        long deckId = mTestDeckIds[0];
-        col.getDecks().select(deckId);
-        Card card = col.getSched().getCard();
+        Collection col = getCol();
+        Card card = getFirstCardFromScheduler(col);
 
         // verify that the card is not already suspended
         Assert.assertNotEquals("Card is not suspended before test", Consts.QUEUE_TYPE_SUSPENDED, card.getQueue());
@@ -933,11 +926,8 @@ public class ContentProviderTest {
     public void testUpdateTags() {
         // get the first card due
         // ----------------------
-        Collection col;
-        col = getCol();
-        long deckId = mTestDeckIds[0];
-        col.getDecks().select(deckId);
-        Card card = col.getSched().getCard();
+        Collection col = getCol();
+        Card card = getFirstCardFromScheduler(col);
         Note note = card.note();
         long noteId = note.getId();
 

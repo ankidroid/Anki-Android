@@ -150,6 +150,7 @@
     <string name="rebuild_cram_deck">Обнова слагања шпила.\nМолим сачекајте...</string>
     <string name="rebuild_cram_label">Ремонтуј</string>
     <string name="empty_cram_label">Очисти</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Чишћење уклапања шпила.\nМолим сачекајте...</string>
     <string name="custom_study_deck_name">Посебна сесија проучавања</string>
     <string name="custom_study_deck_exists">Прво преименујте постојеће специјалне шпилове.</string>
@@ -179,6 +180,7 @@
     <string name="card_template_editor_back">Задњи шаблон</string>
     <string name="card_template_editor_styling">Стил</string>
     <string name="card_template_editor_menu_delete">Избриши</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Потребан је бар један тип.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Да избришем тип картице \'%2$s\' и његову %1$d картицу?</item>
@@ -188,6 +190,8 @@
     <string name="invalid_template">A card could not be generated</string>
     <string name="card_template_editor_would_delete_note">Брисање тог типа карата довешће до брисања једног или неколико белешки. Направите прво нови тип карата.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читати и писати у бази података AnkiDroid</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>

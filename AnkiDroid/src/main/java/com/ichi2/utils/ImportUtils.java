@@ -66,6 +66,15 @@ public class ImportUtils {
         return FileImporter.isDeckPackage(filename) || isCollectionPackage(filename);
     }
 
+    /**
+     * Whether importUtils can handle the given intent
+     * Caused by #6312 - A launcher was sending ACTION_VIEW instead of ACTION_MAIN
+     */
+    public static boolean isInvalidViewIntent(@NonNull Intent intent) {
+        return intent.getData() == null && intent.getClipData() == null;
+    }
+
+
     @SuppressWarnings("WeakerAccess")
     protected static class FileImporter {
         /**

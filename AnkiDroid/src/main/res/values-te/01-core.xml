@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">క్రామ్ డెక్ పునర్నిర్మాణం&#8230;</string>
     <string name="rebuild_cram_label">పునర్నిర్మాణం</string>
     <string name="empty_cram_label">ఖాళీ</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">ఖాళీ క్రామ్ డెక్&#8230;</string>
     <string name="custom_study_deck_name">కస్టమ్ అధ్యయనం సెషన్</string>
     <string name="custom_study_deck_exists">మొదటి సానుకూల అధ్యయనం డెక్ యొక్క పేరు మార్చండి</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">బ్యాక్ టెంప్లేట్</string>
     <string name="card_template_editor_styling">స్టైలింగ్</string>
     <string name="card_template_editor_menu_delete">తొలగించు</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">కనీసం ఒక కార్డు రకం అవసరం</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">తొలగించు \"%2$s\" కార్డు రకం, మరియు దాని %1$d కార్డు?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">ఒక కార్డు సృష్టించబడలేదు</string>
     <string name="card_template_editor_would_delete_note">ఈ కార్డ్ రకాన్ని తొలగించడం వలన ఒకటి లేదా అంతకంటే ఎక్కువ గమనికలు తొలగిపోతాయి. దయచేసి ముందుగా ఒక కొత్త కార్డు రకం సృష్టించండి.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid డేటాబేస్కు చదవండి మరియు వ్రాయండి</string>
     <string name="read_write_permission_description">పొందు ప్రస్తుతం ఉన్న గమనికలు, కార్డులు, నోట్ రకాలు మరియు డెక్స్, కొత్త వాటిని సృష్టించడం</string>

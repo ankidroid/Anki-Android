@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Navigation drawer items-->
+    <string name="decks">Decks</string>
+    <string name="card_browser">Kard browser</string>
+    <string name="statistics">Istatistika</string>
+    <string name="settings">Ang mga setting</string>
+    <string name="help">Tulong</string>
+    <string name="send_feedback">Magpadala ng tugun</string>
+    <string name="studyoptions_title">Pangkalahatang ideya ng deck</string>
+    <string name="studyoptions_due_today">Nakatakda ngayon:</string>
+    <string name="studyoptions_new_total">Bilang ng mga bagong Kard:</string>
+    <string name="studyoptions_total_cards">Kabuuan ng mga kard:</string>
+    <string name="studyoptions_eta">Tinatayang oras (minuto):</string>
+    <string name="studyoptions_start">Pag-aaral</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">Palawakin</string>
+    <string name="collapse">Itiklop</string>
+    <string name="study_more">Suriin ang iba pa</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d Kard na nakatakda (%2$s)</item>
+        <item quantity="other">%1$d nakatakdang kard (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">%d natitirang minuto
+mga natitirang minuto</item>
+        <item quantity="other">%d minutong natitira</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">Nag-aral ng %1$d kard sa %2$s ngayon</item>
+        <item quantity="other">Nag-aral ng %1$d kard sa %2$s ngayon</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">I-type ang sagot</string>
+    <string name="show_answer">Ipakita ang sagot</string>
+    <string name="ease_button_again">Muli</string>
+    <string name="ease_button_hard">Mahirap</string>
+    <string name="ease_button_good">Mabuti</string>
+    <string name="ease_button_easy">Madali</string>
+    <string name="studyoptions_congrats_undo">Bumalik sa dati %s</string>
+    <string name="menu_import">I - import</string>
+    <string name="undo">Bumalik sa dati</string>
+    <string name="undo_action_review">huling pagsusuri</string>
+    <string name="undo_action_bury_card">ilibing ang kard</string>
+    <string name="undo_action_bury_note">ilibing ang tala</string>
+    <string name="undo_action_suspend_card">suspindihin ang kard</string>
+    <string name="undo_action_suspend_note">suspindihin ang tala</string>
+    <string name="undo_action_delete">burahin ang tala</string>
+    <string name="undo_action_delete_multi">delete notes</string>
+    <string name="undo_action_change_deck_multi">change decks</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="unbury">Hukayin muli</string>
+    <string name="rename_deck">Palitan ang pangalan ng deck</string>
+    <string name="menu_add">Idagdag</string>
+    <string name="menu_add_note">Magdagdag ng tala</string>
+    <string name="menu_my_account">I-sync ang account</string>
+    <string name="menu_dismiss_note">Itago / burahin</string>
+    <string name="menu_bury_card">Ilibing ang kard</string>
+    <string name="menu_bury_note">Ilibing ang tala</string>
+    <string name="menu_suspend_card">Suspindihin ang kard</string>
+    <string name="menu_suspend_note">Suspindihin ang tala</string>
+    <string name="menu_bury">Ilibing</string>
+    <string name="menu_suspend">Suspindihin</string>
+    <string name="menu_delete_note">Burahin ang tala</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="delete_note_message">Talaga bang gusto mong burahin ang talang ito at pati na rin ang lahat ngmga kard?\n%s</string>
+    <string name="menu_select">Pumili ng teksto</string>
+    <string name="menu_search">Hanapin sa %1$s</string>
+    <string name="menu_mark_note">Markahan ang tala</string>
+    <string name="menu_unmark_note">Alisin ang marka ng tala</string>
+    <string name="new_deck">Gumawa ng deck</string>
+    <string name="create">Gumawa</string>
+    <string name="new_dynamic_deck">Gumawa ng na-filter na deck</string>
+    <string name="night_mode">Pang-gabing mode</string>
+    <string name="directory_inaccessible">Ang AnkiDroid directory ay hindi mahanap</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d s</string>
+    <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours">%d h</string>
+    <string name="time_quantity_days">%d d</string>
+    <string name="time_quantity_months">%.1f mo</string>
+    <string name="time_quantity_years">%.1f yr</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">Itayo muli ang cram deck&#8230;</string>
+    <string name="rebuild_cram_label">Muling itayo</string>
+    <string name="empty_cram_label">Walang laman</string>
+    <string name="create_subdeck">Create subdeck</string>
+    <string name="empty_cram_deck">Tinatanggal ang mga laman ng cram deck&#8230;</string>
+    <string name="custom_study_deck_name">I-custom ang study session</string>
+    <string name="custom_study_deck_exists">Baguhin muna ang pangalan ng existing custom study deck</string>
+    <string name="empty_deck">Ang deck na ito ay walang laman</string>
+    <string name="studyoptions_empty">Ang deck na ito ay walang laman. Pindotin ang + na button para magdagdag ng laman.</string>
+    <string name="studyoptions_limit_reached">Ang pang araw - araw na pag - aaral ay naabot na</string>
+    <string name="studyoptions_empty_schedule">Walang kard na nakatakdang pag-aralan</string>
+    <string name="studyoptions_congrats_finished">Congratulations! Natapos mo na para sa ngayon.</string>
+    <string name="studyoptions_congrats_more_rev">Ang limitasyon sa araw na ito ay naabot na, ngunit mayroon pang mga kard na kailangang suriin. Maaaring mong dagdagan ang limistayon sa mga pagpipilian.</string>
+    <string name="studyoptions_congrats_more_new">Ang limitasyon sa araw na ito ay naabot na. Mayroong pang mga bagong kard na magagamit; maaari mong dagdagan ang limitasyon sa mga opsyon, ngunit dadagdagan nito ang iyong mga panandaliang workload ng pagsusuri.</string>
+    <string name="studyoptions_congrats_custom">Para mag-aral sa labas ng normal na iskedyul, pindutin ang pindutan ng \"Pasadyang pag-aaral\"</string>
+    <string name="studyoptions_no_cards_due">Walang kard na nakatakda pa</string>
+    <string name="sd_card_not_mounted">Ang device storage ay hindi nakataas</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">I-sync</string>
+    <string name="cancel_sync_confirm">Gusto mo bang kanselahin ang sync?</string>
+    <string name="continue_sync">Ipagtuloy ang pagsync</string>
+    <string name="sync_cancelled">Nakansela ang sync</string>
+    <string name="sync_cancel_message">Kinakansela...\nIto ay maaaring matagalan.</string>
+    <string name="export">I-export</string>
+    <string name="export_collection">I-export ang mga koleksiyon</string>
+    <string name="export_deck">I-export ang deck</string>
+    <string name="nothing">Wala</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">Uri ng mga kard</string>
+    <string name="card_template_editor_front">Harapan ng template</string>
+    <string name="card_template_editor_back">Likod ng template</string>
+    <string name="card_template_editor_styling">Pagstyle</string>
+    <string name="card_template_editor_menu_delete">Burahin</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_cant_delete">Hindi bababa sa isang uri ng kard ang kinakailangan</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Tanggalin ang \"%2$s\" uri ng kard, at ang %1$d kard nito?</item>
+        <item quantity="other">Burahin ang \"%2$s\" uri ng kard, at ang %1$d kard nito?</item>
+    </plurals>
+    <string name="invalid_template">Ang isang kard ay hindi mabubuo</string>
+    <string name="card_template_editor_would_delete_note">Ang pag-alis ng uri ng kard na ito ay magdudulot ng isa o higit pang mga tala na matatanggal. Mangyaring gumawa muna ng isang bagong uri ng kard.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">Basahin at isulat sa database ng AnkiDroid</string>
+    <string name="read_write_permission_description">i-access ang mga umiiral na tala, kard, mga uri ng tala, at mga deck, pati na rin ang gumawa ng mga bago</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
+</resources>

@@ -52,21 +52,23 @@
         <item>Notiz bearbeiten</item>
         <item>Notiz markieren</item>
         <item>Nachschlagen</item>
-        <item>Karte zurückstellen</item>
-        <item>Dauerhaft aussetzen</item>
+        <item>Karte aufschieben</item>
+        <item>Karte ausschließen</item>
         <item>Notiz löschen</item>
         <item>Medien abspielen</item>
         <item>Lernen beenden</item>
-        <item>Notiz vorläufig aussetzen</item>
-        <item>Notiz dauerhaft aussetzen</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
+        <item>Notiz aufschieben</item>
+        <item>Notiz ausschließen</item>
+        <item>Rote Flagge umschalten</item>
+        <item>Orange Flagge umschalten</item>
+        <item>Grüne Flagge umschalten</item>
+        <item>Blaue Flagge umschalten</item>
+        <item>Flagge entfernen</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
-        <item>Karte dauerhaft aussetzen</item>
+        <item>Karte ausschließen</item>
         <item>Nur Schlagwort</item>
     </string-array>
     <string-array name="new_order_labels">
@@ -74,11 +76,11 @@
         <item>Neue Karten in Reihenfolge des Hinzufügens</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
-        <item>Am frühesten gesehene zuerst</item>
+        <item>Älteste zuerst</item>
         <item>Zufällig</item>
         <item>Steigende Intervalle</item>
         <item>Abnehmende Intervalle</item>
-        <item>Meiste Fehlschläge</item>
+        <item>Häufigste Vergessene</item>
         <item>In Reihenfolge des Hinzufügens</item>
         <item>Nach Fälligkeit</item>
         <item>Zuletzt hinzugefügte zuerst</item>

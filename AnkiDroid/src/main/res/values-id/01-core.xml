@@ -140,6 +140,7 @@
     <string name="rebuild_cram_deck">Membuat ulang susunan cram&#8230;</string>
     <string name="rebuild_cram_label">Buat ulang</string>
     <string name="empty_cram_label">Kosong</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Mengosongkan susunan cram&#8230;</string>
     <string name="custom_study_deck_name">Sesi belajar kustom</string>
     <string name="custom_study_deck_exists">Ubah dahulu susunan belajar kustom yang ada</string>
@@ -169,6 +170,7 @@
     <string name="card_template_editor_back">Template belakang</string>
     <string name="card_template_editor_styling">Penataan</string>
     <string name="card_template_editor_menu_delete">Hapus</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">Diperlukan setidaknya satu jenis kartu.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Hapus jenis kartu \"%2$s\", beserta kartu %1$d?</item>
@@ -176,6 +178,8 @@
     <string name="invalid_template">Kartu tidak dapat dibuat</string>
     <string name="card_template_editor_would_delete_note">Menghapus jenis kartu ini akan menyebabkan satu atau lebih catatan terhapus. Silahkan buat dahulu jenis kartu yang baru.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Baca dan tulis ke database AnkiDroid</string>
     <string name="read_write_permission_description">mengakses catatan, kartu, jenis catatan, dan susunan, serta membuat yang baru</string>

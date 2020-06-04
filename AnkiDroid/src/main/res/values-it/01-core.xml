@@ -145,6 +145,7 @@
     <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
     <string name="rebuild_cram_label">Ricrea</string>
     <string name="empty_cram_label">Svuota</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Svuoto mazzo per lo studio focalizzato.\nAttendi...</string>
     <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
     <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
@@ -174,6 +175,7 @@
     <string name="card_template_editor_back">Modello del retro</string>
     <string name="card_template_editor_styling">Stile</string>
     <string name="card_template_editor_menu_delete">Elimina</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Eliminare il tipo di carta \'%2$s\', e la sua carta %1$d?</item>
@@ -182,6 +184,8 @@
     <string name="invalid_template">Una carta non può essere generata</string>
     <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
     <string name="template_for_current_card_deleted">Il tipo di carta per la carta corrente è stato eliminato.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
     <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>

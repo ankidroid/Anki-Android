@@ -412,4 +412,8 @@ public class Whiteboard extends View {
             return mWhichStack.empty();
         }
     }
+
+    public boolean isCurrentlyDrawing() {
+        return mCurrentlyDrawing;
+    }
 }

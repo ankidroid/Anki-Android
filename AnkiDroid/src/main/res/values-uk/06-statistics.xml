@@ -38,16 +38,16 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="statistics_young">Молоді</string>
-    <string name="statistics_mature">Зрілі</string>
+    <string name="statistics_young">Свіжі</string>
+    <string name="statistics_mature">Закріплені</string>
     <string name="statistics_young_and_learn">Нові і нещодавні</string>
-    <string name="statistics_unlearned">Не переглядане</string>
-    <string name="statistics_suspended_and_buried">Приховані+Відкладені</string>
-    <string name="statistics_relearn">Знову вивчені</string>
-    <string name="statistics_learn">Вчити</string>
+    <string name="statistics_unlearned">Не переглядані</string>
+    <string name="statistics_suspended_and_buried">Призупинені+Відкладені</string>
+    <string name="statistics_relearn">Повторно вчено</string>
+    <string name="statistics_learn">Вчено</string>
     <string name="statistics_cram">Зазубрені</string>
     <string name="stats_cards">Картки</string>
-    <string name="stats_cards_intervals">Картки з заданим інтервалом</string>
+    <string name="stats_cards_intervals">Картки з даним інтервалом</string>
     <string name="stats_cumulative_cards">Сукупність карток</string>
     <string name="stats_cumulative_answers">Сукупність відповідей</string>
     <string name="stats_cumulative_time_minutes">Сукупність хвилин</string>
@@ -63,29 +63,29 @@
     <string name="stats_period_year">1 рік</string>
     <string name="stats_period_lifetime">За весь час</string>
     <string name="stats_deck_collection">колекція</string>
-    <string name="stats_time_of_day">Час дня</string>
-    <string name="stats_day_of_week">День неділі</string>
+    <string name="stats_time_of_day">Час доби</string>
+    <string name="stats_day_of_week">День тижня</string>
     <string formatted="false" name="stats_percentage_correct">% правильного</string>
     <string name="stats_reviews">Відповіді</string>
     <string name="stats_answer_type">Тип відповіді</string>
     <string name="stats_today_again_count">Кількість повернень: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; правильно)</string>
-    <string name="stats_today_type_breakdown">Вивчено: &lt;b&gt;%1$d&lt;/b&gt;, 
+    <string name="stats_today_type_breakdown">Вчено: &lt;b&gt;%1$d&lt;/b&gt;, 
 повторено : &lt;b&gt;%2$d&lt;/b&gt;, 
-повторно вивчено: &lt;b&gt;%3$d&lt;/b&gt;, 
+повторно вчено: &lt;b&gt;%3$d&lt;/b&gt;, 
 відфільтровано: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Правильних відповідей у закріплених картах: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">Сьогодні не було вивчено жодної закріпленої картки.</string>
     <string name="stats_overview_forecast_total">Загалом: &lt;b&gt;%1$d&lt;/b&gt; переглядів</string>
-    <string name="stats_overview_forecast_average">Пересічно: &lt;b&gt;%1$.1f&lt;/b&gt; перегл./день</string>
+    <string name="stats_overview_forecast_average">Пересічно: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
     <string name="stats_overview_forecast_due_tomorrow">На завтра: &lt;b&gt;%1$d&lt;/b&gt;</string>
-    <string name="stats_overview_days_studied">Днів навчання: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d за %3$d)</string>
+    <string name="stats_overview_days_studied">Днів навчання: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d із %3$d)</string>
     <string name="stats_overview_total_reviews">Загалом: &lt;b&gt;%1$d&lt;/b&gt; переглядів</string>
-    <string name="stats_overview_reviews_per_day_studydays">Пересічно навчання: &lt;b&gt;%1$.1f&lt;/b&gt; перегл./день</string>
-    <string name="stats_overview_reviews_per_day_all">Якщо вчити щодня: &lt;b&gt;%1$.1f&lt;/b&gt; перегл./день</string>
-    <string name="stats_overview_time_per_day_studydays">Пересічно навчання: &lt;b&gt;%1$.1f&lt;/b&gt; хвилин/день</string>
-    <string name="stats_overview_time_per_day_all">Якщо вчити щодня:  &lt;b&gt;%1$.1f&lt;/b&gt; хвилин/день</string>
-    <string name="stats_overview_new_cards_per_day">Пересічно: &lt;b&gt;%1$.1f&lt;/b&gt; карт/день</string>
+    <string name="stats_overview_reviews_per_day_studydays">Пересічно навчання: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
+    <string name="stats_overview_reviews_per_day_all">Якщо вчити щодня: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
+    <string name="stats_overview_time_per_day_studydays">Пересічно навчання: &lt;b&gt;%1$.1f&lt;/b&gt; хвилин на добу</string>
+    <string name="stats_overview_time_per_day_all">Якщо вчити щодня:  &lt;b&gt;%1$.1f&lt;/b&gt; хвилин на добу</string>
+    <string name="stats_overview_new_cards_per_day">Пересічно: &lt;b&gt;%1$.1f&lt;/b&gt; карток за добу</string>
     <string name="stats_overview_total_new_cards">Загалом: &lt;b&gt;%1$d&lt;/b&gt; карт</string>
     <string name="stats_overview_average_interval">"Середній інтервал: "</string>
     <string name="stats_overview_longest_interval">"Найдовший інтервал: "</string>
@@ -110,7 +110,7 @@
     <string name="stats_breakdown">Годинний розподіл</string>
     <string name="stats_weekly_breakdown">Тижневий розподіл</string>
     <string name="stats_answer_buttons">Кнопки відповіді</string>
-    <string name="stats_cards_types">Типи картки</string>
+    <string name="stats_cards_types">Типи карток</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>
@@ -155,9 +155,9 @@
         <item>4</item>
     </string-array>
     <plurals name="stats_today_cards">
-        <item quantity="one">Переглянуто &lt;b&gt;%1$d карту&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
-        <item quantity="few">Переглянуто &lt;b&gt;%1$d карти&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
-        <item quantity="many">Вивчено &lt;b&gt;%1$d карток&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt; сьогодні</item>
-        <item quantity="other">Переглянуто &lt;b&gt;%1$d карток&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
+        <item quantity="one">Сьогодні переглянуто &lt;b&gt;%1$d карту&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
+        <item quantity="few">Сьогодні переглянуто &lt;b&gt;%1$d карти&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
+        <item quantity="many">Сьогодні переглянуто &lt;b&gt;%1$d карток&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
+        <item quantity="other">Сьогодні переглянуто &lt;b&gt;%1$d карток&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
     </plurals>
 </resources>

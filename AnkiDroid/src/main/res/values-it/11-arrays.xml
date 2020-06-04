@@ -64,6 +64,8 @@
         <item>Attiva/disattiva contrassegno verde</item>
         <item>Attiva/disattiva contrassegno blu</item>
         <item>Rimuovi contrassegno</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Sospendi carta</item>

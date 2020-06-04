@@ -122,10 +122,6 @@
     <string name="automatic_sync_choice">Аўтаматычная сінхранізацыя</string>
     <string name="automatic_sync_choice_summ">Аўтаматычна сінхранізаваць, калі адбываецца адкрыццё/закрыццё праграмы,
         калі з часу апошняй сінхранізацыі мінула 10 хвілін.</string>
-    <string name="fix_hebrew_text">Выпраўленне для галосных на іўрыце</string>
-    <string name="fix_hebrew_text_summ">Выпраўляе праблемы з няправільным адлюстраваннем галосных на іўрыце.</string>
-    <string name="fix_hebrew_instructions">Гэта налада дазваляе абысці алгарытм RTL (справа налева) сістэмы Android, каб правільна адлюстраваць тэкст з галоснымі літарамі на іўрыце.\n\nДля гэтага вам неабходна спампаваць шрыфт Tohu.ttf і скапіяваць яго ўручную ў \n“%s/fonts/”\n\nВам не давядзецца змяняць вашы карткі пры гэтым.</string>
-    <string name="fix_hebrew_download_font">Спампаваць шрыфт</string>
     <string name="day_theme">Дзённая тэма</string>
     <string name="night_theme">Начная тэма</string>
     <string name="default_font">Шрыфт па змаўчанні</string>

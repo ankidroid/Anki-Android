@@ -122,10 +122,6 @@
     <string name="automatic_sync_choice">Awtomatikong pag-synchronize</string>
     <string name="automatic_sync_choice_summ">Awtomatikong i-sync sa start / exit ng app kung ang huling pag-sync ay higit sa 10
         minuto ang nakalipas.</string>
-    <string name="fix_hebrew_text">Ayusin para sa Hebrew vowels</string>
-    <string name="fix_hebrew_text_summ">Workaround para sa tamang vowels ng Hebrew.</string>
-    <string name="fix_hebrew_instructions">Ang setting na ito ay naglalampas sa RTL algorithm ng Android upang maipakita ang tekstong Hebreo na may wastong vowels.\n\nPara itong gumana, kailangan mong i-download ang font na Tohu.ttf at kopyahin ito nang mano-mano sa\n\"%s/fonts/\"\n\nHindi mo na kailangang baguhin ang iyong mga card.</string>
-    <string name="fix_hebrew_download_font">I-download ang font</string>
     <string name="day_theme">Araw ng tema</string>
     <string name="night_theme">Tema ng gabi</string>
     <string name="default_font">Default na font</string>

@@ -92,10 +92,13 @@
     </string-array>
     <string name="card_browser_select_all">全选</string>
     <string name="card_browser_select_none">取消全选</string>
-    <string name="card_browser_edit_note">Edit note</string>
+    <string name="card_browser_edit_note">编辑笔记</string>
     <string name="card_browser_interval_new_card">（新卡片）</string>
     <string name="card_browser_ease_new_card">（新卡片）</string>
     <string name="card_browser_due_filtered_card">（已过滤）</string>
     <string name="card_browser_interval_learning_card">（学习中的卡片）</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
+    <string name="card_browser_note_editor_error">打开笔记编辑器出错</string>
+    <string name="card_browser_no_cards_in_deck">没有在牌组 “%s” 中找到卡片</string>
+    <string name="card_browser_search_all_decks">搜索全部牌组</string>
+    <string name="card_browser_unknown_deck_name">未知</string>
 </resources>

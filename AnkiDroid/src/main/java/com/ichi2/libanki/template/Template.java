@@ -16,10 +16,12 @@
 
 package com.ichi2.libanki.template;
 
+import android.content.res.Resources;
 import android.text.TextUtils;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.hooks.Hooks;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -49,6 +51,8 @@ import timber.log.Timber;
 @SuppressWarnings({"PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 public class Template {
     public static final String clozeReg = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
+    public static final String CLOZE_DELETION_REPLACEMENT = "[...]";
+
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
 
     // Opening tag delimiter
@@ -292,10 +296,30 @@ public class Template {
                     extra = m.group(2);
                 }
 
-                txt = (String) Hooks.runFilter("fmod_" + mod,
-                        txt == null ? "" : txt,
-                        extra == null ? "" : extra,
-                        context, tag, tag_name);
+                if (txt == null) {
+                    txt = "";
+                }
+                try {
+                    switch (mod) {
+                    case "hint" :
+                        txt = runHint(txt, tag);
+                        break;
+                    case "kanji" :
+                        txt = FuriganaFilters.kanjiFilter(txt);
+                        break;
+                    case "kana" :
+                        txt = FuriganaFilters.kanaFilter(txt);
+                        break;
+                    case "furigana" :
+                        txt = FuriganaFilters.furiganaFilter(txt);
+                        break;
+                    default :
+                        break;
+                    }
+                } catch (Exception e) {
+                    Timber.e(e, "Exception while running hook %s", mod);
+                    return "Error in filter " + mod;
+                }
                 if (txt == null) {
                     return String.format("{unknown field %s}", tag_name);
                 }
@@ -303,6 +327,20 @@ public class Template {
         }
         return txt != null ? txt : "";
     }
+
+    private String runHint(String txt, String tag) {
+        if (txt.trim().length() == 0) {
+            return "";
+        }
+        Resources res = AnkiDroidApp.getAppResources();
+        // random id
+        String domid = "hint" + txt.hashCode();
+        return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
+                domid + "').style.display='block';_relinquishFocus();return false;\">" +
+                res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
+                domid + "\" class=hint style=\"display: none\">" + txt + "</div>";
+    }
+
 
     private static @NonNull String clozeText(@NonNull String txt, @NonNull String ord, char type) {
         if (!Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt).find()) {
@@ -320,7 +358,7 @@ public class Template {
                 if (!TextUtils.isEmpty(m.group(4))) {
                     buf = "[" + m.group(4) + "]";
                 } else {
-                    buf = "[...]";
+                    buf = CLOZE_DELETION_REPLACEMENT;
                 }
             } else {
                 buf = m.group(2);

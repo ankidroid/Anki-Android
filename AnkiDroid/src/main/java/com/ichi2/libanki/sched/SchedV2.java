@@ -38,7 +38,6 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.hooks.Hooks;
 
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
@@ -1726,8 +1725,8 @@ public class SchedV2 extends AbstractSched {
             }
             // notify UI
             if (mContextReference != null) {
-                Context context = mContextReference.get();
-                Hooks.getInstance(context).runHook("leech", card, context);
+                Activity context = mContextReference.get();
+                leech(card, context);
             }
             return true;
         }
@@ -2203,19 +2202,21 @@ public class SchedV2 extends AbstractSched {
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
+                List<Long> queue_object;
                 if (queue == Consts.QUEUE_TYPE_REV) {
+                    queue_object = mRevQueue;
                     if (buryRev) {
                         toBury.add(cid);
                     }
-                    // if bury disabled, we still discard to give same-day spacing
-                    mRevQueue.remove(cid);
                 } else {
-                    // if bury is disabled, we still discard to give same-day spacing
+                    queue_object = mNewQueue;
                     if (buryNew) {
                         toBury.add(cid);
                     }
-                    mNewQueue.remove(cid);
                 }
+                // even if burying disabled, we still discard to give
+                // same-day spacing
+                queue_object.remove(cid);
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -2645,7 +2646,7 @@ public class SchedV2 extends AbstractSched {
             mNewCount--;
             break;
         case Consts.QUEUE_TYPE_LRN:
-            mLrnCount -= card.getLeft() / 1000;
+            mLrnCount --;
             break;
         case Consts.QUEUE_TYPE_REV:
             mRevCount--;

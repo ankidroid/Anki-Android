@@ -26,6 +26,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 /**
  * Utility call for proving language related functionality.
@@ -33,13 +34,14 @@ import androidx.annotation.Nullable;
 public class LanguageUtil {
 
     /** A list of all languages supported by AnkiDroid
-     * Please modify LanguageUtilsLanguageRegressionTest if changing */
+     * Please modify LanguageUtilsTest if changing
+     * Please note 'yue' is special, it is 'yu' on crowdin, and mapped in import specially to 'yue' */
     public static final String[] APP_LANGUAGES = {"af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
             "de", "el", "en", "eo", "es-AR", "es-ES", "et", "eu", "fa", "fi", "fil", "fr", "fy-NL", "ga-IE", "gl", "got",
             "gu-IN", "he", "hi", "hr", "hu", "hy-AM", "id", "is", "it", "ja", "jv", "ka", "kk", "km", "ko", "ku",
             "ky", "lt", "lv", "mk", "mn", "mr", "ms", "my", "nl", "nn-NO", "no", "pa-IN", "pl", "pt-BR", "pt-PT",
             "ro", "ru", "sk", "sl", "sq", "sr", "ss", "sv-SE", "sw", "ta", "te", "tg", "th", "ti", "tl", "tn", "tr",
-            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yu", "zh-CN", "zh-TW", "zu" };
+            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yue", "zh-CN", "zh-TW", "zu" };
 
 
     /**
@@ -81,10 +83,13 @@ public class LanguageUtil {
             // Fall back to (system) default only if that fails.
             localeCode = Locale.getDefault().toString();
         }
-        if (localeCode.length() > 2) {
+        // Language separators are '_' or '-' at different times in display/resource fetch
+        if (localeCode != null && (localeCode.contains("_") || localeCode.contains("-"))) {
             try {
-                locale = new Locale(localeCode.substring(0, 2), localeCode.substring(3, 5));
-            } catch (StringIndexOutOfBoundsException e) {
+                String[] localeParts = localeCode.split("[_-]", 2);
+                locale = new Locale(localeParts[0], localeParts[1]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                Timber.w(e, "LanguageUtil::getLocale variant split fail, using code '%s' raw.", localeCode);
                 locale = new Locale(localeCode);
             }
         } else {

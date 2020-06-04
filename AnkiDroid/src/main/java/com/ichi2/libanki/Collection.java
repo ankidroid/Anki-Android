@@ -32,9 +32,8 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.exception.NoSuchDeckException;
-import com.ichi2.libanki.hooks.Hooks;
+import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
@@ -1009,11 +1008,10 @@ public class Collection {
      * Returns hash of id, question, answer.
      */
     public HashMap<String, String> _renderQA(Object[] data) {
-        return _renderQA(data, null, null);
+        return _renderQA(data, false, null, null);
     }
 
-
-    public HashMap<String, String> _renderQA(Object[] data, String qfmt, String afmt) {
+    public HashMap<String, String> _renderQA(Object[] data, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
         String[] flist = Utils.splitFields((String) data[6]);
@@ -1055,9 +1053,13 @@ public class Collection {
                 // the following line differs from libanki // TODO: why?
                 fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
-            fields = (Map<String, String>) Hooks.runFilter("mungeFields", fields, model, data, this);
             String html = new Template(format, fields).render();
-            d.put(type, (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this));
+            html = ChessFilter.fenToChessboard(html, getContext());
+            if (!browser) {
+                // browser don't show image. So compiling LaTeX actually remove information.
+                html = LaTeX.mungeQA(html, this, model);
+            }
+            d.put(type, html);
             // empty cloze?
             if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
                 if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
