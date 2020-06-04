@@ -264,7 +264,7 @@ public class Finder {
     }
 
 
-    public Pair<String, String[]> _where(String[] tokens) {
+    private Pair<String, String[]> _where(String[] tokens) {
         // state and query
         SearchState s = new SearchState();
         List<String> args = new ArrayList<>();
