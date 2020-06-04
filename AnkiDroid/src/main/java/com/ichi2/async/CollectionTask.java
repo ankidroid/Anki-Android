@@ -895,7 +895,13 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         String query = (String) params[0].getObjArray()[0];
         Boolean order = (Boolean) params[0].getObjArray()[1];
         int numCardsToRender = (int) params[0].getObjArray()[2];
-        List<Map<String,String>> searchResult = col.findCardsForCardBrowser(query, order);
+        List<Long> searchResult_ = col.findCards(query, order);
+        List<Map<String,String>> searchResult = new ArrayList<>(searchResult_.size());
+        for (Long cid: searchResult_) {
+            Map<String, String> card = new HashMap<>();
+            card.put(CardBrowser.ID, cid.toString());
+            searchResult.add(card);
+        }
         // Render the first few items
         for (int i = 0; i < Math.min(numCardsToRender, searchResult.size()); i++) {
             Card c = col.getCard(Long.parseLong(searchResult.get(i).get("id")));
