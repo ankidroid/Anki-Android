@@ -992,28 +992,4 @@ public class Finder {
         }
         return dupes;
     }
-
-    /*
-     * ***********************************************************
-     * The methods below are not in LibAnki.
-     * ***********************************************************
-     */
-    
-    /**
-     * A copy of _query() with a custom SQL query specific to the AnkiDroid card browser.
-     */
-    private String _queryForCardBrowser(String preds, String order) {
-        String sql = "select c.id from cards c, notes n where c.nid=n.id and ";
-        // combine with preds
-        if (!TextUtils.isEmpty(preds)) {
-            sql += "(" + preds + ")";
-        } else {
-            sql += "1";
-        }
-        // order
-        if (!TextUtils.isEmpty(order)) {
-            sql += " " + order;
-        }
-        return sql;
-    }
 }
