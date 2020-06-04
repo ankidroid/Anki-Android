@@ -987,13 +987,14 @@ public class Decks {
 
 
     public void beforeUpload() {
-        for (JSONObject d : all()) {
-            d.put("usn", 0);
+        boolean changed_decks = Utils.markAsUploaded(all());
+        boolean changed_conf = Utils.markAsUploaded(allConf());
+        if (changed_decks || changed_conf) {
+            // shouldSave should always be called on both lists, for
+            // its side effect. Thus the disjunction should not be
+            // directly applied to the methods.
+            save();
         }
-        for (JSONObject c : allConf()) {
-            c.put("usn", 0);
-        }
-        save();
     }
 
 
