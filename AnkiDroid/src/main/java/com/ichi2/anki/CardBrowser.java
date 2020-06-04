@@ -1840,9 +1840,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int lastVisibleItem = firstVisibleItem + visibleItemCount;
             int size = getCardCount();
             if ((size > 0) && (firstVisibleItem < size) && ((lastVisibleItem - 1) < size)) {
-                String firstAns = getCards().get(firstVisibleItem).get("answer");
+                String firstAns = getCards().get(firstVisibleItem).get(ANSWER);
                 // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
-                String lastAns = getCards().get(lastVisibleItem - 1).get("answer");
+                String lastAns = getCards().get(lastVisibleItem - 1).get(ANSWER);
                 if (firstAns == null || lastAns == null) {
                     showProgressBar();
                     // Also start rendering the items on the screen every 300ms while scrolling
