@@ -125,6 +125,16 @@ function ankiToggleFlag(flag) {
     }
 }
 
+// Options menu
+function showOptionsMenu() {
+    window.location.href = "signal:show_options_menu";
+}
+
+// Navigation Drawer
+function showNavDrawer() {
+    window.location.href = "signal:show_navigation_drawer";
+}
+
 /* Tell the app the text in the input box when it loses focus */
 function taBlur(itag) {
     //#5944 - percent wasn't encoded, but Mandarin was.

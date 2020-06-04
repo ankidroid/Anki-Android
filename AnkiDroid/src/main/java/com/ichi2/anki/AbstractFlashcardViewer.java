@@ -55,6 +55,7 @@ import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -132,6 +133,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
@@ -462,7 +464,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     };
 
     @SuppressLint("CheckResult")
-    //This is intentionally package-private as it removes the need for synthetic accessors
+        //This is intentionally package-private as it removes the need for synthetic accessors
     void processCardAction(Consumer<WebView> cardConsumer) {
         processCardFunction(card -> {
             cardConsumer.consume(card);
@@ -3109,7 +3111,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                         return true;
                 }
             }
-
+            // Show options menu
+            if (url.startsWith("signal:show_options_menu")) {
+                openOptionsMenu();
+                return true;
+            }
+            // Show Navigation drawer menu through webview
+            if (url.startsWith("signal:show_navigation_drawer")) {
+                DrawerLayout mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+                return true;
+            }
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
             switch (signalOrdinal) {
                 case WebViewSignalParserUtils.SIGNAL_UNHANDLED:
@@ -3364,10 +3376,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         sEditorCard = card;
     }
 
- /*
- Javascript Interface class for calling Java function from AnkiDroid WebView
-see card.js for available functions
- */
+    /*
+    Javascript Interface class for calling Java function from AnkiDroid WebView
+   see card.js for available functions
+    */
     public class JavaScriptFunction {
 
         @JavascriptInterface
@@ -3398,6 +3410,26 @@ see card.js for available functions
         @JavascriptInterface
         public int ankiGetCardFlag() {
             return mCurrentCard.getUserFlag();
+        }
+
+        @JavascriptInterface
+        public String ankiGetNextTime1() {
+            return (String) mNext1.getText();
+        }
+
+        @JavascriptInterface
+        public String ankiGetNextTime2() {
+            return (String) mNext2.getText();
+        }
+
+        @JavascriptInterface
+        public String ankiGetNextTime3() {
+            return (String) mNext3.getText();
+        }
+
+        @JavascriptInterface
+        public String ankiGetNextTime4() {
+            return (String) mNext4.getText();
         }
     }
 }
