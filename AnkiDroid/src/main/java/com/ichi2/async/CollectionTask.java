@@ -892,10 +892,9 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     private TaskData doInBackgroundSearchCards(TaskData... params) {
         Timber.d("doInBackgroundSearchCards");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        Map<String, String> deckNames = (HashMap<String, String>) params[0].getObjArray()[0];
-        String query = (String) params[0].getObjArray()[1];
-        Boolean order = (Boolean) params[0].getObjArray()[2];
-        int numCardsToRender = (int) params[0].getObjArray()[3];
+        String query = (String) params[0].getObjArray()[0];
+        Boolean order = (Boolean) params[0].getObjArray()[1];
+        int numCardsToRender = (int) params[0].getObjArray()[2];
         List<Map<String,String>> searchResult = col.findCardsForCardBrowser(query, order);
         // Render the first few items
         for (int i = 0; i < Math.min(numCardsToRender, searchResult.size()); i++) {
