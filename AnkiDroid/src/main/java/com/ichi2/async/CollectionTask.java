@@ -899,7 +899,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         // Render the first few items
         for (int i = 0; i < Math.min(numCardsToRender, searchResult.size()); i++) {
             Card c = col.getCard(Long.parseLong(searchResult.get(i).get("id")));
-            CardBrowser.updateSearchItemQA(mContext, searchResult.get(i), c);
+            CardBrowser.updateSearchItemQA(mContext, searchResult.get(i), c, col);
         }
         // Finish off the task
         if (isCancelled()) {
@@ -970,7 +970,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 continue;
             }
             // Update item
-            CardBrowser.updateSearchItemQA(mContext, card, c);
+            CardBrowser.updateSearchItemQA(mContext, card, c, col);
             float progress = (float) i / n * 100;
             publishProgress(new TaskData((int) progress));
         }
