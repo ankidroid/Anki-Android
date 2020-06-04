@@ -106,30 +106,32 @@ import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
+import static com.ichi2.anki.CardBrowser.Column.*;
+
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener {
 
-    // Properties in mCards. this is a stringly typed map for speed.
-    // Would be even faster as an array given these are all consts.
-    public static final String QUESTION = "question";
-    public static final String ANSWER = "answer";
-    public static final String FLAGS = "flags";
-    public static final String SUSPENDED = "suspended";
-    public static final String MARKED = "marked";
-    public static final String SFLD = "sfld";
-    public static final String DECK = "deck";
-    public static final String TAGS = "tags";
-    public static final String ID = "id";
-    public static final String CARD = "card";
-    public static final String DUE = "due";
-    public static final String EASE = "ease";
-    public static final String CHANGED = "changed";
-    public static final String CREATED = "created";
-    public static final String EDITED = "edited";
-    public static final String INTERVAL = "interval";
-    public static final String LAPSES = "lapses";
-    public static final String NOTE_TYPE = "note";
-    public static final String REVIEWS = "reviews";
+    enum Column {
+        QUESTION,
+        ANSWER,
+        FLAGS,
+        SUSPENDED,
+        MARKED,
+        SFLD,
+        DECK,
+        TAGS,
+        ID,
+        CARD,
+        DUE,
+        EASE,
+        CHANGED,
+        CREATED,
+        EDITED,
+        INTERVAL,
+        LAPSES,
+        NOTE_TYPE,
+        REVIEWS
+    }
 
     private List<CardCache> mCards;
     private ArrayList<Deck> mDropDownDecks;
@@ -175,11 +177,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "cardEase",
         "cardReps",
         "cardLapses"};
-    private static final String[] COLUMN1_KEYS = {QUESTION, SFLD};
+    private static final Column[] COLUMN1_KEYS = {QUESTION, SFLD};
 
     // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
     // Note: the last 6 are currently hidden
-    private static final String[] COLUMN2_KEYS = {ANSWER,
+    private static final Column[] COLUMN2_KEYS = {ANSWER,
         CARD,
         DECK,
         NOTE_TYPE,
@@ -534,7 +536,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     mColumn1Index = pos;
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
                             .putInt("cardBrowserColumn1", mColumn1Index).commit();
-                    String[] fromMap = mCardsAdapter.getFromMapping();
+                    Column[] fromMap = mCardsAdapter.getFromMapping();
                     fromMap[0] = COLUMN1_KEYS[mColumn1Index];
                     mCardsAdapter.setFromMapping(fromMap);
                 }
@@ -562,10 +564,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     mColumn2Index = pos;
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
                             .putInt("cardBrowserColumn2", mColumn2Index).commit();
-                    String[] fromMap = mCardsAdapter.getFromMapping();
+                    Column[] fromMap = mCardsAdapter.getFromMapping();
                     fromMap[1] = COLUMN2_KEYS[mColumn2Index];
                     if (fromMap[1] == null) {
-                        fromMap[1] = "";
+                        fromMap[1] = ANSWER;
                     }
                     mCardsAdapter.setFromMapping(fromMap);
                 }
@@ -579,9 +581,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // get the font and font size from the preferences
         int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
         String sflCustomFont = preferences.getString("browserEditorFont", "");
-        String[] columnsContent = {COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]};
+        Column[] columnsContent = {COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]};
         if (columnsContent[1] == null) {
-            columnsContent[1] = "";
+            columnsContent[1] = ANSWER;
         }
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         mCardsAdapter = new MultiColumnListAdapter(
@@ -1808,14 +1810,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private final class MultiColumnListAdapter extends BaseAdapter {
         private final int mResource;
-        private String[] mFromKeys;
+        private Column[] mFromKeys;
         private final int[] mToIds;
         private float mOriginalTextSize = -1.0f;
         private final int mFontSizeScalePcent;
         private Typeface mCustomTypeface = null;
         private LayoutInflater mInflater;
 
-        public MultiColumnListAdapter(Context context, int resource, String[] from, int[] to,
+        public MultiColumnListAdapter(Context context, int resource, Column[] from, int[] to,
                                       int fontSizeScalePcent, String customFont) {
             mResource = resource;
             mFromKeys = from;
@@ -1904,13 +1906,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
-        public void setFromMapping(String[] from) {
+        public void setFromMapping(Column[] from) {
             mFromKeys = from;
             notifyDataSetChanged();
         }
 
 
-        public String[] getFromMapping() {
+        public Column[] getFromMapping() {
             return mFromKeys;
         }
 
@@ -2045,7 +2047,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
-        public String getColumnHeaderText(String key) {
+        public String getColumnHeaderText(Column key) {
             switch (key) {
             case FLAGS:
                 return (new Integer(getCard().userFlag())).toString();
