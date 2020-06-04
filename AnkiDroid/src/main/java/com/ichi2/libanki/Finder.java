@@ -1039,7 +1039,8 @@ public class Finder {
                 Map<String, String> card = new HashMap<>();
                 card.put(CardBrowser.ID, cur.getString(0));
                 card.put(CardBrowser.SFLD, cur.getString(1));
-                card.put(CardBrowser.DECK, deckNames.get(cur.getString(2)));
+                String did = cur.getString(2);
+                card.put(CardBrowser.DECK, deckNames.get(did));
                 int queue = cur.getInt(3);
                 String tags = cur.getString(4);
                 card.put(CardBrowser.TAGS, tags);
