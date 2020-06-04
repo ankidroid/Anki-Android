@@ -1009,11 +1009,6 @@ public class Finder {
     }
 
 
-    public List<Map<String, String>> findCardsForCardBrowser(String query, String _order) {
-        return _findCardsForCardBrowser(query, _order);
-    }
-
-
     /** Return a list of card ids for QUERY */
     private List<Map<String, String>> _findCardsForCardBrowser(String query, Object _order) {
         String[] tokens = _tokenize(query);
