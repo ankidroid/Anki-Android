@@ -1127,11 +1127,6 @@ public class Collection {
     }
 
 
-    public List<Map<String, String>> findCardsForCardBrowser(String search, boolean order) {
-        return new Finder(this).findCardsForCardBrowser(search, order);
-    }
-
-
     /** Return a list of note ids */
     public List<Long> findNotes(String query) {
         return new Finder(this).findNotes(query);
