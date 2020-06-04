@@ -1131,10 +1131,10 @@ public class Models {
      */
 
     public void beforeUpload() {
-        for (JSONObject m : all()) {
-            m.put("usn", 0);
+        boolean changed = Utils.markAsUploaded(all());;
+        if (changed) {
+            save();
         }
-        save();
     }
 
 

@@ -1017,4 +1017,29 @@ public class Utils {
         Random rand = new Random();
         return rand.nextFloat() * (max - min) + min;
     }
+
+    /**
+       Set usn to 0 in every object.
+
+       Usn zero means that the object is already online. Non-zero usn
+       means that the object is different than online or is not online.
+
+       This method is called during sync, before uploading, so during
+       an instant, the value will be zero while the object is not
+       actually online; if the connection break at this exact moment,
+       the collection will be inconsistent.
+
+       @return whether there was a non-zero usn; in this case the list
+       should be saved before the upload.
+     */
+    public static boolean markAsUploaded(ArrayList<JSONObject> ar) {
+        boolean changed = false;
+        for (JSONObject obj: ar) {
+            if (obj.optInt("usn", 1) != 0) {
+                obj.put("usn", 0);
+                changed = true;
+            }
+        }
+        return changed;
+    }
 }
