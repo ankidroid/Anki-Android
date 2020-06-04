@@ -998,43 +998,6 @@ public class Finder {
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-
-    /** Return a list of card ids for QUERY */
-    public List<Map<String, String>> findCardsForCardBrowser(String query, boolean _order) {
-        String[] tokens = _tokenize(query);
-        Pair<String, String[]> res1 = _where(tokens);
-        String preds = res1.first;
-        String[] args = res1.second;
-        List<Map<String, String>> res = new ArrayList<>();
-        if (preds == null) {
-            return res;
-        }
-        Pair<String, Boolean> res2 = _order(_order);
-        String order = res2.first;
-        boolean rev = res2.second;
-        String sql = _queryForCardBrowser(preds, order);
-        try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
-            CollectionTask task = CollectionTask.getInstance();
-            while (cur.moveToNext()) {
-                // cancel if the launching task was cancelled. 
-                if (task.isCancelled()){
-                    Timber.i("_findCardsForCardBrowser() cancelled...");
-                    return new ArrayList<>();
-                }                
-                Map<String, String> card = new HashMap<>();
-                card.put(CardBrowser.ID, cur.getString(0));
-                res.add(card);
-            }
-        } catch (SQLException e) {
-            // invalid grouping
-            Timber.e("Invalid grouping, sql: " + sql);
-            return new ArrayList<>();
-        }
-        if (rev) {
-            Collections.reverse(res);
-        }
-        return res;
-    }
     
     /**
      * A copy of _query() with a custom SQL query specific to the AnkiDroid card browser.
