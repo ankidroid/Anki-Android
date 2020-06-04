@@ -1033,7 +1033,6 @@ public class Finder {
                 // add placeholder for question and answer
                 card.put(CardBrowser.QUESTION, null);
                 card.put(CardBrowser.ANSWER, null);
-                card.put(CardBrowser.FLAGS, (new Integer(Card.intToFlag(cur.getInt(5)))).toString());
                 card.put(CardBrowser.SUSPENDED, queue == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
             }
         } catch (SQLException e) {
@@ -1051,7 +1050,7 @@ public class Finder {
      * A copy of _query() with a custom SQL query specific to the AnkiDroid card browser.
      */
     private String _queryForCardBrowser(String preds, String order) {
-        String sql = "select c.id, n.sfld, c.did, c.queue, n.tags, c.flags from cards c, notes n where c.nid=n.id and ";
+        String sql = "select c.id, n.sfld, c.did, c.queue, n.tags from cards c, notes n where c.nid=n.id and ";
         // combine with preds
         if (!TextUtils.isEmpty(preds)) {
             sql += "(" + preds + ")";

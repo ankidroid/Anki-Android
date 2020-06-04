@@ -1533,6 +1533,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put(QUESTION, formatQA(q, context));
         item.put(REVIEWS, Integer.toString(c.getReps()));
         item.put(MARKED, (sMarkedPattern.matcher(item.get(TAGS)).matches())?"marked": null);
+        item.put(FLAGS, (new Integer(c.getUserFlag())).toString());
     }
 
     @CheckResult
