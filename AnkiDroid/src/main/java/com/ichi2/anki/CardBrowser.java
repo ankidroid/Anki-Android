@@ -1539,6 +1539,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put(FLAGS, (new Integer(c.getUserFlag())).toString());
         item.put(SUSPENDED, c.getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
         item.put(DECK, col.getDecks().name(c.getDid()));
+        item.put(SFLD, note.getSFld());
     }
 
     @CheckResult
