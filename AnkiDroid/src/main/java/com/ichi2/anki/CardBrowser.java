@@ -1278,7 +1278,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics())) + 5;
             // Perform database query to get all card ids
             CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new CollectionTask.TaskData(
-                    new Object[] { mDeckNames, searchText, ((mOrder != CARD_ORDER_NONE)),  numCardsToRender}));
+                    new Object[] {searchText, ((mOrder != CARD_ORDER_NONE)),  numCardsToRender}));
         }
     }
 
