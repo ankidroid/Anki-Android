@@ -906,9 +906,8 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             Timber.d("doInBackgroundSearchCards was cancelled so return null");
             return null;
         } else {
-            publishProgress(new TaskData(searchResult));
+            return new TaskData(searchResult);
         }
-        return new TaskData(1);
     }
 
 
