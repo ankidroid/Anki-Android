@@ -69,11 +69,6 @@ public class Finder {
      */
 
     /** Return a list of card ids for QUERY */
-    public List<Long> findCards(String query) {
-        return findCards(query, false);
-    }
-
-
     public List<Long> findCards(String query, String _order) {
         return _findCards(query, _order);
     }
