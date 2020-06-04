@@ -1024,9 +1024,6 @@ public class Finder {
                 Map<String, String> card = new HashMap<>();
                 card.put(CardBrowser.ID, cur.getString(0));
                 res.add(card);
-                // add placeholder for question and answer
-                card.put(CardBrowser.QUESTION, null);
-                card.put(CardBrowser.ANSWER, null);
             }
         } catch (SQLException e) {
             // invalid grouping
