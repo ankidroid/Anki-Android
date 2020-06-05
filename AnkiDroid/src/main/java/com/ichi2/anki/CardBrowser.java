@@ -235,10 +235,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                             .putBoolean("cardBrowserNoSorting", false)
                             .commit();
                 }
-                // default to descending for non-text fields
-                if ("noteFld".equals(fSortTypes[mOrder])) {
-                    mOrderAsc = true;
-                }
                 getCol().getConf().put("sortBackwards", mOrderAsc);
                 searchCards();
             } else if (which != CARD_ORDER_NONE) {
