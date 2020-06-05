@@ -132,7 +132,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public static final String REVIEWS = "reviews";
     private static Pattern sMarkedPattern = Pattern.compile(".*[Mm]arked.*");
 
-    private List<Map<String, String>> mCards;
+    private List<CardCache> mCards;
     private ArrayList<Deck> mDropDownDecks;
     private ListView mCardsListView;
     private SearchView mSearchView;
@@ -1259,7 +1259,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         if (colIsOpen() && mCardsAdapter!= null) {
             // clear the existing card list
-            mCards = new ArrayList<Map<String, String>>();
+            mCards = new ArrayList<>();
             mCardsAdapter.notifyDataSetChanged();
             //  estimate maximum number of cards that could be visible (assuming worst-case minimum row height of 20dp)
             int numCardsToRender = (int) Math.ceil(mCardsListView.getHeight()/
@@ -1287,7 +1287,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private Map<Long, Integer> getPositionMap(List<Map<String, String>> list) {
+    private Map<Long, Integer> getPositionMap(List<CardCache> list) {
         Map<Long, Integer> positions = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
             positions.put(Long.valueOf(list.get(i).get(ID)), i);
@@ -1413,7 +1413,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (pos < 0 || pos >= getCardCount()) {
                 continue;
             }
-            Map<String, String> card = getCards().get(pos);
+            CardCache card = getCards().get(pos);
             // update tags
             card.put(MARKED, (c.note().hasTag("marked")) ? "marked" : null);
             if (updatedCardTags != null) {
@@ -1474,7 +1474,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    public static void updateSearchItemQA(Context context, Map<String, String> item, Card c, Collection col) {
+    public static void updateSearchItemQA(Context context, CardCache item, Card c, Collection col) {
         // render question and answer
         Map<String, String> qa = c._getQA(true, true);
         // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
@@ -1580,7 +1580,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     private void removeNotesView(java.util.Collection<Long> cardsIds, boolean reorderCards) {
         long reviewerCardId = getReviewerCardId();
-        List<Map<String, String>> oldMCards = getCards();
+        List<CardCache> oldMCards = getCards();
         Map<Long, Integer> idToPos = getPositionMap(oldMCards);
         Set<Long> idToRemove = new HashSet<Long>();
         for (Long cardId : cardsIds) {
@@ -1592,8 +1592,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
-        List<Map<String, String>> newMCards = new ArrayList<Map<String, String>>();
-        for (Map<String, String> cardProperties: oldMCards) {
+        List<CardCache> newMCards = new ArrayList<>();
+        for (CardCache cardProperties: oldMCards) {
             if (! idToRemove.contains(Long.parseLong(cardProperties.get(ID)))) {
                 newMCards.add(cardProperties);
             }
@@ -1928,7 +1928,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private void bindView(final int position, final View v) {
             // Draw the content in the columns
             View[] columns = (View[]) v.getTag();
-            final Map<String, String> card = getCards().get(position);
+            final CardCache card = getCards().get(position);
             for (int i = 0; i < mToIds.length; i++) {
                 TextView col = (TextView) columns[i];
                 // set font for column
@@ -1987,7 +1987,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
          * @param cardProperties -- a card object to color
          * @return index into TypedArray specifying the background color
          */
-        private int getColor(Map<String, String> cardProperties) {
+        private int getColor(CardCache cardProperties) {
             boolean suspended = "True".equals(cardProperties.get(SUSPENDED));
             int flag = getFlagOrDefault(cardProperties, 0);
             boolean marked = cardProperties.get(MARKED) != null ;
@@ -2045,7 +2045,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @VisibleForTesting
-    int getFlagOrDefault(Map<String, String> card, int defaultValue) {
+    int getFlagOrDefault(CardCache card, int defaultValue) {
         String flagValue = card.get(FLAGS);
         if (flagValue == null) {
             Timber.d("Unable to obtain flag for card: '%s'. Returning %d", card.get(ID), defaultValue);
@@ -2112,7 +2112,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private List<Map<String, String>> getCards() {
+    private List<CardCache> getCards() {
         if (mCards == null) {
             mCards = new ArrayList<>();
         }
@@ -2127,6 +2127,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return l;
     }
 
+    public static class CardCache extends HashMap<String, String> {
+
+    }
 
     /**
      * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
@@ -2247,7 +2250,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     long[] getCardIds() {
         @SuppressWarnings("unchecked")
-        Map<String, String>[] cardsCopy = mCards.toArray(new Map[0]);
+        CardCache[] cardsCopy = mCards.toArray(new CardCache[0]);
         long[] ret = new long[cardsCopy.length];
         for (int i = 0; i < cardsCopy.length; i++) {
             ret[i] = Long.parseLong(cardsCopy[i].get(ID));
@@ -2305,8 +2308,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public Map<String, String> getPropertiesForCardId(long cardId) {
-        for (Map<String, String> props : mCards) {
+    public CardCache getPropertiesForCardId(long cardId) {
+        for (CardCache props : mCards) {
             String id = Objects.requireNonNull(props.get(ID));
             if (Long.parseLong(id) == cardId) {
                 return props;
