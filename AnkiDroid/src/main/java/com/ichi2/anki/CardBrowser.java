@@ -1990,7 +1990,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
          */
         private int getColor(CardCache cardProperties) {
             boolean suspended = "True".equals(cardProperties.get(SUSPENDED));
-            int flag = getFlagOrDefault(cardProperties, 0);
+            int flag = cardProperties.getFlagOrDefault(0);
             boolean marked = cardProperties.get(MARKED) != null ;
             switch (flag) {
                 case 1:
@@ -2043,21 +2043,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return position;
         }
 
-    }
-
-    @VisibleForTesting
-    int getFlagOrDefault(CardCache card, int defaultValue) {
-        String flagValue = card.get(FLAGS);
-        if (flagValue == null) {
-            Timber.d("Unable to obtain flag for card: '%s'. Returning %d", card.getId(), defaultValue);
-            return defaultValue;
-        }
-        try {
-            return Integer.parseInt(flagValue);
-        } catch (Exception e) {
-            Timber.e(e, "couldn't parse flag value: %s", flagValue);
-            return defaultValue;
-        }
     }
 
 
@@ -2153,6 +2138,21 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mCard = mCol.getCard(mId);
             }
             return mCard;
+        }
+
+        @VisibleForTesting
+        int getFlagOrDefault(int defaultValue) {
+            String flagValue = get(FLAGS);
+            if (flagValue == null) {
+                Timber.d("Unable to obtain flag for card: '%s'. Returning %d", getId(), defaultValue);
+                return defaultValue;
+            }
+            try {
+                return Integer.parseInt(flagValue);
+            } catch (Exception e) {
+                Timber.e(e, "couldn't parse flag value: %s", flagValue);
+                return defaultValue;
+            }
         }
     }
 
