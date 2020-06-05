@@ -1188,7 +1188,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
                 return null;
             }
-            Card c = searchResult.get(i).getCard();
+            CardBrowser.CardCache card = searchResult.get(i);
+            card.load(false);
+            Card c = card.getCard();
             CardBrowser.updateSearchItemQA(mContext, searchResult.get(i), c, col);
         }
         // Finish off the task
@@ -1231,7 +1233,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 //we won't reach any more cards.
                 continue;
             }
-            if (card.get("answer") != null) {
+            if (card.isLoaded()) {
                 //We've already rendered the answer, we don't need to do it again.
                 continue;
             }
@@ -1250,6 +1252,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             }
             // Update item
             CardBrowser.updateSearchItemQA(mContext, card, c, col);
+            card.load(false);
             float progress = (float) i / n * 100;
             publishProgress(new TaskData((int) progress));
         }

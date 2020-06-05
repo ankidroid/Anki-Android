@@ -1414,7 +1414,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 continue;
             }
             CardCache card = getCards().get(pos);
-            card.reload();
+            card.load(true);
             // update tags
             card.put(MARKED, (c.note().hasTag("marked")) ? "marked" : null);
             if (updatedCardTags != null) {
@@ -1855,10 +1855,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int lastVisibleItem = firstVisibleItem + visibleItemCount;
             int size = getCardCount();
             if ((size > 0) && (firstVisibleItem < size) && ((lastVisibleItem - 1) < size)) {
-                String firstAns = getCards().get(firstVisibleItem).get(ANSWER);
+                boolean firstLoaded = getCards().get(firstVisibleItem).isLoaded();
                 // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
-                String lastAns = getCards().get(lastVisibleItem - 1).get(ANSWER);
-                if (firstAns == null || lastAns == null) {
+                boolean lastLoaded = getCards().get(lastVisibleItem - 1).isLoaded();
+                if (!firstLoaded || !lastLoaded) {
                     showProgressBar();
                     // Also start rendering the items on the screen every 300ms while scrolling
                     long currentTime = SystemClock.elapsedRealtime ();
@@ -2089,6 +2089,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private long mId;
         private Collection mCol;
         private Card mCard = null;
+        private boolean mLoaded = false;
 
         public CardCache(long id, Collection col) {
             mId = id;
@@ -2103,6 +2104,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void reload() {
             clear();
             mCard = null;
+            mLoaded = false;
         }
 
         public Card getCard() {
@@ -2145,6 +2147,20 @@ public class CardBrowser extends NavigationDrawerActivity implements
             default:
                 return null;
             }
+        }
+
+        /** pre compute the note and question/answer.  It can safely
+            be called twice without doing extra work. */
+        public void load(boolean reload) {
+            if (reload) {
+                reload();
+            }
+            getCard().note();
+            mLoaded = true;
+        }
+
+        public boolean isLoaded() {
+            return mLoaded;
         }
     }
 
