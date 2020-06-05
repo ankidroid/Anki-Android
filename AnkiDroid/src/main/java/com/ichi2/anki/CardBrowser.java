@@ -1989,9 +1989,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
          * @return index into TypedArray specifying the background color
          */
         private int getColor(CardCache cardProperties) {
-            boolean suspended = "True".equals(cardProperties.get(SUSPENDED));
             int flag = cardProperties.getFlagOrDefault(0);
-            boolean marked = cardProperties.get(MARKED) != null ;
             switch (flag) {
                 case 1:
                    return R.attr.flagRed;
@@ -2002,10 +2000,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 case 4:
                    return R.attr.flagBlue;
                 default:
-                    if (marked) {
+                    if (cardProperties.get(MARKED) != null) {
                         return R.attr.markedColor;
                     } else {
-                        if (suspended) {
+                        if ("True".equals(cardProperties.get(SUSPENDED))) {
                             return R.attr.suspendedColor;
                         } else {
                             return android.R.attr.colorBackground;
