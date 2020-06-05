@@ -1406,7 +1406,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void updateCardsInList(List<Card> cards, Map<Long, String> updatedCardTags) {
         Map<Long, Integer> idToPos = getPositionMap(getCards());
         for (Card c : cards) {
-            Note note = c.note();
             // get position in the mCards search results HashMap
             int pos = idToPos.containsKey(c.getId()) ? idToPos.get(c.getId()) : -1;
             if (pos < 0 || pos >= getCardCount()) {
@@ -1418,9 +1417,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (updatedCardTags != null) {
                 card.put(TAGS, updatedCardTags.get(c.getNid()));
             }
-            // update sfld
-            String sfld = note.getSFld();
-            card.put(SFLD, sfld);
             // update Q & A etc
             updateSearchItemQA(getBaseContext(), card, c, getCol());
             // update deck
@@ -1525,7 +1521,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         String tags = note.stringTags();
         item.put(TAGS, tags);
         item.put(DECK, col.getDecks().name(c.getDid()));
-        item.put(SFLD, note.getSFld());
     }
 
     @CheckResult
@@ -2143,6 +2138,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return getCard().getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False";
             case MARKED:
                 return getCard().note().hasTag("marked") ? "marked" : null;
+            case SFLD:
+                return getCard().note().getSFld();
             default:
                 return null;
             }
