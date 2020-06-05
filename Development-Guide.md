@@ -1,3 +1,8 @@
+### Getting Started
+
+Feel free to join our Discord: [#dev-ankidroid](https://discord.gg/qjzcRTx) to join the community, or if you need help with the below.
+
+
 ### Table of Contents
 * [**Source code**](#Source-code)
   - [Android Studio](#Android-Studio)
