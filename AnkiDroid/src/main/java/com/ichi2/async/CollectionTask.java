@@ -1170,11 +1170,13 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         String query = (String) param.getObjArray()[0];
         Boolean order = (Boolean) param.getObjArray()[1];
         int numCardsToRender = (int) param.getObjArray()[2];
-        List<Long> searchResult_ = col.findCards(query, order, this);
         if (isCancelled()) {
             Timber.d("doInBackgroundSearchCards was cancelled so return null");
             return null;
         }
+        int column1Index = (Integer) param.getObjArray()[3];
+        int column2Index = (Integer) param.getObjArray()[4];
+        List<Long> searchResult_ = col.findCards(query, order, this);
         int resultSize = searchResult_.size();
         List<CardBrowser.CardCache> searchResult = new ArrayList<>(resultSize);
         Timber.d("The search found %d cards", resultSize);
@@ -1188,7 +1190,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
                 return null;
             }
-            searchResult.get(i).load(false);
+            searchResult.get(i).load(false, column1Index, column2Index);
         }
         // Finish off the task
         if (isCancelled()) {
@@ -1208,6 +1210,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         List<CardBrowser.CardCache> cards = (List<CardBrowser.CardCache>) param.getObjArray()[0];
         Integer startPos = (Integer) param.getObjArray()[1];
         Integer n = (Integer) param.getObjArray()[2];
+        int column1Index = (Integer) param.getObjArray()[3];
+        int column2Index = (Integer) param.getObjArray()[4];
 
         List<Long> invalidCardIds = new ArrayList<>();
         // for each specified card in the browser list
@@ -1248,7 +1252,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 continue;
             }
             // Update item
-            card.load(false);
+            card.load(false, column1Index, column2Index);
             float progress = (float) i / n * 100;
             publishProgress(new TaskData((int) progress));
         }

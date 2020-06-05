@@ -1266,8 +1266,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int numCardsToRender = (int) Math.ceil(mCardsListView.getHeight()/
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics())) + 5;
             // Perform database query to get all card ids
-            CollectionTask.launchCollectionTask(SEARCH_CARDS, mSearchCardsHandler, new TaskData(
-                    new Object[] {searchText, ((mOrder != CARD_ORDER_NONE)),  numCardsToRender}));
+            CollectionTask.launchCollectionTask(SEARCH_CARDS,
+                                                mSearchCardsHandler,
+                                                new TaskData(new Object[] {
+                                                        searchText,
+                                                        ((mOrder != CARD_ORDER_NONE)),
+                                                        numCardsToRender,
+                                                        mColumn1Index,
+                                                        mColumn2Index
+                                                    })
+                                                );
         }
     }
 
@@ -1414,7 +1422,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 continue;
             }
             // update Q & A etc
-            getCards().get(pos).load(true);
+            getCards().get(pos).load(true, mColumn1Index, mColumn2Index);
         }
 
         updateList();
@@ -1789,7 +1797,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         mLastRenderStart = currentTime;
                         CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
                         CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                                new TaskData(new Object[]{getCards(), firstVisibleItem, visibleItemCount}));
+                                new TaskData(new Object[]{getCards(), firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index}));
                     }
                 }
             }
@@ -1803,7 +1811,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
                 CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                        new TaskData(new Object[]{getCards(), startIdx - 5, 2 * numVisible + 5}));
+                        new TaskData(new Object[]{getCards(), startIdx - 5, 2 * numVisible + 5, mColumn1Index, mColumn2Index}));
             }
         }
     }
@@ -2105,12 +2113,20 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         /** pre compute the note and question/answer.  It can safely
             be called twice without doing extra work. */
-        public void load(boolean reload) {
+        public void load(boolean reload, int column1Index, int column2Index) {
             if (reload) {
                 reload();
             }
             getCard().note();
-            updateSearchItemQA();
+            if (
+                COLUMN1_KEYS[column1Index] == QUESTION ||
+                COLUMN2_KEYS[column2Index] == QUESTION ||
+                COLUMN2_KEYS[column2Index] == ANSWER
+                // First column can not be the answer. If it were to
+                // change, this code should also be changed.
+                ) {
+                updateSearchItemQA();
+            }
             mLoaded = true;
         }
 
@@ -2263,7 +2279,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void rerenderAllCards() {
         CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                new TaskData(new Object[]{getCards(), 0, mCards.size()-1}));
+                new TaskData(new Object[]{getCards(), 0, mCards.size()-1, mColumn1Index, mColumn2Index}));
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
