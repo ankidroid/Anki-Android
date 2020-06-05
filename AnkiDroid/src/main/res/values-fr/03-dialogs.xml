@@ -81,6 +81,7 @@
         <item quantity="one">%d carte replanifiée</item>
         <item quantity="other">%d cartes replanifiées</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Sélectionnez le paquet dans votre gestionnaire de fichiers ou visitez la page about:downloads pour l’importer</string>
     <string name="answering_error_title">Erreur de la base de données</string>
     <string name="answering_error_message">Il s’est produit une erreur en écrivant dans la collection. Cela est peut-être lié à une base de données corrompue ou à un espace disque insuffisant.\n\nSi cela arrive souvent, vérifiez la base de données, réparez la collection ou restaurez-la à partir d’une sauvegarde, en allant dans les « options ».\n\nCependant, il peut s’agir d’un bug d’AnkiDroid. Signalez-le nous.</string>
     <string name="answering_error_report">Signaler les erreurs</string>
@@ -144,4 +145,51 @@
     <string name="empty_cards_none">Aucune carte vide</string>
     <string name="empty_cards_count">Cartes à supprimer : %d</string>
     <string name="empty_cards_deleted">Cartes supprimées : %d</string>
+<<<<<<< HEAD
+=======
+    <!-- Multimedia - Edit Field Activity -->
+    <string name="multimedia_editor_audio_permission_refused">Impossible d\'obtenir l\'autorisation du micro.</string>
+    <string name="multimedia_editor_camera_permission_refused">Impossible d\'obtenir l\'autorisation de la caméra. La fonctionnalité a été désactivée.</string>
+    <string name="multimedia_editor_failed">Impossible d’ouvrir l’éditeur multimédia</string>
+    <!-- Multimedia - Audio View -->
+    <string name="multimedia_editor_audio_permission_denied">Permission d\'enregistrement audio refusée</string>
+    <!-- Initial collection load -->
+    <string name="collection_load_welcome_request_permissions_title">Bienvenue sur AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid nécessite une autorisation de stockage, que nous utilisons exclusivement pour stocker votre collection AnkiDroid, vos cartes à mémoriser et vos sauvegardes. Notre code est open source, écrit par des bénévoles, et des millions de personnes nous font confiance.\n\nSi vous avez des questions, veuillez accéder à notre guide d’utilisation dans l\'application ou visiter nos forums d\'aide.\n\nMerci d\'avoir essayé AnkiDroid !\n- L\'équipe de développement d\'AnkiDroid</string>
+    <string name="mutimedia_editor_assertion_failed">Une erreur inconnue s\'est produite lors de l\'affichage de l\'éditeur avancé</string>
+    <!-- Database Integrity Check -->
+    <string name="integrity_check_startup_title">AnkiDroid mis à jour</string>
+    <string name="integrity_check_startup_content">AnkiDroid a été mis à jour. Cette mise à jour inclut des corrections pour d\'éventuels problèmes de base de données, et nous vous conseillons d\'exécuter une vérification de la base de données immédiatement.</string>
+    <string name="integrity_check_positive">Vérifier la base de données</string>
+    <string name="integrity_check_continue_anyway">Continuer quand même</string>
+    <string name="integrity_check_insufficient_space">La vérification de la base de données exige beaucoup d’espace de stockage temporaire. \n\n Il est fortement recommandé d’avoir au moins %s d’espace libre sur votre appareil avant de continuer.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nVous avez actuellement %s libres.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d cartes avec des paquets incorrects ont été récupérées. Veuillez consulter le manuel pour plus d\'informations.</string>
+    <string name="video_creation_error">Impossible de lire la vidéo.</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Impossible de changer de paquet</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Erreur lors de la lecture des données de la carte.</string>
+    <!-- Deck Options -->
+    <string name="deck_options_corrupt">Impossible de traiter les options du paquet : %s</string>
+    <!-- Database Errors-->
+    <string name="database_locked_title">Base de données verrouillée</string>
+    <string name="database_locked_summary">La base de données AnkiDroid est utilisée par une autre application. Veuillez fermer l\'autre application puis rouvrir AnkiDroid.</string>
+    <!-- Deck Picker Background-->
+    <string name="background_image_applied">Image d\'arrière-plan appliquée</string>
+    <string name="background_image_removed">Image d\'arrière-plan retirée</string>
+    <string name="no_image_selected">Aucune image sélectionnée</string>
+    <string name="error_selecting_image">Erreur lors de la sélection de l\'image. Veuillez consulter le manuel. %s</string>
+    <string name="error_deleting_image">Erreur lors de la suppression de l\'image</string>
+    <string name="failed_to_apply_background_image">Impossible d\'appliquer l\'image d\'arrière-plan %s</string>
+    <string name="image_max_size_allowed">Taille maximale de l’image de %d Mo autorisée</string>
+    <!-- Global Intent handler -->
+    <!-- Also used by Card Browser, not renaming to save translators effort -->
+    <string name="intent_handler_failed_no_storage_permission">Autorisation de stockage requise manquante. Veuillez accorder l’autorisation de stockage puis réessayez.</string>
+    <!-- Browser Appearance -->
+    <string name="card_template_editor_card_browser_appearance_failed">Impossible de charger l’apparence du navigateur de cartes</string>
+    <!-- Boot Service -->
+    <string name="boot_service_failed_to_schedule_notifications">Échec de la planification des rappels</string>
+    <string name="boot_service_too_many_notifications">Trop de rappels planifiés. Certains n’apparaîtront pas</string>
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
 </resources>

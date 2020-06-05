@@ -89,6 +89,7 @@
         <item quantity="many">%d preplánovaných kartičiek</item>
         <item quantity="other">%d preplánovaných kartičiek</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Chyba databázy</string>
     <string name="answering_error_message">Chyba pri zápise do zbierky. Môže to súvisieť s poškodenou databázou alebo nedostatkom miesta na disku.\n\nAk sa to stáva častejšie, skúste skontrolovať databázu, opraviť zbierku alebo obnoviť zo zálohy ťuknutím na \"Možnosti\".\n\Taktiež to môže byť aj chyba AnkiDroid; prosím oznámte chybu, aby sme to mohli skontrolovať.</string>
     <string name="answering_error_report">Nahlásiť chybu</string>

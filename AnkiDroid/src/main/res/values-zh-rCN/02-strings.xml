@@ -226,4 +226,21 @@
     <string name="import_cannot_with_v2">V2 调度器无法导入包含进度的 V1 牌组。</string>
     <string name="export_v2_dummy_note">此文件需要更新版本的 Anki。</string>
     <string name="export_v2_forbidden">在导出带有进度信息的单个牌组前，请切换到 V1 调度器。</string>
+<<<<<<< HEAD
+=======
+    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
+    <string name="activity_start_failed_load_url">加载 “%s” 失败。</string>
+    <string name="activity_start_failed">系统中没有安装可以执行此操作的应用程序。</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[相机图像可能偏大。您可能希望在媒体目录中压缩并调整图像大小]]></string>
+    <string name="no_browser_notification">未找到浏览器，请通过 PC 或移动设备访问网页： </string>
+    <string name="no_outgoing_link_in_cardbrowser">不支持卡片中的外部页面链接。</string>
+    <!-- The name of the deck which corrupt cards will be moved to -->
+    <string name="check_integrity_recovered_deck_name">已恢复的卡片</string>
+    <!-- Deckpicker Background -->
+    <string name="background_image_title">背景</string>
+    <string name="choose_an_image">选择图片</string>
+    <!-- Card Template Browser Appearance -->
+    <string name="restore_default">恢复初始设置</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
 </resources>

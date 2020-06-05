@@ -81,6 +81,7 @@
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">डेटाबेस त्रुटि</string>
     <string name="answering_error_message">संग्रह में लेखन असफल रहा। डाटाबेस भ्रष्ट हो सकता है या डिस्क पर पर्याप्त रिक्त स्थान नहीं हो सकता है। \ N \ n यदि यह अधिक बार होता है, तो डेटाबेस की जांच करने, संग्रह की मरम्मत करने या इसे बैकअप से पुनर्स्थापित करने का प्रयास करें। उस के लिए \"विकल्प\" को स्पर्श करें। \ N \ या यह एक AnkiDroid बग भी हो सकता है; कृपया त्रुटि की रिपोर्ट करें ताकि हम इसे जांच सकें।</string>
     <string name="answering_error_report">त्रुटि की सूचना दें</string>

@@ -77,6 +77,7 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d kartu dijadwalkan ulang</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Ralat database</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Databese bisa korup atau mungkin tidak ada cukup ruang kosong pada disk. \ n \ n Jika ini terjadi lebih sering, cobalah memeriksa database, memperbaiki koleksi atau mengembalikannya dari cadangan. Sentuh \"opsi\" untuk itu. \ n \ Atau bisa juga bug AnkiDroid; mohon laporkan kesalahannya sehingga kami bisa mengeceknya.</string>
     <string name="answering_error_report">Lapor ralat</string>

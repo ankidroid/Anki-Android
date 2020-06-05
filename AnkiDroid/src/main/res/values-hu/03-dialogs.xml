@@ -81,6 +81,7 @@
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Adatbázis hiba</string>
     <string name="answering_error_message">Hiba történet a gyűjteménybe írás közben. Ennek okozója lehet a sérült adatbázis, vagy a kevés a háttértáron.\n\nHa gyakran megtörténik, ellenőrizd az adatbázist, javítsd a gyűjteményt, vagy állítsd vissza biztonsági mentésből. Ehhez kattints a \'Beállítások\'-ra.\n\nAz is lehet, hogy az AnkiDroid-ban van a hiba, kérjük jelentsd nekünk a hibát!</string>
     <string name="answering_error_report">Hibák jelentése</string>

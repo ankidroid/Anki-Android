@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="check_db_title">Ја проверивте базата на податоци?</string>
+    <string name="check_db_warning">Ова може да трае долго време</string>
+    <string name="check_db_acknowledge">Базата на податоци се проверува</string>
+    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Бришење на deck</string>
+    <string name="delete_deck_default_deck">Стандардниот deck не може да се избрише</string>
+    <string name="delete_deck_title">Бришење на deck?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Избриши ги сите картички во %1$s? Таа содржи %2$d картичка.</item>
+        <item quantity="other">Избриши ги сите картички во %1$s? Таа содржи %2$d картички.</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Испрате ги сите картички во %s назад во нивните оригинални decks?</string>
+    <string name="no_tts_available_message">Нема достапен јазик за текст-во-говор</string>
+    <string name="initializing_tts">Иницијализирање на TTS&#8230;</string>
+    <string name="tts_no_tts">Не зборувај</string>
+    <string-array name="about_content">
+        <item><![CDATA[<h2>%1$s<br/>Флашкарти за Android</h2>AnkiDroid е флешкарт апликација која е целосно компатибилна со софтверот за десктоп <a href=\"%2$s\">Anki</a>. Вие можете да креирате, да преземате и да учите за материјали за двете AnkiDroid или Anki Desktop, и лесно да ги синхронизирате со AnkiWeb.]]></item>
+        <item><![CDATA[За да ни помогнете да го направиме подобар AnkiDroid, ве молиме пријавете грешки во<a href=\"%1$s\">следење на проблемот</a>; нови функции на идеите се многу добредојдени исто така. Најдете одговори на <a href=\"%2$s\">вики</a> или започнете дискусија на <a href=\"%3$s\">форумот</a>.]]></item>
+        <item><![CDATA[AnkiDroid е <a href=\"%1$s\">софтвер со отворен код<a/>, така што сите се охрабруваат да<a href=\"%2$s\">стане соработник</a> :)]]></item>
+        <item><![CDATA[Не-програмери исто така можат да помогнат. На пример, може да <a href=\"%1$s\">помогнат да се преведе</a> AnkiDroid, да се ажурира вики, да се обезбедат слики од екранот или блог за AnkiDroid.]]></item>
+        <item><![CDATA[AnkiDroid се издава под лиценцата<a href=\"%1$s\">GNU-GPL v3 license</a> и изворниот код е достапен на<a href=\"%2$s\">на GitHub</a>.]]></item>
+    </string-array>
+    <string name="preview_title">Преглед</string>
+    <string name="reposition_card_dialog_title">Reposition new card</string>
+    <string name="reposition_card_dialog_message">Start position:</string>
+    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <plurals name="reposition_card_dialog_acknowledge">
+        <item quantity="one">%d card repositioned</item>
+        <item quantity="other">%d cards repositioned</item>
+    </plurals>
+    <string name="reset_card_dialog_title">Ресетирање на напредок на картичката</string>
+    <string name="reset_card_dialog_message">Оваа картичка ќе биде ставена на крајот од новата задача на картичката</string>
+    <plurals name="reset_cards_dialog_acknowledge">
+        <item quantity="one">%d card reset</item>
+        <item quantity="other">%d cards reset</item>
+    </plurals>
+    <string name="reschedule_card_dialog_title">Презакажување на картичка</string>
+    <plurals name="reschedule_cards_dialog_title">
+        <item quantity="one">Reschedule card</item>
+        <item quantity="other">Reschedule cards</item>
+    </plurals>
+    <plurals name="reschedule_card_dialog_interval">
+        <item quantity="one">Current interval: %d day</item>
+        <item quantity="other">Current interval: %d days</item>
+    </plurals>
+    <string name="reschedule_card_dialog_message">Презакажување за преглед во x денови:</string>
+    <plurals name="reschedule_cards_dialog_acknowledge">
+        <item quantity="one">%d card rescheduled</item>
+        <item quantity="other">%d cards rescheduled</item>
+    </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="answering_error_title">Грешка во базата на податоци</string>
+    <string name="answering_error_message">Пишувањето во колекцијата не успеа. Податоците би можеле да бидат корумпирани или можеби нема да има доволно празен простор на дискот.\n\nАко ова се случува почесто, обидете се да ја проверите базата на податоци, да ја поправете колекцијата или да ја вратите од резервната копија. Допрете \"опции\" за тоа.\nИли тоа би можело да биде и AnkiDroid бубачка; ве молиме пријавете ја грешката за да можеме да го провериме ова.</string>
+    <string name="answering_error_report">Пријавете грешка</string>
+    <string name="repair_deck_dialog">Дали навистина сакате да се обидете да ја поправите базата на податоци?\n\nПред да го започнете обидот, копијата ќе биде креирана во подпапката \"%s\".</string>
+    <string name="intent_add_saved_information">Зачувани податоци</string>
+    <string name="intent_add_clear_all">Исчистете се</string>
+    <string name="intent_aedict_empty">Категоријата \"default\" е празна</string>
+    <string name="intent_aedict_category">За да додадете картички на AnkiDroid, отстранете ги сите обележени категории или додадете еден по име \"default\"</string>
+    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_extend">Зголемете го ограничувањето на новата картичка од денес</string>
+    <string name="custom_study_rev_extend">Зголемете го ограничувањето на денешниот преглед</string>
+    <string name="custom_study_forgotten">Преглед на картички заборавени во последните x денови:</string>
+    <string name="custom_study_ahead">Преглед напред за x денови:</string>
+    <string name="custom_study_random">Изберете x картички по случаен избор од deck:</string>
+    <string name="custom_study_preview">Преглед на нови картички додадени во последните x дена:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="rebuild_custom_study_deck">Обнова на прилагодената студија на deck&#8230;</string>
+    <string name="importing_collection">Внесување колекција&#8230;</string>
+    <string name="import_media_count">Внесување на медиумски датотеки %1$d%%&#8230;</string>
+    <string name="import_progress">Внесување на белешки: %1$d%%\n• Внесување картички: %2$d%%\n• Пост-обработка: %3$d%%</string>
+    <string name="import_update_details">Ажурирани %1$d од %2$d постоечки белешки.</string>
+    <string name="import_update_ignored">Некои ажурирања беа игнорирани бидејќи типот на белешка се променил</string>
+    <string name="import_complete_count">Увезени картички: %d</string>
+    <string name="sd_card_full_title">SD картичката е полна</string>
+    <string name="sd_card_almost_full_title">SD картичката е речиси полна</string>
+    <string name="restore_backup_title">Враќање на резервата?</string>
+    <string name="restore_backup">Вашата колекција ќе биде заменета со постара копија. Секој незачуван напредок ќе биде изгубен.</string>
+    <string name="dialog_cancel">Откажи</string>
+    <string name="dialog_ok">ОК</string>
+    <string name="dialog_continue">Продолжи</string>
+    <string name="dialog_positive_create">Креирај</string>
+    <string name="dialog_positive_delete">Избриши</string>
+    <string name="dialog_positive_disable">Оневозможено</string>
+    <string name="dialog_positive_overwrite">Пребриши</string>
+    <string name="dialog_positive_remove">Отстрани</string>
+    <string name="dialog_positive_repair">Поправка</string>
+    <string name="dialog_positive_replace">Замени</string>
+    <string name="dialog_positive_restore">Враќање</string>
+    <string name="dialog_positive_set">Поставете</string>
+    <string name="lookup_button_content">Погледнете го</string>
+    <string name="dialog_collection_path_not_dir">Наведената патека не е валиден директориум</string>
+    <!-- Media checking -->
+    <string name="check_media_title">Ги проверивте медиумите?</string>
+    <string name="check_media_warning">Ова може да потрае долго време со големи медиумски колекции</string>
+    <string name="check_media_message">Проверка на медиумит&#8230;</string>
+    <string name="check_media_acknowledge">Медиумите се проверени</string>
+    <string name="check_media_failed">Проверката на медиумите не успеа</string>
+    <string name="check_media_invalid">Датотеки со невалидно шифрирање: %d</string>
+    <string name="check_media_unused">Датотеки во медиумски фолдер, но не се користат од било која картичка: %d</string>
+    <string name="check_media_nohave">Датотеки кои се користат на картички, но не во медиумски фолдер: %d</string>
+    <string name="check_media_no_unused_missing">Не се пронајдени неискористени или исчезнати датотеки</string>
+    <string name="check_media_db_updated">Медиумската база на податоци е повторно изградена</string>
+    <string name="check_media_delete_unused">Избришете го неискористеното</string>
+    <string name="check_media_deleted">Избришани датотеки: %d</string>
+    <!-- Tags Dialog Options -->
+    <string name="tags_dialog_option_all_cards">Сие картички</string>
+    <string name="tags_dialog_option_new_cards">Ново</string>
+    <string name="tags_dialog_option_due_cards">Доспеано</string>
+    <!-- Empty cards -->
+    <string name="emtpy_cards_finding">Наоѓање празни картички&#8230;</string>
+    <string name="empty_cards_none">Нема празни картички</string>
+    <string name="empty_cards_count">Картички за бришење: %d</string>
+    <string name="empty_cards_deleted">Избришани картички: %d</string>
+    <!-- Multimedia - Edit Field Activity -->
+    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
+    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <!-- Multimedia - Audio View -->
+    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <!-- Initial collection load -->
+    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
+    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <!-- Database Integrity Check -->
+    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
+    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
+    <string name="integrity_check_positive">Check Database</string>
+    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
+    <string name="video_creation_error">Could not play video</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <!-- Deck Options -->
+    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <!-- Database Errors-->
+    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <!-- Deck Picker Background-->
+    <string name="background_image_applied">Background image applied</string>
+    <string name="background_image_removed">Background image removed</string>
+    <string name="no_image_selected">No image selected</string>
+    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
+    <string name="error_deleting_image">Error deleting image</string>
+    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <!-- Global Intent handler -->
+    <!-- Also used by Card Browser, not renaming to save translators effort -->
+    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <!-- Browser Appearance -->
+    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <!-- Boot Service -->
+    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
+    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+</resources>

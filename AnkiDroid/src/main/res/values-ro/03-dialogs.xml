@@ -85,6 +85,7 @@
         <item quantity="few">%d cards rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Eroare a bazei de date</string>
     <string name="answering_error_message">Eroare la scrierea în colecție. Acest lucru ar putea fi legat de o bază de date coruptă sau de spațiu insuficient pe disc.\n\nDacă eroarea persistă, încercaţi sa verificați baza de date, reparați colecția sau să o restaurați dintr-o copie de rezervă. Faceţi clic pe \'opţiuni\' pentru aceasta.\n\nDeasemenea, ar putea fi un bug de la  AnkiDroid; Raportaţi eroarea să putem verifica acest lucru.</string>
     <string name="answering_error_report">Raportează eroare</string>

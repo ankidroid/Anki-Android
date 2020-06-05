@@ -66,4 +66,13 @@
     <string name="model_browser_add_add">Ajouter : %1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Clone : %1$s </string>
+<<<<<<< HEAD
+=======
+    <!--Browser Appearance-->
+    <string name="card_template_browser_appearance_summary">Entrez le modèle que le navigateur de cartes utilisera pour afficher vos cartes. Utilisez ceci pour afficher une réponse plus concise.\n\nUn modèle comme\n« La capitale de {{Country}} est : »\npourrait être compressé dans le navigateur de cartes en\n« Capitale : {{Country}} »</string>
+    <string name="card_template_browser_appearance_question_format">Format de la question</string>
+    <string name="card_template_browser_appearance_answer_format">Format de la réponse</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Rétablir les valeurs par défaut ?</string>
+    <string name="card_template_browser_appearance_saving_note">Ces modifications sont appliquées quand le modèle de carte est sauvegardé</string>
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
 </resources>

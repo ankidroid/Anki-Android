@@ -89,6 +89,7 @@
         <item quantity="many">%d карточек перепланированы</item>
         <item quantity="other">%d карточек перепланированы</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Ошибка в базе данных</string>
     <string name="answering_error_message">Произошла ошибка при записи в коллекцию. База данных может быть повреждена, или недостаточно места в хранилище.\n\nЕсли это случается часто, попробуйте проверить базу данных, починить коллекцию или восстановить её из резервной копии. Для этого нажмите \"Настройки\".\n\nТем не менее, это может быть ошибка в AnkiDroid. Пожалуйста, сообщите об ошибке, чтобы мы могли проверить это.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>

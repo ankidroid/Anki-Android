@@ -256,4 +256,21 @@
     <string name="import_cannot_with_v2">V2 scheduler не може імпортувати колоди V1 зі збереженням планувань.</string>
     <string name="export_v2_dummy_note">Цей файл потребує новішої версії Anki.</string>
     <string name="export_v2_forbidden">Будь ласка, переключіться до V1 scheduler перед експортуванням однієї колоди з планувальною інформацією.</string>
+<<<<<<< HEAD
+=======
+    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
+    <string name="activity_start_failed_load_url">Не вдалося завантажити \'%s\'.</string>
+    <string name="activity_start_failed">Система не має встановленого додатку, який може це виконати.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Зображення можуть бути завеликими. Можливо, Ви хочете зжати та/чи змінити розмір зображень в медіатеці]]></string>
+    <string name="no_browser_notification">Браузер не знайдено, будь ласка, відвідайте веб-сторінку з компʼютера чи з мобільного телефону: </string>
+    <string name="no_outgoing_link_in_cardbrowser">Посилання на зовнішні сторінки в картках не підтримується.</string>
+    <!-- The name of the deck which corrupt cards will be moved to -->
+    <string name="check_integrity_recovered_deck_name">Відновлені картки</string>
+    <!-- Deckpicker Background -->
+    <string name="background_image_title">Тло</string>
+    <string name="choose_an_image">Оберіть зображення</string>
+    <!-- Card Template Browser Appearance -->
+    <string name="restore_default">Відновити «Типове»</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Порожня</string>
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
 </resources>

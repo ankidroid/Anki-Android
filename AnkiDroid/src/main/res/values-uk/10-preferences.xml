@@ -156,7 +156,11 @@
     <string name="new_spread">Положення нової карти</string>
     <string name="learn_cutoff">Вчити наперед</string>
     <string name="learn_cutoff_summ">XXX хв.</string>
+<<<<<<< HEAD
     <string name="time_limit">Обмеження часу Timebox</string>
+=======
+    <string name="time_limit">Показувати результати кожні</string>
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
     <string name="time_limit_summ">XXX хв.</string>
     <string name="day_offset">Початок наступного дня</string>
     <string name="day_offset_summ">XXX г. ранку</string>

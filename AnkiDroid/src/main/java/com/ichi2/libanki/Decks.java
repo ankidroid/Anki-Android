@@ -1090,6 +1090,7 @@ public class Decks {
 
 
     public void beforeUpload() {
+<<<<<<< HEAD
         try {
             for (JSONObject d : all()) {
                 d.put("usn", 0);
@@ -1101,6 +1102,16 @@ public class Decks {
             throw new RuntimeException(e);
         }
         save();
+=======
+        boolean changed_decks = Utils.markAsUploaded(all());
+        boolean changed_conf = Utils.markAsUploaded(allConf());
+        if (changed_decks || changed_conf) {
+            // shouldSave should always be called on both lists, for
+            // its side effect. Thus the disjunction should not be
+            // directly applied to the methods.
+            save();
+        }
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
     }
 
 

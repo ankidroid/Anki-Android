@@ -1296,14 +1296,19 @@ public class Models {
      */
 
     public void beforeUpload() {
+<<<<<<< HEAD
         try {
             for (JSONObject m : all()) {
                 m.put("usn", 0);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
+=======
+        boolean changed = Utils.markAsUploaded(all());;
+        if (changed) {
+            save();
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
         }
-        save();
     }
 
 

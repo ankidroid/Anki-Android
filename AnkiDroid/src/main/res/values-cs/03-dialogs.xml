@@ -89,6 +89,7 @@
         <item quantity="many">%d karet přeplánováno</item>
         <item quantity="other">%d karet přeplánováno</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Došlo k chybě při zápisu do kolekce. To by mohlo souviset s poškozenou databází nebo nedostatečným místem na disku.\n\nJestliže se to stává častěji, prosím zkuste zkontrolovat databázi, opravit nebo obnovit kolekci ze zálohy. Klikněte na \'Možnosti\' pro toto.\n\nNicméně, mohla by to být chyba AnkiDroid. Prosím oznamte chybu, abychom to zkontrolovali.</string>
     <string name="answering_error_report">Hlášení chyby</string>

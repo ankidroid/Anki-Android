@@ -81,6 +81,7 @@
         <item quantity="one">%d kaart opnieuw ingepland</item>
         <item quantity="other">%d kaarten opnieuw ingepland</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Fout in database</string>
     <string name="answering_error_message">Er is een fout opgetreden tijdens het schrijven naar de collectie. Dit kan wijzen op een corrupte database of op onvoldoende opslagruimte.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn; Meld de fout zodat we dit kunnen controleren.</string>
     <string name="answering_error_report">Fout melden</string>

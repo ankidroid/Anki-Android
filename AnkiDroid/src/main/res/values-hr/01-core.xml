@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Navigation drawer items-->
+    <string name="decks">Špilovi</string>
+    <string name="card_browser">Preglednik karata</string>
+    <string name="statistics">Statistika</string>
+    <string name="settings">Postavke</string>
+    <string name="help">Pomoć</string>
+    <string name="send_feedback">Pošalji povratne informacije</string>
+    <string name="studyoptions_title">Pregled špilova</string>
+    <string name="studyoptions_due_today">Potrebno dovršiti danas:</string>
+    <string name="studyoptions_new_total">Ukupan broj novih kartica:</string>
+    <string name="studyoptions_total_cards">Ukupan broj kartica:</string>
+    <string name="studyoptions_eta">Približno vrijeme (minute):</string>
+    <string name="studyoptions_start">Uči</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">Proširi</string>
+    <string name="collapse">Sažmi</string>
+    <string name="study_more">Uči više</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">Potrebno dovršiti %1$d karticu (%2$s)</item>
+        <item quantity="few">Potrebno dovršiti %1$d kartice (%2$s)</item>
+        <item quantity="other">Potrebno dovršiti %1$d kartica (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">%d minuta preostala</item>
+        <item quantity="few">%d minute preostale</item>
+        <item quantity="other">%d minuta preostalo</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d sat %d preostalo</item>
+        <item quantity="few">%d sati %d preostalo</item>
+        <item quantity="other">%d sati %d preostalo</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d dan %d preostalo</item>
+        <item quantity="few">%d dana %d preostalo</item>
+        <item quantity="other">%d dana %d preostalo</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">Učena %1$d kartica danas u %2$s</item>
+        <item quantity="few">Učene %1$d kartice danas u %2$s</item>
+        <item quantity="other">Učeno %1$d kartica danas u %2$s</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">Upiši odgovor</string>
+    <string name="show_answer">Prikaži odgovor</string>
+    <string name="ease_button_again">Ponovo</string>
+    <string name="ease_button_hard">Teško</string>
+    <string name="ease_button_good">U redu</string>
+    <string name="ease_button_easy">Jednostavno</string>
+    <string name="studyoptions_congrats_undo">Poništi %s</string>
+    <string name="menu_import">Uvezi</string>
+    <string name="undo">Poništi</string>
+    <string name="undo_action_review">posljednji pregled</string>
+    <string name="undo_action_bury_card">zakopavanje kartice</string>
+    <string name="undo_action_bury_note">zakopavanje bilješke</string>
+    <string name="undo_action_suspend_card">obustavljanje kartice</string>
+    <string name="undo_action_suspend_note">obustavljanje bilješke</string>
+    <string name="undo_action_delete">brisanje bilješke</string>
+    <string name="undo_action_delete_multi">Izbriši bilješke</string>
+    <string name="undo_action_change_deck_multi">Promjeni skupine</string>
+    <string name="undo_action_reschedule_card">Prerasporedi</string>
+    <string name="undo_action_reset_card">Resetiraj napredak</string>
+    <string name="undo_action_reposition_card">Repozicioniraj</string>
+    <string name="move_all_to_deck">Premjesti sve u skupinu</string>
+    <string name="unbury">Otkopaj</string>
+    <string name="rename_deck">Preimenuj skupinu</string>
+    <string name="menu_add">Dodaj</string>
+    <string name="menu_add_note">Dodaj bilješku</string>
+    <string name="menu_my_account">Sinkroniziraj račun</string>
+    <string name="menu_dismiss_note">Sakrij / izbriši</string>
+    <string name="menu_bury_card">Zakopaj karticu</string>
+    <string name="menu_bury_note">Zakopaj bilješku</string>
+    <string name="menu_suspend_card">Suspendiraj kartu</string>
+    <string name="menu_suspend_note">Obustavi bilješku</string>
+    <string name="menu_bury">Zakopaj</string>
+    <string name="menu_suspend">Obustavi</string>
+    <string name="menu_delete_note">Izbriši bilješku</string>
+    <string name="menu_flag">Označi</string>
+    <string name="menu_flag_card">Označi kartu</string>
+    <string name="menu_flag_card_zero">Bez oznake</string>
+    <string name="menu_flag_card_one">Crvena oznaka</string>
+    <string name="menu_flag_card_two">Narančasta oznaka</string>
+    <string name="menu_flag_card_three">Zelena oznaka</string>
+    <string name="menu_flag_card_four">Plava oznaka</string>
+    <string name="delete_note_message">Zaista izbrisati ovu bilješku i sve njezine kartice?\n%s</string>
+    <string name="menu_select">Odaberi tekst</string>
+    <string name="menu_search">Traži u %1$s</string>
+    <string name="menu_mark_note">Označi bilješku</string>
+    <string name="menu_unmark_note">Odznači bilješku</string>
+    <string name="new_deck">Stvori skupinu</string>
+    <string name="create">Stvori</string>
+    <string name="new_dynamic_deck">Stvori filtriranu skupinu</string>
+    <string name="night_mode">Noćni način rada</string>
+    <string name="directory_inaccessible">AnkiDroid mapa nije dostupna</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d s</string>
+    <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours">%d h</string>
+    <string name="time_quantity_days">%d d</string>
+    <string name="time_quantity_months">%.1f mj</string>
+    <string name="time_quantity_years">%.1f god</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">Obnova natrpane skupine&#8230;</string>
+    <string name="rebuild_cram_label">Obnovi</string>
+    <string name="empty_cram_label">Isprazni</string>
+    <string name="create_subdeck">Stvori podšpil</string>
+    <string name="empty_cram_deck">Pražnjenje natrpane skupine&#8230;</string>
+    <string name="custom_study_deck_name">Prilagođena sesija učenja</string>
+    <string name="custom_study_deck_exists">Prvo preimenujte postojeću prilagođenu skupinu za učenje</string>
+    <string name="empty_deck">Ova skupina je prazna</string>
+    <string name="studyoptions_empty">Ova skupina je prazna. Pritisnite tipku + kako biste dodali novi sadržaj.</string>
+    <string name="studyoptions_limit_reached">Dostignuto dnevno ograničenje učenja</string>
+    <string name="studyoptions_empty_schedule">Nema zakazanih kartica za učenje</string>
+    <string name="studyoptions_congrats_finished">Čestitamo! Za sada ste završili.</string>
+    <string name="studyoptions_congrats_more_rev">Dostignuto je današnje ograničenje, ali još uvijek ima kartica koje čekaju pregled. Ograničenje možete povećati u postavkama.</string>
+    <string name="studyoptions_congrats_more_new">Dostignuto je današnje ograničenje. Dostupno je još kartica; ograničenje možete povećati u postavkama, ali to će povećati opterećenje za kratkoročan pregled.</string>
+    <string name="studyoptions_congrats_custom">Kako biste učili izvan uobičajenog rasporeda, dotaknite tipku \"Prilagođeno učenje\"</string>
+    <string name="studyoptions_no_cards_due">Još nije potrebno dovršiti ni jednu karticu</string>
+    <string name="sd_card_not_mounted">Pohrana uređaja nije montirana</string>
+    <string name="empty_cloze_warning">Uredi bilješku i dodaj cloze brisanja (%1$s)</string>
+    <string name="button_sync">Sinkroniziraj</string>
+    <string name="cancel_sync_confirm">Želite li prekinuti sinkronizaciju?</string>
+    <string name="continue_sync">Nastavi sinkronizaciju</string>
+    <string name="sync_cancelled">Sinkronizacija je otkazana</string>
+    <string name="sync_cancel_message">Otkazivanje&#8230;\nOvo može potrajati neko vrijeme.</string>
+    <string name="export">Izvezi</string>
+    <string name="export_collection">Izvezi zbirku</string>
+    <string name="export_deck">Izvezi skupinu</string>
+    <string name="nothing">Ništa</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">Vrste kartica</string>
+    <string name="card_template_editor_front">Prednji predložak</string>
+    <string name="card_template_editor_back">Stražnji predložak</string>
+    <string name="card_template_editor_styling">Stil</string>
+    <string name="card_template_editor_menu_delete">Izbriši</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Izgled preglednika karata</string>
+    <string name="card_template_editor_cant_delete">Potrebna je barem jedna vrsta kartice</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Izbrisati \"%2$s\" vrstu kartica i njezinu %1$d karticu?</item>
+        <item quantity="few">Izbrisati \"%2$s\" vrstu kartica i njezine %1$d kartice?</item>
+        <item quantity="other">Izbrisati \"%2$s\" vrstu kartica i njezinih %1$d kartica?</item>
+    </plurals>
+    <string name="invalid_template">Nije moguće generirati karticu</string>
+    <string name="card_template_editor_would_delete_note">Uklanjanje ove vrste kartica izazvat će brisanje jedne ili više bilježaka. Prvo stvorite novu vrstu kartica.</string>
+    <string name="template_for_current_card_deleted">Tip kartice za trenutnu karticu je obrisan.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Izgled preglednika</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">Čitanje i pisanje u AnkiDroid bazu podataka</string>
+    <string name="read_write_permission_description">Pristupi postojećim bilješkama, karticama, tipovima kartica i špilovima, te kreiranju novih</string>
+    <string name="card_browser_label">Preglednik karata</string>
+    <string name="card_browser_context_menu">Preglednik karata</string>
+</resources>

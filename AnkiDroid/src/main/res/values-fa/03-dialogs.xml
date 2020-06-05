@@ -81,6 +81,7 @@
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">خطای پایگاه داده</string>
     <string name="answering_error_message">یک خطا هنگام نوشتن مجموعه رخ داده است. که می تواند مربوط به پایگاه داده آسیب دیده و یا فضای ناکافی هارد باشد.\n\nاگر در اغلب موارد این حالت اتفاق می افتد, لطفا پایگاه داده را بررسی کنید, مجموعه را تعمیر کنید یا آن را از فایل پشتیبان بازگردانید.  به این منظور روی \'تنظیمات\' کلیک کنید .\n\nدر صورتی که درست نشد, احتمالا اشکال از برنامه آنکی دروید است; لطفا خطایی را که ما می توانیم آن را بررسی کنیم گزارش کنید.</string>
     <string name="answering_error_report">گزارش خطا</string>

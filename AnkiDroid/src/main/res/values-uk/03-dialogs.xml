@@ -89,6 +89,7 @@
         <item quantity="many">%d карток переплановано</item>
         <item quantity="other">%d картки переплановано</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Виберіть колоду у вашому файловому менеджері або перейдіть на сторінку about:downloads (про:завантаження) для її імпорту</string>
     <string name="answering_error_title">Помилка бази даних</string>
     <string name="answering_error_message">Під час запису в колекцію сталася помилка. Причиною може бути пошкоджена база даних або відсутність місця на диску.\n\nЯкщо це трапляється більш часто, будь ласка, спробуйте перевірити базу даних, відремонтувати колекцію, або відновити її з резервної копії. Для цього натисніть на \"опції\".\n\nОднак, це також може бути недолік AnkiDroid; будь ласка, надішліть звіт для перевірки цього.</string>
     <string name="answering_error_report">Доповісти про помилку</string>
@@ -152,4 +153,51 @@
     <string name="empty_cards_none">Жодної порожньої картки</string>
     <string name="empty_cards_count">Картки до видалення: %d</string>
     <string name="empty_cards_deleted">Карток видалено: %d</string>
+<<<<<<< HEAD
+=======
+    <!-- Multimedia - Edit Field Activity -->
+    <string name="multimedia_editor_audio_permission_refused">Не вдалося отримати дозвіл на використання мікрофона.</string>
+    <string name="multimedia_editor_camera_permission_refused">Не вдалося отримати дозвіл на використанння камери. Функція відключена.</string>
+    <string name="multimedia_editor_failed">Не вдалося відкрити мультимедійний редактор</string>
+    <!-- Multimedia - Audio View -->
+    <string name="multimedia_editor_audio_permission_denied">Відхилено доступ до запису звуку</string>
+    <!-- Initial collection load -->
+    <string name="collection_load_welcome_request_permissions_title">Ласкаво просимо до AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid потрібен дозвіл на доступ до пам\'яті, який ми використовуємо виключно для збереження колекції AnkiDroid, карток та резервніих копій. Код додатка відкритий, написаний добровольцями тому йому довіряють мільйони.\n\nЯкщо у вас виникли запитання, будь ласка, перегляньте посібник в додатоку або відвідайте наші форуми.\n\nДякуємо за те, що ви спробували AnkiDroid!\n—Команда Розробників AnkiDroid</string>
+    <string name="mutimedia_editor_assertion_failed">Невідома помилка під час відображення розширеного редактора</string>
+    <!-- Database Integrity Check -->
+    <string name="integrity_check_startup_title">AnkiDroid оновлено</string>
+    <string name="integrity_check_startup_content">AnkiDroid оновлено. Оновлення включає в себе виправлення можливих проблем з базою даних, і ми радимо Вам запустити перевірку бази даних.</string>
+    <string name="integrity_check_positive">Перевірити базу даних</string>
+    <string name="integrity_check_continue_anyway">Все одно продовжити</string>
+    <string name="integrity_check_insufficient_space">Перевірка бази даних використовує багато тимчасового сховища.\n\nНаполегливо рекомендується мати принаймні %s вільного місця на пристрої перед продовженням.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nЗараз %s вільного місця.</string>
+    <string name="integrity_check_fixed_no_home_deck">Відновлено %d карток з неправильними початковими колодами. Будь ласка, перегляньте посібник для отримання детальної інформації.</string>
+    <string name="video_creation_error">Не вдалося відтворити відео</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Не вдалося змінити колоду</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Помилка при декодуванні даних з картки</string>
+    <!-- Deck Options -->
+    <string name="deck_options_corrupt">Не вдалося обробити параметри колоди: %s</string>
+    <!-- Database Errors-->
+    <string name="database_locked_title">База даних заблокована</string>
+    <string name="database_locked_summary">База даних AnkiDroid використовується іншою програмою. Будь ласка, закрийте іншу програму, а потім повторно відкрийте AnkiDroid.</string>
+    <!-- Deck Picker Background-->
+    <string name="background_image_applied">Фонове зображення встановлено</string>
+    <string name="background_image_removed">Фонове зображення прибране</string>
+    <string name="no_image_selected">Зображення не обрано</string>
+    <string name="error_selecting_image">Помилка встановлення зображення. Будь-ласка, перегляньте посібник. %s</string>
+    <string name="error_deleting_image">Помилка видалення зображення</string>
+    <string name="failed_to_apply_background_image">Не вдалося застосувати тлове зображення %s</string>
+    <string name="image_max_size_allowed">Максимально допустимий розмір зображення %d МБ</string>
+    <!-- Global Intent handler -->
+    <!-- Also used by Card Browser, not renaming to save translators effort -->
+    <string name="intent_handler_failed_no_storage_permission">Немає доступу до пам\'ять. Надайте дозвіл на доступ до пам\'ятв і спробуйте повторити.</string>
+    <!-- Browser Appearance -->
+    <string name="card_template_editor_card_browser_appearance_failed">Не вдалося завантажити зовнішній вигляд переглядача карток</string>
+    <!-- Boot Service -->
+    <string name="boot_service_failed_to_schedule_notifications">Не вдалося запланувати нагадування</string>
+    <string name="boot_service_too_many_notifications">Забагато нагадувань заплановано. Деякі не з’являться</string>
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
 </resources>

@@ -103,7 +103,14 @@
     <string name="cardeditor_title_add_note">Ajouter une note</string>
     <string name="cardeditor_title_edit_card">Modifier la note</string>
     <string name="discard_unsaved_changes">Fermer et perdre la saisie en cours ?</string>
+<<<<<<< HEAD
     <string name="factadder_saving_error">Erreur lors de l\'enregistrement de la note</string>
+=======
+    <string name="note_editor_no_cards_created">Aucune carte créée. Veuillez remplir plus de champs</string>
+    <string name="note_editor_no_first_field">Le premier champ est vide</string>
+    <string name="note_editor_no_cloze_delations">Ce type de note doit contenir des textes à trous</string>
+    <string name="note_editor_no_cards_created_all_fields">Le type de note actuel n’a produit aucune carte.\nVeuillez choisir un autre type de carte, ou cliquez sur « Cartes » et ajoutez un champ de substitution</string>
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
     <string name="saving_facts">Enregistrer la note</string>
     <string name="saving_model">Sauvegarde du modèle</string>
     <string name="add">Ajouter</string>
@@ -154,8 +161,16 @@
     <string name="import_message_add">Ajouter</string>
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
     <string name="import_message_add_confirm">Ajouter « %s » à la collection ? Ceci peut prendre un long moment</string>
+<<<<<<< HEAD
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+=======
+    <string name="import_log_no_apkg">Ceci n\'est pas un fichier Anki valide</string>
+    <string name="import_error_unhandled_request">Incapable de traiter cette requête d\'import</string>
+    <string name="import_error_exception">Échec de l\'import du paquet\n\n%s</string>
+    <string name="import_error_not_apkg_extension">Le nom de fichier « %s » n\'a pas d\'extension .apkg ou .colpkg</string>
+    <string name="import_error_load_imported_database">Les remplacements de la base de données Anki (.anki2) ne sont pas pris en charge. Veuillez voir le guide d’utilisation pour les instructions de remplacement.</string>
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
     <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
     <string name="export_include_schedule">Inclure la planification</string>
@@ -236,4 +251,21 @@
     <string name="import_cannot_with_v2">Le planificateur V2 ne peut pas importer les paquets de cartes V1 avec la planification incluse.</string>
     <string name="export_v2_dummy_note">Ce fichier nécessite une version plus récente d\'Anki.</string>
     <string name="export_v2_forbidden">Veuillez passer au planificateur V1 avant d\'exporter un paquet de cartes avec les informations de planification.</string>
+<<<<<<< HEAD
+=======
+    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
+    <string name="activity_start_failed_load_url">Échec du chargement de \'%s\'</string>
+    <string name="activity_start_failed">Le système n\'a pas d\'application pouvant effectuer cette action.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Les photos d\'appareils sont potentiellement lourdes. Envisager les compresser et redimensionner dans le dossier "media"]]></string>
+    <string name="no_browser_notification">Aucun navigateur internet trouvé, merci de visiter cette page sur un PC ou smartphone.</string>
+    <string name="no_outgoing_link_in_cardbrowser">Le lien vers les pages externes n\'est pas autorisé dans les cartes.</string>
+    <!-- The name of the deck which corrupt cards will be moved to -->
+    <string name="check_integrity_recovered_deck_name">Cartes récupérées</string>
+    <!-- Deckpicker Background -->
+    <string name="background_image_title">Arrière-plan</string>
+    <string name="choose_an_image">Choisir une image</string>
+    <!-- Card Template Browser Appearance -->
+    <string name="restore_default">Rétablir par défaut</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Vide</string>
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
 </resources>

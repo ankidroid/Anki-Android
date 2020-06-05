@@ -17,8 +17,13 @@ android {
 
     defaultConfig {
         applicationId "com.ichi2.anki"
+<<<<<<< HEAD
         minSdkVersion 15
         //noinspection OldTargetApi
+=======
+        minSdkVersion 16
+        //noinspection OldTargetApi - also performed in api/build.fradle
+>>>>>>> f41308f8ee7320468d5543b14b17b1807a0bd40c
         targetSdkVersion 28
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true

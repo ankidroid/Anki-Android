@@ -951,4 +951,26 @@ public class Utils {
         Random rand = new Random();
         return rand.nextFloat() * (max - min) + min;
     }
+
+    /**
+       Set usn to 0 in every object.
+
+       This method is called during full sync, before uploading, so
+       during an instant, the value will be zero while the object is
+       not actually online. This is not a problem because if the sync
+       fails, a full sync will occur again next time.
+
+       @return whether there was a non-zero usn; in this case the list
+       should be saved before the upload.
+     */
+    public static boolean markAsUploaded(ArrayList<JSONObject> ar) {
+        boolean changed = false;
+        for (JSONObject obj: ar) {
+            if (obj.optInt("usn", 1) != 0) {
+                obj.put("usn", 0);
+                changed = true;
+            }
+        }
+        return changed;
+    }
 }
