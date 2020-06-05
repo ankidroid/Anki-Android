@@ -1935,7 +1935,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // set font for column
                 setFont(col);
                 // set text for column
-                col.setText(card.get(mFromKeys[i]));
+                String text_for_column = card.get(mFromKeys[i]);
+                col.setText(text_for_column);
             }
             // set card's background color
             final int backgroundColor = Themes.getColorFromAttr(CardBrowser.this, card.getColor());
