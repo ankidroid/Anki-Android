@@ -1413,7 +1413,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             CardCache card = getCards().get(pos);
             card.load(true);
             // update Q & A etc
-            updateSearchItemQA(getBaseContext(), card, c, getCol());
+            updateSearchItemQA(getBaseContext(), card, c);
         }
 
         updateList();
@@ -1457,7 +1457,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    public static void updateSearchItemQA(Context context, CardCache item, Card c, Collection col) {
+    public static void updateSearchItemQA(Context context, CardCache item, Card c) {
         // render question and answer
         Map<String, String> qa = c._getQA(true, true);
         // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
@@ -1470,15 +1470,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 qa.put("a", qaFull.get("a"));
             }
         }
-        // update the original hash map to include rendered question & answer
         String q = qa.get("q");
         String a = qa.get("a");
         // remove the question from the start of the answer if it exists
         if (a.startsWith(q)) {
             a = a.replaceFirst(Pattern.quote(q), "");
         }
-        // put all of the fields in except for those that have already been pulled out straight from the
-        // database
         item.put(ANSWER, formatQA(a, context));
         item.put(QUESTION, formatQA(q, context));
     }
