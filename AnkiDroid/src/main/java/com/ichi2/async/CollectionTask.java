@@ -1176,10 +1176,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             return null;
         }
         int resultSize = searchResult_.size();
-        List<Map<String,String>> searchResult = new ArrayList<>(resultSize);
+        List<CardBrowser.CardCache> searchResult = new ArrayList<>(resultSize);
         Timber.d("The search found %d cards", resultSize);
         for (Long cid: searchResult_) {
-            Map<String, String> card = new HashMap<>();
+            CardBrowser.CardCache card = new CardBrowser.CardCache();
             card.put(CardBrowser.ID, cid.toString());
             searchResult.add(card);
         }
@@ -1207,7 +1207,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         //(Range<Position>, Function<Position, BrowserCard>)
         Timber.d("doInBackgroundRenderBrowserQA");
         Collection col = getCol();
-        List<Map<String, String>> cards = (List<Map<String, String>>) param.getObjArray()[0];
+        List<CardBrowser.CardCache> cards = (List<CardBrowser.CardCache>) param.getObjArray()[0];
         Integer startPos = (Integer) param.getObjArray()[1];
         Integer n = (Integer) param.getObjArray()[2];
 
@@ -1222,7 +1222,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             if (i < 0 || i >= cards.size()) {
                 continue;
             }
-            Map<String, String> card;
+            CardBrowser.CardCache card;
             try {
                 card = cards.get(i);
             }
@@ -1860,7 +1860,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         Object[] objects = param.getObjArray();
         Set<Integer> checkedCardPositions = (Set<Integer>) objects[0];
-        List<Map<String, String>> cards = (List<Map<String, String>>) objects[1];
+        List<CardBrowser.CardCache> cards = (List<CardBrowser.CardCache>) objects[1];
 
         boolean hasUnsuspended = false;
         boolean hasUnmarked = false;

@@ -3,11 +3,13 @@ package com.ichi2.async;
 
 import android.content.Context;
 
+import com.ichi2.anki.CardBrowser;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
 
 import java.util.List;
 import java.util.Map;
+import static com.ichi2.anki.CardBrowser.CardCache;
 
 public class TaskData {
     private Card mCard;
@@ -15,7 +17,7 @@ public class TaskData {
     private int mInteger;
     private String mMsg;
     private boolean mBool = false;
-    private List<Map<String, String>> mCards;
+    private List<CardCache> mCards;
     private long mLong;
     private Context mContext;
     private int mType;
@@ -76,7 +78,7 @@ public class TaskData {
     }
 
 
-    public TaskData(List<Map<String, String>> cards) {
+    public TaskData(List<CardCache> cards) {
         mCards = cards;
     }
 
@@ -147,12 +149,12 @@ public class TaskData {
     }
 
 
-    public List<Map<String, String>> getCards() {
+    public List<CardCache> getCards() {
         return mCards;
     }
 
 
-    public void setCards(List<Map<String, String>> cards) {
+    public void setCards(List<CardCache> cards) {
         mCards = cards;
     }
 
@@ -215,9 +217,5 @@ public class TaskData {
         }
 
         return clazz.isAssignableFrom(val.getClass());
-    }
-
-    public void setCards(List<Map<String, String>> cards) {
-            mCards = cards;
     }
 }

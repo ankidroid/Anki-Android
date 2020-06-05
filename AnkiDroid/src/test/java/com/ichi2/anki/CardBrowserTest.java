@@ -251,7 +251,7 @@ public class CardBrowserTest extends RobolectricTest {
         long cardId = n.cids().get(0);
 
         CardBrowser b = getBrowserWithNoNewCards();
-        Map<String, String> cardProperties = b.getPropertiesForCardId(cardId);
+        CardBrowser.CardCache cardProperties = b.getPropertiesForCardId(cardId);
 
         int actualFlag = b.getFlagOrDefault(cardProperties, 0);
 
