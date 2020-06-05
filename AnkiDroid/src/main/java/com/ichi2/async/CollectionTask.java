@@ -1179,8 +1179,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         List<CardBrowser.CardCache> searchResult = new ArrayList<>(resultSize);
         Timber.d("The search found %d cards", resultSize);
         for (Long cid: searchResult_) {
-            CardBrowser.CardCache card = new CardBrowser.CardCache();
-            card.put(CardBrowser.ID, cid.toString());
+            CardBrowser.CardCache card = new CardBrowser.CardCache(cid, col);
             searchResult.add(card);
         }
         // Render the first few items
@@ -1189,7 +1188,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
                 return null;
             }
-            Card c = col.getCard(Long.parseLong(searchResult.get(i).get(CardBrowser.ID)));
+            Card c = col.getCard(searchResult.get(i).getId());
             CardBrowser.updateSearchItemQA(mContext, searchResult.get(i), c, col);
         }
         // Finish off the task
@@ -1238,25 +1237,14 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             }
             // Extract card item
             Card c;
-            String maybeCardId = card.get(CardBrowser.ID);
-            if (maybeCardId == null) {
-                Timber.w("CardId was null, skipping");
-                continue;
-            }
-            Long cardId;
-            try {
-                cardId = Long.parseLong(maybeCardId);
-            } catch (Exception e) {
-                Timber.e("Unable to parse CardId: %s. Unable to remove card", maybeCardId);
-                continue;
-            }
+            long cardId = card.getId();
             try {
                 c = col.getCard(cardId);
             } catch (WrongId e) {
                 //#5891 - card can be inconsistent between the deck browser screen and the collection.
                 //Realistically, we can skip any exception as it's a rendering task which should not kill the
                 //process
-                Timber.e(e, "Could not process card '%s' - skipping and removing from sight", maybeCardId);
+                Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId);
                 invalidCardIds.add(cardId);
                 continue;
             }
