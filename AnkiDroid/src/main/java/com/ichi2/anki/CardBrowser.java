@@ -1481,7 +1481,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // put all of the fields in except for those that have already been pulled out straight from the
         // database
         item.put(ANSWER, formatQA(a, context));
-        item.put(CARD, c.template().optString("name"));
         item.put(DUE, c.getDueString());
         if (c.getType() == Consts.CARD_TYPE_NEW) {
             item.put(EASE, context.getString(R.string.card_browser_ease_new_card));
@@ -2132,6 +2131,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return mCol.getDecks().name(getCard().getDid());
             case TAGS:
                 return getCard().note().stringTags();
+            case CARD:
+                return getCard().template().optString("name");
             default:
                 return null;
             }
