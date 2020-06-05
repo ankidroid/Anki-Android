@@ -1480,8 +1480,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // put all of the fields in except for those that have already been pulled out straight from the
         // database
         item.put(ANSWER, formatQA(a, context));
-
-        item.put(NOTE_TYPE, c.model().optString("name"));
         item.put(QUESTION, formatQA(q, context));
         item.put(REVIEWS, Integer.toString(c.getReps()));
     }
@@ -2134,6 +2132,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
             case LAPSES:
                 return Integer.toString(getCard().getLapses());
+            case NOTE_TYPE:
+                return getCard().model().optString("name");
             default:
                 return null;
             }
