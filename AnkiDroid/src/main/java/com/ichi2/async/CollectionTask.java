@@ -1189,7 +1189,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
                 return null;
             }
-            Card c = col.getCard(Long.parseLong(searchResult.get(i).get("id")));
+            Card c = col.getCard(Long.parseLong(searchResult.get(i).get(CardBrowser.ID)));
             CardBrowser.updateSearchItemQA(mContext, searchResult.get(i), c, col);
         }
         // Finish off the task
@@ -1238,7 +1238,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             }
             // Extract card item
             Card c;
-            String maybeCardId = card.get("id");
+            String maybeCardId = card.get(CardBrowser.ID);
             if (maybeCardId == null) {
                 Timber.w("CardId was null, skipping");
                 continue;
@@ -1865,7 +1865,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         boolean hasUnsuspended = false;
         boolean hasUnmarked = false;
         for (int cardPosition : checkedCardPositions) {
-            Card card = col.getCard(Long.parseLong(cards.get(cardPosition).get("id")));
+            Card card = col.getCard(Long.parseLong(cards.get(cardPosition).get(CardBrowser.ID)));
             hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
             hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
             if (hasUnsuspended && hasUnmarked)
