@@ -1411,9 +1411,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (pos < 0 || pos >= getCardCount()) {
                 continue;
             }
-            CardCache card = getCards().get(pos);
             // update Q & A etc
-            card.load(true);
+            getCards().get(pos).load(true);
         }
 
         updateList();
