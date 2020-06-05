@@ -253,7 +253,7 @@ public class CardBrowserTest extends RobolectricTest {
         CardBrowser b = getBrowserWithNoNewCards();
         CardBrowser.CardCache cardProperties = b.getPropertiesForCardId(cardId);
 
-        int actualFlag = b.getFlagOrDefault(cardProperties, 0);
+        int actualFlag = cardProperties.getFlagOrDefault(0);
 
         assertThat("The card flag value should be reflected in the UI", actualFlag, is(1));
     }
