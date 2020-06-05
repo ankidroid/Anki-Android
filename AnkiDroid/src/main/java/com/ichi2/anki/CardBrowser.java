@@ -2140,17 +2140,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @VisibleForTesting
         int getFlagOrDefault(int defaultValue) {
-            String flagValue = get(FLAGS);
-            if (flagValue == null) {
-                Timber.d("Unable to obtain flag for card: '%s'. Returning %d", getId(), defaultValue);
-                return defaultValue;
-            }
-            try {
-                return Integer.parseInt(flagValue);
-            } catch (Exception e) {
-                Timber.e(e, "couldn't parse flag value: %s", flagValue);
-                return defaultValue;
-            }
+            return getCard().userFlag();
         }
     }
 
