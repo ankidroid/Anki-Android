@@ -1481,11 +1481,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // put all of the fields in except for those that have already been pulled out straight from the
         // database
         item.put(ANSWER, formatQA(a, context));
-        if (c.getType() == Consts.CARD_TYPE_NEW) {
-            item.put(EASE, context.getString(R.string.card_browser_ease_new_card));
-        } else {
-            item.put(EASE, (c.getFactor()/10)+"%");
-        }
 
         Note note = c.note();
         item.put(CHANGED, LanguageUtil.getShortDateFormatFromS(c.getMod()));
@@ -2134,6 +2129,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return getCard().template().optString("name");
             case DUE:
                 return getCard().getDueString();
+            case EASE:
+                if (getCard().getType() == Consts.CARD_TYPE_NEW) {
+                    return AnkiDroidApp.getInstance().getString(R.string.card_browser_ease_new_card);
+                } else {
+                    return (getCard().getFactor()/10)+"%";
+                }
             default:
                 return null;
             }
