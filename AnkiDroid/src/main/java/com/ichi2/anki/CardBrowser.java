@@ -39,6 +39,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -1411,9 +1412,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 continue;
             }
             CardCache card = getCards().get(pos);
-            card.load(true);
             // update Q & A etc
-            updateSearchItemQA(card);
+            card.load(true);
         }
 
         updateList();
@@ -1456,31 +1456,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }, mCardsListView, null);
         }
     };
-
-    public static void updateSearchItemQA(CardCache item) {
-        Card c = item.getCard();
-        Context context = AnkiDroidApp.getInstance();
-        // render question and answer
-        Map<String, String> qa = c._getQA(true, true);
-        // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
-        if ("".equals(qa.get("q")) || "".equals(qa.get("a"))) {
-            HashMap<String, String> qaFull = c._getQA(true, false);
-            if ("".equals(qa.get("q"))) {
-                qa.put("q", qaFull.get("q"));
-            }
-            if ("".equals(qa.get("a"))) {
-                qa.put("a", qaFull.get("a"));
-            }
-        }
-        String q = qa.get("q");
-        String a = qa.get("a");
-        // remove the question from the start of the answer if it exists
-        if (a.startsWith(q)) {
-            a = a.replaceFirst(Pattern.quote(q), "");
-        }
-        item.put(ANSWER, formatQA(a, context));
-        item.put(QUESTION, formatQA(q, context));
-    }
 
     @CheckResult
     private static String formatQA(String text, Context context) {
@@ -2037,6 +2012,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private Collection mCol;
         private Card mCard = null;
         private boolean mLoaded = false;
+        private Pair<String, String> mQa = null;
 
         public CardCache(long id, Collection col) {
             mId = id;
@@ -2052,6 +2028,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             clear();
             mCard = null;
             mLoaded = false;
+            mQa = null;
         }
 
         public Card getCard() {
@@ -2134,6 +2111,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return getCard().model().optString("name");
             case REVIEWS:
                 return Integer.toString(getCard().getReps());
+            case QUESTION:
+                updateSearchItemQA();
+                return mQa.first;
+            case ANSWER:
+                updateSearchItemQA();
+                return mQa.second;
             default:
                 return null;
             }
@@ -2146,11 +2129,45 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 reload();
             }
             getCard().note();
+            updateSearchItemQA();
             mLoaded = true;
         }
 
         public boolean isLoaded() {
             return mLoaded;
+        }
+
+        /**
+           Reload question and answer. Use browser format. If it's empty
+           uses non-browser format. If answer starts by question, remove
+           question.
+        */
+        public void updateSearchItemQA() {
+            if (mQa != null) {
+                return;
+            }
+            // render question and answer
+            Map<String, String> qa = getCard()._getQA(true, true);
+            // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
+            if ("".equals(qa.get("q")) || "".equals(qa.get("a"))) {
+                HashMap<String, String> qaFull = getCard()._getQA(true, false);
+                if ("".equals(qa.get("q"))) {
+                    qa.put("q", qaFull.get("q"));
+                }
+                if ("".equals(qa.get("a"))) {
+                    qa.put("a", qaFull.get("a"));
+                }
+            }
+            // update the original hash map to include rendered question & answer
+            String q = qa.get("q");
+            String a = qa.get("a");
+            // remove the question from the start of the answer if it exists
+            if (a.startsWith(q)) {
+                a = a.replaceFirst(Pattern.quote(q), "");
+            }
+            a = formatQA(a, AnkiDroidApp.getInstance());
+            q = formatQA(q, AnkiDroidApp.getInstance());
+            mQa = new Pair<>(q, a);
         }
     }
 
