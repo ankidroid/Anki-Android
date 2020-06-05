@@ -58,6 +58,17 @@ var resizeImages = function() {
     resizeDone = true;
 };
 
+/* Tell the app that we no longer want to focus the WebView and should instead return keyboard
+ * focus to a native answer input method.
+ * Naming subject to change.
+ */
+function _relinquishFocus() {
+    // Clicking on a hint set the Android mouse cursor to a text entry bar, even after navigating
+    // away. This fixes the issue.
+    document.body.style.cursor = "default";
+    window.location.href = "signal:relinquishFocus";
+}
+
 /* Tell the app that the input box got focus. See also
  * AbstractFlashcardViewer and CompatV15 */
 function taFocus() {
@@ -85,7 +96,9 @@ function buttonAnswerEase4() {
 
 /* Tell the app the text in the input box when it loses focus */
 function taBlur(itag) {
-    window.location.href = "typeblurtext:" + itag.value;
+    //#5944 - percent wasn't encoded, but Mandarin was.
+    var encodedVal = encodeURI(itag.value);
+    window.location.href = "typeblurtext:" + encodedVal;
 }
 
 /* Look at the text entered into the input box and send the text on a return */
@@ -100,7 +113,9 @@ function taKey(itag, e) {
     }
 
     if (keycode == 13) {
-        window.location.href = "typeentertext:" + itag.value;
+        //#5944 - percent wasn't encoded, but Mandarin was.
+        var encodedVal = encodeURI(itag.value);
+        window.location.href = "typeentertext:" + encodedVal;
         return false;
     } else {
         return true;
@@ -148,34 +163,4 @@ var onPageFinished = function() {
             });
         }
     }
-}
-
-function _drawMark(mark) {
-    var elem = document.getElementById("_mark");
-    if (!mark) {
-        elem.style.display = "none";
-    } else {
-        elem.style.display = "inline";
-    }
-}
-
-function _drawFlag(flag) {
-    var elem = document.getElementById("_flag");
-    var flag_svg = document.getElementById("_flag_svg");
-    var flag_svg_path = document.getElementById("_flag_svg_path");
-
-    var _flagColours = [
-        "#ff6666",
-        "#ff9900",
-        "#77ff77",
-        "#77aaff"];
-
-    if (flag === 0) {
-        elem.style.display = "none";
-        return;
-    }
-    elem.style.display = "inline";
-    elem.style.color = _flagColours[flag-1];
-    flag_svg.style.fill = _flagColours[flag-1];
-    flag_svg_path.style.fill = _flagColours[flag-1];
 }

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Navigation drawer items-->
+    <string name="decks">ডেকসমূহ</string>
+    <string name="card_browser">কার্ড ব্রাউজার</string>
+    <string name="statistics">পরিসংখ্যান</string>
+    <string name="settings">সেটিংস</string>
+    <string name="help">সাহায্য</string>
+    <string name="send_feedback">মতামত পাঠান</string>
+    <string name="studyoptions_title">ডেকের বিবরণ</string>
+    <string name="studyoptions_due_today">আজ বাকি:</string>
+    <string name="studyoptions_new_total">মোট নতুন কার্ড:</string>
+    <string name="studyoptions_total_cards">মোট কার্ড:</string>
+    <string name="studyoptions_eta">আনুমানিক সময় (মিনিট):</string>
+    <string name="studyoptions_start">অধ্যয়ন</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">প্রসারণ করুন</string>
+    <string name="collapse">সঙ্কোচন</string>
+    <string name="study_more">আরও পড়ুন</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d কার্ড বাকি (%2$s)</item>
+        <item quantity="other">%1$d কার্ড বাকি (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">%d মিনিট বাকি আছে</item>
+        <item quantity="other">%d মিনিট বাকি আছে</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">%2$s আজ পঠিত %1$d কার্ড</item>
+        <item quantity="other">%2$s আজ পঠিত %1$d কার্ড</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">উত্তর লিখুন</string>
+    <string name="show_answer">উত্তর দেখান</string>
+    <string name="ease_button_again">আবার</string>
+    <string name="ease_button_hard">কঠিন</string>
+    <string name="ease_button_good">ভালো</string>
+    <string name="ease_button_easy">সহজ</string>
+    <string name="studyoptions_congrats_undo">%s বাতিল করুন</string>
+    <string name="menu_import">আমদানি করুন</string>
+    <string name="undo">বাতিল করুন</string>
+    <string name="undo_action_review">সর্বশেষ পর্যালোচনা</string>
+    <string name="undo_action_bury_card">কার্ড বাতিল</string>
+    <string name="undo_action_bury_note">নোট বাতিল</string>
+    <string name="undo_action_suspend_card">কার্ড স্থগিত</string>
+    <string name="undo_action_suspend_note">নোট স্থগিত</string>
+    <string name="undo_action_delete">নোট মুছে ফেলুন</string>
+    <string name="undo_action_delete_multi">delete notes</string>
+    <string name="undo_action_change_deck_multi">change decks</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="unbury">বাতিল স্থগিত করুন</string>
+    <string name="rename_deck">ডেক পুনঃনামকরণ করুন</string>
+    <string name="menu_add">যোগ করুন</string>
+    <string name="menu_add_note">নোট যোগ করুন</string>
+    <string name="menu_my_account">হিসাব সিঙ্ক করুন</string>
+    <string name="menu_dismiss_note">গোপন / মুছে ফেলুন</string>
+    <string name="menu_bury_card">কার্ড বাতিল</string>
+    <string name="menu_bury_note">নোট বাতিল</string>
+    <string name="menu_suspend_card">কার্ড স্থগিত</string>
+    <string name="menu_suspend_note">নোট স্থগিত</string>
+    <string name="menu_bury">বাতিল</string>
+    <string name="menu_suspend">স্থগিত</string>
+    <string name="menu_delete_note">নোট মুছে ফেলুন</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="delete_note_message">সত্যি এই নোট এবং এর কার্ড মুছবেন? \n%s</string>
+    <string name="menu_select">টেক্সট নির্বাচন করুন</string>
+    <string name="menu_search">অনুসন্ধান করুন %1$s</string>
+    <string name="menu_mark_note">টীকা চিহ্ন</string>
+    <string name="menu_unmark_note">নোটের টীকা চিহ্ন মুছুন</string>
+    <string name="new_deck">ডেক তৈরি করুন</string>
+    <string name="create">তৈরি করুন</string>
+    <string name="new_dynamic_deck">ফিল্টার করা ডেক তৈরি করুন</string>
+    <string name="night_mode">নাইট মোড</string>
+    <string name="directory_inaccessible">আনকিড্রইড ডাইরেক্টরি অপ্রবেশ্য।</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d সেকেন্ড</string>
+    <string name="time_quantity_minutes">%d মিনিট</string>
+    <string name="time_quantity_hours">%d ঘন্টা</string>
+    <string name="time_quantity_days">%d দিন</string>
+    <string name="time_quantity_months">%.1f মাস</string>
+    <string name="time_quantity_years">%.1f বছর</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">ক্রাম ডেক পুনঃতৈরি করা হচ্ছে&#8230;</string>
+    <string name="rebuild_cram_label">নতুন করে তৈরি করো</string>
+    <string name="empty_cram_label">খালি</string>
+    <string name="create_subdeck">Create subdeck</string>
+    <string name="empty_cram_deck">ক্রাম ডেক ফাঁকা করা হচ্ছে&#8230;</string>
+    <string name="custom_study_deck_name">নিজস্ব গবেষণা অধিবেশন</string>
+    <string name="custom_study_deck_exists">বর্তমান স্বনির্ধারিত গবেষণা ডেক প্রথম পুনঃনামকরণ করুন</string>
+    <string name="empty_deck">এই ডেক ফাঁকা।</string>
+    <string name="studyoptions_empty">এই ডেক খালি আছে। প্রেস + বাটন নতুন উপাদান যোগ করতে।</string>
+    <string name="studyoptions_limit_reached">প্রতিদিনের পড়াশোনা সীমায় পৌঁছে গিয়েছে</string>
+    <string name="studyoptions_empty_schedule">পড়ার জন্য নির্ধারিত কোন কার্ড</string>
+    <string name="studyoptions_congrats_finished">অভিনন্দন! আপাতত শেষ হয়েছে।</string>
+    <string name="studyoptions_congrats_more_rev">আজকের এই সীমায় পৌঁছে গেছে, কিন্তু এখনো পর্যালোচনা থেকে কার্ডের আছে। বিকল্প সীমা বাড়তে পারে।</string>
+    <string name="studyoptions_congrats_more_new">আজকের এই সীমায় পৌঁছে গেছে। আরো নতুন কার্ড পাওয়া যায়। আপনার পছন্দের সীমা বাড়তে পারে, কিন্তু তোমার মেয়াদী রিভিউ চাহিদার এই বৃদ্ধি পাবে।</string>
+    <string name="studyoptions_congrats_custom">স্বাভাবিক সময়সূচির বাইরে পড়াশোনা করার জন্য, \'প্রথা অধ্যয়ন\' বোতাম স্পর্শ</string>
+    <string name="studyoptions_no_cards_due">কোন কার্ড এখনও কার্যকরী হবে</string>
+    <string name="sd_card_not_mounted">ডিভাইস স্টোরেজ মাউন্টেড নয়</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">সিংক্রোনাইজ</string>
+    <string name="cancel_sync_confirm">আপনি সিঙ্ক বাতিল করতে চান?</string>
+    <string name="continue_sync">সিংক বজায় রাখুন</string>
+    <string name="sync_cancelled">সিংক বাতিল করা হয়েছে</string>
+    <string name="sync_cancel_message">Cancelling...\nThis কিছু সময় লাগতে পারে।</string>
+    <string name="export">ডাটা এক্সপোর্ট</string>
+    <string name="export_collection">কালেকশন রপ্তানি করুন</string>
+    <string name="export_deck">ডেক রপ্তানি করুন</string>
+    <string name="nothing">কিছুই না</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">কার্ডের ধরন</string>
+    <string name="card_template_editor_front">সম্মুখ খসড়া</string>
+    <string name="card_template_editor_back">পশ্চাৎ খসড়া</string>
+    <string name="card_template_editor_styling">স্টাইলিং</string>
+    <string name="card_template_editor_menu_delete">মুছুন</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_cant_delete">কমপক্ষে একটি কার্ড টাইপ প্রয়োজন</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">\'%2$s\' কার্ডের ধরন, আর তার %1$d কার্ড মুছে ফেলতে চান?</item>
+        <item quantity="other">\'%2$s\' কার্ডের ধরন, আর তার %1$d কার্ড মুছে ফেলতে চান?</item>
+    </plurals>
+    <string name="invalid_template">কার্ড তৈরি করা যায় নি</string>
+    <string name="card_template_editor_would_delete_note">এই কার্ডের ধরন অপসারণ মুছার কারণে এক বা একাধিক নোট মুছে ফেলা হতে পারে। অনুগ্রহ করে আগে কোন নতুন কার্ডের ধরন তৈরি করুন।</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">AnkiDroid ডাটাবেস থেকে পড়ুন এবং লিখুন</string>
+    <string name="read_write_permission_description">বিদ্যমান নোট, কার্ড, নোটের ধরন এবং ডেক এ প্রবেশের পাশাপাশি নতুন একটি তৈরি করুন</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
+</resources>

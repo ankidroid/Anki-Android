@@ -22,8 +22,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -69,15 +68,11 @@ public class Tags {
 
 
     public void load(String json) {
-        try {
-            JSONObject tags = new JSONObject(json);
-            Iterator<?> i = tags.keys();
-            while (i.hasNext()) {
-                String t = (String) i.next();
-                mTags.put(t, tags.getInt(t));
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        JSONObject tags = new JSONObject(json);
+        Iterator<?> i = tags.keys();
+        while (i.hasNext()) {
+            String t = (String) i.next();
+            mTags.put(t, tags.getInt(t));
         }
         mChanged = false;
     }
@@ -87,11 +82,7 @@ public class Tags {
         if (mChanged) {
             JSONObject tags = new JSONObject();
             for (Map.Entry<String, Integer> t : mTags.entrySet()) {
-                try {
-                    tags.put(t.getKey(), t.getValue());
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                tags.put(t.getKey(), t.getValue());
             }
             ContentValues val = new ContentValues();
             val.put("tags", Utils.jsonToString(tags));
@@ -151,15 +142,9 @@ public class Tags {
             mChanged = true;
         }
         List<String> tags = new ArrayList<>();
-        Cursor cursor = null;
-        try {
-            cursor = mCol.getDb().getDatabase().query("SELECT DISTINCT tags FROM notes"+lim, null);
+        try (Cursor cursor = mCol.getDb().getDatabase().query("SELECT DISTINCT tags FROM notes" + lim, null)) {
             while (cursor.moveToNext()) {
                 tags.add(cursor.getString(0));
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
             }
         }
         HashSet<String> tagSet = new HashSet<>();
@@ -187,18 +172,17 @@ public class Tags {
     * @return a list of the tags
     */
     public ArrayList<String> byDeck(long did, boolean children) {
-        String sql;
+        List<String> tags;
         if (children) {
             ArrayList<Long> dids = new ArrayList<>();
             dids.add(did);
             for (long id : mCol.getDecks().children(did).values()) {
                 dids.add(id);
             }
-            sql = "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(Utils.arrayList2array(dids));
+            tags = mCol.getDb().queryColumn(String.class, "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(Utils.arrayList2array(dids)), 0);
         } else {
-            sql = "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = " + did;
+            tags = mCol.getDb().queryColumn(String.class, "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = ?", 0, new Object[] {did});
         }
-        List<String> tags = mCol.getDb().queryColumn(String.class, sql, 0);
         // Cast to set to remove duplicates
         // Use methods used to get all tags to parse tags here as well.
         return new ArrayList<>(new HashSet<>(split(TextUtils.join(" ", tags))));
@@ -254,15 +238,13 @@ public class Tags {
             t = t.replace("*", "%");
             lim.append(l).append("like '% ").append(t).append(" %'");
         }
-        Cursor cur = null;
         List<Long> nids = new ArrayList<>();
         ArrayList<Object[]> res = new ArrayList<>();
-        try {
-            cur = mCol
-                    .getDb()
-                    .getDatabase()
-                    .query("select id, tags from notes where id in " + Utils.ids2str(ids) +
-                            " and (" + lim + ")", null);
+        try (Cursor cur = mCol
+                .getDb()
+                .getDatabase()
+                .query("select id, tags from notes where id in " + Utils.ids2str(ids) +
+                        " and (" + lim + ")", null)) {
             if (add) {
                 while (cur.moveToNext()) {
                     nids.add(cur.getLong(0));
@@ -274,10 +256,6 @@ public class Tags {
                     res.add(new Object[] { remFromStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(),
                             cur.getLong(0) });
                 }
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         // update tags

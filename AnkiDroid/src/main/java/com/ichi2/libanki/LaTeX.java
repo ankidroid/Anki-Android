@@ -18,10 +18,7 @@
 
 package com.ichi2.libanki;
 
-import com.ichi2.libanki.hooks.Hook;
-import com.ichi2.libanki.hooks.Hooks;
-
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -60,15 +57,16 @@ public class LaTeX {
     public static String mungeQA(String html, Collection col, JSONObject model) {
         StringBuffer sb = new StringBuffer();
         Matcher matcher = sStandardPattern.matcher(html);
+        Media m = col.getMedia();
         while (matcher.find()) {
-            matcher.appendReplacement(sb, _imgLink(matcher.group(1), model));
+            matcher.appendReplacement(sb, _imgLink(matcher.group(1), model, m));
         }
         matcher.appendTail(sb);
 
         matcher = sExpressionPattern.matcher(sb.toString());
         sb = new StringBuffer();
         while (matcher.find()) {
-            matcher.appendReplacement(sb, _imgLink("$" + matcher.group(1) + "$", model));
+            matcher.appendReplacement(sb, _imgLink("$" + matcher.group(1) + "$", model, m));
         }
         matcher.appendTail(sb);
 
@@ -76,7 +74,7 @@ public class LaTeX {
         sb = new StringBuffer();
         while (matcher.find()) {
             matcher.appendReplacement(sb,
-                    _imgLink("\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}", model));
+                    _imgLink("\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}", model, m));
         }
         matcher.appendTail(sb);
 
@@ -87,7 +85,7 @@ public class LaTeX {
     /**
      * Return an img link for LATEX.
      */
-    private static String _imgLink(String latex, JSONObject model) {
+    private static String _imgLink(String latex, JSONObject model, Media m) {
         String txt = _latexFromHtml(latex);
 
         String ext = "png";
@@ -96,7 +94,11 @@ public class LaTeX {
         }
 
         String fname = "latex-" + Utils.checksum(txt) + "." + ext;
-        return "<img class=latex src=\"" + fname + "\">";
+        if (m.have(fname)) {
+            return "<img class=latex src=\"" + fname + "\">";
+        } else {
+            return Matcher.quoteReplacement(latex);
+        }
     }
 
 
@@ -107,17 +109,5 @@ public class LaTeX {
         latex = latex.replaceAll("<br( /)?>|<div>", "\n");
         latex = Utils.stripHTML(latex);
         return latex;
-    }
-
-    public class LaTeXFilter extends Hook {
-        @Override
-        public Object runFilter(Object arg, Object... args) {
-            return LaTeX.mungeQA((String) arg, (Collection) args[4], (JSONObject) args[2]);
-        }
-    }
-
-
-    public void installHook(Hooks h) {
-        h.addHook("mungeQA", new LaTeXFilter());
     }
 }

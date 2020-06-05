@@ -1,0 +1,35 @@
+tasks.whenTaskAdded { task ->
+    if (task.name.startsWith("lint")) {
+        if (task.name.toLowerCase().endsWith("release")) {
+            task.doFirst {
+                android.lintOptions.abortOnError = true
+                android.lintOptions.warningsAsErrors true
+                android.lintOptions.check 'NewApi', 'InlinedApi'
+            }
+        } else {
+            task.doFirst {
+                // move the baseline by deleting api/baseline.xml and AnkiDroid/baseline.xml then ./gradlew lintDebug
+                android.lintOptions.baseline file('./lint-baseline.xml')
+                // # SyntheticAccessor
+                // See discussion on #6205 - we should fix these for performance, but low priority
+                // compared to other more significant warnings.
+
+                // # ObsoleteLintCustomCheck
+                // Requested in #6211 - not actionable by us - upstream issue
+                // Sample:
+                // > Warning: Lint found an issue registry
+                // > (androidx.appcompat.AppCompatIssueRegistry) which requires a newer API level.
+                // > That means that the custom lint checks are intended for a newer lint version;
+                // > please upgrade
+                android.lintOptions.disable 'SyntheticAccessor', 'ObsoleteLintCustomCheck'
+                android.lintOptions.abortOnError true
+                android.lintOptions.checkAllWarnings true
+                android.lintOptions.warningsAsErrors true
+                android.lintOptions.showAll true
+                android.lintOptions.textReport true
+                android.lintOptions.textOutput 'stdout'
+                android.lintOptions.htmlReport true
+            }
+        }
+    }
+}

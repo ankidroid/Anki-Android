@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- generic strings -->
+    <string name="disabled">Адключана</string>
+    <string name="enabled">Уключана</string>
+    <!-- preferences.xml categories-->
+    <string name="pref_cat_general">AnkiDroid</string>
+    <string name="pref_cat_general_summ">Агульныя налады</string>
+    <string name="pref_cat_reviewing">Паўтор</string>
+    <string name="pref_cat_reviewing_summ">Налады паўтарэнняў, якія не залежаць ад калоды</string>
+    <string name="pref_cat_reviewer_behaviour">Паводзіны</string>
+    <string name="pref_cat_flashcard">Паказаць</string>
+    <string name="pref_cat_whiteboard">Дошка</string>
+    <string name="pref_cat_automatic_display">Аўтаматычна паказваць адказ</string>
+    <string name="pref_cat_appearance">Знешні выгляд</string>
+    <string name="pref_cat_appearance_summ">Змена тэмы і шрыфтоў</string>
+    <string name="pref_cat_themes">Тэмы</string>
+    <string name="pref_cat_fonts">Шрыфты</string>
+    <string name="pref_cat_gestures">Жэсты</string>
+    <string name="pref_cat_gestures_summ">Выкарыстоўваць націскі і чырканні замест кнопак</string>
+    <string name="pref_cat_actions">Дзеянні</string>
+    <string name="pref_cat_advanced">Дадаткова</string>
+    <string name="pref_cat_advanced_summ">Аптымізацыя і эксперыментальныя магчымасці</string>
+    <string name="pref_cat_performance">Прадукцыйнасць</string>
+    <string name="pref_cat_workarounds">Абходныя шляхі</string>
+    <string name="pref_cat_plugins">Убудовы</string>
+    <string name="about_title">Пра AnkiDroid</string>
+    <string name="about_version">Версія: </string>
+    <!-- preferences.xml entries-->
+    <string name="whiteboard_stroke_width">Шырыня штрыха</string>
+    <string name="whiteboard_black">Чорныя штрыхі</string>
+    <string name="whiteboard_black_summ">Выкарыстоўвае менш памяці, акрамя начнога рэжыму</string>
+    <string name="use_input_tag">Уводзіць адказ на картцы</string>
+    <string name="use_input_tag_summ">Скарыстайцеся формай тэксту, каб увесці адказ</string>
+    <string name="dictionary">Паглядзець у слоўніку</string>
+    <string name="reset_languages">Скінуць мовы</string>
+    <string name="reset_languages_summ">Скінуць прызначэнне моў (для агучвання тэкстаў і слоўнікаў) для ўсіх калод</string>
+    <string name="reset_languages_question">Скінуць усе моўныя прызначэнні?</string>
+    <string name="reset_confirmation">Усе налады скінутыя</string>
+    <string name="card_zoom">Маштаб картак</string>
+    <string name="image_zoom">Маштаб малюнкаў</string>
+    <string name="button_size">Памер кнопкі адказу</string>
+    <string name="card_browser_font_size">Маштаб шрыфту аглядальніка картак</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="col_path">Каталог AnkiDroid</string>
+    <string name="fullscreen_review">Поўнаэкранны рэжым</string>
+    <string name="full_screen_off">Выключаны</string>
+    <string name="full_screen_system">Схаваць сістэмную панэль</string>
+    <string name="full_screen_complete">Схаваць сістэмную панэль і панэль кнопак адказу</string>
+    <string name="full_screen_error_gestures">Вы павінны ўключыць жэсты, каб схаваць панэль кнопак адказу</string>
+    <string name="answer_buttons_position">Размяшчэнне кнопак адказу</string>
+    <string-array name="answer_buttons_position_labels">
+        <item>Зверху</item>
+        <item>Знізу</item>
+    </string-array>
+    <string name="gestures">Уключыць жэсты</string>
+    <string name="gestures_summ">Прызначыць жэсты для такіх дзеянняў, як адказ і рэдагаванне картак.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_swipe_up">Чырканне ўверх</string>
+    <string name="gestures_swipe_down">Чырканне ўніз</string>
+    <string name="gestures_swipe_left">Чырканне ўлева</string>
+    <string name="gestures_swipe_right">Чырканне ўправа</string>
+    <string name="gestures_double_tap">Двайны дотык</string>
+    <string name="gestures_tap_top">Дотык зверху</string>
+    <string name="gestures_tap_bottom">Дотык знізу</string>
+    <string name="gestures_tap_left">Дотык злева</string>
+    <string name="gestures_tap_right">Дотык справа</string>
+    <string name="more_scrolling_buttons">eReader</string>
+    <string name="more_scrolling_buttons_summ">Таксама выкарыстоўваць кнопкі kanji/katakana, emoji/kao-moji для прагорткі</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="double_scrolling_gap">Падвоеная прагортка</string>
+    <string name="double_scrolling_gap_summ">Падвоены разрыў прагорткі ў eReader</string>
+    <string name="swipe_sensitivity">Адчувальнасць чыркання</string>
+    <string name="tts">Сінтэз маўлення</string>
+    <string name="tts_summ">Чытае пытанні і адказы, калі аўдыяфайл не знойдзены</string>
+    <string name="sync_fetch_missing_media">Атрымліваць медыяфайлы падчас сінхранізацыі</string>
+    <string name="sync_fetch_missing_media_summ">Аўтаматычна атрымліваць адсутныя медыяфайлы, падчас сінхранізацыі</string>
+    <string name="sync_account">Уліковы запіс AnkiWeb</string>
+    <string name="sync_account_summ_logged_out">Вы не ўвайшлі ў сістэму</string>
+    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="automatic_sync_choice">Аўтаматычная сінхранізацыя</string>
+    <string name="automatic_sync_choice_summ">Аўтаматычна сінхранізаваць, калі адбываецца адкрыццё/закрыццё праграмы,
+        калі з часу апошняй сінхранізацыі мінула 10 хвілін.</string>
+    <string name="day_theme">Дзённая тэма</string>
+    <string name="night_theme">Начная тэма</string>
+    <string name="default_font">Шрыфт па змаўчанні</string>
+    <string name="override_font">Ужыванне шрыфту па змаўчанні</string>
+    <string name="language">Мова</string>
+    <string name="language_system">Сістэмная мова</string>
+    <string name="notification_pref">Апавяшчэнні</string>
+    <string name="notification_pref_title">Апавяшчаць калі</string>
+    <string name="never_notify">Ніколі не апавяшчаць</string>
+    <string name="notify_when_pending">Толькі сістэмныя паведамленні</string>
+    <string name="notification_minimum_cards_due">Больш як %d картак за</string>
+    <string name="notification_minimum_cards_due_vibrate">Вібрацыя</string>
+    <string name="notification_minimum_cards_due_blink">Мігаценне святлодыёда</string>
+    <string name="timeout_answer_text">Аўтаматычна паказваць адказ</string>
+    <string name="timeout_answer_summ">Аўтаматычна паказваць адказ без уводу даных карыстальникам. Затрымка складаецца з часу аўтаматычнага прайгравання аўдыяфайлаў.</string>
+    <string name="timeout_answer_seconds">Час паказу адказу</string>
+    <string name="timeout_answer_seconds_summ">XXX сек.</string>
+    <string name="timeout_question_seconds">Час паказу наступнага пытання</string>
+    <string name="timeout_question_seconds_summ">XXX сек.</string>
+    <string name="select_locale_title">Выберыце мову</string>
+    <string name="safe_display">Статычны рэжым экрана</string>
+    <string name="safe_display_summ">Адключыць усю анімацыю і выкарыстоўваць бяспечны метад для адлюстравання картак. Гэта можа быць актуальна для прылад з электроннымі чарніламі.</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="vertical_centering">Выраўноўваць па цэнтры</string>
+    <string name="vertical_centering_summ">Цэнтраваць змесціва карт вертыкальна</string>
+    <string name="pref_backup_max">Максімальная колькасць рэзервовых копій</string>
+    <string name="show_estimates">Паказаць кнопку часу</string>
+    <string name="show_estimates_summ">Паказаць наступны час паўтарэння над кнопкай адказу</string>
+    <string name="show_progress">Паказаць астатнія</string>
+    <string name="show_progress_summ">Паказваць лічыльнік астатніх карт</string>
+    <string name="show_eta">Паказваць ETA</string>
+    <string name="show_eta_summ">Паказваць час, што застаўся</string>
+    <string name="use_current">Калода для новых картак</string>
+    <string name="new_spread">Размяшчэнне новай карткі</string>
+    <string name="learn_cutoff">Вучыць наперад</string>
+    <string name="learn_cutoff_summ">XXX хв.</string>
+    <string name="time_limit">Абмежаванне навучальнага блока</string>
+    <string name="time_limit_summ">XXX хв.</string>
+    <string name="day_offset">Пачатак наступнага дня</string>
+    <string name="day_offset_summ">XXX гадзін пасля поўначы</string>
+    <string name="sched_ver">Эксперыментальны планіроўшчык другой версіі</string>
+    <string name="sched_ver_summ">Уключыць эксперыментальны планіроўшчык. Падчас сінхранізацыі змены будуць перапісаны ў адным кірунку</string>
+    <string name="sched_ver_toggle_title">Пацвердзіць</string>
+    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
+    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="pref_keep_screen_on">Не вымыкаць экран</string>
+    <string name="pref_keep_screen_on_summ">Адключыць таймаўт экрана</string>
+    <string name="convert_fen_text">Падтрымка шахматнай натацыі</string>
+    <string name="convert_fen_text_summ">Малюе шахматную дошку з натацыі Фарсайта — Эдвардса. Натацыя павінна быць абмежавана тэгамі [fen][/fen].</string>
+    <string name="enable_api_title">Уключыць AnkiDroid API</string>
+    <string name="enable_api_summary">Дазволіць іншым дадаткам падлучацца да AnkiDroid і чытаць / запісваць
+ дадзеныя без вашага ўмяшання</string>
+    <string name="custom_buttons">Панэль кнопак дадатку</string>
+    <string name="custom_buttons_summary">Налада кнопак на панэлі дадатку</string>
+    <string name="custom_buttons_setting_always_show">Паказваць заўсёды</string>
+    <string name="custom_buttons_setting_if_room">Паказваць калі ёсць</string>
+    <string name="custom_buttons_setting_menu_only">Толькі меню</string>
+    <string name="reset_custom_buttons">Скід па змаўчанні</string>
+    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
+    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <!-- Advanced statistics settings -->
+    <string name="advanced_statistics_title">Пашыраная статыстыка</string>
+    <string name="enable_advanced_statistics_title">Уключыць пашыраную статыстыку</string>
+    <string name="enable_advanced_statistics_summ">Адлюстроўваць прагноз статыстыкі, заснаваны на вылічэннях і мадэляванні паўтарэнні ў будучым (уключана) або на ўжо спланаваным паўтарэнні ў будучым (выключана).</string>
+    <string name="advanced_forecast_stats_compute_n_days_title">Вылічаць першыя Х дн., імітуючы рэштку</string>
+    <string name="advanced_forecast_stats_compute_precision_title">Дакладнасць вылічэнняў</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title">Лік крокаў мадэлявання</string>
+    <!-- Custom sync server settings -->
+    <string name="custom_sync_server_title">Карыстацкі сервер</string>
+    <string name="custom_sync_server_enable_title">Сервер сінхранізацыі</string>
+    <string name="custom_sync_server_enable_summary">Калі вы не хочаце скарыстаць сервер AnkiWeb, то
+ можаце паказаць альтэрнатыўны сервер</string>
+    <string name="custom_sync_server_base_url_title">URL для сінхранізацыі</string>
+    <string name="custom_sync_server_media_url_title">URL для Media-дадзеных</string>
+    <!-- studyoptions -->
+    <string name="deck_conf_group_summ">Змяненні параметраў у групавой калодзе закране некалькі калод. Калі вы хочаце змяніць толькі бягучую калоду, калі ласка, спачатку дадайце новую групу параметраў</string>
+    <string name="studyoptions_limit_select_tags">Выберыце пазнакі</string>
+    <!-- Deck configurations -->
+    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_group">Групавыя параметры</string>
+    <plurals name="deck_conf_group_summ">
+        <item quantity="one">канфігурацыя \"%1$s\" выкарыстоўваецца %2$d (раз)</item>
+        <item quantity="few">канфігурацыя \"%1$s\" выкарыстоўваецца %2$d (разы)</item>
+        <item quantity="many">%1$s\n%2$d decks use this group</item>
+        <item quantity="other">канфігурацыя \"%1$s\" выкарыстоўваецца %2$d (раз)</item>
+    </plurals>
+    <string name="deck_conf_new_cards">Новыя карткі</string>
+    <string name="deck_conf_rev_cards">Паўтораў</string>
+    <string name="deck_conf_lps_cards">Абмылы</string>
+    <string name="deck_conf_general">Агульныя</string>
+    <string name="deck_conf_reminders">Напамінкі</string>
+    <string name="deck_conf_steps">Крокі (у хвілінах)</string>
+    <string name="deck_conf_order">Чарговасць</string>
+    <string name="deck_conf_new_cards_day">Новых картак за дзень</string>
+    <string name="deck_conf_graduating_ivl">Інтэрвал сканчэння</string>
+    <string name="deck_conf_days">XXX дзён</string>
+    <string name="deck_conf_easy_ivl">Лёгкі інтэрвал</string>
+    <string name="deck_conf_start_ease">Просты старт</string>
+    <string name="deck_conf_max_rev">Максімум паўтарэнняў у дзень</string>
+    <string name="deck_conf_new_bury">Хаваць новыя карты</string>
+    <string name="deck_conf_new_bury_summ">Злучаныя новыя карткі схаваны да наступнага дня</string>
+    <string name="deck_conf_rev_bury">Схаваць звязаныя паўтарэнні</string>
+    <string name="deck_conf_rev_bury_summ">Звязаныя паўтарэнні схаваныя да наступнага дня</string>
+    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_easy_bonus">Лёгкі бонус</string>
+    <string name="deck_conf_ivl_fct">Мадыфікацыя інтэрвалаў</string>
+    <string name="deck_conf_max_ivl">Максімальны інтэрвал</string>
+    <string name="deck_conf_new_lps_ivl">Новы інтэрвал</string>
+    <string name="deck_conf_min_ivl">Мінімальны інтэрвал</string>
+    <string name="deck_conf_leech_thres">Парог надакучлівасці</string>
+    <string name="deck_conf_fails">XXX няшчасцяў</string>
+    <string name="deck_conf_leech_action">Дзеянне для надакучлівай карткі</string>
+    <string name="deck_conf_max_time">Максімальны час адказу</string>
+    <string name="deck_conf_seconds">XXX секунд</string>
+    <string name="deck_conf_timer">Паказаць таймер для адказу</string>
+    <string name="deck_conf_autoplay">Прайграваць аўдыя аўтаматычна</string>
+    <string name="deck_conf_replayq">Прайграванне пытання</string>
+    <string name="deck_conf_replayq_summ">Пасля паказу адказу прайграць аўдыя пытання і адказу</string>
+    <string name="deck_conf_manage">Кіраванне канфігурацыямі</string>
+    <string name="deck_conf_current_group">Цякучая група</string>
+    <string name="deck_conf_rename">Пераіменаваць</string>
+    <string name="deck_conf_reset">Скінуць налады</string>
+    <string name="deck_conf_reset_title">Аднавіць па змаўчанні</string>
+    <string name="deck_conf_reset_message">Аднавіць значэнні бягучых групавых параметраў па змаўчанні?</string>
+    <string name="deck_conf_add">Дадаць</string>
+    <string name="deck_conf_add_summ">Стварыць копію бягучых групавых параметраў</string>
+    <string name="deck_conf_remove">Выдаліць</string>
+    <string name="deck_conf_remove_title">Выдаліць</string>
+    <string name="deck_conf_remove_message">Выдаліць бягучыя групавыя параметры?</string>
+    <string name="deck_conf_set_subdecks">Усталяваць для ўсіх падкалод</string>
+    <plurals name="deck_conf_set_subdecks_summ">
+        <item quantity="one">%s падкалода будзе скарыстаць канфігурацыю</item>
+        <item quantity="few">%s падкалоды будуць скарыстаць канфігурацыю</item>
+        <item quantity="many">%s subdecks will use this group</item>
+        <item quantity="other">%s падкалод будуць скарыстаць канфігурацыю</item>
+    </plurals>
+    <string name="deck_conf_set_subdecks_title">Усталяваць для ўсіх падкалод</string>
+    <string name="deck_conf_set_subdecks_message">Усталяваць бягучыя групавыя параметры для ўсіх падкалод гэтай калоды?</string>
+    <string name="pref_browser_editor_font">Шрыфт аглядніка і рэдактара</string>
+    <string name="deck_conf_cram_filter">Фільтр</string>
+    <string name="deck_conf_cram_options">Параметры</string>
+    <string name="deck_conf_cram_search">Пошук</string>
+    <string name="deck_conf_cram_limit">Абмежаваць</string>
+    <string name="deck_conf_cram_order">карты адабраць па</string>
+    <string name="deck_conf_cram_reschedule">Змяніць расклад</string>
+    <string name="deck_conf_cram_reschedule_summ">Змяніць расклад картак на падставе маіх адказаў у гэтай калодзе</string>
+    <string name="deck_conf_cram_steps">Карыстацкія крокі (у хвілінах)</string>
+    <string name="deck_conf_cram_steps_summ">Вызначыць дадатковыя крокі</string>
+    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_time">Нагадаць у</string>
+    <!-- analytics options -->
+    <string name="analytics_dialog_title">Дапамажыце зрабіць AnkiDroid яшчэ лепш!</string>
+    <string name="analytics_title">Share feature usage</string>
+    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+</resources>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="statistics_young">Млад</string>
+    <string name="statistics_mature">Зрели</string>
+    <string name="statistics_young_and_learn">Малиди+Научи</string>
+    <string name="statistics_unlearned">Невидено</string>
+    <string name="statistics_suspended_and_buried">Суспендирани+Закопани</string>
+    <string name="statistics_relearn">Ре учење</string>
+    <string name="statistics_learn">Учење</string>
+    <string name="statistics_cram">Cram</string>
+    <string name="stats_cards">Картички</string>
+    <string name="stats_cards_intervals">Картички со даден интервал</string>
+    <string name="stats_cumulative_cards">Кумулативни картички</string>
+    <string name="stats_cumulative_answers">Кумулативни одговори</string>
+    <string name="stats_cumulative_time_minutes">Кумулативни минути</string>
+    <string name="stats_cumulative_time_hours">Кумулативни часови</string>
+    <string name="stats_cumulative">Кумулативно</string>
+    <string name="stats_cumulative_percentage">Кумулативен процент</string>
+    <string formatted="false" name="stats_cumulative_correct_percentage">Кумуалативно точни %</string>
+    <string name="stats_answers">Одговори</string>
+    <string name="stats_minutes">Минути</string>
+    <string name="stats_hours">Часови</string>
+    <string name="stats_percentage">Процент</string>
+    <string name="stats_period_month">1 месец</string>
+    <string name="stats_period_year">1 година</string>
+    <string name="stats_period_lifetime">deck живот</string>
+    <string name="stats_deck_collection">колекција</string>
+    <string name="stats_time_of_day">Време од денот</string>
+    <string name="stats_day_of_week">Ден на неделата</string>
+    <string formatted="false" name="stats_percentage_correct">% точно</string>
+    <string name="stats_reviews">Прегледи</string>
+    <string name="stats_answer_type">Тип на одговор</string>
+    <string name="stats_today_again_count">Повторно израчунајте: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; точно)</string>
+    <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_mature_cards">Точни одговори на зрели картички: %1$d/%2$d (%3$.1f%%)</string>
+    <string name="stats_today_no_mature_cards">Денес не се проучувани зрели картички</string>
+    <string name="stats_overview_forecast_total">Вкупно: &lt;b&gt;%1$d&lt;/b&gt; преглед</string>
+    <string name="stats_overview_forecast_average">Просечно: &lt;b&gt;%1$.1f&lt;/b&gt; прегледи/ден</string>
+    <string name="stats_overview_forecast_due_tomorrow">Утрешно достасување: &lt;b&gt;%1$d&lt;/b&gt;</string>
+    <string name="stats_overview_days_studied">Изучено денови: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d од %3$d)</string>
+    <string name="stats_overview_total_reviews">Вкупно: &lt;b&gt;%1$d&lt;/b&gt; прегледи</string>
+    <string name="stats_overview_reviews_per_day_studydays">Просечно студирање по денови: &lt;b&gt;%1$.1f&lt;/b&gt; прегледи/ден</string>
+    <string name="stats_overview_reviews_per_day_all">Ако студирате секој ден: &lt;b&gt;%1$.1f&lt;/b&gt; прегледи/ден</string>
+    <string name="stats_overview_time_per_day_studydays">Просечно студирање за денови: &lt;b&gt;%1$.1f&lt;/b&gt; минути/ден</string>
+    <string name="stats_overview_time_per_day_all">Ако студирате секој ден: &lt;b&gt;%1$.1f&lt;/b&gt; минути/ден</string>
+    <string name="stats_overview_new_cards_per_day">Просечно: &lt;b&gt;%1$.1f&lt;/b&gt; картички/ден</string>
+    <string name="stats_overview_total_new_cards">Вкупно: &lt;b&gt;%1$d&lt;/b&gt; картички</string>
+    <string name="stats_overview_average_interval">"Просечен интервал: "</string>
+    <string name="stats_overview_longest_interval">"Најдолгиот интервал: "</string>
+    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; години</string>
+    <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; месеци</string>
+    <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; денови</string>
+    <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; часови</string>
+    <string name="deck_summary_all_decks">Сите decks</string>
+    <string name="stats_select_time_scale">Изберете временска скала</string>
+    <string-array name="due_x_axis_title">
+        <item>Денови</item>
+        <item>Недели</item>
+        <item>Месеци</item>
+    </string-array>
+    <string name="stats_today">Денеска</string>
+    <string name="stats_overview">Преглед</string>
+    <string name="stats_forecast">Прогноза</string>
+    <string name="stats_review_count">Преглед на рачун</string>
+    <string name="stats_review_time">Преглед на време</string>
+    <string name="stats_added">Додадено</string>
+    <string name="stats_review_intervals">Интервали</string>
+    <string name="stats_breakdown">Часовен дефект</string>
+    <string name="stats_weekly_breakdown">Неделен дефект</string>
+    <string name="stats_answer_buttons">Копчиња за одговор</string>
+    <string name="stats_cards_types">Тип на картичка</string>
+    <string-array name="stats_day_time_strings">
+        <item>4AM</item>
+        <item>10AM</item>
+        <item>4PM</item>
+        <item>10PM</item>
+        <item>3AM</item>
+    </string-array>
+    <string-array name="stats_week_days">
+        <item>Нед</item>
+        <item>Пон</item>
+        <item>Вто</item>
+        <item>Сре</item>
+        <item>Чет</item>
+        <item>Пет</item>
+        <item>Саб</item>
+    </string-array>
+    <string-array name="stats_eases_ticks">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="stats_eases_ticks_schedv2">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <plurals name="stats_today_cards">
+        <item quantity="one">Изучената &lt;b&gt;%1$d картичка&lt;/b&gt; во &lt;b&gt;%2$s&lt;/b&gt; денеска</item>
+        <item quantity="other">Изучената &lt;b&gt;%1$d картички&lt;/b&gt; во &lt;b&gt;%2$s&lt;/b&gt; денеска</item>
+    </plurals>
+</resources>

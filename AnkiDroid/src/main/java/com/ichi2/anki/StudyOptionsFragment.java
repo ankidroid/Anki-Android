@@ -17,10 +17,11 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
@@ -38,14 +39,16 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
-import com.ichi2.async.DeckTask;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.utils.HtmlUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import timber.log.Timber;
 
@@ -80,6 +83,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     /**
      * UI elements for "Study Options" view
      */
+    @Nullable
     private View mStudyOptionsView;
     private View mDeckInfoLayout;
     private Button mButtonStart;
@@ -103,13 +107,26 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     private StudyOptionsListener mListener;
 
-
+    /**
+     * Callbacks for UI events
+     */
+    private View.OnClickListener mButtonClickListener = v -> {
+        if (v.getId() == R.id.studyoptions_start) {
+            Timber.i("StudyOptionsFragment:: start study button pressed");
+            if (mCurrentContentView != CONTENT_CONGRATS) {
+                openReviewer();
+            } else {
+                showCustomStudyContextMenu();
+            }
+        }
+    };
+    
     public interface StudyOptionsListener {
         void onRequireDeckListUpdate();
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             mListener = (StudyOptionsListener) context;
@@ -117,28 +134,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             throw new ClassCastException(context.toString() + " must implement StudyOptionsListener");
         }
     }
-
-
-    /**
-     * Callbacks for UI events
-     */
-    private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            // long timeLimit = 0;
-            switch (v.getId()) {
-                case R.id.studyoptions_start:
-                    Timber.i("StudyOptionsFragment:: start study button pressed");
-                    if (mCurrentContentView != CONTENT_CONGRATS) {
-                        openReviewer();
-                    } else {
-                        showCustomStudyContextMenu();
-                    }
-                    return;
-                default:
-            }
-        }
-    };
 
     private void openFilteredDeckOptions() {
         openFilteredDeckOptions(false);
@@ -173,27 +168,32 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         return f;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //If we're being restored, don't launch deck options again.
+        if (savedInstanceState == null && getArguments() != null) {
+            mLoadWithDeckOptions = getArguments().getBoolean("withDeckOptions");
+        }
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null) {
             // Currently in a layout without a container, so no reason to create our view.
             return null;
         }
-        restorePreferences();
-        mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
+        View studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
+        mStudyOptionsView = studyOptionsView;
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
-        initAllContentViews();
-        if (getArguments() != null) {
-            mLoadWithDeckOptions = getArguments().getBoolean("withDeckOptions");
-        }
-        mToolbar = (Toolbar) mStudyOptionsView.findViewById(R.id.studyOptionsToolbar);
+        initAllContentViews(studyOptionsView);
+        mToolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar);
         mToolbar.inflateMenu(R.menu.study_options_fragment);
         if (mToolbar != null) {
             configureToolbar();
         }
         refreshInterface(true);
-        return mStudyOptionsView;
+        return studyOptionsView;
     }
 
 
@@ -249,24 +249,24 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
 
-    private void initAllContentViews() {
+    private void initAllContentViews(@NonNull View studyOptionsView) {
         if (mFragmented) {
-            mStudyOptionsView.findViewById(R.id.studyoptions_gradient).setVisibility(View.VISIBLE);
+            studyOptionsView.findViewById(R.id.studyoptions_gradient).setVisibility(View.VISIBLE);
         }
-        mDeckInfoLayout = mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
-        mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
-        mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
+        mDeckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckinformation);
+        mTextDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name);
+        mTextDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description);
         // make links clickable
         mTextDeckDescription.setMovementMethod(LinkMovementMethod.getInstance());
-        mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
-        mTextCongratsMessage = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_congrats_message);
+        mButtonStart = studyOptionsView.findViewById(R.id.studyoptions_start);
+        mTextCongratsMessage = studyOptionsView.findViewById(R.id.studyoptions_congrats_message);
         // Code common to both fragmented and non-fragmented view
-        mTextTodayNew = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new);
-        mTextTodayLrn = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_lrn);
-        mTextTodayRev = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_rev);
-        mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total_new);
-        mTextTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total);
-        mTextETA = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_eta);
+        mTextTodayNew = studyOptionsView.findViewById(R.id.studyoptions_new);
+        mTextTodayLrn = studyOptionsView.findViewById(R.id.studyoptions_lrn);
+        mTextTodayRev = studyOptionsView.findViewById(R.id.studyoptions_rev);
+        mTextNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new);
+        mTextTotal = studyOptionsView.findViewById(R.id.studyoptions_total);
+        mTextETA = studyOptionsView.findViewById(R.id.studyoptions_eta);
         mButtonStart.setOnClickListener(mButtonClickListener);
     }
 
@@ -320,15 +320,15 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.rebuild_cram_deck), true);
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
-                        new DeckTask.TaskData(mFragmented));
+                CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REBUILD_CRAM, getCollectionTaskListener(true),
+                        new CollectionTask.TaskData(mFragmented));
                 return true;
             case R.id.action_empty:
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.empty_cram_deck), false);
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, getDeckTaskListener(true),
-                        new DeckTask.TaskData(mFragmented));
+                CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_EMPTY_CRAM, getCollectionTaskListener(true),
+                        new CollectionTask.TaskData(mFragmented));
                 return true;
             case R.id.action_rename:
                 ((DeckPicker) getActivity()).renameDeckDialog(getCol().getDecks().selected());
@@ -442,20 +442,16 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         if (requestCode == DECK_OPTIONS) {
             if (mLoadWithDeckOptions) {
                 mLoadWithDeckOptions = false;
-                try {
-                    JSONObject deck = getCol().getDecks().current();
-                    if (deck.getInt("dyn") != 0 && deck.has("empty")) {
-                        deck.remove("empty");
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                JSONObject deck = getCol().getDecks().current();
+                if (deck.getInt("dyn") != 0 && deck.has("empty")) {
+                    deck.remove("empty");
                 }
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.rebuild_cram_deck), true);
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
-                            new DeckTask.TaskData(mFragmented));
+                    CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REBUILD_CRAM, getCollectionTaskListener(true),
+                            new CollectionTask.TaskData(mFragmented));
             } else {
-                DeckTask.waitToFinish();
+                CollectionTask.waitToFinish();
                 refreshInterface(true);
             }
         } else if (requestCode == AnkiActivity.REQUEST_REVIEW) {
@@ -482,17 +478,10 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             try {
                 mProgressDialog.dismiss();
             } catch (Exception e) {
-                Timber.e("onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                Timber.e("onPostExecute - Dialog dismiss Exception = %s", e.getMessage());
             }
         }
     }
-
-
-    public SharedPreferences restorePreferences() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext());
-        return preferences;
-    }
-
 
     private void refreshInterfaceAndDecklist(boolean resetSched) {
         refreshInterface(resetSched, true);
@@ -517,8 +506,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     protected void refreshInterface(boolean resetSched, boolean resetDecklist) {
         Timber.d("Refreshing StudyOptionsFragment");
         // Load the deck counts for the deck from Collection asynchronously
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, getDeckTaskListener(resetDecklist),
-                new DeckTask.TaskData(new Object[]{resetSched}));
+        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, getCollectionTaskListener(resetDecklist),
+                new CollectionTask.TaskData(new Object[]{resetSched}));
     }
 
 
@@ -528,15 +517,15 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
      *                        to reflect the latest values.
      */
-    private DeckTask.TaskListener getDeckTaskListener(final boolean refreshDecklist) {
-        return new DeckTask.TaskListener() {
+    private CollectionTask.TaskListener getCollectionTaskListener(final boolean refreshDecklist) {
+        return new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
 
             }
 
             @Override
-            public void onPostExecute(DeckTask.TaskData result) {
+            public void onPostExecute(CollectionTask.TaskData result) {
                 dismissProgressDialog();
                 if (result != null) {
                     // Get the return values back from the AsyncTask
@@ -553,40 +542,41 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                         Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh");
                         return;
                     }
+
+                    //#5506 If we have no view, short circuit all UI logic
+                    if (mStudyOptionsView == null) {
+                        tryOpenCramDeckOptions();
+                        return;
+                    }
+
                     // Reinitialize controls incase changed to filtered deck
-                    initAllContentViews();
+                    initAllContentViews(mStudyOptionsView);
                     // Set the deck name
                     String fullName;
                     JSONObject deck = getCol().getDecks().current();
-                    try {
-                        // Main deck name
-                        fullName = deck.getString("name");
-                        String[] name = fullName.split("::");
-                        StringBuilder nameBuilder = new StringBuilder();
-                        if (name.length > 0) {
-                            nameBuilder.append(name[0]);
-                        }
-                        if (name.length > 1) {
-                            nameBuilder.append("\n").append(name[1]);
-                        }
-                        if (name.length > 3) {
-                            nameBuilder.append("...");
-                        }
-                        if (name.length > 2) {
-                            nameBuilder.append("\n").append(name[name.length - 1]);
-                        }
-                        mTextDeckName.setText(nameBuilder.toString());
-
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                    // Main deck name
+                    fullName = deck.getString("name");
+                    String[] name = Decks.path(fullName);
+                    StringBuilder nameBuilder = new StringBuilder();
+                    if (name.length > 0) {
+                        nameBuilder.append(name[0]);
                     }
+                    if (name.length > 1) {
+                        nameBuilder.append("\n").append(name[1]);
+                    }
+                    if (name.length > 3) {
+                        nameBuilder.append("...");
+                    }
+                    if (name.length > 2) {
+                        nameBuilder.append("\n").append(name[name.length - 1]);
+                    }
+                    mTextDeckName.setText(nameBuilder.toString());
 
-                    // open cram deck option if deck is opened for the first time
-                    if (mLoadWithDeckOptions) {
-                        openFilteredDeckOptions(mLoadWithDeckOptions);
-                        mLoadWithDeckOptions = false;
+
+                    if (tryOpenCramDeckOptions()) {
                         return;
                     }
+
                     // Switch between the empty view, the ordinary view, and the "congratulations" view
                     boolean isDynamic = deck.optInt("dyn", 0) != 0;
                     if (totalCards == 0 && !isDynamic) {
@@ -649,11 +639,10 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                             public void run() {
                                 Collection collection = getCol();
                                 // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
-                                StringBuilder sbQuery = new StringBuilder();
-                                sbQuery.append("SELECT count(*) FROM cards WHERE did IN ");
-                                sbQuery.append(Utils.ids2str(collection.getDecks().active()));
-                                sbQuery.append(" AND queue = 0");
-                                final int fullNewCount = collection.getDb().queryScalar(sbQuery.toString());
+                                String query = "SELECT count(*) FROM cards WHERE did IN " +
+                                        Utils.ids2str(collection.getDecks().active()) +
+                                        " AND queue = " + Consts.QUEUE_TYPE_NEW;
+                                final int fullNewCount = collection.getDb().queryScalar(query);
                                 if (fullNewCount > 0) {
                                     Runnable setNewTotalText = new Runnable() {
                                         @Override
@@ -690,12 +679,26 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         };
     }
 
+    /** Open cram deck option if deck is opened for the first time
+     * @return Whether we opened the deck options */
+    private boolean tryOpenCramDeckOptions() {
+        if (!mLoadWithDeckOptions) {
+            return false;
+        }
+
+        openFilteredDeckOptions(true);
+        mLoadWithDeckOptions = false;
+        return true;
+    }
+
     @VisibleForTesting()
     static Spanned formatDescription(String desc) {
         //#5715: In deck description, ignore what is in style and script tag
         //Since we don't currently execute the JS/CSS, it's not worth displaying.
         String withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc);
-        return CompatHelper.getCompat().fromHtml(withStrippedTags);
+        //#5188 - fromHtml displays newlines as " "
+        String withFixedNewlines = HtmlUtils.convertNewlinesToHtml(withStrippedTags);
+        return CompatHelper.getCompat().fromHtml(withFixedNewlines);
     }
 
     private Collection getCol() {

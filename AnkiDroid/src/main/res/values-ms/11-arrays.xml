@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string-array name="error_reporting_choice_labels">
+        <item>Selalu laporan</item>
+        <item>Tidak pernah laporan</item>
+        <item>Bertanya kepada saya</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Tidak ada tindakan</item>
+        <item>Menunjukkan menjawab</item>
+        <item>Butang jawab 1</item>
+        <item>Butang jawab 2</item>
+        <item>Butang jawab 3</item>
+        <item>Butang jawab 4</item>
+        <item>Menjawab disarankan (hijau)</item>
+        <item>Jawaban yang lebih baik daripada yang dicadangkan</item>
+        <item>Batal edit</item>
+        <item>Edit nota</item>
+        <item>Nota Mark</item>
+        <item>Pencarian ungkapan</item>
+        <item>Mengubur kad</item>
+        <item>Menggantung Kad</item>
+        <item>Hapuskan Nota</item>
+        <item>Bermain media</item>
+        <item>Batalkan belajar</item>
+        <item>Mengubur nota</item>
+        <item>Menggantung nota</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Menggantung Kad</item>
+        <item>Hanya Tag</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Baru kad secara rawak</item>
+        <item>Kad baru dalam usaha ditambah</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Tertua dilihat pertama</item>
+        <item>Rawak</item>
+        <item>Meningkatkan selang</item>
+        <item>Decreasing intervals</item>
+        <item>Paling luput</item>
+        <item>Perintah ditambah</item>
+        <item>Perintah kerana</item>
+        <item>Terbaru ditambah pertama</item>
+        <item>Saudara overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Gunakan dek semasa</item>
+        <item>Memutuskan dengan jenis perhatian</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Campuran baru dan kad yang sah</item>
+        <item>Kad baru selepas ulasan</item>
+        <item>Kad baru sebelum ulasan</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Apabila tiada font dinyatakan di jerman</item>
+        <item>Sentiasa</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Terang</item>
+        <item>Biasa</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Hitam</item>
+        <item>Gelap</item>
+    </string-array>
+</resources>

@@ -20,10 +20,32 @@
         android:title="@string/undo"
         ankidroid:showAsAction="always"/>
     <item
-        android:id="@+id/action_mark_card"
-        android:icon="@drawable/ic_star_outline_white_24dp"
-        android:title="@string/menu_mark_note"
-        ankidroid:showAsAction="always"/>
+        android:id="@+id/action_flag"
+        android:title="@string/menu_flag_card"
+        android:icon="@drawable/ic_flag_transparent"
+        ankidroid:showAsAction="always" >
+        <menu>
+            <item
+                android:id="@+id/action_flag_zero"
+                android:title="@string/menu_flag_card_zero"/>
+            <item
+                android:id="@+id/action_flag_one"
+                android:title="@string/menu_flag_card_one"
+                android:icon="@drawable/ic_flag_red"/>
+            <item
+                android:id="@+id/action_flag_two"
+                android:title="@string/menu_flag_card_two"
+                android:icon="@drawable/ic_flag_orange"/>
+            <item
+                android:id="@+id/action_flag_three"
+                android:title="@string/menu_flag_card_three"
+                android:icon="@drawable/ic_flag_green"/>
+            <item
+                android:id="@+id/action_flag_four"
+                android:title="@string/menu_flag_card_four"
+                android:icon="@drawable/ic_flag_blue"/>
+        </menu>
+    </item>
     <item
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_mode_edit_white_24dp"
@@ -52,31 +74,10 @@
         android:title="@string/menu_delete_note"
         android:icon="@drawable/ic_delete_white_24dp"/>
     <item
-        android:id="@+id/action_flag"
-        android:title="@string/menu_flag_card"
-        android:icon="@drawable/ic_flag_transparent">
-      <menu>
-        <item
-            android:id="@+id/action_flag_zero"
-            android:title="@string/menu_flag_card_zero"/>
-        <item
-            android:id="@+id/action_flag_one"
-            android:title="@string/menu_flag_card_one"
-            android:icon="@drawable/ic_flag_red"/>
-        <item
-            android:id="@+id/action_flag_two"
-            android:title="@string/menu_flag_card_two"
-            android:icon="@drawable/ic_flag_orange"/>
-        <item
-            android:id="@+id/action_flag_three"
-            android:title="@string/menu_flag_card_three"
-            android:icon="@drawable/ic_flag_green"/>
-        <item
-            android:id="@+id/action_flag_four"
-            android:title="@string/menu_flag_card_four"
-            android:icon="@drawable/ic_flag_blue"/>
-      </menu>
-    </item>
+        android:id="@+id/action_mark_card"
+        android:icon="@drawable/ic_star_outline_white_24dp"
+        android:title="@string/menu_mark_note"
+        ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_schedule"
         android:title="@string/card_editor_reschedule_card"

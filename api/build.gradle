@@ -41,10 +41,12 @@ android {
     }
 }
 
+apply from: "../lint.gradle"
+
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.6.0'
-    testImplementation "org.robolectric:robolectric:4.2.1"
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.6.2'
+    testImplementation 'org.robolectric:robolectric:4.3.1'
 }
 
 // Borrowed from here:

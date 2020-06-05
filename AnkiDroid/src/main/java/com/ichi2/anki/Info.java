@@ -26,7 +26,6 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
@@ -67,10 +66,7 @@ public class Info extends AnkiActivity {
 
         setContentView(R.layout.info);
         final View mainView = findViewById(android.R.id.content);
-        Toolbar toolbar = mainView.findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
+        enableToolbar(mainView);
 
         setTitle(String.format("%s v%s", VersionUtils.getAppName(), VersionUtils.getPkgVersionName()));
         webView = findViewById(R.id.info);

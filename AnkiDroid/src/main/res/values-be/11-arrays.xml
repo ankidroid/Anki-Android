@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string-array name="error_reporting_choice_labels">
+        <item>Заўсёды паведамляць</item>
+        <item>Ніколі не паведамляць</item>
+        <item>Спытаць мяне</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Няма дзеяння</item>
+        <item>Паказаць адказ</item>
+        <item>Кнопка адказу 1</item>
+        <item>Кнопка адказу 2</item>
+        <item>Кнопка адказу 3</item>
+        <item>Кнопка адказу 4</item>
+        <item>Рэкамендаваны адказ (зялёны)</item>
+        <item>Лепш, чым рэкамендаваны</item>
+        <item>Адмяніць</item>
+        <item>Рэдагаваць нататку</item>
+        <item>Адзначыць нататку</item>
+        <item>Пошук выразу</item>
+        <item>Адкласці нататку</item>
+        <item>Адкласці картку</item>
+        <item>Выдаліць запіс</item>
+        <item>Прайграць Media</item>
+        <item>Перапыніць навучанне</item>
+        <item>Адкласці нататку</item>
+        <item>Схаваць нататку</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Адкласці картку</item>
+        <item>Толькі пазнака</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Новыя карткі ў выпадковым парадку</item>
+        <item>Новыя карткі ў парадку дадання</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Найстарыя першымі</item>
+        <item>Выпадкова</item>
+        <item>Па павелічэнні інтэрвалаў</item>
+        <item>Па змяншэнні інтэрвалаў</item>
+        <item>Колькасць пропускаў</item>
+        <item>У парадку дадання</item>
+        <item>У парадку прагляду</item>
+        <item>Апошнія дададзеныя першымі</item>
+        <item>Адносна затрымкі</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Выкарыстоўваць цякучую калоду</item>
+        <item>Выбар па тыпе нататкі</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Перамяшаць новыя і паўтораныя карткі</item>
+        <item>Новыя карткі пасля паўтарэння</item>
+        <item>Новыя карткі пасля паўтарэння</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Калі не зададзены шрыфт у картках</item>
+        <item>Заўжды</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Светлы</item>
+        <item>Просты</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Чорны</item>
+        <item>Цёмны</item>
+    </string-array>
+</resources>

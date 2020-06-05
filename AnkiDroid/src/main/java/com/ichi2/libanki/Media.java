@@ -27,9 +27,8 @@ import android.util.Pair;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.utils.Assert;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -177,7 +176,7 @@ public class Media {
                              " from old.media m\n" +
                              " left outer join old.log l using (fname)\n" +
                              " union\n" +
-                             " select fname, null, 0, 1 from old.log where type=1;";
+                             " select fname, null, 0, 1 from old.log where type=" + Consts.CARD_TYPE_LRN + ";";
                 mDb.execute(sql);
                 mDb.execute("delete from meta");
                 mDb.execute("insert into meta select dirMod, usn from old.meta");
@@ -298,16 +297,12 @@ public class Media {
         List<String> l = new ArrayList<>();
         JSONObject model = mCol.getModels().get(mid);
         List<String> strings = new ArrayList<>();
-        try {
-            if (model.getInt("type") == Consts.MODEL_CLOZE && string.contains("{{c")) {
-                // if the field has clozes in it, we'll need to expand the
-                // possibilities so we can render latex
-                strings = _expandClozes(string);
-            } else {
-                strings.add(string);
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if (model.getInt("type") == Consts.MODEL_CLOZE && string.contains("{{c")) {
+            // if the field has clozes in it, we'll need to expand the
+            // possibilities so we can render latex
+            strings = _expandClozes(string);
+        } else {
+            strings.add(string);
         }
 
         for (String s : strings) {
@@ -349,7 +344,7 @@ public class Media {
                 if (!TextUtils.isEmpty(m.group(4))) {
                     m.appendReplacement(buf, "[$4]");
                 } else {
-                    m.appendReplacement(buf, "[...]");
+                    m.appendReplacement(buf, Template.CLOZE_DELETION_REPLACEMENT);
                 }
             }
             m.appendTail(buf);
@@ -428,9 +423,7 @@ public class Media {
         File mdir = new File(dir());
         // gather all media references in NFC form
         Set<String> allRefs = new HashSet<>();
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase().query("select id, mid, flds from notes", null);
+        try (Cursor cur = mCol.getDb().getDatabase().query("select id, mid, flds from notes", null)) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
@@ -446,10 +439,6 @@ public class Media {
                     }
                 }
                 allRefs.addAll(noteRefs);
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         // loop through media folder
@@ -676,7 +665,7 @@ public class Media {
         Pair<List<String>, List<String>> result = _changes();
         List<String> added = result.first;
         List<String> removed = result.second;
-        ArrayList<Object[]> media = new ArrayList<>();
+        ArrayList<Object[]> media = new ArrayList<>(added.size() + removed.size());
         for (String f : added) {
             String path = new File(dir(), f).getAbsolutePath();
             long mt = _mtime(path);
@@ -694,9 +683,7 @@ public class Media {
 
     private Pair<List<String>, List<String>> _changes() {
         Map<String, Object[]> cache = new HashMap<>();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("select fname, csum, mtime from media where csum is not null", null);
+        try (Cursor cur = mDb.getDatabase().query("select fname, csum, mtime from media where csum is not null", null)) {
             while (cur.moveToNext()) {
                 String name = cur.getString(0);
                 String csum = cur.getString(1);
@@ -705,10 +692,6 @@ public class Media {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
         }
         List<String> added = new ArrayList<>();
         List<String> removed = new ArrayList<>();
@@ -719,7 +702,7 @@ public class Media {
                 continue;
             }
             String fname = f.getName();
-            if (fname.equalsIgnoreCase("thumbs.db")) {
+            if ("thumbs.db".equalsIgnoreCase(fname)) {
                 continue;
             }
             // and files with invalid chars
@@ -789,19 +772,13 @@ public class Media {
 
 
     public Pair<String, Integer> syncInfo(String fname) {
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("select csum, dirty from media where fname=?", new String[] { fname });
+        try (Cursor cur = mDb.getDatabase().query("select csum, dirty from media where fname=?", new String[] {fname})) {
             if (cur.moveToNext()) {
                 String csum = cur.getString(0);
                 int dirty = cur.getInt(1);
                 return new Pair<>(csum, dirty);
             } else {
                 return new Pair<>(null, 0);
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
     }
@@ -942,7 +919,7 @@ public class Media {
      * This method closes the file before it returns.
      */
     public int addFilesFromZip(ZipFile z) throws IOException {
-        try {
+    try {
             List<Object[]> media = new ArrayList<>();
             // get meta info first
             JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
@@ -969,8 +946,6 @@ public class Media {
                 mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
             }
             return cnt;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
         } finally {
             z.close();
         }

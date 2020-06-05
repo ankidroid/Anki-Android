@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string-array name="error_reporting_choice_labels">
+        <item>Her dem gilî bike</item>
+        <item>Qet gilî neke</item>
+        <item>Ji min re bipirse</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Tevger tune</item>
+        <item>Bersivê nîşan bide</item>
+        <item>Bişkoka bersivê 1</item>
+        <item>Bişkoka bersivê 2</item>
+        <item>Bişkoka tevgerê 3</item>
+        <item>Bişkoka tevgerê 4</item>
+        <item>(Pêşniyariya tevgerê (kesik</item>
+        <item>Ji pêşniyarkirî bêtir bersîv bide</item>
+        <item>Paşve bîne</item>
+        <item>Edit note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Kartê bistîne</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Suspend card</item>
+        <item>Tag only</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>New cards in random order</item>
+        <item>New cards in order added</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Yê herî kevin pêşte tê dîtin</item>
+        <item>Ketober</item>
+        <item>Increasing intervals</item>
+        <item>Decreasing intervals</item>
+        <item>Most lapsed</item>
+        <item>Order added</item>
+        <item>Order due</item>
+        <item>Latest added first</item>
+        <item>Relative overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Use current deck</item>
+        <item>Decide by note type</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Mix new cards and reviews</item>
+        <item>New cards after reviews</item>
+        <item>New cards before reviews</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>When no font specified on flashcards</item>
+        <item>Her dem</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Light</item>
+        <item>Plain</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Black</item>
+        <item>Dark</item>
+    </string-array>
+</resources>

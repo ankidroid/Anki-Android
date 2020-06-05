@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ 	Zaur Molotnikov & Bibek Shrestha
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Main editor popup menu items -->
+    <string name="multimedia_editor_popup_image">Дадаць выяву</string>
+    <string name="multimedia_editor_popup_audio_clip">Дадаць аўдыя кліп</string>
+    <string name="multimedia_editor_popup_audio">Запісаць аўдыя</string>
+    <string name="multimedia_editor_popup_text">Пашыраны рэдактар</string>
+    <string name="multimedia_editor_popup_cloze">Заданне з пропускамі</string>
+    <!-- Translation activity (Glosbe) -->
+    <string name="multimedia_editor_trans_poweredglosbe">Працуе на glosbe.com</string>
+    <!-- these are like translate f r o m  and t o  some othe languages -->
+    <string name="multimedia_editor_trans_from">З</string>
+    <string name="multimedia_editor_trans_to">На</string>
+    <!-- imperative for the button title -->
+    <string name="multimedia_editor_trans_translate">Перакласці</string>
+    <!-- waiting message -->
+    <string name="multimedia_editor_trans_translating_online">Анлайн-пераклад</string>
+    <!-- pick the right translation imperative -->
+    <string name="multimedia_editor_trans_pick_translation">Выберыце пераклад</string>
+    <!-- in controller when fails -->
+    <string name="multimedia_editor_trans_translation_failed">Пераклад не атрымаўся</string>
+    <!-- from controller -->
+    <!-- dialog title to ask for translation source -->
+    <string name="multimedia_editor_trans_pick_translation_source">Выберыце слоўнік</string>
+    <!-- dialog asking to install ColorDict -->
+    <string name="multimedia_editor_trans_install_color_dict">Спачатку ўсталюеце ColorDict</string>
+    <!-- Pronunciation activity (Beolingus) -->
+    <string name="multimedia_editor_pron_load">Загрузіць</string>
+    <string name="multimedia_editor_pron_looking_up">Пошук вымаўлення</string>
+    <!-- in controller when fails -->
+    <string name="multimedia_editor_pron_pronunciation_failed">Пошук вымаўлення не атрымаўся</string>
+    <string name="multimedia_editor_word_search_try_lower_case">Паспрабуйце скарыстаць толькі ніжні рэгістр знакаў</string>
+    <string name="multimedia_editor_poweredbeolingus">Працуе на Beolingus</string>
+    <!-- Field editing general -->
+    <!-- these are button names to convert field type -->
+    <string name="multimedia_editor_field_editing_text">Тэкст</string>
+    <string name="multimedia_editor_field_editing_image">Выява</string>
+    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_done">Гатова</string>
+    <!-- Text field editing -->
+    <!-- buttons -->
+    <string name="multimedia_editor_text_field_editing_search_label">Пошук:</string>
+    <string name="multimedia_editor_text_field_editing_show">Выява</string>
+    <string name="multimedia_editor_text_field_editing_say">Вымаўленне</string>
+    <string name="multimedia_editor_text_field_editing_clear">Ачысціць</string>
+    <string name="multimedia_editor_text_field_editing_clone">Капіяваць з</string>
+    <string name="multimedia_editor_text_field_editing_translate">Пераклад</string>
+    <!-- message to user, when there is no text or many words, but the user tries something -->
+    <string name="multimedia_editor_text_field_editing_no_text">Спачатку ўвядзіце тэкст</string>
+    <string name="multimedia_editor_text_field_editing_many_words">Слоўнік звычайна чакае адно слова</string>
+    <!-- message when cloning -->
+    <string name="multimedia_editor_text_field_editing_clone_source">Капіяваць з</string>
+    <!-- Multimedia card editor activity -->
+    <!-- for buttons -->
+    <!-- delete confirmation -->
+    <!-- Image editing -->
+    <!-- for buttons -->
+    <string name="multimedia_editor_image_field_editing_galery">Галерэя</string>
+    <string name="multimedia_editor_image_field_editing_photo">Камера</string>
+    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <!-- General -->
+    <!-- message on the progress dialog for the user to wait, means process -->
+    <string name="multimedia_editor_general_downloading">Загрузка</string>
+    <!-- when process finishes -->
+    <string name="multimedia_editor_general_done">Выканана</string>
+    <!-- General word search and failures -->
+    <string name="multimedia_editor_error_word_not_found">Слова не знойдзена</string>
+    <!-- failure when contacting glosbe or similar -->
+    <string name="multimedia_editor_trans_getting_failure">Не атрымалася атрымаць пераклад</string>
+    <string name="multimedia_editor_searching_word">Пошук слова</string>
+    <!-- General -->
+    <string name="multimedia_editor_progress_wait_title">Пачакайце</string>
+    <!-- not a good message, when an unexpected error happens -->
+    <string name="multimedia_editor_something_wrong">Нешта пайшло не так</string>
+    <string name="multimedia_editor_attach_mm_content">Дадаць мэдыякантэнт да поля %1$s</string>
+    <string name="multimedia_editor_attach_media">Дадаць Media-файл</string>
+    <!-- Audio view -->
+    <!-- Message when recording fails -->
+    <string name="multimedia_editor_audio_view_recording_failed">Запіс не атрымаўся</string>
+    <string name="multimedia_editor_audio_view_playing_failed">Прайграванне не атрымалася</string>
+    <!-- Activity titles -->
+    <string name="title_activity_edit_text">Поле рэдагавання</string>
+    <string name="title_activity_translation">Пераклад</string>
+    <string name="title_activity_load_pronounciation">Вымаўленне</string>
+    <!-- Network failure -->
+    <string name="network_no_connection">Няма злучэння</string>
+</resources>

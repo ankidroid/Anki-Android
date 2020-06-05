@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.stats;
 
-import com.ichi2.libanki.Stats;
+import com.ichi2.libanki.stats.Stats;
 
 /**
  * Interface between Stats.java and AdvancedStatistics.java

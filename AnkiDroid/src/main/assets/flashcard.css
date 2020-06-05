@@ -2,6 +2,10 @@ body {
   margin: 0px;
   padding: 0px;
 }
+.night_mode .latex {
+    background-color: white;
+}
+
 
 body.night_mode {
   color: white;
@@ -118,25 +122,3 @@ scale up, but not down.  */
 .night_mode .replaybutton svg {
   fill: white;
 }
-
-#_mark_flag {
-  top: 0;
-  font-size: 30px;
-  display: block;
-  -webkit-text-stroke: 1px black;
-  margin: 10px;
-}
-
-#_flag {
-  display: none;
-  right: 10px;
-  float: right;
-}
-
-#_mark {
-  display: none;
-  left: 10px;
-  float: left;
-  color: yellow;
-}
-

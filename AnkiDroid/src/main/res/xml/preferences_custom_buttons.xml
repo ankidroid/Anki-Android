@@ -17,9 +17,9 @@
 
 <!-- Custom buttons Prefrences -->
 <!--
+MenuItem.SHOW_AS_ACTION_NEVER = 0
 MenuItem.SHOW_AS_ACTION_IF_ROOM = 1
 MenuItem.SHOW_AS_ACTION_ALWAYS  = 2
-MenuItem.SHOW_AS_ACTION_NEVER = 0
 MENU_DISABLED = 3
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
@@ -34,7 +34,7 @@ MENU_DISABLED = 3
             android:key="customButtonUndo"
             android:title="@string/undo" />
         <ListPreference
-            android:defaultValue="2"
+            android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="customButtonScheduleCard"
@@ -43,8 +43,8 @@ MENU_DISABLED = 3
             android:defaultValue="2"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
-            android:key="customButtonMarkCard"
-            android:title="@string/menu_mark_note" />
+            android:key="customButtonFlag"
+            android:title="@string/menu_flag" />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/custom_button_labels"
@@ -79,8 +79,8 @@ MENU_DISABLED = 3
             android:defaultValue="1"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
-            android:key="customButtonFlag"
-            android:title="@string/menu_flag" />
+            android:key="customButtonMarkCard"
+            android:title="@string/menu_mark_note" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/menu_dismiss_note" >
         <ListPreference

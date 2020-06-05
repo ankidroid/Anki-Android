@@ -39,6 +39,13 @@
         <item>Abort learning</item>
         <item>Bury note</item>
         <item>Suspend note</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Suspend card</item>

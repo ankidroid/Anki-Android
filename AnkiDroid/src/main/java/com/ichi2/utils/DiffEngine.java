@@ -16,7 +16,7 @@
 
 package com.ichi2.utils;
 
-import com.ichi2.compat.CompatHelper;
+import android.text.Html;
 
 import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch;
 
@@ -61,16 +61,16 @@ public class DiffEngine {
         // We do the comparison with “<”s &c. in the strings, but should of course not just put those in the HTML
         // output. Also, it looks like the Android WebView swallows single “\”s, so replace those with the entity by
         // hand.
-        return "<span class=\"typeBad\">" + CompatHelper.getCompat().detagged(in).replace("\\", "&#x5c;") + "</span>";
+        return "<span class=\"typeBad\">" + Html.escapeHtml(in).replace("\\", "&#x5c;") + "</span>";
     }
 
 
     public static String wrapGood(String in) {
-        return "<span class=\"typeGood\">" + CompatHelper.getCompat().detagged(in).replace("\\", "&#x5c;") + "</span>";
+        return "<span class=\"typeGood\">" + Html.escapeHtml(in).replace("\\", "&#x5c;") + "</span>";
     }
 
 
     public static String wrapMissing(String in) {
-        return "<span class=\"typeMissed\">" + CompatHelper.getCompat().detagged(in).replace("\\", "&#x5c;") + "</span>";
+        return "<span class=\"typeMissed\">" + Html.escapeHtml(in).replace("\\", "&#x5c;") + "</span>";
     }
 }

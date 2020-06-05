@@ -18,15 +18,12 @@
 
 package com.ichi2.async;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.PowerManager;
-import androidx.core.content.ContextCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -35,14 +32,16 @@ import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.sync.FullSyncer;
+import com.ichi2.libanki.sync.HostNum;
 import com.ichi2.libanki.sync.HttpSyncer;
 import com.ichi2.libanki.sync.MediaSyncer;
 import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
+import com.ichi2.utils.Permissions;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
 
@@ -128,8 +127,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     protected void onPreExecute() {
         super.onPreExecute();
         // Acquire the wake lock before syncing to ensure CPU remains on until the sync completes.
-        if (ContextCompat.checkSelfPermission(AnkiDroidApp.getInstance().getApplicationContext(),
-                Manifest.permission.WAKE_LOCK) == PackageManager.PERMISSION_GRANTED) {
+        if (Permissions.canUseWakeLock(AnkiDroidApp.getInstance().getApplicationContext())) {
             mWakeLock.acquire();
         }
         if (mListener != null) {
@@ -205,7 +203,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private Payload doInBackgroundLogin(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        HttpSyncer server = new RemoteServer(this, null);
+        HostNum hostNum = (HostNum) data.data[2];
+        HttpSyncer server = new RemoteServer(this, null, hostNum);
         Response ret;
         try {
             ret = server.hostKey(username, password);
@@ -273,11 +272,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         sIsCancellable = true;
         Timber.d("doInBackgroundSync()");
         // Block execution until any previous background task finishes, or timeout after 5s
-        boolean ok = DeckTask.waitToFinish(5);
+        boolean ok = CollectionTask.waitToFinish(5);
 
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
+        HostNum hostNum = (HostNum) data.data[3];
         // Use safe version that catches exceptions so that full sync is still possible
         Collection col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance());
 
@@ -293,8 +293,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
         try {
             CollectionHelper.getInstance().lockCollection();
-            HttpSyncer server = new RemoteServer(this, hkey);
-            Syncer client = new Syncer(col, server);
+            HttpSyncer server = new RemoteServer(this, hkey, hostNum);
+            Syncer client = new Syncer(col, server, hostNum);
 
             // run sync and check state
             boolean noChanges = false;
@@ -329,7 +329,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 try {
                     // Disable sync cancellation for full-sync
                     sIsCancellable = false;
-                    server = new FullSyncer(col, hkey, this);
+                    server = new FullSyncer(col, hkey, this, hostNum);
                     if ("upload".equals(conflictResolution)) {
                         Timber.i("Sync - fullsync - upload collection");
                         publishProgress(R.string.sync_preparing_full_sync_message);
@@ -350,6 +350,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         publishProgress(R.string.sync_downloading_message);
                         Object[] ret = server.download();
                         if (ret == null) {
+                            Timber.w("Sync - fullsync - unknown error");
                             data.success = false;
                             data.result = new Object[] { "genericError" };
                             return data;
@@ -359,6 +360,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                             col.reopen();
                         }
                         if (!"success".equals(ret[0])) {
+                            Timber.w("Sync - fullsync - download failed");
                             data.success = false;
                             data.result = ret;
                             if (!colCorruptFullSync) {
@@ -395,10 +397,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             boolean noMediaChanges = false;
             String mediaError = null;
             if (media) {
-                server = new RemoteMediaServer(col, hkey, this);
+                server = new RemoteMediaServer(col, hkey, this, hostNum);
                 MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server, this);
                 String ret;
                 try {
+                    Timber.i("Sync - Performing media sync");
                     ret = mediaClient.sync();
                     if (ret == null) {
                         mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
@@ -463,6 +466,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             }
             return data;
         } finally {
+            Timber.i("Sync Finished - Closing Collection");
             // don't bump mod time unless we explicitly save
             if (col != null) {
                 col.close(false);

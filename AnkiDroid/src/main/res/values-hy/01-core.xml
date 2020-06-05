@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Navigation drawer items-->
+    <string name="decks">Կապուկներ</string>
+    <string name="card_browser">Չննիչ</string>
+    <string name="statistics">Վիճակագրություն</string>
+    <string name="settings">Կարգավորումներ</string>
+    <string name="help">Օգնություն</string>
+    <string name="send_feedback">Կարծիք թողնել</string>
+    <string name="studyoptions_title">Կապուկի համատեսք</string>
+    <string name="studyoptions_due_today">Այսօրվա կրկնելիք՝</string>
+    <string name="studyoptions_new_total">Նոր քարտերի քանակը՝</string>
+    <string name="studyoptions_total_cards">Քարտերի քանակը՝</string>
+    <string name="studyoptions_eta">Գնահատված ժամանակ (րոպե)՝</string>
+    <string name="studyoptions_start">Սովորել</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">Ընդարձակել</string>
+    <string name="collapse">Կոծկել</string>
+    <string name="study_more">Սովորել ավելին</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d քարտ կրկնելիք է (%2$s)</item>
+        <item quantity="other">%1$d քարտ կրկնելիք է (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">%d րոպե է մնացել</item>
+        <item quantity="other">%d րոպե է մնացել</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">Այսօր սովորեցիք %1$d քարտ %2$s</item>
+        <item quantity="other">Այսօր սովորեցիք %1$d քարտ %2$s</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">Գրեք պատասխանը</string>
+    <string name="show_answer">Ցուցադրել պատասխանը</string>
+    <string name="ease_button_again">Չեմ հիշում</string>
+    <string name="ease_button_hard">Դժվար է</string>
+    <string name="ease_button_good">Լավ է</string>
+    <string name="ease_button_easy">Հեշտ է</string>
+    <string name="studyoptions_congrats_undo">Հետարկել %s</string>
+    <string name="menu_import">Ներմուծել</string>
+    <string name="undo">Հետարկել</string>
+    <string name="undo_action_review">վերջին կրկնությունը</string>
+    <string name="undo_action_bury_card">առանձնացնել քարտը</string>
+    <string name="undo_action_bury_note">առանձնացնել գրառումը</string>
+    <string name="undo_action_suspend_card">հեռացնել քարտը</string>
+    <string name="undo_action_suspend_note">հեռացնել գրառումը</string>
+    <string name="undo_action_delete">ջնջել գրառումը</string>
+    <string name="undo_action_delete_multi">ջնջել գրառումները</string>
+    <string name="undo_action_change_deck_multi">փոխել կապուկը</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Տեղափոխել բոլորը կապուկի մեջ</string>
+    <string name="unbury">Վերադարձնել առանձնացվածները</string>
+    <string name="rename_deck">Վերանվանել կապուկը</string>
+    <string name="menu_add">Ավելացնել</string>
+    <string name="menu_add_note">Ավելացնել գրառում</string>
+    <string name="menu_my_account">Համաժամեցնել հաշիվը</string>
+    <string name="menu_dismiss_note">Թաքցնել / ջնջել</string>
+    <string name="menu_bury_card">Առանձնացնել քարտը</string>
+    <string name="menu_bury_note">Առանձնացնել գրառումը</string>
+    <string name="menu_suspend_card">Հեռացնել քարտը</string>
+    <string name="menu_suspend_note">Հեռացնել գրառումը</string>
+    <string name="menu_bury">Առանձնացնել</string>
+    <string name="menu_suspend">Հեռացնել</string>
+    <string name="menu_delete_note">Ջնջել գրառումը</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="delete_note_message">Ջնջե՞լ այս գրառումը և նրա բոլոր քարտերը:\n%s</string>
+    <string name="menu_select">Ընտրել գրվածքը</string>
+    <string name="menu_search">Որոնում %1$s-ում</string>
+    <string name="menu_mark_note">Նշել գրառումը</string>
+    <string name="menu_unmark_note">Ապանշել գրառումը</string>
+    <string name="new_deck">Ստեղծել կապուկ</string>
+    <string name="create">Ստեղծել</string>
+    <string name="new_dynamic_deck">Ստեղծել զտված կապուկ</string>
+    <string name="night_mode">Գիշերային տեսք</string>
+    <string name="directory_inaccessible">AnkiDroid-ի պանակը անհասանելի է</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d վրկ</string>
+    <string name="time_quantity_minutes">%d րոպե</string>
+    <string name="time_quantity_hours">%d ժամ</string>
+    <string name="time_quantity_days">%d օր</string>
+    <string name="time_quantity_months">%.1f ամիս</string>
+    <string name="time_quantity_years">%.1f տարի</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">Վերակառուցվում է սովորելու կապուկը&#8230;</string>
+    <string name="rebuild_cram_label">Վերակառուցել</string>
+    <string name="empty_cram_label">Դատարկ</string>
+    <string name="create_subdeck">Create subdeck</string>
+    <string name="empty_cram_deck">Դատարկվում է սովորելու կապուկը&#8230;</string>
+    <string name="custom_study_deck_name">Ուսուցման լրացուցիչ աշխատաշրջան</string>
+    <string name="custom_study_deck_exists">Սկզբում վերանվանել լրացուցիչ ուսուցման առկա կապուկը</string>
+    <string name="empty_deck">Այս կապուկը դատարկ է</string>
+    <string name="studyoptions_empty">Կապուկը դատարկ է: Սեղմեք + կոճակը նոր բովանդակություն ավելացնելու համար:</string>
+    <string name="studyoptions_limit_reached">Հասաք օրական սահմանափակման շեմին</string>
+    <string name="studyoptions_empty_schedule">Սովորելու համար հերթագրված քարտեր չկան</string>
+    <string name="studyoptions_congrats_finished">Դուք այս պահի դրությամբ ավարտել եք սույն կապուկը:</string>
+    <string name="studyoptions_congrats_more_rev">Հասել եք կրկնությունների սահմանափակման այսօրվա շեմին, բայց դեռ կրկնելիք քարտեր կան: Դուք կարող եք բարձրացնել օրական սահմանափակման շեմը ընտրանքներում:</string>
+    <string name="studyoptions_congrats_more_new">Այլ նոր քարտեր կան, բայց հասել եք օրական սահմանափակման շեմին: Ընտրանքներում կարող եք բարձրացնել շեմը, բայց հաշվի առեք, որ ինչքան շատ քարտեր եք նայում, այդքան ավել պետք է կրկնեք մոտակա ժամանակում:</string>
+    <string name="studyoptions_congrats_custom">Արտահերթ սովորելու համար սեղմեք «Լրացուցիչ ուսուցում» կոճակը:</string>
+    <string name="studyoptions_no_cards_due">Կրկնելիք քարտեր դեռ չկան</string>
+    <string name="sd_card_not_mounted">Սարքի պահեստը տեղադրված չէ</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">Համաժամեցում</string>
+    <string name="cancel_sync_confirm">Ուզու՞մ եք չեղարկել համաժամեցումը:</string>
+    <string name="continue_sync">Շարունակել համաժամեցումը</string>
+    <string name="sync_cancelled">Համաժամեցումը չեղարկվեց</string>
+    <string name="sync_cancel_message">Չեղարկվում է&#8230;\n Սա կարող է որոշ ժամանակ տևել:</string>
+    <string name="export">Արտահանել</string>
+    <string name="export_collection">Արտահանել հավաքածուն</string>
+    <string name="export_deck">Արտահանել կապուկը</string>
+    <string name="nothing">Ոչինչ</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">Քարտերի տեսակներ</string>
+    <string name="card_template_editor_front">Հարցի կաղապար</string>
+    <string name="card_template_editor_back">Պատասխանի կաղապար</string>
+    <string name="card_template_editor_styling">Ոճավորում</string>
+    <string name="card_template_editor_menu_delete">Ջնջել</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_cant_delete">Անհրաժեշտ է քարտի առնվազն մեկ տեսակ</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Ջնջե՞լ «%2$s» քարտերի տեսակը և նրա «%1$d» քարտը:</item>
+        <item quantity="other">Ջնջե՞լ «%2$s» քարտերի տեսակը և նրա «%1$d» քարտը:</item>
+    </plurals>
+    <string name="invalid_template">Չստացվեց արարել քարտը</string>
+    <string name="card_template_editor_would_delete_note">Քարտի այս տեսակի հեռացումը կբերի մեկ կամ մի քանի գրառումների ջնջմանը: Սկզբում քարտի նոր տեսակ ստեղծեք:</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">Կարդալ և գրել AnkiDroid-ի շտեմարանի մեջ</string>
+    <string name="read_write_permission_description">մատչել առկա գրառումները, քարտերը, գրառումների տեսակները և կապուկները, ինչպես նաև նորերը ստեղծելը</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
+</resources>

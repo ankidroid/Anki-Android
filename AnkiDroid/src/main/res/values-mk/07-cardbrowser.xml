@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- CardBrowser -->
+    <plurals name="card_browser_subtitle">
+        <item quantity="one">Прикажана е %d картичка</item>
+        <item quantity="other">Прикажани се %d картички</item>
+    </plurals>
+    <string name="card_browser_all_decks">Сите decks</string>
+    <string name="card_browser_delete_card">Delete notes</string>
+    <string name="card_browser_suspend_card">Suspend cards</string>
+    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+    <string name="card_browser_change_deck">Change deck</string>
+    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+    <string name="card_browser_mark_card">Mark notes</string>
+    <string name="card_browser_flag">Flag</string>
+    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+    <string name="card_browser_unmark_card">Unmark notes</string>
+    <string name="delete_card_title">Ја избришавте белешката?</string>
+    <string name="delete_cards_title">Delete notes?</string>
+    <string name="delete_card_message">Го избришавте сите картички од оваа белешка?\nПоле за пребарување: %s</string>
+    <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+    <string name="deleted_message">Notes deleted</string>
+    <string name="changed_deck_message">Moved to %s</string>
+    <string name="card_browser_suspended_cards">(un)suspended cards</string>
+    <string name="card_browser_show_marked">Филтерот е означен</string>
+    <string name="card_browser_show_suspended">Филтерот е суспендиран</string>
+    <string name="card_browser_search_by_tag">Филтрирај по ознака</string>
+    <string name="card_browser_tags_shown">Ознаки: %1$s</string>
+    <string name="card_browser_list_my_searches">Мои пребарувања</string>
+    <string name="card_browser_list_my_searches_save">Зачувајте го пребарувањето</string>
+    <string name="card_browser_list_my_searches_title">Изберете зачувано пребарување</string>
+    <string name="card_browser_list_my_searches_new_name">Име за тековното пребарување</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Вие не можете да го зачувате пребарувањето без име</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Името постои</string>
+    <string name="card_browser_list_my_searches_remove_content">Избришете “%1$s“?</string>
+    <string name="card_browser_change_display_order">Промена на редоследот на прикажувања</string>
+    <string name="card_browser_change_display_order_title">Изберете редослед на прикажување</string>
+    <string name="card_browser_change_display_order_reverse">Изберете го полето двапати за да се смени</string>
+    <string name="card_details_question">Прашање</string>
+    <string name="card_details_answer">Одговор</string>
+    <string name="card_details_due">Доспеано</string>
+    <string name="card_details_tags">Ознаки</string>
+    <string name="card_browser_filtering_cards">Филтрирање картички&#8230; \nПритиснете го копчето за враќање за да откажете</string>
+    <string-array name="card_browser_order_labels">
+        <item>Без сортирање (побрзо)</item>
+        <item>По полето за сортирање</item>
+        <item>Со креирано време</item>
+        <item>По изменето време</item>
+        <item>По променето време</item>
+        <item>По доспеано време</item>
+        <item>По интервал</item>
+        <item>По олеснување</item>
+        <item>По прикази</item>
+        <item>По пропусти</item>
+    </string-array>
+    <string name="card_browser_select_all">Select all</string>
+    <string name="card_browser_select_none">Select none</string>
+    <string name="card_browser_edit_note">Edit note</string>
+    <string name="card_browser_interval_new_card">(new)</string>
+    <string name="card_browser_ease_new_card">(new)</string>
+    <string name="card_browser_due_filtered_card">(filtered)</string>
+    <string name="card_browser_interval_learning_card">(learning)</string>
+    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
+    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
+    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_unknown_deck_name">Unknown</string>
+</resources>

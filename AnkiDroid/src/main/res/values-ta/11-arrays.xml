@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string-array name="error_reporting_choice_labels">
+        <item>எப்போதும் புகாரளிக்கவும்</item>
+        <item>ஒருபோதும் தெரிவிக்கவில்லை</item>
+        <item>என்னிடம் கேள்</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>விருப்பம் இல்லை</item>
+        <item>பதில் காமி</item>
+        <item>பதில் பொத்தானை 1</item>
+        <item>பதில் பொத்தானை 2</item>
+        <item>பதில் பொத்தானை 3</item>
+        <item>பதில் பொத்தானை 4</item>
+        <item>பதில் (பச்சை) பரிந்துரை</item>
+        <item>பரிந்துரைக்கப்பட்ட விட பதில்</item>
+        <item>செயல்தவிர்ப்பது </item>
+        <item>குறிப்பைத் திருத்தவும்</item>
+        <item>குறிப்பு குறிக்கவும்</item>
+        <item>பார்வை வெளிப்பாடு</item>
+        <item>அட்டை அடங்கும்</item>
+        <item>கார்டை நிறுத்து</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Suspend card</item>
+        <item>Tag only</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>New cards in random order</item>
+        <item>New cards in order added</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Oldest seen first</item>
+        <item>Random</item>
+        <item>Increasing intervals</item>
+        <item>Decreasing intervals</item>
+        <item>Most lapsed</item>
+        <item>Order added</item>
+        <item>Order due</item>
+        <item>Latest added first</item>
+        <item>Relative overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Use current deck</item>
+        <item>Decide by note type</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Mix new cards and reviews</item>
+        <item>New cards after reviews</item>
+        <item>New cards before reviews</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>When no font specified on flashcards</item>
+        <item>எப்பொழுதும்</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Light</item>
+        <item>Plain</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Black</item>
+        <item>Dark</item>
+    </string-array>
+</resources>
