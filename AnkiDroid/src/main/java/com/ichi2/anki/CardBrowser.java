@@ -378,7 +378,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         long[] ids = new long[checkedPositions.length];
         int count = 0;
         for (int cardPosition : checkedPositions) {
-            ids[count++] = Long.valueOf(mCards.get(cardPosition).get(ID));
+            ids[count++] = mCards.get(cardPosition).getId();
         }
         return ids;
     }
@@ -611,7 +611,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     onCheck(position, view);
                 } else {
                     // load up the card selected on the list
-                    long clickedCardId = Long.parseLong(getCards().get(position).get(ID));
+                    long clickedCardId = getCards().get(position).getId();
                     openNoteEditorForCard(clickedCardId);
                 }
             }
@@ -1290,7 +1290,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private Map<Long, Integer> getPositionMap(List<CardCache> list) {
         Map<Long, Integer> positions = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
-            positions.put(Long.valueOf(list.get(i).get(ID)), i);
+            positions.put(list.get(i).getId(), i);
         }
         return positions;
     }
@@ -1595,7 +1595,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         List<CardCache> newMCards = new ArrayList<>();
         for (CardCache cardProperties: oldMCards) {
-            if (! idToRemove.contains(Long.parseLong(cardProperties.get(ID)))) {
+            if (! idToRemove.contains(cardProperties.getId())) {
                 newMCards.add(cardProperties);
             }
         }
@@ -2049,7 +2049,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     int getFlagOrDefault(CardCache card, int defaultValue) {
         String flagValue = card.get(FLAGS);
         if (flagValue == null) {
-            Timber.d("Unable to obtain flag for card: '%s'. Returning %d", card.get(ID), defaultValue);
+            Timber.d("Unable to obtain flag for card: '%s'. Returning %d", card.getId(), defaultValue);
             return defaultValue;
         }
         try {
@@ -2123,18 +2123,27 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private long[] getAllCardIds() {
         long[] l = new long[mCards.size()];
         for (int i = 0; i < mCards.size(); i++) {
-            l[i] = Long.parseLong(mCards.get(i).get(ID));
+            l[i] = mCards.get(i).getId();
         }
         return l;
     }
 
     public static class CardCache extends HashMap<String, String> {
+        private long mId;
+        private Collection mCol;
+
+        public CardCache(long id, Collection col) {
+            mId = id;
+            mCol = col;
+        }
+
+        public long getId() {
+            return mId;
+        }
 
         /** clear all values except ID.*/
         public void reload() {
-            String id = get(ID);
             clear();
-            put(ID, id);
         }
     }
 
@@ -2258,7 +2267,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         CardCache[] cardsCopy = mCards.toArray(new CardCache[0]);
         long[] ret = new long[cardsCopy.length];
         for (int i = 0; i < cardsCopy.length; i++) {
-            ret[i] = Long.parseLong(cardsCopy[i].get(ID));
+            ret[i] = cardsCopy[i].getId();
         }
         return ret;
     }
@@ -2298,8 +2307,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public List<Long> getCheckedCardIds() {
         List<Long> cardIds = new ArrayList<>();
         for (Integer pos : mCheckedCardPositions) {
-            String id = mCards.get(pos).get(ID);
-            cardIds.add(Long.valueOf(Objects.requireNonNull(id)));
+            long id = mCards.get(pos).getId();
+            cardIds.add(Objects.requireNonNull(id));
         }
         return cardIds;
     }
@@ -2315,8 +2324,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public CardCache getPropertiesForCardId(long cardId) {
         for (CardCache props : mCards) {
-            String id = Objects.requireNonNull(props.get(ID));
-            if (Long.parseLong(id) == cardId) {
+            long id = Objects.requireNonNull(props.getId());
+            if (id == cardId) {
                 return props;
             }
         }
