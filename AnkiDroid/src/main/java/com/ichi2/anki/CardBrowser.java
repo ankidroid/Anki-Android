@@ -1481,7 +1481,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // database
         item.put(ANSWER, formatQA(a, context));
 
-        item.put(LAPSES, Integer.toString(c.getLapses()));
         item.put(NOTE_TYPE, c.model().optString("name"));
         item.put(QUESTION, formatQA(q, context));
         item.put(REVIEWS, Integer.toString(c.getReps()));
@@ -2133,6 +2132,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 default:
                     return Utils.roundedTimeSpanUnformatted(AnkiDroidApp.getInstance(), getCard().getIvl()*86400);
                 }
+            case LAPSES:
+                return Integer.toString(getCard().getLapses());
             default:
                 return null;
             }
