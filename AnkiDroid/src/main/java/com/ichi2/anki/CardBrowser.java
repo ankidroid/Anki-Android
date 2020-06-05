@@ -1989,7 +1989,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
          * @return index into TypedArray specifying the background color
          */
         private int getColor(CardCache cardProperties) {
-            int flag = cardProperties.getFlagOrDefault(0);
+            int flag = cardProperties.getFlag();
             switch (flag) {
                 case 1:
                    return R.attr.flagRed;
@@ -2139,7 +2139,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         @VisibleForTesting
-        int getFlagOrDefault(int defaultValue) {
+        int getFlag() {
             return getCard().userFlag();
         }
     }
