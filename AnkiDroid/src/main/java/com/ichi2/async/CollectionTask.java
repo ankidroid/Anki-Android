@@ -1188,7 +1188,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
                 return null;
             }
-            CardBrowser.CardCache card = searchResult.get(i).load(false);
+            searchResult.get(i).load(false);
         }
         // Finish off the task
         if (isCancelled()) {
