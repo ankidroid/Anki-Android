@@ -407,7 +407,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
 
-        mNewDid = selectedDeck.getLong(ID);
+        mNewDid = selectedDeck.getLong("id");
 
         Timber.i("Changing selected cards to deck: %d", mNewDid);
 
@@ -2281,7 +2281,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         List<Deck> decks = getValidDecksForChangeDeck();
         for (int i = 0; i < decks.size(); i++) {
             Deck deck = decks.get(i);
-            if (deck.getLong(ID) == deckId) {
+            if (deck.getLong("id") == deckId) {
                 return i;
             }
         }
