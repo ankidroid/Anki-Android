@@ -1419,11 +1419,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             // update Q & A etc
             updateSearchItemQA(getBaseContext(), card, c, getCol());
-            // update deck
-            String deckName;
-            deckName = getCol().getDecks().get(c.getDid()).getString("name");
-            card.put(DECK, deckName);
-            // update flags (marked / suspended / etc) which determine color
         }
 
         updateList();
@@ -1520,7 +1515,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put(REVIEWS, Integer.toString(c.getReps()));
         String tags = note.stringTags();
         item.put(TAGS, tags);
-        item.put(DECK, col.getDecks().name(c.getDid()));
     }
 
     @CheckResult
@@ -2140,6 +2134,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return getCard().note().hasTag("marked") ? "marked" : null;
             case SFLD:
                 return getCard().note().getSFld();
+            case DECK:
+                return mCol.getDecks().name(getCard().getDid());
             default:
                 return null;
             }
