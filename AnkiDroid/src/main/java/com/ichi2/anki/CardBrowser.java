@@ -1481,18 +1481,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // database
         item.put(ANSWER, formatQA(a, context));
 
-        // interval
-        switch (c.getType()) {
-            case Consts.CARD_TYPE_NEW:
-                item.put(INTERVAL, context.getString(R.string.card_browser_interval_new_card));
-                break;
-            case Consts.CARD_TYPE_LRN :
-                item.put(INTERVAL, context.getString(R.string.card_browser_interval_learning_card));
-                break;
-            default:
-                item.put(INTERVAL, Utils.roundedTimeSpanUnformatted(context, c.getIvl()*86400));
-                break;
-        }
         item.put(LAPSES, Integer.toString(c.getLapses()));
         item.put(NOTE_TYPE, c.model().optString("name"));
         item.put(QUESTION, formatQA(q, context));
@@ -2136,6 +2124,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return LanguageUtil.getShortDateFormatFromMs(getCard().note().getId());
             case EDITED:
                 return LanguageUtil.getShortDateFormatFromS(getCard().note().getMod());
+            case INTERVAL:
+                switch (getCard().getType()) {
+                case Consts.CARD_TYPE_NEW:
+                    return AnkiDroidApp.getInstance().getString(R.string.card_browser_interval_new_card);
+                case Consts.CARD_TYPE_LRN :
+                    return AnkiDroidApp.getInstance().getString(R.string.card_browser_interval_learning_card);
+                default:
+                    return Utils.roundedTimeSpanUnformatted(AnkiDroidApp.getInstance(), getCard().getIvl()*86400);
+                }
             default:
                 return null;
             }
