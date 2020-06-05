@@ -88,6 +88,7 @@
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Грешка во базата на податоци</string>
     <string name="answering_error_message">Пишувањето во колекцијата не успеа. Податоците би можеле да бидат корумпирани или можеби нема да има доволно празен простор на дискот.\n\nАко ова се случува почесто, обидете се да ја проверите базата на податоци, да ја поправете колекцијата или да ја вратите од резервната копија. Допрете \"опции\" за тоа.\nИли тоа би можело да биде и AnkiDroid бубачка; ве молиме пријавете ја грешката за да можеме да го провериме ова.</string>
     <string name="answering_error_report">Пријавете грешка</string>

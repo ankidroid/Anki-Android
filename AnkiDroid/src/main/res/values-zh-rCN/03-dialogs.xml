@@ -82,6 +82,7 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d 张卡牌已重新安排</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">在您的文件管理器中选择牌组，或访问关于：下载页面以便导入</string>
     <string name="answering_error_title">数据库错误</string>
     <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是AnkiDroid的bug，请报告这个错误，我们会尽力解决。</string>
     <string name="answering_error_report">报告错误</string>
@@ -188,6 +189,6 @@
     <!-- Browser Appearance -->
     <string name="card_template_editor_card_browser_appearance_failed">无法加载卡牌浏览器外观</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">计划提醒失败</string>
+    <string name="boot_service_too_many_notifications">已计划的提醒太多。有些提醒将不会出现</string>
 </resources>

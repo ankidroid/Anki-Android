@@ -88,6 +88,7 @@
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">డేటాబేస్ లోపం</string>
     <string name="answering_error_message">సేకరణను వ్రాయడంలో విఫలమైంది. డేటాబేస్ పాడైంది లేదా డిస్క్లో తగినంత స్థలం లేదు. \n\n ఇది తరచుగా జరిగితే, డేటాబేస్ను తనిఖీ చెయ్యండి, సేకరణను రిపేరు చేయండి లేదా దాన్ని 
 బ్యాకప్ నుండి పునరుద్ధరించండి. దీనికి \"ఐచ్ఛికాలు\" తాకండి. \n\ లేదా ఇది కూడా ఒక AnkiDroid బగ్ కావచ్చు; దయచేసి లోపాన్ని రిపోర్ట్ చేసి దాన్ని తనిఖీ చేయండి.</string>

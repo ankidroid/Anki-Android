@@ -82,6 +82,7 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Database error</string>
     <string name="answering_error_message">Menulis untuk koleksi gagal. Itu databese boleh korup atau mungkin tidak cukup ruang kosong pada disk.\n\nperkakasan ini terjadi lebih sering, cuba memeriksa database, membaiki koleksi atau memulihkan dari sandaran. Sentuh \"pilihan\" untuk itu.\n\Atau ia bisa menjadi apa yang anda perlu lakukan bug juga; tolong laporkan ralat jadi kita bisa lihat ini.</string>
     <string name="answering_error_report">Report error</string>

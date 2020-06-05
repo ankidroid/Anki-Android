@@ -88,6 +88,7 @@
         <item quantity="one">%d tarjeta reprogramada</item>
         <item quantity="other">%d tarjetas reprogramadas</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Error en base de datos</string>
     <string name="answering_error_message">Ocurrió un error mientras se escribía en la colección. Esto puede deberse a una base de datos corrupta o a insuficiente espacio en disco.\n\nSi sucede más a menudo intente chequear la base de datos, reparar la colección o restaurarla desde una copia de seguridad. Cliquee en \'opciones\' para ello.\n\n\Sin embargo, puede tratarse también de un error de AnkiDroid. Por favor reporte el error para que podamos comprobarlo.</string>
     <string name="answering_error_report">Reportar un error</string>

@@ -89,6 +89,7 @@
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Database error</string>
     <string name="answering_error_message">Ang pagsulat sa koleksyon ay nabigo. Maaaring sira ang database o di kaya`y hindi sapat ang bakanteng espasyo sa disk. \n\n Kung ito ay nangyayari ng madalas, subukang i-tsek ang database, i-ayos ng koleksyon o ibalik ito mula sa isang backup. Pindutin ang \"options\" para diyan. \n\ O maaaring ito ay isang AnkiDroid bug din; paki-ulat ang mali upang maiayos namin ito.</string>
     <string name="answering_error_report">Maling ulat</string>

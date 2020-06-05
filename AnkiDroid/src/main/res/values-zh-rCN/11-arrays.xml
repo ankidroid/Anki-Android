@@ -64,8 +64,8 @@
         <item>切换绿色标识</item>
         <item>切换蓝色标识</item>
         <item>移除标识</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>向上翻页</item>
+        <item>向下翻页</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>暂停卡片</item>

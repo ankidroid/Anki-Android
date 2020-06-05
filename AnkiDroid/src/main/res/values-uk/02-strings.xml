@@ -282,5 +282,5 @@
     <string name="choose_an_image">Оберіть зображення</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Відновити «Типове»</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Порожня</string>
 </resources>

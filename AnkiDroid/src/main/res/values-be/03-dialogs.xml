@@ -100,6 +100,7 @@
         <item quantity="many">У %d картак зменены расклад</item>
         <item quantity="other">У %d картак зменены расклад</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Памылка базы даных</string>
     <string name="answering_error_message">Запіс калекцыі немагчымы. Магчыма, што база даных пашкоджаная або недастаткова вольнага месца на дыску.\n\nКалі гэта памылка паўтараецца вельмі часта, то вы можаце паспрабаваць праверыць базу даных, аднавіць калекцыю або аднавіць яе з рэзервовай копіі. Для гэтага неабходна націснуць \"Параметры\".\n\Магчыма, што гэта памылка самой праграмы; калі гэта так, то мы просім вас адправіць нам справаздачу пра гэта.</string>
     <string name="answering_error_report">Адправіць справаздачу</string>
