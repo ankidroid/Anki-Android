@@ -1938,7 +1938,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 col.setText(card.get(mFromKeys[i]));
             }
             // set card's background color
-            final int backgroundColor = Themes.getColorFromAttr(CardBrowser.this, getColor(card));
+            final int backgroundColor = Themes.getColorFromAttr(CardBrowser.this, card.getColor());
             v.setBackgroundColor(backgroundColor);
             // setup checkbox to change color in multi-select mode
             final CheckBox checkBox = (CheckBox) v.findViewById(R.id.card_checkbox);
@@ -1982,36 +1982,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 v.setTypeface(mCustomTypeface);
             }
         }
-
-        /**
-         * Get the background color of items in the card list based on the Card
-         * @param cardProperties -- a card object to color
-         * @return index into TypedArray specifying the background color
-         */
-        private int getColor(CardCache cardProperties) {
-            int flag = cardProperties.getCard().userFlag();
-            switch (flag) {
-                case 1:
-                   return R.attr.flagRed;
-                case 2:
-                   return R.attr.flagOrange;
-                case 3:
-                  return R.attr.flagGreen;
-                case 4:
-                   return R.attr.flagBlue;
-                default:
-                    if (cardProperties.get(MARKED) != null) {
-                        return R.attr.markedColor;
-                    } else {
-                        if ("True".equals(cardProperties.get(SUSPENDED))) {
-                            return R.attr.suspendedColor;
-                        } else {
-                            return android.R.attr.colorBackground;
-                        }
-                    }
-            }
-        }
-
 
         public void setFromMapping(String[] from) {
             mFromKeys = from;
@@ -2136,6 +2106,34 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mCard = mCol.getCard(mId);
             }
             return mCard;
+        }
+
+        /**
+         * Get the background color of items in the card list based on the Card
+         * @return index into TypedArray specifying the background color
+         */
+        private int getColor() {
+            int flag = getCard().userFlag();
+            switch (flag) {
+                case 1:
+                    return R.attr.flagRed;
+                case 2:
+                    return R.attr.flagOrange;
+                case 3:
+                    return R.attr.flagGreen;
+                case 4:
+                    return R.attr.flagBlue;
+                default:
+                    if (get(MARKED) != null) {
+                        return R.attr.markedColor;
+                    } else {
+                        if ("True".equals(get(SUSPENDED))) {
+                            return R.attr.suspendedColor;
+                        } else {
+                            return android.R.attr.colorBackground;
+                        }
+                    }
+            }
         }
     }
 
