@@ -88,6 +88,7 @@
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Erro na base de datos</string>
     <string name="answering_error_message">Produciuse un erro ao escribir na colección. A base de datos pode estar corrompida ou non existir espazo abondo non disco.\n\nSe isto acontece con moi frecuencia, tenta verificar a base de datos, reparar a colección ou restaurar dende unha copia. Para iso preme en \"opcións\".\n\nTamén podería ser un erro do programa; por favor, envía un informe do erro para que o verifiquemos.</string>
     <string name="answering_error_report">Informar de erros</string>

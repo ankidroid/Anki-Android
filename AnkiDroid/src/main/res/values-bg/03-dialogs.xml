@@ -88,6 +88,7 @@
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Грешка в базата данни</string>
     <string name="answering_error_message">Писането в колекцията е неуспешно. Базата данни може да е повредена или може би няма празно пространство на диска.\n\nАко това се случва по-често, опитайте да в проверите база данни, да поправите колекцията или да възстановите от архива. Докоснете \"Опции\" за това.\n\А може да е грешка в AnkiDroid; Съобщете за тази грешка, да да можем да я проверим.</string>
     <string name="answering_error_report">Доклад грешки</string>

@@ -160,7 +160,7 @@
     <string name="new_spread">Положення нової карти</string>
     <string name="learn_cutoff">Вчити наперед</string>
     <string name="learn_cutoff_summ">XXX хв.</string>
-    <string name="time_limit">Обмеження часу безперервного навчання</string>
+    <string name="time_limit">Показувати результати кожні</string>
     <string name="time_limit_summ">XXX хв.</string>
     <string name="day_offset">Початок наступної доби</string>
     <string name="day_offset_summ">XXX год.</string>

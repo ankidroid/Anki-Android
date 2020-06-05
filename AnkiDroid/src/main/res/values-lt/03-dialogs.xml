@@ -100,6 +100,7 @@
         <item quantity="many">%d kortelių atkūrimas</item>
         <item quantity="other">%d kort. atkūrimas</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Duomenų bazės klaida</string>
     <string name="answering_error_message">Įrašyti kolekcijos nepavyko. Duomenų bazė yra galimai sugadinta arba diske nėra pakankamai vietos.\n\nJei tai nutinka dažnai, patikrinkite duomenų bazę, pataisykite kolekciją arba atkurkite ją iš atsarginės kopijos. Norėdami tai padaryti, spauskite „Parinktys“.\n\Taip pat gali būti, kad tai yra „AnkiDroid“ pranešimas apie klaidą. Tokiu atveju, prašome apie šią klaidą mums pranešti, kad galėtume ją patikrinti.</string>
     <string name="answering_error_report">Pranešti apie klaidą</string>

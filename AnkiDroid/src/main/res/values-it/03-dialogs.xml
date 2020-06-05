@@ -88,6 +88,7 @@
         <item quantity="one">%d carta ripianificata</item>
         <item quantity="other">%d carte ripianificate</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Errore database</string>
     <string name="answering_error_message">Si è verificato un errore durante la scrittura della collezione. Potrebbe essere stato causato da un database danneggiato o da spazio su disco insufficiente.\n\nSe accade spesso, prova a controllare il database, riparare la collezione o ripristinare da un backup. Per fare questo clicca su \'opzioni\'.\n\nTuttavia, potrebbe anche trattarsi di un bug di AnkiDroid;per favore segnala l\'errore affinché possiamo verificare.</string>
     <string name="answering_error_report">Segnala errori</string>

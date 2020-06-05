@@ -88,6 +88,7 @@
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Σφάλμα βάσης δεδομένων</string>
     <string name="answering_error_message">Παρουσιάστηκε σφάλμα κατά την εγγραφή στη συλλογή. Αυτό θα μπορεί να σχετίζεται με κατεστραμμένη βάση δεδομένων ή ανεπαρκή αποθηκευτικό χώρο.\n\nΑν συμβαίνει συχνά, προσπαθήστε να ελέγξετε τη βάση δεδομένων, να επιδιορθώσετε τη συλλογή ή να την επαναφέρετε από ένα αντίγραφο. Κάντε κλικ στις σχετικές «επιλογές».\n\nΕκτός αυτού, μπορεί να είναι και σφάλμα τού Ανκί-Ντρόιντ· παρακαλούμε αναφέρετε το σφάλμα ώστε να το ελέγξουμε.</string>
     <string name="answering_error_report">Αναφορά σφάλματος</string>
