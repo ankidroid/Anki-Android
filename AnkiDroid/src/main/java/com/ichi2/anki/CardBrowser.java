@@ -2002,35 +2002,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return l;
     }
 
-    public static class CardCache extends HashMap<String, String> {
-        private long mId;
-        private Collection mCol;
-        private Card mCard = null;
+    public static class CardCache extends Card.Cache {
         private boolean mLoaded = false;
         private Pair<String, String> mQa = null;
 
         public CardCache(long id, Collection col) {
-            mId = id;
-            mCol = col;
-        }
-
-        public long getId() {
-            return mId;
+            super(col, id);
         }
 
         /** clear all values except ID.*/
         public void reload() {
-            clear();
-            mCard = null;
+            super.reload();
             mLoaded = false;
             mQa = null;
-        }
-
-        public Card getCard() {
-            if (mCard == null) {
-                mCard = mCol.getCard(mId);
-            }
-            return mCard;
         }
 
         /**
@@ -2072,7 +2056,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case SFLD:
                 return getCard().note().getSFld();
             case DECK:
-                return mCol.getDecks().name(getCard().getDid());
+                return getCol().getDecks().name(getCard().getDid());
             case TAGS:
                 return getCard().note().stringTags();
             case CARD:
