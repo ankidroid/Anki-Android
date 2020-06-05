@@ -1413,7 +1413,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             CardCache card = getCards().get(pos);
             card.load(true);
             // update Q & A etc
-            updateSearchItemQA(getBaseContext(), card, c);
+            updateSearchItemQA(card, c);
         }
 
         updateList();
@@ -1457,7 +1457,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    public static void updateSearchItemQA(Context context, CardCache item, Card c) {
+    public static void updateSearchItemQA(CardCache item, Card c) {
+        Context context = AnkiDroidApp.getInstance();
         // render question and answer
         Map<String, String> qa = c._getQA(true, true);
         // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
