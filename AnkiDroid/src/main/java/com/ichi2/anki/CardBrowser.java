@@ -2124,10 +2124,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 case 4:
                     return R.attr.flagBlue;
                 default:
-                    if (get(MARKED) != null) {
+                    if (getCard().note().hasTag("marked")) {
                         return R.attr.markedColor;
                     } else {
-                        if ("True".equals(get(SUSPENDED))) {
+                        if (getCard().getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
                             return R.attr.suspendedColor;
                         } else {
                             return android.R.attr.colorBackground;
