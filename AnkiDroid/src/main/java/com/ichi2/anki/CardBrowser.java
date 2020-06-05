@@ -75,7 +75,6 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.Themes;
@@ -1482,8 +1481,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // database
         item.put(ANSWER, formatQA(a, context));
 
-        Note note = c.note();
-        item.put(EDITED, LanguageUtil.getShortDateFormatFromS(note.getMod()));
         // interval
         switch (c.getType()) {
             case Consts.CARD_TYPE_NEW:
@@ -2137,6 +2134,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return LanguageUtil.getShortDateFormatFromS(getCard().getMod());
             case CREATED:
                 return LanguageUtil.getShortDateFormatFromMs(getCard().note().getId());
+            case EDITED:
+                return LanguageUtil.getShortDateFormatFromS(getCard().note().getMod());
             default:
                 return null;
             }
