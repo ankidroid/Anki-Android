@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Navigation drawer items-->
+    <string name="decks">ባይታ</string>
+    <string name="card_browser">መስሓቢ ካርድ</string>
+    <string name="statistics">ምእካብን ምትትንታንን ጭብጥታት</string>
+    <string name="settings">ምምዕርራይ</string>
+    <string name="help">ሓገዝ</string>
+    <string name="send_feedback">ርእይቶ ስደድ</string>
+    <string name="studyoptions_title">መርኣዪ ባይታ</string>
+    <string name="studyoptions_due_today">ናይ ሎሚ ዕማም</string>
+    <string name="studyoptions_new_total">ጠቅላላ ሓደስቲ ካርድታት:</string>
+    <string name="studyoptions_total_cards">ጠቅላላ ካርድታት:</string>
+    <string name="studyoptions_eta">ዝተገመተ ግዜ:</string>
+    <string name="studyoptions_start">መጽናዕቲ</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">ዘርግሕ</string>
+    <string name="collapse">ኣብ ሓደ ኣኪብ</string>
+    <string name="study_more">መጽናዕቲ ወስኽ</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d ዝግባኣካ ካርድ (%2$s)%1$d</item>
+        <item quantity="other">%1$d ዝግባኣካ ካርድታት (%2$s)%1$d</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">ተሪፉካ ዘሎ ደቒቕ %d</item>
+        <item quantity="other">%d ተሪፊካ ዘሎ ደቓይቕ</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">ዝተጸንዐ %1$d ካርድ ኣብ %2$s ሎሚ</item>
+        <item quantity="other">ዝተጸንዐ %1$d ካርድታት ኣብ %2$s ሎሚ</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">መልሲ ጸሓፍ</string>
+    <string name="show_answer">መልሲ ርአ</string>
+    <string name="ease_button_again">ድገም</string>
+    <string name="ease_button_hard">ከቢድ</string>
+    <string name="ease_button_good">ጽቡቕ</string>
+    <string name="ease_button_easy">ቀሊል</string>
+    <string name="studyoptions_congrats_undo">ንድሕሪት ተመለስ%s</string>
+    <string name="menu_import">ኣምጽእ</string>
+    <string name="undo">ንድሕሪት ተመለስ</string>
+    <string name="undo_action_review">ናይ መጨረሽታ ዘጽናዕካዮ ርኣዮ</string>
+    <string name="undo_action_bury_card">ካርድ ሕባኣዮ</string>
+    <string name="undo_action_bury_note">ጽሑፍ ሕባእ</string>
+    <string name="undo_action_suspend_card">ካርድ ስሓብ</string>
+    <string name="undo_action_suspend_note">ጽሑፍ ሰሓብ</string>
+    <string name="undo_action_delete">ጽሑፍ ደምስስ</string>
+    <string name="undo_action_delete_multi">delete notes</string>
+    <string name="undo_action_change_deck_multi">change decks</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="unbury">ገንጽል</string>
+    <string name="rename_deck">ባይታ ሰዪም</string>
+    <string name="menu_add">ደምር</string>
+    <string name="menu_add_note">ጽሑፍ ወስኽ</string>
+    <string name="menu_my_account">ኣካውንት ኣወሃህድ</string>
+    <string name="menu_dismiss_note">ሕባእ/ደምስስ</string>
+    <string name="menu_bury_card">ካርድ ሕባእ</string>
+    <string name="menu_bury_note">ጽሑፍ ሕባእ</string>
+    <string name="menu_suspend_card">ካርድ ስሓብ</string>
+    <string name="menu_suspend_note">ጽሑፍ ስሓብ</string>
+    <string name="menu_bury">ሕባእ</string>
+    <string name="menu_suspend">ስሓብ</string>
+    <string name="menu_delete_note">ጽሑፍ ደምስስ</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="delete_note_message">ናይባሓቂ ነዚ ጽሑፍ ከምኡ ውን ነዞም ካርድታትን ክትድምስስ ደሊኻ?\n%s</string>
+    <string name="menu_select">ጽሑፍ ምረጽ</string>
+    <string name="menu_search">ኣብ %1$s ርአ</string>
+    <string name="menu_mark_note">ጽሑፍ ምልክት ግበረሉ</string>
+    <string name="menu_unmark_note">ምልክት ዝገበርካሉ ጽሑፍ ምልክቱ ደምስስ</string>
+    <string name="new_deck">ሓዲሽ ባይታ ፍጠር</string>
+    <string name="create">ፍጠር</string>
+    <string name="new_dynamic_deck">ዝፍለ ባይታ ፍጠር</string>
+    <string name="night_mode">ናይ እዋን ለይቲ ኩነት</string>
+    <string name="directory_inaccessible">ዲክሽነርይ AnkiDroid ክእቶ ኣይክእልን ኢዩ።</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">ግዜ_ብዝሒ_ካልኢታት
+ብዝሒ ግዜ መዐቐኒ ናይ ግዜ እዮም።ብዘይ ምብዛሕን ብዘይ ነጠብን ከኣ ንጥቀመሎም።
+s,min,h,d, እዚኦም ከም ልሙድ(ISO 31-1) መዐቀኒታት ከምኡ ውን ክትርጎሙ ዘይክእሉ ኢዮም ብውሑዱ ን ቋንቋ ብ ላቲን መስርሕ ቃላት።</string>
+    <string name="time_quantity_minutes">%d ደቂቅ</string>
+    <string name="time_quantity_hours">%d ሰዓት</string>
+    <string name="time_quantity_days">%d መዓልቲ</string>
+    <string name="time_quantity_months">%.1f ወርሒ</string>
+    <string name="time_quantity_years">%.1f ዓመት</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">ዝሸምደድካዮ  ባይታ ከምባሓዱሽ ሕነጾ...
+\"%.1f a\"</string>
+    <string name="rebuild_cram_label">ከምባሓዱሽ ህነጽ</string>
+    <string name="empty_cram_label">ባዶ ቦታ</string>
+    <string name="create_subdeck">Create subdeck</string>
+    <string name="empty_cram_deck">ዝተሸምደደ ባይታ ጥርሑ ግበሮ</string>
+    <string name="custom_study_deck_name">መጽናዕቲ ብዝጠዕም ምምዕርራይ</string>
+    <string name="custom_study_deck_exists">መጀመርያ ዝነበረ ምምዕርራይ መጽናዕቲ ባይታ ከምባሓዱሽ ሰዩም።</string>
+    <string name="empty_deck">እዚ ባይታ እዚ ጥርሑ እዩ ዘሎ።</string>
+    <string name="studyoptions_empty">ባይታ ጥርሑ ኣሎ። መልጎም + ጠውቅ ሓዲሽ ትሕዝቶ ክትውስኹ።</string>
+    <string name="studyoptions_limit_reached">መዓልታዊ መጽናዕቲ ክትበጽሖ ትኽእል።</string>
+    <string name="studyoptions_empty_schedule">ኣብ መጽናዕቲ ዝተመደቡ ካርድታት የለውን</string>
+    <string name="studyoptions_congrats_finished">እንቋዕ ሓጎሰኩም ንሕጂ ወዲእኩም ኣለኹም</string>
+    <string name="studyoptions_congrats_more_rev">ናይ ሎሚ መዓልቲ ደረት ክትበጽሑዎ ዝነበረኩም በጺሕኩሞ ኣለኹም ግን ገና ክትደግሙዎም ዘለኩም ካርድታት ኣለዉኹም ከምኡ ውን ክትበጽሕዎ ትኽእሉ ደረት ኣብ ኣማራጺታት ዝብል ኣቲኹም ክትውስኽዎ ትኽእሉ።</string>
+    <string name="studyoptions_congrats_more_new">ናይ ሎሚ መዓልቲ ደረት ብጽሒት በጺሕክሞ ኣለኹም። ዝያዳ ሓደስቲ ካርድታት ኣለውኹም።ደረት ብጽሒት ኣብ ኣማራጺታት ዝብል ብምእታው ከተወስኽዎ ትኽእሉ።ግን ነቲ ናይ ሓጺር ንድፊ ጽዕነት ስራሕ ከወስኸልኩም ኢዩ። </string>
+    <string name="studyoptions_congrats_custom">ካብ ኖርማል ወጻኢ ከተጽንዑ ምስትደልዩ ኣብ መጽናዕቲ ምዝጥዕመካ ዝብል መልጎም ጠውቑ።</string>
+    <string name="studyoptions_no_cards_due">ክሳብ ሕጂ ዝተገብኡ ካርድታ የለውን</string>
+    <string name="sd_card_not_mounted">ናይ መባይል ቦታ ኣይተጻዕነን ኣሎ።</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">ምውህሃድ</string>
+    <string name="cancel_sync_confirm">ነዚ ምውህሃድ ከተቋርጾ  ትደሊ ዲኻ?</string>
+    <string name="continue_sync">ምውህሃድ ቀጽል</string>
+    <string name="sync_cancelled">ምውህሃድ ተቋሪጹ ኣሎ</string>
+    <string name="sync_cancel_message">ይቋረጽ......\n ውሑድ ግዜ ክወስድ ይኽእል ኢዩ</string>
+    <string name="export">ስደድ</string>
+    <string name="export_collection">እኩባት ስደድ</string>
+    <string name="export_deck">ባይታ ስደድ</string>
+    <string name="nothing">የለን</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">ዓይነት ካርድ</string>
+    <string name="card_template_editor_front">ቅድመ ባይታ</string>
+    <string name="card_template_editor_back">ድሕረ ባይታ</string>
+    <string name="card_template_editor_styling">ፋሽን</string>
+    <string name="card_template_editor_menu_delete">ደምስስ</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_cant_delete">ብውሕዱ ሓደ ካርድ የድሊ ኣሎ</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">ዓይነት ካርድ “%2$s” ደምስስ ከምኡ ውን ከም %1$d ካርድ ደምስስ</item>
+        <item quantity="other">ዓይነት ካርድታት “%2$s” ደምስስ ከምኡ ውን ከም %1$d ካርድታት ደምስስ</item>
+    </plurals>
+    <string name="invalid_template">ካርድ ክስራሕ ኣይከኣለን</string>
+    <string name="card_template_editor_would_delete_note">ምድምሳስ እዚ ካርድ እዚ ሓደ ወይ ካቡ ንላዕሊ ጽሑፋት ምድምሳሳት ከስዕብ ይኽእል ኢዩ።ሓዲሽ ካርድ ስራሕ መጀመርያ። </string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">ምጽሓፍን ምንባብን ናብ AnkiDroid database</string>
+    <string name="read_write_permission_description">ዝነበሩ ጽሑፋት፣ ካርድታት፣ ዓይነት ጽሑፋት፣ ባይታታት ከምኡ ውን ሓደሽቲ ከምዚኣቶም ዝኣመሰሉ ርከቦም።</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
+</resources>

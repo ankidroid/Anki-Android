@@ -93,5 +93,9 @@ public interface IField extends Serializable {
     public String getFormattedValue();
 
 
+    /**
+     * @param col Collection - bad abstraction, used to obtain media directory only.
+     * @param value The HTML to send to the field.
+     */
     void setFormattedString(Collection col, String value);
 }

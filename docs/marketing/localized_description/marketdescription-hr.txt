@@ -1,0 +1,37 @@
+Zapamtite sve u AnkiDroid!
+
+AnkiDroid Vam omogućuje efikasno učenje flash kartica prikazujući ih prije nego što zaboravite. Potpuno je kompatibilan sa softverom za razmaknuto ponavljanje Anki (uključujući i sinkronizaciju), koji je dostupan za Windows, Linux i MacOS.
+
+Učite razne stvari bilo gdje i bilo kada. Iskoristite vrijeme kada nemate što raditi tijekom putovanja autobusom, u redovima u trgovinama ili bilo kojoj drugoj situaciji kada čekate!
+
+Stvorite vlastite skupine flash kartica ili preuzmite besplatne skupine stvorene za mnoge jezike i teme (dostupno više od 6000 njih).
+
+Dodajte materijal pomoću Anki aplikacije za računala ili direktno u AnkiDroid. Aplikacija podržava čak i automatsko dodavanje materijala iz rječnika!
+
+★ Ključne značajke:
+• podržani dadržaj flash kartica: tekst, slike, zvuk, LaTeX
+• razmaknuto ponavljanje (supermemo 2 algoritam)
+• integriran TTS
+• više od 6000 dostupnih skupina
+• widget s prikazom napretka
+• detaljne statistike
+• sinkronizacija s AnkiWebom
+• otvoren kôd
+
+★ Dodatne značajke:
+• pisanje odgovora (opcionalno)
+• bijela ploča
+• uređivač kartica
+• preglednik kartica
+• prilagođeno tabletima
+• uvoz postojećih datoteka skupina (pomoću Anki Desktopa)
+• integracija rječnika (ColorDict, GoldenDict, Leo.org, Aedict, razni internetski rječnici)
+• dodajte kartice iz drugih aplikacija kao što su rječnici
+• podrška za prilagođene fontove
+• puni sustav sigurnosnog kopiranja
+• navigacija dodirom
+• prilagodiljiv
+• dinamično upravljanje skupinama
+• noćni način rada
+• 27 prijevoda
+• sve prethodne inačice AnkiDroida mogu se preuzeti s web stranice

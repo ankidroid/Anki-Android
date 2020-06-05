@@ -1,5 +1,6 @@
 /***************************************************************************************
  * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ * Copyright (c) 2020 Mike Hardy <github@mikehardy.net>                                 *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -33,8 +34,10 @@ import org.acra.config.ACRAConfigurationException;
 import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.DialogConfiguration;
 import org.acra.config.DialogConfigurationBuilder;
-import org.acra.dialog.BaseCrashReportDialog;
+import org.acra.dialog.CrashReportDialog;
+import org.acra.dialog.CrashReportDialogHelper;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 /**
@@ -42,14 +45,15 @@ import timber.log.Timber;
  * instead of androidx.XXX . Details at {@see https://github.com/ankidroid/Anki-Android/wiki/Crash-Reports}
  */
 @SuppressLint("Registered") // we are sufficiently registered in this special case
-public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
+public class AnkiDroidCrashReportDialog extends CrashReportDialog implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
     private static final String STATE_COMMENT = "comment";
     private CheckBox mAlwaysReportCheckBox;
     private EditText mUserComment;
+    private CrashReportDialogHelper mHelper;
 
     @Override
-    protected void init(Bundle savedInstanceState) {
-        super.init(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 
@@ -66,6 +70,7 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
         catch (ACRAConfigurationException ace) {
             Timber.e(ace, "Unable to initialize ACRA while creating ACRA dialog?");
         }
+        mHelper = new CrashReportDialogHelper(this, getIntent());
         dialogBuilder.setView(buildCustomView(savedInstanceState));
 
         AlertDialog dialog = dialogBuilder.create();
@@ -77,7 +82,8 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
     /**
      * Build the custom view used by the dialog
      */
-    private View buildCustomView(Bundle savedInstanceState) {
+    @Override
+    protected @NonNull View buildCustomView( Bundle savedInstanceState) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
         LayoutInflater inflater = getLayoutInflater();
         @SuppressLint("InflateParams") // when you inflate into an alert dialog, you have no parent view
@@ -108,9 +114,9 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
                 AnkiDroidApp.getInstance().setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS);
             }
             // Send the crash report
-            sendCrash(mUserComment.getText().toString(), "");
+            mHelper.sendCrash(mUserComment.getText().toString(), "");
         } else {
-            cancelReports();
+            mHelper.cancelReports();
         }
 
         finish();
@@ -122,7 +128,7 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mUserComment != null && mUserComment.getText() != null) {
             outState.putString(STATE_COMMENT, mUserComment.getText().toString());

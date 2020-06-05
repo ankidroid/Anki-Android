@@ -24,14 +24,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.R;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.anki.analytics.UsageAnalytics;
 
 import timber.log.Timber;
@@ -72,10 +74,43 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().contentEquals("com.sec.android.widgetapp.APPWIDGET_RESIZE")) {
-            CompatHelper.getCompat().updateWidgetDimensions(context, new RemoteViews(context.getPackageName(), R.layout.widget_small), AnkiDroidWidgetSmall.class);
+            updateWidgetDimensions(context, new RemoteViews(context.getPackageName(), R.layout.widget_small), AnkiDroidWidgetSmall.class);
         }
         super.onReceive(context, intent);
     }
+
+    private static void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls) {
+        AppWidgetManager manager = AppWidgetManager.getInstance(context);
+        int[] ids = manager.getAppWidgetIds(new ComponentName(context, cls));
+        for (int id : ids) {
+            final float scale = context.getResources().getDisplayMetrics().density;
+            Bundle options = manager.getAppWidgetOptions(id);
+            float width, height;
+            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+                height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+            } else {
+                width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
+                height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+            }
+            int horizontal, vertical;
+            float text;
+            if ((width / height) > 0.8) {
+                horizontal = (int) (((width - (height * 0.8))/2 + 4) * scale + 0.5f);
+                vertical = (int) (4 * scale + 0.5f);
+                text = (float)(Math.sqrt(height * 0.8 / width) * 18);
+            } else {
+                vertical = (int) (((height - (width * 1.25))/2 + 4) * scale + 0.5f);
+                horizontal = (int) (4 * scale + 0.5f);
+                text = (float)(Math.sqrt(width * 1.25 / height) * 18);
+            }
+
+            updateViews.setTextViewTextSize(R.id.widget_due, TypedValue.COMPLEX_UNIT_SP, text);
+            updateViews.setTextViewTextSize(R.id.widget_eta, TypedValue.COMPLEX_UNIT_SP, text);
+            updateViews.setViewPadding(R.id.ankidroid_widget_text_layout, horizontal, vertical, horizontal, vertical);
+        }
+    }
+
 
     public static class UpdateService extends Service {
 
@@ -120,13 +155,13 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                         @Override
                         public void onReceive(Context context, Intent intent) {
                             String action = intent.getAction();
-                            if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                            if (action != null && action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
                                 Timber.d("mMountReceiver - Action = Media Mounted");
                                 if (remounted) {
                                     WidgetStatus.update(getBaseContext());
                                     remounted = false;
                                     if (mMountReceiver != null) {
-                                        unregisterReceiver(mMountReceiver);
+                                        AnkiDroidApp.getInstance().unregisterReceiver(mMountReceiver);
                                     }
                                 } else {
                                     remounted = true;
@@ -137,7 +172,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                     IntentFilter iFilter = new IntentFilter();
                     iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
                     iFilter.addDataScheme("file");
-                    registerReceiver(mMountReceiver, iFilter);
+                    AnkiDroidApp.getInstance().registerReceiver(mMountReceiver, iFilter);
                 }
             } else {
                 // If we do not have a cached version, always update.
@@ -178,7 +213,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                     PendingIntent.FLAG_UPDATE_CURRENT);
             updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_button, pendingAnkiDroidIntent);
 
-            CompatHelper.getCompat().updateWidgetDimensions(context, updateViews, AnkiDroidWidgetSmall.class);
+            updateWidgetDimensions(context, updateViews, AnkiDroidWidgetSmall.class);
 
             return updateViews;
         }

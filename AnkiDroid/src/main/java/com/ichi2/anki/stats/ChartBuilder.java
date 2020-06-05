@@ -19,7 +19,7 @@ import android.graphics.Paint;
 
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Stats;
+import com.ichi2.libanki.stats.Stats;
 import com.ichi2.themes.Themes;
 import com.wildplot.android.rendering.BarGraph;
 import com.wildplot.android.rendering.LegendDrawable;

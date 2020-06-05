@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Navigation drawer items-->
+    <string name="decks">Sorta</string>
+    <string name="card_browser">Txartel arakatzailea</string>
+    <string name="statistics">Estatistikak</string>
+    <string name="settings">Ezarpenak</string>
+    <string name="help">Laguntza</string>
+    <string name="send_feedback">Bidali iruzkinak</string>
+    <string name="studyoptions_title">Sortaren aurrebista</string>
+    <string name="studyoptions_due_today">Epemuga gaur:</string>
+    <string name="studyoptions_new_total">Txartel berriak guztira:</string>
+    <string name="studyoptions_total_cards">Txartelak guztira:</string>
+    <string name="studyoptions_eta">Aurreikusitako denbora (min):</string>
+    <string name="studyoptions_start">Ikasi</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">Hedatu</string>
+    <string name="collapse">Tolestu</string>
+    <string name="study_more">Ikasi gehiago</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d card due (%2$s)</item>
+        <item quantity="other">%1$d cards due (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">Minutu %d geratzen da</item>
+        <item quantity="other">%d minutu geratzen dira</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">Studied %1$d card in %2$s today</item>
+        <item quantity="other">Studied %1$d cards in %2$s today</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">Idatzi erantzuna</string>
+    <string name="show_answer">Erakutsi erantzuna</string>
+    <string name="ease_button_again">Berriro</string>
+    <string name="ease_button_hard">Zaila</string>
+    <string name="ease_button_good">Ona</string>
+    <string name="ease_button_easy">Erraza</string>
+    <string name="studyoptions_congrats_undo">Desegin %s</string>
+    <string name="menu_import">Inportatu</string>
+    <string name="undo">Desegin</string>
+    <string name="undo_action_review">azken berrikusketa</string>
+    <string name="undo_action_bury_card">lurperatu txartela</string>
+    <string name="undo_action_bury_note">lurperatu oharra</string>
+    <string name="undo_action_suspend_card">suspend card</string>
+    <string name="undo_action_suspend_note">suspend note</string>
+    <string name="undo_action_delete">ezabatu oharra</string>
+    <string name="undo_action_delete_multi">ezabatu oharrak</string>
+    <string name="undo_action_change_deck_multi">aldatu sortak</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Eraman denak sortara</string>
+    <string name="unbury">Lurpetik atera</string>
+    <string name="rename_deck">Aldatu izena sortari</string>
+    <string name="menu_add">Gehitu</string>
+    <string name="menu_add_note">Gehitu oharra</string>
+    <string name="menu_my_account">Sinkronizatu kontua</string>
+    <string name="menu_dismiss_note">Ezkutatu / ezabatu</string>
+    <string name="menu_bury_card">Lurperatu txartela</string>
+    <string name="menu_bury_note">Lurperatu oharra</string>
+    <string name="menu_suspend_card">Suspend card</string>
+    <string name="menu_suspend_note">Suspend note</string>
+    <string name="menu_bury">Lurperatu</string>
+    <string name="menu_suspend">Suspend</string>
+    <string name="menu_delete_note">Ezabatu oharra</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+    <string name="menu_select">Hautatu testua</string>
+    <string name="menu_search">Lookup in %1$s</string>
+    <string name="menu_mark_note">Markatu oharra</string>
+    <string name="menu_unmark_note">Desmarkatu oharra</string>
+    <string name="new_deck">Sortu sorta</string>
+    <string name="create">Sortu</string>
+    <string name="new_dynamic_deck">Sortu iragazitako sorta</string>
+    <string name="night_mode">Gau modua</string>
+    <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d s</string>
+    <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours">%d h</string>
+    <string name="time_quantity_days">%d e</string>
+    <string name="time_quantity_months">%.1f hi</string>
+    <string name="time_quantity_years">%.1f ur</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">Intentsiborako sorta berreraikitzen&#8230;</string>
+    <string name="rebuild_cram_label">Berreraiki</string>
+    <string name="empty_cram_label">Hustu</string>
+    <string name="create_subdeck">Create subdeck</string>
+    <string name="empty_cram_deck">Intentsiborako sorta husten&#8230;</string>
+    <string name="custom_study_deck_name">Ikasketa saio pertsonalizatua</string>
+    <string name="custom_study_deck_exists">Aldatu izena dagoen ikasketa sortari aurretik</string>
+    <string name="empty_deck">Sorta hau hutsik dago</string>
+    <string name="studyoptions_empty">Sorta hau hutsik dago. Sakatu + botoia edukia gehitzeko.</string>
+    <string name="studyoptions_limit_reached">Eguneko ikasketa mugara heldu zara</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">Zorionak! Oraingoz bukatu duzu.</string>
+    <string name="studyoptions_congrats_more_rev">Today’s limit has been reached, but there are still cards to review. You can increase the limit in the options.</string>
+    <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
+    <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
+    <string name="studyoptions_no_cards_due">No cards are due yet</string>
+    <string name="sd_card_not_mounted">Device storage not mounted</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">Sinkronizatu</string>
+    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+    <string name="continue_sync">Continue sync</string>
+    <string name="sync_cancelled">Sync cancelled</string>
+    <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+    <string name="export">Esportatu</string>
+    <string name="export_collection">Esportatu bilduma</string>
+    <string name="export_deck">Esportatu sorta</string>
+    <string name="nothing">Ezer ez</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">Txartel motak</string>
+    <string name="card_template_editor_front">Aurrealdearen txantiloia</string>
+    <string name="card_template_editor_back">Atzealdearen txantiloia</string>
+    <string name="card_template_editor_styling">Estiloa</string>
+    <string name="card_template_editor_menu_delete">Ezabatu</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_cant_delete">Gutxienez txartel mota bat behar da</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
+        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    </plurals>
+    <string name="invalid_template">Ezin izan da txartel bat sortu</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+    <string name="read_write_permission_description">atzitu dauden oharrak, txartelak, ohar motak, eta sortak, eta berriak sortu ere</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
+</resources>

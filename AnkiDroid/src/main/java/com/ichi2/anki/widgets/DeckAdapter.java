@@ -34,9 +34,9 @@ import android.widget.TextView;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.sched.Sched;
 
-import org.json.JSONObject;
+import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

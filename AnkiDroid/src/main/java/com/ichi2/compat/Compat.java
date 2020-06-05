@@ -17,25 +17,22 @@
 package com.ichi2.compat;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.pm.PackageInfo;
 import android.os.StatFs;
 import android.speech.tts.TextToSpeech;
 import android.text.Spanned;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebSettings;
-import android.widget.RemoteViews;
 import android.widget.TimePicker;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -43,7 +40,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  * A set of implementations for the supported platforms are available.
  * <p>
  * Each implementation ends with a {@code V<n>} prefix, identifying the minimum API version on which this implementation
- * can be used. For example, see {@link CompatV15}.
+ * can be used. For example, see {@link CompatV16}.
  * <p>
  * Each implementation should extend the previous implementation and implement this interface.
  * <p>
@@ -63,12 +60,8 @@ public interface Compat {
     String ACTION_PROCESS_TEXT = "android.intent.action.PROCESS_TEXT";
     String EXTRA_PROCESS_TEXT = "android.intent.extra.PROCESS_TEXT";
 
-    String detagged(String txt);
-    void disableDatabaseWriteAheadLogging(SupportSQLiteDatabase db);
-    void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls);
     void setFullScreen(AbstractFlashcardViewer activity);
     void setSelectableBackground(View view);
-    void openUrl(AnkiActivity activity, Uri uri);
     void prepareWebViewCookies(Context context);
     void flushWebViewCookies();
     void setHTML5MediaAutoPlay(WebSettings settings, Boolean allow);
@@ -76,12 +69,9 @@ public interface Compat {
 
     /** Returns true if the system UI currently visible during immersive mode */
     boolean isImmersiveSystemUiVisible(AnkiActivity activity);
-    boolean deleteDatabase(File db);
-    Uri getExportUri(Context context, File file);
     void setupNotificationChannel(Context context, String id, String name);
     Spanned fromHtml(String html);
     long getAvailableBytes(StatFs stat);
-    long getTotalBytes(StatFs stat);
     void setTime(TimePicker picker, int hour, int minute);
     int getHour(TimePicker picker);
     int getMinute(TimePicker picker);
@@ -94,5 +84,6 @@ public interface Compat {
     /** TextToSpeech API. {@link Compat#initTtsParams} should be called before calling {@link Compat#speak*/
     Object initTtsParams();
     int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId);
+    long getVersionCode(PackageInfo pInfo);
 }
 

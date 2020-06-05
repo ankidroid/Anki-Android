@@ -16,21 +16,25 @@
 
 package com.ichi2.libanki.template;
 
+import android.content.res.Resources;
 import android.text.TextUtils;
-import android.util.Log;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.hooks.Hooks;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 /**
  * This class renders the card content by parsing the card template and replacing all marked sections
@@ -47,132 +51,142 @@ import java.util.regex.Pattern;
 @SuppressWarnings({"PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 public class Template {
     public static final String clozeReg = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
+    public static final String CLOZE_DELETION_REPLACEMENT = "[...]";
+
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
-    private static final Pattern fClozeSection = Pattern.compile("c[qa]:(\\d+):(.+)");
-    private static final String TAG = Template.class.getName();
-
-    // The regular expression used to find a #section
-    private Pattern sSection_re = null;
-
-    // The regular expression used to find a tag.
-    private Pattern sTag_re = null;
 
     // Opening tag delimiter
-    private String sOtag = "{{";
+    private static final String sOtag = Pattern.quote("{{");
 
     // Closing tag delimiter
-    private String sCtag = "}}";
+    private static final String sCtag = Pattern.quote("}}");
+
+    // The regular expression used to find a #section
+    private static final Pattern sSection_re = Pattern.compile(sOtag + "[#|^]([^}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
+
+    // The regular expression used to find a tag.
+    private static final Pattern sTag_re = Pattern.compile(sOtag + "([#=&!>{])?(.+?)\\1?" + sCtag + "+");
 
     // MathJax opening delimiters
-    private static String sMathJaxOpenings[] = {"\\(", "\\["};
+    private static String[] sMathJaxOpenings = {"\\(", "\\["};
 
     // MathJax closing delimiters
-    private static String sMathJaxClosings[] = {"\\)", "\\]"};
+    private static String[] sMathJaxClosings = {"\\)", "\\]"};
 
     private String mTemplate;
     private Map<String, String> mContext;
 
-    private static String get_or_attr(Map<String, String> obj, String name) {
-        return get_or_attr(obj, name, null);
-    }
 
-    private static String get_or_attr(Map<String, String> obj, String name, String _default) {
+    private static @Nullable String get_or_attr(Map<String, String> obj, String name) {
         if (obj.containsKey(name)) {
             return obj.get(name);
         } else {
-            return _default;
+            return null;
         }
     }
 
 
-    public Template(String template, Map<String, String> context) {
+    public Template(@NonNull String template, @Nullable Map<String, String> context) {
         mTemplate = template;
-        mContext = context == null ? new HashMap<String, String>() : context;
-        compile_regexps();
+        mContext = context == null ? new HashMap<>() : context;
     }
 
 
     /**
      * Turns a Mustache template into something wonderful.
      */
-    public String render() {
+    public @NonNull String render() {
         String template = render_sections(mTemplate, mContext);
         return render_tags(template, mContext);
     }
 
     /**
-     * Compiles our section and tag regular expressions.
-     */
-    private void compile_regexps() {
-        String otag = Pattern.quote(sOtag);
-        String ctag = Pattern.quote(sCtag);
-
-        String section = String.format(Locale.US,
-                "%s[\\#|^]([^\\}]*)%s(.+?)%s/\\1%s", otag, ctag, otag, ctag);
-        sSection_re = Pattern.compile(section, Pattern.MULTILINE | Pattern.DOTALL);
-
-        String tag = String.format(Locale.US, "%s(#|=|&|!|>|\\{)?(.+?)\\1?%s+", otag, ctag);
-        sTag_re = Pattern.compile(tag);
-    }
-
-    /**
      * Expands sections.
      */
-    private String render_sections(String template, Map<String, String> context) {
-        while (true) {
-            Matcher match = sSection_re.matcher(template);
-            if (!match.find()) {
-                break;
-            }
-
-            String section = match.group(0);
-            String section_name = match.group(1);
-            String inner = match.group(2);
-            section_name = section_name.trim();
-            String it;
-
-            // check for cloze
-            Matcher m = fClozeSection.matcher(section_name);
-            if (m.find()) {
-                // get full field text
-                String txt = get_or_attr(context, m.group(2), null);
-                Matcher mm = Pattern.compile(String.format(clozeReg, m.group(1))).matcher(txt);
-                if (mm.find()) {
-                    it = mm.group(1);
-                } else {
-                    it = null;
-                }
-            } else {
-                it = get_or_attr(context, section_name, null);
-            }
-            String replacer = "";
-            if (!TextUtils.isEmpty(it)) {
-                it = Utils.stripHTMLMedia(it).trim();
-            }
-            if (!TextUtils.isEmpty(it)) {
-                if (section.charAt(2) != '^') {
-                    replacer = inner;
-                }
-            } else if (TextUtils.isEmpty(it) && section.charAt(2) == '^') {
-                replacer = inner;
-            }
-            template = template.replace(section, replacer);
+    private @NonNull String render_sections(@NonNull String template, @NonNull Map<String, String> context) {
+        /* Apply render_some_section to the templates, until
+           render_some_section states that it does not find sections
+           anymore. Return the last template found. */
+        String previous_template = null;
+        while (template != null) {
+            previous_template = template;
+            template = render_some_sections(template, context);
         }
-        return template;
+        return previous_template;
     }
 
+    /** Deal with conditionals that are found. If no conditionals are
+     * found, return null.
+
+     It is not guaranteed that are conditionals are found. For example, on
+     {{#field1}}
+       {{#field2}}
+     {{/field1}}
+       {{/field2}}, the regexp only finds {{field1}} and ignore {{field2}}.
+
+     Note that all conditionals are found, unless a conditional
+     appears inside itself, or conditionals are not properly
+     closed. Both cases leads to error for some values of fields so
+     should not appear in template anyways.
+
+     If some change is done, the function should be called again to
+     remove those new pairs of conditionals.
+     */
+    private @Nullable String render_some_sections(@NonNull String template, @NonNull Map<String, String> context) {
+        StringBuffer sb = new StringBuffer();
+        Matcher match = sSection_re.matcher(template);
+        boolean found = false;
+        while (match.find()) {
+            found = true;
+            String section = match.group(0);
+            String section_name = match.group(1).trim();
+            String inner = match.group(2);
+            String it = get_or_attr(context, section_name);
+            boolean field_is_empty =  it == null || TextUtils.isEmpty(Utils.stripHTMLMedia(it).trim());
+            boolean conditional_is_negative = section.charAt(2) == '^';
+            // Showing inner content if either field is empty and the
+            // conditional is a ^; or if the field is non-empty and
+            // the conditional is not ^.
+            boolean show_inner = field_is_empty == conditional_is_negative;
+            String replacer = (show_inner) ? inner : "";
+            match.appendReplacement(sb, Matcher.quoteReplacement(replacer));
+        }
+        if (!found) {
+            // There were no replacement. We can halt the computation
+            return null;
+        }
+        match.appendTail(sb);
+        return sb.toString();
+    }
 
     /**
-     * Renders all the tags in a template for a context.
+     * Expands all tags, iteratively until all tags (even tags that are replaced by tags) are resolved.
      */
-    private String render_tags(String template, Map<String, String> context) {
-        while (true) {
-            Matcher match = sTag_re.matcher(template);
-            if (!match.find()) {
-                break;
-            }
+    private @NonNull String render_tags(@NonNull String template, @NonNull Map<String, String> context) {
+        /* Apply render_some_tags to the tags, until
+           render_some_tags states that it does not find tags to replace anymore
+           anymore. Return the last template state */
+        String previous_template = null;
+        while (template != null) {
+            previous_template = template;
+            template = render_some_tags(template, context);
+        }
+        return previous_template;
+    }
 
-            String tag = match.group(0);
+    /**
+     * Replaces all the tags in a template in a single pass for the values in the given context map.
+     */
+    private @Nullable String render_some_tags(@NonNull String template, @NonNull Map<String, String> context) {
+        String ALT_HANDLEBAR_DIRECTIVE = "{{=<% %>=}}";
+        if (template.contains(ALT_HANDLEBAR_DIRECTIVE)) {
+            template = template.replace(ALT_HANDLEBAR_DIRECTIVE, "").replace("<%", "{{").replace("%>", "}}");
+        }
+        StringBuffer sb = new StringBuffer();
+        Matcher match = sTag_re.matcher(template);
+        boolean found = false;
+        while (match.find()) {
+            found = true;
             String tag_type = match.group(1);
             String tag_name = match.group(2).trim();
             String replacement;
@@ -182,20 +196,22 @@ public class Template {
                 replacement = render_tag(tag_name, context);
             } else if ("!".equals(tag_type)) {
                 replacement = render_comment();
-            } else if ("=".equals(tag_type)) {
-                replacement = render_delimiter(tag_name);
             } else {
                 return "{{invalid template}}";
             }
-            template = template.replace(tag, replacement);
+            match.appendReplacement(sb, Matcher.quoteReplacement(replacement));
         }
-        return template;
+        if (!found) {
+            return null;
+        }
+        match.appendTail(sb);
+        return sb.toString();
     }
 
     /**
      * {{{ functions just like {{ in anki
      */
-    private String render_tag(String tag_name, Map<String, String> context) {
+    private @NonNull String render_tag(@NonNull String tag_name, @NonNull Map<String, String> context) {
         return render_unescaped(tag_name, context);
     }
 
@@ -207,7 +223,7 @@ public class Template {
         return "";
     }
 
-    private String render_unescaped(String tag_name, Map<String, String> context) {
+    private @NonNull String render_unescaped(@NonNull String tag_name, @NonNull Map<String, String> context) {
         String txt = get_or_attr(context, tag_name);
         if (txt != null) {
             // some field names could have colons in them
@@ -237,16 +253,14 @@ public class Template {
         // For type:, we return directly since no other mod than cloze (or other
         // pre-defined mods) can be present and those are treated separately
         Collections.reverse(mods);
-        Collections.sort(mods, new Comparator<String>() {
-            // This comparator ensures "type:" mods are ordered first in the list. The rest of
-            // the list remains in the same order.
-            @Override
-            public int compare(String lhs, String rhs) {
-                if ("type".equals(lhs)) {
-                    return 0;
-                } else {
-                    return 1;
-                }
+        // This comparator ensures "type:" mods are ordered first in the list. The rest of
+        // the list remains in the same order.
+        //noinspection ComparatorMethodParameterNotUsed
+        Collections.sort(mods, (lhs, rhs) -> {
+            if ("type".equals(lhs)) {
+                return 0;
+            } else {
+                return 1;
             }
         });
 
@@ -270,7 +284,7 @@ public class Template {
                 mod = split[0];
                 extra = split[1];
                 if (!TextUtils.isEmpty(txt) && !TextUtils.isEmpty(extra)) {
-                    txt = clozeText(txt, extra, mod.charAt(1));
+                    txt = clozeText(txt != null ? txt : "", extra, mod.charAt(1));
                 } else {
                     txt = "";
                 }
@@ -282,19 +296,53 @@ public class Template {
                     extra = m.group(2);
                 }
 
-                txt = (String) Hooks.runFilter("fmod_" + mod,
-                        txt == null ? "" : txt,
-                        extra == null ? "" : extra,
-                        context, tag, tag_name);
+                if (txt == null) {
+                    txt = "";
+                }
+                try {
+                    switch (mod) {
+                    case "hint" :
+                        txt = runHint(txt, tag);
+                        break;
+                    case "kanji" :
+                        txt = FuriganaFilters.kanjiFilter(txt);
+                        break;
+                    case "kana" :
+                        txt = FuriganaFilters.kanaFilter(txt);
+                        break;
+                    case "furigana" :
+                        txt = FuriganaFilters.furiganaFilter(txt);
+                        break;
+                    default :
+                        break;
+                    }
+                } catch (Exception e) {
+                    Timber.e(e, "Exception while running hook %s", mod);
+                    return "Error in filter " + mod;
+                }
                 if (txt == null) {
                     return String.format("{unknown field %s}", tag_name);
                 }
             }
         }
-        return txt;
+        return txt != null ? txt : "";
     }
 
-    private static String clozeText(String txt, String ord, char type) {
+    private String runHint(String txt, String tag) {
+        if (txt.trim().length() == 0) {
+            return "";
+        }
+        Resources res = AnkiDroidApp.getAppResources();
+        // random id
+        String domid = "hint" + txt.hashCode();
+        return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
+                domid + "').style.display='block';_relinquishFocus();return false;\">" +
+                res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
+                domid + "\" class=hint style=\"display: none\">" + txt + "</div>";
+    }
+
+
+    private static @NonNull String clozeText(@NonNull String txt, @NonNull String ord, char type) {
         if (!Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt).find()) {
             return "";
         }
@@ -310,7 +358,7 @@ public class Template {
                 if (!TextUtils.isEmpty(m.group(4))) {
                     buf = "[" + m.group(4) + "]";
                 } else {
-                    buf = "[...]";
+                    buf = CLOZE_DELETION_REPLACEMENT;
                 }
             } else {
                 buf = m.group(2);
@@ -327,7 +375,7 @@ public class Template {
         return txt.replaceAll(String.format(Locale.US, clozeReg, "\\d+"), "$2");
     }
 
-    public static boolean textContainsMathjax(String txt) {
+    public static boolean textContainsMathjax(@NonNull String txt) {
         // Do you have the first opening and then the first closing,
         // or the second opening and the second closing...?
 
@@ -366,7 +414,7 @@ public class Template {
      * The clozeText method interprets the upper-case C as "don't wrap this
      * Cloze in a <span>".
      */
-    public static String removeFormattingFromMathjax(String txt, String ord) {
+    public static @NonNull String removeFormattingFromMathjax(@NonNull String txt, @NonNull String ord) {
         String creg = clozeReg.replace("(?si)", "");
         // Scan the string left to right.
         // After a MathJax opening - \( or \[ - flip in_mathjax to True.
@@ -380,13 +428,12 @@ public class Template {
         boolean in_mathjax = false;
 
         // The following regex matches one of 3 things, noted below:
-        String regex = new StringBuilder("(?si)")
-            .append("(\\\\[(\\[])|")  // group 1, MathJax opening
-            .append("(\\\\[\\])])|")  // group 2, MathJax close
-            .append("(")              // group 3, Cloze deletion number `ord`
-            .append(String.format(Locale.US, creg, ord))
-            .append(")")
-            .toString();
+        String regex = "(?si)" +
+                "(\\\\[(\\[])|" +  // group 1, MathJax opening
+                "(\\\\[])])|" +  // group 2, MathJax close
+                "(" +              // group 3, Cloze deletion number `ord`
+                String.format(Locale.US, creg, ord) +
+                ")";
 
         Matcher m = Pattern.compile(regex).matcher(txt);
 
@@ -394,12 +441,12 @@ public class Template {
         while (m.find()) {
             if (m.group(1) != null) {
                 if (in_mathjax) {
-                    Log.d(TAG, "MathJax opening found while already in MathJax");
+                    Timber.d("MathJax opening found while already in MathJax");
                 }
                 in_mathjax = true;
             } else if (m.group(2) != null) {
                 if (!in_mathjax) {
-                    Log.d(TAG, "MathJax close found while not in MathJax");
+                    Timber.d("MathJax close found while not in MathJax");
                 }
                 in_mathjax = false;
             } else if (m.group(3) != null) {
@@ -407,34 +454,17 @@ public class Template {
                     // appendReplacement has an issue with backslashes, so...
                     m.appendReplacement(
                         repl,
-                        m.quoteReplacement(
+                        Matcher.quoteReplacement(
                             m.group(0).replace(
                                 "{{c" + ord + "::", "{{C" + ord + "::")));
                     continue;
                 }
             } else {
-                Log.d(TAG, "Unexpected: no expected capture group is present");
+                Timber.d("Unexpected: no expected capture group is present");
             }
             // appendReplacement has an issue with backslashes, so...
             m.appendReplacement(repl, Matcher.quoteReplacement(m.group(0)));
         }
         return m.appendTail(repl).toString();
-    }
-
-
-    /**
-     * Changes the Mustache delimiter.
-     */
-    private String render_delimiter(String tag_name) {
-        try {
-            String[] split = tag_name.split(" ");
-            sOtag = split[0];
-            sCtag = split[1];
-        } catch (IndexOutOfBoundsException e) {
-            // invalid
-            return null;
-        }
-        compile_regexps();
-        return "";
     }
 }

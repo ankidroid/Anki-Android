@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Navigation drawer items-->
+    <string name="decks">அடுக்குகள்</string>
+    <string name="card_browser">அட்டை உலாவி</string>
+    <string name="statistics">புள்ளிவிவரங்கள்</string>
+    <string name="settings">அமைப்புகள்</string>
+    <string name="help">உதவி</string>
+    <string name="send_feedback">கருத்தினை அனுப்பவும்</string>
+    <string name="studyoptions_title">டெக் கண்ணோட்டம்</string>
+    <string name="studyoptions_due_today">இன்று காரணமாக</string>
+    <string name="studyoptions_new_total">மொத்த புதிய அட்டைகள்</string>
+    <string name="studyoptions_total_cards">மொத்த அட்டைகள்</string>
+    <string name="studyoptions_eta">கணிக்கப்பட்ட நேரம் (நிமிடங்கள்)</string>
+    <string name="studyoptions_start">படி</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">விரிவாக்க</string>
+    <string name="collapse">சரிவு</string>
+    <string name="study_more">இன்னும் படி</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d காரணமாக அட்டை (%2$s)</item>
+        <item quantity="other">%1$d காரணமாக அட்டை (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">%d நிமிடம் விட்டுவிட்டது</item>
+        <item quantity="other">%d நிமிடம் விட்டுவிட்டது</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">இன்று %2$s அட்டை படித்தது %1$d</item>
+        <item quantity="other">இன்று %2$s அட்டை படித்தது %1$d</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">பதில் தட்டச்சு செய்யவும்</string>
+    <string name="show_answer">பதில் காட்டவும்</string>
+    <string name="ease_button_again">மீண்டும்</string>
+    <string name="ease_button_hard">கடின</string>
+    <string name="ease_button_good">நல்ல</string>
+    <string name="ease_button_easy">எளிதாக</string>
+    <string name="studyoptions_congrats_undo">செயல்தவிர்ப்பது %s</string>
+    <string name="menu_import">இறக்குமதி</string>
+    <string name="undo">செயல்தவிர்ப்பது </string>
+    <string name="undo_action_review">கடைசி மதிப்பாய்வு</string>
+    <string name="undo_action_bury_card">அட்டை அடங்கும்</string>
+    <string name="undo_action_bury_note">குறிப்பு அடங்கும்</string>
+    <string name="undo_action_suspend_card">கார்டை நிறுத்து</string>
+    <string name="undo_action_suspend_note">குறிப்பு நிறுத்து</string>
+    <string name="undo_action_delete">குறிப்பு நீக்கவும்</string>
+    <string name="undo_action_delete_multi">delete notes</string>
+    <string name="undo_action_change_deck_multi">change decks</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="unbury">புதைத்து வைக்காதே</string>
+    <string name="rename_deck">மறுபெயரிடு</string>
+    <string name="menu_add">கூட்டு</string>
+    <string name="menu_add_note">குறிப்பு சேர்க்க</string>
+    <string name="menu_my_account">ஒத்திசைக்க</string>
+    <string name="menu_dismiss_note">மறைக்க/அழி</string>
+    <string name="menu_bury_card">அட்டை அடங்கும்</string>
+    <string name="menu_bury_note">குறிப்பு அடங்கும்</string>
+    <string name="menu_suspend_card">கார்டை நிறுத்து</string>
+    <string name="menu_suspend_note">குறிப்பு நிறுத்து</string>
+    <string name="menu_bury">புதைத்து</string>
+    <string name="menu_suspend">இடைநிறுத்த</string>
+    <string name="menu_delete_note">குறிப்பு நீக்கவும்</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="delete_note_message">உண்மையில் இந்த குறிப்பையும் அதன் அனைத்து அட்டைகளையும் நீக்கவா?\%s</string>
+    <string name="menu_select">உரை தேர்ந்தெடு</string>
+    <string name="menu_search">இங்கே பாருங்கள் %1$s</string>
+    <string name="menu_mark_note">குறிப்பு குறிக்கவும்</string>
+    <string name="menu_unmark_note">குறிப்பு குறிக்கப்படாது</string>
+    <string name="new_deck">டெக் உருவாக்கவும்</string>
+    <string name="create">உருவாக்கு</string>
+    <string name="new_dynamic_deck">வடிகட்டப்பட்ட டெக் உருவாக்கவும்</string>
+    <string name="night_mode">இரவு நிலை</string>
+    <string name="directory_inaccessible">AnkiDroid அடைவு அணுகக்கூடியதாக</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d ஸ் </string>
+    <string name="time_quantity_minutes">%d நிமிடம்</string>
+    <string name="time_quantity_hours">%d ஹ </string>
+    <string name="time_quantity_days">%d டி</string>
+    <string name="time_quantity_months">%.1f மோ</string>
+    <string name="time_quantity_years">%.1f ஆண்டு</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">மீளக் cram கட்டு...</string>
+    <string name="rebuild_cram_label">மீண்டும்</string>
+    <string name="empty_cram_label">காலி</string>
+    <string name="create_subdeck">Create subdeck</string>
+    <string name="empty_cram_deck">Cram கட்டு காலிசெய்வதால்...</string>
+    <string name="custom_study_deck_name">தனிப்பயன் ஆய்வு கூட்டம்</string>
+    <string name="custom_study_deck_exists">தற்போதுள்ள விருப்ப ஆய்வு கட்டு முதலில் மறுபெயரிடு</string>
+    <string name="empty_deck">இந்த கட்டு காலியாக உள்ளது</string>
+    <string name="studyoptions_empty">இந்த கட்டு காலியாக உள்ளது. பத்திரிகை, + புதிய உள்ளடக்கம் சேர்க்க பொத்தான்.</string>
+    <string name="studyoptions_limit_reached">தினசரி படிப்பு வரம்பை அடைந்தது</string>
+    <string name="studyoptions_empty_schedule">ஆய்வு செய்ய திட்டமிட்ட அட்டைகள் இல்லை</string>
+    <string name="studyoptions_congrats_finished">வாழ்த்துக்கள்! நீ இப்போது முடித்துவிட்டாய்.</string>
+    <string name="studyoptions_congrats_more_rev">இன்றைய வரம்பு வரம்பானது, ஆனால் மறுபரிசீலனை செய்ய இன்னும் அட்டைகள் உள்ளன. விருப்பங்களில் வரம்பை அதிகரிக்கலாம்.</string>
+    <string name="studyoptions_congrats_more_new">இன்றைய வரம்பு எட்டப்பட்டுள்ளது. இன்னும் புதிய கார்டுகள் கிடைக்கின்றன; நீங்கள் விருப்பங்களில் வரம்பை அதிகரிக்க முடியும், ஆனால் இது உங்கள் குறுகிய கால மதிப்பாய்வு பணிச்சுமையை அதிகரிக்கும்.</string>
+    <string name="studyoptions_congrats_custom">சாதாரண அட்டவணை வெளியே படிக்க \"விருப்பம் ஆய்வு\" பட்டனைத் தொடவும்</string>
+    <string name="studyoptions_no_cards_due">இல்லை அட்டைகள் இன்னும் காரணமாக உள்ளன</string>
+    <string name="sd_card_not_mounted">சாதன சேமிப்பகம் பொருத்தப்படவில்லை</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">ஒத்திசைக்க</string>
+    <string name="cancel_sync_confirm">ஒத்திசைவை ரத்து செய்ய விரும்புகிறீர்களா?</string>
+    <string name="continue_sync">ஒத்திசைவைத் தொடரவும்</string>
+    <string name="sync_cancelled">ஒத்திசைவு ரத்துசெய்யப்பட்டது</string>
+    <string name="sync_cancel_message">ரத்து இது சிறிது நேரம் ஆகலாம்</string>
+    <string name="export">ஏற்றுமதி</string>
+    <string name="export_collection">ஏற்றுமதி சேகரிப்பு</string>
+    <string name="export_deck">ஏற்றுமதி டெக்</string>
+    <string name="nothing">எதுவும் இல்லை</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">அட்டை வகைகள்</string>
+    <string name="card_template_editor_front">முன் வார்ப்புரு</string>
+    <string name="card_template_editor_back">பின் வார்ப்புரு</string>
+    <string name="card_template_editor_styling">ஸ்டைலிங்</string>
+    <string name="card_template_editor_menu_delete">அழி</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_cant_delete">குறைந்தது ஒரு கார்டு வகை தேவை</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">அட்டை வகை %2$s மற்றும் அதன் அட்டை %1$d நீக்க வேண்டுமா?</item>
+        <item quantity="other">அட்டை வகை %2$s மற்றும் அதன் அட்டை %1$d நீக்க வேண்டுமா?</item>
+    </plurals>
+    <string name="invalid_template">ஒரு கார்டை உருவாக்க முடியவில்லை</string>
+    <string name="card_template_editor_would_delete_note">இந்த கார்டை நீக்குவது ஒன்று அல்லது அதற்கு மேற்பட்ட குறிப்புகள் நீக்கப்படும். முதலில் ஒரு புதிய கார்டு வகை ஒன்றை உருவாக்கவும்.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">AnkiDroid டேட்டாபேஸ் எழுதப்</string>
+    <string name="read_write_permission_description">தற்போதுள்ள குறிப்புகள், அட்டைகள், குறிப்பு வகைகள் மற்றும் அடுக்குகள் அணுக, அத்துடன் புதிய ஒன்றை உருவாக்க</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
+</resources>

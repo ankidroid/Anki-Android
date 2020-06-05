@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string-array name="error_reporting_choice_labels">
+        <item>Həmişə bildir</item>
+        <item>Heç vaxt bildirmə</item>
+        <item>Məndən soruş</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Hərəkət yoxdur</item>
+        <item>Cavabı göstər</item>
+        <item>1. cavab düyməsi</item>
+        <item>2. cavab düyməsi</item>
+        <item>3. cavab düyməsi</item>
+        <item>4. cavab düyməsi</item>
+        <item>Tövsiyə edilən cavab (yaşıl)</item>
+        <item>Tövsiyə ediləndən daha yaxşı cavabla</item>
+        <item>Geri qaytar</item>
+        <item>Qeydə düzəliş et</item>
+        <item>Qeydi işarələ</item>
+        <item>İfadəni axtar</item>
+        <item>Kartı gizlət</item>
+        <item>Suspend card</item>
+        <item>Qeydi sil</item>
+        <item>Medianı oynat</item>
+        <item>Öyrənməni dayandır</item>
+        <item>Qeydi gizlət</item>
+        <item>Suspend note</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Suspend card</item>
+        <item>Yalnız etiket</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Yeni kartlar təsadüfi sırada</item>
+        <item>Yeni kartlar əlavə edilmiş sıraya görə</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Birinci köhnələr</item>
+        <item>Təsadüfi</item>
+        <item>Artan aralıqda</item>
+        <item>Azalan aralıqda</item>
+        <item>Most lapsed</item>
+        <item>Əlavə edilmiş sıra</item>
+        <item>Çıxma sırası</item>
+        <item>Birinci ən son əlavə edilənlər</item>
+        <item>Relative overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Use current deck</item>
+        <item>Qeyd növünə görə qərar ver</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Mix new cards and reviews</item>
+        <item>New cards after reviews</item>
+        <item>New cards before reviews</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>When no font specified on flashcards</item>
+        <item>Həmişə</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Açıq</item>
+        <item>Düz</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Qara</item>
+        <item>Tünd</item>
+    </string-array>
+</resources>

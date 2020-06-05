@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Stats;
+import com.ichi2.libanki.stats.Stats;
 import com.ichi2.themes.Themes;
 import com.wildplot.android.rendering.PlotSheet;
 
@@ -226,7 +226,7 @@ public class AnkiStatsTaskHandler {
                         cur.close();
                     }
                 }
-                Resources res = collection.getContext().getResources();
+                Resources res = mTextView.getResources();
                 final String span = res.getQuantityString(R.plurals.in_minutes, minutes, minutes);
                 return res.getQuantityString(R.plurals.studied_cards_today, cards, cards, span);
             } finally {

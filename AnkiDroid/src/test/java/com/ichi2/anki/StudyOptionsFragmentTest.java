@@ -55,4 +55,26 @@ public class StudyOptionsFragmentTest {
         Spanned result = StudyOptionsFragment.formatDescription("a<style type=\"text/css\">a:1</style>a");
         assertEquals("aa", result.toString());
     }
+
+    /** Begin #5188 - newlines weren't displayed */
+
+    @Test //This was originally correct
+    public void brIsDisplayedAsNewline() {
+        Spanned result = StudyOptionsFragment.formatDescription("a<br/>a");
+        assertEquals("a\na", result.toString());
+    }
+
+    @Test
+    public void windowsNewlinesAreNewlines() {
+        Spanned result = StudyOptionsFragment.formatDescription("a\r\na");
+        assertEquals("a\na", result.toString());
+    }
+
+    @Test
+    public void unixNewlinesAreNewlines() {
+        Spanned result = StudyOptionsFragment.formatDescription("a\na");
+        assertEquals("a\na", result.toString());
+    }
+
+    /** end #5188 */
 }

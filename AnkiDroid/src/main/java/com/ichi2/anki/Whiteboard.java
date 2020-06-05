@@ -206,7 +206,7 @@ public class Whiteboard extends View {
     public void undo() {
         mUndo.pop();
         mUndo.apply();
-        if (undoSize() == 0 && mCardViewer.get() != null) {
+        if (undoEmpty() && mCardViewer.get() != null) {
             mCardViewer.get().supportInvalidateOptionsMenu();
         }
     }
@@ -216,6 +216,11 @@ public class Whiteboard extends View {
      */
     public int undoSize() {
         return mUndo.size();
+    }
+
+    /** @return Whether there are strokes to undo */
+    public boolean undoEmpty() {
+        return mUndo.empty();
     }
 
     /**
@@ -402,5 +407,13 @@ public class Whiteboard extends View {
             }
             invalidate();
         }
+
+        public boolean empty() {
+            return mWhichStack.empty();
+        }
+    }
+
+    public boolean isCurrentlyDrawing() {
+        return mCurrentlyDrawing;
     }
 }

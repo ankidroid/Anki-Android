@@ -42,7 +42,9 @@ import timber.log.Timber;
 
 public abstract class NavigationDrawerActivity extends AnkiActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    /** Navigation Drawer */
+    /**
+     * Navigation Drawer
+     */
     protected CharSequence mTitle;
     protected Boolean mFragmented = false;
     private boolean mNavButtonGoesBack = false;
@@ -58,6 +60,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
     public static final int REQUEST_STATISTICS = 102;
+    private static final String NIGHT_MODE_PREFERENCE = "invertedColors";
 
     /**
      * runnable that will be executed after the drawer has been closed.
@@ -87,20 +90,11 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             toolbar.setNavigationOnClickListener(v -> onNavigationPressed());
         }
         // Configure night-mode switch
-        final SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(NavigationDrawerActivity.this);
+        final SharedPreferences preferences = getPreferences();
         View actionLayout = mNavigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
         mNightModeSwitch = actionLayout.findViewById(R.id.switch_compat);
-        mNightModeSwitch.setChecked(preferences.getBoolean("invertedColors", false));
-        mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                Timber.i("StudyOptionsFragment:: Night mode was enabled");
-                preferences.edit().putBoolean("invertedColors", true).apply();
-            } else {
-                Timber.i("StudyOptionsFragment:: Night mode was disabled");
-                preferences.edit().putBoolean("invertedColors", false).apply();
-            }
-            restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
-        });
+        mNightModeSwitch.setChecked(preferences.getBoolean(NIGHT_MODE_PREFERENCE, false));
+        mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> { applyNightMode(isChecked); });
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0) {
@@ -109,7 +103,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 super.onDrawerClosed(drawerView);
                 supportInvalidateOptionsMenu();
 
-                if(pendingRunnable != null) {
+                if (pendingRunnable != null) {
                     new Handler().post(pendingRunnable);
                     pendingRunnable = null;
                 }
@@ -127,8 +121,9 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
 
-
-    /** Sets selected navigation drawer item */
+    /**
+     * Sets selected navigation drawer item
+     */
     protected void selectNavigationItem(int itemId) {
         if (mNavigationView == null) {
             Timber.e("Could not select item in navigation drawer as NavigationView null");
@@ -150,7 +145,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
 
-
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
@@ -158,6 +152,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             getSupportActionBar().setTitle(mTitle);
         }
     }
+
 
     /**
      * When using the ActionBarDrawerToggle, you must call it during
@@ -173,6 +168,16 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         }
     }
 
+    private SharedPreferences getPreferences() {
+        return AnkiDroidApp.getSharedPrefs(NavigationDrawerActivity.this);
+    }
+
+    private void applyNightMode(boolean setToNightMode) {
+        final SharedPreferences preferences = getPreferences();
+        Timber.i("Night mode was %s", setToNightMode ? "enabled" : "disabled");
+        preferences.edit().putBoolean(NIGHT_MODE_PREFERENCE, setToNightMode).apply();
+        restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -212,9 +217,8 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-        // Update language
-        AnkiDroidApp.setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
+        final SharedPreferences preferences = getPreferences();
+        Timber.i("Handling Activity Result: %d. Result: %d", requestCode, resultCode);
         NotificationChannels.setup(getApplicationContext());
         // Restart the activity on preference change
         if (requestCode == REQUEST_PREFERENCES_UPDATE) {
@@ -232,7 +236,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 }
             } else {
                 // collection path has changed so kick the user back to the DeckPicker
-                CollectionHelper.getInstance().closeCollection(true);
+                CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed");
                 restartActivityInvalidateBackstack(this);
             }
         } else {
@@ -278,32 +282,39 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             // Take action if a different item selected
             switch (item.getItemId()) {
                 case R.id.nav_decks: {
+                    Timber.i("Navigating to decks");
                     Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
                     deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
                     startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.RIGHT);
                     break;
                 }
                 case R.id.nav_browser:
+                    Timber.i("Navigating to card browser");
                     openCardBrowser();
                     break;
                 case R.id.nav_stats: {
+                    Timber.i("Navigating to stats");
                     Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
                     startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, ActivityTransitionAnimation.LEFT);
                     break;
                 }
                 case R.id.nav_night_mode:
+                    Timber.i("Toggling Night Mode");
                     mNightModeSwitch.performClick();
                     break;
                 case R.id.nav_settings:
+                    Timber.i("Navigating to settings");
                     mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
                     // Remember the theme we started with so we can restart the Activity if it changes
                     mOldTheme = Themes.getCurrentTheme(getApplicationContext());
                     startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
                     break;
                 case R.id.nav_help:
+                    Timber.i("Navigating to help");
                     openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
                     break;
                 case R.id.nav_feedback:
+                    Timber.i("Navigating to feedback");
                     openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
                     break;
                 default:

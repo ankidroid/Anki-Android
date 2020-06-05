@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string-array name="error_reporting_choice_labels">
+        <item>Laging iulat</item>
+        <item>Huwag kailanman mag-ulat</item>
+        <item>Tanungin mo ako</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>Walang aksyon</item>
+        <item>Ipakita ang sagot</item>
+        <item>Sagot na pindutan 1</item>
+        <item>Sagot na pindutan 2</item>
+        <item>Sagot na pindutan 3</item>
+        <item>Sagot na pindutan 4</item>
+        <item>Sagot inirerekomenda (berde)</item>
+        <item>Sagutin nang mas mabuti kaysa sa inirekomenda</item>
+        <item>Pawalang-bisa</item>
+        <item>I-edit ang tala</item>
+        <item>Markahan ang tala</item>
+        <item>Hanapin ang expression</item>
+        <item>Bury card</item>
+        <item>Suspend ang card</item>
+        <item>Tanggalin ang tala</item>
+        <item>I-play ang media</item>
+        <item>Abort sa pag-aaral</item>
+        <item>Bury note</item>
+        <item>Suspindihin ang tala</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>Suspindihin ang card</item>
+        <item>Tag lamang</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>Bagong mga card sa random order</item>
+        <item>Bagong mga card sa random na pagkakasunud-sunod</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>Pinakalumang nakita muna</item>
+        <item>Pinakalumang nakita muna</item>
+        <item>Ang pagpapataas ng agwat</item>
+        <item>Pagpapababa ng mga agwat</item>
+        <item>Karamihan ay natapos na</item>
+        <item>Idinagdag ang order</item>
+        <item>Order due</item>
+        <item>Pinakabagong inaidagdag muna</item>
+        <item>Relative overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>Gumamit ng kasalukuyang deck</item>
+        <item>Magpasya ayon sa uri ng tala</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>Paghaluin ang mga bagong card at mga review</item>
+        <item>Mga bagong card pagkatapos ng mga review</item>
+        <item>Bagong mga card bago ang mga review</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Kapag walang tinukoy na font sa flashcards</item>
+        <item>Palagi</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>Banayad</item>
+        <item>Plain</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>Itim</item>
+        <item>Madilim</item>
+    </string-array>
+</resources>

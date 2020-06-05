@@ -117,9 +117,11 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void updateScreenCounts() { /* do nothing */ }
 
 
-    // No Gestures!
     @Override
-    protected void executeCommand(int which) { /* do nothing */ }
+    public boolean executeCommand(int which) {
+        /* do nothing */
+        return false;
+    }
 
     private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override

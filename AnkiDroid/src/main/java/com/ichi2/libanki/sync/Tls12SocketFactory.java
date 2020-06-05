@@ -18,20 +18,23 @@ package com.ichi2.libanki.sync;
 
 import android.os.Build;
 
+import com.ichi2.anki.AnkiDroidApp;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
 
 import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
@@ -48,24 +51,24 @@ import timber.log.Timber;
  * @see SSLSocketFactory
  */
 public class Tls12SocketFactory extends SSLSocketFactory {
-    private static final String[] TLS_V12_ONLY = {"TLSv1.2"};
+    private static final String[] TLS_V12_ONLY =  {"TLSv1.2"};
 
     private final SSLSocketFactory delegate;
 
 
     public static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
-        if (Build.VERSION.SDK_INT >= 16 && Build.VERSION.SDK_INT < 22) {
-
+        if (Build.VERSION.SDK_INT < 22) {
             try {
-                TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(
-                        TrustManagerFactory.getDefaultAlgorithm());
-                trustManagerFactory.init((KeyStore) null);
-                TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
-                if (trustManagers.length != 1 || !(trustManagers[0] instanceof X509TrustManager)) {
-                    throw new IllegalStateException("Unexpected default trust managers:"
-                            + Arrays.toString(trustManagers));
-                }
-                X509TrustManager trustManager = (X509TrustManager) trustManagers[0];
+                Timber.d("Creating unified TrustManager");
+                Certificate cert = getUserTrustRootCertificate();
+
+                String keyStoreType = KeyStore.getDefaultType();
+                KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+                keyStore.load(null, null);
+                keyStore.setCertificateEntry("ca", cert);
+                UnifiedTrustManager trustManager = new UnifiedTrustManager(keyStore);
+                Timber.d("Finished: Creating unified TrustManager");
+
                 SSLContext sc = SSLContext.getInstance("TLSv1.2");
                 sc.init(null, new TrustManager[] {trustManager}, null);
                 Tls12SocketFactory socketFactory = new Tls12SocketFactory(sc.getSocketFactory());
@@ -87,6 +90,14 @@ public class Tls12SocketFactory extends SSLSocketFactory {
         }
 
         return client;
+    }
+
+
+    private static Certificate getUserTrustRootCertificate() throws CertificateException, IOException {
+        CertificateFactory cf = CertificateFactory.getInstance("X.509");
+        try (InputStream crt = AnkiDroidApp.getResourceAsStream("assets/USERTrust_RSA.crt")) {
+            return cf.generateCertificate(crt);
+        }
     }
 
 

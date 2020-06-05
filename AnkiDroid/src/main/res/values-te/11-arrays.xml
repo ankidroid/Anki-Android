@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string-array name="error_reporting_choice_labels">
+        <item>ఎల్లప్పుడూ రిపోర్ట్ చెయ్యండి</item>
+        <item>ఎప్పుడూ రిపోర్ట్ చెయ్యండి</item>
+        <item>నన్ను అడుగు</item>
+    </string-array>
+    <string-array name="gestures_labels">
+        <item>చర్య తీసుకోలేదు</item>
+        <item>సమాధానం చూపించు</item>
+        <item>జవాబు బటన్ 1</item>
+        <item>జవాబు బటన్ 2</item>
+        <item>జవాబు బటన్ 3</item>
+        <item>జవాబు బటన్ 4</item>
+        <item>సిఫార్సు చేసిన సమాధానం (ఆకుపచ్చ)</item>
+        <item>సిఫార్సులు కంటే మెరుగైన సమాధానం ఇవ్వండి</item>
+        <item>అన్డు</item>
+        <item>గమనికను సవరించండి</item>
+        <item>గమనికను గుర్తించండి</item>
+        <item>శోధన వ్యక్తీకరణ</item>
+        <item>గమనిక బరీ</item>
+        <item>కార్డును నిలిపివేయి</item>
+        <item>గమనికను తొలగించండి</item>
+        <item>మీడియా ప్లే చేయండి</item>
+        <item>నేర్చుకోవడం ఆగిపోతుంది</item>
+        <item>బరీ గమనిక</item>
+        <item>గమనికని ఆపివేయి</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>కార్డ్ను ఆపివేయి</item>
+        <item>ట్యాగ్ మాత్రమే</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>యాదృచ్ఛిక క్రమంలో కొత్త కార్డులు</item>
+        <item>క్రమంలో కొత్త కార్డులు జోడించబడ్డాయి</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>పురాతనమైనది మొదటిది</item>
+        <item>పద్ధతి లేకుండా</item>
+        <item>విరామాలను పెంచండి</item>
+        <item>విరామాలను తగ్గించండి</item>
+        <item>చాలా లాప్స్</item>
+        <item>ఆర్డర్ జోడించబడింది</item>
+        <item>ఆర్డర్ జోడించబడింది</item>
+        <item>ఇటీవల జోడించబడింది</item>
+        <item>సాపేక్ష నిర్లక్ష్యం</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>ప్రస్తుత డెక్ ఉపయోగించండి</item>
+        <item>గమనిక రకం ద్వారా నిర్ణయిస్తారు</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>కొత్త కార్డులు మరియు సమీక్షలను జోడించండి</item>
+        <item>సమీక్షల తర్వాత కొత్త కార్డ్లు</item>
+        <item>సమీక్షలకు ముందు కొత్త కార్డ్లు</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>Flashcards లో ఏ ఫాంట్ పేర్కొనబడలేదు</item>
+        <item>ఎల్లప్పుడూ</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>లైట్</item>
+        <item>సాదా</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>నలుపు</item>
+        <item>ముదురు రంగు</item>
+    </string-array>
+</resources>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ 	Zaur Molotnikov & Bibek Shrestha
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Main editor popup menu items -->
+    <string name="multimedia_editor_popup_image">Biauk frisaht</string>
+    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
+    <string name="multimedia_editor_popup_audio">Record audio</string>
+    <string name="multimedia_editor_popup_text">Advanced editor</string>
+    <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
+    <!-- Translation activity (Glosbe) -->
+    <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
+    <!-- these are like translate f r o m  and t o  some othe languages -->
+    <string name="multimedia_editor_trans_from">Fram</string>
+    <string name="multimedia_editor_trans_to">Du</string>
+    <!-- imperative for the button title -->
+    <string name="multimedia_editor_trans_translate">Gaskeirei</string>
+    <!-- waiting message -->
+    <string name="multimedia_editor_trans_translating_online">Gaskeirjands ana natja</string>
+    <!-- pick the right translation imperative -->
+    <string name="multimedia_editor_trans_pick_translation">Gawalei gaskeirein</string>
+    <!-- in controller when fails -->
+    <string name="multimedia_editor_trans_translation_failed">Translation failed</string>
+    <!-- from controller -->
+    <!-- dialog title to ask for translation source -->
+    <string name="multimedia_editor_trans_pick_translation_source">Gawalei waurdabokos</string>
+    <!-- dialog asking to install ColorDict -->
+    <string name="multimedia_editor_trans_install_color_dict">Install ColorDict first</string>
+    <!-- Pronunciation activity (Beolingus) -->
+    <string name="multimedia_editor_pron_load">Load</string>
+    <string name="multimedia_editor_pron_looking_up">Looking up pronunciation</string>
+    <!-- in controller when fails -->
+    <string name="multimedia_editor_pron_pronunciation_failed">Pronunciation failed</string>
+    <string name="multimedia_editor_word_search_try_lower_case">Try using only lower case characters</string>
+    <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
+    <!-- Field editing general -->
+    <!-- these are button names to convert field type -->
+    <string name="multimedia_editor_field_editing_text">Bokos</string>
+    <string name="multimedia_editor_field_editing_image">Frisahts</string>
+    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_done">Manwiþ</string>
+    <!-- Text field editing -->
+    <!-- buttons -->
+    <string name="multimedia_editor_text_field_editing_search_label">Gasokei:</string>
+    <string name="multimedia_editor_text_field_editing_show">Frisahts</string>
+    <string name="multimedia_editor_text_field_editing_say">Pronunciation</string>
+    <string name="multimedia_editor_text_field_editing_clear">Afswairb</string>
+    <string name="multimedia_editor_text_field_editing_clone">Clone from</string>
+    <string name="multimedia_editor_text_field_editing_translate">Gaskeireins</string>
+    <!-- message to user, when there is no text or many words, but the user tries something -->
+    <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
+    <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
+    <!-- message when cloning -->
+    <string name="multimedia_editor_text_field_editing_clone_source">Nim us</string>
+    <!-- Multimedia card editor activity -->
+    <!-- for buttons -->
+    <!-- delete confirmation -->
+    <!-- Image editing -->
+    <!-- for buttons -->
+    <string name="multimedia_editor_image_field_editing_galery">Frisahtiwiko</string>
+    <string name="multimedia_editor_image_field_editing_photo">Camera</string>
+    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <!-- General -->
+    <!-- message on the progress dialog for the user to wait, means process -->
+    <string name="multimedia_editor_general_downloading">Dalahlaþands</string>
+    <!-- when process finishes -->
+    <string name="multimedia_editor_general_done">Manwiþ</string>
+    <!-- General word search and failures -->
+    <string name="multimedia_editor_error_word_not_found">The word was not found</string>
+    <!-- failure when contacting glosbe or similar -->
+    <string name="multimedia_editor_trans_getting_failure">Getting translation failed</string>
+    <string name="multimedia_editor_searching_word">Waurd gasokjand</string>
+    <!-- General -->
+    <string name="multimedia_editor_progress_wait_title">Usbeidei</string>
+    <!-- not a good message, when an unexpected error happens -->
+    <string name="multimedia_editor_something_wrong">Warþ airzei</string>
+    <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
+    <string name="multimedia_editor_attach_media">Attach media</string>
+    <!-- Audio view -->
+    <!-- Message when recording fails -->
+    <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
+    <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
+    <!-- Activity titles -->
+    <string name="title_activity_edit_text">Editing field</string>
+    <string name="title_activity_translation">Gaskeireins</string>
+    <string name="title_activity_load_pronounciation">Pronunciation</string>
+    <!-- Network failure -->
+    <string name="network_no_connection">No connection</string>
+</resources>

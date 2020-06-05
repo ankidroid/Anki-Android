@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Navigation drawer items-->
+    <string name="decks">ڈیک</string>
+    <string name="card_browser">کارڈ براؤزر</string>
+    <string name="statistics">اعداد و شمار</string>
+    <string name="settings">ترتیبات</string>
+    <string name="help">مدد</string>
+    <string name="send_feedback">فیڈ بیک بھیجیں</string>
+    <string name="studyoptions_title">ڈیک کا جائزہ</string>
+    <string name="studyoptions_due_today">آج کے لیے:</string>
+    <string name="studyoptions_new_total">کل نئے کارڈ:</string>
+    <string name="studyoptions_total_cards">کل کارڈ:</string>
+    <string name="studyoptions_eta">تخمینی بقیہ وقت (منٹ):</string>
+    <string name="studyoptions_start">مطالعہ</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">پھیلائیں</string>
+    <string name="collapse">بند کریں</string>
+    <string name="study_more">مزید مطالعہ کریں</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d card due (%2$s)</item>
+        <item quantity="other">%1$d cards due (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">%d منٹ باقی</item>
+        <item quantity="other">%d منٹ باقی</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">Studied %1$d card in %2$s today</item>
+        <item quantity="other">Studied %1$d cards in %2$s today</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">جواب لکھیں</string>
+    <string name="show_answer">جواب دکھائیے</string>
+    <string name="ease_button_again">دوبارہ</string>
+    <string name="ease_button_hard">مشکل</string>
+    <string name="ease_button_good">عمدہ</string>
+    <string name="ease_button_easy">آسان</string>
+    <string name="studyoptions_congrats_undo">%s کالعدم کریں</string>
+    <string name="menu_import">درآمد کریں</string>
+    <string name="undo">کالعدم کریں</string>
+    <string name="undo_action_review">آخری تبصرہ</string>
+    <string name="undo_action_bury_card">bury card</string>
+    <string name="undo_action_bury_note">bury note</string>
+    <string name="undo_action_suspend_card">کارڈ معطل کریں</string>
+    <string name="undo_action_suspend_note">نوٹ معطل کریں</string>
+    <string name="undo_action_delete">نوٹ حذف کریں</string>
+    <string name="undo_action_delete_multi">delete notes</string>
+    <string name="undo_action_change_deck_multi">change decks</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
+    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="unbury">Unbury</string>
+    <string name="rename_deck">ڈیک کو نیا نام دیں</string>
+    <string name="menu_add">شامل کریں</string>
+    <string name="menu_add_note">نوٹ شامل کریں</string>
+    <string name="menu_my_account">Sync account</string>
+    <string name="menu_dismiss_note">چھپائیں / حذف کریں</string>
+    <string name="menu_bury_card">Bury card</string>
+    <string name="menu_bury_note">Bury note</string>
+    <string name="menu_suspend_card">کارڈ معطل کریں</string>
+    <string name="menu_suspend_note">نوٹ معطل کریں</string>
+    <string name="menu_bury">Bury</string>
+    <string name="menu_suspend">Suspend</string>
+    <string name="menu_delete_note">نوٹ حذف کریں</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="delete_note_message">واقعی یہ نوٹ اور اس کے تمام کارڈز حذف کریں؟ \n%s</string>
+    <string name="menu_select">متن کا انتخاب کریں</string>
+    <string name="menu_search">%1$s میں تلاش کریں</string>
+    <string name="menu_mark_note">نوٹ کو نشان زد کریں</string>
+    <string name="menu_unmark_note">نوٹ بے نشان کریں</string>
+    <string name="new_deck">ڈیک بنائیں</string>
+    <string name="create">بنائیں</string>
+    <string name="new_dynamic_deck">فلٹر شدہ ڈیک بنائیں</string>
+    <string name="night_mode">رات کا موڈ</string>
+    <string name="directory_inaccessible">آنکی ڈیرائڈ ڈائریکٹری ناقابل رسائی ہے</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d سیکنڈ</string>
+    <string name="time_quantity_minutes">%d منٹ</string>
+    <string name="time_quantity_hours">%d گھنٹے</string>
+    <string name="time_quantity_days">%d دن</string>
+    <string name="time_quantity_months">%.1f mo</string>
+    <string name="time_quantity_years">%.1f yr</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
+    <string name="rebuild_cram_label">تعمیر نو</string>
+    <string name="empty_cram_label">خالى</string>
+    <string name="create_subdeck">Create subdeck</string>
+    <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
+    <string name="custom_study_deck_name">اپنی مرضی کے مطابق تعلیمی سیشن</string>
+    <string name="custom_study_deck_exists">پہلے موجودہ مخصوص مطالعہ ڈیک کو نیا نام دیں</string>
+    <string name="empty_deck">یہ ڈیک خالی ہے</string>
+    <string name="studyoptions_empty">یہ ڈیک خالی ہے ۔ + کے بٹن کو دبا کر نیا مواد ڈالیں.</string>
+    <string name="studyoptions_limit_reached">روزانہ مطالعہ کی حد تک پہنچ گئے ہیں</string>
+    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="studyoptions_congrats_finished">مبارک ہو! آپ فی الحال کے لیے کام ختم کر چکے ہیں.</string>
+    <string name="studyoptions_congrats_more_rev">آج کی حد تک پہنچ گئے ہیں، لیکن ابھی بھی دہرانے کے لیے کارڈ باقی ہیں ۔ آپ اختیارات میں حد کو بڑھا سکتے ہیں.</string>
+    <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
+    <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
+    <string name="studyoptions_no_cards_due">No cards are due yet</string>
+    <string name="sd_card_not_mounted">Device storage not mounted</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="button_sync">Sync</string>
+    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+    <string name="continue_sync">Continue sync</string>
+    <string name="sync_cancelled">Sync cancelled</string>
+    <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+    <string name="export">برآمد</string>
+    <string name="export_collection">مجموعہ برآمد کریں</string>
+    <string name="export_deck">ڈیک برآمد کریں</string>
+    <string name="nothing">کچھ بھی نہیں</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">کارڈ کی اقسام</string>
+    <string name="card_template_editor_front">سامنے کا سانچا</string>
+    <string name="card_template_editor_back">پیچھے کا سانچا</string>
+    <string name="card_template_editor_styling">Styling</string>
+    <string name="card_template_editor_menu_delete">حذف کریں</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_cant_delete">کم از کم ایک کارڈ کی قسم کی ضرورت ہے</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
+        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    </plurals>
+    <string name="invalid_template">A card could not be generated</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
+</resources>

@@ -105,6 +105,13 @@
         <item>17</item>
         <item>18</item>
         <item>19</item>
+        <item>20</item> <!-- Red Flag -->
+        <item>21</item> <!-- Orange Flag -->
+        <item>22</item> <!-- Green Flag -->
+        <item>23</item> <!-- Blue Flag -->
+        <item>24</item> <!-- Unset Flag -->
+        <item>30</item> <!-- Page Up -->
+        <item>31</item> <!-- Page Down -->
     </string-array>
     <string-array name="custom_button_values">
         <item>2</item>
@@ -135,7 +142,6 @@
     <string name="link_help_zh">https://docs.ankidroid.org/help-zh.html</string>
     <string name="link_manual_zh">https://docs.ankidroid.org/manual-zh.html</string>
     <string name="link_manual_getting_started">https://docs.ankidroid.org/manual.html#gettingStarted</string>
-    <string name="link_hebrew_font">https://github.com/ankidroid/Anki-Android/releases/download/tohu-font/Tohu.ttf</string>
     <string name="link_faq_tts">https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">http://ankisrs.net/docs/manual.html#corrupt-collections</string>

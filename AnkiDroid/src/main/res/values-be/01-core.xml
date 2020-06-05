@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Navigation drawer items-->
+    <string name="decks">Калоды</string>
+    <string name="card_browser">Браўзер картак</string>
+    <string name="statistics">Статыстыка</string>
+    <string name="settings">Налады</string>
+    <string name="help">Дапамога</string>
+    <string name="send_feedback">Адправіць водгук</string>
+    <string name="studyoptions_title">Агляд калоды</string>
+    <string name="studyoptions_due_today">На сёння:</string>
+    <string name="studyoptions_new_total">Усяго новых картак:</string>
+    <string name="studyoptions_total_cards">Усяго картак:</string>
+    <string name="studyoptions_eta">Засталося часу (хвілін):</string>
+    <string name="studyoptions_start">Вучыць</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">Разгарнуць</string>
+    <string name="collapse">Згарнуць</string>
+    <string name="study_more">Вучыць яшчэ</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">Засталася %1$d картка (%2$s)</item>
+        <item quantity="few">Засталося %1$d карткі (%2$s)</item>
+        <item quantity="many">Засталося %1$d картак (%2$s)</item>
+        <item quantity="other">Засталося %1$d карткі (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">Засталася %d хвіліна</item>
+        <item quantity="few">Засталося %d хвіліны</item>
+        <item quantity="many">Засталося %d хвілін</item>
+        <item quantity="other">Засталося %d хвіліны</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="few">%d hours %d left</item>
+        <item quantity="many">%d hours %d left</item>
+        <item quantity="other">%d hours %d left</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d day %d left</item>
+        <item quantity="few">%d days %d left</item>
+        <item quantity="many">%d days %d left</item>
+        <item quantity="other">%d days %d left</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">Сёння вывучана %1$d картка за %2$s</item>
+        <item quantity="few">Сёння вывучана %1$d карткі за %2$s</item>
+        <item quantity="many">Сёння вывучана %1$d картак за %2$s</item>
+        <item quantity="other">Сёння вывучана %1$d карткі за %2$s</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">Увядзіце адказ</string>
+    <string name="show_answer">Паказаць адказ</string>
+    <string name="ease_button_again">Зноў</string>
+    <string name="ease_button_hard">Цяжка</string>
+    <string name="ease_button_good">Добра</string>
+    <string name="ease_button_easy">Лёгка</string>
+    <string name="studyoptions_congrats_undo">Адмяніць %s</string>
+    <string name="menu_import">Імпарт</string>
+    <string name="undo">Адмяніць</string>
+    <string name="undo_action_review">апошняе паўтарэнне</string>
+    <string name="undo_action_bury_card">адкласці картку</string>
+    <string name="undo_action_bury_note">адкласці нататку</string>
+    <string name="undo_action_suspend_card">прыпыніць картку</string>
+    <string name="undo_action_suspend_note">прыпыніць нататку</string>
+    <string name="undo_action_delete">выдаліць нататку</string>
+    <string name="undo_action_delete_multi">выдаліць нататкі</string>
+    <string name="undo_action_change_deck_multi">змяніць калоды</string>
+    <string name="undo_action_reschedule_card">змяніць расклад</string>
+    <string name="undo_action_reset_card">скінуць дасягненні</string>
+    <string name="undo_action_reposition_card">перамясціць</string>
+    <string name="move_all_to_deck">Перамясціць усё ў калоду</string>
+    <string name="unbury">Паказаць</string>
+    <string name="rename_deck">Перайменаваць калоду</string>
+    <string name="menu_add">Дадаць</string>
+    <string name="menu_add_note">Дадаць нататку</string>
+    <string name="menu_my_account">Сінхранізаваць уліковы запіс</string>
+    <string name="menu_dismiss_note">Схаваць / выдаліць</string>
+    <string name="menu_bury_card">Адкласці картку</string>
+    <string name="menu_bury_note">Адкласці нататку</string>
+    <string name="menu_suspend_card">Прыпыніць картку</string>
+    <string name="menu_suspend_note">Прыпыніць нататку</string>
+    <string name="menu_bury">Схаваць</string>
+    <string name="menu_suspend">Прыпыніць</string>
+    <string name="menu_delete_note">Выдаліць нататку</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="delete_note_message">Сапраўды выдаліць гэту нататку і ўсе яе карткі?\n%s</string>
+    <string name="menu_select">Выбраць тэкст</string>
+    <string name="menu_search">Шукаць у %1$s</string>
+    <string name="menu_mark_note">Пазначыць нататку</string>
+    <string name="menu_unmark_note">Зняць пазнаку з нататкі</string>
+    <string name="new_deck">Стварыць калоду</string>
+    <string name="create">Стварыць</string>
+    <string name="new_dynamic_deck">Стварыць адфільтраваную калоду</string>
+    <string name="night_mode">Начны рэжым</string>
+    <string name="directory_inaccessible">Недаступны каталог AnkiDroid</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d с</string>
+    <string name="time_quantity_minutes">%d хв</string>
+    <string name="time_quantity_hours">%d г</string>
+    <string name="time_quantity_days">%d дзён</string>
+    <string name="time_quantity_months">%.1f мес</string>
+    <string name="time_quantity_years">%.1f гадоў</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">Ідзе перабудова калоды для завучвання&#8230;</string>
+    <string name="rebuild_cram_label">Перабудаваць</string>
+    <string name="empty_cram_label">Ачысціць</string>
+    <string name="create_subdeck">Create subdeck</string>
+    <string name="empty_cram_deck">Ачыстка калоды для завучвання&#8230;</string>
+    <string name="custom_study_deck_name">Спецыяльная навучальная сесія</string>
+    <string name="custom_study_deck_exists">Спачатку дайце новую назву бягучай спецыяльнай калодзе</string>
+    <string name="empty_deck">Гэта калода пустая</string>
+    <string name="studyoptions_empty">Гэта калода пустая. Націсніце кнопку +, каб дадаць новае змесціва.</string>
+    <string name="studyoptions_limit_reached">Вы выканалі дзённую норму</string>
+    <string name="studyoptions_empty_schedule">Няма запланаваных картак для навучання</string>
+    <string name="studyoptions_congrats_finished">Віншуем! Пакуль няма картак для навучання.</string>
+    <string name="studyoptions_congrats_more_rev">Вы выканалі дзённую норму, але новыя карткі яшчэ засталіся. Вы можаце змяніць абмежаванні ў наладах праграмы.</string>
+    <string name="studyoptions_congrats_more_new">Вы выканалі дзённую норму, але новыя карткі яшчэ засталіся. Вы можаце змяніць абмежаванні ў наладах праграмы, але ўлічыце, што гэта павялічыць і аб\'ёмы паўтарэнняў у наступныя дні.</string>
+    <string name="studyoptions_congrats_custom">Каб змяніць звыклы графік вывучэння калоды, націсніце \"Дадатковае навучанне\" ніжэй</string>
+    <string name="studyoptions_no_cards_due">Не засталося картак для прагляду.</string>
+    <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
+    <string name="empty_cloze_warning">Калі ласка, змяніце гэту нататку і запоўніце пропускі. (%1$s)</string>
+    <string name="button_sync">Сінхранізаваць</string>
+    <string name="cancel_sync_confirm">Адмянiць сiнхранiзацыю?</string>
+    <string name="continue_sync">Працягнуць сiнхранiзацыю</string>
+    <string name="sync_cancelled">Сiнхранiзацыя адменена</string>
+    <string name="sync_cancel_message">Адмена сінхранізацыі...\nГэта можа заняць некаторы час.</string>
+    <string name="export">Экспарт</string>
+    <string name="export_collection">Экспартаваць калекцыю</string>
+    <string name="export_deck">Экспартаваць калоду</string>
+    <string name="nothing">Нічога</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">Тыпы картак</string>
+    <string name="card_template_editor_front">Шаблон пярэдняга боку</string>
+    <string name="card_template_editor_back">Шаблон задняга боку</string>
+    <string name="card_template_editor_styling">Знешні выгляд</string>
+    <string name="card_template_editor_menu_delete">Выдаліць</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_cant_delete">Патрабуецца прынамсі адзін тып.</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Выдаліць тып карткі \'%2$s\' і яе %1$d картку?</item>
+        <item quantity="few">Выдаліць тып карткі \'%2$s\' і яе %1$d карткі?</item>
+        <item quantity="many">Выдаліць тып карткі \'%2$s\' і яе %1$d карткак?</item>
+        <item quantity="other">Выдаліць тып карткі \'%2$s\' і яе %1$d карткі?</item>
+    </plurals>
+    <string name="invalid_template">Немагчыма згенерыраваць картку</string>
+    <string name="card_template_editor_would_delete_note">Выдаленне гэтага тыпу картак прывядзе да выдалення некаторых запісаў. Першапачаткова, стварыце новы тып картак.</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">Чытанне і запіс у базу даных AnkiDroid</string>
+    <string name="read_write_permission_description">доступ да бягучых нататак, картак, тыпаў нататак і калод, а таксама стварэнне новых</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
+</resources>

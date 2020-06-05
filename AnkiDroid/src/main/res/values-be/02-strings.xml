@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- How to format a percentage shown in the summary field of a preference -->
+    <string name="preference_summary_percentage">XXX%</string>
+    <!-- Navigation drawer strings -->
+    <string name="drawer_open">Адкрыць панэль</string>
+    <string name="drawer_close">Закрыць панэль</string>
+    <string name="CardEditorLaterMessage">Захаваная інфармацыя</string>
+    <string name="CardEditorCardDeck">Калода картак:</string>
+    <string name="CardEditorNoteDeck">Калода:</string>
+    <string name="CardEditorModel">Тып:</string>
+    <string name="CardEditorTags">Пазнакі: %1$s</string>
+    <string name="CardEditorCards">Карткі: %1$s</string>
+    <string name="tag_name">Назва пазнакі</string>
+    <string name="add_new_filter_tags">Дадаць/фільтраваць пазнакі</string>
+    <string name="add_tag">Дадаць пазнаку</string>
+    <string name="check_all_tags">Выбраць/зняць усе пазнакі</string>
+    <string name="filter_tags">Фільтраваць пазнакі</string>
+    <string name="no_tags">Вы пакуль не дадалі ніводнай пазнакі</string>
+    <string name="sdcard_missing_message">Адключыце рэжым назапашвальніка USB, каб атрымаць доступ да калоды</string>
+    <string name="updated_version">Абноўлена да версіі %s</string>
+    <!-- Reviewer.java -->
+    <string name="enable_whiteboard">Уключыць дошку</string>
+    <string name="disable_whiteboard">Адключыць дошку</string>
+    <string name="show_whiteboard">Паказаць дошку</string>
+    <string name="hide_whiteboard">Схаваць дошку</string>
+    <string name="clear_whiteboard">Ачысціць дошку</string>
+    <string name="replay_audio">Паўтарыць аўдыя</string>
+    <string name="leech_suspend_notification">Картка пазначана як надакучлівая і яна была прыпынена</string>
+    <string name="leech_notification">Картка пазначана як надакучлівая</string>
+    <string name="corrupt_font">Пашкоджаны файл шрыфту %s</string>
+    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
+    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
+    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
+    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <!-- Browser -->
+    <string-array name="browser_column1_headings">
+        <item>Пытанне</item>
+        <item>Поле сартавання</item>
+    </string-array>
+    <string-array name="browser_column2_headings">
+        <item>Адказ</item>
+        <item>Картка</item>
+        <item>Калода</item>
+        <item>Нататка</item>
+        <item>Пытанне</item>
+        <item>Пазнакі</item>
+        <item>Правалы</item>
+        <item>Паўтарэнняў</item>
+        <item>Інтэрвал</item>
+        <item>Ease</item>
+        <item>Due</item>
+        <item>Changed</item>
+        <item>Created</item>
+        <item>Edited</item>
+    </string-array>
+    <!-- Custom study options -->
+    <string name="custom_study_increase_new_limit">Павялічыць колькасць новых картак на сёння</string>
+    <string name="custom_study_increase_review_limit">Павялічыць колькасць картак для паўтарэння на сёння</string>
+    <string name="custom_study_review_forgotten">Паўтарыць забытыя карткі</string>
+    <string name="custom_study_review_ahead">Паўтарыць наперад</string>
+    <string name="custom_study_random_selection">Вывучыць выпадкова адабраныя карткі</string>
+    <string name="custom_study_preview_new">Папярэдні прагляд новых картак</string>
+    <string name="custom_study_limit_tags">Абмежаваць вызначанымі пазнакамі</string>
+    <!-- Card editor -->
+    <string name="cardeditor_title_add_note">Дадаць нататку</string>
+    <string name="cardeditor_title_edit_card">Змяніць нататку</string>
+    <string name="discard_unsaved_changes">Закрыць і згубіць бягучыя звесткі?</string>
+    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="saving_facts">Захаванне нататкі</string>
+    <string name="saving_model">Saving note type</string>
+    <string name="add">Дадаць</string>
+    <string name="save">Захаваць</string>
+    <string name="close">Закрыць</string>
+    <string name="select">Выбраць</string>
+    <string name="saving_changes">Захаванне змен&#8230;</string>
+    <string name="reordering_cards">Перамешванне картак&#8230;</string>
+    <string name="field_remapping">%1$s (з “%2$s”)</string>
+    <string name="confirm_map_cards_to_nothing">Не супастаўленыя карткі будуць выдаленыя. Калі нататка не мае ніводнай карткі, то яна будзе згубленая. Працягнуць?</string>
+    <plurals name="timebox_reached">
+        <item quantity="one">%1$d картка вывучана за %2$s</item>
+        <item quantity="few">%1$d карткі вывучана за %2$s</item>
+        <item quantity="many">%1$d картак вывучана за %2$s</item>
+        <item quantity="other">%1$d карткі вывучана за %2$s</item>
+    </plurals>
+    <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
+    <plurals name="in_minutes">
+        <item quantity="one">%1$d хвіліна</item>
+        <item quantity="few">%1$d хвіліны</item>
+        <item quantity="many">%1$d хвілін</item>
+        <item quantity="other">%1$d хвіліны</item>
+    </plurals>
+    <string name="studyoptions_welcome_title">Вітаем у AnkiDroid</string>
+    <string name="fact_adder_intent_title">Картка AnkiDroid</string>
+    <string name="note_editor_add_note">Add note</string>
+    <string name="note_editor_copy_note">Copy note</string>
+    <string name="card_editor_copy_card">Скапіяваць картку</string>
+    <string name="card_editor_reposition_card">Перамясціць</string>
+    <string name="card_editor_reset_card">Скінуць дасягненні</string>
+    <string name="card_editor_reschedule_card">Змяніць расклад</string>
+    <string name="card_editor_preview_card">Папярэдні прагляд</string>
+    <string name="error_insufficient_memory">Дзеянне немагчыма з-за недахопу памяці на прыладзе</string>
+    <string name="rename">Перайменаваць</string>
+    <string name="default_conf_delete_error">Немагчыма выдаліць групавыя параметры па змаўчанні</string>
+    <plurals name="factadder_cards_added">
+        <item quantity="one">%d картка дададзена</item>
+        <item quantity="few">%d карткі дададзена</item>
+        <item quantity="many">%d картак дададзена</item>
+        <item quantity="other">%d карткі дададзена</item>
+    </plurals>
+    <string name="help_title">Дапамога</string>
+    <string name="check_db">Праверыць базу даных</string>
+    <string name="check_media">Праверыць медыяфайлы</string>
+    <string name="empty_cards">Пустыя карткі</string>
+    <string name="check_db_message">Ідзе праверка базы даных&#8230;</string>
+    <string name="empty_card_warning">Гэта картка пустая. Скарыстайцеся параметрам \"Пустыя карткі\" ў меню на экране спіса калод.</string>
+    <string name="unknown_type_field_warning">Тып адказу: невядомае поле %s</string>
+    <string name="delete_deck">Выдаленне калоды&#8230;</string>
+    <string name="show_hint">Паказаць %s</string>
+    <string name="info_rate">Ацаніць AnkiDroid</string>
+    <string name="col_load_failed">Збой загрузкі калекцыі.\nНацісніце кнопку назад, каб закрыць AnkiDroid.</string>
+    <string name="import_title">Імпартаванне</string>
+    <string name="import_select_title">Выберыце файл для імпарту</string>
+    <string name="import_message_add">Дадаць</string>
+    <string name="import_message_replace_confirm">Ваша бягучая калекцыя будзе выдаленая і яе заменяць даныя з файла %s</string>
+    <string name="import_message_add_confirm">Дадаць \"%s\" у калекцыю? Гэта можа заняць шмат часу</string>
+    <string name="import_log_no_apkg">Пашкоджаны файл праграмы Anki</string>
+    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_exception">Failed to import package\n\n%s</string>
+    <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да кіраўніцтва карыстальніка для таго, каб імпартаваць файлы ўручную: \n %s</string>
+    <string name="import_replacing">Замена калекцыі&#8230;</string>
+    <string name="import_interrupted">Import interrupted</string>
+    <string name="export_include_schedule">Разам з раскладам</string>
+    <string name="export_include_media">Разам з медыяфайламі</string>
+    <string name="confirm_apkg_export">Экспартаваць калекцыю ў пакет Anki?</string>
+    <string name="confirm_apkg_export_deck">Экспартаваць \"%s\" у файл apkg?</string>
+    <string name="export_in_progress">Ідзе экспартаванне пакета Anki&#8230;</string>
+    <string name="export_successful_title">Адправіць пакет Anki?</string>
+    <string name="export_send_button">Адправіць</string>
+    <string name="export_save_button">Захаваць у файл</string>
+    <string name="export_send_no_handlers">Няма адпаведнай праграмы для чытання пакета apkg. Захаванне...</string>
+    <string name="export_save_apkg_successful">Пакет Anki паспяхова захаваны</string>
+    <string name="export_save_apkg_unsuccessful">Не атрымалася захаваць пакет Anki</string>
+    <string name="export_successful">Файл \"%s\" быў экспартаваны. Адправіць яго з дапамогай іншай праграмы?</string>
+    <string name="export_email_subject">AnkiDroid экспартаваў калоды картак: %s</string>
+    <string name="export_email_text"><![CDATA[        Добры дзень!
+        <br/><br/>
+        Гэта калода картак была адпраўленая з праграмы <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Вы можаце адкрыць яе з дапамогай адной з версій праграмы <a href="http://ankisrs.net/#download">Anki</a> і атрымаць асалоду ад лёгкага і эфектыўнага навучання!
+        ]]></string>
+    <string name="export_unsuccessful">Памылка экспарту файла apkg</string>
+    <string name="import_hint">Змясціце файл apkg у каталог %s і націсніце \"Добра\" для імпарту картак</string>
+    <string name="upgrade_import_no_file_found">Знойдзены не імпартаваны файл %1$s</string>
+    <string name="study_options">Параметры</string>
+    <string name="select_tts">Задаць сінтэз маўлення</string>
+    <string name="custom_study">Дадатковае навучанне</string>
+    <string name="more_options">Яшчэ</string>
+    <string name="dyn_deck_desc">Гэта спецыяльная калода для вывучэння па-за звыклым графікам. Пасля прагляду, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
+    <string name="steps_error">Крокі павінны быць лікамі, якія больш за 0</string>
+    <string name="steps_min_error">Патрабуецца прынамсі адзін крок</string>
+    <string name="sched_end">(канец)</string>
+    <string name="sched_unbury_action">Для таго, каб убачыць іх зараз, неабходна выбраць \"Паказаць\" у меню</string>
+    <string name="sched_has_buried">Некаторыя звязаныя або адкладзеныя карткі былі перанесеныя на заўтра</string>
+    <string name="tag_editor_add_feedback">Выберыце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
+    <string name="tag_editor_add_feedback_existing">Выбрана існуючая пазнака \"%1$s\"</string>
+    <string name="lookup_hint">Пасля таго, як тэкст будзе скапіяваны, націсніце ў любым месцы карткі, каб паказаць значок пошуку</string>
+    <!-- Time spans -->
+    <plurals name="time_span_seconds">
+        <item quantity="one">%s секунда</item>
+        <item quantity="few">%s секунды</item>
+        <item quantity="many">%s секунд</item>
+        <item quantity="other">%s секунды</item>
+    </plurals>
+    <plurals name="time_span_minutes">
+        <item quantity="one">%s хвіліна</item>
+        <item quantity="few">%s хвіліны</item>
+        <item quantity="many">%s хвілін</item>
+        <item quantity="other">%s хвіліны</item>
+    </plurals>
+    <plurals name="time_span_hours">
+        <item quantity="one">%s гадзіна</item>
+        <item quantity="few">%s гадзіны</item>
+        <item quantity="many">%s гадзін</item>
+        <item quantity="other">%s гадзіны</item>
+    </plurals>
+    <plurals name="time_span_days">
+        <item quantity="one">%s дзень</item>
+        <item quantity="few">%s дні</item>
+        <item quantity="many">%s дзён</item>
+        <item quantity="other">%s дні</item>
+    </plurals>
+    <plurals name="time_span_months">
+        <item quantity="one">%s месяц</item>
+        <item quantity="few">%s месяцы</item>
+        <item quantity="many">%s месяцаў</item>
+        <item quantity="other">%s месяцы</item>
+    </plurals>
+    <plurals name="time_span_years">
+        <item quantity="one">%s год</item>
+        <item quantity="few">%s гады</item>
+        <item quantity="many">%s гадоў</item>
+        <item quantity="other">%s гады</item>
+    </plurals>
+    <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
+    <string name="less_than_time">&lt; %s</string>
+    <string name="decks_rename_exists">Гэта калода ўжо існуе</string>
+    <string name="decks_rename_filtered_nosubdecks">Фільтраваная калода не можа мець падкалод</string>
+    <string name="filtered_deck_name">Фільтраваная калода</string>
+    <string name="reminder_title">Не забудзьцеся пра сённяшняе навучанне!</string>
+    <plurals name="reminder_text">
+        <item quantity="one">%2$d картка для паўтарэння ў %1$s</item>
+        <item quantity="few">%2$d карткі для паўтарэння ў %1$s</item>
+        <item quantity="many">%2$d картак для паўтарэння ў %1$s</item>
+        <item quantity="other">%2$d карткі для паўтарэння ў %1$s</item>
+    </plurals>
+    <!-- Currently only used if exporting APKG fails -->
+    <string name="apk_share_error">Памылка агульнага доступу да файла apkg</string>
+    <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">Для імпарту гэтага файла неабходна ўключыць планіроўшчык другой версіі.</string>
+    <string name="import_cannot_with_v2">Планіроўшчык другой версіі не можа імпартаваць калоды з раскладам першай версіі.</string>
+    <string name="export_v2_dummy_note">Дадзены файл патрабуе больш новую версію праграмы.</string>
+    <string name="export_v2_forbidden">Пераключыцеся на першую версію планіроўшчыка перад экспартаваннем адзіночнай калоды са звесткамі планавання.</string>
+    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
+    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
+    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
+    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <!-- The name of the deck which corrupt cards will be moved to -->
+    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <!-- Deckpicker Background -->
+    <string name="background_image_title">Background</string>
+    <string name="choose_an_image">Choose an Image</string>
+    <!-- Card Template Browser Appearance -->
+    <string name="restore_default">Restore Default</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+</resources>
