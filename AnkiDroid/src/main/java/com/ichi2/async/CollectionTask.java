@@ -1191,7 +1191,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             CardBrowser.CardCache card = searchResult.get(i);
             card.load(false);
             Card c = card.getCard();
-            CardBrowser.updateSearchItemQA(mContext, searchResult.get(i), c);
+            CardBrowser.updateSearchItemQA(searchResult.get(i), c);
         }
         // Finish off the task
         if (isCancelled()) {
@@ -1251,7 +1251,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 continue;
             }
             // Update item
-            CardBrowser.updateSearchItemQA(mContext, card, c);
+            CardBrowser.updateSearchItemQA(card, c);
             card.load(false);
             float progress = (float) i / n * 100;
             publishProgress(new TaskData((int) progress));
