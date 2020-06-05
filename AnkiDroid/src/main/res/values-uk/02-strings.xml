@@ -265,10 +265,10 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Помилка поширення файлу apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Активуйте V2 scheduler аби імпортувати цей файл.</string>
-    <string name="import_cannot_with_v2">V2 scheduler не може імпортувати колоди V1 зі збереженням планувань.</string>
+    <string name="import_needs_v2">Активуйте планувальник V2 щоб імпортувати цей файл.</string>
+    <string name="import_cannot_with_v2">Планувальник V2 не може імпортувати колоди V1 зі збереженням планувань.</string>
     <string name="export_v2_dummy_note">Цей файл потребує новішої версії Anki.</string>
-    <string name="export_v2_forbidden">Будь ласка, переключіться до V1 scheduler перед експортуванням однієї колоди з планувальною інформацією.</string>
+    <string name="export_v2_forbidden">Будь ласка, переключіться до планувальник V1 перед експортуванням однієї колоди з планувальною інформацією.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Не вдалося завантажити \'%s\'.</string>
     <string name="activity_start_failed">Система не має встановленого додатку, який може це виконати.</string>
