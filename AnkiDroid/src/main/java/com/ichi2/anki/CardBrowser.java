@@ -2129,6 +2129,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     public static class CardCache extends HashMap<String, String> {
 
+        /** clear all values except ID.*/
+        public void reload() {
+            String id = get(ID);
+            clear();
+            put(ID, id);
+        }
     }
 
     /**
@@ -2236,9 +2242,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void clearCardData(int position) {
-        String id = mCards.get(position).get(ID);
-        mCards.get(position).clear();
-        mCards.get(position).put(ID, id);
+        mCards.get(position).reload();
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
