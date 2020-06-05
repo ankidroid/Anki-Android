@@ -1935,7 +1935,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // set font for column
                 setFont(col);
                 // set text for column
-                String text_for_column = card.get(mFromKeys[i]);
+                String text_for_column = card.getColumnHeaderText(mFromKeys[i]);
+                if (text_for_column == null) {
+                    text_for_column = card.get(mFromKeys[i]);
+                }
                 col.setText(text_for_column);
             }
             // set card's background color
@@ -2134,6 +2137,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
                             return android.R.attr.colorBackground;
                         }
                     }
+            }
+        }
+
+        public String getColumnHeaderText(String key) {
+            switch (key) {
+            default:
+                return null;
             }
         }
     }
