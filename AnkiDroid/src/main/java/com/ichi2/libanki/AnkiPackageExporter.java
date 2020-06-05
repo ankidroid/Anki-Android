@@ -17,15 +17,14 @@
 package com.ichi2.libanki;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -193,13 +192,11 @@ class AnkiExporter extends Exporter {
                     dconfs.put(Long.toString(d.getLong("conf")), true);
                 }
             }
-
-            JSONObject destinationDeck = d.deepClone();
             if (!mIncludeSched) {
                 // scheduling not included, so reset deck settings to default
-                destinationDeck.put("conf", 1);
+                d.put("conf", 1);
             }
-            dst.getDecks().update(destinationDeck);
+            dst.getDecks().update(d);
         }
         // copy used deck confs
         Timber.d("Copy deck options");
@@ -234,8 +231,8 @@ class AnkiExporter extends Exporter {
                     String fname = f.getName();
                     if (fname.startsWith("_")) {
                         // Loop through every model that will be exported, and check if it contains a reference to f
-                        for (JSONObject model : mSrc.getModels().all()) {
-                            if (_modelHasMedia(model, fname)) {
+                        for (int idx = 0; idx < mid.size(); idx++) {
+                            if (_modelHasMedia(mSrc.getModels().get(idx), fname)) {
                                 media.put(fname, true);
                                 break;
                             }
@@ -330,7 +327,6 @@ public final class AnkiPackageExporter extends AnkiExporter {
     @Override
     public void exportInto(String path, Context context) throws IOException, JSONException, ImportExportException {
         // sched info+v2 scheduler not compatible w/ older clients
-        Timber.i("Starting export into %s", path);
         _v2sched = mCol.schedVer() != 1 && mIncludeSched;
 
         // open a zip file
@@ -354,7 +350,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         mCount = mCol.cardCount();
         mCol.close();
         if (!_v2sched) {
-            z.write(mCol.getPath(), CollectionHelper.COLLECTION_FILENAME);
+            z.write(mCol.getPath(), "collection.anki2");
         } else {
             _addDummyCollection(z, context);
             z.write(mCol.getPath(), "collection.anki21");
@@ -410,13 +406,13 @@ public final class AnkiPackageExporter extends AnkiExporter {
         }
 
         super.exportInto(colfile, context);
-        z.write(colfile, CollectionHelper.COLLECTION_FILENAME);
+        z.write(colfile, "collection.anki2");
         // and media
         prepareMedia();
     	JSONObject media = _exportMedia(z, mMediaFiles, mCol.getMedia().dir());
         // tidy up intermediate files
-        SQLiteDatabase.deleteDatabase(new File(colfile));
-        SQLiteDatabase.deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));
+        CompatHelper.getCompat().deleteDatabase(new File(colfile));
+        CompatHelper.getCompat().deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));
         String tempPath = path.replace(".apkg", ".media");
         File file = new File(tempPath);
         if (file.exists()) {
@@ -444,13 +440,11 @@ public final class AnkiPackageExporter extends AnkiExporter {
         f.delete();
         Collection c = Storage.Collection(context, path);
         Note n = c.newNote();
-        //The created dummy collection only contains the StdModels.
-        //The field names for those are localised during creation, so we need to consider that when creating dummy note
-        n.setItem(context.getString(R.string.front_field_name), context.getString(R.string.export_v2_dummy_note));
+        n.setItem("Front", context.getString(R.string.export_v2_dummy_note));
         c.addNote(n);
         c.save();
         c.close();
-        zip.write(f.getAbsolutePath(), CollectionHelper.COLLECTION_FILENAME);
+        zip.write(f.getAbsolutePath(), "collection.anki2");
     }
 }
 

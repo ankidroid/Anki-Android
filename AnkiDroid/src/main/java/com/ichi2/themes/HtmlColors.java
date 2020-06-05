@@ -13,6 +13,7 @@ public class HtmlColors {
     private static final Pattern fLongHexColorPattern = Pattern.compile("^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$", Pattern.CASE_INSENSITIVE);
     private static final Pattern fRgbColorPattern = Pattern.compile("^rgb\\(([0-9]+)\\s*,\\s*([0-9]+)\\s*,\\s*([0-9]+)\\)$", Pattern.CASE_INSENSITIVE);
     private static final Pattern fClozeStylePattern = Pattern.compile("(.cloze\\s*\\{[^}]*color:\\s*#)[0-9a-f]{6}(;[^}]*\\})", Pattern.CASE_INSENSITIVE);
+    private static final Pattern fDiffStylePattern = Pattern.compile("");
 
     public static String nameToHex(String name) {
         if (sColorsMap == null) {
@@ -39,7 +40,7 @@ public class HtmlColors {
         while (m1.find()) {
             // Convert names to hex
             String color = HtmlColors.nameToHex(m1.group(2));
-            Matcher m2;
+            Matcher m2 = null;
             try {
                 if (color.length() == 4 && color.charAt(0) == '#') {
                     m2 = fShortHexColorPattern.matcher(color);

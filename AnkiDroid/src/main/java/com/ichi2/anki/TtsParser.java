@@ -1,7 +1,5 @@
 package com.ichi2.anki;
 
-import com.ichi2.libanki.template.Template;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 
@@ -22,22 +20,22 @@ public final class TtsParser {
      * elements; in that case the function returns a single LocalisedText object containing the
      * text extracted from the whole HTML fragment, with the localeCode set to an empty string.
      */
-    public static List<LocalisedText> getTextsToRead(String html, String clozeReplacement) {
+    public static List<LocalisedText> getTextsToRead(String html) {
         List<LocalisedText> textsToRead = new ArrayList<>();
 
         Element elem = Jsoup.parseBodyFragment(html).body();
         parseTtsElements(elem, textsToRead);
         if (textsToRead.size() == 0) {
             // No <tts service="android"> elements found: return the text of the whole HTML fragment
-            textsToRead.add(new LocalisedText(elem.text().replace(Template.CLOZE_DELETION_REPLACEMENT, clozeReplacement)));
+            textsToRead.add(new LocalisedText(elem.text()));
         }
 
         return textsToRead;
     }
 
     private static void parseTtsElements(Element element, List<LocalisedText> textsToRead) {
-        if ("tts".equalsIgnoreCase(element.tagName()) &&
-                "android".equalsIgnoreCase(element.attr("service"))) {
+        if (element.tagName().equalsIgnoreCase("tts") &&
+                element.attr("service").equalsIgnoreCase("android")) {
             textsToRead.add(new LocalisedText(element.text(), element.attr("voice")));
             return; // ignore any children
         }

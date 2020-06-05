@@ -30,11 +30,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.utils.AdaptionUtil;
 
 import timber.log.Timber;
 
@@ -114,8 +112,7 @@ public class MyAccount extends AnkiActivity {
         String password = mPassword.getText().toString();
 
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
-            Connection.login(loginListener, new Connection.Payload(new Object[]{username, password,
-                    HostNumFactory.getInstance(this) }));
+            Connection.login(loginListener, new Connection.Payload(new Object[]{username, password}));
         } else {
             UIUtils.showSimpleSnackbar(this, R.string.invalid_username_password, true);
         }
@@ -128,7 +125,6 @@ public class MyAccount extends AnkiActivity {
         editor.putString("username", "");
         editor.putString("hkey", "");
         editor.apply();
-        HostNumFactory.getInstance(this).reset();
         //  force media resync on deauth
         getCol().getMedia().forceResync();
         switchToState(STATE_LOG_IN);
@@ -136,13 +132,9 @@ public class MyAccount extends AnkiActivity {
 
 
     private void resetPassword() {
-        if (AdaptionUtil.hasWebBrowser(this)) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(getResources().getString(R.string.resetpw_url)));
-            startActivityWithoutAnimation(intent);
-        } else {
-            UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + getResources().getString(R.string.resetpw_url), false);
-        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(getResources().getString(R.string.resetpw_url)));
+        startActivityWithoutAnimation(intent);
     }
 
 
@@ -151,21 +143,6 @@ public class MyAccount extends AnkiActivity {
         mUsername = mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = mLoginToMyAccountView.findViewById(R.id.password);
 
-        mPassword.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                switch (keyCode) {
-                    case KeyEvent.KEYCODE_DPAD_CENTER:
-                    case KeyEvent.KEYCODE_ENTER:
-                    case KeyEvent.KEYCODE_NUMPAD_ENTER:
-                        login();
-                        return true;
-                    default:
-                        break;
-                }
-            }
-            return false;
-        });
-
         Button loginButton = mLoginToMyAccountView.findViewById(R.id.login_button);
         loginButton.setOnClickListener(v -> login());
 
@@ -173,8 +150,7 @@ public class MyAccount extends AnkiActivity {
         resetPWButton.setOnClickListener(v -> resetPassword());
 
         Button signUpButton = mLoginToMyAccountView.findViewById(R.id.sign_up_button);
-        Uri url = Uri.parse(getResources().getString(R.string.register_url));
-        signUpButton.setOnClickListener(v -> openUrl(url));
+        signUpButton.setOnClickListener(v -> openUrl(Uri.parse(getResources().getString(R.string.register_url))));
 
         mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);
         mUsernameLoggedIn = mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);

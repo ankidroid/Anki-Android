@@ -17,7 +17,10 @@
 package com.ichi2.compat;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.view.KeyCharacterMap;
 
 public class CompatHelper {
@@ -27,8 +30,8 @@ public class CompatHelper {
 
     private CompatHelper() {
 
-        if (getSdkVersion() >= 28) {
-            mCompat = new CompatV28();
+        if (isNookHdOrHdPlus() && getSdkVersion() == 15) {
+            mCompat = new CompatV15NookHdOrHdPlus();
         } else if (getSdkVersion() >= 26) {
             mCompat = new CompatV26();
         } else if (getSdkVersion() >= 24) {
@@ -43,8 +46,10 @@ public class CompatHelper {
             mCompat = new CompatV18();
         } else if (getSdkVersion() >= 17) {
             mCompat = new CompatV17();
-        } else {
+        } else if (getSdkVersion() >= 16) {
             mCompat = new CompatV16();
+        } else {
+            mCompat = new CompatV15();
         }
     }
 
@@ -76,9 +81,22 @@ public class CompatHelper {
         return sInstance;
     }
 
+    private boolean isNookHdOrHdPlus() {
+        return isNookHd() || isNookHdPlus();
+    }
+
+    private boolean isNookHdPlus() {
+        return "NOOK".equals(Build.BRAND) && "HDplus".equals(Build.PRODUCT)
+            && "ovation".equals(android.os.Build.DEVICE);
+    }
+
+    private boolean isNookHd () {
+        return "bntv400".equalsIgnoreCase(Build.MODEL) && "NOOK".equals(Build.BRAND);
+    }
+
     public static boolean isChromebook() {
         return "chromium".equalsIgnoreCase(Build.BRAND) || "chromium".equalsIgnoreCase(Build.MANUFACTURER)
-                || "novato_cheets".equalsIgnoreCase(Build.DEVICE);
+                || Build.DEVICE.equalsIgnoreCase("novato_cheets");
     }
 
     public static boolean isKindle() {
@@ -91,5 +109,12 @@ public class CompatHelper {
 
     public static boolean hasScrollKeys() {
         return KeyCharacterMap.deviceHasKey(92) || KeyCharacterMap.deviceHasKey(93);
+    }
+
+    public static void removeHiddenPreferences(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (getSdkVersion() >= 16) {
+            preferences.edit().remove("fixHebrewText").apply();
+        }
     }
 }

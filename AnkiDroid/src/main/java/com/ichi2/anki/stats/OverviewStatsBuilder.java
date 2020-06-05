@@ -22,14 +22,18 @@ import android.webkit.WebView;
 
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.stats.Stats;
+import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import timber.log.Timber;
 
 public class OverviewStatsBuilder {
     private static final int CARDS_INDEX = 0;
@@ -235,9 +239,9 @@ public class OverviewStatsBuilder {
         // Fill in the overview stats
         oStats.forecastTotalReviews = tot;
         oStats.forecastAverageReviews = totd.size() == 0 ? 0 : (double) tot / (totd.size() * chunk);
-        oStats.forecastDueTomorrow = mCol.getDb().queryScalar(
-                "select count() from cards where did in " + _limit() + " and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " +
-                        "and due = ?", new Object[]{mCol.getSched().getToday() + 1});
+        oStats.forecastDueTomorrow = mCol.getDb().queryScalar(String.format(Locale.US,
+                "select count() from cards where did in %s and queue in (2,3) " +
+                        "and due = ?", _limit()), new String[]{Integer.toString(mCol.getSched().getToday() + 1)});
     }
 
     private List<int[]> _due(Integer start, Integer end, int chunk) {
@@ -258,7 +262,7 @@ public class OverviewStatsBuilder {
                     "sum(case when ivl < 21 then 1 else 0 end), -- yng\n" +
                     "sum(case when ivl >= 21 then 1 else 0 end) -- mtr\n" +
                     "from cards\n" +
-                    "where did in %s and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")\n" +
+                    "where did in %s and queue in (2,3)\n" +
                     "%s\n" +
                     "group by day order by day",
                     mCol.getSched().getToday(), chunk, _limit(), lim);

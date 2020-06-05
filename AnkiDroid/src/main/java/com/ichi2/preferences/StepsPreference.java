@@ -20,16 +20,14 @@ import android.content.Context;
 import android.preference.EditTextPreference;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
-import android.widget.EditText;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public class StepsPreference extends EditTextPreference {
 
@@ -64,9 +62,7 @@ public class StepsPreference extends EditTextPreference {
      */
     private void updateSettings() {
         // Use the number pad but still allow normal text for spaces and decimals.
-        EditText editText = getEditText();
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_CLASS_TEXT);
-        editText.setKeyListener(DigitsKeyListener.getInstance("0123456789 "));
+        getEditText().setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_CLASS_TEXT);
     }
 
 
@@ -99,10 +95,14 @@ public class StepsPreference extends EditTextPreference {
             return null;
         } else {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < ja.length(); i++) {
-                sb.append(ja.getString(i)).append(" ");
+            try {
+                for (int i = 0; i < ja.length(); i++) {
+                    sb.append(ja.getString(i)).append(" ");
+                }
+                return sb.toString().trim();
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
-            return sb.toString().trim();
         }
     }
 
@@ -115,8 +115,12 @@ public class StepsPreference extends EditTextPreference {
      */
     public static String convertFromJSON(JSONArray a) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < a.length(); i++) {
-            sb.append(a.getString(i)).append(" ");
+        try {
+            for (int i = 0; i < a.length(); i++) {
+                sb.append(a.getString(i)).append(" ");
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
         return sb.toString().trim();
     }

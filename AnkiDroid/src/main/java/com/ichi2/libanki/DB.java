@@ -54,13 +54,13 @@ public class DB {
     private static SupportSQLiteOpenHelper.Factory sqliteOpenHelperFactory = null;
 
     /**
-     * The collection, which is actually an SQLite database.
+     * The deck, which is actually an SQLite database.
      */
     private SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
 
     /**
-     * Open a connection to the SQLite collection database.
+     * Open a database connection to an ".anki" SQLite file.
      */
     public DB(String ankiFilename) {
 
@@ -70,7 +70,9 @@ public class DB {
                 .build();
         SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory().create(configuration);
         mDatabase = helper.getWritableDatabase();
-        mDatabase.disableWriteAheadLogging();
+
+        // TODO: remove this once everyone has stopped using old AnkiDroid clients with WAL (API >= 16)
+        CompatHelper.getCompat().disableDatabaseWriteAheadLogging(mDatabase);
         mDatabase.query("PRAGMA synchronous = 2", null);
         mMod = false;
     }
@@ -118,7 +120,7 @@ public class DB {
         public void onCorruption(SupportSQLiteDatabase db) {
             Timber.e("The database has been corrupted: %s", db.getPath());
             AnkiDroidApp.sendExceptionReport(new RuntimeException("Database corrupted"), "DB.MyDbErrorHandler.onCorruption", "Db has been corrupted: " + db.getPath());
-            CollectionHelper.getInstance().closeCollection(false, "Database corrupted");
+            CollectionHelper.getInstance().closeCollection(false);
             DatabaseErrorDialog.databaseCorruptFlag = true;
         }
     }
@@ -174,7 +176,8 @@ public class DB {
         return queryScalar(query, null);
     }
 
-    public int queryScalar(String query, Object[] selectionArgs) {
+
+    public int queryScalar(String query, String[] selectionArgs) {
         Cursor cursor = null;
         int scalar;
         try {
@@ -193,30 +196,34 @@ public class DB {
 
 
     public String queryString(String query) throws SQLException {
-        return queryString(query, null);
-    }
-
-    public String queryString(String query, Object[] bindArgs) throws SQLException {
-        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
+        Cursor cursor = null;
+        try {
+            cursor = mDatabase.query(query, null);
             if (!cursor.moveToNext()) {
                 throw new SQLException("No result for query: " + query);
             }
             return cursor.getString(0);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
     }
 
 
     public long queryLongScalar(String query) {
-        return queryLongScalar(query, null);
-    }
-
-    public long queryLongScalar(String query, Object[] bindArgs) {
+        Cursor cursor = null;
         long scalar;
-        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
+        try {
+            cursor = mDatabase.query(query, null);
             if (!cursor.moveToNext()) {
                 return 0;
             }
             scalar = cursor.getLong(0);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
         return scalar;
@@ -225,7 +232,7 @@ public class DB {
 
     /**
      * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
-     * the specified class.
+     * the specified class. See Deck.initUndo() for a usage example.
      *
      * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
@@ -233,15 +240,13 @@ public class DB {
      * @return An ArrayList with the contents of the specified column.
      */
     public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
-        return queryColumn(type, query, column, null);
-    }
-
-    public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column, Object[] bindArgs) {
         int nullExceptionCount = 0;
         InvocationTargetException nullException = null; // to catch the null exception for reporting
         ArrayList<T> results = new ArrayList<>();
+        Cursor cursor = null;
 
-        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
+        try {
+            cursor = mDatabase.query(query, null);
             String methodName = getCursorMethodName(type.getSimpleName());
             while (cursor.moveToNext()) {
                 try {
@@ -264,6 +269,9 @@ public class DB {
             // This is really coding error, so it should be revealed if it ever happens
             throw new RuntimeException(e);
         } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
             if (nullExceptionCount > 0) {
                 if (nullException != null) {
                     StringBuilder sb = new StringBuilder();

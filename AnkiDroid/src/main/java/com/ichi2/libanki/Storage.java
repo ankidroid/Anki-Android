@@ -20,10 +20,11 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.libanki.hooks.Hooks;
 
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class Storage {
     public static Collection Collection(Context context, String path, boolean server, boolean log) {
         assert path.endsWith(".anki2");
         // Since this is the entry point into libanki, initialize the hooks here.
+        Hooks.getInstance(context);
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
         // connect
@@ -66,9 +68,10 @@ public class Storage {
                 throw new RuntimeException("This file requires a newer version of Anki.");
             } else if (create) {
                 // add in reverse order so basic is default
-                for (int i = StdModels.stdModels.length-1; i>=0; i--) {
-                    StdModels.stdModels[i].add(col);
-                }
+                Models.addClozeModel(col);
+                Models.addForwardOptionalReverse(col);
+                Models.addForwardReverse(col);
+                Models.addBasicModel(col);
                 col.save();
             }
             return col;
@@ -162,7 +165,7 @@ public class Storage {
             }
             if (ver < 7) {
                 col.modSchemaNoCheck();
-                col.getDb().execute("UPDATE cards SET odue = 0 WHERE (type = " + Consts.CARD_TYPE_LRN + " OR queue = 2) AND NOT odid");
+                col.getDb().execute("UPDATE cards SET odue = 0 WHERE (type = 1 OR queue = 2) AND NOT odid");
                 col.getDb().execute("UPDATE col SET ver = 7");
             }
             if (ver < 8) {
@@ -174,7 +177,7 @@ public class Storage {
                 col.getDb().execute("UPDATE col SET ver = 9");
             }
             if (ver < 10) {
-                col.getDb().execute("UPDATE cards SET left = left + left * 1000 WHERE queue = " + Consts.QUEUE_TYPE_LRN);
+                col.getDb().execute("UPDATE cards SET left = left + left * 1000 WHERE queue = 1");
                 col.getDb().execute("UPDATE col SET ver = 10");
             }
             if (ver < 11) {
@@ -230,30 +233,34 @@ public class Storage {
 
 
     private static void _upgradeClozeModel(Collection col, JSONObject m) throws ConfirmModSchemaException {
-        m.put("type", Consts.MODEL_CLOZE);
-        // convert first template
-        JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
-        for (String type : new String[] { "qfmt", "afmt" }) {
-            t.put(type, t.getString(type).replaceAll("\\{\\{cloze:1:(.+?)\\}\\}", "{{cloze:$1}}"));
-        }
-        t.put("name", "Cloze");
-        // delete non-cloze cards for the model
-        JSONArray ja = m.getJSONArray("tmpls");
-        ArrayList<JSONObject> rem = new ArrayList<>();
-        for (int i = 1; i < ja.length(); i++) {
-            JSONObject ta = ja.getJSONObject(i);
-            if (!ta.getString("afmt").contains("{{cloze:")) {
-                rem.add(ta);
+        try {
+            m.put("type", Consts.MODEL_CLOZE);
+            // convert first template
+            JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
+            for (String type : new String[] { "qfmt", "afmt" }) {
+                t.put(type, t.getString(type).replaceAll("\\{\\{cloze:1:(.+?)\\}\\}", "{{cloze:$1}}"));
             }
+            t.put("name", "Cloze");
+            // delete non-cloze cards for the model
+            JSONArray ja = m.getJSONArray("tmpls");
+            ArrayList<JSONObject> rem = new ArrayList<>();
+            for (int i = 1; i < ja.length(); i++) {
+                JSONObject ta = ja.getJSONObject(i);
+                if (!ta.getString("afmt").contains("{{cloze:")) {
+                    rem.add(ta);
+                }
+            }
+            for (JSONObject r : rem) {
+                col.getModels().remTemplate(m, r);
+            }
+            JSONArray newArray = new JSONArray();
+            newArray.put(ja.get(0));
+            m.put("tmpls", newArray);
+            col.getModels()._updateTemplOrds(m);
+            col.getModels().save(m);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
-        for (JSONObject r : rem) {
-            col.getModels().remTemplate(m, r);
-        }
-        JSONArray newArray = new JSONArray();
-        newArray.put(ja.get(0));
-        m.put("tmpls", newArray);
-        col.getModels()._updateTemplOrds(m);
-        col.getModels().save(m);
 
     }
 
@@ -315,22 +322,26 @@ public class Storage {
 
 
     private static void _setColVars(DB db) {
-        JSONObject g = new JSONObject(Decks.defaultDeck);
-        g.put("id", 1);
-        g.put("name", "Default");
-        g.put("conf", 1);
-        g.put("mod", Utils.intTime());
-        JSONObject gc = new JSONObject(Decks.defaultConf);
-        gc.put("id", 1);
-        JSONObject ag = new JSONObject();
-        ag.put("1", g);
-        JSONObject agc = new JSONObject();
-        agc.put("1", gc);
-        ContentValues values = new ContentValues();
-        values.put("conf", Collection.defaultConf);
-        values.put("decks", Utils.jsonToString(ag));
-        values.put("dconf", Utils.jsonToString(agc));
-        db.update("col", values);
+        try {
+            JSONObject g = new JSONObject(Decks.defaultDeck);
+            g.put("id", 1);
+            g.put("name", "Default");
+            g.put("conf", 1);
+            g.put("mod", Utils.intTime());
+            JSONObject gc = new JSONObject(Decks.defaultConf);
+            gc.put("id", 1);
+            JSONObject ag = new JSONObject();
+            ag.put("1", g);
+            JSONObject agc = new JSONObject();
+            agc.put("1", gc);
+            ContentValues values = new ContentValues();
+            values.put("conf", Collection.defaultConf);
+            values.put("decks", Utils.jsonToString(ag));
+            values.put("dconf", Utils.jsonToString(agc));
+            db.update("col", values);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

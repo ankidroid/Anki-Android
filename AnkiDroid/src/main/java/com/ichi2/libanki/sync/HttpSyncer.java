@@ -25,14 +25,14 @@ import android.net.Uri;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
-import com.ichi2.anki.web.CustomSyncServer;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
 
 import org.apache.http.entity.AbstractHttpEntity;
-import com.ichi2.utils.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -57,7 +57,6 @@ import java.util.zip.GZIPOutputStream;
 
 import javax.net.ssl.SSLException;
 
-import androidx.annotation.Nullable;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -92,50 +91,13 @@ public class HttpSyncer {
     protected String mSKey;
     protected Connection mCon;
     protected Map<String, Object> mPostVars;
-    private volatile OkHttpClient mHttpClient;
-    private final HostNum mHostNum;
 
-    public HttpSyncer(String hkey, Connection con, HostNum hostNum) {
+
+    public HttpSyncer(String hkey, Connection con) {
         mHKey = hkey;
         mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
         mCon = con;
         mPostVars = new HashMap<>();
-        mHostNum = hostNum;
-    }
-
-    private OkHttpClient.Builder getHttpClientBuilder() {
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-                .addNetworkInterceptor(chain -> chain.proceed(
-                        chain.request()
-                                .newBuilder()
-                                .header("User-Agent", "AnkiDroid-" + VersionUtils.getPkgVersionName())
-                                .build()
-                ));
-        Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
-                .followRedirects(true)
-                .followSslRedirects(true)
-                .retryOnConnectionFailure(true)
-                .cache(null)
-                .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
-        return clientBuilder;
-    }
-
-    private OkHttpClient getHttpClient() {
-        if (this.mHttpClient != null) {
-            return mHttpClient;
-        }
-        return setupHttpClient();
-    }
-
-    //PERF: Thread safety isn't required for the current implementation
-    private synchronized OkHttpClient setupHttpClient() {
-        if (mHttpClient != null) {
-            return mHttpClient;
-        }
-        mHttpClient = getHttpClientBuilder().build();
-        return mHttpClient;
     }
 
 
@@ -151,27 +113,27 @@ public class HttpSyncer {
         }
     }
 
-    /** Note: Return value must be closed */
+
     public Response req(String method) throws UnknownHttpResponseException {
         return req(method, null);
     }
 
-    /** Note: Return value must be closed */
+
     public Response req(String method, InputStream fobj) throws UnknownHttpResponseException {
         return req(method, fobj, 6);
     }
 
-    /** Note: Return value must be closed */
+
     public Response req(String method, int comp, InputStream fobj) throws UnknownHttpResponseException {
         return req(method, fobj, comp);
     }
 
-    /** Note: Return value must be closed */
+
     public Response req(String method, InputStream fobj, int comp) throws UnknownHttpResponseException {
         return req(method, fobj, comp, null);
     }
 
-    /** Note: Return value must be closed */
+
     private Response req(String method, InputStream fobj, int comp, JSONObject registerData) throws UnknownHttpResponseException {
         File tmpFileBuffer = null;
         try {
@@ -220,8 +182,15 @@ public class HttpSyncer {
             bos.flush();
             bos.close();
             // connection headers
-
-            String url = syncURL() + method;
+            String url = Consts.SYNC_BASE;
+            if ("register".equals(method)) {
+                url = url + "account/signup" + "?username=" + registerData.getString("u") + "&password="
+                        + registerData.getString("p");
+            } else if (method.startsWith("upgrade")) {
+                url = url + method;
+            } else {
+                url = syncURL() + method;
+            }
 
             Request.Builder requestBuilder = new Request.Builder();
             requestBuilder.url(url);
@@ -233,7 +202,21 @@ public class HttpSyncer {
             Request httpPost = requestBuilder.build();
 
             try {
-                OkHttpClient httpClient = getHttpClient();
+                OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().addNetworkInterceptor(chain -> chain.proceed(
+                        chain.request()
+                                .newBuilder()
+                                .header("User-Agent", "AnkiDroid-" + VersionUtils.getPkgVersionName())
+                                .build()
+                ));
+                Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
+                        .followRedirects(true)
+                        .followSslRedirects(true)
+                        .retryOnConnectionFailure(true)
+                        .cache(null)
+                        .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
+                        .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
+                        .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
+                OkHttpClient httpClient = clientBuilder.build();
                 Response httpResponse = httpClient.newCall(httpPost).execute();
 
                 // we assume badAuthRaises flag from Anki Desktop always False
@@ -248,7 +231,7 @@ public class HttpSyncer {
                 Timber.e(e, "SSLException while building HttpClient");
                 throw new RuntimeException("SSLException while building HttpClient", e);
             }
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | JSONException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             Timber.e(e, "BasicHttpSyncer.sync: IOException");
@@ -450,36 +433,12 @@ public class HttpSyncer {
     public String syncURL() {
         // Allow user to specify custom sync server
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        if (isUsingCustomSyncServer(userPreferences)) {
-            String syncBaseString = CustomSyncServer.getSyncBaseUrl(userPreferences);
-            if (syncBaseString == null) {
-                return getDefaultAnkiWebUrl();
-            }
-            return Uri.parse(syncBaseString).buildUpon().appendPath(getUrlPrefix()).toString() + "/";
+        if (userPreferences != null && userPreferences.getBoolean("useCustomSyncServer", false)) {
+            Uri syncBase = Uri.parse(userPreferences.getString("syncBaseUrl", Consts.SYNC_BASE));
+            return syncBase.buildUpon().appendPath("sync").toString() + "/";
         }
         // Usual case
-        return getDefaultAnkiWebUrl();
-    }
-
-    protected String getUrlPrefix() {
-        return "sync";
-    }
-
-    protected Integer getHostNum() {
-        return mHostNum.getHostNum();
-    }
-
-    protected boolean isUsingCustomSyncServer(@Nullable SharedPreferences userPreferences) {
-        return userPreferences != null && CustomSyncServer.isEnabled(userPreferences);
-    }
-
-    protected String getDefaultAnkiWebUrl() {
-        String hostNumAsStringFormat = "";
-        Integer hostNum = getHostNum();
-        if (hostNum != null) {
-            hostNumAsStringFormat = hostNum.toString();
-        }
-        return String.format(Consts.SYNC_BASE, hostNumAsStringFormat) + getUrlPrefix() + "/";
+        return Consts.SYNC_BASE + "sync/";
     }
 }
 

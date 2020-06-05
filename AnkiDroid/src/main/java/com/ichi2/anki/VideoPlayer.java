@@ -9,7 +9,6 @@ import android.view.SurfaceHolder;
 import android.view.WindowManager;
 import android.widget.VideoView;
 
-import timber.log.Timber;
 
 
 /****************************************************************************************
@@ -36,36 +35,26 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Timber.i("onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_player);
         mPath = getIntent().getStringExtra("path");
-        Timber.i("Video Player intent had path: %s", mPath);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);        
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mVideoView = findViewById(R.id.video_surface);
+        mVideoView = (VideoView) findViewById(R.id.video_surface);
         mVideoView.getHolder().addCallback(this);
         mSoundPlayer = new Sound();
     }
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Timber.i("surfaceCreated");
-
-        if (mPath == null) {
-            //#5911 - path shouldn't be null. I couldn't determine why this happens.
-            AnkiDroidApp.sendExceptionReport("Video: mPath was unexpectedly null", "VideoPlayer surfaceCreated");
-            Timber.e("path was unexpectedly null");
-            UIUtils.showThemedToast(this, getString(R.string.video_creation_error), true);
-            finish();
-            return;
-        }
-
-        mSoundPlayer.playSound(mPath, mp -> {
-            finish();
-            MediaPlayer.OnCompletionListener originalListener = mSoundPlayer.getMediaCompletionListener();
-            if (originalListener != null) {
-                originalListener.onCompletion(mp);
+        mSoundPlayer.playSound(mPath, new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                finish();
+                MediaPlayer.OnCompletionListener originalListener = mSoundPlayer.getMediaCompletionListener();
+                if (originalListener != null) {
+                    originalListener.onCompletion(mp);
+                }
             }
         }, mVideoView);
     }

@@ -2,18 +2,13 @@
 package com.ichi2.anki;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatEditText;
-import timber.log.Timber;
 
 import com.ichi2.themes.Themes;
-
-import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 
 
 public class FieldEditText extends AppCompatEditText {
@@ -45,25 +40,6 @@ public class FieldEditText extends AppCompatEditText {
         // content text has been saved in NoteEditor.java, restore twice caused issue#5660
         super.onSaveInstanceState();
         return null;
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        if (shouldDisableExtendedTextUi()) {
-            Timber.i("Disabling Extended Text UI");
-            this.setImeOptions(this.getImeOptions() | IME_FLAG_NO_EXTRACT_UI);
-        }
-    }
-
-    private boolean shouldDisableExtendedTextUi() {
-        try {
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getContext());
-            return sp.getBoolean("disableExtendedTextUi", false);
-        } catch (Exception e) {
-            Timber.e(e, "Failed to get extended UI preference");
-            return false;
-        }
     }
 
 

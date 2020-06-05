@@ -26,37 +26,24 @@ import android.graphics.drawable.Drawable;
 
 import android.widget.ImageView;
 
-import com.ichi2.anki.AnkiDroidApp;
-
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public class BitmapUtil {
 
-    @Nullable
     public static Bitmap decodeFile(File theFile, int IMAGE_MAX_SIZE) {
         Bitmap bmp = null;
         try {
-            if (!theFile.exists()) {
-                Timber.i("not displaying preview - image does not exist: '%s'", theFile.getPath());
-                return null;
-            }
             // Decode image size
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
 
-            FileInputStream fis = null;
-            try {
-                fis = new FileInputStream(theFile);
-                BitmapFactory.decodeStream(fis, null, o);
-            } finally {
-                if (fis != null) {
-                    fis.close();
-                }
-            }
+            FileInputStream fis = new FileInputStream(theFile);
+            BitmapFactory.decodeStream(fis, null, o);
+            fis.close();
 
             int scale = 1;
             if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
@@ -69,16 +56,12 @@ public class BitmapUtil {
             // Decode with inSampleSize
             BitmapFactory.Options o2 = new BitmapFactory.Options();
             o2.inSampleSize = scale;
+            fis = new FileInputStream(theFile);
+            bmp = BitmapFactory.decodeStream(fis, null, o2);
 
-            try {
-                fis = new FileInputStream(theFile);
-                bmp = BitmapFactory.decodeStream(fis, null, o2);
-            } finally {
-                fis.close(); //don't need a null check, as we reuse the variable.
-            }
-        } catch (Exception e) {
-            //#5513 - We don't know the reason for the crash, let's find out.
-            AnkiDroidApp.sendExceptionReport(e, "BitmapUtil decodeFile");
+            fis.close();
+        } catch (IOException e) {
+            // do nothing
         }
         return bmp;
     }

@@ -30,7 +30,6 @@ import android.widget.LinearLayout;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.utils.Permissions;
 
 import timber.log.Timber;
 
@@ -330,15 +329,6 @@ public class AudioView extends LinearLayout {
             public void onClick(View v) {
                 // Since mAudioPath is not compulsory, we check if it exists
                 if (mAudioPath == null) {
-                    return;
-                }
-
-                //We can get to this screen without permissions through the "Pronunciation" feature.
-                if (!Permissions.canRecordAudio(mContext)) {
-                    Timber.w("Audio recording permission denied.");
-                    UIUtils.showThemedToast(mContext,
-                            getResources().getString(R.string.multimedia_editor_audio_permission_denied),
-                            true);
                     return;
                 }
 

@@ -29,9 +29,9 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,29 +71,26 @@ public class NoteService {
 
     public static void updateMultimediaNoteFromJsonNote(Collection col, final Note editorNoteSrc, final IMultimediaEditableNote noteDst) {
         if (noteDst instanceof MultimediaEditableNote) {
-            updateMultimediaNoteFromFields(col, editorNoteSrc.getFields(), editorNoteSrc.getMid(), (MultimediaEditableNote) noteDst);
-        }
-    }
-
-
-    public static void updateMultimediaNoteFromFields(Collection col, String[] fields, long modelId, MultimediaEditableNote mmNote) {
-        for (int i = 0; i < fields.length; i++) {
-            String value = fields[i];
-            IField field = null;
-            if (value.startsWith("<img")) {
-                field = new ImageField();
-            } else if (value.startsWith("[sound:") && value.contains("rec")) {
-                field = new AudioRecordingField();
-            } else if (value.startsWith("[sound:")) {
-                field = new AudioClipField();
-            } else {
-                field = new TextField();
+            MultimediaEditableNote mmNote = (MultimediaEditableNote) noteDst;
+            String[] values = editorNoteSrc.getFields();
+            for (int i = 0; i < values.length; i++) {
+                String value = values[i];
+                IField field = null;
+                if (value.startsWith("<img")) {
+                    field = new ImageField();
+                } else if (value.startsWith("[sound:") && value.contains("rec")) {
+                    field = new AudioRecordingField();
+                } else if (value.startsWith("[sound:")) {
+                    field = new AudioClipField();
+                } else {
+                    field = new TextField();
+                }
+                field.setFormattedString(col, value);
+                mmNote.setField(i, field);
             }
-            field.setFormattedString(col, value);
-            mmNote.setField(i, field);
+            mmNote.setModelId(editorNoteSrc.getMid());
+            // TODO: set current id of the note as well
         }
-        mmNote.setModelId(modelId);
-        // TODO: set current id of the note as well
     }
 
 

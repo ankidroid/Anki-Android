@@ -62,12 +62,11 @@
                 android:key="useInputTag"
                 android:summary="@string/use_input_tag_summ"
                 android:title="@string/use_input_tag" />
-            <!-- Workaround for #5533 -->
             <CheckBoxPreference
                 android:defaultValue="false"
-                android:key="disableExtendedTextUi"
-                android:summary="@string/disable_extended_text_ui_summ"
-                android:title="@string/disable_extended_text_ui" />
+                android:key="fixHebrewText"
+                android:summary="@string/fix_hebrew_text_summ"
+                android:title="@string/fix_hebrew_text" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_plugins"
@@ -81,6 +80,10 @@
                 android:key="thirdpartyapps_link"
                 android:summary="@string/thirdparty_apps_summary"
                 android:title="@string/thirdparty_apps_title">
+                <intent
+                    android:action="android.intent.action.VIEW"
+                    android:data="https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps"
+                    />
             </Preference>
             <CheckBoxPreference
                 android:defaultValue="false"
@@ -126,12 +129,6 @@
                 android:key="html_javascript_debugging"
                 android:summary="@string/html_javascript_debugging_summ"
                 android:title="@string/html_javascript_debugging"/>
-            <!-- Title and summary are variable, handled in string:
-            card_browser_enable_external_context_menu -->
-            <CheckBoxPreference
-                android:id="@+id/card_browser_external_context_menu"
-                android:defaultValue="true"
-                android:key="card_browser_enable_external_context_menu"/>
         </PreferenceCategory>
 
 

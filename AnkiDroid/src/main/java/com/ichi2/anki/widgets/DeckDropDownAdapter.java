@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import com.ichi2.anki.R;
 
-import com.ichi2.utils.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -79,8 +80,12 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
         } else {
             JSONObject deck = decks.get(position - 1);
-            String deckName = deck.getString("name");
-            deckNameView.setText(deckName);
+            try {
+                String deckName = deck.getString("name");
+                deckNameView.setText(deckName);
+            } catch (JSONException e) {
+                new RuntimeException(e);
+            }
         }
         deckCountsView.setText(((SubtitleListener) context).getSubtitleText());
         return convertView;
@@ -101,8 +106,12 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
         } else {
             JSONObject deck = decks.get(position - 1);
-            String deckName = deck.getString("name");
-            deckNameView.setText(deckName);
+            try {
+                String deckName = deck.getString("name");
+                deckNameView.setText(deckName);
+            } catch (JSONException e) {
+                new RuntimeException(e);
+            }
         }
         return convertView;
     }

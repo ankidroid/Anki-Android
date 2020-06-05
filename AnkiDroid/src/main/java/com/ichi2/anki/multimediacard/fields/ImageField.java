@@ -21,15 +21,9 @@ package com.ichi2.anki.multimediacard.fields;
 
 import com.ichi2.libanki.Collection;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
 import java.io.File;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Field with an image.
@@ -39,6 +33,8 @@ public class ImageField extends FieldBase implements IField {
     String mImagePath;
     private boolean mHasTemporaryMedia = false;
     private String mName;
+
+    private static final String PATH_REGEX = "<img.*src=[\"'](.*)[\"'].*/?>";
 
 
     @Override
@@ -136,15 +132,8 @@ public class ImageField extends FieldBase implements IField {
     @Override
     public String getFormattedValue() {
         File file = new File(getImagePath());
-        return formatImageFileName(file);
-    }
-
-
-    @NonNull
-    @VisibleForTesting
-    static String formatImageFileName(@NonNull File file) {
         if (file.exists()) {
-            return String.format("<img src=\"%s\">", file.getName());
+            return String.format("<img src='%s'/>", file.getName());
         } else {
             return "";
         }
@@ -153,38 +142,13 @@ public class ImageField extends FieldBase implements IField {
 
     @Override
     public void setFormattedString(Collection col, String value) {
-        setImagePath(getImageFullPath(col, value));
-    }
-
-
-    @NonNull
-    @VisibleForTesting
-    static String getImageFullPath(Collection col, String value) {
-        String path = parseImageSrcFromHtml(value);
-        if ("".equals(path)) {
-            return "";
+        Pattern p = Pattern.compile(PATH_REGEX);
+        Matcher m = p.matcher(value);
+        String res = "";
+        if (m.find()) {
+            res = m.group(1);
         }
         String mediaDir = col.getMedia().dir() + "/";
-        return mediaDir + path;
-    }
-
-
-    @VisibleForTesting
-    @CheckResult
-    @NonNull
-    static String parseImageSrcFromHtml(String html) {
-        if (html == null) {
-            return "";
-        }
-        try {
-            Document doc = Jsoup.parseBodyFragment(html);
-            Element image = doc.selectFirst("img[src]");
-            if (image == null) {
-                return "";
-            }
-            return image.attr("src");
-        } catch (Exception e) {
-            return "";
-        }
+        setImagePath(mediaDir + res);
     }
 }

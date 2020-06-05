@@ -14,55 +14,31 @@
 
 package com.ichi2.utils;
 
-import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Preferences;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
 
 /**
  * Utility call for proving language related functionality.
  */
 public class LanguageUtil {
 
-    /** A list of all languages supported by AnkiDroid
-     * Please modify LanguageUtilsTest if changing
-     * Please note 'yue' is special, it is 'yu' on crowdin, and mapped in import specially to 'yue' */
-    public static final String[] APP_LANGUAGES = {"af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
-            "de", "el", "en", "eo", "es-AR", "es-ES", "et", "eu", "fa", "fi", "fil", "fr", "fy-NL", "ga-IE", "gl", "got",
-            "gu-IN", "he", "hi", "hr", "hu", "hy-AM", "id", "is", "it", "ja", "jv", "ka", "kk", "km", "ko", "ku",
-            "ky", "lt", "lv", "mk", "mn", "mr", "ms", "my", "nl", "nn-NO", "no", "pa-IN", "pl", "pt-BR", "pt-PT",
-            "ro", "ru", "sk", "sl", "sq", "sr", "ss", "sv-SE", "sw", "ta", "te", "tg", "th", "ti", "tl", "tn", "tr",
-            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yue", "zh-CN", "zh-TW", "zu" };
+    /** A list of all languages supported by AnkiDroid */
+    public static final String[] APP_LANGUAGES = { "ar", "bg", "ca", "cs", "de", "el", "en", "eo", "es-AR", "es-ES", "et", "fa",
+            "fi", "fr", "got", "gl", "hi", "hu", "id", "it", "ja", "ko", "lt", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru",
+            "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_TW" };
 
 
     /**
-     * Returns the {@link Locale} for the given code or the default locale, if no code or preferences are given.
+     * Returns the {@link Locale} for the given code or the default locale, if no code is given.
      *
      * @return The {@link Locale} for the given code
      */
-    @NonNull
     public static Locale getLocale() {
         return getLocale("");
-    }
-
-    /**
-     * Returns the {@link Locale} for the given code or the default locale, if no preferences are given.
-     *
-     * @return The {@link Locale} for the given code
-     */
-    @NonNull
-    public static Locale getLocale(@Nullable String localeCode) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        return getLocale(localeCode, prefs);
     }
 
     /**
@@ -71,43 +47,27 @@ public class LanguageUtil {
      * @param localeCode The locale code of the language
      * @return The {@link Locale} for the given code
      */
-    @NonNull
-    public static Locale getLocale(@Nullable String localeCode, @NonNull SharedPreferences prefs) {
+    public static Locale getLocale(String localeCode) {
         Locale locale;
         if (localeCode == null || TextUtils.isEmpty(localeCode)) {
 
-            localeCode = prefs.getString(Preferences.LANGUAGE, "");
+            localeCode = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getString(
+                    Preferences.LANGUAGE, "");
             // If no code provided use the app language.
         }
         if (TextUtils.isEmpty(localeCode)) {
+            locale = Locale.getDefault();
             // Fall back to (system) default only if that fails.
-            localeCode = Locale.getDefault().toString();
-        }
-        // Language separators are '_' or '-' at different times in display/resource fetch
-        if (localeCode != null && (localeCode.contains("_") || localeCode.contains("-"))) {
+        } else if (localeCode.length() > 2) {
             try {
-                String[] localeParts = localeCode.split("[_-]", 2);
-                locale = new Locale(localeParts[0], localeParts[1]);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                Timber.w(e, "LanguageUtil::getLocale variant split fail, using code '%s' raw.", localeCode);
+                locale = new Locale(localeCode.substring(0, 2), localeCode.substring(3, 5));
+            } catch (StringIndexOutOfBoundsException e) {
                 locale = new Locale(localeCode);
             }
         } else {
             locale = new Locale(localeCode);
         }
         return locale;
-    }
-
-
-    @NonNull
-    public static String getShortDateFormatFromMs(long ms) {
-        return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(ms));
-    }
-
-
-    @NonNull
-    public static String getShortDateFormatFromS(long s) {
-        return DateFormat.getDateInstance(DateFormat.SHORT, getLocale()).format(new Date(s * 1000L));
     }
 
 }

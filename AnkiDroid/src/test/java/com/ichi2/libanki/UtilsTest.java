@@ -37,8 +37,8 @@ public class UtilsTest {
 
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource("path-traversal.zip");
+        File file = new File(resource.getPath());
         try {
-            File file = new File(resource.toURI());
             ZipFile zipFile = new ZipFile(file);
             Enumeration zipEntries = zipFile.entries();
             while (zipEntries.hasMoreElements()) {
@@ -47,8 +47,8 @@ public class UtilsTest {
             }
             Assert.fail("Expected an IOException");
         }
-        catch (Exception e) {
-            Assert.assertEquals("File is outside extraction target directory.", e.getMessage());
+        catch (IOException e) {
+            Assert.assertEquals(e.getMessage(), "File is outside extraction target directory.");
         }
     }
 
@@ -81,7 +81,7 @@ public class UtilsTest {
         URL resource = Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip");
         File copy = File.createTempFile("testCopyFileToStream", ".zip");
         copy.deleteOnExit();
-        Utils.copyFile(new File(resource.toURI()), copy);
+        Utils.copyFile(new File(resource.getFile()), copy);
         Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
     }
 }

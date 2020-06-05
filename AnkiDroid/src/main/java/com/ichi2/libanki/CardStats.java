@@ -29,11 +29,11 @@ public class CardStats {
         builder.append("</td></tr><tr><td valign=\"top\">");
 
         long next = 0;
-        if (c.getType() == Consts.CARD_TYPE_LRN || c.getType() == Consts.CARD_TYPE_REV) {
+        if (c.getType() == 1 || c.getType() == 2) {
             if (c.getODid() != 0 || c.getQueue() < 0) {
                 next = 0;
             } else {
-                if (c.getQueue() == Consts.QUEUE_TYPE_REV || c.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
+                if (c.getQueue() == 2 || c.getQueue() == 3) {
                     next = Utils.intTime(1000) + ((c.getDue() - col.getSched().getToday()) * 86400000);
                 } else {
                     next = c.getDue();

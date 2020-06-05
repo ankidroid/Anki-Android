@@ -17,7 +17,6 @@ env:
     - ANDROID_HOME=${HOME}/android-sdk
     - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
-    - LOCALE="NONE"
     - GRAVIS="https://raw.githubusercontent.com/DanySK/Gravis-CI/master/"
     - JDK="1.8"
     - TOOLS=${ANDROID_HOME}/tools
@@ -26,25 +25,23 @@ env:
     - UNIT_TEST=FALSE # by default we don't run the unit tests, they are run only in specific builds
     - LINT=FALSE # by default we don't lint, they are run only in specific builds
     - FINALIZE_COVERAGE=FALSE # by default we don't finalize coverage, it is done in one specific build
-    - TERM=dumb
   matrix:
-   - API=16 ABI=x86 AUDIO=-no-audio LOCALE="ko_KR"
-   - API=17 ABI=x86 LOCALE="it_IT"
+   #- API=15 # only runs locally. Create+Start once from AndroidStudio to init sdcard. Then only from command-line w/-engine classic
+   - API=16 ABI=x86 AUDIO=-no-audio
+   - API=17 ABI=x86
    #- API=18 ABI=x86 # frequently flaky: test run failed: 'Instrumentation run failed due to 'java.lang.SecurityException''
-   - API=19 ABI=x86 LOCALE="vi_VN"
+   - API=19 ABI=x86
    # API 20 was Android Wear only
-   - API=21 LOCALE="pl_PL"
-   - API=22 LOCALE="ja_JP"
-   - API=23 LOCALE="ru_RU"
-   - API=24 LOCALE="zh_CN"
-   - API=25 LOCALE="es_ES"
+   - API=21
+   - API=22
+   - API=23
+   - API=24
+   - API=25
    #- API=26 # Fails with unrecognized tests? orchestrator change or something?
-   - API=27 LOCALE="fr_FR"
-   - API=28 # API28 does not handle locale changes for some reason, so it is our default locale test
-   - API=29 LOCALE="pt_BR"
-   - API=R EMU_FLAVOR=google_apis LOCALE="de_DE" # This will be API30 when released, until now it is R, with intermittent failure
-   - API=24 JDK="1.11" # make sure we work in future dev environments
-   - API=24 JDK="1.14" # make sure we work in future dev environments
+   - API=27
+   - API=28
+   - API=29
+   - API=24 JDK="1.11" # make sure we work in the future
 
 jobs:
   fast_finish: true  # Report success without waiting for jobs that allowed to fail.
@@ -63,11 +60,7 @@ jobs:
       install: skip
       os: linux
     - stage: unit_test
-      env: LINT=Release API=NONE
-      install: skip
-      os: linux
-    - stage: unit_test
-      env: LINT=Debug API=NONE
+      env: LINT=TRUE API=NONE
       install: skip
       os: linux
     - stage: finalize_coverage
@@ -75,10 +68,7 @@ jobs:
       install: skip
       script: echo finalize codacy coverage uploads
   allow_failures:
-    - env: API=R EMU_FLAVOR=google_apis LOCALE="de_DE" # unreleased Android API30 is failing in local builds, let's expose that on Travis
     - env: API=24 JDK="1.11" # non-default JDKs should not hold up success reporting
-    - env: API=24 JDK="1.14" # non-default JDKs should not hold up success reporting
-    - env: LINT=Debug API=NONE # we want to see the full lint report vs baseline but not fail on it
     - env: FINALIZE_COVERAGE=TRUE API=NONE # finalizing coverage should not hold up success reporting
 
 before_install:
@@ -86,33 +76,33 @@ before_install:
   # It should not make assumptions about os platform or desired tool installation
 
   # Set up JDK 8 for Android SDK - Java is universally needed: codacy, unit tests, emulators
-  - travis_retry curl "${GRAVIS}.install-jdk-travis.sh" --output ~/.install-jdk-travis.sh
+  - curl "${GRAVIS}.install-jdk-travis.sh" --output ~/.install-jdk-travis.sh
   - export TARGET_JDK="${JDK}"
   - JDK="1.8"
   - source ~/.install-jdk-travis.sh
 
   # Set up Android SDK - this is needed everywhere but coverage finalization, so toggle on that
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then travis_retry wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip; fi
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip; fi
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}; fi
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then rm android-sdk-tools.zip; fi
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then mkdir ~/.android; fi # avoid harmless sdkmanager warning
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo 'count=0' > ~/.android/repositories.cfg; fi # avoid harmless sdkmanager warning
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then yes | travis_retry sdkmanager --licenses >/dev/null; fi # accept all sdkmanager warnings
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "platform-tools" >/dev/null; fi
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "tools" >/dev/null; fi # A second time per Travis docs, gets latest versions
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "build-tools;28.0.3" >/dev/null; fi # Implicit gradle dependency - gradle drives changes
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "platforms;android-28" >/dev/null; fi # We need the API of the current compileSdkVersion from gradle.properties
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then yes | sdkmanager --licenses >/dev/null; fi # accept all sdkmanager warnings
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager --no_https "platform-tools" >/dev/null; fi
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager --no_https "tools" >/dev/null; fi # A second time per Travis docs, gets latest versions
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager --no_https "build-tools;28.0.3" >/dev/null; fi # Implicit gradle dependency - gradle drives changes
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | sdkmanager --no_https "platforms;android-28" >/dev/null; fi # We need the API of the current compileSdkVersion from gradle.properties
 
 install:
   # In our setup, install only runs on matrix entries we want full emulator tests on
   # That only happens currently on linux, so this section can assume linux + emulator is desired
   # Download required emulator tools
-  - echo y | travis_retry sdkmanager --no_https "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
-  - echo y | travis_retry sdkmanager --no_https "emulator" >/dev/null
-  - echo y | travis_retry sdkmanager --no_https "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null # install our emulator
+  - echo y | sdkmanager --no_https "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
+  - echo y | sdkmanager --no_https "emulator" >/dev/null
+  - echo y | sdkmanager --no_https "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null # install our emulator
 
   # Set up KVM on linux for hardware acceleration. Manually here so it only happens for emulator tests, takes ~30s
-  - travis_retry sudo -E apt-get -yq --no-install-suggests --no-install-recommends install bridge-utils libpulse0 libvirt-bin qemu-kvm virtinst ubuntu-vm-builder
+  - sudo -E apt-get -yq --no-install-suggests --no-install-recommends install bridge-utils libpulse0 libvirt-bin qemu-kvm virtinst ubuntu-vm-builder
   - sudo adduser $USER libvirt
   - sudo adduser $USER kvm
 
@@ -130,21 +120,17 @@ install:
   - ./tools/android-wait-for-emulator.sh
   - adb shell input keyevent 82 &
 
-  # Switch locale
-  - if [ "$LOCALE" != "NONE" ]; then adb shell am broadcast -a com.android.intent.action.SET_LOCALE --es com.android.intent.extra.LOCALE "$LOCALE" com.android.customlocale2; fi
-
   # Switch back to our target JDK version to build and run tests
   - JDK="${TARGET_JDK}"
   - source ~/.install-jdk-travis.sh
 
 script:
-  - travis_retry ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint # warm gradle w/travis_retry to handle network blips
   - if [ "$UNIT_TEST" = "TRUE" ]; then ./gradlew jacocoUnitTestReport; fi
-  - if [ "$LINT" != "FALSE" ]; then ./gradlew lint$LINT; fi
+  - if [ "$LINT" = "TRUE" ]; then ./gradlew lint; fi
   - if [ "$API" != "NONE" ]; then ./gradlew jacocoAndroidTestReport; fi
 
 after_success:
-  - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then travis_retry bash tools/upload-codacy-report.sh; fi
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash tools/upload-codacy-report.sh; fi
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock

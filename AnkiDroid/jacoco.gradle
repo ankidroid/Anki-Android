@@ -17,7 +17,7 @@ tasks.withType(Test) {
 }
 
 // Our merge report task
-task jacocoTestReport(type: JacocoReport, dependsOn: ['jacocoAndroidTestReport', 'jacocoUnitTestReport']) {
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
 
     reports {
         xml.enabled = true
@@ -55,7 +55,7 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) 
 }
 
 // Our merge report task
-task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedDebugAndroidTest']) {
+task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['createDebugCoverageReport']) {
 
     reports {
         xml.enabled = true

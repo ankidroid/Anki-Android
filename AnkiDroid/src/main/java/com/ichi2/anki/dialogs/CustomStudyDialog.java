@@ -21,15 +21,11 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -41,14 +37,14 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
-import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-import com.ichi2.async.CollectionTask;
+import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,8 +60,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     private static final int CUSTOM_STUDY_NEW = 100;
     private static final int CUSTOM_STUDY_REV = 101;
     private static final int CUSTOM_STUDY_FORGOT = 102;
-    @VisibleForTesting
-    static final int CUSTOM_STUDY_AHEAD = 103;
+    private static final int CUSTOM_STUDY_AHEAD = 103;
     private static final int CUSTOM_STUDY_RANDOM = 104;
     private static final int CUSTOM_STUDY_PREVIEW = 105;
     private static final int CUSTOM_STUDY_TAGS = 106;
@@ -126,7 +121,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                     @Override
                     public void onSelection(MaterialDialog materialDialog, View view, int which,
                                             CharSequence charSequence) {
-                        AnkiActivity activity = getAnkiActivity();
+                        AnkiActivity activity = (AnkiActivity) getActivity();
                         switch (view.getId()) {
                             case DECK_OPTIONS: {
                                 // User asked to permanently change the deck options
@@ -152,7 +147,36 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                                 TagsDialog dialogFragment = TagsDialog.newInstance(
                                         TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
                                         new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
-                                dialogFragment.setTagsDialogListener(CustomStudyDialog.this::customStudyFromTags);
+                                dialogFragment.setTagsDialogListener(new TagsDialog.TagsDialogListener() {
+                                    @Override
+                                    public void onPositive(List<String> selectedTags, int option) {
+                                        /*
+                                         * Here's the method that gathers the final selection of tags, type of cards and
+                                         * generates the search screen for the custom study deck.
+                                         */
+                                        StringBuilder sb = new StringBuilder();
+                                        switch (option) {
+                                            case 1:
+                                                sb.append("is:new ");
+                                                break;
+                                            case 2:
+                                                sb.append("is:due ");
+                                                break;
+                                            default:
+                                                // Logging here might be appropriate : )
+                                                break;
+                                        }
+                                        List<String> arr = new ArrayList<>();
+                                        if (selectedTags.size() > 0) {
+                                            for (String tag : selectedTags) {
+                                                arr.add(String.format("tag:'%s'", tag));
+                                            }
+                                            sb.append("(").append(TextUtils.join(" or ", arr)).append(")");
+                                        }
+                                        createCustomStudySession(new JSONArray(), new Object[]{sb.toString(),
+                                                Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, true);
+                                    }
+                                });
                                 activity.showDialogFragment(dialogFragment);
                                 break;
                             }
@@ -160,7 +184,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                                 // User asked for a standard custom study option
                                 CustomStudyDialog d = CustomStudyDialog.newInstance(view.getId(),
                                         getArguments().getLong("did"), jumpToReviewer);
-                                getAnkiActivity().showDialogFragment(d);
+                                ((AnkiActivity) getActivity()).showDialogFragment(d);
                             }
                         }
                     }
@@ -191,9 +215,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         // Give EditText focus and show keyboard
         mEditText.setSelectAllOnFocus(true);
         mEditText.requestFocus();
-        if (dialogId == CUSTOM_STUDY_NEW || dialogId == CUSTOM_STUDY_REV) {
-            mEditText.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
-        }
         // deck id
         final long did = getArguments().getLong("did");
         // Whether or not to jump straight to the reviewer
@@ -210,35 +231,46 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                     try {
                         n = Integer.parseInt(mEditText.getText().toString());
                     } catch (Exception ignored) {
-                        // This should never happen because we disable positive button for non-parsable inputs
-                        return;
+                        n = Integer.MAX_VALUE;
                     }
 
                     // Set behavior when clicking OK button
                     switch (dialogId) {
                         case CUSTOM_STUDY_NEW: {
-                            AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
-                            JSONObject deck = col.getDecks().get(did);
-                            deck.put("extendNew", n);
-                            col.getDecks().save(deck);
-                            col.getSched().extendLimits(n, 0);
-                            onLimitsExtended(jumpToReviewer);
+                            try {
+                                AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
+                                JSONObject deck = col.getDecks().get(did);
+                                deck.put("extendNew", n);
+                                col.getDecks().save(deck);
+                                col.getSched().extendLimits(n, 0);
+                                onLimitsExtended(jumpToReviewer);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
                             break;
                         }
                         case CUSTOM_STUDY_REV: {
-                            AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
-                            JSONObject deck = col.getDecks().get(did);
-                            deck.put("extendRev", n);
-                            col.getDecks().save(deck);
-                            col.getSched().extendLimits(0, n);
-                            onLimitsExtended(jumpToReviewer);
+                            try {
+                                AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
+                                JSONObject deck = col.getDecks().get(did);
+                                deck.put("extendRev", n);
+                                col.getDecks().save(deck);
+                                col.getSched().extendLimits(0, n);
+                                onLimitsExtended(jumpToReviewer);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
                             break;
                         }
                         case CUSTOM_STUDY_FORGOT: {
                             JSONArray ar = new JSONArray();
-                            ar.put(0, 1);
-                            createCustomStudySession(ar, new Object[] {String.format(Locale.US,
-                                                                                     "rated:%d:1", n), Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, false);
+                            try {
+                                ar.put(0, 1);
+                                createCustomStudySession(ar, new Object[] {String.format(Locale.US,
+                                        "rated:%d:1", n), Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, false);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
                             break;
                         }
                         case CUSTOM_STUDY_AHEAD: {
@@ -260,7 +292,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                             break;
                     }
                 })
-                .onNegative((dialog, which) -> getAnkiActivity().dismissAllDialogFragments());
+                .onNegative((dialog, which) -> ((AnkiActivity) getActivity()).dismissAllDialogFragments());
         final MaterialDialog dialog = builder.build();
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -275,11 +307,10 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                try {
-                    Integer.parseInt(mEditText.getText().toString());
-                    dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
-                } catch (Exception ignored) {
+                if (editable.length() == 0) {
                     dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
+                } else {
+                    dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
                 }
             }
         });
@@ -305,29 +336,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         return keyValueMap;
     }
 
-    private void customStudyFromTags(List<String> selectedTags, int option) {
-        StringBuilder sb = new StringBuilder();
-        switch (option) {
-            case 1:
-                sb.append("is:new ");
-                break;
-            case 2:
-                sb.append("is:due ");
-                break;
-            default:
-                // Logging here might be appropriate : )
-                break;
-        }
-        List<String> arr = new ArrayList<>();
-        if (selectedTags.size() > 0) {
-            for (String tag : selectedTags) {
-                arr.add(String.format("tag:'%s'", tag));
-            }
-            sb.append("(").append(TextUtils.join(" or ", arr)).append(")");
-        }
-        createCustomStudySession(new JSONArray(), new Object[] {sb.toString(),
-                Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, true);
-    }
 
     /**
      * Retrieve the list of ids to put in the context menu list
@@ -335,7 +343,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
      * @return the ids of which values to show
      */
     private int[] getListIds(int dialogId) {
-        Collection col = getAnkiActivity().getCol();
+        Collection col = ((AnkiActivity) getActivity()).getCol();
         switch (dialogId) {
             case CONTEXT_MENU_STANDARD:
                 // Standard context menu
@@ -424,75 +432,65 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
      */
     private void createCustomStudySession(JSONArray delays, Object[] terms, Boolean resched) {
         JSONObject dyn;
-        final AnkiActivity activity = getAnkiActivity();
+        final AnkiActivity activity = (AnkiActivity) getActivity();
         Collection col = CollectionHelper.getInstance().getCol(activity);
-        long did = getArguments().getLong("did");
-        String deckToStudyName = col.getDecks().get(did).getString("name");
-        String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
-        JSONObject cur = col.getDecks().byName(customStudyDeck);
-        if (cur != null) {
-            Timber.i("Found deck: '%s'", customStudyDeck);
-            if (cur.getInt("dyn") != 1) {
-                Timber.w("Deck: '%s' was non-dynamic", customStudyDeck);
-                new MaterialDialog.Builder(getActivity())
-                    .content(R.string.custom_study_deck_exists)
-                    .negativeText(R.string.dialog_cancel)
-                    .build().show();
-                return;
+        try {
+            long did = getArguments().getLong("did");
+            String deckName = col.getDecks().get(did).getString("name");
+            String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
+            JSONObject cur = col.getDecks().byName(customStudyDeck);
+            if (cur != null) {
+                if (cur.getInt("dyn") != 1) {
+                    new MaterialDialog.Builder(getActivity())
+                            .content(R.string.custom_study_deck_exists)
+                            .negativeText(R.string.dialog_cancel)
+                            .build().show();
+                    return;
+                } else {
+                    // safe to empty
+                    col.getSched().emptyDyn(cur.getLong("id"));
+                    // reuse; don't delete as it may have children
+                    dyn = cur;
+                    col.getDecks().select(cur.getLong("id"));
+                }
             } else {
-                Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck);
-                // safe to empty
-                col.getSched().emptyDyn(cur.getLong("id"));
-                // reuse; don't delete as it may have children
-                dyn = cur;
-                col.getDecks().select(cur.getLong("id"));
+                long customStudyDid = col.getDecks().newDyn(customStudyDeck);
+                dyn = col.getDecks().get(customStudyDid);
             }
-        } else {
-            Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck);
-            long customStudyDid = col.getDecks().newDyn(customStudyDeck);
-            dyn = col.getDecks().get(customStudyDid);
-        }
-        if (!dyn.has("terms")) {
-            //#5959 - temp code to diagnose why terms doesn't exist.
-            // normally we wouldn't want to log this much, but we need to know how deep the corruption is to fix the
-            // issue
-            Timber.w("Invalid Dynamic Deck: %s", dyn);
-            AnkiDroidApp.sendExceptionReport("Custom Study Deck had no terms", "CustomStudyDialog - createCustomStudySession");
-            UIUtils.showThemedToast(this.getContext(), getString(R.string.custom_study_rebuild_deck_corrupt), false);
-            return;
-        }
-        // and then set various options
-        if (delays.length() > 0) {
-            dyn.put("delays", delays);
-        } else {
-            dyn.put("delays", JSONObject.NULL);
-        }
-        JSONArray ar = dyn.getJSONArray("terms");
-        ar.getJSONArray(0).put(0, "deck:\"" + deckToStudyName + "\" " + terms[0]);
-        ar.getJSONArray(0).put(1, terms[1]);
-        ar.getJSONArray(0).put(2, terms[2]);
-        dyn.put("resched", resched);
-        // Rebuild the filtered deck
-        Timber.i("Rebuilding Custom Study Deck");
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REBUILD_CRAM, new CollectionTask.TaskListener() {
+            // and then set various options
+            if (delays.length() > 0) {
+                dyn.put("delays", delays);
+            } else {
+                dyn.put("delays", JSONObject.NULL);
+            }
+            JSONArray ar = dyn.getJSONArray("terms");
+            ar.getJSONArray(0).put(0, "deck:\"" + deckName + "\" " + terms[0]);
+            ar.getJSONArray(0).put(1, terms[1]);
+            ar.getJSONArray(0).put(2, terms[2]);
+            dyn.put("resched", resched);
+            // Rebuild the filtered deck
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, new DeckTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
                     activity.showProgressBar();
                 }
 
                 @Override
-                public void onPostExecute(CollectionTask.TaskData result) {
+                public void onPostExecute(DeckTask.TaskData result) {
                     activity.hideProgressBar();
                     ((CustomStudyListener) activity).onCreateCustomStudySession();
                 }
             });
 
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         // Hide the dialogs
         activity.dismissAllDialogFragments();
     }
 
     private void onLimitsExtended(boolean jumpToReviewer) {
-        AnkiActivity activity = getAnkiActivity();
+        AnkiActivity activity = (AnkiActivity) getActivity();
         if (jumpToReviewer) {
             activity.startActivityForResultWithoutAnimation(new Intent(activity, Reviewer.class), AnkiActivity.REQUEST_REVIEW);
             CollectionHelper.getInstance().getCol(activity).startTimebox();
@@ -500,9 +498,5 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
             ((CustomStudyListener) activity).onExtendStudyLimits();
         }
         activity.dismissAllDialogFragments();
-    }
-
-    protected AnkiActivity getAnkiActivity() {
-        return (AnkiActivity) getActivity();
     }
 }

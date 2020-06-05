@@ -42,14 +42,15 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.stats.Stats;
+import com.ichi2.libanki.Stats;
 import com.ichi2.ui.SlidingTabLayout;
 
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import timber.log.Timber;
@@ -235,9 +236,13 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     // Iterates the drop down decks, and selects the one matching the given id
     private boolean selectDeckById(long deckId) {
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
-            if (mDropDownDecks.get(dropDownDeckIdx).getLong("id") == deckId) {
-                selectDropDownItem(dropDownDeckIdx + 1);
-                return true;
+            try {
+                if (mDropDownDecks.get(dropDownDeckIdx).getLong("id") == deckId) {
+                    selectDropDownItem(dropDownDeckIdx + 1);
+                    return true;
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
         }
         return false;
@@ -447,12 +452,16 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             mActivitySectionPagerAdapter = ((Statistics) getActivity()).getSectionsPagerAdapter();
             mDeckId = ((Statistics) getActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
-                Collection col = CollectionHelper.getInstance().getCol(getActivity());
-                String baseName = Decks.basename(col.getDecks().current().getString("name"));
-                if (sIsSubtitle) {
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(baseName);
-                } else {
-                    getActivity().setTitle(baseName);
+                try {
+                    Collection col = CollectionHelper.getInstance().getCol(getActivity());
+                    List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::", -1));
+                    if (sIsSubtitle) {
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(parts.get(parts.size() - 1));
+                    } else {
+                        getActivity().setTitle(parts.get(parts.size() - 1));
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
             } else {
                 if (sIsSubtitle) {
@@ -604,11 +613,15 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
             mDeckId = ((Statistics) getActivity()).getDeckId();
             if (mDeckId != Stats.ALL_DECKS_ID) {
-                String basename = Decks.basename(col.getDecks().current().getString("name"));
-                if (sIsSubtitle) {
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(basename);
-                } else {
-                    getActivity().setTitle(basename);
+                try {
+                    List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
+                    if (sIsSubtitle) {
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(parts.get(parts.size() - 1));
+                    } else {
+                        getActivity().setTitle(parts.get(parts.size() - 1));
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
             } else {
                 if (sIsSubtitle) {

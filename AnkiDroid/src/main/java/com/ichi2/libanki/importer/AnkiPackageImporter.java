@@ -19,7 +19,6 @@ package com.ichi2.libanki.importer;
 
 import com.google.gson.stream.JsonReader;
 import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Collection;
@@ -61,7 +60,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                 mZip = new ZipFile(new File(mFile), ZipFile.OPEN_READ);
                 // v2 scheduler?
                 if (mZip.getEntry(colname) == null) {
-                    colname = CollectionHelper.COLLECTION_FILENAME;
+                    colname = "collection.anki2";
                 }
                 Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{colname, "media"}, null);
             } catch (IOException e) {

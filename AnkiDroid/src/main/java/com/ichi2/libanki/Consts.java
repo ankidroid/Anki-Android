@@ -27,22 +27,6 @@ public class Consts {
     public static final int NEW_CARDS_RANDOM = 0;
     public static final int NEW_CARDS_DUE = 1;
 
-    // Queue types
-    public static final int QUEUE_TYPE_MANUALLY_BURIED = -3;
-    public static final int QUEUE_TYPE_SIBLING_BURIED = -2;
-    public static final int QUEUE_TYPE_SUSPENDED = -1;
-    public static final int QUEUE_TYPE_NEW = 0;
-    public static final int QUEUE_TYPE_LRN = 1;
-    public static final int QUEUE_TYPE_REV = 2;
-    public static final int QUEUE_TYPE_DAY_LEARN_RELEARN = 3;
-    public static final int QUEUE_TYPE_PREVIEW = 4;
-
-    // Card types
-    public static final int CARD_TYPE_NEW = 0;
-    public static final int CARD_TYPE_LRN = 1;
-    public static final int CARD_TYPE_REV = 2;
-    public static final int CARD_TYPE_RELEARNING = 3;
-
     // removal types
     public static final int REM_CARD = 0;
     public static final int REM_NOTE = 1;
@@ -79,29 +63,11 @@ public class Consts {
     public static final int SCHEMA_VERSION = 11;
     public static final int SYNC_ZIP_SIZE = (int)(2.5*1024*1024);
     public static final int SYNC_ZIP_COUNT = 25;
-    public static final String SYNC_BASE = "https://sync%s.ankiweb.net/";
-    public static final Integer DEFAULT_HOST_NUM = null;
+    public static final String SYNC_BASE = "https://sync.ankiweb.net/";
+    public static final String SYNC_MEDIA_BASE = "https://sync.ankiweb.net/msync/";
     public static final int SYNC_VER = 9;
 
     public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
 
-    // Leech actions
-    public static final int LEECH_SUSPEND = 0;
-    public static final int LEECH_TAGONLY = 1;
-
-    // Buttons
-    public static final int BUTTON_ONE = 1;
-    public static final int BUTTON_TWO = 2;
-    public static final int BUTTON_THREE = 3;
-    public static final int BUTTON_FOUR = 4;
-
-    // Revlog types
-    public static final int REVLOG_LRN = 0;
-    public static final int REVLOG_REV = 1;
-    public static final int REVLOG_RELRN = 2;
-    public static final int REVLOG_CRAM = 3;
-
     // The labels defined in consts.py are in AnkiDroid's resources files.
-
-    public static final long DEFAULT_DECK_ID = 1;
 }

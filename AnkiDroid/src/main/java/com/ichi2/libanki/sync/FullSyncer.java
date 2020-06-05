@@ -16,7 +16,9 @@
 
 package com.ichi2.libanki.sync;
 
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
+import android.net.Uri;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -24,6 +26,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
@@ -47,8 +50,8 @@ public class FullSyncer extends HttpSyncer {
     private Connection mCon;
 
 
-    public FullSyncer(Collection col, String hkey, Connection con, HostNum hostNum) {
-        super(hkey, con, hostNum);
+    public FullSyncer(Collection col, String hkey, Connection con) {
+        super(hkey, con);
         mPostVars = new HashMap<>();
         mPostVars.put("k", hkey);
         mPostVars.put("v",
@@ -56,6 +59,20 @@ public class FullSyncer extends HttpSyncer {
         mCol = col;
         mCon = con;
     }
+
+
+    @Override
+    public String syncURL() {
+        // Allow user to specify custom sync server
+        SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        if (userPreferences!= null && userPreferences.getBoolean("useCustomSyncServer", false)) {
+            Uri syncBase = Uri.parse(userPreferences.getString("syncBaseUrl", Consts.SYNC_BASE));
+            return syncBase.buildUpon().appendPath("sync").toString() + "/";
+        }
+        // Usual case
+        return Consts.SYNC_BASE + "sync/";
+    }
+
 
     @Override
     public Object[] download() throws UnknownHttpResponseException {
@@ -76,7 +93,6 @@ public class FullSyncer extends HttpSyncer {
         }
         String path;
         if (mCol != null) {
-            Timber.i("Closing collection for full sync");
             // Usual case where collection is non-null
             path = mCol.getPath();
             mCol.close();
@@ -89,10 +105,8 @@ public class FullSyncer extends HttpSyncer {
         String tpath = path + ".tmp";
         try {
             super.writeToFile(cont, tpath);
-            Timber.d("Full Sync - Downloaded temp file");
             FileInputStream fis = new FileInputStream(tpath);
             if ("upgradeRequired".equals(super.stream2String(fis, 15))) {
-                Timber.w("Full Sync - 'Upgrade Required' message received");
                 return new Object[]{"upgradeRequired"};
             }
         } catch (FileNotFoundException e) {
@@ -110,7 +124,7 @@ public class FullSyncer extends HttpSyncer {
         DB tempDb = null;
         try {
             tempDb = new DB(tpath);
-            if (!"ok".equalsIgnoreCase(tempDb.queryString("PRAGMA integrity_check"))) {
+            if (!tempDb.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
                 Timber.e("Full sync - downloaded file corrupt");
                 return new Object[] { "remoteDbError" };
             }
@@ -122,14 +136,11 @@ public class FullSyncer extends HttpSyncer {
                 tempDb.close();
             }
         }
-        Timber.d("Full Sync: Downloaded file was not corrupt");
         // overwrite existing collection
         File newFile = new File(tpath);
         if (newFile.renameTo(new File(path))) {
-            Timber.i("Full Sync Success: Overwritten collection with downloaded file");
             return new Object[] { "success" };
         } else {
-            Timber.w("Full Sync: Error overwriting collection with downloaded file");
             return new Object[] { "overwriteError" };
         }
     }
@@ -139,7 +150,7 @@ public class FullSyncer extends HttpSyncer {
     public Object[] upload() throws UnknownHttpResponseException {
         // make sure it's ok before we try to upload
         mCon.publishProgress(R.string.sync_check_upload_file);
-        if (!"ok".equalsIgnoreCase(mCol.getDb().queryString("PRAGMA integrity_check"))) {
+        if (!mCol.getDb().queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
             return new Object[] { "dbError" };
         }
         if (!mCol.basicCheck()) {

@@ -17,13 +17,12 @@
 package com.ichi2.anki;
 
 import android.content.SharedPreferences;
+import android.os.StatFs;
 
 
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
-import com.ichi2.utils.FileUtil;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -172,7 +171,7 @@ public class BackupManager {
                 // Save collection file as zip archive
                 try {
                     ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
-                    ZipEntry ze = new ZipEntry(CollectionHelper.COLLECTION_FILENAME);
+                    ZipEntry ze = new ZipEntry("collection.anki2");
                     zos.putNextEntry(ze);
                     CompatHelper.getCompat().copyFile(colPath, zos);
                     zos.close();
@@ -207,7 +206,12 @@ public class BackupManager {
 
 
     private static long getFreeDiscSpace(File file) {
-        return FileUtil.getFreeDiskSpace(file, MIN_FREE_SPACE * 1024 * 1024);
+        try {
+            return CompatHelper.getCompat().getAvailableBytes(new StatFs(file.getParentFile().getPath()));
+        } catch (IllegalArgumentException e) {
+            Timber.e(e, "Free space could not be retrieved");
+            return MIN_FREE_SPACE * 1024 * 1024;
+        }
     }
 
 
@@ -221,7 +225,6 @@ public class BackupManager {
     public static boolean repairCollection(Collection col) {
         String deckPath = col.getPath();
         File deckFile = new File(deckPath);
-        Timber.i("BackupManager - RepairCollection - Closing Collection");
         col.close();
 
         // repair file

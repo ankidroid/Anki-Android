@@ -17,11 +17,6 @@ package com.ichi2.compat.customtabs;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import androidx.browser.customtabs.CustomTabsClient;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.browser.customtabs.CustomTabsServiceConnection;
@@ -37,11 +32,8 @@ import timber.log.Timber;
  */
 public class CustomTabActivityHelper implements ServiceConnectionCallback {
     private static boolean sCustomTabsFailed = false;
-    @Nullable
     private CustomTabsSession mCustomTabsSession;
-    @Nullable
     private CustomTabsClient mClient;
-    @Nullable
     private CustomTabsServiceConnection mConnection;
 
     /**
@@ -52,7 +44,7 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
      * @param uri the Uri to be opened.
      * @param fallback a CustomTabFallback to be used if Custom Tabs is not available.
      */
-    public static void openCustomTab(@NonNull Activity activity,
+    public static void openCustomTab(Activity activity,
                                      CustomTabsIntent customTabsIntent,
                                      Uri uri,
                                      CustomTabFallback fallback) {
@@ -113,17 +105,11 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
             CustomTabsClient.bindCustomTabsService(activity, packageName, mConnection);
         } catch (SecurityException e) {
             Timber.w(e, "CustomTabsService bind attempt failed, using fallback");
-            disableCustomTabHandler();
+            sCustomTabsFailed = true;
+            mClient = null;
+            mCustomTabsSession = null;
+            mConnection = null;
         }
-    }
-
-
-    private void disableCustomTabHandler() {
-        Timber.i("Disabling custom tab handler and using fallback");
-        sCustomTabsFailed = true;
-        mClient = null;
-        mCustomTabsSession = null;
-        mConnection = null;
     }
 
     /**
@@ -142,22 +128,15 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
 
     @Override
     public void onServiceConnected(CustomTabsClient client) {
+        mClient = client;
         try {
-            mClient = client;
-            try {
-                mClient.warmup(0L);
-            } catch (IllegalStateException e) {
-                // Issue 5337 - some browsers like TorBrowser don't adhere to Android 8 background limits
-                // They will crash as they attempt to start services. warmup failure shouldn't be fatal though.
-                Timber.w(e, "Ignoring CustomTabs implementation that doesn't conform to Android 8 background limits");
-            }
-            getSession();
-        } catch (SecurityException e) {
-            //#6142 - A securityException here means that we're not able to load the CustomTabClient at all, whereas
-            //the IllegalStateException was a failure, but could be continued from
-            Timber.w(e, "CustomTabsService bind attempt failed, using fallback");
-            disableCustomTabHandler();
+            mClient.warmup(0L);
+        } catch (IllegalStateException e) {
+            // Issue 5337 - some browsers like TorBrowser don't adhere to Android 8 background limits
+            // They will crash as they attempt to start services. warmup failure shouldn't be fatal though.
+            Timber.w(e, "Ignoring CustomTabs implementation that doesn't conform to Android 8 background limits");
         }
+        getSession();
     }
 
     @Override
@@ -179,13 +158,4 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
         void openUri(Activity activity, Uri uri);
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE) @CheckResult
-    boolean isFailed() {
-        return sCustomTabsFailed && mClient == null;
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public static void resetFailed() {
-        sCustomTabsFailed = false;
-    }
 }

@@ -13,7 +13,7 @@ Masaüstü uygulaması Anki veya doğrudan AnkiDroid yoluyla malzeme ekleyin. Uy
 • aralıklı yineleme (supermemo 2 algoritması)
 • metin okuma entegrasyonu
 • 6000'den fazla hazır deste
-• ilerleme widget'ı
+• ilerleme widget
 • ayrıntılı istatistikler
 • AnkiWeb ile eşitleme
 • açık kaynaklı

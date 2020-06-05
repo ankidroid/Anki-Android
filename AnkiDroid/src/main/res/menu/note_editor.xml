@@ -7,11 +7,11 @@
         android:title="@string/save"
         ankidroid:showAsAction="always"/>
     <item
-        android:id="@+id/action_add_note_from_note_editor"
-        android:title="@string/note_editor_add_note"
+        android:id="@+id/action_add_card_from_card_editor"
+        android:title="@string/card_editor_add_card"
         android:visible="false"/>
     <item
-        android:id="@+id/action_copy_note"
+        android:id="@+id/action_copy_card"
         android:enabled="false"
-        android:title="@string/note_editor_copy_note"/>
+        android:title="@string/card_editor_copy_card"/>
 </menu>

@@ -2,206 +2,101 @@
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.res.TypedArray;
-
-import androidx.annotation.NonNull;
+import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
-
-import android.os.StatFs;
-import android.os.Vibrator;
-import android.speech.tts.TextToSpeech;
+import androidx.core.content.FileProvider;
 import android.text.Html;
-import android.text.Spanned;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.WebSettings;
-import android.widget.LinearLayout;
-import android.widget.TimePicker;
+import android.util.TypedValue;
+import android.widget.RemoteViews;
 
-import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.compat.customtabs.CustomTabActivityHelper;
+import com.ichi2.compat.customtabs.CustomTabsFallback;
+import com.ichi2.compat.customtabs.CustomTabsHelper;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.HashMap;
 
-import timber.log.Timber;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /** Implementation of {@link Compat} for SDK level 16 */
 @TargetApi(16)
-public class CompatV16 implements Compat {
-    // CookieSyncManager needs to be initialized before use.
-    // Note: CookieSyncManager is deprecated since API level 21, but we still need to use it here
+public class CompatV16 extends CompatV15 implements Compat {
+
     @Override
-    @SuppressWarnings("deprecation")
-    public void prepareWebViewCookies(Context context) {
-        android.webkit.CookieSyncManager.createInstance(context);
+    public void disableDatabaseWriteAheadLogging(SupportSQLiteDatabase db) {
+        db.disableWriteAheadLogging();
     }
 
-    // Cookie data may be lost when an application exists just after it was written.
-    // Below API level 21, this problem can be solved by using CookieSyncManager.sync().
-    // Note: CookieSyncManager.sync() is deprecated since API level 21, but still needed here
     @Override
-    @SuppressWarnings("deprecation")
-    public void flushWebViewCookies() {
-        android.webkit.CookieSyncManager.getInstance().sync();
+    public String detagged(String txt) {
+        return Html.escapeHtml(txt);
     }
 
-    // Below API level 17, there is no simple way to enable the auto play feature of HTML media elements.
+    // Update dimensions of widget from V16 on (elder versions do not support widget measuring)
     @Override
-    public void setHTML5MediaAutoPlay(WebSettings webSettings, Boolean allow) { /* do nothing */ }
+    public void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls) {
+        AppWidgetManager manager = AppWidgetManager.getInstance(context);
+        int[] ids = manager.getAppWidgetIds(new ComponentName(context, cls));
+        for (int id : ids) {
+            final float scale = context.getResources().getDisplayMetrics().density;
+            Bundle options = manager.getAppWidgetOptions(id);
+            float width, height;
+            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+                height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+            } else {
+                width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
+                height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+            }
+            int horizontal, vertical;
+            float text;
+            if ((width / height) > 0.8) {
+                horizontal = (int) (((width - (height * 0.8))/2 + 4) * scale + 0.5f);
+                vertical = (int) (4 * scale + 0.5f);
+                text = (float)(Math.sqrt(height * 0.8 / width) * 18);
+            } else {
+                vertical = (int) (((height - (width * 1.25))/2 + 4) * scale + 0.5f);
+                horizontal = (int) (4 * scale + 0.5f);
+                text = (float)(Math.sqrt(width * 1.25 / height) * 18);
+            }
 
-    // Immersive full screen isn't ready until API 19
-    @SuppressWarnings("PMD.FieldDeclarationsShouldBeAtStartOfClass")
-    protected static final int FULLSCREEN_ALL_GONE = 2;
-    @Override
-    public void setFullScreen(AbstractFlashcardViewer a) {
-        a.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        final int fullscreenMode = Integer.parseInt(AnkiDroidApp.getSharedPrefs(a).getString("fullscreenMode", "0"));
-        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
-            final LinearLayout answerButtons = a.findViewById(R.id.answer_options_layout);
-            answerButtons.setVisibility(View.GONE);
+            updateViews.setTextViewTextSize(R.id.widget_due, TypedValue.COMPLEX_UNIT_SP, text);
+            updateViews.setTextViewTextSize(R.id.widget_eta, TypedValue.COMPLEX_UNIT_SP, text);
+            updateViews.setViewPadding(R.id.ankidroid_widget_text_layout, horizontal, vertical, horizontal, vertical);
         }
     }
 
-    // NOTE: we can't use android.R.attr.selectableItemBackground until API 21
-    @Override
-    public void setSelectableBackground(View view) {
-        Context context = view.getContext();
-        int[] attrs = new int[] {android.R.attr.colorBackground};
-        TypedArray ta = context.obtainStyledAttributes(attrs);
-        view.setBackgroundColor(ta.getColor(0, ContextCompat.getColor(context, R.color.white)));
-        ta.recycle();
-    }
-
-    // Not settable before API 21 so do nothing
-    @Override
-    public void setStatusBarColor(Window window, int color) { /* do nothing */ }
-
-    // Immersive mode introduced in API 19
-    @Override
-    public boolean isImmersiveSystemUiVisible(AnkiActivity activity) { return false; }
 
     @Override
-    public void setupNotificationChannel(Context context, String id, String name) { /* pre-API26, do nothing */ }
-
-    // Until API 24 we ignore flags
-    @Override
-    @SuppressWarnings("deprecation")
-    public Spanned fromHtml(String htmlString) {
-        return Html.fromHtml(htmlString);
-    }
-
-    // Until API 18 it's not a long it's an int
-    @Override
-    @SuppressWarnings("deprecation")
-    public long getAvailableBytes(StatFs stat) { return stat.getAvailableBlocks() * stat.getBlockSize(); }
-
-    // Until API 23 the methods have "current" in the name
-    @Override
-    @SuppressWarnings("deprecation")
-    public void setTime(TimePicker picker, int hour, int minute) {
-        picker.setCurrentHour(hour);
-        picker.setCurrentMinute(minute);
-    }
-    @Override
-    @SuppressWarnings("deprecation")
-    public int getHour(TimePicker picker) { return picker.getCurrentHour(); }
-    @Override
-    @SuppressWarnings("deprecation")
-    public int getMinute(TimePicker picker) { return picker.getCurrentMinute(); }
-
-    // Until API 21 it's Camera v1
-    @Override
-    @SuppressWarnings("deprecation")
-    public int getCameraCount() { return android.hardware.Camera.getNumberOfCameras(); }
-
-    // Until API 26 just specify time, after that specify effect also
-    @Override
-    @SuppressWarnings("deprecation")
-    public void vibrate(Context context, long durationMillis) {
-        Vibrator vibratorManager = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
-        if (vibratorManager != null) {
-            vibratorManager.vibrate(durationMillis);
-        }
-    }
-
-    // Until API 26 do the copy using streams
-    public void copyFile(@NonNull String source, @NonNull String target) throws IOException {
-        try (InputStream fileInputStream = new FileInputStream(new File(source))) {
-            copyFile(fileInputStream, target);
-        } catch (IOException e) {
-            Timber.e(e, "copyFile() error copying source %s", source);
-            throw e;
-        }
-    }
-
-    // Until API 26 do the copy using streams
-    public long copyFile(@NonNull String source, @NonNull OutputStream target) throws IOException {
-        long count;
-
-        try (InputStream fileInputStream = new FileInputStream(new File(source))) {
-            count = copyFile(fileInputStream, target);
-        } catch (IOException e) {
-            Timber.e(e, "copyFile() error copying source %s", source);
-            throw e;
-        }
-
-        return count;
-    }
-
-    // Until API 26 do the copy using streams
-    public long copyFile(@NonNull InputStream source, @NonNull String target) throws IOException {
-        long bytesCopied;
-
-        try (OutputStream targetStream = new FileOutputStream(target)) {
-            bytesCopied = copyFile(source, targetStream);
-        } catch (IOException ioe) {
-            Timber.e(ioe, "Error while copying to file %s", target);
-            throw ioe;
-        }
-        return bytesCopied;
-    }
-
-    private long copyFile(@NonNull InputStream source, @NonNull OutputStream target) throws IOException {
-        // balance memory and performance, it appears 32k is the best trade-off
-        // https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
-        final byte[] buffer = new byte[1024 * 32];
-        long count = 0;
-        int n;
-        while ((n = source.read(buffer)) != -1) {
-            target.write(buffer, 0, n);
-            count += n;
-        }
-        target.flush();
-        return count;
+    public void openUrl(AnkiActivity activity, Uri uri) {
+        CustomTabActivityHelper helper = activity.getCustomTabActivityHelper();
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(helper.getSession());
+        builder.setToolbarColor(ContextCompat.getColor(activity, R.color.material_light_blue_500)).setShowTitle(true);
+        builder.setStartAnimations(activity, R.anim.slide_right_in, R.anim.slide_left_out);
+        builder.setExitAnimations(activity, R.anim.slide_left_in, R.anim.slide_right_out);
+        builder.setCloseButtonIcon(BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_arrow_back_white_24dp));
+        CustomTabsIntent customTabsIntent = builder.build();
+        CustomTabsHelper.addKeepAliveExtra(activity, customTabsIntent.intent);
+        CustomTabActivityHelper.openCustomTab(activity, customTabsIntent, uri, new CustomTabsFallback());
     }
 
     @Override
-    public Object initTtsParams() {
-        return new HashMap<String, String>();
+    public boolean deleteDatabase(File db) {
+        return SQLiteDatabase.deleteDatabase(db);
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId) {
-        HashMap<String, String> params = (HashMap) ttsParams;
-        params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
-        return tts.speak(text, queueMode, params);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public long getVersionCode(PackageInfo pInfo) {
-        return pInfo.versionCode;
+    public Uri getExportUri(Context context, File file) {
+        // Use FileProvider for exporting (this requires Jellybean for reliable sending via migrateExtraStreamtoClipData())
+        return FileProvider.getUriForFile(context, "com.ichi2.anki.apkgfileprovider", file);
     }
 }

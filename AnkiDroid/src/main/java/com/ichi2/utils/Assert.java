@@ -17,14 +17,10 @@
 
 package com.ichi2.utils;
 
-import org.jetbrains.annotations.Contract;
-
 public class Assert {
-    @Contract("false, _, _ -> fail")
-    public static void that(boolean condition, String message, Object... args) {
+    public static void that(boolean condition, String message) {
         if (!condition) {
-            String msg = String.format(message, args);
-            throw new AssertionError(msg);
+            throw new AssertionError(message);
         }
     }
 }

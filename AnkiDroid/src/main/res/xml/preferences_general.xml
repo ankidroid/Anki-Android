@@ -67,8 +67,7 @@
             android:key="reportErrorMode"
             android:title="@string/error_reporting_choice" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/notification_pref"
-        android:key="category_general_notification_pref">
+    <PreferenceCategory android:title="@string/notification_pref" >
         <ListPreference
             android:defaultValue="1000000"
             android:entries="@array/notification_minimum_cards_due_labels"
