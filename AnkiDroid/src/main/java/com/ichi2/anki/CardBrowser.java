@@ -1416,7 +1416,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             CardCache card = getCards().get(pos);
             card.load(true);
             // update tags
-            card.put(MARKED, (c.note().hasTag("marked")) ? "marked" : null);
             if (updatedCardTags != null) {
                 card.put(TAGS, updatedCardTags.get(c.getNid()));
             }
@@ -1526,7 +1525,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put(REVIEWS, Integer.toString(c.getReps()));
         String tags = note.stringTags();
         item.put(TAGS, tags);
-        item.put(MARKED, (sMarkedPattern.matcher(item.get(TAGS)).matches())?"marked": null);
         item.put(DECK, col.getDecks().name(c.getDid()));
         item.put(SFLD, note.getSFld());
     }
@@ -2144,6 +2142,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return (new Integer(getCard().userFlag())).toString();
             case SUSPENDED:
                 return getCard().getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False";
+            case MARKED:
+                return getCard().note().hasTag("marked") ? "marked" : null;
             default:
                 return null;
             }
