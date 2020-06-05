@@ -1481,7 +1481,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // database
         item.put(ANSWER, formatQA(a, context));
         item.put(QUESTION, formatQA(q, context));
-        item.put(REVIEWS, Integer.toString(c.getReps()));
     }
 
     @CheckResult
@@ -2134,6 +2133,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return Integer.toString(getCard().getLapses());
             case NOTE_TYPE:
                 return getCard().model().optString("name");
+            case REVIEWS:
+                return Integer.toString(getCard().getReps());
             default:
                 return null;
             }
