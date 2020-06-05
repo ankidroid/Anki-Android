@@ -1483,7 +1483,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         item.put(ANSWER, formatQA(a, context));
 
         Note note = c.note();
-        item.put(CREATED, LanguageUtil.getShortDateFormatFromMs(note.getId()));
         item.put(EDITED, LanguageUtil.getShortDateFormatFromS(note.getMod()));
         // interval
         switch (c.getType()) {
@@ -2136,6 +2135,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
             case CHANGED:
                 return LanguageUtil.getShortDateFormatFromS(getCard().getMod());
+            case CREATED:
+                return LanguageUtil.getShortDateFormatFromMs(getCard().note().getId());
             default:
                 return null;
             }
