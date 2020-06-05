@@ -1594,9 +1594,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         List<CardCache> newMCards = new ArrayList<>();
-        for (CardCache cardProperties: oldMCards) {
-            if (! idToRemove.contains(cardProperties.getId())) {
-                newMCards.add(cardProperties);
+        for (CardCache card: oldMCards) {
+            if (!idToRemove.contains(card.getId())) {
+                newMCards.add(card);
             }
         }
         mCards = newMCards;
