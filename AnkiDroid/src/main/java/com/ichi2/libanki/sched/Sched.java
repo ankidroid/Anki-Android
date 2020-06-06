@@ -227,17 +227,16 @@ public class Sched extends SchedV2 {
             String p = Decks.parent(deckName);
             // new
             int nlim = _deckNewLimitSingle(deck);
+            int rlim = _deckRevLimitSingle(deck);
             if (!TextUtils.isEmpty(p)) {
                 nlim = Math.min(nlim, lims.get(p)[0]);
+                // review
+                rlim = Math.min(rlim, lims.get(p)[1]);
             }
             int _new = _newForDeck(deck.getLong("id"), nlim);
             // learning
             int lrn = _lrnForDeck(deck.getLong("id"));
             // reviews
-            int rlim = _deckRevLimitSingle(deck);
-            if (!TextUtils.isEmpty(p)) {
-                rlim = Math.min(rlim, lims.get(p)[1]);
-            }
             int rev = _revForDeck(deck.getLong("id"), rlim);
             // save to list
             data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
