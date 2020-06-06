@@ -880,7 +880,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private boolean hasSelectedCards() {
-        return checkedCardCount() > 0;
+        return !mCheckedCards.isEmpty();
     }
 
     private boolean hasSelectedAllCards() {
