@@ -44,6 +44,7 @@ import com.ichi2.libanki.DeckConfig;
 
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -462,6 +463,8 @@ public class SchedV2 extends AbstractSched {
             Integer plim = null;
             if (!TextUtils.isEmpty(p)) {
                 Integer[] parentLims = lims.get(p);
+                // 'temporary for diagnosis of bug #6383'
+                Assert.that(parentLims != null, "Deck %s is supposed to have parent %s. It has not be found.", deckName, p);
                 nlim = Math.min(nlim, parentLims[0]);
                 // reviews
                 plim = parentLims[1];
