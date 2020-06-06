@@ -75,6 +75,11 @@ function taFocus() {
     window.location.href = "signal:typefocus";
 }
 
+// api versioning of JavaScript / AbstractFlashcardViewer
+function ankidroidJSInit(ankiJSapiVersion, ankiDeveloperContact) {
+    window.location.href = "signal:AnkiDroid_JS_apiVersion_" + ankiJSapiVersion + "_and_" +"developerContact_" + ankiDeveloperContact
+}
+
 /*  Call displayCardAnswer() and answerCard() from anki deck template using javascript
  *  See also AbstractFlashcardViewer.
  */

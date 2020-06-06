@@ -185,6 +185,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // ETA
     private int eta;
 
+    // JavaScript Versioning
+    protected String apiVersion;
+    protected String developerContact;
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -3080,6 +3084,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mFlipCardLayout.performClick();
                 return true;
             }
+            // JS api versioning see card.js
+            if (url.startsWith("signal:AnkiDroid_JS_apiVersion_")) {
+                String api = url.replace("signal:AnkiDroid_JS_","");
+                String[] api_dev = api.split("_and_");
+
+                apiVersion = api_dev[0].replace("apiVersion_","");
+                developerContact = api_dev[1].replace("developerContact_","");
+
+                return true;
+            }
             // card.html reload
             if (url.startsWith("signal:reload_card_html")) {
                 redrawCard();
@@ -3091,7 +3105,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return true;
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
-            if (url.startsWith("signal:flag_")) {
+            if (url.startsWith("signal:flag_") && "1.0.0".equals(apiVersion)) {
                 String mFlag = url.replaceFirst("signal:flag_","");
                 switch (mFlag) {
                     case "none": executeCommand(COMMAND_UNSET_FLAG);
