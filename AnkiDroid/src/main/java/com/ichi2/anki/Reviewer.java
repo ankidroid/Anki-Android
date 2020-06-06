@@ -22,12 +22,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
@@ -288,7 +291,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 // Check permission to record and request if not granted
                 if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) !=
                         PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
+                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.RECORD_AUDIO},
                             REQUEST_AUDIO_PERMISSION);
                 } else {
                     toggleMicToolBar();
@@ -455,18 +458,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         Intent intent = new Intent(this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD);
         startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
-    }
-
-
-    private void setCustomButtons(Menu menu) {
-        for(int itemId : mCustomButtons.keySet()) {
-            if(mCustomButtons.get(itemId) != MENU_DISABLED) {
-                menu.findItem(itemId).setShowAsAction(mCustomButtons.get(itemId));
-            }
-            else {
-                menu.findItem(itemId).setVisible(false);
-            }
-        }
     }
 
 
