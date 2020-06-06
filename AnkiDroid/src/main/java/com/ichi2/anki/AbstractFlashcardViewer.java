@@ -3110,6 +3110,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 }
             }
 
+            // Show toast using JS
+            if (url.startsWith("signal:anki_show_toast")) {
+                String msg = url.replaceFirst("signal:anki_show_toast","");
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, msg, true);
+                return true;
+            }
+
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
             switch (signalOrdinal) {
                 case WebViewSignalParserUtils.SIGNAL_UNHANDLED:

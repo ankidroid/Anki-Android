@@ -125,6 +125,11 @@ function ankiToggleFlag(flag) {
     }
 }
 
+// Show toast using js
+function ankiShowToast(message) {
+    window.location.href = "signal:anki_show_toast" + message;
+}
+
 /* Tell the app the text in the input box when it loses focus */
 function taBlur(itag) {
     //#5944 - percent wasn't encoded, but Mandarin was.
