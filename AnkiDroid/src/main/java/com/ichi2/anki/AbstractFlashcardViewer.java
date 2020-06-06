@@ -55,6 +55,7 @@ import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -132,6 +133,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
@@ -184,6 +186,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // ETA
     private int eta;
+
+    private boolean isInFullscreen;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -832,6 +836,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         getDelegate().setHandleNativeActionModesEnabled(true);
+
+        isInFullscreen = !getSupportActionBar().isShowing();
 
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
@@ -3080,6 +3086,26 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mFlipCardLayout.performClick();
                 return true;
             }
+            // Show options menu from WebView
+            if (url.startsWith("signal:anki_show_options_menu")) {
+                if (isInFullscreen) {
+                    openOptionsMenu();
+                } else {
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen, "ankiShowOptionsMenu"), true);
+                }
+                return true;
+            }
+
+            // Show Navigation Drawer from WebView
+            if (url.startsWith("signal:anki_show_navigation_drawer")) {
+                if (isInFullscreen) {
+                    AbstractFlashcardViewer.this.onNavigationPressed();
+                } else {
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen, "ankiShowNavDrawer"), true);
+                }
+                return true;
+            }
+
             // card.html reload
             if (url.startsWith("signal:reload_card_html")) {
                 redrawCard();
