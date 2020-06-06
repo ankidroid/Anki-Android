@@ -2331,12 +2331,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void checkedCardsAtPositions(int[] positions) {
         for (int position : positions) {
-            mCheckedCardPositions.add(position);
             if (position >= mCards.size()) {
                 throw new IllegalStateException(
                         String.format(Locale.US, "Attempted to check card at index %d. %d cards available",
                                 position, mCards.size()));
             }
+            mCheckedCardPositions.add(position);
         }
         onSelectionChanged();
     }
