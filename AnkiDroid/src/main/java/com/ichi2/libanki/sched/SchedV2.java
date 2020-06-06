@@ -459,19 +459,16 @@ public class SchedV2 extends AbstractSched {
             String p = Decks.parent(deckName);
             // new
             int nlim = _deckNewLimitSingle(deck);
+            Integer plim = null;
             if (!TextUtils.isEmpty(p)) {
                 nlim = Math.min(nlim, lims.get(p)[0]);
+                // reviews
+                plim = lims.get(p)[1];
             }
             int _new = _newForDeck(deck.getLong("id"), nlim);
             // learning
             int lrn = _lrnForDeck(deck.getLong("id"));
             // reviews
-            Integer plim;
-            if (!TextUtils.isEmpty(p)) {
-                plim = lims.get(p)[1];
-            } else {
-                plim = null;
-            }
             int rlim = _deckRevLimitSingle(deck, plim);
             int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
             // save to list
