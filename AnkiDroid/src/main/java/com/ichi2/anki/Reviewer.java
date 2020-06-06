@@ -58,6 +58,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
 
@@ -289,8 +290,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             case R.id.action_toggle_mic_tool_bar:
                 Timber.i("Reviewer:: Record mic");
                 // Check permission to record and request if not granted
-                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) !=
-                        PackageManager.PERMISSION_GRANTED) {
+                if (!Permissions.canRecordAudio(this)) {
                     ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.RECORD_AUDIO},
                             REQUEST_AUDIO_PERMISSION);
                 } else {
@@ -396,11 +396,18 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private void toggleMicToolBar() {
-        if ( mMicToolBar == null ) {
+        if (mMicToolBar == null) {
             // Record mic tool bar does not exist yet
-            tempAudioPath = AudioView.generateTempAudioFile(this);
+            mTempAudioPath = AudioView.generateTempAudioFile(this);
+            if (mTempAudioPath == null) {
+                return;
+            }
             mMicToolBar = AudioView.createRecorderInstance(this, R.drawable.av_play, R.drawable.av_pause,
-                    R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, tempAudioPath);
+                        R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, mTempAudioPath);
+            if (mMicToolBar == null) {
+                mTempAudioPath = null;
+                return;
+            }
             FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             mMicToolBar.setLayoutParams(lp2);
@@ -408,7 +415,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             micToolBarLayer.addView(mMicToolBar);
         } else {
             // It exists swap visibility status
-            if( mMicToolBar.getVisibility() != View.VISIBLE) {
+            if (mMicToolBar.getVisibility() != View.VISIBLE) {
                 mMicToolBar.setVisibility(View.VISIBLE);
             } else {
                 mMicToolBar.setVisibility(View.GONE);

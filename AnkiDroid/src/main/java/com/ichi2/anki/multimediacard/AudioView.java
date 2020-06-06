@@ -28,8 +28,10 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.anki.Reviewer;
 import com.ichi2.libanki.Collection;
 import com.ichi2.anki.UIUtils;
 import java.io.File;
@@ -73,14 +75,21 @@ public class AudioView extends LinearLayout {
 
     public static AudioView createRecorderInstance(Context context, int resPlay, int resPause, int resStop,
             int resRecord, int resRecordStop, String audioPath) {
+        try {
         return new AudioView(context, resPlay, resPause, resStop, resRecord, resRecordStop, audioPath);
+        } catch(Exception e) {
+            Timber.e(e);
+            AnkiDroidApp.sendExceptionReport(e, "Unable to create recorder tool bar");
+            UIUtils.showThemedToast(context,
+                    context.getText(R.string.multimedia_editor_audio_view_create_failed).toString(), true);
+            return null;
+        }
     }
 
     public static String generateTempAudioFile(Context context) {
         String tempAudioPath;
         try {
-            Collection col = CollectionHelper.getInstance().getCol(context);
-            File storingDirectory = new File(col.getMedia().dir());
+            File storingDirectory = context.getCacheDir();
             tempAudioPath = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).getAbsolutePath();
         } catch (IOException e) {
             Timber.e(e, "Could not create temporary audio file.");

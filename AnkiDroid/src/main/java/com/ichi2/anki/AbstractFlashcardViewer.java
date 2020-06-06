@@ -323,7 +323,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** File of the temporary mic record **/
     protected AudioView mMicToolBar;
-    protected String tempAudioPath;
+    protected String mTempAudioPath;
 
     /**
      * Last card that the WebView Renderer crashed on.
@@ -2583,13 +2583,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void closeReviewer(int result, boolean saveDeck) {
         // Stop the mic recording if still pending
-        if( mMicToolBar != null ) {
+        if (mMicToolBar != null) {
             mMicToolBar.notifyStopRecord();
         }
         // Remove the temporary audio file
-        if( tempAudioPath != null ) {
-            File tempAudioPathToDelete = new File(tempAudioPath);
-            if (tempAudioPathToDelete.exists()) tempAudioPathToDelete.delete();
+        if (mTempAudioPath != null) {
+            File tempAudioPathToDelete = new File(mTempAudioPath);
+            if (tempAudioPathToDelete.exists()) {
+                tempAudioPathToDelete.delete();
+            }
         }
 
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
