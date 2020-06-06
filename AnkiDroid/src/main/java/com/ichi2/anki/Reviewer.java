@@ -48,6 +48,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
+import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
@@ -512,7 +513,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             undoIcon = R.drawable.ic_undo_white_24dp;
             undoEnabled = (colIsOpen() && getCol().undoAvailable());
         }
-        int alpha = (undoEnabled) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
+        int alpha = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         menu.findItem(R.id.action_undo).setIcon(undoIcon);
         menu.findItem(R.id.action_undo).setEnabled(undoEnabled).getIcon().setAlpha(alpha);
 
