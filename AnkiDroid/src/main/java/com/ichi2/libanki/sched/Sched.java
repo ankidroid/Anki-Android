@@ -229,9 +229,10 @@ public class Sched extends SchedV2 {
             int nlim = _deckNewLimitSingle(deck);
             int rlim = _deckRevLimitSingle(deck);
             if (!TextUtils.isEmpty(p)) {
-                nlim = Math.min(nlim, lims.get(p)[0]);
+                Integer[] parentLims = lims.get(p);
+                nlim = Math.min(nlim, parentLims[0]);
                 // review
-                rlim = Math.min(rlim, lims.get(p)[1]);
+                rlim = Math.min(rlim, parentLims[1]);
             }
             int _new = _newForDeck(deck.getLong("id"), nlim);
             // learning
