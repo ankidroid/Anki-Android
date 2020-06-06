@@ -461,9 +461,10 @@ public class SchedV2 extends AbstractSched {
             int nlim = _deckNewLimitSingle(deck);
             Integer plim = null;
             if (!TextUtils.isEmpty(p)) {
-                nlim = Math.min(nlim, lims.get(p)[0]);
+                Integer[] parentLims = lims.get(p);
+                nlim = Math.min(nlim, parentLims[0]);
                 // reviews
-                plim = lims.get(p)[1];
+                plim = parentLims[1];
             }
             int _new = _newForDeck(deck.getLong("id"), nlim);
             // learning
