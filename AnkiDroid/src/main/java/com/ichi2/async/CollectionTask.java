@@ -130,7 +130,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
      * This method must be called on the main thread.
      *
      * @param type of the task to start
-     * @param listener to the status and result of the task
      * @param params to pass to the task
      * @return the newly created task
      */
