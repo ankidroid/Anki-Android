@@ -393,7 +393,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
         Integer[] checkedPositions = mCheckedCardPositions.toArray(new Integer[0]);
         HashSet<String> notes = new HashSet<>();
         for (Integer position : checkedPositions) {
-            String noteId = mCards.get(position).get(NOTE);
+            String noteId;
+            try {
+                noteId = mCards.get(position).get(NOTE);
+            } catch (IndexOutOfBoundsException e) {
+                //#6384
+                Timber.w(e, "concurrent modification of mCards array - assume more than one note selected");
+                return false;
+            }
             if (notes.add(noteId) && notes.size() > 1) {
                 return false;
             }
