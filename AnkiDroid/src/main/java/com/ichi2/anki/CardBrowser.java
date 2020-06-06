@@ -391,11 +391,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         //copy to array to ensure threadsafe iteration
         Integer[] checkedPositions = mCheckedCardPositions.toArray(new Integer[0]);
+        List<Map<String, String>> cards = mCards;
+
         HashSet<String> notes = new HashSet<>();
         for (Integer position : checkedPositions) {
             String noteId;
             try {
-                noteId = mCards.get(position).get(NOTE);
+                noteId = cards.get(position).get(NOTE);
             } catch (IndexOutOfBoundsException e) {
                 //#6384
                 Timber.w(e, "concurrent modification of mCards array - assume more than one note selected");
@@ -405,7 +407,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return false;
             }
         }
-        return notes.size() == 1;
+        return mCards == cards && notes.size() == 1;
     }
 
     @VisibleForTesting
