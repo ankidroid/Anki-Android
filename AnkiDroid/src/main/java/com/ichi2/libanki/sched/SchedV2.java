@@ -455,7 +455,8 @@ public class SchedV2 extends AbstractSched {
             if (collectionTask != null && collectionTask.isCancelled()) {
                 return null;
             }
-            String p = Decks.parent(deck.getString("name"));
+            String deckName = deck.getString("name");
+            String p = Decks.parent(deckName);
             // new
             int nlim = _deckNewLimitSingle(deck);
             if (!TextUtils.isEmpty(p)) {
