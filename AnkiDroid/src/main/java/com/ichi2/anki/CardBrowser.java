@@ -133,6 +133,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         REVIEWS
     }
 
+    /** List of cards in the browser.
+    * When the list is changed, the position member of its elements should get changed.*/
     private List<CardCache> mCards;
     private ArrayList<Deck> mDropDownDecks;
     private ListView mCardsListView;
@@ -1525,9 +1527,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         List<CardCache> newMCards = new ArrayList<>();
+        int pos = 0;
         for (CardCache card: oldMCards) {
             if (!idToRemove.contains(card.getId())) {
-                newMCards.add(card);
+                newMCards.add(new CardCache(card, pos++));
             }
         }
         mCards = newMCards;
@@ -2015,9 +2018,22 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public static class CardCache extends Card.Cache {
         private boolean mLoaded = false;
         private Pair<String, String> mQa = null;
+        private int mPosition;
 
-        public CardCache(long id, Collection col) {
+        public CardCache(long id, Collection col, int position) {
             super(col, id);
+            mPosition = position;
+        }
+
+        protected CardCache(CardCache cache, int position) {
+            super(cache);
+            mLoaded = cache.mLoaded;
+            mQa = cache.mQa;
+            mPosition = getPosition();
+        }
+
+        public int getPosition() {
+            return mPosition;
         }
 
         /** clear all values except ID.*/
