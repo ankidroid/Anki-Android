@@ -1180,8 +1180,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         int resultSize = searchResult_.size();
         List<CardBrowser.CardCache> searchResult = new ArrayList<>(resultSize);
         Timber.d("The search found %d cards", resultSize);
+        int position = 0;
         for (Long cid: searchResult_) {
-            CardBrowser.CardCache card = new CardBrowser.CardCache(cid, col);
+            CardBrowser.CardCache card = new CardBrowser.CardCache(cid, col, position++);
             searchResult.add(card);
         }
         // Render the first few items
