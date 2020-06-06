@@ -2166,6 +2166,25 @@ public class CardBrowser extends NavigationDrawerActivity implements
             q = formatQA(q, AnkiDroidApp.getInstance());
             mQa = new Pair<>(q, a);
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            return getId() == ((CardCache) obj).getId();
+        }
+
+        @Override
+        public int hashCode() {
+            return new Long(getId()).hashCode();
+        }
     }
 
     /**
