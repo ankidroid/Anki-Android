@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Sembunyikan papan tulis putih</string>
     <string name="clear_whiteboard">Kosongkan papan tulis</string>
     <string name="replay_audio">Putar ulang audio</string>
+    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Kartu ditandai sebagai lintah dan ditangguhkan</string>
     <string name="leech_notification">Kartu ditandai sebagai lintah</string>
     <string name="corrupt_font">File font rusak %s</string>

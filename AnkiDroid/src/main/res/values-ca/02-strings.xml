@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Amaga la pissarra</string>
     <string name="clear_whiteboard">Esborra la pissarra</string>
     <string name="replay_audio">Repetir àudio</string>
+    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Fitxa marcada com a lapa i suspesa</string>
     <string name="leech_notification">Fitxa marcada com a lapa</string>
     <string name="corrupt_font">Fitxer de tipus de lletra incorrecte %s</string>

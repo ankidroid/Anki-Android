@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Скриј ја таблата</string>
     <string name="clear_whiteboard">Избриши ја таблата</string>
     <string name="replay_audio">Репродуцирај аудио</string>
+    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Картичка означена како пијавица и суспендиран</string>
     <string name="leech_notification">Картичка означена како пијавица</string>
     <string name="corrupt_font">Коруптиран фонт додаток %s</string>

@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Whiteboard ausblenden</string>
     <string name="clear_whiteboard">Whiteboard säubern</string>
     <string name="replay_audio">Audio wiederholen</string>
+    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgeschlossen</string>
     <string name="leech_notification">Karte als Lernbremse markiert</string>
     <string name="corrupt_font">Fehlerhafte Schriftartdatei %s</string>

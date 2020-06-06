@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">隱藏白板</string>
     <string name="clear_whiteboard">清除白板</string>
     <string name="replay_audio">重播聲音</string>
+    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">卡片已擱置，同時標為榨時卡</string>
     <string name="leech_notification">卡片標為榨時卡</string>
     <string name="corrupt_font">損壞的字型檔案 %s</string>

@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Թաքցնել գրատախտակը</string>
     <string name="clear_whiteboard">Մաքրել գրատախտակը</string>
     <string name="replay_audio">Կրկին նվագարկել ձայնանյութը</string>
+    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Քարտը նշվեց որպես «կպչուն» և հեռացվեց</string>
     <string name="leech_notification">Քարտը նշվեց որպես «կպչուն»</string>
     <string name="corrupt_font">Տառատեսակի վնասված նիշք %s</string>

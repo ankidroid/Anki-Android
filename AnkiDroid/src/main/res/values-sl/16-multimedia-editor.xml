@@ -112,6 +112,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Snemanje spodletelo</string>
     <string name="multimedia_editor_audio_view_playing_failed">Predvajanje spodletelo</string>
+    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">Urejanje spodletelo</string>
     <string name="title_activity_translation">Prevod</string>

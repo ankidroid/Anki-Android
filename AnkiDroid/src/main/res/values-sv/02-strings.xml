@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Stäng av whiteboard</string>
     <string name="clear_whiteboard">Rensa whiteboard</string>
     <string name="replay_audio">Spela om ljud</string>
+    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Markerat som utsugarkort och åsidosatt</string>
     <string name="leech_notification">Markerat som utsugarkort</string>
     <string name="corrupt_font">Felaktig teckensnittsfil %s</string>

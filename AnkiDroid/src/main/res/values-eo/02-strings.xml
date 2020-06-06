@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Kaŝi skribtabulon</string>
     <string name="clear_whiteboard">Forviŝi skribtabulon</string>
     <string name="replay_audio">Reludi sonaĵon</string>
+    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Karto markita kiel forgesema kaj kaŝita</string>
     <string name="leech_notification">Karto markita kiel forgesema</string>
     <string name="corrupt_font">Difektita dosiero de tiparo %s</string>

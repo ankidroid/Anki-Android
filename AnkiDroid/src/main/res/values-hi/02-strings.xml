@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Whiteboard छुपाएँ</string>
     <string name="clear_whiteboard">स्पष्ट Whiteboard</string>
     <string name="replay_audio">ध्वनि फिर चलाएँ</string>
+    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">जोंक के रूप में के रूप में चिह्नित और निलंबित कार्ड</string>
     <string name="leech_notification">जोंक के रूप में के रूप में चिह्नित कार्ड</string>
     <string name="corrupt_font">दूषित फ़ॉन्ट फ़ाइल %s</string>

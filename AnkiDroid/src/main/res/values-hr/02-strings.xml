@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Sakrij ploču</string>
     <string name="clear_whiteboard">Obriši ploču</string>
     <string name="replay_audio">Ponovno odslušaj</string>
+    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Karte označene kao preteške i suspendirane</string>
     <string name="leech_notification">Karta označena kao preteška</string>
     <string name="corrupt_font">Oštećena datoteka sa fontovima %s</string>
