@@ -266,4 +266,7 @@
     <string name="restore_default">Restore Default</string>
 
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+
+    <!-- in options menu & Navigation Drawer -->
+    <string name="ankidroid_turn_on_fullscreen">Please turn on fullscreen to use %s</string>
 </resources>

@@ -55,6 +55,7 @@ import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -133,6 +134,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
@@ -3116,6 +3118,27 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mFlipCardLayout.performClick();
                 return true;
             }
+            // Show options menu from WebView
+            if (url.startsWith("signal:anki_show_options_menu")) {
+                if (!getSupportActionBar().isShowing()) {
+                    openOptionsMenu();
+                } else {
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen,"ankiShowOptionsMenu"), true);
+                }
+                return true;
+            }
+
+            // Show Navigation Drawer from WebView
+            if (url.startsWith("signal:anki_show_navigation_drawer")) {
+                if (!getSupportActionBar().isShowing()) {
+                    DrawerLayout mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+                    mDrawerLayout.openDrawer(Gravity.LEFT);
+                } else {
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen, "ankiShowNavDrawer"), true);
+                }
+                return true;
+            }
+
             // card.html reload
             if (url.startsWith("signal:reload_card_html")) {
                 redrawCard();

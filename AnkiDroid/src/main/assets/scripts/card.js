@@ -93,6 +93,15 @@ function buttonAnswerEase3() {
 function buttonAnswerEase4() {
     window.location.href = "signal:answer_ease4";
 }
+// Show options menu
+function ankiShowOptionsMenu() {
+    window.location.href = "signal:anki_show_options_menu";
+}
+
+// Show Navigation Drawer
+function ankiShowNavDrawer() {
+    window.location.href = "signal:anki_show_navigation_drawer";
+}
 
 /* Reload card.html */
 function reloadPage() {
