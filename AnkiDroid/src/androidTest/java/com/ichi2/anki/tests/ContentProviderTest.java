@@ -26,6 +26,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import androidx.test.rule.GrantPermissionRule;
+import timber.log.Timber;
+
 import android.util.Log;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
@@ -33,6 +35,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -791,6 +794,8 @@ public class ContentProviderTest extends InstrumentedTest {
             col.reset();
             nextCard = sched.getCard();
             if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+            CollectionTask.waitToFinish();
+
         }
         assertNotNull("Check that there actually is a next scheduled card", nextCard);
         assertEquals("Check that received card and actual card have same note id", nextCard.note().getId(), noteID);
@@ -802,7 +807,7 @@ public class ContentProviderTest extends InstrumentedTest {
      * Test that query for the next card in the schedule returns a valid result WITH a deck selector
      */
     @Test
-    public void testQueryCardFromCertainDeck(){
+    public synchronized void testQueryCardFromCertainDeck(){
         long deckToTest = mTestDeckIds.get(0);
         String deckSelector = "deckID=?";
         String[] deckArguments = {Long.toString(deckToTest)};
@@ -827,6 +832,7 @@ public class ContentProviderTest extends InstrumentedTest {
                 col.reset();
                 nextCard = sched.getCard();
                 if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+                try { Thread.sleep(500); } catch (Exception e) { Timber.e(e); } // Reset counts is executed in background.
             }
             assertNotNull("Check that there actually is a next scheduled card", nextCard);
             assertEquals("Check that received card and actual card have same note id", nextCard.note().getId(), noteID);
