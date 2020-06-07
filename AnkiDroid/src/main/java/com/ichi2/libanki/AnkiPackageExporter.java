@@ -120,8 +120,6 @@ class AnkiExporter extends Exporter {
         Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
                 .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
-        mSrc.getDb().getDatabase()
-                .execSQL("UPDATE DST_DB.cards SET flags = 0 where id in " + Utils.ids2str(cids));
         Set<Long> nids = new HashSet<>(mSrc.getDb().queryColumn(Long.class,
                 "select nid from cards where id in " + Utils.ids2str(cids), 0));
         // notes
