@@ -3399,5 +3399,30 @@ see card.js for available functions
         public int ankiGetCardFlag() {
             return mCurrentCard.getUserFlag();
         }
+
+        @JavascriptInterface
+        public int ankiGetCardReview() {
+            return mCurrentCard.getReps();
+        }
+
+        @JavascriptInterface
+        public int ankiGetCardInterval() {
+            return mCurrentCard.getIvl();
+        }
+
+        @JavascriptInterface
+        public int ankiGetCardQueue() {
+            return mCurrentCard.getQueue();
+        }
+
+        @JavascriptInterface
+        public int ankiGetCardLapses() {
+             return mCurrentCard.getLapses();
+         }
+
+        @JavascriptInterface
+        public long ankiGetCardDue() {
+            return mCurrentCard.getDue();
+         }
     }
 }
