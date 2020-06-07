@@ -24,6 +24,8 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -86,7 +88,8 @@ public class AudioView extends LinearLayout {
         }
     }
 
-    public static String generateTempAudioFile(Context context) {
+    public static @Nullable
+    String generateTempAudioFile(@NonNull Context context) {
         String tempAudioPath;
         try {
             File storingDirectory = context.getCacheDir();
