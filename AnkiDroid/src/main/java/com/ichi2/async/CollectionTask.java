@@ -347,8 +347,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
             case TASK_TYPE_SAVE_MODEL:
                 return doInBackgroundSaveModel(params);
+
             case TASK_TYPE_FIND_EMPTY_CARDS:
                 return doInBackGroundFindEmptyCards(params);
+
             case TASK_TYPE_CHECK_CARD_SELECTION:
                 return doInBackgroundCheckCardSelection(params);
 
