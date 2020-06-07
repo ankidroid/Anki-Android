@@ -29,6 +29,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.PopupMenu;
@@ -126,6 +127,7 @@ public class NoteEditor extends AnkiActivity {
     public static final String EXTRA_CALLER = "CALLER";
     public static final String EXTRA_CARD_ID = "CARD_ID";
     public static final String EXTRA_CONTENTS = "CONTENTS";
+    public static final String EXTRA_TAGS = "TAGS";
     public static final String EXTRA_ID = "ID";
 
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
@@ -533,6 +535,7 @@ public class NoteEditor extends AnkiActivity {
             setTitle(R.string.cardeditor_title_add_note);
             // set information transferred by intent
             String contents = null;
+            String[] tags = intent.getStringArrayExtra(EXTRA_TAGS);
             if (mSourceText != null) {
                 if (mAedictIntent && (mEditFields.size() == 3) && mSourceText[1].contains("[")) {
                     contents = mSourceText[1].replaceFirst("\\[", "\u001f" + mSourceText[0] + "\u001f");
@@ -548,6 +551,9 @@ public class NoteEditor extends AnkiActivity {
             }
             if (contents != null) {
                 setEditFieldTexts(contents);
+            }
+            if (tags != null) {
+                setTags(tags);
             }
         } else {
             mNoteTypeSpinner.setOnItemSelectedListener(new EditNoteTypeListener());
@@ -917,6 +923,9 @@ public class NoteEditor extends AnkiActivity {
                 // intent.putExtra(EXTRA_DECKPATH, mDeckPath);
                 if (item.getItemId() == R.id.action_copy_note) {
                     intent.putExtra(EXTRA_CONTENTS, getFieldsText());
+                    if (mSelectedTags != null) {
+                        intent.putExtra(EXTRA_TAGS, mSelectedTags.toArray(new String[0]));
+                    }
                 }
                 startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
                 return true;
@@ -949,6 +958,12 @@ public class NoteEditor extends AnkiActivity {
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
+    }
+
+
+    private void setTags(@NonNull String[] tags) {
+        mSelectedTags = new ArrayList<>(Arrays.asList(tags));
+        updateTags();
     }
 
 
