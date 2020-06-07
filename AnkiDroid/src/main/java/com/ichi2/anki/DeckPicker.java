@@ -46,6 +46,7 @@ import com.afollestad.materialdialogs.GravityEnum;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
@@ -1290,7 +1291,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      *  Show a simple snackbar message or notification if the activity is not in foreground
      * @param messageResource String resource for message
      */
-    private void showSyncLogMessage(int messageResource, String syncMessage) {
+    private void showSyncLogMessage(@StringRes int messageResource, String syncMessage) {
         if (mActivityPaused) {
             Resources res = AnkiDroidApp.getAppResources();
             showSimpleNotification(res.getString(R.string.app_name),
@@ -1298,7 +1299,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     NotificationChannels.Channel.SYNC);
         } else {
             if (syncMessage == null || syncMessage.length() == 0) {
-                UIUtils.showSimpleSnackbar(this, messageResource, false);
+                if (messageResource == R.string.youre_offline && !Connection.getAllowSyncOnNoConnection()) {
+                    //#6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
+                    View root = this.findViewById(R.id.root_layout);
+                    UIUtils.showSnackbar(this, messageResource, false, R.string.sync_even_if_offline, (v) -> {
+                        Connection.setAllowSyncOnNoConnection(true);
+                        sync();
+                    }, null);
+                } else {
+                    UIUtils.showSimpleSnackbar(this, messageResource, false);
+                }
             } else {
                 Resources res = AnkiDroidApp.getAppResources();
                 showSimpleMessageDialog(res.getString(messageResource), syncMessage, false);
