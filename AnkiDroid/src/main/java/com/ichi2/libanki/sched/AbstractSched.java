@@ -50,9 +50,12 @@ public abstract class AbstractSched {
      */
     public abstract @Nullable Card getCard();
 
-    /** Let the scheduler knows that the selected deck potentially changed and all pre-computed data (queue and counts)
-     * should be discarded. Should be called after getCard if the card is not answered. */
-    protected abstract void reset();
+    /**
+     * The collection saves some numbers such as counts, queues of cards to review, queues of decks potentially having some cards.
+     * Reset all of this and compute from scratch. This occurs because anything else than the sequence of getCard/answerCard did occur.
+     */
+    // Should ideally be protected. It's public only because CollectionTask should call it when the scheduler planned this task
+    public abstract void reset();
 
     /** Check whether we are a new day, and update if so. */
     public abstract void _updateCutoff();

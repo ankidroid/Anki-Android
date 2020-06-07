@@ -130,7 +130,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         FIND_EMPTY_CARDS,
         CHECK_CARD_SELECTION,
         LOAD_COLLECTION_COMPLETE,
-        PRELOAD_NEXT_CARD
+        PRELOAD_NEXT_CARD,
+        RESET,
     }
 
     /**
@@ -486,6 +487,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case PRELOAD_NEXT_CARD:
                 doInBackgroundPreloadNextCard();
+                break;
+
+            case RESET:
+                doInBackgroundReset();
                 break;
 
             default:
@@ -1957,6 +1962,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         if (col != null) {
             CollectionHelper.loadCollectionComplete(col);
         }
+    }
+
+    public void doInBackgroundReset() {
+        getCol().getSched().reset();
     }
 
 
