@@ -20,7 +20,6 @@ import android.content.Context;
 import android.preference.EditTextPreference;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
@@ -39,34 +38,18 @@ public class StepsPreference extends EditTextPreference {
     public StepsPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mAllowEmpty = getAllowEmptyFromAttributes(attrs);
-        updateSettings();
     }
 
 
     public StepsPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         mAllowEmpty = getAllowEmptyFromAttributes(attrs);
-        updateSettings();
     }
 
 
     public StepsPreference(Context context) {
         super(context);
         mAllowEmpty = getAllowEmptyFromAttributes(null);
-        updateSettings();
-    }
-
-
-    /**
-     * Update settings to show a numeric keyboard instead of the default keyboard.
-     * <p>
-     * This method should only be called once from the constructor.
-     */
-    private void updateSettings() {
-        // Use the number pad but still allow normal text for spaces and decimals.
-        EditText editText = getEditText();
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_CLASS_TEXT);
-        editText.setKeyListener(DigitsKeyListener.getInstance("0123456789 "));
     }
 
 
