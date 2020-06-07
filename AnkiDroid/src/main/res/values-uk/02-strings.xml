@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Заховати Дошку</string>
     <string name="clear_whiteboard">Очистити Дошку</string>
     <string name="replay_audio">Повторити звук</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
     <string name="leech_notification">Картку позначено як набридливу</string>
     <string name="corrupt_font">Пошкоджений файл шрифтів %s</string>

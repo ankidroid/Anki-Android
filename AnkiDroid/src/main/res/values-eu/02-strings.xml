@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Arbela ezkutatu</string>
     <string name="clear_whiteboard">Arbela garbitu</string>
     <string name="replay_audio">Replay audio</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="corrupt_font">Corrupt font file %s</string>

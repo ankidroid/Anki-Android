@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Απόκρυψη πίνακα</string>
     <string name="clear_whiteboard">Καθαρίσμός πίνακα</string>
     <string name="replay_audio">Replay audio</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Η κάρτα χαρακτηρίστηκε βδέλλα και αναστάλθηκε</string>
     <string name="leech_notification">Κάρτα σημαδεμένη ως βδέλλα</string>
     <string name="corrupt_font">Κατεστραμμένο αρχείο γραμματοσειράς %s</string>

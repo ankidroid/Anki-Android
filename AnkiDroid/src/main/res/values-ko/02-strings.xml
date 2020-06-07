@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">화이트 보드 숨기기</string>
     <string name="clear_whiteboard">화이트 보드 지우기</string>
     <string name="replay_audio">오디오 다시 재생</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">카드가 거머리로 표시 및 비활성화됨</string>
     <string name="leech_notification">거머리로 표시된 카드</string>
     <string name="corrupt_font">손상된 글꼴 파일 %s</string>

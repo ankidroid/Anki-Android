@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Sembunyi papan putih</string>
     <string name="clear_whiteboard">Padam papan putih</string>
     <string name="replay_audio">Main semula audio</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Kad ditandai seperti lintah dan digantung</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="corrupt_font">Fail font rosak %s</string>

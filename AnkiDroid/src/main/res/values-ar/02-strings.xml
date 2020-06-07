@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">إخفاء لوح السبورة</string>
     <string name="clear_whiteboard">مسح لوح السبورة</string>
     <string name="replay_audio">إعادة تشغيل الصوت</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">البطاقة علمت كسَئُولة و معلقة</string>
     <string name="leech_notification">البطاقة علمت كسَئُولة</string>
     <string name="corrupt_font">ملف خط معطوب %s</string>

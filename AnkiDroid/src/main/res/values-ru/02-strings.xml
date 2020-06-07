@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Скрыть доску</string>
     <string name="clear_whiteboard">Стереть с доски</string>
     <string name="replay_audio">Проиграть звук</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Карточка помечена как приставучая и исключена</string>
     <string name="leech_notification">Карточка помечена как приставучая</string>
     <string name="corrupt_font">Файл шрифта %s повреждён</string>

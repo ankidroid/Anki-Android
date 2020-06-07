@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Yazı tahtasını gizle</string>
     <string name="clear_whiteboard">Yazı tahtasını temizle</string>
     <string name="replay_audio">Sesi yeniden çal</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Kart asalak olarak işaretlenip askıya alınmış</string>
     <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
     <string name="corrupt_font">Bozuk yazı tipi dosyası %s</string>

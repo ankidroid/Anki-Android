@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">הסתר לוח ציור</string>
     <string name="clear_whiteboard">נקה לוח ציור</string>
     <string name="replay_audio">החזר שמע</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">כרטיס מסומן כעלוקה ומושעה</string>
     <string name="leech_notification">כרטיס מסומן כעלוקה</string>
     <string name="corrupt_font">קובץ גופן %s פגום</string>

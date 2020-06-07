@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Masquer le tableau blanc</string>
     <string name="clear_whiteboard">Effacer le tableau blanc</string>
     <string name="replay_audio">Rejouer le son</string>
-    <string name="toggle_mic_tool_bar">Outil d’enregistrement</string>
     <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
     <string name="leech_notification">Carte marquée « encombrante »</string>
     <string name="corrupt_font">Fichier de police corrompu %s</string>

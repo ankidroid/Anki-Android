@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Itago ang whiteboard</string>
     <string name="clear_whiteboard">I-clear ang whiteboard</string>
     <string name="replay_audio">I-replay ang audio</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Ang kard ay namarkahan bilang linta at sinuspinde</string>
     <string name="leech_notification">Ang kard ay namarkahan bilang linta</string>
     <string name="corrupt_font">Sira ang file ng font %s</string>

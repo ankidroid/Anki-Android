@@ -112,7 +112,6 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">रिकॉर्डिंग विफल</string>
     <string name="multimedia_editor_audio_view_playing_failed">बजाना विफल रहा</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">संपादन फ़ील्ड</string>
     <string name="title_activity_translation">अनुवाद</string>

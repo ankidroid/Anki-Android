@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Rajztábla elrejtése</string>
     <string name="clear_whiteboard">Rajztábla törlése</string>
     <string name="replay_audio">Hang ismétlés</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Kártya megjelölve piócaként és felfüggesztésre került</string>
     <string name="leech_notification">Kártya megjelölve piócaként</string>
     <string name="corrupt_font">Sérült font fájl %s</string>

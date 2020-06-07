@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Slėpti rašymo lentą</string>
     <string name="clear_whiteboard">Išvalyti lentą</string>
     <string name="replay_audio">Pagroti dar kartą</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Kortelė pažymėta kaip sunkiai įsimenama, todėl buvo atidėta</string>
     <string name="leech_notification">Kortelė buvo pažymėta kaip sunkiai įsimenama</string>
     <string name="corrupt_font">Sugadintas šriftų failas %s</string>

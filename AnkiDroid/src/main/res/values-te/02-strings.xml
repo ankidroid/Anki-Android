@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">వైట్బోర్డ్ని దాచిపెట్టు</string>
     <string name="clear_whiteboard">క్లియర్ వైట్బోర్డ్</string>
     <string name="replay_audio">ఆడియోను రీప్లే చేయండి</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">కార్డ్ జ్వాల మరియు సస్పెండ్ గా గుర్తించబడింది</string>
     <string name="leech_notification">కార్డు లీచ్గా గుర్తించబడింది</string>
     <string name="corrupt_font">కరప్ట్ ఫాంట్ ఫైల్ %s</string>

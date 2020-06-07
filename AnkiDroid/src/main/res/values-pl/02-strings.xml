@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Ukryj tablicę</string>
     <string name="clear_whiteboard">Wyczyść tablicę</string>
     <string name="replay_audio">Odtwórz dźwięk</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Karta oznaczona jako pijawka i zawieszona</string>
     <string name="leech_notification">Karta oznaczona jako pijawka</string>
     <string name="corrupt_font">Uszkodzony plik czcionki %s</string>

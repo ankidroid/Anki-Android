@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">ホワイトボードを隠す</string>
     <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
     <string name="replay_audio">音声・動画を再生</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">このカードは \"leech\" （無駄） というタグが付けられ、保留されました</string>
     <string name="leech_notification">このカードに \"leech\" （無駄） というタグを付けました</string>
     <string name="corrupt_font">使用できないフォントファイル %s</string>

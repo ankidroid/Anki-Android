@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Agochar encerado</string>
     <string name="clear_whiteboard">Limpar encerado</string>
     <string name="replay_audio">Repetir audio</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Cartón marcado como sambesuga e suspendido</string>
     <string name="leech_notification">Cartón marcado como sambesuga</string>
     <string name="corrupt_font">Arquivo de fonte corrupto %s</string>

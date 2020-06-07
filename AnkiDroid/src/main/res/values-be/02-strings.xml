@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Схаваць дошку</string>
     <string name="clear_whiteboard">Ачысціць дошку</string>
     <string name="replay_audio">Паўтарыць аўдыя</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">Картка пазначана як надакучлівая і яна была прыпынена</string>
     <string name="leech_notification">Картка пазначана як надакучлівая</string>
     <string name="corrupt_font">Пашкоджаны файл шрыфту %s</string>

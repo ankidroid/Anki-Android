@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">隐藏白板</string>
     <string name="clear_whiteboard">清空白板</string>
     <string name="replay_audio">重新播放</string>
-    <string name="toggle_mic_tool_bar">Toggle mic tool bar</string>
     <string name="leech_suspend_notification">卡片被标记为记忆难点并暂停复习</string>
     <string name="leech_notification">卡片被标记为记忆难点</string>
     <string name="corrupt_font">字体文件 %s 已损坏</string>
