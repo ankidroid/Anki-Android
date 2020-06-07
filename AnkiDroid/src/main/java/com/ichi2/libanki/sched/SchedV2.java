@@ -198,7 +198,7 @@ public class SchedV2 extends AbstractSched {
         discardCurrentCard();
     }
 
-    protected void reset() {
+    public void reset() {
         _updateCutoff();
         resetCounts(false);
         resetQueues(false);
