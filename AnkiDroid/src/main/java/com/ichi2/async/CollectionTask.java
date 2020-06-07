@@ -246,7 +246,8 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 return doInBackgroundLoadDeckCounts();
 
             case TASK_TYPE_SAVE_COLLECTION:
-                return doInBackgroundSaveCollection();
+                doInBackgroundSaveCollection();
+                break;
 
             case TASK_TYPE_ANSWER_CARD:
                 return doInBackgroundAnswerCard(params);
@@ -353,8 +354,8 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
             default:
                 Timber.e("unknown task type: %d", mType);
-                return null;
         }
+        return null;
     }
 
 
@@ -541,7 +542,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    private TaskData doInBackgroundSaveCollection() {
+    private void doInBackgroundSaveCollection() {
         Timber.d("doInBackgroundSaveCollection");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col != null) {
@@ -551,7 +552,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 Timber.e(e, "Error on saving deck in background");
             }
         }
-        return null;
     }
 
 
