@@ -44,7 +44,9 @@ import static com.ichi2.async.CollectionTask.TASK_TYPE.UNDO;
 import static com.ichi2.async.CollectionTask.nonTaskUndo;
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -172,7 +174,13 @@ public class AbstractSchedTest extends RobolectricTest {
 
         for (int i = 0; i < nbNote; i++) {
             Card card = sched.getCard();
-            assertEquals(new Counts(nbNote * 2 - i, 0, 0), sched.counts(card));
+            Counts counts = sched.counts(card);
+            sched.setCurrentCard(card); // imitate what the reviewer does
+            assertThat(counts.getNew(), is(greaterThan(nbNote - i))); // Actual number of new card.
+            assertThat(counts.getNew(), is(lessThanOrEqualTo(nbNote * 2 - i))); // Maximal number potentially shown,
+            // because decrementing does not consider burying sibling
+            assertEquals(0, counts.getLrn());
+            assertEquals(0, counts.getRev());
             assertEquals(notes[i].firstCard().getId(), card.getId());
             assertEquals(Consts.QUEUE_TYPE_NEW, card.getQueue());
             sched.answerCard(card, sched.answerButtons(card));

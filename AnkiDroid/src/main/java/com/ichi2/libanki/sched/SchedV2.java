@@ -72,6 +72,7 @@ import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
@@ -162,14 +163,17 @@ public class SchedV2 extends AbstractSched {
      */
     public @Nullable Card getCard() {
         _checkDay();
-        // check day deal with cutoff if required. No need to do it in resets
-        if (!mHaveCounts) {
-            resetCounts(false);
-        }
         if (!mHaveQueues) {
             resetQueues(false);
         }
         @Nullable Card card = _getCard();
+        if (card == null && !mHaveCounts) {
+            // maybe we didn't refill queues because counts were not
+            // set. This could only occur if the only card is a buried
+            // sibling. So let's try to set counts and check again.
+            reset();
+            card = _getCard();
+        }
         if (card != null) {
             mCol.log(card);
             incrReps();
@@ -184,6 +188,10 @@ public class SchedV2 extends AbstractSched {
             card.startTimer();
         } else {
             discardCurrentCard();
+        }
+        if (!mHaveCounts) {
+            // Need to reset queues once counts are reset
+            CollectionTask.launchCollectionTask(RESET);
         }
         return card;
     }

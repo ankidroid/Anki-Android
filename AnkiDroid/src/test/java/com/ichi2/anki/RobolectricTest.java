@@ -448,4 +448,10 @@ public class RobolectricTest {
         return activity;
     }
 
+    protected Card getCard() {
+        Card card = getCol().getSched().getCard();
+        advanceRobolectricLooperWithSleep();
+        return card;
+    }
+
 }
