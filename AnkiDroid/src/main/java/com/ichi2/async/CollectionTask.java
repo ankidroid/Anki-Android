@@ -1852,11 +1852,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
 
 
-        public Comparator getComparator() {
-            return mComparator;
-        }
-
-
         public Card getCard() {
             return mCard;
         }
