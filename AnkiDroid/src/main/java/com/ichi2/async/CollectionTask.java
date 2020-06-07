@@ -1712,7 +1712,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         private long mLong;
         private Context mContext;
         private int mType;
-        private Comparator mComparator;
         private Object[] mObjects;
 
 
