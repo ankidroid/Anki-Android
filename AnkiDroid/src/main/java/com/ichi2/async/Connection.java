@@ -252,6 +252,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     private boolean timeoutOccurred(Exception e) {
         String msg = e.getMessage();
+        if (msg == null) {
+            return false;
+        }
         return msg.contains("UnknownHostException") ||
                 msg.contains("HttpHostConnectException") ||
                 msg.contains("SSLException while building HttpClient") ||

@@ -1730,6 +1730,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         }
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     }
+                } else {
+                    dialogMessage = res.getString(R.string.sync_generic_error);
+                    showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                 }
             } else {
                 Timber.i("Sync was successful");
