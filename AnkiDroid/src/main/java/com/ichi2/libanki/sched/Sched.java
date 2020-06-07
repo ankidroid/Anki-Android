@@ -258,7 +258,7 @@ public class Sched extends SchedV2 {
     @Override
     protected @Nullable Card _getCard() {
         // learning card due?
-        @Nullable Card c = _getLrnCard();
+        @Nullable Card c = _getLrnCard(false);
         if (c != null) {
             return c;
         }
