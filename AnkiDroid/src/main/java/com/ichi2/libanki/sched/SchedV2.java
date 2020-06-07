@@ -619,7 +619,7 @@ public class SchedV2 extends AbstractSched {
      */
     protected @Nullable Card _getCard() {
         // learning card due?
-        @Nullable Card c = _getLrnCard();
+        @Nullable Card c = _getLrnCard(false);
         if (c != null) {
             return c;
         }
@@ -1029,11 +1029,6 @@ public class SchedV2 extends AbstractSched {
             mLrnQueue.sort();
             return !mLrnQueue.isEmpty();
         }
-    }
-
-
-    protected @Nullable Card _getLrnCard() {
-        return _getLrnCard(false);
     }
 
 
