@@ -243,10 +243,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
             case TASK_TYPE_LOAD_DECK_COUNTS:
-                return doInBackgroundLoadDeckCounts(params);
+                return doInBackgroundLoadDeckCounts();
 
             case TASK_TYPE_SAVE_COLLECTION:
-                return doInBackgroundSaveCollection(params);
+                return doInBackgroundSaveCollection();
 
             case TASK_TYPE_ANSWER_CARD:
                 return doInBackgroundAnswerCard(params);
@@ -261,7 +261,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 return doInBackgroundUpdateNotes(params);
 
             case TASK_TYPE_UNDO:
-                return doInBackgroundUndo(params);
+                return doInBackgroundUndo();
 
             case TASK_TYPE_SEARCH_CARDS:
                 return doInBackgroundSearchCards(params);
@@ -273,10 +273,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 return doInBackgroundDismissNotes(params);
 
             case TASK_TYPE_CHECK_DATABASE:
-                return doInBackgroundCheckDatabase(params);
+                return doInBackgroundCheckDatabase();
 
             case TASK_TYPE_REPAIR_DECK:
-                return doInBackgroundRepairDeck(params);
+                return doInBackgroundRepairDeck();
 
             case TASK_TYPE_UPDATE_VALUES_FROM_DECK:
                 return doInBackgroundUpdateValuesFromDeck(params);
@@ -285,10 +285,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 return doInBackgroundDeleteDeck(params);
 
             case TASK_TYPE_REBUILD_CRAM:
-                return doInBackgroundRebuildCram(params);
+                return doInBackgroundRebuildCram();
 
             case TASK_TYPE_EMPTY_CRAM:
-                return doInBackgroundEmptyCram(params);
+                return doInBackgroundEmptyCram();
 
             case TASK_TYPE_IMPORT:
                 return doInBackgroundImportAdd(params);
@@ -318,7 +318,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 return doInBackgroundRenderBrowserQA(params);
 
             case TASK_TYPE_CHECK_MEDIA:
-                return doInBackgroundCheckMedia(params);
+                return doInBackgroundCheckMedia();
 
             case TASK_TYPE_ADD_TEMPLATE:
                 return doInBackgroundAddTemplate(params);
@@ -327,7 +327,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 return doInBackgroundRemoveTemplate(params);
 
             case TASK_TYPE_COUNT_MODELS:
-                return doInBackgroundCountModels(params);
+                return doInBackgroundCountModels();
 
             case TASK_TYPE_DELETE_MODEL:
                 return  doInBackGroundDeleteModel(params);
@@ -527,7 +527,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
+    private TaskData doInBackgroundLoadDeckCounts() {
         Timber.d("doInBackgroundLoadDeckCounts");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
@@ -541,7 +541,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    private TaskData doInBackgroundSaveCollection(TaskData... params) {
+    private TaskData doInBackgroundSaveCollection() {
         Timber.d("doInBackgroundSaveCollection");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col != null) {
@@ -845,7 +845,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    private TaskData doInBackgroundUndo(TaskData... params) {
+    private TaskData doInBackgroundUndo() {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         AbstractSched sched = col.getSched();
         try {
@@ -985,7 +985,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    private TaskData doInBackgroundCheckDatabase(TaskData... params) {
+    private TaskData doInBackgroundCheckDatabase() {
         Timber.d("doInBackgroundCheckDatabase");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         // Don't proceed if collection closed
@@ -1006,7 +1006,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    private TaskData doInBackgroundRepairDeck(TaskData... params) {
+    private TaskData doInBackgroundRepairDeck() {
         Timber.d("doInBackgroundRepairDeck");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col != null) {
@@ -1050,7 +1050,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    private TaskData doInBackgroundRebuildCram(TaskData... params) {
+    private TaskData doInBackgroundRebuildCram() {
         Timber.d("doInBackgroundRebuildCram");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         col.getSched().rebuildDyn(col.getDecks().selected());
@@ -1058,7 +1058,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    private TaskData doInBackgroundEmptyCram(TaskData... params) {
+    private TaskData doInBackgroundEmptyCram() {
         Timber.d("doInBackgroundEmptyCram");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         col.getSched().emptyDyn(col.getDecks().selected());
@@ -1348,7 +1348,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     /**
      * @return The results list from the check, or false if any errors.
      */
-    private TaskData doInBackgroundCheckMedia(TaskData... params) {
+    private TaskData doInBackgroundCheckMedia() {
         Timber.d("doInBackgroundCheckMedia");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         // A media check on AnkiDroid will also update the media db
@@ -1419,7 +1419,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
      *
      * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
      */
-    private TaskData doInBackgroundCountModels(TaskData... params){
+    private TaskData doInBackgroundCountModels(){
         Timber.d("doInBackgroundLoadModels");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
 
