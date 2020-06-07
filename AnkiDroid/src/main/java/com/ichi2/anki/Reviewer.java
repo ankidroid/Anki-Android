@@ -396,7 +396,14 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private void toggleMicToolBar() {
-        if (mMicToolBar == null) {
+        if (mMicToolBar != null) {
+            // It exists swap visibility status
+            if (mMicToolBar.getVisibility() != View.VISIBLE) {
+                mMicToolBar.setVisibility(View.VISIBLE);
+            } else {
+                mMicToolBar.setVisibility(View.GONE);
+            }
+        } else {
             // Record mic tool bar does not exist yet
             mTempAudioPath = AudioView.generateTempAudioFile(this);
             if (mTempAudioPath == null) {
@@ -413,13 +420,6 @@ public class Reviewer extends AbstractFlashcardViewer {
             mMicToolBar.setLayoutParams(lp2);
             LinearLayout micToolBarLayer = findViewById(R.id.mic_tool_bar_layer);
             micToolBarLayer.addView(mMicToolBar);
-        } else {
-            // It exists swap visibility status
-            if (mMicToolBar.getVisibility() != View.VISIBLE) {
-                mMicToolBar.setVisibility(View.VISIBLE);
-            } else {
-                mMicToolBar.setVisibility(View.GONE);
-            }
         }
     }
 
