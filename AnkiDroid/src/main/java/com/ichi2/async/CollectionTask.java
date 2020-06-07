@@ -1770,12 +1770,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
 
 
-        public TaskData(List<Map<String, String>> cards, Comparator comparator) {
-            mCards = cards;
-            mComparator = comparator;
-        }
-
-
         public TaskData(boolean bool) {
             mBool = bool;
         }
