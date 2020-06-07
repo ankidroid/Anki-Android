@@ -27,6 +27,8 @@ import android.media.MediaRecorder;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
+
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -134,6 +136,7 @@ public class AudioView extends LinearLayout {
         mResRecordStopImage = resRecordStop;
 
         this.setOrientation(HORIZONTAL);
+        this.setGravity(Gravity.CENTER);
 
         mRecord = new RecordButton(context);
         addView(mRecord, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
