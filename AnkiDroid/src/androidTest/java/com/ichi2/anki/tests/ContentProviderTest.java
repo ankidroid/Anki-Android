@@ -964,7 +964,23 @@ public class ContentProviderTest {
 
     }
 
-    private Collection reopenCol() {
+
+
+    /** Test that a null did will not crash the provider (#6378) */
+     @Test
+     public void testProviderProvidesDefaultForEmptyModelDeck() {
+         Collection col = getCol();
+         col.getModels().all().get(0).put("did", JSONObject.NULL);
+         col.save();
+
+         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+         // Query all available models
+         final Cursor allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
+         assertNotNull(allModels);
+     }
+
+
+ private Collection reopenCol() {
         CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
         return getCol();
     }
