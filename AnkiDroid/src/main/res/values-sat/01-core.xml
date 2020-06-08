@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Navigation drawer items-->
+    <string name="decks">ᱰᱮᱠᱥ</string>
+    <string name="card_browser">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
+    <string name="statistics">ᱟᱸᱠᱰᱟ</string>
+    <string name="settings">ᱥᱟᱡᱟᱣᱠᱚ</string>
+    <string name="help">ᱜᱚᱸᱲᱚᱸ</string>
+    <string name="send_feedback">ᱞᱟᱹᱭ ᱯᱩᱥᱴᱟᱹᱣ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
+    <string name="studyoptions_title">ᱰᱮᱠ ᱧᱮᱞ ᱵᱤᱰᱟVᱣ ᱢᱮ</string>
+    <string name="studyoptions_due_today">ᱛᱮᱦᱮᱸᱧ-ᱟᱜ ᱥᱟᱨᱮᱡ</string>
+    <string name="studyoptions_new_total">ᱱᱟᱶᱟ ᱠᱟᱰᱥ ᱠᱚᱣᱟᱜ ᱜᱩᱴ:</string>
+    <string name="studyoptions_total_cards">ᱱᱟᱶᱟ ᱠᱟᱰᱥ ᱠᱚᱺ</string>
+    <string name="studyoptions_eta">ᱚᱱᱩᱢᱟᱱ ᱥᱚᱢᱚᱭ (ᱴᱤᱯᱤᱡ)ᱺ</string>
+    <string name="studyoptions_start">ᱯᱟᱲᱦᱟᱣ</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">ᱣᱤᱥᱛᱟᱨ ᱢᱮ</string>
+    <string name="collapse">ᱦᱚᱯᱚᱱ ᱢᱮ</string>
+    <string name="study_more">ᱟᱨᱦᱚᱸ ᱯᱟᱰᱦᱣ ᱢᱮ</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d ᱠᱟᱰ ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ (%2$s)</item>
+        <item quantity="other">%1$d ᱠᱟᱰᱥ ᱞᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱟᱡ ᱟᱠᱟᱱᱟ</item>
+        <item quantity="other">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱟᱡ ᱟᱠᱟᱱᱟ</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">%d ᱴᱚᱲᱚᱝ %d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
+        <item quantity="other">%d ᱴᱚᱲᱚᱝ %d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">%d ᱫᱤᱱ %d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
+        <item quantity="other">%d ᱫᱤᱱ %d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
+    </plurals>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">%1$d ᱠᱟᱰ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱰᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
+        <item quantity="other">%1$d ᱠᱟᱰ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱰᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">ᱛᱮᱞᱟ ᱴᱟᱭᱯ ᱢᱮ</string>
+    <string name="show_answer">ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
+    <string name="ease_button_again">ᱟᱨᱦᱚᱸ</string>
+    <string name="ease_button_hard">ᱠᱚᱰᱟ</string>
+    <string name="ease_button_good">ᱵᱮᱥ</string>
+    <string name="ease_button_easy">ᱥᱚᱦᱚᱡ</string>
+    <string name="studyoptions_congrats_undo">ᱢᱟᱲᱟᱝᱟᱜ %s</string>
+    <string name="menu_import">ᱟᱭᱟᱛ</string>
+    <string name="undo">ᱢᱟᱲᱟᱝᱟᱜ</string>
+    <string name="undo_action_review">ᱢᱟᱲᱟᱝᱟᱜ ᱧᱮᱧᱮᱞᱠᱚᱜ</string>
+    <string name="undo_action_bury_card">ᱠᱟᱰ ᱛᱚᱯᱟᱭ ᱢᱮ</string>
+    <string name="undo_action_bury_note">ᱱᱚᱴ ᱛᱚᱯᱟᱭ ᱢᱮ</string>
+    <string name="undo_action_suspend_card">ᱠᱟᱰ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
+    <string name="undo_action_suspend_note">ᱱᱚᱴ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
+    <string name="undo_action_delete">ᱱᱚᱴ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
+    <string name="undo_action_delete_multi">ᱱᱚᱴᱥ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
+    <string name="undo_action_change_deck_multi">ᱰᱮᱠᱥ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="undo_action_reschedule_card">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
+    <string name="undo_action_reset_card">ᱯᱨᱚᱜᱨᱮᱥ ᱨᱤᱥᱮᱴ ᱢᱮ</string>
+    <string name="undo_action_reposition_card">ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱢᱮ</string>
+    <string name="move_all_to_deck">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱛᱮ ᱩᱪᱟ.ᱰ ᱡᱮ</string>
+    <string name="unbury">ᱛᱚᱯᱟ ᱚᱰᱚᱠ ᱢᱮ</string>
+    <string name="rename_deck">ᱰᱮᱠ ᱟ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ‌ ᱢᱮ</string>
+    <string name="menu_add">ᱥᱮᱞᱮᱫ </string>
+    <string name="menu_add_note">ᱱᱚᱴ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
+    <string name="menu_my_account">ᱠᱷᱟᱛᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱮ</string>
+    <string name="menu_dismiss_note">ᱩᱠᱩᱭ ᱢᱮ/ᱜᱫ ᱜᱤᱰᱤ</string>
+    <string name="menu_bury_card">ᱠᱟᱰ ᱛᱚᱯᱟᱭ ᱢᱮ</string>
+    <string name="menu_bury_note">ᱱᱚᱴ ᱛᱚᱯᱟᱭ ᱢᱮ</string>
+    <string name="menu_suspend_card">ᱠᱟᱰ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
+    <string name="menu_suspend_note">ᱱᱚᱴ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
+    <string name="menu_bury">ᱛᱚᱯᱟ</string>
+    <string name="menu_suspend">ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
+    <string name="menu_delete_note">ᱱᱚᱴ ᱜᱮᱫ ᱜᱤᱰᱤ</string>
+    <string name="menu_flag">ᱯᱚᱛᱠᱟ</string>
+    <string name="menu_flag_card">ᱠᱟᱰ ᱯᱚᱛᱠᱟᱭ ᱢᱮ</string>
+    <string name="menu_flag_card_zero">ᱟᱞᱚ ᱯᱚᱛᱠᱟᱭᱟ</string>
+    <string name="menu_flag_card_one">ᱞᱟᱞ ᱯᱚᱛᱠᱟ</string>
+    <string name="menu_flag_card_two">ᱥᱟᱱᱛᱨᱟ ᱯᱚᱛᱠᱟ</string>
+    <string name="menu_flag_card_three">ᱥᱟᱹᱵᱡᱟ ᱯᱚᱛᱠᱟ</string>
+    <string name="menu_flag_card_four">ᱞᱤᱞ ᱯᱚᱛᱠᱟ</string>
+    <string name="delete_note_message">ᱱᱚᱛᱴ ᱥᱟᱞᱟᱜ ᱛᱮ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱥᱚ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ ᱥᱮ?\n%s</string>
+    <string name="menu_select">ᱚᱞ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
+    <string name="menu_search">%1$s ᱨᱮ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ</string>
+    <string name="menu_mark_note">ᱱᱚᱴ ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</string>
+    <string name="menu_unmark_note">ᱱᱚᱴ ᱚ-ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ </string>
+    <string name="new_deck">ᱱᱟᱶᱟ ᱰᱮᱠ ᱛᱮᱟᱨ ᱢᱮ</string>
+    <string name="create">ᱛᱮᱭᱟᱨ</string>
+    <string name="new_dynamic_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱛᱮᱟᱨ ᱢᱮ</string>
+    <string name="night_mode">ᱧᱤᱸᱫᱟᱹ ᱢᱚᱰ</string>
+    <string name="directory_inaccessible">AnkiDroid ᱩᱱᱩᱫᱩᱜ ᱫᱚ ᱵᱟᱭ ᱦᱟᱛᱟᱣ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟ </string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d ᱴᱤᱡ</string>
+    <string name="time_quantity_minutes">%d ᱴᱤᱯᱤᱡ</string>
+    <string name="time_quantity_hours">%d ᱴᱟᱲᱟᱝ</string>
+    <string name="time_quantity_days">%d ᱫᱤᱱ</string>
+    <string name="time_quantity_months">%.1f ᱪᱟᱸᱫᱚ</string>
+    <string name="time_quantity_years">%.1f ᱥᱮᱨᱢᱟ</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_cram_deck">ᱜᱷᱩᱥᱟᱣ ᱰᱮᱠ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ...</string>
+    <string name="rebuild_cram_label">ᱯᱩᱱᱚᱨᱼᱛᱮᱭᱟᱨ</string>
+    <string name="empty_cram_label">ᱵᱟ.ᱱᱩᱜᱟ</string>
+    <string name="create_subdeck">ᱥᱚᱵᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
+    <string name="empty_cram_deck">ᱜᱷᱩᱥᱟᱣ ᱰᱮᱨ ᱠᱷᱟᱹᱞᱤ ᱢᱮ...</string>
+    <string name="custom_study_deck_name">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣᱜ ᱥᱚᱢᱚᱭ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
+    <string name="custom_study_deck_exists">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ ᱰᱮᱠ ᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
+    <string name="studyoptions_empty">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ ᱾ + ᱵᱚᱴᱚᱱ ᱯᱨᱮᱥ ᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱡᱤᱱᱥᱚ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭ ᱢᱮ ᱾</string>
+    <string name="studyoptions_limit_reached">ᱰᱮᱞᱤ ᱯᱟᱰᱦᱟᱣ ᱚᱠᱛᱚ ᱥᱮᱴᱮᱨ ᱮᱱᱟ </string>
+    <string name="studyoptions_empty_schedule">ᱯᱟᱰᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱟ </string>
+    <string name="studyoptions_congrats_finished">ᱥᱟᱨᱦᱟᱣ! ᱱᱤᱛᱚᱜ ᱞᱟᱜᱤᱫ ᱪᱟᱵᱟ ᱠᱮᱟᱢ</string>
+    <string name="studyoptions_congrats_more_rev">ᱛᱮᱦᱮᱸᱧ ᱞᱟᱹᱜᱤᱫ ᱤᱱᱟᱝᱜᱮ, ᱦᱮᱞᱮ ᱟᱨᱦᱚᱸ ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱧᱮᱞ ᱨᱮᱭᱟᱜ ᱢᱮᱱᱟᱜᱟ ᱾ ᱟᱨᱦᱚᱸ ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱚᱯᱥᱚᱱ ᱨᱮ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱣ ᱫᱟᱲᱮᱭᱟᱼᱜᱟᱢ ᱾ </string>
+    <string name="studyoptions_congrats_more_new">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱞᱤᱢᱤᱴ ᱥᱮᱴᱮᱨ ᱮᱱᱟ ᱾ ᱟᱨᱦᱚᱸ ᱱᱟᱶᱟ ᱠᱟᱰ ᱢᱮᱱᱟᱜᱼᱟ; ᱟᱢ ᱚᱯᱥᱚᱱ ᱨᱮ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱚ ᱫᱟᱲᱮᱟᱜᱼᱟᱢ, ᱦᱮᱞᱮ ᱵᱚᱰᱦᱟᱣ ᱞᱮᱠᱷᱟᱱ ᱢᱚᱱᱮ ᱫᱚᱦᱚ ᱞᱚᱰ ᱡᱟᱥᱛᱤ ᱛᱟᱢᱟ ᱾ </string>
+    <string name="studyoptions_congrats_custom">ᱱᱚᱨᱢᱟᱞ ᱥᱮᱰᱭᱩᱞ ᱠᱷᱚᱱ ᱵᱟᱦᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱥᱮᱱᱟᱢ ᱠᱷᱟᱱ ᱫᱚ, \&quot;Custom study\&quot; ᱵᱚᱴᱚᱱ ᱨᱮ ᱚᱛᱟᱭ ᱛᱮᱵᱚᱱ ᱢᱮ</string>
+    <string name="studyoptions_no_cards_due">ᱱᱤᱛᱚᱜ ᱫᱚ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
+    <string name="sd_card_not_mounted">Device storage ᱫᱚ ᱵᱟᱭ ᱢᱟᱩᱸᱴ ᱟᱠᱟᱱᱟ</string>
+    <string name="empty_cloze_warning">ᱱᱚᱶᱟ ᱱᱚᱴ ᱥᱟᱯᱲᱟᱣ ᱢᱮ ᱟᱨ cloze deletions ᱥᱮᱞᱮᱫ ᱢᱮ ᱾ (%1$s)</string>
+    <string name="button_sync">ᱟᱭᱩᱨ ᱢᱤᱫ</string>
+    <string name="cancel_sync_confirm">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤᱭᱟᱢ ᱥᱮ ?</string>
+    <string name="continue_sync">ᱟᱭᱩᱨ ᱢᱤᱫ ᱪᱟᱹᱞᱩ ᱫᱚᱦᱚᱭ</string>
+    <string name="sync_cancelled">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤ</string>
+    <string name="sync_cancel_message">ᱵᱟᱫ ᱜᱤᱰᱤᱼᱜ ᱠᱟᱱᱟ &#8230;\n ᱠᱤᱪᱷᱤ ᱥᱚᱢᱟᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱭ ᱾ </string>
+    <string name="export">ᱵᱷᱮᱡᱟ</string>
+    <string name="export_collection">ᱴᱤᱢᱟᱹᱞ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
+    <string name="export_deck">ᱰᱮᱠ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
+    <string name="nothing">ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱯᱨᱚᱠᱟᱨ</string>
+    <string name="card_template_editor_front">ᱢᱟᱲᱟᱝ ᱪᱷᱟᱸᱪ</string>
+    <string name="card_template_editor_back">ᱯᱟᱹᱪᱞᱟᱹ ᱪᱷᱟᱸᱪ</string>
+    <string name="card_template_editor_styling">ᱦᱩᱱᱟᱹᱨ</string>
+    <string name="card_template_editor_menu_delete">ᱜᱮᱫ ᱜᱤᱰᱤ</string>
+    <string name="card_template_editor_menu_card_browser_appearance">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱠᱚ</string>
+    <string name="card_template_editor_cant_delete">ᱠᱚᱢ ᱥᱮ ᱠᱚᱢ ᱢᱤᱫ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱠᱟᱰ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ </string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">\&quot;%2$s\&quot; ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ ᱟᱨ %1$d ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱜᱮᱫ ᱜᱤᱰᱤ ᱟ ᱥᱮ?</item>
+        <item quantity="other">\&quot;%2$s\&quot; ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ ᱟᱨ %1$d ᱠᱟᱰᱥ ᱠᱚ ᱮᱢᱟᱱ ᱜᱮᱫ ᱜᱤᱰᱤ ᱟ ᱥᱮ?</item>
+    </plurals>
+    <string name="invalid_template">ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ</string>
+    <string name="card_template_editor_would_delete_note">ᱱᱚᱶᱟ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱮᱠᱷᱟᱱ ᱱᱚᱴᱥ ᱠᱚ ᱦᱚᱸ ᱵᱟᱭ ᱛᱟᱦᱮᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱯᱨᱩᱛᱷᱩᱢ ᱱᱟᱶᱟ ᱠᱟᱰ ᱛᱮᱨᱟ ᱢᱮ ᱾ </string>
+    <string name="template_for_current_card_deleted">ᱱᱚᱶᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱼᱜ ᱠᱟᱲ ᱯᱨᱚᱠᱟᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ ᱾ </string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱠᱚ</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">AnkiDroid ᱥᱟᱫᱠᱷᱤᱭᱟᱽ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱟᱨ ᱚᱞ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <string name="read_write_permission_description">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱱᱚᱴᱥ, ᱠᱟᱰ, ᱱᱚᱴᱥ ᱯᱨᱚᱠᱟᱨ ᱟᱨ ᱰᱮᱠᱥ ᱦᱚᱠ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ ᱚᱱᱟ ᱥᱟᱞᱟᱜ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱦᱚᱸ ᱛᱮᱭᱟᱨ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ</string>
+    <string name="card_browser_label">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
+    <string name="card_browser_context_menu">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
+</resources>
