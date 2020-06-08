@@ -91,7 +91,7 @@ public class Note implements Cloneable {
         try (Cursor cursor = mCol.getDb().getDatabase()
                 .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null)) {
             if (!cursor.moveToFirst()) {
-                throw new RuntimeException("Notes.load(): No result from query for note " + mId);
+                throw new WrongId(mId, "note");
             }
             mGuId = cursor.getString(0);
             mMid = cursor.getLong(1);
