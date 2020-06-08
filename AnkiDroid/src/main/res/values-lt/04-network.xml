@@ -40,6 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Esate neprisijungę</string>
+    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Susinchronizuoti nepavyko</string>
     <string name="vague_error">Klaida</string>
     <string name="retry">Bandyti dar kartą</string>

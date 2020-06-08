@@ -40,6 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">目前是離線狀態</string>
+    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">同步錯誤</string>
     <string name="vague_error">錯誤</string>
     <string name="retry">重試</string>
