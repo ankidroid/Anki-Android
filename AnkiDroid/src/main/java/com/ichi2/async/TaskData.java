@@ -216,4 +216,8 @@ public class TaskData {
 
         return clazz.isAssignableFrom(val.getClass());
     }
+
+    public void setCards(List<Map<String, String>> cards) {
+            mCards = cards;
+    }
 }
