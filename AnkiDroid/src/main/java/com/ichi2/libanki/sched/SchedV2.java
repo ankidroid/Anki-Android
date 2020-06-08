@@ -718,7 +718,8 @@ public class SchedV2 extends AbstractSched {
         if (g.getInt("dyn") != 0) {
             return mDynReportLimit;
         }
-        JSONObject c = mCol.getDecks().confForDid(g.getLong("id"));
+        long did = g.getLong("id");
+        JSONObject c = mCol.getDecks().confForDid(did);
         return Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
     }
 
@@ -1204,7 +1205,8 @@ public class SchedV2 extends AbstractSched {
         if (d.getInt("dyn") != 0) {
             return mDynReportLimit;
         }
-        JSONObject c = mCol.getDecks().confForDid(d.getLong("id"));
+        long did = d.getLong("id");
+        JSONObject c = mCol.getDecks().confForDid(did);
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
 
         if (parentLimit != null) {
@@ -1212,7 +1214,7 @@ public class SchedV2 extends AbstractSched {
         } else if (!d.getString("name").contains("::")) {
             return lim;
         } else {
-            for (JSONObject parent : mCol.getDecks().parents(d.getLong("id"))) {
+            for (JSONObject parent : mCol.getDecks().parents(did)) {
                 // pass in dummy parentLimit so we don't do parent lookup again
                 lim = Math.min(lim, _deckRevLimitSingle(parent, lim));
             }

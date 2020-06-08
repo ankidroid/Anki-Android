@@ -724,7 +724,8 @@ public class Sched extends SchedV2 {
         if (d.getInt("dyn") != 0) {
             return mReportLimit;
         }
-        JSONObject c = mCol.getDecks().confForDid(d.getLong("id"));
+        long did = d.getLong("id");
+        JSONObject c = mCol.getDecks().confForDid(did);
         return Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
     }
 
