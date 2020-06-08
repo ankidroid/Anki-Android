@@ -29,6 +29,9 @@ import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
 
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.sched.AbstractSched;
+import com.ichi2.libanki.sched.Sched;
+import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import org.junit.After;
@@ -41,6 +44,8 @@ import org.robolectric.shadows.ShadowLog;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
 import timber.log.Timber;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class RobolectricTest {
 
@@ -168,5 +173,18 @@ public class RobolectricTest {
         //HACK: We perform this to ensure that onCollectionLoaded is performed synchronously when startLoadingCollection
         //is called.
         getCol();
+    }
+
+
+    protected SchedV2 upgradeToSchedV2() {
+        getCol().getConf().put("schedVer", 2);
+        getCol().setMod();
+        CollectionHelper.getInstance().closeCollection(true, "upgradeToSchedV2");
+
+        AbstractSched sched = getCol().getSched();
+        //Sched inherits from schedv2...
+        assertThat("sched should be v2", !(sched instanceof Sched));
+
+        return (SchedV2) sched;
     }
 }

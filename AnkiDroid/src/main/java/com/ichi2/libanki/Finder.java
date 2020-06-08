@@ -446,7 +446,7 @@ public class Finder {
         } else if ("suspended".equals(val)) {
             return "c.queue = " + Consts.QUEUE_TYPE_SUSPENDED;
         } else if ("buried".equals(val)) {
-            return "c.queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
+            return "c.queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")";
         } else if ("due".equals(val)) {
             return "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and c.due <= " + mCol.getSched().getToday() +
                     ") or (c.queue = " + Consts.QUEUE_TYPE_LRN + " and c.due <= " + mCol.getSched().getDayCutoff() + ")";
