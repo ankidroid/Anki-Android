@@ -111,7 +111,7 @@
     <string name="note_editor_no_cards_created">कोई कार्ड नहीं बनाया गया। कृपया अधिक फ़ील्ड भरें</string>
     <string name="note_editor_no_first_field">पहला फील्ड खाली है</string>
     <string name="note_editor_no_cloze_delations">इस नोट प्रकार में क्लॉज विलोपन होना चाहिए</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_no_cards_created_all_fields">वर्तमान प्रलेख के प्रकार ने किसी भी कार्ड का निर्माण नहीं किया । कृपया एक और प्रलेख का प्रकार चुने , कृपया एक और प्रलेख का प्रकार चुनिये । या आप एक क्षेत्र का प्रतिस्थापन बढ़ाइये ।</string>
     <string name="saving_facts">नोट सहेजने</string>
     <string name="saving_model">नोट प्रकार सहेज रहा है</string>
     <string name="add">जोड़ें</string>
@@ -128,8 +128,8 @@
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="one">%1$d मिनट</item>
+        <item quantity="other">मिनट</item>
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid में आपका स्वागत है</string>
     <string name="fact_adder_intent_title">AnkiDroid कार्ड</string>
@@ -167,7 +167,7 @@
     <string name="import_error_unhandled_request">आयात अनुरोध संसाधित करने में असमर्थ</string>
     <string name="import_error_exception">पैकेज आयात करने में विफल \n\n%s</string>
     <string name="import_error_not_apkg_extension">फ़ाइल नाम \"%s\" में .apkg या .colpkg एक्सटेंशन नहीं है</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_error_load_imported_database">अन्कि डाटाबेस (.anki2) प्रतिस्थापन अभीतक सहारा नहीं दिया जाता हैं । कृपया पुस्तिका प्रतिस्थापन के शिक्षण के लिये देखिये ।</string>
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
     <string name="import_replacing">संग्रह की जगह.. ।</string>
     <string name="import_interrupted">आयात बाधित हुआ</string>
@@ -239,8 +239,8 @@
     <string name="filtered_deck_name">छान डेक</string>
     <string name="reminder_title">आज पढ़ाई करना न भूलें!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d कार्ड %1$s मे पुनरावलोकन कीजिये</item>
+        <item quantity="other">%2$d कार्डस %1$s मे पुनरावलोकन कीजिये</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg फ़ाइल साझा करने में त्रुटि</string>
@@ -261,6 +261,6 @@
     <string name="background_image_title">पृष्ठभूमि</string>
     <string name="choose_an_image">चित्र चुनें</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default">पहले जैसा कर देना</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">रिक्त</string>
 </resources>

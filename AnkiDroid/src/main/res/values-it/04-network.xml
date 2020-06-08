@@ -40,6 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Sei scollegato</string>
+    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Errore di sincronizzazione</string>
     <string name="vague_error">Errore</string>
     <string name="retry">Riprova</string>

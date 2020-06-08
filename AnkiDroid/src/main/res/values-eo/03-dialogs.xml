@@ -88,9 +88,9 @@
         <item quantity="one">%d karto estas replanita</item>
         <item quantity="other">%d kartoj estas replanitaj</item>
     </plurals>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Elektu kartaron per dosier‑administrilo aŭ malfermu la paĝon about:downloads por malfermi ĝin</string>
     <string name="answering_error_title">Eraro pri datumbazo</string>
-    <string name="answering_error_message">Fiaskis skribi al la kolekto. La datumbazo povas esti difektita aŭ eble mankas spaco en la konservejo.\n\nSe tio ĉi okazos pli ofte, provu kontroli la datumbazon, ripari la kolekton aŭ restarigi ĝin el sekurkopio. Frapetu “agordojn” por fari tion.\nAŭ tio ĉi povas esti eraro en AnkiDroid, do bonvolu raporti ĝin por ke ni povu ĝin ripari.</string>
+    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Raporti eraron</string>
     <string name="repair_deck_dialog">Ĉu vi certe volas ripari la datumbazon?\n\nAntaŭ komenci, kopio estos kreita en subdosierujo “%s”.</string>
     <string name="intent_add_saved_information">Konservita datumo</string>
@@ -156,7 +156,7 @@
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Ne povis akiri permeson al la mikrofono.</string>
     <string name="multimedia_editor_camera_permission_refused">Ne povis akiri permeson al la fotilo. Iuj funkcioj ne eblos.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_failed">Fiaskis malfermi redaktilon de plurmedioj</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permeso al registri sonon rifuzita</string>
     <!-- Initial collection load -->
@@ -188,13 +188,13 @@
     <string name="error_selecting_image">Eraro dum elekti bildon. Legu la manlibron de uzanto. %s</string>
     <string name="error_deleting_image">Eraro dum forigi bildon</string>
     <string name="failed_to_apply_background_image">Fiaskis apliki fonan bildon %s</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed">Maksimuma permesata grando de bildo estas %d MB</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Mankas permeso al konservejo. Donu permeson al konservejo kaj sekve reprovu.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">Ne povis ekigi kart‑foliumilon</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">Fiaskis plani memorigaĵojn</string>
+    <string name="boot_service_too_many_notifications">Tro multe da memorigaĵoj planitaj. Iuj ne aperos</string>
 </resources>

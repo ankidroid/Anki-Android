@@ -84,7 +84,7 @@
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">데이터베이스 오류</string>
-    <string name="answering_error_message">컬렉션 파일을 작성 중 오류가 발생했습니다. 데이타베이스가 엉켰거나 디스크 공간이 부족할 가능성이 있습니다.\n\n 이러한 현상이 자주 발생한다면, 데이터베이스를 점검하여 컬렉션을 수정하고 백업에서 복원하시기 바랍니다. 이를 위해 \'옵션\'을 선택하세요. \n\n 동시에 이는 Ankidroid 버그이므로 오류 보고를 해주시면 점검해 보겠습니다.</string>
+    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">오류 보고하기</string>
     <string name="repair_deck_dialog">데이터베이스를 복구하시겠습니까?\n\n 복구를 시작하기 전에 지정된 하위폴더에 복사본 파일이 저장됩니다\'%s\'.</string>
     <string name="intent_add_saved_information">저장된 데이터</string>

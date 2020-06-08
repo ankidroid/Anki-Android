@@ -145,7 +145,7 @@
     <string name="rebuild_cram_deck">Rekreado de lern-kartaro&#8230;</string>
     <string name="rebuild_cram_label">Rekrei</string>
     <string name="empty_cram_label">Forviŝi</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">Krei subkartaron</string>
     <string name="empty_cram_deck">Forviŝado de lern-kartaro&#8230;</string>
     <string name="custom_study_deck_name">Propra lernado</string>
     <string name="custom_study_deck_exists">Unue ŝanĝu nomon de kartaro por propra lernado</string>
@@ -175,7 +175,7 @@
     <string name="card_template_editor_back">Ŝablono dorsa</string>
     <string name="card_template_editor_styling">Stilo</string>
     <string name="card_template_editor_menu_delete">Forigi</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Aspekto de kart-foliumilo</string>
     <string name="card_template_editor_cant_delete">Almenaŭ unu karto estas postulata</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Ĉu forigi la tipon de kartoj “%2$s” kaj ĝian %1$d karton?</item>
@@ -185,7 +185,7 @@
     <string name="card_template_editor_would_delete_note">Forigado de tiu ĉi tipo de kartoj povas ankaŭ forigi kelka(j)n noto(j)n. Unue kreu novan tipon de kartoj.</string>
     <string name="template_for_current_card_deleted">La speco de karto por la nuna karto estis forigita.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Aspekto de foliumilo</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Legi kaj skribi al datumbazo de AnkiDroid</string>
     <string name="read_write_permission_description">aliri ekzistajn notojn, kartojn, tipojn de notoj kaj kartarojn kaj krei novajn</string>

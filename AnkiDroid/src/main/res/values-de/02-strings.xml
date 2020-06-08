@@ -262,5 +262,5 @@
     <string name="choose_an_image">Wählen Sie ein Bild aus</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Standard wiederherstellen</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Auslassung</string>
 </resources>

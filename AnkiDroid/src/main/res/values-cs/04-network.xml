@@ -40,6 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Jste v režimu offline</string>
+    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Chyby synchronizace</string>
     <string name="vague_error">Chyba</string>
     <string name="retry">Opakovat</string>
