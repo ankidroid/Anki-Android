@@ -2040,7 +2040,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         int pos = mDeckListAdapter.findDeckPosition(did);
         Sched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
         // Figure out what action to take
-        if (deckDueTreeNode.newCount + deckDueTreeNode.lrnCount + deckDueTreeNode.revCount > 0) {
+        if (!deckDueTreeNode.haveNumber ||
+            // When numbers are not yet computed, we assume the user know what they want to review and accept to let them study
+            deckDueTreeNode.newCount + deckDueTreeNode.lrnCount + deckDueTreeNode.revCount > 0) {
             // If there are cards to study then either go to Reviewer or StudyOptions
             if (mFragmented || dontSkipStudyOptions) {
                 // Go to StudyOptions screen when tablet or deck counts area was clicked

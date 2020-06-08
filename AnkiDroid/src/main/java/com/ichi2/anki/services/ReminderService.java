@@ -32,6 +32,7 @@ import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.sched.Sched;
+import com.ichi2.utils.Assert;
 
 public class ReminderService extends BroadcastReceiver {
 
@@ -61,6 +62,7 @@ public class ReminderService extends BroadcastReceiver {
             return;
         }
 
+        Assert.that(deckDue.haveNumber, "To test whether cards are due, we should have the counts.");
         final int total = deckDue.revCount + deckDue.lrnCount + deckDue.newCount;
 
         if (total <= 0) {

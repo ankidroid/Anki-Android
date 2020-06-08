@@ -29,6 +29,7 @@ import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.sched.Sched;
+import com.ichi2.utils.Assert;
 
 import java.util.List;
 
@@ -126,6 +127,7 @@ public final class WidgetStatus {
             // Only count the top-level decks in the total
             List<Sched.DeckDueTreeNode> nodes = col.getSched().deckDueTree();
             for (Sched.DeckDueTreeNode node : nodes) {
+                Assert.that(node.haveNumber, "Numbers are required in node to update counts.");
                 total[0] += node.newCount;
                 total[1] += node.lrnCount;
                 total[2] += node.revCount;

@@ -52,6 +52,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.Utils;
 
+import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -409,7 +410,14 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
+    /**
+     *
+     * Used only for CardContentProvider's query.
+     * @param deck It is assumed that the numbers are set in the tree.
+     * @return The counts, as indicated in top of reviewer.
+     */
     private JSONArray getDeckCountsFromDueTreeNode(Sched.DeckDueTreeNode deck){
+        Assert.that(deck.haveNumber, "getDeckCountsFromDueTreeNode should be only called from deck with numbers.");
         JSONArray deckCounts = new JSONArray();
         deckCounts.put(deck.lrnCount);
         deckCounts.put(deck.revCount);

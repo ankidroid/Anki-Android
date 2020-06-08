@@ -199,12 +199,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
 
         // Set the card counts and their colors
-        holder.deckNew.setText(String.valueOf(node.newCount));
-        holder.deckNew.setTextColor((node.newCount == 0) ? mZeroCountColor : mNewCountColor);
-        holder.deckLearn.setText(String.valueOf(node.lrnCount));
-        holder.deckLearn.setTextColor((node.lrnCount == 0) ? mZeroCountColor : mLearnCountColor);
-        holder.deckRev.setText(String.valueOf(node.revCount));
-        holder.deckRev.setTextColor((node.revCount == 0) ? mZeroCountColor : mReviewCountColor);
+        if (node.haveNumber) {
+            holder.deckNew.setText(String.valueOf(node.newCount));
+            holder.deckNew.setTextColor((node.newCount == 0) ? mZeroCountColor : mNewCountColor);
+            holder.deckLearn.setText(String.valueOf(node.lrnCount));
+            holder.deckLearn.setTextColor((node.lrnCount == 0) ? mZeroCountColor : mLearnCountColor);
+            holder.deckRev.setText(String.valueOf(node.revCount));
+            holder.deckRev.setTextColor((node.revCount == 0) ? mZeroCountColor : mReviewCountColor);
+        }
 
         // Store deck ID in layout's tag for easy retrieval in our click listeners
         holder.deckLayout.setTag(node.did);
@@ -266,7 +268,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             node.depth = depth;
 
             // Add this node's counts to the totals if it's a parent deck
-            if (depth == 0) {
+            if (depth == 0 && node.haveNumber) {
                 mNew += node.newCount;
                 mLrn += node.lrnCount;
                 mRev += node.revCount;

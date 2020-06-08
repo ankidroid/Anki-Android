@@ -184,7 +184,14 @@ public abstract class AbstractSched {
         public int revCount;
         public int lrnCount;
         public int newCount;
+        public boolean haveNumber;
         public List<DeckDueTreeNode> children = new ArrayList<>();
+
+        public DeckDueTreeNode(String name, long did) {
+            this.names = new String[]{name};
+            this.did = did;
+            this.haveNumber = false;
+        }
 
         public DeckDueTreeNode(String[] names, long did, int revCount, int lrnCount, int newCount) {
             this.names = names;
@@ -192,6 +199,7 @@ public abstract class AbstractSched {
             this.revCount = revCount;
             this.lrnCount = lrnCount;
             this.newCount = newCount;
+            this.haveNumber = true;
         }
 
         public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount) {
@@ -224,8 +232,13 @@ public abstract class AbstractSched {
 
         @Override
         public String toString() {
-            return String.format(Locale.US, "%s, %d, %d, %d, %d, %d, %s",
-                    Arrays.toString(names), did, depth, revCount, lrnCount, newCount, children);
+            if (haveNumber) {
+                return String.format(Locale.US, "%s, %d, %d, %d, %d, %d, %s",
+                        Arrays.toString(names), did, depth, revCount, lrnCount, newCount, children);
+            } else {
+                return String.format(Locale.US, "%s, %d, %d, %s",
+                        Arrays.toString(names), did, depth, children);
+            }
         }
     }
 
