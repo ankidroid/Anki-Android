@@ -119,11 +119,14 @@ public class RobolectricTest {
         JSONObject model = getCol().getModels().byName(name);
         //PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         //Saves a database trip afterwards.
+        if (model == null) {
+            throw new IllegalArgumentException(String.format("Could not find model '%s'", name));
+        }
         Note n = getCol().newNote(model);
         for(int i = 0; i < fields.length; i++) {
             n.setField(i, fields[i]);
         }
-        if (getCol().addNote(n) != 1) {
+        if (getCol().addNote(n) == 0) {
             throw new IllegalStateException(String.format("Could not add note: {%s}", String.join(", ", fields)));
         }
         return n;
