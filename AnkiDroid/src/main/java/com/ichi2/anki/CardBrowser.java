@@ -1413,7 +1413,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             CardCache card = getCards().get(pos);
             card.load(true);
             // update Q & A etc
-            updateSearchItemQA(card, c);
+            updateSearchItemQA(card);
         }
 
         updateList();
@@ -1457,7 +1457,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    public static void updateSearchItemQA(CardCache item, Card c) {
+    public static void updateSearchItemQA(CardCache item) {
+        Card c = item.getCard();
         Context context = AnkiDroidApp.getInstance();
         // render question and answer
         Map<String, String> qa = c._getQA(true, true);

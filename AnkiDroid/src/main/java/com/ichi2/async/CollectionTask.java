@@ -1190,8 +1190,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             }
             CardBrowser.CardCache card = searchResult.get(i);
             card.load(false);
-            Card c = card.getCard();
-            CardBrowser.updateSearchItemQA(searchResult.get(i), c);
+            CardBrowser.updateSearchItemQA(searchResult.get(i));
         }
         // Finish off the task
         if (isCancelled()) {
@@ -1238,9 +1237,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 continue;
             }
             // Extract card item
-            Card c;
             try {
-                c = card.getCard();
+                // Ensure that card still exists.
+                card.getCard();
             } catch (WrongId e) {
                 //#5891 - card can be inconsistent between the deck browser screen and the collection.
                 //Realistically, we can skip any exception as it's a rendering task which should not kill the
@@ -1251,7 +1250,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 continue;
             }
             // Update item
-            CardBrowser.updateSearchItemQA(card, c);
+            CardBrowser.updateSearchItemQA(card);
             card.load(false);
             float progress = (float) i / n * 100;
             publishProgress(new TaskData((int) progress));
