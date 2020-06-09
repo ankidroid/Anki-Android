@@ -70,6 +70,9 @@ public class OverviewStatsBuilder {
 
         public long totalCards;
         public long totalNotes;
+        public double lowestEase;
+        public double averageEase;
+        public double highestEase;
 
         public static class AnswerButtonsOverview {
             public int total;
@@ -204,6 +207,13 @@ public class OverviewStatsBuilder {
         stringBuilder.append(res.getString(R.string.stats_overview_card_types_total_cards, oStats.totalCards));
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_card_types_total_notes, oStats.totalNotes));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_card_types_lowest_ease, oStats.lowestEase));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_card_types_average_ease, oStats.averageEase));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_card_types_highest_ease, oStats.highestEase));
+
     }
 
     private void appendTodaysStats(StringBuilder stringBuilder) {
