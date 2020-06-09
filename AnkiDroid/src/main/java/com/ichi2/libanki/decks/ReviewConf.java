@@ -25,4 +25,8 @@ public class ReviewConf extends ReviewingConf {
     public void putUseGeneralTimeoutSettings(Object o) {
         put("useGeneralTimeoutSettings", o);
     }
+
+    public void putTimeoutSeconds(String name, Object o) {
+        put("timeout" + name + "Seconds", o);
+    }
 }

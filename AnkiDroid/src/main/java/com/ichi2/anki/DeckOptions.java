@@ -259,10 +259,10 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getRev().putTimeoutAnswer(value);
                                 break;
                             case "revTimeoutAnswerSeconds":
-                                mOptions.getRev().put("timeoutAnswerSeconds", value);
+                                mOptions.getRev().putTimeoutSeconds("Answer", value);
                                 break;
                             case "revTimeoutQuestionSeconds":
-                                mOptions.getRev().put("timeoutQuestionSeconds", value);
+                                mOptions.getRev().putTimeoutSeconds("Question", value);
                                 break;
                             case "lapMinIvl":
                                 mOptions.getLapse().putMinInt(value);
