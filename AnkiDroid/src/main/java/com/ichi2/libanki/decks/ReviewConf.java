@@ -9,4 +9,8 @@ public class ReviewConf extends ReviewingConf {
     public ReviewConf(JSONObject conf) {
         super(conf);
     }
+
+    public void putEase4(float f) {
+        put("ease4", f);
+    }
 }

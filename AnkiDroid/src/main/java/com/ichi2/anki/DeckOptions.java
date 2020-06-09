@@ -241,7 +241,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getRev().put("perDay", value);
                                 break;
                             case "easyBonus":
-                                mOptions.getRev().put("ease4", (Integer) value / 100.0f);
+                                mOptions.getRev().putEase4((Integer) value / 100.0f);
                                 break;
                             case "revIvlFct":
                                 mOptions.getRev().put("ivlFct", (Integer) value / 100.0f);
