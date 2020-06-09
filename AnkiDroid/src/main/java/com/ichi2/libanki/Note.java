@@ -80,7 +80,7 @@ public class Note implements Cloneable {
             Arrays.fill(mFields, "");
             mFlags = 0;
             mData = "";
-            mFMap = mCol.getModels().fieldMap(mModel);
+            mFMap = Models.fieldMap(mModel);
             mScm = mCol.getScm();
         }
     }
@@ -102,7 +102,7 @@ public class Note implements Cloneable {
             mFlags = cursor.getInt(6);
             mData = cursor.getString(7);
             mModel = mCol.getModels().get(mMid);
-            mFMap = mCol.getModels().fieldMap(mModel);
+            mFMap = Models.fieldMap(mModel);
             mScm = mCol.getScm();
         }
     }

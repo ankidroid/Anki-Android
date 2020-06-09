@@ -16,6 +16,7 @@
  ****************************************************************************************/
 package com.ichi2.anki;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import android.text.InputType;
@@ -28,6 +29,7 @@ import android.widget.ListView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
@@ -40,8 +42,14 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class ModelFieldEditor extends AnkiActivity {
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
+import timber.log.Timber;
+
+public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDialog.LocaleSelectionDialogHandler {
 
     private final static int NORMAL_EXIT = 100001;
 
@@ -537,6 +545,54 @@ public class ModelFieldEditor extends AnkiActivity {
             case ModelEditorContextMenu.FIELD_TOGGLE_STICKY:
                 toggleStickyField();
                 break;
+            default: {
+                //need this as we can't switch on a @RequiresApi
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && selection == ModelEditorContextMenu.FIELD_ADD_LANGUAGE_HINT) {
+                    Timber.i("displaying locale hint dialog");
+                    localeHintDialog();
+                    break;
+                }
+            }
         }
     };
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void localeHintDialog() {
+        //We don't currently show the current value, but we may want to in the future
+        DialogFragment dialogFragment = LocaleSelectionDialog.newInstance(this);
+        showDialogFragment(dialogFragment);
+    }
+
+
+    /*
+     * Sets the Locale Hint of the field to the provided value.
+     * This allows some keyboard (GBoard) to change language
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void addFieldLocaleHint(@NonNull Locale selectedLocale) {
+        String input = selectedLocale.toLanguageTag();
+        JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
+        field.put("ad-hint-locale", input);
+        mCol.getModels().save();
+        Timber.i("Set field locale to %s", selectedLocale);
+        String format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.getDisplayName());
+        UIUtils.showSimpleSnackbar(this, format, true);
+    }
+
+
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void onSelectedLocale(@NonNull Locale selectedLocale) {
+        addFieldLocaleHint(selectedLocale);
+        dismissAllDialogFragments();
+    }
+
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void onLocaleSelectionCancelled() {
+        dismissAllDialogFragments();
+    }
 }

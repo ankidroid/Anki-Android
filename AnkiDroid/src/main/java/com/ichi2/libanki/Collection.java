@@ -1025,7 +1025,7 @@ public class Collection {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
         Map<String, String> fields = new HashMap<>();
-        Map<String, Pair<Integer, JSONObject>> fmap = getModels().fieldMap(model);
+        Map<String, Pair<Integer, JSONObject>> fmap = Models.fieldMap(model);
         for (String name : fmap.keySet()) {
             fields.put(name, flist[fmap.get(name).first]);
         }

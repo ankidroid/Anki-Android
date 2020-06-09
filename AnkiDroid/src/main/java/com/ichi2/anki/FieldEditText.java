@@ -4,12 +4,19 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.os.LocaleList;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
 import androidx.appcompat.widget.AppCompatEditText;
 import timber.log.Timber;
 
@@ -89,7 +96,7 @@ public class FieldEditText extends AppCompatEditText {
     }
 
 
-    public void init(int ord, String name, String content) {
+    public void init(int ord, String name, String content, @Nullable Locale hintLocale) {
         mOrd = ord;
         mName = name;
 
@@ -100,11 +107,22 @@ public class FieldEditText extends AppCompatEditText {
         }
         setText(content);
         setContentDescription(name);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && hintLocale != null) {
+            setHintLocale(hintLocale);
+        }
         setMinimumWidth(400);
         mOrigBackground = getBackground();
         // Fixes bug where new instances of this object have wrong colors, probably
         // from some reuse mechanic in Android.
         setDefaultStyle();
+    }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void setHintLocale(@NonNull Locale locale) {
+        Timber.d("Setting hint locale of '%s' to '%s'", mName, locale);
+        setImeHintLocales(new LocaleList(locale));
     }
 
     /**
