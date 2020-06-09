@@ -843,8 +843,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         getDelegate().setHandleNativeActionModesEnabled(true);
 
-        isInFullscreen = !getSupportActionBar().isShowing();
-
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
     }
@@ -3122,6 +3120,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // Show options menu from WebView
             if (url.startsWith("signal:anki_show_options_menu")) {
+                isInFullscreen = !getSupportActionBar().isShowing();
                 if (isInFullscreen) {
                     openOptionsMenu();
                 } else {
@@ -3132,6 +3131,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
             // Show Navigation Drawer from WebView
             if (url.startsWith("signal:anki_show_navigation_drawer")) {
+                isInFullscreen = !getSupportActionBar().isShowing();
                 if (isInFullscreen) {
                     AbstractFlashcardViewer.this.onNavigationPressed();
                 } else {
