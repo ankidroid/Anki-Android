@@ -17,4 +17,8 @@ public class ReviewConf extends ReviewingConf {
     public void putIvlFact(float ivlFct) {
         put("ivlFct", ivlFct);
     }
+
+    public void putTimeoutAnswer(Object o) {
+        put("timeoutAnswer", o);
+    }
 }

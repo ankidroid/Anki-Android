@@ -256,7 +256,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getRev().put("useGeneralTimeoutSettings", value);
                                 break;
                             case "revTimeoutAnswer":
-                                mOptions.getRev().put("timeoutAnswer", value);
+                                mOptions.getRev().putTimeoutAnswer(value);
                                 break;
                             case "revTimeoutAnswerSeconds":
                                 mOptions.getRev().put("timeoutAnswerSeconds", value);
