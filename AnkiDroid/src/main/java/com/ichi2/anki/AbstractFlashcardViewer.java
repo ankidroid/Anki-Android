@@ -55,7 +55,6 @@ import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -133,7 +132,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.drawerlayout.widget.DrawerLayout;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
