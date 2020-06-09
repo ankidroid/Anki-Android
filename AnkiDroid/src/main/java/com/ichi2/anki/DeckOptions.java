@@ -268,7 +268,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getLapse().put("minInt", value);
                                 break;
                             case "lapLeechThres":
-                                mOptions.getLapse().put("leechFails", value);
+                                mOptions.getLapse().putLeechFails(value);
                                 break;
                             case "lapLeechAct":
                                 mOptions.getLapse().putLeechAction(Integer.parseInt((String) value));
