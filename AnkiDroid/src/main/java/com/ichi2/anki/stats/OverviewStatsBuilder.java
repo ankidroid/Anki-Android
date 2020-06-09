@@ -151,11 +151,15 @@ public class OverviewStatsBuilder {
 
         stringBuilder.append("<br>");
 
+        //TODO: AnkiDroid uses 30 days on 2020-06-09, whereas Anki Desktop used 31
+
         //REVIEW TIME
         stringBuilder.append(_subtitle(res.getString(R.string.stats_review_time).toUpperCase()));
         stringBuilder.append(daysStudied);
         stringBuilder.append("<br>");
-        // TODO: Total: x minutes
+        //TODO: Anki Desktop allows changing to hours / days here.
+        stringBuilder.append(res.getString(R.string.stats_overview_total_time_in_period, Math.round(oStats.totalTime)));
+        stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_time_per_day_studydays, oStats.timePerDayOnStudyDays));
         if (!allDaysStudied) {
             stringBuilder.append("<br>");
