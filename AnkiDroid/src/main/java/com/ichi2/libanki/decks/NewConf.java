@@ -32,4 +32,8 @@ public class NewConf extends ReviewingConf {
     public void putOrder(int n) {
         put("order", n);
     }
+
+    public void putInts(JSONArray ar) {
+        put("ints", ar);
+    }
 }
