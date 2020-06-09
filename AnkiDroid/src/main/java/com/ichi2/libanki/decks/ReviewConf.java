@@ -21,4 +21,8 @@ public class ReviewConf extends ReviewingConf {
     public void putTimeoutAnswer(Object o) {
         put("timeoutAnswer", o);
     }
+
+    public void putUseGeneralTimeoutSettings(Object o) {
+        put("useGeneralTimeoutSettings", o);
+    }
 }
