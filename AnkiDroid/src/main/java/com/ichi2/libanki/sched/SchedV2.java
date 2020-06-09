@@ -1766,13 +1766,14 @@ public class SchedV2 extends AbstractSched {
         }
         // dynamic deck; override some attributes, use original deck for others
         DConf oconf = mCol.getDecks().confForDid(card.getODid());
+        JSONArray delays = oconf.getLapse().getDelays();
         LapseConf dict = new LapseConf();
         // original deck
         dict.put("minInt", oconf.getLapse().getInt("minInt"));
         dict.put("leechFails", oconf.getLapse().getInt("leechFails"));
         dict.put("leechAction", oconf.getLapse().getInt("leechAction"));
         dict.put("mult", oconf.getLapse().getDouble("mult"));
-        dict.put("delays", oconf.getLapse().getDelays());
+        dict.put("delays", delays);
         // overrides
         dict.put("resched", conf.getBoolean("resched"));
         return dict;
