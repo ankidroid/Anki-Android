@@ -22,12 +22,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
@@ -38,9 +41,11 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
@@ -53,6 +58,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
 
@@ -70,6 +76,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
+    private static final int REQUEST_AUDIO_PERMISSION = 0;
 
     // Deck picker reset scheduler before opening the reviewer. So
     // first reset is useless.
@@ -280,6 +287,17 @@ public class Reviewer extends AbstractFlashcardViewer {
                 playSounds(true);
                 break;
 
+            case R.id.action_toggle_mic_tool_bar:
+                Timber.i("Reviewer:: Record mic");
+                // Check permission to record and request if not granted
+                if (!Permissions.canRecordAudio(this)) {
+                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.RECORD_AUDIO},
+                            REQUEST_AUDIO_PERMISSION);
+                } else {
+                    toggleMicToolBar();
+                }
+                break;
+
             case R.id.action_edit:
                 Timber.i("Reviewer:: Edit note button pressed");
                 return editCard();
@@ -374,6 +392,43 @@ public class Reviewer extends AbstractFlashcardViewer {
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+
+    private void toggleMicToolBar() {
+        if (mMicToolBar != null) {
+            // It exists swap visibility status
+            if (mMicToolBar.getVisibility() != View.VISIBLE) {
+                mMicToolBar.setVisibility(View.VISIBLE);
+            } else {
+                mMicToolBar.setVisibility(View.GONE);
+            }
+        } else {
+            // Record mic tool bar does not exist yet
+            mTempAudioPath = AudioView.generateTempAudioFile(this);
+            if (mTempAudioPath == null) {
+                return;
+            }
+            mMicToolBar = AudioView.createRecorderInstance(this, R.drawable.av_play, R.drawable.av_pause,
+                        R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, mTempAudioPath);
+            if (mMicToolBar == null) {
+                mTempAudioPath = null;
+                return;
+            }
+            FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            mMicToolBar.setLayoutParams(lp2);
+            LinearLayout micToolBarLayer = findViewById(R.id.mic_tool_bar_layer);
+            micToolBarLayer.addView(mMicToolBar);
+        }
+    }
+
+    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if ( (requestCode == REQUEST_AUDIO_PERMISSION) &&
+                (permissions.length >= 1) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            // Get get audio record permission, so we can create the record tool bar
+            toggleMicToolBar();
+        }
     }
 
     private void showRescheduleCardDialog() {

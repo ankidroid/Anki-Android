@@ -86,6 +86,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
@@ -319,6 +320,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private Sound mSoundPlayer = new Sound();
 
     private long mUseTimerDynamicMS;
+
+    /** File of the temporary mic record **/
+    protected AudioView mMicToolBar;
+    protected String mTempAudioPath;
 
     /**
      * Last card that the WebView Renderer crashed on.
@@ -1452,13 +1457,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         switch (answerButtonsPosition) {
             case "top":
                 cardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout);
-                answerAreaParams.addRule(RelativeLayout.BELOW, R.id.top_bar);
+                answerAreaParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer);
                 answerArea.removeView(mAnswerField);
                 answerArea.addView(mAnswerField, 1);
                 break;
             case "bottom":
                 cardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout);
-                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.top_bar);
+                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer);
                 answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 break;
             default:
@@ -2577,6 +2582,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void closeReviewer(int result, boolean saveDeck) {
+        // Stop the mic recording if still pending
+        if (mMicToolBar != null) {
+            mMicToolBar.notifyStopRecord();
+        }
+        // Remove the temporary audio file
+        if (mTempAudioPath != null) {
+            File tempAudioPathToDelete = new File(mTempAudioPath);
+            if (tempAudioPathToDelete.exists()) {
+                tempAudioPathToDelete.delete();
+            }
+        }
+
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
         mTimeoutHandler.removeCallbacks(mShowQuestionTask);
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
