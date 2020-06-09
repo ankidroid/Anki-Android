@@ -77,6 +77,10 @@
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; days</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hours</string>
 
+    <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+
     <string name="deck_summary_all_decks">All decks</string>
     <string name="stats_select_time_scale">Select timescale</string>
     <string-array name="due_x_axis_title">
