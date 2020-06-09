@@ -3131,8 +3131,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // Show Navigation Drawer from WebView
             if (url.startsWith("signal:anki_show_navigation_drawer")) {
                 if (!getSupportActionBar().isShowing()) {
-                    DrawerLayout mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-                    mDrawerLayout.openDrawer(Gravity.LEFT);
+                    AbstractFlashcardViewer.this.onNavigationPressed();
                 } else {
                     UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen, "ankiShowNavDrawer"), true);
                 }
