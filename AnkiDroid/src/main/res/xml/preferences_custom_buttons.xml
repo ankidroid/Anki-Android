@@ -82,7 +82,7 @@ MENU_DISABLED = 3
             android:key="customButtonMarkCard"
             android:title="@string/menu_mark_note" />
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="customButtonToggleMicToolBar"
