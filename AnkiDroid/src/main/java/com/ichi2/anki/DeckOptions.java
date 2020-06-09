@@ -201,7 +201,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.setMaxTaken(value);
                                 break;
                             case "newFactor":
-                                mOptions.getNew().put("initialFactor", (Integer) value * 10);
+                                mOptions.getNew().putInitialFactor((Integer) value * 10);
                                 break;
                             case "newOrder": {
                                 int newValue = Integer.parseInt((String) value);

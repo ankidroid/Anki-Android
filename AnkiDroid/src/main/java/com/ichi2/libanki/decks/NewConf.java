@@ -25,6 +25,10 @@ public class NewConf extends ReviewingConf {
         put("perDay", reportLimit);
     }
 
+    public void putInitialFactor(int initFact) {
+        put("initialFactor", initFact);
+    }
+
     public void putOrder(int n) {
         put("order", n);
     }
