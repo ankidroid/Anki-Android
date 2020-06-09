@@ -13,4 +13,8 @@ public class ReviewConf extends ReviewingConf {
     public void putEase4(float f) {
         put("ease4", f);
     }
+
+    public void putIvlFact(float ivlFct) {
+        put("ivlFct", ivlFct);
+    }
 }

@@ -244,13 +244,13 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getRev().putEase4((Integer) value / 100.0f);
                                 break;
                             case "revIvlFct":
-                                mOptions.getRev().put("ivlFct", (Integer) value / 100.0f);
+                                mOptions.getRev().putIvlFact((Integer) value / 100.0f);
                                 break;
                             case "revMaxIvl":
                                 mOptions.getRev().put("maxIvl", value);
                                 break;
                             case "revBury":
-                                mOptions.getRev().put("bury", value);
+                                mOptions.getRev().putBury(value);
                                 break;
                             case "revUseGeneralTimeoutSettings":
                                 mOptions.getRev().put("useGeneralTimeoutSettings", value);
