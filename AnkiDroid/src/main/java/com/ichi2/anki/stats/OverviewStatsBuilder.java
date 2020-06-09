@@ -48,7 +48,7 @@ public class OverviewStatsBuilder {
     private final Stats.AxisType mType;
 
 
-    public class OverviewStats {
+    public static class OverviewStats {
         public int forecastTotalReviews;
         public double forecastAverageReviews;
         public int forecastDueTomorrow;
@@ -64,6 +64,21 @@ public class OverviewStatsBuilder {
         public int totalNewCards;
         public double averageInterval;
         public double longestInterval;
+        public AnswerButtonsOverview newCardsOverview;
+        public AnswerButtonsOverview youngCardsOverview;
+        public AnswerButtonsOverview matureCardsOverview;
+
+        public static class AnswerButtonsOverview {
+            public int total;
+            public int correct;
+
+            public double getPercentage() {
+                if (correct == 0) {
+                    return 0;
+                }
+                return (double) correct / (double) total * 100.0;
+            }
+        }
     }
 
     public OverviewStatsBuilder(WebView chartView, Collection collectionData, long deckId, Stats.AxisType mStatType) {
@@ -165,6 +180,14 @@ public class OverviewStatsBuilder {
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_longest_interval));
         stringBuilder.append(Utils.roundedTimeSpan(mWebView.getContext(), (int) Math.round(oStats.longestInterval * Stats.SECONDS_PER_DAY)));
+
+        //ANSWER BUTTONS
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_answer_buttons).toUpperCase()));
+        stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_learn, oStats.newCardsOverview.getPercentage(), oStats.newCardsOverview.correct, oStats.newCardsOverview.total));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_young, oStats.youngCardsOverview.getPercentage(), oStats.youngCardsOverview.correct, oStats.youngCardsOverview.total));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_mature,  oStats.matureCardsOverview.getPercentage(), oStats.matureCardsOverview.correct, oStats.matureCardsOverview.total));
     }
 
     private void appendTodaysStats(StringBuilder stringBuilder) {
