@@ -1520,7 +1520,7 @@ public class NoteEditor extends AnkiActivity {
 
 
     private boolean updateField(FieldEditText field) {
-        String newValue = field.getText().toString().replace(FieldEditText.NEW_LINE, "<br>");
+        String newValue = field.getText().toString();
         if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {
             mEditorNote.values()[field.getOrd()] = newValue;
             return true;

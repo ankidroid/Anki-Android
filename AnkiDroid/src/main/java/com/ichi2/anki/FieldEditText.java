@@ -18,8 +18,6 @@ import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 
 public class FieldEditText extends AppCompatEditText {
 
-    public static final String NEW_LINE = System.getProperty("line.separator");
-
     private String mName;
     private int mOrd;
     private Drawable mOrigBackground;
@@ -90,8 +88,6 @@ public class FieldEditText extends AppCompatEditText {
 
         if (content == null) {
             content = "";
-        } else {
-            content = content.replaceAll("<br(\\s*\\/*)>", NEW_LINE);
         }
         setText(content);
         setContentDescription(name);
