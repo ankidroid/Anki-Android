@@ -569,13 +569,6 @@ public class NoteEditor extends AnkiActivity {
 
         setNote(mEditorNote);
 
-        // Set current note type and deck positions in spinners
-        int position;
-        position = mAllModelIds.indexOf(mEditorNote.model().getLong("id"));
-        // set selection without firing selectionChanged event
-        // nb: setOnItemSelectedListener needs to occur after this
-        mNoteTypeSpinner.setSelection(position, false);
-
         if (mAddNote) {
             mNoteTypeSpinner.setOnItemSelectedListener(new SetNoteTypeListener());
             setTitle(R.string.cardeditor_title_add_note);
@@ -1585,10 +1578,21 @@ public class NoteEditor extends AnkiActivity {
         if (mSelectedTags == null) {
             mSelectedTags = mEditorNote.getTags();
         }
+        // nb: setOnItemSelectedListener needs to occur after this
+        setNoteTypePosition();
         updateDeckPosition();
         updateTags();
         updateCards(mEditorNote.model());
         populateEditFields();
+    }
+
+
+    private void setNoteTypePosition() {
+        // Set current note type and deck positions in spinners
+        int position;
+        position = mAllModelIds.indexOf(mEditorNote.model().getLong("id"));
+        // set selection without firing selectionChanged event
+        mNoteTypeSpinner.setSelection(position, false);
     }
 
 
