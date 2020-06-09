@@ -321,6 +321,24 @@ public class Stats {
                 cur.close();
             }
         }
+
+        String factorQuery = "select\n" +
+                "min(factor) / 10.0,\n" +
+                "avg(factor) / 10.0,\n" +
+                "max(factor) / 10.0\n" +
+                "from cards where did in " + _limit() + " and queue = " + Consts.QUEUE_TYPE_REV;
+        try {
+            cur = mCol.getDb().getDatabase().query(factorQuery, null);
+            if (cur.moveToFirst()) {
+                oStats.lowestEase = cur.getLong(0);
+                oStats.averageEase = cur.getLong(1);
+                oStats.highestEase = cur.getLong(2);
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
     }
 
 
