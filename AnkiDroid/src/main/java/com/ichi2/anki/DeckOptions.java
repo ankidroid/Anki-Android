@@ -235,7 +235,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             }
                             case "newBury":
-                                mOptions.getNew().put("bury", value);
+                                mOptions.getNew().putBury(value);
                                 break;
                             case "revPerDay":
                                 mOptions.getRev().putPerDay(value);

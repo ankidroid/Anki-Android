@@ -62,7 +62,7 @@ public class FinderTest extends RobolectricTest {
 
 
     private void enableBurySiblings() {
-        getCol().getDecks().allConf().get(0).getNew().put("bury", true);
+        getCol().getDecks().allConf().get(0).getNew().putBury(true);
     }
 
 
