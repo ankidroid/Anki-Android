@@ -27,4 +27,8 @@ public class ReviewingConf extends ReadOnlyJSONObject {
     public void putDelays(JSONArray delays) {
         put("delays", delays);
     }
+
+    public void putPerDay(Object o) {
+        put("perDay", o);
+    }
 }
