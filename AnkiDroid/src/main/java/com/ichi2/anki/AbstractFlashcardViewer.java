@@ -3401,7 +3401,7 @@ see card.js for available functions
         }
 
         @JavascriptInterface
-        public int ankiGetCardReview() {
+        public int ankiGetCardReps() {
             return mCurrentCard.getReps();
         }
 
