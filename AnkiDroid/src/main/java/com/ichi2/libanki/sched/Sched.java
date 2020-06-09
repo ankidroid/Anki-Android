@@ -1202,17 +1202,7 @@ public class Sched extends SchedV2 {
         if (delays == null) {
             delays = oconf.getNew().getDelays();
         }
-        NewConf dict = new NewConf();
-        // original deck
-        dict.put("ints", oconf.getNew().getInts());
-        dict.put("initialFactor", oconf.getNew().getInt("initialFactor"));
-        dict.put("bury", oconf.getNew().optBoolean("bury", true));
-        // overrides
-        dict.put("delays", delays);
-        dict.put("separate", conf.getBoolean("separate"));
-        dict.put("order", Consts.NEW_CARDS_DUE);
-        dict.put("perDay", mReportLimit);
-        return dict;
+        return new NewConf(oconf, conf, mReportLimit, delays);
     }
 
 

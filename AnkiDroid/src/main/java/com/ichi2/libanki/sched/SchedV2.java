@@ -1754,17 +1754,7 @@ public class SchedV2 extends AbstractSched {
         // dynamic deck; override some attributes, use original deck for others
         DConf oconf = mCol.getDecks().confForDid(card.getODid());
         JSONArray delays = oconf.getNew().getDelays();
-        NewConf dict = new NewConf();
-        // original deck
-        dict.put("ints", oconf.getNew().getInts());
-        dict.put("initialFactor", oconf.getNew().getInt("initialFactor"));
-        dict.put("bury", oconf.getNew().optBoolean("bury", true));
-        dict.put("delays", delays);
-        // overrides
-        dict.put("separate", conf.getBoolean("separate"));
-        dict.put("order", Consts.NEW_CARDS_DUE);
-        dict.put("perDay", mReportLimit);
-        return dict;
+        return new NewConf(oconf, conf, mReportLimit, delays);
     }
 
 
