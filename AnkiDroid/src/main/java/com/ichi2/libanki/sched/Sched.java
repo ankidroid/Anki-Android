@@ -1215,20 +1215,8 @@ public class Sched extends SchedV2 {
         }
         // dynamic deck; override some attributes, use original deck for others
         DConf oconf = mCol.getDecks().confForDid(card.getODid());
-        JSONArray delays = conf.optDelays();
-        if (delays == null) {
-            delays = oconf.getLapse().getDelays();
-        }
-        LapseConf dict = new LapseConf();
-        // original deck
-        dict.put("minInt", oconf.getLapse().getInt("minInt"));
-        dict.put("leechFails", oconf.getLapse().getInt("leechFails"));
-        dict.put("leechAction", oconf.getLapse().getInt("leechAction"));
-        dict.put("mult", oconf.getLapse().getDouble("mult"));
-        // overrides
-        dict.put("delays", delays);
-        dict.put("resched", conf.getBoolean("resched"));
-        return dict;
+        JSONArray delays = oconf.getLapse().getDelays();
+        return new LapseConf(oconf, conf, delays);
     }
 
 
