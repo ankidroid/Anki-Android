@@ -308,6 +308,19 @@ public class Stats {
         oStats.newCardsOverview = toOverview(0, list);
         oStats.youngCardsOverview = toOverview(1, list);
         oStats.matureCardsOverview = toOverview(2, list);
+
+        String totalCountQuery = "select count(id), count(distinct nid) from cards where did in " + this._limit();
+        try {
+            cur = mCol.getDb().getDatabase().query(totalCountQuery, null);
+            if (cur.moveToFirst()) {
+                oStats.totalCards = cur.getLong(0);
+                oStats.totalNotes = cur.getLong(1);
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
     }
 
 

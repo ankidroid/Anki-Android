@@ -68,6 +68,9 @@ public class OverviewStatsBuilder {
         public AnswerButtonsOverview youngCardsOverview;
         public AnswerButtonsOverview matureCardsOverview;
 
+        public long totalCards;
+        public long totalNotes;
+
         public static class AnswerButtonsOverview {
             public int total;
             public int correct;
@@ -195,6 +198,12 @@ public class OverviewStatsBuilder {
         stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_young, oStats.youngCardsOverview.getPercentage(), oStats.youngCardsOverview.correct, oStats.youngCardsOverview.total));
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_mature,  oStats.matureCardsOverview.getPercentage(), oStats.matureCardsOverview.correct, oStats.matureCardsOverview.total));
+
+        //CARD TYPES
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_cards_types).toUpperCase()));
+        stringBuilder.append(res.getString(R.string.stats_overview_card_types_total_cards, oStats.totalCards));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_card_types_total_notes, oStats.totalNotes));
     }
 
     private void appendTodaysStats(StringBuilder stringBuilder) {
