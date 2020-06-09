@@ -51,7 +51,7 @@ public class SchedV2Test extends RobolectricTest {
         DConf homeDeckConf = getCol().getDecks().confForDid(homeDeckId);
         LapseConf lapse = homeDeckConf.getLapse();
 
-        lapse.put("minInt", 2);
+        lapse.putMinInt(2);
         lapse.putMult(0.7d);
         lapse.putDelays(new JSONArray("[20]"));
 

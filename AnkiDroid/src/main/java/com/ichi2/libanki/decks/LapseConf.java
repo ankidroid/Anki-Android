@@ -23,6 +23,10 @@ public class LapseConf extends ReviewingConf {
         put("resched", conf.getBoolean("resched"));
     }
 
+    public void putMinInt(Object o) {
+        put("minInt", o);
+    }
+
     public void putLeechFails(Object o) {
         put("leechFails", o);
     }

@@ -265,7 +265,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getRev().put("timeoutQuestionSeconds", value);
                                 break;
                             case "lapMinIvl":
-                                mOptions.getLapse().put("minInt", value);
+                                mOptions.getLapse().putMinInt(value);
                                 break;
                             case "lapLeechThres":
                                 mOptions.getLapse().putLeechFails(value);
