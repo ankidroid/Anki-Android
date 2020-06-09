@@ -165,7 +165,10 @@ public class OverviewStatsBuilder {
             stringBuilder.append("<br>");
             stringBuilder.append(res.getString(R.string.stats_overview_time_per_day_all, oStats.timePerDayOnAll));
         }
-        // TODO: Average answer time: x.xs (x.x cards/minute)
+        double cardsPerMinute = oStats.totalTime == 0 ? 0 : ((double)oStats.totalReviews) / oStats.totalTime;
+        double averageAnswerTime = oStats.totalReviews == 0 ? 0 : (oStats.totalTime * 60) / ((double)oStats.totalReviews);
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_average_answer_time, averageAnswerTime, cardsPerMinute));
 
         stringBuilder.append("<br>");
 
