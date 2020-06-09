@@ -32,7 +32,7 @@ public class ModelEditorContextMenu extends AnalyticsDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String[] entries = new String[5];
+        String[] entries = new String[getEntryCount()];
         entries[FIELD_REPOSITION] = getResources().getString(R.string.model_field_editor_reposition_menu);
         entries[SORT_FIELD] = getResources().getString(R.string.model_field_editor_sort_field);
         entries[FIELD_RENAME] = getResources().getString(R.string.model_field_editor_rename);
@@ -44,5 +44,10 @@ public class ModelEditorContextMenu extends AnalyticsDialogFragment {
                 .items(entries)
                 .itemsCallback(mContextMenuListener)
                 .build();
+    }
+
+
+    private int getEntryCount() {
+        return 5;
     }
 }
