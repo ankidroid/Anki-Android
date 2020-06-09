@@ -65,7 +65,7 @@
         android:id="@+id/action_toggle_mic_tool_bar"
         android:title="@string/toggle_mic_tool_bar"
         android:icon="@drawable/ic_action_mic"
-        ankidroid:showAsAction="ifRoom"/>
+        ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_bury"
         android:title="@string/menu_bury"
