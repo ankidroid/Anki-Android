@@ -187,6 +187,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // ETA
     private int eta;
 
+    private boolean isInFullscreen;
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -834,6 +836,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         getDelegate().setHandleNativeActionModesEnabled(true);
+
+        isInFullscreen = !getSupportActionBar().isShowing();
 
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
@@ -3084,17 +3088,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // Show options menu from WebView
             if (url.startsWith("signal:anki_show_options_menu")) {
-                if (!getSupportActionBar().isShowing()) {
+                if (isInFullscreen) {
                     openOptionsMenu();
                 } else {
-                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen,"ankiShowOptionsMenu"), true);
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen, "ankiShowOptionsMenu"), true);
                 }
                 return true;
             }
 
             // Show Navigation Drawer from WebView
             if (url.startsWith("signal:anki_show_navigation_drawer")) {
-                if (!getSupportActionBar().isShowing()) {
+                if (isInFullscreen) {
                     AbstractFlashcardViewer.this.onNavigationPressed();
                 } else {
                     UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen, "ankiShowNavDrawer"), true);
