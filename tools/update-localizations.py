@@ -200,6 +200,12 @@ for language in languages:
 
     if language == 'yu':
         androidLanguage = 'yue'
+    if language == 'he':
+        androidLanguage = 'heb'
+    if language == 'id':
+        androidLanguage = 'ind'
+    if language == 'tl':
+        androidLanguage = 'tgl'
 
     print "\nCopying language files from " + language + " to " + androidLanguage
     valuesDirectory = "AnkiDroid/src/main/res/values-" + androidLanguage + "/"
