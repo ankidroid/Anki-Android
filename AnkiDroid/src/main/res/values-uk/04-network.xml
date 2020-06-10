@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Ви поза мережею</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">Всеодно спробувати</string>
     <string name="sync_error">Помилка синхронізації</string>
     <string name="vague_error">Помилка</string>
     <string name="retry">Повторити спробу</string>

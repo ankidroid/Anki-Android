@@ -145,7 +145,7 @@
     <string name="rebuild_cram_deck">Reconstruindo baralho de estudo intensivo&#8230;</string>
     <string name="rebuild_cram_label">Reconstruir</string>
     <string name="empty_cram_label">Esvaziar</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">Criar sub-baralho</string>
     <string name="empty_cram_deck">Esvaziando baralho de estudo intensivo&#8230;</string>
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
     <string name="custom_study_deck_exists">Por favor renomeie o baralho de estudo personalizado existente primeiro</string>
@@ -175,7 +175,7 @@
     <string name="card_template_editor_back">Modelo de trás</string>
     <string name="card_template_editor_styling">Estilo</string>
     <string name="card_template_editor_menu_delete">Excluir</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Aparência do Navegador de Cartões</string>
     <string name="card_template_editor_cant_delete">Ao menos um tipo de cartão é necessário.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Excluir o tipo de cartão %2$s e seu %1$d cartão?</item>
@@ -185,10 +185,10 @@
     <string name="card_template_editor_would_delete_note">Excluir este tipo de cartão resultaria na remoção de uma ou mais notas. Por favor, crie primeiro um novo tipo de cartão.</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Aparência do navegador</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever para o banco de dados do AnkiDroid</string>
     <string name="read_write_permission_description">acessar as notas, cartas, modelos e baralhos existentes, bem como criar novos</string>
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_label">Navegador de Baralhos</string>
+    <string name="card_browser_context_menu">Navegador de Baralhos</string>
 </resources>

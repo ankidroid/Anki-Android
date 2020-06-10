@@ -185,7 +185,7 @@
     <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
     <string name="template_for_current_card_deleted">Il tipo di carta per la carta corrente è stato eliminato.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Aspetto del browser</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
     <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>

@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Вы не в сети</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">Всё равно попробовать</string>
     <string name="sync_error">Ошибка синхронизации</string>
     <string name="vague_error">Ошибка</string>
     <string name="retry">Повторить</string>

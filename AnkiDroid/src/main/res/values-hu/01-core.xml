@@ -159,7 +159,7 @@
     <string name="studyoptions_congrats_custom">Ahhoz, hogy a szokásostól eltérő ütemben tanulhass, kattints lent, az \"Egyéni tanulás\" gombra.</string>
     <string name="studyoptions_no_cards_due">Jelenleg nincs esedékes kártya</string>
     <string name="sd_card_not_mounted">Nincs elérhető tárolóhely</string>
-    <string name="empty_cloze_warning">Szerkessze ezt a megjegyzést, és adjon hozzá néhány törlést.</string>
+    <string name="empty_cloze_warning">Szerkessze ezt a megjegyzést, és adjon hozzá néhány törlést. (%1$s)</string>
     <string name="button_sync">Szinkronizálás</string>
     <string name="cancel_sync_confirm">Tényleg megszakítod a szinkronizálást?</string>
     <string name="continue_sync">Szinkronizálás folytatása</string>
