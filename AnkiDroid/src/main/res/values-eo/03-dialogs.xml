@@ -90,7 +90,7 @@
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Elektu kartaron per dosier‑administrilo aŭ malfermu la paĝon about:downloads por malfermi ĝin</string>
     <string name="answering_error_title">Eraro pri datumbazo</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Fiaskis skribi al la kolekto. La datumbazo povas esti difektita aŭ eble mankas spaco en la konservejo.\n\nSe tio ĉi okazos pli ofte, provu kontroli la datumbazon, ripari la kolekton aŭ restarigi ĝin el sekurkopio. Frapetu “agordojn” por fari tion.\nAŭ tio ĉi povas esti eraro en AnkiDroid, do bonvolu raporti ĝin por ke ni povu ĝin ripari.</string>
     <string name="answering_error_report">Raporti eraron</string>
     <string name="repair_deck_dialog">Ĉu vi certe volas ripari la datumbazon?\n\nAntaŭ komenci, kopio estos kreita en subdosierujo “%s”.</string>
     <string name="intent_add_saved_information">Konservita datumo</string>

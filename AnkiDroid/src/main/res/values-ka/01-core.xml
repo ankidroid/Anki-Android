@@ -60,12 +60,8 @@
         <item quantity="other">%1$d cards due (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d წუთი დარჩა
-
-%d წუთები დარჩა</item>
-        <item quantity="other">%d წუთი დარჩა
-
-%d წუთები დარჩა</item>
+        <item quantity="one">%d წუთი დარჩა</item>
+        <item quantity="other">%d წუთები დარჩა</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="one">%d hour %d left</item>

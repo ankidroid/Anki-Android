@@ -20,19 +20,19 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
-    <string name="text_field_name">Text</string>
+    <string name="front_field_name">Voorzijde</string>
+    <string name="back_field_name">Achterzijde</string>
+    <string name="text_field_name">Tekst</string>
     <string name="extra_field_name">Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
+    <string name="field_to_ask_front_name">Omgekeerde toevoegen</string>
     <!--Card type-->
-    <string name="card_one_name">Card 1</string>
-    <string name="card_two_name">Card 2</string>
+    <string name="card_one_name">Kaart 1</string>
+    <string name="card_two_name">Kaart 2</string>
     <string name="card_cloze_name">Cloze</string>
     <!--Note type-->
     <string name="basic_model_name">Basic</string>
     <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_typing_model_name">Basis (het antwoord intypen)</string>
+    <string name="forward_reverse_model_name">Basic (en omgekeerde kaart)</string>
+    <string name="forward_optional_reverse_model_name">Basic (optionele omgekeerde kaart)</string>
 </resources>
