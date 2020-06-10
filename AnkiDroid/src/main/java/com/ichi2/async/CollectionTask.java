@@ -1114,6 +1114,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             }
             Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] { colname, "media" }, null);
         } catch (IOException e) {
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - unzip");
             return new TaskData(-2, null, false);
         }
         String colFile = new File(dir, colname).getAbsolutePath();
@@ -1135,6 +1136,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             } catch (Exception e2) {
                 // do nothing
             }
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
             return new TaskData(-2, null, false);
         } finally {
             if (tmpCol != null) {
