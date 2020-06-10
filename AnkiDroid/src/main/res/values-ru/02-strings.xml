@@ -280,6 +280,6 @@
     <string name="background_image_title">Фон</string>
     <string name="choose_an_image">Выберите изображение</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default">Сбросить настройки</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Пусто</string>
 </resources>

@@ -90,7 +90,7 @@
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Wählen Sie den Stapel in Ihrem Dateimanager aus oder besuchen Sie zum Importieren die Seite about:downloads</string>
     <string name="answering_error_title">Datenbankfehler</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Es konnte nicht in die Sammlung geschrieben werden. Dies kann an einer beschädigten Datenbank oder an unzureichendem Speicherplatz liegen.\n\nFalls dies häufiger vorkommt, versuchen Sie bitte, die Datenbank zu überprüfen, die Sammlung zu reparieren oder sie von einer Sicherung wiederherzustellen. Tippen Sie hierfür auf »Optionen«.\n\nEs könnte aber auch ein Fehler in AnkiDroid vorliegen. Damit wird dies überprüfen können, bitten wir Sie, den Fehler zu melden.</string>
     <string name="answering_error_report">Fehler melden</string>
     <string name="repair_deck_dialog">Möchten Sie wirklich versuchen, die Datenbank zu reparieren?\n\nBevor der Versuch startet, wird eine Kopie im Unterordner »%s« angelegt.</string>
     <string name="intent_add_saved_information">Gespeicherte Daten</string>

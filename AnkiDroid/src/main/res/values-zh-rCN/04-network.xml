@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">您处于脱机状态</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">仍旧尝试</string>
     <string name="sync_error">同步出错</string>
     <string name="vague_error">错误</string>
     <string name="retry">重试</string>

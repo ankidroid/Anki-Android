@@ -111,9 +111,9 @@
     <string name="menu_bury">Enterrer</string>
     <string name="menu_suspend">Suspendre</string>
     <string name="menu_delete_note">Supprimer la note</string>
-    <string name="menu_flag">Marquer la carte</string>
+    <string name="menu_flag">Marquer</string>
     <string name="menu_flag_card">Marquer la carte</string>
-    <string name="menu_flag_card_zero">Aucun marqueur de carte</string>
+    <string name="menu_flag_card_zero">Aucun marqueur</string>
     <string name="menu_flag_card_one">Marqueur rouge</string>
     <string name="menu_flag_card_two">Marqueur orange</string>
     <string name="menu_flag_card_three">Marqueur vert</string>
