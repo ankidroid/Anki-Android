@@ -233,6 +233,10 @@ If you have checked that you have correctly done a media sync, and that the medi
 ### Which file manager should I use?
 Most devices using Android 6 and above come with a built-in file explorer (something like: `settings -> storage and memory -> Explore`). If your device does not have a built-in explorer, you can use any file manager that you like, for example see [here](https://www.tomsguide.com/us/pictures-story/518-best-android-file-managers.html) for a list of various recommended file explorers. We personally recommend using a free and open source (FOSS) file manager like [Simple Explorer](http://forum.xda-developers.com/showthread.php?t=2330864).
 
+### How do I fix `net::err_CLEARTEXT_NOT_PERMITTED`?
+
+AnkiDroid no longer supports `http` content, change the URL in the note/template to `https`.
+
 ### But still AnkiDroid does not play my media!
 
 The Android platform has built-in support for the following image formats:
