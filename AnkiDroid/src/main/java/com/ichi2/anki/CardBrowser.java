@@ -125,7 +125,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public static final String EDITED = "edited";
     public static final String INTERVAL = "interval";
     public static final String LAPSES = "lapses";
-    public static final String NOTE = "note";
+    public static final String NOTE_TYPE = "note";
     public static final String REVIEWS = "reviews";
 
     private List<Map<String, String>> mCards;
@@ -180,7 +180,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static final String[] COLUMN2_KEYS = {ANSWER,
         CARD,
         DECK,
-        NOTE,
+        NOTE_TYPE,
         QUESTION,
         TAGS,
         LAPSES,
@@ -1523,7 +1523,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 break;
         }
         item.put(LAPSES, Integer.toString(c.getLapses()));
-        item.put(NOTE, c.model().optString("name"));
+        item.put(NOTE_TYPE, c.model().optString("name"));
         item.put(QUESTION, formatQA(q, context));
         item.put(REVIEWS, Integer.toString(c.getReps()));
     }
