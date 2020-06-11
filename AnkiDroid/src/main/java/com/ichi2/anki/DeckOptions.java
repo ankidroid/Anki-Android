@@ -135,7 +135,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("revTimeoutQuestionSeconds", Integer.toString(revOptions.optInt("timeoutQuestionSeconds", 60)));
 
                 // lapse
-                JSONObject lapOptions = mOptions.getJSONObject("lapse");
+                JSONObject lapOptions = mOptions.getLapse();
                 mValues.put("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")));
                 mValues.put("lapNewIvl", Integer.toString((int) (lapOptions.getDouble("mult") * 100)));
                 mValues.put("lapMinIvl", lapOptions.getString("minInt"));
@@ -261,16 +261,16 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getRev().put("timeoutQuestionSeconds", value);
                                 break;
                             case "lapMinIvl":
-                                mOptions.getJSONObject("lapse").put("minInt", value);
+                                mOptions.getLapse().put("minInt", value);
                                 break;
                             case "lapLeechThres":
-                                mOptions.getJSONObject("lapse").put("leechFails", value);
+                                mOptions.getLapse().put("leechFails", value);
                                 break;
                             case "lapLeechAct":
-                                mOptions.getJSONObject("lapse").put("leechAction", Integer.parseInt((String) value));
+                                mOptions.getLapse().put("leechAction", Integer.parseInt((String) value));
                                 break;
                             case "lapNewIvl":
-                                mOptions.getJSONObject("lapse").put("mult", (Integer) value / 100.0f);
+                                mOptions.getLapse().put("mult", (Integer) value / 100.0f);
                                 break;
                             case "showAnswerTimer":
                                 mOptions.put("timer", (Boolean) value ? 1 : 0);
@@ -289,7 +289,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getNew().put("delays", StepsPreference.convertToJSON((String) value));
                                 break;
                             case "lapSteps":
-                                mOptions.getJSONObject("lapse")
+                                mOptions.getLapse()
                                         .put("delays", StepsPreference.convertToJSON((String) value));
                                 break;
                             case "deckConf": {

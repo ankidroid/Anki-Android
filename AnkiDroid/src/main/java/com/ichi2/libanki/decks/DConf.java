@@ -51,4 +51,8 @@ public class DConf extends ReadOnlyJSONObject{
     public JSONObject getRev() {
         return getJSONObject("rev");
     }
+
+    public JSONObject getLapse() {
+        return getJSONObject("lapse");
+    }
 }

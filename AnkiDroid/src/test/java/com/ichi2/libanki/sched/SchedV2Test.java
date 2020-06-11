@@ -48,7 +48,7 @@ public class SchedV2Test extends RobolectricTest {
         long homeDeckId = addDeck("Poorretention");
 
         DConf homeDeckConf = getCol().getDecks().confForDid(homeDeckId);
-        JSONObject lapse = homeDeckConf.getJSONObject("lapse");
+        JSONObject lapse = homeDeckConf.getLapse();
 
         lapse.put("minInt", 2);
         lapse.put("mult", 0.7d);
