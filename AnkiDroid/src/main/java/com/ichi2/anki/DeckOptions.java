@@ -122,7 +122,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("newPerDay", newOptions.getString("perDay"));
                 mValues.put("newBury", Boolean.toString(newOptions.optBoolean("bury", true)));
                 // rev
-                JSONObject revOptions = mOptions.getJSONObject("rev");
+                JSONObject revOptions = mOptions.getRev();
                 mValues.put("revPerDay", revOptions.getString("perDay"));
                 mValues.put("easyBonus", Integer.toString((int) (revOptions.getDouble("ease4") * 100)));
                 mValues.put("revIvlFct", Integer.toString((int) (revOptions.getDouble("ivlFct") * 100)));
@@ -234,31 +234,31 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getNew().put("bury", value);
                                 break;
                             case "revPerDay":
-                                mOptions.getJSONObject("rev").put("perDay", value);
+                                mOptions.getRev().put("perDay", value);
                                 break;
                             case "easyBonus":
-                                mOptions.getJSONObject("rev").put("ease4", (Integer) value / 100.0f);
+                                mOptions.getRev().put("ease4", (Integer) value / 100.0f);
                                 break;
                             case "revIvlFct":
-                                mOptions.getJSONObject("rev").put("ivlFct", (Integer) value / 100.0f);
+                                mOptions.getRev().put("ivlFct", (Integer) value / 100.0f);
                                 break;
                             case "revMaxIvl":
-                                mOptions.getJSONObject("rev").put("maxIvl", value);
+                                mOptions.getRev().put("maxIvl", value);
                                 break;
                             case "revBury":
-                                mOptions.getJSONObject("rev").put("bury", value);
+                                mOptions.getRev().put("bury", value);
                                 break;
                             case "revUseGeneralTimeoutSettings":
-                                mOptions.getJSONObject("rev").put("useGeneralTimeoutSettings", value);
+                                mOptions.getRev().put("useGeneralTimeoutSettings", value);
                                 break;
                             case "revTimeoutAnswer":
-                                mOptions.getJSONObject("rev").put("timeoutAnswer", value);
+                                mOptions.getRev().put("timeoutAnswer", value);
                                 break;
                             case "revTimeoutAnswerSeconds":
-                                mOptions.getJSONObject("rev").put("timeoutAnswerSeconds", value);
+                                mOptions.getRev().put("timeoutAnswerSeconds", value);
                                 break;
                             case "revTimeoutQuestionSeconds":
-                                mOptions.getJSONObject("rev").put("timeoutQuestionSeconds", value);
+                                mOptions.getRev().put("timeoutQuestionSeconds", value);
                                 break;
                             case "lapMinIvl":
                                 mOptions.getJSONObject("lapse").put("minInt", value);

@@ -1696,7 +1696,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             JSONObject revOptions = new JSONObject();
             long selectedDid = getCol().getDecks().selected();
             if (!getCol().getDecks().isDyn(selectedDid)) {
-                revOptions = getCol().getDecks().confForDid(selectedDid).getJSONObject("rev");
+                revOptions = getCol().getDecks().confForDid(selectedDid).getRev();
             }
 
             mOptUseGeneralTimerSettings = revOptions.optBoolean("useGeneralTimeoutSettings", true);

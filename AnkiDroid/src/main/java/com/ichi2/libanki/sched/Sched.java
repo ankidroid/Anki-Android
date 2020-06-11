@@ -304,7 +304,7 @@ public class Sched extends SchedV2 {
             DConf conf = mCol.getDecks().confForDid(did);
             Deck deck = mCol.getDecks().get(did);
             if (conf.getInt("dyn") == 0) {
-                rev = Math.max(0, Math.min(rev, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
+                rev = Math.max(0, Math.min(rev, conf.getRev().getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
                 _new = Math.max(0, Math.min(_new, conf.getNew().getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
             tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
@@ -728,7 +728,7 @@ public class Sched extends SchedV2 {
             return mReportLimit;
         }
         DConf c = mCol.getDecks().confForDid(d.getLong("id"));
-        return Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+        return Math.max(0, c.getRev().getInt("perDay") - d.getJSONArray("revToday").getInt(1));
     }
 
 

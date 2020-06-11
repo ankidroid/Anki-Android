@@ -206,7 +206,7 @@ public class Storage {
                     col.getDecks().save(d);
                 }
                 for (DConf c : col.getDecks().allConf()) {
-                    JSONObject r = c.getJSONObject("rev");
+                    JSONObject r = c.getRev();
                     r.put("ivlFct", r.optDouble("ivlFct", 1));
                     if (r.has("ivlfct")) {
                         r.remove("ivlfct");

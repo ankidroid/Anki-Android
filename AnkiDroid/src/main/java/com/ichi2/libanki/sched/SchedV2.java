@@ -1205,7 +1205,7 @@ public class SchedV2 extends AbstractSched {
             return mDynReportLimit;
         }
         DConf c = mCol.getDecks().confForDid(d.getLong("id"));
-        int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
+        int lim = Math.max(0, c.getRev().getInt("perDay") - d.getJSONArray("revToday").getInt(1));
 
         if (parentLimit != null) {
             return Math.min(parentLimit, lim);
@@ -1790,10 +1790,10 @@ public class SchedV2 extends AbstractSched {
         DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
-            return conf.getJSONObject("rev");
+            return conf.getRev();
         }
         // dynamic deck
-        return mCol.getDecks().confForDid(card.getODid()).getJSONObject("rev");
+        return mCol.getDecks().confForDid(card.getODid()).getRev();
     }
 
 

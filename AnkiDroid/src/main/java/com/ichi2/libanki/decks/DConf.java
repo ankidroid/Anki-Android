@@ -47,4 +47,8 @@ public class DConf extends ReadOnlyJSONObject{
     public JSONObject getNew() {
         return getJSONObject("new");
     }
+
+    public JSONObject getRev() {
+        return getJSONObject("rev");
+    }
 }
