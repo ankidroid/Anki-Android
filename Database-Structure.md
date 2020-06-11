@@ -51,7 +51,7 @@ CREATE TABLE cards (
       --   value of -1 indicates changes that need to be pushed to server. 
       --   usn < server usn indicates changes that need to be pulled from server.
     type            integer not null,
-      -- 0=new, 1=learning, 2=due, 3=relearning
+      -- 0=new, 1=learning, 2=review, 3=relearning
     queue           integer not null,
       -- -3=user buried(In scheduler 2),
       -- -2=sched buried (In scheduler 2), 
