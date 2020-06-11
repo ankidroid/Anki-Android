@@ -1066,14 +1066,14 @@ public class Models {
 
 
     /** Given a joined field string, return available template ordinals */
-    public ArrayList<Integer> availOrds(JSONObject m, String flds) {
-        String[] fields = Utils.splitFields(flds);
+    public ArrayList<Integer> availOrds(JSONObject m, String[] sfld) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
-            return _availClozeOrds(m, fields);
+            return _availClozeOrds(m, sfld);
         }
-        int nbField = fields.length;
-        for (int i = 0; i < nbField ; i++) {
-            fields[i] = fields[i].trim();
+        int nbField = sfld.length;
+        String[] fields = new String[nbField];
+        for (int i = 0; i < nbField; i++) {
+            fields[i] = sfld[i].trim();
         }
         ArrayList<Integer> avail = new ArrayList<>();
         JSONArray reqArray = m.getJSONArray("req");
