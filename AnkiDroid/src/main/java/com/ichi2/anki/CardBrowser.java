@@ -657,6 +657,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
         editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
         startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
+        //#6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
+        endMultiSelectMode();
     }
 
     private void openNoteEditorForCurrentlySelectedNote() {
