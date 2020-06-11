@@ -1760,7 +1760,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
-        if (mPrefShowTopbar) {
+        if (!mPrefShowTopbar) {
             mTopBarLayout.setVisibility(View.GONE);
         }
 
