@@ -282,9 +282,9 @@ public class Card implements Cloneable {
             if (browser) {
                 String bqfmt = t.getString("bqfmt");
                 String bafmt = t.getString("bafmt");
-                mQA = mCol._renderQA(mId, m, did, mOrd, f.stringTags(), f.joinedFields(), mFlags, browser, bqfmt, bafmt);
+                mQA = mCol._renderQA(mId, m, did, mOrd, f.stringTags(), f.getFields(), mFlags, browser, bqfmt, bafmt);
             } else {
-                mQA = mCol._renderQA(mId, m, did, mOrd, f.stringTags(), f.joinedFields(), mFlags);
+                mQA = mCol._renderQA(mId, m, did, mOrd, f.stringTags(), f.getFields(), mFlags);
             }
         }
         return mQA;

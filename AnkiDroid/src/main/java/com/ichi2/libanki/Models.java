@@ -1029,8 +1029,8 @@ public class Models {
         Arrays.fill(a, "ankiflag");
         Arrays.fill(b, "");
         int ord = t.getInt("ord");
-        String full = mCol._renderQA(1L, m, 1L, ord, "", Utils.joinFields(a), 0).get("q");
-        String empty = mCol._renderQA(1L, m, 1L, ord, "", Utils.joinFields(b), 0).get("q");
+        String full = mCol._renderQA(1L, m, 1L, ord, "", a, 0).get("q");
+        String empty = mCol._renderQA(1L, m, 1L, ord, "", b, 0).get("q");
         // if full and empty are the same, the template is invalid and there is no way to satisfy it
         if (full.equals(empty)) {
             return new Object[] { "none", new JSONArray(), new JSONArray() };
@@ -1039,9 +1039,8 @@ public class Models {
         JSONArray req = new JSONArray();
         for (int i = 0; i < flds.size(); i++) {
             a[i] = "";
-            packedFields = Utils.joinFields(a);
             // if no field content appeared, field is required
-            if (!mCol._renderQA(1L, m, 1L, ord, "", packedFields, 0).get("q").contains("ankiflag")) {
+            if (!mCol._renderQA(1L, m, 1L, ord, "", a, 0).get("q").contains("ankiflag")) {
                 req.put(i);
             }
             a[i] = "ankiflag";
@@ -1054,9 +1053,8 @@ public class Models {
         req = new JSONArray();
         for (int i = 0; i < flds.size(); i++) {
             b[i] = "1";
-            packedFields = Utils.joinFields(b);
             // if not the same as empty, this field can make the card non-blank
-            if (!mCol._renderQA(1L, m, 1L, ord, "", packedFields, 0).get("q").equals(empty)) {
+            if (!mCol._renderQA(1L, m, 1L, ord, "", b, 0).get("q").equals(empty)) {
                 req.put(i);
             }
             b[i] = "";
