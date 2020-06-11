@@ -4,7 +4,7 @@ body {
 }
 
 .nightMode .latex {
-    background-color: white;
+     filter: invert(100%);
 }
 
 
