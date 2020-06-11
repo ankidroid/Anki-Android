@@ -220,18 +220,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     startActivity(i);
                     return true;
                 });
-                //show / hide top bar
-                CheckBoxPreference showTopBar = (CheckBoxPreference) screen.findPreference("showTopbar");
-                showTopBar.setOnPreferenceClickListener(preference -> {
-                    SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(getBaseContext()).edit();
-                    if (showTopBar.isChecked()) {
-                        edit.putBoolean("top_bar", true);
-                    } else {
-                        edit.putBoolean("top_bar", false);
-                    }
-                        edit.apply();
-                    return true;
-                });
                 break;
             case "com.ichi2.anki.prefs.appearance":
                 listener.addPreferencesFromResource(R.xml.preferences_appearance);
