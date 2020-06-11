@@ -113,7 +113,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("autoPlayAudio", Boolean.toString(mOptions.getBoolean("autoplay")));
                 mValues.put("replayQuestion", Boolean.toString(mOptions.optBoolean("replayq", true)));
                 // new
-                JSONObject newOptions = mOptions.getJSONObject("new");
+                JSONObject newOptions = mOptions.getNew();
                 mValues.put("newSteps", StepsPreference.convertFromJSON(newOptions.getJSONArray("delays")));
                 mValues.put("newGradIvl", newOptions.getJSONArray("ints").getString(0));
                 mValues.put("newEasy", newOptions.getJSONArray("ints").getString(1));
@@ -197,41 +197,41 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.put("maxTaken", value);
                                 break;
                             case "newFactor":
-                                mOptions.getJSONObject("new").put("initialFactor", (Integer) value * 10);
+                                mOptions.getNew().put("initialFactor", (Integer) value * 10);
                                 break;
                             case "newOrder": {
                                 int newValue = Integer.parseInt((String) value);
                                 // Sorting is slow, so only do it if we change order
-                                int oldValue = mOptions.getJSONObject("new").getInt("order");
+                                int oldValue = mOptions.getNew().getInt("order");
                                 if (oldValue != newValue) {
-                                    mOptions.getJSONObject("new").put("order", newValue);
+                                    mOptions.getNew().put("order", newValue);
                                     CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REORDER, mConfChangeHandler,
                                             new CollectionTask.TaskData(new Object[] {mOptions}));
                                 }
-                                mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
+                                mOptions.getNew().put("order", Integer.parseInt((String) value));
                                 break;
                             }
                             case "newPerDay":
-                                mOptions.getJSONObject("new").put("perDay", value);
+                                mOptions.getNew().put("perDay", value);
                                 break;
                             case "newGradIvl": {
                                 JSONArray ja = new JSONArray(); // [graduating, easy]
 
                                 ja.put(value);
-                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(1));
-                                mOptions.getJSONObject("new").put("ints", ja);
+                                ja.put(mOptions.getNew().getJSONArray("ints").get(1));
+                                mOptions.getNew().put("ints", ja);
                                 break;
                             }
                             case "newEasy": {
                                 JSONArray ja = new JSONArray(); // [graduating, easy]
 
-                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(0));
+                                ja.put(mOptions.getNew().getJSONArray("ints").get(0));
                                 ja.put(value);
-                                mOptions.getJSONObject("new").put("ints", ja);
+                                mOptions.getNew().put("ints", ja);
                                 break;
                             }
                             case "newBury":
-                                mOptions.getJSONObject("new").put("bury", value);
+                                mOptions.getNew().put("bury", value);
                                 break;
                             case "revPerDay":
                                 mOptions.getJSONObject("rev").put("perDay", value);
@@ -286,7 +286,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mCol.getDecks().save(mDeck);
                                 break;
                             case "newSteps":
-                                mOptions.getJSONObject("new").put("delays", StepsPreference.convertToJSON((String) value));
+                                mOptions.getNew().put("delays", StepsPreference.convertToJSON((String) value));
                                 break;
                             case "lapSteps":
                                 mOptions.getJSONObject("lapse")

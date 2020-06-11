@@ -876,7 +876,7 @@ public class Collection {
     public int _dueForDid(long did, int due) {
         DConf conf = mDecks.confForDid(did);
         // in order due?
-        if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_DUE) {
+        if (conf.getNew().getInt("order") == Consts.NEW_CARDS_DUE) {
             return due;
         } else {
             // random mode; seed with note ts so all cards of this note get

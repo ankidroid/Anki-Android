@@ -718,7 +718,7 @@ public class Decks {
 
 
     public void restoreToDefault(DConf conf) {
-        int oldOrder = conf.getJSONObject("new").getInt("order");
+        int oldOrder = conf.getNew().getInt("order");
         DConf _new = new DConf(defaultConf);
         _new.put("id", conf.getLong("id"));
         _new.put("name", conf.getString("name"));

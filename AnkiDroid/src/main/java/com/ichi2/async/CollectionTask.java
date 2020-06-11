@@ -1268,8 +1268,8 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         try {
             long newConfId = conf.getLong("id");
             // If new config has a different sorting order, reorder the cards
-            int oldOrder = col.getDecks().getConf(deck.getLong("conf")).getJSONObject("new").getInt("order");
-            int newOrder = col.getDecks().getConf(newConfId).getJSONObject("new").getInt("order");
+            int oldOrder = col.getDecks().getConf(deck.getLong("conf")).getNew().getInt("order");
+            int newOrder = col.getDecks().getConf(newConfId).getNew().getInt("order");
             if (oldOrder != newOrder) {
                 switch (newOrder) {
                     case 0:
@@ -1311,10 +1311,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
             // When a conf is deleted, all decks using it revert to the default conf.
             // Cards must be reordered according to the default conf.
-            int order = conf.getJSONObject("new").getInt("order");
-            int defaultOrder = col.getDecks().getConf(1).getJSONObject("new").getInt("order");
+            int order = conf.getNew().getInt("order");
+            int defaultOrder = col.getDecks().getConf(1).getNew().getInt("order");
             if (order != defaultOrder) {
-                conf.getJSONObject("new").put("order", defaultOrder);
+                conf.getNew().put("order", defaultOrder);
                 col.getSched().resortConf(conf);
             }
             col.save();

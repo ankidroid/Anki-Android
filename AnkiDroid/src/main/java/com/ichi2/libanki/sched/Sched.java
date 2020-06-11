@@ -305,7 +305,7 @@ public class Sched extends SchedV2 {
             Deck deck = mCol.getDecks().get(did);
             if (conf.getInt("dyn") == 0) {
                 rev = Math.max(0, Math.min(rev, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
-                _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
+                _new = Math.max(0, Math.min(_new, conf.getNew().getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
             tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
         }
@@ -1191,19 +1191,19 @@ public class Sched extends SchedV2 {
         DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
-            return conf.getJSONObject("new");
+            return conf.getNew();
         }
         // dynamic deck; override some attributes, use original deck for others
         DConf oconf = mCol.getDecks().confForDid(card.getODid());
         JSONArray delays = conf.optJSONArray("delays");
         if (delays == null) {
-            delays = oconf.getJSONObject("new").getJSONArray("delays");
+            delays = oconf.getNew().getJSONArray("delays");
         }
         JSONObject dict = new JSONObject();
         // original deck
-        dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
-        dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
-        dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true));
+        dict.put("ints", oconf.getNew().getJSONArray("ints"));
+        dict.put("initialFactor", oconf.getNew().getInt("initialFactor"));
+        dict.put("bury", oconf.getNew().optBoolean("bury", true));
         // overrides
         dict.put("delays", delays);
         dict.put("separate", conf.getBoolean("separate"));

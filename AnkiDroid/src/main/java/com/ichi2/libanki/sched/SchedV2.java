@@ -496,7 +496,7 @@ public class SchedV2 extends AbstractSched {
             DConf conf = mCol.getDecks().confForDid(did);
             Deck deck = mCol.getDecks().get(did);
             if (conf.getInt("dyn") == 0) {
-                _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
+                _new = Math.max(0, Math.min(_new, conf.getNew().getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
             tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
         }
@@ -719,7 +719,7 @@ public class SchedV2 extends AbstractSched {
             return mDynReportLimit;
         }
         DConf c = mCol.getDecks().confForDid(g.getLong("id"));
-        return Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
+        return Math.max(0, c.getNew().getInt("perDay") - g.getJSONArray("newToday").getInt(1));
     }
 
     public int totalNewForCurrentDeck() {
@@ -1747,16 +1747,16 @@ public class SchedV2 extends AbstractSched {
         DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
-            return conf.getJSONObject("new");
+            return conf.getNew();
         }
         // dynamic deck; override some attributes, use original deck for others
         DConf oconf = mCol.getDecks().confForDid(card.getODid());
         JSONObject dict = new JSONObject();
         // original deck
-        dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
-        dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
-        dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true));
-        dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"));
+        dict.put("ints", oconf.getNew().getJSONArray("ints"));
+        dict.put("initialFactor", oconf.getNew().getInt("initialFactor"));
+        dict.put("bury", oconf.getNew().optBoolean("bury", true));
+        dict.put("delays", oconf.getNew().getJSONArray("delays"));
         // overrides
         dict.put("separate", conf.getBoolean("separate"));
         dict.put("order", Consts.NEW_CARDS_DUE);
@@ -2378,7 +2378,7 @@ public class SchedV2 extends AbstractSched {
     public void resortConf(DConf conf) {
         List<Long> dids = mCol.getDecks().didsForConf(conf);
         for (long did : dids) {
-            if (conf.getJSONObject("new").getLong("order") == 0) {
+            if (conf.getNew().getLong("order") == 0) {
                 randomizeCards(did);
             } else {
                 orderCards(did);
@@ -2400,7 +2400,7 @@ public class SchedV2 extends AbstractSched {
         }
         DConf conf = mCol.getDecks().confForDid(did);
         // in order due?
-        if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_RANDOM) {
+        if (conf.getNew().getInt("order") == Consts.NEW_CARDS_RANDOM) {
             randomizeCards(did);
         }
     }
