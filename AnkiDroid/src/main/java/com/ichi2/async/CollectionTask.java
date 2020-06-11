@@ -62,7 +62,7 @@ import java.util.TreeMap;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.zip.ZipFile;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.Nullable;
 import timber.log.Timber;
@@ -1094,7 +1094,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         String colname = "collection.anki21";
         ZipFile zip;
         try {
-            zip = new ZipFile(new File(path), ZipFile.OPEN_READ);
+            zip = new ZipFile(new File(path));
         } catch (IOException e) {
             Timber.e(e, "doInBackgroundImportReplace - Error while unzipping");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");

@@ -67,8 +67,8 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import timber.log.Timber;
 
@@ -677,7 +677,7 @@ public class Utils {
             zipEntryToFilenameMap = new HashMap<>();
         }
         for (String requestedEntry : zipEntries) {
-            ZipEntry ze = zipFile.getEntry(requestedEntry);
+            ZipArchiveEntry ze = zipFile.getEntry(requestedEntry);
             if (ze != null) {
                 String name = ze.getName();
                 if (zipEntryToFilenameMap.containsKey(name)) {
