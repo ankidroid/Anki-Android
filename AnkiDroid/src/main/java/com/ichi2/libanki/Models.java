@@ -1039,15 +1039,15 @@ public class Models {
         String type = "all";
         JSONArray req = new JSONArray();
         ArrayList<String> tmp = new ArrayList<>();
+        tmp.addAll(a);
         for (int i = 0; i < flds.size(); i++) {
-            tmp.clear();
-            tmp.addAll(a);
             tmp.set(i, "");
             packedFields = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
             // if no field content appeared, field is required
             if (!mCol._renderQA(1L, m, 1L, ord, "", packedFields, 0).get("q").contains("ankiflag")) {
                 req.put(i);
             }
+            tmp.set(i, "ankiflag");
         }
         if (req.length() > 0) {
             return new Object[] { type, req };
@@ -1055,15 +1055,16 @@ public class Models {
         // if there are no required fields, switch to any mode
         type = "any";
         req = new JSONArray();
+        tmp.clear();
+        tmp.addAll(b);
         for (int i = 0; i < flds.size(); i++) {
-            tmp.clear();
-            tmp.addAll(b);
             tmp.set(i, "1");
             packedFields = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
             // if not the same as empty, this field can make the card non-blank
             if (!mCol._renderQA(1L, m, 1L, ord, "", packedFields, 0).get("q").equals(empty)) {
                 req.put(i);
             }
+            tmp.set(i, "");
         }
         return new Object[] { type, req };
     }
