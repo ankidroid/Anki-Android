@@ -33,7 +33,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.zip.ZipFile;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import timber.log.Timber;
 
@@ -58,7 +58,7 @@ public class AnkiPackageImporter extends Anki2Importer {
             String colname = "collection.anki21";
             try {
                 // extract the deck from the zip file
-                mZip = new ZipFile(new File(mFile), ZipFile.OPEN_READ);
+                mZip = new ZipFile(new File(mFile));
                 // v2 scheduler?
                 if (mZip.getEntry(colname) == null) {
                     colname = CollectionHelper.COLLECTION_FILENAME;

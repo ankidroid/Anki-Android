@@ -39,8 +39,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
 import timber.log.Timber;
 
@@ -461,17 +461,17 @@ public final class AnkiPackageExporter extends AnkiExporter {
  */
 class ZipFile {
     private final int BUFFER_SIZE = 1024;
-    private ZipOutputStream mZos;
+    private ZipArchiveOutputStream mZos;
 
 
     public ZipFile(String path) throws FileNotFoundException {
-        mZos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(path)));
+        mZos = new ZipArchiveOutputStream(new BufferedOutputStream(new FileOutputStream(path)));
     }
 
 
     public void write(String path, String entry) throws IOException {
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(path), BUFFER_SIZE);
-        ZipEntry ze = new ZipEntry(entry);
+        ZipArchiveEntry ze = new ZipArchiveEntry(entry);
         writeEntry(bis, ze);
     }
 
@@ -480,19 +480,19 @@ class ZipFile {
         // TODO: Does this work with abnormal characters?
         InputStream is = new ByteArrayInputStream(value.getBytes());
         BufferedInputStream bis = new BufferedInputStream(is, BUFFER_SIZE);
-        ZipEntry ze = new ZipEntry(entry);
+        ZipArchiveEntry ze = new ZipArchiveEntry(entry);
         writeEntry(bis, ze);
     }
 
 
-    private void writeEntry(BufferedInputStream bis, ZipEntry ze) throws IOException {
+    private void writeEntry(BufferedInputStream bis, ZipArchiveEntry ze) throws IOException {
         byte[] buf = new byte[BUFFER_SIZE];
-        mZos.putNextEntry(ze);
+        mZos.putArchiveEntry(ze);
         int len;
         while ((len = bis.read(buf, 0, BUFFER_SIZE)) != -1) {
             mZos.write(buf, 0, len);
         }
-        mZos.closeEntry();
+        mZos.closeArchiveEntry();
         bis.close();
     }
 
