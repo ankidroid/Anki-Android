@@ -1023,15 +1023,14 @@ public class Models {
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // 'String f' is unused upstream as well
     private Object[] _reqForTemplate(JSONObject m, ArrayList<String> flds, JSONObject t) {
-        ArrayList<String> a = new ArrayList<>();
-        ArrayList<String> b = new ArrayList<>();
-        for (String f : flds) {
-            a.add("ankiflag");
-            b.add("");
-        }
+        int nbFields = flds.size();
+        String[] a = new String[nbFields];
+        String[] b = new String[nbFields];
+        Arrays.fill(a, "ankiflag");
+        Arrays.fill(b, "");
         int ord = t.getInt("ord");
-        String full = mCol._renderQA(1L, m, 1L, ord, "", Utils.joinFields(a.toArray(new String[a.size()])), 0).get("q");
-        String empty = mCol._renderQA(1L, m, 1L, ord, "", Utils.joinFields(b.toArray(new String[b.size()])), 0).get("q");
+        String full = mCol._renderQA(1L, m, 1L, ord, "", Utils.joinFields(a), 0).get("q");
+        String empty = mCol._renderQA(1L, m, 1L, ord, "", Utils.joinFields(b), 0).get("q");
         // if full and empty are the same, the template is invalid and there is no way to satisfy it
         if (full.equals(empty)) {
             return new Object[] { "none", new JSONArray(), new JSONArray() };
@@ -1039,13 +1038,13 @@ public class Models {
         String type = "all";
         JSONArray req = new JSONArray();
         for (int i = 0; i < flds.size(); i++) {
-            a.set(i, "");
-            packedFields = Utils.joinFields(a.toArray(new String[a.size()]));
+            a[i] = "";
+            packedFields = Utils.joinFields(a);
             // if no field content appeared, field is required
             if (!mCol._renderQA(1L, m, 1L, ord, "", packedFields, 0).get("q").contains("ankiflag")) {
                 req.put(i);
             }
-            a.set(i, "ankiflag");
+            a[i] = "ankiflag";
         }
         if (req.length() > 0) {
             return new Object[] { type, req };
@@ -1054,13 +1053,13 @@ public class Models {
         type = "any";
         req = new JSONArray();
         for (int i = 0; i < flds.size(); i++) {
-            b.set(i, "1");
-            packedFields = Utils.joinFields(b.toArray(new String[b.size()]));
+            b[i] = "1";
+            packedFields = Utils.joinFields(b);
             // if not the same as empty, this field can make the card non-blank
             if (!mCol._renderQA(1L, m, 1L, ord, "", packedFields, 0).get("q").equals(empty)) {
                 req.put(i);
             }
-            b.set(i, "");
+            b[i] = "";
         }
         return new Object[] { type, req };
     }
