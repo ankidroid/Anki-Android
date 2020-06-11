@@ -197,6 +197,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private CardAppearance mCardAppearance;
     private boolean mPrefHideDueCount;
     private boolean mPrefShowETA;
+    private boolean mPrefShowTopbar;
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
     private int mPrefFullscreenReview;
@@ -1659,6 +1660,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mPrefWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
+        mPrefShowTopbar = preferences.getBoolean("top_bar",false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
@@ -1761,6 +1763,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 eta = mSched.eta(counts, false);
                 actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));
             }
+        }
+
+        if (mPrefShowTopbar) {
+            mTopBarLayout.setVisibility(View.GONE);
         }
 
         newCount = new SpannableString(String.valueOf(counts[0]));
