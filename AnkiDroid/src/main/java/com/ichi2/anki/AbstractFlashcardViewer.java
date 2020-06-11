@@ -1655,7 +1655,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mPrefWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
-        //mPrefShowTopbar = preferences.getBoolean("top_bar", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
