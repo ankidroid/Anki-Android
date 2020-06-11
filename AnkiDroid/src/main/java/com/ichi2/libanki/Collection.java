@@ -1071,7 +1071,7 @@ public class Collection {
             d.put(type, html);
             // empty cloze?
             if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
-                if (getModels()._availClozeOrds(model, packedFields, false).size() == 0) {
+                if (getModels()._availClozeOrds(model, Utils.splitFields(packedFields), false).size() == 0) {
                     String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
                     d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
                 }
