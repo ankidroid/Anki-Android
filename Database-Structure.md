@@ -59,6 +59,7 @@ CREATE TABLE cards (
       -- -1=suspended,
       -- 0=new, 1=learning, 2=due (as for type)
       -- 3=in learning, next rev in at least a day after the previous review
+      -- 4=preview
     due             integer not null,
      -- Due is used differently for different card types: 
      --   new: note id or random int
