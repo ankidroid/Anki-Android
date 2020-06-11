@@ -384,30 +384,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return ids;
     }
 
-    private boolean hasSelectedSingleNoteId() {
-        //Heuristic to skip a large array copy
-        if (checkedCardCount() > 50) {
-            return false;
-        }
-        //copy to array to ensure threadsafe iteration
-        Integer[] checkedPositions = mCheckedCardPositions.toArray(new Integer[0]);
-        List<Map<String, String>> cards = mCards;
-
-        HashSet<String> notes = new HashSet<>();
-        for (Integer position : checkedPositions) {
-            String noteId;
-            try {
-                noteId = cards.get(position).get(NOTE);
-            } catch (IndexOutOfBoundsException e) {
-                //#6384
-                Timber.w(e, "concurrent modification of mCards array - assume more than one note selected");
-                return false;
-            }
-            if (notes.add(noteId) && notes.size() > 1) {
-                return false;
-            }
-        }
-        return mCards == cards && notes.size() == 1;
+    private boolean canPerformMultiSelectEditNote() {
+        //The noteId is not currently available. Only allow if a single card is selected for now.
+        return checkedCardCount() == 1;
     }
 
     @VisibleForTesting
@@ -896,7 +875,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mActionBarMenu.findItem(R.id.action_select_all).setVisible(!hasSelectedAllCards());
         //Note: Theoretically should not happen, as this should kick us back to the menu
         mActionBarMenu.findItem(R.id.action_select_none).setVisible(hasSelectedCards());
-        mActionBarMenu.findItem(R.id.action_edit_note).setVisible(hasSelectedSingleNoteId());
+        mActionBarMenu.findItem(R.id.action_edit_note).setVisible(canPerformMultiSelectEditNote());
     }
 
 
