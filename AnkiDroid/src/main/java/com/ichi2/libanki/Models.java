@@ -1067,10 +1067,10 @@ public class Models {
 
     /** Given a joined field string, return available template ordinals */
     public ArrayList<Integer> availOrds(JSONObject m, String flds) {
-        if (m.getInt("type") == Consts.MODEL_CLOZE) {
-            return _availClozeOrds(m, flds);
-        }
         String[] fields = Utils.splitFields(flds);
+        if (m.getInt("type") == Consts.MODEL_CLOZE) {
+            return _availClozeOrds(m, fields);
+        }
         int nbField = fields.length;
         for (int i = 0; i < nbField ; i++) {
             fields[i] = fields[i].trim();
@@ -1122,8 +1122,8 @@ public class Models {
     }
 
 
-    public ArrayList<Integer> _availClozeOrds(JSONObject m, String flds) {
-        return _availClozeOrds(m, Utils.splitFields(flds), true);
+    public ArrayList<Integer> _availClozeOrds(JSONObject m, String[] sflds) {
+        return _availClozeOrds(m, sflds, true);
     }
 
 
