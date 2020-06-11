@@ -18,6 +18,7 @@ package com.ichi2.libanki.importer;
 
 
 import com.google.gson.stream.JsonReader;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
@@ -66,18 +67,19 @@ public class AnkiPackageImporter extends Anki2Importer {
                 Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{colname, "media"}, null);
             } catch (IOException e) {
                 Timber.e(e, "Failed to unzip apkg.");
-                mLog.add(getRes().getString(R.string.import_log_no_apkg));
+                AnkiDroidApp.sendExceptionReport(e, "AnkiPackageImporter::run() - unzip");
+                mLog.add(getRes().getString(R.string.import_log_failed_unzip, e.getLocalizedMessage()));
                 return;
             }
             String colpath = new File(tempDir, colname).getAbsolutePath();
             if (!(new File(colpath)).exists()) {
-                mLog.add(getRes().getString(R.string.import_log_no_apkg));
+                mLog.add(getRes().getString(R.string.import_log_failed_copy_to, colpath));
                 return;
             }
             tmpCol = Storage.Collection(mContext, colpath);
             try {
                 if (!tmpCol.validCollection()) {
-                    mLog.add(getRes().getString(R.string.import_log_no_apkg));
+                    mLog.add(getRes().getString(R.string.import_log_failed_validate));
                     return;
                 }
             } finally {
