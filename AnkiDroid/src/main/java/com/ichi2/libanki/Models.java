@@ -1122,12 +1122,11 @@ public class Models {
 
 
     public ArrayList<Integer> _availClozeOrds(JSONObject m, String flds) {
-        return _availClozeOrds(m, flds, true);
+        return _availClozeOrds(m, Utils.splitFields(flds), true);
     }
 
 
-    public ArrayList<Integer> _availClozeOrds(JSONObject m, String flds, boolean allowEmpty) {
-        String[] sflds = Utils.splitFields(flds);
+    public ArrayList<Integer> _availClozeOrds(JSONObject m, String[] sflds, boolean allowEmpty) {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
         Set<Integer> ords = new HashSet<>();
         List<String> matches = new ArrayList<>();
