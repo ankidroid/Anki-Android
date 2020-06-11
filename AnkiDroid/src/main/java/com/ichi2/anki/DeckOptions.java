@@ -49,6 +49,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.ROJSONComparator;
 import com.ichi2.libanki.decks.Deck;
+import com.ichi2.libanki.decks.ReviewingConf;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
@@ -113,7 +114,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("autoPlayAudio", Boolean.toString(mOptions.getBoolean("autoplay")));
                 mValues.put("replayQuestion", Boolean.toString(mOptions.optBoolean("replayq", true)));
                 // new
-                JSONObject newOptions = mOptions.getNew();
+                ReviewingConf newOptions = mOptions.getNew();
                 mValues.put("newSteps", StepsPreference.convertFromJSON(newOptions.getJSONArray("delays")));
                 mValues.put("newGradIvl", newOptions.getJSONArray("ints").getString(0));
                 mValues.put("newEasy", newOptions.getJSONArray("ints").getString(1));
@@ -122,7 +123,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("newPerDay", newOptions.getString("perDay"));
                 mValues.put("newBury", Boolean.toString(newOptions.optBoolean("bury", true)));
                 // rev
-                JSONObject revOptions = mOptions.getRev();
+                ReviewingConf revOptions = mOptions.getRev();
                 mValues.put("revPerDay", revOptions.getString("perDay"));
                 mValues.put("easyBonus", Integer.toString((int) (revOptions.getDouble("ease4") * 100)));
                 mValues.put("revIvlFct", Integer.toString((int) (revOptions.getDouble("ivlFct") * 100)));
@@ -135,7 +136,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("revTimeoutQuestionSeconds", Integer.toString(revOptions.optInt("timeoutQuestionSeconds", 60)));
 
                 // lapse
-                JSONObject lapOptions = mOptions.getLapse();
+                ReviewingConf lapOptions = mOptions.getLapse();
                 mValues.put("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")));
                 mValues.put("lapNewIvl", Integer.toString((int) (lapOptions.getDouble("mult") * 100)));
                 mValues.put("lapMinIvl", lapOptions.getString("minInt"));

@@ -24,6 +24,7 @@ import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.Decks;
 
+import com.ichi2.libanki.decks.ReviewingConf;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -206,7 +207,7 @@ public class Storage {
                     col.getDecks().save(d);
                 }
                 for (DConf c : col.getDecks().allConf()) {
-                    JSONObject r = c.getRev();
+                    ReviewingConf r = c.getRev();
                     r.put("ivlFct", r.optDouble("ivlFct", 1));
                     if (r.has("ivlfct")) {
                         r.remove("ivlfct");

@@ -39,6 +39,7 @@ import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.Decks;
 
+import com.ichi2.libanki.decks.ReviewingConf;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -167,7 +168,7 @@ public class Sched extends SchedV2 {
             if (card.getODid() != 0 && card.getQueue() == Consts.QUEUE_TYPE_REV) {
                 return 4;
             }
-            JSONObject conf = _lrnConf(card);
+            ReviewingConf conf = _lrnConf(card);
             if (card.getType() == Consts.CARD_TYPE_NEW || card.getType() == Consts.CARD_TYPE_LRN || conf.getJSONArray("delays").length() > 1) {
                 return 3;
             }
@@ -485,7 +486,7 @@ public class Sched extends SchedV2 {
      */
     @Override
     protected void _answerLrnCard(Card card, int ease) {
-        JSONObject conf = _lrnConf(card);
+        ReviewingConf conf = _lrnConf(card);
         int type;
         if (card.getODid() != 0 && !card.getWasNew()) {
             type = Consts.CARD_TYPE_RELEARNING;
@@ -557,7 +558,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected JSONObject _lrnConf(Card card) {
+    protected ReviewingConf _lrnConf(Card card) {
         if (card.getType() == Consts.CARD_TYPE_REV) {
             return _lapseConf(card);
         } else {
@@ -567,7 +568,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected void _rescheduleAsRev(Card card, JSONObject conf, boolean early) {
+    protected void _rescheduleAsRev(Card card, ReviewingConf conf, boolean early) {
         boolean lapse = (card.getType() == Consts.CARD_TYPE_REV);
         if (lapse) {
             if (_resched(card)) {
@@ -599,7 +600,7 @@ public class Sched extends SchedV2 {
 
     @Override
     protected int _startingLeft(Card card) {
-        JSONObject conf;
+        ReviewingConf conf;
     	if (card.getType() == Consts.CARD_TYPE_REV) {
     		conf = _lapseConf(card);
     	} else {
@@ -611,12 +612,12 @@ public class Sched extends SchedV2 {
     }
 
 
-    private int _graduatingIvl(Card card, JSONObject conf, boolean early) {
+    private int _graduatingIvl(Card card, ReviewingConf conf, boolean early) {
         return _graduatingIvl(card, conf, early, true);
     }
 
 
-    private int _graduatingIvl(Card card, JSONObject conf, boolean early, boolean adj) {
+    private int _graduatingIvl(Card card, ReviewingConf conf, boolean early, boolean adj) {
         if (card.getType() == Consts.CARD_TYPE_REV) {
             // lapsed card being relearnt
             if (card.getODid() != 0) {
@@ -644,14 +645,14 @@ public class Sched extends SchedV2 {
 
 
     /* Reschedule a new card that's graduated for the first time. */
-    private void _rescheduleNew(Card card, JSONObject conf, boolean early) {
+    private void _rescheduleNew(Card card, ReviewingConf conf, boolean early) {
         card.setIvl(_graduatingIvl(card, conf, early));
         card.setDue(mToday + card.getIvl());
         card.setFactor(conf.getInt("initialFactor"));
     }
 
 
-    private void _logLrn(Card card, int ease, JSONObject conf, boolean leaving, int type, int lastLeft) {
+    private void _logLrn(Card card, int ease, ReviewingConf conf, boolean leaving, int type, int lastLeft) {
         int lastIvl = -(_delayForGrade(conf, lastLeft));
         int ivl = leaving ? card.getIvl() : -(_delayForGrade(conf, card.getLeft()));
         log(card.getId(), mCol.usn(), ease, ivl, lastIvl, card.getFactor(), card.timeTaken(), type);
@@ -848,8 +849,7 @@ public class Sched extends SchedV2 {
 
     @Override
     protected int _rescheduleLapse(Card card) {
-        JSONObject conf;
-        conf = _lapseConf(card);
+        ReviewingConf conf = _lapseConf(card);
         card.setLastIvl(card.getIvl());
         if (_resched(card)) {
             card.setLapses(card.getLapses() + 1);
@@ -892,7 +892,7 @@ public class Sched extends SchedV2 {
     }
 
 
-    private int _nextLapseIvl(Card card, JSONObject conf) {
+    private int _nextLapseIvl(Card card, ReviewingConf conf) {
         return Math.max(conf.getInt("minInt"), (int)(card.getIvl() * conf.getDouble("mult")));
     }
 
@@ -927,7 +927,7 @@ public class Sched extends SchedV2 {
     private int _nextRevIvl(Card card, int ease) {
         long delay = _daysLate(card);
         int interval = 0;
-        JSONObject conf = _revConf(card);
+        ReviewingConf conf = _revConf(card);
         double fct = card.getFactor() / 1000.0;
         int ivl2 = _constrainedIvl((int)((card.getIvl() + delay/4) * 1.2), conf, card.getIvl());
         int ivl3 = _constrainedIvl((int)((card.getIvl() + delay/2) * fct), conf, ivl2);
@@ -945,7 +945,7 @@ public class Sched extends SchedV2 {
 
 
     /** Integer interval after interval factor and prev+1 constraints applied */
-    private int _constrainedIvl(int ivl, JSONObject conf, double prev) {
+    private int _constrainedIvl(int ivl, ReviewingConf conf, double prev) {
     	double newIvl = ivl;
     	newIvl = ivl * conf.optDouble("ivlFct",1.0);
         return (int) Math.max(newIvl, prev + 1);
@@ -957,7 +957,7 @@ public class Sched extends SchedV2 {
     protected void _updateRevIvl(Card card, int ease) {
         try {
             int idealIvl = _nextRevIvl(card, ease);
-            JSONObject conf = _revConf(card);
+            ReviewingConf conf = _revConf(card);
             card.setIvl(Math.min(
                     Math.max(_adjRevIvl(card, idealIvl), card.getIvl() + 1),
                     conf.getInt("maxIvl")));
@@ -1129,7 +1129,7 @@ public class Sched extends SchedV2 {
         long elapsed = card.getIvl() - (card.getODue() - mToday);
         double factor = ((card.getFactor() / 1000.0) + 1.2) / 2.0;
         int ivl = Math.max(1, Math.max(card.getIvl(), (int) (elapsed * factor)));
-        JSONObject conf = _revConf(card);
+        ReviewingConf conf = _revConf(card);
         return Math.min(conf.getInt("maxIvl"), ivl);
     }
 
@@ -1140,7 +1140,7 @@ public class Sched extends SchedV2 {
 
     /** Leech handler. True if card was a leech. */
     @Override
-    protected boolean _checkLeech(Card card, JSONObject conf) {
+    protected boolean _checkLeech(Card card, ReviewingConf conf) {
         int lf;
         lf = conf.getInt("leechFails");
         if (lf == 0) {
@@ -1187,7 +1187,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected JSONObject _newConf(Card card) {
+    protected ReviewingConf _newConf(Card card) {
         DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
@@ -1199,7 +1199,7 @@ public class Sched extends SchedV2 {
         if (delays == null) {
             delays = oconf.getNew().getJSONArray("delays");
         }
-        JSONObject dict = new JSONObject();
+        ReviewingConf dict = new ReviewingConf();
         // original deck
         dict.put("ints", oconf.getNew().getJSONArray("ints"));
         dict.put("initialFactor", oconf.getNew().getInt("initialFactor"));
@@ -1214,7 +1214,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected JSONObject _lapseConf(Card card) {
+    protected ReviewingConf _lapseConf(Card card) {
         DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
@@ -1226,7 +1226,7 @@ public class Sched extends SchedV2 {
         if (delays == null) {
             delays = oconf.getLapse().getJSONArray("delays");
         }
-        JSONObject dict = new JSONObject();
+        ReviewingConf dict = new ReviewingConf();
         // original deck
         dict.put("minInt", oconf.getLapse().getInt("minInt"));
         dict.put("leechFails", oconf.getLapse().getInt("leechFails"));
@@ -1335,7 +1335,7 @@ public class Sched extends SchedV2 {
             return _nextLrnIvl(card, ease);
         } else if (ease == Consts.BUTTON_ONE) {
             // lapsed
-            JSONObject conf = _lapseConf(card);
+            ReviewingConf conf = _lapseConf(card);
             if (conf.getJSONArray("delays").length() > 0) {
                 return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
             }
@@ -1353,7 +1353,7 @@ public class Sched extends SchedV2 {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             card.setLeft(_startingLeft(card));
         }
-        JSONObject conf = _lrnConf(card);
+        ReviewingConf conf = _lrnConf(card);
         if (ease == Consts.BUTTON_ONE) {
             // fail
             return _delayForGrade(conf, conf.getJSONArray("delays").length());
@@ -1717,8 +1717,7 @@ public class Sched extends SchedV2 {
 
     @Override
     public boolean leechActionSuspend(Card card) {
-        JSONObject conf;
-        conf = _cardConf(card).getLapse();
+        ReviewingConf conf = _cardConf(card).getLapse();
         return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
     }
 

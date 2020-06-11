@@ -44,15 +44,15 @@ public class DConf extends ReadOnlyJSONObject{
         return ret;
     }
 
-    public JSONObject getNew() {
-        return getJSONObject("new");
+    public ReviewingConf getNew() {
+        return new ReviewingConf(getJSONObject("new"));
     }
 
-    public JSONObject getRev() {
-        return getJSONObject("rev");
+    public ReviewingConf getRev() {
+        return new ReviewingConf(getJSONObject("rev"));
     }
 
-    public JSONObject getLapse() {
-        return getJSONObject("lapse");
+    public ReviewingConf getLapse() {
+        return new ReviewingConf(getJSONObject("lapse"));
     }
 }

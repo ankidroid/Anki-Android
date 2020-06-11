@@ -41,6 +41,7 @@ import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.Decks;
 
+import com.ichi2.libanki.decks.ReviewingConf;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
@@ -891,7 +892,7 @@ public class SchedV2 extends AbstractSched {
 
 
     protected void _answerLrnCard(Card card, int ease) {
-        JSONObject conf = _lrnConf(card);
+        ReviewingConf conf = _lrnConf(card);
         int type;
         if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
             type = Consts.CARD_TYPE_REV;
@@ -926,13 +927,13 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected void _updateRevIvlOnFail(Card card, JSONObject conf) {
+    protected void _updateRevIvlOnFail(Card card, ReviewingConf conf) {
         card.setLastIvl(card.getIvl());
         card.setIvl(_lapseIvl(card, conf));
     }
 
 
-    private int _moveToFirstStep(Card card, JSONObject conf) {
+    private int _moveToFirstStep(Card card, ReviewingConf conf) {
         card.setLeft(_startingLeft(card));
 
         // relearning card?
@@ -944,7 +945,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _moveToNextStep(Card card, JSONObject conf) {
+    private void _moveToNextStep(Card card, ReviewingConf conf) {
         // decrement real left count and recalculate left today
         int left = (card.getLeft() % 1000) - 1;
         card.setLeft(_leftToday(conf.getJSONArray("delays"), left) * 1000 + left);
@@ -953,18 +954,18 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _repeatStep(Card card, JSONObject conf) {
+    private void _repeatStep(Card card, ReviewingConf conf) {
         int delay = _delayForRepeatingGrade(conf, card.getLeft());
         _rescheduleLrnCard(card, conf, delay);
     }
 
 
-    private int _rescheduleLrnCard(Card card, JSONObject conf) {
+    private int _rescheduleLrnCard(Card card, ReviewingConf conf) {
         return _rescheduleLrnCard(card, conf, null);
     }
 
 
-    private int _rescheduleLrnCard(Card card, JSONObject conf, Integer delay) {
+    private int _rescheduleLrnCard(Card card, ReviewingConf conf, Integer delay) {
         // normal delay for the current step?
         if (delay == null) {
             delay = _delayForGrade(conf, card.getLeft());
@@ -999,7 +1000,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected int _delayForGrade(JSONObject conf, int left) {
+    protected int _delayForGrade(ReviewingConf conf, int left) {
         left = left % 1000;
         try {
             double delay;
@@ -1022,7 +1023,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int  _delayForRepeatingGrade(JSONObject conf, int left) {
+    private int  _delayForRepeatingGrade(ReviewingConf conf, int left) {
         // halfway between last and  next
         int delay1 = _delayForGrade(conf, left);
         int delay2;
@@ -1036,7 +1037,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected JSONObject _lrnConf(Card card) {
+    protected ReviewingConf _lrnConf(Card card) {
         if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
             return _lapseConf(card);
         } else {
@@ -1045,7 +1046,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected void _rescheduleAsRev(Card card, JSONObject conf, boolean early) {
+    protected void _rescheduleAsRev(Card card, ReviewingConf conf, boolean early) {
         boolean lapse = (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING);
         if (lapse) {
             _rescheduleGraduatingLapse(card, early);
@@ -1069,7 +1070,7 @@ public class SchedV2 extends AbstractSched {
 
 
     protected int _startingLeft(Card card) {
-        JSONObject conf;
+        ReviewingConf conf;
         if (card.getType() == Consts.CARD_TYPE_RELEARNING) {
             conf = _lapseConf(card);
         } else {
@@ -1104,12 +1105,12 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _graduatingIvl(Card card, JSONObject conf, boolean early) {
+    private int _graduatingIvl(Card card, ReviewingConf conf, boolean early) {
         return _graduatingIvl(card, conf, early, true);
     }
 
 
-    private int _graduatingIvl(Card card, JSONObject conf, boolean early, boolean fuzz) {
+    private int _graduatingIvl(Card card, ReviewingConf conf, boolean early, boolean fuzz) {
         if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
             int bonus = early ? 1 : 0;
             return card.getIvl() + bonus;
@@ -1132,7 +1133,7 @@ public class SchedV2 extends AbstractSched {
 
 
     /** Reschedule a new card that's graduated for the first time. */
-    private void _rescheduleNew(Card card, JSONObject conf, boolean early) {
+    private void _rescheduleNew(Card card, ReviewingConf conf, boolean early) {
         card.setIvl(_graduatingIvl(card, conf, early));
         card.setDue(mToday + card.getIvl());
         card.setFactor(conf.getInt("initialFactor"));
@@ -1141,7 +1142,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _logLrn(Card card, int ease, JSONObject conf, boolean leaving, int type, int lastLeft) {
+    private void _logLrn(Card card, int ease, ReviewingConf conf, boolean leaving, int type, int lastLeft) {
         int lastIvl = -(_delayForGrade(conf, lastLeft));
         int ivl = leaving ? card.getIvl() : -(_delayForGrade(conf, card.getLeft()));
         log(card.getId(), mCol.usn(), ease, ivl, lastIvl, card.getFactor(), card.timeTaken(), type);
@@ -1326,8 +1327,7 @@ public class SchedV2 extends AbstractSched {
 
 
     protected int _rescheduleLapse(Card card) {
-        JSONObject conf;
-        conf = _lapseConf(card);
+        ReviewingConf conf = _lapseConf(card);
         card.setLapses(card.getLapses() + 1);
         card.setFactor(Math.max(1300, card.getFactor() - 200));
         int delay;
@@ -1350,7 +1350,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _lapseIvl(Card card, JSONObject conf) {
+    private int _lapseIvl(Card card, ReviewingConf conf) {
         int ivl = Math.max(1, Math.max(conf.getInt("minInt"), (int)(card.getIvl() * conf.getDouble("mult"))));
         return ivl;
     }
@@ -1390,7 +1390,7 @@ public class SchedV2 extends AbstractSched {
      */
     protected int _nextRevIvl(Card card, int ease, boolean fuzz) {
         long delay = _daysLate(card);
-        JSONObject conf = _revConf(card);
+        ReviewingConf conf = _revConf(card);
         double fct = card.getFactor() / 1000.0;
         double hardFactor = conf.optDouble("hardFactor", 1.2);
         int hardMin;
@@ -1442,7 +1442,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected int _constrainedIvl(double ivl, JSONObject conf, double prev, boolean fuzz) {
+    protected int _constrainedIvl(double ivl, ReviewingConf conf, double prev, boolean fuzz) {
         int newIvl = (int) (ivl * conf.optDouble("ivlFct", 1));
         if (fuzz) {
             newIvl = _fuzzedIvl(newIvl);
@@ -1485,7 +1485,7 @@ public class SchedV2 extends AbstractSched {
 
         long elapsed = card.getIvl() - (card.getODue() - mToday);
 
-        JSONObject conf = _revConf(card);
+        ReviewingConf conf = _revConf(card);
 
         double easyBonus = 1;
         // early 3/4 reviews shouldn't decrease previous interval
@@ -1707,7 +1707,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     /** Leech handler. True if card was a leech. */
-    protected boolean _checkLeech(Card card, JSONObject conf) {
+    protected boolean _checkLeech(Card card, ReviewingConf conf) {
         int lf;
         lf = conf.getInt("leechFails");
         if (lf == 0) {
@@ -1743,7 +1743,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected JSONObject _newConf(Card card) {
+    protected ReviewingConf _newConf(Card card) {
         DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
@@ -1751,7 +1751,7 @@ public class SchedV2 extends AbstractSched {
         }
         // dynamic deck; override some attributes, use original deck for others
         DConf oconf = mCol.getDecks().confForDid(card.getODid());
-        JSONObject dict = new JSONObject();
+        ReviewingConf dict = new ReviewingConf();
         // original deck
         dict.put("ints", oconf.getNew().getJSONArray("ints"));
         dict.put("initialFactor", oconf.getNew().getInt("initialFactor"));
@@ -1765,7 +1765,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected JSONObject _lapseConf(Card card) {
+    protected ReviewingConf _lapseConf(Card card) {
         DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
@@ -1773,7 +1773,7 @@ public class SchedV2 extends AbstractSched {
         }
         // dynamic deck; override some attributes, use original deck for others
         DConf oconf = mCol.getDecks().confForDid(card.getODid());
-        JSONObject dict = new JSONObject();
+        ReviewingConf dict = new ReviewingConf();
         // original deck
         dict.put("minInt", oconf.getLapse().getInt("minInt"));
         dict.put("leechFails", oconf.getLapse().getInt("leechFails"));
@@ -1786,7 +1786,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected JSONObject _revConf(Card card) {
+    protected ReviewingConf _revConf(Card card) {
         DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
@@ -2050,7 +2050,7 @@ public class SchedV2 extends AbstractSched {
             return _nextLrnIvl(card, ease);
         } else if (ease == Consts.BUTTON_ONE) {
             // lapse
-            JSONObject conf = _lapseConf(card);
+            ReviewingConf conf = _lapseConf(card);
             if (conf.getJSONArray("delays").length() > 0) {
                 return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
             }
@@ -2072,7 +2072,7 @@ public class SchedV2 extends AbstractSched {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             card.setLeft(_startingLeft(card));
         }
-        JSONObject conf = _lrnConf(card);
+        ReviewingConf conf = _lrnConf(card);
         if (ease == Consts.BUTTON_ONE) {
             // fail
             return _delayForGrade(conf, conf.getJSONArray("delays").length());
@@ -2201,9 +2201,9 @@ public class SchedV2 extends AbstractSched {
 
     protected void _burySiblings(Card card) {
         ArrayList<Long> toBury = new ArrayList<>();
-        JSONObject nconf = _newConf(card);
+        ReviewingConf nconf = _newConf(card);
         boolean buryNew = nconf.optBoolean("bury", true);
-        JSONObject rconf = _revConf(card);
+        ReviewingConf rconf = _revConf(card);
         boolean buryRev = rconf.optBoolean("bury", true);
         // loop through and remove from queues
         Cursor cur = null;
@@ -2689,8 +2689,7 @@ public class SchedV2 extends AbstractSched {
 
 
     public boolean leechActionSuspend(Card card) {
-        JSONObject conf;
-        conf = _cardConf(card).getLapse();
+        ReviewingConf conf = _cardConf(card).getLapse();
         return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
     }
 
