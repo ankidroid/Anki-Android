@@ -40,6 +40,7 @@ import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.Decks;
 
 import com.ichi2.libanki.decks.ReviewingConf;
+import com.ichi2.libanki.decks.ReviewConf;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -927,7 +928,7 @@ public class Sched extends SchedV2 {
     private int _nextRevIvl(Card card, int ease) {
         long delay = _daysLate(card);
         int interval = 0;
-        ReviewingConf conf = _revConf(card);
+        ReviewConf conf = _revConf(card);
         double fct = card.getFactor() / 1000.0;
         int ivl2 = _constrainedIvl((int)((card.getIvl() + delay/4) * 1.2), conf, card.getIvl());
         int ivl3 = _constrainedIvl((int)((card.getIvl() + delay/2) * fct), conf, ivl2);
@@ -945,7 +946,7 @@ public class Sched extends SchedV2 {
 
 
     /** Integer interval after interval factor and prev+1 constraints applied */
-    private int _constrainedIvl(int ivl, ReviewingConf conf, double prev) {
+    private int _constrainedIvl(int ivl, ReviewConf conf, double prev) {
     	double newIvl = ivl;
     	newIvl = ivl * conf.optDouble("ivlFct",1.0);
         return (int) Math.max(newIvl, prev + 1);
@@ -957,7 +958,7 @@ public class Sched extends SchedV2 {
     protected void _updateRevIvl(Card card, int ease) {
         try {
             int idealIvl = _nextRevIvl(card, ease);
-            ReviewingConf conf = _revConf(card);
+            ReviewConf conf = _revConf(card);
             card.setIvl(Math.min(
                     Math.max(_adjRevIvl(card, idealIvl), card.getIvl() + 1),
                     conf.getInt("maxIvl")));
@@ -1129,7 +1130,7 @@ public class Sched extends SchedV2 {
         long elapsed = card.getIvl() - (card.getODue() - mToday);
         double factor = ((card.getFactor() / 1000.0) + 1.2) / 2.0;
         int ivl = Math.max(1, Math.max(card.getIvl(), (int) (elapsed * factor)));
-        ReviewingConf conf = _revConf(card);
+        ReviewConf conf = _revConf(card);
         return Math.min(conf.getInt("maxIvl"), ivl);
     }
 

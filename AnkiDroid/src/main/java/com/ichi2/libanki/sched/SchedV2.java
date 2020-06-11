@@ -41,6 +41,7 @@ import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.Deck;
 import com.ichi2.libanki.decks.Decks;
 
+import com.ichi2.libanki.decks.ReviewConf;
 import com.ichi2.libanki.decks.ReviewingConf;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
@@ -1390,7 +1391,7 @@ public class SchedV2 extends AbstractSched {
      */
     protected int _nextRevIvl(Card card, int ease, boolean fuzz) {
         long delay = _daysLate(card);
-        ReviewingConf conf = _revConf(card);
+        ReviewConf conf = _revConf(card);
         double fct = card.getFactor() / 1000.0;
         double hardFactor = conf.optDouble("hardFactor", 1.2);
         int hardMin;
@@ -1485,7 +1486,7 @@ public class SchedV2 extends AbstractSched {
 
         long elapsed = card.getIvl() - (card.getODue() - mToday);
 
-        ReviewingConf conf = _revConf(card);
+        ReviewConf conf = _revConf(card);
 
         double easyBonus = 1;
         // early 3/4 reviews shouldn't decrease previous interval
@@ -1786,7 +1787,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected ReviewingConf _revConf(Card card) {
+    protected ReviewConf _revConf(Card card) {
         DConf conf = _cardConf(card);
         // normal deck
         if (card.getODid() == 0) {
@@ -2203,7 +2204,7 @@ public class SchedV2 extends AbstractSched {
         ArrayList<Long> toBury = new ArrayList<>();
         ReviewingConf nconf = _newConf(card);
         boolean buryNew = nconf.optBoolean("bury", true);
-        ReviewingConf rconf = _revConf(card);
+        ReviewConf rconf = _revConf(card);
         boolean buryRev = rconf.optBoolean("bury", true);
         // loop through and remove from queues
         Cursor cur = null;

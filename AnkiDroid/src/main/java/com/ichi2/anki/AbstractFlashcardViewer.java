@@ -98,6 +98,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.decks.Decks;
 import com.ichi2.libanki.decks.ReviewingConf;
+import com.ichi2.libanki.decks.ReviewConf;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -1694,7 +1695,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck
-            ReviewingConf revOptions = new ReviewingConf();
+            ReviewConf revOptions = new ReviewConf();
             long selectedDid = getCol().getDecks().selected();
             if (!getCol().getDecks().isDyn(selectedDid)) {
                 revOptions = getCol().getDecks().confForDid(selectedDid).getRev();

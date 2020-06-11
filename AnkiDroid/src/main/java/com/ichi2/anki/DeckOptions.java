@@ -49,6 +49,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.decks.DConf;
 import com.ichi2.libanki.decks.ROJSONComparator;
 import com.ichi2.libanki.decks.Deck;
+import com.ichi2.libanki.decks.ReviewConf;
 import com.ichi2.libanki.decks.ReviewingConf;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
@@ -123,7 +124,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("newPerDay", newOptions.getString("perDay"));
                 mValues.put("newBury", Boolean.toString(newOptions.optBoolean("bury", true)));
                 // rev
-                ReviewingConf revOptions = mOptions.getRev();
+                ReviewConf revOptions = mOptions.getRev();
                 mValues.put("revPerDay", revOptions.getString("perDay"));
                 mValues.put("easyBonus", Integer.toString((int) (revOptions.getDouble("ease4") * 100)));
                 mValues.put("revIvlFct", Integer.toString((int) (revOptions.getDouble("ivlFct") * 100)));
