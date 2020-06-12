@@ -262,6 +262,6 @@
 
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
 
-    <string name="api_version_developer_contact">Using uninitialized or deprecated JS api. Contact developer at %s, or view wiki to resolve this.</string>
-    <string name="api_version_no_developer_contact">Using uninitialized or deprecated JS api, view wiki to resolve this.</string>
+    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact the deck creator at %s, or view the wiki to resolve this manually.</string>
+    <string name="api_version_no_developer_contact">This card uses unsupported AnkiDroid features. View the wiki to resolve this manually.</string>
 </resources>
