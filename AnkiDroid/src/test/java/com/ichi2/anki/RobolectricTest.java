@@ -42,6 +42,8 @@ import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowDialog;
 import org.robolectric.shadows.ShadowLog;
 
+import java.util.ArrayList;
+
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
 import timber.log.Timber;
@@ -51,6 +53,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.robolectric.Shadows.shadowOf;
 
 public class RobolectricTest {
+
+    private ArrayList<ActivityController> controllersForCleanup = new ArrayList<>();
+
+    protected void saveControllerForCleanup(ActivityController controller) {
+        controllersForCleanup.add(controller);
+    }
 
     @Before
     public void setUp() {
@@ -69,6 +77,19 @@ public class RobolectricTest {
 
     @After
     public void tearDown() {
+
+        // If you don't clean up your ActivityControllers you will get OOM errors
+        for (ActivityController controller : controllersForCleanup) {
+            Timber.d("Calling destroy on controller %s", controller.get().toString());
+            try {
+                controller.destroy();
+            } catch (Exception e) {
+                // Any exception here is likely because the test code already destroyed it, which is fine
+                // No exception here should halt test execution since tests are over anyway.
+            }
+        }
+        controllersForCleanup.clear();
+
         // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
         CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
 
@@ -143,6 +164,7 @@ public class RobolectricTest {
     protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
         ActivityController<T> controller = Robolectric.buildActivity(clazz, i)
                 .create().start().resume().visible();
+        saveControllerForCleanup(controller);
         return controller.get();
     }
 
