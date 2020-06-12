@@ -187,10 +187,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int eta;
 
     // JavaScript Versioning
-    protected String apiVersion = "";
-    protected String developerContact = "";
+    protected String mCardSuppliedApiVersion = "";
+    protected String mCardSuppliedDeveloperContact  = "";
 
-    private String sJsApiVersion = "1.0.0";
+    private static final String sCurrentJsApiVersion = "1.0.0";
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -3086,16 +3086,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mFlipCardLayout.performClick();
                 return true;
             }
-            // JS api versioning see card.js
-            if (url.startsWith("signal:AnkiDroid_JS_apiVersion_")) {
-                String api = url.replace("signal:AnkiDroid_JS_","");
-                String[] api_dev = api.split("_and_");
-
-                apiVersion = api_dev[0].replace("apiVersion_","");
-                developerContact = api_dev[1].replace("developerContact_","");
-
-                return true;
-            }
             // card.html reload
             if (url.startsWith("signal:reload_card_html")) {
                 redrawCard();
@@ -3103,45 +3093,36 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // mark card using javascript
             if (url.startsWith("signal:mark_current_card")) {
-                executeCommand(COMMAND_MARK);
+                if (!requireApiVersion(mCardSuppliedApiVersion)) {
+                    showDeveloperContact();
+                } else {
+                    executeCommand(COMMAND_MARK);
+                }
                 return true;
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
-                if (!requireApiVersion(apiVersion)) {
-                    View parentLayout = findViewById(android.R.id.content);
-                    Snackbar snackbar = Snackbar
-                            .make(parentLayout, "Using uninitialized or deprecated JS api. View more for resolving this.", Snackbar.LENGTH_LONG)
-                            .setAction("VIEW", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent();
-                                    intent.setAction(Intent.ACTION_VIEW);
-                                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.setData(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki"));
-                                    getApplicationContext().startActivity(intent);
-                                }
-                            });
-                    snackbar.show();
-                    //UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.api_version_require, sJsApiVersion), true);
+                if (!requireApiVersion(mCardSuppliedApiVersion)) {
+                    showDeveloperContact();
+                } else {
+                    String mFlag = url.replaceFirst("signal:flag_","");
+                    switch (mFlag) {
+                        case "none": executeCommand(COMMAND_UNSET_FLAG);
+                            return true;
+                        case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
+                            return true;
+                        case "orange": executeCommand(COMMAND_TOGGLE_FLAG_ORANGE);
+                            return true;
+                        case "green": executeCommand(COMMAND_TOGGLE_FLAG_GREEN);
+                            return true;
+                        case "blue": executeCommand(COMMAND_TOGGLE_FLAG_BLUE);
+                            return true;
+                        default:
+                            Timber.d("No such Flag found.");
+                            return true;
+                    }
                 }
-                String mFlag = url.replaceFirst("signal:flag_","");
-                switch (mFlag) {
-                    case "none": executeCommand(COMMAND_UNSET_FLAG);
-                        return true;
-                    case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
-                        return true;
-                    case "orange": executeCommand(COMMAND_TOGGLE_FLAG_ORANGE);
-                        return true;
-                    case "green": executeCommand(COMMAND_TOGGLE_FLAG_GREEN);
-                        return true;
-                    case "blue": executeCommand(COMMAND_TOGGLE_FLAG_BLUE);
-                        return true;
-                    default:
-                        Timber.d("No such Flag found.");
-                        return true;
-                }
+                return true;
             }
 
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
@@ -3354,12 +3335,33 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
+    // show developer contact if js api used in card is deprecated
+    private void showDeveloperContact() {
+        View parentLayout = findViewById(android.R.id.content);
+        String snackbarMsg;
+        if (TextUtils.isEmpty(mCardSuppliedDeveloperContact )) {
+            snackbarMsg = getString(R.string.api_version_no_developer_contact);
+        } else {
+            snackbarMsg = getString(R.string.api_version_developer_contact, mCardSuppliedDeveloperContact );
+        }
+
+        Snackbar snackbar = Snackbar.make(parentLayout, snackbarMsg, Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        TextView snackTextView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        snackTextView.setTextColor(Color.WHITE);
+        snackTextView.setMaxLines(3);
+
+        snackbar.setActionTextColor(Color.MAGENTA)
+                .setAction(getString(R.string.view), view -> {
+                    openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki"));
+        });
+
+        snackbar.show();
+    }
+
     // api version if 1.0.0
     private boolean requireApiVersion(String apiVer) {
-        if (apiVer.equals(sJsApiVersion)) {
-            return true;
-        }
-        return false;
+        return apiVer.equals(sCurrentJsApiVersion);
     }
 
 
@@ -3412,6 +3414,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 see card.js for available functions
  */
     public class JavaScriptFunction {
+
+        @JavascriptInterface
+        public String init(String jsonData) {
+            JSONObject enabledJsApi = new JSONObject();
+
+            JSONObject data = new JSONObject(jsonData);
+            mCardSuppliedApiVersion = data.getString("version");
+            mCardSuppliedDeveloperContact  = data.getString("developer");
+
+            if (TextUtils.isEmpty(mCardSuppliedApiVersion) && TextUtils.isEmpty(mCardSuppliedDeveloperContact )) {
+                enabledJsApi.put("toggleFlag", "disabled");
+                enabledJsApi.put("markCard", "disabled");
+            } else if (requireApiVersion(mCardSuppliedApiVersion)) {
+                enabledJsApi.put("toggleFlag", "enabled");
+                enabledJsApi.put("markCard", "enabled");
+            } else {
+                enabledJsApi.put("toggleFlag", "disabled");
+                enabledJsApi.put("markCard", "disabled");
+            }
+
+            return String.valueOf(enabledJsApi);
+        }
 
         @JavascriptInterface
         public String ankiGetNewCardCount() {

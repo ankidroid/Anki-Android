@@ -75,11 +75,6 @@ function taFocus() {
     window.location.href = "signal:typefocus";
 }
 
-// api versioning of JavaScript / AbstractFlashcardViewer
-function ankidroidJSInit(ankiJSapiVersion, ankiDeveloperContact) {
-    window.location.href = "signal:AnkiDroid_JS_apiVersion_" + ankiJSapiVersion + "_and_" +"developerContact_" + ankiDeveloperContact
-}
-
 /*  Call displayCardAnswer() and answerCard() from anki deck template using javascript
  *  See also AbstractFlashcardViewer.
  */
@@ -123,7 +118,7 @@ function ankiToggleFlag(flag) {
             case 2: window.location.href = "signal:flag_orange"; break;
             case 3: window.location.href = "signal:flag_green"; break;
             case 4: window.location.href = "signal:flag_blue"; break;
-            default: console.log('No Flag Found'); break;
+            default: break;
         }
     } else {
         window.location.href = "signal:flag_" + flag;
