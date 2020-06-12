@@ -84,6 +84,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
+import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.CardAppearance;
@@ -186,9 +187,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int eta;
 
     // JavaScript Versioning
-    protected String apiVersion;
-    protected String developerContact;
+    protected String apiVersion = "";
+    protected String developerContact = "";
 
+    private String sJsApiVersion = "1.0.0";
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -3105,7 +3107,25 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return true;
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
-            if (url.startsWith("signal:flag_") && "1.0.0".equals(apiVersion)) {
+            if (url.startsWith("signal:flag_")) {
+                if (!requireApiVersion(apiVersion)) {
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snackbar = Snackbar
+                            .make(parentLayout, "Using uninitialized or deprecated JS api. View more for resolving this.", Snackbar.LENGTH_LONG)
+                            .setAction("VIEW", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent();
+                                    intent.setAction(Intent.ACTION_VIEW);
+                                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.setData(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki"));
+                                    getApplicationContext().startActivity(intent);
+                                }
+                            });
+                    snackbar.show();
+                    //UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.api_version_require, sJsApiVersion), true);
+                }
                 String mFlag = url.replaceFirst("signal:flag_","");
                 switch (mFlag) {
                     case "none": executeCommand(COMMAND_UNSET_FLAG);
@@ -3333,6 +3353,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     .show();
         }
     }
+
+    // api version if 1.0.0
+    private boolean requireApiVersion(String apiVer) {
+        if (apiVer.equals(sJsApiVersion)) {
+            return true;
+        }
+        return false;
+    }
+
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     protected String getTypedInputText() {

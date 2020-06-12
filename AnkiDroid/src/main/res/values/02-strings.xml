@@ -261,4 +261,6 @@
     <string name="restore_default">Restore Default</string>
 
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+
+    <string name="api_version_require">Using JavaScript function without registering with api version %s</string>
 </resources>
