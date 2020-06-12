@@ -1,4 +1,8 @@
 ## JavaScript API for calling native AnkiDroid functions inside WebView
+This api allow deck developer to add functionality to cards that can call native functions defined in AnkiDroid. This can be used to design whole new layout for buttons, cards info top bar card counts, mark, flag etc. 
+<br> View this files also for additional information.
+<br>[AbstractFlashcardViewer.java](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/java/com/ichi2/anki/AbstractFlashcardViewer.java)
+<br>[card.js](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/assets/scripts/card.js)
 
 To initialize the JavaScript API usage.
 ### Initialize 
@@ -11,8 +15,8 @@ For using these functions, api version and developer contact must be provided.
 The current api version is ```1.0.0```.
 
 #### Type of return value
-String <br>
-All the available functions with ```enabled/disabled``` status.
+```String```
+<br>All the available functions with ```enabled/disabled``` status.
 #### Usage 
 ```javascript
 <script>
@@ -34,7 +38,7 @@ When a card is shown, only the question is shown at first. So use this to perfor
 ```javascript
 <button onclick="showAnswer();">Show Answer From JavaScript</button>
 ```
-#### Again/Hard/Good/Easy
+## Again/Hard/Good/Easy
 The following buttons can be called when available, there is case where only ```Again``` and ```Hard``` present so that can also be handled using JavaScript code.
 The following function will be called when buttons available on screen.
 
@@ -48,6 +52,7 @@ Perform ```Again``` button click
 <button onclick="buttonAnswerEase1();">Again From JS</button>
 ```
 
+
 ### Hard
 #### Name
 ```buttonAnswerEase2()```
@@ -57,6 +62,7 @@ Perform ```Hard``` button click
 ```javascript
 <button onclick="buttonAnswerEase2();">Hard From JS</button>
 ```
+
 
 ### Good
 #### Name
@@ -68,6 +74,7 @@ Perform ```Good``` button click
 <button onclick="buttonAnswerEase3();">Good From JS</button>
 ```
 
+
 ### Easy
 #### Name
 ```buttonAnswerEase4()```
@@ -77,6 +84,7 @@ Perform ```Easy``` button click
 ```javascript
 <button onclick="buttonAnswerEase4();">Easy From JS</button>
 ```
+
 
 ### Mark / Unmark current card
 #### Name
@@ -88,9 +96,10 @@ Adds a tag called "Marked" the current note, so it can be easily found in a sear
 <button onclick="ankiMarkCard();">Mark</button>
 ```
 
+
 ### Flag / Remove flag in current card
 #### Name 
-```ankiToggleCard()```
+```ankiToggleFlag()```
 #### Info
 Adds a colored marker to the card, or toggles it off. Flags will appear during study, and it can be easily found in a search.
 Pass the arguments ```none```, ```"red"```, ```"orange"```, ```"green"```, ```"blue"``` for flagging respective flag.
@@ -104,11 +113,11 @@ Number from ```0...4``` can be used to flag.
 For flagging <b>red</b> in current card.
 #### Usage
 ```javascript
-<button onclick="ankiToggleCard("red");">Red Flag</button>
+<button onclick="ankiToggleFlag("red");">Red Flag</button>
 ```
 For flagging <b>green</b> in current card
 ```javascript
-<button onclick="ankiToggleCard(3);">Green Flag</button>
+<button onclick="ankiToggleFlag(3);">Green Flag</button>
 ```
 
 ### Available information about current cards in WebView ```Front / Back side of Card```
@@ -124,6 +133,8 @@ Return number of new card count
 ```javascript
 console.log(AnkiDroidJS.ankiGetNewCardCount());
 ```
+
+
 ### Learn card count
 #### Name 
 ```AnkiDroidJS.ankiGetLrnCardCount()```
@@ -135,6 +146,8 @@ Return number of learn card count
 ```javascript
 console.log(AnkiDroidJS.ankiGetLrnCardCount());
 ```
+
+
 ### Review card count
 #### Name 
 ```AnkiDroidJS.ankiGetRevCardCount()```
@@ -146,6 +159,7 @@ Return number of review card count
 ```javascript
 console.log(AnkiDroidJS.ankiGetRevCardCount());
 ```
+
 
 ### ETA
 #### Name 
@@ -159,16 +173,19 @@ Return remaining time to complete review
 console.log(AnkiDroidJS.ankiGetETA());
 ```
 
+
 ### Mark status
 #### Name
 ```AnkiDroidJS.ankiGetCardMark()```
 #### Type of return value
 ```true/false```
-#### Info Return current card marked or not. Return boolean value of mark status, true for marked, false for unmarked
+#### Info 
+Return current card marked or not. Return boolean value of mark status, true for marked, false for unmarked
 #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardMark());
 ```
+
 
 ### Flag status
 #### Name
@@ -182,6 +199,7 @@ Return int value of flag 0-none, 1-red, 2-orange, 3-green, 4-blue
 console.log(AnkiDroidJS.ankiGetCardFlag());
 ```
 
+
 ### Review 
 #### Name
 ```AnkiDroidJS.ankiGetCardReps()```
@@ -193,6 +211,7 @@ Return number of reviews made on current card
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardReps());
 ```
+
 
 ### Lapses
 #### Name
@@ -206,6 +225,7 @@ Return number of times the card went from a "was answered correctly"
 console.log(AnkiDroidJS.ankiGetCardLapses());
 ```
 
+
 ### Interval
 #### Name
 ```AnkiDroidJS.ankiGetCardInterval()```
@@ -217,6 +237,7 @@ interval (used in SRS algorithm). Negative = seconds, positive = days
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardInterval());
 ```
+
 
 ### Due
 #### Name 
@@ -235,6 +256,7 @@ learning: integer timestamp
 console.log(AnkiDroidJS.ankiGetCardDue());
 ```
 
+
 ### Queue
 #### Name
 ```AnkiDroidJS.ankiGetCardQueue()```
@@ -242,15 +264,21 @@ console.log(AnkiDroidJS.ankiGetCardDue());
 ```int```
 #### Info
 ```
- -3=user buried(In scheduler 2),
- -2=sched buried (In scheduler 2), 
- -2=buried(In scheduler 1),
- -1=suspended,
-  0=new, 1=learning, 2=review (as for type)
-  3=in learning, next rev in at least a day after the previous review
-  4=preview
+ -3 = user buried(In scheduler 2),
+ -2 = sched buried (In scheduler 2), 
+ -2 = buried(In scheduler 1),
+ -1 = suspended,
+  0 = new, 1=learning, 2=review (as for type)
+  3 = in learning, next rev in at least a day after the previous review
+  4 = preview
 ```
 #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardQueue());
 ```
+
+### Linked issues & PR
+[#6377](https://github.com/ankidroid/Anki-Android/pull/6377) 
+<br>[#6307](https://github.com/ankidroid/Anki-Android/pull/6307) 
+<br>[#6388](https://github.com/ankidroid/Anki-Android/pull/6388) 
+<br>[#6393](https://github.com/ankidroid/Anki-Android/pull/6393) 
