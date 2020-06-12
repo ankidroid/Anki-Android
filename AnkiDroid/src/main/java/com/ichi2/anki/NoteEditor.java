@@ -573,6 +573,9 @@ public class NoteEditor extends AnkiActivity {
         if (!mAddNote && mCurrentEditedCard != null) {
             Timber.i("onCollectionLoaded() Edit note activity successfully started with card id %d", mCurrentEditedCard.getId());
         }
+        if (mAddNote) {
+            Timber.i("onCollectionLoaded() Edit note activity successfully started in add card mode with node id %d", mEditorNote.getId());
+        }
 
         //set focus to FieldEditText 'first' on startup like Anki desktop
         if (mEditFields != null && !mEditFields.isEmpty()) {
@@ -1504,15 +1507,10 @@ public class NoteEditor extends AnkiActivity {
         // Build comma separated list of card names
         Timber.d("updateCards() template count is %s", tmpls.length());
 
-        // This can happen if an Activity result is coming in across a NoteEditor Activity restart
-        if (!mEditorNote.cards().contains(mCurrentEditedCard)) {
-            Timber.d("trying to updateCards but our card seems to have disappeared...");
-            return;
-        }
         for (int i = 0; i < tmpls.length(); i++) {
             String name = tmpls.getJSONObject(i).optString("name");
-            // If more than one card then make currently selected card underlined
-            if (!mAddNote && tmpls.length() > 1 && model == mEditorNote.model() &&
+            // If more than one card, and we have an existing card, underline existing card
+            if (!mAddNote && tmpls.length() > 1 && model == mEditorNote.model() && mCurrentEditedCard != null &&
                 mCurrentEditedCard.template().optString("name").equals(name)) {
                 name = "<u>" + name + "</u>";
             }
