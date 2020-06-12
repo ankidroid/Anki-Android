@@ -430,6 +430,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         // Now confirm everything to persist it to the database
         Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm));
         advanceRobolectricLooper();
+        advanceRobolectricLooper();
         Assert.assertNotEquals("Change not in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
         Assert.assertEquals("Model should have 2 templates now", 2, getCurrentDatabaseModelCopy(modelName).getJSONArray("tmpls").length());
         Assert.assertEquals("should be two cards", 2, getModelCardCount(collectionBasicModelOriginal));
