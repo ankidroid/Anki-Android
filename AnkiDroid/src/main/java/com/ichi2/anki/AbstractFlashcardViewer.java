@@ -189,7 +189,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // JavaScript Versioning
     protected String mCardSuppliedApiVersion = "";
-    protected String developerContact = "";
+    protected String mCardSuppliedDeveloperContact  = "";
 
     private static final String sCurrentJsApiVersion = "1.0.0";
     /**
@@ -3334,10 +3334,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private void showDeveloperContact() {
         View parentLayout = findViewById(android.R.id.content);
         String snackbarMsg;
-        if (TextUtils.isEmpty(developerContact)) {
+        if (TextUtils.isEmpty(mCardSuppliedDeveloperContact )) {
             snackbarMsg = getString(R.string.api_version_no_developer_contact);
         } else {
-            snackbarMsg = getString(R.string.api_version_developer_contact, developerContact);
+            snackbarMsg = getString(R.string.api_version_developer_contact, mCardSuppliedDeveloperContact );
         }
 
         Snackbar snackbar = Snackbar.make(parentLayout, snackbarMsg, Snackbar.LENGTH_LONG);
@@ -3416,9 +3416,9 @@ see card.js for available functions
 
             JSONObject data = new JSONObject(jsonData);
             mCardSuppliedApiVersion = data.getString("version");
-            developerContact = data.getString("developer");
+            mCardSuppliedDeveloperContact  = data.getString("developer");
 
-            if (TextUtils.isEmpty(mCardSuppliedApiVersion) && TextUtils.isEmpty(developerContact)) {
+            if (TextUtils.isEmpty(mCardSuppliedApiVersion) && TextUtils.isEmpty(mCardSuppliedDeveloperContact )) {
                 enabledJsApi.put("toggleFlag", "disabled");
                 enabledJsApi.put("markCard", "disabled");
             } else if (mCardSuppliedApiVersion.equals(sCurrentJsApiVersion)) {
