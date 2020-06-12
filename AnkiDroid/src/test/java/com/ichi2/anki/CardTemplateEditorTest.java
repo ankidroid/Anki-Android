@@ -55,6 +55,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(templateEditorController);
         CardTemplateEditor testEditor = (CardTemplateEditor)templateEditorController.get();
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
 
@@ -71,6 +72,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         templateEditorController.saveInstanceState(outBundle);
         templateEditorController.pause().stop().destroy();
         templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class).create(outBundle).start().resume().visible();
+        saveControllerForCleanup(templateEditorController);
         testEditor = (CardTemplateEditor)templateEditorController.get();
         ShadowActivity shadowTestEditor = shadowOf(testEditor);
         Assert.assertTrue("model change not preserved across activity lifecycle?", testEditor.modelHasChanged());
@@ -93,6 +95,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
 
         // Get going for content edit assertions again...
         templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(templateEditorController);
         testEditor = (CardTemplateEditor)templateEditorController.get();
         shadowTestEditor = shadowOf(testEditor);
         templateFront = testEditor.findViewById(R.id.front_edit);
@@ -134,6 +137,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(templateEditorController);
         CardTemplateEditor testEditor = (CardTemplateEditor)templateEditorController.get();
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
         Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());
@@ -174,6 +178,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(templateEditorController);
         CardTemplateEditor testEditor = (CardTemplateEditor)templateEditorController.get();
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 0));
 
@@ -237,6 +242,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(templateEditorController);
         CardTemplateEditor testEditor = (CardTemplateEditor)templateEditorController.get();
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
         Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());
@@ -319,6 +325,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(templateEditorController);
         CardTemplateEditor testEditor = (CardTemplateEditor)templateEditorController.get();
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
         Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());
@@ -442,6 +449,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(templateEditorController);
         CardTemplateEditor testEditor = (CardTemplateEditor) templateEditorController.get();
         Assert.assertFalse("Model should not have changed yet", testEditor.modelHasChanged());
         Assert.assertEquals("Model should have 2 templates now", 2, testEditor.getTempModel().getTemplateCount());

@@ -49,7 +49,8 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath);
         intent.putExtra("index", 0);
 
-        ActivityController previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
+        ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
+        saveControllerForCleanup((previewerController));
         TestCardTemplatePreviewer testCardTemplatePreviewer = (TestCardTemplatePreviewer) previewerController.get();
         Assert.assertTrue("model change did not show up?",
                 testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).q().contains("PREVIEWER_TEST") &&
@@ -60,6 +61,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         previewerController.saveInstanceState(outBundle);
         previewerController.pause().stop().destroy();
         previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class).create(outBundle).start().resume().visible();
+        saveControllerForCleanup(previewerController);
         testCardTemplatePreviewer = (TestCardTemplatePreviewer) previewerController.get();
         Assert.assertTrue("model change not preserved in lifecycle??",
                 testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).q().contains("PREVIEWER_TEST") &&
@@ -87,13 +89,15 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         intent.putExtra("cardList", new long[] { testCard1.getId(), testCard2.getId() } );
         intent.putExtra("index", 0);
 
-        ActivityController previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
+        ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
+        saveControllerForCleanup(previewerController);
 
         // Take it through a destroy/re-create lifecycle in order to test instance state persistence
         Bundle outBundle = new Bundle();
         previewerController.saveInstanceState(outBundle);
         previewerController.pause().stop().destroy();
         previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class).create(outBundle).start().resume().visible();
+        saveControllerForCleanup((previewerController));
         TestCardTemplatePreviewer testCardTemplatePreviewer = (TestCardTemplatePreviewer) previewerController.get();
 
         // Make sure we can click
