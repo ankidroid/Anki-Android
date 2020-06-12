@@ -2603,6 +2603,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             super(context);
         }
 
+
+        @Override
+        public void loadDataWithBaseURL(@Nullable String baseUrl, String data, @Nullable String mimeType, @Nullable String encoding, @Nullable String historyUrl) {
+            if (!AbstractFlashcardViewer.this.wasDestroyed()) {
+                super.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl);
+            } else {
+                Timber.w("Not loading card - Activity is in the process of being destroyed.");
+            }
+        }
+
+
         @Override
         protected void onScrollChanged(int horiz, int vert, int oldHoriz, int oldVert) {
             super.onScrollChanged(horiz, vert, oldHoriz, oldVert);
