@@ -3086,16 +3086,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mFlipCardLayout.performClick();
                 return true;
             }
-            // JS api versioning see card.js
-            if (url.startsWith("signal:AnkiDroid_JS_apiVersion_")) {
-                String api = url.replace("signal:AnkiDroid_JS_","");
-                String[] api_dev = api.split("_and_");
-
-                apiVersion = api_dev[0].replace("apiVersion_","");
-                developerContact = api_dev[1].replace("developerContact_","");
-
-                return true;
-            }
             // card.html reload
             if (url.startsWith("signal:reload_card_html")) {
                 redrawCard();
@@ -3109,22 +3099,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
                 if (!requireApiVersion(apiVersion)) {
-                    View parentLayout = findViewById(android.R.id.content);
-                    Snackbar snackbar = Snackbar
-                            .make(parentLayout, "Using uninitialized or deprecated JS api. View more for resolving this.", Snackbar.LENGTH_LONG)
-                            .setAction("VIEW", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent();
-                                    intent.setAction(Intent.ACTION_VIEW);
-                                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.setData(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki"));
-                                    getApplicationContext().startActivity(intent);
-                                }
-                            });
-                    snackbar.show();
-                    //UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.api_version_require, sJsApiVersion), true);
+                    showDeveloperContact();
                 }
                 String mFlag = url.replaceFirst("signal:flag_","");
                 switch (mFlag) {
@@ -3354,6 +3329,35 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
+    // show developer contact if js api used in card is deprecated
+    private void showDeveloperContact() {
+        View parentLayout = findViewById(android.R.id.content);
+        String snackbarMsg;
+        if (developerContact.equals("")) {
+            snackbarMsg = getString(R.string.api_version_no_developer_contact);
+        } else {
+            snackbarMsg = getString(R.string.api_version_developer_contact, developerContact);
+        }
+
+        Snackbar snackbar = Snackbar.make(parentLayout, snackbarMsg, 5000);
+        View snackbarView = snackbar.getView();
+        TextView snackTextView = (TextView) snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        snackTextView.setTextColor(Color.WHITE);
+        snackTextView.setMaxLines(3);
+
+        snackbar.setActionTextColor(Color.MAGENTA)
+                .setAction("VIEW", view -> {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setData(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki"));
+                    getApplicationContext().startActivity(intent);
+        });
+
+        snackbar.show();
+    }
+
     // api version if 1.0.0
     private boolean requireApiVersion(String apiVer) {
         if (apiVer.equals(sJsApiVersion)) {
@@ -3412,6 +3416,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 see card.js for available functions
  */
     public class JavaScriptFunction {
+
+        @JavascriptInterface
+        public void init(String api, String contact) {
+            apiVersion = api;
+            developerContact = contact;
+        }
 
         @JavascriptInterface
         public String ankiGetNewCardCount() {
