@@ -1,8 +1,25 @@
+/*
+ Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+
+ This program is free software; you can redistribute it and/or modify it under
+ the terms of the GNU General Public License as published by the Free Software
+ Foundation; either version 3 of the License, or (at your option) any later
+ version.
+
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along with
+ this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.ichi2.anki;
 
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.widget.TextView;
 
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.IField;
@@ -12,6 +29,7 @@ import com.ichi2.utils.JSONObject;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
 import androidx.test.core.app.ActivityScenario;
@@ -24,6 +42,13 @@ import static org.robolectric.Shadows.shadowOf;
 @SuppressWarnings("SameParameterValue")
 @RunWith(AndroidJUnit4.class)
 public class NoteEditorTest extends RobolectricTest {
+
+    @Test
+    @Config(qualifiers = "en")
+    public void verifyCardsList() {
+        NoteEditor n = getNoteEditorEditingExistingBasicNote("Test", "Note", FromScreen.DECK_LIST);
+        assertThat("Cards list is correct", ((TextView) n.findViewById(R.id.CardEditorCardsText)).getText().toString(), is("Cards: Card 1"));
+    }
 
     @Test
     public void whenEditingMultimediaEditUsesCurrentValueOfFields() {
@@ -199,10 +224,15 @@ public class NoteEditorTest extends RobolectricTest {
 
     private <T extends NoteEditor> T getNoteEditorAddingNote(FromScreen from, Class<T> clazz) {
         Intent i = new Intent();
-        if (from == FromScreen.REVIEWER) {
-            i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD);
-        } else {
-            throw new IllegalStateException(" unhandled");
+        switch (from) {
+            case REVIEWER:
+                i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD);
+                break;
+            case DECK_LIST:
+                i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
+                break;
+            default:
+                throw new IllegalStateException(" unhandled");
         }
 
         return super.startActivityNormallyOpenCollectionWithIntent(clazz, i);
@@ -216,17 +246,23 @@ public class NoteEditorTest extends RobolectricTest {
     private <T extends NoteEditor> T getNoteEditorEditingExistingBasicNote(Note n, FromScreen from, Class<T> clazz) {
 
         Intent i = new Intent();
-        if (from == FromScreen.REVIEWER) {
-            i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
-            AbstractFlashcardViewer.setEditorCard(n.cards().get(0));
-        } else {
-            throw new IllegalStateException(from.toString() + " unhandled");
+        switch (from) {
+            case REVIEWER:
+                i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
+                AbstractFlashcardViewer.setEditorCard(n.cards().get(0));
+                break;
+            case DECK_LIST:
+                i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
+                break;
+            default:
+                throw new IllegalStateException(from.toString() + " unhandled");
         }
 
         return super.startActivityNormallyOpenCollectionWithIntent(clazz, i);
     }
 
     private enum FromScreen {
+        DECK_LIST,
         REVIEWER
     }
 
