@@ -1,9 +1,19 @@
 ## JavaScript API for calling native AnkiDroid functions inside WebView
 
+To initialize the JavaScript API usage.
+### Initialize 
+#### Name
+```javascript
+AnkiDroidJS.init()
+```
+#### Info
 For using these functions, api version and developer contact must be provided.
 The current api version is ```1.0.0```.
-To initialize the JavaScript API usage.
 
+#### Type of return value
+String <br>
+All the available functions with ```enabled/disabled``` status.
+#### Usage 
 ```javascript
 <script>
 var jsApi = { "version" : "1.0.0", "developer" : "username@gmail.com" }
@@ -14,8 +24,6 @@ var apiStatus = JSON.parse(apiData);
 console.log(apiStatus);
 </script>
 ```
-
-All the available functions with ```enabled/disabled``` status.
 
 ### Show Answer
 #### Name
@@ -30,7 +38,7 @@ When a card is shown, only the question is shown at first. So use this to perfor
 The following buttons can be called when available, there is case where only ```Again``` and ```Hard``` present so that can also be handled using JavaScript code.
 The following function will be called when buttons available on screen.
 
-#### Again
+### Again
 #### Name
 ```buttonAnswerEase1()```
 #### Info
@@ -40,7 +48,7 @@ Perform ```Again``` button click
 <button onclick="buttonAnswerEase1();">Again From JS</button>
 ```
 
-#### Hard
+### Hard
 #### Name
 ```buttonAnswerEase2()```
 #### Info
@@ -50,7 +58,7 @@ Perform ```Hard``` button click
 <button onclick="buttonAnswerEase2();">Hard From JS</button>
 ```
 
-#### Good
+### Good
 #### Name
 ```buttonAnswerEase3()```
 #### Info
@@ -60,7 +68,7 @@ Perform ```Good``` button click
 <button onclick="buttonAnswerEase3();">Good From JS</button>
 ```
 
-#### Easy
+### Easy
 #### Name
 ```buttonAnswerEase4()```
 #### Info
@@ -70,7 +78,7 @@ Perform ```Easy``` button click
 <button onclick="buttonAnswerEase4();">Easy From JS</button>
 ```
 
-#### Mark / Unmark current card
+### Mark / Unmark current card
 #### Name
 ```ankiMarkCard()```
 #### Info
@@ -80,7 +88,7 @@ Adds a tag called "Marked" the current note, so it can be easily found in a sear
 <button onclick="ankiMarkCard();">Mark</button>
 ```
 
-#### Flag / Remove flag in current card
+### Flag / Remove flag in current card
 #### Name 
 ```ankiToggleCard()```
 #### Info
@@ -105,105 +113,134 @@ For flagging <b>green</b> in current card
 
 ### Available information about current cards in WebView ```Front / Back side of Card```
 
-#### New card count
+### New card count
 #### Name 
 ```AnkiDroidJS.ankiGetNewCardCount()```
 #### Type of return value
-
+```String```
 #### Info
 Return number of new card count
 #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetNewCardCount());
 ```
-#### Learn card count
-<b>Name:</b> ```AnkiDroidJS.ankiGetLrnCardCount()```
+### Learn card count
+#### Name 
+```AnkiDroidJS.ankiGetLrnCardCount()```
 #### Type of return value
-<b>Info:</b> Return number of learn card count
-<b>Usage:</b>
+```String```
+#### Info
+Return number of learn card count
+#### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetLrnCardCount());
 ```
-#### Review card count
-<b>Name:</b> ```AnkiDroidJS.ankiGetRevCardCount()```
+### Review card count
+#### Name 
+```AnkiDroidJS.ankiGetRevCardCount()```
 #### Type of return value
-<b>Info:</b> Return number of review card count in String type
-<b>Usage:</b>
+```String```
+#### Info
+Return number of review card count
+#### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetRevCardCount());
 ```
 
-#### ETA
-<b>Name:</b> ```AnkiDroidJS.ankiGetETA()```
+### ETA
+#### Name 
+```AnkiDroidJS.ankiGetETA()```
 #### Type of return value
-<b>Info:</b> Return remaining time to complete review in int type
-<b>Usage:</b> 
+```int```
+#### Info
+Return remaining time to complete review
+#### Usage 
 ```javascript
 console.log(AnkiDroidJS.ankiGetETA());
 ```
 
-#### Mark status
-<b>Name:</b> ```AnkiDroidJS.ankiGetCardMark()```
+### Mark status
+#### Name
+```AnkiDroidJS.ankiGetCardMark()```
 #### Type of return value
-<b>Info:</b> Return current card marked or not.
-<b>Usage:</b> Return boolean value of mark status, true for marked, false for unmarked
+```true/false```
+#### Info Return current card marked or not. Return boolean value of mark status, true for marked, false for unmarked
+#### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardMark());
 ```
 
-#### Flag status
-<b>Name:</b> ```AnkiDroidJS.ankiGetCardFlag()```
+### Flag status
+#### Name
+```AnkiDroidJS.ankiGetCardFlag()```
 #### Type of return value
-<b>Info:</b> Return int value of flag 0-none, 1-red, 2-orange, 3-green, 4-blue
-<b>Usage:</b>
+```int```
+#### Info
+Return int value of flag 0-none, 1-red, 2-orange, 3-green, 4-blue
+#### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardFlag());
 ```
 
-#### Review 
-<b>Name:</b> ```AnkiDroidJS.ankiGetCardReps()```
+### Review 
+#### Name
+```AnkiDroidJS.ankiGetCardReps()```
 #### Type of return value
-<b>Info:</b> Return number of reviews made on current card
-<b>Usage:</b>
+```int```
+#### Info
+Return number of reviews made on current card
+#### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardReps());
 ```
 
-#### Lapses
-<b>Name:</b> ```AnkiDroidJS.ankiGetCardLapses()```
+### Lapses
+#### Name
+```AnkiDroidJS.ankiGetCardLapses()```
 #### Type of return value
-<b>Info:</b> Return number of times the card went from a "was answered correctly" 
-<b>Usage:</b>
+```int```
+#### Info 
+Return number of times the card went from a "was answered correctly" 
+#### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardLapses());
 ```
 
-#### Interval
-<b>Name:</b> ```AnkiDroidJS.ankiGetCardInterval()```
+### Interval
+#### Name
+```AnkiDroidJS.ankiGetCardInterval()```
 #### Type of return value
-<b>Info:</b>
-<b>Usage:</b>
+```int```
+#### Info
+interval (used in SRS algorithm). Negative = seconds, positive = days
+#### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardInterval());
 ```
 
-#### Due
-<b>Name:</b> ```AnkiDroidJS.ankiGetCardDue()```
+### Due
+#### Name 
+```AnkiDroidJS.ankiGetCardDue()```
 #### Type of return value
-<b>Info:</b> Due is used differently for different card types: 
+```long```
+#### Info
+Due is used differently for different card types: 
 ```
 new: note id or random int
 due: integer day, relative to the collection's creation time
 learning: integer timestamp
 ```
-<b>Usage:</b>
+#### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardDue());
 ```
 
-#### Queue
-<b>Name:</b> ```AnkiDroidJS.ankiGetCardQueue()```
-#### Type of return value<b>Info:</b>
+### Queue
+#### Name
+```AnkiDroidJS.ankiGetCardQueue()```
+#### Type of return value
+```int```
+#### Info
 ```
  -3=user buried(In scheduler 2),
  -2=sched buried (In scheduler 2), 
@@ -213,49 +250,7 @@ console.log(AnkiDroidJS.ankiGetCardDue());
   3=in learning, next rev in at least a day after the previous review
   4=preview
 ```
-<b>Usage:</b>
+#### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardQueue());
 ```
-
-
-```javascript
-showAnswer()
-buttonAnswerEase1()
-buttonAnswerEase2()
-buttonAnswerEase3()
-buttonAnswerEase4()
-ankiMarkCard()
-ankiToggleFlag()
-```
-<b>_showAnswer()_</b>
-<br><b>Usage:</b> Perform Show Answer Click using this function
-
-<b>_buttonAnswerEase1()_</b>
-<br><b>Usage:</b> Perform Again Click using this function
-```javascript
-<button onclick="buttonAnswerEase1();">Again</button>
-```
-Same for other ```buttonAnswerEase```
-```javascript
-<button onclick="buttonAnswerEase1();">Again</button>
-<button onclick="buttonAnswerEase2();">Hard</button>
-<button onclick="buttonAnswerEase3();">Good</button>
-<button onclick="buttonAnswerEase4();">Easy</button>
-```
-
-
-<b>Usage:</b> pass ```0 to 4``` in <b>ankiToggleCard()</b>
-
-### Following information is available in Card
-```
-New Card Count    --> AnkiDroidJS.ankiGetNewCardCount()
-Learn Card Count  --> AnkiDroidJS.ankiGetLrnCardCount()
-Review Card Count --> AnkiDroidJS.ankiGetRevCardCount()
-
-ETA  --> AnkiDroidJS.ankiGetETA()
-Mark --> AnkiDroidJS.ankiGetCardMark()
-Flag --> AnkiDroidJS.ankiGetCardFlag()
-``` 
-
-
