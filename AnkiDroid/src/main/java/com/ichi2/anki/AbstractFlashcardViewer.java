@@ -3426,9 +3426,12 @@ see card.js for available functions
             if (TextUtils.isEmpty(mCardSuppliedApiVersion) && TextUtils.isEmpty(mCardSuppliedDeveloperContact )) {
                 enabledJsApi.put("toggleFlag", "disabled");
                 enabledJsApi.put("markCard", "disabled");
-            } else if (requireApiVersion(mCardSuppliedDeveloperContact)) {
+            } else if (requireApiVersion(mCardSuppliedApiVersion)) {
                 enabledJsApi.put("toggleFlag", "enabled");
                 enabledJsApi.put("markCard", "enabled");
+            } else {
+                enabledJsApi.put("toggleFlag", "disabled");
+                enabledJsApi.put("markCard", "disabled");
             }
 
             return String.valueOf(enabledJsApi);
