@@ -136,14 +136,15 @@ dependencies {
     implementation 'androidx.browser:browser:1.2.0'
     implementation 'androidx.exifinterface:exifinterface:1.2.0'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+    implementation "androidx.multidex:multidex:2.0.1"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.sqlite:sqlite-framework:2.1.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'io.requery:sqlite-android:3.31.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
-    implementation "androidx.multidex:multidex:2.0.1"
 
     // May need a resolution strategy for support libs to our versions
     implementation'ch.acra:acra-http:5.5.1'

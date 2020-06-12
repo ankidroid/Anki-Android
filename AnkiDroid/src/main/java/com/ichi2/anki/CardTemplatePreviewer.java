@@ -39,7 +39,7 @@ import timber.log.Timber;
 public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private String mEditedModelFileName = null;
     private JSONObject mEditedModel = null;
-    private int mIndex;
+    private int mOrdinal;
     private long[] mCardList;
 
     @Override
@@ -53,7 +53,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
         mEditedModelFileName = parameters.getString(TemporaryModel.INTENT_MODEL_FILENAME);
         mCardList = parameters.getLongArray("cardList");
-        mIndex = parameters.getInt("index");
+        mOrdinal = parameters.getInt("ordinal");
 
         if (mEditedModelFileName != null) {
             Timber.d("onCreate() loading edited model from %s", mEditedModelFileName);
@@ -64,9 +64,9 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             }
         }
 
-        if (mEditedModel != null && mIndex != -1) {
+        if (mEditedModel != null && mOrdinal != -1) {
             Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting");
-            mCurrentCard = getDummyCard(mEditedModel, mIndex);
+            mCurrentCard = getDummyCard(mEditedModel, mOrdinal);
             if (mCurrentCard == null) {
                 UIUtils.showSimpleSnackbar(this, R.string.invalid_template, false);
                 finishWithoutAnimation();
@@ -82,7 +82,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mCurrentCard == null || mIndex < 0) {
+        if (mCurrentCard == null || mOrdinal < 0) {
             Timber.e("CardTemplatePreviewer started with empty card list or invalid index");
             finishWithoutAnimation();
             return;
@@ -121,7 +121,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(TemporaryModel.INTENT_MODEL_FILENAME, mEditedModelFileName);
         outState.putLongArray("cardList", mCardList);
-        outState.putInt("index", mIndex);
+        outState.putInt("ordinal", mOrdinal);
         super.onSaveInstanceState(outState);
     }
 
@@ -130,7 +130,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         if (mCurrentCard == null) {
-            mCurrentCard = new PreviewerCard(col, mCardList[mIndex]);
+            mCurrentCard = new PreviewerCard(col, mCardList[mOrdinal]);
         }
         displayCardQuestion();
         showBackIcon();
@@ -142,7 +142,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
     /** Get a dummy card */
     protected @Nullable Card getDummyCard(JSONObject model, int ordinal) {
-        Timber.d("getDummyCard() Creating dummy note for position %s", ordinal);
+        Timber.d("getDummyCard() Creating dummy note for ordinal %s", ordinal);
         if (model == null) {
             return null;
         }

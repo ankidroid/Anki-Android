@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:id="@+id/card_template_editor_main"
         android:layout_width="fill_parent"
@@ -18,11 +19,12 @@
             android:gravity="center_horizontal"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <com.ichi2.ui.SlidingTabLayout
+            <com.google.android.material.tabs.TabLayout
                 android:id="@+id/sliding_tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <androidx.viewpager.widget.ViewPager
+                android:layout_height="wrap_content"
+                app:tabMode="scrollable" />
+            <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
