@@ -16,7 +16,8 @@ The current api version is ```1.0.0```.
 
 #### Type of return value
 ```String```
-<br>All the available functions with ```enabled/disabled``` status.
+<br>All the available functions with ```enabled/disabled``` status of available functions that can be called using JavaScript.
+
 #### Usage 
 ```javascript
 <script>
@@ -102,14 +103,16 @@ Adds a tag called "Marked" the current note, so it can be easily found in a sear
 ```ankiToggleFlag()```
 #### Info
 Adds a colored marker to the card, or toggles it off. Flags will appear during study, and it can be easily found in a search.
-Pass the arguments ```none```, ```"red"```, ```"orange"```, ```"green"```, ```"blue"``` for flagging respective flag.
-Numerical value can also be passed. 
+<br>Pass the arguments ```none```, ```"red"```, ```"orange"```, ```"green"```, ```"blue"``` for flagging respective flag.
+<br>Numerical value can also be passed. 
 Number from ```0...4``` can be used to flag.
+```
 0 - none,
 1 - red,
 2 - orange,
 3 - green,
 4 - blue
+```
 For flagging <b>red</b> in current card.
 #### Usage
 ```javascript
@@ -120,7 +123,8 @@ For flagging <b>green</b> in current card
 <button onclick="ankiToggleFlag(3);">Green Flag</button>
 ```
 
-### Available information about current cards in WebView ```Front / Back side of Card```
+### Available information about current cards in WebView 
+Add functions to ```Front / Back side``` of card to get info. 
 
 ### New card count
 #### Name 
@@ -193,7 +197,14 @@ console.log(AnkiDroidJS.ankiGetCardMark());
 #### Type of return value
 ```int```
 #### Info
-Return int value of flag 0-none, 1-red, 2-orange, 3-green, 4-blue
+Return int value of flag 
+```
+0-none, 
+1-red, 
+2-orange, 
+3-green, 
+4-blue
+```
 #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardFlag());
