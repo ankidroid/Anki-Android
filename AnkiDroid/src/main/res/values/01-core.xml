@@ -180,5 +180,5 @@
     <string name="card_browser_label">Card Browser</string>
     <string name="card_browser_context_menu">Card Browser</string>
 
-    <string name="view">View</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
 </resources>

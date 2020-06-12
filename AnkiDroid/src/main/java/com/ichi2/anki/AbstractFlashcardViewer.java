@@ -3104,6 +3104,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (url.startsWith("signal:flag_")) {
                 if (!requireApiVersion(mCardSuppliedApiVersion)) {
                     showDeveloperContact();
+                    return true;
                 } else {
                     String mFlag = url.replaceFirst("signal:flag_","");
                     switch (mFlag) {
@@ -3122,7 +3123,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                             return true;
                     }
                 }
-                return true;
             }
 
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
@@ -3339,7 +3339,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private void showDeveloperContact() {
         View parentLayout = findViewById(android.R.id.content);
         String snackbarMsg;
-        if (TextUtils.isEmpty(mCardSuppliedDeveloperContact )) {
+        if (TextUtils.isEmpty(mCardSuppliedDeveloperContact)) {
             snackbarMsg = getString(R.string.api_version_no_developer_contact);
         } else {
             snackbarMsg = getString(R.string.api_version_developer_contact, mCardSuppliedDeveloperContact );
@@ -3352,7 +3352,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         snackTextView.setMaxLines(3);
 
         snackbar.setActionTextColor(Color.MAGENTA)
-                .setAction(getString(R.string.view), view -> {
+                .setAction(getString(R.string.reviewer_invalid_api_version_visit_documentation), view -> {
                     openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki"));
         });
 
@@ -3419,11 +3419,17 @@ see card.js for available functions
         public String init(String jsonData) {
             JSONObject enabledJsApi = new JSONObject();
 
-            JSONObject data = new JSONObject(jsonData);
-            mCardSuppliedApiVersion = data.getString("version");
-            mCardSuppliedDeveloperContact  = data.getString("developer");
+            JSONObject data = new JSONObject();
+            try {
+                 data = new JSONObject(jsonData);
+            } catch (JSONException j) {
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.invalid_json_data, j.toString()), false);
+            }
 
-            if (TextUtils.isEmpty(mCardSuppliedApiVersion) && TextUtils.isEmpty(mCardSuppliedDeveloperContact )) {
+            mCardSuppliedApiVersion = data.optString("version", "");
+            mCardSuppliedDeveloperContact  = data.optString("developer", "");
+
+            if (TextUtils.isEmpty(mCardSuppliedApiVersion) && TextUtils.isEmpty(mCardSuppliedDeveloperContact)) {
                 enabledJsApi.put("toggleFlag", "disabled");
                 enabledJsApi.put("markCard", "disabled");
             } else if (requireApiVersion(mCardSuppliedApiVersion)) {
