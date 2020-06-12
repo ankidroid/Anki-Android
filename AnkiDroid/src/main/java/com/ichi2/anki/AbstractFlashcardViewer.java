@@ -3094,30 +3094,36 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // mark card using javascript
             if (url.startsWith("signal:mark_current_card")) {
-                executeCommand(COMMAND_MARK);
+                if (!requireApiVersion(mCardSuppliedApiVersion)) {
+                    showDeveloperContact();
+                } else {
+                    executeCommand(COMMAND_MARK);
+                }
                 return true;
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
                 if (!requireApiVersion(mCardSuppliedApiVersion)) {
                     showDeveloperContact();
+                } else {
+                    String mFlag = url.replaceFirst("signal:flag_","");
+                    switch (mFlag) {
+                        case "none": executeCommand(COMMAND_UNSET_FLAG);
+                            return true;
+                        case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
+                            return true;
+                        case "orange": executeCommand(COMMAND_TOGGLE_FLAG_ORANGE);
+                            return true;
+                        case "green": executeCommand(COMMAND_TOGGLE_FLAG_GREEN);
+                            return true;
+                        case "blue": executeCommand(COMMAND_TOGGLE_FLAG_BLUE);
+                            return true;
+                        default:
+                            Timber.d("No such Flag found.");
+                            return true;
+                    }
                 }
-                String mFlag = url.replaceFirst("signal:flag_","");
-                switch (mFlag) {
-                    case "none": executeCommand(COMMAND_UNSET_FLAG);
-                        return true;
-                    case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
-                        return true;
-                    case "orange": executeCommand(COMMAND_TOGGLE_FLAG_ORANGE);
-                        return true;
-                    case "green": executeCommand(COMMAND_TOGGLE_FLAG_GREEN);
-                        return true;
-                    case "blue": executeCommand(COMMAND_TOGGLE_FLAG_BLUE);
-                        return true;
-                    default:
-                        Timber.d("No such Flag found.");
-                        return true;
-                }
+                return true;
             }
 
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
@@ -3421,7 +3427,7 @@ see card.js for available functions
             if (TextUtils.isEmpty(mCardSuppliedApiVersion) && TextUtils.isEmpty(mCardSuppliedDeveloperContact )) {
                 enabledJsApi.put("toggleFlag", "disabled");
                 enabledJsApi.put("markCard", "disabled");
-            } else if (mCardSuppliedApiVersion.equals(sCurrentJsApiVersion)) {
+            } else if (requireApiVersion(mCardSuppliedDeveloperContact)) {
                 enabledJsApi.put("toggleFlag", "enabled");
                 enabledJsApi.put("markCard", "enabled");
             }
