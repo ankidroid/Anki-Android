@@ -3395,6 +3395,7 @@ see card.js for available functions
             return shouldDisplayMark();
         }
 
+        
         @JavascriptInterface
         public int ankiGetCardFlag() {
             return mCurrentCard.getUserFlag();
