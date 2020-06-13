@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Maximum aantal back-ups</string>
     <string name="show_estimates">Herhaaltijd in knoppen</string>
     <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Resterende weergeven</string>
     <string name="show_progress_summ">Toon resterend aantal kaarten</string>
     <string name="show_eta">Toon ETA</string>

@@ -112,6 +112,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Échec de l’enregistrement</string>
     <string name="multimedia_editor_audio_view_playing_failed">Échec de la lecture</string>
+    <string name="multimedia_editor_audio_view_create_failed">Impossible de créer la barre d\'outils de l\'enregistreur</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">Champs d’édition</string>
     <string name="title_activity_translation">Traduction</string>

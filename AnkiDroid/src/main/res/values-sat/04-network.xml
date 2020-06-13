@@ -39,11 +39,11 @@
 
 -->
 <resources>
-    <string name="youre_offline">ᱟᱢ ᱫᱚ ᱚᱯᱷᱞᱟᱭᱤᱱ ᱜᱮᱭᱟᱢ</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
-    <string name="sync_error">ᱟᱹᱭᱩᱨ ᱢᱤᱫᱭᱩᱨ ᱢᱤᱫ ᱦᱩᱰᱟᱹᱜ</string>
+    <string name="youre_offline">ᱟᱢ ᱚᱯᱷᱞᱟᱭᱤᱱ ᱟᱢ</string>
+    <string name="sync_even_if_offline">ᱡᱮᱞᱠᱟᱭ ᱢᱮ</string>
+    <string name="sync_error">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱦᱩᱰᱟᱹᱜ</string>
     <string name="vague_error">ᱦᱩᱰᱟᱹᱜ</string>
-    <string name="retry">ᱫᱚᱦᱲᱟ ᱵᱤᱰᱟᱹᱣ</string>
+    <string name="retry">ᱫᱼᱪᱮᱥᱴᱟ</string>
     <string name="cancel">ᱵᱟᱰᱨᱟ</string>
     <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">ᱫᱚᱣ ᱟᱨ ᱚᱵᱚᱥᱛᱟ ᱠᱚ</a></string>
     <string name="menu_get_shared_decks">ᱥᱟᱡᱟᱣᱟ ᱠᱟᱱ ᱰᱮᱠᱥ ᱠᱚ ᱧᱟᱢ ᱢᱮ</string>

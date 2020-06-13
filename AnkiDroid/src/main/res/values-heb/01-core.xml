@@ -133,6 +133,7 @@
     <string name="menu_search">חפש ב%1$s</string>
     <string name="menu_mark_note">סמן הערה</string>
     <string name="menu_unmark_note">הסר סימון הערה</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">יצירת חפיסה</string>
     <string name="create">יצירה</string>
     <string name="new_dynamic_deck">יצירת חפיסה מסוננת</string>
@@ -194,7 +195,8 @@
         <item quantity="other">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
     </plurals>
     <string name="invalid_template">לא ניתן לייצר קלף</string>
-    <string name="card_template_editor_would_delete_note">הסרת סוג הכרטסיה תגרום לרשימה אחת או יותר להימחק. אנא צור סוג כרטיסיות חדש קודם.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>

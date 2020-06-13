@@ -80,8 +80,10 @@
     <string name="stats_overview_total_reviews">మొత్తం: &lt;b&gt;%1$d&lt;/b&gt; సమీక్షలు</string>
     <string name="stats_overview_reviews_per_day_studydays">అధ్యయనం చేసిన రోజులు సగటు: &lt;b&gt;%1$.1f&lt;/b&gt; సమీక్షలు / రోజు</string>
     <string name="stats_overview_reviews_per_day_all">మీరు ప్రతిరోజూ చదువుతున్నట్లయితే: &lt;b&gt;%1$.1f&lt;/b&gt; సమీక్షలు / రోజు</string>
+    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
     <string name="stats_overview_time_per_day_studydays">అధ్యయనం చేసిన రోజులు సగటు: &lt;b&gt;%1$.1f&lt;/b&gt; నిమిషాలు / రోజు</string>
     <string name="stats_overview_time_per_day_all">మీరు ప్రతిరోజూ చదువుతున్నట్లయితే: &lt;b&gt;%1$.1f&lt;/b&gt; సమీక్షలు / రోజు</string>
+    <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>
     <string name="stats_overview_new_cards_per_day">సగటు: &lt;b&gt;%1$.1f&lt;/b&gt; కార్డులు / రోజు</string>
     <string name="stats_overview_total_new_cards">మొత్తం: &lt;b&gt;%1$d&lt;/b&gt; కార్డులు</string>
     <string name="stats_overview_average_interval">"సగటు విరామం: "</string>
@@ -90,6 +92,14 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; నెలల</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; రోజులు</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; గంటల</string>
+    <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_card_types_total_cards">Total cards: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_notes">Total notes: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="deck_summary_all_decks">అన్ని డెక్స్</string>
     <string name="stats_select_time_scale">సమయాలను ఎంచుకోండి</string>
     <string-array name="due_x_axis_title">

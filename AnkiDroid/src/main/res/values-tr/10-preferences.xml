@@ -151,6 +151,8 @@
     <string name="pref_backup_max">En fazla yedek sayısı</string>
     <string name="show_estimates">Düğmede zaman göster</string>
     <string name="show_estimates_summ">Cevap düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Kalanı göster</string>
     <string name="show_progress_summ">Kalan kart sayısını göster</string>
     <string name="show_eta">ETA göster</string>

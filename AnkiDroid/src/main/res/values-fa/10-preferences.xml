@@ -151,6 +151,8 @@
     <string name="pref_backup_max">حداکثر تعداد پشتیبان‌ها</string>
     <string name="show_estimates">نمایش  دکمه زمان</string>
     <string name="show_estimates_summ">نمایش زمان مرور بعدی در بالای دکمه پاسخ</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">نمایش باقیمانده</string>
     <string name="show_progress_summ">نمایش تعداد کارت‌های باقیمانده</string>
     <string name="show_eta">نمایش زمان تخمینی</string>

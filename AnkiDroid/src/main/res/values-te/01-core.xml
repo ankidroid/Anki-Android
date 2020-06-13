@@ -123,6 +123,7 @@
     <string name="menu_search">లో చూడండి%1$s</string>
     <string name="menu_mark_note">గమనికను గుర్తు పెట్టుకోండి</string>
     <string name="menu_unmark_note">గమనిక నుండి గుర్తు తీసివేయండి</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">ఒక డెక్ సృష్టించండి</string>
     <string name="create">సృష్టించు</string>
     <string name="new_dynamic_deck">ఫిల్టర్ డెక్ను సృష్టించండి</string>
@@ -182,7 +183,8 @@
         <item quantity="other">తొలగించు \"%2$s\" కార్డు రకం, మరియు దాని %1$d కార్డులు?</item>
     </plurals>
     <string name="invalid_template">ఒక కార్డు సృష్టించబడలేదు</string>
-    <string name="card_template_editor_would_delete_note">ఈ కార్డ్ రకాన్ని తొలగించడం వలన ఒకటి లేదా అంతకంటే ఎక్కువ గమనికలు తొలగిపోతాయి. దయచేసి ముందుగా ఒక కొత్త కార్డు రకం సృష్టించండి.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>

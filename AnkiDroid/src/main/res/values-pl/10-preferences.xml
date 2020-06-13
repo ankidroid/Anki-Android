@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Maksymalna liczba kopii zapasowych</string>
     <string name="show_estimates">Pokaż czas przy przyciskach</string>
     <string name="show_estimates_summ">Pokazuj czas kolejnej powtórki nad przyciskami odpowiedzi</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Pokaż pozostałe</string>
     <string name="show_progress_summ">Pokazuj licznik pozostałych kart</string>
     <string name="show_eta">Pokaż ETA</string>

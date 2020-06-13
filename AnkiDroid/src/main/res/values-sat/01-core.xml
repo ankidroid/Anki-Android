@@ -123,6 +123,7 @@
     <string name="menu_search">%1$s ᱨᱮ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ</string>
     <string name="menu_mark_note">ᱱᱚᱴ ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</string>
     <string name="menu_unmark_note">ᱱᱚᱴ ᱚ-ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ </string>
+    <string name="menu_toggle_mic_tool_bar">ᱟᱢᱟᱜ ᱩᱪᱟᱨᱚᱬ ᱧᱮᱞ ᱢᱮ</string>
     <string name="new_deck">ᱱᱟᱶᱟ ᱰᱮᱠ ᱛᱮᱟᱨ ᱢᱮ</string>
     <string name="create">ᱛᱮᱭᱟᱨ</string>
     <string name="new_dynamic_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱛᱮᱟᱨ ᱢᱮ</string>
@@ -182,7 +183,8 @@
         <item quantity="other">\&quot;%2$s\&quot; ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ ᱟᱨ %1$d ᱠᱟᱰᱥ ᱠᱚ ᱮᱢᱟᱱ ᱜᱮᱫ ᱜᱤᱰᱤ ᱟ ᱥᱮ?</item>
     </plurals>
     <string name="invalid_template">ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ</string>
-    <string name="card_template_editor_would_delete_note">ᱱᱚᱶᱟ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱮᱠᱷᱟᱱ ᱱᱚᱴᱥ ᱠᱚ ᱦᱚᱸ ᱵᱟᱭ ᱛᱟᱦᱮᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱯᱨᱩᱛᱷᱩᱢ ᱱᱟᱶᱟ ᱠᱟᱰ ᱛᱮᱨᱟ ᱢᱮ ᱾ </string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">ᱱᱚᱶᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱼᱜ ᱠᱟᱲ ᱯᱨᱚᱠᱟᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ ᱾ </string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱠᱚ</string>

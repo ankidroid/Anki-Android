@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Скриј ја таблата</string>
     <string name="clear_whiteboard">Избриши ја таблата</string>
     <string name="replay_audio">Репродуцирај аудио</string>
+    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Картичка означена како пијавица и суспендиран</string>
     <string name="leech_notification">Картичка означена како пијавица</string>
     <string name="corrupt_font">Коруптиран фонт додаток %s</string>
@@ -165,11 +166,15 @@
     <string name="import_message_replace_confirm">Ова ќе избрише вашата постоечка колекција и ќе ја замени со податоците од датотеката %s</string>
     <string name="import_message_add_confirm">Додај “%s“ на колекцијата? Ова може да трае долго</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Избраната датотека не може автоматски да биде увезен од AnkiDroid. Ве молиме погледнете го упатството за користење како да рачно внесува анки дадотеки: \n%s</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_replacing">Замена на колекцијата&#8230;</string>
     <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">Вклучи распоред</string>
@@ -264,4 +269,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <!-- in options menu & Navigation Drawer -->
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

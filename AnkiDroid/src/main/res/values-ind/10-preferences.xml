@@ -152,6 +152,8 @@
     <string name="pref_backup_max">Jumlah backup maksimal</string>
     <string name="show_estimates">Tampilkan waktu tuang</string>
     <string name="show_estimates_summ">Tampilkan waktu tinjau berikutnya pada tombol jawab</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Tampilkan yang tersisa</string>
     <string name="show_progress_summ">Tampilkan sisa jumlah kartu</string>
     <string name="show_eta">Tampilkan ETA</string>

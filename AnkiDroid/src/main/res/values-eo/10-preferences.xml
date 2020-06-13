@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Maksimuma nombro da sekurkopioj</string>
     <string name="show_estimates">Montri tempon ĉe butono</string>
     <string name="show_estimates_summ">Montri tempon de sekva ripeto ĉe butonoj de respondoj</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Montri pliajn kartojn</string>
     <string name="show_progress_summ">Montri nombron da pliaj kartoj</string>
     <string name="show_eta">Montri tempon</string>

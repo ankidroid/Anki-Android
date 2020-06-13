@@ -123,6 +123,7 @@
     <string name="menu_search">Serĉi en %1$s</string>
     <string name="menu_mark_note">Marki noton</string>
     <string name="menu_unmark_note">Malmarki noton</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">Krei kartaron</string>
     <string name="create">Krei</string>
     <string name="new_dynamic_deck">Krei filtritan kartaron</string>
@@ -182,7 +183,8 @@
         <item quantity="other">Ĉu vi volas forigi la kartotipon “%2$s” kaj ĝiajn %1$d kartojn?</item>
     </plurals>
     <string name="invalid_template">Ne povas krei karton</string>
-    <string name="card_template_editor_would_delete_note">Forigado de tiu ĉi tipo de kartoj povas ankaŭ forigi kelka(j)n noto(j)n. Unue kreu novan tipon de kartoj.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">La speco de karto por la nuna karto estis forigita.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspekto de foliumilo</string>
