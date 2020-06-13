@@ -1136,9 +1136,13 @@ public class NoteEditor extends AnkiActivity {
                     mReloadRequired = true;
                     mEditorNote.reloadModel();
                     if (!mEditorNote.cards().contains(mCurrentEditedCard)) {
-                        Timber.d("onActivityResult() template edit return - current card is gone");
-                        UIUtils.showSimpleSnackbar(this, R.string.template_for_current_card_deleted, false);
-                        closeNoteEditor();
+                        if (!mAddNote) {
+                            Timber.d("onActivityResult() template edit return - current card is gone, close note editor");
+                            UIUtils.showSimpleSnackbar(this, R.string.template_for_current_card_deleted, false);
+                            closeNoteEditor();
+                        } else {
+                            Timber.d("onActivityResult() template edit return, in add mode, just re-display");
+                        }
                     } else {
                         Timber.d("onActivityResult() template edit return - current card exists");
                         // reload current card - the template ordinals are possibly different post-edit
