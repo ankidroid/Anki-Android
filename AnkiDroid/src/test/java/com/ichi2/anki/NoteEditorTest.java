@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.TextView;
 
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
@@ -32,11 +33,15 @@ import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
+import java.util.ArrayList;
+
+import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.robolectric.Shadows.shadowOf;
 
 @SuppressWarnings("SameParameterValue")
@@ -48,6 +53,22 @@ public class NoteEditorTest extends RobolectricTest {
     public void verifyCardsList() {
         NoteEditor n = getNoteEditorEditingExistingBasicNote("Test", "Note", FromScreen.DECK_LIST);
         assertThat("Cards list is correct", ((TextView) n.findViewById(R.id.CardEditorCardsText)).getText().toString(), is("Cards: Card 1"));
+    }
+
+    @Test
+    public void verifyPreviewAddingNote() {
+        NoteEditor n = getNoteEditorAdding(NoteType.BASIC).withFirstField("Preview Test").build();
+        ActionMenuItemView previewButton = n.findViewById(R.id.action_preview);
+        previewButton.performClick();
+        ShadowActivity.IntentForResult intent = shadowOf(n).getNextStartedActivityForResult();
+        Bundle noteEditorBundle = intent.intent.getBundleExtra("noteEditorBundle");
+        assertThat("Bundle set to add note style", noteEditorBundle.getBoolean("addNote"), is(true));
+        Bundle fieldsBundle = noteEditorBundle.getBundle("editFields");
+        assertThat("Bundle has fields", fieldsBundle, notNullValue());
+        assertThat("Bundle has fields edited value", fieldsBundle.getString("0"), is("Preview Test"));
+        assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), is(new ArrayList<>()));
+        assertThat("Bundle has ordinal 0 for ephemeral preview", intent.intent.getIntExtra("ordinal", -1), is(0));
+        assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), is(true));
     }
 
     @Test
