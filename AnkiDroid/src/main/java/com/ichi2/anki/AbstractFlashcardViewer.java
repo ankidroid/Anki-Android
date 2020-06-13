@@ -3455,11 +3455,24 @@ see card.js for available functions
             return shouldDisplayMark();
         }
 
+        
         @JavascriptInterface
         public int ankiGetCardFlag() {
             return mCurrentCard.getUserFlag();
         }
 
+        @JavascriptInterface
+        public String ankiGetNextTime1() { return (String) mNext1.getText(); }
+
+        @JavascriptInterface
+        public String ankiGetNextTime2() { return (String) mNext2.getText(); }
+
+        @JavascriptInterface
+        public String ankiGetNextTime3() { return (String) mNext3.getText(); }
+
+        @JavascriptInterface
+        public String ankiGetNextTime4() { return (String) mNext4.getText(); }
+        
         @JavascriptInterface
         public int ankiGetCardReps() {
             return mCurrentCard.getReps();
