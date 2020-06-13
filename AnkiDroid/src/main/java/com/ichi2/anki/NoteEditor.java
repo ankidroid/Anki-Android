@@ -919,6 +919,20 @@ public class NoteEditor extends AnkiActivity {
                 closeCardEditorWithCheck();
                 return true;
 
+            case R.id.action_preview:
+                Timber.i("NoteEditor:: Preview button pressed");
+                Intent previewer = new Intent(NoteEditor.this, CardTemplatePreviewer.class);
+
+                previewer.putExtra("ordinal", 0);
+                previewer.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, TemporaryModel.saveTempModel(this, mEditorNote.model()));
+
+                // Send the previewer all our current editing information
+                Bundle noteEditorBundle = new Bundle();
+                onSaveInstanceState(noteEditorBundle);
+                previewer.putExtra("noteEditorBundle", noteEditorBundle);
+                startActivityWithoutAnimation(previewer);
+                return true;
+
             case R.id.action_save:
                 Timber.i("NoteEditor:: Save note button pressed");
                 saveNote();

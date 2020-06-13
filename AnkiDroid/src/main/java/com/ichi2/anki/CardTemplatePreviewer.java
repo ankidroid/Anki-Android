@@ -41,6 +41,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private JSONObject mEditedModel = null;
     private int mOrdinal;
     private long[] mCardList;
+    private Bundle mNoteEditorBundle = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             parameters = getIntent().getExtras();
         }
         if (parameters != null) {
+            mNoteEditorBundle = parameters.getBundle("noteEditorBundle");
             mEditedModelFileName = parameters.getString(TemporaryModel.INTENT_MODEL_FILENAME);
             mCardList = parameters.getLongArray("cardList");
             mOrdinal = parameters.getInt("ordinal");
@@ -125,6 +127,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         outState.putString(TemporaryModel.INTENT_MODEL_FILENAME, mEditedModelFileName);
         outState.putLongArray("cardList", mCardList);
         outState.putInt("ordinal", mOrdinal);
+        outState.putBundle("noteEditorBundle", mNoteEditorBundle);
         super.onSaveInstanceState(outState);
     }
 
@@ -135,6 +138,32 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         if (mCurrentCard == null) {
             mCurrentCard = new PreviewerCard(col, mCardList[mOrdinal]);
         }
+
+        if (mNoteEditorBundle != null) {
+            mCurrentCard.setDid(mNoteEditorBundle.getLong("did"));
+
+            // Clear out old tags, add current tags as that can affect render
+            Note currentNote = mCurrentCard.note();
+            String[] currentTags = currentNote.getTags().toArray(new String[0]);
+            for (String tag : currentTags) {
+                currentNote.delTag(tag);
+            }
+            ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
+            if (tagsList != null) {
+                for (String tag : tagsList.toArray(new String[0])) {
+                    if (!currentNote.hasTag(tag)) {
+                        currentNote.addTag(tag);
+                    }
+                }
+            }
+            Bundle noteFields = mNoteEditorBundle.getBundle("editFields");
+            if (noteFields != null) {
+                for (String fieldOrd : noteFields.keySet()) {
+                    currentNote.setField(Integer.parseInt(fieldOrd), noteFields.getString(fieldOrd));
+                }
+            }
+        }
+
         displayCardQuestion();
         showBackIcon();
     }
