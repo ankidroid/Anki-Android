@@ -99,7 +99,7 @@
     <string name="card_browser_due_filtered_card">(filtrita)</string>
     <string name="card_browser_interval_learning_card">(lernata)</string>
     <string name="card_browser_note_editor_error">Eraro dum malfermi redaktilon de notoj</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_no_cards_in_deck">Neniu karto trovita en la kartaro “%s”</string>
+    <string name="card_browser_search_all_decks">Serĉi en ĉiuj kartaroj</string>
+    <string name="card_browser_unknown_deck_name">Nekonata</string>
 </resources>

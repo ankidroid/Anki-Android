@@ -90,7 +90,7 @@
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Errore database</string>
-    <string name="answering_error_message">Si è verificato un errore durante la scrittura della collezione. Potrebbe essere stato causato da un database danneggiato o da spazio su disco insufficiente.\n\nSe accade spesso, prova a controllare il database, riparare la collezione o ripristinare da un backup. Per fare questo clicca su \'opzioni\'.\n\nTuttavia, potrebbe anche trattarsi di un bug di AnkiDroid;per favore segnala l\'errore affinché possiamo verificare.</string>
+    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Segnala errori</string>
     <string name="repair_deck_dialog">Vuoi veramente provare a riparare il database?\n\nPrima di iniziare il tentativo, verrà creata una copia nella sottocartella \'%s\'.</string>
     <string name="intent_add_saved_information">Dati salvati</string>
@@ -166,7 +166,7 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
+    <string name="integrity_check_positive">Controlla la banca dati</string>
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>

@@ -45,6 +45,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
@@ -69,11 +70,12 @@ public class Finder {
      */
 
     /** Return a list of card ids for QUERY */
+    @CheckResult
     public List<Long> findCards(String query, String _order) {
         return _findCards(query, _order);
     }
 
-
+    @CheckResult
     public List<Long> findCards(String query, boolean _order) {
         return _findCards(query, _order);
     }
@@ -444,7 +446,7 @@ public class Finder {
         } else if ("suspended".equals(val)) {
             return "c.queue = " + Consts.QUEUE_TYPE_SUSPENDED;
         } else if ("buried".equals(val)) {
-            return "c.queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
+            return "c.queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")";
         } else if ("due".equals(val)) {
             return "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and c.due <= " + mCol.getSched().getToday() +
                     ") or (c.queue = " + Consts.QUEUE_TYPE_LRN + " and c.due <= " + mCol.getSched().getDayCutoff() + ")";

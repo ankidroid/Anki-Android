@@ -22,8 +22,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.ichi2.anki"
           android:installLocation="auto"
-          android:versionCode="21200102"
-          android:versionName="2.12alpha2"
+          android:versionCode="21200105"
+          android:versionName="2.12alpha5"
           >
 
     <!--
@@ -327,6 +327,12 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.Previewer"
+            android:label="@string/preview_title"
+            android:exported="false"
+            android:configChanges="locale"
+            />
+        <activity
+            android:name="com.ichi2.anki.CardTemplatePreviewer"
             android:label="@string/preview_title"
             android:exported="false"
             android:configChanges="locale"

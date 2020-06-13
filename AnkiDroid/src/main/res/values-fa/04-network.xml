@@ -40,6 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">به شبکه متصل نیستيد</string>
+    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">خطا در همگام سازی</string>
     <string name="vague_error">خطا</string>
     <string name="retry">تلاش مجدد</string>

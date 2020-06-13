@@ -40,6 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">현재 오프라인 상태입니다</string>
+    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">동기화 오류</string>
     <string name="vague_error">오류</string>
     <string name="retry">재시도</string>

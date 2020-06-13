@@ -43,6 +43,7 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
         ActivityController<DeckPickerTestImpl> controller =
                 Robolectric.buildActivity(DeckPickerTestImpl.class, new Intent())
                 .create().start().resume();
+        saveControllerForCleanup((controller));
         impl = controller.get();
         impl.resetVariables();
     }

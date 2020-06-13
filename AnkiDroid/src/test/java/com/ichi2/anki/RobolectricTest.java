@@ -29,20 +29,36 @@ import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
 
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.sched.AbstractSched;
+import com.ichi2.libanki.sched.Sched;
+import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowDialog;
 import org.robolectric.shadows.ShadowLog;
 
+import java.util.ArrayList;
+
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
 import timber.log.Timber;
 
+import static android.os.Looper.getMainLooper;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.robolectric.Shadows.shadowOf;
+
 public class RobolectricTest {
+
+    private ArrayList<ActivityController> controllersForCleanup = new ArrayList<>();
+
+    protected void saveControllerForCleanup(ActivityController controller) {
+        controllersForCleanup.add(controller);
+    }
 
     @Before
     public void setUp() {
@@ -61,6 +77,19 @@ public class RobolectricTest {
 
     @After
     public void tearDown() {
+
+        // If you don't clean up your ActivityControllers you will get OOM errors
+        for (ActivityController controller : controllersForCleanup) {
+            Timber.d("Calling destroy on controller %s", controller.get().toString());
+            try {
+                controller.destroy();
+            } catch (Exception e) {
+                // Any exception here is likely because the test code already destroyed it, which is fine
+                // No exception here should halt test execution since tests are over anyway.
+            }
+        }
+        controllersForCleanup.clear();
+
         // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
         CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
 
@@ -73,15 +102,38 @@ public class RobolectricTest {
     }
 
 
-    protected void clickDialogButton(DialogAction button) {
+    protected void clickDialogButton(DialogAction button, boolean checkDismissed) {
         MaterialDialog dialog = (MaterialDialog)ShadowDialog.getLatestDialog();
         dialog.getActionButton(button).performClick();
+        if (checkDismissed) {
+            Assert.assertTrue("Dialog not dismissed?", shadowOf(dialog).hasBeenDismissed());
+        }
     }
 
-
-    protected String getDialogText() {
+    /**
+     * Get the current dialog text. Will return null if no dialog visible *or* if you check for dismissed and it has been dismissed
+     *
+     * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
+     */
+    protected String getDialogText(boolean checkDismissed) {
         MaterialDialog dialog = (MaterialDialog)ShadowDialog.getLatestDialog();
-        return dialog == null || dialog.getContentView() == null ? null : dialog.getContentView().getText().toString();
+        if (dialog == null || dialog.getContentView() == null) {
+            return null;
+        }
+
+        if (shadowOf(dialog).hasBeenDismissed()) {
+            Timber.e("The latest dialog has already been dismissed.");
+            return null;
+        }
+
+        return dialog.getContentView().getText().toString();
+    }
+
+    // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
+    protected void advanceRobolectricLooper() {
+        shadowOf(getMainLooper()).idle();
+        try { Thread.sleep(500); } catch (Exception e) { Timber.e(e); }
+
     }
 
 
@@ -92,6 +144,10 @@ public class RobolectricTest {
 
     protected String getResourceString(int res) {
         return getTargetContext().getString(res);
+    }
+
+    protected String getQuantityString(int res, int quantity, Object... formatArgs) {
+        return getTargetContext().getResources().getQuantityString(res, quantity, formatArgs);
     }
 
 
@@ -108,6 +164,7 @@ public class RobolectricTest {
     protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
         ActivityController<T> controller = Robolectric.buildActivity(clazz, i)
                 .create().start().resume().visible();
+        saveControllerForCleanup(controller);
         return controller.get();
     }
 
@@ -119,11 +176,14 @@ public class RobolectricTest {
         JSONObject model = getCol().getModels().byName(name);
         //PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         //Saves a database trip afterwards.
+        if (model == null) {
+            throw new IllegalArgumentException(String.format("Could not find model '%s'", name));
+        }
         Note n = getCol().newNote(model);
         for(int i = 0; i < fields.length; i++) {
             n.setField(i, fields[i]);
         }
-        if (getCol().addNote(n) != 1) {
+        if (getCol().addNote(n) == 0) {
             throw new IllegalStateException(String.format("Could not add note: {%s}", String.join(", ", fields)));
         }
         return n;
@@ -165,5 +225,18 @@ public class RobolectricTest {
         //HACK: We perform this to ensure that onCollectionLoaded is performed synchronously when startLoadingCollection
         //is called.
         getCol();
+    }
+
+
+    protected SchedV2 upgradeToSchedV2() {
+        getCol().getConf().put("schedVer", 2);
+        getCol().setMod();
+        CollectionHelper.getInstance().closeCollection(true, "upgradeToSchedV2");
+
+        AbstractSched sched = getCol().getSched();
+        //Sched inherits from schedv2...
+        assertThat("sched should be v2", !(sched instanceof Sched));
+
+        return (SchedV2) sched;
     }
 }

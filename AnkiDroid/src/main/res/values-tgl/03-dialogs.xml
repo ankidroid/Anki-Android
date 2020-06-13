@@ -90,7 +90,7 @@
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Mali sa database</string>
-    <string name="answering_error_message">Nabigo ang pagsulat sa koleksyon. Maaaring sira ang database o maaaring hindi sapat ang walang laman na puwang sa disk.\n\nKung nananatili itong mas madalas, subukan ang pag-check sa database, pag-aayos sa koleksyon o pagpapanumbalik nito mulang sa isang backup. Pindutin ang \"mga opsyon\" para diyan.\n\O maaaring ito ay isang AnkiDroid bug pati na rin; paki-ulat ang error upang masuri namin ito.</string>
+    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">I-ulat ang error</string>
     <string name="repair_deck_dialog">Gusto ma bang subukan ang pag-aayos ng database?\n\nBago simulan ang pagtatangka, isang kopya ang lilikhain sa subfolder na \"%s\".</string>
     <string name="intent_add_saved_information">Naipon na data</string>

@@ -125,7 +125,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public static final String EDITED = "edited";
     public static final String INTERVAL = "interval";
     public static final String LAPSES = "lapses";
-    public static final String NOTE = "note";
+    public static final String NOTE_TYPE = "note";
     public static final String REVIEWS = "reviews";
     private static Pattern sMarkedPattern = Pattern.compile(".*[Mm]arked.*");
 
@@ -180,7 +180,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static final String[] COLUMN2_KEYS = {ANSWER,
         CARD,
         DECK,
-        NOTE,
+        NOTE_TYPE,
         QUESTION,
         TAGS,
         LAPSES,
@@ -380,21 +380,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return ids;
     }
 
-    private boolean hasSelectedSingleNoteId() {
-        //Heuristic to skip a large array copy
-        if (checkedCardCount() > 50) {
-            return false;
-        }
-        //copy to array to ensure threadsafe iteration
-        Integer[] checkedPositions = mCheckedCardPositions.toArray(new Integer[0]);
-        HashSet<String> notes = new HashSet<>();
-        for (Integer position : checkedPositions) {
-            String noteId = mCards.get(position).get(NOTE);
-            if (notes.add(noteId) && notes.size() > 1) {
-                return false;
-            }
-        }
-        return notes.size() == 1;
+    private boolean canPerformMultiSelectEditNote() {
+        //The noteId is not currently available. Only allow if a single card is selected for now.
+        return checkedCardCount() == 1;
     }
 
     @VisibleForTesting
@@ -669,6 +657,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
         editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
         startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
+        //#6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
+        endMultiSelectMode();
     }
 
     private void openNoteEditorForCurrentlySelectedNote() {
@@ -691,7 +681,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground(this);
+            UIUtils.saveCollectionInBackground();
         }
     }
 
@@ -875,7 +865,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mActionBarMenu.findItem(R.id.action_select_all).setVisible(!hasSelectedAllCards());
         //Note: Theoretically should not happen, as this should kick us back to the menu
         mActionBarMenu.findItem(R.id.action_select_none).setVisible(hasSelectedCards());
-        mActionBarMenu.findItem(R.id.action_edit_note).setVisible(hasSelectedSingleNoteId());
+        mActionBarMenu.findItem(R.id.action_edit_note).setVisible(canPerformMultiSelectEditNote());
     }
 
 
@@ -1522,7 +1512,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 break;
         }
         item.put(LAPSES, Integer.toString(c.getLapses()));
-        item.put(NOTE, c.model().optString("name"));
+        item.put(NOTE_TYPE, c.model().optString("name"));
         item.put(QUESTION, formatQA(q, context));
         item.put(REVIEWS, Integer.toString(c.getReps()));
         String tags = note.stringTags();

@@ -64,8 +64,8 @@
         <item>Grüne Flagge umschalten</item>
         <item>Blaue Flagge umschalten</item>
         <item>Flagge entfernen</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Seite hoch</item>
+        <item>Seite runter</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Karte ausschließen</item>
@@ -80,7 +80,7 @@
         <item>Zufällig</item>
         <item>Steigende Intervalle</item>
         <item>Abnehmende Intervalle</item>
-        <item>Häufigste Vergessene</item>
+        <item>Am häufigsten vergessen</item>
         <item>In Reihenfolge des Hinzufügens</item>
         <item>Nach Fälligkeit</item>
         <item>Zuletzt hinzugefügte zuerst</item>

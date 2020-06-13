@@ -90,7 +90,7 @@
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Sélectionnez le paquet dans votre gestionnaire de fichiers ou visitez la page about:downloads pour l’importer</string>
     <string name="answering_error_title">Erreur de la base de données</string>
-    <string name="answering_error_message">Il s’est produit une erreur en écrivant dans la collection. Cela est peut-être lié à une base de données corrompue ou à un espace disque insuffisant.\n\nSi cela arrive souvent, vérifiez la base de données, réparez la collection ou restaurez-la à partir d’une sauvegarde, en allant dans les « options ».\n\nCependant, il peut s’agir d’un bug d’AnkiDroid. Signalez-le nous.</string>
+    <string name="answering_error_message">L\'écriture de la collection a échoué. La base de données pourrait être corrompue ou il se peut qu\'il n\'y ait pas assez d\'espace libre sur le disque.\n\nSi ceci se produit plus souvent, essayez de vérifier la base de données, de réparer la collection ou de la restaurer à partir d\'une sauvegarde. Touchez « options » pour cela.\n\Ou il pourrait s\'agir d\'une erreur AnkiDroid ; veuillez signaler l\'erreur pour que nous puissions vérifier ceci.</string>
     <string name="answering_error_report">Signaler les erreurs</string>
     <string name="repair_deck_dialog">Voulez-vous vraiment essayer de réparer la base de données ?\n\nAvant de commencer, une copie sera créée dans le sous-dossier « %s ».</string>
     <string name="intent_add_saved_information">Données sauvegardées</string>

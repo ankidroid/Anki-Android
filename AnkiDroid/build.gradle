@@ -2,7 +2,7 @@ import com.android.ddmlib.DdmPreferences
 
 plugins {
  // Gradle plugin portal 
- id 'com.github.triplet.play' version '2.7.5'
+ id 'com.github.triplet.play' version '2.8.0'
 }
 
 apply plugin: 'com.android.application'
@@ -93,6 +93,9 @@ android {
         }
 
         maxParallelForks = gradleTestMaxParallelForks
+        forkEvery = 40
+        maxHeapSize = "2048m"
+        minHeapSize = "1024m"
         systemProperties['junit.jupiter.execution.parallel.enabled'] = true
         systemProperties['junit.jupiter.execution.parallel.mode.default'] = "concurrent"
     }
@@ -136,14 +139,19 @@ dependencies {
     implementation 'androidx.browser:browser:1.2.0'
     implementation 'androidx.exifinterface:exifinterface:1.2.0'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+    implementation "androidx.multidex:multidex:2.0.1"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.sqlite:sqlite-framework:2.1.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'io.requery:sqlite-android:3.31.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
-    implementation "androidx.multidex:multidex:2.0.1"
+    // #6419  - API 27 (& maybe others) could not perform new ZipFile() on a 2GB+ apkg
+    // noinspection GradleDependency - pinned at 1.12 until API21 minSdkVersion (File.toPath usage)
+    implementation 'org.apache.commons:commons-compress:1.12'
+
 
     // May need a resolution strategy for support libs to our versions
     implementation'ch.acra:acra-http:5.5.1'

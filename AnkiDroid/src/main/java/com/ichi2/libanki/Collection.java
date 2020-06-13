@@ -835,6 +835,14 @@ public class Collection {
 
     private Card _newCard(Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         Card card = new Card(this);
+        return getNewLinkedCard(card, note, template, due, parameterDid, flush);
+    }
+
+    // This contains the original libanki implementation of _newCard, with the added parameter that
+    // you pass the Card object in. This allows you to work on 'Card' subclasses that may not have
+    // actual backing store (for instance, if you are previewing unsaved changes on templates)
+    // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
+    public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         long nid = note.getId();
         int ord = -1;
         long did;
@@ -1016,7 +1024,7 @@ public class Collection {
         // unpack fields and create dict
         String[] flist = Utils.splitFields((String) data[6]);
         Map<String, String> fields = new HashMap<>();
-        JSONObject model = mModels.get((Long) data[2]);
+        JSONObject model = (JSONObject)data[2];
         Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
         for (String name : fmap.keySet()) {
             fields.put(name, flist[fmap.get(name).first]);
@@ -1088,7 +1096,8 @@ public class Collection {
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
                             + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where, null);
             while (cur.moveToNext()) {
-                data.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getLong(2), cur.getLong(3), cur.getInt(4),
+                data.add(new Object[] { cur.getLong(0), cur.getLong(1),
+                        getModels().get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
                         cur.getString(5), cur.getString(6), cur.getInt(7)});
             }
         } finally {
