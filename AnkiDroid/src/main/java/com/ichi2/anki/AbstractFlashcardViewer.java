@@ -3105,24 +3105,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 if (!requireApiVersion(mCardSuppliedApiVersion)) {
                     showDeveloperContact();
                     return true;
-                } else {
-                    String mFlag = url.replaceFirst("signal:flag_","");
-                    switch (mFlag) {
-                        case "none": executeCommand(COMMAND_UNSET_FLAG);
-                            return true;
-                        case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
-                            return true;
-                        case "orange": executeCommand(COMMAND_TOGGLE_FLAG_ORANGE);
-                            return true;
-                        case "green": executeCommand(COMMAND_TOGGLE_FLAG_GREEN);
-                            return true;
-                        case "blue": executeCommand(COMMAND_TOGGLE_FLAG_BLUE);
-                            return true;
-                        default:
-                            Timber.d("No such Flag found.");
-                            return true;
-                    }
                 }
+
+                String mFlag = url.replaceFirst("signal:flag_","");
+                switch (mFlag) {
+                    case "none": executeCommand(COMMAND_UNSET_FLAG);
+                        return true;
+                    case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
+                        return true;
+                    case "orange": executeCommand(COMMAND_TOGGLE_FLAG_ORANGE);
+                        return true;
+                    case "green": executeCommand(COMMAND_TOGGLE_FLAG_GREEN);
+                        return true;
+                    case "blue": executeCommand(COMMAND_TOGGLE_FLAG_BLUE);
+                        return true;
+                    default:
+                        Timber.d("No such Flag found.");
+                        return true;
+                    }
             }
 
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
@@ -3422,12 +3422,15 @@ see card.js for available functions
             JSONObject data = new JSONObject();
             try {
                  data = new JSONObject(jsonData);
-            } catch (JSONException j) {
-                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.invalid_json_data, j.toString()), false);
-            }
 
-            mCardSuppliedApiVersion = data.optString("version", "");
-            mCardSuppliedDeveloperContact  = data.optString("developer", "");
+                 if (!(data == JSONObject.NULL)) {
+                     mCardSuppliedApiVersion = data.optString("version", "");
+                     mCardSuppliedDeveloperContact  = data.optString("developer", "");
+                 }
+
+            } catch (JSONException j) {
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.invalid_json_data, j.getLocalizedMessage()), false);
+            }
 
             if (TextUtils.isEmpty(mCardSuppliedApiVersion) && TextUtils.isEmpty(mCardSuppliedDeveloperContact)) {
                 enabledJsApi.put("toggleFlag", "disabled");

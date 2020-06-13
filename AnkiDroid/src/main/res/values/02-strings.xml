@@ -264,5 +264,5 @@
 
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact the deck creator at %s, or view the wiki to resolve this manually.</string>
     <string name="api_version_no_developer_contact">This card uses unsupported AnkiDroid features. View the wiki to resolve this manually.</string>
-    <string name="invalid_json_data">Invalid json data. %s</string>
+    <string name="invalid_json_data">Card provided invalid data. %s</string>
 </resources>
