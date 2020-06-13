@@ -127,7 +127,8 @@ function ankiToggleFlag(flag) {
 
 // Show toast using js
 function ankiShowToast(message) {
-    window.location.href = "signal:anki_show_toast:" + message;
+    var msg = encodeURI(message);
+    window.location.href = "signal:anki_show_toast:" + msg;
 }
 
 /* Tell the app the text in the input box when it loses focus */
