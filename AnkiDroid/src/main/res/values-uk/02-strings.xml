@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Заховати Дошку</string>
     <string name="clear_whiteboard">Очистити Дошку</string>
     <string name="replay_audio">Повторити звук</string>
+    <string name="toggle_mic_tool_bar">Перевірити вимову</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
     <string name="leech_notification">Картку позначено як набридливу</string>
     <string name="corrupt_font">Пошкоджений файл шрифтів %s</string>
@@ -170,11 +171,15 @@
     <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
     <string name="import_message_add_confirm">Додати \"%s\" до колекції? Це може зайняти багато часу</string>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_error_unhandled_request">Не вдалося обробити запит на імпорт</string>
     <string name="import_error_exception">Не вдалося імпортувати пакет\n\n%s</string>
     <string name="import_error_not_apkg_extension">Ім\'я пакету “%s” не містить закінчення .apkg чи .colpkg</string>
     <string name="import_error_load_imported_database">Заміна Anki Database (.anki2) ще не підтримується. Перегляньте у посібнику інструкцію по заміні.</string>
     <string name="import_error_content_provider">Вибраний файл не вдалося імпортувати автоматично до AnkiDroid. Будь ласка, перегляньте посібник користувача для того аби вручну імпортувати anki файли: \n%s</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_replacing">Заміна колекції&#8230;</string>
     <string name="import_interrupted">Імпортування перервано</string>
     <string name="export_include_schedule">Додати планування</string>
@@ -283,4 +288,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Відновити «Типове»</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Порожня</string>
+    <!-- in options menu & Navigation Drawer -->
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

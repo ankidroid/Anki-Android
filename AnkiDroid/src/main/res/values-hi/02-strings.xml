@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Whiteboard छुपाएँ</string>
     <string name="clear_whiteboard">स्पष्ट Whiteboard</string>
     <string name="replay_audio">ध्वनि फिर चलाएँ</string>
+    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">जोंक के रूप में के रूप में चिह्नित और निलंबित कार्ड</string>
     <string name="leech_notification">जोंक के रूप में के रूप में चिह्नित कार्ड</string>
     <string name="corrupt_font">दूषित फ़ॉन्ट फ़ाइल %s</string>
@@ -164,11 +165,15 @@
     <string name="import_message_replace_confirm">यह अपने मौजूदा संग्रह को हटाने और यह फ़ाइल %s का डेटा के साथ बदलना होगा। क्या आपको यकीन है?</string>
     <string name="import_message_add_confirm">\"%s\" को संग्रह में जोड़ें? यह एक लंबा समय लग सकता है</string>
     <string name="import_log_no_apkg">यह एक मान्य Anki पैकेज फ़ाइल नहीं है</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_error_unhandled_request">आयात अनुरोध संसाधित करने में असमर्थ</string>
     <string name="import_error_exception">पैकेज आयात करने में विफल \n\n%s</string>
     <string name="import_error_not_apkg_extension">फ़ाइल नाम \"%s\" में .apkg या .colpkg एक्सटेंशन नहीं है</string>
     <string name="import_error_load_imported_database">अन्कि डाटाबेस (.anki2) प्रतिस्थापन अभीतक सहारा नहीं दिया जाता हैं । कृपया पुस्तिका प्रतिस्थापन के शिक्षण के लिये देखिये ।</string>
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_replacing">संग्रह की जगह.. ।</string>
     <string name="import_interrupted">आयात बाधित हुआ</string>
     <string name="export_include_schedule">शेड्यूलिंग शामिल करें</string>
@@ -263,4 +268,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">पहले जैसा कर देना</string>
     <string name="reviewer_tts_cloze_spoken_replacement">रिक्त</string>
+    <!-- in options menu & Navigation Drawer -->
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

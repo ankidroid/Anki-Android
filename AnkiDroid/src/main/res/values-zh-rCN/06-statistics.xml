@@ -80,8 +80,10 @@
     <string name="stats_overview_total_reviews">总共： &lt;b&gt;%1$d&lt;/b&gt; 张卡片已复习</string>
     <string name="stats_overview_reviews_per_day_studydays">平均：&lt;b&gt;%1$.1f&lt;/b&gt; 张/天</string>
     <string name="stats_overview_reviews_per_day_all">如果你每天都学习，那么每天只需复习 &lt;b&gt;%1$.1f&lt;/b&gt; 张卡片</string>
+    <string name="stats_overview_total_time_in_period">全部：&lt;b&gt;%d&lt;/b&gt; 分钟</string>
     <string name="stats_overview_time_per_day_studydays">平均：&lt;b&gt;%1$.1f&lt;/b&gt; 分钟/天</string>
     <string name="stats_overview_time_per_day_all">如果你每天都学习， 那么每天只需学习 &lt;b&gt;%1$.1f&lt;/b&gt; 分钟</string>
+    <string name="stats_overview_average_answer_time">平均回答时间：&lt;b&gt;%1$.1fs&lt;/b&gt; （&lt;b&gt;%2$.2f&lt;/b&gt; 卡牌/分钟）</string>
     <string name="stats_overview_new_cards_per_day">平均：&lt;b&gt;%1$.1f&lt;/b&gt; 张卡片/天</string>
     <string name="stats_overview_total_new_cards">全部：&lt;b&gt;%1$d&lt;/b&gt; 张卡片</string>
     <string name="stats_overview_average_interval">"平均间隔："</string>
@@ -90,6 +92,14 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt;月</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt;天</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt;小时</string>
+    <string name="stats_overview_answer_buttons_learn">学习：&lt;b&gt;%1$.2f%%&lt;/b&gt; 正确 （%2$d / %3$d）</string>
+    <string name="stats_overview_answer_buttons_young">有待熟悉：&lt;b&gt;%1$.2f%%&lt;/b&gt; 正确 （%2$d / %3$d）</string>
+    <string name="stats_overview_answer_buttons_mature">熟悉：&lt;b&gt;%1$.2f%%&lt;/b&gt; 正确 （%2$d / %3$d）</string>
+    <string name="stats_overview_card_types_total_cards">总卡牌数： &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_notes">总笔记数： &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_lowest_ease">最低难度系数： &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">平均难度系数： &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_highest_ease">最高难度系数： &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="deck_summary_all_decks">所有牌组</string>
     <string name="stats_select_time_scale">选择时间段</string>
     <string-array name="due_x_axis_title">

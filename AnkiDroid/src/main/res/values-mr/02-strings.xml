@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Vhā\'iṭabōrḍa lapavā</string>
     <string name="clear_whiteboard">Vhā\'īṭabōrḍa sāpha karā</string>
     <string name="replay_audio">Ŏḍi\'ō punhā plē karā</string>
+    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Kārḍa līka asē cinhāṅkita kēlē āhē āṇi nilambita kēlē āhē</string>
     <string name="leech_notification">Kārḍa jaḷū mhaṇūna cinhāṅkita</string>
     <string name="corrupt_font">Dūṣita phŏnṭa phā\'īla%s</string>
@@ -164,11 +165,15 @@
     <string name="import_message_replace_confirm">Hē āpalē vidyamāna saṅkalana haṭavēla āṇi phā\'ilacyā ḍēṭāśī punarsthita karēla%s</string>
     <string name="import_message_add_confirm">\"%s\" saṅgrahāmadhyē jōḍāyacē? Yāsa barāca vēḷa lāgū śakatō</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Nivaḍalēlī phā\'ila AnkiDroid dvārē svayan̄calitapaṇē āyāta karaṇē śakya navhatē. Kr̥payā ēnkī phā\'ilsa svahastē kaśī āyāta karāvī yābaddala vāparakartā mĕn\'yu\'ala pahā: \n%s</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_replacing">Saṅgraha punarsthita&#8230;</string>
     <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">Śēḍyūliṅga samāviṣṭa karā</string>
@@ -263,4 +268,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <!-- in options menu & Navigation Drawer -->
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

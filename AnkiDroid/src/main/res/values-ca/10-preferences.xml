@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Màxim número de còpies de seguretat</string>
     <string name="show_estimates">Mostra el temps al botó</string>
     <string name="show_estimates_summ">Mostra el temps de la pròxima revisió al botons de resposta</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Mostra el romanent</string>
     <string name="show_progress_summ">Mostra el recompte de cartes restants</string>
     <string name="show_eta">Mostra el temps restant</string>

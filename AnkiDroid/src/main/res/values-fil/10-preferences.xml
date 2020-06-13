@@ -152,6 +152,8 @@
     <string name="pref_backup_max">Max na bilang ng mga backup</string>
     <string name="show_estimates">Ipakita ang oras ng button</string>
     <string name="show_estimates_summ">Ipakita ang susunod na oras ng pagsusuri sa mga pindutan ng sagot</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Ipakita ang natitira</string>
     <string name="show_progress_summ">Ipakita ang natitirang bilang ng card</string>
     <string name="show_eta">Ipakita ang ETA</string>

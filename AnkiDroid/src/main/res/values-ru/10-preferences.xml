@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Число резервных копий</string>
     <string name="show_estimates">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Показать оставшиеся</string>
     <string name="show_progress_summ">Показывает число оставшихся карточек</string>
     <string name="show_eta">Показывать оценку времени</string>

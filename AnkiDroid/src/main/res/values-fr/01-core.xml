@@ -123,6 +123,7 @@
     <string name="menu_search">Trouvé en %1$s</string>
     <string name="menu_mark_note">Marquer la note</string>
     <string name="menu_unmark_note">Démarquer la note</string>
+    <string name="menu_toggle_mic_tool_bar">Vérifier la prononciation</string>
     <string name="new_deck">Créer un jeu de cartes</string>
     <string name="create">Créer</string>
     <string name="new_dynamic_deck">Créer un paquet filtré</string>
@@ -182,7 +183,8 @@
         <item quantity="other">Supprimer le type de carte “%2$s” et ses %1$d cartes ?</item>
     </plurals>
     <string name="invalid_template">Une carte n\'a pas pu être générée</string>
-    <string name="card_template_editor_would_delete_note">Retirer ce type de carte provoquera la suppression d\'une ou de plusieurs notes. Veuillez d\'abord créer un nouveau type de carte.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">Le type de carte pour la carte actuelle a été supprimé.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Apparence du navigateur</string>

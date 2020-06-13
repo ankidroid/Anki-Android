@@ -133,6 +133,7 @@
     <string name="menu_search">Wyszukiwanie w %1$s</string>
     <string name="menu_mark_note">Wyróżnij notatkę</string>
     <string name="menu_unmark_note">Cofnij wyróżnienie notatki</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">Stwórz talię</string>
     <string name="create">Utwórz</string>
     <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
@@ -194,7 +195,8 @@
         <item quantity="other">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
     </plurals>
     <string name="invalid_template">Karta nie mogła zostać wygenerowana</string>
-    <string name="card_template_editor_would_delete_note">Usunięcie typu karty może spowodować usunięcie jednej lub większej ilości notatek. Proszę o utworzenie najpierw nowej karty.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">Typ karty dla aktualnej karty został usunięty</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>

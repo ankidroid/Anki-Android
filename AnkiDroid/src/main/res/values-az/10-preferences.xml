@@ -152,6 +152,8 @@
     <string name="pref_backup_max">Maksimum nüsxə sayı</string>
     <string name="show_estimates">Show button time</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Show remaining</string>
     <string name="show_progress_summ">Show remaining card count</string>
     <string name="show_eta">Show ETA</string>

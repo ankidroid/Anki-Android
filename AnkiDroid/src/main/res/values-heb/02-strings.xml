@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">הסתר לוח ציור</string>
     <string name="clear_whiteboard">נקה לוח ציור</string>
     <string name="replay_audio">החזר שמע</string>
+    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">כרטיס מסומן כעלוקה ומושעה</string>
     <string name="leech_notification">כרטיס מסומן כעלוקה</string>
     <string name="corrupt_font">קובץ גופן %s פגום</string>
@@ -170,11 +171,15 @@
     <string name="import_message_replace_confirm">אפשרות זאת תמחק את האוסף הנוכחי שלך ותחליפו במידע מקובץ %s</string>
     <string name="import_message_add_confirm">הוסף את \"%s\" לאוסף. פעולה זו עלולה להמשך זמן רב</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_replacing">האוסף מוחלף&#8230;</string>
     <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">כולל תזמון</string>
@@ -283,4 +288,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <!-- in options menu & Navigation Drawer -->
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

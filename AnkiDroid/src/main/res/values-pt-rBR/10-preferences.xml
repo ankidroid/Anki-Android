@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Número máximo de backups</string>
     <string name="show_estimates">Mostrar o tempo no botão</string>
     <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Mostar restantes</string>
     <string name="show_progress_summ">Mostrar contagem de cartões restantes</string>
     <string name="show_eta">Mostrar tempo restante estimado</string>

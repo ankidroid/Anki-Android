@@ -123,6 +123,7 @@
     <string name="menu_search">लुकअप में %1$s</string>
     <string name="menu_mark_note">मार्क नोट करें</string>
     <string name="menu_unmark_note">नोट अचिह्नित करें</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">डेक बनाने</string>
     <string name="create">बनाएँ</string>
     <string name="new_dynamic_deck">फ़िल्टर्ड डेक बनाएं</string>
@@ -182,7 +183,8 @@
         <item quantity="other">\"%2$s\" कार्ड प्रकार और उसके\"%1$d\" कार्ड को हटाएं?</item>
     </plurals>
     <string name="invalid_template">कोई कार्ड जनरेट नहीं किया जा सका</string>
-    <string name="card_template_editor_would_delete_note">इस कार्ड प्रकार को निकालने से एक या अधिक नोट्स हटाए जा सकेंगे । कृपया पहले एक नया कार्ड प्रकार बनाएं ।</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्ड का कार्ड प्रकार हटा दिया गया</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ब्राउज़र का दिखाव</string>

@@ -133,6 +133,7 @@
     <string name="menu_search">Посмотреть в %1$s</string>
     <string name="menu_mark_note">Отметить запись</string>
     <string name="menu_unmark_note">Снять отметку</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">Создать колоду</string>
     <string name="create">Создать</string>
     <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
@@ -194,7 +195,8 @@
         <item quantity="other">Удалить тип “%2$s” и его %1$d карточек?</item>
     </plurals>
     <string name="invalid_template">Невозможно сгенерировать карточку</string>
-    <string name="card_template_editor_would_delete_note">Удаление этого типа приведёт к удалению некоторых записей. Пожалуйста, сначала создайте новый тип карточек.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">Тип карточек текущей карточки был удалён.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Вид списка</string>

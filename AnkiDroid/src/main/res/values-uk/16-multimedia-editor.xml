@@ -112,6 +112,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Не вдалося записати</string>
     <string name="multimedia_editor_audio_view_playing_failed">Не вдалося відтворити</string>
+    <string name="multimedia_editor_audio_view_create_failed">Неможливо створити панель інструментів запису</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">Не вдалося редагувати</string>
     <string name="title_activity_translation">Переклад</string>

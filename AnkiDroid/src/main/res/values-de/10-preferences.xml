@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Maximale Anzahl an Sicherungen</string>
     <string name="show_estimates">Wiederholungszeiten anzeigen</string>
     <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Fällige anzeigen</string>
     <string name="show_progress_summ">Verbleibende Anzahl der Karten anzeigen</string>
     <string name="show_eta">ETA anzeigen</string>
