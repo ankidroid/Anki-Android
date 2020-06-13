@@ -268,5 +268,6 @@
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
 
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen">Please turn on fullscreen to use %s</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

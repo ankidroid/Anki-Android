@@ -3124,7 +3124,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 if (isInFullscreen) {
                     openOptionsMenu();
                 } else {
-                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen, "ankiShowOptionsMenu"), true);
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen_options_menu), true);
                 }
                 return true;
             }
@@ -3135,7 +3135,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 if (isInFullscreen) {
                     AbstractFlashcardViewer.this.onNavigationPressed();
                 } else {
-                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen, "ankiShowNavDrawer"), true);
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen_nav_drawer), true);
                 }
                 return true;
             }
