@@ -8,17 +8,22 @@ import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 import timber.log.Timber;
 
 import com.ichi2.themes.Themes;
+
+import java.util.Objects;
 
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 
 
 public class FieldEditText extends AppCompatEditText {
 
-    public static final String NEW_LINE = System.getProperty("line.separator");
+    @NonNull
+    public static final String NEW_LINE = Objects.requireNonNull(System.getProperty("line.separator"));
 
     private String mName;
     private int mOrd;
