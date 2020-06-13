@@ -35,7 +35,7 @@ import java.util.TreeSet;
 
 public class TagsDialog extends AnalyticsDialogFragment {
     public interface TagsDialogListener {
-        void onPositive(List<String> selectedTags, int option);
+        void onPositive(ArrayList<String> selectedTags, int option);
     }
 
     private static final int TYPE_NONE = -1;

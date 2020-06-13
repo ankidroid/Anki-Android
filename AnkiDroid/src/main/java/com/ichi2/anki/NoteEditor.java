@@ -176,7 +176,7 @@ public class NoteEditor extends AnkiActivity {
 
     private Note mEditorNote;
     public static Card mCurrentEditedCard;
-    private List<String> mSelectedTags;
+    private ArrayList<String> mSelectedTags;
     private long mCurrentDid;
     private ArrayList<Long> mAllDeckIds;
     private ArrayList<Long> mAllModelIds;
@@ -338,7 +338,7 @@ public class NoteEditor extends AnkiActivity {
             mCaller = savedInstanceState.getInt("caller");
             mAddNote = savedInstanceState.getBoolean("addNote");
             mCurrentDid = savedInstanceState.getLong("did");
-            mSelectedTags = new ArrayList<>(Arrays.asList(savedInstanceState.getStringArray("tags")));
+            mSelectedTags = savedInstanceState.getStringArrayList("tags");
             mSavedFields = savedInstanceState.getBundle("editFields");
             mReloadRequired = savedInstanceState.getBoolean("reloadRequired");
             mChanged = savedInstanceState.getBoolean("changed");
@@ -366,7 +366,7 @@ public class NoteEditor extends AnkiActivity {
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<>();
         }
-        savedInstanceState.putStringArray("tags", mSelectedTags.toArray(new String[0]));
+        savedInstanceState.putStringArrayList("tags", mSelectedTags);
         savedInstanceState.putBundle("editFields", getFieldsAsBundle());
         super.onSaveInstanceState(savedInstanceState);
     }
