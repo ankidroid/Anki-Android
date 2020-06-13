@@ -116,6 +116,12 @@ MENU_DISABLED = 3
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
         <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonSaveWhiteboard"
+            android:title="@string/save_whiteboard" />
+        <ListPreference
             android:defaultValue="2"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"

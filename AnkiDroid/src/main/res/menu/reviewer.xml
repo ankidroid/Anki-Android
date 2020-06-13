@@ -47,6 +47,11 @@
         </menu>
     </item>
     <item
+        android:id="@+id/action_save_whiteboard"
+        android:title="@string/save_whiteboard"
+        android:visible="false"
+        ankidroid:showAsAction="never"/>
+    <item
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_mode_edit_white_24dp"
         android:title="@string/cardeditor_title_edit_card"

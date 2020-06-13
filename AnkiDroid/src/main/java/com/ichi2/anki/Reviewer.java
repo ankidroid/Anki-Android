@@ -22,6 +22,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -35,6 +38,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
 
+import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,7 +68,12 @@ import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import timber.log.Timber;
 
@@ -300,11 +309,6 @@ public class Reviewer extends AbstractFlashcardViewer {
                 }
                 break;
 
-            case R.id.action_tag:
-                Timber.i("Reviewer:: Tag button pressed");
-                showTagsDialog();
-                break;
-
             case R.id.action_edit:
                 Timber.i("Reviewer:: Edit note button pressed");
                 return editCard();
@@ -328,6 +332,17 @@ public class Reviewer extends AbstractFlashcardViewer {
             case R.id.action_delete:
                 Timber.i("Reviewer:: Delete note button pressed");
                 showDeleteNoteDialog();
+                break;
+
+            case R.id.action_save_whiteboard:
+                Timber.i("Reviewer:: Save whiteboard button pressed");
+                if (mWhiteboard != null) {
+                    try {
+                        saveWhiteboardInternal();
+                    } catch (Exception e) {
+                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_save_failed, e.getLocalizedMessage()),true);
+                    }
+                }
                 break;
 
             case R.id.action_clear_whiteboard:
@@ -402,6 +417,37 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
+
+    private void saveWhiteboardInternal() {
+        Bitmap bitmap = Bitmap.createBitmap(mWhiteboard.getWidth(), mWhiteboard.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File ankiDroidFolder = new File(pictures, "AnkiDroid");
+
+        if(!ankiDroidFolder.exists()) {
+            ankiDroidFolder.mkdirs();
+        }
+
+        String baseFileName = "Whiteboard";
+        String newName = new SimpleDateFormat("yyyyMMddHHmmss'.png'").format(new Date());
+        String finalFileName = baseFileName + newName;
+
+        File saveImgFile = new File(ankiDroidFolder, finalFileName);
+
+        if (isInNightMode()) {
+            canvas.drawColor(Color.BLACK);
+        } else {
+            canvas.drawColor(Color.WHITE);
+        }
+
+        try {
+            mWhiteboard.draw(canvas);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveImgFile));
+        } catch (FileNotFoundException e) {
+            Timber.e(e, "Whiteboard image saving failed");
+        }
+    }
     private void toggleMicToolBar() {
         if (mMicToolBar != null) {
             // It exists swap visibility status
@@ -533,6 +579,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             if (!mActionButtons.getStatus().clearWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             }
+
+            menu.findItem(R.id.action_save_whiteboard).setVisible(true);
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp);
             if (mShowWhiteboard) {
