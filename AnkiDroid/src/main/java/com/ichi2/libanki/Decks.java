@@ -785,7 +785,7 @@ public class Decks {
         return spaceAroundSeparator.matcher(deckName.trim()).replaceAll( "::");
     }
 
-    /** With .28, anki started strips whitespace of deck name.
+    /** With 2.1.28, anki started strips whitespace of deck name.
      * This method is here for compatibility while we wait for rust.
      * It should be executed before other methods, because both "FOO " and "FOO" will be renamed to the same name,
      * and so this will need to be renamed by _checkDeckTree.*/
