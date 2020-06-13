@@ -1,14 +1,15 @@
 ## JavaScript API for calling native AnkiDroid functions inside WebView
 
-*Audience: This page is for deck developer app developers.*
+*Audience: This page is for deck developer.*
 
-This api allow deck developer to add functionality to cards that can call native functions defined in AnkiDroid. This can be used to design whole new layout for buttons, cards info top bar card counts, mark, flag etc. 
+This api allow deck developer to add functionality to cards that can call native functions defined in AnkiDroid. This can be used to design whole new layout for buttons, cards info, top bar card counts, mark, flag etc. 
 <br> View this files also for additional information.
 <br>[AbstractFlashcardViewer.java](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/java/com/ichi2/anki/AbstractFlashcardViewer.java)
 <br>[card.js](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/assets/scripts/card.js)
 
 To initialize the JavaScript API usage.
 ## Initialize 
+Calling functions using JS will not work, if api are not initialized.
 
 ### Name
 ```javascript
@@ -297,3 +298,7 @@ console.log(AnkiDroidJS.ankiGetCardQueue());
 <br>[#6307](https://github.com/ankidroid/Anki-Android/pull/6307) 
 <br>[#6388](https://github.com/ankidroid/Anki-Android/pull/6388) 
 <br>[#6393](https://github.com/ankidroid/Anki-Android/pull/6393) 
+
+## Sample Decks 
+The implementation of above functionality can be found in this github repo.
+[Anki Custom Card Layout](https://github.com/infinyte7/Anki-Custom-Card-Layout)
