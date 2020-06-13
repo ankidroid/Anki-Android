@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -1496,7 +1497,7 @@ public class Collection {
         File file = new File(mPath);
         CheckDatabaseResult result = new CheckDatabaseResult(file.length());
         final int[] currentTask = {1};
-        int totalTasks = (mModels.all().size() * 4) + 25; // a few fixes are in all-models loops, the rest are one-offs
+        int totalTasks = (mModels.all().size() * 4) + 27; // a few fixes are in all-models loops, the rest are one-offs
         Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
         FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
                 (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
@@ -1551,6 +1552,7 @@ public class Collection {
         executeIntegrityTask.consume(this::removeOriginalDuePropertyWhereInvalid);
         executeIntegrityTask.consume(this::removeDynamicPropertyFromNonDynamicDecks);
         executeIntegrityTask.consume(this::removeDeckOptionsFromDynamicDecks);
+        executeIntegrityTask.consume(this::resetInvalidDeckOptions);
         executeIntegrityTask.consume(this::rebuildTags);
         executeIntegrityTask.consume(this::updateFieldCache);
         executeIntegrityTask.consume(this::fixNewCardDuePositionOverflow);
@@ -1578,6 +1580,47 @@ public class Collection {
         }
         logProblems(result.getProblems());
         return result;
+    }
+
+
+    private List<String> resetInvalidDeckOptions(Runnable notifyProgress) {
+        Timber.d("resetInvalidDeckOptions");
+        //6454
+        notifyProgress.run();
+
+        //obtain a list of all valid dconf IDs
+        List<JSONObject> allConf = getDecks().allConf();
+        HashSet<Long> configIds  = new HashSet<>();
+
+        for (JSONObject conf : allConf) {
+            configIds.add(conf.getLong("id"));
+        }
+
+        notifyProgress.run();
+
+        int changed = 0;
+
+        for (JSONObject d : getDecks().all()) {
+            //dynamic decks do not have dconf
+            if (Decks.isDynamic(d)) {
+                continue;
+            }
+
+            if (!configIds.contains(d.getLong("conf"))) {
+                Timber.d("Reset %s's config to default", d.optString("name", "unknown deck"));
+                d.put("conf", Consts.DEFAULT_DECK_CONFIG_ID);
+                changed++;
+            }
+        }
+
+        List<String> ret = new ArrayList<>();
+
+        if (changed > 0) {
+            ret.add("Fixed " + changed + " decks with invalid config");
+            getDecks().save();
+        }
+
+        return ret;
     }
 
 
