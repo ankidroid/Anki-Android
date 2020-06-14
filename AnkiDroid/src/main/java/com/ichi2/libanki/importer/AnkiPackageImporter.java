@@ -53,7 +53,7 @@ public class AnkiPackageImporter extends Anki2Importer {
         publishProgress(0, 0, 0);
         File tempDir = new File(new File(mCol.getPath()).getParent(), "tmpzip");
         Collection tmpCol; //self.col into Anki.
-        Timber.d("Attempting to import package " + mFile);
+        Timber.d("Attempting to import package %s", mFile);
         try {
             // We extract the zip contents into a temporary directory and do a little more
             // validation than the desktop client to ensure the extracted collection is an apkg.
@@ -68,11 +68,11 @@ public class AnkiPackageImporter extends Anki2Importer {
 
                 // Make sure we have sufficient free space
                 long uncompressedSize = Utils.calculateUncompressedSize(mZip);
-                Timber.d("Total uncompressed size will be: " + uncompressedSize);
                 long availableSpace = Utils.determineBytesAvailable(mCol.getPath());
-                Timber.d("Total available size is:         " + availableSpace);
+                Timber.d("Total uncompressed size will be: %d", uncompressedSize);
+                Timber.d("Total available size is:         %d", availableSpace);
                 if (uncompressedSize > availableSpace) {
-                    Timber.e("Not enough space to unzip, need " + uncompressedSize + ", available " + availableSpace);
+                    Timber.e("Not enough space to unzip, need %d, available %d", uncompressedSize, availableSpace);
                     mLog.add(getRes().getString(R.string.import_log_insufficient_space, uncompressedSize, availableSpace));
                     return;
                 }
@@ -152,7 +152,7 @@ public class AnkiPackageImporter extends Anki2Importer {
             }
         } finally {
             long availableSpace = Utils.determineBytesAvailable(mCol.getPath());
-            Timber.d("Total available size is: " + availableSpace);
+            Timber.d("Total available size is: %d", availableSpace);
 
             // Clean up our temporary files
             if (tempDir.exists()) {
@@ -168,7 +168,7 @@ public class AnkiPackageImporter extends Anki2Importer {
             try {
                 return new BufferedInputStream(mZip.getInputStream(mZip.getEntry(mNameToNum.get(fname))));
             } catch (IOException | NullPointerException e) {
-                Timber.e("Could not extract media file " + fname + "from zip file.");
+                Timber.e("Could not extract media file %s from zip file.", fname);
             }
         }
         return null;
