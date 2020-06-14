@@ -147,9 +147,17 @@ public class Anki2Importer extends Importer {
             publishProgress(100, 100, 50);
             mDst.getDb().getDatabase().setTransactionSuccessful();
             mDst.getMedia().getDb().getDatabase().setTransactionSuccessful();
+        } catch (Exception err) {
+            Timber.e(err, "_import() exception");
+            throw err;
         } finally {
-            mDst.getDb().getDatabase().endTransaction();
-            mDst.getMedia().getDb().getDatabase().endTransaction();
+            // These methods throw about invalid transaction even when you try!
+            if (mDst.getDb().getDatabase().inTransaction()) {
+                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
+            }
+            if (mDst.getMedia().getDb().getDatabase().inTransaction()) {
+                try { mDst.getMedia().getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
+            }
         }
         mDst.getDb().execute("vacuum");
         publishProgress(100, 100, 65);
