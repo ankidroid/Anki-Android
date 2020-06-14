@@ -53,6 +53,7 @@ import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
@@ -85,6 +86,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.CardAppearance;
@@ -124,6 +126,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -191,6 +194,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected String mCardSuppliedDeveloperContact  = "";
 
     private static final String sCurrentJsApiVersion = "1.0.0";
+
+    private HashMap<String, Boolean> jsApiListMap = new HashMap<String, Boolean>();
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -3093,36 +3099,35 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // mark card using javascript
             if (url.startsWith("signal:mark_current_card")) {
-                if (!requireApiVersion(mCardSuppliedApiVersion)) {
-                    showDeveloperContact();
-                } else {
+                if (jsApiListMap.get("markCard")) {
                     executeCommand(COMMAND_MARK);
+                } else {
+                    showDeveloperContact();
                 }
                 return true;
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
-                if (!requireApiVersion(mCardSuppliedApiVersion)) {
-                    showDeveloperContact();
-                    return true;
-                }
-
-                String mFlag = url.replaceFirst("signal:flag_","");
-                switch (mFlag) {
-                    case "none": executeCommand(COMMAND_UNSET_FLAG);
-                        return true;
-                    case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
-                        return true;
-                    case "orange": executeCommand(COMMAND_TOGGLE_FLAG_ORANGE);
-                        return true;
-                    case "green": executeCommand(COMMAND_TOGGLE_FLAG_GREEN);
-                        return true;
-                    case "blue": executeCommand(COMMAND_TOGGLE_FLAG_BLUE);
-                        return true;
-                    default:
-                        Timber.d("No such Flag found.");
-                        return true;
+                if (jsApiListMap.get("toggleFlag")) {
+                    String mFlag = url.replaceFirst("signal:flag_","");
+                    switch (mFlag) {
+                        case "none": executeCommand(COMMAND_UNSET_FLAG);
+                            return true;
+                        case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
+                            return true;
+                        case "orange": executeCommand(COMMAND_TOGGLE_FLAG_ORANGE);
+                            return true;
+                        case "green": executeCommand(COMMAND_TOGGLE_FLAG_GREEN);
+                            return true;
+                        case "blue": executeCommand(COMMAND_TOGGLE_FLAG_BLUE);
+                            return true;
+                        default:
+                            Timber.d("No such Flag found.");
+                            return true;
                     }
+                }
+                showDeveloperContact();
+                return true;
             }
 
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
@@ -3361,7 +3366,34 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // api version if 1.0.0
     private boolean requireApiVersion(String apiVer) {
-        return apiVer.equals(sCurrentJsApiVersion);
+        String[] versionSupplied = apiVer.split("\\.");
+        String[] currentApiVersion = sCurrentJsApiVersion.split("\\.");
+
+        int majorCurrentApiVersion = Integer.parseInt(currentApiVersion[0]);
+        int minorCurrentApiVersion = Integer.parseInt(currentApiVersion[1]);
+        int patchCurrentApiVersion = Integer.parseInt(currentApiVersion[2]);
+
+        if (versionSupplied.length <= 2) {
+            UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.valid_js_api_version, sCurrentJsApiVersion), false);
+            return false;
+        }
+
+        if (versionSupplied.length == 3) {
+            int majorVersionSupplied = Integer.parseInt(versionSupplied[0]);
+            int minorVersionSupplied = Integer.parseInt(versionSupplied[1]);
+            int patchVersionSupplied = Integer.parseInt(versionSupplied[2]);
+
+            if (majorVersionSupplied == majorCurrentApiVersion && minorVersionSupplied == minorCurrentApiVersion && patchVersionSupplied == patchCurrentApiVersion) {
+                return true;
+            } else if (majorVersionSupplied == majorCurrentApiVersion && minorVersionSupplied < minorCurrentApiVersion && patchVersionSupplied < patchCurrentApiVersion) {
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.update_js_api_version, sCurrentJsApiVersion), false);
+                return false;
+            } else {
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.valid_js_api_version, sCurrentJsApiVersion), false);
+                return false;
+            }
+        }
+        return false;
     }
 
 
@@ -3415,15 +3447,32 @@ see card.js for available functions
  */
     public class JavaScriptFunction {
 
+        Gson gson = new Gson();
+        // list of api that can be accessed
+        String[] apiList = {"toggleFlag", "markCard"};
+
+        // initialize all api with disabled status
+        private void preInit() {
+            for (int i = 0; i < apiList.length; i++) {
+                jsApiListMap.put(apiList[i], false);
+            }
+        }
+
+        // if supplied api version match then enable api
+        private void enableJsApi() {
+            for (int i = 0; i < apiList.length; i++) {
+                jsApiListMap.put(apiList[i], true);
+            }
+        }
+
         @JavascriptInterface
         public String init(String jsonData) {
-            JSONObject enabledJsApi = new JSONObject();
+            preInit();
 
-            JSONObject data = new JSONObject();
+            JSONObject data;
             try {
-                 data = new JSONObject(jsonData);
-
-                 if (!(data == JSONObject.NULL)) {
+                data = new JSONObject(jsonData);
+                if (!(data == JSONObject.NULL)) {
                      mCardSuppliedApiVersion = data.optString("version", "");
                      mCardSuppliedDeveloperContact  = data.optString("developer", "");
                  }
@@ -3432,18 +3481,15 @@ see card.js for available functions
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.invalid_json_data, j.getLocalizedMessage()), false);
             }
 
+            String apiStatusJson = "";
             if (TextUtils.isEmpty(mCardSuppliedApiVersion) && TextUtils.isEmpty(mCardSuppliedDeveloperContact)) {
-                enabledJsApi.put("toggleFlag", "disabled");
-                enabledJsApi.put("markCard", "disabled");
+                apiStatusJson = gson.toJson(jsApiListMap);
+                return String.valueOf(apiStatusJson);
             } else if (requireApiVersion(mCardSuppliedApiVersion)) {
-                enabledJsApi.put("toggleFlag", "enabled");
-                enabledJsApi.put("markCard", "enabled");
-            } else {
-                enabledJsApi.put("toggleFlag", "disabled");
-                enabledJsApi.put("markCard", "disabled");
+                enableJsApi();
+                apiStatusJson = gson.toJson(jsApiListMap);
             }
-
-            return String.valueOf(enabledJsApi);
+            return String.valueOf(apiStatusJson);
         }
 
         @JavascriptInterface
