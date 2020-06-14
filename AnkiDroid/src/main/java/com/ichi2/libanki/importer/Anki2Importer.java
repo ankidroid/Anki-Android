@@ -159,9 +159,21 @@ public class Anki2Importer extends Importer {
                 try { mDst.getMedia().getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
             }
         }
-        mDst.getDb().execute("vacuum");
+        try {
+            mDst.getDb().execute("vacuum");
+        } catch (Exception e) {
+            // This is actually not fatal but can fail since vacuum takes so much space
+            // Allow the import to succeed but recommend the user run check database
+            mLog.add(getRes().getString(R.string.import_succeeded_but_check_database, e.getLocalizedMessage()));
+        }
         publishProgress(100, 100, 65);
-        mDst.getDb().execute("analyze");
+        try {
+            mDst.getDb().execute("analyze");
+        } catch (Exception e) {
+            // This is actually not fatal but can fail since vacuum takes so much space
+            // Allow the import to succeed but recommend the user run check database
+            mLog.add(getRes().getString(R.string.import_succeeded_but_check_database, e.getLocalizedMessage()));
+        }
         publishProgress(100, 100, 75);
     }
 
