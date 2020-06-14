@@ -306,8 +306,9 @@ public class Card implements Cloneable {
     }
 
 
+    // not in upstream
     public JSONObject model() {
-        return mCol.getModels().get(note().getMid());
+        return note().model();
     }
 
 
