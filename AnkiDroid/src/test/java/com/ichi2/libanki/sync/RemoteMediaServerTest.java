@@ -67,7 +67,7 @@ public class RemoteMediaServerTest {
 
         String syncUrl = underTest.syncURL();
 
-        assertThat(syncUrl, is("https://sync.example.com/msync/"));
+        assertThat(syncUrl, is("https://sync.example.com/msync"));
     }
 
 
@@ -79,7 +79,7 @@ public class RemoteMediaServerTest {
 
         String syncUrl = underTest.syncURL();
 
-        assertThat(syncUrl, is("https://sync1.example.com/msync/"));
+        assertThat(syncUrl, is("https://sync1.example.com/msync"));
     }
 
     @Test
@@ -89,7 +89,7 @@ public class RemoteMediaServerTest {
 
         String syncUrl = underTest.syncURL();
 
-        assertThat(syncUrl, is("https://sync.example.com/msync/"));
+        assertThat(syncUrl, is("https://sync.example.com/msync"));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class RemoteMediaServerTest {
 
         String syncUrl = underTest.syncURL();
 
-        assertThat(syncUrl, is("https://sync.example.com/msync/"));
+        assertThat(syncUrl, is("https://sync.example.com/msync"));
     }
 
     @Test

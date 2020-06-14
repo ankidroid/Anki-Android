@@ -221,7 +221,7 @@ public class HttpSyncer {
             bos.close();
             // connection headers
 
-            String url = syncURL() + method;
+            String url = Uri.parse(syncURL()).buildUpon().appendPath(method).toString();
 
             Request.Builder requestBuilder = new Request.Builder();
             requestBuilder.url(url);
