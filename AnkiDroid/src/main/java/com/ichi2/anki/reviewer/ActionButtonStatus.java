@@ -48,7 +48,7 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_undo, "customButtonUndo", SHOW_AS_ACTION_ALWAYS);
         setupButton(preferences, R.id.action_schedule, "customButtonScheduleCard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_flag, "customButtonFlag", SHOW_AS_ACTION_ALWAYS);
-        setupButton(preferences, R.id.action_tag, "customButtonTag", SHOW_AS_ACTION_IF_ROOM);
+        setupButton(preferences, R.id.action_tag, "customButtonTag", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_edit, "customButtonEditCard", SHOW_AS_ACTION_IF_ROOM);
         setupButton(preferences, R.id.action_add_note_reviewer, "customButtonAddCard", MENU_DISABLED);
         setupButton(preferences, R.id.action_replay, "customButtonReplay", SHOW_AS_ACTION_IF_ROOM);

@@ -60,7 +60,7 @@
         android:id="@+id/action_tag"
         android:icon="@drawable/ic_tag"
         android:title="@string/menu_edit_tags"
-        ankidroid:showAsAction="ifRoom"/>
+        ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_replay"
         android:title="@string/replay_audio"
