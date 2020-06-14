@@ -136,9 +136,7 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">ግዜ_ብዝሒ_ካልኢታት
-ብዝሒ ግዜ መዐቐኒ ናይ ግዜ እዮም።ብዘይ ምብዛሕን ብዘይ ነጠብን ከኣ ንጥቀመሎም።
-s,min,h,d, እዚኦም ከም ልሙድ(ISO 31-1) መዐቀኒታት ከምኡ ውን ክትርጎሙ ዘይክእሉ ኢዮም ብውሑዱ ን ቋንቋ ብ ላቲን መስርሕ ቃላት።</string>
+    <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d ደቂቅ</string>
     <string name="time_quantity_hours">%d ሰዓት</string>
     <string name="time_quantity_days">%d መዓልቲ</string>

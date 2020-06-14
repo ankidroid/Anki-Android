@@ -19,7 +19,6 @@
 
 package com.ichi2.libanki;
 
-import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -141,7 +140,6 @@ public class Utils {
      * @return The time quantity string. Something like "3 s" or "1.7
      * yr". Only months and year have a number after the decimal.
      */
-    @SuppressLint("StringFormatInvalid")
     public static String timeQuantity(Context context, long time_s) {
         Resources res = context.getResources();
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
