@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Verberg het schrijfbord</string>
     <string name="clear_whiteboard">Schrijfbord schoonvegen</string>
     <string name="replay_audio">Audio herhalen</string>
+    <string name="toggle_mic_tool_bar">Uitspraak controleren</string>
     <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
     <string name="leech_notification">Kaart gemarkeerd als moeilijk</string>
     <string name="corrupt_font">Beschadigd lettertypebestand %s</string>
@@ -110,7 +111,7 @@
     <string name="discard_unsaved_changes">Afsluiten en huidige invoer verloren laten gaan?</string>
     <string name="note_editor_no_cards_created">Geen kaarten aangemaakt. Vul alstublieft meer velden in</string>
     <string name="note_editor_no_first_field">Het eerste veld is leeg</string>
-    <string name="note_editor_no_cloze_delations">Dit type memo moet woorden die verborgen zullen worden bevatten.</string>
+    <string name="note_editor_no_cloze_delations">Dit type notitie moet invuloefeningen bevatten.</string>
     <string name="note_editor_no_cards_created_all_fields">Het huidige type memo produceerde geen kaarten.\nKies alstublieft een ander type memo, of klik op \'Kaarten\' en voeg een veld substitutie toe.</string>
     <string name="saving_facts">Kaart opslaan</string>
     <string name="saving_model">Memotype opslaan</string>
@@ -164,11 +165,15 @@
     <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
     <string name="import_message_add_confirm">“%s” aan de collectie toevoegen? Dit kan lang duren</string>
     <string name="import_log_no_apkg">Dit is geen geldig Anki-pakketbestand</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_error_unhandled_request">Kan importverzoek niet verwerken</string>
     <string name="import_error_exception">Pakket importeren mislukt\n\n%s</string>
     <string name="import_error_not_apkg_extension">Bestandsnaam “%s” heeft geen .apkg of .colpkg-extensie</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) vervangingen worden nog niet ondersteund. Zie alstublieft de handleiding voor vervangende instructies.</string>
     <string name="import_error_content_provider">Het selecteerde bestand kon niet automatisch geïmporteerd worden door AnkiDroid. Bekijk de gebruikershandleiding om te zien hoe je anki bestanden handmatig importeert: \n%s</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_replacing">Collectie vervangen&#8230;</string>
     <string name="import_interrupted">Importeren onderbroken</string>
     <string name="export_include_schedule">Inclusief de planning</string>
@@ -263,5 +268,8 @@
     <string name="choose_an_image">Kies een afbeelding</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Herstel Standaardinstellingen</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Leeg</string>
+    <!-- in options menu & Navigation Drawer -->
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

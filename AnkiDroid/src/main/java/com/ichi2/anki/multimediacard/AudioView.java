@@ -24,12 +24,22 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
+
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.anki.Reviewer;
+import com.ichi2.libanki.Collection;
 import com.ichi2.anki.UIUtils;
+import java.io.File;
+import java.io.IOException;
 import com.ichi2.utils.Permissions;
 
 import timber.log.Timber;
@@ -69,7 +79,28 @@ public class AudioView extends LinearLayout {
 
     public static AudioView createRecorderInstance(Context context, int resPlay, int resPause, int resStop,
             int resRecord, int resRecordStop, String audioPath) {
+        try {
         return new AudioView(context, resPlay, resPause, resStop, resRecord, resRecordStop, audioPath);
+        } catch(Exception e) {
+            Timber.e(e);
+            AnkiDroidApp.sendExceptionReport(e, "Unable to create recorder tool bar");
+            UIUtils.showThemedToast(context,
+                    context.getText(R.string.multimedia_editor_audio_view_create_failed).toString(), true);
+            return null;
+        }
+    }
+
+    public static @Nullable
+    String generateTempAudioFile(@NonNull Context context) {
+        String tempAudioPath;
+        try {
+            File storingDirectory = context.getCacheDir();
+            tempAudioPath = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).getAbsolutePath();
+        } catch (IOException e) {
+            Timber.e(e, "Could not create temporary audio file.");
+            tempAudioPath = null;
+        }
+        return tempAudioPath;
     }
 
 
@@ -105,6 +136,7 @@ public class AudioView extends LinearLayout {
         mResRecordStopImage = resRecordStop;
 
         this.setOrientation(HORIZONTAL);
+        this.setGravity(Gravity.CENTER);
 
         mRecord = new RecordButton(context);
         addView(mRecord, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));

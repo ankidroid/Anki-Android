@@ -123,6 +123,7 @@
     <string name="menu_search">%1$s\'de Ara</string>
     <string name="menu_mark_note">Notu işâretle</string>
     <string name="menu_unmark_note">İşâreti kaldır</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">Deste oluştur</string>
     <string name="create">Oluştur</string>
     <string name="new_dynamic_deck">Filtreli deste oluştur</string>
@@ -182,7 +183,8 @@
         <item quantity="other">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
     </plurals>
     <string name="invalid_template">Bir kart oluşturulamadı</string>
-    <string name="card_template_editor_would_delete_note"> Bu kart tipini kaldırmak bir veya daha fazla notun silinmesine neden olur. Lütfen önce yeni bir kart türü oluşturun.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>

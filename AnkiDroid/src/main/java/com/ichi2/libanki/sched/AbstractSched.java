@@ -73,6 +73,9 @@ public abstract class AbstractSched {
     public abstract boolean revDue();
     /** true if there are any new cards due. */
     public abstract boolean newDue();
+    /** true if there are cards in learning, with review due the same
+     * day, in the selected decks. */
+    public abstract boolean hasCardsTodayAfterStudyAheadLimit();
     public abstract boolean haveBuried();
     /**
      * Return the next interval for a card and ease as a string.

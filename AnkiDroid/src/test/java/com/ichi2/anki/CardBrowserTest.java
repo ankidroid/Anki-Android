@@ -264,7 +264,9 @@ public class CardBrowserTest extends RobolectricTest {
         app.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         Intent inputIntent = new Intent("android.intent.action.PROCESS_TEXT");
 
-        CardBrowser cardBrowser = Robolectric.buildActivity(CardBrowser.class, inputIntent).create().get();
+        ActivityController<CardBrowser> browserController = Robolectric.buildActivity(CardBrowser.class, inputIntent).create();
+        CardBrowser cardBrowser = browserController.get();
+        saveControllerForCleanup(browserController);
 
         ShadowActivity shadowActivity = shadowOf(cardBrowser);
         Intent outputIntent = shadowActivity.getNextStartedActivity();
@@ -336,8 +338,9 @@ public class CardBrowserTest extends RobolectricTest {
         for(int i = 0; i < count; i ++) {
             addNote(Integer.toString(i));
         }
-        ActivityController multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
+        ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
                 .create().start().resume().visible();
+        saveControllerForCleanup(multimediaController);
         return (CardBrowser) multimediaController.get();
     }
 
@@ -356,8 +359,9 @@ public class CardBrowserTest extends RobolectricTest {
 
     @CheckReturnValue
     private CardBrowser getBrowserWithNoNewCards() {
-        ActivityController multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
+        ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
                 .create().start().resume().visible();
+        saveControllerForCleanup(multimediaController);
         return (CardBrowser) multimediaController.get();
     }
 }

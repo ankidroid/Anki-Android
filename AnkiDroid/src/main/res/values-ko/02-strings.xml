@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">화이트 보드 숨기기</string>
     <string name="clear_whiteboard">화이트 보드 지우기</string>
     <string name="replay_audio">오디오 다시 재생</string>
+    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">카드가 거머리로 표시 및 비활성화됨</string>
     <string name="leech_notification">거머리로 표시된 카드</string>
     <string name="corrupt_font">손상된 글꼴 파일 %s</string>
@@ -161,11 +162,15 @@
     <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
     <string name="import_message_add_confirm">\"%s\"를 컬렉션에 추가하시겠습니까? 시간이 오래 걸릴 수 있습니다.</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_replacing">컬렉션을 대체하는 중...</string>
     <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">일정 포함</string>
@@ -255,4 +260,7 @@ Context | Request Context    </string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <!-- in options menu & Navigation Drawer -->
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

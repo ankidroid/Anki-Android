@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- generic strings -->
+    <string name="disabled">I-disable</string>
+    <string name="enabled">I-enable</string>
+    <!-- preferences.xml categories-->
+    <string name="pref_cat_general">Ang AnkiDroid</string>
+    <string name="pref_cat_general_summ">Palitan anf Settings</string>
+    <string name="pref_cat_reviewing">I-review</string>
+    <string name="pref_cat_reviewing_summ">Mga setting ng reviewer na hindi tiyak sa deck</string>
+    <string name="pref_cat_reviewer_behaviour">Pag-uugali</string>
+    <string name="pref_cat_flashcard">Display</string>
+    <string name="pref_cat_whiteboard">Whiteboard</string>
+    <string name="pref_cat_automatic_display">Awtomatikong sagot sa display</string>
+    <string name="pref_cat_appearance">Hitsura</string>
+    <string name="pref_cat_appearance_summ">Baguhin ang mga tema at default na font</string>
+    <string name="pref_cat_themes">Mga Tema</string>
+    <string name="pref_cat_fonts">Fonts</string>
+    <string name="pref_cat_gestures">Kilos</string>
+    <string name="pref_cat_gestures_summ">Gumamit ng mga taps at swipes sa halip ng mga pindutan</string>
+    <string name="pref_cat_actions">Mga Pagkilos</string>
+    <string name="pref_cat_advanced">Masulong</string>
+    <string name="pref_cat_advanced_summ">Mga tampok sa pag-optimize at pang-eksperimento</string>
+    <string name="pref_cat_performance">Paggawa</string>
+    <string name="pref_cat_workarounds">Workarounds</string>
+    <string name="pref_cat_plugins">Mga Plugin</string>
+    <string name="about_title">Tungkol sa AnkiDroid</string>
+    <string name="about_version">Bersyon: </string>
+    <!-- preferences.xml entries-->
+    <string name="whiteboard_stroke_width">Lapad ng stroke</string>
+    <string name="whiteboard_black">Itim na stroke</string>
+    <string name="whiteboard_black_summ">Gumagamit ng kaunting memorya, maliban kung sa gabing kalakaran</string>
+    <string name="use_input_tag">I-type ang sagot sa card</string>
+    <string name="use_input_tag_summ">Gumamit ng isang kahon ng pag-input ng teksto sa loob ng card upang i-type ang sagot</string>
+    <string name="dictionary">Paghahanap ng diksyunaryo</string>
+    <string name="reset_languages">I-reset ang mga wika</string>
+    <string name="reset_languages_summ">I-reset ang mga tugmang wika (para sa teksto sa pagsasalita at mga diksyunaryo) para sa lahat ng mga deck</string>
+    <string name="reset_languages_question">I-reset ang lahat ng mga takdang wika?</string>
+    <string name="reset_confirmation">I-reset ang lahat ng mga estado</string>
+    <string name="card_zoom">Pag-zoom ng card</string>
+    <string name="image_zoom">Pag-zoom ng larawan</string>
+    <string name="button_size">Sukat ng pindutan ng sagot</string>
+    <string name="card_browser_font_size">Pagsusulat ng font sa browser ng card</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="col_path">Direktoryo ng AnkiDroid</string>
+    <string name="fullscreen_review">Fullscreen mode</string>
+    <string name="full_screen_off">Off</string>
+    <string name="full_screen_system">Itago ang mga bar ng system</string>
+    <string name="full_screen_complete">Itago ang mga bar ng system at sagutin ang mga pindutan</string>
+    <string name="full_screen_error_gestures">Dapat mong paganahin ang mga kumpas upang itago ang mga pindutan ng sagot</string>
+    <string name="answer_buttons_position">Posisyon ng sagot sa mga pindutan</string>
+    <string-array name="answer_buttons_position_labels">
+        <item>Itaas</item>
+        <item>Ibaba</item>
+    </string-array>
+    <string name="gestures">Paganahin ang mga galaw</string>
+    <string name="gestures_summ">Magtalaga ng mga kilos sa mga aksyon tulad ng pagsagot at pag-edit ng mga card.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_swipe_up">Mag-swipe pataas</string>
+    <string name="gestures_swipe_down">Mag-swipe pababa</string>
+    <string name="gestures_swipe_left">Mag-swipe pakaliwa</string>
+    <string name="gestures_swipe_right">Mag-swipe pakanan</string>
+    <string name="gestures_double_tap">Dobleng hawakan</string>
+    <string name="gestures_tap_top">Pindutin ang itaas</string>
+    <string name="gestures_tap_bottom">Pindutin ang ibaba</string>
+    <string name="gestures_tap_left">Pindutin ang kaliwa</string>
+    <string name="gestures_tap_right">Pindutin ang kanan</string>
+    <string name="more_scrolling_buttons">eReader</string>
+    <string name="more_scrolling_buttons_summ">Gamitin din ang kanji / katakana, emoji / kao-moji na mga pindutan para sa pag-scroll</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="double_scrolling_gap">Double scroll</string>
+    <string name="double_scrolling_gap_summ">I-double ang scroll puwang sa eReader</string>
+    <string name="swipe_sensitivity">Sensitibong pag-swipe</string>
+    <string name="tts">Teksto sa pagsasalita</string>
+    <string name="tts_summ">Binabasa ang tanong at sagot kung walang sound file na kasama</string>
+    <string name="sync_fetch_missing_media">Kunin ang media sa sync</string>
+    <string name="sync_fetch_missing_media_summ">Awtomatikong makuha ang nawawalang media kapag naka-sync</string>
+    <string name="sync_account">AnkiWeb account</string>
+    <string name="sync_account_summ_logged_out">Hindi naka-log in</string>
+    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="automatic_sync_choice">Awtomatikong pag-synchronize</string>
+    <string name="automatic_sync_choice_summ">Awtomatikong i-sync sa start / exit ng app kung ang huling pag-sync ay higit sa 10
+        minuto ang nakalipas.</string>
+    <string name="day_theme">Araw ng tema</string>
+    <string name="night_theme">Tema ng gabi</string>
+    <string name="default_font">Default na font</string>
+    <string name="override_font">Paggamit ng default na font</string>
+    <string name="language">Wika</string>
+    <string name="language_system">Wika ng sistema</string>
+    <string name="notification_pref">Notipikasyon</string>
+    <string name="notification_pref_title">Notipikasyon kong kailan</string>
+    <string name="never_notify">Huwag kailanman ipaalam</string>
+    <string name="notify_when_pending">Nakabinbin ang mga mensahe na magagamit</string>
+    <string name="notification_minimum_cards_due">Mahigit sa%d card angkop</string>
+    <string name="notification_minimum_cards_due_vibrate">Tumagingting</string>
+    <string name="notification_minimum_cards_due_blink">Kisap ng ilaw</string>
+    <string name="timeout_answer_text">Awtomatikong sagot na ipakita</string>
+    <string name="timeout_answer_summ">Awtomatikong ipakita ang sagot nang hindi gumagamit ng input. Kasama ang pag-antala ng oras para sa awtomatikong pag-play ng mga audio file.</string>
+    <string name="timeout_answer_seconds">Oras upang ipakita ang sagot</string>
+    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_question_seconds">Oras upang ipakita ang susunod na tanong</string>
+    <string name="timeout_question_seconds_summ">XXX s</string>
+    <string name="select_locale_title">Piliin ang wika</string>
+    <string name="safe_display">Ligtas na display mode</string>
+    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="vertical_centering">Sentrong hanayin</string>
+    <string name="vertical_centering_summ">I-sentro ang nilalaman ng mga baraha</string>
+    <string name="pref_backup_max">Max na bilang ng mga backup</string>
+    <string name="show_estimates">Ipakita ang oras na pindutan</string>
+    <string name="show_estimates_summ">Ipakita ang susunod na oras ng pagsusuri sa mga pindutan ng sagot</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_progress">Ipakita ang natitira</string>
+    <string name="show_progress_summ">Ipakita ang natitirang bilang ng card</string>
+    <string name="show_eta">Ipakita ang ETA</string>
+    <string name="show_eta_summ">Ipakita ang natitirang oras</string>
+    <string name="use_current">Deck para sa mga bagong card</string>
+    <string name="new_spread">Bagong posisyon ng card</string>
+    <string name="learn_cutoff">Matuto nang higit na limitasyon</string>
+    <string name="learn_cutoff_summ">XXX min</string>
+    <string name="time_limit">Limitasyon ng oras ng Timebox</string>
+    <string name="time_limit_summ">XXX min</string>
+    <string name="day_offset">Simula ng susunod na araw</string>
+    <string name="day_offset_summ">XXX oras nakalipas nang hatinggabi</string>
+    <string name="sched_ver">Experimental V2 scheduler</string>
+    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_ver_toggle_title">Confirm</string>
+    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
+    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="pref_keep_screen_on">Panatilihin naka on ang screen</string>
+    <string name="pref_keep_screen_on_summ">Huwag paganahin ang timeout ng screen</string>
+    <string name="convert_fen_text">Chess notation support</string>
+    <string name="convert_fen_text_summ">Gumuhit ng chessboard mula sa Forsyth-Edwards Notation. Ang notasyon ay dapat na nakapaloob sa [fen][/fen] na mga tag.</string>
+    <string name="enable_api_title">Paganahin ang AnkiDroid API</string>
+    <string name="enable_api_summary">Hayaan ang iba pang apps na kumonekta sa AnkiDroid at basahin / isulat ang data nang wala ang iyong interbensyon</string>
+    <string name="custom_buttons">Mga pindutan ng bar ng app</string>
+    <string name="custom_buttons_summary">I-customize kung aling mga aksyon ang lilitaw sa app bar</string>
+    <string name="custom_buttons_setting_always_show">Laging ipakita</string>
+    <string name="custom_buttons_setting_if_room">Ipakita kung room</string>
+    <string name="custom_buttons_setting_menu_only">Menu lamang</string>
+    <string name="reset_custom_buttons">I-reset sa default</string>
+    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
+    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <!-- Advanced statistics settings -->
+    <string name="advanced_statistics_title">Mga advanced na istatistika</string>
+    <string name="enable_advanced_statistics_title">Paganahin ang mga advanced na istatistika</string>
+    <string name="enable_advanced_statistics_summ">Ipakita ang mga istatistika ng forecast batay sa isang pag-compute o simulation ng mga review sa hinaharap (pinagana) o sa mga review sa hinaharap na naka-iskedyul (hindi pinagana).</string>
+    <string name="advanced_forecast_stats_compute_n_days_title">Kuwentahin ang unang mga araw, gayahin ang natitira</string>
+    <string name="advanced_forecast_stats_compute_precision_title">Katiyakan ng pagkukuwenta</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title">Bilang ng mga pag-ulit ng simulation</string>
+    <!-- Custom sync server settings -->
+    <string name="custom_sync_server_title">Gumamit ng custom sync server</string>
+    <string name="custom_sync_server_enable_title">Gumamit ng custom sync server</string>
+    <string name="custom_sync_server_enable_summary">Kung ayaw mong gamitin ang pagmamay-ari na serbisyo ng AnkiWeb maaari mong tukuyin ang isang alternatibong server dito</string>
+    <string name="custom_sync_server_base_url_title">I-sync ang url</string>
+    <string name="custom_sync_server_media_url_title">Nai-singkronisa ang media</string>
+    <!-- studyoptions -->
+    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="studyoptions_limit_select_tags">Piliin ang mga tag</string>
+    <!-- Deck configurations -->
+    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_group">Opsyon na grupo</string>
+    <plurals name="deck_conf_group_summ">
+        <item quantity="one">Ang %1$s\n%2$d deck ay gumagamit ng pangkat na ito</item>
+        <item quantity="other">Ang %1$s\n%2$d deck ay gumagamit ng pangkat na ito</item>
+    </plurals>
+    <string name="deck_conf_new_cards">Mga bagong kard</string>
+    <string name="deck_conf_rev_cards">Mga Review</string>
+    <string name="deck_conf_lps_cards">Mga pagkakamali</string>
+    <string name="deck_conf_general">Pangkalahatan</string>
+    <string name="deck_conf_reminders">Mga Paalala</string>
+    <string name="deck_conf_steps">Mga hakbang (sa ilang minuto)</string>
+    <string name="deck_conf_order">Kaayusan</string>
+    <string name="deck_conf_new_cards_day">Mga Bagong kard / araw</string>
+    <string name="deck_conf_graduating_ivl">Pagtatapos ng agwat</string>
+    <string name="deck_conf_days">XXX araw (s)</string>
+    <string name="deck_conf_easy_ivl">Madaling pagitan</string>
+    <string name="deck_conf_start_ease">Madaling pagsisimula</string>
+    <string name="deck_conf_max_rev">Pinakamataas na review / araw</string>
+    <string name="deck_conf_new_bury">Ibaon ang kaugnay na mga bagong card</string>
+    <string name="deck_conf_new_bury_summ">Ang mga kaugnay na bagong card ay ibinaon hanggang sa susunod na araw</string>
+    <string name="deck_conf_rev_bury">Ibaon kaugnay na mga review</string>
+    <string name="deck_conf_rev_bury_summ">Ang mga kaugnay na review ay ibinaon hanggang sa susunod na araw</string>
+    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_easy_bonus">Madaling bonus</string>
+    <string name="deck_conf_ivl_fct">Modifier ng agwat</string>
+    <string name="deck_conf_max_ivl">Pinakamataas na agwat</string>
+    <string name="deck_conf_new_lps_ivl">Bagong agwat</string>
+    <string name="deck_conf_min_ivl">Pinakamababa na agwat</string>
+    <string name="deck_conf_leech_thres">Pasukan ng Leech</string>
+    <string name="deck_conf_fails">XXX lapse(s)</string>
+    <string name="deck_conf_leech_action">Pumili ng aksyon</string>
+    <string name="deck_conf_max_time">Pinakamataas na oras ng sagot</string>
+    <string name="deck_conf_seconds">XXX segundo</string>
+    <string name="deck_conf_timer">Ipakita ang timer ng sagot</string>
+    <string name="deck_conf_autoplay">Awtomatikong magtugtogin ang audio</string>
+    <string name="deck_conf_replayq">I-replay ang tanong</string>
+    <string name="deck_conf_replayq_summ">Kapag ipinakita ang sagot, i-replay ang parehong tanong at sagot na audio</string>
+    <string name="deck_conf_manage">Pamamahala ng grupo</string>
+    <string name="deck_conf_current_group">Kasalukuyang grupo</string>
+    <string name="deck_conf_rename">Palitan ang pangalan</string>
+    <string name="deck_conf_reset">Ibalik sa dating ayos</string>
+    <string name="deck_conf_reset_title">Ibalik sa dating ayos</string>
+    <string name="deck_conf_reset_message">Ibalik ang kasalukuyang mga opsyon ng pangkat sa mga default na halaga?</string>
+    <string name="deck_conf_add">Magdagdag</string>
+    <string name="deck_conf_add_summ">Lumikha ng isang kopya ng kasalukuyang pangkat ng mga pagpipilian</string>
+    <string name="deck_conf_remove">Alisin</string>
+    <string name="deck_conf_remove_title">Alisin</string>
+    <string name="deck_conf_remove_message">Alisin ang mga kasalukuyang pangkat ng mga pagpipilian?</string>
+    <string name="deck_conf_set_subdecks">Itakda para sa lahat ng mga subdecks</string>
+    <plurals name="deck_conf_set_subdecks_summ">
+        <item quantity="one">%s subdeck ang gagamitin sa pangkat na ito</item>
+        <item quantity="other">%s subdeck ang gagamitin sa pangkat na ito</item>
+    </plurals>
+    <string name="deck_conf_set_subdecks_title">Itakda para sa lahat ng mga subdecks</string>
+    <string name="deck_conf_set_subdecks_message">Itakda ang kasalukuyang mga opsyon na pangkat para sa lahat ng mga subdecks ng deck na ito?</string>
+    <string name="pref_browser_editor_font">Browser at editor ng font</string>
+    <string name="deck_conf_cram_filter">Salain</string>
+    <string name="deck_conf_cram_options">Mga Opsyon</string>
+    <string name="deck_conf_cram_search">Paghahanap</string>
+    <string name="deck_conf_cram_limit">Limitasyon sa</string>
+    <string name="deck_conf_cram_order">napili ng mga kard sa pamamagitan ng</string>
+    <string name="deck_conf_cram_reschedule">Iskedyul uli</string>
+    <string name="deck_conf_cram_reschedule_summ">Ischedule ulu ang maga cards batay sa aking mga sagot sa deck na ito</string>
+    <string name="deck_conf_cram_steps">Mga pasadyang hakbang (sa ilang minuto)</string>
+    <string name="deck_conf_cram_steps_summ">Magtakda ng mga pasadyang hakbang</string>
+    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_time">Paalala sa</string>
+    <!-- analytics options -->
+    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
+    <string name="analytics_title">Share feature usage</string>
+    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+</resources>

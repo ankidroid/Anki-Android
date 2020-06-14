@@ -118,6 +118,7 @@
     <string name="menu_search">%1$s에서 찾아보기</string>
     <string name="menu_mark_note">노트 표시</string>
     <string name="menu_unmark_note">노트 표시 해제</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">카드 묶음 만들기</string>
     <string name="create">만들기</string>
     <string name="new_dynamic_deck">필터링된 카드 묶음 만들기</string>
@@ -176,7 +177,8 @@
         <item quantity="other">\'%2$s\' 카드 형식과 %1$d 카드를 삭제할까요?</item>
     </plurals>
     <string name="invalid_template">카드를 생성할 수 없습니다</string>
-    <string name="card_template_editor_would_delete_note">이 카드 유형을 제거하면 하나 또는 여러개의 노트가 삭제됩니다. 먼저 새 카드 유형을 만드세요.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>

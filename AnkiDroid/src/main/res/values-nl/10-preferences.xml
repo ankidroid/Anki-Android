@@ -78,9 +78,9 @@
     <string name="card_zoom">Kaart zoom</string>
     <string name="image_zoom">Afbeelding zoom</string>
     <string name="button_size">Grootte antwoordknop</string>
-    <string name="card_browser_font_size">Lettertypegrootte aanpassen van kaartverkenner</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_font_size">Lettertypegrootte van de kaartenbrowser</string>
+    <string name="card_browser_hide_media">Bestandsnamen in kaartenbrowser weergeven</string>
+    <string name="card_browser_hide_media_summary">Bestandsnamen van de media weergeven in de velden voor vraag/antwoord van de kaartenbrowser</string>
     <string name="col_path">AnkiDroid directory</string>
     <string name="fullscreen_review">Volledig schermmodus</string>
     <string name="full_screen_off">Uit</string>
@@ -94,8 +94,8 @@
     </string-array>
     <string name="gestures">Bewegingen inschakelen</string>
     <string name="gestures_summ">Bewegingen toewijzen aan acties zoals het beantwoorden en bewerken van kaarten.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links">Negeer aanraakgebaren op links</string>
+    <string name="gestures_allow_links_summary">Aanraakgebaren worden niet verwerkt als een link/hint wordt ingedrukt.</string>
     <string name="gestures_swipe_up">Omhoog vegen</string>
     <string name="gestures_swipe_down">Omlaag vegen</string>
     <string name="gestures_swipe_left">Naar links vegen</string>
@@ -107,8 +107,8 @@
     <string name="gestures_tap_right">Druk rechts</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Gebruik ook kanji/katakana, emoji/kao-moji knoppen voor scrollen</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Schakelt het contextmenu \' \'%s\' overal in</string>
     <string name="double_scrolling_gap">Sneller scrollen</string>
     <string name="double_scrolling_gap_summ">Verdubbel de scroll-afstand voor eReader</string>
     <string name="swipe_sensitivity">Veeggevoeligheid</string>
@@ -143,14 +143,16 @@
     <string name="select_locale_title">Taal selecteren</string>
     <string name="safe_display">Veilige weergavemodus</string>
     <string name="safe_display_summ">Alle animaties uitschakelen en veiligere methode gebruiken om kaarten te trekken. Dit kan nodig zijn voor sommige E-inkt-apparaten.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">Bewerkingsmodus voor een enkel veld uitschakelen</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Laat het contextmenu \'Invuloefening\' toe in de landschapsmodus.</string>
     <string name="vertical_centering">Uitlijnen in het midden</string>
     <string name="vertical_centering_summ">De inhoud van kaarten verticaal centreren</string>
     <string name="pref_backup_max">Maximum aantal back-ups</string>
     <string name="show_estimates">Herhaaltijd in knoppen</string>
     <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Resterende weergeven</string>
     <string name="show_progress_summ">Toon resterend aantal kaarten</string>
     <string name="show_eta">Toon ETA</string>
@@ -224,8 +226,8 @@
     <string name="deck_conf_new_bury_summ">Gerelateerde nieuwe kaarten worden geblokkeerd tot de volgende dag</string>
     <string name="deck_conf_rev_bury">Blokkeer gerelateerde overhooropdracht</string>
     <string name="deck_conf_rev_bury_summ">Gerelateerde overhooropdrachten worden geblokkeerd tot de volgende dag</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings">Algemene instellingen gebruiken</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Gebruik de algemene instellingen voor \'Automatisch antwoord weergeven\' in plaats van de instellingen voor deze groep.</string>
     <string name="deck_conf_easy_bonus">Bonus bij gemakkelijk</string>
     <string name="deck_conf_ivl_fct">Intervalsfactor</string>
     <string name="deck_conf_max_ivl">Grootste interval</string>

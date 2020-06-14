@@ -48,6 +48,7 @@
     <string name="hide_whiteboard">Hide whiteboard</string>
     <string name="clear_whiteboard">Clear whiteboard</string>
     <string name="replay_audio">Replay audio</string>
+    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="corrupt_font">Corrupt font file %s</string>
@@ -156,11 +157,15 @@
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
     <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_replacing">Replacing collection…</string>
     <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">Include scheduling</string>
@@ -267,4 +272,8 @@
     <string name="invalid_json_data">Card provided invalid data. %s</string>
     <string name="valid_js_api_version">Please provide a valid api version. Current api version is %s</string>
     <string name="update_js_api_version">Please update js api version. Current api version is %s</string>
+
+    <!-- in options menu & Navigation Drawer -->
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

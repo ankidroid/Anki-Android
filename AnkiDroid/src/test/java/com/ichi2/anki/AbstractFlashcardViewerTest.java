@@ -319,8 +319,9 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         n.setField(0, "a");
         getCol().addNote(n);
 
-        ActivityController multimediaController = Robolectric.buildActivity(NonAbstractFlashcardViewer.class, new Intent())
+        ActivityController<NonAbstractFlashcardViewer> multimediaController = Robolectric.buildActivity(NonAbstractFlashcardViewer.class, new Intent())
                 .create().start().resume().visible();
+        saveControllerForCleanup((multimediaController));
 
         NonAbstractFlashcardViewer viewer = (NonAbstractFlashcardViewer) multimediaController.get();
         viewer.onCollectionLoaded(getCol());

@@ -110,6 +110,11 @@
             android:key="@string/answer_buttons_position_preference"
             android:title="@string/answer_buttons_position" />
         <CheckBoxPreference
+            android:key="showTopbar"
+            android:defaultValue="true"
+            android:summary="@string/show_top_bar_summ"
+            android:title="@string/show_top_bar" />
+        <CheckBoxPreference
             android:key="showProgress"
             android:summary="@string/show_progress_summ"
             android:title="@string/show_progress" />

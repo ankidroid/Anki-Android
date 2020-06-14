@@ -40,6 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Sei scollegato</string>
+    <string name="sync_even_if_offline">Prova comunque</string>
     <string name="sync_error">Errore di sincronizzazione</string>
     <string name="vague_error">Errore</string>
     <string name="retry">Riprova</string>
@@ -111,7 +112,7 @@
     <string name="sync_media_downloaded_count">%d file multimediali scaricati</string>
     <string name="sync_sanity_failed">Dopo la sincronizzazione, la collezione era in uno stato incoerente. Per risolvere questo problema, AnkiDroid forzerà una sincronizzazione completa. Scegliere quali dati vuoi mantenere, o annulla se preferisci sincronizzare più tardi.</string>
     <string name="sync_media_sanity_failed">Sincronizzazione dei contenuti multimediali terminata, ma il conteggio dei media non corrisponde con il server. La prossima volta verrà eseguita una sincronizzazione completa per correggere eventuali errori.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
+    <string name="sync_media_db_error">Sincronizzazione media non riuscita perché la banca dati corrente è corrotta. Si raccomanda un controllo multimediale.</string>
     <string name="sync_media_error">Errore di sincronizzazione dei dati multimediali.</string>
     <string name="sync_media_error_check">Errore durante la sincronizzazione di media. Si raccomanda un controllo del media.</string>
     <string name="sync_sanity_local">Locale</string>

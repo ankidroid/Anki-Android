@@ -123,6 +123,7 @@
     <string name="menu_search">Búsqueda en %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">Crear mazo</string>
     <string name="create">Crear</string>
     <string name="new_dynamic_deck">Crear mazo filtrado</string>
@@ -182,7 +183,8 @@
         <item quantity="other">¿Eliminar el tipo de tarjeta \'%2$s\' y sus %1$d tarjetas?</item>
     </plurals>
     <string name="invalid_template">No se pudo generar una tarjeta</string>
-    <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta podría causar que una o más notas se eliminen. Por favor, cree un nuevo tipo de tarjeta primero.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">El tipo de tarjeta para la tarjeta actual fue eliminado.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>

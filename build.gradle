@@ -1,3 +1,5 @@
+import org.gradle.internal.jvm.Jvm
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
@@ -14,6 +16,18 @@ buildscript {
 
 ext {
 
+    jvmVersion = Jvm.current().javaVersion.majorVersion
+    if (jvmVersion != "8" && jvmVersion != "11" && jvmVersion != "14") {
+        println "\n\n\n"
+        println "**************************************************************************************************************"
+        println "\n\n\n"
+        println "ERROR: AnkiDroid builds with JVM LTS and current releases (currently major version 8, 11, or 14)."
+        println "  Incompatible major version detected: '" + jvmVersion + "'"
+        println "\n\n\n"
+        println "**************************************************************************************************************"
+        println "\n\n\n"
+        System.exit(1)
+    }
     travisBuild = System.getenv("TRAVIS") == "true"
     // allows for -Dpre-dex=false to be set
     preDexEnabled = "true" == System.getProperty("pre-dex", "true")

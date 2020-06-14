@@ -88,9 +88,9 @@
         <item quantity="one">%d Karte umgeplant</item>
         <item quantity="other">%d Karten umgeplant</item>
     </plurals>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Wählen Sie den Stapel in Ihrem Dateimanager aus oder besuchen Sie zum Importieren die Seite about:downloads</string>
     <string name="answering_error_title">Datenbankfehler</string>
-    <string name="answering_error_message">Beim Schreiben in die Datenbank ist ein Fehler aufgetreten. Dies kann an einer defekten Datenbank oder an unzureichendem Speicherplatz liegen.\n\nFalls dies häufiger vorkommt, versuchen Sie bitte, die Datenbank zu überprüfen, die Sammlung zu reparieren oder sie von einer Sicherung wiederherzustellen. Tippen Sie hierfür auf »Optionen«.\n\nEs könnte aber auch ein Fehler in AnkiDroid sein. Damit wird dies überprüfen können, bitten wir Sie, den Fehler zu melden.</string>
+    <string name="answering_error_message">Es konnte nicht in die Sammlung geschrieben werden. Dies kann an einer beschädigten Datenbank oder an unzureichendem Speicherplatz liegen.\n\nFalls dies häufiger vorkommt, versuchen Sie bitte, die Datenbank zu überprüfen, die Sammlung zu reparieren oder sie von einer Sicherung wiederherzustellen. Tippen Sie hierfür auf »Optionen«.\n\nEs könnte aber auch ein Fehler in AnkiDroid vorliegen. Damit wird dies überprüfen können, bitten wir Sie, den Fehler zu melden.</string>
     <string name="answering_error_report">Fehler melden</string>
     <string name="repair_deck_dialog">Möchten Sie wirklich versuchen, die Datenbank zu reparieren?\n\nBevor der Versuch startet, wird eine Kopie im Unterordner »%s« angelegt.</string>
     <string name="intent_add_saved_information">Gespeicherte Daten</string>
@@ -195,6 +195,6 @@
     <!-- Browser Appearance -->
     <string name="card_template_editor_card_browser_appearance_failed">Erscheinungsbild der Kartenübersicht konnte nicht geladen werden</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">Erinnerungen konnten nicht eingeplant werden</string>
+    <string name="boot_service_too_many_notifications">Zu viele Erinnerungen eingeplant. Einige werden nicht erscheinen.</string>
 </resources>

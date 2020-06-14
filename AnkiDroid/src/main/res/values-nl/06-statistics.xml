@@ -80,8 +80,10 @@
     <string name="stats_overview_total_reviews">In totaal: &lt;b&gt;%1$d&lt;/b&gt; overhoringen</string>
     <string name="stats_overview_reviews_per_day_studydays">Gemiddelde voor dagen gestudeerd: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/dag</string>
     <string name="stats_overview_reviews_per_day_all">Had je elke dag gestudeerd: &lt;B&gt;%1$.1f&lt;/b&gt; reviews/dag</string>
+    <string name="stats_overview_total_time_in_period">Totaal: &lt;b&gt;%d&lt;/b&gt; minuten</string>
     <string name="stats_overview_time_per_day_studydays">Gemiddelde voor dagen gestudeerd: &lt;b&gt;%1$.1f&lt;/b&gt; minuten/dag</string>
     <string name="stats_overview_time_per_day_all">Had je elke dag gestudeerd: &lt;b&gt;%1$.1f&lt;/b&gt; minuten/dag</string>
+    <string name="stats_overview_average_answer_time">Gemiddelde antwoordtijd: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; kaarten/minuut)</string>
     <string name="stats_overview_new_cards_per_day">Gemiddeld: &lt;b&gt;%1$.1f&lt;/b&gt; kaarten/dag</string>
     <string name="stats_overview_total_new_cards">Totaal: &lt;b&gt;%1$d&lt;/b&gt; kaarten</string>
     <string name="stats_overview_average_interval">"Gemiddelde interval: "</string>
@@ -90,6 +92,14 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; maanden</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; dagen</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; uren</string>
+    <string name="stats_overview_answer_buttons_learn">Leer: &lt;b&gt;%1$.2f%%&lt;/b&gt; juist (%2$d van %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">Jong: &lt;b&gt;%1$.2f%%&lt;/b&gt; juist (%2$d van %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">Rijp: &lt;b&gt;%1$.2f%%&lt;/b&gt; juist (%2$d van %3$d)</string>
+    <string name="stats_overview_card_types_total_cards">Totaal aantal kaarten: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_notes">Totaal aantal notities: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_lowest_ease">Laagste gemakkelijkheid: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">Gemiddelde gemakkelijkheid: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_highest_ease">Hoogste gemakkelijkheid: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="deck_summary_all_decks">Alle leersets</string>
     <string name="stats_select_time_scale">Kies tijdschaal</string>
     <string-array name="due_x_axis_title">

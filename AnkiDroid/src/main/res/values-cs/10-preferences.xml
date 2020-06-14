@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Maximální počet záloh</string>
     <string name="show_estimates">Zobrazit tlačítko času</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Zobraz zbývající</string>
     <string name="show_progress_summ">Zobrazit zbývající počet karet</string>
     <string name="show_eta">Zobrazit ETA</string>

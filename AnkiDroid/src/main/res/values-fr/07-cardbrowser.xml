@@ -50,7 +50,7 @@
     <string name="card_browser_change_deck">Changer de paquet</string>
     <string name="card_browser_unsuspend_card">Reprendre les cartes</string>
     <string name="card_browser_mark_card">Marquer les notes</string>
-    <string name="card_browser_flag">Marquer</string>
+    <string name="card_browser_flag">Marquer la carte</string>
     <string name="card_browser_toggle_mark_card">(dé)marquer les notes</string>
     <string name="card_browser_unmark_card">Démarquer les notes</string>
     <string name="delete_card_title">Supprimer la note ?</string>

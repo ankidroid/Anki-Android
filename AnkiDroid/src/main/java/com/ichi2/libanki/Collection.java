@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -835,6 +836,14 @@ public class Collection {
 
     private Card _newCard(Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         Card card = new Card(this);
+        return getNewLinkedCard(card, note, template, due, parameterDid, flush);
+    }
+
+    // This contains the original libanki implementation of _newCard, with the added parameter that
+    // you pass the Card object in. This allows you to work on 'Card' subclasses that may not have
+    // actual backing store (for instance, if you are previewing unsaved changes on templates)
+    // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
+    public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         long nid = note.getId();
         int ord = -1;
         long did;
@@ -1016,7 +1025,7 @@ public class Collection {
         // unpack fields and create dict
         String[] flist = Utils.splitFields((String) data[6]);
         Map<String, String> fields = new HashMap<>();
-        JSONObject model = mModels.get((Long) data[2]);
+        JSONObject model = (JSONObject)data[2];
         Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
         for (String name : fmap.keySet()) {
             fields.put(name, flist[fmap.get(name).first]);
@@ -1088,7 +1097,8 @@ public class Collection {
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
                             + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where, null);
             while (cur.moveToNext()) {
-                data.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getLong(2), cur.getLong(3), cur.getInt(4),
+                data.add(new Object[] { cur.getLong(0), cur.getLong(1),
+                        getModels().get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
                         cur.getString(5), cur.getString(6), cur.getInt(7)});
             }
         } finally {
@@ -1495,7 +1505,7 @@ public class Collection {
         File file = new File(mPath);
         CheckDatabaseResult result = new CheckDatabaseResult(file.length());
         final int[] currentTask = {1};
-        int totalTasks = (mModels.all().size() * 4) + 25; // a few fixes are in all-models loops, the rest are one-offs
+        int totalTasks = (mModels.all().size() * 4) + 27; // a few fixes are in all-models loops, the rest are one-offs
         Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
         FunctionalInterfaces.Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
                 (FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException> function) -> {
@@ -1550,6 +1560,7 @@ public class Collection {
         executeIntegrityTask.consume(this::removeOriginalDuePropertyWhereInvalid);
         executeIntegrityTask.consume(this::removeDynamicPropertyFromNonDynamicDecks);
         executeIntegrityTask.consume(this::removeDeckOptionsFromDynamicDecks);
+        executeIntegrityTask.consume(this::resetInvalidDeckOptions);
         executeIntegrityTask.consume(this::rebuildTags);
         executeIntegrityTask.consume(this::updateFieldCache);
         executeIntegrityTask.consume(this::fixNewCardDuePositionOverflow);
@@ -1577,6 +1588,47 @@ public class Collection {
         }
         logProblems(result.getProblems());
         return result;
+    }
+
+
+    private List<String> resetInvalidDeckOptions(Runnable notifyProgress) {
+        Timber.d("resetInvalidDeckOptions");
+        //6454
+        notifyProgress.run();
+
+        //obtain a list of all valid dconf IDs
+        List<JSONObject> allConf = getDecks().allConf();
+        HashSet<Long> configIds  = new HashSet<>();
+
+        for (JSONObject conf : allConf) {
+            configIds.add(conf.getLong("id"));
+        }
+
+        notifyProgress.run();
+
+        int changed = 0;
+
+        for (JSONObject d : getDecks().all()) {
+            //dynamic decks do not have dconf
+            if (Decks.isDynamic(d)) {
+                continue;
+            }
+
+            if (!configIds.contains(d.getLong("conf"))) {
+                Timber.d("Reset %s's config to default", d.optString("name", "unknown deck"));
+                d.put("conf", Consts.DEFAULT_DECK_CONFIG_ID);
+                changed++;
+            }
+        }
+
+        List<String> ret = new ArrayList<>();
+
+        if (changed > 0) {
+            ret.add("Fixed " + changed + " decks with invalid config");
+            getDecks().save();
+        }
+
+        return ret;
     }
 
 

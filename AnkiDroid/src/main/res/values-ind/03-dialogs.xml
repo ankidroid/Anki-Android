@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="check_db_title">Periksa database</string>
+    <string name="check_db_warning">Ini mungkin memakan waktu lama</string>
+    <string name="check_db_acknowledge">Database checked</string>
+    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Hapus Dek</string>
+    <string name="delete_deck_default_deck">Dek default tidak dapat dihapus</string>
+    <string name="delete_deck_title">Hapus Dek</string>
+    <plurals name="delete_deck_message">
+        <item quantity="other">Hapus semua kartu di %1$s? Ini berisi kartu %2$d.</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Apakah Anda yakin akan mengembalikan semua kartu di %s kembali ke dek asli mereka?</string>
+    <string name="no_tts_available_message">Tiada teks-kepada-bahasa tersedia</string>
+    <string name="initializing_tts">Initializing TTS&#8230;</string>
+    <string name="tts_no_tts">Jangan sebut</string>
+    <string-array name="about_content">
+        <item><![CDATA[< h2> %1$s: <br/> Flashcards untuk Android </ h2> AnkiDroid adalah aplikasi flashcard yang sepenuhnya kompatibel dengan perangkat lunak desktop <a href=\"%2$s \"> Anki </a>. Anda dapat membuat, mendownload dan mempelajari materi pada Desktop AnkiDroid atau Anki, dan menyinkronkannya dengan mudah dengan AnkiWeb.]]></item>
+        <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
+        <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
+        <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
+        <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    </string-array>
+    <string name="preview_title">Pratinjau</string>
+    <string name="reposition_card_dialog_title">Reposisi kartu baru</string>
+    <string name="reposition_card_dialog_message">Posisi Mulai:</string>
+    <string name="reposition_card_not_new_error">Hanya kartu baru dapat direposisikan</string>
+    <plurals name="reposition_card_dialog_acknowledge">
+        <item quantity="other">%d kartu direposisikan</item>
+    </plurals>
+    <string name="reset_card_dialog_title">Set semula rekod kemajuan kad</string>
+    <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
+    <plurals name="reset_cards_dialog_acknowledge">
+        <item quantity="other">%d kartu diulang</item>
+    </plurals>
+    <string name="reschedule_card_dialog_title">Kartu penjadwal ulang</string>
+    <plurals name="reschedule_cards_dialog_title">
+        <item quantity="other">Reschedule cards</item>
+    </plurals>
+    <plurals name="reschedule_card_dialog_interval">
+        <item quantity="other">Current interval: %d days</item>
+    </plurals>
+    <string name="reschedule_card_dialog_message">Penjadwalan ulang untuk ditinjau dalam x hari:</string>
+    <plurals name="reschedule_cards_dialog_acknowledge">
+        <item quantity="other">%d kartu dijadwalkan ulang</item>
+    </plurals>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="answering_error_title">Ralat database</string>
+    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_report">Lapor ralat</string>
+    <string name="repair_deck_dialog">Apakah Anda benar-benar ingin mencoba untuk memperbaiki database?\n\nSebelum memulai, salinan akan dibuat dalam subfolder \'%s\'.</string>
+    <string name="intent_add_saved_information">Data yang disimpan</string>
+    <string name="intent_add_clear_all">Hapus semua</string>
+    <string name="intent_aedict_empty">Kategori \'default\' kosong</string>
+    <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
+    <string name="custom_study_new_total_new">Kartu-kartu baru di dek: %d</string>
+    <string name="custom_study_rev_total_rev">Pengulangan yang perlu di deck: %d</string>
+    <string name="custom_study_new_extend">Tingkatkan batas kartu baru hari ini</string>
+    <string name="custom_study_rev_extend">Tingkatkan batas review hari ini oleh</string>
+    <string name="custom_study_forgotten">Mengkaji kartu yang terlupakan dalam x hari terakhir:</string>
+    <string name="custom_study_ahead">Review ahead by x days:</string>
+    <string name="custom_study_random">Select x cards randomly from the deck:</string>
+    <string name="custom_study_preview">Preview kartu baru ditambahkan dalam x hari terakhir:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="rebuild_custom_study_deck">Membangun kembali dek studi adat&#8230;</string>
+    <string name="importing_collection">Mengimpor koleksi.\nSilahkan tunggu&#8230;</string>
+    <string name="import_media_count">Mengimpor file-file media %1$d%%\nSilahkan tunggu&#8230;</string>
+    <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+    <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+    <string name="import_update_ignored">Beberapa pembaruan diabaikan karena jenis catatan telah berubah</string>
+    <string name="import_complete_count">Kartu yang diimpor: %d</string>
+    <string name="sd_card_full_title">SD card full</string>
+    <string name="sd_card_almost_full_title">Kartu SD hampir penuh</string>
+    <string name="restore_backup_title">Kembalikan cadangan?</string>
+    <string name="restore_backup">Koleksi Anda akan diganti dengan salinan yang lebih tua. Setiap kemajuan yang belum disimpan akan hilang.</string>
+    <string name="dialog_cancel">Membatalkan</string>
+    <string name="dialog_ok">Baik</string>
+    <string name="dialog_continue">Terus</string>
+    <string name="dialog_positive_create">Membuat</string>
+    <string name="dialog_positive_delete">Menghapus</string>
+    <string name="dialog_positive_disable">Nonaktifkan</string>
+    <string name="dialog_positive_overwrite">Timpa</string>
+    <string name="dialog_positive_remove">Menghapus</string>
+    <string name="dialog_positive_repair">Perbaikan</string>
+    <string name="dialog_positive_replace">Menggantikan</string>
+    <string name="dialog_positive_restore">Mengembalikan</string>
+    <string name="dialog_positive_set">Set</string>
+    <string name="lookup_button_content">Lihatlah</string>
+    <string name="dialog_collection_path_not_dir">Jalur yang ditentukan bukan direktori yang valid</string>
+    <!-- Media checking -->
+    <string name="check_media_title">Periksa media?</string>
+    <string name="check_media_warning">Ini mungkin memakan waktu lama dengan koleksi media yang besar</string>
+    <string name="check_media_message">Memeriksa media&#8230;</string>
+    <string name="check_media_acknowledge">Media diperiksa</string>
+    <string name="check_media_failed">Pemeriksaan media gagal</string>
+    <string name="check_media_invalid">File dengan enkode tidak valid: %d</string>
+    <string name="check_media_unused">File di folder media tapi tidak digunakan oleh kartu manapun: %d</string>
+    <string name="check_media_nohave">File yang digunakan pada kartu tapi tidak ada di folder media: %d</string>
+    <string name="check_media_no_unused_missing">Tidak ada file yang tidak terpakai atau hilang ditemukan</string>
+    <string name="check_media_db_updated">Database media dibangun kembali</string>
+    <string name="check_media_delete_unused">Hapus yang tidak terpakai</string>
+    <string name="check_media_deleted">File dihapus: %d</string>
+    <!-- Tags Dialog Options -->
+    <string name="tags_dialog_option_all_cards">Semua kartu</string>
+    <string name="tags_dialog_option_new_cards">Baru</string>
+    <string name="tags_dialog_option_due_cards">Due</string>
+    <!-- Empty cards -->
+    <string name="emtpy_cards_finding">Menemukan kartu kosong&#8230;</string>
+    <string name="empty_cards_none">Tidak ada kartu kosong</string>
+    <string name="empty_cards_count">Kartu yang akan dihapus: %d</string>
+    <string name="empty_cards_deleted">Kartu dihapus: %d</string>
+    <!-- Multimedia - Edit Field Activity -->
+    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
+    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <!-- Multimedia - Audio View -->
+    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <!-- Initial collection load -->
+    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
+    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <!-- Database Integrity Check -->
+    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
+    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
+    <string name="integrity_check_positive">Check Database</string>
+    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
+    <string name="video_creation_error">Could not play video</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <!-- Deck Options -->
+    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <!-- Database Errors-->
+    <string name="database_locked_title">Database Locked</string>
+    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <!-- Deck Picker Background-->
+    <string name="background_image_applied">Background image applied</string>
+    <string name="background_image_removed">Background image removed</string>
+    <string name="no_image_selected">No image selected</string>
+    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
+    <string name="error_deleting_image">Error deleting image</string>
+    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <!-- Global Intent handler -->
+    <!-- Also used by Card Browser, not renaming to save translators effort -->
+    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <!-- Browser Appearance -->
+    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <!-- Boot Service -->
+    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
+    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+</resources>

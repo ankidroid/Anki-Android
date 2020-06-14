@@ -152,6 +152,8 @@
     <string name="pref_backup_max">Biztonsági másolatok maximális száma</string>
     <string name="show_estimates">Idő mutatása a gombokon</string>
     <string name="show_estimates_summ">A gombokon látszódjon a következő esedékesség időpontja</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Hátralévő mutatása</string>
     <string name="show_progress_summ">Hátralévő kártyák számának megjelenítése</string>
     <string name="show_eta">ETA megjelenítése</string>

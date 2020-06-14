@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.stats.OverviewStatsBuilder;
+import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats.AnswerButtonsOverview;
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -302,7 +303,70 @@ public class Stats {
 
         oStats.totalNewCards = getNewCards(timespan);
         oStats.newCardsPerDay = (double) oStats.totalNewCards / (double) oStats.allDays;
+
+        ArrayList<double[]> list = eases(timespan);
+        oStats.newCardsOverview = toOverview(0, list);
+        oStats.youngCardsOverview = toOverview(1, list);
+        oStats.matureCardsOverview = toOverview(2, list);
+
+        String totalCountQuery = "select count(id), count(distinct nid) from cards where did in " + this._limit();
+        try {
+            cur = mCol.getDb().getDatabase().query(totalCountQuery, null);
+            if (cur.moveToFirst()) {
+                oStats.totalCards = cur.getLong(0);
+                oStats.totalNotes = cur.getLong(1);
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+
+        String factorQuery = "select\n" +
+                "min(factor) / 10.0,\n" +
+                "avg(factor) / 10.0,\n" +
+                "max(factor) / 10.0\n" +
+                "from cards where did in " + _limit() + " and queue = " + Consts.QUEUE_TYPE_REV;
+        try {
+            cur = mCol.getDb().getDatabase().query(factorQuery, null);
+            if (cur.moveToFirst()) {
+                oStats.lowestEase = cur.getLong(0);
+                oStats.averageEase = cur.getLong(1);
+                oStats.highestEase = cur.getLong(2);
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
     }
+
+
+    private AnswerButtonsOverview toOverview(int type, ArrayList<double[]> list) {
+        AnswerButtonsOverview answerButtonsOverview = new AnswerButtonsOverview();
+
+        final int INDEX_TYPE = 0; //0:learn; 1:young; 2:mature
+        final int INDEX_EASE = 1; //1...4 - AGAIN - EASY
+        final int INDEX_COUNT = 2;
+
+        final double EASE_AGAIN = 1d;
+
+        for (double[] elements : list) {
+            //if we're not of the type we're looking for, continue
+            if (elements[INDEX_TYPE] != type) {
+                continue;
+            }
+
+            double answersCountForTypeAndEase = elements[INDEX_COUNT];
+            boolean isAgain = elements[INDEX_EASE] == EASE_AGAIN;
+
+            answerButtonsOverview.total += answersCountForTypeAndEase;
+            answerButtonsOverview.correct += isAgain ? 0 : answersCountForTypeAndEase;
+        }
+
+        return answerButtonsOverview;
+    }
+
 
     public boolean calculateDue(Context context, AxisType type) {
         // Not in libanki
@@ -1053,6 +1117,47 @@ public class Stats {
         mValueLabels = new int[] { R.string.statistics_learn, R.string.statistics_young, R.string.statistics_mature};
         mColors = new int[] { R.attr.stats_learn, R.attr.stats_young, R.attr.stats_mature};
         mType = type;
+        ArrayList<double[]> list = eases(type);
+
+        //TODO adjust for AnswerButton, for now only copied from intervals
+        // small adjustment for a proper chartbuilding with achartengine
+        if (list.size() == 0) {
+            list.add(0, new double[]{0, 1, 0});
+        }
+
+        mSeriesList = new double[4][list.size()+1];
+
+        for (int i = 0; i < list.size(); i++) {
+            double[] data = list.get(i);
+            int currentType = (int)data[0];
+            double ease = data[1];
+            double cnt = data[2];
+
+            if (currentType == Consts.CARD_TYPE_LRN) {
+                ease += 5;
+            } else if (currentType == 2) {
+                ease += 10;
+            }
+            mSeriesList[0][i] = ease;
+            mSeriesList[1 + currentType][i] = cnt;
+            if (cnt > mMaxCards) {
+                mMaxCards = (int) cnt;
+            }
+        }
+        mSeriesList[0][list.size()] = 15;
+
+        mFirstElement = 0.5;
+        mLastElement = 14.5;
+        mMcount = 100;
+        mMaxElements = 15;      //bars are positioned from 1 to 14
+        if(mMaxCards == 0) {
+            mMaxCards = 10;
+        }
+        return list.size() > 0;
+    }
+
+
+    private ArrayList<double[]> eases(AxisType type) {
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
         Vector<String> lims = new Vector<>();
@@ -1111,43 +1216,9 @@ public class Stats {
                 cur.close();
             }
         }
-
-        //TODO adjust for AnswerButton, for now only copied from intervals
-        // small adjustment for a proper chartbuilding with achartengine
-        if (list.size() == 0) {
-            list.add(0, new double[]{0, 1, 0});
-        }
-
-        mSeriesList = new double[4][list.size()+1];
-
-        for (int i = 0; i < list.size(); i++) {
-            double[] data = list.get(i);
-            int currentType = (int)data[0];
-            double ease = data[1];
-            double cnt = data[2];
-
-            if (currentType == Consts.CARD_TYPE_LRN) {
-                ease += 5;
-            } else if (currentType == 2) {
-                ease += 10;
-            }
-            mSeriesList[0][i] = ease;
-            mSeriesList[1 + currentType][i] = cnt;
-            if (cnt > mMaxCards) {
-                mMaxCards = (int) cnt;
-            }
-        }
-        mSeriesList[0][list.size()] = 15;
-
-        mFirstElement = 0.5;
-        mLastElement = 14.5;
-        mMcount = 100;
-        mMaxElements = 15;      //bars are positioned from 1 to 14
-        if(mMaxCards == 0) {
-            mMaxCards = 10;
-        }
-        return list.size() > 0;
+        return list;
     }
+
 
     /**
      * Card Types

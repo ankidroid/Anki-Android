@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="statistics_young">Muda</string>
+    <string name="statistics_mature">Dewasa</string>
+    <string name="statistics_young_and_learn">Pemuda + mempelajari</string>
+    <string name="statistics_unlearned">Tidak terlihat</string>
+    <string name="statistics_suspended_and_buried">Ditangguhkan + Dikubur</string>
+    <string name="statistics_relearn">Kembali mempelajari</string>
+    <string name="statistics_learn">Mempelajari</string>
+    <string name="statistics_cram">Menjejalkan</string>
+    <string name="stats_cards">Kartu-kartu</string>
+    <string name="stats_cards_intervals">Kartu dengan interval yang diberikan</string>
+    <string name="stats_cumulative_cards">Kartu kumulatif</string>
+    <string name="stats_cumulative_answers">Jawaban kumulatif</string>
+    <string name="stats_cumulative_time_minutes">Menit kumulatif</string>
+    <string name="stats_cumulative_time_hours">Jam kumulatif</string>
+    <string name="stats_cumulative">Kumulatif</string>
+    <string name="stats_cumulative_percentage">Persentase kumulatif</string>
+    <string formatted="false" name="stats_cumulative_correct_percentage">Kumulatif benar%</string>
+    <string name="stats_answers">Jawaban</string>
+    <string name="stats_minutes">Menit</string>
+    <string name="stats_hours">Jam</string>
+    <string name="stats_percentage">Persentase</string>
+    <string name="stats_period_month">1 bulan</string>
+    <string name="stats_period_year">1 tahun</string>
+    <string name="stats_period_lifetime">dek hidup</string>
+    <string name="stats_deck_collection">koleksi</string>
+    <string name="stats_time_of_day">Waktu hari</string>
+    <string name="stats_day_of_week">Hari dalam seminggu</string>
+    <string formatted="false" name="stats_percentage_correct">% benar</string>
+    <string name="stats_reviews">Ulasan</string>
+    <string name="stats_answer_type">Jenis jawaban</string>
+    <string name="stats_today_again_count">Sekali lagi hitung: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt;benar)</string>
+    <string name="stats_today_type_breakdown">Pelajari: &lt;b&gt;%1$d&lt;/b&gt;, ulasan: &lt;b&gt;%2$d&lt;/b&gt;, belajar kembali: &lt;b&gt;%3$d&lt;/b&gt;, disaring: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_mature_cards">Jawaban yang benar pada kartu dewasa: %1$d/%2$d (%3$.1f%%)</string>
+    <string name="stats_today_no_mature_cards">Tidak ada kartu dewasa yang dipelajari hari ini</string>
+    <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt;total</string>
+    <string name="stats_overview_forecast_average">Rata-rata: &lt;b&gt;%1$.1f&lt;/b&gt;ulasan/hari</string>
+    <string name="stats_overview_forecast_due_tomorrow">Karena besok: &lt;b&gt;%1$d&lt;/b&gt;</string>
+    <string name="stats_overview_days_studied">Hari-hari belajar: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
+    <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
+    <string name="stats_overview_reviews_per_day_studydays">Rata-rata untuk hari yang di pelajari: &lt;b&gt;%1$.1f&lt;/b&gt;ulasa/hari</string>
+    <string name="stats_overview_reviews_per_day_all">Jika anda memelajari seriap hari: &lt;b&gt;%1$.1f&lt;/b&gt;ulasan/hari</string>
+    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
+    <string name="stats_overview_time_per_day_studydays">Rata-rata untuk hari di pelajari: &lt;b&gt;%1$.1f&lt;/b&gt;minit/hari</string>
+    <string name="stats_overview_time_per_day_all">Jika anda belajar setiap hari:  &lt;b&gt;%1$.1f&lt;/b&gt;minit/hari</string>
+    <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>
+    <string name="stats_overview_new_cards_per_day">Rata-rata: &lt;b&gt;%1$.1f&lt;/b&gt; kartu/hari</string>
+    <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt;kartu</string>
+    <string name="stats_overview_average_interval">"Interval rata-rata: "</string>
+    <string name="stats_overview_longest_interval">"Interval terpanjang: "</string>
+    <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; tahun</string>
+    <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; bulan</string>
+    <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; hari</string>
+    <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; jam</string>
+    <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_card_types_total_cards">Total cards: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_notes">Total notes: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="deck_summary_all_decks">Semua dek</string>
+    <string name="stats_select_time_scale">Pilih skala waktu</string>
+    <string-array name="due_x_axis_title">
+        <item>Hari</item>
+        <item>Minggu</item>
+        <item>Bulan</item>
+    </string-array>
+    <string name="stats_today">Hari ini</string>
+    <string name="stats_overview">Ikhtisar</string>
+    <string name="stats_forecast">Ramalan cuaca</string>
+    <string name="stats_review_count">Ulasan count</string>
+    <string name="stats_review_time">Ulasan waktu</string>
+    <string name="stats_added">Ditambahkan</string>
+    <string name="stats_review_intervals">Interval</string>
+    <string name="stats_breakdown">Perincian per jam</string>
+    <string name="stats_weekly_breakdown">Rincian mingguan</string>
+    <string name="stats_answer_buttons">Jawaban tombol</string>
+    <string name="stats_cards_types">Jenis kartu</string>
+    <string-array name="stats_day_time_strings">
+        <item>4AM</item>
+        <item>10AM</item>
+        <item>4PM</item>
+        <item>10PM</item>
+        <item>3AM</item>
+    </string-array>
+    <string-array name="stats_week_days">
+        <item>Sun</item>
+        <item>Senin</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+    <string-array name="stats_eases_ticks">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="stats_eases_ticks_schedv2">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <plurals name="stats_today_cards">
+        <item quantity="other">Belajar&lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; hari ini</item>
+    </plurals>
+</resources>
