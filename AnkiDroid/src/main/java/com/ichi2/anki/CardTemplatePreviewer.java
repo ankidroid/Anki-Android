@@ -142,8 +142,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         if (mNoteEditorBundle != null) {
             mCurrentCard.setDid(mNoteEditorBundle.getLong("did"));
 
-            // Clear out old tags, add current tags as that can affect render
             Note currentNote = mCurrentCard.note();
+            // Clear out old tags, copy tags to avoid concurrent modification, add current tags for render correctness
             String[] currentTags = currentNote.getTags().toArray(new String[0]);
             for (String tag : currentTags) {
                 currentNote.delTag(tag);
