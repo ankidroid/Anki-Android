@@ -151,7 +151,7 @@ public class Anki2Importer extends Importer {
             Timber.e(err, "_import() exception");
             throw err;
         } finally {
-            // These methods throw about invalid transaction even when you try!
+            // endTransaction throws about invalid transaction even when you check first!
             if (mDst.getDb().getDatabase().inTransaction()) {
                 try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
             }
@@ -170,7 +170,7 @@ public class Anki2Importer extends Importer {
         try {
             mDst.getDb().execute("analyze");
         } catch (Exception e) {
-            // This is actually not fatal but can fail since vacuum takes so much space
+            // This is actually not fatal but can fail
             // Allow the import to succeed but recommend the user run check database
             mLog.add(getRes().getString(R.string.import_succeeded_but_check_database, e.getLocalizedMessage()));
         }
@@ -211,13 +211,13 @@ public class Anki2Importer extends Importer {
         mIgnoredGuids = new HashMap<>();
         // iterate over source collection
         ArrayList<Object[]> add = new ArrayList<>();
-        int totalAddSize = 0;
+        int totalAddCount = 0;
         final int thresExecAdd = 1000;
         ArrayList<Object[]> update = new ArrayList<>();
-        int totalUpdateSize = 0;
+        int totalUpdateCount = 0;
         final int thresExecUpdate = 1000;
         ArrayList<Long> dirty = new ArrayList<>();
-        int totalDirtySize = 0;
+        int totalDirtyCount = 0;
         final int thresExecDirty = 1000;
         int usn = mDst.usn();
         int dupes = 0;
@@ -230,8 +230,6 @@ public class Anki2Importer extends Importer {
             boolean largeCollection = total > 200;
             int onePercent = total/100;
             int i = 0;
-
-
 
             while (cur.moveToNext()) {
                 // turn the db result into a mutable list
@@ -283,27 +281,27 @@ public class Anki2Importer extends Importer {
                 i++;
 
                 // add to col partially, so as to avoid OOM
-                if (add.size() > thresExecAdd){
-                    totalAddSize  += add.size();
-                    mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", add);
+                if (add.size() > thresExecAdd) {
+                    totalAddCount  += add.size();
+                    addNotes(add);
                     add.clear();
-                    Timber.d("add notes: "+totalAddSize);
+                    Timber.d("add notes: %d", totalAddCount);
                 }
                 // add to col partially, so as to avoid OOM
                 if (update.size() > thresExecUpdate){
-                    totalUpdateSize  += update.size();
-                    mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", update);
-                    update.clear();//update = new ArrayList<>();
-                    Timber.d("update notes: "+totalUpdateSize);
+                    totalUpdateCount  += update.size();
+                    updateNotes(update);
+                    update.clear();
+                    Timber.d("update notes: %d", totalUpdateCount);
                 }
                 // add to col partially, so as to avoid OOM
-                if (dirty.size() > thresExecDirty){
-                    totalDirtySize  += dirty.size();
-                   long[] das = Utils.arrayList2array(dirty);
+                if (dirty.size() > thresExecDirty) {
+                    totalDirtyCount  += dirty.size();
+                    long[] das = Utils.arrayList2array(dirty);
                     mDst.updateFieldCache(das);
                     mDst.getTags().registerNotes(das);
-                    dirty.clear();//dirty = new ArrayList<>();
-                    Timber.d("dirty notes: "+totalDirtySize);
+                    dirty.clear();
+                    Timber.d("dirty notes: %d", totalDirtyCount);
                 }
 
                 if (total != 0 && (!largeCollection || i % onePercent == 0)) {
@@ -319,35 +317,40 @@ public class Anki2Importer extends Importer {
         }
 
         // summarize partial add/update/dirty results for total values
-        totalAddSize += add.size();
-        totalUpdateSize += update.size();
-        totalDirtySize += dirty.size();
+        totalAddCount += add.size();
+        totalUpdateCount += update.size();
+        totalDirtyCount += dirty.size();
 
         if (dupes > 0) {
-            int up = totalUpdateSize;
-            mLog.add(getRes().getString(R.string.import_update_details, totalUpdateSize, dupes));
+            mLog.add(getRes().getString(R.string.import_update_details, totalUpdateCount, dupes));
             if (dupesIgnored.size() > 0) {
                 mLog.add(getRes().getString(R.string.import_update_ignored));
-                // TODO: uncomment this and fix above string if we implement a detailed
-                // log viewer dialog type.
-                //mLog.addAll(dupesIgnored);
             }
         }
         // export info for calling code
         mDupes = dupes;
-        mAdded = totalAddSize;
-        mUpdated = totalUpdateSize;
-        Timber.d("add notes in total: " + totalAddSize);
-        Timber.d("update notes in total: " + totalUpdateSize);
-        Timber.d("dirty notes in total: " + totalDirtySize);
+        mAdded = totalAddCount;
+        mUpdated = totalUpdateCount;
+        Timber.d("add notes total:    %d", totalAddCount);
+        Timber.d("update notes total: %d", totalUpdateCount);
+        Timber.d("dirty notes total:  %d", totalDirtyCount);
         // add to col (for last chunk)
-        mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", add);
-        mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", update);
+        addNotes(add);
+        add.clear();
+        updateNotes(update);
+        update.clear();
         long[] das = Utils.arrayList2array(dirty);
         mDst.updateFieldCache(das);
         mDst.getTags().registerNotes(das);
     }
 
+    private void addNotes(List<Object[]> add) {
+        mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", add);
+    }
+
+    private void updateNotes(List<Object[]> update) {
+        mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", update);
+    }
 
     // determine if note is a duplicate, and adjust mid and/or guid as required
     // returns true if note should be added
@@ -514,12 +517,11 @@ public class Anki2Importer extends Importer {
         }
         // loop through src
         List<Object[]> cards = new ArrayList<>();
-        int totalCardsSize = 0;
+        int totalCardCount = 0;
         final int thresExecCards = 1000;
         List<Object[]> revlog = new ArrayList<>();
-        int totalRevlogSize = 0;
+        int totalRevlogCount = 0;
         final int thresExecRevlog = 1000;
-        int cnt = 0;
         int usn = mDst.usn();
         long aheadBy = mSrc.getSched().getToday() - mDst.getSched().getToday();
         try {
@@ -609,21 +611,20 @@ public class Anki2Importer extends Importer {
                         revlog.add(rev);
                     }
                 }
-                cnt += 1;
                 i++;
                 // apply card changes partially
-                if(cards.size() > thresExecCards){
-                    totalCardsSize += cards.size();
-                    mDst.getDb().executeMany("insert or ignore into cards values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", cards);
+                if (cards.size() > thresExecCards) {
+                    totalCardCount += cards.size();
+                    insertCards(cards);
                     cards.clear();
-                    Timber.d("add cards: "+totalCardsSize);
+                    Timber.d("add cards: %d", totalCardCount);
                 }
                 // apply revlog changes partially
-                if(revlog.size() > thresExecRevlog){
-                    totalRevlogSize += revlog.size();
-                    mDst.getDb().executeMany("insert or ignore into revlog values (?,?,?,?,?,?,?,?,?)", revlog);
+                if (revlog.size() > thresExecRevlog) {
+                    totalRevlogCount += revlog.size();
+                    insertRevlog(revlog);
                     revlog.clear();
-                    Timber.d("add revlog: "+totalRevlogSize);
+                    Timber.d("add revlog: %d", totalRevlogCount);
                 }
 
                 if (total != 0 && (!largeCollection || i % onePercent == 0)) {
@@ -637,14 +638,24 @@ public class Anki2Importer extends Importer {
             }
         }
         // count total values
-        totalCardsSize += cards.size();
-        totalRevlogSize += revlog.size();
-        Timber.d("add cards in total: "+ totalCardsSize);
-        Timber.d("add revlog in total: "+ totalRevlogSize);
+        totalCardCount += cards.size();
+        totalRevlogCount += revlog.size();
+        Timber.d("add cards total:  %d", totalCardCount);
+        Timber.d("add revlog total: %d", totalRevlogCount);
         // apply (for last chunk)
+        insertCards(cards);
+        cards.clear();
+        insertRevlog(revlog);
+        revlog.clear();
+        mLog.add(getRes().getString(R.string.import_complete_count, totalCardCount));
+    }
+
+    private void insertCards(List<Object[]> cards) {
         mDst.getDb().executeMany("insert or ignore into cards values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", cards);
+    }
+
+    private void insertRevlog(List<Object[]> revlog) {
         mDst.getDb().executeMany("insert or ignore into revlog values (?,?,?,?,?,?,?,?,?)", revlog);
-        mLog.add(getRes().getString(R.string.import_complete_count, cnt));
     }
 
 
