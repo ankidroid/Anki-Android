@@ -18,6 +18,7 @@ package com.ichi2.libanki.utils;
 
 import com.ichi2.libanki.Note;
 
+import java.util.AbstractSet;
 import java.util.List;
 
 public class NoteUtils {
@@ -31,10 +32,9 @@ public class NoteUtils {
             currentNote.delTag(tag);
         }
         if (tagsList != null) {
-            for (String tag : tagsList.toArray(new String[0])) {
-                if (!currentNote.hasTag(tag)) {
-                    currentNote.addTag(tag);
-                }
+            AbstractSet<String> tagsSet = currentNote.getCol().getTags().canonify(tagsList);
+            for (String tag : tagsSet) {
+                currentNote.addTag(tag);
             }
         }
     }
