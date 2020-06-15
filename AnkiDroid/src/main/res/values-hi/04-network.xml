@@ -101,7 +101,7 @@
     <string name="sync_writing_db">डेटाबेस में परिवर्तन लिख रहा है.. ।</string>
     <string name="sync_download_chunk">परिवर्तन डाउनलोड कर रहा है.. ।</string>
     <string name="sync_upload_chunk">परिवर्तन अपलोड कर रहा है.. ।</string>
-    <string name="sync_up_down_size">Up: %1$d kb, नीचे: %2$d kb</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">कुछ समस्या प्रकट हुई। दोबारा प्रयत्न करें।</string>
     <string name="sync_check_upload_file">अपलोड करने से पहले फ़ाइल जांच रहा है.. ।</string>
     <string name="sync_check_download_file">डाउनलोड की गई फ़ाइल जांच रहा है.. ।</string>

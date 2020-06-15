@@ -151,8 +151,8 @@
     <string name="pref_backup_max">最大备份数量</string>
     <string name="show_estimates">显示回答按钮的时间</string>
     <string name="show_estimates_summ">在答案按钮上方显示下次复习的时间</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">显示顶部栏</string>
+    <string name="show_top_bar_summ">在顶部栏中显示卡牌计数、标志和标记</string>
     <string name="show_progress">显示剩余数量</string>
     <string name="show_progress_summ">显示剩余卡片数量</string>
     <string name="show_eta">显示预计完成时间</string>

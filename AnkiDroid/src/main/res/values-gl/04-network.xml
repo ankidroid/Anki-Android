@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Escribindo os cambios na base de datos&#8230;</string>
     <string name="sync_download_chunk">Descargando cambios&#8230;</string>
     <string name="sync_upload_chunk">Subindo cambios&#8230;</string>
-    <string name="sync_up_down_size">Subido: %1$d kB, baixado: %2$d kB</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Produciuse un erro. Téntao máis tarde.</string>
     <string name="sync_check_upload_file">Verificando o ficheiro antes de subir&#8230;</string>
     <string name="sync_check_download_file">Verificando o ficheiro descargado&#8230;</string>

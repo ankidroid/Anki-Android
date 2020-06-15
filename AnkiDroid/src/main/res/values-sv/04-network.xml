@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Skriver ändringar till databas...</string>
     <string name="sync_download_chunk">Hämtar ändringar...</string>
     <string name="sync_upload_chunk">Överför ändringar...</string>
-    <string name="sync_up_down_size">Upp: %1$d kb, Ner: %2$d kb</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Ett fel har uppstått. Försök igen senare.</string>
     <string name="sync_check_upload_file">Kontrollerar filen innan överföring...</string>
     <string name="sync_check_download_file">Kontrollerar hämtad fil...</string>

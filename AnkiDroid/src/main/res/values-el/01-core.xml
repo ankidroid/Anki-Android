@@ -53,7 +53,7 @@
     <string name="studyoptions_start">Μελέτη</string>
     <!-- DeckPicker.java -->
     <string name="expand">Ανάπυξη</string>
-    <string name="collapse">Collapse</string>
+    <string name="collapse">Σύμπτυξη</string>
     <string name="study_more">Περισσότερη μελέτη</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d κάρτα σε (%2$s)</item>
@@ -64,12 +64,12 @@
         <item quantity="other">Απόμειναν %d λεπτά</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">Απομένει %d ώρα %d</item>
+        <item quantity="other">Απομένουν %d ώρες %d</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">Απομένει %d ημέρα %d</item>
+        <item quantity="other">Απομένουν %d ημέρες %d</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -103,7 +103,7 @@
     <string name="menu_add">Προσθήκη</string>
     <string name="menu_add_note">Προσθήκη σημείωσης</string>
     <string name="menu_my_account">Συγχρονισμός λογαριασμού</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
+    <string name="menu_dismiss_note">Απόκρυψη / διαγραφή</string>
     <string name="menu_bury_card">Κρύψιμο κάρτας</string>
     <string name="menu_bury_note">Απόκρυψη Σημείωσης</string>
     <string name="menu_suspend_card">Αναστολή κάρτας</string>

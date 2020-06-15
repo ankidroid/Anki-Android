@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Verilənlər bazasında dəyişiklik yazma...</string>
     <string name="sync_download_chunk">Dəyişiklikləri endirmək...</string>
     <string name="sync_upload_chunk">Dəyişiklikləri endirmək...</string>
-    <string name="sync_up_down_size">Up: %1$d kB, aşağı: %2$d kB</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Bir səhv baş verdi.Biraz sonra yenidən cəhd edin.</string>
     <string name="sync_check_upload_file">Yüklənmədən əvvəl faylı yoxlanyın...</string>
     <string name="sync_check_download_file">Yüklənilən fayl yoxlanılır...</string>

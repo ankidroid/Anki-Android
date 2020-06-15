@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Записване на промените в базата данни&#8230;</string>
     <string name="sync_download_chunk">Изтегляне на промените&#8230;</string>
     <string name="sync_upload_chunk">Качване на промените&#8230;</string>
-    <string name="sync_up_down_size">Качен: %1$d kB, изтеглени: %2$d kB</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Възникна грешка. Опитайте отново по-късно.</string>
     <string name="sync_check_upload_file">Проверка на файла преди качване&#8230;</string>
     <string name="sync_check_download_file">Проверка на изтеглен файл...</string>

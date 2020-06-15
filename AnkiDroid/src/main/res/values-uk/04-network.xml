@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Запис змін до бази даних...</string>
     <string name="sync_download_chunk">Завантаження змін...</string>
     <string name="sync_upload_chunk">Відвантаження змін...</string>
-    <string name="sync_up_down_size">Вгору: %1$d kb, Вниз: %2$d kb</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Виникла помилка. Будь ласка, спробуйте пізніше.</string>
     <string name="sync_check_upload_file">Перевірка файлу перед відвантаженням...</string>
     <string name="sync_check_download_file">Перевірка завантаженого файлу...</string>

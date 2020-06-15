@@ -195,8 +195,8 @@
         <item quantity="other">Видалити тип картки «%2$s» та його %1$d картки?</item>
     </plurals>
     <string name="invalid_template">Картка не може бути створена</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">Видалення цього типу картки зумовить видалення одного чи декількох записів. Будь ласка, спочатку створіть і збережіть новий тип карток.</string>
+    <string name="card_template_editor_save_error">Не вдалося зберегти зміни шаблону картки: %s</string>
     <string name="template_for_current_card_deleted">Тип картки для поточної картки було видалено.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Зовнішній вигляд переглядача</string>
