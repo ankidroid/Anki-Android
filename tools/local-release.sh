@@ -13,4 +13,4 @@ read -sp "Enter keystore password: " KSTOREPWD; echo
 read -sp "Enter key password: " KEYPWD; echo
 export KSTOREPWD
 export KEYPWD
-./gradlew assembleRelease
+./gradlew assembleRelease -Duniversal-apk=true

@@ -31,6 +31,8 @@ ext {
     travisBuild = System.getenv("TRAVIS") == "true"
     // allows for -Dpre-dex=false to be set
     preDexEnabled = "true" == System.getProperty("pre-dex", "true")
+    // allows for universal APKs to be generated
+    universalApkEnabled = "true" == System.getProperty("universal-apk", "false")
 
     // Travis may report host CPU counts vs guest, but runs 2 cores everywhere
     // everyone else gets 50% of cores to account for SMT which doesn't help this workload
