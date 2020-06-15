@@ -100,6 +100,21 @@ public class MyAccount extends AnkiActivity {
         }
     }
 
+
+    public void attemptLogin() {
+        String username = mUsername.getText().toString().trim(); // trim spaces, issue 1586
+        String password = mPassword.getText().toString();
+
+        if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
+            Timber.i("Attempting auto-login");
+            Connection.login(loginListener, new Connection.Payload(new Object[]{username, password,
+                    HostNumFactory.getInstance(this) }));
+        } else {
+            Timber.i("Auto-login cancelled - username/password missing");
+        }
+    }
+
+
     private void saveUserInformation(String username, String hkey) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
@@ -190,6 +205,8 @@ public class MyAccount extends AnkiActivity {
             mPassword.setAutoFillListener((value) -> {
                 //disable "show password".
                 mPasswordLayout.setEndIconVisible(false);
+                Timber.i("Attempting login from autofill");
+                attemptLogin();
             });
         }
     }
