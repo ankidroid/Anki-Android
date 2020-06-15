@@ -14,3 +14,4 @@ read -sp "Enter key password: " KEYPWD; echo
 export KSTOREPWD
 export KEYPWD
 ./gradlew assembleRelease -Duniversal-apk=true
+./tools/parallel-package-release.sh TEST

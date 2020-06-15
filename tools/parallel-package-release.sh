@@ -19,10 +19,12 @@ if [ "$TAG" == "" ]; then
 fi
 
 # Read the key passwords
-read -sp "Enter keystore password: " KSTOREPWD; echo
-read -sp "Enter key password: " KEYPWD; echo
-export KSTOREPWD
-export KEYPWD
+if [ "$KSTOREPWD" == "" ]; then
+  read -sp "Enter keystore password: " KSTOREPWD; echo
+  read -sp "Enter key password: " KEYPWD; echo
+  export KSTOREPWD
+  export KEYPWD
+fi
 
 # Get on to the tag requested
 #git checkout $TAG
