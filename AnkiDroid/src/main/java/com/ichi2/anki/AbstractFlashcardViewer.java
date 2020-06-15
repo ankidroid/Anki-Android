@@ -851,6 +851,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return R.layout.reviewer;
     }
 
+    protected boolean isFullscreen() {
+        isInFullscreen = !getSupportActionBar().isShowing();
+        return isInFullscreen;
+    }
+
     @ Override
     public void onConfigurationChanged(Configuration config) {
         // called when screen rotated, etc, since recreating the Webview is too expensive
@@ -3120,8 +3125,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // Show options menu from WebView
             if (url.startsWith("signal:anki_show_options_menu")) {
-                isInFullscreen = !getSupportActionBar().isShowing();
-                if (isInFullscreen) {
+                if (isFullscreen()) {
                     openOptionsMenu();
                 } else {
                     UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen_options_menu), true);
@@ -3131,8 +3135,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
             // Show Navigation Drawer from WebView
             if (url.startsWith("signal:anki_show_navigation_drawer")) {
-                isInFullscreen = !getSupportActionBar().isShowing();
-                if (isInFullscreen) {
+                if (isFullscreen()) {
                     AbstractFlashcardViewer.this.onNavigationPressed();
                 } else {
                     UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen_nav_drawer), true);
@@ -3500,8 +3503,7 @@ see card.js for available functions
 
         @JavascriptInterface
         public boolean ankiIsInFullscreen() {
-            isInFullscreen = !getSupportActionBar().isShowing();
-            return isInFullscreen;
+            return isFullscreen();
         }
     }
 }
