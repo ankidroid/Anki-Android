@@ -128,6 +128,26 @@ For flagging <b>green</b> in current card
 <button onclick="ankiToggleFlag(3);">Green Flag</button>
 ```
 
+## Show options menu using JavaScript
+### Name
+```ankiShowOptionsMenu()```
+### Info
+In full screen, a button can be added to show options menu.
+### Usage
+```javascript
+<button onclick="ankiShowOptionsMenu()">Show Options Menu</button>
+```
+## Show navigation drawer using JavaScript
+### Name
+```ankiShowNavDrawer()```
+### Info
+In full screen, a button can be added to show side navigation drawer.
+### Usage
+```javascript
+<button onclick="ankiShowNavDrawer()">Show Navigation Drawer</button>
+```
+
+
 ## Available information about current cards in WebView 
 Add functions to ```Front / Back side``` of card to get info. 
 
