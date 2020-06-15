@@ -1137,6 +1137,10 @@ public class NoteEditor extends AnkiActivity {
                     mEditorNote.reloadModel();
                     if (!mEditorNote.cards().contains(mCurrentEditedCard)) {
                         if (!mAddNote) {
+                            /* This can occur, for example, if the
+                             * card type was deleted or if the note
+                             * type was changed without moving this
+                             * card to another type. */
                             Timber.d("onActivityResult() template edit return - current card is gone, close note editor");
                             UIUtils.showSimpleSnackbar(this, R.string.template_for_current_card_deleted, false);
                             closeNoteEditor();
