@@ -3497,5 +3497,11 @@ see card.js for available functions
         public long ankiGetCardDue() {
             return mCurrentCard.getDue();
          }
+
+        @JavascriptInterface
+        public boolean ankiIsInFullscreen() {
+            isInFullscreen = !getSupportActionBar().isShowing();
+            return isInFullscreen;
+        }
     }
 }
