@@ -118,7 +118,7 @@
     <string name="menu_search">Tra cứu trong %1$s</string>
     <string name="menu_mark_note">Đánh dấu ghi chú</string>
     <string name="menu_unmark_note">Bỏ đánh dấu ghi chú</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Kiểm tra phát âm</string>
     <string name="new_deck">Tạo bộ thẻ</string>
     <string name="create">Tạo</string>
     <string name="new_dynamic_deck">Tạo bộ thẻ đã lọc</string>
@@ -141,7 +141,7 @@
     <string name="rebuild_cram_deck">Đang dựng lại bộ thẻ ôn thi&#8230;</string>
     <string name="rebuild_cram_label">Dựng lại</string>
     <string name="empty_cram_label">Dọn trống</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">Tạo bộ thẻ phụ</string>
     <string name="empty_cram_deck">Đang dọn trống bộ thẻ ôn thi&#8230;</string>
     <string name="custom_study_deck_name">Phiên học tuỳ chọn</string>
     <string name="custom_study_deck_exists">Đổi tên bộ thẻ học tuỳ chọn hiện hữu trước nhất</string>
@@ -155,7 +155,7 @@
     <string name="studyoptions_congrats_custom">Để học ngoài lịch trình thông thường, hãy bấm nút \"Học theo tuỳ chọn\"</string>
     <string name="studyoptions_no_cards_due">Chưa có thẻ nào tới hạn</string>
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Chỉnh sửa ghi chú và thêm miêu tả đúng nhất</string>
     <string name="button_sync">Đồng bộ</string>
     <string name="cancel_sync_confirm">Bạn có muốn huỷ đồng bộ?</string>
     <string name="continue_sync">Tiếp tục đồng bộ</string>
@@ -171,7 +171,7 @@
     <string name="card_template_editor_back">Mẫu định dạng mặt sau</string>
     <string name="card_template_editor_styling">Phong cách</string>
     <string name="card_template_editor_menu_delete">Xoá</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Xuất hiện trình duyệt thẻ</string>
     <string name="card_template_editor_cant_delete">Cần tối thiểu một loại thẻ</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Xoá loại thẻ \"%2$s\" và (các) thẻ %1$d của nó?</item>

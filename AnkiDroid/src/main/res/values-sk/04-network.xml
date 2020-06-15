@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Zapisujem zmeny do databázy...</string>
     <string name="sync_download_chunk">Sťahovanie zmien...</string>
     <string name="sync_upload_chunk">Nahrávanie zmien...</string>
-    <string name="sync_up_down_size">Nahrávanie: %1$d kB, Sťahovanie: %2$d kB</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Vyskytla sa chyba. Skúste to znova neskôr.</string>
     <string name="sync_check_upload_file">Kontrola súboru pred nahrávaním...</string>
     <string name="sync_check_download_file">Kontrola stiahnutého súboru&#8230;</string>

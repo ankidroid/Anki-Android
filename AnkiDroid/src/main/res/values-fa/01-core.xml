@@ -40,7 +40,7 @@
 <resources>
     <!-- Navigation drawer items-->
     <string name="decks">دسته ها</string>
-    <string name="card_browser">جستجوی کارت</string>
+    <string name="card_browser">مرورگر کارت</string>
     <string name="statistics">آمار</string>
     <string name="settings">تنظیمات</string>
     <string name="help">راهنما</string>
@@ -93,9 +93,9 @@
     <string name="undo_action_suspend_note">تعلیق یادداشت</string>
     <string name="undo_action_delete">حذف یادداشت</string>
     <string name="undo_action_delete_multi">حذف یادداشت‌ها</string>
-    <string name="undo_action_change_deck_multi">تغییر دسته ها</string>
-    <string name="undo_action_reschedule_card">برنا مه ریزی مجدد</string>
-    <string name="undo_action_reset_card">تنظیم مجدد پیشرفت</string>
+    <string name="undo_action_change_deck_multi">تغییر دسته‌ها</string>
+    <string name="undo_action_reschedule_card">زمانبندی مجدد</string>
+    <string name="undo_action_reset_card">بازنشانی پیشرفت</string>
     <string name="undo_action_reposition_card">تغییر مکان</string>
     <string name="move_all_to_deck">انتقال همه به دسته</string>
     <string name="unbury">خروج از حالت مخفی</string>
@@ -111,24 +111,24 @@
     <string name="menu_bury">مخفی کردن</string>
     <string name="menu_suspend">تعلیق</string>
     <string name="menu_delete_note">حذف یادداشت</string>
-    <string name="menu_flag">پرچم</string>
-    <string name="menu_flag_card">کارت پرچم</string>
-    <string name="menu_flag_card_zero">بدون پرچم</string>
-    <string name="menu_flag_card_one">پرچم قرمز</string>
-    <string name="menu_flag_card_two">پرچم نارنجی</string>
-    <string name="menu_flag_card_three">پرچم سبز</string>
-    <string name="menu_flag_card_four">پرچم آبی</string>
+    <string name="menu_flag">نشانه</string>
+    <string name="menu_flag_card">نشان کارت</string>
+    <string name="menu_flag_card_zero">بدون نشان</string>
+    <string name="menu_flag_card_one">نشان قرمز</string>
+    <string name="menu_flag_card_two">نشان نارنجی</string>
+    <string name="menu_flag_card_three">نشان سبز</string>
+    <string name="menu_flag_card_four">نشان آبی</string>
     <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
     <string name="menu_select">انتخاب متن</string>
     <string name="menu_search">جستجو در %1$s</string>
-    <string name="menu_mark_note">نشانه گذاری یادداشت</string>
+    <string name="menu_mark_note">نشانه‌گذاری یادداشت</string>
     <string name="menu_unmark_note">برداشتن علامتگذاری یادداشت</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">بررسی تلفظ</string>
     <string name="new_deck">ایجاد دسته</string>
     <string name="create">ساختن</string>
     <string name="new_dynamic_deck">ایجاد دسته فیلتر شده</string>
     <string name="night_mode">حالت شب</string>
-    <string name="directory_inaccessible">فهرست ankidroid غیر قابل دسترس است</string>
+    <string name="directory_inaccessible">فهرست AnkiDroid غیر قابل دسترس است</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -136,61 +136,61 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%dثانیه</string>
+    <string name="time_quantity_seconds">%d ثانیه</string>
     <string name="time_quantity_minutes">%d دقیقه</string>
-    <string name="time_quantity_hours">%dساعت</string>
+    <string name="time_quantity_hours">%d ساعت</string>
     <string name="time_quantity_days">%d روز</string>
     <string name="time_quantity_months">%.1f ماه</string>
-    <string name="time_quantity_years">سال %.1f</string>
+    <string name="time_quantity_years">%.1f سال</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_cram_deck">درحال بازسازی دسته کارت آزمون.\nلطفا صبر کنید...</string>
     <string name="rebuild_cram_label">بازسازی</string>
     <string name="empty_cram_label">خالی</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">ایجاد زیردسته</string>
     <string name="empty_cram_deck">در حال خالی کردن دسته مطالعه فشرده .\nلطفا صبر کنید...</string>
     <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
     <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
     <string name="empty_deck">این دسته خالی است</string>
     <string name="studyoptions_empty">این دسته خالی است. دکمه + را فشار دهید تا مطلب جدید اضافه کنید.</string>
-    <string name="studyoptions_limit_reached">به محدودیت مطالعه روزانه رسیده اید</string>
-    <string name="studyoptions_empty_schedule">هیچ کارتی برای مطالعه امروز برنامه ریزی نشده است</string>
+    <string name="studyoptions_limit_reached">به محدودیت مطالعه روزانه رسیده‌اید</string>
+    <string name="studyoptions_empty_schedule">هیچ کارتی برای مطالعه امروز برنامه‌ریزی نشده است</string>
     <string name="studyoptions_congrats_finished">تبریک ! فعلا کارتان تمام شد.</string>
     <string name="studyoptions_congrats_more_rev">به حد روزانه مرور رسیده اید، ولی هنوز کارتهایی هستند که باید مرور شوند. برای بهینه سازی حافظه، می توانید حد روزانه مرور را در بخش گزینه ها افزایش دهید.</string>
     <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند، ولی شما به حد تعیین شده روزانه مرور رسیده اید. شما می توانید این حد را در بخش گزینه ها افزایش دهید، ولی لطفا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>
     <string name="studyoptions_congrats_custom">جهت مطالعه خارج از برنامه ، بر روی دکمه مطالعه سفارشی زیر کلیک کنید.</string>
-    <string name="studyoptions_no_cards_due">هیچ کارتی دریافت نشده است </string>
-    <string name="sd_card_not_mounted">هیچ دستگاه ای برای ذخیره سازی نصب نشده است</string>
-    <string name="empty_cloze_warning">لطفا این یادداشت را ویرایش کنید و برخی کلمات جا افتاده را اضافه کنید. (%1$s)</string>
+    <string name="studyoptions_no_cards_due">کارتی برای مطالعه وجود ندارد</string>
+    <string name="sd_card_not_mounted">حافظۀ دستگاه یافت نشد</string>
+    <string name="empty_cloze_warning">این یادداشت را ویرایش و چند کلوز اضافه کنید. (%1$s)</string>
     <string name="button_sync">همگام سازی</string>
-    <string name="cancel_sync_confirm">آیا می خواهید همگام سازی را متوقف کنید؟</string>
-    <string name="continue_sync">ادامه همگام سازی</string>
-    <string name="sync_cancelled">همگام سازی لغو شد</string>
+    <string name="cancel_sync_confirm">آیا می‌خواهید همگام‌سازی را لغو کنید؟</string>
+    <string name="continue_sync">ادامه همگام‌سازی</string>
+    <string name="sync_cancelled">همگام‌سازی لغو شد</string>
     <string name="sync_cancel_message">در حال لغو کردن...\nممکن است کمی زمان بر باشد.</string>
     <string name="export">صادر کردن</string>
-    <string name="export_collection">صادر کردن مجموعه فلش کارتها</string>
-    <string name="export_deck">صادر کردن دسته</string>
-    <string name="nothing">هیچ </string>
+    <string name="export_collection">صدور مجموعه</string>
+    <string name="export_deck">صدور دسته</string>
+    <string name="nothing">هیچ</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">نوع کارت</string>
+    <string name="title_activity_template_editor">نوع کارت‌ها</string>
     <string name="card_template_editor_front">قالب جلو</string>
     <string name="card_template_editor_back">قالب پشت</string>
     <string name="card_template_editor_styling">طراحی</string>
     <string name="card_template_editor_menu_delete">حذف</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_cant_delete">حداقل یک کارت وارد کنید.</string>
+    <string name="card_template_editor_menu_card_browser_appearance">ظاهر مروگر کارت</string>
+    <string name="card_template_editor_cant_delete">وجود حداقل یک نوع کارت ضروری است</string>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">حذف نوع کارت %2$s ،و %1$d کارت آن؟</item>
-        <item quantity="other">حذف نوع کارت %2$s و %1$d کارت آن؟</item>
+        <item quantity="one">حذف نوع کارت \"%2$s\"، و %1$d کارت آن؟</item>
+        <item quantity="other">حذف نوع کارت \"%2$s\" و %1$d کارت آن؟</item>
     </plurals>
-    <string name="invalid_template">کارت جدید نمی تواند ساخته شود</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="invalid_template">تولید کارت جدید با مشکل مواجه شد</string>
+    <string name="card_template_editor_would_delete_note">حذف این نوع کارت باعث حذف یک یا چند یادداشت خواهد شد. لطفاً ایتدا نوع کارت جدیدی را ساخته و ذخیره کنید.</string>
+    <string name="card_template_editor_save_error">خطا در ذخیرۀ تغییرات قالب کارت: %s</string>
     <string name="template_for_current_card_deleted">نوع کارت برای کارت فعلی حذف شد.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">ظاهر مرورگر کارت</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">خواندن و نوشتن داده ها روی AnkiDroid</string>
-    <string name="read_write_permission_description">به یادداشتهای موجود، کارت ها، نوع یادداشتها و دسته ها و همچنین ایجاد موارد جدید دسترسی داشته باشید</string>
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="read_write_permission_label">خواندن و نوشتن داده‌ها روی دیتابیس AnkiDroid</string>
+    <string name="read_write_permission_description">قابلیت دسترسی و ویرایش یادداشت‌ها، کارت‌ها، نوع یادداشت‌ها، و دسته‌ها</string>
+    <string name="card_browser_label">مرورگر کارت</string>
+    <string name="card_browser_context_menu">مرورگر کارت</string>
 </resources>
