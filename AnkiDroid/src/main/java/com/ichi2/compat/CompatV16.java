@@ -106,7 +106,11 @@ public class CompatV16 implements Compat {
     @Override
     @CheckResult
     @SuppressWarnings("deprecation")
-    public long getAvailableBytes(StatFs stat) { return stat.getAvailableBlocks() * stat.getBlockSize(); }
+    public long getAvailableBytes(StatFs stat) {
+        long availableBlocks = stat.getAvailableBlocks();
+        long blockSize = stat.getBlockSize();
+        return availableBlocks * blockSize;
+    }
 
     // Until API 23 the methods have "current" in the name
     @Override
