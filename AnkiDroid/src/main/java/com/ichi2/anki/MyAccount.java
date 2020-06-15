@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.view.KeyEvent;
@@ -29,11 +30,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.material.textfield.TextInputLayout;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.ui.TextInputEditField;
 import com.ichi2.utils.AdaptionUtil;
 
 import timber.log.Timber;
@@ -46,12 +49,13 @@ public class MyAccount extends AnkiActivity {
     private View mLoggedIntoMyAccountView;
 
     private EditText mUsername;
-    private EditText mPassword;
+    private TextInputEditField mPassword;
 
     private TextView mUsernameLoggedIn;
 
     private MaterialDialog mProgressDialog;
     Toolbar mToolbar = null;
+    private TextInputLayout mPasswordLayout;
 
 
     private void switchToState(int newState) {
@@ -150,6 +154,7 @@ public class MyAccount extends AnkiActivity {
         mLoginToMyAccountView = getLayoutInflater().inflate(R.layout.my_account, null);
         mUsername = mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = mLoginToMyAccountView.findViewById(R.id.password);
+        mPasswordLayout = mLoginToMyAccountView.findViewById(R.id.password_layout);
 
         mPassword.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -180,6 +185,13 @@ public class MyAccount extends AnkiActivity {
         mUsernameLoggedIn = mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);
         Button logoutButton = mLoggedIntoMyAccountView.findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(v -> logout());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mPassword.setAutoFillListener((value) -> {
+                //disable "show password".
+                mPasswordLayout.setEndIconVisible(false);
+            });
+        }
     }
 
 
