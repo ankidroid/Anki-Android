@@ -23,6 +23,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.utils.NoteUtils;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
@@ -143,19 +144,9 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             mCurrentCard.setDid(mNoteEditorBundle.getLong("did"));
 
             Note currentNote = mCurrentCard.note();
-            // Clear out old tags, copy tags to avoid concurrent modification, add current tags for render correctness
-            String[] currentTags = currentNote.getTags().toArray(new String[0]);
-            for (String tag : currentTags) {
-                currentNote.delTag(tag);
-            }
             ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
-            if (tagsList != null) {
-                for (String tag : tagsList.toArray(new String[0])) {
-                    if (!currentNote.hasTag(tag)) {
-                        currentNote.addTag(tag);
-                    }
-                }
-            }
+            NoteUtils.setTags(currentNote, tagsList);
+
             Bundle noteFields = mNoteEditorBundle.getBundle("editFields");
             if (noteFields != null) {
                 for (String fieldOrd : noteFields.keySet()) {
