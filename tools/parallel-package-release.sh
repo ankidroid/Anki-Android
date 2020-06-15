@@ -34,5 +34,5 @@ for BUILD in $BUILDNAMES; do
     LCBUILD=`tr '[:upper:]' '[:lower:]' <<< $BUILD`
     ./tools/parallel-package-name.sh com.ichi2.anki.$LCBUILD AnkiDroid.$BUILD
     ./gradlew assembleRelease
-    cp AnkiDroid/build/outputs/apk/release/AnkiDroid-release.apk ../AnkiDroid-$TAG.parallel.$BUILD.apk
+    cp AnkiDroid/build/outputs/apk/release/AnkiDroid-armeabi-v7a-release.apk ../AnkiDroid-$TAG.parallel.$BUILD.apk
 done
