@@ -100,8 +100,16 @@ then
   exit
 fi
 
-# Copy exported file to cwd
-cp AnkiDroid/build/outputs/apk/release/AnkiDroid-armeabi-v7a-release.apk AnkiDroid-"$VERSION".apk
+# Now build the universal release also
+if ! ./gradlew assembleRelease -Duniversal-apk=true
+then
+  # APK contains problems, abort release
+  git checkout -- $GRADLEFILE # Revert version change
+  exit
+fi
+
+# Copy universal APK to cwd
+cp AnkiDroid/build/outputs/apk/release/AnkiDroid-universal-release.apk AnkiDroid-"$VERSION".apk
 
 # Commit modified AndroidManifest.xml (and changelog.html if it changed)
 git add $GRADLEFILE $CHANGELOG
