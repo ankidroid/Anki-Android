@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import androidx.annotation.CheckResult;
+
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -71,6 +73,7 @@ public interface Compat {
     boolean isImmersiveSystemUiVisible(AnkiActivity activity);
     void setupNotificationChannel(Context context, String id, String name);
     Spanned fromHtml(String html);
+    @CheckResult
     long getAvailableBytes(StatFs stat);
     void setTime(TimePicker picker, int hour, int minute);
     int getHour(TimePicker picker);
