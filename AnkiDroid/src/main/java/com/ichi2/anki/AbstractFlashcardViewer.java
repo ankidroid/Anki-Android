@@ -53,7 +53,6 @@ import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
@@ -196,7 +195,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected String mCardSuppliedDeveloperContact  = "";
 
     private static final String sCurrentJsApiVersion = "1.0.0";
-
+    // JS api list enable/disable status
     private HashMap<String, Boolean> jsApiListMap = new HashMap<String, Boolean>();
 
     private boolean isInFullscreen;
@@ -3507,21 +3506,21 @@ see card.js for available functions
  */
     public class JavaScriptFunction {
 
-        Gson gson = new Gson();
+        private final Gson sGson = new Gson();
         // list of api that can be accessed
-        String[] apiList = {"toggleFlag", "markCard"};
+        private final String[] sApiList = {"toggleFlag", "markCard"};
 
         // initialize all api with disabled status
         private void preInit() {
-            for (int i = 0; i < apiList.length; i++) {
-                jsApiListMap.put(apiList[i], false);
+            for (int i = 0; i < sApiList.length; i++) {
+                jsApiListMap.put(sApiList[i], false);
             }
         }
 
         // if supplied api version match then enable api
         private void enableJsApi() {
-            for (int i = 0; i < apiList.length; i++) {
-                jsApiListMap.put(apiList[i], true);
+            for (int i = 0; i < sApiList.length; i++) {
+                jsApiListMap.put(sApiList[i], true);
             }
         }
 
@@ -3543,11 +3542,11 @@ see card.js for available functions
 
             String apiStatusJson = "";
             if (TextUtils.isEmpty(mCardSuppliedApiVersion) && TextUtils.isEmpty(mCardSuppliedDeveloperContact)) {
-                apiStatusJson = gson.toJson(jsApiListMap);
+                apiStatusJson = sGson.toJson(jsApiListMap);
                 return String.valueOf(apiStatusJson);
             } else if (requireApiVersion(mCardSuppliedApiVersion)) {
                 enableJsApi();
-                apiStatusJson = gson.toJson(jsApiListMap);
+                apiStatusJson = sGson.toJson(jsApiListMap);
             }
             return String.valueOf(apiStatusJson);
         }
