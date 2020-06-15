@@ -36,3 +36,5 @@ for BUILD in $BUILDNAMES; do
     ./gradlew assembleRelease -Duniversal-apk=true
     cp AnkiDroid/build/outputs/apk/release/AnkiDroid-universal-release.apk ./AnkiDroid-$TAG.parallel.$BUILD.apk
 done
+git reset --hard
+git clean -f
