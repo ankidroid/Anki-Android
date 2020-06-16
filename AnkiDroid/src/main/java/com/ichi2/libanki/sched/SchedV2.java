@@ -470,9 +470,6 @@ public class SchedV2 extends AbstractSched {
                     break;
                 }
             }
-            int rev = node.revCount;
-            int _new = node.newCount;
-            int lrn = node.lrnCount;
             for (DeckDueTreeNode c : children) {
                     // set new string to tail
                 String[] newTail = new String[c.names.length-1];
@@ -482,16 +479,16 @@ public class SchedV2 extends AbstractSched {
             node.children = _groupChildrenMain(node.children);
             // tally up children counts
             for (DeckDueTreeNode ch : node.children) {
-                lrn +=  ch.lrnCount;
-                _new += ch.newCount;
+                node.lrnCount += ch.lrnCount;
+                node.newCount += ch.newCount;
             }
             // limit the counts to the deck's limits
             JSONObject conf = mCol.getDecks().confForDid(node.did);
             JSONObject deck = mCol.getDecks().get(node.did);
             if (conf.getInt("dyn") == 0) {
-                _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
+                node.newCount = Math.max(0, Math.min(node.newCount, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
-            tree.add(new DeckDueTreeNode(head, node.did, rev, lrn, _new, node.children));
+            tree.add(new DeckDueTreeNode(head, node.did, node.revCount, node.lrnCount, node.newCount, node.children));
         }
         return tree;
     }
