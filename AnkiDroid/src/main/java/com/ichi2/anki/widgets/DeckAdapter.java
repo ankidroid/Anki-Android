@@ -40,6 +40,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
+import com.ichi2.libanki.sched.DeckTreeNode;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -523,6 +523,26 @@ public class SchedV2 extends AbstractSched {
         return data;
     }
 
+    /** Similar to deck due tree, but ignore the number of cards.
+
+     It may takes a lot of time to compute the number of card, it
+     requires multiple database access by deck.  Ignoring this number
+     lead to the creation of a tree more quickly.*/
+    @Override
+    public List<DeckTreeNode> quickDeckDueTree() {
+        // Similar to deckDueTree, ignoring the numbers
+
+        // Similar to deckDueList
+        ArrayList<DeckTreeNode> data = new ArrayList<>();
+        for (JSONObject deck : mCol.getDecks().allSorted()) {
+            DeckTreeNode g = new DeckTreeNode(mCol, deck.getString("name"), deck.getLong("id"));
+            data.add(g);
+        }
+        // End of the similar part.
+
+        return _groupChildren(data, false);
+    }
+
 
     public List<DeckDueTreeNode> deckDueTree() {
         return deckDueTree(null);
