@@ -190,7 +190,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
-    private List<Sched.DeckDueTreeNode> mDueTree;
+    private List<Sched.DeckDueTreeNode> mDueTree = null;
 
     private List<CollectionTask> tasksToCancelOnClose;
 
@@ -820,6 +820,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mSyncOnResume = false;
         } else if (colIsOpen()) {
             selectNavigationItem(R.id.nav_decks);
+            if (mDueTree == null) {
+                updateDeckList(true);
+            }
             updateDeckList();
             setTitle(getResources().getString(R.string.app_name));
         }
@@ -2130,7 +2133,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
-        CollectionTask task = CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
+        updateDeckList(false);
+    }
+
+    private void updateDeckList(boolean quick) {
+        int task_type = (quick) ? CollectionTask.TASK_TYPE_LOAD_DECK : CollectionTask.TASK_TYPE_LOAD_DECK_COUNTS;
+        CollectionTask task = CollectionTask.launchCollectionTask(task_type, new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
