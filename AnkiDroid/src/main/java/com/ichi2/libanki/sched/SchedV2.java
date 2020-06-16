@@ -470,9 +470,10 @@ public class SchedV2 extends AbstractSched {
             int rev = node.getRevCount();
             int _new = node.getNewCount();
             int lrn = node.getLrnCount();
-            children = _groupChildrenMain(children, depth + 1);
+            // the children set contains direct children but not the children of children...
+            node.setChildren(_groupChildrenMain(children, depth + 1));
             // tally up children counts
-            for (DeckDueTreeNode ch : children) {
+            for (DeckDueTreeNode ch : node.getChildren()) {
                 lrn +=  ch.getLrnCount();
                 _new += ch.getNewCount();
             }
@@ -482,7 +483,7 @@ public class SchedV2 extends AbstractSched {
                 JSONObject deck = mCol.getDecks().get(node.getDid());
                 _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
-            tree.add(new DeckDueTreeNode(head, node.getDid(), rev, lrn, _new, children));
+            tree.add(new DeckDueTreeNode(head, node.getDid(), rev, lrn, _new, node.getChildren()));
         }
         return tree;
     }

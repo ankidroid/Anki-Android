@@ -274,9 +274,10 @@ public class Sched extends SchedV2 {
             int rev = node.getRevCount();
             int _new = node.getNewCount();
             int lrn = node.getLrnCount();
-            children = _groupChildrenMain(children, depth + 1);
+            // the children set contains direct children but not the children of children...
+            node.setChildren(_groupChildrenMain(children, depth + 1));
             // tally up children counts
-            for (DeckDueTreeNode ch : children) {
+            for (DeckDueTreeNode ch : node.getChildren()) {
                 rev += ch.getRevCount();
                 lrn += ch.getLrnCount();
                 _new += ch.getNewCount();
