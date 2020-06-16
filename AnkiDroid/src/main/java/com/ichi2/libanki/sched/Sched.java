@@ -246,8 +246,13 @@ public class Sched extends SchedV2 {
     }
 
 
+    /**
+       Transform the list of decks into a tree.
+       @param grps list of decks
+       @param checkDone whether check is already done. If so, fail in case of trouble, otherwise just ignore troubles.
+     */
     @Override
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps) {
+    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, boolean checkDone) {
         List<DeckDueTreeNode> tree = new ArrayList<>();
         // group and recurse
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
@@ -258,13 +263,31 @@ public class Sched extends SchedV2 {
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
             // from this node. This is our version of python's itertools.groupby.
             List<DeckDueTreeNode> children = new ArrayList<>();
+            if (!checkDone && node.names.length != 1) {
+                // One of both assertion fail. It'll be corrected in checkIntegrity, ignore this deck for now
+                JSONObject deck = mCol.getDecks().get(node.did);
+                Timber.d("Deck %s (%d) is first and has length %d.", deck.getString("name"), node.did, node.names.length);
+                continue;
+            }
             Assert.that(node.names.length > 0, "_groupChildrenMain: node has length zero (or negative): means that there is a deck with empty name ?");
             Assert.that(node.names.length < 2, "_groupChildrenMain: node has length at least two. Means that a deck's parent is missing.");
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
+                if (!checkDone && next.names.length == 0) {
+                    // It'll be corrected in checkIntegrity, ignore this deck for now
+                    JSONObject deck = mCol.getDecks().get(next.did);
+                    Timber.d("Deck %s (%d) is not first and has length zero.", deck.getString("name"), next.did);
+                    continue;
+                }
                 Assert.that(next.names.length > 0, "_groupChildrenMain: next has length zero (or negative): means that there is a deck with empty name ?");
                 if (head.equals(next.names[0])) {
                     // Same head - add to tail of current head.
+                    if (!checkDone && next.names.length == 1) {
+                        // One of both assertion fail. It'll be corrected in checkIntegrity, ignore this deck for now
+                        JSONObject deck = mCol.getDecks().get(next.did);
+                        Timber.d("Deck %s (%d) is not first and has length 1.", deck.getString("name"), next.did);
+                        continue;
+                    }
                     Assert.that(next.names.length != 1, "_groupChildrenMain: next has length 1. Means that there are two decks with the same name.");
                     children.add(next);
                 } else {
@@ -280,7 +303,7 @@ public class Sched extends SchedV2 {
                 System.arraycopy(c.names, 1, newTail, 0, c.names.length-1);
                 c.names = newTail;
             }
-            node.children = _groupChildrenMain(children);
+            node.children = _groupChildrenMain(children, checkDone);
             // tally up children counts
             for (DeckDueTreeNode ch : node.children) {
                 node.revCount += ch.revCount;

@@ -427,11 +427,11 @@ public class SchedV2 extends AbstractSched {
         if (deckDueTree == null) {
             return null;
         }
-        return _groupChildren(deckDueTree);
+        return _groupChildren(deckDueTree, true);
     }
 
 
-    private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps) {
+    private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps, boolean checkDone) {
         // first, split the group names into components
         for (DeckDueTreeNode g : grps) {
             g.names = Decks.path(g.names[0]);
@@ -439,11 +439,15 @@ public class SchedV2 extends AbstractSched {
         // and sort based on those components
         Collections.sort(grps);
         // then run main function
-        return _groupChildrenMain(grps);
+        return _groupChildrenMain(grps, checkDone);
     }
 
-
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps) {
+    /**
+       Transform the list of decks into a tree.
+       @param grps list of decks
+       @param checkDone whether check is already done. If so, fail in case of trouble, otherwise just ignore troubles.
+     */
+    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, boolean checkDone) {
         List<DeckDueTreeNode> tree = new ArrayList<>();
         // group and recurse
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
@@ -454,13 +458,29 @@ public class SchedV2 extends AbstractSched {
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
             // from this node. This is our version of python's itertools.groupby.
             List<DeckDueTreeNode> children = new ArrayList<>();
+            if (!checkDone && node.names.length != 1) {
+                // One of both assertion fail. It'll be corrected in checkIntegrity, ignore this deck for now
+                continue;
+            }
             Assert.that(node.names.length > 0, "_groupChildrenMain: node has length zero (or negative): means that there is a deck with empty name ?");
             Assert.that(node.names.length < 2, "_groupChildrenMain: node has length at least two. Means that a deck's parent is missing.");
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
+                if (!checkDone && node.names.length == 0) {
+                    // It'll be corrected in checkIntegrity, ignore this deck for now
+                    JSONObject deck = mCol.getDecks().get(next.did);
+                    Timber.d("Deck %s (%d) is not first and has length zero.", deck.getString("name"), next.did);
+                    continue;
+                }
                 Assert.that(next.names.length > 0, "_groupChildrenMain: next has length zero (or negative): means that there is a deck with empty name ?");
                 if (head.equals(next.names[0])) {
                     // Same head - add to tail of current head.
+                    if (!checkDone && next.names.length == 1) {
+                        // One of both assertion fail. It'll be corrected in checkIntegrity, ignore this deck for now
+                        JSONObject deck = mCol.getDecks().get(next.did);
+                        Timber.d("Deck %s (%d) is not first and has length 1.", deck.getString("name"), next.did);
+                        continue;
+                    }
                     Assert.that(next.names.length != 1, "The tail should have a queue of length greater than 1.");
                     children.add(next);
                 } else {
@@ -476,7 +496,7 @@ public class SchedV2 extends AbstractSched {
                 System.arraycopy(c.names, 1, newTail, 0, c.names.length-1);
                 c.names = newTail;
             }
-            node.children = _groupChildrenMain(node.children);
+            node.children = _groupChildrenMain(node.children, checkDone);
             // tally up children counts
             for (DeckDueTreeNode ch : node.children) {
                 node.lrnCount += ch.lrnCount;
