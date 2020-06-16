@@ -198,12 +198,6 @@ public abstract class AbstractSched {
             this(new String[]{name}, did, revCount, lrnCount, newCount);
         }
 
-        public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount,
-                               List<DeckDueTreeNode> children) {
-            this(new String[]{name}, did, revCount, lrnCount, newCount);
-            this.children = children;
-        }
-
         /**
          * Sort on the head of the node.
          */

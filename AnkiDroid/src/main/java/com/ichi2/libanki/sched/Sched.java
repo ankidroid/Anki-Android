@@ -294,7 +294,7 @@ public class Sched extends SchedV2 {
                 node.revCount = Math.max(0, Math.min(node.revCount, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
                 node.newCount = Math.max(0, Math.min(node.newCount, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
-            tree.add(new DeckDueTreeNode(head, node.did, node.revCount, node.lrnCount, node.newCount, node.children));
+            tree.add(node);
         }
         return tree;
     }
