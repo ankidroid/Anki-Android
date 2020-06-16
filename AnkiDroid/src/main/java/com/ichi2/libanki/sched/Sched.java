@@ -286,9 +286,9 @@ public class Sched extends SchedV2 {
                     children.add(c);
                 }
             }
-            children = _groupChildrenMain(children, depth + 1);
+            node.setChildren(_groupChildrenMain(children, depth + 1));
             // tally up children counts
-            for (DeckDueTreeNode ch : children) {
+            for (DeckDueTreeNode ch : node.getChildren()) {
                 rev += ch.getRevCount();
                 lrn += ch.getLrnCount();
                 _new += ch.getNewCount();
@@ -300,7 +300,7 @@ public class Sched extends SchedV2 {
                 rev = Math.max(0, Math.min(rev, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
                 _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
-            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
+            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, node.getChildren()));
         }
         return tree;
     }

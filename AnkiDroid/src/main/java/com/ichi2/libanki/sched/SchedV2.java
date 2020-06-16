@@ -483,9 +483,9 @@ public class SchedV2 extends AbstractSched {
                     children.add(c);
                 }
             }
-            children = _groupChildrenMain(children, depth + 1);
+            node.setChildren(_groupChildrenMain(node.getChildren(), depth + 1));
             // tally up children counts
-            for (DeckDueTreeNode ch : children) {
+            for (DeckDueTreeNode ch : node.getChildren()) {
                 lrn +=  ch.getLrnCount();
                 _new += ch.getNewCount();
             }
@@ -495,7 +495,7 @@ public class SchedV2 extends AbstractSched {
             if (conf.getInt("dyn") == 0) {
                 _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
-            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
+            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, node.getChildren()));
         }
         return tree;
     }

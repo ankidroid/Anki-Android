@@ -262,6 +262,11 @@ public abstract class AbstractSched {
         public List<DeckDueTreeNode> getChildren() {
             return mChildren;
         }
+
+
+        public void setChildren(List<DeckDueTreeNode> children) {
+            mChildren = children;
+        }
     }
 
     public interface LimitMethod {
