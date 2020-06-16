@@ -795,8 +795,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 invalidateOptionsMenu();
                 showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(this), 0);
             } else {
-                // User denied access to the SD card so show error toast and finish activity
-                Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+                // User denied access to file storage  so show error toast and display "App Info"
+                Toast.makeText(this, R.string.startup_no_storage_permission, Toast.LENGTH_LONG).show();
                 finishWithoutAnimation();
                 // Open the Android settings page for our app so that the user can grant the missing permission
                 Intent intent = new Intent();
