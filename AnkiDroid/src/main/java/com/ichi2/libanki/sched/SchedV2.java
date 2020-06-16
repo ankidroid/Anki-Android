@@ -41,6 +41,7 @@ import com.ichi2.libanki.Utils;
 
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -452,13 +453,16 @@ public class SchedV2 extends AbstractSched {
             // Compose the "tail" node list. The tail is a list of all the nodes that proceed
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
             // from this node. This is our version of python's itertools.groupby.
-            List<DeckDueTreeNode> tail  = new ArrayList<>();
-            tail.add(node);
+            List<DeckDueTreeNode> children = new ArrayList<>();
+            Assert.that(node.names.length > 0, "_groupChildrenMain: node has length zero (or negative): means that there is a deck with empty name ?");
+            Assert.that(node.names.length < 2, "_groupChildrenMain: node has length at least two. Means that a deck's parent is missing.");
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
+                Assert.that(next.names.length > 0, "_groupChildrenMain: next has length zero (or negative): means that there is a deck with empty name ?");
                 if (head.equals(next.names[0])) {
                     // Same head - add to tail of current head.
-                    tail.add(next);
+                    Assert.that(next.names.length != 1, "The tail should have a queue of length greater than 1.");
+                    children.add(next);
                 } else {
                     // We've iterated past this head, so step back in order to use this node as the
                     // head in the next iteration of the outer loop.
@@ -466,25 +470,15 @@ public class SchedV2 extends AbstractSched {
                     break;
                 }
             }
-            Long did = null;
-            int rev = 0;
-            int _new = 0;
-            int lrn = 0;
-            List<DeckDueTreeNode> children = new ArrayList<>();
-            for (DeckDueTreeNode c : tail) {
-                if (c.names.length == 1) {
-                    // current node
-                    did = c.did;
-                    rev += c.revCount;
-                    lrn += c.lrnCount;
-                    _new += c.newCount;
-                } else {
+            Long did = node.did;
+            int rev = node.revCount;
+            int _new = node.newCount;
+            int lrn = node.lrnCount;
+            for (DeckDueTreeNode c : children) {
                     // set new string to tail
-                    String[] newTail = new String[c.names.length-1];
-                    System.arraycopy(c.names, 1, newTail, 0, c.names.length-1);
-                    c.names = newTail;
-                    children.add(c);
-                }
+                String[] newTail = new String[c.names.length-1];
+                System.arraycopy(c.names, 1, newTail, 0, c.names.length-1);
+                c.names = newTail;
             }
             node.children = _groupChildrenMain(node.children);
             // tally up children counts
