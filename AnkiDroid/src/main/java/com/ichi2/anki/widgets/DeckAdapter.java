@@ -68,6 +68,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     private int mNew;
     private int mLrn;
     private int mRev;
+    private boolean mNumberSet = false;
 
     // Flags
     private boolean mHasSubdecks;
@@ -145,6 +146,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         mCol = col;
         mDeckList.clear();
         mNew = mLrn = mRev = 0;
+        mNumberSet = false;
         mHasSubdecks = false;
         processNodes(nodes);
         notifyDataSetChanged();
@@ -269,6 +271,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
             // Add this node's counts to the totals if it's a parent deck
             if (depth == 0 && node.haveNumber) {
+                mNumberSet = true;
                 mNew += node.newCount;
                 mLrn += node.lrnCount;
                 mRev += node.revCount;
@@ -307,6 +310,10 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     public int getDue() {
         return mNew + mLrn + mRev;
+    }
+
+    public boolean getNumberSet() {
+        return mNumberSet;
     }
 
     public List<Sched.DeckDueTreeNode> getDeckList() {
