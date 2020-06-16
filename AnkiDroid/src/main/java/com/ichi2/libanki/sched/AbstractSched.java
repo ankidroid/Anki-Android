@@ -52,6 +52,7 @@ public abstract class AbstractSched {
     /** load the due tree, but halt if deck task is cancelled*/
     public abstract DeckDueTreeNodeNumbered deckDueTree(CollectionTask collectionTask);
     public abstract DeckDueTreeNodeNumbered deckDueTree();
+    public abstract DeckDueTreeNodeQuick quickDeckDueTree();
     /** New count for a single deck. */
     public abstract int _newForDeck(long did, int lim);
     /** Limit for deck without parent limits. */

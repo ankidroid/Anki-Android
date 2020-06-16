@@ -85,6 +85,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     public static final int TASK_TYPE_DISMISS_MULTI = 12;
     public static final int TASK_TYPE_CHECK_DATABASE = 14;
     public static final int TASK_TYPE_REPAIR_DECK = 20;
+    public static final int TASK_TYPE_LOAD_DECK = 21;
     public static final int TASK_TYPE_LOAD_DECK_COUNTS = 22;
     public static final int TASK_TYPE_UPDATE_VALUES_FROM_DECK = 23;
     public static final int TASK_TYPE_DELETE_DECK = 25;
@@ -257,6 +258,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
+
+            case TASK_TYPE_LOAD_DECK:
+                return doInBackgroundLoadDeck();
+
             case TASK_TYPE_LOAD_DECK_COUNTS:
                 return doInBackgroundLoadDeckCounts();
 
@@ -542,6 +547,20 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             return new TaskData(false);
         }
         return new TaskData(true);
+    }
+
+
+    private TaskData doInBackgroundLoadDeck() {
+        Timber.d("doInBackgroundLoadDeckCounts");
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        try {
+            // Get due tree
+            Object[] o = new Object[] {col.getSched().quickDeckDueTree()};
+            return new TaskData(o);
+        } catch (RuntimeException e) {
+            Timber.e(e, "doInBackgroundLoadDeckCounts - error");
+            return null;
+        }
     }
 
 
