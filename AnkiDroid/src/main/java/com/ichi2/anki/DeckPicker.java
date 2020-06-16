@@ -916,6 +916,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mSyncOnResume = false;
         } else if (colIsOpen()) {
             selectNavigationItem(R.id.nav_decks);
+            if (mDueTree == null) {
+                updateDeckList(true);
+            }
             updateDeckList();
             setTitle(getResources().getString(R.string.app_name));
         }
@@ -2307,8 +2310,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
+        updateDeckList(false);
+    }
+
+    private void updateDeckList(boolean quick) {
         TaskListener listener = updateDeckListListener();
-        CollectionTask task = CollectionTask.launchCollectionTask(LOAD_DECK_COUNTS, listener);
+        CollectionTask.TASK_TYPE taskType = quick ? LOAD_DECK_QUICK : LOAD_DECK_COUNTS;
+        CollectionTask.launchCollectionTask(taskType, listener);
     }
 
     public void __renderPage() {
