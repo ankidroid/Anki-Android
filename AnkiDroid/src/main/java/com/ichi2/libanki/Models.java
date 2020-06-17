@@ -1071,8 +1071,9 @@ public class Models {
             return _availClozeOrds(m, flds);
         }
         String[] fields = Utils.splitFields(flds);
-        for (String f : fields) {
-            f = f.trim();
+        int nbField = fields.length;
+        for (int i = 0; i < nbField ; i++) {
+            fields[i] = fields[i].trim();
         }
         ArrayList<Integer> avail = new ArrayList<>();
         JSONArray reqArray = m.getJSONArray("req");
