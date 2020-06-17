@@ -6,6 +6,7 @@ plugins {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'app.brant.amazonappstorepublisher'
 
 repositories {
     google()
@@ -107,6 +108,12 @@ android {
 play {
     serviceAccountCredentials = file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json")
     track = 'beta'
+}
+amazon {
+    securityProfile = file("${homePath}/src/AnkiDroid-Amazon-Publish-Security-Profile.json")
+    applicationId = "amzn1.devportal.mobileapp.524a424d314931494c55383833305539"
+    pathToApks = [ file("./build/outputs/apk/release/AnkiDroid-release.apk") ]
+    replaceEdit = true
 }
 
 // Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must

@@ -129,3 +129,8 @@ fi
 
 github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" $PRE_RELEASE
 github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION".apk --file AnkiDroid-"$VERSION".apk
+
+if [ "$PUBLIC" = "public" ]; then
+  ./gradlew publishToAmazonAppStore
+  echo "Remember to add release notes and submit on Amazon: https://developer.amazon.com/apps-and-games/console/app/list"
+fi
