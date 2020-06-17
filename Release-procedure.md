@@ -105,3 +105,9 @@ git log --first-parent origin/$RELEASE_BRANCH..$RELEASE_BRANCH --format='%B' --r
 # Push changes 
 git push
 ```
+
+## Amazon App Store
+
+This is a manual process currently, but Amazon has begun accepting our builds again. An automated solution (like the "Triple-T Publisher" integrated into our gradle scripts for Google Play Store) would be most welcome.
+
+Until then you need to be part of Nicolas Raoul's Amazon Developer organization (he can send you an invite, currently Mike Hardy is a member) and with that you authority you may create new releases and submit them for review / distribution.
