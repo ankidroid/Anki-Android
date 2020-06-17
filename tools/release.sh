@@ -140,9 +140,9 @@ github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION".apk --file A
 
 # Now that Git is clean and the main release is done, run the parallel release script and upload them
 ./tools/parallel-package-release.sh "$VERSION"
-BUILDNAMES='A' # For all releases we will post one parallel release for testers to use
-if [ "$PUBLIC" != "public" ]; then
-  BUILDNAMES='A B C D E' # For public releases we will post 5 parallel builds for everyone to use
+BUILDNAMES='A B C D E' # For public builds we will post all parallels
+if [ "$PUBLIC" = "public" ]; then
+  BUILDNAMES='A' # For alpha releases just post one parallel build
 fi
 for BUILD in $BUILDNAMES; do
   github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION".parallel."$BUILD".apk --file AnkiDroid-"$VERSION".parallel."$BUILD".apk
