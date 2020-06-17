@@ -15,7 +15,8 @@ If an urgent bug is discovered shortly after a major release, commits will be ad
   * In AndroidManifest.xml change android:versionName from 2.9beta11 to 2.9beta12 (for instance), and change android:versionCode accordingly.
     * As a special case, when creating a new patch release (e.g., v2.9.4, you will start by calling your first beta 2.9.4beta0 with release version code ending 00 - the release script will bump those 0's to 1's for the first beta of the new patch release)
   * The tools/release.sh script will bump the versions, compile and upload to Google Play + Github and tag and push
-    * The release script makes use of the [github-release](https://github.com/aktau/github-release) tool and gawk
+    * The tool will ask for a keystore and key password, the release keystore and the passwords are private information for release managers only. Similarly, you will need credentials to the Play Store and the Amazon App Store in order to finalize the public releases
+    * The release script makes use of the [github-release](https://github.com/aktau/github-release) tool, gawk, sed, and asciidoctor - it will verify they are present and error if they are not
     * As a special case, when creating a new release branch, will have to set the branch (`git push --set-upstream origin release-2.11` for example) and then run `git push --tags` to get the new branch contents correct in github
 
 
@@ -27,7 +28,7 @@ If an urgent bug is discovered shortly after a major release, commits will be ad
   * Always use this repository: https://github.com/ankidroid/Anki-Android
   * Consider syncing translations from crowdin if they are still backwards compatible (no strings were deleted) - do this on master and `cherry-pick -x commit-hash` to the release branch
   * Switch to the branch to release, for instance "release-2.10"
-  * Run `./tools/release.sh public` to compile/upload/tag and push to github and Play Console
+  * Run `./tools/release.sh public` to compile/upload/tag and push to github, Play Console, and Amazon App Store
     * The release script makes use of the [github-release](https://github.com/aktau/github-release) tool and gawk
   * After the release script is finished, the stable build will be in the beta channel. Manually promote it to production using the web interface of the Play Console
 
@@ -108,6 +109,8 @@ git push
 
 ## Amazon App Store
 
-This is a manual process currently, but Amazon has begun accepting our builds again. An automated solution (like the "Triple-T Publisher" integrated into our gradle scripts for Google Play Store) would be most welcome.
+This is a partially manual process, but Amazon has begun accepting our builds again
 
-Until then you need to be part of Nicolas Raoul's Amazon Developer organization (he can send you an invite, currently Mike Hardy is a member) and with that you authority you may create new releases and submit them for review / distribution.
+You need to be part of Nicolas Raoul's Amazon Developer organization (he can send you an invite, currently Mike Hardy is a member) and with that you authority you may create new releases and submit them for review / distribution. You will also need the Amazon App Store publishing credential JSON (similar to the Google Publishing JSON needed for the Play Store)
+
+After running the release script, for public releases only, there should be a new release present on the Amazon App Store in unpublished state: https://developer.amazon.com/apps-and-games/console/apps/list.html - fill in the description for the release, and submit it for review
