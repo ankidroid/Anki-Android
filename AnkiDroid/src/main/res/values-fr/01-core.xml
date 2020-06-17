@@ -129,6 +129,11 @@
     <string name="new_dynamic_deck">Créer un paquet filtré</string>
     <string name="night_mode">Mode nuit</string>
     <string name="directory_inaccessible">Le répertoire d\'AnkiDroid est inaccessible</string>
+    <!--This is shown when AnkiDroid starts up with no storage permissions.
+    The user is taken to the "App Info" screen, and needs to click "Permissions" and
+    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
+    of the permissions/app info screen will differ between devices. -->
+    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -183,8 +188,8 @@
         <item quantity="other">Supprimer le type de carte “%2$s” et ses %1$d cartes ?</item>
     </plurals>
     <string name="invalid_template">Une carte n\'a pas pu être générée</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">Retirer ce type de carte provoquera la suppression d\'une ou de plusieurs notes. Veuillez d\'abord créer et sauvegarder un nouveau type de carte.</string>
+    <string name="card_template_editor_save_error">Impossible de sauvegarder les modifications apportées au modèle de carte : %s</string>
     <string name="template_for_current_card_deleted">Le type de carte pour la carte actuelle a été supprimé.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Apparence du navigateur</string>

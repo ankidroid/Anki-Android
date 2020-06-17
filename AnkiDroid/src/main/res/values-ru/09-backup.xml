@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Не удалось сохранить резервную копию из-за нехватки места в хранилище. Уменьшите количество копий или удалите какие-нибудь файлы.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">В хранилище меньше %d МБ.\nОсвободите немного места, чтобы не потерять данные.</string>
     <string name="backup_delete">Резервные копии удаляются&#8230;</string>
     <string name="backup_restore">Восстановить из резервной копии</string>

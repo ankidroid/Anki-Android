@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup yadda saxlanmadı.SD kartda kifayət qədər yer qalmadı.Yedək dərinliyini aşağı salın və ya digər faylları təkrarlayın.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">SD kartınızdan az MB boşluq qaldı.Data zərərini qarşısını almaq üçün boş yer.</string>
     <string name="backup_delete">Nüsxələrin silinməsi ...</string>
     <string name="backup_restore">Restore from backup</string>

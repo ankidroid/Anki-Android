@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Poslední zálohování nelze provést vzhledem k nedostatku místa na vaší SD kartě.\n\nUvolněte nějaké místo na kartě nebo snižte hloubku zálohování - počet záloh AnkiDroid.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Na vaší SD kartě je méně místa než %d mb.\nUvolněte trochu místa, aby se zabránilo ztrátě dat.</string>
     <string name="backup_delete">Mazání záloh.\nProsím čekejte&#8230;</string>
     <string name="backup_restore">Obnovit ze zálohy</string>

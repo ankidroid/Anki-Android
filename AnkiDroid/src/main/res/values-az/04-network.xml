@@ -78,7 +78,7 @@
     <string name="sync_uploading_message">Yüklənilir...</string>
     <string name="sync_downloading_message">Endirilir....</string>
     <string name="sync_title">Sinxronizasiya</string>
-    <string name="sync_downloading_media">Media yüklənir...</string>
+    <string name="sync_downloading_media">Media yüklənir %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Yerli tam sync</string>
     <string name="sync_log_downloading_message">Yerli tam sync</string>
     <string name="sync_log_clocks_unsynchronized">Saatiniz saniyə tərəfindən silinir.Telefonunuzdakı tarix,vaxt və vaxt zolağının düzgün quraşdırıldığından əmin olun,sonra yenidən eşitdirin.</string>

@@ -168,8 +168,8 @@
     <string name="import_log_failed_unzip">apkg ᱠᱷᱩᱞᱟᱹ ᱦᱩᱲᱟᱜᱺ %s</string>
     <string name="import_log_failed_copy_to">apkg ᱠᱷᱚᱱ %s ᱱᱚᱠᱚᱞ ᱦᱩᱲᱟᱜ</string>
     <string name="import_log_failed_validate">apkg ᱯᱩᱥᱴᱚᱣ ᱦᱩᱰᱟᱹᱜ</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
+    <string name="import_log_insufficient_space">ᱯᱮᱠᱮᱡ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱟ ᱾ %1$d ᱫᱚᱨᱠᱟᱨ, %2$d ᱢᱮᱱᱟᱜᱼᱟ</string>
+    <string name="import_succeeded_but_check_database">ᱰᱟᱴᱟ ᱟᱹᱜᱩ ᱦᱩᱭ ᱦᱮᱞᱮ ᱯᱚᱥᱴ-ᱟᱜᱩ ᱠᱞᱤᱱᱚᱯᱷ ᱰᱤᱜᱟᱹᱣ ᱾ ᱪᱮᱠ ᱰᱟᱴᱟᱵᱮᱥ ᱯᱚᱨᱮ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ ᱾ ᱢᱩᱞ ᱠᱟᱨᱚᱬ: %s</string>
     <string name="import_error_unhandled_request">ᱞᱟᱫᱮ ᱱᱮᱦᱚᱨ ᱵᱟᱝ ᱜᱟᱱᱚᱜ ᱠᱟᱱᱟ</string>
     <string name="import_error_exception">ᱯᱟᱠᱟᱡ \n\n%s ᱞᱟᱫᱮ ᱦᱩᱲᱟᱹᱜ</string>
     <string name="import_error_not_apkg_extension">ᱨᱮᱫᱧᱩᱛᱩᱢ “%s” ᱴᱦᱮᱱ .apkg or .colpkg extension ᱵᱟᱱᱩᱜᱽᱟ</string>

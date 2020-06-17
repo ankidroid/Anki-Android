@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup tidak diselamatkan. Tidak cukup ruang kiri pada kad SD. Lebih rendah sandaran kedalaman atau remone beberapa fail lain.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Kurang dari %d MB ruang di SD kad kiri.\nFree beberapa ruang untuk mengelak daripada kehilangan data.</string>
     <string name="backup_delete">Sedang menghapuskan sandaran&#8230;</string>
     <string name="backup_restore">Memulihkan dari sandaran</string>

@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Kunne ikke gjennomføre siste sikkerhetskopiering på grunn av for lite plass på SD-kortet ditt.\n\nFrigjør plass eller reduser sikkerhetskopidybden.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Mindre enn %d MB plass igjen på SD-kortet ditt. \nFrigjør litt plass for å unngå tap av data.</string>
     <string name="backup_delete">Sletter sikkerhetskopier. \nVennligst vent...</string>
     <string name="backup_restore">Gjennopprett fra sikkerhetskopi</string>

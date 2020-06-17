@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Hindi nai-save ang backup. Hindi sapat na puwang na naiwan sa SD card. Ibaba ang backup na depth o remone ang ibang mga file.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Mas mababa sa %d MB na espasyo sa iyong SD card na natitira. \n Linisin ang ilang espasyo upang maiwasan ang pagkawala ng data.</string>
     <string name="backup_delete">Binubura ang mga backup&#8230;</string>
     <string name="backup_restore">Ibalik mula sa backup</string>

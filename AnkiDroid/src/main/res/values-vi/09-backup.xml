@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remone some other files.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Less than %d MB space on your SD card left.\nFree some space to avoid data loss.</string>
     <string name="backup_delete">Đang xóa bỏ các bản sao lưu&#8230;</string>
     <string name="backup_restore">Khôi phục từ bản sao lưu</string>

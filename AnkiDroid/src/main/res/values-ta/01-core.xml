@@ -129,6 +129,11 @@
     <string name="new_dynamic_deck">வடிகட்டப்பட்ட டெக் உருவாக்கவும்</string>
     <string name="night_mode">இரவு நிலை</string>
     <string name="directory_inaccessible">AnkiDroid அடைவு அணுகக்கூடியதாக</string>
+    <!--This is shown when AnkiDroid starts up with no storage permissions.
+    The user is taken to the "App Info" screen, and needs to click "Permissions" and
+    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
+    of the permissions/app info screen will differ between devices. -->
+    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.

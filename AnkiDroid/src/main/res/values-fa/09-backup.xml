@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">به دلیل فضای ناکافی کارت حافظه امکان پشتیبان گیری در موعد مقرر وجود ندارد.\n\nمقداری از فضا را خالی کنید یا حجم فایل پشتیبان را کم کنید.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">کمتر از %d مگابایت فضا بر روی کارت حافظه باقیمانده است.\nبرای جلوگیری از هدر رفتن اطلاعات مقداری فضا خالی کنید.</string>
     <string name="backup_delete">درحال حذف فایلهای پشتیبان.\nلطفا صبر کنید...</string>
     <string name="backup_restore">بازیابی از نسخه های پشتیبان</string>
