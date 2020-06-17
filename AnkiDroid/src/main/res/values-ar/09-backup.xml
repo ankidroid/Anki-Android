@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">تعذر تنفيذ إجراء النسخ الاحتياطي الأخير نظراً لمساحة غير كافية على البطاقة المؤمنة SD الخاص بك.\n\nحرر بعض المساحة أو خفض عمق النسخ الاحتياطي.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">بقي أقل من  %d ميجا في بطاقة التخزين.\nحرر بعض المساحة لتجنب فقدان البيانات.</string>
     <string name="backup_delete">حذف النسخ الاحتياطي.\nالرجاء الانتظار...</string>
     <string name="backup_restore">استعادة من النسخة الاحتياطية</string>

@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">La acción de la última copia de seguridad no pudo ser ejecutado debido a espacio insuficiente en su tarjeta SD.\n\nLibere algo de espacio o disminuya la profundidad de la copia de seguridad.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Hay menos de %d mb de espacio en su tarjeta SD.\nLibere algo de espacio para evitar pérdida de datos.</string>
     <string name="backup_delete">Eliminando copias de seguridad&#8230;</string>
     <string name="backup_restore">Restaurar desde copia de seguridad</string>

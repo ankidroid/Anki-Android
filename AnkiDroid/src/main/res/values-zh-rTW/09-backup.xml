@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">無法執行上一次的備份，因為記憶卡中沒有足夠空間。\n\n請釋放一些空間或是減少備份的量。</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">記憶卡少於%d mb的空間. 請釋放一些空間以避免資料遺失. </string>
     <string name="backup_delete">刪除備份中\n請稍後...</string>
     <string name="backup_restore">從備份還原</string>
