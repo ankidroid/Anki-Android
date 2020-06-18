@@ -295,7 +295,7 @@ public class UsageAnalytics {
     private static class AndroidDefaultRequest extends DefaultRequest {
         private DefaultRequest setAndroidRequestParameters(Context context) {
 
-            // Are we running on really large screens or small screens or ?
+            // Are we running on really large screens or small screens? Send raw screen size
             try {
                 WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
                 Display display = wm.getDefaultDisplay();
@@ -308,12 +308,15 @@ public class UsageAnalytics {
 
             // We can have up to 20 of these - there might be other things we want to know
             // but simply seeing what hardware we are running on should be useful
-            this.customDimension(1, Build.VERSION.RELEASE); // systemVersion
-            this.customDimension(2, Build.BRAND); // brand
-            this.customDimension(3, Build.MODEL); // model
-            this.customDimension(4, Build.BOARD); // deviceId
+            this.customDimension(1, Build.VERSION.RELEASE); // systemVersion, e.g. "7.1.1"  for Android 7.1.1
+            this.customDimension(2, Build.BRAND); // brand e.g. "OnePlus"
+            this.customDimension(3, Build.MODEL); // model e.g. "ONEPLUS A6013" for the 6T
+            this.customDimension(4, Build.BOARD); // deviceId e.g. "sdm845" for the 6T
 
             // This is important for google to auto-fingerprint us for default reporting
+            // It is not possible to set operating system explicitly, there is no API or analytics parameter for it
+            // Instead they respond that they auto-parse User-Agent strings for analytics attribution
+            // For maximum analytics built-in report compatibility we will send the official WebView User-Agent string
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     this.userAgent(WebSettings.getDefaultUserAgent(context));
@@ -321,6 +324,8 @@ public class UsageAnalytics {
                     this.userAgent(System.getProperty("http.agent"));
                 }
             } catch (RuntimeException e) {
+                // Catch RuntimeException as WebView initialization blows up in unpredictable ways
+                // but analytics should never be a show-stopper
                 this.userAgent(System.getProperty("http.agent"));
             }
 
