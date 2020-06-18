@@ -20,6 +20,7 @@
 
 package com.ichi2.anki;
 
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
@@ -323,7 +324,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 cardBrowserContextMenuPreference.setSummary(getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
 
                 // Make it possible to test crash reporting, but only for DEBUG builds
-                if (BuildConfig.DEBUG) {
+                if (BuildConfig.DEBUG && !ActivityManager.isUserAMonkey()) {
                     Timber.i("Debug mode, allowing for test crashes");
                     Preference triggerTestCrashPreference = new Preference(this);
                     triggerTestCrashPreference.setKey("trigger_crash_preference");
