@@ -1816,7 +1816,7 @@ public class NoteEditor extends AnkiActivity {
         String clozeOpenBracket = "{{c" + (nextClozeIndex) + "::";
 
         // Update text field with updated text and selection
-        textBox.setText(beforeText + clozeOpenBracket + selectedText + "}}" + afterText);
+        textBox.setText(String.format("%s%s%s}}%s", beforeText, clozeOpenBracket, selectedText, afterText));
         int clozeOpenSize = clozeOpenBracket.length();
         textBox.setSelection(selectionStart+clozeOpenSize, selectionEnd+clozeOpenSize);
     }
