@@ -38,28 +38,28 @@ public class AdaptionUtil {
             return sHasWebBrowser;
         }
 
-        checkHasWebBrowser(context);
+        sHasWebBrowser = checkHasWebBrowser(context);
         sHasRunWebBrowserCheck = true;
         return sHasWebBrowser;
     }
 
 
-    private static void checkHasWebBrowser(Context context) {
+    private static boolean checkHasWebBrowser(Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
         PackageManager pm = context.getPackageManager();
         List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         for (ResolveInfo ri : list) {
             // If we aren't a restricted device, any browser will do
             if (!isRestrictedLearningDevice()) {
-                sHasWebBrowser = true;
-                break;
+                return true;
             }
             // If we are a restricted device, only a system browser will do
             if (isSystemApp(ri.activityInfo.packageName, pm)) {
-                sHasWebBrowser = true;
-                break;
+                return true;
             }
         }
+        // Either there are no web browsers, or we're a restricted learning device and there's no system browsers.
+        return false;
     }
 
 
