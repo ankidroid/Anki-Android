@@ -86,6 +86,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -124,6 +125,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -2473,6 +2475,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_EDIT:
                 editCard();
                 return true;
+            case COMMAND_TAG:
+                showTagsDialog();
+                return true;
             case COMMAND_MARK:
                 onMark(mCurrentCard);
                 return true;
@@ -3401,6 +3406,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     static void setEditorCard(Card card) {
         //I don't see why we don't do this by intent.
         sEditorCard = card;
+    }
+
+    protected void showTagsDialog() {
+        ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
+        ArrayList<String> selTags = new ArrayList<>(mCurrentCard.note().getTags());
+        TagsDialog.TagsDialogListener tagsDialogListener = (selectedTags, option) -> {
+            if (!mCurrentCard.note().getTags().equals(selectedTags)) {
+                String tagString = TextUtils.join(" ", selectedTags);
+                Note note = mCurrentCard.note();
+                note.setTagsFromStr(tagString);
+                note.flush();
+                // Reload current card to reflect tag changes
+                displayCardQuestion(true);
+            }
+        };
+        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags, tags);
+        dialog.setTagsDialogListener(tagsDialogListener);
+        showDialogFragment(dialog);
     }
 
  /*
