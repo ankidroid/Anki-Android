@@ -241,7 +241,11 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:theme="@style/LegacyActionBarLight"
-            />
+            >
+            <intent-filter>
+                <category android:name="android.intent.category.MONKEY" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.ichi2.anki.DeckOptions"
             android:label="@string/deckpreferences_title"
