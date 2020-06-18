@@ -149,9 +149,9 @@ public class Utils {
         } else if (Math.abs(time_s) < TIME_HOUR) {
             return res.getString(R.string.time_quantity_minutes, (int) Math.round(time_s/TIME_MINUTE));
         } else if (Math.abs(time_s) < TIME_DAY) {
-            return res.getString(R.string.time_quantity_hours, (int) Math.round(time_s/TIME_HOUR));
+            return res.getString(R.string.time_quantity_hours_minutes, (int) Math.round(time_s/TIME_HOUR), (int) Math.round((time_s % TIME_HOUR) / TIME_MINUTE));
         } else if (Math.abs(time_s) < TIME_MONTH) {
-            return res.getString(R.string.time_quantity_days, (int) Math.round(time_s/TIME_DAY));
+            return res.getString(R.string.time_quantity_days_hours, (int) Math.round(time_s/TIME_DAY), (int) Math.round((time_s % TIME_DAY) / TIME_HOUR));
         } else if (Math.abs(time_s) < TIME_YEAR) {
             return res.getString(R.string.time_quantity_months, time_s/TIME_MONTH);
         } else {
