@@ -1265,6 +1265,9 @@ public class NoteEditor extends AnkiActivity {
                 PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, false);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
+                if (isClozeType()) {
+                    popup.getMenu().findItem(R.id.menu_multimedia_add_cloze).setVisible(true);
+                }
                 popup.setOnMenuItemClickListener(item -> {
 
                     switch (item.getItemId()) {
@@ -1286,6 +1289,11 @@ public class NoteEditor extends AnkiActivity {
                         case R.id.menu_multimedia_text: {
                             Timber.i("NoteEditor:: Advanced editor button pressed");
                             startAdvancedTextEditor(index);
+                            return true;
+                        }
+                        case R.id.menu_multimedia_add_cloze: {
+                            Timber.i("NoteEditor:: Insert cloze button pressed");
+                            convertSelectedTextToCloze(index);
                             return true;
                         }
                         default:
@@ -1795,6 +1803,13 @@ public class NoteEditor extends AnkiActivity {
         public void onDestroyActionMode(ActionMode mode) {
             // Left empty on purpose
         }
+    }
+
+    private void convertSelectedTextToCloze(int fieldIndex) {
+        if (fieldIndex < 0 || fieldIndex > mEditFields.size()) {
+            Timber.w("Invalid field index %d requested for cloze insertion.", fieldIndex);
+        }
+        convertSelectedTextToCloze(mEditFields.get(fieldIndex));
     }
 
     private void convertSelectedTextToCloze(FieldEditText textBox) {
