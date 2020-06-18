@@ -825,9 +825,11 @@ public class NoteEditor extends AnkiActivity {
             modified = modified || mEditorNote.getTags().size() > mSelectedTags.size();
             if (modified) {
                 mEditorNote.setTagsFromStr(tagsAsString(mSelectedTags));
-                // set a flag so that changes to card object will be written to DB later via onActivityResult() in
-                // CardBrowser
+                // CardBrowser always runs CollectionTask.TASK_TYPE_UPDATE_NOTE in response to non-canceled edits
+                // so mChanged is likely not needed anymore...
                 mChanged = true;
+                // ...but we do need it to reload itself so results of tag and field edits are shown
+                mReloadRequired = true;
             }
             closeNoteEditor();
         }
