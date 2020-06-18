@@ -1782,28 +1782,7 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             if (item.getItemId() == mMenuId) {
-                // get the current text and selection locations
-                int selectionStart = mTextBox.getSelectionStart();
-                int selectionEnd = mTextBox.getSelectionEnd();
-                String text = "";
-                if (mTextBox.getText() != null) {
-                    text = mTextBox.getText().toString();
-                }
-
-                // Split the text in the places where the cloze deletion will be inserted
-                String beforeText = text.substring(0, selectionStart);
-                String selectedText = text.substring(selectionStart, selectionEnd);
-                String afterText = text.substring(selectionEnd);
-                int nextClozeIndex = getNextClozeIndex();
-
-                // Format the cloze deletion open bracket
-                String clozeOpenBracket = "{{c" + (nextClozeIndex) + "::";
-
-                // Update text field with updated text and selection
-                mTextBox.setText(beforeText + clozeOpenBracket + selectedText + "}}" + afterText);
-                int clozeOpenSize = clozeOpenBracket.length();
-                mTextBox.setSelection(selectionStart+clozeOpenSize, selectionEnd+clozeOpenSize);
-
+                convertSelectedTextToCloze(mTextBox);
                 mode.finish();
                 return true;
             } else {
@@ -1817,6 +1796,31 @@ public class NoteEditor extends AnkiActivity {
             // Left empty on purpose
         }
     }
+
+    private void convertSelectedTextToCloze(FieldEditText textBox) {
+        // get the current text and selection locations
+        int selectionStart = textBox.getSelectionStart();
+        int selectionEnd = textBox.getSelectionEnd();
+        String text = "";
+        if (textBox.getText() != null) {
+            text = textBox.getText().toString();
+        }
+
+        // Split the text in the places where the cloze deletion will be inserted
+        String beforeText = text.substring(0, selectionStart);
+        String selectedText = text.substring(selectionStart, selectionEnd);
+        String afterText = text.substring(selectionEnd);
+        int nextClozeIndex = getNextClozeIndex();
+
+        // Format the cloze deletion open bracket
+        String clozeOpenBracket = "{{c" + (nextClozeIndex) + "::";
+
+        // Update text field with updated text and selection
+        textBox.setText(beforeText + clozeOpenBracket + selectedText + "}}" + afterText);
+        int clozeOpenSize = clozeOpenBracket.length();
+        textBox.setSelection(selectionStart+clozeOpenSize, selectionEnd+clozeOpenSize);
+    }
+
 
     private boolean hasClozeDeletions() {
         return getNextClozeIndex() > 1;
