@@ -38,10 +38,16 @@ public class AdaptionUtil {
             return sHasWebBrowser;
         }
 
+        checkHasWebBrowser(context);
+        sHasRunWebBrowserCheck = true;
+        return sHasWebBrowser;
+    }
+
+
+    private static void checkHasWebBrowser(Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
         PackageManager pm = context.getPackageManager();
         List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        sHasWebBrowser = false;
         for (ResolveInfo ri : list) {
             // If we aren't a restricted device, any browser will do
             if (!isRestrictedLearningDevice()) {
@@ -54,9 +60,8 @@ public class AdaptionUtil {
                 break;
             }
         }
-        sHasRunWebBrowserCheck = true;
-        return sHasWebBrowser;
     }
+
 
     private static boolean isSystemApp(String packageName, PackageManager pm) {
         if (packageName != null) {
