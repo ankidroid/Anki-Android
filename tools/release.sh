@@ -109,7 +109,11 @@ then
 fi
 
 # Copy universal APK to cwd
-cp AnkiDroid/build/outputs/apk/release/AnkiDroid-universal-release.apk AnkiDroid-"$VERSION".apk
+ABIs='universal arm64-v8a x86 x86_64 armeabi-v7a'
+for ABI in $ABIS; do
+  cp AnkiDroid/build/outputs/apk/release/AnkiDroid-"$ABI"-release.apk AnkiDroid-"$VERSION"-"$ABI".apk
+done
+
 
 # Commit modified AndroidManifest.xml (and changelog.html if it changed)
 git add $GRADLEFILE $CHANGELOG
@@ -135,8 +139,11 @@ else
   PRE_RELEASE="--pre-release"
 fi
 
-github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" $PRE_RELEASE
-github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION".apk --file AnkiDroid-"$VERSION".apk
+github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --body "The builds with letter codes below (A, B, etc) are universal parallel builds. They will install side-by-side with the main APK build for testing, or to connect to a different AnkiWeb account in combination with changing the storage directory in preferences. If you install the main APK below, you should install the version matching your CPU instruction set. If you do not know that information, there are many guides on finding it, for example https://www.howtogeek.com/339665/how-to-find-your-android-devices-info-for-correct-apk-downloads/" $PRE_RELEASE
+
+for ABI in $ABIS; do
+  github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
+done
 
 if [ "$PUBLIC" = "public" ]; then
   ./gradlew publishToAmazonAppStore
