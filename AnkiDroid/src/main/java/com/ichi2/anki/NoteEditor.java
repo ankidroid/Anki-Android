@@ -390,7 +390,6 @@ public class NoteEditor extends AnkiActivity {
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Intent intent = getIntent();
         Timber.d("NoteEditor() onCollectionLoaded: caller: %d", mCaller);
@@ -577,10 +576,14 @@ public class NoteEditor extends AnkiActivity {
             Timber.i("onCollectionLoaded() Edit note activity successfully started in add card mode with node id %d", mEditorNote.getId());
         }
 
+        // don't open keyboard if not adding note
+        if (!mAddNote) {
+            this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        }
+
         //set focus to FieldEditText 'first' on startup like Anki desktop
         if (mEditFields != null && !mEditFields.isEmpty()) {
-            FieldEditText first = mEditFields.getFirst();
-            first.requestFocus();
+            mEditFields.getFirst().requestFocus();
         }
     }
 
