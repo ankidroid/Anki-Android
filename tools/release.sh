@@ -139,7 +139,7 @@ else
   PRE_RELEASE="--pre-release"
 fi
 
-github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --body "The builds with letter codes below (A, B, etc) are universal parallel builds. They will install side-by-side with the main APK build for testing, or to connect to a different AnkiWeb account in combination with changing the storage directory in preferences. If you install the main APK below, you should install the version matching your CPU instruction set. If you do not know that information, there are many guides on finding it, for example https://www.howtogeek.com/339665/how-to-find-your-android-devices-info-for-correct-apk-downloads/" $PRE_RELEASE
+github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --description "The builds with letter codes below (A, B, etc) are universal parallel builds. They will install side-by-side with the main APK build for testing, or to connect to a different AnkiWeb account in combination with changing the storage directory in preferences. If you install the main APK below, you should install the version matching your CPU instruction set. If you do not know that information, there are many guides on finding it, for example https://www.howtogeek.com/339665/how-to-find-your-android-devices-info-for-correct-apk-downloads/" $PRE_RELEASE
 
 for ABI in $ABIS; do
   github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
