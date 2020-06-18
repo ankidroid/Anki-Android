@@ -91,7 +91,7 @@ read -rsp "Enter keystore password: " KSTOREPWD; echo
 read -rsp "Enter key password: " KEYPWD; echo
 export KSTOREPWD
 export KEYPWD
-# Build signed APK using Gradle and publish to Play 
+# Build signed APK using Gradle and publish to Play
 # Configuration for pushing to Play specified in build.gradle 'play' task
 if ! ./gradlew publishReleaseApk
 then
@@ -109,7 +109,7 @@ then
 fi
 
 # Copy universal APK to cwd
-ABIs='universal arm64-v8a x86 x86_64 armeabi-v7a'
+ABIS='universal arm64-v8a x86 x86_64 armeabi-v7a'
 for ABI in $ABIS; do
   cp AnkiDroid/build/outputs/apk/release/AnkiDroid-"$ABI"-release.apk AnkiDroid-"$VERSION"-"$ABI".apk
 done
@@ -152,9 +152,10 @@ fi
 
 # Now that Git is clean and the main release is done, run the parallel release script and upload them
 ./tools/parallel-package-release.sh "$VERSION"
-BUILDNAMES='A B C D E' # For public builds we will post all parallels
 if [ "$PUBLIC" = "public" ]; then
-  BUILDNAMES='A' # For alpha releases just post one parallel build
+  BUILDNAMES='A B C D E' # For public builds we will post all parallels
+else
+  BUILDNAMES='A B' # For alpha releases just post a couple parallel builds
 fi
 for BUILD in $BUILDNAMES; do
   github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION".parallel."$BUILD".apk --file AnkiDroid-"$VERSION".parallel."$BUILD".apk
