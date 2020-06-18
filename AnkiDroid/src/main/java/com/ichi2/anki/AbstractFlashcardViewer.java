@@ -1879,8 +1879,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         });
     }
 
-
     protected void displayCardQuestion() {
+        displayCardQuestion(false);
+    }
+
+    protected void displayCardQuestion(boolean reload) {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
 
@@ -1891,7 +1894,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (mCurrentCard.isEmpty()) {
             displayString = getResources().getString(R.string.empty_card_warning);
         } else {
-            question = mCurrentCard.q();
+            question = mCurrentCard.q(reload);
             question = getCol().getMedia().escapeImages(question);
             question = typeAnsQuestionFilter(question);
 

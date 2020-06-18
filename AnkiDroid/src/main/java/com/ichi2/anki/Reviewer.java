@@ -842,6 +842,8 @@ public class Reviewer extends AbstractFlashcardViewer {
                 Note note = mCurrentCard.note();
                 note.setTagsFromStr(tagString);
                 note.flush();
+                // Reload current card to reflect tag changes
+                displayCardQuestion(true);
             }
         };
         TagsDialog dialog = TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags, tags);
