@@ -33,12 +33,11 @@ public class ViewerCommand {
     public static final int COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED = 7;
     public static final int COMMAND_UNDO = 8;
     public static final int COMMAND_EDIT = 9;
-    public static final int COMMAND_TAG = 10;
-    public static final int COMMAND_MARK = 11;
-    public static final int COMMAND_LOOKUP = 12;
-    public static final int COMMAND_BURY_CARD = 13;
-    public static final int COMMAND_SUSPEND_CARD = 14;
-    public static final int COMMAND_DELETE = 15;
+    public static final int COMMAND_MARK = 10;
+    public static final int COMMAND_LOOKUP = 11;
+    public static final int COMMAND_BURY_CARD = 12;
+    public static final int COMMAND_SUSPEND_CARD = 13;
+    public static final int COMMAND_DELETE = 14;
     public static final int COMMAND_PLAY_MEDIA = 16;
     public static final int COMMAND_EXIT = 17;
     public static final int COMMAND_BURY_NOTE = 18;
@@ -56,6 +55,8 @@ public class ViewerCommand {
     public static final int COMMAND_ANSWER_RECOMMENDED = 29;
     public static final int COMMAND_PAGE_UP = 30;
     public static final int COMMAND_PAGE_DOWN = 31;
+
+    public static final int COMMAND_TAG = 32;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({COMMAND_NOTHING, COMMAND_SHOW_ANSWER, COMMAND_FLIP_OR_ANSWER_EASE1, COMMAND_FLIP_OR_ANSWER_EASE2,
