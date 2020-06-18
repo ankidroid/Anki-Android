@@ -128,8 +128,10 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours_minutes">%d h %d m</string>
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d d</string>
+    <string name="time_quantity_days_hours">%d d %d h</string>
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string><!-- or "%.1f a" -->
     <string name="rebuild_cram_deck">Rebuilding cram deck…</string>
