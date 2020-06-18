@@ -16,6 +16,7 @@
 
 package com.ichi2.utils;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -45,6 +46,10 @@ public class AdaptionUtil {
 
 
     private static boolean checkHasWebBrowser(Context context) {
+        // The test monkey often gets stuck on the Shared Decks WebView, ignore it as it shouldn't crash.
+        if (ActivityManager.isUserAMonkey()) {
+            return false;
+        }
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
         PackageManager pm = context.getPackageManager();
         List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
