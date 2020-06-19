@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Collection;
 import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -23,6 +24,7 @@ public abstract class AbstractSched {
     /**
      * Pop the next card from the queue. null if finished.
      */
+    protected Collection mCol;
     public abstract Card getCard();
     public abstract void reset();
     /** Ensures that reset is executed before the next card is selected */
@@ -245,20 +247,12 @@ public abstract class AbstractSched {
             return mRevCount;
         }
 
-        public void addRevCount(int count) {
-            mRevCount += count;
-        }
-
         public void limitRevCount(int limit) {
             mRevCount = Math.max(0, Math.min(mRevCount, limit));
         }
 
         public int getNewCount() {
             return mNewCount;
-        }
-
-        public void addNewCount(int count) {
-            mNewCount += count;
         }
 
         public void limitNewCount(int limit) {
@@ -269,18 +263,32 @@ public abstract class AbstractSched {
             return mLrnCount;
         }
 
-        public void addLrnCount(int count) {
-            mLrnCount += count;
-        }
-
         public List<DeckDueTreeNode> getChildren() {
             return mChildren;
         }
 
-        public void setChildren(List<DeckDueTreeNode> children) {
+        public void setChildren(List<DeckDueTreeNode> children, boolean addRev) {
             mChildren = children;
+            // tally up children counts
+            for (DeckDueTreeNode ch : children) {
+                mLrnCount += ch.getLrnCount();
+                mNewCount += ch.getNewCount();
+                if (addRev) {
+                    mRevCount += ch.getRevCount();
+                }
+            }
+            // limit the counts to the deck's limits
+            JSONObject conf = mCol.getDecks().confForDid(mDid);
+            if (conf.getInt("dyn") == 0) {
+                JSONObject deck = mCol.getDecks().get(mDid);
+                limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1));
+                if (addRev) {
+                    limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1));
+                }
+            }
         }
     }
+
 
     public interface LimitMethod {
         int operation(JSONObject g);
