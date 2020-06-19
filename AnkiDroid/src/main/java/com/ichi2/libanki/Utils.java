@@ -140,7 +140,7 @@ public class Utils {
      * @return The time quantity string. Something like "3 s" or "1.7
      * yr". Only months and year have a number after the decimal.
      */
-    public static String timeQuantity(Context context, long time_s) {
+    public static String timeQuantityTopDeckPicker(Context context, long time_s) {
         Resources res = context.getResources();
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
         // hard-coded. See also 01-core.xml
@@ -152,6 +152,37 @@ public class Utils {
             return res.getString(R.string.time_quantity_hours_minutes, (int) Math.round(time_s/TIME_HOUR), (int) Math.round((time_s % TIME_HOUR) / TIME_MINUTE));
         } else if (Math.abs(time_s) < TIME_MONTH) {
             return res.getString(R.string.time_quantity_days_hours, (int) Math.round(time_s/TIME_DAY), (int) Math.round((time_s % TIME_DAY) / TIME_HOUR));
+        } else if (Math.abs(time_s) < TIME_YEAR) {
+            return res.getString(R.string.time_quantity_months, time_s/TIME_MONTH);
+        } else {
+            return res.getString(R.string.time_quantity_years, time_s/TIME_YEAR);
+        }
+    }
+
+
+    /**
+     * Return a string representing a time quantity
+     *
+     * Equivalent to Anki's anki/utils.py's shortTimeFmt, applied to a number.
+     * I.e. equivalent to Anki's anki/utils.py's fmtTimeSpan, with the parameter short=True.
+     *
+     * @param context The application's environment.
+     * @param time_s The time to format, in seconds
+     * @return The time quantity string. Something like "3 s" or "1.7
+     * yr". Only months and year have a number after the decimal.
+     */
+    public static String timeQuantityNextIvl(Context context, long time_s) {
+        Resources res = context.getResources();
+        // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
+        // hard-coded. See also 01-core.xml
+        if (Math.abs(time_s) < TIME_MINUTE ) {
+            return res.getString(R.string.time_quantity_seconds, time_s);
+        } else if (Math.abs(time_s) < TIME_HOUR) {
+            return res.getString(R.string.time_quantity_minutes, (int) Math.round(time_s/TIME_MINUTE));
+        } else if (Math.abs(time_s) < TIME_DAY) {
+            return res.getString(R.string.time_quantity_hours, (int) Math.round(time_s/TIME_HOUR));
+        } else if (Math.abs(time_s) < TIME_MONTH) {
+            return res.getString(R.string.time_quantity_days, (int) Math.round(time_s/TIME_DAY));
         } else if (Math.abs(time_s) < TIME_YEAR) {
             return res.getString(R.string.time_quantity_months, time_s/TIME_MONTH);
         } else {
