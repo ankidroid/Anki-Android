@@ -85,6 +85,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DeckComparator;
+import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.widget.WidgetStatus;
 
@@ -957,19 +958,24 @@ public class NoteEditor extends AnkiActivity {
 
 
     public void addNewNote() {
-        Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
-        intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
-        startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
+        openNewNoteEditor(intent -> { });
     }
 
 
     public void copyNote() {
+        openNewNoteEditor(intent -> {
+            intent.putExtra(EXTRA_CONTENTS, getFieldsText());
+            if (mSelectedTags != null) {
+                intent.putExtra(EXTRA_TAGS, mSelectedTags.toArray(new String[0]));
+            }
+        });
+    }
+
+    private void openNewNoteEditor(Consumer<Intent> intentEnricher) {
         Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
         intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
-        intent.putExtra(EXTRA_CONTENTS, getFieldsText());
-        if (mSelectedTags != null) {
-            intent.putExtra(EXTRA_TAGS, mSelectedTags.toArray(new String[0]));
-        }
+        //mutate event with additional properties
+        intentEnricher.consume(intent);
         startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
     }
 
