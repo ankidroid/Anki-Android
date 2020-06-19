@@ -61,7 +61,7 @@ public class ReminderService extends BroadcastReceiver {
             return;
         }
 
-        final int total = deckDue.revCount + deckDue.lrnCount + deckDue.newCount;
+        final int total = deckDue.getRevCount() + deckDue.getLrnCount() + deckDue.getNewCount();
 
         if (total <= 0) {
             return;
@@ -113,7 +113,7 @@ public class ReminderService extends BroadcastReceiver {
 
         try {
             for (Sched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree()) {
-                if (node.did == deckId) {
+                if (node.getDid() == deckId) {
                     return node;
                 }
             }

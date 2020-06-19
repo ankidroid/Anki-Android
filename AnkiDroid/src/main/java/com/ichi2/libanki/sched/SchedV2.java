@@ -433,7 +433,7 @@ public class SchedV2 extends AbstractSched {
     private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps) {
         // first, split the group names into components
         for (DeckDueTreeNode g : grps) {
-            g.names = Decks.path(g.names[0]);
+            g.setNames(Decks.path(g.getName()[0]));
         }
         // and sort based on those components
         Collections.sort(grps);
@@ -448,7 +448,7 @@ public class SchedV2 extends AbstractSched {
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
         while (it.hasNext()) {
             DeckDueTreeNode node = it.next();
-            String head = node.names[0];
+            String head = node.getName()[0];
             // Compose the "tail" node list. The tail is a list of all the nodes that proceed
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
             // from this node. This is our version of python's itertools.groupby.
@@ -456,7 +456,7 @@ public class SchedV2 extends AbstractSched {
             tail.add(node);
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
-                if (head.equals(next.names[0])) {
+                if (head.equals(next.getName()[0])) {
                     // Same head - add to tail of current head.
                     tail.add(next);
                 } else {
@@ -472,25 +472,25 @@ public class SchedV2 extends AbstractSched {
             int lrn = 0;
             List<DeckDueTreeNode> children = new ArrayList<>();
             for (DeckDueTreeNode c : tail) {
-                if (c.names.length == 1) {
+                if (c.getName().length == 1) {
                     // current node
-                    did = c.did;
-                    rev += c.revCount;
-                    lrn += c.lrnCount;
-                    _new += c.newCount;
+                    did = c.getDid();
+                    rev += c.getRevCount();
+                    lrn += c.getLrnCount();
+                    _new += c.getNewCount();
                 } else {
                     // set new string to tail
-                    String[] newTail = new String[c.names.length-1];
-                    System.arraycopy(c.names, 1, newTail, 0, c.names.length-1);
-                    c.names = newTail;
+                    String[] newTail = new String[c.getName().length-1];
+                    System.arraycopy(c.getName(), 1, newTail, 0, c.getName().length-1);
+                    c.setNames(newTail);
                     children.add(c);
                 }
             }
             children = _groupChildrenMain(children);
             // tally up children counts
             for (DeckDueTreeNode ch : children) {
-                lrn +=  ch.lrnCount;
-                _new += ch.newCount;
+                lrn +=  ch.getLrnCount();
+                _new += ch.getNewCount();
             }
             // limit the counts to the deck's limits
             JSONObject conf = mCol.getDecks().confForDid(did);
