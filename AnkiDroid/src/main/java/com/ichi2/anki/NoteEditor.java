@@ -1867,7 +1867,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
     private int getNextClozeIndex() {
-        /** BUG: This assumes all fields are inserted as: {{cloze:Text}} */
+        // BUG: This assumes all fields are inserted as: {{cloze:Text}}
         List<String> fieldValues = new ArrayList<>(mEditFields.size());
         for (FieldEditText e : mEditFields) {
             Editable editable = e.getText();
