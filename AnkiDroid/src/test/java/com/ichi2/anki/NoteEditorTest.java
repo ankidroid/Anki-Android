@@ -183,7 +183,7 @@ public class NoteEditorTest extends RobolectricTest {
     @Test
     @Ignore("Not yet implemented")
     public void clozeNoteWithClozeInWrongFieldDoesNotSave() {
-        //Anki Desktop blocks with "Continue?", we sould just block to match the above test
+        //Anki Desktop blocks with "Continue?", we should just block to match the above test
         int initialCards = getCardCount();
         NoteEditor editor = getNoteEditorAdding(NoteType.CLOZE)
                 .withSecondField("{{c1::AnkiDroid}} is fantastic")
