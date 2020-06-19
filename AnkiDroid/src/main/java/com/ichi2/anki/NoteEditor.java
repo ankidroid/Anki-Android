@@ -131,6 +131,7 @@ public class NoteEditor extends AnkiActivity {
     public static final String EXTRA_CONTENTS = "CONTENTS";
     public static final String EXTRA_TAGS = "TAGS";
     public static final String EXTRA_ID = "ID";
+    public static final String EXTRA_DID = "DECK_ID";
 
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -521,6 +522,8 @@ public class NoteEditor extends AnkiActivity {
                 // Do Nothing
             }
         });
+
+        mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
 
         setDid(mEditorNote);
 
@@ -974,6 +977,7 @@ public class NoteEditor extends AnkiActivity {
     private void openNewNoteEditor(Consumer<Intent> intentEnricher) {
         Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
         intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
+        intent.putExtra(EXTRA_DID, mCurrentDid);
         //mutate event with additional properties
         intentEnricher.consume(intent);
         startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
@@ -1888,5 +1892,12 @@ public class NoteEditor extends AnkiActivity {
     @VisibleForTesting
     void setFieldValueFromUi(int i, String newText) {
         mEditFields.get(i).setText(newText);
+    }
+
+
+
+    @VisibleForTesting
+    long getDeckId() {
+        return mCurrentDid;
     }
 }

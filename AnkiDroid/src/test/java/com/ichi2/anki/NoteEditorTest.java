@@ -24,12 +24,14 @@ import android.widget.TextView;
 
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.IField;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
@@ -206,6 +208,33 @@ public class NoteEditorTest extends RobolectricTest {
             assertThat("Activity should be cancelled as no changes were made", result.getResultCode(), is(Activity.RESULT_CANCELED));
         }
     }
+
+    @Test
+    public void copyNoteCopiesDeckId() {
+        // value returned if deck not found
+        final int DECK_ID_NOT_FOUND = -404;
+        long currentDid = addDeck("Basic::Test");
+        getCol().getConf().put("curDeck", currentDid);
+        Note n = super.addNoteUsingBasicModel("Test", "Note");
+        n.model().put("did", currentDid);
+        NoteEditor editor = getNoteEditorEditingExistingBasicNote("Test", "Note", FromScreen.DECK_LIST);
+
+        getCol().getConf().put("curDeck", Consts.DEFAULT_DECK_ID); // Change DID if going through default path
+        Intent copyNoteIntent = getCopyNoteIntent(editor);
+        NoteEditor newNoteEditor = super.startActivityNormallyOpenCollectionWithIntent(NoteEditor.class, copyNoteIntent);
+
+        assertThat("Selected deck ID should be the current deck id", editor.getDeckId(), is(currentDid));
+        assertThat("Deck ID in the intent should be the selected deck id", copyNoteIntent.getLongExtra(NoteEditor.EXTRA_DID, DECK_ID_NOT_FOUND), is(currentDid));
+        assertThat("Deck ID in the new note should be the ID provided in the intent", newNoteEditor.getDeckId(), is(currentDid));
+    }
+
+
+    private Intent getCopyNoteIntent(NoteEditor editor) {
+        ShadowActivity editorShadow = Shadows.shadowOf(editor);
+        editor.copyNote();
+        return editorShadow.peekNextStartedActivityForResult().intent;
+    }
+
 
     private int getCardCount() {
         return getCol().cardCount();
