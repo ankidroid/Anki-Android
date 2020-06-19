@@ -169,13 +169,13 @@ public class ImportUtils {
                 String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
                 errorMessage = copyFileToCache(context, data, tempOutDir) ? null : context.getString(R.string.import_error_copy_file_to_cache);
                 // Show import dialog
-                if (errorMessage == null) {
-                    sendShowImportFileDialogMsg(tempOutDir);
-                } else {
+                if (errorMessage != null) {
                     AnkiDroidApp.sendExceptionReport(new RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed");
+                    return errorMessage;
                 }
+                sendShowImportFileDialogMsg(tempOutDir);
+                return null;
             }
-            return errorMessage;
         }
 
 
