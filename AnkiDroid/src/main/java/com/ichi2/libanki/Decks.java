@@ -815,7 +815,10 @@ public class Decks {
             // ensure no sections are blank
             if (deck.getString("name").indexOf("::::") != -1) {
                 Timber.i("fix deck with missing sections %s", deck.getString("name"));
-                deck.put("name", "recovered"+Utils.intTime(1000));
+                do {
+                    deck.put("name", deck.getString("name").replace("::::", "::blank::"));
+                    // We may need to iterate, in order to replace "::::::" and adding to "blank" in it.
+                } while (deck.getString("name").indexOf("::::") != -1);
                 save(deck);
             }
 
