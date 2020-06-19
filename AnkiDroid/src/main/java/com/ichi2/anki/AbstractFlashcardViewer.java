@@ -312,6 +312,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int mGestureTapTop;
     private int mGestureTapBottom;
     private int mGestureLongclick;
+    private int mGestureVolumeUp;
+    private int mGestureVolumeDown;
 
     private Spanned mCardContent;
     private String mBaseUrl;
@@ -1338,6 +1340,32 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            // assign correct gesture code
+            int gesture = COMMAND_NOTHING;
+
+            switch (event.getKeyCode()) {
+                case KeyEvent.KEYCODE_VOLUME_UP:
+                    gesture = mGestureVolumeUp;
+                    break;
+                case KeyEvent.KEYCODE_VOLUME_DOWN:
+                    gesture = mGestureVolumeDown;
+                    break;
+            }
+
+            // Execute gesture's command, but only consume event if action is assigned. We want the volume buttons to work normally otherwise.
+            if (gesture != COMMAND_NOTHING) {
+                executeCommand(gesture);
+                return true;
+            }
+        }
+
+        return super.dispatchKeyEvent(event);
+    }
+
+
     // Set the content view to the one provided and initialize accessors.
     @SuppressWarnings("deprecation") // Tracked separately as #5023 on github for clipboard
     protected void initLayout() {
@@ -1677,6 +1705,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "12"));
             mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
             mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
+            mGestureVolumeUp = Integer.parseInt(preferences.getString("gestureVolumeUp", "0"));
+            mGestureVolumeDown = Integer.parseInt(preferences.getString("gestureVolumeDown", "0"));
         }
 
         if (preferences.getBoolean("keepScreenOn", false)) {
