@@ -245,13 +245,13 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps) {
+    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, int depth) {
         List<DeckDueTreeNode> tree = new ArrayList<>();
         // group and recurse
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
         while (it.hasNext()) {
             DeckDueTreeNode node = it.next();
-            String head = node.getNamePart(0);
+            String head = node.getNamePart(depth);
             // Compose the "tail" node list. The tail is a list of all the nodes that proceed
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
             // from this node. This is our version of python's itertools.groupby.
@@ -275,7 +275,7 @@ public class Sched extends SchedV2 {
             int lrn = 0;
             List<DeckDueTreeNode> children = new ArrayList<>();
             for (DeckDueTreeNode c : tail) {
-                if (c.getName().length == 1) {
+                if (c.getName().length -1 == depth) {
                     // current node
                     did = c.getDid();
                     rev += c.getRevCount();
@@ -283,13 +283,10 @@ public class Sched extends SchedV2 {
                     _new += c.getNewCount();
                 } else {
                     // set new string to tail
-                    String[] newTail = new String[c.getName().length-1];
-                    System.arraycopy(c.getName(), 1, newTail, 0, c.getName().length-1);
-                    c.setNames(newTail);
                     children.add(c);
                 }
             }
-            children = _groupChildrenMain(children);
+            children = _groupChildrenMain(children, depth + 1);
             // tally up children counts
             for (DeckDueTreeNode ch : children) {
                 rev += ch.getRevCount();

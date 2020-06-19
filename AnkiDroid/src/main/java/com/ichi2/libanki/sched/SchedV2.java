@@ -443,12 +443,16 @@ public class SchedV2 extends AbstractSched {
 
 
     protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps) {
+        return _groupChildrenMain(grps, 0);
+    }
+
+    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, int depth) {
         List<DeckDueTreeNode> tree = new ArrayList<>();
         // group and recurse
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
         while (it.hasNext()) {
             DeckDueTreeNode node = it.next();
-            String head = node.getNamePart(0);
+            String head = node.getNamePart(depth);
             // Compose the "tail" node list. The tail is a list of all the nodes that proceed
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
             // from this node. This is our version of python's itertools.groupby.
@@ -456,7 +460,7 @@ public class SchedV2 extends AbstractSched {
             tail.add(node);
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
-                if (head.equals(next.getNamePart(0))) {
+                if (head.equals(next.getNamePart(depth))) {
                     // Same head - add to tail of current head.
                     tail.add(next);
                 } else {
@@ -472,7 +476,7 @@ public class SchedV2 extends AbstractSched {
             int lrn = 0;
             List<DeckDueTreeNode> children = new ArrayList<>();
             for (DeckDueTreeNode c : tail) {
-                if (c.getName().length == 1) {
+                if (c.getName().length - 1 == depth) {
                     // current node
                     did = c.getDid();
                     rev += c.getRevCount();
@@ -480,13 +484,10 @@ public class SchedV2 extends AbstractSched {
                     _new += c.getNewCount();
                 } else {
                     // set new string to tail
-                    String[] newTail = new String[c.getName().length-1];
-                    System.arraycopy(c.getName(), 1, newTail, 0, c.getName().length-1);
-                    c.setNames(newTail);
                     children.add(c);
                 }
             }
-            children = _groupChildrenMain(children);
+            children = _groupChildrenMain(children, depth + 1);
             // tally up children counts
             for (DeckDueTreeNode ch : children) {
                 lrn +=  ch.getLrnCount();
