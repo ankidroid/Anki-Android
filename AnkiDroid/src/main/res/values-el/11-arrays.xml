@@ -50,15 +50,16 @@
         <item>Απάντηση καλύτερη από την προτεινόμενη</item>
         <item>Αναίρεση</item>
         <item>Επεξεργασία σημείωσης</item>
-        <item>Μαρκάρισμα σημείωσης</item>
-        <item>Αναζήτηση έκφρασης</item>
-        <item>Κρύψιμο κάρτας</item>
-        <item>Αναστολή κάρτας</item>
-        <item>Διαγραφή σημείωσης</item>
-        <item>Αναπαραγωγή πολυμέσων</item>
-        <item>Ματαίωση μάθησης</item>
-        <item>Απόκρυψης σημείωσης</item>
-        <item>Αναστολής σημείωσης</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

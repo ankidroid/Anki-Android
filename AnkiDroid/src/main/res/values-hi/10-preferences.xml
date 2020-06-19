@@ -198,7 +198,9 @@
     <string name="custom_sync_server_enable_title">कस्टम सिंक्रनाइज़ेशन सर्वर का उपयोग करें</string>
     <string name="custom_sync_server_enable_summary">यदि आप स्वामित्व AnkiWeb सेवा का उपयोग नहीं करना चाहते आप एक वैकल्पिक सर्वर यहां निर्दिष्ट कर सकते है</string>
     <string name="custom_sync_server_base_url_title">सिंक्रनाइज़ेशन url</string>
+    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">मीडिया सिंक्रनाइज़ेशन url</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">टैग का चयन करें</string>

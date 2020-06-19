@@ -50,22 +50,23 @@
         <item>Réponse meilleure que celle recommandée</item>
         <item>Annuler</item>
         <item>Modifier la note</item>
-        <item>Marquer la note</item>
-        <item>Rechercher l’expression</item>
-        <item>Enterrer la carte</item>
-        <item>Suspendre la carte</item>
-        <item>Supprimer la note</item>
-        <item>Lancer le média</item>
-        <item>Interrompre l’apprentissage</item>
-        <item>Enterrer la note</item>
-        <item>Suspendre la note</item>
-        <item>Activer/désactiver le marqueur rouge</item>
-        <item>Activer/désactiver le marqueur orange</item>
-        <item>Activer/désactiver le marqueur vert</item>
-        <item>Activer/désactiver le marqueur bleu</item>
-        <item>Retirer le marqueur</item>
-        <item>Haut</item>
-        <item>Bas</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Suspendre la carte</item>

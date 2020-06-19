@@ -50,10 +50,11 @@
         <item>Answer better than recommended</item>
         <item>Võta tagasi</item>
         <item>Edit note</item>
+        <item>Tag note</item>
         <item>Mark note</item>
         <item>Lookup expression</item>
-        <item>Mata kaart</item>
-        <item>Peata kaart</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
         <item>Delete note</item>
         <item>Play media</item>
         <item>Abort learning</item>

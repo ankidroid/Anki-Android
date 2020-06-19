@@ -47,7 +47,7 @@
         <item quantity="other">Засталося %d карткі</item>
     </plurals>
     <string name="widget_no_cards_due">Няма картак для паўтору</string>
-    <string name="widget_loading">Загрузка віджэта&#8230;</string>
+    <string name="widget_loading">Віджэт загружаецца&#8230;</string>
     <plurals name="widget_cards_in_decks_due">
         <item quantity="one">Засталася %1$d картка ў %2$s</item>
         <item quantity="few">Засталося %1$d карткі ў %2$s</item>

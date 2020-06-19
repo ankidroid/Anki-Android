@@ -113,6 +113,7 @@
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
     <string name="menu_select">選擇文字</string>
     <string name="menu_search">在%1$s中查詢</string>
@@ -138,8 +139,10 @@
     -->
     <string name="time_quantity_seconds">%d秒</string>
     <string name="time_quantity_minutes">%d分鐘</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d個小時</string>
     <string name="time_quantity_days">%d天</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f個月</string>
     <string name="time_quantity_years">%.1f年</string>
     <!-- or "%.1f a" -->

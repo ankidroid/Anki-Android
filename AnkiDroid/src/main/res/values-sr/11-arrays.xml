@@ -50,15 +50,16 @@
         <item>Боље од препорученог</item>
         <item>Опозови</item>
         <item>Уреди белешку</item>
-        <item>Означи белешку</item>
-        <item>Претрага израза</item>
-        <item>Сакриј, покажи касније</item>
-        <item>Откажи картицу</item>
-        <item>Избриши белешку</item>
-        <item>Пусти медију</item>
-        <item>Прекини учење</item>
-        <item>Закопај белешку</item>
-        <item>Откажи белешку</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

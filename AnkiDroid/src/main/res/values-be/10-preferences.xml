@@ -201,7 +201,9 @@
     <string name="custom_sync_server_enable_summary">Калі вы не хочаце скарыстаць сервер AnkiWeb, то
  можаце паказаць альтэрнатыўны сервер</string>
     <string name="custom_sync_server_base_url_title">URL для сінхранізацыі</string>
+    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">URL для Media-дадзеных</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Змяненні параметраў у групавой калодзе закране некалькі калод. Калі вы хочаце змяніць толькі бягучую калоду, калі ласка, спачатку дадайце новую групу параметраў</string>
     <string name="studyoptions_limit_select_tags">Выберыце пазнакі</string>

@@ -50,22 +50,23 @@
         <item>Antwort besser als empfohlen</item>
         <item>Rückgängig</item>
         <item>Notiz bearbeiten</item>
-        <item>Notiz markieren</item>
-        <item>Nachschlagen</item>
-        <item>Karte aufschieben</item>
-        <item>Karte ausschließen</item>
-        <item>Notiz löschen</item>
-        <item>Medien abspielen</item>
-        <item>Lernen beenden</item>
-        <item>Notiz aufschieben</item>
-        <item>Notiz ausschließen</item>
-        <item>Rote Flagge umschalten</item>
-        <item>Orange Flagge umschalten</item>
-        <item>Grüne Flagge umschalten</item>
-        <item>Blaue Flagge umschalten</item>
-        <item>Flagge entfernen</item>
-        <item>Seite hoch</item>
-        <item>Seite runter</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Karte ausschließen</item>

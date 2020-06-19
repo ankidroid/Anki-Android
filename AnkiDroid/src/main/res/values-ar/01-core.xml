@@ -138,6 +138,7 @@
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">هل تريد حقا حذف هذه الملاحظة و جميع بطاقاتها؟\n%s</string>
     <string name="menu_select">حدد نصا</string>
     <string name="menu_search">البحث في %1$s</string>
@@ -163,8 +164,10 @@
     -->
     <string name="time_quantity_seconds">%d ثانية</string>
     <string name="time_quantity_minutes">%d دقيقة</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d ساعة</string>
     <string name="time_quantity_days">%d يوم</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f شهر</string>
     <string name="time_quantity_years">%.1f سنة</string>
     <!-- or "%.1f a" -->

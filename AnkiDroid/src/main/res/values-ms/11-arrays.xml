@@ -50,15 +50,16 @@
         <item>Jawaban yang lebih baik daripada yang dicadangkan</item>
         <item>Batal edit</item>
         <item>Edit nota</item>
-        <item>Nota Mark</item>
-        <item>Pencarian ungkapan</item>
-        <item>Mengubur kad</item>
-        <item>Menggantung Kad</item>
-        <item>Hapuskan Nota</item>
-        <item>Bermain media</item>
-        <item>Batalkan belajar</item>
-        <item>Mengubur nota</item>
-        <item>Menggantung nota</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

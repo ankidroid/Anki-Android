@@ -113,6 +113,7 @@
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Bạn thực sự muốn xoá ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
     <string name="menu_select">Chọn văn bản</string>
     <string name="menu_search">Tra cứu trong %1$s</string>
@@ -138,8 +139,10 @@
     -->
     <string name="time_quantity_seconds">%d giây</string>
     <string name="time_quantity_minutes">%d phút</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d giờ</string>
     <string name="time_quantity_days">%d ngày</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f tháng</string>
     <string name="time_quantity_years">%.1f năm</string>
     <!-- or "%.1f a" -->

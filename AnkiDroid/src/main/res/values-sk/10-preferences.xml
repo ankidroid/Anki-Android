@@ -199,7 +199,9 @@
     <string name="custom_sync_server_enable_title">Použiť vlastný server synchronizácie</string>
     <string name="custom_sync_server_enable_summary">Ak nechcete používať privátne služby AnkiWeb, môžete tu špecifikovať alternatívny server</string>
     <string name="custom_sync_server_base_url_title">Sync url</string>
+    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">Media sync url</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Zmeny v nastaveniach balíčkových skupín majú vplyv na viaceré balíčky. Ak si želáte zmeniť len aktuálny balíček, prosím, pridajte najprv novú skupinu v možnostiach</string>
     <string name="studyoptions_limit_select_tags">Zvoliť štítky</string>

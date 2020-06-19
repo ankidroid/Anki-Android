@@ -124,16 +124,17 @@
     <string name="menu_flag">Flag</string>
     <string name="menu_flag_card">Flag card</string>
     <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag_card_one">Чырвоны сцяжок</string>
+    <string name="menu_flag_card_two">Аранжавы сцяжок</string>
+    <string name="menu_flag_card_three">Зялёны сцяжок</string>
+    <string name="menu_flag_card_four">Блакітны сцяжок</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Сапраўды выдаліць гэту нататку і ўсе яе карткі?\n%s</string>
     <string name="menu_select">Выбраць тэкст</string>
     <string name="menu_search">Шукаць у %1$s</string>
     <string name="menu_mark_note">Пазначыць нататку</string>
     <string name="menu_unmark_note">Зняць пазнаку з нататкі</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Праверыць вымаўленне</string>
     <string name="new_deck">Стварыць калоду</string>
     <string name="create">Стварыць</string>
     <string name="new_dynamic_deck">Стварыць адфільтраваную калоду</string>
@@ -153,8 +154,10 @@
     -->
     <string name="time_quantity_seconds">%d с</string>
     <string name="time_quantity_minutes">%d хв</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d г</string>
     <string name="time_quantity_days">%d дзён</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f мес</string>
     <string name="time_quantity_years">%.1f гадоў</string>
     <!-- or "%.1f a" -->

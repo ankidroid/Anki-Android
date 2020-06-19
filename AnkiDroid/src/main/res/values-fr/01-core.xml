@@ -118,6 +118,7 @@
     <string name="menu_flag_card_two">Marqueur orange</string>
     <string name="menu_flag_card_three">Marqueur vert</string>
     <string name="menu_flag_card_four">Marqueur bleu</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Voulez-vous vraiment supprimer cette note et toutes ses cartes ?\n%s</string>
     <string name="menu_select">Sélectionner le texte</string>
     <string name="menu_search">Trouvé en %1$s</string>
@@ -143,8 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d j</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->

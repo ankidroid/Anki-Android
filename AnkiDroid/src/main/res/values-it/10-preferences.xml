@@ -198,7 +198,9 @@
     <string name="custom_sync_server_enable_title">Utilizza server di sincronizzazione personalizzato</string>
     <string name="custom_sync_server_enable_summary">Se non desideri utilizzare il servizio proprietario AnkiWeb puoi specificare un server alternativo qui</string>
     <string name="custom_sync_server_base_url_title">Url di sincronizzazione</string>
+    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">Url di sincronizzazione del contenuto multimediale</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Le modifiche alle opzioni del gruppo di mazzi influenzeranno più mazzi. Se desideri cambiare solo il mazzo corrente, aggiungi prima un nuovo gruppo di opzioni</string>
     <string name="studyoptions_limit_select_tags">Seleziona etichette</string>

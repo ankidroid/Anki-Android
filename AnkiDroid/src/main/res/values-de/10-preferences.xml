@@ -198,7 +198,9 @@
     <string name="custom_sync_server_enable_title">Eigenen Synchronisationsserver verwenden</string>
     <string name="custom_sync_server_enable_summary">Wenn Sie nicht den proprietären AnkiWeb-Dienst verwenden möchten, können Sie hier einen alternativen Server angeben</string>
     <string name="custom_sync_server_base_url_title">Sync-URL</string>
+    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">Medien-Sync-URL</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Änderungen an Stapelgruppen-Optionen beeinflussen mehrere Stapel. Wenn Sie nur den aktuellen Stapel ändern möchten, fügen Sie bitte zuerst eine neue Optionsgruppe hinzu</string>
     <string name="studyoptions_limit_select_tags">Schlagwörter auswählen</string>

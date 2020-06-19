@@ -50,22 +50,23 @@
         <item>Краще, ніж рекомендовано</item>
         <item>Скасувати</item>
         <item>Редагувати запис</item>
-        <item>Позначити запис</item>
-        <item>Пошук виразу</item>
-        <item>Відкласти картку</item>
-        <item>Призупинити картку</item>
-        <item>Видалити запис</item>
-        <item>Відтворити медіа</item>
-        <item>Перервати навчання</item>
-        <item>Відкласти запис</item>
-        <item>Призупинити запис</item>
-        <item>переключити червоний прапорець</item>
-        <item>переключити помаранчевий прапорець</item>
-        <item>переключити зелений прапорець</item>
-        <item>переключити синій прапорець</item>
-        <item>Прибрати прапорець</item>
-        <item>Попередня сторінка</item>
-        <item>Наступна сторінка</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Призупинити картку</item>

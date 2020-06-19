@@ -113,6 +113,7 @@
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
     <string name="menu_select">テキストを選択</string>
     <string name="menu_search">%1$s で検索</string>
@@ -138,8 +139,10 @@
     -->
     <string name="time_quantity_seconds">%d秒</string>
     <string name="time_quantity_minutes">%d分</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d時間</string>
     <string name="time_quantity_days">%d日間</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1fヶ月</string>
     <string name="time_quantity_years">%.1f年</string>
     <!-- or "%.1f a" -->

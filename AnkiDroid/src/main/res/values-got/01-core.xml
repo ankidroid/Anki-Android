@@ -118,6 +118,7 @@
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Wileizu bi sunjai þo melein jah allos kartos is usniman?\n%s</string>
     <string name="menu_select">Walei bokos</string>
     <string name="menu_search">Gasokei in %1$s</string>
@@ -143,8 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d hv</string>
     <string name="time_quantity_days">%d d</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f men</string>
     <string name="time_quantity_years">%.1f jer</string>
     <!-- or "%.1f a" -->

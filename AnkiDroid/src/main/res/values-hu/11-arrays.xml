@@ -50,15 +50,16 @@
         <item>Jobb válasz, mint a javasolt</item>
         <item>Visszavonás</item>
         <item>Megjegyzés szerkesztése</item>
-        <item>Jelöld meg a jegyzetet</item>
-        <item>Kifejezés keresése</item>
-        <item>Kártya holnapra halasztása</item>
-        <item>Kártya felfüggesztése</item>
-        <item>Megjegyzés törlése</item>
-        <item>Média lejátszása</item>
-        <item>A tanulás megszakítása</item>
-        <item>Jegyzet holnapra halasztása</item>
-        <item>Folyamatosan függessze fel a jegyzetet</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

@@ -128,6 +128,7 @@
     <string name="menu_flag_card_two">Oranžový příznak</string>
     <string name="menu_flag_card_three">Zelený příznak</string>
     <string name="menu_flag_card_four">Modrý příznak</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Opravdu smazat poznámku a všechny její karty?\n%s</string>
     <string name="menu_select">Vybrat text</string>
     <string name="menu_search">Vyhledat v %1$s</string>
@@ -153,8 +154,10 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d hodin</string>
     <string name="time_quantity_days">%d dní</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f měsíců</string>
     <string name="time_quantity_years">%.1f roků</string>
     <!-- or "%.1f a" -->

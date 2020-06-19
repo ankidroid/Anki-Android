@@ -118,6 +118,7 @@
     <string name="menu_flag_card_two">Oranssi lippu</string>
     <string name="menu_flag_card_three">Vihreä lippu</string>
     <string name="menu_flag_card_four">Sininen lippu</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
     <string name="menu_select">Valitse teksti</string>
     <string name="menu_search">Haku %1$s</string>
@@ -143,8 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d pv</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f kk</string>
     <string name="time_quantity_years">%.1f v</string>
     <!-- or "%.1f a" -->

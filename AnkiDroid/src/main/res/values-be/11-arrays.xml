@@ -50,15 +50,16 @@
         <item>Лепш, чым рэкамендаваны</item>
         <item>Адмяніць</item>
         <item>Рэдагаваць нататку</item>
-        <item>Адзначыць нататку</item>
-        <item>Пошук выразу</item>
-        <item>Адкласці нататку</item>
-        <item>Адкласці картку</item>
-        <item>Выдаліць запіс</item>
-        <item>Прайграць Media</item>
-        <item>Перапыніць навучанне</item>
-        <item>Адкласці нататку</item>
-        <item>Схаваць нататку</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

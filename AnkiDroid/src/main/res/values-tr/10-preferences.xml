@@ -198,7 +198,9 @@
     <string name="custom_sync_server_enable_title">Özel senkronizasyon sunucusu kullan</string>
     <string name="custom_sync_server_enable_summary">Özel AnkiWeb hizmetini kullanmak istemiyorsanız burada alternatif bir sunucu belirtebilirsiniz</string>
     <string name="custom_sync_server_base_url_title">Senkronizasyon Url\'i</string>
+    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">Medya Senkronizasyon Url\'i</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Deste grubu seçeneklerinde yapılan değişiklikler birden fazla desteyi etkiler. Eğer sadece şu anki desteyi değiştirmek istiyorsanız, lütfen önce yeni bir seçenek grubu ekleyin.</string>
     <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>

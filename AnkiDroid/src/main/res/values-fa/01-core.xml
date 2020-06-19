@@ -118,6 +118,7 @@
     <string name="menu_flag_card_two">نشان نارنجی</string>
     <string name="menu_flag_card_three">نشان سبز</string>
     <string name="menu_flag_card_four">نشان آبی</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
     <string name="menu_select">انتخاب متن</string>
     <string name="menu_search">جستجو در %1$s</string>
@@ -143,8 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d ثانیه</string>
     <string name="time_quantity_minutes">%d دقیقه</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d ساعت</string>
     <string name="time_quantity_days">%d روز</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f ماه</string>
     <string name="time_quantity_years">%.1f سال</string>
     <!-- or "%.1f a" -->

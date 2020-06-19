@@ -128,6 +128,7 @@
     <string name="menu_flag_card_two">Помаранчевий прапорець</string>
     <string name="menu_flag_card_three">Зелений прапорець</string>
     <string name="menu_flag_card_four">Синій прапорець</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Дійсно видалити цей запис разом з усіма його картками?\n%s</string>
     <string name="menu_select">Виділити текст</string>
     <string name="menu_search">Пошук у %1$s</string>
@@ -143,7 +144,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Щоб продовжити надайте AnkiDroid дозвіл на доступ до сховищя. Будь ласка.</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -153,8 +154,10 @@
     -->
     <string name="time_quantity_seconds">%d сек</string>
     <string name="time_quantity_minutes">%d хв</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d год</string>
     <string name="time_quantity_days">%d дн</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f міс</string>
     <string name="time_quantity_years">%.1f р</string>
     <!-- or "%.1f a" -->

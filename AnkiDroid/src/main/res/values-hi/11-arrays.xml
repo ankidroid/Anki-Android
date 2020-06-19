@@ -50,20 +50,21 @@
         <item>उत्तर सुझाव से बेहतर</item>
         <item>पूर्ववत्</item>
         <item>नोट संपादित करें</item>
-        <item>नोट चिह्नित करें</item>
-        <item>वाक्यांश खोजें</item>
-        <item>पत्ता दफन करें</item>
-        <item>पत्ता निलंबित करें</item>
-        <item>नोट मिटाएँ</item>
-        <item>मीडिया चलाएँ</item>
-        <item>सीखना रोक दें</item>
-        <item>नोट दफन करें</item>
-        <item>नोट निलंबित करें</item>
-        <item>लाल झंडा टॉगल करें</item>
-        <item>नारंगी झंडा टॉगल करें</item>
-        <item>हरा झंडा टॉगल करें</item>
-        <item>नीला झंडा टॉगल करें</item>
-        <item>झंडा हटाये</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
         <item>Page Up</item>
         <item>Page Down</item>
     </string-array>

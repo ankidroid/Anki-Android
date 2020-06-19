@@ -118,6 +118,7 @@
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">ናይባሓቂ ነዚ ጽሑፍ ከምኡ ውን ነዞም ካርድታትን ክትድምስስ ደሊኻ?\n%s</string>
     <string name="menu_select">ጽሑፍ ምረጽ</string>
     <string name="menu_search">ኣብ %1$s ርአ</string>
@@ -143,8 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d ደቂቅ</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d ሰዓት</string>
     <string name="time_quantity_days">%d መዓልቲ</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f ወርሒ</string>
     <string name="time_quantity_years">%.1f ዓመት</string>
     <!-- or "%.1f a" -->

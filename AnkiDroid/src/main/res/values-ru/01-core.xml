@@ -128,6 +128,7 @@
     <string name="menu_flag_card_two">Оранжевый флажок</string>
     <string name="menu_flag_card_three">Зелёный флажок</string>
     <string name="menu_flag_card_four">Синий флажок</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
     <string name="menu_select">Выделить текст</string>
     <string name="menu_search">Посмотреть в %1$s</string>
@@ -153,8 +154,10 @@
     -->
     <string name="time_quantity_seconds">%d с</string>
     <string name="time_quantity_minutes">%d мин.</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d ч.</string>
     <string name="time_quantity_days">%d дн.</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f мес.</string>
     <string name="time_quantity_years">%.1f г.</string>
     <!-- or "%.1f a" -->

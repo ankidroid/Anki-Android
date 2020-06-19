@@ -118,6 +118,7 @@
     <string name="menu_flag_card_two">ᱥᱟᱱᱛᱨᱟ ᱯᱚᱛᱠᱟ</string>
     <string name="menu_flag_card_three">ᱥᱟᱹᱵᱡᱟ ᱯᱚᱛᱠᱟ</string>
     <string name="menu_flag_card_four">ᱞᱤᱞ ᱯᱚᱛᱠᱟ</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">ᱱᱚᱛᱴ ᱥᱟᱞᱟᱜ ᱛᱮ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱥᱚ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ ᱥᱮ?\n%s</string>
     <string name="menu_select">ᱚᱞ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
     <string name="menu_search">%1$s ᱨᱮ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ</string>
@@ -133,7 +134,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">ᱫᱚᱭᱟᱠᱟᱛᱮ Ankidroid ᱞᱮᱛᱟᱲ ᱞᱟᱹᱜᱤᱫ \'ᱫᱚᱦᱚ ᱡᱟᱭᱜᱟ\' ᱮᱢᱚᱜᱽᱢᱮ</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -143,8 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d ᱴᱤᱡ</string>
     <string name="time_quantity_minutes">%d ᱴᱤᱯᱤᱡ</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d ᱴᱟᱲᱟᱝ</string>
     <string name="time_quantity_days">%d ᱫᱤᱱ</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f ᱪᱟᱸᱫᱚ</string>
     <string name="time_quantity_years">%.1f ᱥᱮᱨᱢᱟ</string>
     <!-- or "%.1f a" -->

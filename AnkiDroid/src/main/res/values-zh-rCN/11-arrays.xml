@@ -50,22 +50,23 @@
         <item>好于建议的回答</item>
         <item>撤销</item>
         <item>编辑笔记</item>
-        <item>标记笔记</item>
-        <item>查找表达式</item>
-        <item>隐藏卡片</item>
-        <item>暂停卡片</item>
-        <item>删除笔记</item>
-        <item>播放媒体</item>
-        <item>终止学习</item>
-        <item>隐藏笔记</item>
-        <item>暂停笔记</item>
-        <item>切换红色标识</item>
-        <item>切换橙色标识</item>
-        <item>切换绿色标识</item>
-        <item>切换蓝色标识</item>
-        <item>移除标识</item>
-        <item>向上翻页</item>
-        <item>向下翻页</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>暂停卡片</item>

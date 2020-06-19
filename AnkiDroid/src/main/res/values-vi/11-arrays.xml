@@ -50,15 +50,16 @@
         <item>Answer better than recommended</item>
         <item>Phục hồi</item>
         <item>Sửa ghi chú</item>
-        <item>Đánh dấu ghi chú</item>
-        <item>Biểu thức tra cứu</item>
-        <item>Tạm dừng thẻ</item>
-        <item>Tạm ngưng thẻ</item>
-        <item>Xoá ghi chú</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
         <item>Play media</item>
         <item>Abort learning</item>
-        <item>Ẩn ghi chú</item>
-        <item>Tạm dừng ghi chú</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>
