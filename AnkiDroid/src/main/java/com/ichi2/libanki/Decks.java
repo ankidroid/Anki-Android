@@ -792,7 +792,9 @@ public class Decks {
             // two decks with the same name?
             if (names.contains(normalizeName(deck.getString("name")))) {
                 Timber.i("fix duplicate deck name %s", deck.getString("name"));
-                deck.put("name", deck.getString("name") + Utils.intTime(1000));
+                do {
+                    deck.put("name", deck.getString("name") + "+");
+                } while (names.contains(normalizeName(deck.getString("name"))));
                 save(deck);
             }
 
