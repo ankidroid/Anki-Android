@@ -175,7 +175,7 @@ public abstract class AbstractSched {
      * The names field is an array of names that build a deck name from a hierarchy (i.e., a nested
      * deck will have an entry for every level of nesting). While the python version interchanges
      * between a string and a list of strings throughout processing, we always use an array for
-     * this field and use getName()[0] for those cases.
+     * this field and use getNamePart(0) for those cases.
      */
     public class DeckDueTreeNode implements Comparable {
         private String[] mName;
@@ -236,6 +236,10 @@ public abstract class AbstractSched {
 
         public String[] getNames() {
             return mName;
+        }
+
+        public String getNamePart(int part) {
+            return mName[part];
         }
         
         public void setNames(String[] mName) {
