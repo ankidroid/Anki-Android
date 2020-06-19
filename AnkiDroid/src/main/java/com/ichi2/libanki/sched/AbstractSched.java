@@ -178,29 +178,26 @@ public abstract class AbstractSched {
      * this field and use names[0] for those cases.
      */
     public class DeckDueTreeNode implements Comparable {
-        private String[] mName;
+        private String mName;
+        private String[] mSplittedName;
         private long mDid;
-        private int mDepth;
         private int mRevCount;
         private int mLrnCount;
         private int mNewCount;
         private List<DeckDueTreeNode> mChildren = new ArrayList<>();
 
-        public DeckDueTreeNode(String[] mName, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
-            this.mName = mName;
+        public DeckDueTreeNode(String name, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
             this.mDid = mDid;
             this.mRevCount = mRevCount;
             this.mLrnCount = mLrnCount;
             this.mNewCount = mNewCount;
-        }
-
-        public DeckDueTreeNode(String name, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
-            this(new String[]{name}, mDid, mRevCount, mLrnCount, mNewCount);
+            this.mName = name;
+            this.mSplittedName = name.split("::");
         }
 
         public DeckDueTreeNode(String name, long mDid, int mRevCount, int mLrnCount, int mNewCount,
                                List<DeckDueTreeNode> mChildren) {
-            this(new String[]{name}, mDid, mRevCount, mLrnCount, mNewCount);
+            this(name, mDid, mRevCount, mLrnCount, mNewCount);
             this.mChildren = mChildren;
         }
 
@@ -211,8 +208,8 @@ public abstract class AbstractSched {
         public int compareTo(Object other) {
             DeckDueTreeNode rhs = (DeckDueTreeNode) other;
             // Consider each subdeck name in the ordering
-            for (int i = 0; i < mName.length && i < rhs.mName.length; i++) {
-                int cmp = mName[i].compareTo(rhs.mName[i]);
+            for (int i = 0; i < mSplittedName.length && i < rhs.mSplittedName.length; i++) {
+                int cmp = mSplittedName[i].compareTo(rhs.mSplittedName[i]);
                 if (cmp == 0) {
                     continue;
                 }
@@ -221,7 +218,7 @@ public abstract class AbstractSched {
             // If we made it this far then the arrays are of different length. The longer one should
             // always come after since it contains all of the sections of the shorter one inside it
             // (i.e., the short one is an ancestor of the longer one).
-            if (rhs.mName.length > mName.length) {
+            if (rhs.mSplittedName.length > mSplittedName.length) {
                 return -1;
             } else {
                 return 1;
@@ -230,24 +227,16 @@ public abstract class AbstractSched {
 
         @Override
         public String toString() {
-            return String.format(Locale.US, "%s, %d, %d, %d, %d, %d, %s",
-                    Arrays.toString(mName), mDid, mDepth, mRevCount, mLrnCount, mNewCount, mChildren);
-        }
-
-        public String[] getName() {
-            return mName;
+            return String.format(Locale.US, "%s, %d, %d, %d, %d, %s",
+                    mName, mDid, mRevCount, mLrnCount, mNewCount, mChildren);
         }
 
         public String getNamePart(int part) {
-            return mName[part];
+            return mSplittedName[part];
         }
 
         public String getLastPart() {
-            return mName[mName.length - 1];
-        }
-        
-        public void setNames(String[] mName) {
-            this.mName = mName;
+            return mSplittedName[mSplittedName.length - 1];
         }
 
         public long getDid() {
@@ -255,11 +244,7 @@ public abstract class AbstractSched {
         }
 
         public int getDepth() {
-            return mDepth;
-        }
-
-        public void setDepth(int mDepth) {
-            this.mDepth = mDepth;
+            return mSplittedName.length - 1;
         }
 
         public int getRevCount() {

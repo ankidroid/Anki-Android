@@ -275,7 +275,7 @@ public class Sched extends SchedV2 {
             int lrn = 0;
             List<DeckDueTreeNode> children = new ArrayList<>();
             for (DeckDueTreeNode c : tail) {
-                if (c.getName().length -1 == depth) {
+                if (c.getDepth() == depth) {
                     // current node
                     did = c.getDid();
                     rev += c.getRevCount();

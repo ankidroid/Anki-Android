@@ -262,8 +262,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 }
             }
             mDeckList.add(node);
-            // Keep track of the depth. It's used to determine visual properties like indenting later
-            node.setDepth(depth);
 
             // Add this node's counts to the totals if it's a parent deck
             if (depth == 0) {
