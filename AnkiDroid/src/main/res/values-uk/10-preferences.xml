@@ -201,9 +201,9 @@
     <string name="custom_sync_server_enable_summary">Якщо ви не хочете використовувати сервер AnkiWeb, то
     ви можете вказати альтернативний сервер</string>
     <string name="custom_sync_server_base_url_title">URL для синхронізації</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">Непрацююче посилання для синхронізації</string>
     <string name="custom_sync_server_media_url_title">URL Media-даних</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">Непрацююче посилання для синхронізації медіа</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Зміни опцій групи колоди впливатимуть на кілька колод. Якщо ви бажаєте змінити лише поточну колоду, спочатку додайте нову групу опцій</string>
     <string name="studyoptions_limit_select_tags">Оберіть позначки</string>

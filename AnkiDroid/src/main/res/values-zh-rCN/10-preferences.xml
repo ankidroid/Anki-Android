@@ -198,9 +198,9 @@
     <string name="custom_sync_server_enable_title">使用自定义同步服务器</string>
     <string name="custom_sync_server_enable_summary">如果你不想使用专有的 AnkiWeb 服务，您可以指定替代的服务器</string>
     <string name="custom_sync_server_base_url_title">同步地址</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">同步地址无效</string>
     <string name="custom_sync_server_media_url_title">媒体文件同步地址</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">媒体同步地址无效</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">更改牌组集选项会影响多个牌组。如果您想仅更改当前牌组，请先添加一个新的选项组</string>
     <string name="studyoptions_limit_select_tags">选择标签</string>

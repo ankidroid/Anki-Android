@@ -118,7 +118,7 @@
     <string name="menu_flag_card_two">Orange Flagge</string>
     <string name="menu_flag_card_three">Grüne Flagge</string>
     <string name="menu_flag_card_four">Blaue Flagge</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_edit_tags">Schlagwörter bearbeiten</string>
     <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
     <string name="menu_select">Text auswählen</string>
     <string name="menu_search">In %1$s nachschlagen</string>
@@ -134,7 +134,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Bitte erteilen Sie AnkiDroid die Berechtigung »Speicher«, um fortfahren zu können</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -191,8 +191,8 @@
         <item quantity="other">Kartentyp »%2$s« und seine %1$d Karten löschen?</item>
     </plurals>
     <string name="invalid_template">Es konnte keine Karte erzeugt werden</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">Durch Entfernen dieses Kartentyps würde mindestens eine Notiz gelöscht werden. Bitte erstellen und speichern Sie zuerst einen neuen Kartentyp.</string>
+    <string name="card_template_editor_save_error">Änderungen an Kartenvorlagen konnten nicht gespeichert werden: %s</string>
     <string name="template_for_current_card_deleted">Der Kartentyp der aktuellen Karte wurde gelöscht.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Übersichtserscheinungsbild</string>

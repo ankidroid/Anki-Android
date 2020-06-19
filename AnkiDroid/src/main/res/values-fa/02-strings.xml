@@ -169,6 +169,7 @@
     <string name="import_log_failed_copy_to">خطا در کپی کردن apkg به %s</string>
     <string name="import_log_failed_validate">apkg معتبر نیست</string>
     <string name="import_log_insufficient_space">فضای کافی برای بازکردن بسته وجود ندارد. لازم %1$d، در دسترس %2$d</string>
+    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">ورود داده موفقیت آمیز بود ولی پاکسازی بعد از ورود ناموفق بود. بعداً بررسی دیتابیس را اجرا کنید. دلیل اصلی: %s</string>
     <string name="import_error_unhandled_request">پردازش درخواست ورود ممکن نیست</string>
     <string name="import_error_exception">خطا در ورود بسته\n\n%s</string>
