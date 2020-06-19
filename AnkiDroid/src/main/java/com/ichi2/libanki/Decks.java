@@ -812,19 +812,19 @@ public class Decks {
         Set<String> names = new HashSet<String>();
 
         for (JSONObject deck: decks) {
+            // ensure no sections are blank
+            if (deck.getString("name").indexOf("::::") != -1) {
+                Timber.i("fix deck with missing sections %s", deck.getString("name"));
+                deck.put("name", "recovered"+Utils.intTime(1000));
+                save(deck);
+            }
+
             // two decks with the same name?
             if (names.contains(normalizeName(deck.getString("name")))) {
                 Timber.i("fix duplicate deck name %s", deck.getString("name"));
                 do {
                     deck.put("name", deck.getString("name") + "+");
                 } while (names.contains(normalizeName(deck.getString("name"))));
-                save(deck);
-            }
-
-            // ensure no sections are blank
-            if (deck.getString("name").indexOf("::::") != -1) {
-                Timber.i("fix deck with missing sections %s", deck.getString("name"));
-                deck.put("name", "recovered"+Utils.intTime(1000));
                 save(deck);
             }
 
