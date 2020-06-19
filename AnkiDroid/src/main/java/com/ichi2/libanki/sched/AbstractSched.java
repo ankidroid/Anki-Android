@@ -237,6 +237,10 @@ public abstract class AbstractSched {
         public String[] getName() {
             return mName;
         }
+
+        public String getNamePart(int part) {
+            return mName[part];
+        }
         
         public void setNames(String[] mName) {
             this.mName = mName;

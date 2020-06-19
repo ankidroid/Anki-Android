@@ -251,7 +251,7 @@ public class Sched extends SchedV2 {
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
         while (it.hasNext()) {
             DeckDueTreeNode node = it.next();
-            String head = node.getName()[0];
+            String head = node.getNamePart(0);
             // Compose the "tail" node list. The tail is a list of all the nodes that proceed
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
             // from this node. This is our version of python's itertools.groupby.
@@ -259,7 +259,7 @@ public class Sched extends SchedV2 {
             tail.add(node);
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
-                if (head.equals(next.getName()[0])) {
+                if (head.equals(next.getNamePart(0))) {
                     // Same head - add to tail of current head.
                     tail.add(next);
                 } else {

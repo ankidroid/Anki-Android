@@ -191,7 +191,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             CompatHelper.getCompat().setSelectableBackground(holder.deckLayout);
         }
         // Set deck name and colour. Filtered decks have their own colour
-        holder.deckName.setText(node.getName()[0]);
+        holder.deckName.setText(node.getNamePart(0));
         if (mCol.getDecks().isDyn(node.getDid())) {
             holder.deckName.setTextColor(mDeckNameDynColor);
         } else {
