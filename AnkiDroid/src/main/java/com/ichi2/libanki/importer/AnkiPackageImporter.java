@@ -60,7 +60,16 @@ public class AnkiPackageImporter extends Anki2Importer {
             String colname = "collection.anki21";
             try {
                 // extract the deck from the zip file
-                mZip = new ZipFile(new File(mFile));
+                try {
+                    mZip = new ZipFile(new File(mFile));
+                } catch (FileNotFoundException fileNotFound) {
+                    // The cache can be cleared between copying the file in and importing. This is temporary
+                    if (fileNotFound.getMessage().contains("ENOENT")) {
+                        mLog.add(getRes().getString(R.string.import_log_file_cache_cleared));
+                        return;
+                    }
+                    throw fileNotFound; //displays: failed to unzip
+                }
                 // v2 scheduler?
                 if (mZip.getEntry(colname) == null) {
                     colname = CollectionHelper.COLLECTION_FILENAME;
