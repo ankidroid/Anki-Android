@@ -941,23 +941,36 @@ public class NoteEditor extends AnkiActivity {
                 return true;
 
             case R.id.action_add_note_from_note_editor:
+                Timber.i("NoteEditor:: Add Note button pressed");
+                addNewNote();
+                return true;
             case R.id.action_copy_note: {
-                Timber.i("NoteEditor:: Copy or add card button pressed");
-                Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
-                intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
-                if (item.getItemId() == R.id.action_copy_note) {
-                    intent.putExtra(EXTRA_CONTENTS, getFieldsText());
-                    if (mSelectedTags != null) {
-                        intent.putExtra(EXTRA_TAGS, mSelectedTags.toArray(new String[0]));
-                    }
-                }
-                startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
+                Timber.i("NoteEditor:: Copy Note button pressed");
+                copyNote();
                 return true;
             }
             default:
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+
+    public void addNewNote() {
+        Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
+        intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
+        startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
+    }
+
+
+    public void copyNote() {
+        Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
+        intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
+        intent.putExtra(EXTRA_CONTENTS, getFieldsText());
+        if (mSelectedTags != null) {
+            intent.putExtra(EXTRA_TAGS, mSelectedTags.toArray(new String[0]));
+        }
+        startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
     }
 
 
