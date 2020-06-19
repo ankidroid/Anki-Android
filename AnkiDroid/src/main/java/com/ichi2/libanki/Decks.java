@@ -813,6 +813,12 @@ public class Decks {
 
         for (JSONObject deck: decks) {
             // ensure no sections are blank
+            if ("".equals(deck.getString("name"))) {
+                Timber.i("Fix deck with empty name");
+                deck.put("name", "blank");
+                save(deck);
+            }
+
             if (deck.getString("name").indexOf("::::") != -1) {
                 Timber.i("fix deck with missing sections %s", deck.getString("name"));
                 do {
