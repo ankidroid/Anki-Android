@@ -1708,6 +1708,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     null);
 
         }
+
+        @Override
+        public void onCancelled() {
+            super.onCancelled();
+            hideProgressBar();
+        }
     };
 
     public boolean hasSelectedAllDecks() {
@@ -1812,6 +1818,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_unmark_card));
                 mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_white_24dp);
             }
+        }
+
+
+        @Override
+        public void onCancelled() {
+            super.onCancelled();
+            hideProgressBar();
         }
     };
 
