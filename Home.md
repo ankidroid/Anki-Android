@@ -11,6 +11,7 @@ Other supplementary information can be found in the Wiki pages below:
 * [Installation guide](wiki/Installation)
 * [Frequently asked questions](wiki/FAQ)
 * [Advanced card formatting guide](wiki/Advanced-formatting)
+* [AnkiDroid Javascript API](wiki/AnkiDroid-Javascript-API)
 * [List of permissions](wiki/Permissions)
 * [List of freely distributable fonts](wiki/Freely-distributable-fonts)
 * [List of Third Party Apps which integrate with AnkiDroid](wiki/Third-Party-Apps)
