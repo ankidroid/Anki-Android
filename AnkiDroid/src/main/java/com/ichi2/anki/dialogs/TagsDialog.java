@@ -352,7 +352,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 } else {
                     final String filterPattern = constraint.toString().toLowerCase().trim();
                     for (String tag : mAllTags) {
-                        if (tag.toLowerCase().startsWith(filterPattern)) {
+                        if (tag.toLowerCase().contains(filterPattern)) {
                             mFilteredTags.add(tag);
                         }
                     }
