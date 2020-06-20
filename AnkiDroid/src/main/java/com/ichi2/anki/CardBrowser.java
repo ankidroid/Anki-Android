@@ -774,6 +774,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     mSearchView.setQuery(mSearchTerms, false);
                 }
             });
+            // Fixes #6500 - keep the search consistent
+            if (!TextUtils.isEmpty(mSearchTerms)) {
+                mSearchItem.expandActionView();
+                mSearchView.setQuery(mSearchTerms, false);
+            }
         } else {
             // multi-select mode
             getMenuInflater().inflate(R.menu.card_browser_multiselect, menu);
