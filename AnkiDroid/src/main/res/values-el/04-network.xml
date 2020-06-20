@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Εγγραφή αλλαγών στη βάση δεδομένων...</string>
     <string name="sync_download_chunk">Λήψη αλλαγών...</string>
     <string name="sync_upload_chunk">Αποστολή αλλαγών...</string>
-    <string name="sync_up_down_size">Προς: %1$d kb, Από: %2$d kb</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Συνέβη σφάλμα. Παρακαλούμε ξαναπροσπαθήστε αργότερα.</string>
     <string name="sync_check_upload_file">Έλεγχος αρχείου πριν την αποστολή...</string>
     <string name="sync_check_download_file">Έλεγχος ληφθέντος αρχείου...</string>

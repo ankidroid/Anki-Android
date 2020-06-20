@@ -78,7 +78,7 @@
     <string name="sync_uploading_message">Yüklənilir...</string>
     <string name="sync_downloading_message">Endirilir....</string>
     <string name="sync_title">Sinxronizasiya</string>
-    <string name="sync_downloading_media">Media yüklənir...</string>
+    <string name="sync_downloading_media">Media yüklənir %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Yerli tam sync</string>
     <string name="sync_log_downloading_message">Yerli tam sync</string>
     <string name="sync_log_clocks_unsynchronized">Saatiniz saniyə tərəfindən silinir.Telefonunuzdakı tarix,vaxt və vaxt zolağının düzgün quraşdırıldığından əmin olun,sonra yenidən eşitdirin.</string>
@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Verilənlər bazasında dəyişiklik yazma...</string>
     <string name="sync_download_chunk">Dəyişiklikləri endirmək...</string>
     <string name="sync_upload_chunk">Dəyişiklikləri endirmək...</string>
-    <string name="sync_up_down_size">Up: %1$d kB, aşağı: %2$d kB</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Bir səhv baş verdi.Biraz sonra yenidən cəhd edin.</string>
     <string name="sync_check_upload_file">Yüklənmədən əvvəl faylı yoxlanyın...</string>
     <string name="sync_check_download_file">Yüklənilən fayl yoxlanılır...</string>

@@ -113,6 +113,7 @@
     <string name="menu_flag_card_two">橙色标志</string>
     <string name="menu_flag_card_three">绿色标志</string>
     <string name="menu_flag_card_four">蓝色标志</string>
+    <string name="menu_edit_tags">编辑标签​​​​​</string>
     <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
     <string name="menu_select">选择文本</string>
     <string name="menu_search">在%1$s中查找</string>
@@ -124,6 +125,11 @@
     <string name="new_dynamic_deck">创建筛选牌组</string>
     <string name="night_mode">夜间模式</string>
     <string name="directory_inaccessible">无法访问AnkiDroid目录</string>
+    <!--This is shown when AnkiDroid starts up with no storage permissions.
+    The user is taken to the "App Info" screen, and needs to click "Permissions" and
+    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
+    of the permissions/app info screen will differ between devices. -->
+    <string name="startup_no_storage_permission">请授予 AnkiDroid “存储”权限以继续</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -133,8 +139,10 @@
     -->
     <string name="time_quantity_seconds">%d秒</string>
     <string name="time_quantity_minutes">%d分钟</string>
+    <string name="time_quantity_hours_minutes">%1$d 小时 %2$d 分钟</string>
     <string name="time_quantity_hours">%d小时</string>
     <string name="time_quantity_days">%d天</string>
+    <string name="time_quantity_days_hours">%1$d 天 %2$d 小时</string>
     <string name="time_quantity_months">%.1f月</string>
     <string name="time_quantity_years">%.1f年</string>
     <!-- or "%.1f a" -->
@@ -177,8 +185,8 @@
         <item quantity="other">确定删除\"%2$s\"笔记类型类型和它包含的%1$d张卡片吗？</item>
     </plurals>
     <string name="invalid_template">无法生成卡片</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">移除此卡牌类型将删除一个或多个笔记。请首先创建并保存一个新的卡牌类型。</string>
+    <string name="card_template_editor_save_error">无法保存卡片模板更改：%s</string>
     <string name="template_for_current_card_deleted">当前卡牌的卡牌类型已被删除。</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">浏览器外观</string>

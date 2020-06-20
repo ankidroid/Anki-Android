@@ -43,7 +43,7 @@ public class Note implements Cloneable {
     private String mGuId;
     private JSONObject mModel;
     private long mMid;
-    private List<String> mTags;
+    private ArrayList<String> mTags;
     private String[] mFields;
     private int mFlags;
     private String mData;
@@ -91,7 +91,7 @@ public class Note implements Cloneable {
         try (Cursor cursor = mCol.getDb().getDatabase()
                 .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null)) {
             if (!cursor.moveToFirst()) {
-                throw new RuntimeException("Notes.load(): No result from query for note " + mId);
+                throw new WrongId(mId, "note");
             }
             mGuId = cursor.getString(0);
             mMid = cursor.getLong(1);
@@ -365,7 +365,7 @@ public class Note implements Cloneable {
     }
 
 
-    public List<String> getTags() {
+    public ArrayList<String> getTags() {
         return mTags;
     }
 

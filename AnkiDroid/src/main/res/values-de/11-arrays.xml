@@ -50,13 +50,14 @@
         <item>Antwort besser als empfohlen</item>
         <item>Rückgängig</item>
         <item>Notiz bearbeiten</item>
+        <item>Notiz verschlagworten</item>
         <item>Notiz markieren</item>
-        <item>Nachschlagen</item>
+        <item>Ausdruck nachschlagen</item>
         <item>Karte aufschieben</item>
         <item>Karte ausschließen</item>
         <item>Notiz löschen</item>
         <item>Medien abspielen</item>
-        <item>Lernen beenden</item>
+        <item>Lernen abbrechen</item>
         <item>Notiz aufschieben</item>
         <item>Notiz ausschließen</item>
         <item>Rote Flagge umschalten</item>

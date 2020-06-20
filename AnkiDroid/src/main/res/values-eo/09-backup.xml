@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Fiaskis konservi sekurkopion. Spaco mankas en la SD-karto. Bonvolu malpliigi nombron da sekurkopioj aŭ forigi kelkajn dosierojn.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Malpli ol %d MB da spaco en via SD-karto.\nLiberigu iom da spaco por ke ne perdu datumojn.</string>
     <string name="backup_delete">Forigado de sekurkopioj&#8230;</string>
     <string name="backup_restore">Restarigi el sekurkopio</string>

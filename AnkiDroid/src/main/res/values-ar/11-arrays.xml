@@ -50,10 +50,11 @@
         <item>الإجابة أفضل مما أوصى بها</item>
         <item>تراجع</item>
         <item>Edit note</item>
+        <item>Tag note</item>
         <item>Mark note</item>
-        <item>تعبير البحث</item>
-        <item>أخف البطاقة</item>
-        <item>علق البطاقة</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
         <item>Delete note</item>
         <item>Play media</item>
         <item>Abort learning</item>

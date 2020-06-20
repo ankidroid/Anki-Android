@@ -118,6 +118,7 @@
     <string name="menu_flag_card_two">Orange Flagge</string>
     <string name="menu_flag_card_three">Grüne Flagge</string>
     <string name="menu_flag_card_four">Blaue Flagge</string>
+    <string name="menu_edit_tags">Schlagwörter bearbeiten</string>
     <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
     <string name="menu_select">Text auswählen</string>
     <string name="menu_search">In %1$s nachschlagen</string>
@@ -129,6 +130,11 @@
     <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
     <string name="night_mode">Nachtmodus</string>
     <string name="directory_inaccessible">Auf das AnkiDroid-Verzeichnis kann nicht zugegriffen werden</string>
+    <!--This is shown when AnkiDroid starts up with no storage permissions.
+    The user is taken to the "App Info" screen, and needs to click "Permissions" and
+    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
+    of the permissions/app info screen will differ between devices. -->
+    <string name="startup_no_storage_permission">Bitte erteilen Sie AnkiDroid die Berechtigung »Speicher«, um fortfahren zu können</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -138,8 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d d</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f Mo</string>
     <string name="time_quantity_years">%.1f Jr</string>
     <!-- or "%.1f a" -->
@@ -183,8 +191,8 @@
         <item quantity="other">Kartentyp »%2$s« und seine %1$d Karten löschen?</item>
     </plurals>
     <string name="invalid_template">Es konnte keine Karte erzeugt werden</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">Durch Entfernen dieses Kartentyps würde mindestens eine Notiz gelöscht werden. Bitte erstellen und speichern Sie zuerst einen neuen Kartentyp.</string>
+    <string name="card_template_editor_save_error">Änderungen an Kartenvorlagen konnten nicht gespeichert werden: %s</string>
     <string name="template_for_current_card_deleted">Der Kartentyp der aktuellen Karte wurde gelöscht.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Übersichtserscheinungsbild</string>

@@ -57,6 +57,11 @@
         android:icon="@drawable/ic_add_white_24dp"
         ankidroid:showAsAction="never"/>
     <item
+        android:id="@+id/action_tag"
+        android:icon="@drawable/ic_tag"
+        android:title="@string/menu_edit_tags"
+        ankidroid:showAsAction="never"/>
+    <item
         android:id="@+id/action_replay"
         android:title="@string/replay_audio"
         android:icon="@drawable/ic_play_circle_white"

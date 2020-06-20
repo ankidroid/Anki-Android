@@ -50,7 +50,7 @@
     <string name="card_browser_change_deck">WIjzig dek</string>
     <string name="card_browser_unsuspend_card">Kaarten herstellen</string>
     <string name="card_browser_mark_card">Memo\'s markeren</string>
-    <string name="card_browser_flag">Markeren</string>
+    <string name="card_browser_flag">Vlag</string>
     <string name="card_browser_toggle_mark_card">Memo\'s (on)markeren</string>
     <string name="card_browser_unmark_card">Memo onmarkeren</string>
     <string name="delete_card_title">Memo verwijderen</string>

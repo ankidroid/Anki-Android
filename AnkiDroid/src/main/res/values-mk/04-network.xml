@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Пишување промени во базата на податоци&#8230;</string>
     <string name="sync_download_chunk">Преземање на промените&#8230;</string>
     <string name="sync_upload_chunk">Поставување на промените&#8230;</string>
-    <string name="sync_up_down_size">Горе: %1$d kB, доле: %2$d kB</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Се појави грешка. Обидете се повторно подоцна.</string>
     <string name="sync_check_upload_file">Проверка на датотеката пред да ја поставите&#8230;</string>
     <string name="sync_check_download_file">Проверка на преземената датотека&#8230;</string>

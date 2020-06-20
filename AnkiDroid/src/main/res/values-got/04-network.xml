@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Meljand inmaideinos du databesa&#8230;</string>
     <string name="sync_download_chunk">Dalahlaþand inmaideinos&#8230;</string>
     <string name="sync_upload_chunk">Iupalaþand inmaideinos&#8230;</string>
-    <string name="sync_up_down_size">Iupa: %1$d kB, dalaþa: %2$d kB</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Airzei warþ. Gakiusei spediza aftra.</string>
     <string name="sync_check_upload_file">Checking file before upload&#8230;</string>
     <string name="sync_check_download_file">Checking downloaded file&#8230;</string>

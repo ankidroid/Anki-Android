@@ -19,10 +19,12 @@ if [ "$TAG" == "" ]; then
 fi
 
 # Read the key passwords
-read -sp "Enter keystore password: " KSTOREPWD; echo
-read -sp "Enter key password: " KEYPWD; echo
-export KSTOREPWD
-export KEYPWD
+if [ "$KSTOREPWD" == "" ]; then
+  read -sp "Enter keystore password: " KSTOREPWD; echo
+  read -sp "Enter key password: " KEYPWD; echo
+  export KSTOREPWD
+  export KEYPWD
+fi
 
 # Get on to the tag requested
 #git checkout $TAG
@@ -33,6 +35,8 @@ for BUILD in $BUILDNAMES; do
     git clean -f
     LCBUILD=`tr '[:upper:]' '[:lower:]' <<< $BUILD`
     ./tools/parallel-package-name.sh com.ichi2.anki.$LCBUILD AnkiDroid.$BUILD
-    ./gradlew assembleRelease
-    cp AnkiDroid/build/outputs/apk/release/AnkiDroid-release.apk ../AnkiDroid-$TAG.parallel.$BUILD.apk
+    ./gradlew assembleRelease -Duniversal-apk=true
+    cp AnkiDroid/build/outputs/apk/release/AnkiDroid-universal-release.apk ./AnkiDroid-$TAG.parallel.$BUILD.apk
 done
+git reset --hard
+git clean -f

@@ -152,8 +152,8 @@
     <string name="pref_backup_max">Максимальне число резервних копій</string>
     <string name="show_estimates">Показувати час кнопки</string>
     <string name="show_estimates_summ">Показати час наступного повторення вище кнопок відповіді</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Показати верхню панель</string>
+    <string name="show_top_bar_summ">Показувати кількість карт, прапорець та зірочку на верхній панелі</string>
     <string name="show_progress">Показати решту</string>
     <string name="show_progress_summ">Показувати лічильник залишилих карт</string>
     <string name="show_eta">Показувати оцінку часу</string>
@@ -201,7 +201,9 @@
     <string name="custom_sync_server_enable_summary">Якщо ви не хочете використовувати сервер AnkiWeb, то
     ви можете вказати альтернативний сервер</string>
     <string name="custom_sync_server_base_url_title">URL для синхронізації</string>
+    <string name="custom_sync_server_base_url_invalid">Непрацююче посилання для синхронізації</string>
     <string name="custom_sync_server_media_url_title">URL Media-даних</string>
+    <string name="custom_sync_server_media_url_invalid">Непрацююче посилання для синхронізації медіа</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Зміни опцій групи колоди впливатимуть на кілька колод. Якщо ви бажаєте змінити лише поточну колоду, спочатку додайте нову групу опцій</string>
     <string name="studyoptions_limit_select_tags">Оберіть позначки</string>

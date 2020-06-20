@@ -29,7 +29,6 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
-
 import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -147,13 +146,33 @@ public class Anki2Importer extends Importer {
             publishProgress(100, 100, 50);
             mDst.getDb().getDatabase().setTransactionSuccessful();
             mDst.getMedia().getDb().getDatabase().setTransactionSuccessful();
+        } catch (Exception err) {
+            Timber.e(err, "_import() exception");
+            throw err;
         } finally {
-            mDst.getDb().getDatabase().endTransaction();
-            mDst.getMedia().getDb().getDatabase().endTransaction();
+            // endTransaction throws about invalid transaction even when you check first!
+            if (mDst.getDb().getDatabase().inTransaction()) {
+                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
+            }
+            if (mDst.getMedia().getDb().getDatabase().inTransaction()) {
+                try { mDst.getMedia().getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
+            }
         }
-        mDst.getDb().execute("vacuum");
+        try {
+            mDst.getDb().execute("vacuum");
+        } catch (Exception e) {
+            // This is actually not fatal but can fail since vacuum takes so much space
+            // Allow the import to succeed but recommend the user run check database
+            mLog.add(getRes().getString(R.string.import_succeeded_but_check_database, e.getLocalizedMessage()));
+        }
         publishProgress(100, 100, 65);
-        mDst.getDb().execute("analyze");
+        try {
+            mDst.getDb().execute("analyze");
+        } catch (Exception e) {
+            // This is actually not fatal but can fail
+            // Allow the import to succeed but recommend the user run check database
+            mLog.add(getRes().getString(R.string.import_succeeded_but_check_database, e.getLocalizedMessage()));
+        }
         publishProgress(100, 100, 75);
     }
 
@@ -191,12 +210,19 @@ public class Anki2Importer extends Importer {
         mIgnoredGuids = new HashMap<>();
         // iterate over source collection
         ArrayList<Object[]> add = new ArrayList<>();
+        int totalAddCount = 0;
+        final int thresExecAdd = 1000;
         ArrayList<Object[]> update = new ArrayList<>();
+        int totalUpdateCount = 0;
+        final int thresExecUpdate = 1000;
         ArrayList<Long> dirty = new ArrayList<>();
+        int totalDirtyCount = 0;
+        final int thresExecDirty = 1000;
         int usn = mDst.usn();
         int dupes = 0;
         ArrayList<String> dupesIgnored = new ArrayList<>();
         try {
+            mDst.getDb().getDatabase().beginTransaction();
             cur = mSrc.getDb().getDatabase().query("select * from notes", null);
 
             // Counters for progress updates
@@ -253,39 +279,84 @@ public class Anki2Importer extends Importer {
                     }
                 }
                 i++;
+
+                // add to col partially, so as to avoid OOM
+                if (add.size() >= thresExecAdd) {
+                    totalAddCount  += add.size();
+                    addNotes(add);
+                    add.clear();
+                    Timber.d("add notes: %d", totalAddCount);
+                }
+                // add to col partially, so as to avoid OOM
+                if (update.size() >= thresExecUpdate){
+                    totalUpdateCount  += update.size();
+                    updateNotes(update);
+                    update.clear();
+                    Timber.d("update notes: %d", totalUpdateCount);
+                }
+                // add to col partially, so as to avoid OOM
+                if (dirty.size() >= thresExecDirty) {
+                    totalDirtyCount  += dirty.size();
+                    long[] das = Utils.arrayList2array(dirty);
+                    mDst.updateFieldCache(das);
+                    mDst.getTags().registerNotes(das);
+                    dirty.clear();
+                    Timber.d("dirty notes: %d", totalDirtyCount);
+                }
+
                 if (total != 0 && (!largeCollection || i % onePercent == 0)) {
                     // Calls to publishProgress are reasonably expensive due to res.getString()
                     publishProgress(i * 100 / total, 0, 0);
                 }
             }
             publishProgress(100, 0, 0);
+
+            // summarize partial add/update/dirty results for total values
+            totalAddCount += add.size();
+            totalUpdateCount += update.size();
+            totalDirtyCount += dirty.size();
+
+            if (dupes > 0) {
+                mLog.add(getRes().getString(R.string.import_update_details, totalUpdateCount, dupes));
+                if (dupesIgnored.size() > 0) {
+                    mLog.add(getRes().getString(R.string.import_update_ignored));
+                }
+            }
+            // export info for calling code
+            mDupes = dupes;
+            mAdded = totalAddCount;
+            mUpdated = totalUpdateCount;
+            Timber.d("add notes total:    %d", totalAddCount);
+            Timber.d("update notes total: %d", totalUpdateCount);
+            Timber.d("dirty notes total:  %d", totalDirtyCount);
+            // add to col (for last chunk)
+            addNotes(add);
+            add.clear();
+            updateNotes(update);
+            update.clear();
+            mDst.getDb().getDatabase().setTransactionSuccessful();
+
         } finally {
             if (cur != null) {
                 cur.close();
             }
-        }
-        if (dupes > 0) {
-            //int up = update.size(); // unused upstream as well, leaving for upstream comparison only
-            mLog.add(getRes().getString(R.string.import_update_details, update.size(), dupes));
-            if (dupesIgnored.size() > 0) {
-                mLog.add(getRes().getString(R.string.import_update_ignored));
-                // TODO: uncomment this and fix above string if we implement a detailed
-                // log viewer dialog type.
-                //mLog.addAll(dupesIgnored);
+            if (mDst.getDb().getDatabase().inTransaction()) {
+                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
             }
         }
-        // export info for calling code
-        mDupes = dupes;
-        mAdded = add.size();
-        mUpdated = update.size();
-        // add to col
-        mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", add);
-        mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", update);
+
         long[] das = Utils.arrayList2array(dirty);
         mDst.updateFieldCache(das);
         mDst.getTags().registerNotes(das);
     }
 
+    private void addNotes(List<Object[]> add) {
+        mDst.getDb().executeManyNoTransaction("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", add);
+    }
+
+    private void updateNotes(List<Object[]> update) {
+        mDst.getDb().executeManyNoTransaction("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", update);
+    }
 
     // determine if note is a duplicate, and adjust mid and/or guid as required
     // returns true if note should be added
@@ -306,7 +377,6 @@ public class Anki2Importer extends Importer {
 		mIgnoredGuids.put(origGuid, true);
 		return false;
     }
-
 
     /**
      * Models
@@ -453,11 +523,15 @@ public class Anki2Importer extends Importer {
         }
         // loop through src
         List<Object[]> cards = new ArrayList<>();
+        int totalCardCount = 0;
+        final int thresExecCards = 1000;
         List<Object[]> revlog = new ArrayList<>();
-        int cnt = 0;
+        int totalRevlogCount = 0;
+        final int thresExecRevlog = 1000;
         int usn = mDst.usn();
         long aheadBy = mSrc.getSched().getToday() - mDst.getSched().getToday();
         try {
+            mDst.getDb().getDatabase().beginTransaction();
             cur = mSrc.getDb().getDatabase().query(
                     "select f.guid, f.mid, c.* from cards c, notes f " +
                     "where c.nid = f.id", null);
@@ -544,22 +618,56 @@ public class Anki2Importer extends Importer {
                         revlog.add(rev);
                     }
                 }
-                cnt += 1;
                 i++;
+                // apply card changes partially
+                if (cards.size() >= thresExecCards) {
+                    totalCardCount += cards.size();
+                    insertCards(cards);
+                    cards.clear();
+                    Timber.d("add cards: %d", totalCardCount);
+                }
+                // apply revlog changes partially
+                if (revlog.size() >= thresExecRevlog) {
+                    totalRevlogCount += revlog.size();
+                    insertRevlog(revlog);
+                    revlog.clear();
+                    Timber.d("add revlog: %d", totalRevlogCount);
+                }
+
                 if (total != 0 && (!largeCollection || i % onePercent == 0)) {
                     publishProgress(100, i * 100 / total, 0);
                 }
             }
             publishProgress(100, 100, 0);
+
+            // count total values
+            totalCardCount += cards.size();
+            totalRevlogCount += revlog.size();
+            Timber.d("add cards total:  %d", totalCardCount);
+            Timber.d("add revlog total: %d", totalRevlogCount);
+            // apply (for last chunk)
+            insertCards(cards);
+            cards.clear();
+            insertRevlog(revlog);
+            revlog.clear();
+            mLog.add(getRes().getString(R.string.import_complete_count, totalCardCount));
+            mDst.getDb().getDatabase().setTransactionSuccessful();
         } finally {
             if (cur != null) {
                 cur.close();
             }
+            if (mDst.getDb().getDatabase().inTransaction()) {
+                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
+            }
         }
-        // apply
-        mDst.getDb().executeMany("insert or ignore into cards values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", cards);
-        mDst.getDb().executeMany("insert or ignore into revlog values (?,?,?,?,?,?,?,?,?)", revlog);
-        mLog.add(getRes().getString(R.string.import_complete_count, cnt));
+    }
+
+    private void insertCards(List<Object[]> cards) {
+        mDst.getDb().executeManyNoTransaction("insert or ignore into cards values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", cards);
+    }
+
+    private void insertRevlog(List<Object[]> revlog) {
+        mDst.getDb().executeManyNoTransaction("insert or ignore into revlog values (?,?,?,?,?,?,?,?,?)", revlog);
     }
 
 

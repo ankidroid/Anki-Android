@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Đang lưu các thay đổi vào cơ sở dữ liệu&#8230;</string>
     <string name="sync_download_chunk">Đang tải xuống các thay đổi&#8230;</string>
     <string name="sync_upload_chunk">Đang tải lên các thay đổi&#8230;</string>
-    <string name="sync_up_down_size">Lên: %1$d kB, xuống: %2$d kB</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Đã xảy ra lỗi. Hãy thử lại sau.</string>
     <string name="sync_check_upload_file">Đang kiểm tra tệp trước khi tải lên&#8230;</string>
     <string name="sync_check_download_file">Đang kiểm tra tệp đã tải về&#8230;</string>

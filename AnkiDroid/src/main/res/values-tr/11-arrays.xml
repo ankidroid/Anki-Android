@@ -50,15 +50,16 @@
         <item>Önerilenden daha iyi cevap ver</item>
         <item>Geri al</item>
         <item>Notu düzenle</item>
-        <item>Notu işâretle</item>
-        <item>İfadeyi ara</item>
-        <item>Kartı gizle</item>
-        <item>Kartı askıya al</item>
-        <item>Notu sil</item>
-        <item>Medyayı oynat</item>
-        <item>Öğrenmeyi durdur</item>
-        <item>Notu gizle</item>
-        <item>Notu askıya al</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

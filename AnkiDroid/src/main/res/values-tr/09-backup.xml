@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Yedek kaydedilemedi. SD kartta yeterli alan kalmamış. Yedekleme derinliğini düşürün veya başka bazı dosyaları kaldırın.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">SD kartınızda %d MB\'tan daha az yer var.\nVeri kaybını önlemek için biraz yer açın.</string>
     <string name="backup_delete">Yedekler siliniyor.\nLütfen bekleyin...</string>
     <string name="backup_restore">Yedekten geri yükle</string>

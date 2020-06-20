@@ -141,7 +141,7 @@ public class Card implements Cloneable {
     public void load() {
         try (Cursor cursor = mCol.getDb().getDatabase().query("SELECT * FROM cards WHERE id = " + mId, null)) {
             if (!cursor.moveToFirst()) {
-                throw new RuntimeException(" No card with id " + mId);
+                throw new WrongId(mId, "card");
             }
             mId = cursor.getLong(0);
             mNid = cursor.getLong(1);
@@ -278,15 +278,13 @@ public class Card implements Cloneable {
             Note f = note(reload);
             JSONObject m = model();
             JSONObject t = template();
-            Object[] data;
-            data = new Object[] { mId, f.getId(), m, mODid != 0L ? mODid : mDid, mOrd, f.stringTags(), f.joinedFields(), mFlags};
-
+            long did = mODid != 0L ? mODid : mDid;
             if (browser) {
                 String bqfmt = t.getString("bqfmt");
                 String bafmt = t.getString("bafmt");
-                mQA = mCol._renderQA(data, browser, bqfmt, bafmt);
+                mQA = mCol._renderQA(mId, m, did, mOrd, f.stringTags(), f.getFields(), mFlags, browser, bqfmt, bafmt);
             } else {
-                mQA = mCol._renderQA(data);
+                mQA = mCol._renderQA(mId, m, did, mOrd, f.stringTags(), f.getFields(), mFlags);
             }
         }
         return mQA;
@@ -306,8 +304,9 @@ public class Card implements Cloneable {
     }
 
 
+    // not in upstream
     public JSONObject model() {
-        return mCol.getModels().get(note().getMid());
+        return note().model();
     }
 
 
@@ -345,7 +344,7 @@ public class Card implements Cloneable {
 
 
     public boolean isEmpty() {
-        ArrayList<Integer> ords = mCol.getModels().availOrds(model(), Utils.joinFields(note().getFields()));
+        ArrayList<Integer> ords = mCol.getModels().availOrds(model(), note().getFields());
         return !ords.contains(mOrd);
     }
 

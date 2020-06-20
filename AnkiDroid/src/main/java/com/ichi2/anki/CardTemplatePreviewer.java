@@ -23,6 +23,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.utils.NoteUtils;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
@@ -41,6 +42,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private JSONObject mEditedModel = null;
     private int mOrdinal;
     private long[] mCardList;
+    private Bundle mNoteEditorBundle = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +53,12 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         if (parameters == null) {
             parameters = getIntent().getExtras();
         }
-        mEditedModelFileName = parameters.getString(TemporaryModel.INTENT_MODEL_FILENAME);
-        mCardList = parameters.getLongArray("cardList");
-        mOrdinal = parameters.getInt("ordinal");
+        if (parameters != null) {
+            mNoteEditorBundle = parameters.getBundle("noteEditorBundle");
+            mEditedModelFileName = parameters.getString(TemporaryModel.INTENT_MODEL_FILENAME);
+            mCardList = parameters.getLongArray("cardList");
+            mOrdinal = parameters.getInt("ordinal");
+        }
 
         if (mEditedModelFileName != null) {
             Timber.d("onCreate() loading edited model from %s", mEditedModelFileName);
@@ -85,14 +90,15 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         if (mCurrentCard == null || mOrdinal < 0) {
             Timber.e("CardTemplatePreviewer started with empty card list or invalid index");
             finishWithoutAnimation();
-            return;
         }
     }
 
 
     @Override
     protected void setTitle() {
-        getSupportActionBar().setTitle(R.string.preview_title);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.preview_title);
+        }
     }
 
     @Override
@@ -122,6 +128,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         outState.putString(TemporaryModel.INTENT_MODEL_FILENAME, mEditedModelFileName);
         outState.putLongArray("cardList", mCardList);
         outState.putInt("ordinal", mOrdinal);
+        outState.putBundle("noteEditorBundle", mNoteEditorBundle);
         super.onSaveInstanceState(outState);
     }
 
@@ -132,6 +139,22 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         if (mCurrentCard == null) {
             mCurrentCard = new PreviewerCard(col, mCardList[mOrdinal]);
         }
+
+        if (mNoteEditorBundle != null) {
+            mCurrentCard.setDid(mNoteEditorBundle.getLong("did"));
+
+            Note currentNote = mCurrentCard.note();
+            ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
+            NoteUtils.setTags(currentNote, tagsList);
+
+            Bundle noteFields = mNoteEditorBundle.getBundle("editFields");
+            if (noteFields != null) {
+                for (String fieldOrd : noteFields.keySet()) {
+                    currentNote.setField(Integer.parseInt(fieldOrd), noteFields.getString(fieldOrd));
+                }
+            }
+        }
+
         displayCardQuestion();
         showBackIcon();
     }
@@ -169,12 +192,12 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         private Note mNote;
 
 
-        public PreviewerCard(Collection col) {
+        private PreviewerCard(Collection col) {
             super(col);
         }
 
 
-        public PreviewerCard(Collection col, long id) {
+        private PreviewerCard(Collection col, long id) {
             super(col, id);
         }
 

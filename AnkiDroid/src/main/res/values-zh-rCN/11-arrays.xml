@@ -50,10 +50,11 @@
         <item>好于建议的回答</item>
         <item>撤销</item>
         <item>编辑笔记</item>
+        <item>标签笔记</item>
         <item>标记笔记</item>
         <item>查找表达式</item>
-        <item>隐藏卡片</item>
-        <item>暂停卡片</item>
+        <item>隐藏卡牌</item>
+        <item>暂停卡牌</item>
         <item>删除笔记</item>
         <item>播放媒体</item>
         <item>终止学习</item>

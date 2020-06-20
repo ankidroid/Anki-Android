@@ -111,13 +111,14 @@
     <string name="menu_bury">Verbergen</string>
     <string name="menu_suspend">Opschorten</string>
     <string name="menu_delete_note">Memo verwijderen</string>
-    <string name="menu_flag">Markering</string>
+    <string name="menu_flag">Vlag</string>
     <string name="menu_flag_card">Markeer kaart</string>
-    <string name="menu_flag_card_zero">Geen markering</string>
-    <string name="menu_flag_card_one">Rode markering</string>
-    <string name="menu_flag_card_two">Oranje markering</string>
-    <string name="menu_flag_card_three">Groene markering</string>
-    <string name="menu_flag_card_four">Blauwe markering</string>
+    <string name="menu_flag_card_zero">Geen vlag</string>
+    <string name="menu_flag_card_one">Rode vlag</string>
+    <string name="menu_flag_card_two">Oranje vlag</string>
+    <string name="menu_flag_card_three">Groene vlag</string>
+    <string name="menu_flag_card_four">Blauwe vlag</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Deze memo en al zijn kaarten verwijderen?\n%s</string>
     <string name="menu_select">Tekst selecteren</string>
     <string name="menu_search">Opzoeken in %1$s</string>
@@ -129,6 +130,11 @@
     <string name="new_dynamic_deck">Gefilterde set maken</string>
     <string name="night_mode">Nachtmodus</string>
     <string name="directory_inaccessible">AnkiDroidmap is ontoegankelijk</string>
+    <!--This is shown when AnkiDroid starts up with no storage permissions.
+    The user is taken to the "App Info" screen, and needs to click "Permissions" and
+    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
+    of the permissions/app info screen will differ between devices. -->
+    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -138,8 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d d</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f ma</string>
     <string name="time_quantity_years">%.1f jr</string>
     <!-- or "%.1f a" -->
@@ -183,8 +191,8 @@
         <item quantity="other">Verwijder het “%2$s” kaarttype, en zijn %1$d kaarten?</item>
     </plurals>
     <string name="invalid_template">De kaart kon niet worden aangemaakt</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">Het verwijderen van dit kaarttype zou er mogelijk voor zorgen dat een of meer notities worden verwijderd. Gelieve een nieuw kaarttype eerst te maken en op te slaan.</string>
+    <string name="card_template_editor_save_error">Kan de wijzigingen aan het kaartsjabloon niet opslaan: %s</string>
     <string name="template_for_current_card_deleted">Het kaarttype voor de huidige kaart is verwijderd.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Verkenner uiterlijk</string>

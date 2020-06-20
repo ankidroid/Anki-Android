@@ -134,11 +134,11 @@
     <string name="notification_minimum_cards_due">Mehr als %d Karten fällig</string>
     <string name="notification_minimum_cards_due_vibrate">Vibrieren</string>
     <string name="notification_minimum_cards_due_blink">Blinken</string>
-    <string name="timeout_answer_text">Antworten automatisch zeigen</string>
+    <string name="timeout_answer_text">Antwort automatisch anzeigen</string>
     <string name="timeout_answer_summ">Antwort automatisch ohne Benutzereingabe anzeigen. Verzögerung enthält die Zeit für automatisch abgespielte Audiodateien.</string>
-    <string name="timeout_answer_seconds">Zeit bis zum Zeigen der Antwort</string>
+    <string name="timeout_answer_seconds">Zeit bis zur Anzeige der Antwort</string>
     <string name="timeout_answer_seconds_summ">XXX s</string>
-    <string name="timeout_question_seconds">Zeit, bis die nächste Frage gezeigt wird</string>
+    <string name="timeout_question_seconds">Zeit bis zur Anzeige der nächsten Frage</string>
     <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Sprache wählen</string>
     <string name="safe_display">Sicherer Anzeigemodus</string>
@@ -151,8 +151,8 @@
     <string name="pref_backup_max">Maximale Anzahl an Sicherungen</string>
     <string name="show_estimates">Wiederholungszeiten anzeigen</string>
     <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Obere Leiste anzeigen</string>
+    <string name="show_top_bar_summ">Kartenanzahl, Flagge und Markierung in oberer Leiste anzeigen</string>
     <string name="show_progress">Fällige anzeigen</string>
     <string name="show_progress_summ">Verbleibende Anzahl der Karten anzeigen</string>
     <string name="show_eta">ETA anzeigen</string>
@@ -198,7 +198,9 @@
     <string name="custom_sync_server_enable_title">Eigenen Synchronisationsserver verwenden</string>
     <string name="custom_sync_server_enable_summary">Wenn Sie nicht den proprietären AnkiWeb-Dienst verwenden möchten, können Sie hier einen alternativen Server angeben</string>
     <string name="custom_sync_server_base_url_title">Sync-URL</string>
+    <string name="custom_sync_server_base_url_invalid">Synchronisations-URL ungültig</string>
     <string name="custom_sync_server_media_url_title">Medien-Sync-URL</string>
+    <string name="custom_sync_server_media_url_invalid">Mediensynchronisations-URL ungültig</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Änderungen an Stapelgruppen-Optionen beeinflussen mehrere Stapel. Wenn Sie nur den aktuellen Stapel ändern möchten, fügen Sie bitte zuerst eine neue Optionsgruppe hinzu</string>
     <string name="studyoptions_limit_select_tags">Schlagwörter auswählen</string>

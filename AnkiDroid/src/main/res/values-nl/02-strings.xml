@@ -41,8 +41,8 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Open drawer</string>
-    <string name="drawer_close">Sluit drawer</string>
+    <string name="drawer_open">Zijmenu openen</string>
+    <string name="drawer_close">Zijmenu sluiten</string>
     <string name="CardEditorLaterMessage">Informatie opgeslagen voor later</string>
     <string name="CardEditorCardDeck">Kaartenset:</string>
     <string name="CardEditorNoteDeck">Set:</string>
@@ -165,15 +165,18 @@
     <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
     <string name="import_message_add_confirm">“%s” aan de collectie toevoegen? Dit kan lang duren</string>
     <string name="import_log_no_apkg">Dit is geen geldig Anki-pakketbestand</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
+    <string name="import_log_failed_unzip">Fout bij het uitpakken van apkg: %s</string>
+    <string name="import_log_failed_copy_to">Fout bij het kopiëren van apkg naar %s</string>
+    <string name="import_log_failed_validate">apkg-validatie mislukt</string>
+    <string name="import_log_insufficient_space">Er is niet genoeg ruimte om het pakket uit te pakken. %1$d vereist, beschikbare %2$d</string>
+    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
+    <string name="import_succeeded_but_check_database">Het importeren van gegevens is gelukt, maar de opruiming na de import is mislukt. Voer later de databasecontrole uit. Kernoorzaak: %s</string>
     <string name="import_error_unhandled_request">Kan importverzoek niet verwerken</string>
     <string name="import_error_exception">Pakket importeren mislukt\n\n%s</string>
     <string name="import_error_not_apkg_extension">Bestandsnaam “%s” heeft geen .apkg of .colpkg-extensie</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) vervangingen worden nog niet ondersteund. Zie alstublieft de handleiding voor vervangende instructies.</string>
     <string name="import_error_content_provider">Het selecteerde bestand kon niet automatisch geïmporteerd worden door AnkiDroid. Bekijk de gebruikershandleiding om te zien hoe je anki bestanden handmatig importeert: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() is mislukt (mogelijk uit gebrek aan opslagruimte)</string>
     <string name="import_replacing">Collectie vervangen&#8230;</string>
     <string name="import_interrupted">Importeren onderbroken</string>
     <string name="export_include_schedule">Inclusief de planning</string>
@@ -270,6 +273,6 @@
     <string name="restore_default">Herstel Standaardinstellingen</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Leeg</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Schakel schermvullende weergave in om Toon navigatiemenu te gebruiken met behulp van JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Schakel schermvullende weergave in om Toon optiesmenu te gebruiken met behulp van JavaScript.</string>
 </resources>

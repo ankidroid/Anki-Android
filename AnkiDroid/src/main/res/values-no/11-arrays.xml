@@ -50,14 +50,15 @@
         <item>Svaret bedre enn antatt</item>
         <item>Angre</item>
         <item>Rediger notat</item>
+        <item>Tag note</item>
         <item>Mark note</item>
-        <item>Oppslagsuttrykk</item>
-        <item>Begrav kort</item>
-        <item>Suspender kort</item>
-        <item>Slett notat</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
         <item>Play media</item>
         <item>Abort learning</item>
-        <item>Begrav notat</item>
+        <item>Bury note</item>
         <item>Suspend note</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>

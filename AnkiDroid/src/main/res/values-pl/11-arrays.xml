@@ -50,20 +50,21 @@
         <item>Odpowiedź lepsza niż zalecana</item>
         <item>Cofnij</item>
         <item>Edytuj notatkę</item>
-        <item>Wyróżnij notatkę</item>
-        <item>Wyszukaj wyrażenie</item>
-        <item>Ukryj kartę</item>
-        <item>Wstrzymaj kartę</item>
-        <item>Usuń notatkę</item>
-        <item>Odtwórz plik multimedialny</item>
-        <item>Przerwij naukę</item>
-        <item>Zakop notatkę</item>
-        <item>Zawieś notatkę</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>
         <item>Toggle Blue Flag</item>
-        <item>Usuń oznaczenie</item>
+        <item>Remove Flag</item>
         <item>Page Up</item>
         <item>Page Down</item>
     </string-array>

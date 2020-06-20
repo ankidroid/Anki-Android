@@ -1023,35 +1023,27 @@ public class Models {
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // 'String f' is unused upstream as well
     private Object[] _reqForTemplate(JSONObject m, ArrayList<String> flds, JSONObject t) {
-        ArrayList<String> a = new ArrayList<>();
-        ArrayList<String> b = new ArrayList<>();
-        for (String f : flds) {
-            a.add("ankiflag");
-            b.add("");
-        }
-        Object[] data;
-        data = new Object[] {1L, 1L, m, 1L, t.getInt("ord"), "",
-                             Utils.joinFields(a.toArray(new String[a.size()])), 0};
-        String full = mCol._renderQA(data).get("q");
-        data = new Object[] {1L, 1L, m, 1L, t.getInt("ord"), "",
-                             Utils.joinFields(b.toArray(new String[b.size()])), 0};
-        String empty = mCol._renderQA(data).get("q");
+        int nbFields = flds.size();
+        String[] a = new String[nbFields];
+        String[] b = new String[nbFields];
+        Arrays.fill(a, "ankiflag");
+        Arrays.fill(b, "");
+        int ord = t.getInt("ord");
+        String full = mCol._renderQA(1L, m, 1L, ord, "", a, 0).get("q");
+        String empty = mCol._renderQA(1L, m, 1L, ord, "", b, 0).get("q");
         // if full and empty are the same, the template is invalid and there is no way to satisfy it
         if (full.equals(empty)) {
             return new Object[] { "none", new JSONArray(), new JSONArray() };
         }
         String type = "all";
         JSONArray req = new JSONArray();
-        ArrayList<String> tmp = new ArrayList<>();
         for (int i = 0; i < flds.size(); i++) {
-            tmp.clear();
-            tmp.addAll(a);
-            tmp.set(i, "");
-            data[6] = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
+            a[i] = "";
             // if no field content appeared, field is required
-            if (!mCol._renderQA(data).get("q").contains("ankiflag")) {
+            if (!mCol._renderQA(1L, m, 1L, ord, "", a, 0).get("q").contains("ankiflag")) {
                 req.put(i);
             }
+            a[i] = "ankiflag";
         }
         if (req.length() > 0) {
             return new Object[] { type, req };
@@ -1060,27 +1052,26 @@ public class Models {
         type = "any";
         req = new JSONArray();
         for (int i = 0; i < flds.size(); i++) {
-            tmp.clear();
-            tmp.addAll(b);
-            tmp.set(i, "1");
-            data[6] = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
+            b[i] = "1";
             // if not the same as empty, this field can make the card non-blank
-            if (!mCol._renderQA(data).get("q").equals(empty)) {
+            if (!mCol._renderQA(1L, m, 1L, ord, "", b, 0).get("q").equals(empty)) {
                 req.put(i);
             }
+            b[i] = "";
         }
         return new Object[] { type, req };
     }
 
 
     /** Given a joined field string, return available template ordinals */
-    public ArrayList<Integer> availOrds(JSONObject m, String flds) {
+    public ArrayList<Integer> availOrds(JSONObject m, String[] sfld) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
-            return _availClozeOrds(m, flds);
+            return _availClozeOrds(m, sfld);
         }
-        String[] fields = Utils.splitFields(flds);
-        for (String f : fields) {
-            f = f.trim();
+        int nbField = sfld.length;
+        String[] fields = new String[nbField];
+        for (int i = 0; i < nbField; i++) {
+            fields[i] = sfld[i].trim();
         }
         ArrayList<Integer> avail = new ArrayList<>();
         JSONArray reqArray = m.getJSONArray("req");
@@ -1129,13 +1120,12 @@ public class Models {
     }
 
 
-    public ArrayList<Integer> _availClozeOrds(JSONObject m, String flds) {
-        return _availClozeOrds(m, flds, true);
+    public ArrayList<Integer> _availClozeOrds(JSONObject m, String[] sflds) {
+        return _availClozeOrds(m, sflds, true);
     }
 
 
-    public ArrayList<Integer> _availClozeOrds(JSONObject m, String flds, boolean allowEmpty) {
-        String[] sflds = Utils.splitFields(flds);
+    public ArrayList<Integer> _availClozeOrds(JSONObject m, String[] sflds, boolean allowEmpty) {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
         Set<Integer> ords = new HashSet<>();
         List<String> matches = new ArrayList<>();

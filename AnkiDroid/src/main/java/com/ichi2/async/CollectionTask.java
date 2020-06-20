@@ -32,6 +32,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
+import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
@@ -984,7 +985,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             }
             try {
                 c = col.getCard(cardId);
-            } catch (Exception e) {
+            } catch (WrongId e) {
                 //#5891 - card can be inconsistent between the deck browser screen and the collection.
                 //Realistically, we can skip any exception as it's a rendering task which should not kill the
                 //process

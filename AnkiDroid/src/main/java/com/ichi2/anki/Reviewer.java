@@ -34,6 +34,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
+
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -297,6 +298,11 @@ public class Reviewer extends AbstractFlashcardViewer {
                 } else {
                     toggleMicToolBar();
                 }
+                break;
+
+            case R.id.action_tag:
+                Timber.i("Reviewer:: Tag button pressed");
+                showTagsDialog();
                 break;
 
             case R.id.action_edit:

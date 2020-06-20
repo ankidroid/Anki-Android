@@ -55,7 +55,7 @@
     <string name="delete_card_title">ノートの削除</string>
     <string name="delete_cards_title">ノートを削除しますか？</string>
     <string name="delete_card_message">このノートから作られたカードを全て削除してもよろしいですか？\n検索フィールド: %s</string>
-    <string name="delete_card_mult_message">選ばれたのノートのカードは全て消しますか。\n(選ばれたのカードだけでなく)</string>
+    <string name="delete_card_mult_message">選択したノートから作られたカードを全て削除しますか？\n（選択したカードだけではなく）</string>
     <string name="deleted_message">ノートを削除しました</string>
     <string name="changed_deck_message">%sにカードを移動しました</string>
     <string name="card_browser_suspended_cards">保留の操作</string>
@@ -93,10 +93,10 @@
     <string name="card_browser_select_all">全て選択</string>
     <string name="card_browser_select_none">選択を全て解除</string>
     <string name="card_browser_edit_note">Edit note</string>
-    <string name="card_browser_interval_new_card">(新しい)</string>
+    <string name="card_browser_interval_new_card">(新規)</string>
     <string name="card_browser_ease_new_card">(new)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(学習しています)</string>
+    <string name="card_browser_interval_learning_card">(学習中)</string>
     <string name="card_browser_note_editor_error">Error opening Note Editor</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>

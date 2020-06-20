@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Laatste back-up kan niet worden gemaakt vanwege onvoldoende ruimte op uw sd-kaart.\n\nMaak wat ruimte vrij of verlaag de back-updiepte.</string>
+    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Nog minder dan %d MB ruimte op uw SD-kaart beschikbaar.\nMaak meer ruimte vrij om gegevensverlies te voorkomen.</string>
     <string name="backup_delete">Verwijderen van back-ups. \nEven wachten...</string>
     <string name="backup_restore">Back-up terugzetten</string>

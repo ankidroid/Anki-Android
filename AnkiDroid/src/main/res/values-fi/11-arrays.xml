@@ -50,20 +50,21 @@
         <item>Vastaa paremmin kuin ehdotettu</item>
         <item>Kumoa</item>
         <item>Muokkaa merkintää</item>
-        <item>Merkitse merkintä</item>
-        <item>Hakutermi</item>
-        <item>Piilota kortti</item>
-        <item>Keskeytä kortti</item>
-        <item>Poista merkintä</item>
-        <item>Toista media</item>
-        <item>Keskeytä oppiminen</item>
-        <item>Piilota merkintä</item>
-        <item>Jäädytä merkintä</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>
         <item>Toggle Blue Flag</item>
-        <item>Poista lippu</item>
+        <item>Remove Flag</item>
         <item>Page Up</item>
         <item>Page Down</item>
     </string-array>

@@ -64,7 +64,7 @@
     <string name="hide_whiteboard">پنهان کردن تخته سفید</string>
     <string name="clear_whiteboard">پاک کردن تخته سفید</string>
     <string name="replay_audio">بازپخش صوت</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="toggle_mic_tool_bar">بررسی تلفظ</string>
     <string name="leech_suspend_notification">کارت به عنوان مزاحم مشخص و تعلیق شده است</string>
     <string name="leech_notification">کارت به عنوان مزاحم مشخص شده است</string>
     <string name="corrupt_font">فونت فایل خراب %s</string>
@@ -72,10 +72,10 @@
     <string name="webview_crash_unknwon_detailed">خطای داخلی در نمایش وب باعث این خطا شده است</string>
     <string name="webview_crash_oom">حافظه کافی نیست</string>
     <string name="webview_crash_oom_details">نمای وب به وسیلۀ سیستم پایان یافت. این معمولاً زمانی رخ می‌دهد که حافظۀ نرم افزار به دلیل فونت‌ها یا فایل‌های بزرگ پر شود. </string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_nonfatal">تنظیم‌کنندۀ ظاهر برنامه دچار مشکل شد. دلیل: %s</string>
+    <string name="webview_crash_fatal">خطای وخیم: تنظیم‌کنندۀ ظاهر برنامه دچار مشکل شد. دلیل: %s</string>
+    <string name="webview_crash_loop_dialog_title">مشکل در سیستم تنظیم‌کنندۀ ظاهر برنامه</string>
+    <string name="webview_crash_loop_dialog_content">سیستم در تنظیم ظاهر کارت %1$s با خطا مواجه شد.\n%2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>سوال</item>
@@ -90,12 +90,12 @@
         <item>برچسب ها</item>
         <item>دفعات اشتباه</item>
         <item>بازبینی ها</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Changed</item>
-        <item>Created</item>
-        <item>Edited</item>
+        <item>بازه</item>
+        <item>سهولت</item>
+        <item>موعد مرور</item>
+        <item>تغییر یافته</item>
+        <item>ساخته شده</item>
+        <item>ویرایش شده</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">افزایش محدوده کارتهای جدید امروز</string>
@@ -109,12 +109,12 @@
     <string name="cardeditor_title_add_note">افزودن یادداشت</string>
     <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
     <string name="discard_unsaved_changes">آیا می خواهید خارج شوید؟ورودی ها از بین خواهد رفت.</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_no_cards_created">کارتی ساخته نشد. لطفاً فیلدهای بیشتری را پر کنید</string>
+    <string name="note_editor_no_first_field">فیلد نخست خالی است</string>
+    <string name="note_editor_no_cloze_delations">این نوع یادداشت باید حاوی کلوز باشد</string>
+    <string name="note_editor_no_cards_created_all_fields">نوع یادداشت فعلی هیچ کارتی تولید نکرد.\nلطفاٌ نوع یادداشت دیگری را انتخاب کنید، یا روی \'کارت‌ها\' کلیک کرده یک فیلد جایگزین را وارد کنید</string>
     <string name="saving_facts">ذخیره یادداشت</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">در حال ذخیرۀ نوع یادداشت</string>
     <string name="add">اضافه کردن</string>
     <string name="save">ذخیره</string>
     <string name="close">بستن</string>
@@ -129,13 +129,13 @@
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="one">%1$d دقیقه</item>
+        <item quantity="other">%1$d دقیقه</item>
     </plurals>
     <string name="studyoptions_welcome_title">به آنکی دروید خوش آمدید</string>
     <string name="fact_adder_intent_title">کارت آنکی دروید</string>
-    <string name="note_editor_add_note">Add note</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_add_note">افزودن یادداشت</string>
+    <string name="note_editor_copy_note">کپی یادداشت</string>
     <string name="card_editor_copy_card">کپی کارت</string>
     <string name="card_editor_reposition_card">تغییر مکان</string>
     <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
@@ -164,23 +164,26 @@
     <string name="import_message_add">اضافه کردن</string>
     <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد. آیا مطمئنید؟</string>
     <string name="import_message_add_confirm">آیا می خواهید \"%s\" را به مجموعه اضافه کنید ؟ ممکن است زمان زیادی طول بکشد</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_log_no_apkg">این یک فایل معتبر آنکی نیست</string>
+    <string name="import_log_failed_unzip">خطا در بازکردن فایل apkg: %s</string>
+    <string name="import_log_failed_copy_to">خطا در کپی کردن apkg به %s</string>
+    <string name="import_log_failed_validate">apkg معتبر نیست</string>
+    <string name="import_log_insufficient_space">فضای کافی برای بازکردن بسته وجود ندارد. لازم %1$d، در دسترس %2$d</string>
+    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
+    <string name="import_succeeded_but_check_database">ورود داده موفقیت آمیز بود ولی پاکسازی بعد از ورود ناموفق بود. بعداً بررسی دیتابیس را اجرا کنید. دلیل اصلی: %s</string>
+    <string name="import_error_unhandled_request">پردازش درخواست ورود ممکن نیست</string>
+    <string name="import_error_exception">خطا در ورود بسته\n\n%s</string>
+    <string name="import_error_not_apkg_extension">فایل \"%s\" فاقد پسوند .apkg یا .colpkg است</string>
+    <string name="import_error_load_imported_database">جایگزین دیتابیس آنکی (.anki2) هنوز پشتیبانی نشده است. لطفاً برای راهنمایی در مورد جایگزینی راهنما را بخوانید.</string>
     <string name="import_error_content_provider">فایل انتخاب شده به صورت خودکار توسط ankidroid نمی تواند وارد شود. لطفا راهنمای کاربر را ببینید که چگونه به صورت دستی بتوان فایل anki را وارد کرد:\n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() با مشکل مواجه شد (احتمالاً به دلیل کمبود حافظه)</string>
     <string name="import_replacing">در حال جایگزین کردن مجموعه&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">در فرایند ورود اختلال ایجاد شد</string>
     <string name="export_include_schedule">به همراه زمانبندی</string>
     <string name="export_include_media">به همراه رسانه</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
+    <string name="confirm_apkg_export">صدور مجموعه به‌صورت مجموعۀ آنکی؟</string>
     <string name="confirm_apkg_export_deck">دسته %s به عنوان یک فایل با پسوند apkg صادر شود؟</string>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_in_progress">در حال صدور فایل مجموعۀ آنکی...</string>
     <string name="export_successful_title">ارسال بسته Anki؟</string>
     <string name="export_send_button">ارسال</string>
     <string name="export_save_button">ذخیره در فایل</string>
@@ -250,25 +253,25 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">اشتراک گذاری فایل apkg با خطا مواجه شد</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">برای ورود این فایل، زمان‌بندی نسخۀ 2 باید فعال شده باشد.</string>
+    <string name="import_cannot_with_v2">زمان‌بندی نسخۀ 2 قادر به وارد کردن دستۀ دارای زمان‌بندی نسخۀ 1 نیست.</string>
+    <string name="export_v2_dummy_note">این فایل نیازمند نسخۀ جدیدتری از آنکی است.</string>
+    <string name="export_v2_forbidden">لطفاً قبل از صدور دستۀ حاوی اطلاعات زمان‌بندی، زمان‌بندی خود را به نسخۀ 1 تغییر دهید.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="activity_start_failed_load_url">بارگذاری \'%s\' ناموفق.</string>
+    <string name="activity_start_failed">دستگاه شما نرم افزار قادر به انجام این عمل را ندارد.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[تصاویر دوربین ممکن است بزرگ باشند. در صورت لزوم تغییر اندازۀ تصویر یا کاهش حجم آن از مسیر رسانه استفاده کنید]]></string>
+    <string name="no_browser_notification">مرورگر یافت نشد، لطفاً صفحۀ مربوطه را در سیستم دیگری باز کنید: </string>
+    <string name="no_outgoing_link_in_cardbrowser">لینک صفحۀ خارجی درون کارت پشتیبانی نمی‌شود.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">کارت‌های بازیابی شده</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="background_image_title">پس زمینه</string>
+    <string name="choose_an_image">انتخاب تصویر</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default">بازنشانی پیش‌فرض</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">خالی</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">لطفاً برای نمایش نوار ابزار جاواسکریپت حالت تمام صفحه را فعال کنید.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">لطفاً برای نمایش تنظیمات جاواسکریپت حالت تمام صفحه را فعال کنید.</string>
 </resources>

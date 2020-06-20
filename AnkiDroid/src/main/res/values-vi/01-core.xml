@@ -113,17 +113,23 @@
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Bạn thực sự muốn xoá ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
     <string name="menu_select">Chọn văn bản</string>
     <string name="menu_search">Tra cứu trong %1$s</string>
     <string name="menu_mark_note">Đánh dấu ghi chú</string>
     <string name="menu_unmark_note">Bỏ đánh dấu ghi chú</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Kiểm tra phát âm</string>
     <string name="new_deck">Tạo bộ thẻ</string>
     <string name="create">Tạo</string>
     <string name="new_dynamic_deck">Tạo bộ thẻ đã lọc</string>
     <string name="night_mode">Chế độ ban đêm</string>
     <string name="directory_inaccessible">Không thể truy cập thư mục AnkiDroid</string>
+    <!--This is shown when AnkiDroid starts up with no storage permissions.
+    The user is taken to the "App Info" screen, and needs to click "Permissions" and
+    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
+    of the permissions/app info screen will differ between devices. -->
+    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -133,15 +139,17 @@
     -->
     <string name="time_quantity_seconds">%d giây</string>
     <string name="time_quantity_minutes">%d phút</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d giờ</string>
     <string name="time_quantity_days">%d ngày</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f tháng</string>
     <string name="time_quantity_years">%.1f năm</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_cram_deck">Đang dựng lại bộ thẻ ôn thi&#8230;</string>
     <string name="rebuild_cram_label">Dựng lại</string>
     <string name="empty_cram_label">Dọn trống</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">Tạo bộ thẻ phụ</string>
     <string name="empty_cram_deck">Đang dọn trống bộ thẻ ôn thi&#8230;</string>
     <string name="custom_study_deck_name">Phiên học tuỳ chọn</string>
     <string name="custom_study_deck_exists">Đổi tên bộ thẻ học tuỳ chọn hiện hữu trước nhất</string>
@@ -155,7 +163,7 @@
     <string name="studyoptions_congrats_custom">Để học ngoài lịch trình thông thường, hãy bấm nút \"Học theo tuỳ chọn\"</string>
     <string name="studyoptions_no_cards_due">Chưa có thẻ nào tới hạn</string>
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Chỉnh sửa ghi chú và thêm miêu tả đúng nhất</string>
     <string name="button_sync">Đồng bộ</string>
     <string name="cancel_sync_confirm">Bạn có muốn huỷ đồng bộ?</string>
     <string name="continue_sync">Tiếp tục đồng bộ</string>
@@ -171,7 +179,7 @@
     <string name="card_template_editor_back">Mẫu định dạng mặt sau</string>
     <string name="card_template_editor_styling">Phong cách</string>
     <string name="card_template_editor_menu_delete">Xoá</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Xuất hiện trình duyệt thẻ</string>
     <string name="card_template_editor_cant_delete">Cần tối thiểu một loại thẻ</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Xoá loại thẻ \"%2$s\" và (các) thẻ %1$d của nó?</item>

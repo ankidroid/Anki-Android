@@ -50,10 +50,11 @@
         <item>பரிந்துரைக்கப்பட்ட விட பதில்</item>
         <item>செயல்தவிர்ப்பது </item>
         <item>குறிப்பைத் திருத்தவும்</item>
-        <item>குறிப்பு குறிக்கவும்</item>
-        <item>பார்வை வெளிப்பாடு</item>
-        <item>அட்டை அடங்கும்</item>
-        <item>கார்டை நிறுத்து</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
         <item>Delete note</item>
         <item>Play media</item>
         <item>Abort learning</item>

@@ -138,6 +138,7 @@
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">هل تريد حقا حذف هذه الملاحظة و جميع بطاقاتها؟\n%s</string>
     <string name="menu_select">حدد نصا</string>
     <string name="menu_search">البحث في %1$s</string>
@@ -149,6 +150,11 @@
     <string name="new_dynamic_deck">انشئ شَدّة أوراق مُفَلتَرة</string>
     <string name="night_mode">وضع ليلي</string>
     <string name="directory_inaccessible">لا يمكن الوصول لدليل آنكيدرويد</string>
+    <!--This is shown when AnkiDroid starts up with no storage permissions.
+    The user is taken to the "App Info" screen, and needs to click "Permissions" and
+    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
+    of the permissions/app info screen will differ between devices. -->
+    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -158,8 +164,10 @@
     -->
     <string name="time_quantity_seconds">%d ثانية</string>
     <string name="time_quantity_minutes">%d دقيقة</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d ساعة</string>
     <string name="time_quantity_days">%d يوم</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f شهر</string>
     <string name="time_quantity_years">%.1f سنة</string>
     <!-- or "%.1f a" -->

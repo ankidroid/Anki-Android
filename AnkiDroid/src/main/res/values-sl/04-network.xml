@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Pisanje sprememb v podatkovno zbirko &#8230;</string>
     <string name="sync_download_chunk">Prejemanje sprememb &#8230;</string>
     <string name="sync_upload_chunk">Pošiljanje sprememb &#8230;</string>
-    <string name="sync_up_down_size">Poslano: %1$d kB, Prejeto: %2$d kB</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Pojavila se je napaka. Poizkusite znova pozneje.</string>
     <string name="sync_check_upload_file">Preverjanje datoteke pred pošiljanjem &#8230;</string>
     <string name="sync_check_download_file">Preverjanje prejete datoteke &#8230;</string>

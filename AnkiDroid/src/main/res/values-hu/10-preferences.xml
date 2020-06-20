@@ -199,7 +199,9 @@
     <string name="custom_sync_server_enable_title">Használj egyéni szinkronizáló szervert</string>
     <string name="custom_sync_server_enable_summary">Ha nem szeretnéd használni az AnkiWeb saját szolgáltatását, itt egy alternatív kiszolgálót adhatsz meg</string>
     <string name="custom_sync_server_base_url_title">Szinkronizáló Url</string>
+    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">Média szinkronizáló url</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">Válassz címkét</string>

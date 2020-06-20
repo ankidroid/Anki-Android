@@ -18,6 +18,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.compat.CompatHelper;
 
+import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.jetbrains.annotations.Contract;
 
 import java.io.File;
@@ -169,13 +170,33 @@ public class ImportUtils {
                 String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
                 errorMessage = copyFileToCache(context, data, tempOutDir) ? null : context.getString(R.string.import_error_copy_file_to_cache);
                 // Show import dialog
-                if (errorMessage == null) {
-                    sendShowImportFileDialogMsg(tempOutDir);
-                } else {
+                if (errorMessage != null) {
                     AnkiDroidApp.sendExceptionReport(new RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed");
+                    return errorMessage;
                 }
+
+                errorMessage = validateZipFile(context, tempOutDir);
+                if (errorMessage != null) {
+                    //noinspection ResultOfMethodCallIgnored
+                    new File(tempOutDir).delete();
+                    return errorMessage;
+                }
+
+                sendShowImportFileDialogMsg(tempOutDir);
+                return null;
             }
-            return errorMessage;
+        }
+
+
+        protected String validateZipFile(Context context, String filePath) {
+            File file = new File(filePath);
+            try {
+                new ZipFile(file);
+            } catch (Exception e) {
+                Timber.w(e, "Failed to validate zip");
+                return context.getString(R.string.import_log_failed_unzip, e.getLocalizedMessage());
+            }
+            return null;
         }
 
 
