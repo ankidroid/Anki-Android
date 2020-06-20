@@ -313,6 +313,18 @@ console.log(AnkiDroidJS.ankiGetCardDue());
 console.log(AnkiDroidJS.ankiGetCardQueue());
 ```
 
+## Some tips to improve card / deck development 
+If want to hide card's button / text in current card when reviewing on Anki Desktop / AnkiMobile then adding all code to ```if``` block can hide the things.
+```javascript
+ var isMobile = /Android/i.test(navigator.userAgent); 
+ if (isMobile) { 
+  
+  // Here all AnkiDroid defined functions call.
+  // It will be hidden or not called on AnkiDesktop / AnkiMobile
+  
+ }
+```
+
 ## Linked issues & PR
 [#6377](https://github.com/ankidroid/Anki-Android/pull/6377) 
 <br>[#6307](https://github.com/ankidroid/Anki-Android/pull/6307) 
