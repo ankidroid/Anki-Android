@@ -50,16 +50,15 @@
         <item>Resposta mellor ca recomendada</item>
         <item>Desfacer</item>
         <item>Editar nota</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
+        <item>Marcar a nota</item>
+        <item>Buscar expresión</item>
+        <item>Agochar cartón</item>
+        <item>Suspender cartón</item>
+        <item>Eliminar nota</item>
+        <item>Reproducir medio</item>
+        <item>Abortar aprendizaxe</item>
+        <item>Agochar nota</item>
+        <item>Suspender nota</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

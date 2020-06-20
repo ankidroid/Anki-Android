@@ -198,9 +198,7 @@
     <string name="custom_sync_server_enable_title">使用自定義同步服務器</string>
     <string name="custom_sync_server_enable_summary">如果你不想使用專有的 AnkiWeb 服務，您可以指定替代的服務器</string>
     <string name="custom_sync_server_base_url_title">同步地址</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">媒體文件同步地址</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">選擇標籤</string>

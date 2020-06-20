@@ -123,7 +123,6 @@
     <string name="menu_flag_card_two">Narančasta oznaka</string>
     <string name="menu_flag_card_three">Zelena oznaka</string>
     <string name="menu_flag_card_four">Plava oznaka</string>
-    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Zaista izbrisati ovu bilješku i sve njezine kartice?\n%s</string>
     <string name="menu_select">Odaberi tekst</string>
     <string name="menu_search">Traži u %1$s</string>
@@ -135,11 +134,6 @@
     <string name="new_dynamic_deck">Stvori filtriranu skupinu</string>
     <string name="night_mode">Noćni način rada</string>
     <string name="directory_inaccessible">AnkiDroid mapa nije dostupna</string>
-    <!--This is shown when AnkiDroid starts up with no storage permissions.
-    The user is taken to the "App Info" screen, and needs to click "Permissions" and
-    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
-    of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -149,10 +143,8 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f mj</string>
     <string name="time_quantity_years">%.1f god</string>
     <!-- or "%.1f a" -->

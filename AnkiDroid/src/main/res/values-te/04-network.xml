@@ -101,7 +101,7 @@
     <string name="sync_writing_db">డేటాబేస్లో మార్పులను రాయడం&#8230;</string>
     <string name="sync_download_chunk">మార్పులను డౌన్లోడ్ చేస్తోంది&#8230;</string>
     <string name="sync_upload_chunk">మార్పులను అప్లోడ్ చేస్తోంది&#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">పైకి: %1$d kB, డౌన్:%2$d kB</string>
     <string name="sync_generic_error">లోపం సంభవించింది. తరువాత మళ్ళీ ప్రయత్నించండి.</string>
     <string name="sync_check_upload_file">అప్లోడ్ చేసే ముందు ఫైల్ను తనిఖీ చేస్తోంది&#8230;</string>
     <string name="sync_check_download_file">డౌన్లోడ్ చేసిన ఫైల్ తనిఖీ చేస్తోంది&#8230;</string>

@@ -369,7 +369,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
 
     private void cancelActivityWithAssertionFailure(String logMessage) {
-        Timber.e(logMessage);
+        Timber.wtf(logMessage);
         UIUtils.showThemedToast(this, getString(R.string.mutimedia_editor_assertion_failed), false);
         finishCancel();
     }

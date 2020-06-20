@@ -198,9 +198,7 @@
     <string name="custom_sync_server_enable_title">Använd annan synkroniseringsserver</string>
     <string name="custom_sync_server_enable_summary">Om du inte vill använda den proprietära AnkiWeb-tjänsten kan du ange en alternativ server här</string>
     <string name="custom_sync_server_base_url_title">Synkroniseringsurl</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">Mediasynkroniseringsurl</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Ändringar till kortleksgruppsinställningar kommer att påverka flera kortlekar. Om du bara vill ändra nuvarande kortlek, var då vänlig och lägg först till en ny konfigurationsgrupp</string>
     <string name="studyoptions_limit_select_tags">Välj etiketter</string>

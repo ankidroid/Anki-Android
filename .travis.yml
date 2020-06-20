@@ -42,7 +42,7 @@ env:
    - API=27 LOCALE="fr_FR"
    - API=28 # API28 does not handle locale changes for some reason, so it is our default locale test
    - API=29 LOCALE="pt_BR"
-   - API=30 EMU_FLAVOR=google_apis LOCALE="de_DE" # This will be API30 when released, until now it is R, with intermittent failure
+   - API=R EMU_FLAVOR=google_apis LOCALE="de_DE" # This will be API30 when released, until now it is R, with intermittent failure
    - API=24 JDK="1.11" # make sure we work in future dev environments
    - API=24 JDK="1.14" # make sure we work in future dev environments
 
@@ -75,7 +75,7 @@ jobs:
       install: skip
       script: echo finalize codacy coverage uploads
   allow_failures:
-    - env: API=30 EMU_FLAVOR=google_apis LOCALE="de_DE" # unreleased Android API30 is failing in local builds, let's expose that on Travis
+    - env: API=R EMU_FLAVOR=google_apis LOCALE="de_DE" # unreleased Android API30 is failing in local builds, let's expose that on Travis
     - env: API=24 JDK="1.11" # non-default JDKs should not hold up success reporting
     - env: API=24 JDK="1.14" # non-default JDKs should not hold up success reporting
     - env: LINT=Debug API=NONE # we want to see the full lint report vs baseline but not fail on it

@@ -39,31 +39,31 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">ᱥᱟᱨᱮᱡᱽᱠᱟᱱ ᱠᱟᱰᱥ</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid ᱠᱟᱰ ᱥᱟᱨᱮᱡ ᱠᱚ</item>
-        <item quantity="other">%d AnkiDroid ᱠᱟᱰᱥ ᱥᱟᱨᱮᱡ ᱠᱚ</item>
+        <item quantity="one">%d AnkiDroid card due</item>
+        <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_no_cards_due">ᱠᱟᱰᱥ ᱵᱟᱠᱚ ᱥᱟᱨᱮᱡᱼᱟ</string>
-    <string name="widget_loading">ᱣᱤᱡᱮᱴ ᱞᱚᱰᱚᱜᱼᱠᱟᱱᱟ&#8230;</string>
+    <string name="widget_no_cards_due">No cards due</string>
+    <string name="widget_loading">Widget loading&#8230;</string>
     <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d ᱠᱟᱰ ᱥᱟᱨᱮᱡ ᱚᱠᱛᱚ %2$s</item>
-        <item quantity="other">%1$d ᱠᱟᱰ ᱥᱟᱨᱮᱡ ᱚᱠᱛᱚ %2$s</item>
+        <item quantity="one">%1$d card due in %2$s</item>
+        <item quantity="other">%1$d cards due in %2$s</item>
     </plurals>
     <plurals name="widget_decks">
-        <item quantity="one">%1$d ᱰᱮᱠ</item>
-        <item quantity="other">%1$d ᱰᱮᱠᱥ</item>
+        <item quantity="one">%1$d deck</item>
+        <item quantity="other">%1$d decks</item>
     </plurals>
-    <string name="widget_small">AnkiDroid ᱠᱟᱹᱴᱤᱡ</string>
+    <string name="widget_small">AnkiDroid small</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d ᱠᱟᱰ ᱥᱟᱨᱟᱡ</item>
-        <item quantity="other">%d ᱥᱟᱰᱥ ᱥᱟᱨᱮᱡ</item>
+        <item quantity="one">%d card due</item>
+        <item quantity="other">%d cards due</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱮᱡ</item>
-        <item quantity="other">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱮᱡ</item>
+        <item quantity="one">%d minute remaining</item>
+        <item quantity="other">%d minutes remaining</item>
     </plurals>
-    <string name="widget_add_note">ᱱᱚᱴ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
-    <string name="widget_add_note_button">ᱱᱟᱶᱟ AnkiDroid ᱱᱚᱴ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
+    <string name="widget_add_note">Add note</string>
+    <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

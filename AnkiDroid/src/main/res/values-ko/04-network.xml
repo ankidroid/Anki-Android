@@ -101,7 +101,7 @@
     <string name="sync_writing_db">데이터베이스에 변경 내용을 쓰는 중...</string>
     <string name="sync_download_chunk">변경 내용 다운로드...</string>
     <string name="sync_upload_chunk">변경 내용을 업로드 중...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">업로드: %1$d kb, 다운로드: %2$d kb</string>
     <string name="sync_generic_error">오류가 발생 했습니다. 나중에 다시 시도하십시오.</string>
     <string name="sync_check_upload_file">업로드 전 파일 확인 중...</string>
     <string name="sync_check_download_file">다운로드 파일 점검 중...</string>

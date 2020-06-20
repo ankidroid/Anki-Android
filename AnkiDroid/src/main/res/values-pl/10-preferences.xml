@@ -198,9 +198,7 @@
     <string name="custom_sync_server_enable_title">Używaj niestandardowego serwera synchronizacji</string>
     <string name="custom_sync_server_enable_summary">Jeśli nie chcesz używać osobistej usługi AnkiWeb, możesz ustawić tutaj alternatywny serwer</string>
     <string name="custom_sync_server_base_url_title">Adres url synchronizacji</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">Adres url synchronizacji mediów</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Zmiany opcji grup talii będzie mieć wpływ na wiele talii. Jeśli chcesz zmienić tylko obecną talię, najpierw dodaj nowe ustawienie talii</string>
     <string name="studyoptions_limit_select_tags">Wybierz etykiety</string>

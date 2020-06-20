@@ -19,31 +19,24 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
-import android.os.Bundle;
 import android.widget.TextView;
 
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.IField;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
-import java.util.ArrayList;
-
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.robolectric.Shadows.shadowOf;
 
 @SuppressWarnings("SameParameterValue")
@@ -55,22 +48,6 @@ public class NoteEditorTest extends RobolectricTest {
     public void verifyCardsList() {
         NoteEditor n = getNoteEditorEditingExistingBasicNote("Test", "Note", FromScreen.DECK_LIST);
         assertThat("Cards list is correct", ((TextView) n.findViewById(R.id.CardEditorCardsText)).getText().toString(), is("Cards: Card 1"));
-    }
-
-    @Test
-    public void verifyPreviewAddingNote() {
-        NoteEditor n = getNoteEditorAdding(NoteType.BASIC).withFirstField("Preview Test").build();
-        ActionMenuItemView previewButton = n.findViewById(R.id.action_preview);
-        previewButton.performClick();
-        ShadowActivity.IntentForResult intent = shadowOf(n).getNextStartedActivityForResult();
-        Bundle noteEditorBundle = intent.intent.getBundleExtra("noteEditorBundle");
-        assertThat("Bundle set to add note style", noteEditorBundle.getBoolean("addNote"), is(true));
-        Bundle fieldsBundle = noteEditorBundle.getBundle("editFields");
-        assertThat("Bundle has fields", fieldsBundle, notNullValue());
-        assertThat("Bundle has fields edited value", fieldsBundle.getString("0"), is("Preview Test"));
-        assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), is(new ArrayList<>()));
-        assertThat("Bundle has ordinal 0 for ephemeral preview", intent.intent.getIntExtra("ordinal", -1), is(0));
-        assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), is(true));
     }
 
     @Test
@@ -185,7 +162,7 @@ public class NoteEditorTest extends RobolectricTest {
     @Test
     @Ignore("Not yet implemented")
     public void clozeNoteWithClozeInWrongFieldDoesNotSave() {
-        //Anki Desktop blocks with "Continue?", we should just block to match the above test
+        //Anki Desktop blocks with "Continue?", we sould just block to match the above test
         int initialCards = getCardCount();
         NoteEditor editor = getNoteEditorAdding(NoteType.CLOZE)
                 .withSecondField("{{c1::AnkiDroid}} is fantastic")
@@ -208,33 +185,6 @@ public class NoteEditorTest extends RobolectricTest {
             assertThat("Activity should be cancelled as no changes were made", result.getResultCode(), is(Activity.RESULT_CANCELED));
         }
     }
-
-    @Test
-    public void copyNoteCopiesDeckId() {
-        // value returned if deck not found
-        final int DECK_ID_NOT_FOUND = -404;
-        long currentDid = addDeck("Basic::Test");
-        getCol().getConf().put("curDeck", currentDid);
-        Note n = super.addNoteUsingBasicModel("Test", "Note");
-        n.model().put("did", currentDid);
-        NoteEditor editor = getNoteEditorEditingExistingBasicNote("Test", "Note", FromScreen.DECK_LIST);
-
-        getCol().getConf().put("curDeck", Consts.DEFAULT_DECK_ID); // Change DID if going through default path
-        Intent copyNoteIntent = getCopyNoteIntent(editor);
-        NoteEditor newNoteEditor = super.startActivityNormallyOpenCollectionWithIntent(NoteEditor.class, copyNoteIntent);
-
-        assertThat("Selected deck ID should be the current deck id", editor.getDeckId(), is(currentDid));
-        assertThat("Deck ID in the intent should be the selected deck id", copyNoteIntent.getLongExtra(NoteEditor.EXTRA_DID, DECK_ID_NOT_FOUND), is(currentDid));
-        assertThat("Deck ID in the new note should be the ID provided in the intent", newNoteEditor.getDeckId(), is(currentDid));
-    }
-
-
-    private Intent getCopyNoteIntent(NoteEditor editor) {
-        ShadowActivity editorShadow = Shadows.shadowOf(editor);
-        editor.copyNote();
-        return editorShadow.peekNextStartedActivityForResult().intent;
-    }
-
 
     private int getCardCount() {
         return getCol().cardCount();

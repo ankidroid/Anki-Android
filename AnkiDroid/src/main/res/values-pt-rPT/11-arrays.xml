@@ -50,16 +50,15 @@
         <item>Resposta melhor do que a recomendada</item>
         <item>Anular</item>
         <item>Editar nota</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
+        <item>Marcar nota</item>
+        <item>Procurar expressão</item>
+        <item>Ocultar ficha</item>
+        <item>Suspender ficha</item>
+        <item>Eliminar nota</item>
+        <item>Reproduzir multimédia</item>
+        <item>Abortar aprendizagem</item>
+        <item>Ocultar nota</item>
+        <item>Suspender nota</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

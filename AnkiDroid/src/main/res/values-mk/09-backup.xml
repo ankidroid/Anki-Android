@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
+    <string name="backup_deck_no_space_left">Резервната копија не е зачувана. Нема доволно простор на SD картичката. Намалете ја длабочината на резервната копија или премонтирајте некои други датотеки.</string>
     <string name="sd_space_warning">Оставено е помалку од %d MB простор на вашиот SD картичка. \nНаправите простор за да избегнете губење на податоци.</string>
     <string name="backup_delete">Бришење на резервната копија&#8230;</string>
     <string name="backup_restore">Вратете од резервната копија</string>

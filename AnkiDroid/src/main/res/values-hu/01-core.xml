@@ -118,7 +118,6 @@
     <string name="menu_flag_card_two">Narancs jelölő</string>
     <string name="menu_flag_card_three">Zöld jelölő</string>
     <string name="menu_flag_card_four">Kék jelölő</string>
-    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
     <string name="menu_select">Szöveg kijelölése</string>
     <string name="menu_search">Keresés itt: %1$s</string>
@@ -130,11 +129,6 @@
     <string name="new_dynamic_deck">Szűrt pakli létrehozása</string>
     <string name="night_mode">Éjszakai mód</string>
     <string name="directory_inaccessible">Nem érhető el az AnkiDroid könyvtár</string>
-    <!--This is shown when AnkiDroid starts up with no storage permissions.
-    The user is taken to the "App Info" screen, and needs to click "Permissions" and
-    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
-    of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -144,10 +138,8 @@
     -->
     <string name="time_quantity_seconds">%d másodperc</string>
     <string name="time_quantity_minutes">%d perc</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d óra</string>
     <string name="time_quantity_days">%d nap</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f hónap</string>
     <string name="time_quantity_years">%.1f év</string>
     <!-- or "%.1f a" -->

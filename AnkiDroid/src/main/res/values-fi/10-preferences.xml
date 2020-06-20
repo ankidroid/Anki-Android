@@ -198,9 +198,7 @@
     <string name="custom_sync_server_enable_title">Käytä mukautettua synkronointiserveriä</string>
     <string name="custom_sync_server_enable_summary">Jos et halua käyttää AnkiWebin omaa palvelua, voit määrittää vaihtoehtoisen serverin täällä</string>
     <string name="custom_sync_server_base_url_title">Synkronointiosoite</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">Median synkronointiosoite</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Muutokset pakkaryhmän asetuksiin vaikuttaa useisiin pakkoihin. Jos haluat muuttaa vain nykyistä pakkaa, valitse uusi asetukset-ryhmä.</string>
     <string name="studyoptions_limit_select_tags">Valitse tunnisteet</string>

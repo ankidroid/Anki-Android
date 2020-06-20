@@ -40,66 +40,66 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d ᱠᱟᱰ ᱫᱮᱠᱷᱟᱣᱼᱮᱱᱟ</item>
-        <item quantity="other">%d ᱠᱟᱰᱥ ᱫᱮᱠᱷᱟᱣᱼᱮᱱᱟ</item>
+        <item quantity="one">%d card shown</item>
+        <item quantity="other">%d cards shown</item>
     </plurals>
-    <string name="card_browser_all_decks">ᱡᱷᱚᱛᱚ ᱰᱮᱠᱥ</string>
-    <string name="card_browser_delete_card">ᱱᱚᱴᱥ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
-    <string name="card_browser_suspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰᱥ ᱠᱚ</string>
-    <string name="card_browser_toggle_suspend_card">(ᱵᱟᱝ)ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰᱥ ᱠᱚ</string>
-    <string name="card_browser_change_deck">ᱰᱮᱠᱥ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
-    <string name="card_browser_unsuspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰᱥ ᱠᱚ</string>
-    <string name="card_browser_mark_card">ᱱᱚᱴ ᱢᱟᱨᱠ ᱢᱮ</string>
-    <string name="card_browser_flag">ᱯᱚᱛᱠᱟ</string>
-    <string name="card_browser_toggle_mark_card">(ᱵᱟᱝ)ᱢᱟᱨᱠ ᱠᱟᱱ ᱱᱚᱴᱥ</string>
-    <string name="card_browser_unmark_card">ᱱᱚᱴ ᱚ-ᱢᱟᱨᱠᱚᱭ ᱢᱮ</string>
-    <string name="delete_card_title">ᱱᱚᱴ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
-    <string name="delete_cards_title">ᱱᱚᱴᱥ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
-    <string name="delete_card_message">ᱱᱚᱴᱥ ᱨᱮᱭᱟᱜ ᱡᱷᱚᱛᱚ ᱠᱟᱰᱥ ᱜᱮᱫ ᱜᱤᱲᱤᱼᱟᱢ?\nᱥᱮᱸᱫᱽᱨᱟ ᱡᱟᱭᱜᱟ: %s</string>
-    <string name="delete_card_mult_message">ᱪᱚᱭᱚᱱ ᱠᱟᱱᱟ ᱠᱟᱰᱥ ᱜᱮᱫ ᱜᱤᱲᱤᱼᱟᱢ ᱥᱮ?\n(ᱪᱚᱭᱚᱱ ᱠᱟᱱ ᱠᱟᱰᱥ ᱦᱚᱸ ᱵᱟᱝᱟ)</string>
-    <string name="deleted_message">ᱱᱚᱴᱥ ᱜᱮᱫ ᱜᱤᱲᱤ ᱮᱱᱟ</string>
-    <string name="changed_deck_message">%s ᱛᱮ ᱩᱪᱟᱲᱼᱱᱟ</string>
-    <string name="card_browser_suspended_cards">(ᱵᱟᱝ)ᱵᱟᱹᱫ ᱠᱚᱱ ᱠᱟᱰᱥ ᱠᱚ</string>
-    <string name="card_browser_show_marked">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱢᱮᱨᱠᱼᱠᱟᱱᱟ</string>
-    <string name="card_browser_show_suspended">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱵᱚᱸᱫ ᱜᱤᱰᱤ ᱠᱟᱱᱟ</string>
-    <string name="card_browser_search_by_tag">ᱴᱮᱜ ᱛᱮ ᱪᱷᱟᱱᱠᱟᱱᱟ</string>
-    <string name="card_browser_tags_shown">ᱴᱮᱜᱥ: %1$s</string>
-    <string name="card_browser_list_my_searches">ᱤᱧᱟᱜ ᱥᱮᱸᱫᱽᱨᱟ</string>
-    <string name="card_browser_list_my_searches_save">ᱥᱮᱸᱫᱽᱨᱟ ᱥᱟᱧᱪᱟᱣ</string>
-    <string name="card_browser_list_my_searches_title">ᱥᱟᱧᱪᱟᱣᱠᱟᱱ ᱠᱟᱱ ᱠᱟᱰ ᱪᱚᱭᱚᱱ</string>
-    <string name="card_browser_list_my_searches_new_name">ᱱᱤᱛᱚᱜᱼᱟ ᱥᱮᱸᱫᱽᱨᱟ ᱧᱩᱛᱩᱢᱟᱼᱜ ᱢᱮ</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">ᱧᱩᱛᱩᱢ ᱵᱮᱜᱚᱨ ᱥᱮᱸᱫᱽᱨᱟ ᱵᱟᱝ ᱥᱟᱧᱪᱟᱣ ᱫᱟᱲᱮᱟᱼᱜᱟ</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">ᱧᱩᱛᱩᱢ ᱞᱟᱦᱟ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜᱼᱟ</string>
-    <string name="card_browser_list_my_searches_remove_content">“%1$s” ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟ?</string>
-    <string name="card_browser_change_display_order">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
-    <string name="card_browser_change_display_order_title">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
-    <string name="card_browser_change_display_order_reverse">ᱩᱞᱴᱟ ᱞᱟᱹᱜᱤᱫ ᱒ ᱡᱟᱭᱜᱟ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
-    <string name="card_details_question">ᱠᱩᱠᱞᱤ</string>
-    <string name="card_details_answer">ᱛᱮᱞᱟ</string>
-    <string name="card_details_due">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
-    <string name="card_details_tags">ᱴᱮᱜᱥ</string>
-    <string name="card_browser_filtering_cards">ᱠᱟᱰᱥ ᱪᱷᱟᱹᱱᱤ&#8230; \nᱵᱟᱫᱽ ᱞᱟᱜᱤᱫ ᱯᱟᱹᱪᱞᱟ ᱵᱚᱴᱚᱱ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="card_browser_all_decks">All decks</string>
+    <string name="card_browser_delete_card">Delete notes</string>
+    <string name="card_browser_suspend_card">Suspend cards</string>
+    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+    <string name="card_browser_change_deck">Change deck</string>
+    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+    <string name="card_browser_mark_card">Mark notes</string>
+    <string name="card_browser_flag">Flag</string>
+    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+    <string name="card_browser_unmark_card">Unmark notes</string>
+    <string name="delete_card_title">Delete note?</string>
+    <string name="delete_cards_title">Delete notes?</string>
+    <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
+    <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+    <string name="deleted_message">Notes deleted</string>
+    <string name="changed_deck_message">Moved to %s</string>
+    <string name="card_browser_suspended_cards">(un)suspended cards</string>
+    <string name="card_browser_show_marked">Filter marked</string>
+    <string name="card_browser_show_suspended">Filter suspended</string>
+    <string name="card_browser_search_by_tag">Filter by tag</string>
+    <string name="card_browser_tags_shown">Tags: %1$s</string>
+    <string name="card_browser_list_my_searches">My searches</string>
+    <string name="card_browser_list_my_searches_save">Save search</string>
+    <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+    <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
+    <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+    <string name="card_browser_change_display_order">Change display order</string>
+    <string name="card_browser_change_display_order_title">Choose display order</string>
+    <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
+    <string name="card_details_question">Question</string>
+    <string name="card_details_answer">Answer</string>
+    <string name="card_details_due">Due</string>
+    <string name="card_details_tags">Tags</string>
+    <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
     <string-array name="card_browser_order_labels">
-        <item>ᱢᱚᱦᱰᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ (ᱞᱚᱜᱚᱱ)</item>
-        <item>ᱡᱟᱭᱜᱟ ᱢᱚᱦᱰᱟ ᱠᱟᱛᱮ</item>
-        <item>ᱛᱮᱭᱟᱨ ᱥᱚᱢᱚᱭ ᱦᱤᱥᱟᱹᱵ ᱛᱮ</item>
-        <item>ᱥᱟᱯᱰᱟᱣ ᱥᱚᱢᱚᱭ ᱛᱮ</item>
-        <item>ᱵᱚᱫᱚᱞ ᱥᱚᱢᱚᱭ ᱦᱤᱥᱟᱹᱵ ᱛᱮ</item>
-        <item>ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ ᱦᱤᱥᱟᱹᱵ ᱛᱮ</item>
-        <item>ᱚᱠᱛᱚ ᱛᱟᱞᱟ ᱛᱮ</item>
-        <item>ᱟᱞᱜᱟ ᱛᱮ</item>
-        <item>ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱛᱮ</item>
-        <item>ᱪᱩᱠ ᱛᱮ</item>
+        <item>No sorting (faster)</item>
+        <item>By sort field</item>
+        <item>By created time</item>
+        <item>By edited time</item>
+        <item>By changed time</item>
+        <item>By due time</item>
+        <item>By interval</item>
+        <item>By ease</item>
+        <item>By reviews</item>
+        <item>By lapses</item>
     </string-array>
-    <string name="card_browser_select_all">ᱡᱷᱚᱛᱚ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
-    <string name="card_browser_select_none">ᱟᱞᱚ ᱪᱚᱭᱚᱱ ᱟ</string>
-    <string name="card_browser_edit_note">ᱱᱚᱴ ᱥᱟᱯᱰᱟᱣ</string>
-    <string name="card_browser_interval_new_card">(ᱱᱟᱶᱟ)</string>
-    <string name="card_browser_ease_new_card">(ᱱᱟᱶᱟ)</string>
-    <string name="card_browser_due_filtered_card">(ᱪᱷᱟᱹᱱᱤᱭᱟᱜ)</string>
-    <string name="card_browser_interval_learning_card">(ᱪᱮᱫᱚᱜ)</string>
-    <string name="card_browser_note_editor_error">ᱱᱚᱴ ᱮᱰᱤᱴᱚᱨ ᱚᱰᱚᱠ ᱡᱚᱠᱷᱟᱜ ᱦᱩᱰᱟᱹᱜ</string>
-    <string name="card_browser_no_cards_in_deck">ᱰᱮᱠ ᱨᱮ ᱪᱚᱫ ᱠᱟᱰᱥ ᱠᱚ ᱵᱟᱹᱱᱩᱜᱼᱟ ‘%s’</string>
-    <string name="card_browser_search_all_decks">ᱠᱷᱚᱛᱚ ᱰᱮᱠᱥ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
-    <string name="card_browser_unknown_deck_name">ᱵᱟᱝ ᱵᱟᱰᱟᱭᱟᱜ</string>
+    <string name="card_browser_select_all">Select all</string>
+    <string name="card_browser_select_none">Select none</string>
+    <string name="card_browser_edit_note">Edit note</string>
+    <string name="card_browser_interval_new_card">(new)</string>
+    <string name="card_browser_ease_new_card">(new)</string>
+    <string name="card_browser_due_filtered_card">(filtered)</string>
+    <string name="card_browser_interval_learning_card">(learning)</string>
+    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
+    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
+    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_unknown_deck_name">Unknown</string>
 </resources>

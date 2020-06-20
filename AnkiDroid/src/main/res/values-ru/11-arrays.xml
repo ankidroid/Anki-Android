@@ -50,23 +50,22 @@
         <item>Лучше рекомендованного ответа</item>
         <item>Отменить</item>
         <item>Править запись</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Отметить запись</item>
+        <item>Посмотреть выражение</item>
+        <item>Отложить карточку</item>
+        <item>Исключить карточку</item>
+        <item>Удалить запись</item>
+        <item>Воспроизвести медиафайл</item>
+        <item>Прервать обучение</item>
+        <item>Отложить запись</item>
+        <item>Исключить запись</item>
+        <item>Красный флажок</item>
+        <item>Оранжевый флажок</item>
+        <item>Зелёный флажок</item>
+        <item>Синий флажок</item>
+        <item>Убрать флажок</item>
+        <item>Страница вверх</item>
+        <item>Страница вниз</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Исключить карточку</item>

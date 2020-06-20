@@ -50,16 +50,15 @@
         <item>jawab lebih baik dari yang dianjurkan</item>
         <item>Membuka</item>
         <item>edit catatan</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
+        <item>catat catatan</item>
+        <item>ekspresi lookup</item>
+        <item>kartu penguburan</item>
+        <item>kartu suspend</item>
+        <item>hapus catatan</item>
+        <item>media bermain</item>
+        <item>tentang belajar</item>
+        <item>mengubur catatan</item>
+        <item>Tunggu catatan</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

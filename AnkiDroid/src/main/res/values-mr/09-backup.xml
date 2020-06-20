@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
+    <string name="backup_deck_no_space_left">Bĕka\'apa jatana kēlēlā nāhī. SD kārḍavara purēsē sthāna śillaka nāhī. Bĕka\'apa sakhōla kamī karā kinvā kāhī itara phāyalī kāḍhūna ṭākā.</string>
     <string name="sd_space_warning">Āpalyā SD kārḍavarīla %d MB pēkṣā kamī jāgā śillaka āhēta.\n ḍēṭācē nukasāna ṭāḷaṇyāsāṭhī kāhī jāgā.</string>
     <string name="backup_delete">Bĕka\'apa haṭavita āhē&#8230;</string>
     <string name="backup_restore">Bĕka\'apamadhūna punarsan̄cayita karā</string>

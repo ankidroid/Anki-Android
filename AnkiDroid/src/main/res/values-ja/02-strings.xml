@@ -64,18 +64,18 @@
     <string name="hide_whiteboard">ホワイトボードを隠す</string>
     <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
     <string name="replay_audio">音声・動画を再生</string>
-    <string name="toggle_mic_tool_bar">発音を確認</string>
+    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">このカードは \"leech\" （無駄） というタグが付けられ、保留されました</string>
     <string name="leech_notification">このカードに \"leech\" （無駄） というタグを付けました</string>
     <string name="corrupt_font">使用できないフォントファイル %s</string>
-    <string name="webview_crash_unknown">原因不明のエラー</string>
-    <string name="webview_crash_unknwon_detailed">これはWebViewの内部エラーによって引き起こされました。</string>
-    <string name="webview_crash_oom">メモリ不足</string>
-    <string name="webview_crash_oom_details">WebViewはシステムによって終了されました。これは通常、アプリケーションがメモリ不足時に発生します。多くの場合、大きなフォントやメディアが原因です。</string>
-    <string name="webview_crash_nonfatal">WebView レンダラーがクラッシュしました。原因: %s</string>
-    <string name="webview_crash_fatal">重大なエラー: WebView レンダラーがクラッシュしました。原因: %s</string>
-    <string name="webview_crash_loop_dialog_title">システムのWebViewのレンダリング失敗</string>
-    <string name="webview_crash_loop_dialog_content">システム WebView はカード \'%1$s\' のレンダリングに失敗しました。\n %2$s</string>
+    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
+    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
+    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
+    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>質問</item>
@@ -91,11 +91,11 @@
         <item>忘却回数</item>
         <item>学習回数</item>
         <item>間隔</item>
-        <item>易しさ</item>
-        <item>期日</item>
-        <item>変更日</item>
-        <item>作成日</item>
-        <item>編集日</item>
+        <item>Ease</item>
+        <item>Due</item>
+        <item>Changed</item>
+        <item>Created</item>
+        <item>Edited</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">今日の新規カードの上限を上げる</string>
@@ -109,12 +109,12 @@
     <string name="cardeditor_title_add_note">ノートを追加</string>
     <string name="cardeditor_title_edit_card">ノートの編集</string>
     <string name="discard_unsaved_changes">閉じて現在の入力を破棄しますか？</string>
-    <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
-    <string name="note_editor_no_first_field">最初のフィールドが空です</string>
-    <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め問題が含まれている必要があります</string>
+    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="saving_facts">カードの保存</string>
-    <string name="saving_model">ノートタイプを保存しています</string>
+    <string name="saving_model">Saving note type</string>
     <string name="add">追加</string>
     <string name="save">保存</string>
     <string name="close">閉じる</string>
@@ -132,8 +132,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroidへようこそ</string>
     <string name="fact_adder_intent_title">AnkiDroid カード</string>
-    <string name="note_editor_add_note">ノートを追加</string>
-    <string name="note_editor_copy_note">ノートをコピー</string>
+    <string name="note_editor_add_note">Add note</string>
+    <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">カードをコピー</string>
     <string name="card_editor_reposition_card">新規カードの表示順序を変更</string>
     <string name="card_editor_reset_card">学習履歴をリセット</string>
@@ -161,33 +161,30 @@
     <string name="import_message_add">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
     <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？　処理に時間がかかる可能性があります。</string>
-    <string name="import_log_no_apkg">これは読み込み可能なAnkiパーッケージファイル（*.apkg）ではありません</string>
-    <string name="import_log_failed_unzip">apkgファイルの解凍に失敗しました: %s</string>
-    <string name="import_log_failed_copy_to">apkgファイルを %sにコピーできませんでした</string>
-    <string name="import_log_failed_validate">apkgファイルの検証に失敗しました</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">インポートリクエストを処理できません</string>
-    <string name="import_error_exception">パッケージのインポートに失敗しました\n\n%s</string>
+    <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
+    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">ファイル名 \"%s\" は拡張子が .apkg か .colpkgではありません。</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) の置換はまだサポートされていません。マニュアルを参照してください。</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">選択されたファイルをAnkiDroidによって自動的にインポートできませんでした。ankiのファイルを手動でインポートする方法については、マニュアルをご覧ください: \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() に失敗しました (おそらくストレージスペース外です)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_replacing">コレクションを置き換えています...</string>
-    <string name="import_interrupted">インポートが中断されました</string>
+    <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">スケジュール情報を含める</string>
     <string name="export_include_media">メディアファイルを含める</string>
-    <string name="confirm_apkg_export">全デッキのデータの控え（Ankiパッケージ）を作成します。よろしいですか？</string>
+    <string name="confirm_apkg_export">コレクション（全デッキ）を AnkiやAnkiDroid用のファイル \"collection.apkg\" としてエクスポートします。よろしいですか？</string>
     <string name="confirm_apkg_export_deck">デッキ \"%s\" のデータが入ったAnki用ファイル（*.apkg）を作成します。よろしいですか？</string>
-    <string name="export_in_progress">Ankiパッケージを作成しています...</string>
-    <string name="export_successful_title">Ankiパッケージを送信しますか？</string>
+    <string name="export_in_progress">Ankiのファイル包み(.apkg)を貸し出しています...</string>
+    <string name="export_successful_title">Ankiのファイル包み(.apkg)をおくりましょうか？</string>
     <string name="export_send_button">送信</string>
     <string name="export_save_button">ファイルへ保存</string>
-    <string name="export_send_no_handlers">apkgファイルに対応した他のアプリがありません。保存します...</string>
-    <string name="export_save_apkg_successful">Ankiパッケージを保存しました</string>
-    <string name="export_save_apkg_unsuccessful">Ankiパッケージの保存に失敗しました</string>
-    <string name="export_successful">Ankiパッケージのファイル “%s” を作成しました。他のアプリで送信しますか？　それともこの端末や自分のGoogleドライブに保存しますか？</string>
+    <string name="export_send_no_handlers">apkgを処理出来るアプリはありません。保存しています...</string>
+    <string name="export_save_apkg_successful">apkgを成功に保存されました。</string>
+    <string name="export_save_apkg_unsuccessful">apkgを保存に失敗しました</string>
+    <string name="export_successful">デッキのファイルが保存されました。（%s）　このファイルを他のアプリで送信しますか？</string>
     <string name="export_email_subject">[AnkiDroid] %s</string>
     <string name="export_email_text"><![CDATA[こんにちは！
 <br/> <br/>
@@ -242,25 +239,25 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Anki用ファイル（*.apkg）の送信がキャンセルされました</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">このファイルをインポートするにはV2スケジューラを有効にする必要があります。</string>
-    <string name="import_cannot_with_v2">V2スケジューラは、スケジュール情報付きのV1デッキはインポートできません。</string>
+    <string name="import_needs_v2">このファイルをインポートには、V2スケジューラーを可能にするが必要です</string>
+    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">このファイルはAnkiの新しいバーショーンが必要です。</string>
-    <string name="export_v2_forbidden">スケジュール情報付きの単一デッキをエクスポートする前に、V1スケジューラに切り替えてください。</string>
+    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' の読み込みに失敗しました。</string>
-    <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[画像が大きい可能性があります。メディアディレクトリ内の画像を圧縮してサイズを変更したほうがよいかもしれません。]]></string>
-    <string name="no_browser_notification">ブラウザが見つかりません。PCまたはモバイルでWebページにアクセスしてください： </string>
-    <string name="no_outgoing_link_in_cardbrowser">カード内の外部ページリンクはサポートされていません。</string>
+    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
+    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
+    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">回復されたカード</string>
+    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
-    <string name="choose_an_image">画像を選択</string>
+    <string name="choose_an_image">Choose an Image</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">デフォルトに戻す</string>
+    <string name="restore_default">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">JavaScriptを使用してナビゲーションドロワーを使用するには、フルスクリーンをオンにしてください。</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">JavaScriptを使用してオプションメニューを表示するには、フルスクリーンをオンにしてください。</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

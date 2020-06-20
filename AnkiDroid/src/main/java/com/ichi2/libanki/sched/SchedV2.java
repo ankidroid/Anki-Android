@@ -2027,7 +2027,7 @@ public class SchedV2 extends AbstractSched {
         if (ivl == 0) {
             return context.getString(R.string.sched_end);
         }
-        String s = Utils.timeQuantityNextIvl(context, ivl);
+        String s = Utils.timeQuantity(context, ivl);
         if (ivl < mCol.getConf().getInt("collapseTime")) {
             s = context.getString(R.string.less_than_time, s);
         }

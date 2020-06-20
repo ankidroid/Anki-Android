@@ -50,16 +50,15 @@
         <item>Svar bättre än rekommenderat</item>
         <item>Ångra</item>
         <item>Redigera not</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
+        <item>Märk not</item>
+        <item>Sökutryck</item>
+        <item>Göm kort</item>
+        <item>Uteslut kort</item>
+        <item>Ta bort not</item>
+        <item>Spela upp media</item>
+        <item>Avbryt inlärning</item>
+        <item>Göm not</item>
+        <item>Uteslut not</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

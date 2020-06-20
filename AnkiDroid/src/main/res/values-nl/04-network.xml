@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Veranderingen schrijven naar de database...</string>
     <string name="sync_download_chunk">Veranderingen downloaden...</string>
     <string name="sync_upload_chunk">Veranderingen uploaden...</string>
-    <string name="sync_up_down_size">Omhoog: %1$d KB, omlaag: %2$d KB</string>
+    <string name="sync_up_down_size">Verzonden: %1$d kb, Opgehaald: %2$d kb</string>
     <string name="sync_generic_error">Er is een fout opgetreden. Probeer het later opnieuw.</string>
     <string name="sync_check_upload_file">Bestandscontrole voor upload...</string>
     <string name="sync_check_download_file">Controle van het gedownloade bestand...</string>

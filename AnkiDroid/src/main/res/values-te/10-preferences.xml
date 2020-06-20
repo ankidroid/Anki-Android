@@ -199,9 +199,7 @@
     <string name="custom_sync_server_enable_title">అనుకూల సమకాలీకరణ సర్వర్ని ఉపయోగించండి</string>
     <string name="custom_sync_server_enable_summary">మీరు ఇక్కడ యాజమాన్య AnkiWeb సేవను ఉపయోగించకూడదనుకుంటే, మీరు ఒక ప్రత్యామ్నాయ సర్వర్ని పేర్కొనవచ్చు</string>
     <string name="custom_sync_server_base_url_title">Url ని సమకాలీకరించండి</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">మీడియా సమకాలీకరణ url</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">ట్యాగ్లను ఎంచుకోండి</string>

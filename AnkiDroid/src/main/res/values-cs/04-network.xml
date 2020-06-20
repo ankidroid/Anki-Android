@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Zápis změn do databáze...</string>
     <string name="sync_download_chunk">Stahování změn...</string>
     <string name="sync_upload_chunk">Nahrávání změn...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Nahráno: %1$d kb, staženo: %2$d kb</string>
     <string name="sync_generic_error">Došlo k chybě. Opakujte akci později.</string>
     <string name="sync_check_upload_file">Kontrola souborů před odesláním...</string>
     <string name="sync_check_download_file">Kontrola staženého souboru...</string>

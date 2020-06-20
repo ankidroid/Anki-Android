@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Tallennetaan muutokset tietokantaan&#8230;</string>
     <string name="sync_download_chunk">Ladataan muutoksia&#8230;</string>
     <string name="sync_upload_chunk">Lähetetään muutoksia&#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Lähetetty: %1$d kt, ladattu %2$d kt</string>
     <string name="sync_generic_error">Tapahtui virhe. Yritä myöhemmin uudelleen.</string>
     <string name="sync_check_upload_file">Tiedostoa tarkistetaan ennen lähettämistä&#8230;</string>
     <string name="sync_check_download_file">Tarkistetaan ladattua tiedostoa&#8230;</string>

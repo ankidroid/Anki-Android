@@ -27,11 +27,11 @@ if ! [ -f ../ankidroiddocs/changelog.asc ]; then
 fi
 
 # Define the location of the manifest file
-SRC_DIR="./AnkiDroid"
-GRADLEFILE="$SRC_DIR/build.gradle"
-CHANGELOG="$SRC_DIR/src/main/assets/changelog.html"
+SRC_DIR="./AnkiDroid/src/main"
+MANIFEST="$SRC_DIR/AndroidManifest.xml"
+CHANGELOG="$SRC_DIR/assets/changelog.html"
 
-if ! VERSION=$(grep 'versionName=' $GRADLEFILE | sed -e 's/.*="//' | sed -e 's/".*//')
+if ! VERSION=$(grep android:versionName $MANIFEST | sed -e 's/.*="//' | sed -e 's/".*//')
 then
   echo "Unable to get current version. Is sed installed?"
   exit 1
@@ -39,7 +39,7 @@ fi
 
 if [ "$PUBLIC" = "public" ]; then
   echo "About to perform a public release. Please first:"
-  echo "- Edit the version in $GRADLEFILE manually but do not commit it."
+  echo "- Edit the version in AndroidManifest.xml manually but do not commit it."
   echo "- Author and merge a PR to ankidroiddocs/changelog.asc with details for the current version"
   echo "Press Enter to continue."
   read -r
@@ -77,13 +77,13 @@ if [ "$PUBLIC" != "public" ]; then
   # Increment version code
   # It is an integer in AndroidManifest that nobody actually sees.
   # Ex: 72 to 73
-  PREVIOUS_CODE=$(grep 'versionCode=' $GRADLEFILE | sed -e 's/.*=//')
+  PREVIOUS_CODE=$(grep android:versionCode $MANIFEST | sed -e 's/.*="//' | sed -e 's/".*//')
   GUESSED_CODE=$((PREVIOUS_CODE + 1))
 
   # Edit AndroidManifest.xml to bump version string
   echo "Bumping version from $PREVIOUS_VERSION$SUFFIX to $VERSION (and code from $PREVIOUS_CODE to $GUESSED_CODE)"
-  sed -i -e s/"$PREVIOUS_VERSION"$SUFFIX/"$VERSION"/g $GRADLEFILE
-  sed -i -e s/versionCode="$PREVIOUS_CODE"/versionCode="$GUESSED_CODE"/g $GRADLEFILE
+  sed -i -e s/"$PREVIOUS_VERSION"$SUFFIX/"$VERSION"/g $MANIFEST
+  sed -i -e s/versionCode=\""$PREVIOUS_CODE"/versionCode=\""$GUESSED_CODE"/g $MANIFEST
 fi
 
 # Read the key passwords
@@ -91,32 +91,20 @@ read -rsp "Enter keystore password: " KSTOREPWD; echo
 read -rsp "Enter key password: " KEYPWD; echo
 export KSTOREPWD
 export KEYPWD
-# Build signed APK using Gradle and publish to Play
+# Build signed APK using Gradle and publish to Play 
 # Configuration for pushing to Play specified in build.gradle 'play' task
 if ! ./gradlew publishReleaseApk
 then
   # APK contains problems, abort release
-  git checkout -- $GRADLEFILE # Revert version change
+  git checkout -- $MANIFEST # Revert version change
   exit
 fi
 
-# Now build the universal release also
-if ! ./gradlew assembleRelease -Duniversal-apk=true
-then
-  # APK contains problems, abort release
-  git checkout -- $GRADLEFILE # Revert version change
-  exit
-fi
-
-# Copy universal APK to cwd
-ABIS='universal arm64-v8a x86 x86_64 armeabi-v7a'
-for ABI in $ABIS; do
-  cp AnkiDroid/build/outputs/apk/release/AnkiDroid-"$ABI"-release.apk AnkiDroid-"$VERSION"-"$ABI".apk
-done
-
+# Copy exported file to cwd
+cp AnkiDroid/build/outputs/apk/release/AnkiDroid-release.apk AnkiDroid-"$VERSION".apk
 
 # Commit modified AndroidManifest.xml (and changelog.html if it changed)
-git add $GRADLEFILE $CHANGELOG
+git add $MANIFEST $CHANGELOG
 git commit -m "Bumped version to $VERSION
 @branch-specific"
 
@@ -139,24 +127,5 @@ else
   PRE_RELEASE="--pre-release"
 fi
 
-github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --description "The builds with letter codes below (A, B, etc) are universal parallel builds. They will install side-by-side with the main APK build for testing, or to connect to a different AnkiWeb account in combination with changing the storage directory in preferences. If you install the main APK below, you should install the version matching your CPU instruction set. If you do not know that information, there are many guides on finding it, for example https://www.howtogeek.com/339665/how-to-find-your-android-devices-info-for-correct-apk-downloads/" $PRE_RELEASE
-
-for ABI in $ABIS; do
-  github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
-done
-
-if [ "$PUBLIC" = "public" ]; then
-  ./gradlew publishToAmazonAppStore
-  echo "Remember to add release notes and submit on Amazon: https://developer.amazon.com/apps-and-games/console/app/list"
-fi
-
-# Now that Git is clean and the main release is done, run the parallel release script and upload them
-./tools/parallel-package-release.sh "$VERSION"
-if [ "$PUBLIC" = "public" ]; then
-  BUILDNAMES='A B C D E' # For public builds we will post all parallels
-else
-  BUILDNAMES='A B' # For alpha releases just post a couple parallel builds
-fi
-for BUILD in $BUILDNAMES; do
-  github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION".parallel."$BUILD".apk --file AnkiDroid-"$VERSION".parallel."$BUILD".apk
-done
+github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" $PRE_RELEASE
+github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION".apk --file AnkiDroid-"$VERSION".apk

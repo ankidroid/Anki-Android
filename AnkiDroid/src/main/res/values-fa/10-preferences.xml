@@ -198,9 +198,7 @@
     <string name="custom_sync_server_enable_title">استفاده از سرور همگام سازی سفارشی</string>
     <string name="custom_sync_server_enable_summary">اگر شما نمی خواهید از خدمات اختصاصی ankiWeb استفاده کنید می توانید یک سرور جایگزین را در اینجا مشخص کنید</string>
     <string name="custom_sync_server_base_url_title">لینک همگام سازی</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">لینک همگام سازی رسانه</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">انتخاب برچسبها</string>

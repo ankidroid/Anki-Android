@@ -50,16 +50,15 @@
         <item>Odgovori bolje kot priporočeno</item>
         <item>Razveljavi</item>
         <item>Uredi zapisek</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
+        <item>Označi zapisek</item>
+        <item>Iskalni izraz</item>
+        <item>Prikrij kartico</item>
+        <item>Pridrži kartico</item>
+        <item>Izbriši zapisek</item>
+        <item>Predvajaj predstavnost</item>
+        <item>Prekini učenje</item>
+        <item>Prikrij zapisek</item>
+        <item>Pridrži zapisek</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

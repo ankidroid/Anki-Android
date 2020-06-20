@@ -101,7 +101,7 @@
     <string name="sync_writing_db">將變更的資料寫入到資料庫中...</string>
     <string name="sync_download_chunk">下載變更中...</string>
     <string name="sync_upload_chunk">上傳變更中...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">上傳: %1$d kb, 下載: %2$d kb</string>
     <string name="sync_generic_error">出現錯誤，請稍後再試</string>
     <string name="sync_check_upload_file">正在檢查需要上傳的檔案...</string>
     <string name="sync_check_download_file">檢查下載的檔案...</string>

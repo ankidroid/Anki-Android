@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Változások adatbázisba írása...</string>
     <string name="sync_download_chunk">Változások letöltése...</string>
     <string name="sync_upload_chunk">Változások feltöltése...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Fel: %1$d kb, Le: %2$d kb</string>
     <string name="sync_generic_error">Hiba történt. Próbálkozz újra később.</string>
     <string name="sync_check_upload_file">Fájl ellenőrzése feltöltés előtt...</string>
     <string name="sync_check_download_file">A letöltött fájl ellenőrzése...</string>

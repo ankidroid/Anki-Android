@@ -18,12 +18,7 @@ package com.ichi2.anki.analytics;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Point;
-import android.os.Build;
 import android.preference.PreferenceManager;
-import android.view.Display;
-import android.view.WindowManager;
-import android.webkit.WebSettings;
 
 import com.brsanthu.googleanalytics.GoogleAnalytics;
 import com.brsanthu.googleanalytics.GoogleAnalyticsConfig;
@@ -67,8 +62,7 @@ public class UsageAnalytics {
             sAnalytics = GoogleAnalytics.builder()
                     .withTrackingId(getAnalyticsTag(context))
                     .withConfig(gaConfig)
-                    .withDefaultRequest(new AndroidDefaultRequest()
-                            .setAndroidRequestParameters(context)
+                    .withDefaultRequest(new DefaultRequest()
                             .applicationName(context.getString(R.string.app_name))
                             .applicationVersion(Integer.toString(BuildConfig.VERSION_CODE))
                             .applicationId(BuildConfig.APPLICATION_ID)
@@ -116,7 +110,6 @@ public class UsageAnalytics {
         sAnalyticsSamplePercentage = 100;
         reInitialize();
     }
-
 
     /**
      * We want to send an analytics hit on any exception, then chain to other handlers (e.g., ACRA)
@@ -217,7 +210,7 @@ public class UsageAnalytics {
      * Send an arbitrary analytics event - these should be noun/verb pairs, e.g. "text to speech", "enabled"
      *
      * @param category the category of event, make your own but use a constant so reporting is good
-     * @param action   the action the user performed
+     * @param action the action the user performed
      */
     public static void sendAnalyticsEvent(@NonNull String category, @NonNull String action) {
         sendAnalyticsEvent(category, action, Integer.MIN_VALUE, null);
@@ -228,9 +221,9 @@ public class UsageAnalytics {
      * Send a detailed arbitrary analytics event, with noun/verb pairs and extra data if needed
      *
      * @param category the category of event, make your own but use a constant so reporting is good
-     * @param action   the action the user performed
-     * @param value    A value for the event, Integer.MIN_VALUE signifies caller shouldn't send the value
-     * @param label    A label for the event, may be null
+     * @param action the action the user performed
+     * @param value A value for the event, Integer.MIN_VALUE signifies caller shouldn't send the value
+     * @param label A label for the event, may be null
      */
     @SuppressWarnings("WeakerAccess")
     public static void sendAnalyticsEvent(@NonNull String category, @NonNull String action, int value, String label) {
@@ -252,7 +245,7 @@ public class UsageAnalytics {
     /**
      * Send an exception event out for aggregation/analysis, parsed from the exception information
      *
-     * @param t     Throwable to send for analysis
+     * @param t Throwable to send for analysis
      * @param fatal whether it was fatal or not
      */
     public static void sendAnalyticsException(@NonNull Throwable t, boolean fatal) {
@@ -264,7 +257,7 @@ public class UsageAnalytics {
         Throwable cause;
         Throwable result = t;
 
-        while (null != (cause = result.getCause()) && (!result.equals(cause))) {
+        while (null != (cause = result.getCause())  && (!result.equals(cause)) ) {
             result = cause;
         }
         return result;
@@ -275,7 +268,7 @@ public class UsageAnalytics {
      * Send an exception event out for aggregation/analysis
      *
      * @param description API limited to 100 characters, truncated here to 100 if needed
-     * @param fatal       whether it was fatal or not
+     * @param fatal whether it was fatal or not
      */
     @SuppressWarnings("WeakerAccess")
     public static void sendAnalyticsException(@NonNull String description, boolean fatal) {
@@ -284,52 +277,5 @@ public class UsageAnalytics {
             return;
         }
         sAnalytics.exception().exceptionDescription(description).exceptionFatal(fatal).sendAsync();
-    }
-
-
-    /**
-     * An Android-specific device config generator. Without this it's "Desktop" and unknown for all hardware.
-     * It is interesting to us what devices people use though (for instance: is Amazon Kindle support worth it?
-     * Is anyone still using e-ink devices? How many people are on tablets? ChromeOS?)
-     */
-    private static class AndroidDefaultRequest extends DefaultRequest {
-        private DefaultRequest setAndroidRequestParameters(Context context) {
-
-            // Are we running on really large screens or small screens? Send raw screen size
-            try {
-                WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-                Display display = wm.getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-                this.screenResolution(size.x + "x" + size.y);
-            } catch (RuntimeException e) {
-                // nothing much to do here, it means we couldn't get WindowManager
-            }
-
-            // We can have up to 20 of these - there might be other things we want to know
-            // but simply seeing what hardware we are running on should be useful
-            this.customDimension(1, Build.VERSION.RELEASE); // systemVersion, e.g. "7.1.1"  for Android 7.1.1
-            this.customDimension(2, Build.BRAND); // brand e.g. "OnePlus"
-            this.customDimension(3, Build.MODEL); // model e.g. "ONEPLUS A6013" for the 6T
-            this.customDimension(4, Build.BOARD); // deviceId e.g. "sdm845" for the 6T
-
-            // This is important for google to auto-fingerprint us for default reporting
-            // It is not possible to set operating system explicitly, there is no API or analytics parameter for it
-            // Instead they respond that they auto-parse User-Agent strings for analytics attribution
-            // For maximum analytics built-in report compatibility we will send the official WebView User-Agent string
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    this.userAgent(WebSettings.getDefaultUserAgent(context));
-                } else {
-                    this.userAgent(System.getProperty("http.agent"));
-                }
-            } catch (RuntimeException e) {
-                // Catch RuntimeException as WebView initialization blows up in unpredictable ways
-                // but analytics should never be a show-stopper
-                this.userAgent(System.getProperty("http.agent"));
-            }
-
-            return this;
-        }
     }
 }

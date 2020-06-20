@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.res.TypedArray;
 
-import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
@@ -104,13 +103,8 @@ public class CompatV16 implements Compat {
 
     // Until API 18 it's not a long it's an int
     @Override
-    @CheckResult
     @SuppressWarnings("deprecation")
-    public long getAvailableBytes(StatFs stat) {
-        long availableBlocks = stat.getAvailableBlocks();
-        long blockSize = stat.getBlockSize();
-        return availableBlocks * blockSize;
-    }
+    public long getAvailableBytes(StatFs stat) { return stat.getAvailableBlocks() * stat.getBlockSize(); }
 
     // Until API 23 the methods have "current" in the name
     @Override

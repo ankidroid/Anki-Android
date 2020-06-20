@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Schreibe Änderungen in die Datenbank&#8230;</string>
     <string name="sync_download_chunk">Lade Änderungen herunter&#8230;</string>
     <string name="sync_upload_chunk">Lade Änderungen hoch&#8230;</string>
-    <string name="sync_up_down_size">Gesendet: %1$d KB, empfangen: %2$d KB</string>
+    <string name="sync_up_down_size">Gesendet: %1$d kB, empfangen: %2$d kB</string>
     <string name="sync_generic_error">Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.</string>
     <string name="sync_check_upload_file">Prüfe Datei vor dem Hochladen&#8230;</string>
     <string name="sync_check_download_file">Prüfe heruntergeladene Datei&#8230;</string>

@@ -2,7 +2,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
@@ -29,7 +28,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.ProgressBar;
 
@@ -70,10 +68,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         // Set the theme
         Themes.setTheme(this);
         super.onCreate(savedInstanceState);
-        // Disable the notifications bar if running under the test monkey.
-        if (ActivityManager.isUserAMonkey()) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
         mCustomTabActivityHelper = new CustomTabActivityHelper();
     }
 

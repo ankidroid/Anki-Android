@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
+    <string name="backup_deck_no_space_left">காப்பு சேமிக்கப்படவில்லை. ஸ் டி கார்டில் போதுமான இடம் இல்லை. காப்பு ஆழத்தை குறைக்க அல்லது வேறு சில கோப்புகளை மீட்டெடுக்கவும்.</string>
     <string name="sd_space_warning">ஸ் டி கார்டில் ம் பி %d இடம் விட குறைவாக உள்ளது. தரவு இழப்பைத் தவிர்க்க சில இடங்களை இலவசமாகப் பயன்படுத்தவும் \n.</string>
     <string name="backup_delete">காப்புப்பிரதிகளை நீக்குகிறது</string>
     <string name="backup_restore">காப்பு இருந்து மீட்க</string>

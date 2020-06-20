@@ -35,7 +35,7 @@ import java.util.TreeSet;
 
 public class TagsDialog extends AnalyticsDialogFragment {
     public interface TagsDialogListener {
-        void onPositive(ArrayList<String> selectedTags, int option);
+        void onPositive(List<String> selectedTags, int option);
     }
 
     private static final int TYPE_NONE = -1;
@@ -352,7 +352,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 } else {
                     final String filterPattern = constraint.toString().toLowerCase().trim();
                     for (String tag : mAllTags) {
-                        if (tag.toLowerCase().contains(filterPattern)) {
+                        if (tag.toLowerCase().startsWith(filterPattern)) {
                             mFilteredTags.add(tag);
                         }
                     }

@@ -364,22 +364,17 @@ public class DB {
         return getDatabase().insert(table, SQLiteDatabase.CONFLICT_NONE, values);
     }
 
+
     public void executeMany(String sql, List<Object[]> list) {
         mMod = true;
         mDatabase.beginTransaction();
         try {
-            executeManyNoTransaction(sql, list);
+            for (Object[] o : list) {
+                mDatabase.execSQL(sql, o);
+            }
             mDatabase.setTransactionSuccessful();
         } finally {
             mDatabase.endTransaction();
-        }
-    }
-
-    /** Use this executeMany version with external transaction management */
-    public void executeManyNoTransaction(String sql, List<Object[]> list) {
-        mMod = true;
-        for (Object[] o : list) {
-            mDatabase.execSQL(sql, o);
         }
     }
 

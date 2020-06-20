@@ -50,16 +50,15 @@
         <item>Отговаря се по-добре, отколкото се препоръчва</item>
         <item>Отмяна</item>
         <item>Промяна на бележка</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
+        <item>Маркирай бележка</item>
+        <item>Израз за търсене</item>
+        <item>Скрий картата</item>
+        <item>Прекрати картата</item>
+        <item>Изтриване на бележка</item>
+        <item>Пускане на медия</item>
+        <item>Прекъсване на обучението</item>
+        <item>Зарови бележка</item>
+        <item>Отлагане на бележка</item>
         <item>Toggle Red Flag</item>
         <item>Toggle Orange Flag</item>
         <item>Toggle Green Flag</item>

@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Skriver endringer til database...</string>
     <string name="sync_download_chunk">Laster ned endringer...</string>
     <string name="sync_upload_chunk">Laster opp endringer...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Opp: %1$d kb, ned: %2$d kb</string>
     <string name="sync_generic_error">Det oppstod en feil. Vennligst prøv igjen senere.</string>
     <string name="sync_check_upload_file">Kontrollerer fil før opplasting...</string>
     <string name="sync_check_download_file">Kontrollerer nedlastet fil...</string>

@@ -113,10 +113,10 @@ Forma: Digər
     <string name="rebuild_custom_study_deck">Xüsusi iş yerinin bərpası ...</string>
     <string name="importing_collection">Yığım idxal ...</string>
     <string name="import_media_count">Media faylları idxalı</string>
-    <string name="import_progress">• İthalat qeydləri: %1$d%%\n• Kartları idxal etmək: %2$d%%\n • Post-processing: %3$d%%</string>
-    <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+    <string name="import_progress">• İthalat qeydləri:• Kartları idxal etmək • Post-processing:%</string>
+    <string name="import_update_details"> mövcud qeydlərdən yeniləndi.</string>
     <string name="import_update_ignored">Qeydin növü dəyişdirildiyi üçün bəzi yeniliklər nəzərə alınmadı</string>
-    <string name="import_complete_count">Kartlar idxal olunur: %d</string>
+    <string name="import_complete_count">Kartlar idxal olunur:</string>
     <string name="sd_card_full_title">SD kart doludur</string>
     <string name="sd_card_almost_full_title">SD kart demək olar ki doludur.</string>
     <string name="restore_backup_title">Ehtiyyatda olanı bərpa etmə?</string>

@@ -101,7 +101,7 @@
     <string name="sync_writing_db">S\'estan escrivint els canvis en la base de dades&#8230;</string>
     <string name="sync_download_chunk">S\'estan baixant el canvis...</string>
     <string name="sync_upload_chunk">S\'estan carregant els canvis...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Pujat: %1$d kb, Baixat: %2$d kb</string>
     <string name="sync_generic_error">S\'ha produït un error. Si us plau proveu de nou més tard.</string>
     <string name="sync_check_upload_file">S\'esta comprovant l\'arxiu abans de carregar-ho...</string>
     <string name="sync_check_download_file">S\'estan comprovaant els arxius descarregats...</string>

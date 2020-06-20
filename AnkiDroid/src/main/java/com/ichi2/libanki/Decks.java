@@ -232,7 +232,6 @@ public class Decks {
      * Add a deck with NAME. Reuse deck if already exists. Return id as int.
      */
     public Long id(String name, boolean create, String type) {
-        name = strip(name);
         name = name.replace("\"", "");
         name = Normalizer.normalize(name, Normalizer.Form.NFC);
         JSONObject deck = byName(name);
@@ -456,7 +455,6 @@ public class Decks {
      * Rename deck prefix to NAME if not exists. Updates children.
      */
     public void rename(JSONObject g, String newName) throws DeckRenameException {
-        newName = strip(newName);
         // make sure target node doesn't already exist
         JSONObject deckWithThisName = byName(newName);
         if (deckWithThisName != null) {
@@ -779,27 +777,6 @@ public class Decks {
                 "select id from cards where did in " + Utils.ids2str(Utils.arrayList2array(dids)), 0));
     }
 
-
-    private static final Pattern spaceAroundSeparator = Pattern.compile(" *:: *");
-    private static String strip(String deckName) {
-        return spaceAroundSeparator.matcher(deckName.trim()).replaceAll( "::");
-    }
-
-    /** With 2.1.28, anki started strips whitespace of deck name.
-     * This method is here for compatibility while we wait for rust.
-     * It should be executed before other methods, because both "FOO " and "FOO" will be renamed to the same name,
-     * and so this will need to be renamed by _checkDeckTree.*/
-    private void _removeSpaces () {
-        for (JSONObject deck: all()) {
-            String currentName = deck.getString("name");
-            String newName = strip(currentName);
-            if (!currentName.equals(newName)) {
-                deck.put("name", newName);
-                save(deck);
-            }
-        }
-    }
-
     private void _recoverOrphans() {
         Long[] dids = allIds();
         boolean mod = mCol.getDb().getMod();
@@ -812,28 +789,17 @@ public class Decks {
         Set<String> names = new HashSet<String>();
 
         for (JSONObject deck: decks) {
-            // ensure no sections are blank
-            if ("".equals(deck.getString("name"))) {
-                Timber.i("Fix deck with empty name");
-                deck.put("name", "blank");
-                save(deck);
-            }
-
-            if (deck.getString("name").indexOf("::::") != -1) {
-                Timber.i("fix deck with missing sections %s", deck.getString("name"));
-                do {
-                    deck.put("name", deck.getString("name").replace("::::", "::blank::"));
-                    // We may need to iterate, in order to replace "::::::" and adding to "blank" in it.
-                } while (deck.getString("name").indexOf("::::") != -1);
-                save(deck);
-            }
-
             // two decks with the same name?
             if (names.contains(normalizeName(deck.getString("name")))) {
                 Timber.i("fix duplicate deck name %s", deck.getString("name"));
-                do {
-                    deck.put("name", deck.getString("name") + "+");
-                } while (names.contains(normalizeName(deck.getString("name"))));
+                deck.put("name", deck.getString("name") + Utils.intTime(1000));
+                save(deck);
+            }
+
+            // ensure no sections are blank
+            if (deck.getString("name").indexOf("::::") != -1) {
+                Timber.i("fix deck with missing sections %s", deck.getString("name"));
+                deck.put("name", "recovered"+Utils.intTime(1000));
                 save(deck);
             }
 
@@ -849,7 +815,6 @@ public class Decks {
     }
 
     public void checkIntegrity() {
-        _removeSpaces();
         _recoverOrphans();
         _checkDeckTree();
     }

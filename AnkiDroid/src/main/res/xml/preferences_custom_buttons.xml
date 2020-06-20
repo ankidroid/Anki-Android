@@ -52,12 +52,6 @@ MENU_DISABLED = 3
             android:key="customButtonEditCard"
             android:title="@string/cardeditor_title_edit_card" />
         <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/custom_button_labels"
-            android:entryValues="@array/custom_button_values"
-            android:key="customButtonTags"
-            android:title="@string/menu_edit_tags" />
-        <ListPreference
             android:defaultValue="3"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"

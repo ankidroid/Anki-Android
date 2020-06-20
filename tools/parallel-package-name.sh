@@ -10,9 +10,8 @@ ROOT="AnkiDroid/src/main/"
 MANIFEST="AndroidManifest.xml"
 CONSTANTS="res/values/constants.xml"
 
-OLD_ID=com.ichi2.anki
-OLD_NAME=AnkiDroid
-
+OLD_ID=`grep applicationId AnkiDroid/build.gradle | sed "s/.*applicationId \"//" | sed "s/\"//"`
+OLD_NAME=`grep "name=\"app_name\"" $ROOT$CONSTANTS | sed "s/.*name=\"app_name\">//" | sed "s/<\/string>//"`
 perl -pi -e "s/name=\"app_name\">$OLD_NAME/name=\"app_name\">$NEW_NAME/g" $ROOT$CONSTANTS
 perl -pi -e "s/applicationId \"$OLD_ID/applicationId \"$NEW_ID/g" AnkiDroid/build.gradle
 perl -pi -e "s/android:authorities=\"$OLD_ID/android:authorities=\"$NEW_ID/g" $ROOT$MANIFEST

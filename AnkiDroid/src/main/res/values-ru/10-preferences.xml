@@ -198,9 +198,7 @@
     <string name="custom_sync_server_enable_title">Использовать пользовательский сервер</string>
     <string name="custom_sync_server_enable_summary">Если вы не хотите использовать AnkiWeb, то вы можете указать альтернативный сервер</string>
     <string name="custom_sync_server_base_url_title">URL для синхронизации</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">URL для медиафайлов</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Изменения конфигурации затронут несколько колод. Если вы хотите изменить только текущую колоду, сначала добавьте новую конфигурацию</string>
     <string name="studyoptions_limit_select_tags">Выберите метки</string>

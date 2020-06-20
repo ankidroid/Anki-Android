@@ -128,7 +128,6 @@
     <string name="menu_flag_card_two">Оранжевый флажок</string>
     <string name="menu_flag_card_three">Зелёный флажок</string>
     <string name="menu_flag_card_four">Синий флажок</string>
-    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
     <string name="menu_select">Выделить текст</string>
     <string name="menu_search">Посмотреть в %1$s</string>
@@ -140,11 +139,6 @@
     <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
     <string name="night_mode">Ночной режим</string>
     <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>
-    <!--This is shown when AnkiDroid starts up with no storage permissions.
-    The user is taken to the "App Info" screen, and needs to click "Permissions" and
-    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
-    of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -154,10 +148,8 @@
     -->
     <string name="time_quantity_seconds">%d с</string>
     <string name="time_quantity_minutes">%d мин.</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d ч.</string>
     <string name="time_quantity_days">%d дн.</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f мес.</string>
     <string name="time_quantity_years">%.1f г.</string>
     <!-- or "%.1f a" -->

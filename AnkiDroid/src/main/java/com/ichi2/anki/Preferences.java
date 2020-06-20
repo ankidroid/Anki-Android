@@ -20,9 +20,7 @@
 
 package com.ichi2.anki;
 
-import android.app.ActivityManager;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -46,7 +44,6 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.WindowManager.BadTokenException;
-import android.webkit.URLUtil;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -326,7 +323,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 cardBrowserContextMenuPreference.setSummary(getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
 
                 // Make it possible to test crash reporting, but only for DEBUG builds
-                if (BuildConfig.DEBUG && !ActivityManager.isUserAMonkey()) {
+                if (BuildConfig.DEBUG) {
                     Timber.i("Debug mode, allowing for test crashes");
                     Preference triggerTestCrashPreference = new Preference(this);
                     triggerTestCrashPreference.setKey("trigger_crash_preference");
@@ -383,35 +380,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             case "com.ichi2.anki.prefs.custom_sync_server":
                 getSupportActionBar().setTitle(R.string.custom_sync_server_title);
                 listener.addPreferencesFromResource(R.xml.preferences_custom_sync_server);
-                screen = listener.getPreferenceScreen();
-                Preference syncUrlPreference = screen.findPreference("syncBaseUrl");
-                Preference mSyncUrlPreference = screen.findPreference("syncMediaUrl");
-                syncUrlPreference.setOnPreferenceChangeListener((Preference preference, Object newValue) -> {
-                    String newUrl = newValue.toString();
-                    if (!URLUtil.isValidUrl(newUrl)) {
-                         new AlertDialog.Builder(this)
-                                .setTitle(R.string.custom_sync_server_base_url_invalid)
-                                .setPositiveButton(R.string.dialog_ok, null)
-                                .show();
-
-                        return false;
-                    }
-
-                    return true;
-                });
-                mSyncUrlPreference.setOnPreferenceChangeListener((Preference preference, Object newValue) -> {
-                    String newUrl = newValue.toString();
-                    if (!URLUtil.isValidUrl(newUrl)) {
-                        new AlertDialog.Builder(this)
-                                .setTitle(R.string.custom_sync_server_media_url_invalid)
-                                .setPositiveButton(R.string.dialog_ok, null)
-                                .show();
-
-                        return false;
-                    }
-
-                    return true;
-                });
                 break;
             case "com.ichi2.anki.prefs.advanced_statistics":
                 getSupportActionBar().setTitle(R.string.advanced_statistics_title);

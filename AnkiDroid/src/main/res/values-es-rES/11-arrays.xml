@@ -50,21 +50,20 @@
         <item>Respuesta mejor que la recomendada</item>
         <item>Deshacer</item>
         <item>Editar nota</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
+        <item>Marcar nota</item>
+        <item>Consultar expresión</item>
+        <item>Enterrar tarjeta</item>
+        <item>Suspender tarjeta</item>
+        <item>Eliminar nota</item>
+        <item>Reproducir archivos multimedia</item>
+        <item>Abandonar aprendizaje</item>
+        <item>Enterrar nota</item>
+        <item>Suspender nota</item>
+        <item>Cambiar Marca Roja</item>
+        <item>Cambiar Marca Naranja</item>
+        <item>Cambiar Marca Verde</item>
+        <item>Cambiar Marca Azul</item>
+        <item>Quitar Marca</item>
         <item>Page Up</item>
         <item>Page Down</item>
     </string-array>

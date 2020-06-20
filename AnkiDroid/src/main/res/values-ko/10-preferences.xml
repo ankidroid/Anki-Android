@@ -198,9 +198,7 @@
     <string name="custom_sync_server_enable_title">자체 동기화 서버 사용</string>
     <string name="custom_sync_server_enable_summary">독점 AnkiWeb 서비스를 사용하지 않기를 원하신다면 대체 서버를 여기에 지정할 수 있습니다.</string>
     <string name="custom_sync_server_base_url_title">동기화 URL</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">미디어 동기화 URL</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">태그 선택</string>

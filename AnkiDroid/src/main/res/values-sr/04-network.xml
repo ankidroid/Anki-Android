@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Запис промена у базу података...</string>
     <string name="sync_download_chunk">Учитавање промена...</string>
     <string name="sync_upload_chunk">Учитавање промена...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Преузето: %1$d kb, Учитано: %2$d kb</string>
     <string name="sync_generic_error">Дошло је до грешке. Поновите покушај касније.</string>
     <string name="sync_check_upload_file">Провера датотеке пре учитавања...</string>
     <string name="sync_check_download_file">Провера учитане датотеке...</string>
