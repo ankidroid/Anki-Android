@@ -434,7 +434,7 @@ public class Whiteboard extends View {
         File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File ankiDroidFolder = new File(pictures, "AnkiDroid");
 
-        if(!ankiDroidFolder.exists()) {
+        if (!ankiDroidFolder.exists()) {
             ankiDroidFolder.mkdirs();
         }
 

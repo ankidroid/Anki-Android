@@ -336,9 +336,9 @@ public class Reviewer extends AbstractFlashcardViewer {
                 if (mWhiteboard != null) {
                     try {
                         mWhiteboard.saveWhiteboard();
-                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, mWhiteboard.getSaveImagePath()),true);
+                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, mWhiteboard.getSaveImagePath()), true);
                     } catch (Exception e) {
-                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_save_failed, e.getLocalizedMessage()),true);
+                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_save_failed, e.getLocalizedMessage()), true);
                     }
                 }
                 break;
