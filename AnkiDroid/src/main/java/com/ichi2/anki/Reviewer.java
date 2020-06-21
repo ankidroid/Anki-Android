@@ -18,7 +18,6 @@
 
 package com.ichi2.anki;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -335,8 +334,8 @@ public class Reviewer extends AbstractFlashcardViewer {
                 Timber.i("Reviewer:: Save whiteboard button pressed");
                 if (mWhiteboard != null) {
                     try {
-                        mWhiteboard.saveWhiteboard();
-                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, mWhiteboard.getSaveImagePath()), true);
+                        String savedWhiteboardFileName = mWhiteboard.saveWhiteboard();
+                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true);
                     } catch (Exception e) {
                         UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_save_failed, e.getLocalizedMessage()), true);
                     }

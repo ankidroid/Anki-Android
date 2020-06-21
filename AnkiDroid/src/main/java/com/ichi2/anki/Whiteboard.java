@@ -74,8 +74,6 @@ public class Whiteboard extends View {
     private boolean mUndoModeActive = false;
     private final int foregroundColor;
 
-    File saveWhiteboardImagFile;
-
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
@@ -426,7 +424,7 @@ public class Whiteboard extends View {
         return mCurrentlyDrawing;
     }
 
-    protected void saveWhiteboard() throws FileNotFoundException {
+    protected String saveWhiteboard() throws FileNotFoundException {
 
         Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
@@ -442,7 +440,7 @@ public class Whiteboard extends View {
         String newName = new SimpleDateFormat("yyyyMMddHHmmss'.png'").format(new Date());
         String finalFileName = baseFileName + newName;
 
-        saveWhiteboardImagFile = new File(ankiDroidFolder, finalFileName);
+        File saveWhiteboardImagFile = new File(ankiDroidFolder, finalFileName);
 
         if (foregroundColor != Color.BLACK) {
             canvas.drawColor(Color.BLACK);
@@ -452,9 +450,6 @@ public class Whiteboard extends View {
 
         this.draw(canvas);
         bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveWhiteboardImagFile));
-    }
-
-    protected String getSaveImagePath() {
         return saveWhiteboardImagFile.getAbsolutePath();
     }
 }
