@@ -28,12 +28,19 @@ import android.graphics.PathMeasure;
 import android.graphics.Point;
 import android.graphics.PointF;
 import androidx.core.content.ContextCompat;
+
+import android.os.Environment;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Stack;
 
 /**
@@ -65,7 +72,9 @@ public class Whiteboard extends View {
     private boolean mInvertedColors;
     private boolean mMonochrome;
     private boolean mUndoModeActive = false;
+    private int foregroundColor;
 
+    File saveWhiteboardImagFile;
 
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
@@ -73,7 +82,7 @@ public class Whiteboard extends View {
         mInvertedColors = inverted;
         mMonochrome = monochrome;
 
-        int foregroundColor;
+
         if (!mInvertedColors) {
             if (mMonochrome) {
                 foregroundColor = Color.BLACK;
@@ -415,5 +424,37 @@ public class Whiteboard extends View {
 
     public boolean isCurrentlyDrawing() {
         return mCurrentlyDrawing;
+    }
+
+    protected void saveWhiteboard() throws FileNotFoundException {
+
+        Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File ankiDroidFolder = new File(pictures, "AnkiDroid");
+
+        if(!ankiDroidFolder.exists()) {
+            ankiDroidFolder.mkdirs();
+        }
+
+        String baseFileName = "Whiteboard";
+        String newName = new SimpleDateFormat("yyyyMMddHHmmss'.png'").format(new Date());
+        String finalFileName = baseFileName + newName;
+
+        saveWhiteboardImagFile = new File(ankiDroidFolder, finalFileName);
+
+        if (foregroundColor != Color.BLACK) {
+            canvas.drawColor(Color.BLACK);
+        } else {
+            canvas.drawColor(Color.WHITE);
+        }
+
+        this.draw(canvas);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveWhiteboardImagFile));
+    }
+
+    protected String getSaveImagePath() {
+        return saveWhiteboardImagFile.getAbsolutePath();
     }
 }
