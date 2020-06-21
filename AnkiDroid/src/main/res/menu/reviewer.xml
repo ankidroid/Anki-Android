@@ -52,6 +52,10 @@
         android:visible="false"
         ankidroid:showAsAction="never"/>
     <item
+        android:id="@+id/action_enable_whiteboard"
+        android:title="@string/enable_whiteboard"
+        android:icon="@drawable/ic_gesture_white_24dp" />
+    <item
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_mode_edit_white_24dp"
         android:title="@string/cardeditor_title_edit_card"
@@ -103,10 +107,6 @@
         android:id="@+id/action_search_dictionary"
         android:title="@string/menu_select"
         android:visible="false"/>
-    <item
-        android:id="@+id/action_enable_whiteboard"
-        android:title="@string/enable_whiteboard"
-        android:icon="@drawable/ic_gesture_white_24dp" />
     <item
         android:id="@+id/action_open_deck_options"
         android:title="@string/study_options" />
