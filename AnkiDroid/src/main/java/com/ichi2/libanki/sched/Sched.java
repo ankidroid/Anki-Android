@@ -245,12 +245,17 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected <T extends DeckDueTreeNode> void _groupChildrenMain(T parent, List<T> grps, int depth) {
+    protected <T extends DeckDueTreeNode> void _groupChildrenMain(T parent, List<T> grps, int depth, boolean checkDone) {
         List<T> tree = new ArrayList<>();
         // group and recurse
         ListIterator<T> it = grps.listIterator();
         while (it.hasNext()) {
             T node = it.next();
+            if (!checkDone && node.getDepth() != depth) {
+                JSONObject deck = mCol.getDecks().get(node.getDid());
+                Timber.d("Deck %s (%d)'s parent is missing. Ignoring for quick display.", deck.getString("name"), node.getDid());
+                continue;
+            }
             String head = node.getNamePart(depth);
             // Compose the "tail" node list. The tail is a list of all the nodes that proceed
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
@@ -260,6 +265,11 @@ public class Sched extends SchedV2 {
                 T next = it.next();
                 if (head.equals(next.getNamePart(depth))) {
                     // Same head - add to tail of current head.
+                    if (!checkDone && next.getDepth() == depth) {
+                        JSONObject deck = mCol.getDecks().get(next.getDid());
+                        Timber.d("Deck %s (%d)'s is a duplicate name. Ignoring for quick display.", deck.getString("name"), next.getDid());
+                        continue;
+                    }
                     children.add(next);
                 } else {
                     // We've iterated past this head, so step back in order to use this node as the
@@ -268,7 +278,7 @@ public class Sched extends SchedV2 {
                     break;
                 }
             }
-            _groupChildrenMain(node, children, depth + 1);
+            _groupChildrenMain(node, children, depth + 1, checkDone);
             tree.add(node);
         }
         parent.setChildren(tree, true);

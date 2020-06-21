@@ -427,29 +427,34 @@ public class SchedV2 extends AbstractSched {
             return null;
         }
         DeckDueTreeNodeNumbered topLevel = new DeckDueTreeNodeNumbered("", null, 0, 0, 0);
-        _groupChildren(topLevel, deckDueTree);
+        _groupChildren(topLevel, deckDueTree, true);
         return topLevel;
     }
 
 
-    private <T extends DeckDueTreeNode> void _groupChildren(T toplevel, List<T> grps) {
+    private <T extends DeckDueTreeNode> void _groupChildren(T toplevel, List<T> grps, boolean checkDone) {
         // sort based on name's components
         Collections.sort(grps);
         // then run main function
-        _groupChildrenMain(toplevel, grps);
+        _groupChildrenMain(toplevel, grps, checkDone);
     }
 
 
-    protected <T extends DeckDueTreeNode> void _groupChildrenMain(T topLevel, List<T> grps) {
-        _groupChildrenMain(topLevel, grps, 0);
+    protected <T extends DeckDueTreeNode> void _groupChildrenMain(T topLevel, List<T> grps, boolean checkDone) {
+        _groupChildrenMain(topLevel, grps, 0, checkDone);
     }
 
-    protected <T extends DeckDueTreeNode> void _groupChildrenMain(T parent, List<T> grps, int depth) {
+    protected <T extends DeckDueTreeNode> void _groupChildrenMain(T parent, List<T> grps, int depth, boolean checkDone) {
         List<T> tree = new ArrayList<>();
         // group and recurse
         ListIterator<T> it = grps.listIterator();
         while (it.hasNext()) {
             T node = it.next();
+            if (!checkDone && node.getDepth() != depth) {
+                JSONObject deck = mCol.getDecks().get(node.getDid());
+                Timber.d("Deck %s (%d)'s parent is missing. Ignoring for quick display.", deck.getString("name"), node.getDid());
+                continue;
+            }
             String head = node.getNamePart(depth);
             // Compose the "tail" node list. The tail is a list of all the nodes that proceed
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
@@ -459,6 +464,11 @@ public class SchedV2 extends AbstractSched {
                 T next = it.next();
                 if (head.equals(next.getNamePart(depth))) {
                     // Same head - add to tail of current head.
+                    if (!checkDone && next.getDepth() == depth) {
+                        JSONObject deck = mCol.getDecks().get(next.getDid());
+                        Timber.d("Deck %s (%d)'s is a duplicate name. Ignoring for quick display.", deck.getString("name"), next.getDid());
+                        continue;
+                    }
                     children.add(next);
                 } else {
                     // We've iterated past this head, so step back in order to use this node as the
@@ -468,7 +478,7 @@ public class SchedV2 extends AbstractSched {
                 }
             }
             tree.add(node);
-            _groupChildrenMain(node, children, depth + 1);
+            _groupChildrenMain(node, children, depth + 1, checkDone);
         }
         parent.setChildren(tree, false);
     }
