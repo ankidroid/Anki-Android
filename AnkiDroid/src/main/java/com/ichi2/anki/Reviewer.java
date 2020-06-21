@@ -308,7 +308,11 @@ public class Reviewer extends AbstractFlashcardViewer {
                     toggleMicToolBar();
                 }
                 break;
-
+            case R.id.action_tag:
+                Timber.i("Reviewer:: Tag button pressed");
+                showTagsDialog();
+                break;
+                
             case R.id.action_edit:
                 Timber.i("Reviewer:: Edit note button pressed");
                 return editCard();
