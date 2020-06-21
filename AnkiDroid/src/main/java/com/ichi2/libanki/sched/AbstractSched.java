@@ -273,6 +273,10 @@ public abstract class AbstractSched {
         public List<DeckDueTreeNode> getChildren() {
             return mChildren;
         }
+
+        public boolean hasChildren() {
+            return !mChildren.isEmpty();
+        }
     }
 
     public interface LimitMethod {

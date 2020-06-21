@@ -177,7 +177,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             deckLayout.setPadding(normalPadding, 0, rightPadding, 0);
         }
 
-        if (node.getChildren().size() > 0) {
+        if (node.hasChildren()) {
             holder.deckExpander.setTag(node.getDid());
             holder.deckExpander.setOnClickListener(mDeckExpanderClickListener);
         } else {
@@ -228,7 +228,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         if (collapsed) {
             expander.setImageDrawable(mExpandImage);
             expander.setContentDescription(expander.getContext().getString(R.string.expand));
-        } else if (node.getChildren().size() > 0) {
+        } else if (node.hasChildren()) {
             expander.setImageDrawable(mCollapseImage);
             expander.setContentDescription(expander.getContext().getString(R.string.collapse));
         } else {
@@ -249,7 +249,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         for (Sched.DeckDueTreeNode node : nodes) {
             // If the default deck is empty, hide it by not adding it to the deck list.
             // We don't hide it if it's the only deck or if it has sub-decks.
-            if (node.getDid() == 1 && nodes.size() > 1 && node.getChildren().size() == 0) {
+            if (node.getDid() == 1 && nodes.size() > 1 && !node.hasChildren()) {
                 if (mCol.getDb().queryScalar("select 1 from cards where did = 1") == 0) {
                     continue;
                 }

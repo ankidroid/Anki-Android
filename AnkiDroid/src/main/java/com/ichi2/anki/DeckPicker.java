@@ -2076,7 +2076,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (getCol().getDecks().isDyn(did)) {
             // Go to the study options screen if filtered deck with no cards to study
             openStudyOptions(false);
-        } else if (deckDueTreeNode.getChildren().size() == 0 && getCol().cardCount(new Long[]{did}) == 0) {
+        } else if (!deckDueTreeNode.hasChildren() && getCol().cardCount(new Long[]{did}) == 0) {
             // If the deck is empty and has no children then show a message saying it's empty
             final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_manual_getting_started));
             mayOpenUrl(helpUrl);
