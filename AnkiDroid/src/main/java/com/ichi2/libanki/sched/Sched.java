@@ -271,24 +271,7 @@ public class Sched extends SchedV2 {
                     break;
                 }
             }
-            int rev = node.getRevCount();
-            int _new = node.getNewCount();
-            int lrn = node.getLrnCount();
-            children = _groupChildrenMain(children, depth + 1);
-            // tally up children counts
-            for (DeckDueTreeNode ch : children) {
-                rev += ch.getRevCount();
-                lrn += ch.getLrnCount();
-                _new += ch.getNewCount();
-            }
-            // limit the counts to the deck's limits
-            JSONObject conf = mCol.getDecks().confForDid(node.getDid());
-            if (conf.getInt("dyn") == 0) {
-                JSONObject deck = mCol.getDecks().get(node.getDid());
-                rev = Math.max(0, Math.min(rev, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
-                _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
-            }
-            tree.add(new DeckDueTreeNode(head, node.getDid(), rev, lrn, _new, children));
+            tree.add(new DeckDueTreeNode(node, children, true));
         }
         return tree;
     }
