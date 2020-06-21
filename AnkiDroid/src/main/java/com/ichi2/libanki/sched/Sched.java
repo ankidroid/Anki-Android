@@ -245,7 +245,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, int depth) {
+    protected void _groupChildrenMain(DeckDueTreeNode parent, List<DeckDueTreeNode> grps, int depth) {
         List<DeckDueTreeNode> tree = new ArrayList<>();
         // group and recurse
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
@@ -268,10 +268,10 @@ public class Sched extends SchedV2 {
                     break;
                 }
             }
-            node.setChildren(_groupChildrenMain(children, depth + 1), true);
+            _groupChildrenMain(node, children, depth + 1);
             tree.add(node);
         }
-        return tree;
+        parent.setChildren(tree, true);
     }
 
 

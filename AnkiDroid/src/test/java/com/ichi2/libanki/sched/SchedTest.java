@@ -90,9 +90,9 @@ public class SchedTest extends RobolectricTest {
 
     @NonNull
     private DeckDueTreeNode getCountsForDid(double didToFind) {
-        List<DeckDueTreeNode> tree =  getCol().getSched().deckDueTree();
+        DeckDueTreeNode topLevel =  getCol().getSched().deckDueTree();
 
-        for (DeckDueTreeNode node: tree) {
+        for (DeckDueTreeNode node: topLevel.getChildren()) {
             if (node.getDid() == didToFind) {
                 return node;
             }

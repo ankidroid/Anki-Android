@@ -112,7 +112,7 @@ public class ReminderService extends BroadcastReceiver {
         }
 
         try {
-            for (Sched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree()) {
+            for (Sched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree().getChildren()) {
                 if (node.getDid() == deckId) {
                     return node;
                 }

@@ -190,7 +190,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
-    private List<Sched.DeckDueTreeNode> mDueTree;
+    private Sched.DeckDueTreeNode mDueTree;
 
     private List<CollectionTask> tasksToCancelOnClose;
 
@@ -2151,7 +2151,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showCollectionErrorDialog();
                     return;
                 }
-                mDueTree = (List<Sched.DeckDueTreeNode>) result.getObjArray()[0];
+                mDueTree = (Sched.DeckDueTreeNode) result.getObjArray()[0];
 
                 __renderPage();
                 // Update the mini statistics bar as well
@@ -2172,8 +2172,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         // Set the "x due in y minutes" subtitle
         try {
-            int eta = mDeckListAdapter.getEta();
-            int due = mDeckListAdapter.getDue();
+            int eta = mDueTree.getEta();
+            int due = mDueTree.getDue();
             Resources res = getResources();
             if (getCol().cardCount() != -1) {
                 String time = "-";

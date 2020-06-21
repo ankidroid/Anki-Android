@@ -28,6 +28,7 @@ import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 
 import java.util.List;
@@ -118,18 +119,13 @@ public final class WidgetStatus {
 
 
         private void updateCounts(Context context) {
-            int[] total = {0, 0, 0};
             Collection col = CollectionHelper.getInstance().getCol(context);
             // Ensure queues are reset if we cross over to the next day.
             col.getSched()._checkDay();
 
             // Only count the top-level decks in the total
-            List<Sched.DeckDueTreeNode> nodes = col.getSched().deckDueTree();
-            for (Sched.DeckDueTreeNode node : nodes) {
-                total[0] += node.getNewCount();
-                total[1] += node.getLrnCount();
-                total[2] += node.getRevCount();
-            }
+            AbstractSched.DeckDueTreeNode topLevel = col.getSched().deckDueTree();
+            int[] total = {topLevel.getNewCount(), topLevel.getLrnCount(), topLevel.getRevCount()};
             int due = total[0] + total[1] + total[2];
             int eta = col.getSched().eta(total, false);
             sSmallWidgetStatus = new Pair<>(due, eta);

@@ -416,32 +416,34 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public List<DeckDueTreeNode> deckDueTree() {
+    public DeckDueTreeNode deckDueTree() {
         return deckDueTree(null);
     }
 
-    public List<DeckDueTreeNode> deckDueTree(CollectionTask collectionTask) {
+    public DeckDueTreeNode deckDueTree(CollectionTask collectionTask) {
         List<DeckDueTreeNode> deckDueTree = deckDueList(collectionTask);
         if (deckDueTree == null) {
             return null;
         }
-        return _groupChildren(deckDueTree);
+        DeckDueTreeNode topLevel = new DeckDueTreeNode("", null, 0, 0, 0);
+        _groupChildren(topLevel, deckDueTree);
+        return topLevel;
     }
 
 
-    private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps) {
+    private void _groupChildren(DeckDueTreeNode topLevel, List<DeckDueTreeNode> grps) {
         // sort based on name's components
         Collections.sort(grps);
         // then run main function
-        return _groupChildrenMain(grps);
+        _groupChildrenMain(topLevel, grps);
     }
 
 
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps) {
-        return _groupChildrenMain(grps, 0);
+    protected void _groupChildrenMain(DeckDueTreeNode topLevel, List<DeckDueTreeNode> grps) {
+        _groupChildrenMain(topLevel, grps, 0);
     }
 
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, int depth) {
+    protected void _groupChildrenMain(DeckDueTreeNode parent, List<DeckDueTreeNode> grps, int depth) {
         List<DeckDueTreeNode> tree = new ArrayList<>();
         // group and recurse
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
@@ -464,10 +466,10 @@ public class SchedV2 extends AbstractSched {
                     break;
                 }
             }
-            node.setChildren(_groupChildrenMain(node.getChildren(), depth + 1), false);
             tree.add(node);
+            _groupChildrenMain(node, children, depth + 1);
         }
-        return tree;
+        parent.setChildren(tree, false);
     }
 
 

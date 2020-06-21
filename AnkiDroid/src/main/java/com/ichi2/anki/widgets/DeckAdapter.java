@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 
 import com.ichi2.utils.JSONObject;
@@ -63,11 +64,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     private View.OnClickListener mCountsClickListener;
 
     private Collection mCol;
-
-    // Totals accumulated as each deck is processed
-    private int mNew;
-    private int mLrn;
-    private int mRev;
 
     // Flags
     private boolean mHasSubdecks;
@@ -141,10 +137,9 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     /**
      * Consume a list of {@link Sched.DeckDueTreeNode}s to render a new deck list.
      */
-    public void buildDeckList(List<Sched.DeckDueTreeNode> nodes, Collection col) {
+    public void buildDeckList(Sched.DeckDueTreeNode nodes, Collection col) {
         mCol = col;
         mDeckList.clear();
-        mNew = mLrn = mRev = 0;
         mHasSubdecks = false;
         processNodes(nodes);
         notifyDataSetChanged();
@@ -240,11 +235,12 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     }
 
 
-    private void processNodes(List<Sched.DeckDueTreeNode> nodes) {
-        for (Sched.DeckDueTreeNode node : nodes) {
+    private void processNodes(Sched.DeckDueTreeNode nodes) {
+        List<AbstractSched.DeckDueTreeNode> children = nodes.getChildren();
+        for (Sched.DeckDueTreeNode node : children) {
             // If the default deck is empty, hide it by not adding it to the deck list.
             // We don't hide it if it's the only deck or if it has sub-decks.
-            if (node.getDid() == 1 && nodes.size() > 1 && node.getChildren().size() == 0) {
+            if (node.getDid() == 1 && children.size() > 1 && node.getChildren().size() == 0) {
                 if (mCol.getDb().queryScalar("select 1 from cards where did = 1") == 0) {
                     continue;
                 }
@@ -258,14 +254,8 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             }
             mDeckList.add(node);
 
-            // Add this node's counts to the totals if it's a parent deck
-            if (node.getDepth() == 0) {
-                mNew += node.getNewCount();
-                mLrn += node.getLrnCount();
-                mRev += node.getRevCount();
-            }
             // Process sub-decks
-            processNodes(node.getChildren());
+            processNodes(node);
         }
     }
 
@@ -289,15 +279,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         } else {
             return findDeckPosition(parents.get(parents.size() - 1).optLong("id", 0));
         }
-    }
-
-
-    public int getEta() {
-        return mCol.getSched().eta(new int[]{mNew, mLrn, mRev});
-    }
-
-    public int getDue() {
-        return mNew + mLrn + mRev;
     }
 
     public List<Sched.DeckDueTreeNode> getDeckList() {
