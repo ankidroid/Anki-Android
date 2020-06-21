@@ -420,12 +420,13 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         return true;
     }
-    private void saveWhiteboardInternal() {
+
+    private void saveWhiteboardInternal() throws FileNotFoundException{
         Bitmap bitmap = Bitmap.createBitmap(mWhiteboard.getWidth(), mWhiteboard.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
 
         File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File ankiDroidFolder = new File(pictures, "AnkiDroid");
+        File ankiDroidFolder = new File(pictures, "AnkiDroidFolder");
 
         if(!ankiDroidFolder.exists()) {
             ankiDroidFolder.mkdirs();
@@ -443,14 +444,11 @@ public class Reviewer extends AbstractFlashcardViewer {
             canvas.drawColor(Color.WHITE);
         }
 
-        try {
-            mWhiteboard.draw(canvas);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveImgFile));
-            UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, saveImgFile.getAbsolutePath()),true);
-        } catch (FileNotFoundException e) {
-            Timber.e(e, "Whiteboard image saving failed");
-        }
+        mWhiteboard.draw(canvas);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveImgFile));
+        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, saveImgFile.getAbsolutePath()),true);
     }
+
     private void toggleMicToolBar() {
         if (mMicToolBar != null) {
             // It exists swap visibility status
