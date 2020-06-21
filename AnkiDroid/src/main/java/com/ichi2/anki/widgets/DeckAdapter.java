@@ -194,12 +194,19 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
 
         // Set the card counts and their colors
-        holder.deckNew.setText(String.valueOf(node.getNewCount()));
-        holder.deckNew.setTextColor((node.getNewCount() == 0) ? mZeroCountColor : mNewCountColor);
-        holder.deckLearn.setText(String.valueOf(node.getLrnCount()));
-        holder.deckLearn.setTextColor((node.getLrnCount() == 0) ? mZeroCountColor : mLearnCountColor);
-        holder.deckRev.setText(String.valueOf(node.getRevCount()));
-        holder.deckRev.setTextColor((node.getRevCount() == 0) ? mZeroCountColor : mReviewCountColor);
+        if (node instanceof AbstractSched.DeckDueTreeNodeNumbered) {
+            AbstractSched.DeckDueTreeNodeNumbered node_ = (AbstractSched.DeckDueTreeNodeNumbered) node;
+            holder.deckNew.setText(String.valueOf(node_.getNewCount()));
+            holder.deckNew.setTextColor((node_.getNewCount() == 0) ? mZeroCountColor : mNewCountColor);
+            holder.deckLearn.setText(String.valueOf(node_.getLrnCount()));
+            holder.deckLearn.setTextColor((node_.getLrnCount() == 0) ? mZeroCountColor : mLearnCountColor);
+            holder.deckRev.setText(String.valueOf(node_.getRevCount()));
+            holder.deckRev.setTextColor((node_.getRevCount() == 0) ? mZeroCountColor : mReviewCountColor);
+        } else {
+            holder.deckNew.setText("");
+            holder.deckRev.setText("");
+            holder.deckLearn.setText("");
+        }
 
         // Store deck ID in layout's tag for easy retrieval in our click listeners
         holder.deckLayout.setTag(node.getDid());

@@ -369,10 +369,10 @@ public class CardContentProvider extends ContentProvider {
                 return rv;
             }
             case DECKS: {
-                List<Sched.DeckDueTreeNode> allDecks = col.getSched().deckDueList();
+                List<Sched.DeckDueTreeNodeNumbered> allDecks = col.getSched().deckDueList();
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, allDecks.size());
-                for (Sched.DeckDueTreeNode deck : allDecks) {
+                for (Sched.DeckDueTreeNodeNumbered deck : allDecks) {
                     long id = deck.getDid();
                     String name = deck.getLastPart();
                     addDeckToCursor(id, name, getDeckCountsFromDueTreeNode(deck), rv, col, columns);
@@ -383,10 +383,10 @@ public class CardContentProvider extends ContentProvider {
                 /* Direct access deck */
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
-                List<Sched.DeckDueTreeNode> allDecks = col.getSched().deckDueList();
+                List<Sched.DeckDueTreeNodeNumbered> allDecks = col.getSched().deckDueList();
                 long deckId;
                 deckId = Long.parseLong(uri.getPathSegments().get(1));
-                for (Sched.DeckDueTreeNode deck : allDecks) {
+                for (Sched.DeckDueTreeNodeNumbered deck : allDecks) {
                     if(deck.getDid() == deckId){
                         addDeckToCursor(deckId, deck.getLastPart(), getDeckCountsFromDueTreeNode(deck), rv, col, columns);
                         return rv;
@@ -409,7 +409,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private JSONArray getDeckCountsFromDueTreeNode(Sched.DeckDueTreeNode deck){
+    private JSONArray getDeckCountsFromDueTreeNode(Sched.DeckDueTreeNodeNumbered deck){
         JSONArray deckCounts = new JSONArray();
         deckCounts.put(deck.getLrnCount());
         deckCounts.put(deck.getRevCount());

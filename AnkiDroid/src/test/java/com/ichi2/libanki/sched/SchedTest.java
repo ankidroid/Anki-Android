@@ -21,7 +21,6 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.sched.AbstractSched.DeckDueTreeNode;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,7 +71,7 @@ public class SchedTest extends RobolectricTest {
         sched.rebuildDyn(dynDeck);
 
         //Assert
-        DeckDueTreeNode dynamicDeck = getCountsForDid(dynDeck);
+        AbstractSched.DeckDueTreeNodeNumbered dynamicDeck = getCountsForDid(dynDeck);
 
         assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.getLrnCount(), is(0));
         assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.getNewCount(), is(0));
@@ -89,10 +88,10 @@ public class SchedTest extends RobolectricTest {
 
 
     @NonNull
-    private DeckDueTreeNode getCountsForDid(double didToFind) {
-        DeckDueTreeNode topLevel =  getCol().getSched().deckDueTree();
+    private AbstractSched.DeckDueTreeNodeNumbered getCountsForDid(double didToFind) {
+        AbstractSched.DeckDueTreeNodeNumbered topLevel =  getCol().getSched().deckDueTree();
 
-        for (DeckDueTreeNode node: topLevel.getChildren()) {
+        for (AbstractSched.DeckDueTreeNodeNumbered node: topLevel.getChildren()) {
             if (node.getDid() == didToFind) {
                 return node;
             }

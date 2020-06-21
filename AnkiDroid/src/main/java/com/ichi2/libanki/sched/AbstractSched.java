@@ -14,7 +14,6 @@ import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,10 +48,10 @@ public abstract class AbstractSched {
     /**
      * Returns [deckname, did, rev, lrn, new]
      */
-    public abstract List<DeckDueTreeNode> deckDueList();
+    public abstract List<DeckDueTreeNodeNumbered> deckDueList();
     /** load the due tree, but halt if deck task is cancelled*/
-    public abstract DeckDueTreeNode deckDueTree(CollectionTask collectionTask);
-    public abstract DeckDueTreeNode deckDueTree();
+    public abstract DeckDueTreeNodeNumbered deckDueTree(CollectionTask collectionTask);
+    public abstract DeckDueTreeNodeNumbered deckDueTree();
     /** New count for a single deck. */
     public abstract int _newForDeck(long did, int lim);
     /** Limit for deck without parent limits. */
@@ -178,21 +177,18 @@ public abstract class AbstractSched {
      * deck will have an entry for every level of nesting). While the python version interchanges
      * between a string and a list of strings throughout processing, we always use an array for
      * this field and use names[0] for those cases.
+     * 
+     * T represents the set of descendants. For parametrization
+     * reason, it should be given explicitely.
      */
-    public class DeckDueTreeNode implements Comparable {
+    public abstract class DeckDueTreeNode<T extends DeckDueTreeNode> implements Comparable {
         private String mName;
         private String[] mSplittedName;
         private Long mDid;
-        private int mRevCount;
-        private int mLrnCount;
-        private int mNewCount;
-        private List<DeckDueTreeNode> mChildren = new ArrayList<>();
+        private List<T> mChildren = new ArrayList<>();
 
-        public DeckDueTreeNode(String name, Long mDid, int mRevCount, int mLrnCount, int mNewCount) {
+        public DeckDueTreeNode(String name, Long mDid) {
             this.mDid = mDid;
-            this.mRevCount = mRevCount;
-            this.mLrnCount = mLrnCount;
-            this.mNewCount = mNewCount;
             this.mName = name;
             this.mSplittedName = name.split("::");
         }
@@ -223,8 +219,8 @@ public abstract class AbstractSched {
 
         @Override
         public String toString() {
-            return String.format(Locale.US, "%s, %d, %d, %d, %d, %s",
-                    mName, mDid, mRevCount, mLrnCount, mNewCount, mChildren);
+            return String.format(Locale.US, "%s, %d, %s",
+                    mName, mDid, mChildren);
         }
 
         public String getNamePart(int part) {
@@ -235,12 +231,51 @@ public abstract class AbstractSched {
             return mSplittedName[mSplittedName.length - 1];
         }
 
-        public long getDid() {
+        public Long getDid() {
             return mDid;
         }
 
         public int getDepth() {
             return mSplittedName.length - 1;
+        }
+
+        public List<T> getChildren() {
+            return mChildren;
+        }
+
+        public void setChildren(List<T> children, boolean addRev) {
+            mChildren = children;
+        }
+    }
+
+    /** Used to represents decks in deck picker, without numbers, for quick loading. 
+
+        Creating this subclass ensure all descendants are also "quick"
+        and not numbered. This increase type safety.
+     */
+    public class DeckDueTreeNodeQuick extends DeckDueTreeNode<DeckDueTreeNodeQuick> {
+        public DeckDueTreeNodeQuick(String name, Long mDid) {
+            super(name, mDid);
+        }
+    }
+
+    /** Used to represents decks in deck picker, with number. */
+    public class DeckDueTreeNodeNumbered extends DeckDueTreeNode<DeckDueTreeNodeNumbered> {
+        private int mRevCount;
+        private int mLrnCount;
+        private int mNewCount;
+
+        public DeckDueTreeNodeNumbered(String name, Long mDid, int mRevCount, int mLrnCount, int mNewCount) {
+            super(name, mDid);
+            this.mRevCount = mRevCount;
+            this.mLrnCount = mLrnCount;
+            this.mNewCount = mNewCount;
+        }
+
+        @Override
+        public String toString() {
+            return String.format(Locale.US, "%s, %d, %d, %d, %d, %s",
+                    getName(), getDid(), mRevCount, mLrnCount, mNewCount, getChildren());
         }
 
         public int getRevCount() {
@@ -263,14 +298,10 @@ public abstract class AbstractSched {
             return mLrnCount;
         }
 
-        public List<DeckDueTreeNode> getChildren() {
-            return mChildren;
-        }
-
-        public void setChildren(List<DeckDueTreeNode> children, boolean addRev) {
-            mChildren = children;
+        public void setChildren(List<DeckDueTreeNodeNumbered> children, boolean addRev) {
+            super.setChildren(children, addRev);
             // tally up children counts
-            for (DeckDueTreeNode ch : children) {
+            for (DeckDueTreeNodeNumbered ch : children) {
                 mLrnCount += ch.getLrnCount();
                 mNewCount += ch.getNewCount();
                 if (addRev) {
@@ -278,10 +309,10 @@ public abstract class AbstractSched {
                 }
             }
             // limit the counts to the deck's limits
-            if (mDid != null) {
-                JSONObject conf = mCol.getDecks().confForDid(mDid);
+            if (getDid() != null) {
+                JSONObject conf = mCol.getDecks().confForDid(getDid());
                 if (conf.getInt("dyn") == 0) {
-                    JSONObject deck = mCol.getDecks().get(mDid);
+                    JSONObject deck = mCol.getDecks().get(getDid());
                     limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1));
                     if (addRev) {
                         limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1));

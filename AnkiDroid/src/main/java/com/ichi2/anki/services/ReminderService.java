@@ -55,7 +55,7 @@ public class ReminderService extends BroadcastReceiver {
             alarmManager.cancel(reminderIntent);
         }
 
-        Sched.DeckDueTreeNode deckDue = getDeckDue(context, deckId, true);
+        Sched.DeckDueTreeNodeNumbered deckDue = getDeckDue(context, deckId, true);
 
         if (null == deckDue) {
             return;
@@ -103,7 +103,7 @@ public class ReminderService extends BroadcastReceiver {
 
 
     // getDeckDue information, will recur one time to workaround collection close if recur is true
-    private Sched.DeckDueTreeNode getDeckDue(Context context, long deckId, boolean recur) {
+    private Sched.DeckDueTreeNodeNumbered getDeckDue(Context context, long deckId, boolean recur) {
 
         // Avoid crashes if the deck is deleted while we are working
         if (CollectionHelper.getInstance().getCol(context).getDecks().get(deckId, false) == null) {
@@ -112,7 +112,7 @@ public class ReminderService extends BroadcastReceiver {
         }
 
         try {
-            for (Sched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree().getChildren()) {
+            for (Sched.DeckDueTreeNodeNumbered node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree().getChildren()) {
                 if (node.getDid() == deckId) {
                     return node;
                 }

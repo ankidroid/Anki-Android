@@ -104,6 +104,7 @@ import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
@@ -2038,7 +2039,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mFocusedDeck = did;
         // Get some info about the deck to handle special cases
         int pos = mDeckListAdapter.findDeckPosition(did);
-        Sched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
+        Sched.DeckDueTreeNode deckDueTreeNode_ = mDeckListAdapter.getDeckList().get(pos);
+        if (!(deckDueTreeNode_ instanceof AbstractSched.DeckDueTreeNodeNumbered)) {
+            // If we don't yet have numbers, we trust the user that they knows what they opens, tries to open it.
+            // If there is nothing to review, it'll come back to deck picker.
+            if (mFragmented || dontSkipStudyOptions) {
+                // Go to StudyOptions screen when tablet or deck counts area was clicked
+                openStudyOptions(false);
+            } else {
+                // Otherwise jump straight to the reviewer
+                openReviewer();
+            }
+            return;
+        }
+        // There are numbers
+        Sched.DeckDueTreeNodeNumbered deckDueTreeNode = (AbstractSched.DeckDueTreeNodeNumbered) deckDueTreeNode_;
         // Figure out what action to take
         if (deckDueTreeNode.getNewCount() + deckDueTreeNode.getLrnCount() + deckDueTreeNode.getRevCount() > 0) {
             // If there are cards to study then either go to Reviewer or StudyOptions
@@ -2172,16 +2187,23 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         // Set the "x due in y minutes" subtitle
         try {
-            int eta = mDueTree.getEta();
-            int due = mDueTree.getDue();
-            Resources res = getResources();
-            if (getCol().cardCount() != -1) {
-                String time = "-";
-                if (eta != -1) {
-                    time = Utils.timeQuantityTopDeckPicker(AnkiDroidApp.getInstance(), eta*60);
-                }
+            if (!(mDueTree instanceof AbstractSched.DeckDueTreeNodeNumbered)) {
                 if (getSupportActionBar() != null) {
-                    getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+                    getSupportActionBar().setSubtitle("");
+                }
+            } else {
+                AbstractSched.DeckDueTreeNodeNumbered dueTree = (AbstractSched.DeckDueTreeNodeNumbered) mDueTree;
+                int eta = dueTree.getEta();
+                int due = dueTree.getDue();
+                Resources res = getResources();
+                if (getCol().cardCount() != -1) {
+                    String time = "-";
+                    if (eta != -1) {
+                        time = Utils.timeQuantityTopDeckPicker(AnkiDroidApp.getInstance(), eta * 60);
+                    }
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+                    }
                 }
             }
         } catch (RuntimeException e) {

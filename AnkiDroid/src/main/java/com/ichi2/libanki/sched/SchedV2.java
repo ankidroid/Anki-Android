@@ -373,17 +373,18 @@ public class SchedV2 extends AbstractSched {
      * Returns [deckname, did, rev, lrn, new]
      *
      * Return nulls when deck task is cancelled.
+     * @return
      */
-    public List<DeckDueTreeNode> deckDueList() {
+    public List<DeckDueTreeNodeNumbered> deckDueList() {
         return deckDueList(null);
     }
 
-    public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask) {
+    public List<DeckDueTreeNodeNumbered> deckDueList(CollectionTask collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
-        ArrayList<DeckDueTreeNode> data = new ArrayList<>();
+        ArrayList<DeckDueTreeNodeNumbered> data = new ArrayList<>();
         HashMap<Long, HashMap> childMap = mCol.getDecks().childMap();
         for (JSONObject deck : decks) {
             if (collectionTask != null && collectionTask.isCancelled()) {
@@ -408,7 +409,7 @@ public class SchedV2 extends AbstractSched {
             int rlim = _deckRevLimitSingle(deck, plim);
             int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
             // save to list
-            data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            data.add(new DeckDueTreeNodeNumbered(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
             // add deck as a parent
             lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
         }
@@ -416,46 +417,46 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public DeckDueTreeNode deckDueTree() {
+    public DeckDueTreeNodeNumbered deckDueTree() {
         return deckDueTree(null);
     }
 
-    public DeckDueTreeNode deckDueTree(CollectionTask collectionTask) {
-        List<DeckDueTreeNode> deckDueTree = deckDueList(collectionTask);
+    public DeckDueTreeNodeNumbered deckDueTree(CollectionTask collectionTask) {
+        List<DeckDueTreeNodeNumbered> deckDueTree = deckDueList(collectionTask);
         if (deckDueTree == null) {
             return null;
         }
-        DeckDueTreeNode topLevel = new DeckDueTreeNode("", null, 0, 0, 0);
+        DeckDueTreeNodeNumbered topLevel = new DeckDueTreeNodeNumbered("", null, 0, 0, 0);
         _groupChildren(topLevel, deckDueTree);
         return topLevel;
     }
 
 
-    private void _groupChildren(DeckDueTreeNode topLevel, List<DeckDueTreeNode> grps) {
+    private <T extends DeckDueTreeNode> void _groupChildren(T toplevel, List<T> grps) {
         // sort based on name's components
         Collections.sort(grps);
         // then run main function
-        _groupChildrenMain(topLevel, grps);
+        _groupChildrenMain(toplevel, grps);
     }
 
 
-    protected void _groupChildrenMain(DeckDueTreeNode topLevel, List<DeckDueTreeNode> grps) {
+    protected <T extends DeckDueTreeNode> void _groupChildrenMain(T topLevel, List<T> grps) {
         _groupChildrenMain(topLevel, grps, 0);
     }
 
-    protected void _groupChildrenMain(DeckDueTreeNode parent, List<DeckDueTreeNode> grps, int depth) {
-        List<DeckDueTreeNode> tree = new ArrayList<>();
+    protected <T extends DeckDueTreeNode> void _groupChildrenMain(T parent, List<T> grps, int depth) {
+        List<T> tree = new ArrayList<>();
         // group and recurse
-        ListIterator<DeckDueTreeNode> it = grps.listIterator();
+        ListIterator<T> it = grps.listIterator();
         while (it.hasNext()) {
-            DeckDueTreeNode node = it.next();
+            T node = it.next();
             String head = node.getNamePart(depth);
             // Compose the "tail" node list. The tail is a list of all the nodes that proceed
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
             // from this node. This is our version of python's itertools.groupby.
-            List<DeckDueTreeNode> children = new ArrayList<>();
+            List<T> children = new ArrayList<>();
             while (it.hasNext()) {
-                DeckDueTreeNode next = it.next();
+                T next = it.next();
                 if (head.equals(next.getNamePart(depth))) {
                     // Same head - add to tail of current head.
                     children.add(next);
