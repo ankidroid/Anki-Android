@@ -268,25 +268,21 @@ public class Sched extends SchedV2 {
                     break;
                 }
             }
-            Long did = node.getDid();
-            int rev = node.getRevCount();
-            int _new = node.getNewCount();
-            int lrn = node.getLrnCount();
             node.setChildren(_groupChildrenMain(children, depth + 1));
             // tally up children counts
             for (DeckDueTreeNode ch : node.getChildren()) {
-                rev += ch.getRevCount();
-                lrn += ch.getLrnCount();
-                _new += ch.getNewCount();
+                node.addRevCount(ch.getRevCount());
+                node.addLrnCount(ch.getLrnCount());
+                node.addNewCount(ch.getNewCount());
             }
             // limit the counts to the deck's limits
-            JSONObject conf = mCol.getDecks().confForDid(did);
+            JSONObject conf = mCol.getDecks().confForDid(node.getDid());
             if (conf.getInt("dyn") == 0) {
-                JSONObject deck = mCol.getDecks().get(did);
-                rev = Math.max(0, Math.min(rev, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
-                _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
+                JSONObject deck = mCol.getDecks().get(node.getDid());
+                node.limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1));
+                node.limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1));
             }
-            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, node.getChildren()));
+            tree.add(node);
         }
         return tree;
     }

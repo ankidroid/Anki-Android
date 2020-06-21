@@ -195,12 +195,6 @@ public abstract class AbstractSched {
             this.mSplittedName = name.split("::");
         }
 
-        public DeckDueTreeNode(String name, long mDid, int mRevCount, int mLrnCount, int mNewCount,
-                               List<DeckDueTreeNode> mChildren) {
-            this(name, mDid, mRevCount, mLrnCount, mNewCount);
-            this.mChildren = mChildren;
-        }
-
         /**
          * Sort on the head of the node.
          */
@@ -251,18 +245,37 @@ public abstract class AbstractSched {
             return mRevCount;
         }
 
+        public void addRevCount(int count) {
+            mRevCount += count;
+        }
+
+        public void limitRevCount(int limit) {
+            mRevCount = Math.max(0, Math.min(mRevCount, limit));
+        }
+
         public int getNewCount() {
             return mNewCount;
+        }
+
+        public void addNewCount(int count) {
+            mNewCount += count;
+        }
+
+        public void limitNewCount(int limit) {
+            mNewCount = Math.max(0, Math.min(mNewCount, limit));
         }
 
         public int getLrnCount() {
             return mLrnCount;
         }
 
+        public void addLrnCount(int count) {
+            mLrnCount += count;
+        }
+
         public List<DeckDueTreeNode> getChildren() {
             return mChildren;
         }
-
 
         public void setChildren(List<DeckDueTreeNode> children) {
             mChildren = children;

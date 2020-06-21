@@ -465,23 +465,19 @@ public class SchedV2 extends AbstractSched {
                     break;
                 }
             }
-            Long did = node.getDid();
-            int rev = node.getRevCount();
-            int _new = node.getNewCount();
-            int lrn = node.getLrnCount();
             node.setChildren(_groupChildrenMain(node.getChildren(), depth + 1));
             // tally up children counts
             for (DeckDueTreeNode ch : node.getChildren()) {
-                lrn +=  ch.getLrnCount();
-                _new += ch.getNewCount();
+                node.addLrnCount(ch.getLrnCount());
+                node.addNewCount(ch.getNewCount());
             }
             // limit the counts to the deck's limits
-            JSONObject conf = mCol.getDecks().confForDid(did);
+            JSONObject conf = mCol.getDecks().confForDid(node.getDid());
             if (conf.getInt("dyn") == 0) {
-                JSONObject deck = mCol.getDecks().get(did);
-                _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
+                JSONObject deck = mCol.getDecks().get(node.getDid());
+                node.limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1));
             }
-            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, node.getChildren()));
+            tree.add(node);
         }
         return tree;
     }
