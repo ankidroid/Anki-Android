@@ -2544,8 +2544,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             String msg;
             long shrunkInMb = Math.round(databaseResult.getSizeChangeInKb() / 1024.0);
             if (shrunkInMb > 0.0) {
-                msg = String.format(Locale.getDefault(),
-                getResources().getString(R.string.check_db_acknowledge_shrunk), (int) shrunkInMb);
+                msg = getResources().getString(R.string.check_db_acknowledge_shrunk, (int) shrunkInMb);
             } else {
                 msg = getResources().getString(R.string.check_db_acknowledge);
             }
