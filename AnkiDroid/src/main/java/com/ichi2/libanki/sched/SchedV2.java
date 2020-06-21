@@ -76,7 +76,6 @@ public class SchedV2 extends AbstractSched {
     private String mName = "std2";
     private boolean mHaveCustomStudy = true;
 
-    protected Collection mCol;
     protected int mQueueLimit;
     protected int mReportLimit;
     private int mDynReportLimit;
@@ -468,23 +467,9 @@ public class SchedV2 extends AbstractSched {
                     break;
                 }
             }
-            int rev = node.getRevCount();
-            int _new = node.getNewCount();
-            int lrn = node.getLrnCount();
             // the children set contains direct children but not the children of children...
-            node.setChildren(_groupChildrenMain(children, depth + 1));
-            // tally up children counts
-            for (DeckDueTreeNode ch : node.getChildren()) {
-                lrn +=  ch.getLrnCount();
-                _new += ch.getNewCount();
-            }
-            // limit the counts to the deck's limits
-            JSONObject conf = mCol.getDecks().confForDid(node.getDid());
-            if (conf.getInt("dyn") == 0) {
-                JSONObject deck = mCol.getDecks().get(node.getDid());
-                _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
-            }
-            tree.add(new DeckDueTreeNode(head, node.getDid(), rev, lrn, _new, node.getChildren()));
+            node.setChildren(_groupChildrenMain(node.getChildren(), depth + 1), false);
+            tree.add(node);
         }
         return tree;
     }
