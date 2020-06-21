@@ -48,6 +48,7 @@ import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -992,6 +993,7 @@ public class ContentProviderTest {
 
     /** Test that a null did will not crash the provider (#6378) */
      @Test
+     @Ignore("#6025 - This causes mild data corruption - should not be run on actual collection")
      public void testProviderProvidesDefaultForEmptyModelDeck() {
          Collection col = getCol();
          col.getModels().all().get(0).put("did", JSONObject.NULL);
