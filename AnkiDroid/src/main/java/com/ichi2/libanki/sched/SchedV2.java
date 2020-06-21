@@ -491,8 +491,8 @@ public class SchedV2 extends AbstractSched {
             }
             // limit the counts to the deck's limits
             JSONObject conf = mCol.getDecks().confForDid(did);
-            JSONObject deck = mCol.getDecks().get(did);
             if (conf.getInt("dyn") == 0) {
+                JSONObject deck = mCol.getDecks().get(did);
                 _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
             tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, node.getChildren()));
