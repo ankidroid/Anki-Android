@@ -182,13 +182,13 @@ public abstract class AbstractSched {
     public class DeckDueTreeNode implements Comparable {
         private String mName;
         private String[] mSplittedName;
-        private long mDid;
+        private Long mDid;
         private int mRevCount;
         private int mLrnCount;
         private int mNewCount;
         private List<DeckDueTreeNode> mChildren = new ArrayList<>();
 
-        public DeckDueTreeNode(String name, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
+        public DeckDueTreeNode(String name, Long mDid, int mRevCount, int mLrnCount, int mNewCount) {
             this.mDid = mDid;
             this.mRevCount = mRevCount;
             this.mLrnCount = mLrnCount;
@@ -278,12 +278,14 @@ public abstract class AbstractSched {
                 }
             }
             // limit the counts to the deck's limits
-            JSONObject conf = mCol.getDecks().confForDid(mDid);
-            if (conf.getInt("dyn") == 0) {
-                JSONObject deck = mCol.getDecks().get(mDid);
-                limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1));
-                if (addRev) {
-                    limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1));
+            if (mDid != null) {
+                JSONObject conf = mCol.getDecks().confForDid(mDid);
+                if (conf.getInt("dyn") == 0) {
+                    JSONObject deck = mCol.getDecks().get(mDid);
+                    limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1));
+                    if (addRev) {
+                        limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1));
+                    }
                 }
             }
         }
