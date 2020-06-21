@@ -141,6 +141,7 @@ public abstract class AbstractSched {
     public abstract int getReps();
     public abstract void setReps(int reps);
     public abstract int cardCount();
+    public abstract int eta(int[] counts);
     /**
      * Return an estimate, in minutes, for how long it will take to complete all the reps in {@code counts}.
      *
@@ -158,7 +159,6 @@ public abstract class AbstractSched {
      * @param counts An array of [new, lrn, rev] counts from the scheduler's counts() method.
      * @param reload Force rebuild of estimator rates using the revlog.
      */
-    public abstract int eta(int[] counts);
     public abstract int eta(int[] counts, boolean reload);
     public abstract void decrementCounts(Card card);
     public abstract boolean leechActionSuspend(Card card);
