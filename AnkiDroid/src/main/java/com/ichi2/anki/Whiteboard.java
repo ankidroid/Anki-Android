@@ -72,7 +72,7 @@ public class Whiteboard extends View {
     private boolean mInvertedColors;
     private boolean mMonochrome;
     private boolean mUndoModeActive = false;
-    private int foregroundColor;
+    private final int foregroundColor;
 
     File saveWhiteboardImagFile;
 
