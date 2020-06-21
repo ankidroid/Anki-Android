@@ -241,11 +241,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
 
     private void processNodes(List<Sched.DeckDueTreeNode> nodes) {
-        processNodes(nodes, 0);
-    }
-
-
-    private void processNodes(List<Sched.DeckDueTreeNode> nodes, int depth) {
         for (Sched.DeckDueTreeNode node : nodes) {
             // If the default deck is empty, hide it by not adding it to the deck list.
             // We don't hide it if it's the only deck or if it has sub-decks.
@@ -264,13 +259,13 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             mDeckList.add(node);
 
             // Add this node's counts to the totals if it's a parent deck
-            if (depth == 0) {
+            if (node.getDepth() == 0) {
                 mNew += node.getNewCount();
                 mLrn += node.getLrnCount();
                 mRev += node.getRevCount();
             }
             // Process sub-decks
-            processNodes(node.getChildren(), depth + 1);
+            processNodes(node.getChildren());
         }
     }
 
