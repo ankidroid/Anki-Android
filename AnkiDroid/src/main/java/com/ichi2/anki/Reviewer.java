@@ -446,6 +446,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         try {
             mWhiteboard.draw(canvas);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveImgFile));
+            UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, saveImgFile.getAbsolutePath()),true);
         } catch (FileNotFoundException e) {
             Timber.e(e, "Whiteboard image saving failed");
         }
