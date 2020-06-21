@@ -452,13 +452,12 @@ public class SchedV2 extends AbstractSched {
             // Compose the "tail" node list. The tail is a list of all the nodes that proceed
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
             // from this node. This is our version of python's itertools.groupby.
-            List<DeckDueTreeNode> tail  = new ArrayList<>();
-            tail.add(node);
+            List<DeckDueTreeNode> children = new ArrayList<>();
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
                 if (head.equals(next.getNamePart(depth))) {
                     // Same head - add to tail of current head.
-                    tail.add(next);
+                    children.add(next);
                 } else {
                     // We've iterated past this head, so step back in order to use this node as the
                     // head in the next iteration of the outer loop.
@@ -466,23 +465,10 @@ public class SchedV2 extends AbstractSched {
                     break;
                 }
             }
-            Long did = null;
-            int rev = 0;
-            int _new = 0;
-            int lrn = 0;
-            List<DeckDueTreeNode> children = new ArrayList<>();
-            for (DeckDueTreeNode c : tail) {
-                if (c.getDepth() == depth) {
-                    // current node
-                    did = c.getDid();
-                    rev += c.getRevCount();
-                    lrn += c.getLrnCount();
-                    _new += c.getNewCount();
-                } else {
-                    // set new string to tail
-                    children.add(c);
-                }
-            }
+            Long did = node.getDid();
+            int rev = node.getRevCount();
+            int _new = node.getNewCount();
+            int lrn = node.getLrnCount();
             node.setChildren(_groupChildrenMain(node.getChildren(), depth + 1));
             // tally up children counts
             for (DeckDueTreeNode ch : node.getChildren()) {
