@@ -415,9 +415,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         return true;
     }
-
-
-
     private void saveWhiteboardInternal() {
         Bitmap bitmap = Bitmap.createBitmap(mWhiteboard.getWidth(), mWhiteboard.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
