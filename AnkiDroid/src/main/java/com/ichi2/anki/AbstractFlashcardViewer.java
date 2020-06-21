@@ -1265,7 +1265,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         new MaterialDialog.Builder(this)
                 .title(res.getString(R.string.delete_card_title))
                 .iconAttr(R.attr.dialogErrorIcon)
-                .content(String.format(res.getString(R.string.delete_note_message),
+                .content(res.getString(R.string.delete_note_message,
                         Utils.stripHTML(mCurrentCard.q(true))))
                 .positiveText(res.getString(R.string.dialog_positive_delete))
                 .negativeText(res.getString(R.string.dialog_cancel))
