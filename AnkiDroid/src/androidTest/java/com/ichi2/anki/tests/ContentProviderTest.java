@@ -184,7 +184,7 @@ public class ContentProviderTest {
         }
         // delete test decks
         for(long did : mTestDeckIds) {
-            col.getDecks().rem(did, true);
+            col.getDecks().rem(did, true, true);
         }
         col.getDecks().flush();
         assertEquals("Check that all created decks have been deleted", mNumDecksBeforeTest, col.getDecks().count());
