@@ -22,7 +22,6 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView;
-import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.ExecEscaped;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.SelectionType;
 import com.ichi2.anki.servicelayer.NoteService;
@@ -46,7 +45,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
@@ -59,6 +57,7 @@ import androidx.appcompat.widget.TooltipCompat;
 import timber.log.Timber;
 
 import static com.ichi2.anki.NoteEditor.REQUEST_MULTIMEDIA_EDIT;
+import static com.ichi2.anki.multimediacard.visualeditor.VisualEditorFunctionality.*;
 
 //BUG: Initial undo will undo the initial text
 //BUG: <hr/> is  less thick in the editor
@@ -185,18 +184,18 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
         };
 
         //defined: https://github.com/jkennethcarino/rtexteditorview/blob/master/library/src/main/assets/editor.js
-        setupAction.apply(R.id.editor_button_bold, "setBold", R.string.visual_editor_tooltip_bold);
-        setupAction.apply(R.id.editor_button_italic, "setItalic", R.string.visual_editor_tooltip_italic);
-        setupAction.apply(R.id.editor_button_underline, "setUnderline", R.string.visual_editor_tooltip_underline);
-        setupAction.apply(R.id.editor_button_clear_formatting, "removeFormat", R.string.visual_editor_tooltip_clear_formatting);
-        setupAction.apply(R.id.editor_button_list_bullet, "insertUnorderedList", R.string.visual_editor_tooltip_bullet_list);
-        setupAction.apply(R.id.editor_button_list_numbered, "insertOrderedList", R.string.visual_editor_tooltip_numbered_list);
-        setupAction.apply(R.id.editor_button_horizontal_rule, "insertHorizontalRule", R.string.visual_editor_tooltip_horizontal_line);
-        setupAction.apply(R.id.editor_button_align_left, "setAlignLeft", R.string.visual_editor_tooltip_align_left);
-        setupAction.apply(R.id.editor_button_align_center, "setAlignCenter", R.string.visual_editor_tooltip_align_center);
-        setupAction.apply(R.id.editor_button_align_right, "setAlignRight", R.string.visual_editor_tooltip_align_right);
-        setupAction.apply(R.id.editor_button_align_justify, "setAlignJustify", R.string.visual_editor_tooltip_align_justify);
-        setupAction.apply(R.id.editor_button_view_html, "editHtml", R.string.visual_editor_tooltip_view_source); //this is a toggle.
+        setupAction.apply(R.id.editor_button_bold, BOLD, R.string.visual_editor_tooltip_bold);
+        setupAction.apply(R.id.editor_button_italic, ITALIC, R.string.visual_editor_tooltip_italic);
+        setupAction.apply(R.id.editor_button_underline, UNDERLINE, R.string.visual_editor_tooltip_underline);
+        setupAction.apply(R.id.editor_button_clear_formatting, CLEAR_FORMATTING, R.string.visual_editor_tooltip_clear_formatting);
+        setupAction.apply(R.id.editor_button_list_bullet, ORDERED_LIST, R.string.visual_editor_tooltip_bullet_list);
+        setupAction.apply(R.id.editor_button_list_numbered, UNORDERED_LIST, R.string.visual_editor_tooltip_numbered_list);
+        setupAction.apply(R.id.editor_button_horizontal_rule, HORIZONTAL_RULE, R.string.visual_editor_tooltip_horizontal_line);
+        setupAction.apply(R.id.editor_button_align_left, ALIGN_LEFT, R.string.visual_editor_tooltip_align_left);
+        setupAction.apply(R.id.editor_button_align_center, ALIGN_CENTER, R.string.visual_editor_tooltip_align_center);
+        setupAction.apply(R.id.editor_button_align_right, ALIGN_RIGHT, R.string.visual_editor_tooltip_align_right);
+        setupAction.apply(R.id.editor_button_align_justify, ALIGN_JUSTIFY, R.string.visual_editor_tooltip_align_justify);
+        setupAction.apply(R.id.editor_button_view_html, EDIT_SOURCE, R.string.visual_editor_tooltip_view_source); //this is a toggle.
 
         AndroidListenerSetup setupAndroidListener = (id, function, toolltipId) -> {
             View view = findViewById(id);
