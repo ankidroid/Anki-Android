@@ -80,10 +80,12 @@ public class ContentProviderTest {
     private static final String TEST_FIELD_NAME = "TestFieldName";
     private static final String TEST_FIELD_VALUE = "test field value";
     private static final String TEST_TAG = "aldskfhewjklhfczmxkjshf";
-    private static final String[] TEST_DECKS = {"cmxieunwoogyxsctnjmv"
-                                                ,"sstuljxgmfdyugiujyhq"
-                                                ,"pdsqoelhmemmmbwjunnu"
-                                                ,"scxipjiyozczaaczoawo"};
+    private static final String[] TEST_DECKS = {
+            "cmxieunwoogyxsctnjmv",
+            "sstuljxgmfdyugiujyhq",
+            "pdsqoelhmemmmbwjunnu",
+            "scxipjiyozczaaczoawo",
+    };
     private static final String TEST_MODEL_NAME = "com.ichi2.anki.provider.test.a1x6h9l";
     private static final String[] TEST_MODEL_FIELDS = {"FRONTS","BACK"};
     private static final String[] TEST_MODEL_CARDS = {"cArD1", "caRD2"};
