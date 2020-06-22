@@ -358,8 +358,7 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
 
         webView.setHtml(mCurrentText);
         //reset the note history so we can't undo the above action.
-        webView.execFunction("clearHistory");
-        webView.execFunction("resizeImages"); //This is called on window.onload in the card viewer.
+        webView.load();
 
         //Could be better, this is done per card in AbstractFlashCardViewer
         webView.getSettings().setDefaultFontSize(CardAppearance.calculateDynamicFontSize(mCurrentText));
@@ -447,8 +446,7 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
 
 
     private void cloze(int clozeId) {
-        ExecEscaped e = ExecEscaped.fromString(String.format(Locale.US, "cloze(%d)", clozeId));
-        mWebView.exec(e);
+        mWebView.insertCloze(clozeId);
     }
 
     @Override

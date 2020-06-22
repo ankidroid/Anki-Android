@@ -52,7 +52,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
-public class VisualEditorWebView extends WebView {
+public abstract class VisualEditorWebView extends WebView {
     private String content;
 
     private RTextEditorView.OnTextChangeListener onTextChangeListener;
@@ -78,7 +78,7 @@ public class VisualEditorWebView extends WebView {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
+    @SuppressLint("SetJavaScriptEnabled")
     public void init(String utf8Content, String baseUrl) {
         WebSettings settings = getSettings();
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -87,8 +87,6 @@ public class VisualEditorWebView extends WebView {
 
         setWebChromeClient(getDefaultWebChromeClient());
         setWebViewClient(getDefaultWebViewClient());
-        addJavascriptInterface(this, "RTextEditorView");
-        loadDataWithBaseURL(baseUrl + "__visual_editor__.html\"", utf8Content, "text/html; charset=utf-8", "UTF-8", null);
     }
 
     @JavascriptInterface
@@ -179,10 +177,8 @@ public class VisualEditorWebView extends WebView {
         };
     }
 
-    public void setHtml(@NonNull String html) {
-        ExecEscaped s = ExecEscaped.fromString(html);
-        execUnsafe("setHtml('" + s.getEscapedValue() + "');");
-    }
+    public abstract void setHtml(@NonNull String html);
+
 
     /** Executes a niladic JavaScript function */
     public void execFunction(String functionName) {
@@ -266,35 +262,18 @@ public class VisualEditorWebView extends WebView {
     }
 
 
-    public void deleteImage(@NonNull String guid) {
-        //noinspection ConstantConditions
-        if (guid == null) {
-            Timber.w("Failed to delete image - no guid");
-            return;
-        }
-        ExecEscaped safeString =  ExecEscaped.fromString(guid);
-        String safeCommand = String.format("deleteImage('%s')", safeString.getEscapedValue());
-        execUnsafe(safeCommand);
-    }
+    public abstract void deleteImage(@NonNull String guid);
 
 
-    public void pasteHtml(String html) {
-        Timber.v("pasting: %s", html);
-        ExecEscaped safeString = ExecEscaped.fromString(html);
-        execUnsafe("pasteHTML('" + safeString.getEscapedValue() + "');");
-    }
+    public abstract void pasteHtml(String html);
 
 
-    public void setSelectedTextColor(int color) {
-        execUnsafe("setTextForeColor('" + colorToHex(color) + "');");
-    }
+    public abstract void setSelectedTextColor(int color);
 
-    public void setSelectedBackgroundColor(int color) {
-        execUnsafe("setTextBackColor('" + colorToHex(color) +"');");
-    }
+    public abstract void setSelectedBackgroundColor(int color);
 
 
-    private String colorToHex(int color) {
+    protected String colorToHex(int color) {
         return String.format("#%06X", (color & 0xFFFFFF));
     }
 
@@ -306,6 +285,14 @@ public class VisualEditorWebView extends WebView {
             execUnsafe("$(\"body\").removeClass(\"night_mode\");");
         }
     }
+
+
+    public void load() {
+        execFunction("resizeImages"); //This is called on window.onload in the card viewer.
+    }
+
+
+    public abstract void insertCloze(int clozeId);
 
 
     public static class ExecEscaped {

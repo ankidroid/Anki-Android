@@ -20,7 +20,7 @@
         android:layout_marginBottom="32dp"
         android:id="@+id/visual_editor_wrapper">
 
-        <com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView
+        <com.ichi2.anki.multimediacard.visualeditor.SummerNoteVisualEditor
             android:id="@+id/editor_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
