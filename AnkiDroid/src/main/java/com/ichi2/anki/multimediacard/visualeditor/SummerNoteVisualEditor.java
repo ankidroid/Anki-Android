@@ -79,6 +79,26 @@ public class SummerNoteVisualEditor extends VisualEditorWebView {
 
 
     @Override
+    public String getJsFunctionName(VisualEditorFunctionality functionality) {
+        switch (functionality) {
+            case BOLD: return "setBold";
+            case ITALIC: return "setItalic";
+            case UNDERLINE: return "setUnderline";
+            case CLEAR_FORMATTING: return "removeFormat";
+            case UNORDERED_LIST: return "insertUnorderedList";
+            case ORDERED_LIST: return "insertOrderedList";
+            case HORIZONTAL_RULE: return "insertHorizontalRule";
+            case ALIGN_LEFT: return "setAlignLeft";
+            case ALIGN_CENTER: return "setAlignCenter";
+            case ALIGN_RIGHT: return "setAlignRight";
+            case ALIGN_JUSTIFY: return "setAlignJustify";
+            case EDIT_SOURCE: return "editHtml";
+            default: return null;
+        }
+    }
+
+
+    @Override
     public void deleteImage(@NonNull String guid) {
         //noinspection ConstantConditions
         if (guid == null) {

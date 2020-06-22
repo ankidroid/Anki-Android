@@ -16,17 +16,17 @@
 
 package com.ichi2.anki.multimediacard.visualeditor;
 
-public class VisualEditorFunctionality {
-    public static final String BOLD = "setBold";
-    public static final String ITALIC = "setItalic";
-    public static final String UNDERLINE = "setUnderline";
-    public static final String CLEAR_FORMATTING = "removeFormat";
-    public static final String UNORDERED_LIST = "insertUnorderedList";
-    public static final String ORDERED_LIST = "insertOrderedList";
-    public static final String HORIZONTAL_RULE = "insertHorizontalRule";
-    public static final String ALIGN_LEFT = "setAlignLeft";
-    public static final String ALIGN_CENTER = "setAlignCenter";
-    public static final String ALIGN_RIGHT = "setAlignRight";
-    public static final String ALIGN_JUSTIFY = "setAlignJustify";
-    public static final String EDIT_SOURCE = "editHtml";
+public enum VisualEditorFunctionality {
+    BOLD,
+    ITALIC,
+    UNDERLINE,
+    CLEAR_FORMATTING,
+    UNORDERED_LIST,
+    ORDERED_LIST,
+    HORIZONTAL_RULE,
+    ALIGN_LEFT,
+    ALIGN_CENTER,
+    ALIGN_RIGHT,
+    ALIGN_JUSTIFY,
+    EDIT_SOURCE,
 }

@@ -294,6 +294,8 @@ public abstract class VisualEditorWebView extends WebView {
 
     public abstract void insertCloze(int clozeId);
 
+    public abstract String getJsFunctionName(@NonNull VisualEditorFunctionality functionality);
+
 
     public static class ExecEscaped {
         private final String escapedValue;

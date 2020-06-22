@@ -21,6 +21,7 @@ import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
+import com.ichi2.anki.multimediacard.visualeditor.VisualEditorFunctionality;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.multimediacard.visualeditor.VisualEditorWebView.SelectionType;
@@ -177,13 +178,16 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
 
     private void setupEditorScrollbarButtons(Context context) {
         final Resources resources = context.getResources();
-        SimpleListenerSetup setupAction = (id, jsName, tooltipStringResource) -> {
+        SimpleListenerSetup setupAction = (id, functionality, tooltipStringResource) -> {
+            String jsName = mWebView.getJsFunctionName(functionality);
+            if (jsName == null) {
+                Timber.d("Skipping functionality: %s", functionality);
+            }
             View view = findViewById(id);
             view.setOnClickListener(v -> mWebView.execFunction(jsName));
             setTooltip(view, resources.getString(tooltipStringResource));
         };
 
-        //defined: https://github.com/jkennethcarino/rtexteditorview/blob/master/library/src/main/assets/editor.js
         setupAction.apply(R.id.editor_button_bold, BOLD, R.string.visual_editor_tooltip_bold);
         setupAction.apply(R.id.editor_button_italic, ITALIC, R.string.visual_editor_tooltip_italic);
         setupAction.apply(R.id.editor_button_underline, UNDERLINE, R.string.visual_editor_tooltip_underline);
@@ -677,7 +681,7 @@ public class VisualEditorActivity extends AnkiActivity implements ColorPickerDia
     /** Setup a button which executes a JavaScript runnable */
     @FunctionalInterface
     protected interface SimpleListenerSetup {
-        void apply(@IdRes int buttonId, String function, @StringRes int tooltipText);
+        void apply(@IdRes int buttonId, VisualEditorFunctionality function, @StringRes int tooltipText);
     }
 
     /** A button which performs an Android Runnable */
