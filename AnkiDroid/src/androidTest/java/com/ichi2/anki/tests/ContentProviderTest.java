@@ -125,9 +125,26 @@ public class ContentProviderTest {
         // create test decks and add one note for every deck
         mNumDecksBeforeTest = col.getDecks().count();
         for(int i = 0; i < TEST_DECKS.length; i++) {
-            long did = col.getDecks().id(TEST_DECKS[i]);
-            mTestDeckIds.add(did);
-            mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields, TEST_TAG));
+            String fullName = TEST_DECKS[i];
+            String[] path = col.getDecks().path(fullName);
+            String partialName = "";
+            /* Looping over all parents of full name. Adding them to
+             * mTestDeckIds ensures the deck parents decks get deleted
+             * too at tear-down.
+             */
+            for (int j = 0; j < path.length; j++) {
+                partialName += path[j];
+                /* If parent already exists, don't add the deck, so
+                 * that we are sure it won't get deleted at
+                 * set-down, */
+                if (col.getDecks().byName(partialName) != null) {
+                    continue;
+                }
+                long did = col.getDecks().id(partialName);
+                mTestDeckIds.add(did);
+                mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields, TEST_TAG));
+                partialName += "::";
+            }
         }
         // Add a note to the default deck as well so that testQueryNextCard() works
         mCreatedNotes.add(setupNewNote(col, mModelId, 1, mDummyFields, TEST_TAG));
