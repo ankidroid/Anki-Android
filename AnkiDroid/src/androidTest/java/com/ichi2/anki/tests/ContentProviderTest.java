@@ -80,6 +80,7 @@ public class ContentProviderTest {
     private static final String TEST_FIELD_NAME = "TestFieldName";
     private static final String TEST_FIELD_VALUE = "test field value";
     private static final String TEST_TAG = "aldskfhewjklhfczmxkjshf";
+    // In case of change in TEST_DECKS, change mTestDeckIds for efficiency
     private static final String[] TEST_DECKS = {
             "cmxieunwoogyxsctnjmv",
             "sstuljxgmfdyugiujyhq",
@@ -96,7 +97,10 @@ public class ContentProviderTest {
     private static final String TEST_MODEL_CSS = "styleeeee";
 
     private int mNumDecksBeforeTest;
-    private long[] mTestDeckIds = new long[TEST_DECKS.length];
+    /* initialCapacity set to expected value when the test is written.
+     * Should create no problem if we forget to change it when more tests are added.
+     */
+    private List<Long> mTestDeckIds = new ArrayList<>(TEST_DECKS.length + 1);
     private ArrayList<Uri> mCreatedNotes;
     private long mModelId = 0;
     private String[] mDummyFields = new String[1];
@@ -122,7 +126,7 @@ public class ContentProviderTest {
         mNumDecksBeforeTest = col.getDecks().count();
         for(int i = 0; i < TEST_DECKS.length; i++) {
             long did = col.getDecks().id(TEST_DECKS[i]);
-            mTestDeckIds[i] = did;
+            mTestDeckIds.add(did);
             mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields, TEST_TAG));
         }
         // Add a note to the default deck as well so that testQueryNextCard() works
@@ -522,7 +526,7 @@ public class ContentProviderTest {
                 try {
                     assertTrue("Check that there is at least one result for cards", cardsCursor.getCount() > 0);
                     while (cardsCursor.moveToNext()) {
-                        long targetDid = mTestDeckIds[0];
+                        long targetDid = mTestDeckIds.get(0);
                         // Move to test deck (to test NOTES_ID_CARDS_ORD Uri)
                         ContentValues values = new ContentValues();
                         values.put(FlashCardsContract.Card.DECK_ID, targetDid);
@@ -682,7 +686,7 @@ public class ContentProviderTest {
     public void testQueryCertainDeck() throws Exception {
         Collection col = getCol();
 
-        long deckId = mTestDeckIds[0];
+        long deckId = mTestDeckIds.get(0);
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
         try (Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(deckUri, null, null, null, null)) {
             if (decksCursor == null || !decksCursor.moveToFirst()) {
@@ -733,7 +737,7 @@ public class ContentProviderTest {
      */
     @Test
     public void testQueryCardFromCertainDeck(){
-        long deckToTest = mTestDeckIds[0];
+        long deckToTest = mTestDeckIds.get(0);
         String deckSelector = "deckID=?";
         String deckArguments[] = {Long.toString(deckToTest)};
         Collection col = getCol();
@@ -773,7 +777,7 @@ public class ContentProviderTest {
      */
     @Test
     public void testSetSelectedDeck(){
-        long deckId = mTestDeckIds[0];
+        long deckId = mTestDeckIds.get(0);
         ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Uri selectDeckUri = FlashCardsContract.Deck.CONTENT_SELECTED_URI;
         ContentValues values = new ContentValues();
@@ -784,7 +788,7 @@ public class ContentProviderTest {
     }
 
     private Card getFirstCardFromScheduler(Collection col) {
-        long deckId = mTestDeckIds[0];
+        long deckId = mTestDeckIds.get(0);
         col.getDecks().select(deckId);
         col.getSched().reset();
         return col.getSched().getCard();
