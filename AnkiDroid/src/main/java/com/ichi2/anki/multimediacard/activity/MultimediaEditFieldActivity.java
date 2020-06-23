@@ -237,10 +237,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
 
     protected void done() {
-
         mFieldController.onDone();
-
-        Intent resultData = new Intent();
 
         boolean bChangeToText = false;
 
@@ -271,13 +268,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         if (bChangeToText) {
             mField = new TextField();
         }
-
-        resultData.putExtra(EXTRA_RESULT_FIELD, mField);
-        resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex);
-
-        setResult(RESULT_OK, resultData);
-
-        finishWithoutAnimation();
+        saveAndExit();
     }
 
 
@@ -379,6 +370,14 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         recreateEditingUi(ChangeUIRequest.fieldChange(newField));
     }
 
+
+    private void saveAndExit() {
+        Intent resultData = new Intent();
+        resultData.putExtra(EXTRA_RESULT_FIELD, mField);
+        resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex);
+        setResult(RESULT_OK, resultData);
+        finishWithoutAnimation();
+    }
 
     @Override
     protected void onDestroy() {
