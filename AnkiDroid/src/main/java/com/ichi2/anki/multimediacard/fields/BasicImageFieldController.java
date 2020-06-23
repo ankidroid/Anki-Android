@@ -91,8 +91,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         return (int) Math.min(height * 0.4, width * 0.6);
     }
 
-    // The NewApi deprecation should be removed with API21. UnsupportedChromeOsCameraSystemFeature can be fixed in API16
-    @SuppressLint( {"UnsupportedChromeOsCameraSystemFeature", "NewApi"})
+    // The NewApi deprecation should be removed with API21
+    @SuppressLint("NewApi")
     @Override
     public void createUI(Context context, LinearLayout layout) {
         LinearLayout.LayoutParams p = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -127,7 +127,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
 
                 // Until Android API21 (maybe 22) you must manually handle permissions for image capture w/FileProvider
-                // It does not exist on API15 so they will still crash sadly. This can be removed once minSDK is >= 22
+                // This can be removed once minSDK is >= 22
                 // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
                 if (CompatHelper.getSdkVersion() <= Build.VERSION_CODES.LOLLIPOP) {
                     cameraIntent.setClipData(ClipData.newRawUri("", uriSavedImage));
