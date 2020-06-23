@@ -210,8 +210,9 @@ public abstract class AbstractSched {
         @Override
         public int compareTo(Object other) {
             DeckDueTreeNode rhs = (DeckDueTreeNode) other;
+            int minDepth = Math.min(mName.length, rhs.mName.length);
             // Consider each subdeck name in the ordering
-            for (int i = 0; i < mName.length && i < rhs.mName.length; i++) {
+            for (int i = 0; i < minDepth; i++) {
                 int cmp = mName[i].compareTo(rhs.mName[i]);
                 if (cmp == 0) {
                     continue;
