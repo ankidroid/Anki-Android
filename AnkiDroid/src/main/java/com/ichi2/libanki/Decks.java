@@ -292,10 +292,10 @@ public class Decks {
         // log the removal regardless of whether we have the deck or not
         mCol._logRem(new long[] { did }, Consts.REM_DECK);
         // do nothing else if doesn't exist
-        if (!mDecks.containsKey(did)) {
+        JSONObject deck = get(did, false);
+        if (deck == null) {
             return;
         }
-        JSONObject deck = get(did);
         if (deck.getInt("dyn") != 0) {
             // deleting a cramming deck returns cards to their previous deck
             // rather than deleting the cards
