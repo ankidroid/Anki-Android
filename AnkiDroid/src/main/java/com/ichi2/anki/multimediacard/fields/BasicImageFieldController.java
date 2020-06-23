@@ -63,10 +63,13 @@ import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
 import com.ichi2.utils.Permissions;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -90,6 +93,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private DisplayMetrics mMetrics = null;
     private SystemTime mTime = new SystemTime();
 
+    private Button mCropButton = null;
 
     private int getMaxImageSize() {
         DisplayMetrics metrics = getDisplayMetrics();
@@ -116,6 +120,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         drawUIComponents(context);
 
+        mCropButton = new Button(mActivity);
+        mCropButton.setText(gtxt(R.string.crop_button));
+        mCropButton.setOnClickListener(v -> requestCrop(getUriForFile(new File(mImagePath))));
+        mCropButton.setVisibility(View.INVISIBLE);
 
         Button mBtnGallery = new Button(mActivity);
         mBtnGallery.setText(gtxt(R.string.multimedia_editor_image_field_editing_galery));
@@ -175,6 +183,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mImageFileSizeWarning, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
+        layout.addView(mCropButton, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
 
@@ -268,6 +277,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
         } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
             handleTakePictureResult();
+        } else if (requestCode == ACTIVITY_CROP_PICTURE) {
+            handleCropResult();
         } else {
             Timber.w("Unhandled request code: %d", requestCode);
             return;
@@ -381,6 +392,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mImagePreview.setImageBitmap(b);
         mImageFileSize.setVisibility(View.VISIBLE);
         mImageFileSize.setText(Formatter.formatFileSize(mActivity, f.length()));
+        mCropButton.setVisibility(View.VISIBLE);
     }
 
 
@@ -388,6 +400,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     public void onDestroy() {
         ImageView imageView = mImagePreview;
         BitmapUtil.freeImageView(imageView);
+        mCropButton.setVisibility(View.INVISIBLE);
     }
 
 
@@ -397,6 +410,87 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mField.setImagePath(mImagePath);
         mField.setHasTemporaryMedia(true);
         showCropDialog(getUriForFile(new File(mImagePath)));
+    }
+
+
+    /**
+     * Invoke system crop function
+     *
+     * @param uri image's uri
+     */
+    public void requestCrop(Uri uri) {
+        Timber.d("photoCrop() on %s", uri);
+
+        if (mImagePath == null) {
+            Timber.w("requestCrop() but mImagePath is null");
+            return;
+        }
+
+        // Pre-create a file in our cache for the cropping application to put results in
+        String fileName = mImagePath.substring(mImagePath.lastIndexOf("/") + 1, mImagePath.lastIndexOf("."));
+        File image = new File(mAnkiCacheDirectory + "/" + fileName + ".png");
+        if (!image.exists()) {
+            try {
+                if (!image.createNewFile()) {
+                    Timber.w("Failed to create new file for crop %s", image.getAbsolutePath());
+                    return;
+                }
+            } catch (IOException e) {
+                Timber.w(e, "Create cropped file failed");
+                return;
+            }
+        }
+
+        // Save the previous image in case user cancels
+        mPreviousImagePath = mImagePath;
+        mPreviousImageUri = mImageUri;
+        mImagePath = image.getPath();
+        mImageUri = Uri.fromFile(image);
+        mField.setImagePath(mImagePath);
+        mField.setHasTemporaryMedia(true);
+
+        // This is basically a "magic" recipe to get the system to crop, gleaned from StackOverflow etc
+        // Intent intent = new Intent(Intent.ACTION_EDIT);  // edit (vs crop) would be even better, but it fails differently and needs lots of testing
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        int flags = Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+        intent.setFlags(flags);
+
+        // For any app that might handle the action, make sure they have permission for our URI
+        List<ResolveInfo> resInfoList = mActivity.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        for (ResolveInfo resolveInfo : resInfoList) {
+            String packageName = resolveInfo.activityInfo.packageName;
+            mActivity.grantUriPermission(packageName, uri, flags);
+        }
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString()); // worked w/crop but not edit
+        intent.putExtra("noFaceDetection", true); // no face detection
+        mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(intent, null), ACTIVITY_CROP_PICTURE);
+    }
+
+
+    private void showCropDialog(Uri uri) {
+        if (uri == null) {
+            Timber.w("showCropDialog called with null URI");
+            return;
+        }
+        new MaterialDialog.Builder(mActivity)
+                .content(R.string.crop_image)
+                .positiveText(R.string.dialog_ok)
+                .negativeText(R.string.dialog_cancel)
+                .onPositive((dialog, which) -> requestCrop(uri))
+                .build().show();
+    }
+
+
+    private void handleCropResult() {
+        Timber.d("handleCropResult");
+        rotateAndCompress(); // this is a long-running operation.
+        Timber.d("handleCropResult() = image path currently %s", mField.getImagePath());
+        mField.setImagePath(mImagePath);
+        Timber.d("handleCropResult() = image path now %s", mField.getImagePath());
+        mField.setHasTemporaryMedia(true);
     }
 
 
