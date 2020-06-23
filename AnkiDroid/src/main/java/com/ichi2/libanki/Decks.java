@@ -24,6 +24,7 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.text.TextUtils;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.libanki.exception.NoSuchDeckException;
@@ -437,7 +438,15 @@ public class Decks {
     @CheckResult
     public JSONObject byName(String name) {
         String normalized = normalizeName(name);
-        return mNameMap.get(normalized);
+        JSONObject deck = mNameMap.get(normalized);
+        if (deck == null) {
+            return null;
+        }
+        String foundName = deck.getString("name");
+        if (!equalName(name, foundName)) {
+            AnkiDroidApp.sendExceptionReport("We looked for deck \"" + name + "\" and instead got deck \"" + foundName + "\".", "Decks - byName");
+        }
+        return deck;
     }
 
 
