@@ -3,6 +3,7 @@
  * Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>                              *
  * Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>                                   *
+ * Copyright (c) 2020 Mike Hardy <github@mikehardy.net>                                 *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -22,16 +23,17 @@ package com.ichi2.anki.multimediacard.fields;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.provider.MediaStore.MediaColumns;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -39,6 +41,7 @@ import androidx.core.content.FileProvider;
 
 import android.text.TextUtils;
 import android.text.format.Formatter;
+import android.provider.DocumentsContract;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -277,46 +280,32 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         UIUtils.showThemedToast(mActivity, mActivity.getResources().getString(R.string.multimedia_editor_something_wrong), false);
     }
 
-
     private void handleSelectImageIntent(Intent data) {
         if (data == null) {
-            Timber.e("no intent provided");
+            Timber.e("handleSelectImageIntent() no intent provided");
             showSomethingWentWrong();
             return;
         }
 
-        Timber.i("Handle Select Image. Intent: %s. extras: %s", data, data.getExtras() == null ? "null" : TextUtils.join(", ", data.getExtras().keySet()));
-        Uri selectedImage = data.getData();
+        Timber.i("handleSelectImageIntent() Intent: %s. extras: %s", data, data.getExtras() == null ? "null" : TextUtils.join(", ", data.getExtras().keySet()));
+        Uri selectedImage = getImageUri(mActivity, data);
 
         if (selectedImage == null) {
-            Timber.w("selectedImage was null");
+            Timber.w("handleSelectImageIntent() selectedImage was null");
             showSomethingWentWrong();
             return;
         }
 
-        String[] filePathColumn = { MediaColumns.DATA };
-
-        Cursor cursor = mActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-
-        if (cursor == null) {
-            Timber.w("cursor was null");
-            showSomethingWentWrong();
+        String filePath = getImagePathFromUri(mActivity, selectedImage);
+        if (filePath == null) {
+            Timber.w("handleSelectImageIntent() Unable to get image path for %s", selectedImage);
             return;
         }
+        mImagePath = filePath;
+        mImageUri = selectedImage;
 
-        if (!cursor.moveToFirst()) {
-            //TODO: #5909, it would be best to instrument this to see if we can fix the failure
-            Timber.w("cursor had no data");
-            showSomethingWentWrong();
-            return;
-        }
-
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String filePath = cursor.getString(columnIndex);
-        cursor.close();
-
-        Timber.i("Decoded image: '%s'", filePath);
-        mField.setImagePath(filePath);
+        Timber.i("handleSelectImageIntent() Decoded image: '%s'", mImagePath);
+        mField.setImagePath(mImagePath);
     }
 
 
@@ -426,6 +415,80 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             uri = Uri.fromFile(file);
         }
         return uri;
+    }
+
+
+    /**
+     * Get image uri that adapts various model
+     *
+     * @return image uri
+     */
+    private @Nullable Uri getImageUri(Context context, Intent data) {
+        Timber.d("getImageUri for data %s", data);
+        Uri uri = data.getData();
+        if (uri == null) {
+            UIUtils.showThemedToast(context, context.getString(R.string.select_image_failed), false);
+            return null;
+        }
+        mImageUri = uri;
+        mImagePath = getImagePathFromUri(context, uri);
+        mField.setImagePath(mImagePath);
+        mField.setHasTemporaryMedia(false);
+        return mImageUri;
+    }
+
+
+    private @Nullable String getImagePathFromUri(Context context, Uri uri) {
+        Timber.d("getImagePathFromUri() URI: %s", uri);
+        String imagePath = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
+            String docId = DocumentsContract.getDocumentId(uri);
+            if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+                String id = docId.split(":")[1];
+                String selection = MediaStore.Images.Media._ID + "=" + id;
+                imagePath = getImagePathFromContentResolver(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.parseLong(docId));
+                imagePath = getImagePathFromContentResolver(context, contentUri, null);
+            }
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            imagePath = getImagePathFromContentResolver(context, uri, null);
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            imagePath = uri.getPath();
+        }
+
+        return imagePath;
+    }
+
+
+    /**
+     * Get image path based on uri and selection args
+     *
+     * @return image uri
+     */
+    private @Nullable String getImagePathFromContentResolver(Context context, Uri uri, String selection) {
+        Timber.d("getImagePathFromContentResolver() %s", uri);
+        String[] filePathColumn = { MediaStore.MediaColumns.DATA };
+        Cursor cursor = context.getContentResolver().query(uri, filePathColumn, selection, null, null);
+
+        if (cursor == null) {
+            Timber.w("getImagePathFromUri() cursor was null");
+            showSomethingWentWrong();
+            return null;
+        }
+
+        if (!cursor.moveToFirst()) {
+            //TODO: #5909, it would be best to instrument this to see if we can fix the failure
+            Timber.w("getImagePathFromUri() cursor had no data");
+            showSomethingWentWrong();
+            return null;
+        }
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String path = cursor.getString(columnIndex);
+        cursor.close();
+        Timber.d("getImagePathFromUri() decoded image %s", path);
+        return path;
     }
 
 
