@@ -33,6 +33,7 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.FileProvider;
 
@@ -71,13 +72,18 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     @VisibleForTesting
     static final int ACTIVITY_SELECT_IMAGE = 1;
     private static final int ACTIVITY_TAKE_PICTURE = 2;
+    private static final int ACTIVITY_CROP_PICTURE = 3;
     private static final int IMAGE_SAVE_MAX_WIDTH = 1920;
 
     private ImageView mImagePreview;
     private TextView mImageFileSize;
     private TextView mImageFileSizeWarning;
 
-    private String mTempCameraImagePath;
+    private @Nullable String mImagePath;
+    private @Nullable Uri mImageUri;
+    private @Nullable String mPreviousImagePath; // save the latest path to prevent from cropping or taking photo action canceled
+    private @Nullable Uri mPreviousImageUri;
+    private @Nullable String mAnkiCacheDirectory;
     private DisplayMetrics mMetrics = null;
     private SystemTime mTime = new SystemTime();
 
@@ -95,12 +101,18 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     @SuppressLint("NewApi")
     @Override
     public void createUI(Context context, LinearLayout layout) {
+        Timber.d("createUI()");
+        mImagePath = mField.getImagePath();
+        mImagePreview = new ImageView(mActivity);
+        File externalCacheDir = context.getExternalCacheDir();
+        if (externalCacheDir != null) {
+            mAnkiCacheDirectory = externalCacheDir.getAbsolutePath();
+        }
         LinearLayout.LayoutParams p = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 
         drawUIComponents(context);
 
-        setPreviewImage(mField.getImagePath(), getMaxImageSize());
 
         Button mBtnGallery = new Button(mActivity);
         mBtnGallery.setText(gtxt(R.string.multimedia_editor_image_field_editing_galery));
@@ -114,34 +126,31 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mBtnCamera.setOnClickListener(v -> {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             File image;
-            File storageDir;
-            String timeStamp = TimeUtils.getTimestamp(mTime);
             try {
-                storageDir = mActivity.getCacheDir();
-                image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
-                mTempCameraImagePath = image.getPath();
-                Uri uriSavedImage = FileProvider.getUriForFile(mActivity,
-                        mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider",
-                        image);
-
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+                // Store the old image path for deletion / error handling if the user cancels
+                image = createNewFile();
+                mPreviousImagePath = mImagePath;
+                mPreviousImageUri = mImageUri;
+                mImageUri = null;
+                mImagePath = image.getPath();
+                mImageUri = getUriForFile(image);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
 
                 // Until Android API21 (maybe 22) you must manually handle permissions for image capture w/FileProvider
                 // This can be removed once minSDK is >= 22
                 // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
                 if (CompatHelper.getSdkVersion() <= Build.VERSION_CODES.LOLLIPOP) {
-                    cameraIntent.setClipData(ClipData.newRawUri("", uriSavedImage));
+                    cameraIntent.setClipData(ClipData.newRawUri("", mImageUri));
                     cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 }
 
                 if (cameraIntent.resolveActivity(context.getPackageManager()) != null) {
                     mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
-                }
-                else {
+                } else {
                     Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent");
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                Timber.w(e, "mBtnCamera::onClickListener() unable to prepare file and launch camera");
             }
         });
 
@@ -156,11 +165,20 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             mBtnCamera.setVisibility(View.INVISIBLE);
         }
 
+        setPreviewImage(mImagePath, getMaxImageSize());
+
         layout.addView(mImagePreview, ViewGroup.LayoutParams.MATCH_PARENT, p);
         layout.addView(mImageFileSize, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mImageFileSizeWarning, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+
+    private File createNewFile() throws IOException {
+        String timeStamp = TimeUtils.getTimestamp(mTime);
+        File storageDir = new File(mAnkiCacheDirectory);
+        return File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
     }
 
 
@@ -216,10 +234,24 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // ignore RESULT_CANCELED but handle image select and take
+        Timber.d("onActivityResult()");
         if (resultCode == Activity.RESULT_CANCELED) {
+            Timber.d("Activity was cancelled");
+            // Restore the old version of the image if the user cancelled
+            switch (requestCode) {
+                case ACTIVITY_TAKE_PICTURE:
+                case ACTIVITY_CROP_PICTURE:
+                    if (!TextUtils.isEmpty(mPreviousImagePath)) {
+                        mImagePath = mPreviousImagePath;
+                        mImageUri = mPreviousImageUri;
+                    }
+                    break;
+                default:
+                    break;
+            }
             return;
         }
+
         mImageFileSizeWarning.setVisibility(View.GONE);
         if (requestCode == ACTIVITY_SELECT_IMAGE) {
             try {
@@ -232,15 +264,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 return;
             }
         } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
-            mImageFileSizeWarning.setVisibility(View.GONE);
-            String imagePath = rotateAndCompress(mTempCameraImagePath);
-            mField.setImagePath(imagePath);
-            mField.setHasTemporaryMedia(true);
+            handleTakePictureResult();
         } else {
             Timber.w("Unhandled request code: %d", requestCode);
             return;
         }
-        setPreviewImage(mField.getImagePath(), getMaxImageSize());
+        setPreviewImage(mImagePath, getMaxImageSize());
     }
 
 
@@ -304,37 +333,42 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private String rotateAndCompress(String inPath) {
+    private void rotateAndCompress() {
+        Timber.d("rotateAndCompress() on %s", mImagePath);
         // Set the rotation of the camera image and save as png
-        File f = new File(inPath);
+        File f = new File(mImagePath);
         // use same filename but with png extension for output file
-        String outPath = inPath.substring(0, inPath.lastIndexOf(".")) + ".png";
         // Load into a bitmap with max size of 1920 pixels and rotate if necessary
         Bitmap b = BitmapUtil.decodeFile(f, IMAGE_SAVE_MAX_WIDTH);
         if (b == null) {
-            //#5513 - if we can't decode a bitmap, return the original image
+            //#5513 - if we can't decode a bitmap, leave the image alone
             //And display a warning to push users to compress manually.
+            Timber.d("rotateAndCompress() unable to decode file %s", mImagePath);
             mImageFileSizeWarning.setVisibility(View.VISIBLE);
-            return inPath;
+            return;
         }
 
         FileOutputStream out = null;
         try {
-            out = new FileOutputStream(outPath);
+            File outFile = createNewFile();
+            out = new FileOutputStream(outFile);
             b = ExifUtil.rotateFromCamera(f, b);
             b.compress(Bitmap.CompressFormat.PNG, 90, out);
-            f.delete();
-            return outPath;
+            if (!f.delete()) {
+                Timber.w("rotateAndCompress() delete of pre-compressed image failed %s", mImagePath);
+            }
+            mImagePath = outFile.getAbsolutePath();
         } catch (FileNotFoundException e) {
-            Timber.e(e, "Error in BasicImageFieldController.rotateAndCompress()");
-            return inPath;
+            Timber.w(e, "rotateAndCompress() File not found for image compression %s", mImagePath);
+        } catch (IOException e) {
+            Timber.w(e, "rotateAndCompress() create file failed for file %s", mImagePath);
         } finally {
             try {
                 if (out != null) {
                     out.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                Timber.w(e, "rotateAndCompress() Unable to clean up image compression output stream");
             }
         }
     }
@@ -351,7 +385,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     void setImagePreview(File f, int maxsize) {
         Bitmap b = BitmapUtil.decodeFile(f, maxsize);
         if (b == null) {
-            Timber.i("Not displaying preview: Could not process image %s", f.getPath());
+            Timber.i("setImagePreview() could not process image %s", f.getPath());
             return;
         }
         b = ExifUtil.rotateFromCamera(f, b);
@@ -366,6 +400,34 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         ImageView imageView = mImagePreview;
         BitmapUtil.freeImageView(imageView);
     }
+
+
+    private void handleTakePictureResult() {
+        Timber.d("handleTakePictureResult");
+        rotateAndCompress();
+        mField.setImagePath(mImagePath);
+        mField.setHasTemporaryMedia(true);
+        showCropDialog(getUriForFile(new File(mImagePath)));
+    }
+
+
+    /**
+     * Get Uri based on current image path
+     *
+     * @param file the file to get URI for
+     * @return current image path's uri
+     */
+    private Uri getUriForFile(File file) {
+        Timber.d("getUriForFile() %s", file);
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(mActivity, mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider", file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        return uri;
+    }
+
 
     public boolean isShowingPreview() {
         return mImageFileSize.getVisibility() == View.VISIBLE;
