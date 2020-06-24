@@ -169,7 +169,7 @@
     <string name="import_log_failed_copy_to">APKG-Datei konnte nicht nach %s kopiert werden</string>
     <string name="import_log_failed_validate">Validierung der APKG-Datei nicht erfolgreich</string>
     <string name="import_log_insufficient_space">Kein ausreichender Speicherplatz zum Entpacken des Pakets. Benötigt %1$d, verfügbar %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
+    <string name="import_log_file_cache_cleared">Fehler beim Importieren der Datei. Wahrscheinlich wird der Cache während der Verarbeitung gelöscht.\nBitte versuchen Sie es erneut</string>
     <string name="import_succeeded_but_check_database">Der Datenimport war erfolgreich, jedoch ist bei der anschließenden Bereinigung ein Fehler aufgetreten. Hauptursache: %s</string>
     <string name="import_error_unhandled_request">Importanfrage kann nicht verarbeitet werden</string>
     <string name="import_error_exception">Paket konnte nicht importiert werden\n\n%s</string>
@@ -267,11 +267,11 @@
     <string name="check_integrity_recovered_deck_name">Wiederhergestellte Karten</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Hintergrund</string>
-    <string name="choose_an_image">Wählen Sie ein Bild aus</string>
+    <string name="choose_an_image">Bild auswählen</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Standard wiederherstellen</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Auslassung</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Bitte schalten Sie den Vollbildmodus ein, um »Navigationsbereich anzeigen« mit JavaScript zu verwenden.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Bitte schalten Sie den Vollbildmodus ein, um »Seitenleiste anzeigen« mit JavaScript zu verwenden.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Bitte schalten Sie den Vollbildmodus ein, um »Optionsmenü anzeigen« mit JavaScript zu verwenden.</string>
 </resources>

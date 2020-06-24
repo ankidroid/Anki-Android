@@ -50,7 +50,7 @@
     <string name="card_browser_change_deck">Cambia mazzo</string>
     <string name="card_browser_unsuspend_card">Riattiva carte</string>
     <string name="card_browser_mark_card">Contrassegna note</string>
-    <string name="card_browser_flag">Flag</string>
+    <string name="card_browser_flag">Contrassegno</string>
     <string name="card_browser_toggle_mark_card">contrassegna/togli contrassegno note</string>
     <string name="card_browser_unmark_card">Togli contrassegno note</string>
     <string name="delete_card_title">Elimina nota</string>
@@ -93,13 +93,13 @@
     </string-array>
     <string name="card_browser_select_all">Seleziona tutto</string>
     <string name="card_browser_select_none">Deseleziona tutto</string>
-    <string name="card_browser_edit_note">Edit note</string>
+    <string name="card_browser_edit_note">Modifica la nota</string>
     <string name="card_browser_interval_new_card">(nuova)</string>
-    <string name="card_browser_ease_new_card">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
+    <string name="card_browser_ease_new_card">(nuovo)</string>
+    <string name="card_browser_due_filtered_card">(filtrato)</string>
     <string name="card_browser_interval_learning_card">(apprendimento)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_note_editor_error">Errore nell\'aprire dell\'editore delle note</string>
+    <string name="card_browser_no_cards_in_deck">Nessuna carta trovata nel mazzo «%s»</string>
+    <string name="card_browser_search_all_decks">Cerca tutti i mazzi</string>
+    <string name="card_browser_unknown_deck_name">Sconosciuto</string>
 </resources>

@@ -88,9 +88,9 @@
         <item quantity="one">%d cartão reagendado</item>
         <item quantity="other">%d cartões reagendados</item>
     </plurals>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Selecione o baralho no seu gerenciador de arquivos ou visite a página about:downloads para importá-lo</string>
     <string name="answering_error_title">Erro de banco de dados</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Isso pode estar relacionado a um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso ocorrer frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso pode ser um bug do AnkiDroid; relate o erro para que possamos verificar o problema.</string>
     <string name="answering_error_report">Reportar erro</string>
     <string name="repair_deck_dialog">Você realmente deseja tentar reparar o banco de dados?\n\nAntes de iniciar a tentativa, uma cópia será criada na subpasta \"%s\".</string>
     <string name="intent_add_saved_information">Dados salvos</string>
@@ -156,7 +156,7 @@
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
     <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_failed">Falha ao abrir o Editor de Multimídia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
     <!-- Initial collection load -->
@@ -182,19 +182,19 @@
     <string name="database_locked_title">Banco de dados bloqueado</string>
     <string name="database_locked_summary">O banco de dados do AnkiDroid está em uso por outro aplicativo. Por favor, feche o outro aplicativo e reabra o AnkiDroid.</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
+    <string name="background_image_applied">Imagem de fundo aplicada</string>
     <string name="background_image_removed">Imagem de fundo removida</string>
     <string name="no_image_selected">Nenhuma imagem selecionada</string>
     <string name="error_selecting_image">Erro selecionando imagem. Por favor veja o manual. %s</string>
     <string name="error_deleting_image">Erro deletando imagem</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="failed_to_apply_background_image">Falha ao aplicar a imagem de fundo %s</string>
+    <string name="image_max_size_allowed">Tamanho máximo de imagem %d MB permitido</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Falta a permissão de armazenamento necessário. Por favor, conceda permissão de armazenamento e tente novamente.</string>
     <!-- Browser Appearance -->
     <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">Falha ao agendar lembretes</string>
+    <string name="boot_service_too_many_notifications">Muitos lembretes programados. Alguns não aparecerão</string>
 </resources>

@@ -118,13 +118,13 @@
     <string name="menu_flag_card_two">Sinalização laranja</string>
     <string name="menu_flag_card_three">Sinalização verde</string>
     <string name="menu_flag_card_four">Sinalização azul</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_edit_tags">Editar tags</string>
     <string name="delete_note_message">Deseja realmente excluir esta nota e todos seus cartões?\n%s</string>
     <string name="menu_select">Selecionar texto</string>
     <string name="menu_search">Pesquisar em %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Verificar Pronúncia</string>
     <string name="new_deck">Criar baralho</string>
     <string name="create">Criar</string>
     <string name="new_dynamic_deck">Criar baralho com filtros</string>
@@ -134,7 +134,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Por favor, conceda ao AnkiDroid a permissão de \'Armazenamento\' para continuar</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -191,8 +191,8 @@
         <item quantity="other">Excluir o tipo de cartão %2$s e seus %1$d cartões?</item>
     </plurals>
     <string name="invalid_template">Não foi possível gerar um cartão</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">Excluir este tipo de cartão resultará na remoção de uma ou mais notas. Por favor, primeiro crie um novo tipo de cartão.</string>
+    <string name="card_template_editor_save_error">Não é possível salvar as alterações no modelo de cartão: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aparência do navegador</string>

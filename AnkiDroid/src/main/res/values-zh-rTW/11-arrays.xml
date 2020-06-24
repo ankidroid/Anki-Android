@@ -50,23 +50,23 @@
         <item>優於建議的答案</item>
         <item>復原</item>
         <item>編輯筆記</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>標記筆記</item>
+        <item>標記筆記</item>
+        <item>查找運算式</item>
+        <item>暫時隱藏卡片</item>
+        <item>擱置卡片</item>
+        <item>刪除筆記</item>
+        <item>播放媒體檔</item>
+        <item>中止學習</item>
+        <item>暫時隱藏筆記</item>
+        <item>擱置筆記</item>
+        <item>套用紅色標記</item>
+        <item>套用橙色標記</item>
+        <item>套用綠色標記</item>
+        <item>套用藍色標記</item>
+        <item>移除標記</item>
+        <item>向上翻頁</item>
+        <item>向下翻頁</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>長久擱置卡片</item>
@@ -74,7 +74,7 @@
     </string-array>
     <string-array name="new_order_labels">
         <item>按隨機順序學習新卡片</item>
-        <item>按創建順序學習新卡片</item>
+        <item>按建立順序學習新卡片</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
         <item>舊卡先出現</item>
@@ -97,7 +97,7 @@
         <item>新卡片在複習卡片之前</item>
     </string-array>
     <string-array name="override_font_labels">
-        <item>當 flashcard 沒有指定字體時</item>
+        <item>當單字卡沒有指定字型時</item>
         <item>總是</item>
     </string-array>
     <string-array name="day_theme_labels">
