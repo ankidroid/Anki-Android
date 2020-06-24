@@ -87,10 +87,11 @@ public class ActionButtonStatus {
                     color only if the buttons are blocked and we
                     expect the next card to take time to arrive.
                     */
+                    Drawable mutableIcon = icon.mutate();
                     if (mReviewerUi.getControlBlocked() == ReviewerUi.ControlBlock.SLOW) {
-                        icon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
+                        mutableIcon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
                     } else {
-                        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
+                        mutableIcon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
                     }
                 }
             } else {
