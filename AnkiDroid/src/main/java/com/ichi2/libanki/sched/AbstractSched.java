@@ -239,7 +239,7 @@ public abstract class AbstractSched {
             return mName;
         }
 
-        public String getNamePart(int part) {
+        public String getDeckNameComponent(int part) {
             return mName[part];
         }
         
