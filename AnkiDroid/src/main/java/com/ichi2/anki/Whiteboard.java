@@ -35,12 +35,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.TimeUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Stack;
 
 /**
@@ -73,6 +74,7 @@ public class Whiteboard extends View {
     private boolean mMonochrome;
     private boolean mUndoModeActive = false;
     private final int foregroundColor;
+    private SystemTime mTime = new SystemTime();
 
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
@@ -437,8 +439,8 @@ public class Whiteboard extends View {
         }
 
         String baseFileName = "Whiteboard";
-        String newName = new SimpleDateFormat("yyyyMMddHHmmss'.png'").format(new Date());
-        String finalFileName = baseFileName + newName;
+        String timeStamp = TimeUtils.getTimestamp(mTime);
+        String finalFileName = baseFileName + timeStamp + ".png";
 
         File saveWhiteboardImagFile = new File(ankiDroidFolder, finalFileName);
 
