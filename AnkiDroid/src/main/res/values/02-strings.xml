@@ -273,4 +273,6 @@
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+
+    <string name="title_whiteboard_pen_color">Pen Color</string>
 </resources>

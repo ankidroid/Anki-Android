@@ -21,13 +21,11 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Point;
 import android.graphics.PointF;
-import androidx.core.content.ContextCompat;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -66,32 +64,16 @@ public class Whiteboard extends View {
     private boolean mMonochrome;
     private boolean mUndoModeActive = false;
 
-
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
         mInvertedColors = inverted;
         mMonochrome = monochrome;
 
-        int foregroundColor;
-        if (!mInvertedColors) {
-            if (mMonochrome) {
-                foregroundColor = Color.BLACK;
-            } else {
-                foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color);
-            }
-        } else {
-            if (mMonochrome) {
-                foregroundColor = Color.WHITE;
-            } else {
-                foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color_inv);
-            }
-        }
-
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
-        mPaint.setColor(foregroundColor);
+        //mPaint.setColor(foregroundColor);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -241,11 +223,7 @@ public class Whiteboard extends View {
         // To fix issue #1336, just make the whiteboard big and square.
         final Point p = getDisplayDimenions();
         int bitmapSize = Math.max(p.x, p.y);
-        if (mMonochrome && !mInvertedColors) {
-            createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ALPHA_8);
-        } else {
-            createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_4444);
-        }
+        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_4444);
     }
 
     private void drawStart(float x, float y) {
@@ -355,7 +333,6 @@ public class Whiteboard extends View {
         display.getSize(point);
         return point;
     }
-
     /**
      * Keep a stack of all points and paths so that the last stroke can be undone
      * pop() removes the last stroke from the stack, and apply() redraws it to whiteboard.
@@ -415,5 +392,9 @@ public class Whiteboard extends View {
 
     public boolean isCurrentlyDrawing() {
         return mCurrentlyDrawing;
+    }
+
+    public void changePenColor(int color) {
+        mPaint.setColor(color);
     }
 }

@@ -37,6 +37,13 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/mic_tool_bar_layer" />
 
+            <include
+                layout="@layout/reviewer_whiteboard_pen_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_above="@+id/bottom_area_layout"/>
+
             <include layout="@layout/reviewer_answer_buttons" />
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
