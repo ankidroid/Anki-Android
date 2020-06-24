@@ -1082,7 +1082,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
            The card could have been rescheduled, the deck could have changed, or a change of
            note type could have lead to the card being deleted */
         if (data != null && data.hasExtra("reloadRequired")) {
-            getCol().getSched().reset();
+            getCol().getSched().deferReset();
             CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(false),
                     new CollectionTask.TaskData(null, 0));
         }
@@ -1098,7 +1098,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 redrawCard();
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
-            getCol().getSched().reset();
+            getCol().getSched().deferReset();
             CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(false),
                     new CollectionTask.TaskData(null, 0));
         }
@@ -1265,7 +1265,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         new MaterialDialog.Builder(this)
                 .title(res.getString(R.string.delete_card_title))
                 .iconAttr(R.attr.dialogErrorIcon)
-                .content(String.format(res.getString(R.string.delete_note_message),
+                .content(res.getString(R.string.delete_note_message,
                         Utils.stripHTML(mCurrentCard.q(true))))
                 .positiveText(res.getString(R.string.dialog_positive_delete))
                 .negativeText(res.getString(R.string.dialog_cancel))

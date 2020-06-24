@@ -43,7 +43,6 @@ import com.ichi2.utils.JSONObject;
 
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -252,7 +251,7 @@ public class Sched extends SchedV2 {
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
         while (it.hasNext()) {
             DeckDueTreeNode node = it.next();
-            String head = node.names[0];
+            String head = node.getNamePart(0);
             // Compose the "tail" node list. The tail is a list of all the nodes that proceed
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
             // from this node. This is our version of python's itertools.groupby.
@@ -260,7 +259,7 @@ public class Sched extends SchedV2 {
             tail.add(node);
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
-                if (head.equals(next.names[0])) {
+                if (head.equals(next.getNamePart(0))) {
                     // Same head - add to tail of current head.
                     tail.add(next);
                 } else {
@@ -276,31 +275,31 @@ public class Sched extends SchedV2 {
             int lrn = 0;
             List<DeckDueTreeNode> children = new ArrayList<>();
             for (DeckDueTreeNode c : tail) {
-                if (c.names.length == 1) {
+                if (c.getNames().length == 1) {
                     // current node
-                    did = c.did;
-                    rev += c.revCount;
-                    lrn += c.lrnCount;
-                    _new += c.newCount;
+                    did = c.getDid();
+                    rev += c.getRevCount();
+                    lrn += c.getLrnCount();
+                    _new += c.getNewCount();
                 } else {
                     // set new string to tail
-                    String[] newTail = new String[c.names.length-1];
-                    System.arraycopy(c.names, 1, newTail, 0, c.names.length-1);
-                    c.names = newTail;
+                    String[] newTail = new String[c.getNames().length-1];
+                    System.arraycopy(c.getNames(), 1, newTail, 0, c.getNames().length-1);
+                    c.setNames(newTail);
                     children.add(c);
                 }
             }
             children = _groupChildrenMain(children);
             // tally up children counts
             for (DeckDueTreeNode ch : children) {
-                rev +=  ch.revCount;
-                lrn +=  ch.lrnCount;
-                _new += ch.newCount;
+                rev += ch.getRevCount();
+                lrn += ch.getLrnCount();
+                _new += ch.getNewCount();
             }
             // limit the counts to the deck's limits
             JSONObject conf = mCol.getDecks().confForDid(did);
-            JSONObject deck = mCol.getDecks().get(did);
             if (conf.getInt("dyn") == 0) {
+                JSONObject deck = mCol.getDecks().get(did);
                 rev = Math.max(0, Math.min(rev, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
                 _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
@@ -724,7 +723,8 @@ public class Sched extends SchedV2 {
         if (d.getInt("dyn") != 0) {
             return mReportLimit;
         }
-        JSONObject c = mCol.getDecks().confForDid(d.getLong("id"));
+        long did = d.getLong("id");
+        JSONObject c = mCol.getDecks().confForDid(did);
         return Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
     }
 

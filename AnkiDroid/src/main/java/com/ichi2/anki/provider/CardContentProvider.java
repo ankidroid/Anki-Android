@@ -347,7 +347,7 @@ public class CardContentProvider extends ContentProvider {
                 }
 
                 //retrieve the number of cards provided by the selection parameter "limit"
-                col.getSched().reset();
+                col.getSched().deferReset();
                 for (int k = 0; k< limit; k++){
                     Card currentCard = col.getSched().getCard();
 
@@ -373,8 +373,8 @@ public class CardContentProvider extends ContentProvider {
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, allDecks.size());
                 for (Sched.DeckDueTreeNode deck : allDecks) {
-                    long id = deck.did;
-                    String name = deck.names[0];
+                    long id = deck.getDid();
+                    String name = deck.getNamePart(0);
                     addDeckToCursor(id, name, getDeckCountsFromDueTreeNode(deck), rv, col, columns);
                 }
                 return rv;
@@ -387,8 +387,8 @@ public class CardContentProvider extends ContentProvider {
                 long deckId;
                 deckId = Long.parseLong(uri.getPathSegments().get(1));
                 for (Sched.DeckDueTreeNode deck : allDecks) {
-                    if(deck.did == deckId){
-                        addDeckToCursor(deckId, deck.names[0], getDeckCountsFromDueTreeNode(deck), rv, col, columns);
+                    if(deck.getDid() == deckId){
+                        addDeckToCursor(deckId, deck.getNamePart(0), getDeckCountsFromDueTreeNode(deck), rv, col, columns);
                         return rv;
                     }
                 }
@@ -411,9 +411,9 @@ public class CardContentProvider extends ContentProvider {
 
     private JSONArray getDeckCountsFromDueTreeNode(Sched.DeckDueTreeNode deck){
         JSONArray deckCounts = new JSONArray();
-        deckCounts.put(deck.lrnCount);
-        deckCounts.put(deck.revCount);
-        deckCounts.put(deck.newCount);
+        deckCounts.put(deck.getLrnCount());
+        deckCounts.put(deck.getRevCount());
+        deckCounts.put(deck.getNewCount());
         return deckCounts;
     }
 

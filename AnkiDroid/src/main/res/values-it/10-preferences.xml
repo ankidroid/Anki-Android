@@ -39,7 +39,7 @@
 -->
 <resources>
     <!-- generic strings -->
-    <string name="disabled">Disattivato</string>
+    <string name="disabled">Disabilitato</string>
     <string name="enabled">Abilitato</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general">AnkiDroid</string>
@@ -80,7 +80,7 @@
     <string name="button_size">Dimensione pulsante di risposta</string>
     <string name="card_browser_font_size">Ridimensionamento carattere nel browser</string>
     <string name="card_browser_hide_media">Mostra i nomi dei file nel browser delle carte</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">Mostra i nomi dei file multimediali nei campi domanda/risposta del browser delle carte</string>
     <string name="col_path">Cartella AnkiDroid</string>
     <string name="fullscreen_review">Modalità a schermo intero</string>
     <string name="full_screen_off">Disabilitato</string>
@@ -94,8 +94,8 @@
     </string-array>
     <string name="gestures">Attiva i gesti</string>
     <string name="gestures_summ">Assegna gesti alle azioni come rispondere e modificare carte.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links">Ignora i gesti sui collegamenti</string>
+    <string name="gestures_allow_links_summary">I gesti non verranno elaborati se viene premuto un collegamento/suggerimento.</string>
     <string name="gestures_swipe_up">Scorri su</string>
     <string name="gestures_swipe_down">Scorri giù</string>
     <string name="gestures_swipe_left">Scorri a sinistra</string>
@@ -107,8 +107,8 @@
     <string name="gestures_tap_right">Premi a destra</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Utilizza anche pulsanti kanji/katakana, emoji/kao-moji per lo scorrimento</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">Menù «%s»</string>
+    <string name="card_browser_enable_external_context_menu_summary">Abilita il menù contestuale «%s» globalmente</string>
     <string name="double_scrolling_gap">Doppio scorrimento</string>
     <string name="double_scrolling_gap_summ">Raddoppia il divario di scorrimento con eReader</string>
     <string name="swipe_sensitivity">Sensibilità scorrimento</string>
@@ -151,8 +151,8 @@
     <string name="pref_backup_max">Numero massimo di backup</string>
     <string name="show_estimates">Mostra scadenza pulsanti</string>
     <string name="show_estimates_summ">Mostra la prossima scadenza sopra i pulsanti di risposta</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Mostra barra superiore</string>
+    <string name="show_top_bar_summ">Mostra il conteggio delle carte, il contrassegno e la marca nella barra superiore</string>
     <string name="show_progress">Mostra rimanenti</string>
     <string name="show_progress_summ">Visualizza il conteggio delle carte rimanenti</string>
     <string name="show_eta">Visualizza tempo rimanente</string>
@@ -198,9 +198,9 @@
     <string name="custom_sync_server_enable_title">Utilizza server di sincronizzazione personalizzato</string>
     <string name="custom_sync_server_enable_summary">Se non desideri utilizzare il servizio proprietario AnkiWeb puoi specificare un server alternativo qui</string>
     <string name="custom_sync_server_base_url_title">Url di sincronizzazione</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">URL di sincronizzazione non valido</string>
     <string name="custom_sync_server_media_url_title">Url di sincronizzazione del contenuto multimediale</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">URL sincronizzazione media non valido</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Le modifiche alle opzioni del gruppo di mazzi influenzeranno più mazzi. Se desideri cambiare solo il mazzo corrente, aggiungi prima un nuovo gruppo di opzioni</string>
     <string name="studyoptions_limit_select_tags">Seleziona etichette</string>
@@ -229,7 +229,7 @@
     <string name="deck_conf_rev_bury">Seppellisci le ripetizioni correlate</string>
     <string name="deck_conf_rev_bury_summ">Ripetizioni correlate sono seppellite fino al prossimo giorno</string>
     <string name="deck_conf_use_general_timeout_settings">Usa impostazioni generali</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Usa le impostazioni generali di «Risposta di visualizzazione automatica» invece di usare le impostazioni per questo gruppo.</string>
     <string name="deck_conf_easy_bonus">Bonus facile</string>
     <string name="deck_conf_ivl_fct">Modificatore intervallo</string>
     <string name="deck_conf_max_ivl">Intervallo massimo</string>

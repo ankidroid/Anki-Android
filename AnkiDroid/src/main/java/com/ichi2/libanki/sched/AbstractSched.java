@@ -141,6 +141,7 @@ public abstract class AbstractSched {
     public abstract int getReps();
     public abstract void setReps(int reps);
     public abstract int cardCount();
+    public abstract int eta(int[] counts);
     /**
      * Return an estimate, in minutes, for how long it will take to complete all the reps in {@code counts}.
      *
@@ -158,7 +159,6 @@ public abstract class AbstractSched {
      * @param counts An array of [new, lrn, rev] counts from the scheduler's counts() method.
      * @param reload Force rebuild of estimator rates using the revlog.
      */
-    public abstract int eta(int[] counts);
     public abstract int eta(int[] counts, boolean reload);
     public abstract void decrementCounts(Card card);
     public abstract boolean leechActionSuspend(Card card);
@@ -175,33 +175,33 @@ public abstract class AbstractSched {
      * The names field is an array of names that build a deck name from a hierarchy (i.e., a nested
      * deck will have an entry for every level of nesting). While the python version interchanges
      * between a string and a list of strings throughout processing, we always use an array for
-     * this field and use names[0] for those cases.
+     * this field and use getNamePart(0) for those cases.
      */
     public class DeckDueTreeNode implements Comparable {
-        public String[] names;
-        public long did;
-        public int depth;
-        public int revCount;
-        public int lrnCount;
-        public int newCount;
-        public List<DeckDueTreeNode> children = new ArrayList<>();
+        private String[] mName;
+        private long mDid;
+        private int mDepth;
+        private int mRevCount;
+        private int mLrnCount;
+        private int mNewCount;
+        private List<DeckDueTreeNode> mChildren = new ArrayList<>();
 
-        public DeckDueTreeNode(String[] names, long did, int revCount, int lrnCount, int newCount) {
-            this.names = names;
-            this.did = did;
-            this.revCount = revCount;
-            this.lrnCount = lrnCount;
-            this.newCount = newCount;
+        public DeckDueTreeNode(String[] mName, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
+            this.mName = mName;
+            this.mDid = mDid;
+            this.mRevCount = mRevCount;
+            this.mLrnCount = mLrnCount;
+            this.mNewCount = mNewCount;
         }
 
-        public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount) {
-            this(new String[]{name}, did, revCount, lrnCount, newCount);
+        public DeckDueTreeNode(String name, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
+            this(new String[]{name}, mDid, mRevCount, mLrnCount, mNewCount);
         }
 
-        public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount,
-                               List<DeckDueTreeNode> children) {
-            this(new String[]{name}, did, revCount, lrnCount, newCount);
-            this.children = children;
+        public DeckDueTreeNode(String name, long mDid, int mRevCount, int mLrnCount, int mNewCount,
+                               List<DeckDueTreeNode> mChildren) {
+            this(new String[]{name}, mDid, mRevCount, mLrnCount, mNewCount);
+            this.mChildren = mChildren;
         }
 
         /**
@@ -211,8 +211,8 @@ public abstract class AbstractSched {
         public int compareTo(Object other) {
             DeckDueTreeNode rhs = (DeckDueTreeNode) other;
             // Consider each subdeck name in the ordering
-            for (int i = 0; i < names.length && i < rhs.names.length; i++) {
-                int cmp = names[i].compareTo(rhs.names[i]);
+            for (int i = 0; i < mName.length && i < rhs.mName.length; i++) {
+                int cmp = mName[i].compareTo(rhs.mName[i]);
                 if (cmp == 0) {
                     continue;
                 }
@@ -221,7 +221,7 @@ public abstract class AbstractSched {
             // If we made it this far then the arrays are of different length. The longer one should
             // always come after since it contains all of the sections of the shorter one inside it
             // (i.e., the short one is an ancestor of the longer one).
-            if (rhs.names.length > names.length) {
+            if (rhs.mName.length > mName.length) {
                 return -1;
             } else {
                 return 1;
@@ -231,7 +231,51 @@ public abstract class AbstractSched {
         @Override
         public String toString() {
             return String.format(Locale.US, "%s, %d, %d, %d, %d, %d, %s",
-                    Arrays.toString(names), did, depth, revCount, lrnCount, newCount, children);
+                    Arrays.toString(mName), mDid, mDepth, mRevCount, mLrnCount, mNewCount, mChildren);
+        }
+
+        public String[] getNames() {
+            return mName;
+        }
+
+        public String getNamePart(int part) {
+            return mName[part];
+        }
+        
+        public void setNames(String[] mName) {
+            this.mName = mName;
+        }
+
+        public long getDid() {
+            return mDid;
+        }
+
+        public int getDepth() {
+            return mDepth;
+        }
+
+        public void setDepth(int mDepth) {
+            this.mDepth = mDepth;
+        }
+
+        public int getRevCount() {
+            return mRevCount;
+        }
+
+        public int getNewCount() {
+            return mNewCount;
+        }
+
+        public int getLrnCount() {
+            return mLrnCount;
+        }
+
+        public List<DeckDueTreeNode> getChildren() {
+            return mChildren;
+        }
+
+        public boolean hasChildren() {
+            return !mChildren.isEmpty();
         }
     }
 

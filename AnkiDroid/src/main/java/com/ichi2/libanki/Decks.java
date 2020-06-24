@@ -279,11 +279,11 @@ public class Decks {
      * Remove the deck. If cardsToo, delete any cards inside.
      */
     public void rem(long did, boolean cardsToo, boolean childrenToo) {
+        JSONObject deck = get(did, false);
         if (did == 1) {
             // we won't allow the default deck to be deleted, but if it's a
             // child of an existing deck then it needs to be renamed
-            JSONObject deck = get(did);
-            if (deck.getString("name").contains("::")) {
+            if (deck != null && deck.getString("name").contains("::")) {
                 deck.put("name", "Default");
                 save(deck);
             }
@@ -292,10 +292,9 @@ public class Decks {
         // log the removal regardless of whether we have the deck or not
         mCol._logRem(new long[] { did }, Consts.REM_DECK);
         // do nothing else if doesn't exist
-        if (!mDecks.containsKey(did)) {
+        if (deck == null) {
             return;
         }
-        JSONObject deck = get(did);
         if (deck.getInt("dyn") != 0) {
             // deleting a cramming deck returns cards to their previous deck
             // rather than deleting the cards

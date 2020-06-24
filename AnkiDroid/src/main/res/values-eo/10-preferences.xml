@@ -151,8 +151,8 @@
     <string name="pref_backup_max">Maksimuma nombro da sekurkopioj</string>
     <string name="show_estimates">Montri tempon ĉe butono</string>
     <string name="show_estimates_summ">Montri tempon de sekva ripeto ĉe butonoj de respondoj</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Montri supran breton</string>
+    <string name="show_top_bar_summ">Montri nombron da kartoj, flagon kaj markon sur la supra breto</string>
     <string name="show_progress">Montri pliajn kartojn</string>
     <string name="show_progress_summ">Montri nombron da pliaj kartoj</string>
     <string name="show_eta">Montri tempon</string>
@@ -184,7 +184,7 @@
     <string name="reset_custom_buttons">Restarigi normojn</string>
     <string name="thirdparty_apps_title">Eksteraj aplikaĵoj uzantaj API</string>
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
-    <string name="html_javascript_debugging">Senerarigado de HTML / Javascript</string>
+    <string name="html_javascript_debugging">Senerarigado de HTML / Ĝavoskripto</string>
     <string name="html_javascript_debugging_summ">Aktivigu forajn konektojn por WebView kaj konservu HTML de kartoj al la dosierujo “AnkiDroid”</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Detala statistiko</string>
@@ -198,9 +198,9 @@
     <string name="custom_sync_server_enable_title">Uzi propran servilon por samtempigado</string>
     <string name="custom_sync_server_enable_summary">Se vi ne volas uzi la neliberan servon de AnkiWeb, vi povas difini alternativan servilon tie ĉi</string>
     <string name="custom_sync_server_base_url_title">Samtempiga servilo</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">Malĝusta ligilo de samtempigo</string>
     <string name="custom_sync_server_media_url_title">Ligilo de aŭdvidaĵa samtempigado</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">Malĝusta ligilo de samtempigo de aŭdvidaĵoj</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Ŝanĝoj al grupaj agordoj de kartaroj aplikos al pluraj kartaroj. Se vi volas ŝanĝi nur la nunan kartaron, bonvolu unue aldoni novan grupon de agordoj</string>
     <string name="studyoptions_limit_select_tags">Elekti etikedojn</string>
