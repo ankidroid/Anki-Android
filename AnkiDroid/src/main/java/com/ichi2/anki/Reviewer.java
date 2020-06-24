@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -72,14 +74,15 @@ import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 
-public class Reviewer extends AbstractFlashcardViewer {
+public class Reviewer extends AbstractFlashcardViewer implements View.OnClickListener{
     private boolean mHasDrawerSwipeConflicts = false;
     private boolean mShowWhiteboard = true;
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
-
+    private int foregroundColor;
+    private LinearLayout colorPalette;
     // Deck picker reset scheduler before opening the reviewer. So
     // first reset is useless.
     private boolean mSchedResetDone = false;
@@ -102,6 +105,54 @@ public class Reviewer extends AbstractFlashcardViewer {
     @VisibleForTesting
     protected PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.pen_color_white:
+                mWhiteboard.changePenColor(Color.WHITE);
+                //foregroundColor = Color.WHITE;
+                colorPalette.setVisibility(View.GONE);
+                break;
+
+            case R.id.pen_color_black:
+                mWhiteboard.changePenColor(Color.BLACK);
+                //foregroundColor = Color.BLACK;
+                colorPalette.setVisibility(View.GONE);
+                break;
+
+            case R.id.pen_color_red:
+                mWhiteboard.changePenColor(Color.RED);
+                //foregroundColor = Color.RED;
+                colorPalette.setVisibility(View.GONE);
+                break;
+
+            case R.id.pen_color_green:
+                mWhiteboard.changePenColor(Color.GREEN);
+                //foregroundColor = Color.GREEN;
+                colorPalette.setVisibility(View.GONE);
+                break;
+
+            case R.id.pen_color_blue:
+                mWhiteboard.changePenColor(Color.BLUE);
+                //foregroundColor = Color.BLUE;
+                colorPalette.setVisibility(View.GONE);
+                break;
+
+            case R.id.pen_color_yellow:
+                mWhiteboard.changePenColor(Color.YELLOW);
+                //foregroundColor = Color.YELLOW;
+                colorPalette.setVisibility(View.GONE);
+                break;
+
+            default:
+                colorPalette.setVisibility(View.GONE);
+                break;
+
+        }
+    }
+
+
     /** We need to listen for and handle reschedules / resets very similarly */
     abstract class ScheduleCollectionTaskListener extends NextCardHandler {
 
@@ -122,6 +173,20 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
+
+        Button penColorWhite = (Button) findViewById(R.id.pen_color_white);
+        Button penColorBlack = (Button) findViewById(R.id.pen_color_black);
+        Button penColorRed = (Button) findViewById(R.id.pen_color_red);
+        Button penColorGreen = (Button) findViewById(R.id.pen_color_green);
+        Button penColorBlue = (Button) findViewById(R.id.pen_color_blue);
+        Button penColorYellow = (Button) findViewById(R.id.pen_color_yellow);
+
+        penColorWhite.setOnClickListener(this);
+        penColorBlack.setOnClickListener(this);
+        penColorRed.setOnClickListener(this);
+        penColorGreen.setOnClickListener(this);
+        penColorBlue.setOnClickListener(this);
+        penColorYellow.setOnClickListener(this);
 
         if (FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser(getIntent(), this)) {
             this.setResult(RESULT_CANCELED);
@@ -330,11 +395,14 @@ public class Reviewer extends AbstractFlashcardViewer {
                 showDeleteNoteDialog();
                 break;
 
+            case R.id.action_change_whiteboard_pen_color:
+                Timber.i("Reviewer:: Pen Color button pressed");
+                colorPalette = (LinearLayout) findViewById(R.id.whiteboard_pen_color);
+                colorPalette.setVisibility(View.VISIBLE);
+                break;
+
             case R.id.action_clear_whiteboard:
                 Timber.i("Reviewer:: Clear whiteboard button pressed");
-                if (mWhiteboard != null) {
-                    mWhiteboard.clear();
-                }
                 break;
 
             case R.id.action_hide_whiteboard:
