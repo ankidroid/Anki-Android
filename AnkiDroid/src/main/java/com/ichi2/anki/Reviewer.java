@@ -393,6 +393,9 @@ public class Reviewer extends AbstractFlashcardViewer implements View.OnClickLis
 
             case R.id.action_clear_whiteboard:
                 Timber.i("Reviewer:: Clear whiteboard button pressed");
+                if (mWhiteboard != null) {
+                    mWhiteboard.clear();
+                }
                 break;
 
             case R.id.action_hide_whiteboard:
