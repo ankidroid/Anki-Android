@@ -88,6 +88,7 @@ public class ContentProviderTest {
             "pdsqoelhmemmmbwjunnu",
             "scxipjiyozczaaczoawo",
             "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
+            "cmxieunwoogyxsctnjmv::INSBGDS",
     };
     private static final String TEST_MODEL_NAME = "com.ichi2.anki.provider.test.a1x6h9l";
     private static final String[] TEST_MODEL_FIELDS = {"FRONTS","BACK"};
