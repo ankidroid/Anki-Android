@@ -229,8 +229,23 @@ public abstract class AbstractSched {
 
         @Override
         public String toString() {
-            return String.format(Locale.US, "%s, %d, %d, %d, %d, %s",
-                    mName, mDid, mRevCount, mLrnCount, mNewCount, mChildren);
+            StringBuffer buf = new StringBuffer();
+            toString(buf);
+            return buf.toString();
+        }
+
+        public void toString(StringBuffer buf) {
+            for (int i = 0; i < getDepth(); i++ ) {
+                buf.append("  ");
+            }
+            buf.append(String.format(Locale.US, "%s, %d, %d, %d, %d\n",
+                    mName, mDid, mRevCount, mLrnCount, mNewCount));
+            if (mChildren == null) {
+                return;
+            }
+            for (DeckDueTreeNode children : mChildren) {
+                children.toString(buf);
+            }
         }
 
         /**
@@ -324,6 +339,27 @@ public abstract class AbstractSched {
                     limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1));
                 }
             }
+        }
+
+
+        /**
+         * Whether both elements have the same structure and numbers.
+         * @param object
+         * @return
+         */
+        @Override
+        public boolean equals(Object object) {
+            if (!(object instanceof DeckDueTreeNode)) {
+                return false;
+            }
+            DeckDueTreeNode tree = (DeckDueTreeNode) object;
+            return Decks.equalName(getFullDeckName(), tree.getFullDeckName()) &&
+                    mRevCount == tree.mRevCount &&
+                    mLrnCount == tree.mLrnCount &&
+                    mNewCount == tree.mNewCount &&
+                    (mChildren == tree.mChildren || // Would be the case if both are null, or the same pointer
+                    mChildren.equals(tree.mChildren))
+                    ;
         }
     }
 

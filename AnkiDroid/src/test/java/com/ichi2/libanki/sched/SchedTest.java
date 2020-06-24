@@ -23,6 +23,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.AbstractSched.DeckDueTreeNode;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -31,6 +32,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.sched.SchedV2Test.TEST_DECKS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -123,6 +125,19 @@ public class SchedTest extends RobolectricTest {
         long did = addDeck("New");
         getCol().getDecks().select(did);
     }
+
+    @Test
+    public void ensureDeckTree() {
+        for (String deckName: TEST_DECKS) {
+            addDeck(deckName);
+        }
+        getCol().getSched().deckDueTree();
+        AbstractSched sched = getCol().getSched();
+        List<AbstractSched.DeckDueTreeNode> tree = sched.deckDueTree();
+        Assert.assertEquals("Tree has not the expected structure", SchedV2Test.expectedTree(sched, false), tree);
+
+    }
+
 
     private void selectDefaultDeck() {
         getCol().getDecks().select(Consts.DEFAULT_DECK_ID);
