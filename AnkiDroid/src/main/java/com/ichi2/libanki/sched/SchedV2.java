@@ -433,7 +433,7 @@ public class SchedV2 extends AbstractSched {
     private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps) {
         // first, split the group names into components
         for (DeckDueTreeNode g : grps) {
-            g.setNames(Decks.path(g.getNamePart(0)));
+            g.setNames(Decks.path(g.getDeckNameComponent(0)));
         }
         // and sort based on those components
         Collections.sort(grps);
@@ -448,11 +448,11 @@ public class SchedV2 extends AbstractSched {
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
         while (it.hasNext()) {
             DeckDueTreeNode node = it.next();
-            String head = node.getNamePart(0);
+            String head = node.getDeckNameComponent(0);
             List<DeckDueTreeNode> children  = new ArrayList<>();
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
-                if (head.equals(next.getNamePart(0))) {
+                if (head.equals(next.getDeckNameComponent(0))) {
                     // Same head - add to tail of current head.
                     children.add(next);
                 } else {

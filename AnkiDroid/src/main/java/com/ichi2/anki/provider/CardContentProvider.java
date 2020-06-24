@@ -374,7 +374,7 @@ public class CardContentProvider extends ContentProvider {
                 MatrixCursor rv = new MatrixCursor(columns, allDecks.size());
                 for (Sched.DeckDueTreeNode deck : allDecks) {
                     long id = deck.getDid();
-                    String name = deck.getNamePart(0);
+                    String name = deck.getDeckNameComponent(0);
                     addDeckToCursor(id, name, getDeckCountsFromDueTreeNode(deck), rv, col, columns);
                 }
                 return rv;
@@ -388,7 +388,7 @@ public class CardContentProvider extends ContentProvider {
                 deckId = Long.parseLong(uri.getPathSegments().get(1));
                 for (Sched.DeckDueTreeNode deck : allDecks) {
                     if(deck.getDid() == deckId){
-                        addDeckToCursor(deckId, deck.getNamePart(0), getDeckCountsFromDueTreeNode(deck), rv, col, columns);
+                        addDeckToCursor(deckId, deck.getDeckNameComponent(0), getDeckCountsFromDueTreeNode(deck), rv, col, columns);
                         return rv;
                     }
                 }

@@ -251,7 +251,7 @@ public class Sched extends SchedV2 {
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
         while (it.hasNext()) {
             DeckDueTreeNode node = it.next();
-            String head = node.getNamePart(0);
+            String head = node.getDeckNameComponent(0);
             // Compose the "children" node list. The children is a list of all the nodes that proceed
             // the current one that contain the same name[0], except for the current one itself.
             // I.e., they are subdecks that stem from this node.
@@ -259,7 +259,7 @@ public class Sched extends SchedV2 {
             List<DeckDueTreeNode> children  = new ArrayList<>();
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
-                if (head.equals(next.getNamePart(0))) {
+                if (head.equals(next.getDeckNameComponent(0))) {
                     // Same head - add to tail of current head.
                     children.add(next);
                 } else {
