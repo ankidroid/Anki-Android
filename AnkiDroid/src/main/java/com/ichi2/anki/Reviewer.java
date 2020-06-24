@@ -527,11 +527,11 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp).mutate();
             if (mShowWhiteboard) {
-                whiteboardIcon.setAlpha(255);
+                whiteboardIcon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
             } else {
-                whiteboardIcon.setAlpha(77);
+                whiteboardIcon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
             }
