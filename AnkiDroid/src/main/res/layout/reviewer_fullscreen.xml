@@ -20,6 +20,12 @@
             <include layout="@layout/reviewer_flashcard_fullscreen"
                      android:layout_width="fill_parent"
                      android:layout_height="fill_parent"/>
+            <include
+                layout="@layout/reviewer_whiteboard_pen_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_above="@+id/bottom_area_layout"/>
             <include layout="@layout/reviewer_answer_buttons"/>
         </RelativeLayout>
         <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
