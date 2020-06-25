@@ -41,7 +41,7 @@ import java.util.Stack;
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  */
-public class Whiteboard extends View implements View.OnClickListener {
+public class Whiteboard extends View {
 
     private static final float TOUCH_TOLERANCE = 4;
 
@@ -68,7 +68,7 @@ public class Whiteboard extends View implements View.OnClickListener {
     private boolean mMonochrome;
     private boolean mUndoModeActive = false;
 
-    private LinearLayout mColorPalette;
+    private final LinearLayout mColorPalette;
 
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
@@ -113,12 +113,12 @@ public class Whiteboard extends View implements View.OnClickListener {
         Button penColorGreen = (Button) cardViewer.findViewById(R.id.pen_color_green);
         Button penColorBlue = (Button) cardViewer.findViewById(R.id.pen_color_blue);
         Button penColorYellow = (Button) cardViewer.findViewById(R.id.pen_color_yellow);
-        penColorWhite.setOnClickListener(this);
-        penColorBlack.setOnClickListener(this);
-        penColorRed.setOnClickListener(this);
-        penColorGreen.setOnClickListener(this);
-        penColorBlue.setOnClickListener(this);
-        penColorYellow.setOnClickListener(this);
+        penColorWhite.setOnClickListener(this::onClick);
+        penColorBlack.setOnClickListener(this::onClick);
+        penColorRed.setOnClickListener(this::onClick);
+        penColorGreen.setOnClickListener(this::onClick);
+        penColorBlue.setOnClickListener(this::onClick);
+        penColorYellow.setOnClickListener(this::onClick);
     }
 
 
@@ -260,13 +260,7 @@ public class Whiteboard extends View implements View.OnClickListener {
         // To fix issue #1336, just make the whiteboard big and square.
         final Point p = getDisplayDimenions();
         int bitmapSize = Math.max(p.x, p.y);
-        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888);
-        /*
-        if (mMonochrome && !mInvertedColors) {
-            createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ALPHA_8);
-        } else {
-            createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_4444);
-        }*/
+        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_4444);
     }
 
     private void drawStart(float x, float y) {
@@ -374,7 +368,7 @@ public class Whiteboard extends View implements View.OnClickListener {
         return point;
     }
 
-    @Override
+
     public void onClick(View view) {
 
         switch (view.getId()) {
