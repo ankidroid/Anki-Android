@@ -118,7 +118,7 @@
     <string name="menu_flag_card_two">Contrassegno arancione</string>
     <string name="menu_flag_card_three">Contrassegno verde</string>
     <string name="menu_flag_card_four">Contrassegno blu</string>
-    <string name="menu_edit_tags">Modifica etichette</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Vuoi veramente eliminare questa nota e tutte le sue carte?\n%s</string>
     <string name="menu_select">Seleziona testo</string>
     <string name="menu_search">Ricerca in %1$s</string>
@@ -134,7 +134,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Si prega di concedere ad AnkiDroid l\'autorizzazione «Memoria» per continuare</string>
+    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -144,10 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d min</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d g</string>
-    <string name="time_quantity_days_hours">%1$d g %2$d h</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f me</string>
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->
@@ -191,8 +191,8 @@
         <item quantity="other">Eliminare il tipo di carta \'%2$s\', e le sue carte %1$d?</item>
     </plurals>
     <string name="invalid_template">Una carta non può essere generata</string>
-    <string name="card_template_editor_would_delete_note">La rimozione di questo tipo di carta causerebbe l\'eliminazione di una o più note. Si prega di creare e salvare prima un nuovo tipo di carta.</string>
-    <string name="card_template_editor_save_error">Impossibile salvare le modifiche al modello di carta: %s</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">Il tipo di carta per la carta corrente è stato eliminato.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspetto del browser</string>

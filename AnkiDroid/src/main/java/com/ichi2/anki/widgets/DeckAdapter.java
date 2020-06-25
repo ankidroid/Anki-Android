@@ -177,38 +177,38 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             deckLayout.setPadding(normalPadding, 0, rightPadding, 0);
         }
 
-        if (node.hasChildren()) {
-            holder.deckExpander.setTag(node.getDid());
+        if (node.children.size() > 0) {
+            holder.deckExpander.setTag(node.did);
             holder.deckExpander.setOnClickListener(mDeckExpanderClickListener);
         } else {
             holder.deckExpander.setOnClickListener(null);
         }
         holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
         // Set background colour. The current deck has its own color
-        if (node.getDid() == mCol.getDecks().current().optLong("id")) {
+        if (node.did == mCol.getDecks().current().optLong("id")) {
             holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
         } else {
             CompatHelper.getCompat().setSelectableBackground(holder.deckLayout);
         }
         // Set deck name and colour. Filtered decks have their own colour
-        holder.deckName.setText(node.getNamePart(0));
-        if (mCol.getDecks().isDyn(node.getDid())) {
+        holder.deckName.setText(node.names[0]);
+        if (mCol.getDecks().isDyn(node.did)) {
             holder.deckName.setTextColor(mDeckNameDynColor);
         } else {
             holder.deckName.setTextColor(mDeckNameDefaultColor);
         }
 
         // Set the card counts and their colors
-        holder.deckNew.setText(String.valueOf(node.getNewCount()));
-        holder.deckNew.setTextColor((node.getNewCount() == 0) ? mZeroCountColor : mNewCountColor);
-        holder.deckLearn.setText(String.valueOf(node.getLrnCount()));
-        holder.deckLearn.setTextColor((node.getLrnCount() == 0) ? mZeroCountColor : mLearnCountColor);
-        holder.deckRev.setText(String.valueOf(node.getRevCount()));
-        holder.deckRev.setTextColor((node.getRevCount() == 0) ? mZeroCountColor : mReviewCountColor);
+        holder.deckNew.setText(String.valueOf(node.newCount));
+        holder.deckNew.setTextColor((node.newCount == 0) ? mZeroCountColor : mNewCountColor);
+        holder.deckLearn.setText(String.valueOf(node.lrnCount));
+        holder.deckLearn.setTextColor((node.lrnCount == 0) ? mZeroCountColor : mLearnCountColor);
+        holder.deckRev.setText(String.valueOf(node.revCount));
+        holder.deckRev.setTextColor((node.revCount == 0) ? mZeroCountColor : mReviewCountColor);
 
         // Store deck ID in layout's tag for easy retrieval in our click listeners
-        holder.deckLayout.setTag(node.getDid());
-        holder.countsLayout.setTag(node.getDid());
+        holder.deckLayout.setTag(node.did);
+        holder.countsLayout.setTag(node.did);
 
         // Set click listeners
         holder.deckLayout.setOnClickListener(mDeckClickListener);
@@ -223,19 +223,19 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
 
     private void setDeckExpander(ImageButton expander, ImageButton indent, Sched.DeckDueTreeNode node){
-        boolean collapsed = mCol.getDecks().get(node.getDid()).optBoolean("collapsed", false);
+        boolean collapsed = mCol.getDecks().get(node.did).optBoolean("collapsed", false);
         // Apply the correct expand/collapse drawable
         if (collapsed) {
             expander.setImageDrawable(mExpandImage);
             expander.setContentDescription(expander.getContext().getString(R.string.expand));
-        } else if (node.hasChildren()) {
+        } else if (node.children.size() > 0) {
             expander.setImageDrawable(mCollapseImage);
             expander.setContentDescription(expander.getContext().getString(R.string.collapse));
         } else {
             expander.setImageDrawable(mNoExpander);
         }
         // Add some indenting for each nested level
-        int width = (int) indent.getResources().getDimension(R.dimen.keyline_1) * node.getDepth();
+        int width = (int) indent.getResources().getDimension(R.dimen.keyline_1) * node.depth;
         indent.setMinimumWidth(width);
     }
 
@@ -249,13 +249,13 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         for (Sched.DeckDueTreeNode node : nodes) {
             // If the default deck is empty, hide it by not adding it to the deck list.
             // We don't hide it if it's the only deck or if it has sub-decks.
-            if (node.getDid() == 1 && nodes.size() > 1 && !node.hasChildren()) {
+            if (node.did == 1 && nodes.size() > 1 && node.children.size() == 0) {
                 if (mCol.getDb().queryScalar("select 1 from cards where did = 1") == 0) {
                     continue;
                 }
             }
             // If any of this node's parents are collapsed, don't add it to the deck list
-            for (JSONObject parent : mCol.getDecks().parents(node.getDid())) {
+            for (JSONObject parent : mCol.getDecks().parents(node.did)) {
                 mHasSubdecks = true;    // If a deck has a parent it means it's a subdeck so set a flag
                 if (parent.optBoolean("collapsed")) {
                     return;
@@ -263,16 +263,16 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             }
             mDeckList.add(node);
             // Keep track of the depth. It's used to determine visual properties like indenting later
-            node.setDepth(depth);
+            node.depth = depth;
 
             // Add this node's counts to the totals if it's a parent deck
             if (depth == 0) {
-                mNew += node.getNewCount();
-                mLrn += node.getLrnCount();
-                mRev += node.getRevCount();
+                mNew += node.newCount;
+                mLrn += node.lrnCount;
+                mRev += node.revCount;
             }
             // Process sub-decks
-            processNodes(node.getChildren(), depth + 1);
+            processNodes(node.children, depth + 1);
         }
     }
 
@@ -285,7 +285,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
      */
     public int findDeckPosition(long did) {
         for (int i = 0; i < mDeckList.size(); i++) {
-            if (mDeckList.get(i).getDid() == did) {
+            if (mDeckList.get(i).did == did) {
                 return i;
             }
         }

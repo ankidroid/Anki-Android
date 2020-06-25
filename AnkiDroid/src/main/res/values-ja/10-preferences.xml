@@ -55,7 +55,7 @@
     <string name="pref_cat_themes">テーマ</string>
     <string name="pref_cat_fonts">フォント</string>
     <string name="pref_cat_gestures">ジェスチャー</string>
-    <string name="pref_cat_gestures_summ">よく行う操作を、タップやスワイプをするだけで手軽に行えるようになります</string>
+    <string name="pref_cat_gestures_summ">よく使うボタン操作をタップやスワイプにも割り当てます</string>
     <string name="pref_cat_actions">アクション</string>
     <string name="pref_cat_advanced">その他</string>
     <string name="pref_cat_advanced_summ">高度な最適化設定、実験的機能、AnkiDroidについて</string>
@@ -79,8 +79,8 @@
     <string name="image_zoom">画像の拡大・縮小</string>
     <string name="button_size">解答表示ボタン・回答ボタンのサイズ</string>
     <string name="card_browser_font_size">ブラウザ用フォントサイズ</string>
-    <string name="card_browser_hide_media">ブラウザでファイル名も表示</string>
-    <string name="card_browser_hide_media_summary">ブラウザのカード一覧画面の質問フィールド欄と解答フィールド欄に、メディア（画像・音声・動画）ファイル名も表示する</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroidディレクトリ</string>
     <string name="fullscreen_review">フルスクリーンモード</string>
     <string name="full_screen_off">オフ</string>
@@ -94,8 +94,8 @@
     </string-array>
     <string name="gestures">ジェスチャーを有効にする</string>
     <string name="gestures_summ">回答やカード編集などの操作にジェスチャーを割り当てます</string>
-    <string name="gestures_allow_links">リンク上ではタップジェスチャー無効</string>
-    <string name="gestures_allow_links_summary">リンク用やヒント表示用の文字列・画像をタップした場合は、タップジェスチャーに割り当てたアクションを実行せず、単にリンク先やヒントを表示します</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">上にスワイプ</string>
     <string name="gestures_swipe_down">下にスワイプ</string>
     <string name="gestures_swipe_left">左にスワイプ</string>
@@ -152,7 +152,7 @@
     <string name="show_estimates">回答ボタンに復習間隔を表示</string>
     <string name="show_estimates_summ">次の復習までの間隔を回答ボタンの中に表示します</string>
     <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">トップバーにカード枚数、フラグボタン、マークボタンを表示する</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">残りのカード枚数を表示</string>
     <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 基本学習および再基本学習、緑: 復習）</string>
     <string name="show_eta">推定学習時間を表示</string>
@@ -227,8 +227,8 @@
     <string name="deck_conf_new_bury_summ">新規の関連カード（同じノートから作られた別のカード。例：裏表反転カード）の学習を翌日まで延期します</string>
     <string name="deck_conf_rev_bury">関連カードの復習を延期</string>
     <string name="deck_conf_rev_bury_summ">関連カード（同じノートから作られた別のカード。例：裏表反転カード）の復習を翌日まで延期します</string>
-    <string name="deck_conf_use_general_timeout_settings">一般設定を使用する</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">このグループ独自の設定は行わず、ドロワーメニューの[設定]>[カードの学習]>[解答の自動表示]での一般的な設定をそのまま使用します。</string>
+    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">簡単と答えた時のボーナス（復習間隔の伸び率の割り増し）</string>
     <string name="deck_conf_ivl_fct">復習間隔の調整</string>
     <string name="deck_conf_max_ivl">復習間隔の上限</string>

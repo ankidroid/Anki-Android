@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Konservado de ŝanĝoj en la datumbazon&#8230;</string>
     <string name="sync_download_chunk">Elŝutado de ŝanĝoj&#8230;</string>
     <string name="sync_upload_chunk">Alŝutado de ŝanĝoj&#8230;</string>
-    <string name="sync_up_down_size">alŝutita: %1$d KiB, elŝutita: %2$d KiB</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">Eraro okazis. Bonvolu reprovi poste.</string>
     <string name="sync_check_upload_file">Kontrolado de dosiero antaŭ alŝuto&#8230;</string>
     <string name="sync_check_download_file">Kontrolado de elŝutita dosiero&#8230;</string>

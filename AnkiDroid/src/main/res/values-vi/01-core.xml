@@ -163,7 +163,7 @@
     <string name="studyoptions_congrats_custom">Để học ngoài lịch trình thông thường, hãy bấm nút \"Học theo tuỳ chọn\"</string>
     <string name="studyoptions_no_cards_due">Chưa có thẻ nào tới hạn</string>
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
-    <string name="empty_cloze_warning">Chỉnh sửa ghi chú và thêm miêu tả đúng nhất. (%1$s)</string>
+    <string name="empty_cloze_warning">Chỉnh sửa ghi chú và thêm miêu tả đúng nhất</string>
     <string name="button_sync">Đồng bộ</string>
     <string name="cancel_sync_confirm">Bạn có muốn huỷ đồng bộ?</string>
     <string name="continue_sync">Tiếp tục đồng bộ</string>

@@ -62,10 +62,10 @@
         <item quantity="other">還有%d分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">剩餘 %d 小時 %d</item>
+        <item quantity="other">%d hours %d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">剩餘 %d 天 %d</item>
+        <item quantity="other">%d days %d left</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -88,10 +88,10 @@
     <string name="undo_action_suspend_note">長久擱置筆記</string>
     <string name="undo_action_delete">刪除筆記</string>
     <string name="undo_action_delete_multi">刪除筆記</string>
-    <string name="undo_action_change_deck_multi">變更牌組</string>
-    <string name="undo_action_reschedule_card">重新排程</string>
-    <string name="undo_action_reset_card">重設進度</string>
-    <string name="undo_action_reposition_card">變更位置</string>
+    <string name="undo_action_change_deck_multi">更改牌組</string>
+    <string name="undo_action_reschedule_card">reschedule</string>
+    <string name="undo_action_reset_card">reset progress</string>
+    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">全部移動到牌組</string>
     <string name="unbury">取消暫時隱藏</string>
     <string name="rename_deck">重新命名牌組</string>
@@ -106,21 +106,21 @@
     <string name="menu_bury">隱藏</string>
     <string name="menu_suspend">暫停</string>
     <string name="menu_delete_note">刪除筆記</string>
-    <string name="menu_flag">標記</string>
-    <string name="menu_flag_card">標記卡片</string>
-    <string name="menu_flag_card_zero">無標記</string>
-    <string name="menu_flag_card_one">紅色標記</string>
-    <string name="menu_flag_card_two">橙色標記</string>
-    <string name="menu_flag_card_three">綠色標記</string>
-    <string name="menu_flag_card_four">藍色標記</string>
-    <string name="menu_edit_tags">編輯標籤</string>
+    <string name="menu_flag">Flag</string>
+    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
+    <string name="menu_flag_card_two">Orange flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
     <string name="menu_select">選擇文字</string>
     <string name="menu_search">在%1$s中查詢</string>
     <string name="menu_mark_note">標記筆記</string>
     <string name="menu_unmark_note">取消標記筆記</string>
-    <string name="menu_toggle_mic_tool_bar">檢查發音</string>
-    <string name="new_deck">建立牌組</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="new_deck">創建牌組</string>
     <string name="create">建立</string>
     <string name="new_dynamic_deck">新增篩選牌組</string>
     <string name="night_mode">夜間模式</string>
@@ -129,7 +129,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">請授予 AnkiDroid ‘儲存空間’ 權限以繼續</string>
+    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -139,17 +139,17 @@
     -->
     <string name="time_quantity_seconds">%d秒</string>
     <string name="time_quantity_minutes">%d分鐘</string>
-    <string name="time_quantity_hours_minutes">%1$d 小時 %2$d 分鐘</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d個小時</string>
     <string name="time_quantity_days">%d天</string>
-    <string name="time_quantity_days_hours">%1$d 天 %2$d 小時</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f個月</string>
     <string name="time_quantity_years">%.1f年</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_cram_deck">正在重建填鴨式牌組。\n請稍後...</string>
     <string name="rebuild_cram_label">重建</string>
     <string name="empty_cram_label">清空</string>
-    <string name="create_subdeck">建立子牌組</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">正在清空填鴨式牌組。\n請稍後...</string>
     <string name="custom_study_deck_name">自訂學程</string>
     <string name="custom_study_deck_exists">請先重新命名現有的「自訂學習」牌組。</string>
@@ -163,7 +163,7 @@
     <string name="studyoptions_congrats_custom">如果要有額外的學習進度，請按下方的「自訂學習」按鈕。</string>
     <string name="studyoptions_no_cards_due">尚無到期的卡片。</string>
     <string name="sd_card_not_mounted">儲存裝置未掛載</string>
-    <string name="empty_cloze_warning">編輯此筆記，並新增一些克漏字測驗。(%1$s)</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync">同步</string>
     <string name="cancel_sync_confirm">你要取消同步嗎？</string>
     <string name="continue_sync">繼續同步</string>
@@ -179,20 +179,20 @@
     <string name="card_template_editor_back">反面樣本</string>
     <string name="card_template_editor_styling">造型</string>
     <string name="card_template_editor_menu_delete">刪除</string>
-    <string name="card_template_editor_menu_card_browser_appearance">卡片瀏覽器外觀</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">需要至少一個卡片種類。</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">刪除卡片種類 \"%2$s\"，和它的 %1$d 張卡片？</item>
     </plurals>
     <string name="invalid_template">無法生成卡片</string>
-    <string name="card_template_editor_would_delete_note">移除這個卡片種類將會導致一或多個筆記被刪除。請先新增並儲存一個卡片種類。</string>
-    <string name="card_template_editor_save_error">無法儲存卡片模板變更：%s</string>
-    <string name="template_for_current_card_deleted">當前卡片的卡片類型已被刪除。</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">瀏覽器外觀</string>
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">讀寫 AnkiDroid 資料庫</string>
-    <string name="read_write_permission_description">瀏覽現有的筆記、卡片、筆記類型和牌組，或者自己動手建立新的~</string>
-    <string name="card_browser_label">卡片瀏覽器</string>
-    <string name="card_browser_context_menu">卡片瀏覽器</string>
+    <string name="read_write_permission_description">瀏覽現有的筆記、 卡片、 筆記類型和牌組，或者自己動手創建新的~</string>
+    <string name="card_browser_label">Card Browser</string>
+    <string name="card_browser_context_menu">Card Browser</string>
 </resources>

@@ -64,7 +64,7 @@
     <string name="hide_whiteboard">Kaŝi skribtabulon</string>
     <string name="clear_whiteboard">Forviŝi skribtabulon</string>
     <string name="replay_audio">Reludi sonaĵon</string>
-    <string name="toggle_mic_tool_bar">Kontroli elparolon</string>
+    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Karto markita kiel forgesema kaj kaŝita</string>
     <string name="leech_notification">Karto markita kiel forgesema</string>
     <string name="corrupt_font">Difektita dosiero de tiparo %s</string>
@@ -164,19 +164,19 @@
     <string name="import_message_add">Aldoni</string>
     <string name="import_message_replace_confirm">Tio ĉi forigos vian ekzistan kolekton kaj anstataŭigos ĝin per datumoj de dosiero %s</string>
     <string name="import_message_add_confirm">Ĉu aldoni “%s” al kolekto? Tio ĉi povas okupi multan tempon</string>
-    <string name="import_log_no_apkg">Tio ĉi ne estas valida dosiero Anki-pakaĵo</string>
-    <string name="import_log_failed_unzip">Fiaskis maldensigi la dosieron apkg: %s</string>
-    <string name="import_log_failed_copy_to">Fiaskis kopii la dosieron apkg al %s</string>
-    <string name="import_log_failed_validate">Fiaskis validigi la dosieron apkg</string>
-    <string name="import_log_insufficient_space">Mankas spaco por maldensigi la pakaĵon. Postulas: %1$d, disponeble: %2$d</string>
-    <string name="import_log_file_cache_cleared">Eraro dum enporti dosieron, probable la kaŝmemoro forviŝiĝis dum pritraktado.\nReprovu</string>
-    <string name="import_succeeded_but_check_database">Sukcese enportis datumojn, sed fiaskis ordigi la datumojn. Plenumu kontrolon de datumbazo poste. Ĉefa kialo: %s</string>
+    <string name="import_log_no_apkg">Tio-ĉi ne estas valida Anki-pakaĵa dosiero</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
+    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
+    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
+    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_unhandled_request">Fiaskis pritrakti peton pri enporto</string>
     <string name="import_error_exception">Fiaskis enporti pakaĵon\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dosiernomo \"%s\" ne finiĝas per .apkg aŭ .colpkg</string>
     <string name="import_error_load_imported_database">Anstataŭigoj de Anki-datumbazo (.anki2) ankoraŭ ne estas subtenataj. Legu la manlibron por instrukciojn pri anstataŭigo.</string>
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti anki-dosierojn:\n%s</string>
-    <string name="import_error_copy_file_to_cache">Fiaskis kopii dosieron al kaŝmemoro (probable mankas spaco en konservejo)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_replacing">Anstataŭigado de kolekto&#8230;</string>
     <string name="import_interrupted">Enportado interrompita</string>
     <string name="export_include_schedule">Inkluzivi lern-planon</string>
@@ -272,6 +272,6 @@
     <string name="restore_default">Restarigi implicitajn</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Malplena</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Aktivigu plenekranan reĝimon por uzi “montri navigan tirmenuon” per Ĝavoskripto.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Aktivigu plenekranan reĝimon por uzi “montri menuon de agordoj” per Ĝavoskripto.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

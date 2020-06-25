@@ -23,7 +23,7 @@
     <string name="model_browser_label">Gestisci i tipi di note</string>
     <string name="model_editor_label">Gestisci i campi</string>
     <!--Toasts-->
-    <string name="toast_last_model">Non puoi eliminare il tuo ultimo tipo di nota</string>
+    <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">I tipi di nota devono avere almeno un campo</string>
     <string name="toast_empty_name">Devi inserire un nome</string>
     <string name="toast_duplicate_field">Nome di campo già utilizzato</string>
@@ -46,7 +46,7 @@
     <string name="model_browser_template">Modifica le carte</string>
     <string name="model_browser_add">Aggiungi tipo di nota</string>
     <!--Rename-->
-    <string name="rename_model">Rinoma il tipo di nota</string>
+    <string name="rename_model">Rename note type</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Modifica i campi</string>
     <string name="model_field_editor_add">Aggiungi campo</string>
@@ -55,21 +55,21 @@
     <string name="model_field_editor_rename">Rinomina il campo</string>
     <string name="model_field_editor_reposition_menu">Riposiziona il campo</string>
     <string name="model_field_editor_reposition">Riposiziona il campo (immetti un valore %1$d –%2$d)</string>
-    <string name="model_field_editor_toggle_sticky">Ricorda l\'ultimo input quando si aggiunge</string>
+    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Aggiornamento dei campi</string>
     <string name="model_field_editor_sort_field">Ordina per questo campo</string>
     <string name="model_clone_suffix">copia</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Sei sicuro/a di voler eliminare questo tipo di nota?</string>
+    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Sei sicuro di voler eliminare questo campo?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Aggiungi: %1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Clona: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Inserisci il modello che il browser delle carte userà per visualizzare le tue carte. Usa questo per visualizzare una risposta più concisa.\n\nUn modello iniziale di\n«La capitale di {{Country}} è:»\npotrebbe essere compresso nel browser delle carte a\n«Capitale: {{Country}}»</string>
-    <string name="card_template_browser_appearance_question_format">Formato della domanda</string>
-    <string name="card_template_browser_appearance_answer_format">Formato della risposta</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Ripristinare i valori predefiniti?</string>
-    <string name="card_template_browser_appearance_saving_note">Queste modifiche vengono applicate quando il modello della carta viene salvato</string>
+    <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
+    <string name="card_template_browser_appearance_question_format">Question Format</string>
+    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
+    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
 </resources>

@@ -21,13 +21,13 @@
 <resources>
     <!--Fields-->
     <string name="front_field_name">Front</string>
-    <string name="back_field_name">Indietro</string>
-    <string name="text_field_name">Testo</string>
+    <string name="back_field_name">Back</string>
+    <string name="text_field_name">Text</string>
     <string name="extra_field_name">Extra</string>
-    <string name="field_to_ask_front_name">Aggiungi inverso</string>
+    <string name="field_to_ask_front_name">Add Reverse</string>
     <!--Card type-->
-    <string name="card_one_name">Carta 1</string>
-    <string name="card_two_name">Carta 2</string>
+    <string name="card_one_name">Card 1</string>
+    <string name="card_two_name">Card 2</string>
     <string name="card_cloze_name">Cloze</string>
     <!--Note type-->
     <string name="basic_model_name">Basic</string>

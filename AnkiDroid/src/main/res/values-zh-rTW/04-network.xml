@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">目前是離線狀態</string>
-    <string name="sync_even_if_offline">強制嘗試</string>
+    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">同步錯誤</string>
     <string name="vague_error">錯誤</string>
     <string name="retry">重試</string>
@@ -49,7 +49,7 @@
     <string name="menu_get_shared_decks">取得共享的牌組</string>
     <string name="connection_error_message">網路出了點問題。</string>
     <string name="not_logged_in_title">登入 AnkiWeb</string>
-    <string name="login_create_account_message">您必須登入到第三方賬戶以使用云端同步服務。您可以在下一步建立一個賬戶。</string>
+    <string name="login_create_account_message">您必須登錄到第三方賬戶以使用云同步服務。您可以在下一步創建一個賬戶。</string>
     <!-- MyAccount.java -->
     <string name="username">電子郵件地址</string>
     <string name="username_repeat">再次輸入電子郵件地址</string>
@@ -93,7 +93,7 @@
     <string name="sync_remote_db_error">已下載的資料庫已損壞。請再試一次。</string>
     <string name="sync_overwrite_error">所下載的檔案無法覆蓋你當前的收藏</string>
     <string name="sync_connection_error">連線逾時。可能是你的網路連線有問題，或是你的媒體資料夾內有很大的檔案。</string>
-    <string name="sync_write_access_error">下載的檔案無法儲存到 SD 記憶卡。你的 SD 記憶卡裝載為唯讀，或者沒有足夠的空間。</string>
+    <string name="sync_write_access_error">下載的檔無法保存到 SD 卡。你的 SD 卡設定為唯讀，或者沒有足夠的空間。</string>
     <string name="sync_deletions_message">同步刪除...</string>
     <string name="sync_small_objects_message">同步小物件...</string>
     <string name="sync_finish_message">完成同步...</string>
@@ -101,7 +101,7 @@
     <string name="sync_writing_db">將變更的資料寫入到資料庫中...</string>
     <string name="sync_download_chunk">下載變更中...</string>
     <string name="sync_upload_chunk">上傳變更中...</string>
-    <string name="sync_up_down_size">上載: %1$d KB, 下載: %2$d KB</string>
+    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
     <string name="sync_generic_error">出現錯誤，請稍後再試</string>
     <string name="sync_check_upload_file">正在檢查需要上傳的檔案...</string>
     <string name="sync_check_download_file">檢查下載的檔案...</string>
@@ -121,7 +121,7 @@
     <string name="force_full_sync_summary">下一次同步時，強制單方面的修改</string>
     <string name="full_sync_confirmation">此變動會使你下一次同步你的收藏時，需要完整上傳你的資料庫。如果同步的話，你其他的裝置上尚未同步的複習卡片或其他變動的部分將會遺失，你是否要繼續？</string>
     <string name="full_sync_confirmation_upgrade">由於先前安裝的 AnkiDroid 版本的程式錯誤，我們建議你強制完整同步一次。</string>
-    <string name="sync_error_407_proxy_required">Proxy 要求認證。</string>
+    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
     <string name="sync_error_409">一次只能有一個用戶連線到 AnkiWeb，如果上次同步失敗了，請幾分鐘後再嘗試。</string>
     <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
     <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>

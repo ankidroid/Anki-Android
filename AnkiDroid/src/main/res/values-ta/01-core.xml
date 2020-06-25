@@ -119,7 +119,7 @@
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
     <string name="menu_edit_tags">Edit tags</string>
-    <string name="delete_note_message">உண்மையில் இந்த குறிப்பையும் அதன் அனைத்து அட்டைகளையும் நீக்கவா?\n%s</string>
+    <string name="delete_note_message">உண்மையில் இந்த குறிப்பையும் அதன் அனைத்து அட்டைகளையும் நீக்கவா?\%s</string>
     <string name="menu_select">உரை தேர்ந்தெடு</string>
     <string name="menu_search">இங்கே பாருங்கள் %1$s</string>
     <string name="menu_mark_note">குறிப்பு குறிக்கவும்</string>

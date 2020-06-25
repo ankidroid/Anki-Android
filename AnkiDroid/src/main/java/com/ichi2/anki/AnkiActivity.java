@@ -53,8 +53,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
     public static final int REQUEST_REVIEW = 901;
-    /** The name of the parent class (Reviewer) */
-    private final String mActivityName;
 
     private DialogHandler mHandler = new DialogHandler(this);
 
@@ -63,14 +61,10 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     private boolean mIsDestroyed = false;
 
-    public AnkiActivity() {
-        super();
-        this.mActivityName = getClass().getSimpleName();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Timber.i("AnkiActivity::onCreate - %s", mActivityName);
+        Timber.i("AnkiActivity::onCreate");
         // The hardware buttons should control the music volume
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         // Set the theme
@@ -90,14 +84,14 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     @Override
     protected void onStart() {
-        Timber.i("AnkiActivity::onStart - %s", mActivityName);
+        Timber.i("AnkiActivity::onStart");
         super.onStart();
         mCustomTabActivityHelper.bindCustomTabsService(this);
     }
 
     @Override
     protected void onStop() {
-        Timber.i("AnkiActivity::onStop - %s", mActivityName);
+        Timber.i("AnkiActivity::onStop");
         super.onStop();
         mCustomTabActivityHelper.unbindCustomTabsService(this);
     }
@@ -105,7 +99,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     @Override
     protected void onPause() {
-        Timber.i("AnkiActivity::onPause - %s", mActivityName);
+        Timber.i("AnkiActivity::onPause");
         super.onPause();
     }
 
@@ -113,7 +107,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     @Override
     protected void onResume() {
-        Timber.i("AnkiActivity::onResume - %s", mActivityName);
+        Timber.i("AnkiActivity::onResume");
         super.onResume();
         UsageAnalytics.sendAnalyticsScreenView(this);
         ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(SIMPLE_NOTIFICATION_ID);
@@ -124,7 +118,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     @Override
     protected void onDestroy() {
         this.mIsDestroyed = true;
-        Timber.i("AnkiActivity::onDestroy - %s", mActivityName);
+        Timber.i("AnkiActivity::onDestroy");
         super.onDestroy();
     }
 

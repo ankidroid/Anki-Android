@@ -51,7 +51,7 @@
     <string name="pref_cat_whiteboard">白板</string>
     <string name="pref_cat_automatic_display">自動顯示答案</string>
     <string name="pref_cat_appearance">外觀</string>
-    <string name="pref_cat_appearance_summ">變更主題和預設字型</string>
+    <string name="pref_cat_appearance_summ">更改主題和默認字體</string>
     <string name="pref_cat_themes">佈景</string>
     <string name="pref_cat_fonts">字型</string>
     <string name="pref_cat_gestures">手勢</string>
@@ -78,7 +78,7 @@
     <string name="card_zoom">卡片縮放</string>
     <string name="image_zoom">圖片縮放</string>
     <string name="button_size">答案按鈕尺寸</string>
-    <string name="card_browser_font_size">卡片瀏覽器字型縮放</string>
+    <string name="card_browser_font_size">卡片瀏覽器字體縮放</string>
     <string name="card_browser_hide_media">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">AnkiDroid路徑</string>
@@ -94,7 +94,7 @@
     </string-array>
     <string name="gestures">開啓手勢</string>
     <string name="gestures_summ">替動作設定手勢，像是回答問題和編輯卡片。</string>
-    <string name="gestures_allow_links">忽略連結上的點擊手勢</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">向上撥動</string>
     <string name="gestures_swipe_down">向下撥動</string>
@@ -107,14 +107,14 @@
     <string name="gestures_tap_right">輕觸右邊</string>
     <string name="more_scrolling_buttons">電子書閱讀器</string>
     <string name="more_scrolling_buttons_summ">也使用漢字/片假名，emoji/kao-moji 按鈕來捲動</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ 選單</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap">加速捲動</string>
     <string name="double_scrolling_gap_summ">加倍 eReader 的滾動間距</string>
     <string name="swipe_sensitivity">滑動靈敏度</string>
     <string name="tts">念出文字</string>
     <string name="tts_summ">如果沒有內含音效檔，則大聲讀出問題和答案</string>
-    <string name="sync_fetch_missing_media">同步時取得媒體檔案</string>
+    <string name="sync_fetch_missing_media">同步時讀取媒體檔案</string>
     <string name="sync_fetch_missing_media_summ">同步時自動取得缺少的媒體檔案</string>
     <string name="sync_account">AnkiWeb 帳號</string>
     <string name="sync_account_summ_logged_out">未登入</string>
@@ -123,8 +123,8 @@
     <string name="automatic_sync_choice_summ">如果距離上次同步超過 10 分鐘，則在開啓/關閉 app 時自動同步。</string>
     <string name="day_theme">白天主題</string>
     <string name="night_theme">夜間主題</string>
-    <string name="default_font">預設字型</string>
-    <string name="override_font">預設字型套用條件</string>
+    <string name="default_font">預設的字體</string>
+    <string name="override_font">何時使用預設字體</string>
     <string name="language">語言</string>
     <string name="language_system">系統語言</string>
     <string name="notification_pref">通知</string>
@@ -135,7 +135,7 @@
     <string name="notification_minimum_cards_due_vibrate">震動</string>
     <string name="notification_minimum_cards_due_blink">提示燈</string>
     <string name="timeout_answer_text">自動顯示答案</string>
-    <string name="timeout_answer_summ">無需用戶輸入自動顯示答案。延遲時間包括自動播放音訊檔案的時間。</string>
+    <string name="timeout_answer_summ">無需用戶輸入自動顯示答案。延遲時間包括自動播放音頻文件的時間。</string>
     <string name="timeout_answer_seconds">顯示答案的時間</string>
     <string name="timeout_answer_seconds_summ">XXX 秒</string>
     <string name="timeout_question_seconds">顯示下一題的時間</string>
@@ -151,7 +151,7 @@
     <string name="pref_backup_max">最大備份數量</string>
     <string name="show_estimates">顯示按鈕的時間</string>
     <string name="show_estimates_summ">在答案按鈕上顯示下一次複習的時間</string>
-    <string name="show_top_bar">顯示頂部列</string>
+    <string name="show_top_bar">Show Top Bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">顯示剩餘數量</string>
     <string name="show_progress_summ">顯示剩餘卡片數量</string>
@@ -165,9 +165,9 @@
     <string name="time_limit_summ">XXX分鐘</string>
     <string name="day_offset">明天的開始時間</string>
     <string name="day_offset_summ">午夜過後 XXX 小時</string>
-    <string name="sched_ver">實驗性 V2 排程器</string>
+    <string name="sched_ver">Experimental V2 scheduler</string>
     <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">確認</string>
+    <string name="sched_ver_toggle_title">Confirm</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on">保持螢幕開啓</string>
@@ -181,8 +181,8 @@
     <string name="custom_buttons_setting_always_show">總是顯示</string>
     <string name="custom_buttons_setting_if_room">有空間時顯示</string>
     <string name="custom_buttons_setting_menu_only">僅限菜單</string>
-    <string name="reset_custom_buttons">重置為預設</string>
-    <string name="thirdparty_apps_title">第三方 API 應用程式</string>
+    <string name="reset_custom_buttons">重置為默認設置</string>
+    <string name="thirdparty_apps_title">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
@@ -198,9 +198,9 @@
     <string name="custom_sync_server_enable_title">使用自定義同步服務器</string>
     <string name="custom_sync_server_enable_summary">如果你不想使用專有的 AnkiWeb 服務，您可以指定替代的服務器</string>
     <string name="custom_sync_server_base_url_title">同步地址</string>
-    <string name="custom_sync_server_base_url_invalid">同步地址無效</string>
-    <string name="custom_sync_server_media_url_title">媒體檔案同步地址</string>
-    <string name="custom_sync_server_media_url_invalid">媒體同步地址無效</string>
+    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_media_url_title">媒體文件同步地址</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">選擇標籤</string>
@@ -227,7 +227,7 @@
     <string name="deck_conf_new_bury_summ">相關的新卡片將被暫時隱藏到隔天</string>
     <string name="deck_conf_rev_bury">暫時隱藏相關的複習</string>
     <string name="deck_conf_rev_bury_summ">相關的複習將被暫時隱藏到隔天</string>
-    <string name="deck_conf_use_general_timeout_settings">使用一般設定</string>
+    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">簡單卡片的間隔倍率</string>
     <string name="deck_conf_ivl_fct">間隔調節器</string>
@@ -260,7 +260,7 @@
     </plurals>
     <string name="deck_conf_set_subdecks_title">設定給所有子牌組</string>
     <string name="deck_conf_set_subdecks_message">套用當前設定群組到該牌組的所有子牌組嗎？</string>
-    <string name="pref_browser_editor_font">瀏覽器和編輯器字型</string>
+    <string name="pref_browser_editor_font">瀏覽器和編輯器的字體</string>
     <string name="deck_conf_cram_filter">篩選器</string>
     <string name="deck_conf_cram_options">選項</string>
     <string name="deck_conf_cram_search">搜尋</string>
@@ -273,7 +273,7 @@
     <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
     <string name="deck_conf_reminders_time">提醒時間</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">幫助 AnkiDroid 做得更好！</string>
-    <string name="analytics_title">分享特性使用方式</string>
+    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
+    <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
 </resources>

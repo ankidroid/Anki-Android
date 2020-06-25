@@ -118,13 +118,13 @@
     <string name="menu_flag_card_two">Oranĝa flago</string>
     <string name="menu_flag_card_three">Verda flago</string>
     <string name="menu_flag_card_four">Blua flago</string>
-    <string name="menu_edit_tags">Redakti etikedojn</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Ĉu vi certe volas forigi tiun ĉi noton kaj ĉiujn ĝiajn kartojn?\n%s</string>
     <string name="menu_select">Elekti tekston</string>
     <string name="menu_search">Serĉi en %1$s</string>
     <string name="menu_mark_note">Marki noton</string>
     <string name="menu_unmark_note">Malmarki noton</string>
-    <string name="menu_toggle_mic_tool_bar">Kontroli elparolon</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">Krei kartaron</string>
     <string name="create">Krei</string>
     <string name="new_dynamic_deck">Krei filtritan kartaron</string>
@@ -134,7 +134,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Donu al AnkiDroid permeson al “konservejo” por pluigi</string>
+    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -144,7 +144,7 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d min</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d d</string>
     <string name="time_quantity_days_hours">%1$d d %2$d h</string>
@@ -191,8 +191,8 @@
         <item quantity="other">Ĉu vi volas forigi la kartotipon “%2$s” kaj ĝiajn %1$d kartojn?</item>
     </plurals>
     <string name="invalid_template">Ne povas krei karton</string>
-    <string name="card_template_editor_would_delete_note">Per forigi tiun ĉi specon de karto, unu aŭ pli notoj estos forigitaj. Unue kreu kaj konservu novan specon de karto.</string>
-    <string name="card_template_editor_save_error">Fiaskis konservi ŝanĝojn al ŝablono de karto: %s</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">La speco de karto por la nuna karto estis forigita.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspekto de foliumilo</string>

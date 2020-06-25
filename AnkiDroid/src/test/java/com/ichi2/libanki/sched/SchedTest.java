@@ -74,9 +74,9 @@ public class SchedTest extends RobolectricTest {
         //Assert
         DeckDueTreeNode dynamicDeck = getCountsForDid(dynDeck);
 
-        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.getLrnCount(), is(0));
-        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.getNewCount(), is(0));
-        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.getRevCount(), is(0));
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.lrnCount, is(0));
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.newCount, is(0));
+        assertThat("A learn card should not be moved into a dyn deck", dynamicDeck.revCount, is(0));
     }
 
 
@@ -93,7 +93,7 @@ public class SchedTest extends RobolectricTest {
         List<DeckDueTreeNode> tree =  getCol().getSched().deckDueTree();
 
         for (DeckDueTreeNode node: tree) {
-            if (node.getDid() == didToFind) {
+            if (node.did == didToFind) {
                 return node;
             }
         }

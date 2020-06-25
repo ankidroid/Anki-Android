@@ -50,23 +50,23 @@
         <item>Risposta migliore di quanto raccomandato</item>
         <item>Annulla</item>
         <item>Modifica nota</item>
-        <item>Nota di etichetta</item>
-        <item>Contrassegna la nota</item>
-        <item>Verifica l\'espressione</item>
-        <item>Seppellisci la carta</item>
-        <item>Sospendi la carta</item>
-        <item>Elimina la nota</item>
-        <item>Riproduci media</item>
-        <item>Interrompi l\'apprendimento</item>
-        <item>Seppellisci la nota</item>
-        <item>Sospendi la nota</item>
-        <item>Attiva/disattiva contrassegno rosso</item>
-        <item>Attiva/disattiva contrassegno aracione</item>
-        <item>Attiva/disattiva contrassegno verde</item>
-        <item>Attiva/disattiva contrassegno blu</item>
-        <item>Rimuovi il contrassegno</item>
-        <item>Vai su</item>
-        <item>Vai giù</item>
+        <item>Tag note</item>
+        <item>Mark note</item>
+        <item>Lookup expression</item>
+        <item>Bury card</item>
+        <item>Suspend card</item>
+        <item>Delete note</item>
+        <item>Play media</item>
+        <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Sospendi carta</item>

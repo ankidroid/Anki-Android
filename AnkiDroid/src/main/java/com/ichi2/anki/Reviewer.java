@@ -80,6 +80,9 @@ public class Reviewer extends AbstractFlashcardViewer {
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
 
+    // Deck picker reset scheduler before opening the reviewer. So
+    // first reset is useless.
+    private boolean mSchedResetDone = false;
 
     private ActionButtons mActionButtons = new ActionButtons(this);
 
@@ -126,6 +129,9 @@ public class Reviewer extends AbstractFlashcardViewer {
             return;
         }
 
+        if (getIntent().hasExtra("com.ichi2.anki.SchedResetDone")) {
+            mSchedResetDone = true;
+        }
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
             Timber.d("onCreate() :: received Intent with action = %s", getIntent().getAction());
             selectDeckFromExtra();
@@ -182,7 +188,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Select the deck
         getCol().getDecks().select(did);
         // Reset the schedule so that we get the counts for the currently selected deck
-        getCol().getSched().deferReset();
+        getCol().getSched().reset();
     }
 
     @Override
@@ -229,7 +235,10 @@ public class Reviewer extends AbstractFlashcardViewer {
             setWhiteboardVisibility(whiteboardVisibility);
         }
 
-        col.getSched().deferReset();     // Reset schedule in case card was previously loaded
+        if (!mSchedResetDone) {
+            mSched.reset();     // Reset schedule in case card was previously loaded
+            mSchedResetDone = false;
+        }
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(false),
                 new CollectionTask.TaskData(null, 0));
 

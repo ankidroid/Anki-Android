@@ -198,9 +198,9 @@
     <string name="custom_sync_server_enable_title">Aangepaste synchronisatie-server gebruiken</string>
     <string name="custom_sync_server_enable_summary">Als u AnkiWeb\'s eigen service niet wilt gebruiken, kunt u hier een alternatieve server opgeven</string>
     <string name="custom_sync_server_base_url_title">URL synchroniseren</string>
-    <string name="custom_sync_server_base_url_invalid">Synchronisatie-URL ongeldig</string>
+    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">Media sync url</string>
-    <string name="custom_sync_server_media_url_invalid">Mediasynchronisatie-URL ongeldig</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Veranderingen in de setgroepopties zullen een invloed hebben op meerdere sets. Als u alleen de huidige set wilt wijzigen, voeg dan eerst een nieuwe optiegroep toe</string>
     <string name="studyoptions_limit_select_tags">Selecteer Tags</string>

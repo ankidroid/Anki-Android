@@ -64,18 +64,18 @@
     <string name="hide_whiteboard">隱藏白板</string>
     <string name="clear_whiteboard">清除白板</string>
     <string name="replay_audio">重播聲音</string>
-    <string name="toggle_mic_tool_bar">檢查發音</string>
+    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">卡片已擱置，同時標為榨時卡</string>
     <string name="leech_notification">卡片標為榨時卡</string>
     <string name="corrupt_font">損壞的字型檔案 %s</string>
-    <string name="webview_crash_unknown">未知錯誤</string>
-    <string name="webview_crash_unknwon_detailed">此錯誤由 WebView 內部錯誤導致</string>
-    <string name="webview_crash_oom">記憶體不足</string>
-    <string name="webview_crash_oom_details">WebView 已被系統終止。 當應用程式記憶體不足時通常會發生這種情況，這通常是因為字型或媒體佔用較大。</string>
-    <string name="webview_crash_nonfatal">WebView 渲染器已崩潰。原因：%s</string>
-    <string name="webview_crash_fatal">致命錯誤：WebView 渲染器已崩潰。原因：%s</string>
-    <string name="webview_crash_loop_dialog_title">系統 WebView 渲染失敗</string>
-    <string name="webview_crash_loop_dialog_content">系統 WebView 渲染卡片 ‘%1$s’ 失敗。\n %2$s</string>
+    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
+    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
+    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
+    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>問題</item>
@@ -90,12 +90,12 @@
         <item>標籤</item>
         <item>答錯次數</item>
         <item>複習次數</item>
-        <item>間期</item>
-        <item>難易度</item>
-        <item>到期</item>
-        <item>已變更</item>
-        <item>已建立 </item>
-        <item>已編輯</item>
+        <item>Interval</item>
+        <item>Ease</item>
+        <item>Due</item>
+        <item>Changed</item>
+        <item>Created</item>
+        <item>Edited</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">增加今日新卡片上限</string>
@@ -110,11 +110,11 @@
     <string name="cardeditor_title_edit_card">編輯筆記</string>
     <string name="discard_unsaved_changes">關閉且放棄當前的輸入？</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">第一字段為空</string>
+    <string name="note_editor_no_first_field">The first field is empty</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="saving_facts">儲存筆記中</string>
-    <string name="saving_model">儲存筆記類型中</string>
+    <string name="saving_model">Saving note type</string>
     <string name="add">新增</string>
     <string name="save">存儲</string>
     <string name="close">關閉</string>
@@ -128,16 +128,16 @@
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="other">%1$d 分鐘</item>
+        <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">歡迎使用 AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid 卡片</string>
-    <string name="note_editor_add_note">新增筆記</string>
-    <string name="note_editor_copy_note">複製筆記</string>
+    <string name="note_editor_add_note">Add note</string>
+    <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">複製卡片</string>
-    <string name="card_editor_reposition_card">變更位置</string>
+    <string name="card_editor_reposition_card">更改位置</string>
     <string name="card_editor_reset_card">重設卡片進度</string>
-    <string name="card_editor_reschedule_card">重新排程</string>
+    <string name="card_editor_reschedule_card">Reschedule</string>
     <string name="card_editor_preview_card">預覽</string>
     <string name="error_insufficient_memory">因為裝置上沒有足夠的記憶體所以不能執行你要求的操作</string>
     <string name="rename">重新命名</string>
@@ -156,49 +156,49 @@
     <string name="show_hint">顯示%s</string>
     <string name="info_rate">評價AnkiDroid</string>
     <string name="col_load_failed">載入收藏時發生錯誤。\n按返回鍵來關閉 AnkiDroid</string>
-    <string name="import_title">正在匯入……</string>
+    <string name="import_title">正在導入……</string>
     <string name="import_select_title">選擇欲匯入的檔案</string>
     <string name="import_message_add">新增</string>
     <string name="import_message_replace_confirm">這將會刪除你現有的收藏並以%s的內容取代，你確定嗎？</string>
     <string name="import_message_add_confirm">新增「%s」到收藏嗎？這可能會花上好一段時間</string>
-    <string name="import_log_no_apkg">這不是有效的 Anki 套件檔案</string>
-    <string name="import_log_failed_unzip">解壓縮 Apkg 失敗：%s</string>
-    <string name="import_log_failed_copy_to">複製 Apkg 至 %s 失敗</string>
-    <string name="import_log_failed_validate">Apkg 驗證失敗</string>
+    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">無法執行匯入請求</string>
-    <string name="import_error_exception">無法匯入套件\n\n%s</string>
+    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考使用者手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
-    <string name="import_replacing">正在匯入牌組集合&#8230;&#8230;</string>
-    <string name="import_interrupted">匯入中斷</string>
+    <string name="import_replacing">正在導入牌組集合&#8230;&#8230;</string>
+    <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">包含進度</string>
     <string name="export_include_media">包含媒體</string>
-    <string name="confirm_apkg_export">是否匯出收藏為 Anki 套件？</string>
+    <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">將 \"%s\" 匯出成 apkg 檔案嗎？</string>
-    <string name="export_in_progress">匯出 Anki 套件檔案中&#8230;</string>
-    <string name="export_successful_title">發送 Anki 套件？</string>
+    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
+    <string name="export_successful_title">Send Anki package?</string>
     <string name="export_send_button">發送</string>
     <string name="export_save_button">儲存到檔案</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">成功儲存 Anki 套件</string>
-    <string name="export_save_apkg_unsuccessful">儲存 Anki 套件失敗</string>
-    <string name="export_successful">檔案 “%s” 匯出完畢，您想用其它應用程式發送它嗎？</string>
-    <string name="export_email_subject">AnkiDroid 已匯出單字卡：%s</string>
+    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
+    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
+    <string name="export_successful">文件 “%s” 導出完畢，您想用其他 app 發送它嗎？</string>
+    <string name="export_email_subject">AnkiDroid 導出卡片： %s</string>
     <string name="export_email_text"><![CDATA[        你好！
         <br/><br/>
-        這是從 <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> 分享的 Anki 單字卡牌組。
+        這是從 <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> 分享的 Anki 記憶牌組。
         使用任一 <a href="http://ankisrs.net/#download">Anki 客戶端</a>打開它，享受輕鬆高效的學習吧！
         ]]></string>
-    <string name="export_unsuccessful">匯出 Apkg 檔案時出錯</string>
+    <string name="export_unsuccessful">導出apkg文件時出錯</string>
     <string name="import_hint">若你要匯入卡片，請將 apkg 檔案放在「%s」目錄下，然後按OK</string>
     <string name="upgrade_import_no_file_found">找不到可匯入的%1$s檔案</string>
-    <string name="study_options">選項</string>
-    <string name="select_tts">設定 TTS 語言</string>
+    <string name="study_options">Options</string>
+    <string name="select_tts">設置 TTS 語言</string>
     <string name="custom_study">自訂學習</string>
     <string name="more_options">更多</string>
     <string name="dyn_deck_desc">這是專門用來進行額外學習進度的牌組。卡片在你複習完以後會自動回歸原本的牌組。如果在牌組列表中刪除這個牌組，其他剩下的卡片也會回歸它們原本的牌組。</string>
@@ -238,29 +238,29 @@
     <string name="filtered_deck_name">篩選牌組</string>
     <string name="reminder_title">不要忘記今天去學習 ！</string>
     <plurals name="reminder_text">
-        <item quantity="other">%2$d 卡片在 %1$s 內待複習</item>
+        <item quantity="other">%2$d cards to review in %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">分享 Apkg 檔案時出錯</string>
+    <string name="apk_share_error">共享 apkg 文件時出錯</string>
     <!-- Import and export v2 feedback -->
     <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
     <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">載入 ‘%s’ 失敗。</string>
+    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">已恢復卡片</string>
+    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">背景</string>
-    <string name="choose_an_image">選擇圖片</string>
+    <string name="background_image_title">Background</string>
+    <string name="choose_an_image">Choose an Image</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">恢復預設值</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
+    <string name="restore_default">Restore Default</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>

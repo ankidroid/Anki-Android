@@ -39,9 +39,9 @@
 -->
 <resources>
     <!-- Navigation drawer items-->
-    <string name="decks">Kortsæt</string>
+    <string name="decks">Dæk</string>
     <string name="card_browser">Kort browser</string>
-    <string name="statistics">Statistik</string>
+    <string name="statistics">Statistikker</string>
     <string name="settings">Indstillinger</string>
     <string name="help">Hjælp</string>
     <string name="send_feedback">Send feedback</string>
@@ -84,7 +84,7 @@
     <string name="ease_button_good">God</string>
     <string name="ease_button_easy">Let</string>
     <string name="studyoptions_congrats_undo">Fortryd %s</string>
-    <string name="menu_import">Importer</string>
+    <string name="menu_import">Importér</string>
     <string name="undo">Fortryd</string>
     <string name="undo_action_review">sidste gennemgang</string>
     <string name="undo_action_bury_card">begrav kort</string>
@@ -99,7 +99,7 @@
     <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Grav op</string>
-    <string name="rename_deck">Omdøb kortsæt</string>
+    <string name="rename_deck">Omdøb dæk</string>
     <string name="menu_add">Tilføj</string>
     <string name="menu_add_note">Tilføj note</string>
     <string name="menu_my_account">Synkroniseringskonto</string>
@@ -113,19 +113,19 @@
     <string name="menu_delete_note">Slet note</string>
     <string name="menu_flag">Flag</string>
     <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">Intet flag</string>
-    <string name="menu_flag_card_one">Rødt flag</string>
+    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_one">Red flag</string>
     <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Grønt flag</string>
-    <string name="menu_flag_card_four">Blåt flag</string>
+    <string name="menu_flag_card_three">Green flag</string>
+    <string name="menu_flag_card_four">Blue flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Vil du virkelig gerne slette denne note og alle dens kort?\n%s</string>
     <string name="menu_select">Vælg tekst</string>
     <string name="menu_search">Slå op i %1$s</string>
     <string name="menu_mark_note">Markér note</string>
     <string name="menu_unmark_note">Fjern markering fra note</string>
-    <string name="menu_toggle_mic_tool_bar">Tjek Udtale</string>
-    <string name="new_deck">Opret kortsæt</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="new_deck">Opret dæk</string>
     <string name="create">Opret</string>
     <string name="new_dynamic_deck">Opret filtreret dæk</string>
     <string name="night_mode">Nattetilstand</string>
@@ -145,7 +145,7 @@
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
     <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d t</string>
+    <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d d</string>
     <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f mo</string>
@@ -153,13 +153,13 @@
     <!-- or "%.1f a" -->
     <string name="rebuild_cram_deck">Genopbygger proppet dæk &#8230;</string>
     <string name="rebuild_cram_label">Genopbyg</string>
-    <string name="empty_cram_label">Tøm</string>
-    <string name="create_subdeck">Opret underkortsæt</string>
+    <string name="empty_cram_label">Tom</string>
+    <string name="create_subdeck">Create subdeck</string>
     <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
-    <string name="empty_deck">Dette kortsæt er tomt</string>
-    <string name="studyoptions_empty">Dette kortsæt er tomt. Tryk på +knappen for at tilføje indhold.</string>
+    <string name="empty_deck">This deck is empty</string>
+    <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
     <string name="studyoptions_limit_reached">Daily study limit reached</string>
     <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
@@ -171,19 +171,19 @@
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync">Synkroniser</string>
     <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-    <string name="continue_sync">Fortsæt synkronisering</string>
-    <string name="sync_cancelled">Synkronisering annulleret</string>
+    <string name="continue_sync">Continue sync</string>
+    <string name="sync_cancelled">Sync cancelled</string>
     <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
-    <string name="export">Eksporter</string>
-    <string name="export_collection">Eksporter samling</string>
-    <string name="export_deck">Eksporter kortsæt</string>
+    <string name="export">Export</string>
+    <string name="export_collection">Export collection</string>
+    <string name="export_deck">Export deck</string>
     <string name="nothing">Nothing</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Korttyper</string>
+    <string name="title_activity_template_editor">Card types</string>
     <string name="card_template_editor_front">Front template</string>
     <string name="card_template_editor_back">Back template</string>
     <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_delete">Slet</string>
+    <string name="card_template_editor_menu_delete">Delete</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_cant_delete">At least one card type is required</string>
     <plurals name="card_template_editor_confirm_delete">

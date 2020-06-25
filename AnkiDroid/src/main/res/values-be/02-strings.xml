@@ -64,7 +64,7 @@
     <string name="hide_whiteboard">Схаваць дошку</string>
     <string name="clear_whiteboard">Ачысціць дошку</string>
     <string name="replay_audio">Паўтарыць аўдыя</string>
-    <string name="toggle_mic_tool_bar">Праверыць вымаўленне</string>
+    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Картка пазначана як надакучлівая і яна была прыпынена</string>
     <string name="leech_notification">Картка пазначана як надакучлівая</string>
     <string name="corrupt_font">Пашкоджаны файл шрыфту %s</string>
@@ -74,7 +74,7 @@
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">Памылка сістэмнага WebView</string>
+    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
@@ -91,7 +91,7 @@
         <item>Правалы</item>
         <item>Паўтарэнняў</item>
         <item>Інтэрвал</item>
-        <item>Лёгкасць</item>
+        <item>Ease</item>
         <item>Засталося</item>
         <item>Зменена</item>
         <item>Створана</item>
@@ -109,7 +109,7 @@
     <string name="cardeditor_title_add_note">Дадаць нататку</string>
     <string name="cardeditor_title_edit_card">Змяніць нататку</string>
     <string name="discard_unsaved_changes">Закрыць і згубіць бягучыя звесткі?</string>
-    <string name="note_editor_no_cards_created">Карткі не створаны. Калі ласка, запоўніце неабходныя палі.</string>
+    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
     <string name="note_editor_no_first_field">Першае поле пустое</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
@@ -172,13 +172,13 @@
     <string name="import_message_add_confirm">Дадаць \"%s\" у калекцыю? Гэта можа заняць шмат часу</string>
     <string name="import_log_no_apkg">Пашкоджаны файл праграмы Anki</string>
     <string name="import_log_failed_unzip">Не атрымалася распакаваць apkg: %s</string>
-    <string name="import_log_failed_copy_to">Не атрымалася скапіяваць apkg у %s</string>
-    <string name="import_log_failed_validate">не атрымалася праверыць apkg</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Не атрымалася апрацаваць запыт на імпарт</string>
-    <string name="import_error_exception">Не атрымалася імпартаваць пакет\n\n%s</string>
+    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да кіраўніцтва карыстальніка для таго, каб імпартаваць файлы ўручную: \n %s</string>
@@ -282,7 +282,7 @@
     <string name="activity_start_failed">У сістэме нестае патрэбнай прылады каб гэта выканаць.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="no_outgoing_link_in_cardbrowser">Знешнія спасылкі ў картках не падтрымліваюцца.</string>
+    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Адноўленыя карткі</string>
     <!-- Deckpicker Background -->

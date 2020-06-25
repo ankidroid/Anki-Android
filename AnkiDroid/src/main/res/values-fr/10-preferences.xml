@@ -152,7 +152,7 @@
     <string name="show_estimates">Afficher le temps</string>
     <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
     <string name="show_top_bar">Afficher la barre supérieure</string>
-    <string name="show_top_bar_summ">Afficher le nombre de cartes, le marqueur et la marque dans la barre supérieure</string>
+    <string name="show_top_bar_summ">Afficher le nombre de cartes, le drapeau et la marque dans la barre supérieure</string>
     <string name="show_progress">Afficher le nombre restant de révision</string>
     <string name="show_progress_summ">Montrer le nombre de cartes restantes</string>
     <string name="show_eta">Afficher le temps restant</string>
@@ -198,9 +198,9 @@
     <string name="custom_sync_server_enable_title">Utiliser un serveur de synchronisation personnalisé</string>
     <string name="custom_sync_server_enable_summary">Si vous ne souhaitez pas utiliser le service propriétaire AnkiWeb, vous pouvez spécifiez ici un serveur alternatif</string>
     <string name="custom_sync_server_base_url_title">Synchroniser l’URL</string>
-    <string name="custom_sync_server_base_url_invalid">URL de synchronisation invalide</string>
+    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title">Synchroniser l’URL pour les médias</string>
-    <string name="custom_sync_server_media_url_invalid">URL de synchronisation des médias invalide</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Les modifications apportées aux options du groupe de paquets affecteront plusieurs paquets de cartes. Si vous souhaitez modifier uniquement le paquet actuel, veuillez d\'abord ajouter un nouveau groupe d\'options</string>
     <string name="studyoptions_limit_select_tags">Sélectionner les étiquettes</string>

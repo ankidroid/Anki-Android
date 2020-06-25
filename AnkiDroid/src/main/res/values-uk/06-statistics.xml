@@ -75,7 +75,7 @@
 повторно вчено: &lt;b&gt;%3$d&lt;/b&gt;, 
 відфільтровано: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Правильних відповідей у закріплених картах: %1$d/%2$d (%3$.1f%%)</string>
-    <string name="stats_today_no_mature_cards">За сьогодні немає переглянутих закріплених карток.</string>
+    <string name="stats_today_no_mature_cards">Сьогодні не було вивчено жодної закріпленої картки.</string>
     <string name="stats_overview_forecast_total">Загалом: &lt;b&gt;%1$d&lt;/b&gt; переглядів</string>
     <string name="stats_overview_forecast_average">Пересічно: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
     <string name="stats_overview_forecast_due_tomorrow">На завтра: &lt;b&gt;%1$d&lt;/b&gt;</string>

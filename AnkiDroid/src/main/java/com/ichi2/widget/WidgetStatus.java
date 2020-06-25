@@ -126,9 +126,9 @@ public final class WidgetStatus {
             // Only count the top-level decks in the total
             List<Sched.DeckDueTreeNode> nodes = col.getSched().deckDueTree();
             for (Sched.DeckDueTreeNode node : nodes) {
-                total[0] += node.getNewCount();
-                total[1] += node.getLrnCount();
-                total[2] += node.getRevCount();
+                total[0] += node.newCount;
+                total[1] += node.lrnCount;
+                total[2] += node.revCount;
             }
             int due = total[0] + total[1] + total[2];
             int eta = col.getSched().eta(total, false);

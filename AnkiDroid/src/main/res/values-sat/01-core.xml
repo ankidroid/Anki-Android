@@ -118,16 +118,16 @@
     <string name="menu_flag_card_two">ᱥᱟᱱᱛᱨᱟ ᱯᱚᱛᱠᱟ</string>
     <string name="menu_flag_card_three">ᱥᱟᱹᱵᱡᱟ ᱯᱚᱛᱠᱟ</string>
     <string name="menu_flag_card_four">ᱞᱤᱞ ᱯᱚᱛᱠᱟ</string>
-    <string name="menu_edit_tags">ᱴᱮᱜᱥ ᱥᱟᱯᱲᱟᱣ</string>
+    <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">ᱱᱚᱛᱴ ᱥᱟᱞᱟᱜ ᱛᱮ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱥᱚ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ ᱥᱮ?\n%s</string>
     <string name="menu_select">ᱚᱞ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
     <string name="menu_search">%1$s ᱨᱮ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ</string>
     <string name="menu_mark_note">ᱱᱚᱴ ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</string>
     <string name="menu_unmark_note">ᱱᱚᱴ ᱚ-ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ </string>
     <string name="menu_toggle_mic_tool_bar">ᱟᱢᱟᱜ ᱩᱪᱟᱨᱚᱬ ᱧᱮᱞ ᱢᱮ</string>
-    <string name="new_deck">ᱱᱟᱶᱟ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
+    <string name="new_deck">ᱱᱟᱶᱟ ᱰᱮᱠ ᱛᱮᱟᱨ ᱢᱮ</string>
     <string name="create">ᱛᱮᱭᱟᱨ</string>
-    <string name="new_dynamic_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
+    <string name="new_dynamic_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱛᱮᱟᱨ ᱢᱮ</string>
     <string name="night_mode">ᱧᱤᱸᱫᱟᱹ ᱢᱚᱰ</string>
     <string name="directory_inaccessible">AnkiDroid ᱩᱱᱩᱫᱩᱜ ᱫᱚ ᱵᱟᱭ ᱦᱟᱛᱟᱣ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟ </string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -144,10 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d ᱴᱤᱡ</string>
     <string name="time_quantity_minutes">%d ᱴᱤᱯᱤᱡ</string>
-    <string name="time_quantity_hours_minutes">%1$d ᱴᱟᱲ. %2$d ᱴᱤᱯ.</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d ᱴᱟᱲᱟᱝ</string>
     <string name="time_quantity_days">%d ᱫᱤᱱ</string>
-    <string name="time_quantity_days_hours">%1$d ᱫᱤᱱ %2$d ᱴᱟᱲ.</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f ᱪᱟᱸᱫᱚ</string>
     <string name="time_quantity_years">%.1f ᱥᱮᱨᱢᱟ</string>
     <!-- or "%.1f a" -->
@@ -175,7 +175,7 @@
     <string name="sync_cancelled">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤ</string>
     <string name="sync_cancel_message">ᱵᱟᱫ ᱜᱤᱰᱤᱼᱜ ᱠᱟᱱᱟ &#8230;\n ᱠᱤᱪᱷᱤ ᱥᱚᱢᱟᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱭ ᱾ </string>
     <string name="export">ᱵᱷᱮᱡᱟ</string>
-    <string name="export_collection">ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
+    <string name="export_collection">ᱴᱤᱢᱟᱹᱞ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="export_deck">ᱰᱮᱠ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="nothing">ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <!-- Card template editor -->

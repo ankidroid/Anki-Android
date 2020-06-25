@@ -53,34 +53,34 @@
     <string name="initializing_tts">正在初始化 TTS&#8230;</string>
     <string name="tts_no_tts">不要發音</string>
     <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>給 Android 的單字卡</h2>AnkiDroid 是完全相容桌面版本的單字卡應用程式 <a href=\"%2$s\">Anki</a>。 你可以任意在 AnkiDroid 或是桌面版 Anki 上新增、下載和學習東西，並使用 AnkiWeb 輕鬆同步這些記錄。]]></item>
+        <item><![CDATA[<h2>%1$s:<br/>給 Android 的 Flashcard</h2>AnkiDroid 是完全相容桌面版本的 flashcard 應用程式 <a href=\"%2$s\">Anki</a>。 你可以任意在 AnkiDroid 或是桌面版 Anki 上新增、下載和學習東西，並使用 AnkiWeb 輕鬆同步這些記錄。]]></item>
         <item><![CDATA[為了協助我們讓 AnkiDroid 更好，請到 <a href=\"%1$s\">issue tracker</a> 回報錯誤; 任何有關新功能的點子也很歡迎。在 <a href=\"%2$s\">wiki</a> 尋找答案或是在<a href=\"%3$s\">論壇</a>參與討論。]]></item>
         <item><![CDATA[AnkiDroid 是<a href=\"%1$s\">自由軟體<a/>，所以我們鼓勵任何人<a href=\"%2$s\">成爲貢獻者</a> :-)]]></item>
         <item><![CDATA[非開發者亦可幫助。例如，你可以<a href=\"%1$s\">幫助翻譯</a>AnkiDroid、更新wiki、提供屏幕截圖，或寫關於AnkiDroid的博客。]]></item>
         <item><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GNU-GPL v3 授權</a>下釋出且你可在<a href=\"%2$s\">GitHub</a> 上取得其程式碼]]></item>
     </string-array>
     <string name="preview_title">預覽</string>
-    <string name="reposition_card_dialog_title">變更新卡片位置</string>
+    <string name="reposition_card_dialog_title">更改新卡位置</string>
     <string name="reposition_card_dialog_message">開始位置：</string>
-    <string name="reposition_card_not_new_error">只有新卡片可以變更位置</string>
+    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="other">%d 卡片已變更位置</item>
+        <item quantity="other">%d cards repositioned</item>
     </plurals>
     <string name="reset_card_dialog_title">重置卡片進度</string>
     <string name="reset_card_dialog_message">這張卡片將被放在新卡片佇列的最後面。</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="other">%d 卡片已重設</item>
+        <item quantity="other">%d cards reset</item>
     </plurals>
     <string name="reschedule_card_dialog_title">重置卡片進度</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="other">重置卡片</item>
+        <item quantity="other">Reschedule cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">當前間期：%d 天</item>
+        <item quantity="other">Current interval: %d days</item>
     </plurals>
     <string name="reschedule_card_dialog_message">重置 x 天內複習的進度：</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="other">%d 卡片已重置</item>
+        <item quantity="other">%d cards rescheduled</item>
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">資料庫錯誤</string>
@@ -91,22 +91,22 @@
     <string name="intent_add_clear_all">全部清除</string>
     <string name="intent_aedict_empty">\'default\'類別是空的</string>
     <string name="intent_aedict_category">若要增加新卡片至 AnkiDroid，刪除所有的記事本類別或新增一個 \'default\' 牌組</string>
-    <string name="custom_study_new_total_new">牌組的新卡片：%d</string>
-    <string name="custom_study_rev_total_rev">牌組中複習到期的卡片：%d</string>
+    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">增加今天的新卡片限制</string>
     <string name="custom_study_rev_extend">增加今天的複習上限</string>
     <string name="custom_study_forgotten">過去 x 天內忘記的複習卡:</string>
     <string name="custom_study_ahead">提早複習 x 天:</string>
     <string name="custom_study_random">隨機選擇 x 張卡片，從牌組:</string>
     <string name="custom_study_preview">預覽過去 x 天新增的卡片:</string>
-    <string name="custom_study_rebuild_deck_corrupt">無法重構自訂學習牌組</string>
+    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="rebuild_custom_study_deck">重建自訂學習的牌組。\n請稍後...</string>
     <string name="importing_collection">匯入收藏中&#8230;</string>
     <string name="import_media_count">匯入媒體檔案 %1$d%%\n 請稍後......</string>
-    <string name="import_progress">正在匯入筆記: %1$d%%\n• 正在匯入卡片: %2$d%%\n• 正在後期處理: %3$d%%</string>
+    <string name="import_progress">正在導入筆記: %1$d%%\n• 正在導入卡牌: %2$d%%\n• 正在後期處理: %3$d%%</string>
     <string name="import_update_details">現有筆記%2$d條，已更新%1$d條。</string>
     <string name="import_update_ignored">忽略了某些更新，因為這些筆記的類型已改變</string>
-    <string name="import_complete_count">卡片已匯入：%d</string>
+    <string name="import_complete_count">卡牌已導入：%d</string>
     <string name="sd_card_full_title">SD 卡空間已滿</string>
     <string name="sd_card_almost_full_title">SD 卡空間快滿</string>
     <string name="restore_backup_title">回復備份嗎？</string>
@@ -143,44 +143,44 @@
     <string name="tags_dialog_option_new_cards">新增</string>
     <string name="tags_dialog_option_due_cards">到期</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">正在搜尋空白卡片&#8230;&#8230;</string>
-    <string name="empty_cards_none">沒有空白卡片</string>
-    <string name="empty_cards_count">將要刪除卡片：%d</string>
-    <string name="empty_cards_deleted">已刪除卡片：%d</string>
+    <string name="emtpy_cards_finding">正在查找空白卡牌&#8230;&#8230;</string>
+    <string name="empty_cards_none">沒有空白卡牌</string>
+    <string name="empty_cards_count">將要刪除卡牌：%d</string>
+    <string name="empty_cards_deleted">已刪除卡牌：%d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">無法取得語音權限</string>
-    <string name="multimedia_editor_camera_permission_refused">無法取得相機權限。功能已禁用。</string>
-    <string name="multimedia_editor_failed">無法開啟多媒體編輯器</string>
+    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
+    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">音訊錄製權限被拒絕</string>
+    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">歡迎使用 AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
     <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">Ankidroid 已更新</string>
+    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">檢查資料庫</string>
-    <string name="integrity_check_continue_anyway">仍要繼續</string>
+    <string name="integrity_check_positive">Check Database</string>
+    <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\n你當前擁有 %s 空閒。</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
     <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">無法播放影片</string>
+    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">無法變更牌組</string>
+    <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">解碼卡片中資料時出錯</string>
+    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">無法處理牌組選項：%s</string>
+    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
-    <string name="database_locked_title">資料庫已鎖定</string>
+    <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">背景圖片已套用</string>
-    <string name="background_image_removed">背景圖片已移除</string>
-    <string name="no_image_selected">未選擇圖片</string>
-    <string name="error_selecting_image">選擇圖片出錯。請查看使用手冊。%s</string>
-    <string name="error_deleting_image">刪除圖片時出錯</string>
+    <string name="background_image_applied">Background image applied</string>
+    <string name="background_image_removed">Background image removed</string>
+    <string name="no_image_selected">No image selected</string>
+    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
+    <string name="error_deleting_image">Error deleting image</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
@@ -189,6 +189,6 @@
     <!-- Browser Appearance -->
     <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">排定提醒失敗</string>
+    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
 </resources>

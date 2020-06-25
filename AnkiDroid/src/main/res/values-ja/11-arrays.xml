@@ -56,17 +56,17 @@
         <item>Bury card</item>
         <item>Suspend card</item>
         <item>Delete note</item>
-        <item>音声・動画を再生</item>
+        <item>Play media</item>
         <item>Abort learning</item>
         <item>Bury note</item>
         <item>Suspend note</item>
-        <item>赤フラグを付ける/取り外す</item>
-        <item>橙フラグを付ける/取り外す</item>
-        <item>緑フラグを付ける/取り外す</item>
-        <item>青フラグを付ける/取り外す</item>
-        <item>フラグを取り外す</item>
-        <item>１画面分上へスクロール</item>
-        <item>１画面分下へスクロール</item>
+        <item>Toggle Red Flag</item>
+        <item>Toggle Orange Flag</item>
+        <item>Toggle Green Flag</item>
+        <item>Toggle Blue Flag</item>
+        <item>Remove Flag</item>
+        <item>Page Up</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>タグを付けて保留</item>
