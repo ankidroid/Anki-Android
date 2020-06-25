@@ -79,6 +79,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
+    private LinearLayout colorPalette;
 
     // Deck picker reset scheduler before opening the reviewer. So
     // first reset is useless.
@@ -136,6 +137,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             Timber.d("onCreate() :: received Intent with action = %s", getIntent().getAction());
             selectDeckFromExtra();
         }
+
+        colorPalette = (LinearLayout) findViewById(R.id.whiteboard_pen_color);
 
         startLoadingCollection();
     }
@@ -332,8 +335,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_change_whiteboard_pen_color:
                 Timber.i("Reviewer:: Pen Color button pressed");
-                LinearLayout colorPalette;
-                colorPalette = (LinearLayout) findViewById(R.id.whiteboard_pen_color);
                 colorPalette.setVisibility(View.VISIBLE);
                 break;
 
@@ -544,14 +545,24 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_change_whiteboard_pen_color).setVisible(true);
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp);
+            Drawable whiteboardColorPaletteIcon = ContextCompat.getDrawable(this, R.drawable.ic_color_lens_white_24dp);
+
             if (mShowWhiteboard) {
                 whiteboardIcon.setAlpha(255);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
+
+                whiteboardColorPaletteIcon.setAlpha(255);
+                menu.findItem(R.id.action_change_whiteboard_pen_color).setIcon(whiteboardColorPaletteIcon);
             } else {
                 whiteboardIcon.setAlpha(77);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
+
+                whiteboardColorPaletteIcon.setAlpha(77);
+                menu.findItem(R.id.action_change_whiteboard_pen_color).setEnabled(false);
+                menu.findItem(R.id.action_change_whiteboard_pen_color).setIcon(whiteboardColorPaletteIcon);
+                colorPalette.setVisibility(View.GONE);
             }
         } else {
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.enable_whiteboard);
