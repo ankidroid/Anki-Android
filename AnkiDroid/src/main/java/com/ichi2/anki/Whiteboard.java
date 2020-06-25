@@ -68,7 +68,7 @@ public class Whiteboard extends View implements View.OnClickListener {
     private boolean mMonochrome;
     private boolean mUndoModeActive = false;
 
-    private LinearLayout colorPalette;
+    private LinearLayout mColorPalette;
 
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
@@ -94,7 +94,7 @@ public class Whiteboard extends View implements View.OnClickListener {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
-        //mPaint.setColor(foregroundColor);
+        mPaint.setColor(foregroundColor);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -105,7 +105,7 @@ public class Whiteboard extends View implements View.OnClickListener {
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
         // selecting pen color to draw
-        colorPalette = (LinearLayout) cardViewer.findViewById(R.id.whiteboard_pen_color);
+        mColorPalette = (LinearLayout) cardViewer.findViewById(R.id.whiteboard_pen_color);
 
         Button penColorWhite = (Button) cardViewer.findViewById(R.id.pen_color_white);
         Button penColorBlack = (Button) cardViewer.findViewById(R.id.pen_color_black);
@@ -380,35 +380,34 @@ public class Whiteboard extends View implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        int redPenColor = Color.parseColor("#f44336");
-        int greenPenColor = Color.parseColor("#4caf50");
-        int bluePenColor = Color.parseColor("#2196f3");
-        int yellowPenColor = Color.parseColor("#ffeb3b");
-
         switch (view.getId()) {
             case R.id.pen_color_white:
                 mPaint.setColor(Color.WHITE);
-                colorPalette.setVisibility(View.GONE);
+                mColorPalette.setVisibility(View.GONE);
                 break;
             case R.id.pen_color_black:
                 mPaint.setColor(Color.BLACK);
-                colorPalette.setVisibility(View.GONE);
+                mColorPalette.setVisibility(View.GONE);
                 break;
             case R.id.pen_color_red:
+                int redPenColor = Color.parseColor("#f44336");
                 mPaint.setColor(redPenColor);
-                colorPalette.setVisibility(View.GONE);
+                mColorPalette.setVisibility(View.GONE);
                 break;
             case R.id.pen_color_green:
+                int greenPenColor = Color.parseColor("#4caf50");
                 mPaint.setColor(greenPenColor);
-                colorPalette.setVisibility(View.GONE);
+                mColorPalette.setVisibility(View.GONE);
                 break;
             case R.id.pen_color_blue:
+                int bluePenColor = Color.parseColor("#2196f3");
                 mPaint.setColor(bluePenColor);
-                colorPalette.setVisibility(View.GONE);
+                mColorPalette.setVisibility(View.GONE);
                 break;
             case R.id.pen_color_yellow:
+                int yellowPenColor = Color.parseColor("#ffeb3b");
                 mPaint.setColor(yellowPenColor);
-                colorPalette.setVisibility(View.GONE);
+                mColorPalette.setVisibility(View.GONE);
                 break;
             default:
                 break;

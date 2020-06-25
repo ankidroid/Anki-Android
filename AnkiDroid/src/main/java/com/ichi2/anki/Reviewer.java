@@ -79,7 +79,6 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
-    private LinearLayout colorPalette;
 
     // Deck picker reset scheduler before opening the reviewer. So
     // first reset is useless.
@@ -333,6 +332,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_change_whiteboard_pen_color:
                 Timber.i("Reviewer:: Pen Color button pressed");
+                LinearLayout colorPalette;
                 colorPalette = (LinearLayout) findViewById(R.id.whiteboard_pen_color);
                 colorPalette.setVisibility(View.VISIBLE);
                 break;
