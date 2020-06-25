@@ -26,7 +26,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Point;
-import android.graphics.PointF;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -293,13 +293,10 @@ public class Whiteboard extends View implements View.OnClickListener {
         mCurrentlyDrawing = false;
         PathMeasure pm = new PathMeasure(mPath, false);
         mPath.lineTo(mX, mY);
-        if (pm.getLength() > 0) {
-            mCanvas.drawPath(mPath, mPaint);
-            mUndo.add(mPath);
-        } else {
-            mCanvas.drawPoint(mX, mY, mPaint);
-            mUndo.add(mX, mY);
-        }
+        Paint paint = new Paint(mPaint);
+        WhiteboardAction action = pm.getLength() > 0 ? new DrawPath(new Path(mPath), paint) : new DrawPoint(mX, mY, paint);
+        action.apply(mCanvas);
+        mUndo.add(action);
         mUndoModeActive = true;
         // kill the path so we don't double draw
         mPath.reset();
@@ -419,55 +416,75 @@ public class Whiteboard extends View implements View.OnClickListener {
      * pop() removes the last stroke from the stack, and apply() redraws it to whiteboard.
      */
     private class UndoStack {
-        private final Stack<Path> mPathStack = new Stack<>();
-        private final Stack<PointF> mPointStack = new Stack<>();
-        private final Stack<Integer> mWhichStack = new Stack<>();
+        private final Stack<WhiteboardAction> mStack = new Stack<>();
 
-        public void add(Path path) {
-            mPathStack.add(new Path(path));
-            mWhichStack.add(0);
-        }
-        public void add(float x, float y) {
-            mPointStack.add(new PointF(x, y));
-            mWhichStack.add(1);
+        public void add(WhiteboardAction action) {
+            mStack.add(action);
         }
 
         public void clear() {
-            mPathStack.clear();
-            mPointStack.clear();
-            mWhichStack.clear();
+            mStack.clear();
         }
 
         public int size() {
-            return mWhichStack.size();
+            return mStack.size();
         }
 
         public void pop() {
-            if (mWhichStack.size() == 0) return;
-            switch (mWhichStack.peek()) {
-                case 0:
-                    mPathStack.pop();
-                    break;
-                case 1:
-                    mPointStack.pop();
-                    break;
-            }
-            mWhichStack.pop();
+            mStack.pop();
         }
 
         public void apply() {
             mBitmap.eraseColor(0);
-            for (Path path : mPathStack) {
-                mCanvas.drawPath(path, mPaint);
-            }
-            for (PointF point : mPointStack) {
-                mCanvas.drawPoint(point.x, point.y, mPaint);
+
+            for (WhiteboardAction action : mStack) {
+                action.apply(mCanvas);
             }
             invalidate();
         }
 
         public boolean empty() {
-            return mWhichStack.empty();
+            return mStack.empty();
+        }
+    }
+
+    private interface WhiteboardAction {
+        void apply(@NonNull Canvas canvas);
+    }
+
+    private static class DrawPoint implements WhiteboardAction {
+
+        private final float mX;
+        private final float mY;
+        private final Paint mPaint;
+
+
+        public DrawPoint(float x, float y, Paint paint) {
+            mX = x;
+            mY = y;
+            mPaint = paint;
+        }
+
+
+        @Override
+        public void apply(@NonNull Canvas canvas) {
+            canvas.drawPoint(mX, mY, mPaint);
+        }
+    }
+
+    private static class DrawPath implements WhiteboardAction {
+        private final Path mPath;
+        private final Paint mPaint;
+
+        public DrawPath(Path path, Paint paint) {
+            mPath = path;
+            mPaint = paint;
+        }
+
+
+        @Override
+        public void apply(@NonNull Canvas canvas) {
+            canvas.drawPath(mPath, mPaint);
         }
     }
 
