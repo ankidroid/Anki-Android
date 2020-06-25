@@ -46,10 +46,10 @@
     <string name="card_browser_delete_card">刪除筆記</string>
     <string name="card_browser_suspend_card">擱置卡片</string>
     <string name="card_browser_toggle_suspend_card">(取消)擱置卡片</string>
-    <string name="card_browser_change_deck">更改牌組</string>
+    <string name="card_browser_change_deck">變更牌組</string>
     <string name="card_browser_unsuspend_card">取消擱置卡片</string>
     <string name="card_browser_mark_card">標記筆記</string>
-    <string name="card_browser_flag">Flag</string>
+    <string name="card_browser_flag">標記</string>
     <string name="card_browser_toggle_mark_card">(取消)標記筆記</string>
     <string name="card_browser_unmark_card">取消標記筆記</string>
     <string name="delete_card_title">刪除筆記？</string>
@@ -92,13 +92,13 @@
     </string-array>
     <string name="card_browser_select_all">全選</string>
     <string name="card_browser_select_none">全不選</string>
-    <string name="card_browser_edit_note">Edit note</string>
-    <string name="card_browser_interval_new_card">(new)</string>
-    <string name="card_browser_ease_new_card">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_edit_note">編輯筆記</string>
+    <string name="card_browser_interval_new_card">(新增)</string>
+    <string name="card_browser_ease_new_card">(新增)</string>
+    <string name="card_browser_due_filtered_card">（已過濾）</string>
+    <string name="card_browser_interval_learning_card">（學習中）</string>
+    <string name="card_browser_note_editor_error">開啟筆記編輯器時出錯</string>
+    <string name="card_browser_no_cards_in_deck">牌組 ‘%s’ 中未找到任何卡片</string>
+    <string name="card_browser_search_all_decks">搜尋所有牌組</string>
+    <string name="card_browser_unknown_deck_name">未知</string>
 </resources>

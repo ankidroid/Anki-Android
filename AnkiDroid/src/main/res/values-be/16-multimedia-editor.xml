@@ -35,7 +35,7 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Дадаць выяву</string>
-    <string name="multimedia_editor_popup_audio_clip">Дадаць аўдыя кліп</string>
+    <string name="multimedia_editor_popup_audio_clip">Дадаць гуказапіс</string>
     <string name="multimedia_editor_popup_audio">Запісаць аўдыя</string>
     <string name="multimedia_editor_popup_text">Пашыраны рэдактар</string>
     <string name="multimedia_editor_popup_cloze">Заданне з пропускамі</string>
@@ -68,8 +68,8 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text">Тэкст</string>
     <string name="multimedia_editor_field_editing_image">Выява</string>
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio">Запіс гуку</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Гуказапіс</string>
     <string name="multimedia_editor_field_editing_done">Гатова</string>
     <!-- Text field editing -->
     <!-- buttons -->
@@ -91,7 +91,7 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Галерэя</string>
     <string name="multimedia_editor_image_field_editing_photo">Камера</string>
-    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <string name="multimedia_editor_image_field_editing_library">Бібліятэка</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Загрузка</string>
@@ -112,7 +112,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Запіс не атрымаўся</string>
     <string name="multimedia_editor_audio_view_playing_failed">Прайграванне не атрымалася</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">Немагчыма стварыць панэль кіравання запісам</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">Поле рэдагавання</string>
     <string name="title_activity_translation">Пераклад</string>

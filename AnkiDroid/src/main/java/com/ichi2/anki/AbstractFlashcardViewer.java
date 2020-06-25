@@ -316,6 +316,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int mGestureTapTop;
     private int mGestureTapBottom;
     private int mGestureLongclick;
+    private int mGestureVolumeUp;
+    private int mGestureVolumeDown;
 
     private Spanned mCardContent;
     private String mBaseUrl;
@@ -1082,7 +1084,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
            The card could have been rescheduled, the deck could have changed, or a change of
            note type could have lead to the card being deleted */
         if (data != null && data.hasExtra("reloadRequired")) {
-            getCol().getSched().reset();
+            getCol().getSched().deferReset();
             CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(false),
                     new CollectionTask.TaskData(null, 0));
         }
@@ -1098,7 +1100,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 redrawCard();
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
-            getCol().getSched().reset();
+            getCol().getSched().deferReset();
             CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(false),
                     new CollectionTask.TaskData(null, 0));
         }
@@ -1265,7 +1267,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         new MaterialDialog.Builder(this)
                 .title(res.getString(R.string.delete_card_title))
                 .iconAttr(R.attr.dialogErrorIcon)
-                .content(String.format(res.getString(R.string.delete_note_message),
+                .content(res.getString(R.string.delete_note_message,
                         Utils.stripHTML(mCurrentCard.q(true))))
                 .positiveText(res.getString(R.string.dialog_positive_delete))
                 .negativeText(res.getString(R.string.dialog_cancel))
@@ -1344,6 +1346,32 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(true),
                 new CollectionTask.TaskData(mCurrentCard, mCurrentEase));
+    }
+
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            // assign correct gesture code
+            int gesture = COMMAND_NOTHING;
+
+            switch (event.getKeyCode()) {
+                case KeyEvent.KEYCODE_VOLUME_UP:
+                    gesture = mGestureVolumeUp;
+                    break;
+                case KeyEvent.KEYCODE_VOLUME_DOWN:
+                    gesture = mGestureVolumeDown;
+                    break;
+            }
+
+            // Execute gesture's command, but only consume event if action is assigned. We want the volume buttons to work normally otherwise.
+            if (gesture != COMMAND_NOTHING) {
+                executeCommand(gesture);
+                return true;
+            }
+        }
+
+        return super.dispatchKeyEvent(event);
     }
 
 
@@ -1686,6 +1714,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "12"));
             mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
             mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
+            mGestureVolumeUp = Integer.parseInt(preferences.getString("gestureVolumeUp", "0"));
+            mGestureVolumeDown = Integer.parseInt(preferences.getString("gestureVolumeDown", "0"));
         }
 
         if (preferences.getBoolean("keepScreenOn", false)) {

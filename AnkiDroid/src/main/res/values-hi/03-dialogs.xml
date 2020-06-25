@@ -41,7 +41,7 @@
     <string name="check_db_title">डेटाबेस की जाँच करें?</string>
     <string name="check_db_warning">इसमें बहुत समय लग सकता है</string>
     <string name="check_db_acknowledge">डेटाबेस की जाँच की गई</string>
-    <string name="check_db_acknowledge_shrunk">डेटाबेस जाँची और अनुकूलित की गई।\n%d kB से घटाया गया।</string>
+    <string name="check_db_acknowledge_shrunk">डेटाबेस जाँची और अनुकूलित की गई।\n%d MB से घटाया गया।</string>
     <string name="contextmenu_deckpicker_delete_deck">डेक मिटाएँ</string>
     <string name="delete_deck_default_deck">डिफ़ॉल्ट डेक को मिटाया नहीं जा सकता।</string>
     <string name="delete_deck_title">डेक मिटाएँ?</string>

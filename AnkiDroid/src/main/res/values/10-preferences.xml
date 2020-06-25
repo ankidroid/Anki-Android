@@ -86,6 +86,8 @@
     <string name="gestures_tap_bottom">Touch bottom</string>
     <string name="gestures_tap_left">Touch left</string>
     <string name="gestures_tap_right">Touch right</string>
+    <string name="gestures_volume_up">Volume up</string>
+    <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>

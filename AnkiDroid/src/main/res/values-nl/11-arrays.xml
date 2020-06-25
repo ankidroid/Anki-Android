@@ -50,23 +50,23 @@
         <item>Antwoord beter dan aangeraden</item>
         <item>Ongedaan maken</item>
         <item>Memo bewerken</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Tagnaam</item>
+        <item>Markeermemo</item>
+        <item>Uitdrukking opzoeken</item>
+        <item>Kaart verbergen</item>
+        <item>Kaart opschorten</item>
+        <item>Memo verwijderen</item>
+        <item>Media afspelen</item>
+        <item>Leren afbreken</item>
+        <item>Memo begraven</item>
+        <item>Memo opschorten</item>
+        <item>Rode vlag in-/uitschakelen</item>
+        <item>Oranje vlag in-/uitschakelen</item>
+        <item>Groene vlag in-/uitschakelen</item>
+        <item>Blauwe vlag in-/uitschakelen</item>
+        <item>Vlag verwijderen</item>
+        <item>Pagina omhoog</item>
+        <item>Pagina omlaag</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Kaart uitstellen</item>

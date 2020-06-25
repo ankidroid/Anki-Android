@@ -49,5 +49,5 @@
     <string name="feedback_copy_debug">Капіяваць звесткі адладкі</string>
     <string name="feedback_report">Справаздача</string>
     <string name="feedback_report_automatically">Аўтаматычна адпраўляць справаздачы пра памылкі</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="feedback_no_suitable_app_found">Прыдатная прылада не знойдзена</string>
 </resources>

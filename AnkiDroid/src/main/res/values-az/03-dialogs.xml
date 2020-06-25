@@ -46,14 +46,10 @@
     <string name="delete_deck_default_deck">Standart göyərtə silinə bilməz</string>
     <string name="delete_deck_title">göyərtə silin?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">-da bütün kartları silin?  kartı var.
-Forma: Digər
--da bütün kartları silin?  kartı var.</item>
-        <item quantity="other">% 1 $ s-da bütün kartları silin? % 2 $ d kartı var.
-Forma: Digər
-% 1 $ s-da bütün kartları silin? % 2 $ d kartı var.</item>
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+        <item quantity="other">%1$s-da bütün kartları silin? %2$d kartı var.</item>
     </plurals>
-    <string name="delete_cram_deck_message">Bütün kartları orijinal katlarına geri göndərin?</string>
+    <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
     <string name="no_tts_available_message">Mətndən-çıxış dilinə ehtiyac yoxdur</string>
     <string name="initializing_tts">TTS-ni başlatma ...</string>
     <string name="tts_no_tts">Söhbət etməyin</string>
@@ -96,7 +92,7 @@ Forma: Digər
     <string name="answering_error_title">Verilənlər bazası səhvi</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Səhv bildir</string>
-    <string name="repair_deck_dialog">Doğrudan verilənlər bazasını bərpa etməyə çalışırsınız?Keçirilməyə başlamazdan əvvəl,alt klasörlerde bir kopya yaradılacaq </string>
+    <string name="repair_deck_dialog">Doğrudan verilənlər bazasını bərpa etməyə çalışırsınız?Keçirilməyə başlamazdan əvvəl,alt klasörlerde bir kopya yaradılacaq \"%s\"</string>
     <string name="intent_add_saved_information">Saxlanılan məlumatlar</string>
     <string name="intent_add_clear_all">Hamısını sil</string>
     <string name="intent_aedict_empty">Kateqoriya \"default\" boşdur</string>
@@ -112,7 +108,7 @@ Forma: Digər
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="rebuild_custom_study_deck">Xüsusi iş yerinin bərpası ...</string>
     <string name="importing_collection">Yığım idxal ...</string>
-    <string name="import_media_count">Media faylları idxalı</string>
+    <string name="import_media_count">Media faylları idxalı %1$d%%&#8230;</string>
     <string name="import_progress">• İthalat qeydləri: %1$d%%\n• Kartları idxal etmək: %2$d%%\n • Post-processing: %3$d%%</string>
     <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
     <string name="import_update_ignored">Qeydin növü dəyişdirildiyi üçün bəzi yeniliklər nəzərə alınmadı</string>

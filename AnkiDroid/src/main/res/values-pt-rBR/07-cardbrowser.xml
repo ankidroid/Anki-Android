@@ -93,13 +93,13 @@
     </string-array>
     <string name="card_browser_select_all">Selecionar todos</string>
     <string name="card_browser_select_none">Desselecionar todos</string>
-    <string name="card_browser_edit_note">Edit note</string>
+    <string name="card_browser_edit_note">Editar Nota</string>
     <string name="card_browser_interval_new_card">(novo)</string>
     <string name="card_browser_ease_new_card">(novo)</string>
     <string name="card_browser_due_filtered_card">(filtrada)</string>
     <string name="card_browser_interval_learning_card">(aprendizado)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_note_editor_error">Erro ao abrir o editor de notas</string>
+    <string name="card_browser_no_cards_in_deck">Nenhuma carta encontrada no deck ‘%s\'</string>
+    <string name="card_browser_search_all_decks">Pesquisar em todos os baralhos</string>
+    <string name="card_browser_unknown_deck_name">Desconhecido</string>
 </resources>

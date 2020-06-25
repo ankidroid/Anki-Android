@@ -80,9 +80,6 @@ public class Reviewer extends AbstractFlashcardViewer {
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
 
-    // Deck picker reset scheduler before opening the reviewer. So
-    // first reset is useless.
-    private boolean mSchedResetDone = false;
 
     private ActionButtons mActionButtons = new ActionButtons(this);
 
@@ -129,9 +126,6 @@ public class Reviewer extends AbstractFlashcardViewer {
             return;
         }
 
-        if (getIntent().hasExtra("com.ichi2.anki.SchedResetDone")) {
-            mSchedResetDone = true;
-        }
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
             Timber.d("onCreate() :: received Intent with action = %s", getIntent().getAction());
             selectDeckFromExtra();
@@ -188,7 +182,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Select the deck
         getCol().getDecks().select(did);
         // Reset the schedule so that we get the counts for the currently selected deck
-        getCol().getSched().reset();
+        getCol().getSched().deferReset();
     }
 
     @Override
@@ -235,10 +229,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             setWhiteboardVisibility(whiteboardVisibility);
         }
 
-        if (!mSchedResetDone) {
-            mSched.reset();     // Reset schedule in case card was previously loaded
-            mSchedResetDone = false;
-        }
+        col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler(false),
                 new CollectionTask.TaskData(null, 0));
 
@@ -532,7 +523,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         int alpha = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         menu.findItem(R.id.action_undo).setIcon(undoIcon);
-        menu.findItem(R.id.action_undo).setEnabled(undoEnabled).getIcon().setAlpha(alpha);
+        menu.findItem(R.id.action_undo).setEnabled(undoEnabled).getIcon().mutate().setAlpha(alpha);
 
         // White board button
         if (mPrefWhiteboard) {
@@ -547,13 +538,13 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             menu.findItem(R.id.action_save_whiteboard).setVisible(true);
 
-            Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp);
+            Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp).mutate();
             if (mShowWhiteboard) {
-                whiteboardIcon.setAlpha(255);
+                whiteboardIcon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
             } else {
-                whiteboardIcon.setAlpha(77);
+                whiteboardIcon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
             }
