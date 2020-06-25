@@ -18,7 +18,8 @@ env:
     - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
     - LOCALE="NONE"
-    - GRAVIS="https://raw.githubusercontent.com/DanySK/Gravis-CI/master/"
+    - GRAVIS_REPO="https://github.com/DanySK/Gravis-CI.git"
+    - GRAVIS="$HOME/gravis"
     - JDK="1.8"
     - TOOLS=${ANDROID_HOME}/tools
     # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
@@ -86,10 +87,10 @@ before_install:
   # It should not make assumptions about os platform or desired tool installation
 
   # Set up JDK 8 for Android SDK - Java is universally needed: codacy, unit tests, emulators
-  - travis_retry curl "${GRAVIS}.install-jdk-travis.sh" --output ~/.install-jdk-travis.sh
+  - travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS
   - export TARGET_JDK="${JDK}"
   - JDK="1.8"
-  - source ~/.install-jdk-travis.sh
+  - source $GRAVIS/install-jdk
 
   # Set up Android SDK - this is needed everywhere but coverage finalization, so toggle on that
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then travis_retry wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip; fi
@@ -135,7 +136,7 @@ install:
 
   # Switch back to our target JDK version to build and run tests
   - JDK="${TARGET_JDK}"
-  - source ~/.install-jdk-travis.sh
+  - source $GRAVIS/install-jdk
 
 script:
   - travis_retry ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint # warm gradle w/travis_retry to handle network blips
@@ -148,8 +149,7 @@ after_success:
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-  - curl "${GRAVIS}.clean_gradle_cache.sh" --output ~/.clean_gradle_cache.sh
-  - bash ~/.clean_gradle_cache.sh > /dev/null
+  - $GRAVIS/clean-gradle-cache
 
 cache:
   directories:
