@@ -32,6 +32,8 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import java.lang.ref.WeakReference;
 import java.util.Stack;
@@ -39,7 +41,7 @@ import java.util.Stack;
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  */
-public class Whiteboard extends View {
+public class Whiteboard extends View implements View.OnClickListener {
 
     private static final float TOUCH_TOLERANCE = 4;
 
@@ -66,6 +68,7 @@ public class Whiteboard extends View {
     private boolean mMonochrome;
     private boolean mUndoModeActive = false;
 
+    private LinearLayout colorPalette;
 
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
@@ -91,7 +94,7 @@ public class Whiteboard extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
-        mPaint.setColor(foregroundColor);
+        //mPaint.setColor(foregroundColor);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -100,6 +103,22 @@ public class Whiteboard extends View {
         createBitmap();
         mPath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+
+        // selecting pen color to draw
+        colorPalette = (LinearLayout) cardViewer.findViewById(R.id.whiteboard_pen_color);
+
+        Button penColorWhite = (Button) cardViewer.findViewById(R.id.pen_color_white);
+        Button penColorBlack = (Button) cardViewer.findViewById(R.id.pen_color_black);
+        Button penColorRed = (Button) cardViewer.findViewById(R.id.pen_color_red);
+        Button penColorGreen = (Button) cardViewer.findViewById(R.id.pen_color_green);
+        Button penColorBlue = (Button) cardViewer.findViewById(R.id.pen_color_blue);
+        Button penColorYellow = (Button) cardViewer.findViewById(R.id.pen_color_yellow);
+        penColorWhite.setOnClickListener(this);
+        penColorBlack.setOnClickListener(this);
+        penColorRed.setOnClickListener(this);
+        penColorGreen.setOnClickListener(this);
+        penColorBlue.setOnClickListener(this);
+        penColorYellow.setOnClickListener(this);
     }
 
 
@@ -241,11 +260,13 @@ public class Whiteboard extends View {
         // To fix issue #1336, just make the whiteboard big and square.
         final Point p = getDisplayDimenions();
         int bitmapSize = Math.max(p.x, p.y);
+        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888);
+        /*
         if (mMonochrome && !mInvertedColors) {
             createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ALPHA_8);
         } else {
             createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_4444);
-        }
+        }*/
     }
 
     private void drawStart(float x, float y) {
@@ -354,6 +375,44 @@ public class Whiteboard extends View {
         Point point = new Point();
         display.getSize(point);
         return point;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        int redPenColor = Color.parseColor("#f44336");
+        int greenPenColor = Color.parseColor("#4caf50");
+        int bluePenColor = Color.parseColor("#2196f3");
+        int yellowPenColor = Color.parseColor("#ffeb3b");
+
+        switch (view.getId()) {
+            case R.id.pen_color_white:
+                mPaint.setColor(Color.WHITE);
+                colorPalette.setVisibility(View.GONE);
+                break;
+            case R.id.pen_color_black:
+                mPaint.setColor(Color.BLACK);
+                colorPalette.setVisibility(View.GONE);
+                break;
+            case R.id.pen_color_red:
+                mPaint.setColor(redPenColor);
+                colorPalette.setVisibility(View.GONE);
+                break;
+            case R.id.pen_color_green:
+                mPaint.setColor(greenPenColor);
+                colorPalette.setVisibility(View.GONE);
+                break;
+            case R.id.pen_color_blue:
+                mPaint.setColor(bluePenColor);
+                colorPalette.setVisibility(View.GONE);
+                break;
+            case R.id.pen_color_yellow:
+                mPaint.setColor(yellowPenColor);
+                colorPalette.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
     }
 
     /**

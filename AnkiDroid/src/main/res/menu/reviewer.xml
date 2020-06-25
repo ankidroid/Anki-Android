@@ -14,6 +14,12 @@
         android:visible="false"
         ankidroid:showAsAction="always"/>
     <item
+        android:id="@+id/action_change_whiteboard_pen_color"
+        android:icon="@drawable/ic_color_lens_white_24dp"
+        android:title="@string/title_whiteboard_pen_color"
+        android:visible="false"
+        ankidroid:showAsAction="always"/>
+    <item
         android:id="@+id/action_undo"
         android:enabled="false"
         android:icon="@drawable/ic_undo_white_24dp"

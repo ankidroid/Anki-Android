@@ -79,6 +79,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
+    private LinearLayout colorPalette;
 
     // Deck picker reset scheduler before opening the reviewer. So
     // first reset is useless.
@@ -330,6 +331,12 @@ public class Reviewer extends AbstractFlashcardViewer {
                 showDeleteNoteDialog();
                 break;
 
+            case R.id.action_change_whiteboard_pen_color:
+                Timber.i("Reviewer:: Pen Color button pressed");
+                colorPalette = (LinearLayout) findViewById(R.id.whiteboard_pen_color);
+                colorPalette.setVisibility(View.VISIBLE);
+                break;
+
             case R.id.action_clear_whiteboard:
                 Timber.i("Reviewer:: Clear whiteboard button pressed");
                 if (mWhiteboard != null) {
@@ -533,6 +540,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             if (!mActionButtons.getStatus().clearWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             }
+
+            menu.findItem(R.id.action_change_whiteboard_pen_color).setVisible(true);
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp);
             if (mShowWhiteboard) {
