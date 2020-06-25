@@ -545,7 +545,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_change_whiteboard_pen_color).setVisible(true);
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp);
-            Drawable whiteboardColorPaletteIcon = ContextCompat.getDrawable(this, R.drawable.ic_color_lens_white_24dp);
+            Drawable whiteboardColorPaletteIcon = ContextCompat.getDrawable(this, R.drawable.ic_color_lens_white_24dp).mutate();
 
             if (mShowWhiteboard) {
                 whiteboardIcon.setAlpha(255);
