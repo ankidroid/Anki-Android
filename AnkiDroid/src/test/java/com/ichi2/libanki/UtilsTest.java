@@ -27,8 +27,8 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.Objects;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 
 public class UtilsTest {
 
@@ -40,9 +40,9 @@ public class UtilsTest {
         try {
             File file = new File(resource.toURI());
             ZipFile zipFile = new ZipFile(file);
-            Enumeration zipEntries = zipFile.entries();
+            Enumeration zipEntries = zipFile.getEntries();
             while (zipEntries.hasMoreElements()) {
-                ZipEntry ze2 = (ZipEntry) zipEntries.nextElement();
+                ZipArchiveEntry ze2 = (ZipArchiveEntry) zipEntries.nextElement();
                 Utils.unzipFiles(zipFile, "/tmp", new String[]{ze2.getName()}, null);
             }
             Assert.fail("Expected an IOException");

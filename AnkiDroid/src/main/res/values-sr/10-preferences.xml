@@ -152,6 +152,8 @@
     <string name="pref_backup_max">Максималан број резервне датотеке</string>
     <string name="show_estimates">Прикажи дугме времена</string>
     <string name="show_estimates_summ">Следећи пут прикажи разматрање изнад дугмета за одговоре</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Прикажи преостале</string>
     <string name="show_progress_summ">Прикажи број остале картице</string>
     <string name="show_eta">Show ETA</string>

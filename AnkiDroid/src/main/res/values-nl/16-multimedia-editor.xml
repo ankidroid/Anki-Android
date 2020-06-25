@@ -38,7 +38,7 @@
     <string name="multimedia_editor_popup_audio_clip">Audioclip toevoegen</string>
     <string name="multimedia_editor_popup_audio">Neem audio op</string>
     <string name="multimedia_editor_popup_text">Geavanceerde editor</string>
-    <string name="multimedia_editor_popup_cloze">Cloze verwijdering</string>
+    <string name="multimedia_editor_popup_cloze">Invuloefening</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Aangedreven door glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -112,6 +112,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Opname mislukt</string>
     <string name="multimedia_editor_audio_view_playing_failed">Afspelen mislukt</string>
+    <string name="multimedia_editor_audio_view_create_failed">Kan geen opnamewerkbalk aanmaken</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">Veld wijzigen</string>
     <string name="title_activity_translation">Vertaling</string>

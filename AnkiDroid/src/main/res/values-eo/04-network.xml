@@ -40,6 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Vi estas eksterrete</string>
+    <string name="sync_even_if_offline">Provi malgraŭ tio</string>
     <string name="sync_error">Eraro dum samtempigado</string>
     <string name="vague_error">Eraro</string>
     <string name="retry">Reprovi</string>

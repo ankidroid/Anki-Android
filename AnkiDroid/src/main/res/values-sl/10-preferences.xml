@@ -152,6 +152,8 @@
     <string name="pref_backup_max">Največje št. varnostnih kopij</string>
     <string name="show_estimates">Prikaži čas gumba</string>
     <string name="show_estimates_summ">Prikaži naslednji čas pregleda na gumbih za odgovor</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Prikaži preostale</string>
     <string name="show_progress_summ">Prikaži število preostalih kartic</string>
     <string name="show_eta">Prikaži pre. čas</string>

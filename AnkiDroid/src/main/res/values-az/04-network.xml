@@ -40,6 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Aktiv deyilsiniz</string>
+    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Sinxronizasiya xətası</string>
     <string name="vague_error">Xəta</string>
     <string name="retry">yeniden</string>
@@ -100,7 +101,7 @@
     <string name="sync_writing_db">Verilənlər bazasında dəyişiklik yazma...</string>
     <string name="sync_download_chunk">Dəyişiklikləri endirmək...</string>
     <string name="sync_upload_chunk">Dəyişiklikləri endirmək...</string>
-    <string name="sync_up_down_size">Up: kB, aşağı: kB</string>
+    <string name="sync_up_down_size">Up: %1$d kB, aşağı: %2$d kB</string>
     <string name="sync_generic_error">Bir səhv baş verdi.Biraz sonra yenidən cəhd edin.</string>
     <string name="sync_check_upload_file">Yüklənmədən əvvəl faylı yoxlanyın...</string>
     <string name="sync_check_download_file">Yüklənilən fayl yoxlanılır...</string>

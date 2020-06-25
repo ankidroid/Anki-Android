@@ -59,13 +59,13 @@
         <item>Leren afbreken</item>
         <item>Opmerking begraven</item>
         <item>Memo opschorten</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Rode markering in-/uitschakelen</item>
+        <item>Oranje markering in-/uitschakelen</item>
+        <item>Groene markering in-/uitschakelen</item>
+        <item>Blauwe markering in-/uitschakelen</item>
+        <item>Markering verwijderen</item>
+        <item>Pagina omhoog</item>
+        <item>Pagina omlaag</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Kaart uitstellen</item>

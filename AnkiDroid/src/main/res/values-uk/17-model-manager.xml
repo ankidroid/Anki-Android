@@ -46,7 +46,7 @@
     <!--Browser-->
     <string name="model_browser_delete">Видалити тип запису</string>
     <string name="model_browser_rename">Перейменувати</string>
-    <string name="model_browser_options">Опції</string>
+    <string name="model_browser_options">Налаштування</string>
     <string name="model_browser_template">Редагувати картки</string>
     <string name="model_browser_add">Додати тип запису</string>
     <!--Rename-->

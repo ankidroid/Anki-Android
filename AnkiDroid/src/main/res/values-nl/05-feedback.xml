@@ -49,5 +49,5 @@
     <string name="feedback_copy_debug">Kopieer debuginformatie</string>
     <string name="feedback_report">Meld een probleem</string>
     <string name="feedback_report_automatically">Foutmeldingen automatisch versturen</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="feedback_no_suitable_app_found">Geen geschikte app gevonden</string>
 </resources>

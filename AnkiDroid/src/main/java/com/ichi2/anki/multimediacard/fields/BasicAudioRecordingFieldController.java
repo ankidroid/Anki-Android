@@ -24,15 +24,10 @@ import android.content.Intent;
 
 import android.widget.LinearLayout;
 
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.AudioView;
-import com.ichi2.libanki.Collection;
 
 import java.io.File;
-import java.io.IOException;
-
-import timber.log.Timber;
 
 public class BasicAudioRecordingFieldController extends FieldControllerBase implements IFieldController {
 
@@ -59,14 +54,7 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
         }
 
         if (!bExist) {
-            try {
-                Collection col = CollectionHelper.getInstance().getCol(context);
-                File storingDirectory = new File(col.getMedia().dir());
-                tempAudioPath = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).getAbsolutePath();
-            } catch (IOException e) {
-                Timber.e(e, "Could not create temporary audio file.");
-                tempAudioPath = null;
-            }
+            tempAudioPath = AudioView.generateTempAudioFile(mActivity);
         }
 
         mAudioView = AudioView.createRecorderInstance(mActivity, R.drawable.av_play, R.drawable.av_pause,

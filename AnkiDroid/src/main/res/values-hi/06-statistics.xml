@@ -80,8 +80,10 @@
     <string name="stats_overview_total_reviews">औसत: &lt;b&gt;%1$d&lt;/b&gt; समीक्षा / दिन</string>
     <string name="stats_overview_reviews_per_day_studydays">औसत: &lt;b&gt;%1$.1f&lt;/b&gt; समीक्षा / दिन</string>
     <string name="stats_overview_reviews_per_day_all">यदि आप प्रतिदिन अध्ययन करते हैं: &lt;b&gt;%1$.1f &lt;/b&gt;</string>
+    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
     <string name="stats_overview_time_per_day_studydays">अध्ययन के दिनों के लिए औसत: &lt;b&gt;%1$.1f&lt;/b&gt;</string>
     <string name="stats_overview_time_per_day_all">यदि आप प्रतिदिन अध्ययन करते हैं: &lt;b&gt;%1$.1f &lt;/b&gt;</string>
+    <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>
     <string name="stats_overview_new_cards_per_day">औसत: &lt;b&gt;%1$.1f&lt;/b&gt; समीक्षा / दिन</string>
     <string name="stats_overview_total_new_cards">औसत: &lt;b&gt;%1$d&lt;/b&gt; समीक्षा / दिन</string>
     <string name="stats_overview_average_interval">"औसत अंतराल: "</string>
@@ -90,6 +92,14 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; सही</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; सही</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; सही</string>
+    <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_card_types_total_cards">Total cards: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_notes">Total notes: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="deck_summary_all_decks">सभी डेक</string>
     <string name="stats_select_time_scale">टाइमस्केल का चयन करें</string>
     <string-array name="due_x_axis_title">

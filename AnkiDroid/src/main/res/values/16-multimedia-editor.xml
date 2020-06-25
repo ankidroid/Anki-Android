@@ -102,6 +102,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
     <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
+    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
 
     <!-- Activity titles -->
 

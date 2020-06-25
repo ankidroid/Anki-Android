@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- generic strings -->
+    <string name="disabled">Cacat</string>
+    <string name="enabled">Diaktifkan</string>
+    <!-- preferences.xml categories-->
+    <string name="pref_cat_general">AnkiDroid</string>
+    <string name="pref_cat_general_summ">Pengaturan umum</string>
+    <string name="pref_cat_reviewing">Meninjau</string>
+    <string name="pref_cat_reviewing_summ">Non-dek-spesifik pengaturan resensi</string>
+    <string name="pref_cat_reviewer_behaviour">Perilaku</string>
+    <string name="pref_cat_flashcard">Tampilan</string>
+    <string name="pref_cat_whiteboard">Papan tulis</string>
+    <string name="pref_cat_automatic_display">Otomatis tampilkan jawaban</string>
+    <string name="pref_cat_appearance">Penampilan</string>
+    <string name="pref_cat_appearance_summ">Ubah tema dan font default</string>
+    <string name="pref_cat_themes">Tema</string>
+    <string name="pref_cat_fonts">Font</string>
+    <string name="pref_cat_gestures">Gerakan</string>
+    <string name="pref_cat_gestures_summ">Gunakan ketukan dan gesekan pengganti tombol</string>
+    <string name="pref_cat_actions">Tindakan</string>
+    <string name="pref_cat_advanced">Tingkat lanjut</string>
+    <string name="pref_cat_advanced_summ">Optimasi dan fitur percobaan</string>
+    <string name="pref_cat_performance">Kinerja</string>
+    <string name="pref_cat_workarounds">Solusi</string>
+    <string name="pref_cat_plugins">Pengaya</string>
+    <string name="about_title">Tentang AnkiDroid</string>
+    <string name="about_version">Versi: </string>
+    <!-- preferences.xml entries-->
+    <string name="whiteboard_stroke_width">Lebar pukulan</string>
+    <string name="whiteboard_black">Pukulan-pukulan hitam</string>
+    <string name="whiteboard_black_summ">Gunakan lebih sedikit memori, kecuali dalam modus malam</string>
+    <string name="use_input_tag">Ketik jawaban ke dalam kartu</string>
+    <string name="use_input_tag_summ">Gunakan kotak input teks di dalam kartu untuk mengetikkan jawabannya</string>
+    <string name="dictionary">Kamus lookup</string>
+    <string name="reset_languages">Reset bahasa</string>
+    <string name="reset_languages_summ">Reset tugas bahasa (untuk teks pidato dan kamus) untuk semua deck</string>
+    <string name="reset_languages_question">Reset semua tugas bahasa?</string>
+    <string name="reset_confirmation">Reset semua negara</string>
+    <string name="card_zoom">Card zoom</string>
+    <string name="image_zoom">Zoom gambar</string>
+    <string name="button_size">Ukuran tombol jawaban</string>
+    <string name="card_browser_font_size">Kartu browser penskalaan huruf</string>
+    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="col_path">Direktori AnkiDroid</string>
+    <string name="fullscreen_review">Mode layar penuh</string>
+    <string name="full_screen_off">Mati</string>
+    <string name="full_screen_system">Sembunyikan bilah sistem</string>
+    <string name="full_screen_complete">Sembunyikan bilah sistem dan tombol jawab</string>
+    <string name="full_screen_error_gestures">Anda harus mengaktifkan isyarat untuk menyembunyikan tombol jawab</string>
+    <string name="answer_buttons_position">Jawab tombol posisi</string>
+    <string-array name="answer_buttons_position_labels">
+        <item>Top</item>
+        <item>Bottom</item>
+    </string-array>
+    <string name="gestures">Aktifkan gerakan</string>
+    <string name="gestures_summ">Menetapkan gerakan-gerakan menjadi tindakan-tindakan seperti menjawab dan mengedit kartu-kartu.</string>
+    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_swipe_up">Sapu ke atas</string>
+    <string name="gestures_swipe_down">Sapu ke bawah</string>
+    <string name="gestures_swipe_left">Sapu ke kiri</string>
+    <string name="gestures_swipe_right">Sapu ke kanan</string>
+    <string name="gestures_double_tap">Sentuh ganda</string>
+    <string name="gestures_tap_top">Sentuh atas</string>
+    <string name="gestures_tap_bottom">Sentuh bawah</string>
+    <string name="gestures_tap_left">Sentuh kiri</string>
+    <string name="gestures_tap_right">Sentuh kanan</string>
+    <string name="more_scrolling_buttons">eReader</string>
+    <string name="more_scrolling_buttons_summ">Juga gunakan kanji/katakana, emoji/kao-moji tombol untuk bergulir</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="double_scrolling_gap">Skroling ganda</string>
+    <string name="double_scrolling_gap_summ">Gandakan jarak skroling dengan eReader</string>
+    <string name="swipe_sensitivity">Sensitivitas usapan</string>
+    <string name="tts">Teks untuk pidato</string>
+    <string name="tts_summ">Membaca pertanyaan dan jawaban jika file tidak ada file suara disertakan</string>
+    <string name="sync_fetch_missing_media">Ambil media di sinkronisasi</string>
+    <string name="sync_fetch_missing_media_summ">Otomatis ambil media yang hilang ketika sinkronisasi.</string>
+    <string name="sync_account">Akun AnkiWeb</string>
+    <string name="sync_account_summ_logged_out">Tidak masuk</string>
+    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="automatic_sync_choice">Sinkronisasi otomatis</string>
+    <string name="automatic_sync_choice_summ">Sinkronkan secara otomatis di aplikasi mulai / keluar jika sinkronisasi terakhir lebih dari 10
+         menit yang lalu.</string>
+    <string name="day_theme">Tema hari</string>
+    <string name="night_theme">Tema malam</string>
+    <string name="default_font">Font standar</string>
+    <string name="override_font">Penerapan huruf bawaan</string>
+    <string name="language">Bahasa</string>
+    <string name="language_system">Bahasa sistem</string>
+    <string name="notification_pref">Pemberitahuan</string>
+    <string name="notification_pref_title">Beritahu kapan</string>
+    <string name="never_notify">Jangan pernah memberitahukan</string>
+    <string name="notify_when_pending">Pesan tertunda tersedia</string>
+    <string name="notification_minimum_cards_due">Lebih dari %d kartu jatuh tempo</string>
+    <string name="notification_minimum_cards_due_vibrate">Bergetar</string>
+    <string name="notification_minimum_cards_due_blink">Berkedip terang</string>
+    <string name="timeout_answer_text">Otomatis tampilkan layar</string>
+    <string name="timeout_answer_summ">Tampilkan jawaban secara otomatis tanpa masukan dari pengguna. Keterlambatan mencakup waktu untuk file audio yang diputar secara otomatis.</string>
+    <string name="timeout_answer_seconds">Waktunya untuk menunjukkan jawaban</string>
+    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_question_seconds">Time to show next question</string>
+    <string name="timeout_question_seconds_summ">XXX s</string>
+    <string name="select_locale_title">Pilih bahasa</string>
+    <string name="safe_display">Mode tampilan aman</string>
+    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
+    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="vertical_centering">Pusat sejajar</string>
+    <string name="vertical_centering_summ">Pusatkan isi kartu secara vertikal</string>
+    <string name="pref_backup_max">Jumlah backup maksimal</string>
+    <string name="show_estimates">Tampilkan waktu tuang</string>
+    <string name="show_estimates_summ">Tampilkan waktu tinjau berikutnya pada tombol jawab</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_progress">Tampilkan yang tersisa</string>
+    <string name="show_progress_summ">Tampilkan sisa jumlah kartu</string>
+    <string name="show_eta">Tampilkan ETA</string>
+    <string name="show_eta_summ">Tampilkan sisa waktu</string>
+    <string name="use_current">Deck untuk kartu baru</string>
+    <string name="new_spread">Posisi kartu baru</string>
+    <string name="learn_cutoff">Pelajari batas depan</string>
+    <string name="learn_cutoff_summ">XXX min</string>
+    <string name="time_limit">Timebox time limit</string>
+    <string name="time_limit_summ">XXX min</string>
+    <string name="day_offset">Mulai hari berikutnya</string>
+    <string name="day_offset_summ">XXX beberapa jam lewat tengah malam</string>
+    <string name="sched_ver">Experimental V2 scheduler</string>
+    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_ver_toggle_title">Konfirmasi</string>
+    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
+    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="pref_keep_screen_on">Biarkan layarnya menyala</string>
+    <string name="pref_keep_screen_on_summ">Nonaktifkan batas waktu layar</string>
+    <string name="convert_fen_text">Dukungan notasi catur</string>
+    <string name="convert_fen_text_summ">Menggambar papan catur dari Notasi Forsyth-Edwards. Notasi harus tertutup dalam tag [fen][/fen].</string>
+    <string name="enable_api_title">Aktifkan AnkiDroid API</string>
+    <string name="enable_api_summary">Biarkan aplikasi lain terhubung ke AnkiDroid dan baca / tulis data tanpa intervensi Anda</string>
+    <string name="custom_buttons">Tombol bilah tombol</string>
+    <string name="custom_buttons_summary">Sesuaikan tindakan mana yang muncul di bilah aplikasi</string>
+    <string name="custom_buttons_setting_always_show">Selalu tampilkan</string>
+    <string name="custom_buttons_setting_if_room">Tunjukkan apakah ruangan</string>
+    <string name="custom_buttons_setting_menu_only">Menu saja</string>
+    <string name="reset_custom_buttons">Setel ulang ke default</string>
+    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
+    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <!-- Advanced statistics settings -->
+    <string name="advanced_statistics_title">Statistik tingkat lanjut</string>
+    <string name="enable_advanced_statistics_title">Aktifkan statistik lanjutan</string>
+    <string name="enable_advanced_statistics_summ">Statistik perkiraan tampilan berdasarkan pada perhitungan atau simulasi masa depan ulasan (diaktifkan) atau di masa depan ulasan sudah dijadwalkan (dinonaktifkan).</string>
+    <string name="advanced_forecast_stats_compute_n_days_title">Hitunglah n hari pertama, simulasikan sisanya</string>
+    <string name="advanced_forecast_stats_compute_precision_title">Presisi perhitungan</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title">Jumlah iterasi simulasi</string>
+    <!-- Custom sync server settings -->
+    <string name="custom_sync_server_title">Custom sync server</string>
+    <string name="custom_sync_server_enable_title">Gunakan server sinkronisasi khusus</string>
+    <string name="custom_sync_server_enable_summary">Jika Anda tidak ingin menggunakan layanan AnkiWeb milik Anda, Anda bisa menentukan server alternatif di sini</string>
+    <string name="custom_sync_server_base_url_title">Url sinkronisasi</string>
+    <string name="custom_sync_server_media_url_title">Url sinkronisasi media</string>
+    <!-- studyoptions -->
+    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="studyoptions_limit_select_tags">Pilih tag</string>
+    <!-- Deck configurations -->
+    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_group">Pilihan-pilihan grup</string>
+    <plurals name="deck_conf_group_summ">
+        <item quantity="other">%1$s\n%2$d decks menggunakan grup ini</item>
+    </plurals>
+    <string name="deck_conf_new_cards">Kartu-kartu baru</string>
+    <string name="deck_conf_rev_cards">Ulasan-ulasan</string>
+    <string name="deck_conf_lps_cards">Penyimpangan-penyimpangan</string>
+    <string name="deck_conf_general">Umum</string>
+    <string name="deck_conf_reminders">Reminders</string>
+    <string name="deck_conf_steps">Langkah-langkah (dalam beberapa menit)</string>
+    <string name="deck_conf_order">Pesan</string>
+    <string name="deck_conf_new_cards_day">Kartu-kartu baru/hari</string>
+    <string name="deck_conf_graduating_ivl">Interval pelulusan</string>
+    <string name="deck_conf_days">XXX hari</string>
+    <string name="deck_conf_easy_ivl">Interval mudah</string>
+    <string name="deck_conf_start_ease">Mulai mudah</string>
+    <string name="deck_conf_max_rev">Ulasan maksimum/hari</string>
+    <string name="deck_conf_new_bury">Mengubur terkait kartu baru</string>
+    <string name="deck_conf_new_bury_summ">Kartu-kartu baru terkait dikubur sampai hari berikutnya</string>
+    <string name="deck_conf_rev_bury">Mengubur ulasan terkait</string>
+    <string name="deck_conf_rev_bury_summ">Ulasan terkait dikubur sampai hari berikutnya</string>
+    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_easy_bonus">Bonus mudah</string>
+    <string name="deck_conf_ivl_fct">Pengubah interval</string>
+    <string name="deck_conf_max_ivl">Interval maksimum</string>
+    <string name="deck_conf_new_lps_ivl">Interval baru</string>
+    <string name="deck_conf_min_ivl">Interval minimum</string>
+    <string name="deck_conf_leech_thres">Lintah ambang</string>
+    <string name="deck_conf_fails">XXX lapse(s)</string>
+    <string name="deck_conf_leech_action">Lintah aksi</string>
+    <string name="deck_conf_max_time">Waktu maksimal jawaban</string>
+    <string name="deck_conf_seconds">XXX detik</string>
+    <string name="deck_conf_timer">Tampilkan waktu jawaban</string>
+    <string name="deck_conf_autoplay">Otomatis putar audio</string>
+    <string name="deck_conf_replayq">Ulangi pertanyaan</string>
+    <string name="deck_conf_replayq_summ">Ketika menjawab diperlihatkan, ulangi kedua pertanyaan dan jawab audio</string>
+    <string name="deck_conf_manage">Manajemen grup</string>
+    <string name="deck_conf_current_group">Grup saat ini</string>
+    <string name="deck_conf_rename">Ubah nama</string>
+    <string name="deck_conf_reset">Kembalikan ke awal</string>
+    <string name="deck_conf_reset_title">Kembalikan ke awal</string>
+    <string name="deck_conf_reset_message">Mengembalikan pilihan kelompok saat ini menjadi nilai-nilai default?</string>
+    <string name="deck_conf_add">Tambahkan</string>
+    <string name="deck_conf_add_summ">Membuat salinan dari pilihan grup saat ini</string>
+    <string name="deck_conf_remove">Hapus</string>
+    <string name="deck_conf_remove_title">Hapus</string>
+    <string name="deck_conf_remove_message">Hapus grup opsi saat ini?</string>
+    <string name="deck_conf_set_subdecks">Atur untuk semua subdek</string>
+    <plurals name="deck_conf_set_subdecks_summ">
+        <item quantity="other">% s subdecks akan menggunakan grup ini</item>
+    </plurals>
+    <string name="deck_conf_set_subdecks_title">Atur untuk semua subdek</string>
+    <string name="deck_conf_set_subdecks_message">Tetapkan grup pilihan saat ini untuk semua subdep dek ini?</string>
+    <string name="pref_browser_editor_font">Font browser dan editor</string>
+    <string name="deck_conf_cram_filter">Menyaring</string>
+    <string name="deck_conf_cram_options">Pilihan</string>
+    <string name="deck_conf_cram_search">Pencarian</string>
+    <string name="deck_conf_cram_limit">Batasi untuk</string>
+    <string name="deck_conf_cram_order">kartu yang dipilih oleh</string>
+    <string name="deck_conf_cram_reschedule">Penjadwalan ulang</string>
+    <string name="deck_conf_cram_reschedule_summ">Jadwalkan ulang kartu berdasarkan jawaban saya di dek ini</string>
+    <string name="deck_conf_cram_steps">Langkah khusus (dalam menit)</string>
+    <string name="deck_conf_cram_steps_summ">Tentukan langkah khusus</string>
+    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_time">Ingatkan</string>
+    <!-- analytics options -->
+    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
+    <string name="analytics_title">Share feature usage</string>
+    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+</resources>

@@ -86,6 +86,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
@@ -159,7 +160,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     public static final int EASE_4 = 4;
 
     /** Maximum time in milliseconds to wait before accepting answer button presses. */
-    private static final int DOUBLE_TAP_IGNORE_THRESHOLD = 200;
+    @VisibleForTesting
+    protected static final int DOUBLE_TAP_IGNORE_THRESHOLD = 200;
 
     /** Time to wait in milliseconds before resuming fullscreen mode **/
     protected static final int INITIAL_HIDE_DELAY = 200;
@@ -184,6 +186,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // ETA
     private int eta;
+
+    private boolean isInFullscreen;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -284,7 +288,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * A record of the last time the "show answer" or ease buttons were pressed. We keep track
      * of this time to ignore accidental button presses.
      */
-    private long mLastClickTime;
+    @VisibleForTesting
+    protected long mLastClickTime;
 
     /**
      * Swipe Detection
@@ -320,6 +325,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private Sound mSoundPlayer = new Sound();
 
     private long mUseTimerDynamicMS;
+
+    /** File of the temporary mic record **/
+    protected AudioView mMicToolBar;
+    protected String mTempAudioPath;
 
     /**
      * Last card that the WebView Renderer crashed on.
@@ -1453,13 +1462,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         switch (answerButtonsPosition) {
             case "top":
                 cardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout);
-                answerAreaParams.addRule(RelativeLayout.BELOW, R.id.top_bar);
+                answerAreaParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer);
                 answerArea.removeView(mAnswerField);
                 answerArea.addView(mAnswerField, 1);
                 break;
             case "bottom":
                 cardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout);
-                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.top_bar);
+                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer);
                 answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 break;
             default:
@@ -2583,6 +2592,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void closeReviewer(int result, boolean saveDeck) {
+        // Stop the mic recording if still pending
+        if (mMicToolBar != null) {
+            mMicToolBar.notifyStopRecord();
+        }
+        // Remove the temporary audio file
+        if (mTempAudioPath != null) {
+            File tempAudioPathToDelete = new File(mTempAudioPath);
+            if (tempAudioPathToDelete.exists()) {
+                tempAudioPathToDelete.delete();
+            }
+        }
+
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
         mTimeoutHandler.removeCallbacks(mShowQuestionTask);
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
@@ -2592,7 +2613,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         AbstractFlashcardViewer.this.setResult(result);
 
         if (saveDeck) {
-            UIUtils.saveCollectionInBackground(this);
+            UIUtils.saveCollectionInBackground();
         }
         finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
@@ -2608,6 +2629,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         public MyWebView(Context context) {
             super(context);
         }
+
+
+        @Override
+        public void loadDataWithBaseURL(@Nullable String baseUrl, String data, @Nullable String mimeType, @Nullable String encoding, @Nullable String historyUrl) {
+            if (!AbstractFlashcardViewer.this.wasDestroyed()) {
+                super.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl);
+            } else {
+                Timber.w("Not loading card - Activity is in the process of being destroyed.");
+            }
+        }
+
 
         @Override
         protected void onScrollChanged(int horiz, int vert, int oldHoriz, int oldVert) {
@@ -3086,6 +3118,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mFlipCardLayout.performClick();
                 return true;
             }
+            // Show options menu from WebView
+            if (url.startsWith("signal:anki_show_options_menu")) {
+                isInFullscreen = !getSupportActionBar().isShowing();
+                if (isInFullscreen) {
+                    openOptionsMenu();
+                } else {
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen_options_menu), true);
+                }
+                return true;
+            }
+
+            // Show Navigation Drawer from WebView
+            if (url.startsWith("signal:anki_show_navigation_drawer")) {
+                isInFullscreen = !getSupportActionBar().isShowing();
+                if (isInFullscreen) {
+                    AbstractFlashcardViewer.this.onNavigationPressed();
+                } else {
+                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.ankidroid_turn_on_fullscreen_nav_drawer), true);
+                }
+                return true;
+            }
+
             // card.html reload
             if (url.startsWith("signal:reload_card_html")) {
                 redrawCard();
@@ -3401,9 +3455,47 @@ see card.js for available functions
             return shouldDisplayMark();
         }
 
+        
         @JavascriptInterface
         public int ankiGetCardFlag() {
             return mCurrentCard.getUserFlag();
         }
+
+        @JavascriptInterface
+        public String ankiGetNextTime1() { return (String) mNext1.getText(); }
+
+        @JavascriptInterface
+        public String ankiGetNextTime2() { return (String) mNext2.getText(); }
+
+        @JavascriptInterface
+        public String ankiGetNextTime3() { return (String) mNext3.getText(); }
+
+        @JavascriptInterface
+        public String ankiGetNextTime4() { return (String) mNext4.getText(); }
+        
+        @JavascriptInterface
+        public int ankiGetCardReps() {
+            return mCurrentCard.getReps();
+        }
+
+        @JavascriptInterface
+        public int ankiGetCardInterval() {
+            return mCurrentCard.getIvl();
+        }
+
+        @JavascriptInterface
+        public int ankiGetCardQueue() {
+            return mCurrentCard.getQueue();
+        }
+
+        @JavascriptInterface
+        public int ankiGetCardLapses() {
+             return mCurrentCard.getLapses();
+         }
+
+        @JavascriptInterface
+        public long ankiGetCardDue() {
+            return mCurrentCard.getDue();
+         }
     }
 }

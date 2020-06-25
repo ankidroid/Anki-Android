@@ -39,6 +39,7 @@ public class CompatV19 extends CompatV18 implements Compat {
         // Show / hide the Action bar together with the status bar
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
         final int fullscreenMode = Integer.parseInt(prefs.getString("fullscreenMode", "0"));
+        final boolean topBar = prefs.getBoolean("showTopbar", true);
         CompatHelper.getCompat().setStatusBarColor(a.getWindow(), Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
         View decorView = a.getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener
@@ -63,6 +64,13 @@ public class CompatV19 extends CompatV18 implements Compat {
                             }
                         } else {
                             hideViewWithAnimation(toolbar);
+
+                            if (topBar) {
+                                showViewWithAnimation(topbar);
+                            } else {
+                                hideViewWithAnimation(topbar);
+                            }
+
                             if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
                                 hideViewWithAnimation(topbar);
                                 hideViewWithAnimation(answerButtons);

@@ -90,8 +90,7 @@
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">డేటాబేస్ లోపం</string>
-    <string name="answering_error_message">సేకరణను వ్రాయడంలో విఫలమైంది. డేటాబేస్ పాడైంది లేదా డిస్క్లో తగినంత స్థలం లేదు. \n\n ఇది తరచుగా జరిగితే, డేటాబేస్ను తనిఖీ చెయ్యండి, సేకరణను రిపేరు చేయండి లేదా దాన్ని 
-బ్యాకప్ నుండి పునరుద్ధరించండి. దీనికి \"ఐచ్ఛికాలు\" తాకండి. \n\ లేదా ఇది కూడా ఒక AnkiDroid బగ్ కావచ్చు; దయచేసి లోపాన్ని రిపోర్ట్ చేసి దాన్ని తనిఖీ చేయండి.</string>
+    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">నివేదన లోపం</string>
     <string name="repair_deck_dialog">మీరు నిజంగా డాటాబేస్ రిపేరు చేయాలనుకుంటున్నారా? \n\n ప్రయత్నం ప్రారంభించటానికి ముందు, \"కాపీ\" ఫోల్డర్ \"%s\" లో సృష్టించబడుతుంది.</string>
     <string name="intent_add_saved_information">సేవ్ చేయబడిన డేటా</string>

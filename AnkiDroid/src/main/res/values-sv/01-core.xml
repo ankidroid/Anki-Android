@@ -123,6 +123,7 @@
     <string name="menu_search">Sökning i %1$s</string>
     <string name="menu_mark_note">Markera not</string>
     <string name="menu_unmark_note">Avmarkera not</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">Skapa kortlek</string>
     <string name="create">Skapa</string>
     <string name="new_dynamic_deck">Skapa filtrerad kortlek</string>
@@ -182,7 +183,8 @@
         <item quantity="other">Ta bort korttypen \"%2$s\" och dess %1$d kort?</item>
     </plurals>
     <string name="invalid_template">Ett kort kunde inte genereras</string>
-    <string name="card_template_editor_would_delete_note">Att ta bort den här korttypen skulle göra att en eller flera noter tas bort. Vänligen skapa en ny korttyp först.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>

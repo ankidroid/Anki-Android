@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Максимален брой на резервните копия</string>
     <string name="show_estimates">Показване бутон за време</string>
     <string name="show_estimates_summ">Показване на времето за следващото повторение над бутоните за отговор</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Показване на оставащото</string>
     <string name="show_progress_summ">Показване на брояч на оставащите карти</string>
     <string name="show_eta">Покажи ЕТА</string>

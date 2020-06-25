@@ -167,7 +167,7 @@ public class ImportUtils {
                 // Copy to temporary file
                 filename = ensureValidLength(filename);
                 String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
-                errorMessage = copyFileToCache(context, data, tempOutDir) ? null : "copyFileToCache() failed (possibly out of storage space)";
+                errorMessage = copyFileToCache(context, data, tempOutDir) ? null : context.getString(R.string.import_error_copy_file_to_cache);
                 // Show import dialog
                 if (errorMessage == null) {
                     sendShowImportFileDialogMsg(tempOutDir);

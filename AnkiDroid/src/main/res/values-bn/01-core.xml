@@ -123,6 +123,7 @@
     <string name="menu_search">অনুসন্ধান করুন %1$s</string>
     <string name="menu_mark_note">টীকা চিহ্ন</string>
     <string name="menu_unmark_note">নোটের টীকা চিহ্ন মুছুন</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">ডেক তৈরি করুন</string>
     <string name="create">তৈরি করুন</string>
     <string name="new_dynamic_deck">ফিল্টার করা ডেক তৈরি করুন</string>
@@ -182,7 +183,8 @@
         <item quantity="other">\'%2$s\' কার্ডের ধরন, আর তার %1$d কার্ড মুছে ফেলতে চান?</item>
     </plurals>
     <string name="invalid_template">কার্ড তৈরি করা যায় নি</string>
-    <string name="card_template_editor_would_delete_note">এই কার্ডের ধরন অপসারণ মুছার কারণে এক বা একাধিক নোট মুছে ফেলা হতে পারে। অনুগ্রহ করে আগে কোন নতুন কার্ডের ধরন তৈরি করুন।</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>

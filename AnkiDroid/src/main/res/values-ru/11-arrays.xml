@@ -64,8 +64,8 @@
         <item>Зелёный флажок</item>
         <item>Синий флажок</item>
         <item>Убрать флажок</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Страница вверх</item>
+        <item>Страница вниз</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Исключить карточку</item>

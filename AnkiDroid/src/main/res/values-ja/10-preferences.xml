@@ -151,6 +151,8 @@
     <string name="pref_backup_max">保管するバックアップの世代数</string>
     <string name="show_estimates">回答ボタンに復習間隔を表示</string>
     <string name="show_estimates_summ">次の復習までの間隔を回答ボタンの中に表示します</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">残りのカード枚数を表示</string>
     <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 基本学習および再基本学習、緑: 復習）</string>
     <string name="show_eta">推定学習時間を表示</string>

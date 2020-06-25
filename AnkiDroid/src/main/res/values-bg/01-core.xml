@@ -123,6 +123,7 @@
     <string name="menu_search">Търсене в %1$s</string>
     <string name="menu_mark_note">Маркирай бележка</string>
     <string name="menu_unmark_note">Размаркирай бележка</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">Създай тесте</string>
     <string name="create">Създай</string>
     <string name="new_dynamic_deck">Създайте филтрирано тесте</string>
@@ -182,7 +183,8 @@
         <item quantity="other">Изтриване на тип карта \"%2$s\" и неговите %1$d карти?</item>
     </plurals>
     <string name="invalid_template">Картата не може да се генерира</string>
-    <string name="card_template_editor_would_delete_note">Изтриването на този тип карти ще доведе до премахване на една или няколко бележки. Моля, първо създайте нов тип карти.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>

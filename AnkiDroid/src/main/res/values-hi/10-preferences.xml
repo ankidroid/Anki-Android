@@ -151,6 +151,8 @@
     <string name="pref_backup_max">बैकअप की अधिकतम संख्या</string>
     <string name="show_estimates">बटन समय दिखाएं</string>
     <string name="show_estimates_summ">उत्तर बटंस पर अगली समीक्षा समय दिखाएं</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">शेष दिखाएं</string>
     <string name="show_progress_summ">शेष कार्ड गणना दिखाएं</string>
     <string name="show_eta">ईटीए दिखाएं</string>

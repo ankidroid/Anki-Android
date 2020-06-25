@@ -112,6 +112,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Registrazione non riuscita</string>
     <string name="multimedia_editor_audio_view_playing_failed">Riproduzione non riuscita</string>
+    <string name="multimedia_editor_audio_view_create_failed">Impossibile creare la barra degli strumenti di registrazione</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">Modifico campo</string>
     <string name="title_activity_translation">Traduzione</string>

@@ -118,6 +118,7 @@
     <string name="menu_search">Tra cứu trong %1$s</string>
     <string name="menu_mark_note">Đánh dấu ghi chú</string>
     <string name="menu_unmark_note">Bỏ đánh dấu ghi chú</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">Tạo bộ thẻ</string>
     <string name="create">Tạo</string>
     <string name="new_dynamic_deck">Tạo bộ thẻ đã lọc</string>
@@ -176,7 +177,8 @@
         <item quantity="other">Xoá loại thẻ \"%2$s\" và (các) thẻ %1$d của nó?</item>
     </plurals>
     <string name="invalid_template">Không thể tạo thẻ</string>
-    <string name="card_template_editor_would_delete_note">Xoá bỏ loại thẻ này có thể dẫn đến việc một hay nhiều ghi chú bị xoá. Xin tạo loại thẻ mới trước đã.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>

@@ -64,6 +64,7 @@
     <string name="hide_whiteboard">Skryť tabuľu</string>
     <string name="clear_whiteboard">Vyčistiť tabuľu</string>
     <string name="replay_audio">Znovu prehrať zvuk</string>
+    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Kartička označená ako pijavica a pozastavená</string>
     <string name="leech_notification">Kartička označená ako pijavica</string>
     <string name="corrupt_font">Poškodený súbor písma %s</string>
@@ -170,11 +171,15 @@
     <string name="import_message_replace_confirm">Týmto vymažete vašu existujúcu zbierku a nahradíte ju dátami zo súboru %s. Ste si istý?</string>
     <string name="import_message_add_confirm">Pridať “%s” do zbierky? Môže to chvíľu trvať</string>
     <string name="import_log_no_apkg">Toto nie je platný Anki balík</string>
+    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_error_unhandled_request">Nedá sa spracovať požiadavka na import</string>
     <string name="import_error_exception">Nepodarilo sa importovať balík\n\n%s</string>
     <string name="import_error_not_apkg_extension">Názov súboru “%s” nemá príponu .apkg alebo .colpkg</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Zvolený súbor nemohol byť importovaný automaticky AnkiDroidom. Pozrite si, prosím, používateľský manuál ako manuálne importovať anki súbory: \n%s</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_replacing">Zbierka sa nahrádza&#8230;</string>
     <string name="import_interrupted">Import prerušený</string>
     <string name="export_include_schedule">Zahrnúť plánovanie</string>
@@ -283,4 +288,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <!-- in options menu & Navigation Drawer -->
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
 </resources>

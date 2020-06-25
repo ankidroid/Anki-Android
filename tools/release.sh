@@ -27,11 +27,11 @@ if ! [ -f ../ankidroiddocs/changelog.asc ]; then
 fi
 
 # Define the location of the manifest file
-SRC_DIR="./AnkiDroid/src/main"
-MANIFEST="$SRC_DIR/AndroidManifest.xml"
-CHANGELOG="$SRC_DIR/assets/changelog.html"
+SRC_DIR="./AnkiDroid"
+GRADLEFILE="$SRC_DIR/build.gradle"
+CHANGELOG="$SRC_DIR/src/main/assets/changelog.html"
 
-if ! VERSION=$(grep android:versionName $MANIFEST | sed -e 's/.*="//' | sed -e 's/".*//')
+if ! VERSION=$(grep 'versionName=' $GRADLEFILE | sed -e 's/.*="//' | sed -e 's/".*//')
 then
   echo "Unable to get current version. Is sed installed?"
   exit 1
@@ -39,7 +39,7 @@ fi
 
 if [ "$PUBLIC" = "public" ]; then
   echo "About to perform a public release. Please first:"
-  echo "- Edit the version in AndroidManifest.xml manually but do not commit it."
+  echo "- Edit the version in $GRADLEFILE manually but do not commit it."
   echo "- Author and merge a PR to ankidroiddocs/changelog.asc with details for the current version"
   echo "Press Enter to continue."
   read -r
@@ -77,13 +77,13 @@ if [ "$PUBLIC" != "public" ]; then
   # Increment version code
   # It is an integer in AndroidManifest that nobody actually sees.
   # Ex: 72 to 73
-  PREVIOUS_CODE=$(grep android:versionCode $MANIFEST | sed -e 's/.*="//' | sed -e 's/".*//')
+  PREVIOUS_CODE=$(grep 'versionCode=' $GRADLEFILE | sed -e 's/.*=//')
   GUESSED_CODE=$((PREVIOUS_CODE + 1))
 
   # Edit AndroidManifest.xml to bump version string
   echo "Bumping version from $PREVIOUS_VERSION$SUFFIX to $VERSION (and code from $PREVIOUS_CODE to $GUESSED_CODE)"
-  sed -i -e s/"$PREVIOUS_VERSION"$SUFFIX/"$VERSION"/g $MANIFEST
-  sed -i -e s/versionCode=\""$PREVIOUS_CODE"/versionCode=\""$GUESSED_CODE"/g $MANIFEST
+  sed -i -e s/"$PREVIOUS_VERSION"$SUFFIX/"$VERSION"/g $GRADLEFILE
+  sed -i -e s/versionCode="$PREVIOUS_CODE"/versionCode="$GUESSED_CODE"/g $GRADLEFILE
 fi
 
 # Read the key passwords
@@ -96,15 +96,15 @@ export KEYPWD
 if ! ./gradlew publishReleaseApk
 then
   # APK contains problems, abort release
-  git checkout -- $MANIFEST # Revert version change
+  git checkout -- $GRADLEFILE # Revert version change
   exit
 fi
 
 # Copy exported file to cwd
-cp AnkiDroid/build/outputs/apk/release/AnkiDroid-release.apk AnkiDroid-"$VERSION".apk
+cp AnkiDroid/build/outputs/apk/release/AnkiDroid-armeabi-v7a-release.apk AnkiDroid-"$VERSION".apk
 
 # Commit modified AndroidManifest.xml (and changelog.html if it changed)
-git add $MANIFEST $CHANGELOG
+git add $GRADLEFILE $CHANGELOG
 git commit -m "Bumped version to $VERSION
 @branch-specific"
 

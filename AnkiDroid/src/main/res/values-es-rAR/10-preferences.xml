@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Número máximo de copias de seguridad</string>
     <string name="show_estimates">Mostar el botón tiempo</string>
     <string name="show_estimates_summ">Mostrar el tiempo para el próximo repaso encima de los botones de respuesta</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Mostar restantes</string>
     <string name="show_progress_summ">Mostrar contador de tarjetas restantes</string>
     <string name="show_eta">Mostrar ETA</string>

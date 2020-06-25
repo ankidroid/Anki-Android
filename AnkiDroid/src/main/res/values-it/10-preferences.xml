@@ -79,7 +79,7 @@
     <string name="image_zoom">Zoom immagini</string>
     <string name="button_size">Dimensione pulsante di risposta</string>
     <string name="card_browser_font_size">Ridimensionamento carattere nel browser</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media">Mostra i nomi dei file nel browser delle carte</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">Cartella AnkiDroid</string>
     <string name="fullscreen_review">Modalità a schermo intero</string>
@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Numero massimo di backup</string>
     <string name="show_estimates">Mostra scadenza pulsanti</string>
     <string name="show_estimates_summ">Mostra la prossima scadenza sopra i pulsanti di risposta</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Mostra rimanenti</string>
     <string name="show_progress_summ">Visualizza il conteggio delle carte rimanenti</string>
     <string name="show_eta">Visualizza tempo rimanente</string>
@@ -224,7 +226,7 @@
     <string name="deck_conf_new_bury_summ">Carte nuove correlate sono seppellite fino al prossimo giorno</string>
     <string name="deck_conf_rev_bury">Seppellisci le ripetizioni correlate</string>
     <string name="deck_conf_rev_bury_summ">Ripetizioni correlate sono seppellite fino al prossimo giorno</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings">Usa impostazioni generali</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Bonus facile</string>
     <string name="deck_conf_ivl_fct">Modificatore intervallo</string>

@@ -95,13 +95,13 @@
     </string-array>
     <string name="card_browser_select_all">Выбрать все</string>
     <string name="card_browser_select_none">Снять выделение</string>
-    <string name="card_browser_edit_note">Edit note</string>
+    <string name="card_browser_edit_note">Править запись</string>
     <string name="card_browser_interval_new_card">(новые)</string>
     <string name="card_browser_ease_new_card">(новые)</string>
     <string name="card_browser_due_filtered_card">(фильтрованные)</string>
     <string name="card_browser_interval_learning_card">(изучаемые)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_note_editor_error">Ошибка при открытии редактора записей</string>
+    <string name="card_browser_no_cards_in_deck">В колоде «%s» не найдено карточек</string>
+    <string name="card_browser_search_all_decks">Искать во всех колодах</string>
+    <string name="card_browser_unknown_deck_name">Неизвестно</string>
 </resources>

@@ -123,6 +123,7 @@
     <string name="menu_search">In %1$s nachschlagen</string>
     <string name="menu_mark_note">Notiz markieren</string>
     <string name="menu_unmark_note">Markierung entfernen</string>
+    <string name="menu_toggle_mic_tool_bar">Aussprache prüfen</string>
     <string name="new_deck">Stapel erstellen</string>
     <string name="create">Erstellen</string>
     <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
@@ -182,7 +183,8 @@
         <item quantity="other">Kartentyp »%2$s« und seine %1$d Karten löschen?</item>
     </plurals>
     <string name="invalid_template">Es konnte keine Karte erzeugt werden</string>
-    <string name="card_template_editor_would_delete_note">Kartentyp kann nicht gelöscht werden, da dadurch mindestens eine Notiz gelöscht würde.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">Der Kartentyp der aktuellen Karte wurde gelöscht.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Übersichtserscheinungsbild</string>

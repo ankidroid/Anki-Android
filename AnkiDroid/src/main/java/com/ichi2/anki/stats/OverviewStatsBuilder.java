@@ -48,7 +48,7 @@ public class OverviewStatsBuilder {
     private final Stats.AxisType mType;
 
 
-    public class OverviewStats {
+    public static class OverviewStats {
         public int forecastTotalReviews;
         public double forecastAverageReviews;
         public int forecastDueTomorrow;
@@ -64,6 +64,27 @@ public class OverviewStatsBuilder {
         public int totalNewCards;
         public double averageInterval;
         public double longestInterval;
+        public AnswerButtonsOverview newCardsOverview;
+        public AnswerButtonsOverview youngCardsOverview;
+        public AnswerButtonsOverview matureCardsOverview;
+
+        public long totalCards;
+        public long totalNotes;
+        public double lowestEase;
+        public double averageEase;
+        public double highestEase;
+
+        public static class AnswerButtonsOverview {
+            public int total;
+            public int correct;
+
+            public double getPercentage() {
+                if (correct == 0) {
+                    return 0;
+                }
+                return (double) correct / (double) total * 100.0;
+            }
+        }
     }
 
     public OverviewStatsBuilder(WebView chartView, Collection collectionData, long deckId, Stats.AxisType mStatType) {
@@ -136,17 +157,24 @@ public class OverviewStatsBuilder {
 
         stringBuilder.append("<br>");
 
+        //TODO: AnkiDroid uses 30 days on 2020-06-09, whereas Anki Desktop used 31
+
         //REVIEW TIME
         stringBuilder.append(_subtitle(res.getString(R.string.stats_review_time).toUpperCase()));
         stringBuilder.append(daysStudied);
         stringBuilder.append("<br>");
-        // TODO: Total: x minutes
+        //TODO: Anki Desktop allows changing to hours / days here.
+        stringBuilder.append(res.getString(R.string.stats_overview_total_time_in_period, Math.round(oStats.totalTime)));
+        stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_time_per_day_studydays, oStats.timePerDayOnStudyDays));
         if (!allDaysStudied) {
             stringBuilder.append("<br>");
             stringBuilder.append(res.getString(R.string.stats_overview_time_per_day_all, oStats.timePerDayOnAll));
         }
-        // TODO: Average answer time: x.xs (x.x cards/minute)
+        double cardsPerMinute = oStats.totalTime == 0 ? 0 : ((double)oStats.totalReviews) / oStats.totalTime;
+        double averageAnswerTime = oStats.totalReviews == 0 ? 0 : (oStats.totalTime * 60) / ((double)oStats.totalReviews);
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_average_answer_time, averageAnswerTime, cardsPerMinute));
 
         stringBuilder.append("<br>");
 
@@ -165,6 +193,27 @@ public class OverviewStatsBuilder {
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_longest_interval));
         stringBuilder.append(Utils.roundedTimeSpan(mWebView.getContext(), (int) Math.round(oStats.longestInterval * Stats.SECONDS_PER_DAY)));
+
+        //ANSWER BUTTONS
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_answer_buttons).toUpperCase()));
+        stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_learn, oStats.newCardsOverview.getPercentage(), oStats.newCardsOverview.correct, oStats.newCardsOverview.total));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_young, oStats.youngCardsOverview.getPercentage(), oStats.youngCardsOverview.correct, oStats.youngCardsOverview.total));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_mature,  oStats.matureCardsOverview.getPercentage(), oStats.matureCardsOverview.correct, oStats.matureCardsOverview.total));
+
+        //CARD TYPES
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_cards_types).toUpperCase()));
+        stringBuilder.append(res.getString(R.string.stats_overview_card_types_total_cards, oStats.totalCards));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_card_types_total_notes, oStats.totalNotes));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_card_types_lowest_ease, oStats.lowestEase));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_card_types_average_ease, oStats.averageEase));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_card_types_highest_ease, oStats.highestEase));
+
     }
 
     private void appendTodaysStats(StringBuilder stringBuilder) {

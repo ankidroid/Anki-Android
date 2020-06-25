@@ -79,7 +79,7 @@
     <string name="image_zoom">Масштаб картинок</string>
     <string name="button_size">Размер кнопки ответа</string>
     <string name="card_browser_font_size">Масштаб шрифта в списке карточек</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_hide_media">Показывать имена файлов в списке карточек</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">Папка AnkiDroid</string>
     <string name="fullscreen_review">Полноэкранный режим</string>
@@ -94,7 +94,7 @@
     </string-array>
     <string name="gestures">Включить жесты</string>
     <string name="gestures_summ">Назначает жесты действиям вроде ответа и правки</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links">Игнорировать жесты на ссылках</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_swipe_up">Смахнуть наверх</string>
     <string name="gestures_swipe_down">Смахивание вниз</string>
@@ -107,8 +107,8 @@
     <string name="gestures_tap_right">Касание справа</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Также использовать клавиши kanji/katakana, emoji/kao-moji для прокрутки</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">Пункт «%s» в меню</string>
+    <string name="card_browser_enable_external_context_menu_summary">Добавляет пункт «%s» в контекстное меню системы</string>
     <string name="double_scrolling_gap">Двойная прокрутка</string>
     <string name="double_scrolling_gap_summ">Удвоить дистанцию прокрутки на читалках</string>
     <string name="swipe_sensitivity">Чувствительность смахивания</string>
@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Число резервных копий</string>
     <string name="show_estimates">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Показать оставшиеся</string>
     <string name="show_progress_summ">Показывает число оставшихся карточек</string>
     <string name="show_eta">Показывать оценку времени</string>

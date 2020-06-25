@@ -40,6 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Niste povezani</string>
+    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Napaka sinhronizacije</string>
     <string name="vague_error">Napaka</string>
     <string name="retry">Poizkusi znova</string>

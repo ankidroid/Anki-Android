@@ -90,7 +90,7 @@
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Erro na base de dados</string>
-    <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Tal poderá estar relacionado com uma base de dados corrompida ou espaço insuficiente no disco.\n\nSe isso acontecer mais frequentemente, tente verificar a base de dados, repare a coleção ou restaure-a de uma cópia de segurança. Para tal, carregue em \'Opções\'.\n\nEm todo caso, isso poderá até ser um bug do AnkiDroid; denuncie o erro para que o possamos verificar.</string>
+    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Comunicar erro</string>
     <string name="repair_deck_dialog">Realmente deseja tentar reparar a base de dados?\n\nAntes de iniciar a tentativa, será criada uma cópia na subpasta \'%s\'.</string>
     <string name="intent_add_saved_information">Dados guardados</string>

@@ -133,6 +133,7 @@
     <string name="menu_search">Vyhledat v %1$s</string>
     <string name="menu_mark_note">Označit poznámku</string>
     <string name="menu_unmark_note">Odznačit poznámku</string>
+    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="new_deck">Vytvořit balíček</string>
     <string name="create">Vytvořit</string>
     <string name="new_dynamic_deck">Vytvořit filtrovaný balíček</string>
@@ -194,7 +195,8 @@
         <item quantity="other">Odstranit typ karty \'%2$s\' a jeho %1$d karet?</item>
     </plurals>
     <string name="invalid_template">Karta nemůže být vytvořena</string>
-    <string name="card_template_editor_would_delete_note"> Odstraněním tohoto typu karty můžete způsobit, že jedna nebo         více poznámek budou odstraněny. Nejprve vytvořte nový typ karty.</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">Typ karty současné karty byl odstraněn.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>

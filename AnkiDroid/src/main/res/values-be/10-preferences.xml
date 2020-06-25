@@ -152,6 +152,8 @@
     <string name="pref_backup_max">Максімальная колькасць рэзервовых копій</string>
     <string name="show_estimates">Паказаць кнопку часу</string>
     <string name="show_estimates_summ">Паказаць наступны час паўтарэння над кнопкай адказу</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Паказаць астатнія</string>
     <string name="show_progress_summ">Паказваць лічыльнік астатніх карт</string>
     <string name="show_eta">Паказваць ETA</string>

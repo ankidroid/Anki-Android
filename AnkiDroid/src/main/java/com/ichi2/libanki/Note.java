@@ -43,7 +43,7 @@ public class Note implements Cloneable {
     private String mGuId;
     private JSONObject mModel;
     private long mMid;
-    private List<String> mTags;
+    private ArrayList<String> mTags;
     private String[] mFields;
     private int mFlags;
     private String mData;
@@ -365,7 +365,7 @@ public class Note implements Cloneable {
     }
 
 
-    public List<String> getTags() {
+    public ArrayList<String> getTags() {
         return mTags;
     }
 

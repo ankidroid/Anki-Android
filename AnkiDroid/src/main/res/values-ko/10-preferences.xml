@@ -151,6 +151,8 @@
     <string name="pref_backup_max">최대 백업 개수</string>
     <string name="show_estimates">버튼에 시간 표시</string>
     <string name="show_estimates_summ">답변 버튼에 다음 복습 시간 표시</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">남은 개수 표시</string>
     <string name="show_progress_summ">남은 카드 개수 표시</string>
     <string name="show_eta">예상 완료일 표시</string>

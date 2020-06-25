@@ -115,7 +115,7 @@ public class UIUtils {
     }
 
 
-    public static void saveCollectionInBackground(Context context) {
+    public static void saveCollectionInBackground() {
         if (CollectionHelper.getInstance().colIsOpen()) {
             CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_SAVE_COLLECTION, new CollectionTask.TaskListener() {
                 @Override

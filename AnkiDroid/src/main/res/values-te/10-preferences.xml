@@ -152,6 +152,8 @@
     <string name="pref_backup_max">అత్యధిక సంఖ్యలో బ్యాకప్లు</string>
     <string name="show_estimates">బటన్ సమయం చూపించు</string>
     <string name="show_estimates_summ">సమాధానం బటన్లపై తదుపరి సమీక్ష సమయం చూపించు</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">మిగిలిన చూపు</string>
     <string name="show_progress_summ">మిగిలిన కార్డ్ సంఖ్యను చూపు</string>
     <string name="show_eta">ETA ను చూపించు</string>

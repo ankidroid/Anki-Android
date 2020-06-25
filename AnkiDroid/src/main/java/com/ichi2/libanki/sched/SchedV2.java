@@ -1952,6 +1952,20 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    /** true if there are cards in learning, with review due the same
+     * day, in the selected decks. */
+    /* not in upstream anki. As revDue and newDue, it's used to check
+     * what to do when a deck is selected in deck picker. When this
+     * method is called, we already know that no cards is due
+     * immedietly. It answers whether cards will be due later in the
+     * same deck. */
+    public boolean hasCardsTodayAfterStudyAheadLimit() {
+        return mCol.getDb().queryScalar(
+                "SELECT 1 FROM cards WHERE did IN " + _deckLimit()
+                + " AND queue = " + Consts.QUEUE_TYPE_LRN + " LIMIT 1") != 0;
+    }
+
+
     /** true if there are any new cards due. */
     public boolean newDue() {
         return mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0;

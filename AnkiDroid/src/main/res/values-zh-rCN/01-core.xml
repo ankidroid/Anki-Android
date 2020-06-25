@@ -118,6 +118,7 @@
     <string name="menu_search">在%1$s中查找</string>
     <string name="menu_mark_note">标记笔记</string>
     <string name="menu_unmark_note">取消标记</string>
+    <string name="menu_toggle_mic_tool_bar">检查读音</string>
     <string name="new_deck">创建牌组</string>
     <string name="create">创建</string>
     <string name="new_dynamic_deck">创建筛选牌组</string>
@@ -176,7 +177,8 @@
         <item quantity="other">确定删除\"%2$s\"笔记类型类型和它包含的%1$d张卡片吗？</item>
     </plurals>
     <string name="invalid_template">无法生成卡片</string>
-    <string name="card_template_editor_would_delete_note">移除这个笔记类型需要删除一个或多个笔记，请首先创建一个新的笔记类型。</string>
+    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">当前卡牌的卡牌类型已被删除。</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">浏览器外观</string>

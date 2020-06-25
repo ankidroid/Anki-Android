@@ -22,6 +22,8 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Pair;
+import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.Assert;
@@ -265,7 +267,7 @@ public class Models {
 
 
     /** get model with ID, or null. */
-    public JSONObject get(long id) {
+    public @Nullable JSONObject get(long id) {
         if (mModels.containsKey(id)) {
             return mModels.get(id);
         } else {
@@ -445,7 +447,7 @@ public class Models {
     }
 
 
-    public ArrayList<String> fieldNames(JSONObject m) {
+    public static ArrayList<String> fieldNames(JSONObject m) {
         JSONArray ja;
         ja = m.getJSONArray("flds");
         ArrayList<String> names = new ArrayList<>();
@@ -680,7 +682,7 @@ public class Models {
      * Templates ***********************************************************************************************
      */
 
-    public JSONObject newTemplate(String name) {
+    public static JSONObject newTemplate(String name) {
         JSONObject t;
         t = new JSONObject(defaultTemplate);
         t.put("name", name);
@@ -729,7 +731,9 @@ public class Models {
      * @throws ConfirmModSchemaException 
      */
     public boolean remTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
-        assert (m.getJSONArray("tmpls").length() > 1);
+        if (m.getJSONArray("tmpls").length() <= 1) {
+            return false;
+        }
         // find cards using this template
         JSONArray ja = m.getJSONArray("tmpls");
         int ord = -1;
@@ -739,16 +743,19 @@ public class Models {
                 break;
             }
         }
-        String sql = "select c.id from cards c, notes f where c.nid=f.id and mid = " +
-            m.getLong("id") + " and ord = " + ord;
-        long[] cids = Utils.toPrimitive(mCol.getDb().queryColumn(Long.class, sql, 0));
-        // all notes with this template must have at least two cards, or we could end up creating orphaned notes
-        sql = "select nid, count() from cards where nid in (select nid from cards where id in " +
-            Utils.ids2str(cids) + ") group by nid having count() < 2 limit 1";
-        if (mCol.getDb().queryScalar(sql) != 0) {
+
+        if (ord == -1) {
+            throw new IllegalArgumentException("Invalid template proposed for delete");
+        }
+        // the code in "isRemTemplateSafe" was in place here in libanki. It is extracted to a method for reuse
+        long[] cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
+        if (cids == null) {
+            Timber.d("remTemplate getCardIdsForModel determined it was unsafe to delete the template");
             return false;
         }
+
         // ok to proceed; remove cards
+        Timber.d("remTemplate proceeding to delete the template and %d cards", cids.length);
         mCol.modSchema();
         mCol.remCards(cids);
         // shift ordinals
@@ -767,11 +774,47 @@ public class Models {
         m.put("tmpls", ja2);
         _updateTemplOrds(m);
         save(m);
+        Timber.d("remTemplate done working");
         return true;
     }
 
 
-    public void _updateTemplOrds(JSONObject m) {
+    /**
+     * Extracted from remTemplate so we can test if removing templates is safe without actually removing them
+     * This method will either give you all the card ids for the ordinals sent in related to the model sent in *or*
+     * it will return null if the result of deleting the ordinals is unsafe because it would leave notes with no cards
+     *
+     * @param modelId long id of the JSON model
+     * @param ords array of ints, each one is the ordinal a the card template in the given model
+     * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
+     */
+    public @Nullable long[] getCardIdsForModel(long modelId, int[] ords) {
+        String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = " +
+                modelId + " and c2.ord  in " + Utils.ids2str(ords);
+        long[] cids = Utils.toPrimitive(mCol.getDb().queryColumn(Long.class, cardIdsToDeleteSql, 0));
+        //Timber.d("cardIdsToDeleteSql was '" + cardIdsToDeleteSql + "' and got %s", Utils.ids2str(cids));
+        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.length, modelId, Utils.ids2str(ords));
+
+        // all notes with this template must have at least two cards, or we could end up creating orphaned notes
+        String noteCountPreDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?)";
+        int preDeleteNoteCount = mCol.getDb().queryScalar(noteCountPreDeleteSql, new Long[] {modelId});
+        Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql);
+        Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount);
+        String noteCountPostDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in " + Utils.ids2str(ords);
+        Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql);
+        int postDeleteNoteCount = mCol.getDb().queryScalar(noteCountPostDeleteSql, new Long[] {modelId});
+        Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount);
+
+        if (preDeleteNoteCount != postDeleteNoteCount) {
+            Timber.d("There will be orphan notes if these cards are deleted.");
+            return null;
+        }
+        Timber.d("Deleting these cards will not orphan notes.");
+        return cids;
+    }
+
+
+    public static void _updateTemplOrds(JSONObject m) {
         JSONArray ja;
         ja = m.getJSONArray("tmpls");
         for (int i = 0; i < ja.length(); i++) {
@@ -987,10 +1030,10 @@ public class Models {
             b.add("");
         }
         Object[] data;
-        data = new Object[] {1L, 1L, m.getLong("id"), 1L, t.getInt("ord"), "",
+        data = new Object[] {1L, 1L, m, 1L, t.getInt("ord"), "",
                              Utils.joinFields(a.toArray(new String[a.size()])), 0};
         String full = mCol._renderQA(data).get("q");
-        data = new Object[] {1L, 1L, m.getLong("id"), 1L, t.getInt("ord"), "",
+        data = new Object[] {1L, 1L, m, 1L, t.getInt("ord"), "",
                              Utils.joinFields(b.toArray(new String[b.size()])), 0};
         String empty = mCol._renderQA(data).get("q");
         // if full and empty are the same, the template is invalid and there is no way to satisfy it

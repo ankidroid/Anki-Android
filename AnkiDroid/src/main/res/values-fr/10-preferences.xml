@@ -151,6 +151,8 @@
     <string name="pref_backup_max">Nombre de sauvegarde max</string>
     <string name="show_estimates">Afficher le temps</string>
     <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
+    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Afficher le nombre restant de révision</string>
     <string name="show_progress_summ">Montrer le nombre de cartes restantes</string>
     <string name="show_eta">Afficher le temps restant</string>

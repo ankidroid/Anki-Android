@@ -64,8 +64,8 @@
         <item>Baskuli verdan flagon</item>
         <item>Baskuli bluan flagon</item>
         <item>Forigi flagon</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Paĝo supren</item>
+        <item>Paĝo suben</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Kaŝi karton por daŭre</item>

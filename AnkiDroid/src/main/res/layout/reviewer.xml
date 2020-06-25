@@ -8,7 +8,6 @@
      We use a Coordinator layout as root View for main content as it allows snackbars
      to be swiped off screen. Other behaviors can also be added in the future if necessary -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,14 +18,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <include layout="@layout/toolbar"/>
-            <include layout="@layout/reviewer_topbar"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_below="@+id/toolbar" />
-            <include layout="@layout/reviewer_flashcard"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"/>
-            <include layout="@layout/reviewer_answer_buttons"/>
+
+            <include
+                layout="@layout/reviewer_topbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbar" />
+
+            <include
+                layout="@layout/reviewer_mic_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/top_bar" />
+
+            <include
+                layout="@layout/reviewer_flashcard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/mic_tool_bar_layer" />
+
+            <include layout="@layout/reviewer_answer_buttons" />
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <!-- Left navigation drawer -->
