@@ -631,13 +631,16 @@ public class SchedV2 extends AbstractSched {
         such card.
      */
     protected long currentCardNid() {
+        Card currentCard = mCurrentCard;
+        /* mCurrentCard may be set to null when the reviewer gets closed. So we copy it to be sure to avoid
+           NullPointerException */
         if (mCurrentCard == null) {
             /* This method is used to determine whether two cards are siblings. Since 0 is not a valid nid, all cards
             will have a nid distinct from 0. As it is used in sql statement, it is not possible to just use a function
             areSiblings()*/
             return 0;
         }
-        return mCurrentCard.getNid();
+        return currentCard.getNid();
     }
 
     /**
@@ -2859,11 +2862,14 @@ public class SchedV2 extends AbstractSched {
         mCurrentCard = card;
         long did = card.getDid();
         List<JSONObject> parents = mCol.getDecks().parents(did);
-        mCurrentCardParentsDid = new ArrayList<>(parents.size() + 1);
+        List<Long> currentCardParentsDid = new ArrayList<>(parents.size() + 1);
         for (JSONObject parent : parents) {
-            mCurrentCardParentsDid.add(parent.getLong("id"));
+            currentCardParentsDid.add(parent.getLong("id"));
         }
-        mCurrentCardParentsDid.add(did);
+        currentCardParentsDid.add(did);
+        // We set the member only once it is filled, to ensure we avoid null pointer exception if `discardCurrentCard`
+        // were called during `setCurrentCard`.
+        mCurrentCardParentsDid = currentCardParentsDid;
         _burySiblings(card);
         // if current card is next card or in the queue
         mRevQueue.remove(card.getId());
