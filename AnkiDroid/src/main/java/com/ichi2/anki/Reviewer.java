@@ -321,6 +321,18 @@ public class Reviewer extends AbstractFlashcardViewer {
                 showDeleteNoteDialog();
                 break;
 
+            case R.id.action_save_whiteboard:
+                Timber.i("Reviewer:: Save whiteboard button pressed");
+                if (mWhiteboard != null) {
+                    try {
+                        String savedWhiteboardFileName = mWhiteboard.saveWhiteboard();
+                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true);
+                    } catch (Exception e) {
+                        UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_save_failed, e.getLocalizedMessage()), true);
+                    }
+                }
+                break;
+
             case R.id.action_clear_whiteboard:
                 Timber.i("Reviewer:: Clear whiteboard button pressed");
                 if (mWhiteboard != null) {
@@ -391,7 +403,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         return true;
     }
-
 
     private void toggleMicToolBar() {
         if (mMicToolBar != null) {
@@ -524,6 +535,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             if (!mActionButtons.getStatus().clearWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             }
+
+            menu.findItem(R.id.action_save_whiteboard).setVisible(true);
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp).mutate();
             if (mShowWhiteboard) {
