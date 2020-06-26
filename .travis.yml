@@ -18,7 +18,7 @@ env:
     - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
     - LOCALE="NONE"
-    - GRAVIS_REPO="https://github.com/DanySK/Gravis-CI.git"
+    - GRAVIS_REPO="https://github.com/mikehardy/Gravis-CI.git"
     - GRAVIS="$HOME/gravis"
     - JDK="1.8"
     - TOOLS=${ANDROID_HOME}/tools
@@ -87,7 +87,7 @@ before_install:
   # It should not make assumptions about os platform or desired tool installation
 
   # Set up JDK 8 for Android SDK - Java is universally needed: codacy, unit tests, emulators
-  - travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS
+  - travis_retry git clone --single-branch --branch resilience --depth 1 $GRAVIS_REPO $GRAVIS
   - export TARGET_JDK="${JDK}"
   - JDK="1.8"
   - source $GRAVIS/install-jdk
