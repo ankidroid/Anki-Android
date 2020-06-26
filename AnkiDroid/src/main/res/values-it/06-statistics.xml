@@ -80,7 +80,7 @@
     <string name="stats_overview_total_reviews">Totale: &lt;b&gt;%1$d&lt;/b&gt; ripetizioni</string>
     <string name="stats_overview_reviews_per_day_studydays">Media per i giorni di studio: &lt;b&gt;%1$.1f&lt;/b&gt; ripetizioni/giorno</string>
     <string name="stats_overview_reviews_per_day_all">Se avessi studiato ogni giorno: &lt;b&gt;%1$.1f&lt;/b&gt; ripetizioni/giorno</string>
-    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
+    <string name="stats_overview_total_time_in_period">Totale: &lt;b&gt;%d&lt;/b&gt; minuti</string>
     <string name="stats_overview_time_per_day_studydays">Media per i giorni di studio: &lt;b&gt;%1$.1f&lt;/b&gt; minuti/giorno</string>
     <string name="stats_overview_time_per_day_all">Se avessi studiato ogni giorno: &lt;b&gt;%1$.1f&lt;/b&gt; minuti/giorno</string>
     <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>

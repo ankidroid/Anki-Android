@@ -48,6 +48,7 @@ import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -80,10 +81,15 @@ public class ContentProviderTest {
     private static final String TEST_FIELD_NAME = "TestFieldName";
     private static final String TEST_FIELD_VALUE = "test field value";
     private static final String TEST_TAG = "aldskfhewjklhfczmxkjshf";
-    private static final String[] TEST_DECKS = {"cmxieunwoogyxsctnjmv"
-                                                ,"sstuljxgmfdyugiujyhq"
-                                                ,"pdsqoelhmemmmbwjunnu"
-                                                ,"scxipjiyozczaaczoawo"};
+    // In case of change in TEST_DECKS, change mTestDeckIds for efficiency
+    private static final String[] TEST_DECKS = {
+            "cmxieunwoogyxsctnjmv",
+            "sstuljxgmfdyugiujyhq",
+            "pdsqoelhmemmmbwjunnu",
+            "scxipjiyozczaaczoawo",
+            "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
+            "cmxieunwoogyxsctnjmv::INSBGDS",
+    };
     private static final String TEST_MODEL_NAME = "com.ichi2.anki.provider.test.a1x6h9l";
     private static final String[] TEST_MODEL_FIELDS = {"FRONTS","BACK"};
     private static final String[] TEST_MODEL_CARDS = {"cArD1", "caRD2"};
@@ -93,7 +99,10 @@ public class ContentProviderTest {
     private static final String TEST_MODEL_CSS = "styleeeee";
 
     private int mNumDecksBeforeTest;
-    private long[] mTestDeckIds = new long[TEST_DECKS.length];
+    /* initialCapacity set to expected value when the test is written.
+     * Should create no problem if we forget to change it when more tests are added.
+     */
+    private List<Long> mTestDeckIds = new ArrayList<>(TEST_DECKS.length + 1);
     private ArrayList<Uri> mCreatedNotes;
     private long mModelId = 0;
     private String[] mDummyFields = new String[1];
@@ -118,9 +127,26 @@ public class ContentProviderTest {
         // create test decks and add one note for every deck
         mNumDecksBeforeTest = col.getDecks().count();
         for(int i = 0; i < TEST_DECKS.length; i++) {
-            long did = col.getDecks().id(TEST_DECKS[i]);
-            mTestDeckIds[i] = did;
-            mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields, TEST_TAG));
+            String fullName = TEST_DECKS[i];
+            String[] path = col.getDecks().path(fullName);
+            String partialName = "";
+            /* Looping over all parents of full name. Adding them to
+             * mTestDeckIds ensures the deck parents decks get deleted
+             * too at tear-down.
+             */
+            for (int j = 0; j < path.length; j++) {
+                partialName += path[j];
+                /* If parent already exists, don't add the deck, so
+                 * that we are sure it won't get deleted at
+                 * set-down, */
+                if (col.getDecks().byName(partialName) != null) {
+                    continue;
+                }
+                long did = col.getDecks().id(partialName);
+                mTestDeckIds.add(did);
+                mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields, TEST_TAG));
+                partialName += "::";
+            }
         }
         // Add a note to the default deck as well so that testQueryNextCard() works
         mCreatedNotes.add(setupNewNote(col, mModelId, 1, mDummyFields, TEST_TAG));
@@ -160,7 +186,7 @@ public class ContentProviderTest {
         }
         // delete test decks
         for(long did : mTestDeckIds) {
-            col.getDecks().rem(did, true);
+            col.getDecks().rem(did, true, true);
         }
         col.getDecks().flush();
         assertEquals("Check that all created decks have been deleted", mNumDecksBeforeTest, col.getDecks().count());
@@ -519,7 +545,7 @@ public class ContentProviderTest {
                 try {
                     assertTrue("Check that there is at least one result for cards", cardsCursor.getCount() > 0);
                     while (cardsCursor.moveToNext()) {
-                        long targetDid = mTestDeckIds[0];
+                        long targetDid = mTestDeckIds.get(0);
                         // Move to test deck (to test NOTES_ID_CARDS_ORD Uri)
                         ContentValues values = new ContentValues();
                         values.put(FlashCardsContract.Card.DECK_ID, targetDid);
@@ -679,7 +705,7 @@ public class ContentProviderTest {
     public void testQueryCertainDeck() throws Exception {
         Collection col = getCol();
 
-        long deckId = mTestDeckIds[0];
+        long deckId = mTestDeckIds.get(0);
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
         try (Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(deckUri, null, null, null, null)) {
             if (decksCursor == null || !decksCursor.moveToFirst()) {
@@ -730,7 +756,7 @@ public class ContentProviderTest {
      */
     @Test
     public void testQueryCardFromCertainDeck(){
-        long deckToTest = mTestDeckIds[0];
+        long deckToTest = mTestDeckIds.get(0);
         String deckSelector = "deckID=?";
         String deckArguments[] = {Long.toString(deckToTest)};
         Collection col = getCol();
@@ -770,7 +796,7 @@ public class ContentProviderTest {
      */
     @Test
     public void testSetSelectedDeck(){
-        long deckId = mTestDeckIds[0];
+        long deckId = mTestDeckIds.get(0);
         ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Uri selectDeckUri = FlashCardsContract.Deck.CONTENT_SELECTED_URI;
         ContentValues values = new ContentValues();
@@ -781,7 +807,7 @@ public class ContentProviderTest {
     }
 
     private Card getFirstCardFromScheduler(Collection col) {
-        long deckId = mTestDeckIds[0];
+        long deckId = mTestDeckIds.get(0);
         col.getDecks().select(deckId);
         col.getSched().reset();
         return col.getSched().getCard();
@@ -968,6 +994,7 @@ public class ContentProviderTest {
 
     /** Test that a null did will not crash the provider (#6378) */
      @Test
+     @Ignore("#6025 - This causes mild data corruption - should not be run on actual collection")
      public void testProviderProvidesDefaultForEmptyModelDeck() {
          Collection col = getCol();
          col.getModels().all().get(0).put("did", JSONObject.NULL);

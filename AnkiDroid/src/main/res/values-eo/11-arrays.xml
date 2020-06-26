@@ -50,23 +50,23 @@
         <item>Respondo pli bona ol konsilinda</item>
         <item>Malfari</item>
         <item>Redakti noton</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Etikedi noton</item>
+        <item>Marki noton</item>
+        <item>Serĉi tekston</item>
+        <item>Kaŝi karton por tago</item>
+        <item>Kaŝi karton por daŭre</item>
+        <item>Forigi noton</item>
+        <item>Ludi aŭdvidaĵon</item>
+        <item>Ĉesi lernadon</item>
+        <item>Kaŝi noton por tago</item>
+        <item>Kaŝi noton por daŭre</item>
+        <item>Baskuli ruĝan flagon</item>
+        <item>Baskuli oranĝkoloran flagon</item>
+        <item>Baskuli verdan flagon</item>
+        <item>Baskuli bluan flagon</item>
+        <item>Forigi flagon</item>
+        <item>Paĝo supren</item>
+        <item>Paĝo suben</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Kaŝi karton por daŭre</item>

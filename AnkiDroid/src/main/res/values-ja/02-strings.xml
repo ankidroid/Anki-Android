@@ -183,11 +183,11 @@
     <string name="export_in_progress">Ankiパッケージを作成しています...</string>
     <string name="export_successful_title">Ankiパッケージを送信しますか？</string>
     <string name="export_send_button">送信</string>
-    <string name="export_save_button">ファイルへ保存</string>
+    <string name="export_save_button">保存</string>
     <string name="export_send_no_handlers">apkgファイルに対応した他のアプリがありません。保存します...</string>
     <string name="export_save_apkg_successful">Ankiパッケージを保存しました</string>
     <string name="export_save_apkg_unsuccessful">Ankiパッケージの保存に失敗しました</string>
-    <string name="export_successful">Ankiパッケージのファイル “%s” を作成しました。他のアプリで送信しますか？　それともこの端末や自分のGoogleドライブに保存しますか？</string>
+    <string name="export_successful">Ankiパッケージファイル “%s” を作成しました。他のアプリに送信しますか？　それともこの端末や自分のGoogleドライブに保存しますか？</string>
     <string name="export_email_subject">[AnkiDroid] %s</string>
     <string name="export_email_text"><![CDATA[こんにちは！
 <br/> <br/>
@@ -255,7 +255,7 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">回復されたカード</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
+    <string name="background_image_title">デッキ一覧画面の背景</string>
     <string name="choose_an_image">画像を選択</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">デフォルトに戻す</string>

@@ -433,7 +433,7 @@ public class SchedV2 extends AbstractSched {
     private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps) {
         // first, split the group names into components
         for (DeckDueTreeNode g : grps) {
-            g.names = Decks.path(g.names[0]);
+            g.setNames(Decks.path(g.getNamePart(0)));
         }
         // and sort based on those components
         Collections.sort(grps);
@@ -448,17 +448,13 @@ public class SchedV2 extends AbstractSched {
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
         while (it.hasNext()) {
             DeckDueTreeNode node = it.next();
-            String head = node.names[0];
-            // Compose the "tail" node list. The tail is a list of all the nodes that proceed
-            // the current one that contain the same name[0]. I.e., they are subdecks that stem
-            // from this node. This is our version of python's itertools.groupby.
-            List<DeckDueTreeNode> tail  = new ArrayList<>();
-            tail.add(node);
+            String head = node.getNamePart(0);
+            List<DeckDueTreeNode> children  = new ArrayList<>();
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
-                if (head.equals(next.names[0])) {
+                if (head.equals(next.getNamePart(0))) {
                     // Same head - add to tail of current head.
-                    tail.add(next);
+                    children.add(next);
                 } else {
                     // We've iterated past this head, so step back in order to use this node as the
                     // head in the next iteration of the outer loop.
@@ -466,39 +462,28 @@ public class SchedV2 extends AbstractSched {
                     break;
                 }
             }
-            Long did = null;
-            int rev = 0;
-            int _new = 0;
-            int lrn = 0;
-            List<DeckDueTreeNode> children = new ArrayList<>();
-            for (DeckDueTreeNode c : tail) {
-                if (c.names.length == 1) {
-                    // current node
-                    did = c.did;
-                    rev += c.revCount;
-                    lrn += c.lrnCount;
-                    _new += c.newCount;
-                } else {
-                    // set new string to tail
-                    String[] newTail = new String[c.names.length-1];
-                    System.arraycopy(c.names, 1, newTail, 0, c.names.length-1);
-                    c.names = newTail;
-                    children.add(c);
-                }
+            int rev = node.getRevCount();
+            int _new = node.getNewCount();
+            int lrn = node.getLrnCount();
+            for (DeckDueTreeNode c : children) {
+                // set new string to tail
+                String[] newTail = new String[c.getNames().length-1];
+                System.arraycopy(c.getNames(), 1, newTail, 0, c.getNames().length-1);
+                c.setNames(newTail);
             }
             children = _groupChildrenMain(children);
             // tally up children counts
             for (DeckDueTreeNode ch : children) {
-                lrn +=  ch.lrnCount;
-                _new += ch.newCount;
+                lrn +=  ch.getLrnCount();
+                _new += ch.getNewCount();
             }
             // limit the counts to the deck's limits
-            JSONObject conf = mCol.getDecks().confForDid(did);
-            JSONObject deck = mCol.getDecks().get(did);
+            JSONObject conf = mCol.getDecks().confForDid(node.getDid());
             if (conf.getInt("dyn") == 0) {
+                JSONObject deck = mCol.getDecks().get(node.getDid());
                 _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
             }
-            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
+            tree.add(new DeckDueTreeNode(head, node.getDid(), rev, lrn, _new, children));
         }
         return tree;
     }
@@ -718,7 +703,8 @@ public class SchedV2 extends AbstractSched {
         if (g.getInt("dyn") != 0) {
             return mDynReportLimit;
         }
-        JSONObject c = mCol.getDecks().confForDid(g.getLong("id"));
+        long did = g.getLong("id");
+        JSONObject c = mCol.getDecks().confForDid(did);
         return Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
     }
 
@@ -1204,7 +1190,8 @@ public class SchedV2 extends AbstractSched {
         if (d.getInt("dyn") != 0) {
             return mDynReportLimit;
         }
-        JSONObject c = mCol.getDecks().confForDid(d.getLong("id"));
+        long did = d.getLong("id");
+        JSONObject c = mCol.getDecks().confForDid(did);
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
 
         if (parentLimit != null) {
@@ -1212,7 +1199,7 @@ public class SchedV2 extends AbstractSched {
         } else if (!d.getString("name").contains("::")) {
             return lim;
         } else {
-            for (JSONObject parent : mCol.getDecks().parents(d.getLong("id"))) {
+            for (JSONObject parent : mCol.getDecks().parents(did)) {
                 // pass in dummy parentLimit so we don't do parent lookup again
                 lim = Math.min(lim, _deckRevLimitSingle(parent, lim));
             }

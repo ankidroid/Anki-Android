@@ -144,10 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d t. %2$d min</string>
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d pv</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
+    <string name="time_quantity_days_hours">%1$d p. %2$d t.</string>
     <string name="time_quantity_months">%.1f kk</string>
     <string name="time_quantity_years">%.1f v</string>
     <!-- or "%.1f a" -->
@@ -199,6 +199,6 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Lue ja kirjoita AnkiDroidi-tietokantaan</string>
     <string name="read_write_permission_description">lupa päästä olemassaoleviin merkintöihin, kortteihin, merkintätyyppeihin ja pakkoihin, sekä luoda uusia</string>
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_label">Korttiselain</string>
+    <string name="card_browser_context_menu">Korttiselain</string>
 </resources>
