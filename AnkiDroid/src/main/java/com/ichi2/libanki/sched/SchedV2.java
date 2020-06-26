@@ -578,7 +578,8 @@ public class SchedV2 extends AbstractSched {
     protected void _resetNewCount() {
         mNewCount = _walkingCount((JSONObject g) -> _deckNewLimitSingle(g),
                                   (long did, int lim) -> _cntFnNew(did, lim));
-        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_NEW) {
+        Card currentCard = mCurrentCard;
+        if (currentCard != null && currentCard.getQueue() == Consts.QUEUE_TYPE_NEW) {
             mNewCount -= 1;
         }
     }
@@ -605,6 +606,10 @@ public class SchedV2 extends AbstractSched {
         such card.
      */
     protected long currentCardNid() {
+        Card currentCard = mCurrentCard;
+        /* mCurrentCard may be set to null when the reviewer gets
+           closed. So we copy it to be sure to avoid
+           NullPointerException */
         if (mCurrentCard == null) {
             /* This method is used to determine whether two cards are
             siblings. Since 0 is not a valid nid, all cards will have
@@ -612,7 +617,7 @@ public class SchedV2 extends AbstractSched {
             is not possible to just use a function areSiblings()*/
             return 0;
         }
-        return mCurrentCard.getNid();
+        return currentCard.getNid();
     }
 
     private boolean _fillNew() {
@@ -754,7 +759,10 @@ public class SchedV2 extends AbstractSched {
         long did = g.getLong("id");
         JSONObject c = mCol.getDecks().confForDid(did);
         int lim = Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
-        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_NEW && mCurrentCardParentsDid.contains(did)) {
+        // mCurrentCard may be set to null when the reviewer gets closed. So we copy it to be sure to avoid NullPointerException
+        Card currentCard = mCurrentCard;
+        List<Long> currentCardParentsDid = mCurrentCardParentsDid;
+        if (currentCard != null && currentCard.getQueue() == Consts.QUEUE_TYPE_NEW && currentCardParentsDid != null && currentCardParentsDid.contains(did)) {
             lim--;
         }
         return lim;
@@ -1261,7 +1269,10 @@ public class SchedV2 extends AbstractSched {
         long did = d.getLong("id");
         JSONObject c = mCol.getDecks().confForDid(did);
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
-        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_REV && mCurrentCardParentsDid.contains(did)) {
+        // mCurrentCard may be set to null when the reviewer gets closed. So we copy it to be sure to avoid NullPointerException
+        Card currentCard = mCurrentCard;
+        List<Long> currentCardParentsDid = mCurrentCardParentsDid;
+        if (currentCard != null && currentCard.getQueue() == Consts.QUEUE_TYPE_REV && currentCardParentsDid != null && currentCardParentsDid.contains(did)) {
             lim --;
         }
 
@@ -1292,7 +1303,8 @@ public class SchedV2 extends AbstractSched {
         int lim = _currentRevLimit();
         mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
                                              new Object[]{mToday, lim});
-        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_REV ) {
+        Card currentCard = mCurrentCard;        
+        if (currentCard != null && currentCard.getQueue() == Consts.QUEUE_TYPE_REV ) {
             mRevCount -= 1;
         }
     }
@@ -2805,11 +2817,14 @@ public class SchedV2 extends AbstractSched {
         mCurrentCard = card;
         long did = card.getDid();
         List<JSONObject> parents = mCol.getDecks().parents(did);
-        mCurrentCardParentsDid = new ArrayList<>(parents.size() + 1);
+        List<Long> currentCardParentsDid = new ArrayList<>(parents.size() + 1);
         for (JSONObject parent : parents) {
-            mCurrentCardParentsDid.add(parent.getLong("id"));
+            currentCardParentsDid.add(parent.getLong("id"));
         }
-        mCurrentCardParentsDid.add(did);
+        currentCardParentsDid.add(did);
+        // We set the member only once it is filled, to ensure we avoid null pointer exception
+        // if `discardCurrentCard` were called during `setCurrentCard`.
+        mCurrentCardParentsDid = currentCardParentsDid;
         _burySiblings(card);
         // if current card is next card or in the queue
         mRevQueue.remove(card.getId());

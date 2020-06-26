@@ -338,9 +338,10 @@ public class Sched extends SchedV2 {
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? "+
                         "LIMIT ?",
                 new Object[]{mToday, mReportLimit});
-        if (mCurrentCard != null && (
-                mCurrentCard.getQueue() == Consts.QUEUE_TYPE_LRN ||
-                        mCurrentCard.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
+        Card currentCard = mCurrentCard;
+        if (currentCard != null && (
+                currentCard.getQueue() == Consts.QUEUE_TYPE_LRN ||
+                        currentCard.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
         )) {
             mLrnCount -= 1;
         }
@@ -667,7 +668,10 @@ public class Sched extends SchedV2 {
         long did = d.getLong("id");
         JSONObject c = mCol.getDecks().confForDid(did);
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
-        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_REV && mCurrentCardParentsDid.contains(did)) {
+        // mCurrentCard may be set to null when the reviewer gets closed. So we copy it to be sure to avoid NullPointerException
+        Card currentCard = mCurrentCard;
+        List<Long> currentCardParentsDid = mCurrentCardParentsDid;
+        if (currentCard != null && currentCard.getQueue() == Consts.QUEUE_TYPE_REV && currentCardParentsDid != null && currentCardParentsDid.contains(did)) {
             lim--;
         }
         return lim;
@@ -685,7 +689,8 @@ public class Sched extends SchedV2 {
     protected void _resetRevCount() {
         mRevCount = _walkingCount(d -> _deckRevLimitSingle(d),
                                   (did, lim) -> _cntFnRev(did, lim));
-        if (mCurrentCard != null && mCurrentCard.getQueue() == Consts.QUEUE_TYPE_REV ) {
+        Card currentCard = mCurrentCard;
+        if (currentCard != null && currentCard.getQueue() == Consts.QUEUE_TYPE_REV ) {
             mRevCount -= 1;
         }
     }
