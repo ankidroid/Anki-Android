@@ -49,9 +49,9 @@
     <string name="card_browser_change_deck">デッキを変更</string>
     <string name="card_browser_unsuspend_card">カードの保留を解除</string>
     <string name="card_browser_mark_card">ノートにマーク</string>
-    <string name="card_browser_flag">Flag</string>
+    <string name="card_browser_flag">フラグ</string>
     <string name="card_browser_toggle_mark_card">マーク／マーク解除</string>
-    <string name="card_browser_unmark_card">ノートのマークをはずす</string>
+    <string name="card_browser_unmark_card">ノートのマークを取り外す</string>
     <string name="delete_card_title">ノートの削除</string>
     <string name="delete_cards_title">ノートを削除しますか？</string>
     <string name="delete_card_message">このノートから作られたカードを全て削除してもよろしいですか？\n検索フィールド: %s</string>
@@ -92,13 +92,13 @@
     </string-array>
     <string name="card_browser_select_all">全て選択</string>
     <string name="card_browser_select_none">選択を全て解除</string>
-    <string name="card_browser_edit_note">Edit note</string>
+    <string name="card_browser_edit_note">ノートを編集</string>
     <string name="card_browser_interval_new_card">(新規)</string>
     <string name="card_browser_ease_new_card">(new)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(学習中)</string>
     <string name="card_browser_note_editor_error">Error opening Note Editor</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_search_all_decks">全デッキで検索</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
 </resources>

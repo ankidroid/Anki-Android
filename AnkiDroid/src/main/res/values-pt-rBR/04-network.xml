@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Você está off-line</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">Tentar Mesmo Assim</string>
     <string name="sync_error">Erro de sincronização</string>
     <string name="vague_error">Erro</string>
     <string name="retry">Tentar novamente</string>
@@ -101,7 +101,7 @@
     <string name="sync_writing_db">Gravando alterações no banco de dados&#8230;</string>
     <string name="sync_download_chunk">Baixando alterações&#8230;</string>
     <string name="sync_upload_chunk">Fazendo upload de alterações&#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Enviado: %1$d kB, Recebido: %2$d kB</string>
     <string name="sync_generic_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
     <string name="sync_check_upload_file">Verificando arquivo antes de fazer upload&#8230;</string>
     <string name="sync_check_download_file">Verificando o arquivo baixado&#8230;</string>

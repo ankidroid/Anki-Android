@@ -59,13 +59,13 @@
         <item quantity="other">現在の課題: %1$d枚 (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="other">残り %d 分</item>
+        <item quantity="other">残り約 %d 分</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">残り約 %d 時間 %d 分</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">残り約 %d 日と %d 時間</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -106,14 +106,14 @@
     <string name="menu_bury">延期</string>
     <string name="menu_suspend">保留</string>
     <string name="menu_delete_note">ノートを削除</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag">フラグ</string>
+    <string name="menu_flag_card">カードにフラグを付ける</string>
+    <string name="menu_flag_card_zero">フラグなし</string>
+    <string name="menu_flag_card_one">赤フラグ</string>
+    <string name="menu_flag_card_two">橙フラグ</string>
+    <string name="menu_flag_card_three">緑フラグ</string>
+    <string name="menu_flag_card_four">青フラグ</string>
+    <string name="menu_edit_tags">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
     <string name="menu_select">テキストを選択</string>
     <string name="menu_search">%1$s で検索</string>
@@ -149,7 +149,7 @@
     <string name="rebuild_cram_deck">フィルターデッキを再構築しています...</string>
     <string name="rebuild_cram_label">再構築</string>
     <string name="empty_cram_label">空にする</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">サブデッキを作成</string>
     <string name="empty_cram_deck">カードを元のデッキへ戻しています...</string>
     <string name="custom_study_deck_name">カスタム学習セッション</string>
     <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
