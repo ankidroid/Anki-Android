@@ -89,7 +89,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private @Nullable Uri mImageUri;
     private @Nullable String mPreviousImagePath; // save the latest path to prevent from cropping or taking photo action canceled
     private @Nullable Uri mPreviousImageUri;
-    private @Nullable String mAnkiCacheDirectory;
+    private @Nullable String mAnkiCacheDirectory; // system provided 'External Cache Dir'
+                                                  // e.g.  '/self/primary/Android/data/com.ichi2.anki.AnkiDroid/cache/'
     private DisplayMetrics mMetrics = null;
     private SystemTime mTime = new SystemTime();
 
@@ -337,6 +338,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         Timber.d("rotateAndCompress() on %s", mImagePath);
         // Set the rotation of the camera image and save as png
         File f = new File(mImagePath);
+        Timber.d("rotateAndCompress in path %s has size %d", mImagePath, f.length());
         // use same filename but with png extension for output file
         // Load into a bitmap with max size of 1920 pixels and rotate if necessary
         Bitmap b = BitmapUtil.decodeFile(f, IMAGE_SAVE_MAX_WIDTH);
@@ -353,11 +355,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             File outFile = createNewFile();
             out = new FileOutputStream(outFile);
             b = ExifUtil.rotateFromCamera(f, b);
-            b.compress(Bitmap.CompressFormat.PNG, 90, out);
+            b.compress(Bitmap.CompressFormat.JPEG, 90, out);
             if (!f.delete()) {
                 Timber.w("rotateAndCompress() delete of pre-compressed image failed %s", mImagePath);
             }
             mImagePath = outFile.getAbsolutePath();
+            Timber.d("rotateAndCompress out path %s has size %d", mImagePath, outFile.length());
         } catch (FileNotFoundException e) {
             Timber.w(e, "rotateAndCompress() File not found for image compression %s", mImagePath);
         } catch (IOException e) {
@@ -388,6 +391,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             Timber.i("setImagePreview() could not process image %s", f.getPath());
             return;
         }
+        Timber.d("setPreviewImage path %s has size %d", f.getAbsolutePath(), f.length());
         b = ExifUtil.rotateFromCamera(f, b);
         mImagePreview.setImageBitmap(b);
         mImageFileSize.setVisibility(View.VISIBLE);
@@ -478,7 +482,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         new MaterialDialog.Builder(mActivity)
                 .content(R.string.crop_image)
                 .positiveText(R.string.dialog_ok)
-                .negativeText(R.string.dialog_cancel)
+                .negativeText(R.string.dialog_no)
                 .onPositive((dialog, which) -> requestCrop(uri))
                 .build().show();
     }

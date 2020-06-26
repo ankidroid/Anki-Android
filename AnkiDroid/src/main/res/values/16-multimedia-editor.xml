@@ -114,9 +114,9 @@
 	<string name="network_no_connection">No connection</string>
 
     <!-- Crop function-->
-    <string name="crop_image" translatable="false">Do you want to crop this image?</string>
-    <string name="crop_button" translatable="false">Crop image</string>
-    <string name="save_dialog_content" translatable="false">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed" translatable="false">"Select image failed, Please retry"</string>
+    <string name="crop_image">Do you want to crop this image?</string>
+    <string name="crop_button">Crop image</string>
+    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
+    <string name="select_image_failed">"Select image failed, Please retry"</string>
 
 </resources>

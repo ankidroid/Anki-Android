@@ -70,7 +70,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     private static final int REQUEST_AUDIO_PERMISSION = 0;
     private static final int REQUEST_CAMERA_PERMISSION = 1;
 
-    public static final int sImageLimit = 1024 * 1024;
+    public static final int sImageLimit = 1024 * 1024; // 1MB in bytes
 
     private IField mField;
     private IMultimediaEditableNote mNote;
@@ -393,7 +393,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         new MaterialDialog.Builder(this)
                 .content(content)
                 .positiveText(R.string.dialog_ok)
-                .negativeText(R.string.dialog_cancel)
+                .negativeText(R.string.dialog_no)
                 .onPositive((dialog, which) -> imageFieldController.requestCrop(uri))
                 .onNegative((dialog, which) -> saveAndExit())
                 .build().show();
