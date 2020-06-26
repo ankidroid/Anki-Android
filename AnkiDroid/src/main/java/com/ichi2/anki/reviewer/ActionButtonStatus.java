@@ -61,6 +61,7 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_mark_card, "customButtonMarkCard", SHOW_AS_ACTION_IF_ROOM);
         setupButton(preferences, R.id.action_delete, "customButtonDelete", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_toggle_mic_tool_bar, "customButtonToggleMicToolBar", SHOW_AS_ACTION_NEVER);
+        setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_ALWAYS);
     }
 
@@ -88,10 +89,11 @@ public class ActionButtonStatus {
                     color only if the buttons are blocked and we
                     expect the next card to take time to arrive.
                     */
+                    Drawable mutableIcon = icon.mutate();
                     if (mReviewerUi.getControlBlocked() == ReviewerUi.ControlBlock.SLOW) {
-                        icon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
+                        mutableIcon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
                     } else {
-                        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
+                        mutableIcon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
                     }
                 }
             } else {

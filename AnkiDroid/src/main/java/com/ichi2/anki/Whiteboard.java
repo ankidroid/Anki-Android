@@ -28,6 +28,8 @@ import android.graphics.PathMeasure;
 import android.graphics.Point;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+
+import android.os.Environment;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,6 +37,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.TimeUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.Stack;
 
@@ -67,8 +75,9 @@ public class Whiteboard extends View {
     private boolean mInvertedColors;
     private boolean mMonochrome;
     private boolean mUndoModeActive = false;
-
+    private final int foregroundColor;
     private final LinearLayout mColorPalette;
+    private SystemTime mTime = new SystemTime();
 
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
@@ -76,7 +85,7 @@ public class Whiteboard extends View {
         mInvertedColors = inverted;
         mMonochrome = monochrome;
 
-        int foregroundColor;
+
         if (!mInvertedColors) {
             if (mMonochrome) {
                 foregroundColor = Color.BLACK;
@@ -107,18 +116,12 @@ public class Whiteboard extends View {
         // selecting pen color to draw
         mColorPalette = (LinearLayout) cardViewer.findViewById(R.id.whiteboard_pen_color);
 
-        Button penColorWhite = (Button) cardViewer.findViewById(R.id.pen_color_white);
-        Button penColorBlack = (Button) cardViewer.findViewById(R.id.pen_color_black);
-        Button penColorRed = (Button) cardViewer.findViewById(R.id.pen_color_red);
-        Button penColorGreen = (Button) cardViewer.findViewById(R.id.pen_color_green);
-        Button penColorBlue = (Button) cardViewer.findViewById(R.id.pen_color_blue);
-        Button penColorYellow = (Button) cardViewer.findViewById(R.id.pen_color_yellow);
-        penColorWhite.setOnClickListener(this::onClick);
-        penColorBlack.setOnClickListener(this::onClick);
-        penColorRed.setOnClickListener(this::onClick);
-        penColorGreen.setOnClickListener(this::onClick);
-        penColorBlue.setOnClickListener(this::onClick);
-        penColorYellow.setOnClickListener(this::onClick);
+        ((Button) cardViewer.findViewById(R.id.pen_color_white)).setOnClickListener(this::onClick);
+        ((Button) cardViewer.findViewById(R.id.pen_color_black)).setOnClickListener(this::onClick);
+        ((Button) cardViewer.findViewById(R.id.pen_color_red)).setOnClickListener(this::onClick);
+        ((Button) cardViewer.findViewById(R.id.pen_color_green)).setOnClickListener(this::onClick);
+        ((Button) cardViewer.findViewById(R.id.pen_color_blue)).setOnClickListener(this::onClick);
+        ((Button) cardViewer.findViewById(R.id.pen_color_yellow)).setOnClickListener(this::onClick);
     }
 
 
@@ -484,5 +487,34 @@ public class Whiteboard extends View {
 
     public boolean isCurrentlyDrawing() {
         return mCurrentlyDrawing;
+    }
+
+    protected String saveWhiteboard() throws FileNotFoundException {
+
+        Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File ankiDroidFolder = new File(pictures, "AnkiDroid");
+
+        if (!ankiDroidFolder.exists()) {
+            ankiDroidFolder.mkdirs();
+        }
+
+        String baseFileName = "Whiteboard";
+        String timeStamp = TimeUtils.getTimestamp(mTime);
+        String finalFileName = baseFileName + timeStamp + ".png";
+
+        File saveWhiteboardImagFile = new File(ankiDroidFolder, finalFileName);
+
+        if (foregroundColor != Color.BLACK) {
+            canvas.drawColor(Color.BLACK);
+        } else {
+            canvas.drawColor(Color.WHITE);
+        }
+
+        this.draw(canvas);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveWhiteboardImagFile));
+        return saveWhiteboardImagFile.getAbsolutePath();
     }
 }
