@@ -440,7 +440,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         rotateAndCompress();
         mField.setImagePath(mImagePath);
         mField.setHasTemporaryMedia(true);
-        showCropDialog(getUriForFile(new File(mImagePath)));
+        showCropDialog(mActivity.getString(R.string.crop_image), null);
     }
 
 
@@ -501,17 +501,23 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private void showCropDialog(Uri uri) {
-        if (uri == null) {
-            Timber.w("showCropDialog called with null URI");
+    public void showCropDialog(String content, @Nullable MaterialDialog.SingleButtonCallback negativeCallBack) {
+        if (mImagePath == null || mImageUri == null) {
+            Timber.w("showCropDialog called with null URI or Path");
             return;
         }
-        new MaterialDialog.Builder(mActivity)
-                .content(R.string.crop_image)
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(mActivity)
+                .content(content)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_no)
-                .onPositive((dialog, which) -> requestCrop(uri))
-                .build().show();
+                .onPositive((dialog, which) -> requestCrop());
+
+        if (negativeCallBack != null) {
+            builder.onNegative(negativeCallBack);
+        }
+
+        builder.build().show();
     }
 
 

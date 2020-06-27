@@ -395,18 +395,10 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     public void showLargeFileCropDialog(float length) {
         BasicImageFieldController imageFieldController = (BasicImageFieldController) mFieldController;
-        File file = new File(mField.getImagePath());
-        Uri uri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".apkgfileprovider", file);
         DecimalFormat decimalFormat = new DecimalFormat(".00");
         String size = decimalFormat.format(length);
         String content = getString(R.string.save_dialog_content, size);
-        new MaterialDialog.Builder(this)
-                .content(content)
-                .positiveText(R.string.dialog_ok)
-                .negativeText(R.string.dialog_no)
-                .onPositive((dialog, which) -> imageFieldController.requestCrop(uri))
-                .onNegative((dialog, which) -> saveAndExit())
-                .build().show();
+        imageFieldController.showCropDialog(content, (dialog, which) -> saveAndExit());
     }
 
 
