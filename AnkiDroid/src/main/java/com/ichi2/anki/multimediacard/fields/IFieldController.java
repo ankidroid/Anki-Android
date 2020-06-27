@@ -21,13 +21,14 @@ package com.ichi2.anki.multimediacard.fields;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 
 /**
- * A not in anki has fields. Each of the fields can be edited.
+ * A note in anki has fields. Each of the fields can be edited.
  * <p>
  * A controller is about to decide, which UI elements have to be on the activity and what has to be done there to edit a
  * field.
@@ -52,6 +53,14 @@ public interface IFieldController {
 
     // Called before other
     void setEditingActivity(MultimediaEditFieldActivity activity);
+
+
+    // Called after setting field/note/index/activity, allows state persistence across Activity restarts
+    void loadInstanceState(Bundle savedInstanceState);
+
+
+    // Called during editing Activity pause, allows state persistence across Activity restarts
+    Bundle saveInstanceState();
 
 
     // Layout is vertical inside a scroll view already
