@@ -248,7 +248,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Timber.d("onActivityResult()");
-        if (resultCode == Activity.RESULT_CANCELED) {
+        if (resultCode != Activity.RESULT_OK) {
             Timber.d("Activity was cancelled");
             // Restore the old version of the image if the user cancelled
             switch (requestCode) {
