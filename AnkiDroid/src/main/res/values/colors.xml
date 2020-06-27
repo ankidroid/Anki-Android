@@ -66,6 +66,7 @@
     <color name="material_indigo_200">#9fa8da</color>
     <color name="material_indigo_700">#ff303f9f</color>
     <color name="material_indigo_A700">#ff304ffe</color>
+    <color name="material_blue_500">#ff2196f3</color>
     <color name="material_blue_600">#ff1e88e5</color>
     <color name="material_blue_700">#ff1976d2</color>
     <color name="material_blue_A700">#ff2962ff</color>
@@ -91,6 +92,8 @@
     <color name="material_green_900">#ff1B5E20</color>
     <color name="material_light_green_A700">#ff64dd17</color>
     <color name="material_lime_green_A700">#ffaeea00</color>
+
+    <color name="material_yellow_500">#ffffeb3b</color>
 
     <color name="material_deep_purple_400">#ff7E57C2</color>
 

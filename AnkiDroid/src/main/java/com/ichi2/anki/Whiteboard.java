@@ -384,22 +384,22 @@ public class Whiteboard extends View {
                 mColorPalette.setVisibility(View.GONE);
                 break;
             case R.id.pen_color_red:
-                int redPenColor = Color.parseColor("#f44336");
+                int redPenColor = ContextCompat.getColor(getContext(), R.color.material_red_500);
                 mPaint.setColor(redPenColor);
                 mColorPalette.setVisibility(View.GONE);
                 break;
             case R.id.pen_color_green:
-                int greenPenColor = Color.parseColor("#4caf50");
+                int greenPenColor = ContextCompat.getColor(getContext(), R.color.material_green_500);
                 mPaint.setColor(greenPenColor);
                 mColorPalette.setVisibility(View.GONE);
                 break;
             case R.id.pen_color_blue:
-                int bluePenColor = Color.parseColor("#2196f3");
+                int bluePenColor = ContextCompat.getColor(getContext(), R.color.material_blue_500);
                 mPaint.setColor(bluePenColor);
                 mColorPalette.setVisibility(View.GONE);
                 break;
             case R.id.pen_color_yellow:
-                int yellowPenColor = Color.parseColor("#ffeb3b");
+                int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
                 mPaint.setColor(yellowPenColor);
                 mColorPalette.setVisibility(View.GONE);
                 break;
