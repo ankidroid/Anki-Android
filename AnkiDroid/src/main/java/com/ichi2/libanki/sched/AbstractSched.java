@@ -186,13 +186,17 @@ public abstract class AbstractSched {
         private int mNewCount;
         private List<DeckDueTreeNode> mChildren = new ArrayList<>();
 
-        public DeckDueTreeNode(String mName, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
+        private DeckDueTreeNode(String mName, long mDid) {
             this.mName = mName;
             this.mDid = mDid;
+            this.mNameComponents = Decks.path(mName);
+        }
+
+        public DeckDueTreeNode(String mName, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
+            this(mName, mDid);
             this.mRevCount = mRevCount;
             this.mLrnCount = mLrnCount;
             this.mNewCount = mNewCount;
-            this.mNameComponents = Decks.path(mName);
         }
 
         public DeckDueTreeNode(String mName, long mDid, int mRevCount, int mLrnCount, int mNewCount,
