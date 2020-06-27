@@ -8,39 +8,39 @@
 
     <Button
         android:id="@+id/pen_color_white"
-        android:background="#ffffff"
+        android:background="@color/white"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"/>
 
     <Button
         android:id="@+id/pen_color_black"
-        android:background="#000000"
+        android:background="@color/black"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"/>
 
     <Button
         android:id="@+id/pen_color_red"
-        android:background="#f44336"
+        android:background="@color/material_red_500"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"/>
     <Button
         android:id="@+id/pen_color_green"
-        android:background="#4caf50"
+        android:background="@color/material_green_500"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"/>
     <Button
         android:id="@+id/pen_color_blue"
-        android:background="#2196f3"
+        android:background="@color/material_blue_500"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"/>
     <Button
         android:id="@+id/pen_color_yellow"
-        android:background="#ffeb3b"
+        android:background="@color/material_yellow_500"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"/>
