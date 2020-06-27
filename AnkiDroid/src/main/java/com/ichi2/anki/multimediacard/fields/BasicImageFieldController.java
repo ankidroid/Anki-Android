@@ -33,6 +33,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 
 import androidx.annotation.Nullable;
@@ -103,6 +104,32 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         int width = metrics.widthPixels;
 
         return (int) Math.min(height * 0.4, width * 0.6);
+    }
+
+    public void loadInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            Timber.d("loadInstanceState but null so nothing to load");
+            return;
+        }
+
+        Timber.d("loadInstanceState loading saved state...");
+        mImagePath = savedInstanceState.getString("mImagePath");
+        mPreviousImagePath = savedInstanceState.getString("mPreviousImagePath");
+
+        if (mImagePath != null) {
+            mImageUri = getUriForFile(new File(mImagePath));
+        }
+        if (mPreviousImagePath != null) {
+            mPreviousImageUri = getUriForFile(new File(mPreviousImagePath));
+        }
+    }
+
+    public Bundle saveInstanceState() {
+        Timber.d("saveInstanceState");
+        Bundle savedInstanceState = new Bundle();
+        savedInstanceState.putString("mImagePath", mImagePath);
+        savedInstanceState.putString("mPreviousImagePath", mPreviousImagePath);
+        return savedInstanceState;
     }
 
     // The NewApi deprecation should be removed with API21

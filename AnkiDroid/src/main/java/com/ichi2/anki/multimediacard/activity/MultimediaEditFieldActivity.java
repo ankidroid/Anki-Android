@@ -26,6 +26,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
 import android.view.Menu;
@@ -87,9 +88,13 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Bundle controllerBundle = null;
         if (savedInstanceState != null) {
+            Timber.d("onCreate - saved bundle exists");
             boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
-            if (b) {
+            controllerBundle = savedInstanceState.getBundle("controllerBundle");
+            if (controllerBundle == null && b) {
+                Timber.d("onCreate - saved bundle does has BUNDLE_KEY_SHUT_OFF and no controller bundle, terminating");
                 finishCancel();
                 return;
             }
@@ -112,7 +117,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return;
         }
 
-        recreateEditingUi(ChangeUIRequest.init(mField));
+        recreateEditingUi(ChangeUIRequest.init(mField), controllerBundle);
     }
 
     @VisibleForTesting
@@ -149,14 +154,19 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     }
 
     /** Sets various properties required for IFieldController to be in a valid state */
-    private void setupUIController(IFieldController fieldController) {
+    private void setupUIController(IFieldController fieldController, @Nullable Bundle savedInstanceState) {
         fieldController.setField(mField);
         fieldController.setFieldIndex(mFieldIndex);
         fieldController.setNote(mNote);
         fieldController.setEditingActivity(this);
+        fieldController.loadInstanceState(savedInstanceState);
     }
 
     private void recreateEditingUi(ChangeUIRequest newUI) {
+        this.recreateEditingUi(newUI, null);
+    }
+
+    private void recreateEditingUi(ChangeUIRequest newUI, @Nullable Bundle savedInstanceState) {
         Timber.d("recreateEditingUi()");
 
         //Permissions are checked async, save our current state to allow continuation
@@ -184,7 +194,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         mFieldController = fieldController;
         mField = newUI.getField();
 
-        setupUIController(mFieldController);
+        setupUIController(mFieldController, savedInstanceState);
 
         LinearLayout linearLayout = findViewById(R.id.LinearLayoutInScrollViewFieldEdit);
 
@@ -410,19 +420,30 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-
         if (mFieldController != null) {
             mFieldController.onDestroy();
         }
-
+        super.onDestroy();
     }
 
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        Timber.d("onSaveInstanceState - saving state");
+
+        // This is used to tell the whole activity to shut down if it is restored from Activity restart.
+        // Why? I am not really sure. Perhaps to avoid terrible bugs due to not implementing things correctly?
         outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);
+
+        // We will give field controllers a chance to save / restore across restarts though.
+        // If this bundle is not null, on restore, we should continue across Activity restart.
+        if (mFieldController != null) {
+            Bundle controllerBundle = mFieldController.saveInstanceState();
+            if (controllerBundle != null) {
+                outState.putBundle("controllerBundle", mFieldController.saveInstanceState());
+            }
+        }
+        super.onSaveInstanceState(outState);
     }
 
     /** Intermediate class to hold state for the onRequestPermissionsResult callback */
