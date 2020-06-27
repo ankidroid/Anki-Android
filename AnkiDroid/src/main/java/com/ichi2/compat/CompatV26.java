@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import java.io.IOException;
@@ -53,17 +54,17 @@ public class CompatV26 extends CompatV24 implements Compat {
     }
 
     @Override
-    public void copyFile(String source, String target) throws IOException {
+    public void copyFile(@NonNull String source, @NonNull String target) throws IOException {
         Files.copy(Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING);
     }
 
     @Override
-    public long copyFile(String source, OutputStream target) throws IOException {
+    public long copyFile(@NonNull String source, @NonNull OutputStream target) throws IOException {
         return Files.copy(Paths.get(source), target);
     }
 
     @Override
-    public long copyFile(InputStream source, String target) throws IOException {
+    public long copyFile(@NonNull InputStream source, @NonNull String target) throws IOException {
         return Files.copy(source, Paths.get(target), StandardCopyOption.REPLACE_EXISTING);
     }
 }
