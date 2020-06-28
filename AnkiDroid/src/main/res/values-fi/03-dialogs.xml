@@ -119,6 +119,7 @@
     <string name="restore_backup">Kokoelmasi korvataan vanhemmalla kopiolla. Mahdolliset tallentamattomat tiedot menetetään.</string>
     <string name="dialog_cancel">Peruuta</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Jatka</string>
     <string name="dialog_positive_create">Luo</string>
     <string name="dialog_positive_delete">Poista</string>

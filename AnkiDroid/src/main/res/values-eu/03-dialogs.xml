@@ -119,6 +119,7 @@
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
     <string name="dialog_cancel">Utzi</string>
     <string name="dialog_ok">Ados</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Jarraitu</string>
     <string name="dialog_positive_create">Sortu</string>
     <string name="dialog_positive_delete">Ezabatu</string>

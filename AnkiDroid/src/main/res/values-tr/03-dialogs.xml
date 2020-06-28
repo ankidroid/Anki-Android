@@ -119,6 +119,7 @@
     <string name="restore_backup">Koleksiyonunuz eski bir kopyayla değiştirilecek. Kaydedilmemiş ilerlemeler kaybolacak.</string>
     <string name="dialog_cancel">İptâl</string>
     <string name="dialog_ok">Tamam</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Devam Et</string>
     <string name="dialog_positive_create">Oluştur</string>
     <string name="dialog_positive_delete">Sil</string>

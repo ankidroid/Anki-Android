@@ -124,7 +124,7 @@
     <string name="menu_search">Haku %1$s</string>
     <string name="menu_mark_note">Merkitse merkintä</string>
     <string name="menu_unmark_note">Poista merkintä</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Uusi pakka</string>
     <string name="create">Luo</string>
     <string name="new_dynamic_deck">Uusi suodatettu pakka</string>

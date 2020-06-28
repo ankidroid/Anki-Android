@@ -47,9 +47,9 @@
     <string name="delete_deck_title">ᱰᱮᱠ ᱴᱚᱭᱴᱚᱞ ᱢᱮᱴᱟᱣᱟ  ᱥᱮ?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$s ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱷᱚᱛ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱰ ᱢᱮᱱᱟᱼᱜᱟ ᱾</item>
-        <item quantity="other">%1$s ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱷᱚᱛ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱰᱥ ᱢᱮᱱᱟᱼᱜᱟ ᱾</item>
+        <item quantity="other">%1$s ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱷᱚᱛ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱰ ᱢᱮᱱᱟᱼᱜᱟ ᱾</item>
     </plurals>
-    <string name="delete_cram_deck_message">ᱡᱷᱚᱛᱟ %s ᱠᱟᱰᱥ ᱟᱡᱟᱜ ᱢᱩᱞ ᱰᱮᱠᱥ ᱛᱮ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
+    <string name="delete_cram_deck_message">ᱡᱷᱚᱛᱟ %s ᱠᱟᱰ ᱟᱡᱟᱜ ᱢᱩᱞ ᱰᱮᱠᱥ ᱛᱮ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
     <string name="no_tts_available_message">text-to-speech ᱯᱟᱹᱨᱥᱤ ᱵᱟᱱᱩᱜᱼᱟ ᱾</string>
     <string name="initializing_tts">TTS ᱮᱛᱚᱷᱚᱵᱽᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
@@ -66,18 +66,18 @@
     <string name="reposition_card_not_new_error">ᱠᱷᱟᱹᱞᱤ ᱱᱟᱶᱟ ᱠᱟᱰ ᱜᱮ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱫᱟᱲᱮᱭᱟᱜᱟᱢ</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱮᱱᱟ</item>
-        <item quantity="other">%d ᱠᱟᱰᱥ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱮᱱᱟ</item>
+        <item quantity="other">%d ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱮᱱᱟ</item>
     </plurals>
     <string name="reset_card_dialog_title">ᱠᱟᱰ ᱨᱤᱥᱮᱴ ᱯᱨᱚᱜᱨᱮᱥᱚᱜ ᱠᱟᱱᱟ</string>
     <string name="reset_card_dialog_message">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱭᱩ ᱢᱩᱪᱟᱹᱫ ᱨᱮ ᱫᱚᱦᱚᱜᱼᱟ</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d ᱠᱟᱰ ᱨᱤᱥᱮᱴ</item>
-        <item quantity="other">%d ᱠᱟᱰᱥ ᱨᱤᱥᱮᱴ</item>
+        <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱴ</item>
     </plurals>
     <string name="reschedule_card_dialog_title">ᱠᱟᱰ‌ ᱨᱤᱥᱮᱰᱭᱩᱞ</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
-        <item quantity="other">ᱠᱟᱰᱥ ᱠᱚ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
+        <item quantity="other">ᱠᱟᱰ ᱠᱚ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">ᱱᱤᱛᱚᱜᱟᱜ ᱚᱵᱫᱷᱤᱺ %d ᱫᱤᱱ</item>
@@ -86,7 +86,7 @@
     <string name="reschedule_card_dialog_message">x ᱫᱤᱱ ᱧᱮᱞᱡᱚᱝ ᱞᱟᱜᱤᱫ Reschedule ᱢᱮ</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
-        <item quantity="other">%d ᱠᱟᱰᱥ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
+        <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ᱨᱮᱫ ᱢᱮᱱᱮᱡᱟᱨ ᱛᱮ ᱰᱮᱠ ᱠᱷᱚᱱ ᱠᱟᱰ ᱪᱚᱭᱚᱱ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ about:downloads ᱥᱟᱠᱟᱢ ᱠᱷᱟᱱ import ᱢᱮ</string>
     <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱦᱩᱰᱟᱹᱜ ᱦᱩᱭᱮᱱᱟ</string>
@@ -119,6 +119,7 @@
     <string name="restore_backup">ᱟᱢᱟᱜ ᱱᱚᱠᱚᱞ ᱫᱚ ᱢᱟᱨᱮ ᱴᱩᱢᱟᱹᱞ ᱥᱟᱞᱟᱜ ᱵᱚᱫᱚᱞᱚᱜ ᱟ ᱾ ᱵᱟᱝ ᱥᱚᱝᱪᱟᱣᱟᱠᱟᱱ ᱠᱟᱹᱢᱤ ᱚᱫ ᱚᱫᱚᱜᱽᱟ ᱾</string>
     <string name="dialog_cancel">ᱵᱟᱰᱨᱟ</string>
     <string name="dialog_ok">ᱴᱷᱤᱠ</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">ᱞᱮᱛᱟᱲ</string>
     <string name="dialog_positive_create">ᱛᱮᱭᱟᱨ</string>
     <string name="dialog_positive_delete">ᱜᱮᱫ ᱜᱤᱰᱤ</string>
@@ -138,21 +139,21 @@
     <string name="check_media_acknowledge">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞᱮᱱᱟ</string>
     <string name="check_media_failed">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ</string>
     <string name="check_media_invalid">ᱨᱚᱫ ᱨᱮ ᱵᱟᱲ ᱫᱟᱱᱟᱲ ᱪᱤᱱᱦᱟ: %d</string>
-    <string name="check_media_unused">ᱨᱮᱫ ᱫᱚ ᱢᱮᱰᱤᱭᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱢᱮᱱᱟᱜᱟ ᱦᱮᱞᱮ ᱚᱠᱟ ᱠᱟᱰᱥ ᱨᱮ ᱵᱟᱭ ᱵᱮᱵᱽᱷᱟᱨ ᱠᱟᱱᱟ: %d</string>
+    <string name="check_media_unused">ᱨᱮᱫ ᱫᱚ ᱢᱮᱰᱤᱭᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱢᱮᱱᱟᱜᱟ ᱦᱮᱞᱮ ᱚᱠᱟ ᱠᱟᱰ ᱨᱮ ᱵᱟᱭ ᱵᱮᱵᱽᱷᱟᱨ ᱠᱟᱱᱟ: %d</string>
     <string name="check_media_nohave">ᱨᱮᱫ ᱠᱟᱰ ᱨᱮ ᱢᱮᱱᱟᱜᱼᱟ ᱦᱮᱞᱮ ᱢᱮᱰᱤᱭᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱵᱟᱹᱱᱩᱜᱼᱟ: %d</string>
     <string name="check_media_no_unused_missing">ᱵᱟᱝ ᱵᱮᱵᱦᱟᱨᱟᱜ ᱨᱮᱫ ᱵᱟᱭ ᱧᱟᱢᱞᱮᱱᱟ</string>
     <string name="check_media_db_updated">ᱢᱮᱰᱤᱭᱟ ᱥᱟᱫᱠᱷᱤᱭᱟᱽ ᱵᱟᱹᱭᱥᱟᱹᱣ ᱫᱩᱦᱲᱟᱛᱮᱭᱟᱨ</string>
     <string name="check_media_delete_unused">ᱵᱟᱝ ᱵᱮᱵᱷᱟᱨ ᱚᱠ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
     <string name="check_media_deleted">ᱨᱮᱫ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ: %d</string>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">ᱡᱷᱚᱛᱚ ᱠᱟᱰᱥ ᱠᱚ </string>
+    <string name="tags_dialog_option_all_cards">ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱠᱚ </string>
     <string name="tags_dialog_option_new_cards">ᱱᱟᱶᱟ</string>
     <string name="tags_dialog_option_due_cards">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰᱥ ᱯᱟᱱᱛᱮ ᱪᱟᱹᱞᱩ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="empty_cards_none">ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰᱥ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
-    <string name="empty_cards_count">ᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱰᱥ: %d</string>
-    <string name="empty_cards_deleted">ᱠᱟᱰᱥ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟᱺ %d</string>
+    <string name="emtpy_cards_finding">ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱯᱟᱱᱛᱮ ᱪᱟᱹᱞᱩ ᱠᱟᱱᱟ&#8230;</string>
+    <string name="empty_cards_none">ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
+    <string name="empty_cards_count">ᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱰ: %d</string>
+    <string name="empty_cards_deleted">ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟᱺ %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">ᱢᱟᱤᱠᱨᱚᱯᱷᱚᱱ ᱪᱷᱟᱰ ᱵᱟᱝ ᱟᱜᱩ ᱫᱟᱲᱮᱟᱫᱟᱠ ᱟ ᱾</string>
     <string name="multimedia_editor_camera_permission_refused">ᱠᱮᱢᱨᱟ ᱪᱦᱟᱰ ᱵᱟᱜ ᱟᱹᱜᱩ ᱫᱟᱲᱮᱟᱫᱟ ᱾ ᱠᱟᱹᱢᱤᱠᱟᱚ ᱵᱟᱰ ᱦᱚᱪᱚᱭ ᱮᱱᱟ</string>

@@ -119,6 +119,7 @@
     <string name="restore_backup">Uw collectie zal worden vervangen door een oudere kopie. Alle niet-opgeslagen vooruitgang zal verloren gaan.</string>
     <string name="dialog_cancel">Annuleren</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Doorgaan</string>
     <string name="dialog_positive_create">Maak</string>
     <string name="dialog_positive_delete">Verwijder</string>

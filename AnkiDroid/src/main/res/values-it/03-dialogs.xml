@@ -119,6 +119,7 @@
     <string name="restore_backup">La tua collezione verrà sostituita con una copia meno recente. I cambiamenti non salvati verranno persi.</string>
     <string name="dialog_cancel">Annulla</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Continua</string>
     <string name="dialog_positive_create">Crea</string>
     <string name="dialog_positive_delete">Elimina</string>

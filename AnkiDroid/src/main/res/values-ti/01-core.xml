@@ -124,7 +124,7 @@
     <string name="menu_search">ኣብ %1$s ርአ</string>
     <string name="menu_mark_note">ጽሑፍ ምልክት ግበረሉ</string>
     <string name="menu_unmark_note">ምልክት ዝገበርካሉ ጽሑፍ ምልክቱ ደምስስ</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">ሓዲሽ ባይታ ፍጠር</string>
     <string name="create">ፍጠር</string>
     <string name="new_dynamic_deck">ዝፍለ ባይታ ፍጠር</string>

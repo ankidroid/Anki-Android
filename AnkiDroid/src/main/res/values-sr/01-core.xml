@@ -129,7 +129,7 @@
     <string name="menu_search">Потражи у %1$s</string>
     <string name="menu_mark_note">Означи белешку</string>
     <string name="menu_unmark_note">Уклони ознаку белешке</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Направи шпил</string>
     <string name="create">Креирај</string>
     <string name="new_dynamic_deck">Направи филтриран шпил</string>

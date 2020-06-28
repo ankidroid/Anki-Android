@@ -105,6 +105,8 @@
     <string name="gestures_tap_bottom">Alsó rész érintése</string>
     <string name="gestures_tap_left">Baloldali rész érintése</string>
     <string name="gestures_tap_right">Jobboldali rész érintése</string>
+    <string name="gestures_volume_up">Volume up</string>
+    <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">e-Olvasó</string>
     <string name="more_scrolling_buttons_summ">Kanji/Katakana használata is, az Emoji/Kao-moji gombok görgetéséhez</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>

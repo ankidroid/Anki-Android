@@ -124,7 +124,7 @@
     <string name="menu_search">Serĉi en %1$s</string>
     <string name="menu_mark_note">Marki noton</string>
     <string name="menu_unmark_note">Malmarki noton</string>
-    <string name="menu_toggle_mic_tool_bar">Kontroli elparolon</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Krei kartaron</string>
     <string name="create">Krei</string>
     <string name="new_dynamic_deck">Krei filtritan kartaron</string>

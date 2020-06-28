@@ -58,6 +58,7 @@
     <string name="sdcard_missing_message">SD卡暂时不可用，因为当前其正作为USB存储设备。拔掉USB之后即可访问你的牌组。</string>
     <string name="updated_version">更新到%s版本</string>
     <!-- Reviewer.java -->
+    <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">启用白板</string>
     <string name="disable_whiteboard">禁用白板</string>
     <string name="show_whiteboard">显示白板</string>
@@ -264,4 +265,8 @@
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">请开启全屏以使用 JavaScript 显示导航抽屉。</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">请开启全屏以使用 JavaScript 显示选项菜单。</string>
+    <!-- Whiteboard save image message in Reviewer -->
+    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
+    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
+    <string name="title_whiteboard_pen_color">Pen color</string>
 </resources>

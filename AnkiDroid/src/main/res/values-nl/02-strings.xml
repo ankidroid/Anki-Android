@@ -58,6 +58,7 @@
     <string name="sdcard_missing_message">De SD-kaart is niet beschikbaar omdat ze in gebruik is voor USB-opslag. Ontkoppel de USB om toegang te krijgen tot uw sets.</string>
     <string name="updated_version">Geüpdatet naar versie %s</string>
     <!-- Reviewer.java -->
+    <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Whiteboard inschakelen</string>
     <string name="disable_whiteboard">Whiteboard uitschakelen</string>
     <string name="show_whiteboard">Toon het schrijfbord</string>
@@ -275,4 +276,8 @@
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Schakel schermvullende weergave in om Toon navigatiemenu te gebruiken met behulp van JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Schakel schermvullende weergave in om Toon optiesmenu te gebruiken met behulp van JavaScript.</string>
+    <!-- Whiteboard save image message in Reviewer -->
+    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
+    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
+    <string name="title_whiteboard_pen_color">Pen color</string>
 </resources>

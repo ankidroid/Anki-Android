@@ -119,7 +119,7 @@
     <string name="menu_search">%1$s で検索</string>
     <string name="menu_mark_note">ノートにマークを付ける</string>
     <string name="menu_unmark_note">ノートのマークをはずす</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">デッキを新規作成</string>
     <string name="create">新規作成</string>
     <string name="new_dynamic_deck">フィルターデッキを作成</string>

@@ -105,6 +105,8 @@
     <string name="gestures_tap_bottom">Aşağıya dokunma</string>
     <string name="gestures_tap_left">Sola dokunma</string>
     <string name="gestures_tap_right">Sağa dokunma</string>
+    <string name="gestures_volume_up">Volume up</string>
+    <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eOkuyucu</string>
     <string name="more_scrolling_buttons_summ">Kaydırma için Kanji/Katakana, Emoji/Kao-moji düğmelerini de kullan</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>

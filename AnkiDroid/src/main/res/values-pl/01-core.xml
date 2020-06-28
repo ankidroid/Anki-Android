@@ -134,7 +134,7 @@
     <string name="menu_search">Wyszukiwanie w %1$s</string>
     <string name="menu_mark_note">Wyróżnij notatkę</string>
     <string name="menu_unmark_note">Cofnij wyróżnienie notatki</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Stwórz talię</string>
     <string name="create">Utwórz</string>
     <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>

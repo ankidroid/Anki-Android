@@ -105,6 +105,8 @@
     <string name="gestures_tap_bottom">点击底部</string>
     <string name="gestures_tap_left">点击左侧</string>
     <string name="gestures_tap_right">点击右侧</string>
+    <string name="gestures_volume_up">Volume up</string>
+    <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">电子书阅读器</string>
     <string name="more_scrolling_buttons_summ">也使用 kanji/katakana， emoji/kao-moji 按钮来滚动</string>
     <string name="card_browser_enable_external_context_menu">“%s” 菜单</string>

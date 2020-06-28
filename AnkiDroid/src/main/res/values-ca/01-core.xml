@@ -124,7 +124,7 @@
     <string name="menu_search">Cerca-ho a %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Crea un paquet</string>
     <string name="create">Genera</string>
     <string name="new_dynamic_deck">Crear un paquet filtrat</string>

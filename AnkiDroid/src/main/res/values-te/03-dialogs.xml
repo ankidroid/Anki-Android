@@ -119,6 +119,7 @@
     <string name="restore_backup">మీ సేకరణ పాత కాపీతో భర్తీ చేయబడుతుంది. ఏదైనా సేవ్ చేయని ప్రగతిని కోల్పోతారు.</string>
     <string name="dialog_cancel">రద్దు చేయు</string>
     <string name="dialog_ok">సరే</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">కొనసాగండి</string>
     <string name="dialog_positive_create">సృష్టించు</string>
     <string name="dialog_positive_delete">తొలగించు</string>

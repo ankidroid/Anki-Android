@@ -124,7 +124,7 @@
     <string name="menu_search">%1$s\'de Ara</string>
     <string name="menu_mark_note">Notu işâretle</string>
     <string name="menu_unmark_note">İşâreti kaldır</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Deste oluştur</string>
     <string name="create">Oluştur</string>
     <string name="new_dynamic_deck">Filtreli deste oluştur</string>

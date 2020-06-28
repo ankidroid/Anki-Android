@@ -124,7 +124,7 @@
     <string name="menu_search">Пребарување во %1$s</string>
     <string name="menu_mark_note">Означите белешка</string>
     <string name="menu_unmark_note">Отштиклирај ја белешката</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Креирајте deck</string>
     <string name="create">Креирај</string>
     <string name="new_dynamic_deck">Креирајте филтер на deck</string>

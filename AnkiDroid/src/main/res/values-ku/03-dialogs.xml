@@ -119,6 +119,7 @@
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
     <string name="dialog_cancel">Betal bike</string>
     <string name="dialog_ok">Baş e</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Bidomîne</string>
     <string name="dialog_positive_create">Çêke</string>
     <string name="dialog_positive_delete">Jê bibe</string>

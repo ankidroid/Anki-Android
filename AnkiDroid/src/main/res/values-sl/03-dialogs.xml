@@ -131,6 +131,7 @@
     <string name="restore_backup">Vaša zbirka bo nadomeščena s starejšo kopijo. Vse neshranjene spremembe bodo izgubljene.</string>
     <string name="dialog_cancel">Prekliči</string>
     <string name="dialog_ok">V redu</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Nadaljuj</string>
     <string name="dialog_positive_create">Ustvari</string>
     <string name="dialog_positive_delete">Izbriši</string>

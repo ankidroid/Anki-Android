@@ -58,6 +58,7 @@
     <string name="sdcard_missing_message">کارت حافظه در دسترس نیست زیرا حافظه یواس بی در حال استفاده است.اتصال را برای دسترسی به دسته های کارت قطع نمایید.</string>
     <string name="updated_version">به نسخه %s بروزرسانی شد</string>
     <!-- Reviewer.java -->
+    <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">فعال سازی تخته سفید</string>
     <string name="disable_whiteboard">غیر فعال کردن تخته سفید</string>
     <string name="show_whiteboard">نمایش تخته سفید</string>
@@ -274,4 +275,8 @@
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">لطفاً برای نمایش نوار ابزار جاواسکریپت حالت تمام صفحه را فعال کنید.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">لطفاً برای نمایش تنظیمات جاواسکریپت حالت تمام صفحه را فعال کنید.</string>
+    <!-- Whiteboard save image message in Reviewer -->
+    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
+    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
+    <string name="title_whiteboard_pen_color">Pen color</string>
 </resources>

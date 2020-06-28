@@ -124,7 +124,7 @@
     <string name="menu_search">Opzoeken in %1$s</string>
     <string name="menu_mark_note">Memo markeren</string>
     <string name="menu_unmark_note">Memo onmarkeren</string>
-    <string name="menu_toggle_mic_tool_bar">Uitspraak controleren</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Leerset aanmaken</string>
     <string name="create">Maak</string>
     <string name="new_dynamic_deck">Gefilterde set maken</string>

@@ -113,6 +113,7 @@
     <string name="restore_backup">컬렉션이 기존의 것으로 대체됩니다. 저장되지 않은 모든 작업은 손실됩니다.</string>
     <string name="dialog_cancel">취소</string>
     <string name="dialog_ok">확인</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">계속하기</string>
     <string name="dialog_positive_create">만들기</string>
     <string name="dialog_positive_delete">삭제</string>

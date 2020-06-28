@@ -105,6 +105,8 @@
     <string name="gestures_tap_bottom">దిగువ తాకండి</string>
     <string name="gestures_tap_left">ఎడమవైపు తాకండి</string>
     <string name="gestures_tap_right">కుడివైపు తాకండి</string>
+    <string name="gestures_volume_up">Volume up</string>
+    <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">కూడా స్క్రోలింగ్ కోసం కంజి / కటన, ఎమోజి / కావో మోజి బటన్లను ఉపయోగించండి</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>

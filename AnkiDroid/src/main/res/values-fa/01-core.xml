@@ -124,7 +124,7 @@
     <string name="menu_search">جستجو در %1$s</string>
     <string name="menu_mark_note">نشانه‌گذاری یادداشت</string>
     <string name="menu_unmark_note">برداشتن علامتگذاری یادداشت</string>
-    <string name="menu_toggle_mic_tool_bar">بررسی تلفظ</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">ایجاد دسته</string>
     <string name="create">ساختن</string>
     <string name="new_dynamic_deck">ایجاد دسته فیلتر شده</string>

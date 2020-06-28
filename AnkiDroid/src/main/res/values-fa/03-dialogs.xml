@@ -121,6 +121,7 @@
     <string name="restore_backup">مجموعه شما با یک نسخه قدیمی تر جایگزین خواهد شد. موارد ذخیره نشده از بین خواهند رفت.</string>
     <string name="dialog_cancel">لغو</string>
     <string name="dialog_ok">تایید</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">ادامه</string>
     <string name="dialog_positive_create">ایجاد</string>
     <string name="dialog_positive_delete">حذف</string>

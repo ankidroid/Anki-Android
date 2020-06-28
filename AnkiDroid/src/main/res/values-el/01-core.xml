@@ -124,7 +124,7 @@
     <string name="menu_search">Αναζήτηση στο %1$s</string>
     <string name="menu_mark_note">Μαρκάρισμα σημείωσης</string>
     <string name="menu_unmark_note">Ξεμαρκάρισμα σημείωσης</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Δημιουργία τράπουλας</string>
     <string name="create">Δημιουργία</string>
     <string name="new_dynamic_deck">Δημιουργία φιλτραρισμένης τράπουλας</string>

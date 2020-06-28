@@ -113,6 +113,7 @@
     <string name="restore_backup">Koleksi Anda akan diganti dengan salinan yang lebih tua. Setiap kemajuan yang belum disimpan akan hilang.</string>
     <string name="dialog_cancel">Membatalkan</string>
     <string name="dialog_ok">Baik</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Terus</string>
     <string name="dialog_positive_create">Membuat</string>
     <string name="dialog_positive_delete">Menghapus</string>

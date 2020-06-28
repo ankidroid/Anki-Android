@@ -131,6 +131,7 @@
     <string name="restore_backup">האוסף שלך יוחלף בעותק ישן יותר. כל תהליך שלא נשמר ילך לאיבוד.</string>
     <string name="dialog_cancel">ביטול</string>
     <string name="dialog_ok">אישור</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">המשך</string>
     <string name="dialog_positive_create">יצירה</string>
     <string name="dialog_positive_delete">מחיקה</string>

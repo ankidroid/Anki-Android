@@ -134,7 +134,7 @@
     <string name="menu_search">חפש ב%1$s</string>
     <string name="menu_mark_note">סמן הערה</string>
     <string name="menu_unmark_note">הסר סימון הערה</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">יצירת חפיסה</string>
     <string name="create">יצירה</string>
     <string name="new_dynamic_deck">יצירת חפיסה מסוננת</string>

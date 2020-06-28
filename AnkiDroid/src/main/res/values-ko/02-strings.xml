@@ -58,6 +58,7 @@
     <string name="sdcard_missing_message">현재 SD카드가 USB 저장소로 사용되고 있어 사용이 불가능합니다. 덱에 접근하려면 USB 연결을 해제하세요.</string>
     <string name="updated_version">버전 %s로 업데이트됨</string>
     <!-- Reviewer.java -->
+    <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">화이트보드 활성화</string>
     <string name="disable_whiteboard">화이트보드 비활성화</string>
     <string name="show_whiteboard">화이트 보드 보이기</string>
@@ -266,4 +267,8 @@ Context | Request Context    </string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <!-- Whiteboard save image message in Reviewer -->
+    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
+    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
+    <string name="title_whiteboard_pen_color">Pen color</string>
 </resources>
