@@ -313,7 +313,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 case ACTIVITY_CROP_PICTURE:
                     if (!TextUtils.isEmpty(mPreviousImagePath)) {
                         mImagePath = mPreviousImagePath;
+                        mField.setImagePath(mImagePath);
                         mImageUri = mPreviousImageUri;
+                        mPreviousImagePath = null;
+                        mPreviousImageUri = null;
                     }
                     break;
                 default:
