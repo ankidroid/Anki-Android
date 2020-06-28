@@ -471,7 +471,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private void rotateAndCompress() {
+    /**
+     * Rotate and compress the image, with the side effect of current image being backed by a new file
+     *
+     * @return true if successful, false indicates the current image is likely not usable, revert if possible
+     */
+    private boolean rotateAndCompress() {
         Timber.d("rotateAndCompress() on %s", mImagePath);
         // Set the rotation of the camera image and save as png
         File f = new File(mImagePath);
@@ -482,9 +487,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         if (b == null) {
             //#5513 - if we can't decode a bitmap, leave the image alone
             //And display a warning to push users to compress manually.
-            Timber.d("rotateAndCompress() unable to decode file %s", mImagePath);
+            Timber.w("rotateAndCompress() unable to decode file %s", mImagePath);
             mImageFileSizeWarning.setVisibility(View.VISIBLE);
-            return;
+            return false;
         }
 
         FileOutputStream out = null;
@@ -513,6 +518,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 Timber.w(e, "rotateAndCompress() Unable to clean up image compression output stream");
             }
         }
+        return true;
     }
 
 
@@ -549,7 +555,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private void handleTakePictureResult() {
         Timber.d("handleTakePictureResult");
-        rotateAndCompress();
+        if (!rotateAndCompress()) {
+            Timber.i("handleTakePictureResult appears to have an invalid picture");
+            revertToPreviousImage();
+            showSomethingWentWrong();
+            return;
+        };
         mField.setHasTemporaryMedia(true);
         showCropDialog(mActivity.getString(R.string.crop_image), null);
     }
@@ -624,7 +635,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private void handleCropResult() {
         Timber.d("handleCropResult");
-        rotateAndCompress(); // this is a long-running operation.
+        if (!rotateAndCompress()) {
+            Timber.i("handleCropResult() appears to have an invalid file, reverting");
+            revertToPreviousImage();
+            showSomethingWentWrong();
+            return;
+        }
         Timber.d("handleCropResult() = image path now %s", mField.getImagePath());
         mField.setHasTemporaryMedia(true);
     }
