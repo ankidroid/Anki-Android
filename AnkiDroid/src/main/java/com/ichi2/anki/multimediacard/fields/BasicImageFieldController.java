@@ -169,7 +169,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         Button mBtnGallery = new Button(mActivity);
         mBtnGallery.setText(gtxt(R.string.multimedia_editor_image_field_editing_galery));
         mBtnGallery.setOnClickListener(v -> {
-            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent i = new Intent(Intent.ACTION_PICK);
+            i.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             mActivity.startActivityForResultWithoutAnimation(i, ACTIVITY_SELECT_IMAGE);
         });
 
