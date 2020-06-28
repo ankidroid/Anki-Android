@@ -119,6 +119,7 @@
     <string name="restore_backup">Din samling kommer att ersättas med en äldre kopia. Ej sparade framsteg kommer att gå förlorade.</string>
     <string name="dialog_cancel">Avbryt</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Fortsätt</string>
     <string name="dialog_positive_create">Skapa</string>
     <string name="dialog_positive_delete">Radera</string>

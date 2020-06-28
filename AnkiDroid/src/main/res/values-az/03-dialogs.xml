@@ -119,6 +119,7 @@
     <string name="restore_backup">Koleksiyanız köhnə bir surət ilə əvəz olunacaq.Saxlanmayan hər hansı bir irəliləyiş itirilmiş olacaq.</string>
     <string name="dialog_cancel">Ləğv etmək</string>
     <string name="dialog_ok">Oldu</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Davam et</string>
     <string name="dialog_positive_create">Yaratmaq</string>
     <string name="dialog_positive_delete">Delete</string>

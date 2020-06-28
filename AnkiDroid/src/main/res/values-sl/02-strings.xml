@@ -58,6 +58,7 @@
     <string name="sdcard_missing_message">Izklopite pomnilniško napravo USB za dostop do svojih kompletov</string>
     <string name="updated_version">Posodobljen na različico %s</string>
     <!-- Reviewer.java -->
+    <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Omogoči belo tablo</string>
     <string name="disable_whiteboard">Onemogoči belo tablo</string>
     <string name="show_whiteboard">Prikaži belo tablo</string>
@@ -294,4 +295,8 @@
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <!-- Whiteboard save image message in Reviewer -->
+    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
+    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
+    <string name="title_whiteboard_pen_color">Pen color</string>
 </resources>

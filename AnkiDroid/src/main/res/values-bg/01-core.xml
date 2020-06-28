@@ -124,7 +124,7 @@
     <string name="menu_search">Търсене в %1$s</string>
     <string name="menu_mark_note">Маркирай бележка</string>
     <string name="menu_unmark_note">Размаркирай бележка</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Създай тесте</string>
     <string name="create">Създай</string>
     <string name="new_dynamic_deck">Създайте филтрирано тесте</string>

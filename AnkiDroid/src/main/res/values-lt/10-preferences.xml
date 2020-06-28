@@ -105,6 +105,8 @@
     <string name="gestures_tap_bottom">Liesti apačioje</string>
     <string name="gestures_tap_left">Liesti kairėje</string>
     <string name="gestures_tap_right">Liesti dešinėje</string>
+    <string name="gestures_volume_up">Volume up</string>
+    <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">el. skaityklė</string>
     <string name="more_scrolling_buttons_summ">Naršymui taip pat naudoti kandži/katakanos, emoji/kao-moji mygtukus</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>

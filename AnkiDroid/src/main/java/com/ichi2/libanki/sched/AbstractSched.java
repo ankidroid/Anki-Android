@@ -9,20 +9,24 @@ import android.widget.Toast;
 import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Collection;
 import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public abstract class AbstractSched {
     /**
      * Pop the next card from the queue. null if finished.
      */
+    protected Collection mCol;
     public abstract Card getCard();
     public abstract void reset();
     /** Ensures that reset is executed before the next card is selected */
@@ -178,30 +182,22 @@ public abstract class AbstractSched {
      * this field and use getNamePart(0) for those cases.
      */
     public class DeckDueTreeNode implements Comparable {
-        private String[] mName;
+        private final String mName;
+        private final String[] mNameComponents;
         private long mDid;
-        private int mDepth;
         private int mRevCount;
         private int mLrnCount;
         private int mNewCount;
-        private List<DeckDueTreeNode> mChildren = new ArrayList<>();
+        @Nullable
+        private List<DeckDueTreeNode> mChildren = null;
 
-        public DeckDueTreeNode(String[] mName, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
+        public DeckDueTreeNode(String mName, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
             this.mName = mName;
             this.mDid = mDid;
             this.mRevCount = mRevCount;
             this.mLrnCount = mLrnCount;
             this.mNewCount = mNewCount;
-        }
-
-        public DeckDueTreeNode(String name, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
-            this(new String[]{name}, mDid, mRevCount, mLrnCount, mNewCount);
-        }
-
-        public DeckDueTreeNode(String name, long mDid, int mRevCount, int mLrnCount, int mNewCount,
-                               List<DeckDueTreeNode> mChildren) {
-            this(new String[]{name}, mDid, mRevCount, mLrnCount, mNewCount);
-            this.mChildren = mChildren;
+            this.mNameComponents = Decks.path(mName);
         }
 
         /**
@@ -210,9 +206,10 @@ public abstract class AbstractSched {
         @Override
         public int compareTo(Object other) {
             DeckDueTreeNode rhs = (DeckDueTreeNode) other;
+            int minDepth = Math.min(getDepth(), rhs.getDepth()) + 1;
             // Consider each subdeck name in the ordering
-            for (int i = 0; i < mName.length && i < rhs.mName.length; i++) {
-                int cmp = mName[i].compareTo(rhs.mName[i]);
+            for (int i = 0; i < minDepth; i++) {
+                int cmp = mNameComponents[i].compareTo(rhs.mNameComponents[i]);
                 if (cmp == 0) {
                     continue;
                 }
@@ -221,7 +218,7 @@ public abstract class AbstractSched {
             // If we made it this far then the arrays are of different length. The longer one should
             // always come after since it contains all of the sections of the shorter one inside it
             // (i.e., the short one is an ancestor of the longer one).
-            if (rhs.mName.length > mName.length) {
+            if (rhs.getDepth() > getDepth()) {
                 return -1;
             } else {
                 return 1;
@@ -230,54 +227,104 @@ public abstract class AbstractSched {
 
         @Override
         public String toString() {
-            return String.format(Locale.US, "%s, %d, %d, %d, %d, %d, %s",
-                    Arrays.toString(mName), mDid, mDepth, mRevCount, mLrnCount, mNewCount, mChildren);
+            return String.format(Locale.US, "%s, %d, %d, %d, %d, %s",
+                    mName, mDid, mRevCount, mLrnCount, mNewCount, mChildren);
         }
 
-        public String[] getNames() {
+        /**
+         * @return The full deck name, e.g. "A::B::C"
+         * */
+        public String getFullDeckName() {
             return mName;
         }
 
-        public String getNamePart(int part) {
-            return mName[part];
+        /**
+         * For deck "A::B::C", `getDeckNameComponent(0)` returns "A",
+         * `getDeckNameComponent(1)` returns "B", etc...
+         */
+        public String getDeckNameComponent(int part) {
+            return mNameComponents[part];
         }
-        
-        public void setNames(String[] mName) {
-            this.mName = mName;
+
+        /**
+         * The part of the name displayed in deck picker, i.e. the
+         * part that does not belong to its parents. E.g.  for deck
+         * "A::B::C", returns "C".
+         */
+        public String getLastDeckNameComponent() {
+            return getDeckNameComponent(getDepth());
         }
 
         public long getDid() {
             return mDid;
         }
 
+        /**
+         * @return The depth of a deck. Top level decks have depth 0,
+         * their children have depth 1, etc... So "A::B::C" would have
+         * depth 2.
+         */
         public int getDepth() {
-            return mDepth;
-        }
-
-        public void setDepth(int mDepth) {
-            this.mDepth = mDepth;
+            return mNameComponents.length - 1;
         }
 
         public int getRevCount() {
             return mRevCount;
         }
 
+        private void limitRevCount(int limit) {
+            mRevCount = Math.max(0, Math.min(mRevCount, limit));
+        }
+
         public int getNewCount() {
             return mNewCount;
+        }
+
+        private void limitNewCount(int limit) {
+            mNewCount = Math.max(0, Math.min(mNewCount, limit));
         }
 
         public int getLrnCount() {
             return mLrnCount;
         }
 
+        /**
+         * @return The children of this deck. Note that they are set
+         * in the data structure returned by DeckDueTree but are
+         * always empty when the data structure is returned by
+         * deckDueList.*/
         public List<DeckDueTreeNode> getChildren() {
             return mChildren;
         }
 
+        /**
+         * @return whether this node as any children. */
         public boolean hasChildren() {
-            return !mChildren.isEmpty();
+            return mChildren != null && !mChildren.isEmpty();
+        }
+
+        public void setChildren(@NonNull List<DeckDueTreeNode> children, boolean addRev) {
+            mChildren = children;
+            // tally up children counts
+            for (DeckDueTreeNode ch : children) {
+                mLrnCount += ch.getLrnCount();
+                mNewCount += ch.getNewCount();
+                if (addRev) {
+                    mRevCount += ch.getRevCount();
+                }
+            }
+            // limit the counts to the deck's limits
+            JSONObject conf = mCol.getDecks().confForDid(mDid);
+            if (conf.getInt("dyn") == 0) {
+                JSONObject deck = mCol.getDecks().get(mDid);
+                limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1));
+                if (addRev) {
+                    limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1));
+                }
+            }
         }
     }
+
 
     public interface LimitMethod {
         int operation(JSONObject g);

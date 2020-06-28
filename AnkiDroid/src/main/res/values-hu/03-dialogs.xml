@@ -119,6 +119,7 @@
     <string name="restore_backup">A gyűjteményed egy régi másolattal felül lesz írva. A nem mentett változások elvesznek.</string>
     <string name="dialog_cancel">Mégsem</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Folytatás</string>
     <string name="dialog_positive_create">Létrehoz</string>
     <string name="dialog_positive_delete">Töröl</string>

@@ -124,7 +124,7 @@
     <string name="menu_search">இங்கே பாருங்கள் %1$s</string>
     <string name="menu_mark_note">குறிப்பு குறிக்கவும்</string>
     <string name="menu_unmark_note">குறிப்பு குறிக்கப்படாது</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">டெக் உருவாக்கவும்</string>
     <string name="create">உருவாக்கு</string>
     <string name="new_dynamic_deck">வடிகட்டப்பட்ட டெக் உருவாக்கவும்</string>

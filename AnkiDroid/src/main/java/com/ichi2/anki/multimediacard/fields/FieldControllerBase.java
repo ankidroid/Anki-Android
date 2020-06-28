@@ -19,8 +19,12 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
+import android.os.Bundle;
+
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
+
+import androidx.annotation.Nullable;
 
 public abstract class FieldControllerBase implements IFieldController {
 
@@ -53,4 +57,14 @@ public abstract class FieldControllerBase implements IFieldController {
         mActivity = activity;
     };
 
+
+    @Override
+    public void loadInstanceState(Bundle savedInstancedState) { /* Default implementation does nothing */ }
+
+
+    @Override
+    @Nullable
+    public Bundle saveInstanceState() {
+        return null;
+    }
 }

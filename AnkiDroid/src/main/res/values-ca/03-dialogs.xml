@@ -119,6 +119,7 @@
     <string name="restore_backup">La seva col·lecció serà replaçada per una còpia anterior. Tots els canvis fets després de desar es perdran.</string>
     <string name="dialog_cancel">Cancel·la</string>
     <string name="dialog_ok">D\'acord</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_positive_create">Crear</string>
     <string name="dialog_positive_delete">Eliminar</string>

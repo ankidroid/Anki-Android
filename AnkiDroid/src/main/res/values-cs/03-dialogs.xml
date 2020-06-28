@@ -131,6 +131,7 @@
     <string name="restore_backup">Vaše kolekce bude nahrazena starší kopií. Všechny neuložené změny budou ztraceny.</string>
     <string name="dialog_cancel">Zrušit</string>
     <string name="dialog_ok">Ok</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Pokračovat</string>
     <string name="dialog_positive_create">Vytvořit</string>
     <string name="dialog_positive_delete">Odstranit</string>

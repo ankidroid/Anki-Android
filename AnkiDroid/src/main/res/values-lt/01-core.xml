@@ -134,7 +134,7 @@
     <string name="menu_search">Ieškoti: %1$s</string>
     <string name="menu_mark_note">Žymėti užrašą</string>
     <string name="menu_unmark_note">Atžymėti užrašą</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Kurti rinkinį</string>
     <string name="create">Kurti</string>
     <string name="new_dynamic_deck">Kurti rinktinį rinkinį</string>

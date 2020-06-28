@@ -144,7 +144,7 @@
     <string name="menu_search">البحث في %1$s</string>
     <string name="menu_mark_note">أشِّر الملاحظة</string>
     <string name="menu_unmark_note">الغِ تأشير الملاحظة</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">إنشاء شَدّة أوراق</string>
     <string name="create">إنشاء</string>
     <string name="new_dynamic_deck">انشئ شَدّة أوراق مُفَلتَرة</string>

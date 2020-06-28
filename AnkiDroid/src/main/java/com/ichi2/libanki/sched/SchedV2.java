@@ -76,7 +76,6 @@ public class SchedV2 extends AbstractSched {
     private String mName = "std2";
     private boolean mHaveCustomStudy = true;
 
-    protected Collection mCol;
     protected int mQueueLimit;
     protected int mReportLimit;
     private int mDynReportLimit;
@@ -331,7 +330,6 @@ public class SchedV2 extends AbstractSched {
         int tot = 0;
         HashMap<Long, Integer> pcounts = new HashMap<>();
         // for each of the active decks
-        HashMap<String, JSONObject> nameMap = mCol.getDecks().nameMap();
         for (long did : mCol.getDecks().active()) {
             // get the individual deck's limit
             int lim = limFn.operation(mCol.getDecks().get(did));
@@ -339,7 +337,7 @@ public class SchedV2 extends AbstractSched {
                 continue;
             }
             // check the parents
-            List<JSONObject> parents = mCol.getDecks().parents(did, nameMap);
+            List<JSONObject> parents = mCol.getDecks().parents(did);
             for (JSONObject p : parents) {
                 // add if missing
                 long id = p.getLong("id");
@@ -431,11 +429,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps) {
-        // first, split the group names into components
-        for (DeckDueTreeNode g : grps) {
-            g.setNames(Decks.path(g.getNamePart(0)));
-        }
-        // and sort based on those components
+        // sort based on name's components
         Collections.sort(grps);
         // then run main function
         return _groupChildrenMain(grps);
@@ -443,16 +437,26 @@ public class SchedV2 extends AbstractSched {
 
 
     protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps) {
+        return _groupChildrenMain(grps, 0);
+    }
+
+    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, int depth) {
         List<DeckDueTreeNode> tree = new ArrayList<>();
         // group and recurse
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
         while (it.hasNext()) {
             DeckDueTreeNode node = it.next();
-            String head = node.getNamePart(0);
+            String head = node.getDeckNameComponent(depth);
             List<DeckDueTreeNode> children  = new ArrayList<>();
+            /* Compose the "children" node list. The children is a
+             * list of all the nodes that proceed the current one that
+             * contain the same at depth `depth`, except for the
+             * current one itself.  I.e., they are subdecks that stem
+             * from this node.  This is our version of python's
+             * itertools.groupby. */
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
-                if (head.equals(next.getNamePart(0))) {
+                if (head.equals(next.getDeckNameComponent(depth))) {
                     // Same head - add to tail of current head.
                     children.add(next);
                 } else {
@@ -462,28 +466,9 @@ public class SchedV2 extends AbstractSched {
                     break;
                 }
             }
-            int rev = node.getRevCount();
-            int _new = node.getNewCount();
-            int lrn = node.getLrnCount();
-            for (DeckDueTreeNode c : children) {
-                // set new string to tail
-                String[] newTail = new String[c.getNames().length-1];
-                System.arraycopy(c.getNames(), 1, newTail, 0, c.getNames().length-1);
-                c.setNames(newTail);
-            }
-            children = _groupChildrenMain(children);
-            // tally up children counts
-            for (DeckDueTreeNode ch : children) {
-                lrn +=  ch.getLrnCount();
-                _new += ch.getNewCount();
-            }
-            // limit the counts to the deck's limits
-            JSONObject conf = mCol.getDecks().confForDid(node.getDid());
-            if (conf.getInt("dyn") == 0) {
-                JSONObject deck = mCol.getDecks().get(node.getDid());
-                _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
-            }
-            tree.add(new DeckDueTreeNode(head, node.getDid(), rev, lrn, _new, children));
+            // the children set contains direct children but not the children of children...
+            node.setChildren(_groupChildrenMain(node.getChildren(), depth + 1), false);
+            tree.add(node);
         }
         return tree;
     }

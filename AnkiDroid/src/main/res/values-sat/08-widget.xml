@@ -39,12 +39,12 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">ᱥᱟᱨᱮᱡᱽᱠᱟᱱ ᱠᱟᱰᱥ</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">ᱥᱟᱨᱮᱡᱽᱠᱟᱱ ᱠᱟᱰ</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d AnkiDroid ᱠᱟᱰ ᱥᱟᱨᱮᱡ ᱠᱚ</item>
-        <item quantity="other">%d AnkiDroid ᱠᱟᱰᱥ ᱥᱟᱨᱮᱡ ᱠᱚ</item>
+        <item quantity="other">%d AnkiDroid ᱠᱟᱰ ᱥᱟᱨᱮᱡ ᱠᱚ</item>
     </plurals>
-    <string name="widget_no_cards_due">ᱠᱟᱰᱥ ᱵᱟᱠᱚ ᱥᱟᱨᱮᱡᱼᱟ</string>
+    <string name="widget_no_cards_due">ᱠᱟᱰ ᱵᱟᱠᱚ ᱥᱟᱨᱮᱡᱼᱟ</string>
     <string name="widget_loading">ᱣᱤᱡᱮᱴ ᱞᱚᱰᱚᱜᱼᱠᱟᱱᱟ&#8230;</string>
     <plurals name="widget_cards_in_decks_due">
         <item quantity="one">%1$d ᱠᱟᱰ ᱥᱟᱨᱮᱡ ᱚᱠᱛᱚ %2$s</item>

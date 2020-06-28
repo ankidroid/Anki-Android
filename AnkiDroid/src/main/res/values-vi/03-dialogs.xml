@@ -113,6 +113,7 @@
     <string name="restore_backup">Bộ sưu tập sẽ được thay bằng bản sao cũ hơn. Bất kỳ tiến trình nào chưa lưu sẽ bị mất.</string>
     <string name="dialog_cancel">Huỷ</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Tiếp tục</string>
     <string name="dialog_positive_create">Tạo</string>
     <string name="dialog_positive_delete">Xoá</string>

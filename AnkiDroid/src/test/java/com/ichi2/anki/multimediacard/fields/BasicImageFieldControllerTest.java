@@ -102,9 +102,9 @@ public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTe
         return new ImageField();
     }
 
-    private static IField imageFieldWithData() {
+    private IField imageFieldWithData() {
         IField field = emptyImageField();
-        field.setImagePath("test");
+        field.setImagePath(getTargetContext().getExternalCacheDir() + "/temp-photos/test");
         return field;
     }
 }

@@ -73,8 +73,8 @@
         <item>ᱴᱮᱜ ᱜᱮ</item>
     </string-array>
     <string-array name="new_order_labels">
-        <item>ᱨᱮᱱᱰᱚᱢ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰᱥ ᱛᱷᱟᱨ</item>
-        <item>ᱛᱷᱟᱨ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰᱥ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
+        <item>ᱨᱮᱱᱰᱚᱢ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱛᱷᱟᱨ</item>
+        <item>ᱛᱷᱟᱨ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
         <item>ᱢᱟᱨᱮ ᱧᱮᱞ ᱢᱟᱲᱟᱝ</item>
@@ -92,9 +92,9 @@
         <item>ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱧᱮᱞᱠᱟᱛᱮ ᱪᱤᱱᱛᱟᱭ ᱢᱮ</item>
     </string-array>
     <string-array name="new_spread_labels">
-        <item>ᱱᱟᱶᱟ ‌ᱠᱟᱰᱥ ᱟᱨ ᱫᱩᱦᱲᱟ‌ ᱧᱮᱞ ᱠᱚ ᱢᱮᱥᱟᱭ ᱢᱮ</item>
+        <item>ᱱᱟᱶᱟ ‌ᱠᱟᱰ ᱟᱨ ᱫᱩᱦᱲᱟ‌ ᱧᱮᱞ ᱠᱚ ᱢᱮᱥᱟᱭ ᱢᱮ</item>
         <item>ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱛᱟᱭᱚᱢ ᱱᱟᱶᱟ ᱠᱟᱰᱟ</item>
-        <item>ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱢᱟᱲᱟᱝ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰᱥ ᱧᱮᱞ</item>
+        <item>ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱢᱟᱲᱟᱝ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱧᱮᱞ</item>
     </string-array>
     <string-array name="override_font_labels">
         <item>ᱪᱮᱫ ᱦᱚᱸ ᱪᱤᱠᱤ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱱᱚᱶᱟ ᱯᱷᱞᱟᱥᱠᱟᱰ ᱞᱟᱹᱜᱤᱫ</item>
@@ -105,7 +105,7 @@
         <item>Plain</item>
     </string-array>
     <string-array name="night_theme_labels">
-        <item>Black</item>
-        <item>Dark</item>
+        <item>ᱦᱮᱸᱫᱮ</item>
+        <item>ᱧᱩᱛ</item>
     </string-array>
 </resources>

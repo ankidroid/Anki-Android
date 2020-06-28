@@ -120,6 +120,7 @@
     <string name="restore_backup">Ang iyong koleksyon ay mapapalitan ng mas lumang kopya. Ang anumang pag-unlad na hindi na - isave ay mawawala.</string>
     <string name="dialog_cancel">Kanselahin</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Magpatuloy</string>
     <string name="dialog_positive_create">Gumawa</string>
     <string name="dialog_positive_delete">Burahin</string>

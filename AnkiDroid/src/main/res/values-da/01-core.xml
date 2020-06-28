@@ -124,7 +124,7 @@
     <string name="menu_search">Slå op i %1$s</string>
     <string name="menu_mark_note">Markér note</string>
     <string name="menu_unmark_note">Fjern markering fra note</string>
-    <string name="menu_toggle_mic_tool_bar">Tjek Udtale</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Opret kortsæt</string>
     <string name="create">Opret</string>
     <string name="new_dynamic_deck">Opret filtreret dæk</string>

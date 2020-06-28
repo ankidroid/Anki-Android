@@ -119,6 +119,7 @@
     <string name="restore_backup">Вашата колекција ќе биде заменета со постара копија. Секој незачуван напредок ќе биде изгубен.</string>
     <string name="dialog_cancel">Откажи</string>
     <string name="dialog_ok">ОК</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Продолжи</string>
     <string name="dialog_positive_create">Креирај</string>
     <string name="dialog_positive_delete">Избриши</string>

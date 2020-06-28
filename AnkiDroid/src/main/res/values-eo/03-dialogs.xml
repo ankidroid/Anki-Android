@@ -119,6 +119,7 @@
     <string name="restore_backup">Via kolekto estos anstataŭigita per eksa kopio. Ĉiu nekonservita progreso perdiĝos.</string>
     <string name="dialog_cancel">Nuligi</string>
     <string name="dialog_ok">Bone</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Pluigi</string>
     <string name="dialog_positive_create">Krei</string>
     <string name="dialog_positive_delete">Forigi</string>

@@ -100,9 +100,9 @@
         <item quantity="many">%d карточек перепланированы</item>
         <item quantity="other">%d карточек перепланированы</item>
     </plurals>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Для импорта выберите колоду в файловом менеджере или посетите страницу about:downloads</string>
     <string name="answering_error_title">Ошибка в базе данных</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибка в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>
     <string name="repair_deck_dialog">Вы действительно хотите починить базу данных?\n\nПеред восстановлением копия базы данных будет помещена в папку \'%s\'.</string>
     <string name="intent_add_saved_information">Сохраненные данные</string>
@@ -131,6 +131,7 @@
     <string name="restore_backup">Ваша коллекция будет заменена более старой копией. Несохранённый прогресс будет потерян.</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Продолжить</string>
     <string name="dialog_positive_create">Создать</string>
     <string name="dialog_positive_delete">Удалить</string>
@@ -203,10 +204,10 @@
     <string name="image_max_size_allowed">Максимальный размер изображения – %d МБ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Нет разрешения на доступ к хранилищу. Предоставьте разрешение «Хранилище» и попробуйте снова.</string>
     <!-- Browser Appearance -->
     <string name="card_template_editor_card_browser_appearance_failed">Не удалось отобразить список карточек</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Не удалось установить напоминания</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_too_many_notifications">Запланировано слишком много напоминаний. Некоторые из них не будут показаны</string>
 </resources>

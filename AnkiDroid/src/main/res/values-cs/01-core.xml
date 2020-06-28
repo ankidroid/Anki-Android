@@ -134,7 +134,7 @@
     <string name="menu_search">Vyhledat v %1$s</string>
     <string name="menu_mark_note">Označit poznámku</string>
     <string name="menu_unmark_note">Odznačit poznámku</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Vytvořit balíček</string>
     <string name="create">Vytvořit</string>
     <string name="new_dynamic_deck">Vytvořit filtrovaný balíček</string>

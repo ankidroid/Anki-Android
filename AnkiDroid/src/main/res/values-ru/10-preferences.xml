@@ -79,8 +79,8 @@
     <string name="image_zoom">Масштаб картинок</string>
     <string name="button_size">Размер кнопки ответа</string>
     <string name="card_browser_font_size">Масштаб шрифта в списке карточек</string>
-    <string name="card_browser_hide_media">Показывать имена файлов в списке карточек</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media">Показывать имена файлов</string>
+    <string name="card_browser_hide_media_summary">Показывает имена медиафайлов в полях вопросов и ответов в списке карточек</string>
     <string name="col_path">Папка AnkiDroid</string>
     <string name="fullscreen_review">Полноэкранный режим</string>
     <string name="full_screen_off">Выключен</string>
@@ -95,7 +95,7 @@
     <string name="gestures">Включить жесты</string>
     <string name="gestures_summ">Назначает жесты действиям вроде ответа и правки</string>
     <string name="gestures_allow_links">Игнорировать жесты на ссылках</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links_summary">Жесты не будут учитываться, если нажата ссылка или подсказка.</string>
     <string name="gestures_swipe_up">Смахнуть наверх</string>
     <string name="gestures_swipe_down">Смахивание вниз</string>
     <string name="gestures_swipe_left">Смахивание влево</string>
@@ -105,6 +105,8 @@
     <string name="gestures_tap_bottom">Касание внизу</string>
     <string name="gestures_tap_left">Касание слева</string>
     <string name="gestures_tap_right">Касание справа</string>
+    <string name="gestures_volume_up">Volume up</string>
+    <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Также использовать клавиши kanji/katakana, emoji/kao-moji для прокрутки</string>
     <string name="card_browser_enable_external_context_menu">Пункт «%s» в меню</string>
@@ -151,8 +153,8 @@
     <string name="pref_backup_max">Число резервных копий</string>
     <string name="show_estimates">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Показывать верхнюю панель</string>
+    <string name="show_top_bar_summ">Показывает счётчик карточек и кнопки «Флажок» и «Отметить»</string>
     <string name="show_progress">Показать оставшиеся</string>
     <string name="show_progress_summ">Показывает число оставшихся карточек</string>
     <string name="show_eta">Показывать оценку времени</string>
@@ -198,9 +200,9 @@
     <string name="custom_sync_server_enable_title">Использовать пользовательский сервер</string>
     <string name="custom_sync_server_enable_summary">Если вы не хотите использовать AnkiWeb, то вы можете указать альтернативный сервер</string>
     <string name="custom_sync_server_base_url_title">URL для синхронизации</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">Недопустимый адрес синхронизации</string>
     <string name="custom_sync_server_media_url_title">URL для медиафайлов</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">Недопустимый адрес синхронизация медиафайлов</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Изменения конфигурации затронут несколько колод. Если вы хотите изменить только текущую колоду, сначала добавьте новую конфигурацию</string>
     <string name="studyoptions_limit_select_tags">Выберите метки</string>

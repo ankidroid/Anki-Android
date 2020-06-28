@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/whiteboard_pen_color"
+    android:visibility="gone">
+
+    <Button
+        android:id="@+id/pen_color_white"
+        android:background="@color/white"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"/>
+
+    <Button
+        android:id="@+id/pen_color_black"
+        android:background="@color/black"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"/>
+
+    <Button
+        android:id="@+id/pen_color_red"
+        android:background="@color/material_red_500"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"/>
+    <Button
+        android:id="@+id/pen_color_green"
+        android:background="@color/material_green_500"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"/>
+    <Button
+        android:id="@+id/pen_color_blue"
+        android:background="@color/material_blue_500"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"/>
+    <Button
+        android:id="@+id/pen_color_yellow"
+        android:background="@color/material_yellow_500"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"/>
+
+</LinearLayout>

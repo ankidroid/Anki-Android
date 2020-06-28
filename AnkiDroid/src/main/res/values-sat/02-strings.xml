@@ -48,7 +48,7 @@
     <string name="CardEditorNoteDeck">ᱰᱮᱠᱺ</string>
     <string name="CardEditorModel">ᱯᱨᱚᱠᱟᱨᱺ</string>
     <string name="CardEditorTags">ᱴᱮᱜᱥᱺ%1$s</string>
-    <string name="CardEditorCards">ᱠᱟᱰᱥᱺ%1$s</string>
+    <string name="CardEditorCards">ᱠᱟᱰᱺ%1$s</string>
     <string name="tag_name">ᱴᱮᱜ ᱧᱩᱛᱩᱢ</string>
     <string name="add_new_filter_tags">ᱥᱮᱞᱮᱫ/ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ</string>
     <string name="add_tag">ᱴᱮᱜ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
@@ -58,6 +58,7 @@
     <string name="sdcard_missing_message">USB ᱥᱴᱚᱨᱮᱡ ᱵᱚᱸᱫ ᱞᱮᱠᱷᱟᱱ ᱰᱮᱠᱥ ᱨᱮ ᱦᱚᱠ ᱮᱢ ᱧᱮᱢ ᱟᱢ</string>
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ </string>
     <!-- Reviewer.java -->
+    <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ</string>
     <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ</string>
     <string name="show_whiteboard">ᱥᱤᱠᱮᱴ ᱫᱮᱠᱷᱟᱣ ᱢᱮ</string>
@@ -146,14 +147,14 @@
     <string name="default_conf_delete_error">ᱟᱯᱱᱟᱨ ᱢᱚᱱᱮ ᱛᱮᱭᱟᱜ ᱫᱚᱞ ᱵᱟᱭ ᱚᱰᱚᱠ ᱦᱩᱭᱩᱜᱼᱟ</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
-        <item quantity="other">%d ᱠᱟᱰᱥ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
+        <item quantity="other">%d ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
     </plurals>
     <string name="help_title">ᱜᱚᱸᱲᱚᱸ</string>
     <string name="check_db">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ</string>
     <string name="check_media">ᱢᱤᱰᱤᱭᱟ ᱪᱮᱠ ᱢᱮ</string>
-    <string name="empty_cards">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰᱥ ᱠᱚ</string>
+    <string name="empty_cards">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰ ᱠᱚ</string>
     <string name="check_db_message">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠᱚᱜ ᱠᱟᱱᱟ</string>
-    <string name="empty_card_warning">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱱᱩᱬᱤ ᱜᱮᱭᱟ ᱾ \"ᱱᱩᱬᱤ ᱠᱟᱰᱥ\" ᱰᱮᱠ ᱥᱠᱨᱤᱱ ᱛᱟᱞᱠᱟ ᱢᱮᱱᱩ ᱠᱷᱚᱱ ᱪᱚᱭᱚᱱ ᱢᱮ ᱾</string>
+    <string name="empty_card_warning">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱱᱩᱬᱤ ᱜᱮᱭᱟ ᱾ \"ᱱᱩᱬᱤ ᱠᱟᱰ\" ᱰᱮᱠ ᱥᱠᱨᱤᱱ ᱛᱟᱞᱠᱟ ᱢᱮᱱᱩ ᱠᱷᱚᱱ ᱪᱚᱭᱚᱱ ᱢᱮ ᱾</string>
     <string name="unknown_type_field_warning">ᱨᱚᱲ ᱴᱟᱭᱤᱯ ᱢᱮᱺ ᱵᱚᱭ ᱵᱟᱰᱟᱭᱠᱟᱱ ᱡᱟᱭᱜᱟ %s</string>
     <string name="delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="show_hint">ᱫᱮᱠᱷᱟᱣ %s</string>
@@ -270,4 +271,8 @@
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">ᱡᱟᱵᱷᱟᱥᱨᱤᱯᱴ ᱛᱮ ᱱᱮᱵᱷᱤᱠᱮᱥᱚᱱ ᱰᱨᱣᱟᱹᱨ ᱫᱮᱠᱷᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱯᱷᱩᱞᱼᱥᱠᱨᱤᱱ ᱚᱱ ᱛᱟᱢ ᱾</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">ᱡᱟᱵᱷᱟᱥᱨᱤᱯᱴ ᱛᱮ ᱚᱯᱥᱚᱱ ᱢᱮᱱᱩ ᱫᱮᱠᱷᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱯᱷᱩᱞᱼᱥᱠᱨᱤᱱ ᱚᱱ ᱛᱟᱢ ᱾</string>
+    <!-- Whiteboard save image message in Reviewer -->
+    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
+    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
+    <string name="title_whiteboard_pen_color">Pen color</string>
 </resources>

@@ -35,7 +35,8 @@ if grep -RHn '%' res/values* |
  grep -v '%[0-9][0-9]\?$d' |  # Multiple decimal variable
  grep -v '%1$.1f'   | # ?
  grep -v '%.1f'     |
- grep -v '%\\n'
+ grep -v '%\\n'     |
+ grep -v 'stats_overview_card_types_'
 then
  echo "Found grep errors but if you are not on macOS they are likely false positive. Ignoring"
  #EXIT_STATUS=$((EXIT_STATUS + 1))

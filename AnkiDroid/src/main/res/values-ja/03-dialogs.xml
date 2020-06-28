@@ -113,6 +113,7 @@
     <string name="restore_backup">現在のコレクション（全デッキ）が、以前バックアップしたものに置き換えられます。また、バックアップ後に変更した内容は全て失われます。</string>
     <string name="dialog_cancel">キャンセル</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">続行</string>
     <string name="dialog_positive_create">作成</string>
     <string name="dialog_positive_delete">削除</string>

@@ -25,6 +25,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
 import android.view.Menu;
@@ -39,6 +40,7 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.BasicControllerFactory;
+import com.ichi2.anki.multimediacard.fields.BasicImageFieldController;
 import com.ichi2.anki.multimediacard.fields.EFieldType;
 import com.ichi2.anki.multimediacard.fields.IControllerFactory;
 import com.ichi2.anki.multimediacard.fields.IField;
@@ -48,6 +50,7 @@ import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.utils.Permissions;
 
 import java.io.File;
+import java.text.DecimalFormat;
 
 import timber.log.Timber;
 
@@ -65,6 +68,8 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     private static final int REQUEST_AUDIO_PERMISSION = 0;
     private static final int REQUEST_CAMERA_PERMISSION = 1;
 
+    public static final int sImageLimit = 1024 * 1024; // 1MB in bytes
+
     private IField mField;
     private IMultimediaEditableNote mNote;
     private int mFieldIndex;
@@ -80,9 +85,13 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Bundle controllerBundle = null;
         if (savedInstanceState != null) {
+            Timber.i("onCreate - saved bundle exists");
             boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
-            if (b) {
+            controllerBundle = savedInstanceState.getBundle("controllerBundle");
+            if (controllerBundle == null && b) {
+                Timber.i("onCreate - saved bundle has BUNDLE_KEY_SHUT_OFF and no controller bundle, terminating");
                 finishCancel();
                 return;
             }
@@ -105,7 +114,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return;
         }
 
-        recreateEditingUi(ChangeUIRequest.init(mField));
+        recreateEditingUi(ChangeUIRequest.init(mField), controllerBundle);
     }
 
     @VisibleForTesting
@@ -142,14 +151,19 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     }
 
     /** Sets various properties required for IFieldController to be in a valid state */
-    private void setupUIController(IFieldController fieldController) {
+    private void setupUIController(IFieldController fieldController, @Nullable Bundle savedInstanceState) {
         fieldController.setField(mField);
         fieldController.setFieldIndex(mFieldIndex);
         fieldController.setNote(mNote);
         fieldController.setEditingActivity(this);
+        fieldController.loadInstanceState(savedInstanceState);
     }
 
     private void recreateEditingUi(ChangeUIRequest newUI) {
+        this.recreateEditingUi(newUI, null);
+    }
+
+    private void recreateEditingUi(ChangeUIRequest newUI, @Nullable Bundle savedInstanceState) {
         Timber.d("recreateEditingUi()");
 
         //Permissions are checked async, save our current state to allow continuation
@@ -167,7 +181,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         IFieldController fieldController = controllerFactory.createControllerForField(newUI.getField());
 
         if (fieldController == null) {
-            Timber.d("Field controller creation failed");
+            Timber.w("Field controller creation failed");
             UIRecreationHandler.onControllerCreationFailed(newUI, this);
             return;
         }
@@ -177,7 +191,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         mFieldController = fieldController;
         mField = newUI.getField();
 
-        setupUIController(mFieldController);
+        setupUIController(mFieldController, savedInstanceState);
 
         LinearLayout linearLayout = findViewById(R.id.LinearLayoutInScrollViewFieldEdit);
 
@@ -237,10 +251,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
 
     protected void done() {
-
         mFieldController.onDone();
-
-        Intent resultData = new Intent();
 
         boolean bChangeToText = false;
 
@@ -253,6 +264,12 @@ public class MultimediaEditFieldActivity extends AnkiActivity
                 File f = new File(mField.getImagePath());
                 if (!f.exists()) {
                     bChangeToText = true;
+                } else {
+                    long length = f.length();
+                    if (length > sImageLimit) {
+                        showLargeFileCropDialog((float) (1.0 * length / sImageLimit));
+                        return;
+                    }
                 }
             }
         } else if (mField.getType() == EFieldType.AUDIO_RECORDING) {
@@ -271,13 +288,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         if (bChangeToText) {
             mField = new TextField();
         }
-
-        resultData.putExtra(EXTRA_RESULT_FIELD, mField);
-        resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex);
-
-        setResult(RESULT_OK, resultData);
-
-        finishWithoutAnimation();
+        saveAndExit();
     }
 
 
@@ -379,22 +390,49 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         recreateEditingUi(ChangeUIRequest.fieldChange(newField));
     }
 
+    public void showLargeFileCropDialog(float length) {
+        BasicImageFieldController imageFieldController = (BasicImageFieldController) mFieldController;
+        DecimalFormat decimalFormat = new DecimalFormat(".00");
+        String size = decimalFormat.format(length);
+        String content = getString(R.string.save_dialog_content, size);
+        imageFieldController.showCropDialog(content, (dialog, which) -> saveAndExit());
+    }
+
+
+    private void saveAndExit() {
+        Intent resultData = new Intent();
+        resultData.putExtra(EXTRA_RESULT_FIELD, mField);
+        resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex);
+        setResult(RESULT_OK, resultData);
+        finishWithoutAnimation();
+    }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-
         if (mFieldController != null) {
             mFieldController.onDestroy();
         }
-
+        super.onDestroy();
     }
 
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        Timber.d("onSaveInstanceState - saving state");
+
+        // This is used to tell the whole activity to shut down if it is restored from Activity restart.
+        // Why? I am not really sure. Perhaps to avoid terrible bugs due to not implementing things correctly?
         outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);
+
+        // We will give field controllers a chance to save / restore across restarts though.
+        // If this bundle is not null, on restore, we should continue across Activity restart.
+        if (mFieldController != null) {
+            Bundle controllerBundle = mFieldController.saveInstanceState();
+            if (controllerBundle != null) {
+                outState.putBundle("controllerBundle", mFieldController.saveInstanceState());
+            }
+        }
+        super.onSaveInstanceState(outState);
     }
 
     /** Intermediate class to hold state for the onRequestPermissionsResult callback */

@@ -58,13 +58,14 @@
     <string name="sdcard_missing_message">Отключите режим передачи файлов по USB, чтобы получить доступ к колодам</string>
     <string name="updated_version">Обновлено до версии %s</string>
     <!-- Reviewer.java -->
+    <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Включить доску</string>
     <string name="disable_whiteboard">Отключить доску</string>
     <string name="show_whiteboard">Показать доску</string>
     <string name="hide_whiteboard">Скрыть доску</string>
     <string name="clear_whiteboard">Стереть с доски</string>
     <string name="replay_audio">Проиграть звук</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="toggle_mic_tool_bar">Проверить произношение</string>
     <string name="leech_suspend_notification">Карточка помечена как приставучая и исключена</string>
     <string name="leech_notification">Карточка помечена как приставучая</string>
     <string name="corrupt_font">Файл шрифта %s повреждён</string>
@@ -112,7 +113,7 @@
     <string name="note_editor_no_cards_created">Карточки не созданы. Заполните больше полей</string>
     <string name="note_editor_no_first_field">Первое поле пусто</string>
     <string name="note_editor_no_cloze_delations">Этот тип записи должен содержать задание с пропусками</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_no_cards_created_all_fields">Текущий тип записи не производит никаких карточек.\nВыберите другой тип записи или нажмите «Карты» и добавьте подстановку поля</string>
     <string name="saving_facts">Запись сохраняется</string>
     <string name="saving_model">Тип записи сохраняется</string>
     <string name="add">Добавить</string>
@@ -171,18 +172,18 @@
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
     <string name="import_message_add_confirm">Добавить \"%s\" в коллекцию? Это может занять много времени</string>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Не удается обработать запрос на импорт</string>
+    <string name="import_log_failed_unzip">Не удалось распаковать apkg: %s</string>
+    <string name="import_log_failed_copy_to">Не удалось скопировать apkg в %s</string>
+    <string name="import_log_failed_validate">Не удалось проверить apkg</string>
+    <string name="import_log_insufficient_space">Недостаточно места для распаковки. Требуется %1$d, но доступно %2$d</string>
+    <string name="import_log_file_cache_cleared">Ошибка при импорте файла: скорее всего, был очищен кеш. Попробуйте снова</string>
+    <string name="import_succeeded_but_check_database">Импорт данных удался, но очистка — нет. Выполните проверку базы данных. Главная причина: %s</string>
+    <string name="import_error_unhandled_request">Не удаётся обработать запрос на импорт</string>
     <string name="import_error_exception">Не удалось импортировать пакет\n\n%s</string>
     <string name="import_error_not_apkg_extension">У файла “%s” должно быть расширение .apkg или .colpkg</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_error_load_imported_database">Замена базы данных Anki (.anki2) пока не поддерживается. Смотрите руководство для инструкций по замене.</string>
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() не удалось. Возможно недостаточно места</string>
     <string name="import_replacing">Коллекция заменяется&#8230;</string>
     <string name="import_interrupted">Импорт прерван</string>
     <string name="export_include_schedule">Вместе с расписанием</string>
@@ -291,6 +292,10 @@
     <string name="restore_default">Сбросить настройки</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пусто</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Включите полноэкранный режим для показа панели навигации с помощью JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Включите полноэкранный режим для показа меню параметров с помощью JavaScript.</string>
+    <!-- Whiteboard save image message in Reviewer -->
+    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
+    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
+    <string name="title_whiteboard_pen_color">Pen color</string>
 </resources>

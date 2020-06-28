@@ -105,6 +105,8 @@
     <string name="gestures_tap_bottom">नीचे स्पर्श करें</string>
     <string name="gestures_tap_left">बाएं स्पर्श करें</string>
     <string name="gestures_tap_right">दाएं स्पर्श करें</string>
+    <string name="gestures_volume_up">Volume up</string>
+    <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">ई-रीडर</string>
     <string name="more_scrolling_buttons_summ">साथ ही स्क्रॉलिंग के लिए कांजी/कतकान, इमोजी/काओ-मोजी बटन का उपयोग करें</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>

@@ -41,7 +41,7 @@
     <string name="check_db_title">Datenbank überprüfen?</string>
     <string name="check_db_warning">Dies kann lange dauern</string>
     <string name="check_db_acknowledge">Datenbank überprüft</string>
-    <string name="check_db_acknowledge_shrunk">Datenbank wurde überprüft und optimiert.\nDie Größe wurde um %d MB reduziert.</string>
+    <string name="check_db_acknowledge_shrunk">Datenbank überprüft und optimiert.\nGröße um %d MB reduziert.</string>
     <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
     <string name="delete_deck_default_deck">Der Standardstapel kann nicht gelöscht werden</string>
     <string name="delete_deck_title">Stapel löschen?</string>
@@ -119,6 +119,7 @@
     <string name="restore_backup">Ihre Sammlung wird durch eine ältere Kopie ersetzt. Nicht gespeicherte Lernfortschritte gehen verloren.</string>
     <string name="dialog_cancel">Abbrechen</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">Weiter</string>
     <string name="dialog_positive_create">Erstellen</string>
     <string name="dialog_positive_delete">Löschen</string>

@@ -119,6 +119,7 @@
     <string name="restore_backup">आपका संग्रह किसी पुरानी प्रतिलिपि से बदल दिया जाएगा । कोई भी न सहेजा गया प्रगति खो जाएगी ।</string>
     <string name="dialog_cancel">रद्द करें</string>
     <string name="dialog_ok">ठीक है</string>
+    <string name="dialog_no">No</string>
     <string name="dialog_continue">जारी रखें</string>
     <string name="dialog_positive_create">बनाएँ</string>
     <string name="dialog_positive_delete">हटाएँ</string>

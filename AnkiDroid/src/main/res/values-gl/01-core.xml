@@ -124,7 +124,7 @@
     <string name="menu_search">Procurar en %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
-    <string name="menu_toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Crear baralla</string>
     <string name="create">Crear</string>
     <string name="new_dynamic_deck">Crear baralla filtrada</string>

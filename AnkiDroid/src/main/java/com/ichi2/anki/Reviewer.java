@@ -79,7 +79,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
-
+    private LinearLayout colorPalette;
 
     private ActionButtons mActionButtons = new ActionButtons(this);
 
@@ -130,6 +130,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             Timber.d("onCreate() :: received Intent with action = %s", getIntent().getAction());
             selectDeckFromExtra();
         }
+
+        colorPalette = (LinearLayout) findViewById(R.id.whiteboard_pen_color);
 
         startLoadingCollection();
     }
@@ -321,6 +323,11 @@ public class Reviewer extends AbstractFlashcardViewer {
                 showDeleteNoteDialog();
                 break;
 
+            case R.id.action_change_whiteboard_pen_color:
+                Timber.i("Reviewer:: Pen Color button pressed");
+                colorPalette.setVisibility(View.VISIBLE);
+                break;
+
             case R.id.action_save_whiteboard:
                 Timber.i("Reviewer:: Save whiteboard button pressed");
                 if (mWhiteboard != null) {
@@ -403,6 +410,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         return true;
     }
+
 
     private void toggleMicToolBar() {
         if (mMicToolBar != null) {
@@ -537,16 +545,27 @@ public class Reviewer extends AbstractFlashcardViewer {
             }
 
             menu.findItem(R.id.action_save_whiteboard).setVisible(true);
+            menu.findItem(R.id.action_change_whiteboard_pen_color).setVisible(true);
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp).mutate();
+            Drawable whiteboardColorPaletteIcon = ContextCompat.getDrawable(this, R.drawable.ic_color_lens_white_24dp).mutate();
+
             if (mShowWhiteboard) {
                 whiteboardIcon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
+
+                whiteboardColorPaletteIcon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
+                menu.findItem(R.id.action_change_whiteboard_pen_color).setIcon(whiteboardColorPaletteIcon);
             } else {
                 whiteboardIcon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
+
+                whiteboardColorPaletteIcon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
+                menu.findItem(R.id.action_change_whiteboard_pen_color).setEnabled(false);
+                menu.findItem(R.id.action_change_whiteboard_pen_color).setIcon(whiteboardColorPaletteIcon);
+                colorPalette.setVisibility(View.GONE);
             }
         } else {
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.enable_whiteboard);
