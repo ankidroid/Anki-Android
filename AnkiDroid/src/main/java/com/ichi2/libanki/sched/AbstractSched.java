@@ -15,6 +15,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -320,6 +321,29 @@ public abstract class AbstractSched {
                 limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1));
                 if (addRev) {
                     limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1));
+                }
+            }
+        }
+
+        /**
+         * deckDueTree().toList is not the same as deckDueList because:
+         * * the list obtained here is ordered
+         * * the number takes children into account
+         *
+         * @return This deck and all its descendants.
+         */
+        public List<DeckDueTreeNode> toList() {
+            List<DeckDueTreeNode> list = new LinkedList<>();
+            toList(list);
+            return list;
+        }
+
+        /** Add this elements and all of its children to list.*/
+        private void toList(List<DeckDueTreeNode> list) {
+            list.add(this);
+            if (mChildren != null) {
+                for (DeckDueTreeNode child : mChildren) {
+                    child.toList(list);
                 }
             }
         }

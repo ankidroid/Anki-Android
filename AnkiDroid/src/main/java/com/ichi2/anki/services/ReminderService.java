@@ -31,7 +31,11 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ReminderService extends BroadcastReceiver {
 
@@ -113,8 +117,10 @@ public class ReminderService extends BroadcastReceiver {
 
         try {
             for (Sched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree()) {
-                if (node.getDid() == deckId) {
-                    return node;
+                for (Sched.DeckDueTreeNode node_ : node.toList()) {
+                    if (node_.getDid() == deckId) {
+                        return node_;
+                    }
                 }
             }
         } catch (Exception e) {
