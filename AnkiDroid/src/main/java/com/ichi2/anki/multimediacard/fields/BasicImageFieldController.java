@@ -320,7 +320,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
 
             // Some apps send this back with app-specific data, direct the user to another app
-            if (resultCode == Activity.RESULT_FIRST_USER) {
+            if (resultCode >= Activity.RESULT_FIRST_USER) {
                 UIUtils.showThemedToast(mActivity, mActivity.getString(R.string.activity_result_unexpected), true);
             }
             return;
