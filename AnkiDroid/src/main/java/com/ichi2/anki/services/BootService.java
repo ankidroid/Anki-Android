@@ -90,23 +90,17 @@ public class BootService extends BroadcastReceiver {
 
     private void scheduleDeckReminder(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        for (JSONObject deck : CollectionHelper.getInstance().getCol(context).getDecks().all()) {
+        for (JSONObject deckConfiguration : CollectionHelper.getInstance().getCol(context).getDecks().allConf()) {
             Collection col = CollectionHelper.getInstance().getCol(context);
-            if (col.getDecks().isDyn(deck.getLong("id"))) {
-                continue;
-            }
-            final long deckConfigurationId = deck.getLong("conf");
-            final JSONObject deckConfiguration = col.getDecks().getConf(deckConfigurationId);
-
             if (deckConfiguration.has("reminder")) {
                 final JSONObject reminder = deckConfiguration.getJSONObject("reminder");
 
                 if (reminder.getBoolean("enabled")) {
                     final PendingIntent reminderIntent = PendingIntent.getBroadcast(
                                                                                     context,
-                                                                                    (int) deck.getLong("id"),
-                                                                                    new Intent(context, ReminderService.class).putExtra(ReminderService.EXTRA_DECK_ID,
-                                                                                                                                        deck.getLong("id")),
+                                                                                    (int) deckConfiguration.getLong("id"),
+                                                                                    new Intent(context, ReminderService.class).putExtra(ReminderService.EXTRA_DECK_OPTION_ID,
+                                                                                            deckConfiguration.getLong("id")),
                                                                                     0
                                                                                     );
                     final Calendar calendar = Calendar.getInstance();
