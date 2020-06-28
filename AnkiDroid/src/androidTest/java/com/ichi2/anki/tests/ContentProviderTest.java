@@ -49,12 +49,13 @@ import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -68,8 +69,17 @@ import static org.junit.Assert.fail;
  * <p/>
  * These tests should cover all supported operations for each URI.
  */
-@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
-public class ContentProviderTest {
+@RunWith(Parameterized.class)
+public class ContentProviderTest extends InstrumentedTest {
+
+    @Parameterized.Parameter()
+    public int schedVersion;
+
+    @Parameterized.Parameters
+    public static java.util.Collection<Object[]> initParameters() {
+        // This does one run with schedVersion injected as 1, and one run as 2
+        return Arrays.asList(new Object[][] { { 1 }, { 2 } });
+    }
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
@@ -115,10 +125,15 @@ public class ContentProviderTest {
      * Initially create one note for each model.
      */
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         Log.i(AnkiDroidApp.TAG, "setUp()");
         mCreatedNotes = new ArrayList<>();
         final Collection col = getCol();
+
+        // We have parameterized the "schedVersion" variable, if we are on an emulator
+        // (so it is safe) we will try to run with multiple scheduler versions
+        if (InstrumentedTest.isEmulator()) col.changeSchedulerVer(schedVersion);
+
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         mModelId = model.getLong("id");
@@ -1006,8 +1021,11 @@ public class ContentProviderTest {
 
     /** Test that a null did will not crash the provider (#6378) */
      @Test
-     @Ignore("#6025 - This causes mild data corruption - should not be run on actual collection")
      public void testProviderProvidesDefaultForEmptyModelDeck() {
+         if (!isEmulator()) {
+             // This causes mild data corruption - should not be run on actual collection"
+             return;
+         }
          Collection col = getCol();
          col.getModels().all().get(0).put("did", JSONObject.NULL);
          col.save();
