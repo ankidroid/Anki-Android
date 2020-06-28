@@ -14,7 +14,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 

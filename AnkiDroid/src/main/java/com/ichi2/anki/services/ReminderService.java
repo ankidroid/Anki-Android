@@ -34,7 +34,6 @@ import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.sched.AbstractSched;
-import com.ichi2.libanki.sched.Sched;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
@@ -91,13 +90,13 @@ public class ReminderService extends BroadcastReceiver {
         if (!notificationManager.areNotificationsEnabled()) {
             return;
         }
-        List<Sched.DeckDueTreeNode> decksDue = getDeckOptionDue(context, dConfId, true);
+        List<AbstractSched.DeckDueTreeNode> decksDue = getDeckOptionDue(context, dConfId, true);
 
         if (null == decksDue) {
             return;
         }
 
-        for (Sched.DeckDueTreeNode deckDue: decksDue) {
+        for (AbstractSched.DeckDueTreeNode deckDue: decksDue) {
             long deckId = deckDue.getDid();
             final int total = deckDue.getRevCount() + deckDue.getLrnCount() + deckDue.getNewCount();
 
@@ -141,7 +140,7 @@ public class ReminderService extends BroadcastReceiver {
 
     // getDeckOptionDue information, will recur one time to workaround collection close if recur is true
     @Nullable
-    private List<Sched.DeckDueTreeNode> getDeckOptionDue(Context context, long dConfId, boolean recur) {
+    private List<AbstractSched.DeckDueTreeNode> getDeckOptionDue(Context context, long dConfId, boolean recur) {
 
         Collection col = CollectionHelper.getInstance().getCol(context);
         // Avoid crashes if the deck option group is deleted while we
@@ -151,10 +150,10 @@ public class ReminderService extends BroadcastReceiver {
             return null;
         }
 
-        List<Sched.DeckDueTreeNode> decks = new ArrayList<>();
+        List<AbstractSched.DeckDueTreeNode> decks = new ArrayList<>();
         try {
             // This loop over top level deck only. No notification will ever occur for subdecks.
-            for (Sched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree()) {
+            for (AbstractSched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree()) {
                 JSONObject deck = col.getDecks().get(node.getDid(), false);
                 // Dynamic deck has no "conf", so are not added here.
                 if (deck != null && deck.optLong("conf") == dConfId) {
