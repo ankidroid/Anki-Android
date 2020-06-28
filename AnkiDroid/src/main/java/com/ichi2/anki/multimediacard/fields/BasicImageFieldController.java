@@ -276,7 +276,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Timber.d("onActivityResult()");
         if (resultCode != Activity.RESULT_OK) {
-            Timber.d("Activity was cancelled");
+            Timber.d("Activity was not successful");
             // Restore the old version of the image if the user cancelled
             switch (requestCode) {
                 case ACTIVITY_TAKE_PICTURE:
@@ -288,6 +288,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                     break;
                 default:
                     break;
+            }
+
+            // Some apps send this back with app-specific data, direct the user to another app
+            if (resultCode == Activity.RESULT_FIRST_USER) {
+                UIUtils.showThemedToast(mActivity, mActivity.getString(R.string.activity_result_unexpected), true);
             }
             return;
         }
