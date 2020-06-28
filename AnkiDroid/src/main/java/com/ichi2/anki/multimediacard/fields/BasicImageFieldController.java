@@ -20,7 +20,6 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ContentUris;
@@ -110,11 +109,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     public void loadInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            Timber.d("loadInstanceState but null so nothing to load");
+            Timber.i("loadInstanceState but null so nothing to load");
             return;
         }
 
-        Timber.d("loadInstanceState loading saved state...");
+        Timber.i("loadInstanceState loading saved state...");
         mImagePath = savedInstanceState.getString("mImagePath");
         mImageUri = savedInstanceState.getParcelable("mImageUri");
         mPreviousImagePath = savedInstanceState.getString("mPreviousImagePath");
@@ -131,8 +130,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         return savedInstanceState;
     }
 
-    // The NewApi deprecation should be removed with API21
-    @SuppressLint("NewApi")
     @Override
     public void createUI(Context context, LinearLayout layout) {
         Timber.d("createUI()");
@@ -252,7 +249,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    @SuppressLint("NewApi") //Conditionally called anything which requires API 16+.
     private void drawUIComponents(Context context) {
         mImagePreview = new ImageView(mActivity);
 
@@ -422,7 +418,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             try {
                 inputStream = mActivity.getContentResolver().openInputStream(uri);
             } catch (Exception e) {
-                Timber.i(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri);
+                Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri);
                 showSomethingWentWrong();
                 return null;
             }

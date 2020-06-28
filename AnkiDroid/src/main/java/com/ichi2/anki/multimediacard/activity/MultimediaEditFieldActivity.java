@@ -22,7 +22,6 @@ package com.ichi2.anki.multimediacard.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,7 +33,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
@@ -54,7 +52,6 @@ import com.ichi2.utils.Permissions;
 import java.io.File;
 import java.text.DecimalFormat;
 
-import androidx.core.content.FileProvider;
 import timber.log.Timber;
 
 public class MultimediaEditFieldActivity extends AnkiActivity
@@ -90,11 +87,11 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         Bundle controllerBundle = null;
         if (savedInstanceState != null) {
-            Timber.d("onCreate - saved bundle exists");
+            Timber.i("onCreate - saved bundle exists");
             boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
             controllerBundle = savedInstanceState.getBundle("controllerBundle");
             if (controllerBundle == null && b) {
-                Timber.d("onCreate - saved bundle does has BUNDLE_KEY_SHUT_OFF and no controller bundle, terminating");
+                Timber.i("onCreate - saved bundle has BUNDLE_KEY_SHUT_OFF and no controller bundle, terminating");
                 finishCancel();
                 return;
             }
@@ -184,7 +181,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         IFieldController fieldController = controllerFactory.createControllerForField(newUI.getField());
 
         if (fieldController == null) {
-            Timber.d("Field controller creation failed");
+            Timber.w("Field controller creation failed");
             UIRecreationHandler.onControllerCreationFailed(newUI, this);
             return;
         }
