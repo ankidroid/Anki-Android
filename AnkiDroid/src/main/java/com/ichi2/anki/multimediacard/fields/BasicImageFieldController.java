@@ -627,7 +627,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             uri = FileProvider.getUriForFile(mActivity, mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider", file);
         } else {
-            uri = getUriForFile(file);
+            uri = Uri.fromFile(file);
         }
         return uri;
     }
