@@ -199,10 +199,18 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                     cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 }
 
-                if (cameraIntent.resolveActivity(context.getPackageManager()) != null) {
-                    mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
-                } else {
+                if (cameraIntent.resolveActivity(context.getPackageManager()) == null) {
                     Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent");
+                    showSomethingWentWrong();
+                    onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null);
+                    return;
+                }
+                try {
+                    mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
+                } catch (Exception e) {
+                    Timber.w(e, "Unable to take picture");
+                    showSomethingWentWrong();
+                    onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null);
                 }
             } catch (IOException e) {
                 Timber.w(e, "mBtnCamera::onClickListener() unable to prepare file and launch camera");
@@ -513,7 +521,13 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString()); // worked w/crop but not edit
         intent.putExtra("noFaceDetection", true); // no face detection
-        mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(intent, null), ACTIVITY_CROP_PICTURE);
+        try {
+            mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(intent, null), ACTIVITY_CROP_PICTURE);
+        } catch (Exception e) {
+            Timber.w(e, "requestCrop unable to start cropping activity for Uri %s", mPreviousImageUri);
+            showSomethingWentWrong();
+            onActivityResult(ACTIVITY_CROP_PICTURE, Activity.RESULT_CANCELED, null);
+        }
     }
 
 
