@@ -179,12 +179,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             File image;
             try {
-                // Store the old image path for deletion / error handling if the user cancels
-                if (mPreviousImagePath != null && !(new File(mPreviousImagePath).delete())) {
-                    Timber.i("CameraButton onClickListener() unable to delete previous image file");
-                }
-                mPreviousImagePath = mImagePath;
-                mPreviousImageUri = mImageUri;
+                saveImageForRevert();
 
                 // Create a new image for the camera result to land in, clear the URI
                 image = createNewCacheFile();
@@ -238,6 +233,22 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mCropButton, ViewGroup.LayoutParams.MATCH_PARENT);
     }
+
+
+    private void saveImageForRevert() {
+        deletePreviousImage();
+        mPreviousImagePath = mImagePath;
+        mPreviousImageUri = mImageUri;
+    }
+
+
+    private void deletePreviousImage() {
+        // Store the old image path for deletion / error handling if the user cancels
+        if (mPreviousImagePath != null && !(new File(mPreviousImagePath).delete())) {
+            Timber.i("deletePreviousImage() unable to delete previous image file");
+        }
+    }
+
 
     private File createNewCacheFile() throws IOException {
         return createNewCacheFile("jpg");
@@ -309,11 +320,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 case ACTIVITY_TAKE_PICTURE:
                 case ACTIVITY_CROP_PICTURE:
                     if (!TextUtils.isEmpty(mPreviousImagePath)) {
-                        mImagePath = mPreviousImagePath;
-                        mField.setImagePath(mImagePath);
-                        mImageUri = mPreviousImageUri;
-                        mPreviousImagePath = null;
-                        mPreviousImageUri = null;
+                        revertToPreviousImage();
                     }
                     break;
                 default:
@@ -347,6 +354,20 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             return;
         }
         setPreviewImage(mImagePath, getMaxImageSize());
+    }
+
+
+    private void revertToPreviousImage() {
+        if (mImagePath != null && new File(mImagePath).exists()) {
+            if (!new File(mImagePath).delete()) {
+                Timber.i("revertToPreviousImage() had existing image, but delete failed");
+            }
+        }
+        mImagePath = mPreviousImagePath;
+        mField.setImagePath(mImagePath);
+        mImageUri = mPreviousImageUri;
+        mPreviousImagePath = null;
+        mPreviousImageUri = null;
     }
 
 
@@ -445,9 +466,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     @Override
     public void onDone() {
-        if (mPreviousImagePath != null && !(new File(mPreviousImagePath).delete())) {
-            Timber.i("onDone() unable to delete previous image file");
-        }
+        deletePreviousImage();
     }
 
 
@@ -556,12 +575,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             return;
         }
 
-        // Save the previous image in case user cancels
-        if (mPreviousImagePath != null && !(new File(mPreviousImagePath).delete())) {
-            Timber.i("requestCrop() unable to delete previous image file");
-        }
-        mPreviousImagePath = mImagePath;
-        mPreviousImageUri = mImageUri;
+        saveImageForRevert();
         mImagePath = image.getPath();
         mImageUri = Uri.fromFile(image); // This must be the file URL it will not work with a content URI
         mField.setImagePath(mImagePath);
