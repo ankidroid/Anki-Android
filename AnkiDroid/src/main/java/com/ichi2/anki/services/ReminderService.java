@@ -63,6 +63,10 @@ public class ReminderService extends BroadcastReceiver {
             alarmManager.cancel(reminderIntent);
         }
 
+        final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        if (!notificationManager.areNotificationsEnabled()) {
+            return;
+        }
         List<Sched.DeckDueTreeNode> decksDue = getDeckOptionDue(context, dConfId, true);
 
         if (null == decksDue) {
@@ -77,33 +81,30 @@ public class ReminderService extends BroadcastReceiver {
                 continue;
             }
 
-            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
             Timber.v("Notify: study deck %s", deckDue.getFullDeckName());
-            if (notificationManager.areNotificationsEnabled()) {
-                final Notification notification =
-                        new NotificationCompat.Builder(context,
-                                NotificationChannels.getId(NotificationChannels.Channel.DECK_REMINDERS))
-                                .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                                .setContentTitle(context.getString(R.string.reminder_title))
-                                .setContentText(context.getResources().getQuantityString(
-                                        R.plurals.reminder_text,
-                                        total,
-                                        CollectionHelper.getInstance().getCol(context).getDecks().name(deckId),
-                                        total
-                                ))
-                                .setSmallIcon(R.drawable.ic_stat_notify)
-                                .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
-                                .setContentIntent(PendingIntent.getActivity(
-                                        context,
-                                        (int) deckId,
-                                        getReviewDeckIntent(context, deckId),
-                                        PendingIntent.FLAG_UPDATE_CURRENT
-                                ))
-                                .setAutoCancel(true)
-                                .build();
+            final Notification notification =
+                new NotificationCompat.Builder(context,
+                    NotificationChannels.getId(NotificationChannels.Channel.DECK_REMINDERS))
+                        .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                        .setContentTitle(context.getString(R.string.reminder_title))
+                        .setContentText(context.getResources().getQuantityString(
+                                R.plurals.reminder_text,
+                                total,
+                                CollectionHelper.getInstance().getCol(context).getDecks().name(deckId),
+                                total
+                        ))
+                        .setSmallIcon(R.drawable.ic_stat_notify)
+                        .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
+                        .setContentIntent(PendingIntent.getActivity(
+                                context,
+                                (int) deckId,
+                                getReviewDeckIntent(context, deckId),
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        ))
+                        .setAutoCancel(true)
+                        .build();
                 notificationManager.notify((int) deckId, notification);
-            }
         }
     }
 
