@@ -244,41 +244,6 @@ public class Sched extends SchedV2 {
     }
 
 
-    @Override
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, int depth) {
-        List<DeckDueTreeNode> tree = new ArrayList<>();
-        // group and recurse
-        ListIterator<DeckDueTreeNode> it = grps.listIterator();
-        while (it.hasNext()) {
-            DeckDueTreeNode node = it.next();
-            String head = node.getDeckNameComponent(depth);
-            List<DeckDueTreeNode> children  = new ArrayList<>();
-            /* Compose the "children" node list. The children is a
-             * list of all the nodes that proceed the current one that
-             * contain the same at depth `depth`, except for the
-             * current one itself.  I.e., they are subdecks that stem
-             * from this node.  This is our version of python's
-             * itertools.groupby. */
-            while (it.hasNext()) {
-                DeckDueTreeNode next = it.next();
-                if (head.equals(next.getDeckNameComponent(depth))) {
-                    // Same head - add to tail of current head.
-                    children.add(next);
-                } else {
-                    // We've iterated past this head, so step back in order to use this node as the
-                    // head in the next iteration of the outer loop.
-                    it.previous();
-                    break;
-                }
-            }
-            // the children set contains direct children but not the children of children...
-            node.setChildren(_groupChildrenMain(children, depth + 1), true);
-            tree.add(node);
-        }
-        return tree;
-    }
-
-
     /**
      * Getting the next card ****************************************************
      * *******************************************

@@ -467,7 +467,7 @@ public class SchedV2 extends AbstractSched {
                 }
             }
             // the children set contains direct children but not the children of children...
-            node.setChildren(_groupChildrenMain(children, depth + 1), false);
+            node.setChildren(_groupChildrenMain(children, depth + 1), "std".equals(getName()));
             tree.add(node);
         }
         return tree;
