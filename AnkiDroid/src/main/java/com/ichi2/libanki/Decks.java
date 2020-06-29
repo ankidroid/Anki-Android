@@ -1123,15 +1123,21 @@ public class Decks {
         return deckName != null && !deckName.trim().isEmpty();
     }
 
+
+    private static HashMap<String, String> sParentCache = new HashMap();
     public static String parent(String deckName) {
         // method parent, from sched's method deckDueList in python
-        List<String> parts = Arrays.asList(path(deckName));
-        if (parts.size() < 2) {
-            return null;
-        } else {
-            parts = parts.subList(0, parts.size() - 1);
-            return TextUtils.join("::", parts);
+        if (!sParentCache.containsKey(deckName)) {
+            List<String> parts = Arrays.asList(path(deckName));
+            if (parts.size() < 2) {
+                sParentCache.put(deckName, null);
+            } else {
+                parts = parts.subList(0, parts.size() - 1);
+                String parentName = TextUtils.join("::", parts);
+                sParentCache.put(deckName, parentName);
+            }
         }
+        return sParentCache.get(deckName);
     }
 
     public String getActualDescription() {
