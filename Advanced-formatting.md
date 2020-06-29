@@ -63,6 +63,50 @@ AnkiDroid contains a very basic color inverter that e.g. changes white to black 
  background-color: #303030;
 }
 ```
+### Auto change color in night-mode
+In style.css
+```css
+.card {
+  --text-color1: black;
+}
+
+.card.night_mode {
+  --text-color1: white;
+}
+
+.title {
+   color: var(--text-color1);
+}
+```
+Now turning on night mode automatically change the text color. 
+
+#### To access color in Front/Back side of card
+
+```css
+.card {
+   --text-color1: black;
+}
+
+.card.night_mode {
+   --text-color1: white;
+}
+
+.text {
+   color: var(--text-color1);
+}
+```
+
+Now in JavaScript (Front/Back side of card)
+```html
+<div class="text">Some Text</div>
+
+<script>
+
+var text_color = getComputedStyle(document.querySelector(".text")).color;
+console.log(text_color);
+
+</script>
+```
 
 ### Invert color of images in night-mode
 The default color inversion algorithm does not affect images, with the consequence that images which have a transparent background and black lines will end up appearing invisible when night-mode is enabled. If you would like the color of images to be inverted when using night mode, you can set the following CSS selectors in addition to the `.card.night_mode` styling mentioned above. Note that these filters will generally only work on Android 4.4+.
