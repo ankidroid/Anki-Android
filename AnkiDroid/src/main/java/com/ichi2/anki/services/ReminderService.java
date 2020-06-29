@@ -68,7 +68,11 @@ public class ReminderService extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         cancelDeckReminder(context, intent);
 
+        // 0 is not a valid dconf id.
         final long dConfId = intent.getLongExtra(EXTRA_DECK_OPTION_ID, 0);
+        if (dConfId == 0) {
+            return;
+        }
 
         if (CollectionHelper.getInstance().getCol(context).getDecks().getConf(dConfId) == null) {
             final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
