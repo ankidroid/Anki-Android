@@ -45,8 +45,28 @@ public class ReminderService extends BroadcastReceiver {
     public static final String EXTRA_DECK_OPTION_ID = "EXTRA_DECK_OPTION_ID";
     public static final String EXTRA_DECK_ID = "EXTRA_DECK_ID";
 
+
+    /** Cancelling all deck reminder. We used to use them, now we have deck option reminders. */
+    private void cancelDeckReminder(Context context, Intent intent) {
+        // 0 Is not a valid deck id.
+        final long deckId = intent.getLongExtra(EXTRA_DECK_ID, 0);
+        if (deckId == 0) {
+            return;
+        }
+        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        
+        final PendingIntent reminderIntent = PendingIntent.getBroadcast(
+            context,
+            (int) deckId,
+            new Intent(context, ReminderService.class).putExtra(EXTRA_DECK_OPTION_ID, deckId),
+            0);
+
+        alarmManager.cancel(reminderIntent);
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
+        cancelDeckReminder(context, intent);
 
         final long dConfId = intent.getLongExtra(EXTRA_DECK_OPTION_ID, 0);
 
