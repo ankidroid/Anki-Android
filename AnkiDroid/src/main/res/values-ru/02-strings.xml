@@ -58,7 +58,7 @@
     <string name="sdcard_missing_message">Отключите режим передачи файлов по USB, чтобы получить доступ к колодам</string>
     <string name="updated_version">Обновлено до версии %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Сохранить написанное</string>
     <string name="enable_whiteboard">Включить доску</string>
     <string name="disable_whiteboard">Отключить доску</string>
     <string name="show_whiteboard">Показать доску</string>
@@ -295,7 +295,7 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Включите полноэкранный режим для показа панели навигации с помощью JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Включите полноэкранный режим для показа меню параметров с помощью JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Pen color</string>
+    <string name="white_board_image_save_failed">Не удалось сохранить изображение доски. %s</string>
+    <string name="white_board_image_saved">Изображение доски сохранено в %s</string>
+    <string name="title_whiteboard_pen_color">Цвет маркера</string>
 </resources>

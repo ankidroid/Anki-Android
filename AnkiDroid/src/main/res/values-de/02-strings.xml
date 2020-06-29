@@ -58,7 +58,7 @@
     <string name="sdcard_missing_message">Deaktivieren Sie den  USB-Speicher um auf Ihre Stapel zuzugreifen</string>
     <string name="updated_version">Aktualisiert auf Version %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Whiteboard speichern</string>
     <string name="enable_whiteboard">Whiteboard aktivieren</string>
     <string name="disable_whiteboard">Whiteboard ausschalten</string>
     <string name="show_whiteboard">Whiteboard anzeigen</string>
@@ -276,7 +276,7 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Bitte schalten Sie den Vollbildmodus ein, um »Seitenleiste anzeigen« mit JavaScript zu verwenden.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Bitte schalten Sie den Vollbildmodus ein, um »Optionsmenü anzeigen« mit JavaScript zu verwenden.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Pen color</string>
+    <string name="white_board_image_save_failed">Whiteboardbild konnte nicht gespeichert werden. %s</string>
+    <string name="white_board_image_saved">Whiteboardbild in %s gespeichert</string>
+    <string name="title_whiteboard_pen_color">Stiftfarbe</string>
 </resources>

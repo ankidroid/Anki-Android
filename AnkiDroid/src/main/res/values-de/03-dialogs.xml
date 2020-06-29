@@ -119,7 +119,7 @@
     <string name="restore_backup">Ihre Sammlung wird durch eine ältere Kopie ersetzt. Nicht gespeicherte Lernfortschritte gehen verloren.</string>
     <string name="dialog_cancel">Abbrechen</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">Nein</string>
     <string name="dialog_continue">Weiter</string>
     <string name="dialog_positive_create">Erstellen</string>
     <string name="dialog_positive_delete">Löschen</string>

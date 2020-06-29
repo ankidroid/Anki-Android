@@ -120,9 +120,9 @@
     <!-- Network failure -->
     <string name="network_no_connection">无网络连接</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="crop_image">您想裁剪此图像吗？</string>
+    <string name="crop_button">裁剪图像</string>
+    <string name="save_dialog_content">当前图像大小是 %sMB。默认图像大小限制是 1MB。您想裁剪它吗？</string>
+    <string name="select_image_failed">"选择图像失败，请重试"</string>
+    <string name="activity_result_unexpected">应用返回了意外的值。您可能需要使用另一个应用程序</string>
 </resources>

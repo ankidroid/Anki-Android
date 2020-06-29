@@ -20,7 +20,7 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
+    <string name="front_field_name">Anteriore</string>
     <string name="back_field_name">Indietro</string>
     <string name="text_field_name">Testo</string>
     <string name="extra_field_name">Extra</string>
@@ -30,9 +30,9 @@
     <string name="card_two_name">Carta 2</string>
     <string name="card_cloze_name">Cloze</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
+    <string name="basic_model_name">Standard</string>
     <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_typing_model_name">Standard (scrivi la risposta)</string>
+    <string name="forward_reverse_model_name">Standard (e carta invertita)</string>
+    <string name="forward_optional_reverse_model_name">Standard (carta invertita opzionale)</string>
 </resources>

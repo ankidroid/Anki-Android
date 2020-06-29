@@ -76,8 +76,8 @@
     </plurals>
     <string name="reschedule_card_dialog_title">Rischedula la scheda</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="one">Riprogramma la carta</item>
+        <item quantity="other">Riprogramma le carte</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Intervallo attuale: %d giorno</item>
@@ -90,7 +90,7 @@
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Seleziona il mazzo nel gestitore di file o visita la pagina about:download per importarlo</string>
     <string name="answering_error_title">Errore database</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Scrittura della raccolta non riuscita. La banca dati potrebbe essere danneggiata o potrebbe non esserci abbastanza spazio vuoto sul disco.\n\nSe questo accade più spesso, prova a controllare la banca dati, a riparare la collezione o a ripristinarla da un backup. Tocca «opzioni» per quello.\n\O potrebbe essere anche un errore di AnkiDroid, per favore segnala l\'errore in modo da poterlo controllare.</string>
     <string name="answering_error_report">Segnala errori</string>
     <string name="repair_deck_dialog">Vuoi veramente provare a riparare il database?\n\nPrima di iniziare il tentativo, verrà creata una copia nella sottocartella \'%s\'.</string>
     <string name="intent_add_saved_information">Dati salvati</string>
@@ -162,40 +162,40 @@
     <string name="multimedia_editor_audio_permission_denied">Permesso registrazione audio negato</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">Benvenuto/a ad AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid richiede l\'autorizzazione di archiviazione, che utilizziamo esclusivamente per memorizzare la tua collezione AnkiDroid, supporti di carte mnemoniche e backup. Il nostro codice è open-source, scritto da volontari, e di fiducia da milioni.\n\nSe hai domande, accedi al nostro manuale in-app o visita i nostri forum di aiuto.\n\nGrazie per aver provato AnkiDroid!\n — Squadra di sviluppo di AnkiDroid</string>
+    <string name="mutimedia_editor_assertion_failed">Si è verificato un errore sconosciuto durante la visualizzazione dell\'editore avanzato</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aggiornato</string>
     <string name="integrity_check_startup_content">AnkiDroid è stato aggiornato. Questo aggiornamento include correzioni per eventuali problemi nella banca dati e ti consigliamo di eseguire ora il controllo della banca dati.</string>
     <string name="integrity_check_positive">Controlla la banca dati</string>
     <string name="integrity_check_continue_anyway">Continua comunque</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
+    <string name="integrity_check_insufficient_space">Il controllo banca dati utilizza una grande quantità di memoria temporanea.\n\nSi raccomanda vivamente di avere almeno %s spazio libero sul dispositivo prima di continuare.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nAttualmente hai %s liberi.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d carte con mazzi di origine non corretti sono state recuperate. Si prega di vedere il manuale per maggiori informazioni.</string>
     <string name="video_creation_error">Impossibile riprodurre il video</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Impossibile cambiare mazzo</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">Errore nella decodifica dei dati dalla carta</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <string name="deck_options_corrupt">Elaborazione delle opzioni del mazzo non riuscita: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Banca dati bloccata</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <string name="database_locked_summary">La banca dati di AnkiDroid è in uso da un\'altra applicazione. Chiudi l\'altra applicazione e riapri AnkiDroid.</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Immagine di sfondo applicata</string>
     <string name="background_image_removed">Immagine di sfondo rimossa</string>
     <string name="no_image_selected">Nessuna immagine selezionata</string>
     <string name="error_selecting_image">Errore durante la selezione dell\'immagine. Si prega di vedere il manuale. %s</string>
     <string name="error_deleting_image">Errore durante l\'eliminazione dell\'immagine</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="failed_to_apply_background_image">Impossibile applicare l\'immagine di sfondo %s</string>
     <string name="image_max_size_allowed">Dimensione massima dell\'immagine: %d MB consentiti</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Autorizzazione di archiviazione mancante. Si prega di concedere l\'autorizzazione all\'archiviazione e riprovare l\'azione.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">Impossibile caricare l\'aspetto del browser delle carte</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">Pianificazione dei promemoria fallita</string>
+    <string name="boot_service_too_many_notifications">Troppi promemoria pianificati. Alcuni non appariranno.</string>
 </resources>
