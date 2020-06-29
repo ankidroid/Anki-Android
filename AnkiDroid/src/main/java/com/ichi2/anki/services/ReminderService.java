@@ -112,6 +112,7 @@ public class ReminderService extends BroadcastReceiver {
         }
 
         try {
+            // This loop over top level deck only. No notification will ever occur for subdecks.
             for (Sched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree()) {
                 if (node.getDid() == deckId) {
                     return node;
