@@ -115,6 +115,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
+import com.ichi2.libanki.sched.AbstractDeckTreeNode;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
@@ -210,7 +211,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
-    private List<DeckDueTreeNode> mDueTree;
+    private List<AbstractDeckTreeNode> mDueTree;
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -2177,7 +2178,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mFocusedDeck = did;
         // Get some info about the deck to handle special cases
         int pos = mDeckListAdapter.findDeckPosition(did);
-        DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
+        AbstractDeckTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
+        if (!deckDueTreeNode.shouldDisplayCounts()) {
+            // If we don't yet have numbers, we trust the user that they knows what they opens, tries to open it.
+            // If there is nothing to review, it'll come back to deck picker.
+            openReviewerOrStudyOptions(dontSkipStudyOptions);
+            return;
+        }
+        // There are numbers
         // Figure out what action to take
         if (deckDueTreeNode.getNewCount() + deckDueTreeNode.getLrnCount() + deckDueTreeNode.getRevCount() > 0) {
             // If there are cards to study then either go to Reviewer or StudyOptions
@@ -2283,7 +2291,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 deckPicker.showCollectionErrorDialog();
                 return;
             }
-            deckPicker.mDueTree = (List<DeckDueTreeNode>) result.getObjArray()[0];
+            deckPicker.mDueTree = (List<AbstractDeckTreeNode>) result.getObjArray()[0];
 
             deckPicker.__renderPage();
             // Update the mini statistics bar as well
@@ -2362,15 +2370,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         // Set the "x due in y minutes" subtitle
         try {
-            int eta = mDeckListAdapter.getEta();
-            int due = mDeckListAdapter.getDue();
+            Integer eta = mDeckListAdapter.getEta();
+            Integer due = mDeckListAdapter.getDue();
             Resources res = getResources();
             if (getCol().cardCount() != -1) {
                 String time = "-";
-                if (eta != -1) {
+                if (eta != -1 && eta != null) {
                     time = Utils.timeQuantityTopDeckPicker(AnkiDroidApp.getInstance(), eta*60);
                 }
-                if (getSupportActionBar() != null) {
+                if (due != null && getSupportActionBar() != null) {
                     getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
                 }
             }
