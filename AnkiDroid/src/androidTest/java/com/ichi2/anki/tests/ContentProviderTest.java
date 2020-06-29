@@ -857,7 +857,7 @@ public class ContentProviderTest extends InstrumentedTest {
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
         int cardOrd = card.getOrd();
-        int ease = AbstractFlashcardViewer.EASE_3; //<- insert real ease here
+        int ease = (schedVersion == 1) ? AbstractFlashcardViewer.EASE_3 : AbstractFlashcardViewer.EASE_4 ;
         long timeTaken = 5000; // 5 seconds
 
         values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
@@ -866,6 +866,9 @@ public class ContentProviderTest extends InstrumentedTest {
         values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
         int updateCount = cr.update(reviewInfoUri, values, null, null);
         assertEquals("Check if update returns 1", 1, updateCount);
+        // Waiting fail, because the current thread is not
+        // locked. However, it does not seems to create any problem,
+        // so it may be deleted safely (?)
         try { Thread.currentThread().wait(500); } catch (Exception e) {/* do nothing */}
         col.getSched().reset();
         Card newCard = col.getSched().getCard();
@@ -918,7 +921,8 @@ public class ContentProviderTest extends InstrumentedTest {
         // -----------------------------
 
         Card cardAfterUpdate = col.getCard(cardId);
-        assertEquals("Card is user-buried", Consts.QUEUE_TYPE_SIBLING_BURIED, cardAfterUpdate.getQueue());
+        // QUEUE_TYPE_MANUALLY_BURIED was also used for SIBLING_BURIED in sched v1
+        assertEquals("Card is user-buried", (schedVersion == 1) ? Consts.QUEUE_TYPE_SIBLING_BURIED : Consts.QUEUE_TYPE_MANUALLY_BURIED, cardAfterUpdate.getQueue());
 
         // cleanup, unbury cards
         // ---------------------
