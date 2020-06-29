@@ -78,6 +78,10 @@ In style.css
    color: var(--text-color1);
 }
 ```
+In Front/Back side of card
+```html
+<div class="title">Question 1</div>
+```
 Now turning on night mode automatically change the text color. 
 
 #### To access color in Front/Back side of card
