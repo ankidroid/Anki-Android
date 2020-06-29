@@ -49,12 +49,13 @@ import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -62,14 +63,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeTrue;
 
 /**
  * Test cases for {@link com.ichi2.anki.provider.CardContentProvider}.
  * <p/>
  * These tests should cover all supported operations for each URI.
  */
-@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
-public class ContentProviderTest {
+@RunWith(Parameterized.class)
+public class ContentProviderTest extends InstrumentedTest {
+
+    @Parameterized.Parameter()
+    public int schedVersion;
+
+    @Parameterized.Parameters
+    public static java.util.Collection<Object[]> initParameters() {
+        // This does one run with schedVersion injected as 1, and one run as 2
+        return Arrays.asList(new Object[][] { { 1 }, { 2 } });
+    }
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
@@ -115,10 +126,17 @@ public class ContentProviderTest {
      * Initially create one note for each model.
      */
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         Log.i(AnkiDroidApp.TAG, "setUp()");
         mCreatedNotes = new ArrayList<>();
         final Collection col = getCol();
+
+        // We have parameterized the "schedVersion" variable, if we are on an emulator
+        // (so it is safe) we will try to run with multiple scheduler versions
+        if (InstrumentedTest.isEmulator()) {
+            col.changeSchedulerVer(schedVersion);
+        }
+
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         mModelId = model.getLong("id");
@@ -176,10 +194,7 @@ public class ContentProviderTest {
         // Delete all notes
         List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);
         if (remnantNotes.size() > 0) {
-            long[] noteIds = new long[remnantNotes.size()];
-            for (int i = 0; i < remnantNotes.size(); i++) {
-                noteIds[i] = remnantNotes.get(i);
-            }
+            long[] noteIds = Utils.arrayList2array(remnantNotes);
             col.remNotes(noteIds);
             col.save();
             assertEquals("Check that remnant notes have been deleted", 0, col.findNotes("tag:" + TEST_TAG).size());
@@ -400,7 +415,9 @@ public class ContentProviderTest {
 
     private String[] removeFromProjection(@SuppressWarnings("SameParameterValue") String[] inputProjection, int idx) {
         String[] outputProjection = new String[inputProjection.length - 1];
-        if (idx >= 0) System.arraycopy(inputProjection, 0, outputProjection, 0, idx);
+        if (idx >= 0) {
+            System.arraycopy(inputProjection, 0, outputProjection, 0, idx);
+        }
         //noinspection ManualArrayCopy
         for (int i = idx + 1; i < inputProjection.length; i++) {
             outputProjection[i - 1] = inputProjection[i];
@@ -842,12 +859,12 @@ public class ContentProviderTest {
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
         int cardOrd = card.getOrd();
-        int ease = AbstractFlashcardViewer.EASE_3; //<- insert real ease here
+        int earlyGraduatingEase = (schedVersion == 1) ? AbstractFlashcardViewer.EASE_3 : AbstractFlashcardViewer.EASE_4;
         long timeTaken = 5000; // 5 seconds
 
         values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
         values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
-        values.put(FlashCardsContract.ReviewInfo.EASE, ease);
+        values.put(FlashCardsContract.ReviewInfo.EASE, earlyGraduatingEase);
         values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
         int updateCount = cr.update(reviewInfoUri, values, null, null);
         assertEquals("Check if update returns 1", 1, updateCount);
@@ -903,7 +920,8 @@ public class ContentProviderTest {
         // -----------------------------
 
         Card cardAfterUpdate = col.getCard(cardId);
-        assertEquals("Card is user-buried", Consts.QUEUE_TYPE_SIBLING_BURIED, cardAfterUpdate.getQueue());
+        // QUEUE_TYPE_MANUALLY_BURIED was also used for SIBLING_BURIED in sched v1
+        assertEquals("Card is user-buried", (schedVersion == 1) ? Consts.QUEUE_TYPE_SIBLING_BURIED : Consts.QUEUE_TYPE_MANUALLY_BURIED, cardAfterUpdate.getQueue());
 
         // cleanup, unbury cards
         // ---------------------
@@ -998,16 +1016,13 @@ public class ContentProviderTest {
         assertEquals("two tags", 2, newTagList.size());
         assertEquals("check first tag", TEST_TAG, newTagList.get(0));
         assertEquals("check second tag", tag2, newTagList.get(1));
-
-
     }
-
 
 
     /** Test that a null did will not crash the provider (#6378) */
      @Test
-     @Ignore("#6025 - This causes mild data corruption - should not be run on actual collection")
      public void testProviderProvidesDefaultForEmptyModelDeck() {
+         assumeTrue("This causes mild data corruption - should not be run on a collection you care about", isEmulator());
          Collection col = getCol();
          col.getModels().all().get(0).put("did", JSONObject.NULL);
          col.save();
@@ -1018,10 +1033,8 @@ public class ContentProviderTest {
          assertNotNull(allModels);
      }
 
-
- private Collection reopenCol() {
-        CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
-        return getCol();
-    }
-
+     private Collection reopenCol() {
+         CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
+         return getCol();
+     }
 }
