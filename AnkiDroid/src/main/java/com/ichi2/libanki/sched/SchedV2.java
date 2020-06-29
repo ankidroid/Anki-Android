@@ -537,7 +537,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps, boolean checkDone) {
+    private <T extends AbstractDeckTreeNode> List<T> _groupChildren(List<T> grps, boolean checkDone) {
         // sort based on name's components
         Collections.sort(grps);
         // then run main function
@@ -545,7 +545,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, boolean checkDone) {
+    protected <T extends AbstractDeckTreeNode> List<T> _groupChildrenMain(List<T> grps, boolean checkDone) {
         return _groupChildrenMain(grps, 0, checkDone);
     }
 
@@ -560,14 +560,14 @@ public class SchedV2 extends AbstractSched {
         false, we can't assume all decks have parents and that there
         is no duplicate. Instead, we'll ignore problems.
      */
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, int depth, boolean checkDone) {
-        List<DeckDueTreeNode> tree = new ArrayList<>();
+    protected <T extends AbstractDeckTreeNode> List<T> _groupChildrenMain(List<T> grps, int depth, boolean checkDone) {
+        List<T> tree = new ArrayList<>();
         // group and recurse
-        ListIterator<DeckDueTreeNode> it = grps.listIterator();
+        ListIterator<T> it = grps.listIterator();
         while (it.hasNext()) {
-            DeckDueTreeNode node = it.next();
+            T node = it.next();
             String head = node.getDeckNameComponent(depth);
-            List<DeckDueTreeNode> children  = new ArrayList<>();
+            List<AbstractDeckTreeNode> children  = new ArrayList<>();
             /* Compose the "children" node list. The children is a
              * list of all the nodes that proceed the current one that
              * contain the same at depth `depth`, except for the
@@ -580,7 +580,7 @@ public class SchedV2 extends AbstractSched {
                 continue;
             }
             while (it.hasNext()) {
-                DeckDueTreeNode next = it.next();
+                AbstractDeckTreeNode next = it.next();
                 if (head.equals(next.getDeckNameComponent(depth))) {
                     // Same head - add to tail of current head.
                     if (!checkDone && next.getDepth() == depth) {
