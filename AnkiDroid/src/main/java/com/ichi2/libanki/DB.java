@@ -107,7 +107,7 @@ public class DB {
      * do nothing in our implementation. However, we on corruption events we want to send messages but
      * not delete the database.
      */
-    public class SupportSQLiteOpenHelperCallback extends SupportSQLiteOpenHelper.Callback {
+    public static class SupportSQLiteOpenHelperCallback extends SupportSQLiteOpenHelper.Callback {
 
         protected SupportSQLiteOpenHelperCallback(int version) { super(version); }
         public void onCreate(SupportSQLiteDatabase db) {/* do nothing */ }

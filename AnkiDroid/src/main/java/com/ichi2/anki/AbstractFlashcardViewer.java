@@ -2624,7 +2624,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Provides a hook for calling "alert" from javascript. Useful for debugging your javascript.
      */
-    public final class AnkiDroidWebChromeClient extends WebChromeClient {
+    public static final class AnkiDroidWebChromeClient extends WebChromeClient {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
             Timber.i("AbstractFlashcardViewer:: onJsAlert: %s", message);

@@ -214,7 +214,7 @@ public class Finder {
      * LibAnki creates a dictionary and operates on it with an inner function inside _where().
      * AnkiDroid combines the two in this class instead.
      */
-    public class SearchState {
+    public static class SearchState {
         public boolean isnot;
         public boolean isor;
         public boolean join;
