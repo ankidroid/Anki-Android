@@ -71,7 +71,7 @@ public class DBTest {
 
 
     // Test fixture that lets us inspect corruption handler status
-    public class TestDB extends DB {
+    public static class TestDB extends DB {
 
         private boolean databaseIsCorrupt = false;
 

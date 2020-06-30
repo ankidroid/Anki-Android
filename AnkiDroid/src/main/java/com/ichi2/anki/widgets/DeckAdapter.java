@@ -73,7 +73,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     private boolean mHasSubdecks;
 
     // ViewHolder class to save inflated views for recycling
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public RelativeLayout deckLayout;
         public LinearLayout countsLayout;
         public ImageButton deckExpander;

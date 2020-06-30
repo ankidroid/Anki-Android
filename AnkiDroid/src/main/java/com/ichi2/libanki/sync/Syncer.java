@@ -915,7 +915,7 @@ public class Syncer {
         }
     }
 
-    private class UnexpectedSchemaChange extends Exception {
+    private static class UnexpectedSchemaChange extends Exception {
     }
 
 }

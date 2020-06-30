@@ -317,7 +317,7 @@ public class AdvancedStatistics {
 
         EaseClassifier classifier = new EaseClassifier(mCol.getDb().getDatabase());
         ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier, end, chunk);
-        TodayStats todayStats = new TodayStats(mCol.getDb().getDatabase(), Settings.getDayStartCutoff((int)mCol.getCrt()));
+        TodayStats todayStats = new TodayStats(mCol.getDb().getDatabase(), Settings.getDayStartCutoff((int) mCol.getCrt()));
 
         long t0 = System.currentTimeMillis();
         SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
@@ -390,7 +390,7 @@ public class AdvancedStatistics {
         return new PlottableSimulationResult(dues, ArrayUtils.transposeMatrix(nInStateCum));
     }
 
-    private class Card {
+    private static class Card {
 
         private int ivl;
         private double factor;
@@ -523,7 +523,7 @@ public class AdvancedStatistics {
     /**
      * Stores settings that are deck-specific.
      */
-    private class Deck {
+    private static class Deck {
 
         private long did;
 
@@ -828,7 +828,7 @@ public class AdvancedStatistics {
         }
     }
 
-    public class TodayStats {
+    public static class TodayStats {
 
         private Map<Long, Integer> nLearnedPerDeckId = new HashMap<Long, Integer>();
 
@@ -1020,7 +1020,7 @@ public class AdvancedStatistics {
     /**
      * Stores global settings.
      */
-    private class Settings {
+    private static class Settings {
 
         private final int computeNDays;
         private final double computeMaxError;
@@ -1421,7 +1421,7 @@ public class AdvancedStatistics {
         }
     }
 
-    private class PlottableSimulationResult {
+    private static class PlottableSimulationResult {
 
         // Forecasted number of reviews
         // ArrayList: time

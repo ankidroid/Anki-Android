@@ -551,7 +551,7 @@ public class ModelBrowser extends AnkiActivity {
      * Used so that the main ListView is able to display the number of notes using the model
      * along with the name.
      */
-    public class DisplayPair {
+    public static class DisplayPair {
         private String name;
         private int count;
 

@@ -508,7 +508,7 @@ public class Models {
         _addField(m, field);
     }
 
-    class TransformFieldAdd implements TransformFieldVisitor {
+    static class TransformFieldAdd implements TransformFieldVisitor {
         @Override
         public String[] transform(String[] fields) {
             String[] f = new String[fields.length + 1];
@@ -546,7 +546,7 @@ public class Models {
 
     }
 
-    class TransformFieldDelete implements TransformFieldVisitor {
+    static class TransformFieldDelete implements TransformFieldVisitor {
         private int idx;
 
 
@@ -598,7 +598,7 @@ public class Models {
 
     }
 
-    class TransformFieldMove implements TransformFieldVisitor {
+    static class TransformFieldMove implements TransformFieldVisitor {
         private int idx;
         private int oldidx;
 
