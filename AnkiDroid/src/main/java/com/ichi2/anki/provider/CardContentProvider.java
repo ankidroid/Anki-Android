@@ -32,7 +32,13 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import android.os.CancellationSignal;
+import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -59,6 +65,9 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -111,6 +120,7 @@ public class CardContentProvider extends ContentProvider {
     private static final int DECKS = 4000;
     private static final int DECK_SELECTED = 4001;
     private static final int DECKS_ID = 4002;
+    private static final int MEDIA = 5000;
 
     private static final UriMatcher sUriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
@@ -132,6 +142,7 @@ public class CardContentProvider extends ContentProvider {
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "decks/", DECKS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "decks/#", DECKS_ID);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "selected_deck/", DECK_SELECTED);
+        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "media", MEDIA);
     }
 
     /**
@@ -1038,6 +1049,7 @@ public class CardContentProvider extends ContentProvider {
             case DECKS_ID:
                 // Deck ID is generated automatically by libanki
                 throw new IllegalArgumentException("Not possible to insert deck with specific ID");
+
             default:
                 // Unknown URI type
                 throw new IllegalArgumentException("uri " + uri + " is not supported");
