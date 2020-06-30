@@ -23,6 +23,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
@@ -238,5 +239,31 @@ public class RobolectricTest {
         assertThat("sched should be v2", !(sched instanceof Sched));
 
         return (SchedV2) sched;
+    }
+
+
+    protected synchronized void waitForTask(int taskType, int timeoutMs) throws InterruptedException {
+        boolean[] completed = new boolean[] { false };
+        CollectionTask.launchCollectionTask(taskType, new CollectionTask.TaskListener() {
+            @Override
+            public void onPreExecute() {
+
+            }
+
+
+            @Override
+            public void onPostExecute(CollectionTask.TaskData result) {
+                completed[0] = true;
+                synchronized (RobolectricTest.this) {
+                    RobolectricTest.this.notify();
+                }
+            }
+        });
+
+        wait(timeoutMs);
+
+        if (!completed[0]) {
+            throw new IllegalStateException(String.format("Task %d didn't finish in %d ms", taskType, timeoutMs));
+        }
     }
 }
