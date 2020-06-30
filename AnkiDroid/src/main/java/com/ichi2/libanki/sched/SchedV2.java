@@ -256,6 +256,9 @@ public class SchedV2 extends AbstractSched {
 
 
     public int[] counts() {
+        if (!mHaveQueues) {
+            reset();
+        }
         return new int[] {mNewCount, mLrnCount, mRevCount};
     }
 
