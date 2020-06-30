@@ -2167,6 +2167,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 __renderPage();
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
+                Timber.d("Startup - Deck List UI Completed");
             }
         });
         tasksToCancelOnClose.add(task);

@@ -239,6 +239,8 @@ public class AnkiDroidApp extends MultiDexApplication {
         }
         Timber.tag(TAG);
 
+        Timber.d("Startup - Application Start");
+
         // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
         UsageAnalytics.initialize(this);
         if (BuildConfig.DEBUG) {
