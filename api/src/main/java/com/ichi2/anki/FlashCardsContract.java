@@ -1185,4 +1185,19 @@ public class FlashCardsContract {
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.deck";
 
     }
+
+    public static class AnkiMedia {
+
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "media");
+
+        /**
+         * Uri.toString() which points to the media file that is to be inserted.
+         */
+        public static final String FILE_URI = "file_uri";
+
+        /**
+         * The preferred name for the file that will be inserted/copied into collection.media
+         */
+        public static final String PREFERRED_NAME = "preferred_name";
+    }
 }
