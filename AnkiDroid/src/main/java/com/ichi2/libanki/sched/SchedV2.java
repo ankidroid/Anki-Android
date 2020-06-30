@@ -152,6 +152,13 @@ public class SchedV2 extends AbstractSched {
         if (card != null) {
             mCol.log(card);
             mReps += 1;
+            // In upstream, counts are decremented when the card is
+            // gotten; i.e. in _getLrnCard, _getRevCard and
+            // _getNewCard. This can not be done anymore since we use
+            // those methods to pre-fetch the next card. Instead we
+            // decrement the counts here, when the card is returned to
+            // the reviewer.
+            decrementCounts(card);
             card.startTimer();
         }
         return card;
@@ -424,23 +431,34 @@ public class SchedV2 extends AbstractSched {
         if (deckDueTree == null) {
             return null;
         }
-        return _groupChildren(deckDueTree);
+        return _groupChildren(deckDueTree, true);
     }
 
 
-    private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps) {
+    private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps, boolean checkDone) {
         // sort based on name's components
         Collections.sort(grps);
         // then run main function
-        return _groupChildrenMain(grps);
+        return _groupChildrenMain(grps, checkDone);
     }
 
 
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps) {
-        return _groupChildrenMain(grps, 0);
+    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, boolean checkDone) {
+        return _groupChildrenMain(grps, 0, checkDone);
     }
 
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, int depth) {
+    /**
+        @return the tree structure of all decks from @grps, starting
+        at specified depth.
+
+        @param grps a list of decks of dept at least depth, having all
+        the same first depth name elements, sorted in deck order.
+        @param depth The depth of the tree we are creating
+        @param checkDone whether the set of deck was checked. If
+        false, we can't assume all decks have parents and that there
+        is no duplicate. Instead, we'll ignore problems.
+     */
+    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps, int depth, boolean checkDone) {
         List<DeckDueTreeNode> tree = new ArrayList<>();
         // group and recurse
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
@@ -454,10 +472,20 @@ public class SchedV2 extends AbstractSched {
              * current one itself.  I.e., they are subdecks that stem
              * from this node.  This is our version of python's
              * itertools.groupby. */
+            if (!checkDone && node.getDepth() != depth) {
+                JSONObject deck = mCol.getDecks().get(node.getDid());
+                Timber.d("Deck %s (%d)'s parent is missing. Ignoring for quick display.", deck.getString("name"), node.getDid());
+                continue;
+            }
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
                 if (head.equals(next.getDeckNameComponent(depth))) {
                     // Same head - add to tail of current head.
+                    if (!checkDone && next.getDepth() == depth) {
+                        JSONObject deck = mCol.getDecks().get(next.getDid());
+                        Timber.d("Deck %s (%d)'s is a duplicate name. Ignoring for quick display.", deck.getString("name"), next.getDid());
+                        continue;
+                    }
                     children.add(next);
                 } else {
                     // We've iterated past this head, so step back in order to use this node as the
@@ -467,7 +495,7 @@ public class SchedV2 extends AbstractSched {
                 }
             }
             // the children set contains direct children but not the children of children...
-            node.setChildren(_groupChildrenMain(node.getChildren(), depth + 1), false);
+            node.setChildren(_groupChildrenMain(children, depth + 1, checkDone), "std".equals(getName()));
             tree.add(node);
         }
         return tree;
@@ -603,7 +631,7 @@ public class SchedV2 extends AbstractSched {
 
     protected Card _getNewCard() {
         if (_fillNew()) {
-            mNewCount -= 1;
+            // mNewCount -= 1; see decrementCounts()
             return mCol.getCard(mNewQueue.remove());
         }
         return null;
@@ -798,7 +826,7 @@ public class SchedV2 extends AbstractSched {
             if (mLrnQueue.getFirst()[0] < cutoff) {
                 long id = mLrnQueue.remove()[1];
                 Card card = mCol.getCard(id);
-                mLrnCount -= 1;
+                // mLrnCount -= 1; see decrementCounts()
                 return card;
             }
         }
@@ -854,7 +882,7 @@ public class SchedV2 extends AbstractSched {
 
     protected Card _getLrnDayCard() {
         if (_fillLrnDay()) {
-            mLrnCount -= 1;
+            // mLrnCount -= 1; see decrementCounts()
             return mCol.getCard(mLrnDayQueue.remove());
         }
         return null;
@@ -1264,7 +1292,7 @@ public class SchedV2 extends AbstractSched {
 
     protected Card _getRevCard() {
         if (_fillRev()) {
-            mRevCount -= 1;
+            // mRevCount -= 1; see decrementCounts()
             return mCol.getCard(mRevQueue.remove());
         } else {
             return null;

@@ -124,7 +124,7 @@
     <string name="menu_search">In %1$s nachschlagen</string>
     <string name="menu_mark_note">Notiz markieren</string>
     <string name="menu_unmark_note">Markierung entfernen</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Ausprache überprüfen</string>
     <string name="new_deck">Stapel erstellen</string>
     <string name="create">Erstellen</string>
     <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>

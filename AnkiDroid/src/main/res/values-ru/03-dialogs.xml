@@ -131,7 +131,7 @@
     <string name="restore_backup">Ваша коллекция будет заменена более старой копией. Несохранённый прогресс будет потерян.</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">Нет</string>
     <string name="dialog_continue">Продолжить</string>
     <string name="dialog_positive_create">Создать</string>
     <string name="dialog_positive_delete">Удалить</string>

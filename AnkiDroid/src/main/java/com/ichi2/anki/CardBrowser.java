@@ -1165,8 +1165,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         }
 
-        if (requestCode == EDIT_CARD &&  data!=null && data.hasExtra("reloadRequired")) {
-            // if reloadRequired flag was sent from note editor then reload card list
+        if (requestCode == EDIT_CARD &&  data != null &&
+                (data.getBooleanExtra("reloadRequired", false) ||
+                        data.getBooleanExtra("noteChanged", false))) {
+            // if reloadRequired or noteChanged flag was sent from note editor then reload card list
             searchCards();
             // in use by reviewer?
             if (getReviewerCardId() == mCurrentCardId) {

@@ -3569,5 +3569,10 @@ see card.js for available functions
         public boolean ankiIsInFullscreen() {
             return isFullscreen();
         }
+
+        @JavascriptInterface
+        public boolean ankiIsInNightMode() {
+            return isInNightMode();
+        }
     }
 }

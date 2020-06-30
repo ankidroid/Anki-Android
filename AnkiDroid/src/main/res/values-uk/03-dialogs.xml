@@ -131,7 +131,7 @@
     <string name="restore_backup">Вашу колекцію замінить стара копія. Будь-який незбережений прогрес буде втрачено.</string>
     <string name="dialog_cancel">Скасувати</string>
     <string name="dialog_ok">Гаразд</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">Ні</string>
     <string name="dialog_continue">Продовжити</string>
     <string name="dialog_positive_create">Створити</string>
     <string name="dialog_positive_delete">Видалити</string>

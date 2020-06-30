@@ -170,10 +170,10 @@ public class CollectionHelper {
         // Create specified directory if it doesn't exit
         File dir = new File(path);
         if (!dir.exists() && !dir.mkdirs()) {
-            throw new StorageAccessException("Failed to create AnkiDroid directory");
+            throw new StorageAccessException("Failed to create AnkiDroid directory " + path);
         }
         if (!dir.canWrite()) {
-            throw new StorageAccessException("No write access to AnkiDroid directory");
+            throw new StorageAccessException("No write access to AnkiDroid directory " + path);
         }
         // Add a .nomedia file to it if it doesn't exist
         File nomedia = new File(dir, ".nomedia");
@@ -181,7 +181,7 @@ public class CollectionHelper {
             try {
                 nomedia.createNewFile();
             } catch (IOException e) {
-                throw new StorageAccessException("Failed to create .nomedia file");
+                throw new StorageAccessException("Failed to create .nomedia file", e);
             }
         }
     }

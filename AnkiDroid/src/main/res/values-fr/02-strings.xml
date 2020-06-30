@@ -58,7 +58,7 @@
     <string name="sdcard_missing_message">La carte SD n\'est pas disponible car elle est connectée en USB. Déconnectez l\'USB pour accéder aux paquets.</string>
     <string name="updated_version">Mis à jour à la version %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Enregistrer le tableau blanc</string>
     <string name="enable_whiteboard">Activer le tableau blanc</string>
     <string name="disable_whiteboard">Désactiver le tableau blanc</string>
     <string name="show_whiteboard">Afficher le tableau blanc</string>
@@ -276,7 +276,7 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Veuillez activer le plein écran pour utiliser Afficher le tiroir de navigation en utilisant JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Veuillez activer le plein écran pour utiliser Afficher le menu d\'options en utilisant JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Pen color</string>
+    <string name="white_board_image_save_failed">Impossible d\'enregistrer l\'image du tableau blanc. %s</string>
+    <string name="white_board_image_saved">Image du tableau blanc enregistrée dans %s</string>
+    <string name="title_whiteboard_pen_color">Couleur du stylet</string>
 </resources>

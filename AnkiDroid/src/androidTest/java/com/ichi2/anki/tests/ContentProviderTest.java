@@ -38,6 +38,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.StdModels;
@@ -48,27 +49,38 @@ import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeTrue;
 
 /**
  * Test cases for {@link com.ichi2.anki.provider.CardContentProvider}.
  * <p/>
  * These tests should cover all supported operations for each URI.
  */
-@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
-public class ContentProviderTest {
+@RunWith(Parameterized.class)
+public class ContentProviderTest extends InstrumentedTest {
+
+    @Parameterized.Parameter()
+    public int schedVersion;
+
+    @Parameterized.Parameters
+    public static java.util.Collection<Object[]> initParameters() {
+        // This does one run with schedVersion injected as 1, and one run as 2
+        return Arrays.asList(new Object[][] { { 1 }, { 2 } });
+    }
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
@@ -118,24 +130,30 @@ public class ContentProviderTest {
         Log.i(AnkiDroidApp.TAG, "setUp()");
         mCreatedNotes = new ArrayList<>();
         final Collection col = getCol();
+
+        // We have parameterized the "schedVersion" variable, if we are on an emulator
+        // (so it is safe) we will try to run with multiple scheduler versions
+        if (InstrumentedTest.isEmulator()) {
+            col.changeSchedulerVer(schedVersion);
+        }
+
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         mModelId = model.getLong("id");
-        ArrayList<String> flds = col.getModels().fieldNames(model);
+        ArrayList<String> fields = Models.fieldNames(model);
         // Use the names of the fields as test values for the notes which will be added
-        mDummyFields = flds.toArray(new String[flds.size()]);
+        mDummyFields = fields.toArray(new String[0]);
         // create test decks and add one note for every deck
         mNumDecksBeforeTest = col.getDecks().count();
-        for(int i = 0; i < TEST_DECKS.length; i++) {
-            String fullName = TEST_DECKS[i];
-            String[] path = col.getDecks().path(fullName);
+        for (String fullName : TEST_DECKS) {
+            String[] path = Decks.path(fullName);
             String partialName = "";
             /* Looping over all parents of full name. Adding them to
              * mTestDeckIds ensures the deck parents decks get deleted
              * too at tear-down.
              */
-            for (int j = 0; j < path.length; j++) {
-                partialName += path[j];
+            for (String s : path) {
+                partialName += s;
                 /* If parent already exists, don't add the deck, so
                  * that we are sure it won't get deleted at
                  * set-down, */
@@ -152,10 +170,10 @@ public class ContentProviderTest {
         mCreatedNotes.add(setupNewNote(col, mModelId, 1, mDummyFields, TEST_TAG));
     }
 
-    private static Uri setupNewNote(Collection col, long mid, long did, String[] flds, String tag) {
+    private static Uri setupNewNote(Collection col, long mid, long did, String[] fields, @SuppressWarnings("SameParameterValue") String tag) {
         Note newNote = new Note(col, col.getModels().get(mid));
-        for (int idx=0; idx < flds.length; idx++) {
-            newNote.setField(idx, flds[idx]);
+        for (int idx = 0; idx < fields.length; idx++) {
+            newNote.setField(idx, fields[idx]);
         }
         newNote.addTag(tag);
         assertTrue("At least one card added for note", col.addNote(newNote) >= 1);
@@ -176,11 +194,8 @@ public class ContentProviderTest {
         // Delete all notes
         List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);
         if (remnantNotes.size() > 0) {
-            long[] nids = new long[remnantNotes.size()];
-            for (int i = 0; i < remnantNotes.size(); i++) {
-                nids[i] = remnantNotes.get(i);
-            }
-            col.remNotes(nids);
+            long[] noteIds = Utils.arrayList2array(remnantNotes);
+            col.remNotes(noteIds);
             col.save();
             assertEquals("Check that remnant notes have been deleted", 0, col.findNotes("tag:" + TEST_TAG).size());
         }
@@ -211,7 +226,7 @@ public class ContentProviderTest {
      * Check that inserting and removing a note into default deck works as expected
      */
     @Test
-    public void testInsertAndRemoveNote() throws Exception {
+    public void testInsertAndRemoveNote() {
         // Get required objects for test
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         // Add the note
@@ -223,11 +238,14 @@ public class ContentProviderTest {
         assertNotNull("Check that URI returned from addNewNote is not null", newNoteUri);
         final Collection col = reopenCol();  // test that the changes are physically saved to the DB
         // Check that it looks as expected
+        assertNotNull("check note URI path", newNoteUri.getLastPathSegment());
         Note addedNote = new Note(col, Long.parseLong(newNoteUri.getLastPathSegment()));
         addedNote.load();
-        assertTrue("Check that fields were set correctly", Arrays.equals(addedNote.getFields(), TEST_NOTE_FIELDS));
+        assertArrayEquals("Check that fields were set correctly", addedNote.getFields(), TEST_NOTE_FIELDS);
         assertEquals("Check that tag was set correctly", TEST_TAG, addedNote.getTags().get(0));
-        int expectedNumCards = col.getModels().get(mModelId).getJSONArray("tmpls").length();
+        JSONObject model = col.getModels().get(mModelId);
+        assertNotNull("Check model", model);
+        int expectedNumCards = model.getJSONArray("tmpls").length();
         assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.cards().size());
         // Now delete the note
         cr.delete(newNoteUri, null, null);
@@ -265,7 +283,9 @@ public class ContentProviderTest {
         col = reopenCol();  // test that the changes are physically saved to the DB
         assertNotNull("Check template uri", templateUri);
         assertEquals("Check template uri ord", expectedOrd, ContentUris.parseId(templateUri));
-        JSONObject template = col.getModels().get(modelId).getJSONArray("tmpls").getJSONObject(expectedOrd);
+        model = col.getModels().get(modelId);
+        assertNotNull("Check model", model);
+        JSONObject template = model.getJSONArray("tmpls").getJSONObject(expectedOrd);
         assertEquals("Check template JSONObject ord", expectedOrd, template.getInt("ord"));
         assertEquals("Check template name", TEST_MODEL_CARDS[testIndex], template.getString("name"));
         assertEquals("Check qfmt", TEST_MODEL_QFMT[testIndex], template.getString("qfmt"));
@@ -285,8 +305,8 @@ public class ContentProviderTest {
         Collection col = getCol();
         JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
-        JSONArray initialFldsArr = model.getJSONArray("flds");
-        int initialFieldCount = initialFldsArr.length();
+        JSONArray initialFieldsArr = model.getJSONArray("flds");
+        int initialFieldCount = initialFieldsArr.length();
         Uri noteTypeUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId);
         ContentValues insertFieldValues = new ContentValues();
         insertFieldValues.put(FlashCardsContract.Model.FIELD_NAME, TEST_FIELD_NAME);
@@ -298,6 +318,7 @@ public class ContentProviderTest {
         // Test the field is as expected
         long fieldId = ContentUris.parseId(fieldUri);
         assertEquals("Check field id", initialFieldCount, fieldId);
+        assertNotNull("Check model", model);
         JSONArray fldsArr = model.getJSONArray("flds");
         assertEquals("Check fields length", initialFieldCount + 1, fldsArr.length());
         assertEquals("Check last field name", TEST_FIELD_NAME, fldsArr.getJSONObject(fldsArr.length() - 1).optString("name", ""));
@@ -392,11 +413,12 @@ public class ContentProviderTest {
         }
     }
 
-    private String[] removeFromProjection(String[] inputProjection, int idx) {
+    private String[] removeFromProjection(@SuppressWarnings("SameParameterValue") String[] inputProjection, int idx) {
         String[] outputProjection = new String[inputProjection.length - 1];
-        for (int i = 0; i < idx; i++) {
-            outputProjection[i] = inputProjection[i];
+        if (idx >= 0) {
+            System.arraycopy(inputProjection, 0, outputProjection, 0, idx);
         }
+        //noinspection ManualArrayCopy
         for (int i = idx + 1; i < inputProjection.length; i++) {
             outputProjection[i - 1] = inputProjection[i];
         }
@@ -423,9 +445,9 @@ public class ContentProviderTest {
                 assertNotNull("Check that there is a valid cursor for detail data after update", noteCursor);
                 assertEquals("Check that there is one and only one entry after update", 1, noteCursor.getCount());
                 assertTrue("Move to first item in cursor", noteCursor.moveToFirst());
-                String[] newFlds = Utils.splitFields(
+                String[] newFields = Utils.splitFields(
                         noteCursor.getString(noteCursor.getColumnIndex(FlashCardsContract.Note.FLDS)));
-                assertTrue("Check that the flds have been updated correctly", Arrays.equals(newFlds, dummyFields2));
+                assertArrayEquals("Check that the flds have been updated correctly", newFields, dummyFields2);
             }
         }
     }
@@ -435,7 +457,7 @@ public class ContentProviderTest {
      * Check that inserting a new model works as expected
      */
     @Test
-    public void testInsertAndUpdateModel() throws Exception {
+    public void testInsertAndUpdateModel() {
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         ContentValues cv = new ContentValues();
         // Insert a new model
@@ -444,23 +466,27 @@ public class ContentProviderTest {
         cv.put(FlashCardsContract.Model.NUM_CARDS, TEST_MODEL_CARDS.length);
         Uri modelUri = cr.insert(FlashCardsContract.Model.CONTENT_URI, cv);
         assertNotNull("Check inserted model isn't null", modelUri);
+        assertNotNull("Check last path segment exists", modelUri.getLastPathSegment());
         long mid = Long.parseLong(modelUri.getLastPathSegment());
         Collection col = reopenCol();
         try {
             JSONObject model = col.getModels().get(mid);
+            assertNotNull("Check model", model);
             assertEquals("Check model name", TEST_MODEL_NAME, model.getString("name"));
             assertEquals("Check templates length", TEST_MODEL_CARDS.length, model.getJSONArray("tmpls").length());
             assertEquals("Check field length", TEST_MODEL_FIELDS.length, model.getJSONArray("flds").length());
-            JSONArray flds = model.getJSONArray("flds");
-            for (int i = 0; i < flds.length(); i++) {
-                assertEquals("Check name of fields", TEST_MODEL_FIELDS[i], flds.getJSONObject(i).getString("name"));
+            JSONArray fields = model.getJSONArray("flds");
+            for (int i = 0; i < fields.length(); i++) {
+                assertEquals("Check name of fields", TEST_MODEL_FIELDS[i], fields.getJSONObject(i).getString("name"));
             }
             // Test updating the model CSS (to test updating MODELS_ID Uri)
             cv = new ContentValues();
             cv.put(FlashCardsContract.Model.CSS, TEST_MODEL_CSS);
             assertTrue(cr.update(modelUri, cv, null, null) > 0);
             col = reopenCol();
-            assertEquals("Check css", TEST_MODEL_CSS, col.getModels().get(mid).getString("css"));
+            model = col.getModels().get(mid);
+            assertNotNull("Check model", model);
+            assertEquals("Check css", TEST_MODEL_CSS, model.getString("css"));
             // Update each of the templates in model (to test updating MODELS_ID_TEMPLATES_ID Uri)
             for (int i = 0; i < TEST_MODEL_CARDS.length; i++) {
                 cv = new ContentValues();
@@ -472,7 +498,9 @@ public class ContentProviderTest {
                 Uri tmplUri = Uri.withAppendedPath(Uri.withAppendedPath(modelUri, "templates"), Integer.toString(i));
                 assertTrue("Update rows", cr.update(tmplUri, cv, null, null) > 0);
                 col = reopenCol();
-                JSONObject template = col.getModels().get(mid).getJSONArray("tmpls").getJSONObject(i);
+                model = col.getModels().get(mid);
+                assertNotNull("Check model", model);
+                JSONObject template = model.getJSONArray("tmpls").getJSONObject(i);
                 assertEquals("Check template name", TEST_MODEL_CARDS[i], template.getString("name"));
                 assertEquals("Check qfmt", TEST_MODEL_QFMT[i], template.getString("qfmt"));
                 assertEquals("Check afmt", TEST_MODEL_AFMT[i], template.getString("afmt"));
@@ -483,7 +511,9 @@ public class ContentProviderTest {
             // Delete the model (this will force a full-sync)
             col.modSchemaNoCheck();
             try {
-                col.getModels().rem(col.getModels().get(mid));
+                JSONObject model = col.getModels().get(mid);
+                assertNotNull("Check model", model);
+                col.getModels().rem(model);
             } catch (ConfirmModSchemaException e) {
                 // This will never happen
             }
@@ -514,7 +544,7 @@ public class ContentProviderTest {
                     assertEquals("Check that model names are the same", nameFromModel, nameFromModels);
                     String flds = allModels.getString(allModels.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES));
                     assertTrue("Check that valid number of fields", Utils.splitFields(flds).length >= 1);
-                    Integer numCards = allModels.getInt(allModels.getColumnIndex(FlashCardsContract.Model.NUM_CARDS));
+                    int numCards = allModels.getInt(allModels.getColumnIndex(FlashCardsContract.Model.NUM_CARDS));
                     assertTrue("Check that valid number of cards", numCards >= 1);
                 } finally {
                     singleModel.close();
@@ -675,7 +705,7 @@ public class ContentProviderTest {
      * Test query to decks table
      */
     @Test
-    public void testQueryAllDecks() throws Exception{
+    public void testQueryAllDecks() {
         Collection col = getCol();
         Decks decks = col.getDecks();
 
@@ -702,7 +732,7 @@ public class ContentProviderTest {
      * Test query to specific deck ID
      */
     @Test
-    public void testQueryCertainDeck() throws Exception {
+    public void testQueryCertainDeck() {
         Collection col = getCol();
 
         long deckId = mTestDeckIds.get(0);
@@ -725,7 +755,7 @@ public class ContentProviderTest {
      * Test that query for the next card in the schedule returns a valid result without any deck selector
      */
     @Test
-    public void testQueryNextCard(){
+    public void testQueryNextCard() {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
 
@@ -758,7 +788,7 @@ public class ContentProviderTest {
     public void testQueryCardFromCertainDeck(){
         long deckToTest = mTestDeckIds.get(0);
         String deckSelector = "deckID=?";
-        String deckArguments[] = {Long.toString(deckToTest)};
+        String[] deckArguments = {Long.toString(deckToTest)};
         Collection col = getCol();
         AbstractSched sched = col.getSched();
         long selectedDeckBeforeTest = col.getDecks().selected();
@@ -829,12 +859,12 @@ public class ContentProviderTest {
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
         int cardOrd = card.getOrd();
-        int ease = AbstractFlashcardViewer.EASE_3; //<- insert real ease here
+        int earlyGraduatingEase = (schedVersion == 1) ? AbstractFlashcardViewer.EASE_3 : AbstractFlashcardViewer.EASE_4;
         long timeTaken = 5000; // 5 seconds
 
         values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
         values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
-        values.put(FlashCardsContract.ReviewInfo.EASE, ease);
+        values.put(FlashCardsContract.ReviewInfo.EASE, earlyGraduatingEase);
         values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
         int updateCount = cr.update(reviewInfoUri, values, null, null);
         assertEquals("Check if update returns 1", 1, updateCount);
@@ -890,7 +920,8 @@ public class ContentProviderTest {
         // -----------------------------
 
         Card cardAfterUpdate = col.getCard(cardId);
-        assertEquals("Card is user-buried", Consts.QUEUE_TYPE_SIBLING_BURIED, cardAfterUpdate.getQueue());
+        // QUEUE_TYPE_MANUALLY_BURIED was also used for SIBLING_BURIED in sched v1
+        assertEquals("Card is user-buried", (schedVersion == 1) ? Consts.QUEUE_TYPE_SIBLING_BURIED : Consts.QUEUE_TYPE_MANUALLY_BURIED, cardAfterUpdate.getQueue());
 
         // cleanup, unbury cards
         // ---------------------
@@ -966,13 +997,12 @@ public class ContentProviderTest {
 
         // update tags
         // -----------
-        String tag1 = TEST_TAG;
         String tag2 = "mynewtag";
 
         ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Uri updateNoteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
         ContentValues values = new ContentValues();
-        values.put(FlashCardsContract.Note.TAGS, tag1 + " " + tag2);
+        values.put(FlashCardsContract.Note.TAGS, TEST_TAG + " " + tag2);
         int updateCount = cr.update(updateNoteUri, values, null, null);
 
         assertEquals("updateCount is 1", 1, updateCount);
@@ -986,16 +1016,13 @@ public class ContentProviderTest {
         assertEquals("two tags", 2, newTagList.size());
         assertEquals("check first tag", TEST_TAG, newTagList.get(0));
         assertEquals("check second tag", tag2, newTagList.get(1));
-
-
     }
-
 
 
     /** Test that a null did will not crash the provider (#6378) */
      @Test
-     @Ignore("#6025 - This causes mild data corruption - should not be run on actual collection")
      public void testProviderProvidesDefaultForEmptyModelDeck() {
+         assumeTrue("This causes mild data corruption - should not be run on a collection you care about", isEmulator());
          Collection col = getCol();
          col.getModels().all().get(0).put("did", JSONObject.NULL);
          col.save();
@@ -1006,10 +1033,8 @@ public class ContentProviderTest {
          assertNotNull(allModels);
      }
 
-
- private Collection reopenCol() {
-        CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
-        return getCol();
-    }
-
+     private Collection reopenCol() {
+         CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
+         return getCol();
+     }
 }

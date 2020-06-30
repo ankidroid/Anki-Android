@@ -373,9 +373,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                                 final PendingIntent reminderIntent = PendingIntent.getBroadcast(
                                         getApplicationContext(),
-                                        (int) mDeck.getLong("id"),
+                                        (int) mOptions.getLong("id"),
                                         new Intent(getApplicationContext(), ReminderService.class).putExtra
-                                                (ReminderService.EXTRA_DECK_ID, mDeck.getLong("id")),
+                                                (ReminderService.EXTRA_DECK_OPTION_ID, mOptions.getLong("id")),
                                         0
                                 );
 
@@ -408,9 +408,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                                 final PendingIntent reminderIntent = PendingIntent.getBroadcast(
                                         getApplicationContext(),
-                                        (int) mDeck.getLong("id"),
+                                        (int) mOptions.getLong("id"),
                                         new Intent(getApplicationContext(), ReminderService.class).putExtra
-                                                (ReminderService.EXTRA_DECK_ID, mDeck.getLong("id")),
+                                                (ReminderService.EXTRA_DECK_OPTION_ID, mOptions.getLong("id")),
                                         0
                                 );
 

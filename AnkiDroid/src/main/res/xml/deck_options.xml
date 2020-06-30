@@ -215,7 +215,7 @@
                 android:title="@string/deck_conf_replayq" />
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/deck_conf_reminders">
-            <CheckBoxPreference
+            <com.ichi2.ui.AutoSizeCheckBoxPreference
                 android:key="reminderEnabled"
                 android:title="@string/deck_conf_reminders_enabled" />
             <com.ichi2.preferences.TimePreference

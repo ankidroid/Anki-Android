@@ -832,11 +832,7 @@ public class NoteEditor extends AnkiActivity {
             modified = modified || mEditorNote.getTags().size() > mSelectedTags.size();
             if (modified) {
                 mEditorNote.setTagsFromStr(tagsAsString(mSelectedTags));
-                // CardBrowser always runs CollectionTask.TASK_TYPE_UPDATE_NOTE in response to non-canceled edits
-                // so mChanged is likely not needed anymore...
                 mChanged = true;
-                // ...but we do need it to reload itself so results of tag and field edits are shown
-                mReloadRequired = true;
             }
             closeNoteEditor();
         }
@@ -1048,11 +1044,14 @@ public class NoteEditor extends AnkiActivity {
         } else {
             result = RESULT_CANCELED;
         }
+        if (intent == null) {
+            intent = new Intent();
+        }
         if (mReloadRequired) {
-            if (intent == null) {
-                intent = new Intent();
-            }
             intent.putExtra("reloadRequired", true);
+        }
+        if (mChanged) {
+            intent.putExtra("noteChanged", true);
         }
 
         closeNoteEditor(result, intent);

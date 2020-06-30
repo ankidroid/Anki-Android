@@ -50,23 +50,23 @@
         <item>Лепш, чым рэкамендаваны</item>
         <item>Адмяніць</item>
         <item>Рэдагаваць нататку</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Пазначыць</item>
+        <item>Пазначыць нататку</item>
+        <item>Пошук выразу</item>
+        <item>Схаваць картку</item>
+        <item>Прыпыніць картку</item>
+        <item>Выдаліць нататку</item>
+        <item>Прайграць медыа</item>
+        <item>Перапыніць навучанне</item>
+        <item>Схаваць нататку</item>
+        <item>Прыпыніць нататку</item>
+        <item>Чырвоны сцяжок</item>
+        <item>Аранжавы сцяжок</item>
+        <item>Зялёны сцяжок</item>
+        <item>Блакітны сцяжок</item>
+        <item>Прыбраць сцяжок</item>
+        <item>Пракруціць уверх</item>
+        <item>Пракруціць уніз</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Адкласці картку</item>

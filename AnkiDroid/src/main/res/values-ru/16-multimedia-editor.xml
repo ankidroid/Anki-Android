@@ -120,9 +120,9 @@
     <!-- Network failure -->
     <string name="network_no_connection">Нет соединения</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="crop_image">Обрезать это изображение?</string>
+    <string name="crop_button">Обрезать изображение</string>
+    <string name="save_dialog_content">Размер изображения — %s МБ. По умолчанию размер изображения ограничен 1 МБ. Обрезать его?</string>
+    <string name="select_image_failed">"Не удалось выбрать изображение. Попробуйте снова"</string>
+    <string name="activity_result_unexpected">Приложение вернуло неожиданный результат. Попробуйте использовать другое приложение</string>
 </resources>

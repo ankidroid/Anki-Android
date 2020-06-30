@@ -105,8 +105,8 @@
     <string name="gestures_tap_bottom">Premi giù</string>
     <string name="gestures_tap_left">Premi a sinistra</string>
     <string name="gestures_tap_right">Premi a destra</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_volume_up">Alza il volume</string>
+    <string name="gestures_volume_down">Abbassa il volume</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Utilizza anche pulsanti kanji/katakana, emoji/kao-moji per lo scorrimento</string>
     <string name="card_browser_enable_external_context_menu">Menù «%s»</string>
@@ -145,9 +145,9 @@
     <string name="select_locale_title">Scegli la lingua</string>
     <string name="safe_display">Modalità visualizzazione sicura</string>
     <string name="safe_display_summ">Disattiva tutte le animazioni e utilizza il metodo più sicuro per disegnare le carte. Dispositivi e-ink possono richiedere questo.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">Disabilita la modalità Modifica singolo campo</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Consente il menù contestuale «Cloze» quando in modalità orizzontale.</string>
     <string name="vertical_centering">Allinea al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente il contenuto delle carte</string>
     <string name="pref_backup_max">Numero massimo di backup</string>

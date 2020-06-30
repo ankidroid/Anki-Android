@@ -58,7 +58,7 @@
     <string name="sdcard_missing_message">Вимкніть USB-накопичувач для доступу до ваших колод</string>
     <string name="updated_version">Оновлено до версії %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Зберегти написане</string>
     <string name="enable_whiteboard">Увімкнути дошку</string>
     <string name="disable_whiteboard">Вимкнути дошку</string>
     <string name="show_whiteboard">Показати Дошку</string>
@@ -296,7 +296,7 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Будь ласка, увімкніть повноекранний режим, щоб показати відображувач навігації використовуючи JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Будь ласка, увімкніть повноекранний режим, щоб показати меню параметрів використовуючи JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Pen color</string>
+    <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
+    <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
+    <string name="title_whiteboard_pen_color">Колір олівця</string>
 </resources>
