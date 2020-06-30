@@ -103,6 +103,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Utils;
@@ -554,7 +555,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     .customView(mDialogEditText, true)
                     .onPositive((dialog, which) -> {
                         String deckName = mDialogEditText.getText().toString();
-                        createNewDeck(deckName);
+                        if (Decks.isValidDeckName(deckName)) {
+                            createNewDeck(deckName);
+                        } else {
+                            Timber.i("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
+                            UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
+                        }
                     })
                     .negativeText(R.string.dialog_cancel)
                     .show();
@@ -653,6 +659,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             String filteredDeckName = mDialogEditText.getText().toString();
+                            if (!Decks.isValidDeckName(filteredDeckName)) {
+                                Timber.i("Not creating deck with invalid name '%s'", filteredDeckName);
+                                UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
+                                return;
+                            }
                             Timber.i("DeckPicker:: Creating filtered deck...");
                             getCol().getDecks().newDyn(filteredDeckName);
                             openStudyOptions(true);
@@ -2244,7 +2255,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 .onPositive((dialog, which) -> {
                     String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
                     Collection col = getCol();
-                    if (!TextUtils.isEmpty(newName) && !newName.equals(currentName)) {
+                    if (!Decks.isValidDeckName(newName)) {
+                        Timber.i("renameDeckDialog not renaming deck to invalid name '%s'", newName);
+                        UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
+                    } else if (!newName.equals(currentName)) {
                         try {
                             col.getDecks().rename(col.getDecks().get(did), newName);
                         } catch (DeckRenameException e) {
@@ -2477,10 +2491,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 .onPositive((dialog, which) -> {
                     String textValue = mDialogEditText.getText().toString();
                     String newName = getCol().getDecks().getSubdeckName(did, textValue);
-                    if (newName != null) {
+                    if (Decks.isValidDeckName(newName)) {
                         createNewDeck(newName);
                     } else {
-                        Timber.d("Failed to obtain subdeck name");
+                        Timber.i("createSubDeckDialog - not creating invalid subdeck name '%s'", newName);
+                        UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
                     }
                     dismissAllDialogFragments();
                     mDeckListAdapter.notifyDataSetChanged();

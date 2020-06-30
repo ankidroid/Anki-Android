@@ -1105,6 +1105,10 @@ public class Decks {
     * ***********************************************************
     */
 
+    public static boolean isValidDeckName(@Nullable String deckName) {
+        return deckName != null && !deckName.trim().isEmpty();
+    }
+
     public static String parent(String deckName) {
         // method parent, from sched's method deckDueList in python
         List<String> parts = Arrays.asList(path(deckName));
