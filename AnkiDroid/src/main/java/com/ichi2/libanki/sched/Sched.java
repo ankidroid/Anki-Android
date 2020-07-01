@@ -55,6 +55,7 @@ import java.util.Locale;
 import java.util.Random;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -1608,8 +1609,13 @@ public class Sched extends SchedV2 {
     }
 
 
+    /**
+     * This is used when card is currently in the reviewer, to adapt the counts by removing this card from it.*/
     @Override
-    public void decrementCounts(Card card) {
+    public void decrementCounts(@Nullable Card card) {
+        if (card == null) {
+            return;
+        }
         @Consts.CARD_QUEUE int type = card.getQueue();
         switch (type) {
         case Consts.QUEUE_TYPE_NEW:
