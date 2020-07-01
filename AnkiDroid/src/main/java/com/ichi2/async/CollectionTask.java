@@ -883,8 +883,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                     newCard = col.getCard(cid);
                     newCard.startTimer();
                     col.reset();
-                    col.getSched().decrementCounts(newCard);
-                    sched.deferReset();
+                    sched.deferReset(newCard);
                 } else {
                     // cid < 0
                     /* multi-card action undone, no action to take here */

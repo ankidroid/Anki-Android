@@ -90,6 +90,8 @@ public class SchedV2 extends AbstractSched {
     protected int mRevCount;
 
     private int mNewCardModulus;
+    // When an action is undone, reset counts need to take the card into account
+    private Card mUndidCard = null;
 
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
@@ -165,8 +167,13 @@ public class SchedV2 extends AbstractSched {
     }
 
     /** Ensures that reset is executed before the next card is selected */
-    public void deferReset(){
+    public void deferReset(Card undidCard){
         mHaveQueues = false;
+        mUndidCard = undidCard;
+    }
+
+    public void deferReset(){
+        deferReset(null);
     }
 
     public void reset() {
@@ -175,6 +182,10 @@ public class SchedV2 extends AbstractSched {
         _resetRev();
         _resetNew();
         mHaveQueues = true;
+        if (mUndidCard != null) {
+            decrementCounts(mUndidCard);
+            mUndidCard = null;
+        }
     }
 
 

@@ -30,6 +30,9 @@ public abstract class AbstractSched {
     public abstract void reset();
     /** Ensures that reset is executed before the next card is selected */
     public abstract void deferReset();
+    /**
+     * @param undoneCard a card undone, send back to the reviewer.*/
+    public abstract void deferReset(Card undoneCard);
     public abstract void answerCard(Card card, int ease);
     public abstract int[] counts();
     public abstract int[] counts(Card card);
