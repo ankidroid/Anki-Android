@@ -159,6 +159,7 @@
     <string name="custom_study_deck_name">कस्टम अध्ययन सत्र</string>
     <string name="custom_study_deck_exists">कृपया पहले मौजूदा कस्टम अध्ययन डेक का नाम बदलें।</string>
     <string name="empty_deck">इस डेक खाली है</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">यह डेक खाली है । नई सामग्री जोड़ने के लिए + बटन दबाएँ.</string>
     <string name="studyoptions_limit_reached">दैनिक अध्ययन सीमा तक पहुंच गई</string>
     <string name="studyoptions_empty_schedule">कोई कार्ड अध्ययन के लिए अनुसूचित</string>

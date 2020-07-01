@@ -159,6 +159,7 @@
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">Dette kortsæt er tomt</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Dette kortsæt er tomt. Tryk på +knappen for at tilføje indhold.</string>
     <string name="studyoptions_limit_reached">Daily study limit reached</string>
     <string name="studyoptions_empty_schedule">No cards scheduled to study</string>

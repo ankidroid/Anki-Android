@@ -159,6 +159,7 @@
     <string name="custom_study_deck_name">Propra lernado</string>
     <string name="custom_study_deck_exists">Unue ŝanĝu nomon de kartaro por propra lernado</string>
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Tiu ĉi kartaro estas malplena. Frapetu la butonon “+” por aldoni novan enhavon.</string>
     <string name="studyoptions_limit_reached">Limigo de taga lernado atingita</string>
     <string name="studyoptions_empty_schedule">Neniuj kartoj planitaj por lerni</string>

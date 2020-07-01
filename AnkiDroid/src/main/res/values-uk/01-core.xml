@@ -169,6 +169,7 @@
     <string name="custom_study_deck_name">Додаткове навчання</string>
     <string name="custom_study_deck_exists">Спочатку перейменуйте колоду додаткового навчання</string>
     <string name="empty_deck">Ця колода порожня</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Ця колода порожня. Натисніть кніпку +, щоб додати новий вміст.</string>
     <string name="studyoptions_limit_reached">Досягнуто денної межі навчання</string>
     <string name="studyoptions_empty_schedule">Нема запланованих карток</string>

@@ -159,6 +159,7 @@
     <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
     <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglévő, Egyéni tanulás paklit</string>
     <string name="empty_deck">Ez a pakli üres</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Ez a pakli üres. Adj hozzá új tartalmat a \"+\" megnyomásával.</string>
     <string name="studyoptions_limit_reached">Elérted a napi tanulási mennyiséget</string>
     <string name="studyoptions_empty_schedule">A tanuláshoz nincsenek kártyák ütemezve</string>

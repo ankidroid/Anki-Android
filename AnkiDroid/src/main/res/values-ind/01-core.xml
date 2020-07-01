@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">Sesi belajar kustom</string>
     <string name="custom_study_deck_exists">Ubah dahulu susunan belajar kustom yang ada</string>
     <string name="empty_deck">Susunan ini kosong</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Susunan Ini kosong. Tekan tombol + untuk menambahkan konten baru.</string>
     <string name="studyoptions_limit_reached">Batas studi harian tercapai</string>
     <string name="studyoptions_empty_schedule">Tidak ada kartu yang dijadwalkan untuk dipelajari</string>
