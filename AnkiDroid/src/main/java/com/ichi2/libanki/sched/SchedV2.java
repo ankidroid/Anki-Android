@@ -182,10 +182,8 @@ public class SchedV2 extends AbstractSched {
         _resetRev();
         _resetNew();
         mHaveQueues = true;
-        if (mUndidCard != null) {
-            decrementCounts(mUndidCard);
-            mUndidCard = null;
-        }
+        decrementCounts(mUndidCard);
+        mUndidCard = null;
     }
 
 
@@ -2662,8 +2660,12 @@ public class SchedV2 extends AbstractSched {
         return (int) Math.round((newTotal + relrnTotal + revTotal + futureRelrnTotal) / 60000);
     }
 
-
-    public void decrementCounts(Card card) {
+    /**
+     * This is used when card is currently in the reviewer, to adapt the counts by removing this card from it.*/
+    public void decrementCounts(@Nullable Card card) {
+        if (card == null) {
+            return;
+        }
         switch (card.getQueue()) {
         case Consts.QUEUE_TYPE_NEW:
             mNewCount--;
