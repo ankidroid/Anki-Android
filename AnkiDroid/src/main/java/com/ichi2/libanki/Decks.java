@@ -365,11 +365,7 @@ public class Decks {
      * A list of all decks.
      */
     public ArrayList<JSONObject> all() {
-        ArrayList<JSONObject> decks = new ArrayList<>();
-        for (JSONObject deck : mDecks.values()) {
-            decks.add(deck);
-        }
-        return decks;
+        return new ArrayList<>(mDecks.values());
     }
 
 
@@ -675,11 +671,7 @@ public class Decks {
      * A list of all deck config.
      */
     public ArrayList<JSONObject> allConf() {
-        ArrayList<JSONObject> confs = new ArrayList<>();
-        for (JSONObject c : mDconf.values()) {
-            confs.add(c);
-        }
-        return confs;
+        return new ArrayList<>(mDconf.values());
     }
 
 
