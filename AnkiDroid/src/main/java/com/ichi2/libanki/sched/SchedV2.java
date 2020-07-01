@@ -60,6 +60,7 @@ import java.util.Locale;
 import java.util.Random;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
@@ -570,6 +571,14 @@ public class SchedV2 extends AbstractSched {
     /**
      * New cards **************************************************************** *******************************
      */
+
+    /** Same as _resetRev, but assume discardCard is currently in the reviewer and so don't conunt it.*/
+    protected void _resetNew(@Nullable Card discardCard) {
+        _resetRev();
+        if (discardCard != null && discardCard.getQueue() == Consts.QUEUE_TYPE_NEW) {
+            mNewCount--;
+        }
+    }
 
     protected void _resetNewCount() {
         mNewCount = _walkingCount((JSONObject g) -> _deckNewLimitSingle(g),
@@ -1236,6 +1245,14 @@ public class SchedV2 extends AbstractSched {
                                         new Object[] {mToday, lim});
     }
 
+
+    /** Same as _resetRev, but assume discardCard is currently in the reviewer and so don't conunt it.*/
+    protected void _resetRev(@Nullable Card discardCard) {
+        _resetRev();
+        if (discardCard != null && discardCard.getQueue() == Consts.QUEUE_TYPE_REV) {
+            mRevCount--;
+        }
+    }
 
     protected void _resetRevCount() {
         int lim = _currentRevLimit();
