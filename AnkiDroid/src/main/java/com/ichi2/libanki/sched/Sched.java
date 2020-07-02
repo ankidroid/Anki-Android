@@ -750,14 +750,11 @@ public class Sched extends SchedV2 {
             // nothing left in the deck; move to next
             mRevDids.remove();
         }
-        if (mRevCount != 0) {
-            // if we didn't get a card but the count is non-zero,
-            // we need to check again for any cards that were
-            // removed from the queue but not buried
-            _resetRev();
-            return _fillRev();
-        }
-        return false;
+        // Since we didn't get a card and the count is non-zero, we
+        // need to check again for any cards that were removed from
+        // the queue but not buried
+        _resetRev();
+        return _fillRev();
     }
 
 

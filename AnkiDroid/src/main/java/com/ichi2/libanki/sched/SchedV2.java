@@ -632,14 +632,11 @@ public class SchedV2 extends AbstractSched {
             // nothing left in the deck; move to next
             mNewDids.remove();
         }
-        if (mNewCount != 0) {
-            // if we didn't get a card but the count is non-zero,
-            // we need to check again for any cards that were
-            // removed from the queue but not buried
-            _resetNew();
-            return _fillNew();
-        }
-        return false;
+        // if we didn't get a card, since the count is non-zero, we
+        // need to check again for any cards that were removed
+        // from the queue but not buried
+        _resetNew();
+        return _fillNew();
     }
 
 
@@ -1293,14 +1290,11 @@ public class SchedV2 extends AbstractSched {
                 return true;
             }
         }
-        if (mRevCount != 0) {
-            // if we didn't get a card but the count is non-zero,
-            // we need to check again for any cards that were
-            // removed from the queue but not buried
-            _resetRev();
-            return _fillRev();
-        }
-        return false;
+        // since we didn't get a card and the count is non-zero, we
+        // need to check again for any cards that were removed from
+        // the queue but not buried
+        _resetRev();
+        return _fillRev();
     }
 
 
