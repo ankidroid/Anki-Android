@@ -56,6 +56,7 @@ import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -362,11 +363,9 @@ public class Sched extends SchedV2 {
         }
         Cursor cur = null;
         mLrnQueue.clear();
+        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         try {
-            cur = mCol
-                    .getDb()
-                    .getDatabase()
-                    .query(
+            cur = db.query(
                             "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? LIMIT ?",
                                     new Object[]{mDayCutoff, mReportLimit});
             while (cur.moveToNext()) {
@@ -706,6 +705,7 @@ public class Sched extends SchedV2 {
         if (mRevCount == 0) {
             return false;
         }
+        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         while (!mRevDids.isEmpty()) {
             long did = mRevDids.getFirst();
             int lim = Math.min(mQueueLimit, _deckRevLimit(did));
@@ -714,10 +714,7 @@ public class Sched extends SchedV2 {
                 mRevQueue.clear();
                 // fill the queue with the current did
                 try {
-                    cur = mCol
-                            .getDb()
-                            .getDatabase()
-                            .query(
+                    cur = db.query(
                                     "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
                                             + " LIMIT ?",
                                     new Object[]{did, mToday, lim});

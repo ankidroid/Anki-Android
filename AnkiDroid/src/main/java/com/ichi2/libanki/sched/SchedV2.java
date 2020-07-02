@@ -61,6 +61,7 @@ import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -599,6 +600,7 @@ public class SchedV2 extends AbstractSched {
         if (mNewCount == 0) {
             return false;
         }
+        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         while (!mNewDids.isEmpty()) {
             long did = mNewDids.getFirst();
             int lim = Math.min(mQueueLimit, _deckNewLimit(did));
@@ -607,10 +609,7 @@ public class SchedV2 extends AbstractSched {
                 mNewQueue.clear();
                 try {
                     // fill the queue with the current did
-                    cur = mCol
-                            .getDb()
-                            .getDatabase()
-                            .query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " order by due, ord LIMIT ?",
+                    cur = db.query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " order by due, ord LIMIT ?",
                                     new Object[]{did, lim});
                     while (cur.moveToNext()) {
                         mNewQueue.add(cur.getLong(0));
@@ -851,16 +850,14 @@ public class SchedV2 extends AbstractSched {
         if (!mLrnDayQueue.isEmpty()) {
             return true;
         }
+        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         while (!mLrnDids.isEmpty()) {
             long did = mLrnDids.getFirst();
             // fill the queue with the current did
             mLrnDayQueue.clear();
             Cursor cur = null;
             try {
-                cur = mCol
-                        .getDb()
-                        .getDatabase()
-                        .query(
+                cur = db.query(
                                 "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? LIMIT ?",
                                 new Object[] {did, mToday, mQueueLimit});
                 while (cur.moveToNext()) {
@@ -1260,15 +1257,13 @@ public class SchedV2 extends AbstractSched {
             return false;
         }
         int lim = Math.min(mQueueLimit, _currentRevLimit());
+        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         if (lim != 0) {
             Cursor cur = null;
             mRevQueue.clear();
             // fill the queue with the current did
             try {
-                cur = mCol
-                        .getDb()
-                        .getDatabase()
-                        .query(
+                cur = db.query(
                                 "SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? "
                                         + " ORDER BY due, random() LIMIT ?",
                                 new Object[] {mToday, lim});
