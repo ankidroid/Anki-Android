@@ -1607,19 +1607,23 @@ public class Sched extends SchedV2 {
 
 
     /**
-     * This is used when card is currently in the reviewer, to adapt the counts by removing this card from it.*/
+     * This is used when card is currently in the reviewer, to adapt the counts by removing this card from it.
+     *
+     * @param discardCard A card sent to reviewer that should not be
+     * counted.
+     */
     @Override
-    public void decrementCounts(@Nullable Card card) {
-        if (card == null) {
+    public void decrementCounts(@Nullable Card discardCard) {
+        if (discardCard == null) {
             return;
         }
-        @Consts.CARD_QUEUE int type = card.getQueue();
+        @Consts.CARD_QUEUE int type = discardCard.getQueue();
         switch (type) {
         case Consts.QUEUE_TYPE_NEW:
             mNewCount--;
             break;
         case Consts.QUEUE_TYPE_LRN:
-            mLrnCount -= card.getLeft() / 1000;
+            mLrnCount -= discardCard.getLeft() / 1000;
             break;
         case Consts.QUEUE_TYPE_REV:
             mRevCount--;

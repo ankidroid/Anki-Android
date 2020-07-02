@@ -2656,11 +2656,11 @@ public class SchedV2 extends AbstractSched {
 
     /**
      * This is used when card is currently in the reviewer, to adapt the counts by removing this card from it.*/
-    public void decrementCounts(@Nullable Card card) {
-        if (card == null) {
+    public void decrementCounts(@Nullable Card discardCard) {
+        if (discardCard == null) {
             return;
         }
-        switch (card.getQueue()) {
+        switch (discardCard.getQueue()) {
         case Consts.QUEUE_TYPE_NEW:
             mNewCount--;
             break;
