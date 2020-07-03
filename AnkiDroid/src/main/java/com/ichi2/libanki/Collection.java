@@ -669,7 +669,7 @@ public class Collection {
                 long due = cur.getLong(4);
                 long odue = cur.getLong(5);
                 long odid = cur.getLong(6);
-                long type = cur.getLong(7);
+                @Consts.CARD_TYPE int type = cur.getInt(7);
 
                 // existing cards
                 if (!have.containsKey(nid)) {

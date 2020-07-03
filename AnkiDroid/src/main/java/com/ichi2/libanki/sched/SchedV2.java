@@ -285,6 +285,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @Consts.CARD_TYPE
     public int countIdx(Card card) {
         if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.getQueue() == Consts.QUEUE_TYPE_PREVIEW) {
             return Consts.QUEUE_TYPE_LRN;
