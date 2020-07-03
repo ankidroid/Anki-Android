@@ -149,6 +149,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
+    @Consts.CARD_QUEUE
     public int countIdx(Card card) {
         if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
             return Consts.QUEUE_TYPE_LRN;
@@ -1610,7 +1611,7 @@ public class Sched extends SchedV2 {
 
     @Override
     public void decrementCounts(Card card) {
-        int type = card.getQueue();
+        @Consts.CARD_QUEUE int type = card.getQueue();
         switch (type) {
         case Consts.QUEUE_TYPE_NEW:
             mNewCount--;

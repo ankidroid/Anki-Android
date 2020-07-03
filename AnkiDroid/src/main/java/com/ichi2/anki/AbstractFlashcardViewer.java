@@ -3551,6 +3551,7 @@ see card.js for available functions
         }
 
         @JavascriptInterface
+        @Consts.CARD_QUEUE
         public int ankiGetCardQueue() {
             return mCurrentCard.getQueue();
         }

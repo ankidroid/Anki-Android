@@ -1265,7 +1265,7 @@ public class Collection {
                 mDb.execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
                         new Object[]{Utils.intTime(), usn(), c.getNid()});
                 // and finally, update daily count
-                int n = c.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : c.getQueue();
+                @Consts.CARD_QUEUE int n = c.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : c.getQueue();
                 String type = (new String[]{"new", "lrn", "rev"})[n];
                 mSched._updateStats(c, type, -1);
                 mSched.setReps(mSched.getReps() - 1);
