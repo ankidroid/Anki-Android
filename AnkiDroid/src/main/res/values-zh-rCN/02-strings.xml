@@ -268,5 +268,5 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">保存白板图像失败。 %s</string>
     <string name="white_board_image_saved">白板图像已保存到 %s</string>
-    <string name="title_whiteboard_pen_color">笔颜色</string>
+    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
 </resources>

@@ -39,33 +39,33 @@
 -->
 <resources>
     <!-- Navigation drawer items-->
-    <string name="decks">Susunan</string>
+    <string name="decks">Dek</string>
     <string name="card_browser">Penelusur kartu</string>
     <string name="statistics">Statistik</string>
     <string name="settings">Pengaturan</string>
     <string name="help">Bantuan</string>
     <string name="send_feedback">Kirim Masukan</string>
-    <string name="studyoptions_title">Gambaran susunan</string>
+    <string name="studyoptions_title">Gambaran umum dek</string>
     <string name="studyoptions_due_today">Jatuh tempo hari ini:</string>
     <string name="studyoptions_new_total">Total kartu baru:</string>
     <string name="studyoptions_total_cards">Total kartu:</string>
-    <string name="studyoptions_eta">Perkiraan waktu (menit):</string>
+    <string name="studyoptions_eta">Estimasi waktu (mnt):</string>
     <string name="studyoptions_start">Belajar</string>
     <!-- DeckPicker.java -->
     <string name="expand">Perluas</string>
-    <string name="collapse">Perpendek</string>
-    <string name="study_more">Pelajari lebih banyak</string>
+    <string name="collapse">Tutup</string>
+    <string name="study_more">Belajar lagi</string>
     <plurals name="deckpicker_title">
         <item quantity="other">%1$d kartu jatuh tempo (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d menit tersisa</item>
+        <item quantity="other">%d menit lagi</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">%d jam %d mnt lagi</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">%d hari %d jam lagi</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -80,10 +80,10 @@
     <string name="ease_button_easy">Mudah</string>
     <string name="studyoptions_congrats_undo">Batalkan %s</string>
     <string name="menu_import">Impor</string>
-    <string name="undo">Membatalkan</string>
+    <string name="undo">Urungkan</string>
     <string name="undo_action_review">ulasan terakhir</string>
     <string name="undo_action_bury_card">pendam kartu</string>
-    <string name="undo_action_bury_note">kubur catatan</string>
+    <string name="undo_action_bury_note">pendam catatan</string>
     <string name="undo_action_suspend_card">tangguhkan kartu</string>
     <string name="undo_action_suspend_note">tangguhkan catatan</string>
     <string name="undo_action_delete">hapus catatan</string>
@@ -106,30 +106,30 @@
     <string name="menu_bury">Pendam</string>
     <string name="menu_suspend">Tangguhkan</string>
     <string name="menu_delete_note">Hapus catatan</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
-    <string name="delete_note_message">Apakah benar-benar menghapus catatan ini dan semua kartunya?\n%s</string>
+    <string name="menu_flag">Panji</string>
+    <string name="menu_flag_card">Beri kartu bendera</string>
+    <string name="menu_flag_card_zero">Tidak ada bendera</string>
+    <string name="menu_flag_card_one">Bendera merah</string>
+    <string name="menu_flag_card_two">Bendera Oranye</string>
+    <string name="menu_flag_card_three">Bendera Hijau</string>
+    <string name="menu_flag_card_four">Bendera Biru</string>
+    <string name="menu_edit_tags">Edit tag</string>
+    <string name="delete_note_message">Yakin akan menghapus catatan ini dan semua kartunya?\n%s</string>
     <string name="menu_select">Pilih teks</string>
     <string name="menu_search">Pencarian di %1$s</string>
-    <string name="menu_mark_note">Tandai catatan</string>
+    <string name="menu_mark_note">tandai catatan</string>
     <string name="menu_unmark_note">Batal tandai catatan</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Cek pelafalan</string>
     <string name="new_deck">Buat susunan</string>
     <string name="create">Buat</string>
-    <string name="new_dynamic_deck">Buat susunan pilihan</string>
+    <string name="new_dynamic_deck">Buat dek tersaring</string>
     <string name="night_mode">Mode malam</string>
     <string name="directory_inaccessible">Direktori AnkiDroid tidak dapat diakses</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Mohon beri AnkiDroid izin \'penyimpanan\' untuk melanjutkan</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -137,30 +137,30 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d s</string>
+    <string name="time_quantity_seconds">%d d</string>
     <string name="time_quantity_minutes">%d mnt</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$ j /%2$ m </string>
     <string name="time_quantity_hours">%d j</string>
     <string name="time_quantity_days">%d hr</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
+    <string name="time_quantity_days_hours">%1$h/%2$j </string>
     <string name="time_quantity_months">%.1f bln</string>
     <string name="time_quantity_years">%.1f th</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Membuat ulang susunan cram&#8230;</string>
+    <string name="rebuild_cram_deck">Membuat ulang dek cram&#8230;</string>
     <string name="rebuild_cram_label">Buat ulang</string>
     <string name="empty_cram_label">Kosong</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Mengosongkan susunan cram&#8230;</string>
+    <string name="create_subdeck">Buat subdek</string>
+    <string name="empty_cram_deck">Mengosongkan dek cram&#8230;</string>
     <string name="custom_study_deck_name">Sesi belajar kustom</string>
     <string name="custom_study_deck_exists">Ubah dahulu susunan belajar kustom yang ada</string>
-    <string name="empty_deck">Susunan ini kosong</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">Susunan Ini kosong. Tekan tombol + untuk menambahkan konten baru.</string>
-    <string name="studyoptions_limit_reached">Batas studi harian tercapai</string>
+    <string name="empty_deck">Dek ini kosong</string>
+    <string name="invalid_deck_name">Nama dek tidak valid</string>
+    <string name="studyoptions_empty">Dek Ini kosong. Tekan tombol + untuk menambah konten baru.</string>
+    <string name="studyoptions_limit_reached">Batas belajar harian tercapai</string>
     <string name="studyoptions_empty_schedule">Tidak ada kartu yang dijadwalkan untuk dipelajari</string>
-    <string name="studyoptions_congrats_finished">Selamat! Kamu telah selesai untuk saat ini.</string>
-    <string name="studyoptions_congrats_more_rev">Batas hari ini telah dicapai, tetapi masih ada kartu-kartu untuk diulas. Anda dapat menaikkan batasan di dalam opsi.</string>
-    <string name="studyoptions_congrats_more_new">Batas hari ini telah dicapai. Ada lebih banyak kartu-kartu baru yang tersedia; Anda dapat menaikkan batasan di opsi, tetapi ini akan meningkatkan beban kerja ulasan jangka pendek Anda.</string>
+    <string name="studyoptions_congrats_finished">Selamat! Kamu telah selesai untuk sekarang.</string>
+    <string name="studyoptions_congrats_more_rev">Batas hari ini telah dicapai, tetapi masih ada kartu-kartu untuk diulas. Kamu dapat menaikkan batasan di pengaturan.</string>
+    <string name="studyoptions_congrats_more_new">Batas hari ini telah dicapai. Ada banyak kartu baru yang tersedia; Kamu dapat menaikkan batasan di pengaturan, tetapi ini akan meningkatkan beban kerja ulasan jangka pendekmu.</string>
     <string name="studyoptions_congrats_custom">Untuk belajar di luar jadwal normal, sentuh tombol \"Belajar kustom\"</string>
     <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
     <string name="sd_card_not_mounted">Perangkat penyimpanan tidak terpasang</string>
@@ -180,20 +180,20 @@
     <string name="card_template_editor_back">Template belakang</string>
     <string name="card_template_editor_styling">Penataan</string>
     <string name="card_template_editor_menu_delete">Hapus</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Tampilan penelusur kartu</string>
     <string name="card_template_editor_cant_delete">Diperlukan setidaknya satu jenis kartu.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Hapus jenis kartu \"%2$s\", beserta kartu %1$d?</item>
     </plurals>
     <string name="invalid_template">Kartu tidak dapat dibuat</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="card_template_editor_would_delete_note">Menghapus jenis kartu ini akan menyebabkan satu catatan atau lebih terhapus. Silahkan buat dulu jenis kartu yang baru.</string>
+    <string name="card_template_editor_save_error">Tidak dapat menyimpan perubahan templat kartu: %s</string>
+    <string name="template_for_current_card_deleted">Templat untuk kartu ini sudah dihapus.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Tampilan penelusur</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Baca dan tulis ke database AnkiDroid</string>
     <string name="read_write_permission_description">mengakses catatan, kartu, jenis catatan, dan susunan, serta membuat yang baru</string>
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_label">Penelusur kartu</string>
+    <string name="card_browser_context_menu">Penelusur kartu</string>
 </resources>
