@@ -31,7 +31,7 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
     public void checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase();
 
-        CollectionTask.TaskData result = super.execute(TASK_TYPE_CHECK_DATABASE);
+        CollectionTask.TaskData result = super.execute(CHECK_DATABASE);
 
         assertThat("The result should specify a failure", result.getBoolean(), is(false));
         Collection.CheckDatabaseResult checkDbResult = assertObjIsDbResult(result);
