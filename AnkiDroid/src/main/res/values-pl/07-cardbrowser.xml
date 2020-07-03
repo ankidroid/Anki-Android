@@ -85,8 +85,8 @@
         <item>Bez sortowania (szybciej)</item>
         <item>Wg pola wyszukiwania</item>
         <item>Wg utworzenia</item>
-        <item>Wg zmodyfikowania</item>
-        <item>Według czasu zmiany</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Według czasu powtórki</item>
         <item>Wg przerw</item>
         <item>Wg łatwości</item>

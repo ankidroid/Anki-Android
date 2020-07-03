@@ -41,19 +41,19 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Buka laci</string>
-    <string name="drawer_close">Tutup laci</string>
-    <string name="CardEditorLaterMessage">Simpan informasi untuk nanti</string>
+    <string name="drawer_open">Buka drawer</string>
+    <string name="drawer_close">Tutup drawer</string>
+    <string name="CardEditorLaterMessage">Informasi disimpan untuk nanti</string>
     <string name="CardEditorCardDeck">Dek kartu:</string>
     <string name="CardEditorNoteDeck">Dek:</string>
     <string name="CardEditorModel">Tipe:</string>
     <string name="CardEditorTags">Tag: %1$s</string>
     <string name="CardEditorCards">Kartu:%1$s</string>
     <string name="tag_name">Nama tag</string>
-    <string name="add_new_filter_tags">Tambah/Saring tag</string>
+    <string name="add_new_filter_tags">Tambah/Filter tag</string>
     <string name="add_tag">Tambah tag</string>
     <string name="check_all_tags">Centang / hapus centang semua tag</string>
-    <string name="filter_tags">Saring tag</string>
+    <string name="filter_tags">FIlter tag</string>
     <string name="no_tags">Kamu belum menambahkan tag apapun</string>
     <string name="sdcard_missing_message">Matikan penyimpanan USB untuk mengakses dekmu</string>
     <string name="updated_version">Diperbarui ke versi %s</string>
@@ -68,11 +68,11 @@
     <string name="toggle_mic_tool_bar">Cek pelafalan</string>
     <string name="leech_suspend_notification">Kartu ditandai sebagai leech dan ditangguhkan</string>
     <string name="leech_notification">Kartu ditandai sebagai leech</string>
-    <string name="corrupt_font">File font %s rusak</string>
+    <string name="corrupt_font">File fon %s rusak</string>
     <string name="webview_crash_unknown">Galat Tidak Diketahui</string>
     <string name="webview_crash_unknwon_detailed">Ini disebabkan oleh galat internal dalam WebView</string>
     <string name="webview_crash_oom">Kehabisan memori</string>
-    <string name="webview_crash_oom_details">WebView dihentikan oleh sistem. Ini biasa terjadi saat aplikasi kehabisan memori, kadang karena font atau media yang besar</string>
+    <string name="webview_crash_oom_details">WebView dihentikan oleh sistem. Ini biasa terjadi saat aplikasi kehabisan memori, terkadang karena fon atau media yang besar</string>
     <string name="webview_crash_nonfatal">Perender WebView mogok. Sebab: %s</string>
     <string name="webview_crash_fatal">Galat Fatal: Perender WebView mogok. Sebab: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistem WebView Gagal Merender</string>
@@ -80,23 +80,23 @@
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Pertanyaan</item>
-        <item>Sort field</item>
+        <item>Urutkan kolom</item>
     </string-array>
     <string-array name="browser_column2_headings">
-        <item>Menjawab</item>
+        <item>Jawaban</item>
         <item>Kartu</item>
-        <item>Deck</item>
-        <item>Note</item>
+        <item>Dek</item>
+        <item>Catatan</item>
         <item>Pertanyaan</item>
         <item>Tag</item>
-        <item>Lapisan</item>
+        <item>Kelupaan</item>
         <item>Ulasan</item>
         <item>Interval</item>
-        <item>Ringan</item>
+        <item>Renggang</item>
         <item>Jatuh tempo</item>
-        <item>Diubah</item>
+        <item>Card Modified</item>
         <item>Dibuat</item>
-        <item>Diedit</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Tambah batas kartu baru hari ini</string>
@@ -121,11 +121,11 @@
     <string name="close">Tutup</string>
     <string name="select">Pilih</string>
     <string name="saving_changes">Menyimpan perubahan...</string>
-    <string name="reordering_cards">Menata ulang kartu&#8230;</string>
+    <string name="reordering_cards">Mengurutkan ulang kartu&#8230;</string>
     <string name="field_remapping">%1$s (dari \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">Semua kartu yang dipetakan kosong akan dihapus. Jika catatan tidak memiliki sisa kartu, kartu tersebut akan hilang. Apa kamu yakin?</string>
+    <string name="confirm_map_cards_to_nothing">Semua kartu yang dipetakan jadi kosong akan dihapus. Jika catatan tidak memiliki sisa kartu, kartu tersebut akan hilang. Apa kamu yakin?</string>
     <plurals name="timebox_reached">
-        <item quantity="other">%1$d kartu dipelajari dalam%2$s</item>
+        <item quantity="other">%1$d kartu dipelajari dalam %2$s</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
@@ -136,9 +136,9 @@
     <string name="note_editor_add_note">Tambah catatan</string>
     <string name="note_editor_copy_note">Salin Catatan</string>
     <string name="card_editor_copy_card">Salin kartu</string>
-    <string name="card_editor_reposition_card">Reposisi</string>
+    <string name="card_editor_reposition_card">Pindah posisi</string>
     <string name="card_editor_reset_card">Reset kemajuan</string>
-    <string name="card_editor_reschedule_card">Penjadwalan ulang</string>
+    <string name="card_editor_reschedule_card">Jadwalkan ulang</string>
     <string name="card_editor_preview_card">Pratinjau</string>
     <string name="error_insufficient_memory">Operasi gagal karena memori tidak cukup pada perangkat</string>
     <string name="rename">Ubah nama</string>
@@ -147,12 +147,12 @@
         <item quantity="other">%d kartu ditambahkan</item>
     </plurals>
     <string name="help_title">Bantuan</string>
-    <string name="check_db">Periksa database</string>
+    <string name="check_db">Periksa basisdata</string>
     <string name="check_media">Periksa media</string>
     <string name="empty_cards">Kartu kosong</string>
-    <string name="check_db_message">Memeriksa database...</string>
-    <string name="empty_card_warning">Kartu ini kosong. Gunakan opsi \"Kosongkan kartu\" dari menu di layar daftar dek.</string>
-    <string name="unknown_type_field_warning">Ketik jawaban: bidang tidak diketahui%s</string>
+    <string name="check_db_message">Memeriksa basisdata...</string>
+    <string name="empty_card_warning">Kartu ini kosong. Gunakan opsi \"Kosongkan kartu\" dari menu di halaman daftar dek.</string>
+    <string name="unknown_type_field_warning">Ketik jawaban: kolom tidak diketahui%s</string>
     <string name="delete_deck">Menghapus dek...</string>
     <string name="show_hint">Tampilkan %s</string>
     <string name="info_rate">Beri AnkiDroid rating</string>
@@ -160,7 +160,7 @@
     <string name="import_title">Mengimpor</string>
     <string name="import_select_title">Pilih file untuk diimpor</string>
     <string name="import_message_add">Tambah</string>
-    <string name="import_message_replace_confirm">Ini akan menghapus koleksimu yang ada dan menggantinya dengan data dari file %s</string>
+    <string name="import_message_replace_confirm">Ini akan menghapus koleksimu yang ada dan menggantinya dengan data dari berkas %s</string>
     <string name="import_message_add_confirm">Tambah \"%s\" ke koleksi? Ini mungkin memakan waktu lama</string>
     <string name="import_log_no_apkg">Ini bukan paket Anki yang valid</string>
     <string name="import_log_failed_unzip">Gagal mengekstrak apkg: %s</string>
@@ -172,8 +172,8 @@
     <string name="import_error_unhandled_request">Tidak dapat memproses permintaan impor</string>
     <string name="import_error_exception">Gagal mengimpor paket\n\n%s</string>
     <string name="import_error_not_apkg_extension">Berkas bernama \"%s\" tidak memiliki ekstensi .apkg atau .colpkg</string>
-    <string name="import_error_load_imported_database">Pengganti Basisdata Anki (.anki2) belum didukung. Harap lihat panduan untuk instruksi penggantian</string>
-    <string name="import_error_content_provider">File yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat manual pengguna tentang cara mengimpor file anki secara manual: \n%s</string>
+    <string name="import_error_load_imported_database">Pengganti Basisdata Anki (.anki2) belum didukung. Harap lihat panduan untuk langkah penggantian</string>
+    <string name="import_error_content_provider">File yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas anki secara manual: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() gagal (mungkin karena ruang penyimpanan)</string>
     <string name="import_replacing">Mengganti koleksi&#8230;</string>
     <string name="import_interrupted">Impor terganggu</string>
@@ -184,7 +184,7 @@
     <string name="export_in_progress">Mengekspor berkas paket Anki...</string>
     <string name="export_successful_title">Kirim paket Anki</string>
     <string name="export_send_button">Kirim</string>
-    <string name="export_save_button">Menyimpan ke dalam berkas</string>
+    <string name="export_save_button">Simpan ke dalam berkas</string>
     <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan...</string>
     <string name="export_save_apkg_successful">Berhasil menyimpan paket Anki</string>
     <string name="export_save_apkg_unsuccessful">Paket Anki gagal disimpan</string>
@@ -200,15 +200,15 @@
     <string name="upgrade_import_no_file_found">Tidak ada berkas %1$s ditemukan yang dapat diimpor</string>
     <string name="study_options">Opsi</string>
     <string name="select_tts">Tetapkan bahasa TTS</string>
-    <string name="custom_study">Belajar khusus</string>
+    <string name="custom_study">Belajar kustom</string>
     <string name="more_options">Lainnya</string>
     <string name="dyn_deck_desc">Ini adalah dek khusus untuk belajar di luar jadwal normal. Kartu akan otomatis dikembalikan ke dek aslinya setelah kamu mengulasnya. Menghapus dek ini dari daftar dek akan mengembalikan semua kartu yang tersisa ke dek aslinya.</string>
     <string name="steps_error">Langkah-langkah harus lebih besar dari 0</string>
     <string name="steps_min_error">Setidaknya satu langkah diperlukan</string>
-    <string name="sched_end">(akhir)</string>
-    <string name="sched_unbury_action">Untuk melihat mereka sekarang sentuhan item \"Unbury\" di menu</string>
-    <string name="sched_has_buried">Beberapa kartu terkait atau dipendam ditunda sampai besok</string>
-    <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk konfirmasi menambah “%1$s”</string>
+    <string name="sched_end">(selesai)</string>
+    <string name="sched_unbury_action">Untuk melihatnya sentuh item \"Angkat\" di menu</string>
+    <string name="sched_has_buried">Beberapa kartu yang terkait atau dipendam ditunda sampai besok</string>
+    <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk mengkonfirmasi menambahkan “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Tag \" %1$s \" dipilih</string>
     <string name="lookup_hint">Setelah menyalin teks, tekan di mana saja di flashcard untuk menampilkan ikon pencarian</string>
     <!-- Time spans -->
@@ -268,5 +268,5 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Gagal menyimpan gambar di whiteboard</string>
     <string name="white_board_image_saved">Gambar whiteboard disimpan ke %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_pen_color">Warna pena whiteboard</string>
 </resources>

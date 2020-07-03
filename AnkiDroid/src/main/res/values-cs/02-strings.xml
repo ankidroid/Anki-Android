@@ -94,9 +94,9 @@
         <item>Interval</item>
         <item>Snadnost</item>
         <item>Ke zkoušení</item>
-        <item>Změněno</item>
+        <item>Card Modified</item>
         <item>Vytvořeno</item>
-        <item>Upraveno</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Zvýšit dnešní limit nových karet</string>

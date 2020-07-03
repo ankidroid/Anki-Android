@@ -79,8 +79,8 @@
     <string name="image_zoom">Zoom gambar</string>
     <string name="button_size">Ukuran tombol jawaban</string>
     <string name="card_browser_font_size">Kartu browser penskalaan huruf</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media">Tampilkan nama berkas di penelusur kartu</string>
+    <string name="card_browser_hide_media_summary">Tampilkan nama berkas media di kolom tanya/jawab penelusur kartu</string>
     <string name="col_path">Direktori AnkiDroid</string>
     <string name="fullscreen_review">Mode layar penuh</string>
     <string name="full_screen_off">Mati</string>
@@ -94,8 +94,8 @@
     </string-array>
     <string name="gestures">Aktifkan gerakan</string>
     <string name="gestures_summ">Menetapkan gerakan-gerakan menjadi tindakan-tindakan seperti menjawab dan mengedit kartu-kartu.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links">Abaikan gestur sentuhan di tautan</string>
+    <string name="gestures_allow_links_summary">Sentuhan gestur tidak akan diproses jika ada tautan ditekan.</string>
     <string name="gestures_swipe_up">Sapu ke atas</string>
     <string name="gestures_swipe_down">Sapu ke bawah</string>
     <string name="gestures_swipe_left">Sapu ke kiri</string>
@@ -105,12 +105,12 @@
     <string name="gestures_tap_bottom">Sentuh bawah</string>
     <string name="gestures_tap_left">Sentuh kiri</string>
     <string name="gestures_tap_right">Sentuh kanan</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_volume_up">Volume naik</string>
+    <string name="gestures_volume_down">Volume turun</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Juga gunakan kanji/katakana, emoji/kao-moji tombol untuk bergulir</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>
+    <string name="card_browser_enable_external_context_menu_summary">Mengaktifkan konteks menu ‘%s’ secara global</string>
     <string name="double_scrolling_gap">Skroling ganda</string>
     <string name="double_scrolling_gap_summ">Gandakan jarak skroling dengan eReader</string>
     <string name="swipe_sensitivity">Sensitivitas usapan</string>
@@ -145,17 +145,17 @@
     <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="safe_display">Mode tampilan aman</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="safe_display_summ">Nonaktifkan semua animasi dan gunakan metode yang lebih aman untuk menggambar kartu. Perangkat E-ink mungkin memerlukan ini.</string>
+    <string name="disable_extended_text_ui">Nonaktifkan mode edit kolom tunggal</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Membolehkan konteks menu \'titik-titik\' saat mode lanskap</string>
     <string name="vertical_centering">Pusat sejajar</string>
     <string name="vertical_centering_summ">Pusatkan isi kartu secara vertikal</string>
     <string name="pref_backup_max">Jumlah backup maksimal</string>
     <string name="show_estimates">Tampilkan waktu tuang</string>
     <string name="show_estimates_summ">Tampilkan waktu tinjau berikutnya pada tombol jawab</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Tampilkan bar atas</string>
+    <string name="show_top_bar_summ">Tampilkan jumlah kartu, bendera dan tanda di bar atas</string>
     <string name="show_progress">Tampilkan yang tersisa</string>
     <string name="show_progress_summ">Tampilkan sisa jumlah kartu</string>
     <string name="show_eta">Tampilkan ETA</string>
@@ -168,11 +168,11 @@
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Mulai hari berikutnya</string>
     <string name="day_offset_summ">XXX beberapa jam lewat tengah malam</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_ver">Penjadwalan eksperimental V2</string>
+    <string name="sched_ver_summ">Aktifkan penjadwalan eksperimental. Perubahan dipaksa ke satu arah saat sinkronisasi berikutnya</string>
     <string name="sched_ver_toggle_title">Konfirmasi</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver_2to1">Ini akan mereset kartu yang dipelajari, dek terfilter, dan mengubah versi penjadwalan. Lanjut?</string>
+    <string name="sched_ver_1to2">Penjadwalan eksperimental dapat mengakibatkan jadwal yang salah. Harap pastikan kamu telah membaca dokumentasi terlebih dulu. Lanjutkan?</string>
     <string name="pref_keep_screen_on">Biarkan layarnya menyala</string>
     <string name="pref_keep_screen_on_summ">Nonaktifkan batas waktu layar</string>
     <string name="convert_fen_text">Dukungan notasi catur</string>
@@ -185,10 +185,10 @@
     <string name="custom_buttons_setting_if_room">Tunjukkan apakah ruangan</string>
     <string name="custom_buttons_setting_menu_only">Menu saja</string>
     <string name="reset_custom_buttons">Setel ulang ke default</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="thirdparty_apps_title">Aplikasi API pihak ketiga</string>
+    <string name="thirdparty_apps_summary">Lihat daftar aplikasi yang menggunakan API AnkiDroid seperti kamus, alat.</string>
+    <string name="html_javascript_debugging">Pengawakutuan HTML / Javascript</string>
+    <string name="html_javascript_debugging_summ">Aktifkan koneksi WebView jarak jauh, dan simpan kartu HTML ke direktori AnkiDroid</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Statistik tingkat lanjut</string>
     <string name="enable_advanced_statistics_title">Aktifkan statistik lanjutan</string>
@@ -201,14 +201,14 @@
     <string name="custom_sync_server_enable_title">Gunakan server sinkronisasi khusus</string>
     <string name="custom_sync_server_enable_summary">Jika Anda tidak ingin menggunakan layanan AnkiWeb milik Anda, Anda bisa menentukan server alternatif di sini</string>
     <string name="custom_sync_server_base_url_title">Url sinkronisasi</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">Sinkronisasi url tidak valid</string>
     <string name="custom_sync_server_media_url_title">Url sinkronisasi media</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">Sinkronisasi media tidak valid</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="deck_conf_group_summ">Perubahan ke opsi grup dek akan mempengaruhi banyak dek. Jika kamu hanya ingin mengubah dek saat ini, harap tambahkan grup opsi baru terlebih dahulu</string>
     <string name="studyoptions_limit_select_tags">Pilih tag</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_deck_description">Deskripsi dek (hanya mengubah dek saat ini)</string>
     <string name="deck_conf_group">Pilihan-pilihan grup</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d decks menggunakan grup ini</item>
@@ -230,8 +230,8 @@
     <string name="deck_conf_new_bury_summ">Kartu-kartu baru terkait dikubur sampai hari berikutnya</string>
     <string name="deck_conf_rev_bury">Mengubur ulasan terkait</string>
     <string name="deck_conf_rev_bury_summ">Ulasan terkait dikubur sampai hari berikutnya</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings">Gunakan pengaturan umum</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Gunakan pengaturan umum \'Tampilkan jawaban otomatis\' daripada menggunakan pengaturan grup ini.</string>
     <string name="deck_conf_easy_bonus">Bonus mudah</string>
     <string name="deck_conf_ivl_fct">Pengubah interval</string>
     <string name="deck_conf_max_ivl">Interval maksimum</string>
@@ -273,10 +273,10 @@
     <string name="deck_conf_cram_reschedule_summ">Jadwalkan ulang kartu berdasarkan jawaban saya di dek ini</string>
     <string name="deck_conf_cram_steps">Langkah khusus (dalam menit)</string>
     <string name="deck_conf_cram_steps_summ">Tentukan langkah khusus</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_enabled">Aktifkan notifikasi pengingat untuk dek di grup dek ini</string>
     <string name="deck_conf_reminders_time">Ingatkan</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_dialog_title">Bantu AnkiDroid jadi lebih baik!</string>
+    <string name="analytics_title">Bagikan data penggunaan fitur</string>
+    <string name="analytics_summ">Kamu bisa berkontribusi ke AnkiDroid dengan membantu tim pengembangan tahu fitur mana yang orang gunakan</string>
 </resources>

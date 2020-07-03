@@ -83,8 +83,8 @@
         <item>Без сортиране (по-бързо)</item>
         <item>По поле за сортиране</item>
         <item>По време на създаване</item>
-        <item>По време на редактиране</item>
-        <item>По време на промяна</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>По време за повторение</item>
         <item>По интервал</item>
         <item>По сложност</item>

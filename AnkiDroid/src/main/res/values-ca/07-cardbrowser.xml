@@ -83,8 +83,8 @@
         <item>Cap ordenació (més ràpid)</item>
         <item>Per camp d\'ordenació</item>
         <item>Per hora de creació</item>
-        <item>Per hora d\'edició</item>
-        <item>Per hora de modificació</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Per venciment</item>
         <item>Per interval</item>
         <item>Per dificultat</item>

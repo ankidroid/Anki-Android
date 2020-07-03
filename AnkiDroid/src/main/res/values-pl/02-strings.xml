@@ -94,9 +94,9 @@
         <item>Przerwa</item>
         <item>Łatwość</item>
         <item>Do przejrzenia</item>
-        <item>Zmieniona</item>
+        <item>Card Modified</item>
         <item>Stworzona</item>
-        <item>Zmieniona</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Zwiększ dzisiejszy limit nowych kart</string>

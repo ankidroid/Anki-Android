@@ -83,8 +83,8 @@
         <item>Ingen sortering (kjappere)</item>
         <item>Etter sorteringsfelt</item>
         <item>Etter skapelsesdato</item>
-        <item>Etter endringsdato</item>
-        <item>Etter forandringsdato</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Etter forfallstid</item>
         <item>Etter intervall</item>
         <item>Etter letthet</item>

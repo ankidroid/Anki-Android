@@ -147,7 +147,7 @@
     <string name="safe_display_summ">Deshabilita todas las animaciones y utiliza un método más seguro para dibujar las tarjetas. Dispositivos E-ink podrían requerir esto.</string>
     <string name="disable_extended_text_ui">Desactivar modo de edición de un campo</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Permite el menú contextual \'huecos\' cuando está en modo horizontal.</string>
+    <string name="disable_extended_text_ui_summ">Permite el menú contextual \'preguntas anidadas\' cuando está en modo horizontal.</string>
     <string name="vertical_centering">Alinear al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
     <string name="pref_backup_max">Número máximo de copias de seguridad</string>

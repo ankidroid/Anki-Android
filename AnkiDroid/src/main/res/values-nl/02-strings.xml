@@ -94,9 +94,9 @@
         <item>Interval</item>
         <item>Gemak</item>
         <item>Deadline</item>
-        <item>Gewijzigd</item>
+        <item>Card Modified</item>
         <item>Gemaakt</item>
-        <item>Bewerkt</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Limiet nieuwe kaarten voor vandaag verhogen</string>

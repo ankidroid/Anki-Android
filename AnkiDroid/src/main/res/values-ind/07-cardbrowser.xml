@@ -40,25 +40,25 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="other">%d cards shown</item>
+        <item quantity="other">%d kartu ditampilkan</item>
     </plurals>
-    <string name="card_browser_all_decks">Semua deck</string>
+    <string name="card_browser_all_decks">Semua dek</string>
     <string name="card_browser_delete_card">Hapus catatan</string>
     <string name="card_browser_suspend_card">Tangguhkan kartu</string>
-    <string name="card_browser_toggle_suspend_card">(tidak) tangguhkan kartu</string>
-    <string name="card_browser_change_deck">Ganti deck</string>
-    <string name="card_browser_unsuspend_card">Meniadakan tangguhkan kartu</string>
-    <string name="card_browser_mark_card">Mark catatan</string>
-    <string name="card_browser_flag">Flag</string>
-    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
-    <string name="card_browser_unmark_card">Hapus tanda catatan</string>
+    <string name="card_browser_toggle_suspend_card">(batal) tangguhkan kartu</string>
+    <string name="card_browser_change_deck">Ganti dek</string>
+    <string name="card_browser_unsuspend_card">Batal tangguhkan kartu</string>
+    <string name="card_browser_mark_card">Tandai catatan</string>
+    <string name="card_browser_flag">Bendera</string>
+    <string name="card_browser_toggle_mark_card">(batal)tandai catatan</string>
+    <string name="card_browser_unmark_card">Batal tandai catatan</string>
     <string name="delete_card_title">Hapus catatan?</string>
     <string name="delete_cards_title">Hapus catatan?</string>
     <string name="delete_card_message">Hapus semua kartu dari catatan ini?\n Bidang pencarian: %s</string>
-    <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+    <string name="delete_card_mult_message">Hapus semua kartu dari catatan yang dipilih?\n(tidak hanya kartu yang dipilih)</string>
     <string name="deleted_message">Catatan dihapus</string>
-    <string name="changed_deck_message">Dipindahkan ke %s</string>
-    <string name="card_browser_suspended_cards">(un)suspended cards</string>
+    <string name="changed_deck_message">Dipindah ke %s</string>
+    <string name="card_browser_suspended_cards">kartu (batal)ditangguhkan</string>
     <string name="card_browser_show_marked">Filter ditandai</string>
     <string name="card_browser_show_suspended">Filter ditangguhkan</string>
     <string name="card_browser_search_by_tag">Filter menurut tag</string>
@@ -68,22 +68,22 @@
     <string name="card_browser_list_my_searches_title">Pilih pencarian tersimpan</string>
     <string name="card_browser_list_my_searches_new_name">Nama untuk pencarian saat ini</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Anda tidak dapat menyimpan pencarian tanpa nama</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Nama ada</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Nama sudah ada</string>
     <string name="card_browser_list_my_searches_remove_content">Hapus \" %1$s \"?</string>
     <string name="card_browser_change_display_order">Ubah urutan tampilan</string>
     <string name="card_browser_change_display_order_title">Pilih urutan tampilan</string>
-    <string name="card_browser_change_display_order_reverse">Pilih bidang dua kali untuk membalikkan</string>
-    <string name="card_details_question">Soalan</string>
-    <string name="card_details_answer">Jawapan</string>
-    <string name="card_details_due">Lewat</string>
+    <string name="card_browser_change_display_order_reverse">Pilih bidang dua kali untuk membalik</string>
+    <string name="card_details_question">Pertanyaan</string>
+    <string name="card_details_answer">Jawaban</string>
+    <string name="card_details_due">Jatuh tempo</string>
     <string name="card_details_tags">Tags</string>
     <string name="card_browser_filtering_cards">Menyaring kartu... \ n Tekan tombol kembali untuk membatalkan</string>
     <string-array name="card_browser_order_labels">
         <item>Tidak ada pemilahan (lebih cepat)</item>
         <item>Dengan bidang sortir</item>
         <item>Dengan waktu yang dibuat</item>
-        <item>Dengan waktu diedit</item>
-        <item>Dengan waktu yang berubah</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Dengan karena waktu</item>
         <item>Dengan interval</item>
         <item>Dengan mudah</item>
@@ -92,13 +92,13 @@
     </string-array>
     <string name="card_browser_select_all">Pilih semua</string>
     <string name="card_browser_select_none">Pilih tidak ada</string>
-    <string name="card_browser_edit_note">Edit note</string>
-    <string name="card_browser_interval_new_card">(new)</string>
-    <string name="card_browser_ease_new_card">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_edit_note">Edit catatan</string>
+    <string name="card_browser_interval_new_card">(baru)</string>
+    <string name="card_browser_ease_new_card">(baru)</string>
+    <string name="card_browser_due_filtered_card">(disaring)</string>
+    <string name="card_browser_interval_learning_card">(masih belajar)</string>
+    <string name="card_browser_note_editor_error">Galat membuka editor catatan</string>
+    <string name="card_browser_no_cards_in_deck">Tidak ada kartu ditemukan di dek ‘%s’</string>
+    <string name="card_browser_search_all_decks">Cari seluruh dek</string>
+    <string name="card_browser_unknown_deck_name">Tak diketahui</string>
 </resources>

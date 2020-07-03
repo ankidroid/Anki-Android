@@ -94,9 +94,9 @@
         <item>अंतराल</item>
         <item>आसानी</item>
         <item>देय</item>
-        <item>बदला हुआ</item>
+        <item>Card Modified</item>
         <item>बनाया गया</item>
-        <item>संपादित किया</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">आज के नये कार्ड की सीमा बढ़ाएं</string>

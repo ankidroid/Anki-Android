@@ -85,8 +85,8 @@
         <item>ללא מיון (מהיר יותר)</item>
         <item>לפי שדה המיון</item>
         <item>לפי זמן היצירה</item>
-        <item>לפי זמן העריכה</item>
-        <item>לפי זמן השינוי</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>By due time</item>
         <item>לפי מרווח</item>
         <item>לפי דרגת קושי</item>

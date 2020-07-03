@@ -85,8 +85,8 @@
         <item>Nerūšiuoti (greičiau)</item>
         <item>Pagal rūšiavimo lauką</item>
         <item>Pagal sukūrimo laiką</item>
-        <item>Pagal redagavimo laiką</item>
-        <item>Pagal keitimo laiką</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Pagal numatytą laiką</item>
         <item>Pagal intervalą</item>
         <item>Pagal lengvumą</item>

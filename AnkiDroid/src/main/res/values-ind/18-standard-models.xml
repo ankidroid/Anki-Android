@@ -28,10 +28,10 @@
     <!--Card type-->
     <string name="card_one_name">Kartu 1</string>
     <string name="card_two_name">Kartu 2</string>
-    <string name="card_cloze_name">Cloze</string>
+    <string name="card_cloze_name">Kloza</string>
     <!--Note type-->
     <string name="basic_model_name">Dasar</string>
-    <string name="cloze_model_name">Cloze</string>
+    <string name="cloze_model_name">Kloza</string>
     <string name="basic_typing_model_name">Dasar (masukkan jawaban)</string>
     <string name="forward_reverse_model_name">Dasar (juga kartu terbalik)</string>
     <string name="forward_optional_reverse_model_name">Dasar (kartu terbalik opsional)</string>

@@ -94,9 +94,9 @@
         <item>Intervall</item>
         <item>Leichtigkeit</item>
         <item>Fällig</item>
-        <item>Geändert</item>
+        <item>Card Modified</item>
         <item>Erstellt</item>
-        <item>Bearbeitet</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Limit für neue Karten für heute erhöhen</string>
@@ -278,5 +278,5 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Whiteboardbild konnte nicht gespeichert werden. %s</string>
     <string name="white_board_image_saved">Whiteboardbild in %s gespeichert</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_pen_color">Stiftfarbe des Whiteboards</string>
 </resources>

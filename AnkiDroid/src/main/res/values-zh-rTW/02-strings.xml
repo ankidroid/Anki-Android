@@ -94,9 +94,9 @@
         <item>間期</item>
         <item>難易度</item>
         <item>到期</item>
-        <item>已變更</item>
+        <item>Card Modified</item>
         <item>已建立 </item>
-        <item>已編輯</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">增加今日新卡片上限</string>

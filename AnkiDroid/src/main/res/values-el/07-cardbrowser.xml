@@ -83,8 +83,8 @@
         <item>Χωρίς ταξινόμηση (γρήγορο)</item>
         <item>Κατά πεδίου ταξινόμησης</item>
         <item>Κατά χρόνο δημιουργίας</item>
-        <item>Κατά χρόνο σύνταξης</item>
-        <item>Κατά χρόνο αλλαγής</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Κατά προγρ/μένο χρόνο</item>
         <item>Κατά μεσοδιάστημα</item>
         <item>Κατά ευκολία</item>

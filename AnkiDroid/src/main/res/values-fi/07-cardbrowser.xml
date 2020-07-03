@@ -83,8 +83,8 @@
         <item>Ei lajittelua (nopeampi)</item>
         <item>By sort field</item>
         <item>Luomisajan mukaan</item>
-        <item>Muokkausajan mukaan</item>
-        <item>Muutosajan mukaan</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Eräpäivän mukaan</item>
         <item>Aikaväleittäin</item>
         <item>Helpotuksien mukaan</item>

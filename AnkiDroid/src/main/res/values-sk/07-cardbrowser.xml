@@ -85,8 +85,8 @@
         <item>Bez triedenia (rýchlejšie)</item>
         <item>Podľa triediaceho poľa</item>
         <item>Podľa času vytvorenia</item>
-        <item>Podľa času úpravy</item>
-        <item>Podľa času zmeny</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Podľa času preskúšania</item>
         <item>Podľa intervalu</item>
         <item>Podľa jednoduchosti</item>

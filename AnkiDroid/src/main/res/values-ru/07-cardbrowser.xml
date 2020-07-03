@@ -85,8 +85,8 @@
         <item>Без сортировки (быстро)</item>
         <item>По полю сортировки</item>
         <item>По времени создания</item>
-        <item>По времени правки</item>
-        <item>По времени изменения</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>По расписанию</item>
         <item>По интервалу</item>
         <item>По лёгкости</item>

@@ -94,9 +94,9 @@
         <item>Інтэрвал</item>
         <item>Лёгкасць</item>
         <item>Засталося</item>
-        <item>Зменена</item>
+        <item>Card Modified</item>
         <item>Створана</item>
-        <item>Зменена</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Павялічыць колькасць новых картак на сёння</string>
