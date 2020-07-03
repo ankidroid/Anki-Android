@@ -15,6 +15,12 @@
  ****************************************************************************************/
 
 package com.ichi2.libanki;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy.*;
+
+import androidx.annotation.IntDef;
+
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class Consts {
 
@@ -42,6 +48,9 @@ public class Consts {
     public static final int CARD_TYPE_LRN = 1;
     public static final int CARD_TYPE_REV = 2;
     public static final int CARD_TYPE_RELEARNING = 3;
+    @Retention(SOURCE)
+    @IntDef({CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING})
+    public @interface CARD_TYPE {}
 
     // removal types
     public static final int REM_CARD = 0;

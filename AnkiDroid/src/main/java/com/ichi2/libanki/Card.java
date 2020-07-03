@@ -82,6 +82,7 @@ public class Card implements Cloneable {
     private int mOrd;
     private long mMod;
     private int mUsn;
+    @Consts.CARD_TYPE
     private int mType;
     private int mQueue;
     private long mDue;
@@ -423,6 +424,7 @@ public class Card implements Cloneable {
     }
 
 
+    @Consts.CARD_TYPE
     public int getType() {
         return mType;
     }

@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Collection;
 import com.ichi2.utils.JSONObject;
@@ -41,6 +42,7 @@ public abstract class AbstractSched {
      */
     public abstract int dueForecast();
     public abstract int dueForecast(int days);
+    @Consts.CARD_TYPE
     public abstract int countIdx(Card card);
     public abstract int answerButtons(Card card);
     /**
