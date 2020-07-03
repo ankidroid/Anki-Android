@@ -84,6 +84,7 @@ public class Card implements Cloneable {
     private int mUsn;
     @Consts.CARD_TYPE
     private int mType;
+    @Consts.CARD_QUEUE
     private int mQueue;
     private long mDue;
     private int mIvl;
@@ -444,13 +445,13 @@ public class Card implements Cloneable {
         return mLeft;
     }
 
-
+    @Consts.CARD_QUEUE
     public int getQueue() {
         return mQueue;
     }
 
 
-    public void setQueue(int queue) {
+    public void setQueue(@Consts.CARD_QUEUE int queue) {
         mQueue = queue;
     }
 
