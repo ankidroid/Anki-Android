@@ -148,7 +148,7 @@ public class TemporaryModel {
         dumpChanges();
         TemporaryModel.clearTempModelFiles();
         CollectionTask.TaskData args = new CollectionTask.TaskData(new Object[] {mEditedModel, getAdjustedTemplateChanges()});
-        CollectionTask.launchCollectionTask(TASK_TYPE_SAVE_MODEL, listener, args);
+        CollectionTask.launchCollectionTask(SAVE_MODEL, listener, args);
 
     }
 

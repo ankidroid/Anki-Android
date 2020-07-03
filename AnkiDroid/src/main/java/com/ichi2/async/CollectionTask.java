@@ -76,43 +76,43 @@ import timber.log.Timber;
 public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, CollectionTask.TaskData, CollectionTask.TaskData> {
 
     public enum TASK_TYPE {
-        TASK_TYPE_SAVE_COLLECTION,
-        TASK_TYPE_ANSWER_CARD,
-        TASK_TYPE_ADD_NOTE,
-        TASK_TYPE_UPDATE_NOTE,
-        TASK_TYPE_UPDATE_NOTES_MULTI,
-        TASK_TYPE_UNDO,
-        TASK_TYPE_DISMISS,
-        TASK_TYPE_DISMISS_MULTI,
-        TASK_TYPE_CHECK_DATABASE,
-        TASK_TYPE_REPAIR_DECK,
-        TASK_TYPE_LOAD_DECK_COUNTS,
-        TASK_TYPE_UPDATE_VALUES_FROM_DECK,
-        TASK_TYPE_DELETE_DECK,
-        TASK_TYPE_REBUILD_CRAM,
-        TASK_TYPE_EMPTY_CRAM,
-        TASK_TYPE_IMPORT,
-        TASK_TYPE_IMPORT_REPLACE,
-        TASK_TYPE_SEARCH_CARDS,
-        TASK_TYPE_EXPORT_APKG,
-        TASK_TYPE_REORDER,
-        TASK_TYPE_CONF_CHANGE,
-        TASK_TYPE_CONF_RESET,
-        TASK_TYPE_CONF_REMOVE,
-        TASK_TYPE_CONF_SET_SUBDECKS,
-        TASK_TYPE_RENDER_BROWSER_QA,
-        TASK_TYPE_CHECK_MEDIA,
-        TASK_TYPE_ADD_TEMPLATE,
-        TASK_TYPE_REMOVE_TEMPLATE,
-        TASK_TYPE_COUNT_MODELS,
-        TASK_TYPE_DELETE_MODEL,
-        TASK_TYPE_DELETE_FIELD,
-        TASK_TYPE_REPOSITION_FIELD,
-        TASK_TYPE_ADD_FIELD,
-        TASK_TYPE_CHANGE_SORT_FIELD,
-        TASK_TYPE_SAVE_MODEL,
-        TASK_TYPE_FIND_EMPTY_CARDS,
-        TASK_TYPE_CHECK_CARD_SELECTION,
+        SAVE_COLLECTION,
+        ANSWER_CARD,
+        ADD_NOTE,
+        UPDATE_NOTE,
+        UPDATE_NOTES_MULTI,
+        UNDO,
+        DISMISS,
+        DISMISS_MULTI,
+        CHECK_DATABASE,
+        REPAIR_DECK,
+        LOAD_DECK_COUNTS,
+        UPDATE_VALUES_FROM_DECK,
+        DELETE_DECK,
+        REBUILD_CRAM,
+        EMPTY_CRAM,
+        IMPORT,
+        IMPORT_REPLACE,
+        SEARCH_CARDS,
+        EXPORT_APKG,
+        REORDER,
+        CONF_CHANGE,
+        CONF_RESET,
+        CONF_REMOVE,
+        CONF_SET_SUBDECKS,
+        RENDER_BROWSER_QA,
+        CHECK_MEDIA,
+        ADD_TEMPLATE,
+        REMOVE_TEMPLATE,
+        COUNT_MODELS,
+        DELETE_MODEL,
+        DELETE_FIELD,
+        REPOSITION_FIELD,
+        ADD_FIELD,
+        CHANGE_SORT_FIELD,
+        SAVE_MODEL,
+        FIND_EMPTY_CARDS,
+        CHECK_CARD_SELECTION,
     }
 
     /**
@@ -253,122 +253,122 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
-        if (mType != TASK_TYPE.TASK_TYPE_REPAIR_DECK && CollectionHelper.getInstance().getColSafe(mContext) == null) {
+        if (mType != TASK_TYPE.REPAIR_DECK && CollectionHelper.getInstance().getColSafe(mContext) == null) {
             Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", mType);
             return null;
         }
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
-            case TASK_TYPE_LOAD_DECK_COUNTS:
+            case LOAD_DECK_COUNTS:
                 return doInBackgroundLoadDeckCounts();
 
-            case TASK_TYPE_SAVE_COLLECTION:
+            case SAVE_COLLECTION:
                 doInBackgroundSaveCollection();
                 break;
 
-            case TASK_TYPE_ANSWER_CARD:
+            case ANSWER_CARD:
                 return doInBackgroundAnswerCard(params);
 
-            case TASK_TYPE_ADD_NOTE:
+            case ADD_NOTE:
                 return doInBackgroundAddNote(params);
 
-            case TASK_TYPE_UPDATE_NOTE:
+            case UPDATE_NOTE:
                 return doInBackgroundUpdateNote(params);
 
-            case TASK_TYPE_UPDATE_NOTES_MULTI:
+            case UPDATE_NOTES_MULTI:
                 return doInBackgroundUpdateNotes(params);
 
-            case TASK_TYPE_UNDO:
+            case UNDO:
                 return doInBackgroundUndo();
 
-            case TASK_TYPE_SEARCH_CARDS:
+            case SEARCH_CARDS:
                 return doInBackgroundSearchCards(params);
 
-            case TASK_TYPE_DISMISS:
+            case DISMISS:
                 return doInBackgroundDismissNote(params);
 
-            case TASK_TYPE_DISMISS_MULTI:
+            case DISMISS_MULTI:
                 return doInBackgroundDismissNotes(params);
 
-            case TASK_TYPE_CHECK_DATABASE:
+            case CHECK_DATABASE:
                 return doInBackgroundCheckDatabase();
 
-            case TASK_TYPE_REPAIR_DECK:
+            case REPAIR_DECK:
                 return doInBackgroundRepairDeck();
 
-            case TASK_TYPE_UPDATE_VALUES_FROM_DECK:
+            case UPDATE_VALUES_FROM_DECK:
                 return doInBackgroundUpdateValuesFromDeck(params);
 
-            case TASK_TYPE_DELETE_DECK:
+            case DELETE_DECK:
                 return doInBackgroundDeleteDeck(params);
 
-            case TASK_TYPE_REBUILD_CRAM:
+            case REBUILD_CRAM:
                 return doInBackgroundRebuildCram();
 
-            case TASK_TYPE_EMPTY_CRAM:
+            case EMPTY_CRAM:
                 return doInBackgroundEmptyCram();
 
-            case TASK_TYPE_IMPORT:
+            case IMPORT:
                 return doInBackgroundImportAdd(params);
 
-            case TASK_TYPE_IMPORT_REPLACE:
+            case IMPORT_REPLACE:
                 return doInBackgroundImportReplace(params);
 
-            case TASK_TYPE_EXPORT_APKG:
+            case EXPORT_APKG:
                 return doInBackgroundExportApkg(params);
 
-            case TASK_TYPE_REORDER:
+            case REORDER:
                 return doInBackgroundReorder(params);
 
-            case TASK_TYPE_CONF_CHANGE:
+            case CONF_CHANGE:
                 return doInBackgroundConfChange(params);
 
-            case TASK_TYPE_CONF_RESET:
+            case CONF_RESET:
                 return doInBackgroundConfReset(params);
 
-            case TASK_TYPE_CONF_REMOVE:
+            case CONF_REMOVE:
                 return doInBackgroundConfRemove(params);
 
-            case TASK_TYPE_CONF_SET_SUBDECKS:
+            case CONF_SET_SUBDECKS:
                 return doInBackgroundConfSetSubdecks(params);
 
-            case TASK_TYPE_RENDER_BROWSER_QA:
+            case RENDER_BROWSER_QA:
                 return doInBackgroundRenderBrowserQA(params);
 
-            case TASK_TYPE_CHECK_MEDIA:
+            case CHECK_MEDIA:
                 return doInBackgroundCheckMedia();
 
-            case TASK_TYPE_ADD_TEMPLATE:
+            case ADD_TEMPLATE:
                 return doInBackgroundAddTemplate(params);
 
-            case TASK_TYPE_REMOVE_TEMPLATE:
+            case REMOVE_TEMPLATE:
                 return doInBackgroundRemoveTemplate(params);
 
-            case TASK_TYPE_COUNT_MODELS:
+            case COUNT_MODELS:
                 return doInBackgroundCountModels();
 
-            case TASK_TYPE_DELETE_MODEL:
+            case DELETE_MODEL:
                 return  doInBackGroundDeleteModel(params);
 
-            case TASK_TYPE_DELETE_FIELD:
+            case DELETE_FIELD:
                 return doInBackGroundDeleteField(params);
 
-            case TASK_TYPE_REPOSITION_FIELD:
+            case REPOSITION_FIELD:
                 return doInBackGroundRepositionField(params);
 
-            case TASK_TYPE_ADD_FIELD:
+            case ADD_FIELD:
                 return doInBackGroundAddField(params);
 
-            case TASK_TYPE_CHANGE_SORT_FIELD:
+            case CHANGE_SORT_FIELD:
                 return doInBackgroundChangeSortField(params);
 
-            case TASK_TYPE_SAVE_MODEL:
+            case SAVE_MODEL:
                 return doInBackgroundSaveModel(params);
 
-            case TASK_TYPE_FIND_EMPTY_CARDS:
+            case FIND_EMPTY_CARDS:
                 return doInBackGroundFindEmptyCards(params);
 
-            case TASK_TYPE_CHECK_CARD_SELECTION:
+            case CHECK_CARD_SELECTION:
                 return doInBackgroundCheckCardSelection(params);
 
             default:

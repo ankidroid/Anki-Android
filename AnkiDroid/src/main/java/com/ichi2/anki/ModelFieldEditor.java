@@ -179,7 +179,7 @@ public class ModelFieldEditor extends AnkiActivity {
                         //Name is valid, now field is added
                         try {
                             mCol.modSchema();
-                            CollectionTask.launchCollectionTask(TASK_TYPE_ADD_FIELD, mChangeFieldHandler,
+                            CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
                                     new CollectionTask.TaskData(new Object[]{mMod, fieldName}));
                         } catch (ConfirmModSchemaException e) {
 
@@ -190,7 +190,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                 mCol.modSchemaNoCheck();
                                 String fieldName1 = mFieldNameInput.getText().toString()
                                         .replaceAll("[\\n\\r]", "");
-                                CollectionTask.launchCollectionTask(TASK_TYPE_ADD_FIELD, mChangeFieldHandler,
+                                CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
                                         new CollectionTask.TaskData(new Object[]{mMod, fieldName1}));
                                 dismissContextMenu();
                             };
@@ -240,7 +240,7 @@ public class ModelFieldEditor extends AnkiActivity {
     }
 
     private void deleteField() {
-        CollectionTask.launchCollectionTask(TASK_TYPE_DELETE_FIELD, mChangeFieldHandler,
+        CollectionTask.launchCollectionTask(DELETE_FIELD, mChangeFieldHandler,
                                 new CollectionTask.TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
     }
 
@@ -323,7 +323,7 @@ public class ModelFieldEditor extends AnkiActivity {
                             // Input is valid, now attempt to modify
                             try {
                                 mCol.modSchema();
-                                CollectionTask.launchCollectionTask(TASK_TYPE_REPOSITION_FIELD, mChangeFieldHandler,
+                                CollectionTask.launchCollectionTask(REPOSITION_FIELD, mChangeFieldHandler,
                                         new CollectionTask.TaskData(new Object[]{mMod,
                                                 mNoteFields.getJSONObject(mCurrentPos), pos - 1}));
                             } catch (ConfirmModSchemaException e) {
@@ -336,7 +336,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                         mCol.modSchemaNoCheck();
                                         String newPosition1 = mFieldNameInput.getText().toString();
                                         int pos1 = Integer.parseInt(newPosition1);
-                                        CollectionTask.launchCollectionTask(TASK_TYPE_REPOSITION_FIELD,
+                                        CollectionTask.launchCollectionTask(REPOSITION_FIELD,
                                                 mChangeFieldHandler, new CollectionTask.TaskData(new Object[]{mMod,
                                                         mNoteFields.getJSONObject(mCurrentPos), pos1 - 1}));
                                         dismissContextMenu();
@@ -398,7 +398,7 @@ public class ModelFieldEditor extends AnkiActivity {
     private void sortByField() {
         try {
             mCol.modSchema();
-            CollectionTask.launchCollectionTask(TASK_TYPE_CHANGE_SORT_FIELD, mChangeFieldHandler,
+            CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
                     new CollectionTask.TaskData(new Object[]{mMod, mCurrentPos}));
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
@@ -406,7 +406,7 @@ public class ModelFieldEditor extends AnkiActivity {
             c.setArgs(getResources().getString(R.string.full_sync_confirmation));
             Runnable confirm = () -> {
                 mCol.modSchemaNoCheck();
-                CollectionTask.launchCollectionTask(TASK_TYPE_CHANGE_SORT_FIELD, mChangeFieldHandler,
+                CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
                         new CollectionTask.TaskData(new Object[]{mMod, mCurrentPos}));
                 dismissContextMenu();
             };

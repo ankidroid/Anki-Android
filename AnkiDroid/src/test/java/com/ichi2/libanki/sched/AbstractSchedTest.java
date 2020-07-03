@@ -78,7 +78,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
         sched.answerCard(cardBeforeUndo, EASE_3);
 
-        waitForTask(TASK_TYPE_UNDO, 5000);
+        waitForTask(UNDO, 5000);
 
         int[] countsAfterUndo = sched.counts();
 
