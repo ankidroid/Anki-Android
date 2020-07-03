@@ -105,7 +105,7 @@
     <string name="undo_action_delete_multi">видалити записи</string>
     <string name="undo_action_change_deck_multi">Змінити колоди</string>
     <string name="undo_action_reschedule_card">перепланувати</string>
-    <string name="undo_action_reset_card">скинути прогрес</string>
+    <string name="undo_action_reset_card">скинути перебіг</string>
     <string name="undo_action_reposition_card">переставити</string>
     <string name="move_all_to_deck">Перемістити все до колоди</string>
     <string name="unbury">Повернути</string>
@@ -169,7 +169,7 @@
     <string name="custom_study_deck_name">Додаткове навчання</string>
     <string name="custom_study_deck_exists">Спочатку перейменуйте колоду додаткового навчання</string>
     <string name="empty_deck">Ця колода порожня</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="invalid_deck_name">Некоректна назва колоди</string>
     <string name="studyoptions_empty">Ця колода порожня. Натисніть кніпку +, щоб додати новий вміст.</string>
     <string name="studyoptions_limit_reached">Досягнуто денної межі навчання</string>
     <string name="studyoptions_empty_schedule">Нема запланованих карток</string>

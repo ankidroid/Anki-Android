@@ -79,8 +79,8 @@
     <string name="image_zoom">Zoom de la imagen</string>
     <string name="button_size">Tamaño del botón de respuesta</string>
     <string name="card_browser_font_size">Escalado de fuentes del explorador de tarjetas</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media">Mostrar nombres de archivo en el navegador de tarjetas</string>
+    <string name="card_browser_hide_media_summary">Mostrar nombres de archivos multimedia en los campos de pregunta/respuesta del navegador de tarjetas</string>
     <string name="col_path">Directorio de AnkiDroid</string>
     <string name="fullscreen_review">Pantalla completa</string>
     <string name="full_screen_off">Apagado</string>
@@ -94,8 +94,8 @@
     </string-array>
     <string name="gestures">Habilitar gestos</string>
     <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links">Ignorar gestos táctiles en los enlaces</string>
+    <string name="gestures_allow_links_summary">Los gestos de toque no se procesarán si se presiona un enlace/pista.</string>
     <string name="gestures_swipe_up">Deslizar hacia arriba</string>
     <string name="gestures_swipe_down">Deslizar hacia abajo</string>
     <string name="gestures_swipe_left">Deslizar hacia la izquierda</string>
@@ -105,12 +105,12 @@
     <string name="gestures_tap_bottom">Presione abajo</string>
     <string name="gestures_tap_left">Presione izquierda</string>
     <string name="gestures_tap_right">Presione derecha</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_volume_up">Subir volumen</string>
+    <string name="gestures_volume_down">Bajar volumen</string>
     <string name="more_scrolling_buttons">Lector electrónico</string>
     <string name="more_scrolling_buttons_summ">Utilizar también los botones Kanji/Katakana, Emoji/Kao-moji para desplazar</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">Menú ‘%s’</string>
+    <string name="card_browser_enable_external_context_menu_summary">Habilita globalmente el menú contextual ‘%s</string>
     <string name="double_scrolling_gap">Doble desplazamiento</string>
     <string name="double_scrolling_gap_summ">Doblar la distancia de desplazamiento con e-Reader</string>
     <string name="swipe_sensitivity">Sensibilidad de deslizado</string>
@@ -153,8 +153,8 @@
     <string name="pref_backup_max">Número máximo de copias de seguridad</string>
     <string name="show_estimates">Mostar el botón tiempo</string>
     <string name="show_estimates_summ">Mostrar el tiempo para el próximo repaso encima de los botones de respuesta</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Mostrar Barra Superior</string>
+    <string name="show_top_bar_summ">Mostrar recuento de tarjetas, banderas y marcas en la barra superior</string>
     <string name="show_progress">Mostar restantes</string>
     <string name="show_progress_summ">Mostrar contador de tarjetas restantes</string>
     <string name="show_eta">Mostrar ETA</string>
@@ -200,9 +200,9 @@
     <string name="custom_sync_server_enable_title">Utilizar el servidor de sincronización personalizado</string>
     <string name="custom_sync_server_enable_summary">Si no quieres utilizar el servicio propietario de AnkiWeb, puedes especificar un servidor alternativo aquí</string>
     <string name="custom_sync_server_base_url_title">Sincronizar url</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">Url de sincronización no inválido</string>
     <string name="custom_sync_server_media_url_title">Sincronizar media url</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">URL de sincronización de medios inválida</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Los cambios en las opciones del grupo de mazos afectarán a varios mazos. Si desea cambiar sólo el mazo actual, primero añada un nuevo grupo de opciones</string>
     <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>

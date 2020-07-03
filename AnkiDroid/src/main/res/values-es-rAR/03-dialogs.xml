@@ -88,9 +88,9 @@
         <item quantity="one">%d tarjeta reprogramada</item>
         <item quantity="other">%d tarjetas reprogramadas</item>
     </plurals>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Selecciona el mazo en tu gestor de archivos o visita la página about:downloads para importarlo</string>
     <string name="answering_error_title">Error en base de datos</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, presiona \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
     <string name="answering_error_report">Reportar un error</string>
     <string name="repair_deck_dialog">¿Desea realmente intentar reparar la base de datos?\n\nAntes de comenzar con el intento, una copia será creada en el subdirectorio \'%s\'.</string>
     <string name="intent_add_saved_information">Datos guardados</string>
@@ -157,7 +157,7 @@
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">No se pudo obtener el permiso del micrófono.</string>
     <string name="multimedia_editor_camera_permission_refused">No se pudo obtener el permiso de la cámara. Funcionalidad ha sido desactivada.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_failed">Error al abrir el Editor Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permiso de grabación de audio denegado</string>
     <!-- Initial collection load -->
@@ -189,13 +189,13 @@
     <string name="error_selecting_image">Error al seleccionar la imagen. Por favor vea el manual. %s</string>
     <string name="error_deleting_image">Error al eliminar la imagen</string>
     <string name="failed_to_apply_background_image">Error al aplicar la imagen de fondo %s</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed">Tamaño máximo de imagen %d MB permitido</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Faltan permisos de almacenamiento requeridos. Por favor, concede permiso de almacenamiento y vuelve a intentarlo.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">No se pudo cargar la Apariencia del Navegador de Tarjetas</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">Error al programar recordatorios</string>
+    <string name="boot_service_too_many_notifications">Demasiados recordatorios programados. Algunos no aparecerán</string>
 </resources>

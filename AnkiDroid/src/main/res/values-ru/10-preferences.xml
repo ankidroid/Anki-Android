@@ -96,7 +96,7 @@
     <string name="gestures_summ">Назначает жесты действиям вроде ответа и правки</string>
     <string name="gestures_allow_links">Игнорировать жесты на ссылках</string>
     <string name="gestures_allow_links_summary">Жесты не будут учитываться, если нажата ссылка или подсказка.</string>
-    <string name="gestures_swipe_up">Смахнуть наверх</string>
+    <string name="gestures_swipe_up">Смахивание вверх</string>
     <string name="gestures_swipe_down">Смахивание вниз</string>
     <string name="gestures_swipe_left">Смахивание влево</string>
     <string name="gestures_swipe_right">Смахивание вправо</string>
