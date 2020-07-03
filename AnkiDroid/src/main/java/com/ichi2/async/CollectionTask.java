@@ -75,43 +75,45 @@ import timber.log.Timber;
  */
 public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, CollectionTask.TaskData, CollectionTask.TaskData> {
 
-    public static final int TASK_TYPE_SAVE_COLLECTION = 2;
-    public static final int TASK_TYPE_ANSWER_CARD = 3;
-    public static final int TASK_TYPE_ADD_NOTE = 6;
-    public static final int TASK_TYPE_UPDATE_NOTE = 7;
-    public static final int TASK_TYPE_UPDATE_NOTES_MULTI = 9;
-    public static final int TASK_TYPE_UNDO = 8;
-    public static final int TASK_TYPE_DISMISS = 11;
-    public static final int TASK_TYPE_DISMISS_MULTI = 12;
-    public static final int TASK_TYPE_CHECK_DATABASE = 14;
-    public static final int TASK_TYPE_REPAIR_DECK = 20;
-    public static final int TASK_TYPE_LOAD_DECK_COUNTS = 22;
-    public static final int TASK_TYPE_UPDATE_VALUES_FROM_DECK = 23;
-    public static final int TASK_TYPE_DELETE_DECK = 25;
-    public static final int TASK_TYPE_REBUILD_CRAM = 26;
-    public static final int TASK_TYPE_EMPTY_CRAM = 27;
-    public static final int TASK_TYPE_IMPORT = 28;
-    public static final int TASK_TYPE_IMPORT_REPLACE = 29;
-    public static final int TASK_TYPE_SEARCH_CARDS = 30;
-    public static final int TASK_TYPE_EXPORT_APKG = 31;
-    public static final int TASK_TYPE_REORDER = 32;
-    public static final int TASK_TYPE_CONF_CHANGE = 33;
-    public static final int TASK_TYPE_CONF_RESET = 34;
-    public static final int TASK_TYPE_CONF_REMOVE = 35;
-    public static final int TASK_TYPE_CONF_SET_SUBDECKS = 36;
-    public static final int TASK_TYPE_RENDER_BROWSER_QA = 37;
-    public static final int TASK_TYPE_CHECK_MEDIA = 38;
-    public static final int TASK_TYPE_ADD_TEMPLATE = 39;
-    public static final int TASK_TYPE_REMOVE_TEMPLATE = 40;
-    public static final int TASK_TYPE_COUNT_MODELS = 41;
-    public static final int TASK_TYPE_DELETE_MODEL = 42;
-    public static final int TASK_TYPE_DELETE_FIELD = 43;
-    public static final int TASK_TYPE_REPOSITION_FIELD = 44;
-    public static final int TASK_TYPE_ADD_FIELD = 45;
-    public static final int TASK_TYPE_CHANGE_SORT_FIELD = 46;
-    public static final int TASK_TYPE_SAVE_MODEL = 47;
-    public static final int TASK_TYPE_FIND_EMPTY_CARDS = 48;
-    public static final int TASK_TYPE_CHECK_CARD_SELECTION = 49;
+    public enum TASK_TYPE {
+        TASK_TYPE_SAVE_COLLECTION,
+        TASK_TYPE_ANSWER_CARD,
+        TASK_TYPE_ADD_NOTE,
+        TASK_TYPE_UPDATE_NOTE,
+        TASK_TYPE_UPDATE_NOTES_MULTI,
+        TASK_TYPE_UNDO,
+        TASK_TYPE_DISMISS,
+        TASK_TYPE_DISMISS_MULTI,
+        TASK_TYPE_CHECK_DATABASE,
+        TASK_TYPE_REPAIR_DECK,
+        TASK_TYPE_LOAD_DECK_COUNTS,
+        TASK_TYPE_UPDATE_VALUES_FROM_DECK,
+        TASK_TYPE_DELETE_DECK,
+        TASK_TYPE_REBUILD_CRAM,
+        TASK_TYPE_EMPTY_CRAM,
+        TASK_TYPE_IMPORT,
+        TASK_TYPE_IMPORT_REPLACE,
+        TASK_TYPE_SEARCH_CARDS,
+        TASK_TYPE_EXPORT_APKG,
+        TASK_TYPE_REORDER,
+        TASK_TYPE_CONF_CHANGE,
+        TASK_TYPE_CONF_RESET,
+        TASK_TYPE_CONF_REMOVE,
+        TASK_TYPE_CONF_SET_SUBDECKS,
+        TASK_TYPE_RENDER_BROWSER_QA,
+        TASK_TYPE_CHECK_MEDIA,
+        TASK_TYPE_ADD_TEMPLATE,
+        TASK_TYPE_REMOVE_TEMPLATE,
+        TASK_TYPE_COUNT_MODELS,
+        TASK_TYPE_DELETE_MODEL,
+        TASK_TYPE_DELETE_FIELD,
+        TASK_TYPE_REPOSITION_FIELD,
+        TASK_TYPE_ADD_FIELD,
+        TASK_TYPE_CHANGE_SORT_FIELD,
+        TASK_TYPE_SAVE_MODEL,
+        TASK_TYPE_FIND_EMPTY_CARDS,
+        TASK_TYPE_CHECK_CARD_SELECTION,
+    }
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
@@ -136,7 +138,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
      * @param params to pass to the task
      * @return the newly created task
      */
-    public static CollectionTask launchCollectionTask(int type, TaskData... params) {
+    public static CollectionTask launchCollectionTask(TASK_TYPE type, TaskData... params) {
         return launchCollectionTask(type, null, params);
     }
 
@@ -152,7 +154,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
      * @param params to pass to the task
      * @return the newly created task
      */
-    public static CollectionTask launchCollectionTask(int type, @Nullable Listener listener, TaskData... params) {
+    public static CollectionTask launchCollectionTask(TASK_TYPE type, @Nullable Listener listener, TaskData... params) {
         // Start new task
         CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
         newTask.execute(params);
@@ -175,7 +177,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     public static boolean waitToFinish(Integer timeout) {
         try {
             if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                Timber.d("CollectionTask: waiting for task %d to finish...", sLatestInstance.mType);
+                Timber.d("CollectionTask: waiting for task %s to finish...", sLatestInstance.mType);
                 if (timeout != null) {
                     sLatestInstance.get(timeout, TimeUnit.SECONDS);
                 } else {
@@ -196,7 +198,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         try {
             if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
                 sLatestInstance.cancel(true);
-                Timber.i("Cancelled task %d", sLatestInstance.mType);
+                Timber.i("Cancelled task %s", sLatestInstance.mType);
             }
         } catch (Exception e) {
             return;
@@ -204,7 +206,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    public static void cancelTask(int taskType) {
+    public static void cancelTask(TASK_TYPE taskType) {
         // cancel the current task only if it's of type taskType
         if (sLatestInstance != null && sLatestInstance.mType == taskType) {
             cancelTask();
@@ -212,12 +214,12 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    private final int mType;
+    private final TASK_TYPE mType;
     private final Listener mListener;
     private CollectionTask mPreviousTask;
 
 
-    public CollectionTask(int type, Listener listener, CollectionTask previousTask) {
+    public CollectionTask(TASK_TYPE type, Listener listener, CollectionTask previousTask) {
         mType = type;
         mListener = listener;
         mPreviousTask = previousTask;
@@ -230,29 +232,29 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         super.doInBackground(params);
         // Wait for previous thread (if any) to finish before continuing
         if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
-            Timber.d("Waiting for %d to finish before starting %d", mPreviousTask.mType, mType);
+            Timber.d("Waiting for %s to finish before starting %s", mPreviousTask.mType, mType);
             try {
                 mPreviousTask.get();
-                Timber.d("Finished waiting for %d to finish. Status= %s", mPreviousTask.mType, mPreviousTask.getStatus());
+                Timber.d("Finished waiting for %s to finish. Status= %s", mPreviousTask.mType, mPreviousTask.getStatus());
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 // We have been interrupted, return immediately.
-                Timber.d(e, "interrupted while waiting for previous task: %d", mPreviousTask.mType);
+                Timber.d(e, "interrupted while waiting for previous task: %s", mPreviousTask.mType);
                 return null;
             } catch (ExecutionException e) {
                 // Ignore failures in the previous task.
-                Timber.e(e, "previously running task failed with exception: %d", mPreviousTask.mType);
+                Timber.e(e, "previously running task failed with exception: %s", mPreviousTask.mType);
             } catch (CancellationException e) {
                 // Ignore cancellation of previous task
-                Timber.d(e, "previously running task was cancelled: %d", mPreviousTask.mType);
+                Timber.d(e, "previously running task was cancelled: %s", mPreviousTask.mType);
             }
         }
         sLatestInstance = this;
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
-        if (mType != TASK_TYPE_REPAIR_DECK && CollectionHelper.getInstance().getColSafe(mContext) == null) {
-            Timber.e("CollectionTask CollectionTask %d as Collection could not be opened", mType);
+        if (mType != TASK_TYPE.TASK_TYPE_REPAIR_DECK && CollectionHelper.getInstance().getColSafe(mContext) == null) {
+            Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", mType);
             return null;
         }
         // Actually execute the task now that we are at the front of the queue.
@@ -370,7 +372,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 return doInBackgroundCheckCardSelection(params);
 
             default:
-                Timber.e("unknown task type: %d", mType);
+                Timber.e("unknown task type: %s", mType);
         }
         return null;
     }

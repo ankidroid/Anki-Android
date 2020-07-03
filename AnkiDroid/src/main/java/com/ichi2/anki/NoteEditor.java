@@ -102,6 +102,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import timber.log.Timber;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -782,7 +783,7 @@ public class NoteEditor extends AnkiActivity {
             }
             getCol().getModels().current().put("tags", ja);
             getCol().getModels().setChanged();
-            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_ADD_NOTE, mSaveNoteHandler, new CollectionTask.TaskData(mEditorNote));
+            CollectionTask.launchCollectionTask(TASK_TYPE_ADD_NOTE, mSaveNoteHandler, new CollectionTask.TaskData(mEditorNote));
         } else {
             // Check whether note type has been changed
             final JSONObject newModel = getCurrentlySelectedModel();

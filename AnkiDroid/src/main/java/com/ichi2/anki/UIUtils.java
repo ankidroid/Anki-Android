@@ -16,6 +16,7 @@ import com.ichi2.async.CollectionTask.TaskData;
 import java.util.Calendar;
 
 import timber.log.Timber;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 
 public class UIUtils {
 
@@ -117,7 +118,7 @@ public class UIUtils {
 
     public static void saveCollectionInBackground() {
         if (CollectionHelper.getInstance().colIsOpen()) {
-            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_SAVE_COLLECTION, new CollectionTask.TaskListener() {
+            CollectionTask.launchCollectionTask(TASK_TYPE_SAVE_COLLECTION, new CollectionTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
                     Timber.d("saveCollectionInBackground: start");

@@ -130,6 +130,8 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 
+import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
@@ -1227,7 +1229,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UNDO, new CollectionTask.TaskListener() {
+        CollectionTask.launchCollectionTask(TASK_TYPE_UNDO, new CollectionTask.TaskListener() {
             @Override
             public void onCancelled() {
                 hideProgressBar();
@@ -1369,7 +1371,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback method to handle repairing deck
     public void repairDeck() {
         Timber.i("Repairing Deck");
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REPAIR_DECK, new CollectionTask.TaskListener() {
+        CollectionTask.launchCollectionTask(TASK_TYPE_REPAIR_DECK, new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -1414,13 +1416,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void performIntegrityCheck() {
         Timber.i("performIntegrityCheck()");
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CHECK_DATABASE, new CheckDatabaseListener());
+        CollectionTask.launchCollectionTask(TASK_TYPE_CHECK_DATABASE, new CheckDatabaseListener());
     }
 
 
     @Override
     public void mediaCheck() {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CHECK_MEDIA, new CollectionTask.TaskListener() {
+        CollectionTask.launchCollectionTask(TASK_TYPE_CHECK_MEDIA, new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
@@ -1862,7 +1864,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_IMPORT, mImportAddListener,
+        CollectionTask.launchCollectionTask(TASK_TYPE_IMPORT, mImportAddListener,
                 new TaskData(importPath, false));
     }
 
@@ -1870,7 +1872,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback to import a file -- replacing the existing collection
     @Override
     public void importReplace(String importPath) {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_IMPORT_REPLACE, mImportReplaceListener, new TaskData(importPath));
+        CollectionTask.launchCollectionTask(TASK_TYPE_IMPORT_REPLACE, mImportReplaceListener, new TaskData(importPath));
     }
 
 
@@ -1902,7 +1904,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         inputArgs[2] = did;
         inputArgs[3] = includeSched;
         inputArgs[4] = includeMedia;
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_EXPORT_APKG, mExportListener, new TaskData(inputArgs));
+        CollectionTask.launchCollectionTask(TASK_TYPE_EXPORT_APKG, mExportListener, new TaskData(inputArgs));
     }
 
 
@@ -2139,7 +2141,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
-        CollectionTask task = CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
+        CollectionTask task = CollectionTask.launchCollectionTask(TASK_TYPE_LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -2329,7 +2331,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         deleteDeck(mContextMenuDid);
     }
     public void deleteDeck(final long did) {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DELETE_DECK, new CollectionTask.TaskListener() {
+        CollectionTask.launchCollectionTask(TASK_TYPE_DELETE_DECK, new CollectionTask.TaskListener() {
             // Flag to indicate if the deck being deleted is the current deck.
             private boolean removingCurrent;
 
@@ -2394,13 +2396,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void rebuildFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REBUILD_CRAM, mSimpleProgressListener,
+        CollectionTask.launchCollectionTask(TASK_TYPE_REBUILD_CRAM, mSimpleProgressListener,
                 new CollectionTask.TaskData(mFragmented));
     }
 
     public void emptyFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_EMPTY_CRAM, mSimpleProgressListener,
+        CollectionTask.launchCollectionTask(TASK_TYPE_EMPTY_CRAM, mSimpleProgressListener,
                 new CollectionTask.TaskData(mFragmented));
     }
 
@@ -2441,7 +2443,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_FIND_EMPTY_CARDS, new CollectionTask.TaskListener() {
+        CollectionTask.launchCollectionTask(TASK_TYPE_FIND_EMPTY_CARDS, new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
