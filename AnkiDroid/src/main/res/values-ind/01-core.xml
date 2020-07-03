@@ -139,10 +139,10 @@
     -->
     <string name="time_quantity_seconds">%d d</string>
     <string name="time_quantity_minutes">%d mnt</string>
-    <string name="time_quantity_hours_minutes">%1$ j /%2$ m </string>
+    <string name="time_quantity_hours_minutes">%1$d j%2$d m</string>
     <string name="time_quantity_hours">%d j</string>
     <string name="time_quantity_days">%d hr</string>
-    <string name="time_quantity_days_hours">%1$h/%2$j </string>
+    <string name="time_quantity_days_hours">%1$d h %2$d j</string>
     <string name="time_quantity_months">%.1f bln</string>
     <string name="time_quantity_years">%.1f th</string>
     <!-- or "%.1f a" -->
