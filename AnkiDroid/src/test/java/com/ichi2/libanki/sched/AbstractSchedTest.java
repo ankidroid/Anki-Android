@@ -32,6 +32,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 import java.util.Arrays;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -77,7 +78,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
         sched.answerCard(cardBeforeUndo, EASE_3);
 
-        waitForTask(CollectionTask.TASK_TYPE_UNDO, 5000);
+        waitForTask(TASK_TYPE_UNDO, 5000);
 
         int[] countsAfterUndo = sched.counts();
 
