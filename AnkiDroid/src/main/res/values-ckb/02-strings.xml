@@ -94,9 +94,9 @@
         <item>Interval</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>گۆڕدرا</item>
+        <item>Card Modified</item>
         <item>دروستکرا</item>
-        <item>دەستکاریکرا</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">زیادکردنی سنووری کارتە نوێکانی ئەمڕۆ</string>

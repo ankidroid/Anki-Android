@@ -50,23 +50,23 @@
         <item>Respuesta mejor que la recomendada</item>
         <item>Deshacer</item>
         <item>Editar nota</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Etiquetar nota</item>
+        <item>Marcar nota</item>
+        <item>Buscar expresión</item>
+        <item>Enterrar tarjeta</item>
+        <item>Suspender Tarjeta</item>
+        <item>Eliminar nota</item>
+        <item>Reproducir multimedia</item>
+        <item>Abandonar aprendizaje</item>
+        <item>Enterrar nota</item>
+        <item>Suspender Nota</item>
+        <item>Cambiar Bandera Roja</item>
+        <item>Cambiar Bandera Naranja</item>
+        <item>Cambiar Bandera verde</item>
+        <item>Cambiar Bandera Azul</item>
+        <item>Eliminar Bandera</item>
+        <item>Página Arriba</item>
+        <item>Página Abajo</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Suspender tarjeta</item>

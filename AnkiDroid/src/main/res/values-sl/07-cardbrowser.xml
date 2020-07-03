@@ -85,8 +85,8 @@
         <item>Brez razvrščanja (hitrejše)</item>
         <item>Po polju za razvrščanje</item>
         <item>Po času nastanka</item>
-        <item>Po času urejanja</item>
-        <item>Po času spremembe</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Po času zapadlosti</item>
         <item>Po razmiku</item>
         <item>Po težavnosti</item>

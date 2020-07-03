@@ -83,8 +83,8 @@
         <item>No sorting (faster)</item>
         <item>By sort field</item>
         <item>Yaradılma vaxtı</item>
-        <item>By edited time</item>
-        <item>By changed time</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Eyni vaxtla</item>
         <item>By interval</item>
         <item>Asanlıqla</item>

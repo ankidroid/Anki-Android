@@ -31,7 +31,7 @@
     <string name="card_cloze_name">Pregunta anidada</string>
     <!--Note type-->
     <string name="basic_model_name">Básico</string>
-    <string name="cloze_model_name">Pregunta annidada</string>
+    <string name="cloze_model_name">Pregunta anidada</string>
     <string name="basic_typing_model_name">Básico (escribir la respuesta)</string>
     <string name="forward_reverse_model_name">Básico (y tarjeta invertida)</string>
     <string name="forward_optional_reverse_model_name">Básico (tarjeta invertida opcional)</string>

@@ -85,8 +85,8 @@
         <item>Žádné třídění (rychlejší)</item>
         <item>Podle pole řazení</item>
         <item>Podle času vytvoření</item>
-        <item>Podle času úpravy</item>
-        <item>Podle času změny</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Podle času k zopakování</item>
         <item>Podle intervalu</item>
         <item>Podle obtížnosti</item>

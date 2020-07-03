@@ -76,7 +76,7 @@
     <string name="show_answer">Tampilkan jawaban</string>
     <string name="ease_button_again">Ulang</string>
     <string name="ease_button_hard">Sulit</string>
-    <string name="ease_button_good">Bagus</string>
+    <string name="ease_button_good">Baik</string>
     <string name="ease_button_easy">Mudah</string>
     <string name="studyoptions_congrats_undo">Batalkan %s</string>
     <string name="menu_import">Impor</string>
@@ -88,13 +88,13 @@
     <string name="undo_action_suspend_note">tangguhkan catatan</string>
     <string name="undo_action_delete">hapus catatan</string>
     <string name="undo_action_delete_multi">hapus catatan</string>
-    <string name="undo_action_change_deck_multi">ganti deck</string>
-    <string name="undo_action_reschedule_card">penjadwalan ulang</string>
-    <string name="undo_action_reset_card">setel ulang kemajuan saya</string>
-    <string name="undo_action_reposition_card">reposisi</string>
+    <string name="undo_action_change_deck_multi">ganti dek</string>
+    <string name="undo_action_reschedule_card">jadwalkan ulang</string>
+    <string name="undo_action_reset_card">reset kemajuan</string>
+    <string name="undo_action_reposition_card">pindah posisi</string>
     <string name="move_all_to_deck">Pindahkan semua ke dek</string>
     <string name="unbury">Angkat</string>
-    <string name="rename_deck">Ganti nama susunan</string>
+    <string name="rename_deck">Ganti nama dek</string>
     <string name="menu_add">Tambah</string>
     <string name="menu_add_note">Tambah catatan</string>
     <string name="menu_my_account">Sinkronisasi akun</string>
@@ -122,7 +122,7 @@
     <string name="menu_toggle_mic_tool_bar">Cek pelafalan</string>
     <string name="new_deck">Buat susunan</string>
     <string name="create">Buat</string>
-    <string name="new_dynamic_deck">Buat dek tersaring</string>
+    <string name="new_dynamic_deck">Buat dek terfilter</string>
     <string name="night_mode">Mode malam</string>
     <string name="directory_inaccessible">Direktori AnkiDroid tidak dapat diakses</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -139,20 +139,20 @@
     -->
     <string name="time_quantity_seconds">%d d</string>
     <string name="time_quantity_minutes">%d mnt</string>
-    <string name="time_quantity_hours_minutes">%1$d j%2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d j %2$d m </string>
     <string name="time_quantity_hours">%d j</string>
     <string name="time_quantity_days">%d hr</string>
-    <string name="time_quantity_days_hours">%1$d h %2$d j</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d j</string>
     <string name="time_quantity_months">%.1f bln</string>
     <string name="time_quantity_years">%.1f th</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Membuat ulang dek cram&#8230;</string>
+    <string name="rebuild_cram_deck">Membuat ulang dek intensif&#8230;</string>
     <string name="rebuild_cram_label">Buat ulang</string>
     <string name="empty_cram_label">Kosong</string>
     <string name="create_subdeck">Buat subdek</string>
-    <string name="empty_cram_deck">Mengosongkan dek cram&#8230;</string>
+    <string name="empty_cram_deck">Mengosongkan dek intensif&#8230;</string>
     <string name="custom_study_deck_name">Sesi belajar kustom</string>
-    <string name="custom_study_deck_exists">Ubah dahulu susunan belajar kustom yang ada</string>
+    <string name="custom_study_deck_exists">Ubah nama dek belajar kustom yang ada</string>
     <string name="empty_deck">Dek ini kosong</string>
     <string name="invalid_deck_name">Nama dek tidak valid</string>
     <string name="studyoptions_empty">Dek Ini kosong. Tekan tombol + untuk menambah konten baru.</string>
@@ -163,37 +163,37 @@
     <string name="studyoptions_congrats_more_new">Batas hari ini telah dicapai. Ada banyak kartu baru yang tersedia; Kamu dapat menaikkan batasan di pengaturan, tetapi ini akan meningkatkan beban kerja ulasan jangka pendekmu.</string>
     <string name="studyoptions_congrats_custom">Untuk belajar di luar jadwal normal, sentuh tombol \"Belajar kustom\"</string>
     <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
-    <string name="sd_card_not_mounted">Perangkat penyimpanan tidak terpasang</string>
-    <string name="empty_cloze_warning">Ubah catatan ini dan menambahkan beberapa penghapusan cloze. (%1$s)</string>
-    <string name="button_sync">Siknronisasi</string>
-    <string name="cancel_sync_confirm">Apakah Anda ingin membatalkan sinkronisasi?</string>
+    <string name="sd_card_not_mounted">Penyimpanan perangkat tidak terpasang</string>
+    <string name="empty_cloze_warning">Edit catatan ini dan menambahkan beberapa kloza deletasi (titik-titik). (%1$s)</string>
+    <string name="button_sync">Sinkronisasi</string>
+    <string name="cancel_sync_confirm">Batalkan sinkronisasi?</string>
     <string name="continue_sync">Lanjutkan sinkronisasi</string>
     <string name="sync_cancelled">Sinkronisasi dibatalkan</string>
     <string name="sync_cancel_message">Membatalkan... \ n Ini mungkin memakan waktu lama.</string>
     <string name="export">Ekspor</string>
     <string name="export_collection">Ekspor koleksi</string>
-    <string name="export_deck">Ekspor susunan</string>
+    <string name="export_deck">Ekspor dek</string>
     <string name="nothing">Tidak ada</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Jenis kartu</string>
-    <string name="card_template_editor_front">Template depan</string>
-    <string name="card_template_editor_back">Template belakang</string>
+    <string name="title_activity_template_editor">Tipe kartu</string>
+    <string name="card_template_editor_front">Templat depan</string>
+    <string name="card_template_editor_back">Templat belakang</string>
     <string name="card_template_editor_styling">Penataan</string>
     <string name="card_template_editor_menu_delete">Hapus</string>
     <string name="card_template_editor_menu_card_browser_appearance">Tampilan penelusur kartu</string>
-    <string name="card_template_editor_cant_delete">Diperlukan setidaknya satu jenis kartu.</string>
+    <string name="card_template_editor_cant_delete">Setidaknya satu tipe kartu diperlukan.</string>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="other">Hapus jenis kartu \"%2$s\", beserta kartu %1$d?</item>
+        <item quantity="other">Hapus tipe kartu \"%2$s\", beserta kartu %1$d?</item>
     </plurals>
     <string name="invalid_template">Kartu tidak dapat dibuat</string>
-    <string name="card_template_editor_would_delete_note">Menghapus jenis kartu ini akan menyebabkan satu catatan atau lebih terhapus. Silahkan buat dulu jenis kartu yang baru.</string>
+    <string name="card_template_editor_would_delete_note">Menghapus tipe kartu ini akan menyebabkan satu catatan atau lebih terhapus. Silahkan buat dahulu tipe kartu yang baru.</string>
     <string name="card_template_editor_save_error">Tidak dapat menyimpan perubahan templat kartu: %s</string>
     <string name="template_for_current_card_deleted">Templat untuk kartu ini sudah dihapus.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Tampilan penelusur</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Baca dan tulis ke database AnkiDroid</string>
-    <string name="read_write_permission_description">mengakses catatan, kartu, jenis catatan, dan susunan, serta membuat yang baru</string>
+    <string name="read_write_permission_label">Baca dan tulis ke basisdata AnkiDroid</string>
+    <string name="read_write_permission_description">mengakses catatan yang ada, kartu, tipe catatan, dan dek, serta membuat yang baru</string>
     <string name="card_browser_label">Penelusur kartu</string>
     <string name="card_browser_context_menu">Penelusur kartu</string>
 </resources>

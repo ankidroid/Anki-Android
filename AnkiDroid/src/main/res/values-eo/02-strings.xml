@@ -94,9 +94,9 @@
         <item>Intertempo</item>
         <item>Facileco</item>
         <item>Lernenda</item>
-        <item>Ŝanĝita</item>
+        <item>Card Modified</item>
         <item>Kreita</item>
-        <item>Redaktita</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Pliigi hodiaŭan limigon de novaj kartoj</string>

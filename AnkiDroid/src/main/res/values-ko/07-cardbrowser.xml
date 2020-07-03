@@ -82,8 +82,8 @@
         <item>정렬 안함(더 빠름)</item>
         <item>정렬 필드에 따라</item>
         <item>생성된 시간에 따라</item>
-        <item>편집된 시간에 따라</item>
-        <item>수정된 시간에 따라</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>학습 예정 시간에 따라</item>
         <item>학습 간격에 따라</item>
         <item>난이도에 따라</item>

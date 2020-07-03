@@ -50,7 +50,7 @@
     <string name="card_browser_change_deck">Cambiar mazo</string>
     <string name="card_browser_unsuspend_card">Desuspender tarjetas</string>
     <string name="card_browser_mark_card">Marcar notas</string>
-    <string name="card_browser_flag">Marca</string>
+    <string name="card_browser_flag">Bandera</string>
     <string name="card_browser_toggle_mark_card">(des)marcar notas</string>
     <string name="card_browser_unmark_card">Desmarcar notas</string>
     <string name="delete_card_title">¿Eliminar nota?</string>
@@ -83,8 +83,8 @@
         <item>Sin orden (más rápido)</item>
         <item>Por campo de ordenamiento</item>
         <item>Por fecha de creación</item>
-        <item>Por fecha de edición</item>
-        <item>Por fecha de modificación</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Por fecha programada</item>
         <item>Por intervalo</item>
         <item>Por facilidad</item>

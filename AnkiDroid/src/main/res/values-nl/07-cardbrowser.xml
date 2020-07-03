@@ -83,8 +83,8 @@
         <item>Niet sorteren (sneller)</item>
         <item>Naar sorteerveld</item>
         <item>Op tijd aanmaak</item>
-        <item>Op tijd laatst bewerkt</item>
-        <item>Op gewijzigde tijd</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Op geplande tijd</item>
         <item>Op interval</item>
         <item>Op gemakkelijkheid</item>

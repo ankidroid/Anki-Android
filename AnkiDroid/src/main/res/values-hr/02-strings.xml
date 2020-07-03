@@ -94,9 +94,9 @@
         <item>Interval</item>
         <item>Ublažavanje</item>
         <item>Istek</item>
-        <item>Promjenjeno</item>
+        <item>Card Modified</item>
         <item>Kreirano</item>
-        <item>Uređeno</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>

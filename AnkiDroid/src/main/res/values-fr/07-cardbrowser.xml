@@ -83,8 +83,8 @@
         <item>Pas de tri (plus rapide)</item>
         <item>Par champ de tri</item>
         <item>Par ancienneté</item>
-        <item>Par date de correction</item>
-        <item>Par date de changement</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Par date d’échéance</item>
         <item>Par largeur de l’intervalle</item>
         <item>Par simplicité</item>

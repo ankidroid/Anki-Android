@@ -94,9 +94,9 @@
         <item>Interval</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Changed</item>
+        <item>Card Modified</item>
         <item>Created</item>
-        <item>Edited</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Incrementar o límite de cartóns novos para hoxe</string>

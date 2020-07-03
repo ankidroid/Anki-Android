@@ -94,9 +94,9 @@
         <item>بازه</item>
         <item>سهولت</item>
         <item>موعد مرور</item>
-        <item>تغییر یافته</item>
+        <item>Card Modified</item>
         <item>ساخته شده</item>
-        <item>ویرایش شده</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">افزایش محدوده کارتهای جدید امروز</string>

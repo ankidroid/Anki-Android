@@ -35,7 +35,7 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Menambahkan gambar</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
+    <string name="multimedia_editor_popup_audio_clip">Tambah klip audio</string>
     <string name="multimedia_editor_popup_audio">Record audio</string>
     <string name="multimedia_editor_popup_text">Editor lanjutan</string>
     <string name="multimedia_editor_popup_cloze">Penghapusan cuplikan</string>
@@ -68,8 +68,8 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text">Teks</string>
     <string name="multimedia_editor_field_editing_image">Gambar</string>
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio">Rekaman audio</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Klip Audio</string>
     <string name="multimedia_editor_field_editing_done">Selesai</string>
     <!-- Text field editing -->
     <!-- buttons -->
@@ -91,7 +91,7 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galeri</string>
     <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
-    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <string name="multimedia_editor_image_field_editing_library">Pustaka</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Download</string>
@@ -112,7 +112,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Perekaman gagal</string>
     <string name="multimedia_editor_audio_view_playing_failed">Bermain gagal</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">Tidak dapat membuat tool bar perekam</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">Bidang pengeditan</string>
     <string name="title_activity_translation">Terjemahan</string>
@@ -120,9 +120,9 @@
     <!-- Network failure -->
     <string name="network_no_connection">Tidak ada koneksi</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="crop_image">Apa kamu ingin memangkas gambar ini?</string>
+    <string name="crop_button">Pangkas gambar</string>
+    <string name="save_dialog_content">Saat ini gambar berukuran %sMB. Batas ukuran gambar adalah 1MB. Apa kamu ingin memangkasnya?</string>
+    <string name="select_image_failed">"Memilih gambar gagal, coba lagi"</string>
+    <string name="activity_result_unexpected">Aplikasi mengembalikan nilai tak terduga. Kamu bisa menggunakan aplikasi lain</string>
 </resources>

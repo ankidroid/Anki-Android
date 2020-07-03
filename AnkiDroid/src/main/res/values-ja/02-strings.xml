@@ -94,9 +94,9 @@
         <item>間隔</item>
         <item>易しさ</item>
         <item>期日</item>
-        <item>変更日</item>
+        <item>Card Modified</item>
         <item>作成日</item>
-        <item>編集日</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">今日の新規カードの上限を上げる</string>

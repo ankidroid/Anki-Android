@@ -83,8 +83,8 @@
         <item>Sem ordenação (mais rápido)</item>
         <item>Pelo campo de ordenação</item>
         <item>Por ordem de criação</item>
-        <item>Por última edição</item>
-        <item>Por mudança no tempo do card</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Por tempo programado</item>
         <item>Por intervalo</item>
         <item>Por facilidade</item>

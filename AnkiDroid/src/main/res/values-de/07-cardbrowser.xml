@@ -83,8 +83,8 @@
         <item>Keine Sortierung (schneller)</item>
         <item>Nach Sortierfeld</item>
         <item>Nach Erstellungsdatum</item>
-        <item>Nach Änderungsdatum</item>
-        <item>Nach letzter Veränderung</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Nach Fälligkeit</item>
         <item>Nach Intervall</item>
         <item>Nach Leichtigkeit</item>

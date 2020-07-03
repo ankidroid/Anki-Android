@@ -94,9 +94,9 @@
         <item>Интервал</item>
         <item>Лёгкость</item>
         <item>Срок</item>
-        <item>Изменено</item>
+        <item>Card Modified</item>
         <item>Создано</item>
-        <item>Изменено</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Добавить новых на сегодня</string>

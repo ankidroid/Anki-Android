@@ -94,9 +94,9 @@
         <item>Kertausväli</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Muutettu</item>
+        <item>Card Modified</item>
         <item>Luotu</item>
-        <item>Muokattu</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Lisää tämän päivän uusien korttien rajoitusta</string>
