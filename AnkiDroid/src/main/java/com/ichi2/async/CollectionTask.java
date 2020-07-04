@@ -1551,6 +1551,11 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         });
 
         for (JSONObject n : models) {
+            if (isCancelled()) {
+                Timber.e("doInBackgroundLoadModels :: Cancelled");
+                // onPostExecute not executed if cancelled. Return value not used.
+                return new TaskData(false);
+            }
             cardCount.add(col.getModels().useCount(n));
         }
 
