@@ -1551,7 +1551,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         });
 
         for (JSONObject n : models) {
-            cardCount.add(col.getModels().nids(n).size());
+            cardCount.add(col.getModels().useCount(n));
         }
 
         Object[] data = new Object[2];
