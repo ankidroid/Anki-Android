@@ -79,9 +79,9 @@
         <item>Interval</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Changed</item>
+        <item>Card Modified</item>
         <item>Created</item>
-        <item>Edited</item>
+        <item>Note Modified</item>
     </string-array>
 
     <!-- Custom study options -->
@@ -274,22 +274,9 @@
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
-
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="update_js_api_patch_version">AnkiDroid JS API patch update available. Contact developer %s, or view wiki.</string>
-    <string name="update_js_api_minor_version">AnkiDroid JS API minor update available. Contact developer %s, or view wiki.</string>
-
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
 
-    <!-- Error codes for AnkiDroid JS API-->
-    <string name="anki_js_unknown_error">(Error Code:0)</string>
-    <string name="anki_js_mark_card_not_supported">(Error Code:1)</string>
-    <string name="anki_js_flag_card_not_supported">(Error Code:2)</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
 </resources>
