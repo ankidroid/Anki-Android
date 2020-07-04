@@ -677,8 +677,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onStop() {
         Timber.d("onStop()");
         // cancel rendering the question and answer, which has shared access to mCards
-        CollectionTask.cancelTask(SEARCH_CARDS);
-        CollectionTask.cancelTask(RENDER_BROWSER_QA);
+        CollectionTask.cancelAllTasks(SEARCH_CARDS);
+        CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
@@ -1240,8 +1240,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void searchCards() {
         // cancel the previous search & render tasks if still running
-        CollectionTask.cancelTask(SEARCH_CARDS);
-        CollectionTask.cancelTask(RENDER_BROWSER_QA);
+        CollectionTask.cancelAllTasks(SEARCH_CARDS);
+        CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
         String searchText;
         if (mSearchTerms == null) {
             mSearchTerms = "";
@@ -1861,7 +1861,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     long currentTime = SystemClock.elapsedRealtime ();
                     if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
                         mLastRenderStart = currentTime;
-                        CollectionTask.cancelTask(RENDER_BROWSER_QA);
+                        CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
                         CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
                                 new CollectionTask.TaskData(new Object[]{getCards(), firstVisibleItem, visibleItemCount}));
                     }

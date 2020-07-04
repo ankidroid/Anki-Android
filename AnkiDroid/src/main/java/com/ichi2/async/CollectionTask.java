@@ -227,14 +227,21 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    /** Cancel the current task only if it's of type taskType */
-    public static void cancelTask(TASK_TYPE taskType) {
-        // Copying because there is a risk of concurrent change
-        CollectionTask latestInstance = sLatestInstance;
-        if (latestInstance != null && latestInstance.mType == taskType) {
-            if(latestInstance.safeCancel()) {
-                Timber.i("Cancelled task %s", latestInstance.mType);
+    /** Cancel all tasks of type taskType*/
+    public static void cancelAllTasks(TASK_TYPE taskType) {
+        int count = 0;
+        synchronized (sTasks) {
+            for (CollectionTask task: sTasks) {
+                if (task.mType != taskType) {
+                    continue;
+                }
+                if (task.safeCancel()) {
+                    count ++;
+                }
             }
+        }
+        if (count > 0) {
+            Timber.i("Cancelled %d instances of task %s", count, taskType);
         }
     }
 
