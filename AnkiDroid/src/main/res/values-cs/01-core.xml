@@ -169,6 +169,7 @@
     <string name="custom_study_deck_name">Dodatečné procvičování</string>
     <string name="custom_study_deck_exists">Nejdříve prosím přejmenujte balíček dodatečného tréninku.</string>
     <string name="empty_deck">Tento balíček je prázdný</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Tento balíček je prázdný. Stiskni tlačítko + pro přidání nového obsahu.</string>
     <string name="studyoptions_limit_reached">Denní limit studia dosažen</string>
     <string name="studyoptions_empty_schedule">Žádné další karty ke studiu</string>

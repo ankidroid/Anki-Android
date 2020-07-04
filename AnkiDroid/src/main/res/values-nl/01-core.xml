@@ -159,6 +159,7 @@
     <string name="custom_study_deck_name">Aangepaste studiesessie</string>
     <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
     <string name="empty_deck">Deze leerset is leeg</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Deze leerset is leeg. Druk op de + knop om nieuwe inhoud toe te voegen.</string>
     <string name="studyoptions_limit_reached">De dagelijkse studielimiet is bereikt</string>
     <string name="studyoptions_empty_schedule">Er zijn geen kaarten gepland om te studeren</string>

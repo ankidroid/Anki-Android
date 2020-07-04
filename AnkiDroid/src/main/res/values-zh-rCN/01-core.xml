@@ -154,6 +154,7 @@
     <string name="custom_study_deck_name">自定义学习的进程</string>
     <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
     <string name="empty_deck">此列表为空</string>
+    <string name="invalid_deck_name">无效的牌组名称</string>
     <string name="studyoptions_empty">这个牌组是空的，请点击 + 按钮来添加内容。</string>
     <string name="studyoptions_limit_reached">达到每日学习限制</string>
     <string name="studyoptions_empty_schedule">计划中没有需要学习的卡片</string>

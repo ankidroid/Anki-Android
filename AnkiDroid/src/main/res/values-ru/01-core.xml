@@ -169,6 +169,7 @@
     <string name="custom_study_deck_name">Дополнительная учебная сессия</string>
     <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
     <string name="empty_deck">Эта колода пуста</string>
+    <string name="invalid_deck_name">Недопустимое название колоды</string>
     <string name="studyoptions_empty">Эта колода пуста. Нажмите кнопку +, чтобы добавить что-нибудь.</string>
     <string name="studyoptions_limit_reached">На сегодня всё</string>
     <string name="studyoptions_empty_schedule">Нет запланированых карточек</string>

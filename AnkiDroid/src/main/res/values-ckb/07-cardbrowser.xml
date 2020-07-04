@@ -83,8 +83,8 @@
         <item>No sorting (faster)</item>
         <item>By sort field</item>
         <item>By created time</item>
-        <item>Ligorî dema guherandinê</item>
-        <item>By changed time</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>By due time</item>
         <item>By interval</item>
         <item>Li gorî hêsaniyê</item>

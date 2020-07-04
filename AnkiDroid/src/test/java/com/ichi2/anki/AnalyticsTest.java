@@ -101,7 +101,7 @@ public class AnalyticsTest {
         mAnalytics = UsageAnalytics.initialize(mMockContext);
     }
 
-    private class SpyGoogleAnalyticsBuilder extends GoogleAnalyticsBuilder {
+    private static class SpyGoogleAnalyticsBuilder extends GoogleAnalyticsBuilder {
         public GoogleAnalytics build() {
             GoogleAnalytics analytics = super.build();
             return Mockito.spy(analytics);

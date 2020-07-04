@@ -169,6 +169,7 @@
     <string name="custom_study_deck_name">Seja učenja po meri</string>
     <string name="custom_study_deck_exists">Najprej preimenujte obstoječi komplet za učenje po meri.</string>
     <string name="empty_deck">Ta komplet je prazen</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Ta komplet je prazen. Pritisnite na gumb +, da dodate novo vsebino.</string>
     <string name="studyoptions_limit_reached">Dosežena omejitev dnevnega učenja</string>
     <string name="studyoptions_empty_schedule">Ni načrtovanih kartic za učenje</string>

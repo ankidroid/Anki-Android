@@ -94,9 +94,9 @@
         <item>Проміжок</item>
         <item>Легкість</item>
         <item>Наступний перегляд</item>
-        <item>Змінено</item>
+        <item>Card Modified</item>
         <item>Створено</item>
-        <item>Відредаговано</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Збільшити сьогоднішній ліміт нових карток</string>
@@ -143,7 +143,7 @@
     <string name="note_editor_copy_note">Копіювати примітку</string>
     <string name="card_editor_copy_card">Копіювати картку</string>
     <string name="card_editor_reposition_card">Переставити</string>
-    <string name="card_editor_reset_card">Скинути прогрес</string>
+    <string name="card_editor_reset_card">Скинути перебіг</string>
     <string name="card_editor_reschedule_card">Перепланувати</string>
     <string name="card_editor_preview_card">Передперегляд</string>
     <string name="error_insufficient_memory">Дія не можлива через брак пам’яті на вашому пристрої</string>
@@ -298,5 +298,5 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
-    <string name="title_whiteboard_pen_color">Колір олівця</string>
+    <string name="title_whiteboard_pen_color">Колір пензля</string>
 </resources>

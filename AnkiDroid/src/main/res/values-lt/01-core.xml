@@ -169,6 +169,7 @@
     <string name="custom_study_deck_name">Individualus mokymosi seansas</string>
     <string name="custom_study_deck_exists">Prašome pirmiausiai pervadinti esamą individualaus mokymosi rinkinį</string>
     <string name="empty_deck">Šis rinkinys yra tuščias</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Šis rinkinys yra tuščias. Norėdami pridėti naują turinį, spauskite +.</string>
     <string name="studyoptions_limit_reached">Pasiekta dienos mokymosi norma</string>
     <string name="studyoptions_empty_schedule">Kortelių mokytis nenumatyta</string>

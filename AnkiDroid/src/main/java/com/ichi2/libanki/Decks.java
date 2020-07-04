@@ -163,9 +163,9 @@ public class Decks {
             String id = ids.getString(i);
             JSONObject o = decksarray.getJSONObject(id);
             long longId = Long.parseLong(id);
-            nameMapAdd(o.getString("name"), o);
             mDecks.put(longId, o);
         }
+        resetNameMap();
         JSONObject confarray = new JSONObject(dconf);
         ids = confarray.names();
         for (int i = 0; ids != null && i < ids.length(); i++) {
@@ -365,11 +365,7 @@ public class Decks {
      * A list of all decks.
      */
     public ArrayList<JSONObject> all() {
-        ArrayList<JSONObject> decks = new ArrayList<>();
-        for (JSONObject deck : mDecks.values()) {
-            decks.add(deck);
-        }
-        return decks;
+        return new ArrayList<>(mDecks.values());
     }
 
 
@@ -468,11 +464,25 @@ public class Decks {
         save();
     }
 
+    /** Recompute the name map. Most operation deal with updating the name map directly,
+     * however, after a failed safety check, doing the whole computation is easier.*/
+    private void resetNameMap() {
+        HashMap<String, JSONObject> nameMap = new HashMap<>(mDecks.size());
+        for (JSONObject deck: mDecks.values()) {
+            nameMapAdd(deck.getString("name"), deck, nameMap);
+        }
+        mNameMap = nameMap;
+    }
+
     private void nameMapAdd(String name, JSONObject g) {
-        mNameMap.put(name, g);
+        nameMapAdd(name, g, mNameMap);
+    }
+
+    private void nameMapAdd(String name, JSONObject g, Map<String, JSONObject> nameMap) {
+        nameMap.put(name, g);
         // Normalized name is also added because it's required to use it in by name.
         // Non normalized is kept for Parent
-        mNameMap.put(normalizeName(name), g);
+        nameMap.put(normalizeName(name), g);
     }
 
     /**
@@ -661,11 +671,7 @@ public class Decks {
      * A list of all deck config.
      */
     public ArrayList<JSONObject> allConf() {
-        ArrayList<JSONObject> confs = new ArrayList<>();
-        for (JSONObject c : mDconf.values()) {
-            confs.add(c);
-        }
-        return confs;
+        return new ArrayList<>(mDconf.values());
     }
 
 
@@ -862,6 +868,7 @@ public class Decks {
     private void _checkDeckTree() {
         ArrayList<JSONObject> decks = allSorted();
         Set<String> names = new HashSet<String>();
+        boolean correction = false;
 
         for (JSONObject deck: decks) {
             // ensure no sections are blank
@@ -869,6 +876,7 @@ public class Decks {
                 Timber.i("Fix deck with empty name");
                 deck.put("name", "blank");
                 save(deck);
+                correction = true;
             }
 
             if (deck.getString("name").indexOf("::::") != -1) {
@@ -878,6 +886,7 @@ public class Decks {
                     // We may need to iterate, in order to replace "::::::" and adding to "blank" in it.
                 } while (deck.getString("name").indexOf("::::") != -1);
                 save(deck);
+                correction = true;
             }
 
             // two decks with the same name?
@@ -887,6 +896,7 @@ public class Decks {
                     deck.put("name", deck.getString("name") + "+");
                 } while (names.contains(normalizeName(deck.getString("name"))));
                 save(deck);
+                correction = true;
             }
 
             // immediate parent must exist
@@ -895,8 +905,12 @@ public class Decks {
                 Timber.i("fix deck with missing parent %s", deck.getString("name"));
                 _ensureParents(deck.getString("name"));
                 names.add(normalizeName(immediateParent));
+                correction = true;
             }
             names.add(normalizeName(deck.getString("name")));
+        }
+        if (correction) {
+            resetNameMap();
         }
     }
 
@@ -1105,15 +1119,25 @@ public class Decks {
     * ***********************************************************
     */
 
+    public static boolean isValidDeckName(@Nullable String deckName) {
+        return deckName != null && !deckName.trim().isEmpty();
+    }
+
+
+    private static HashMap<String, String> sParentCache = new HashMap();
     public static String parent(String deckName) {
         // method parent, from sched's method deckDueList in python
-        List<String> parts = Arrays.asList(path(deckName));
-        if (parts.size() < 2) {
-            return null;
-        } else {
-            parts = parts.subList(0, parts.size() - 1);
-            return TextUtils.join("::", parts);
+        if (!sParentCache.containsKey(deckName)) {
+            List<String> parts = Arrays.asList(path(deckName));
+            if (parts.size() < 2) {
+                sParentCache.put(deckName, null);
+            } else {
+                parts = parts.subList(0, parts.size() - 1);
+                String parentName = TextUtils.join("::", parts);
+                sParentCache.put(deckName, parentName);
+            }
         }
+        return sParentCache.get(deckName);
     }
 
     public String getActualDescription() {

@@ -179,6 +179,7 @@
     <string name="custom_study_deck_name">دورة دراسية مخصصة</string>
     <string name="custom_study_deck_exists">الرجاء إعادة تسمية شَدّة الأوراق المدرسة المخصصة الحالية اولاً.</string>
     <string name="empty_deck">شَدّة الأوراق هذه فارغة</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">شَدّة الأوراق هذه فارغة. اضغط الزر + لإضافة محتوى جديد.</string>
     <string name="studyoptions_limit_reached">تم الوصول لحد الدراسة اليومي</string>
     <string name="studyoptions_empty_schedule">لا توجد بطاقات مُجَدْوَلة للدراسة</string>

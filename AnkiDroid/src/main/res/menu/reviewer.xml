@@ -18,7 +18,7 @@
         android:icon="@drawable/ic_color_lens_white_24dp"
         android:title="@string/title_whiteboard_pen_color"
         android:visible="false"
-        ankidroid:showAsAction="always"/>
+        ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_undo"
         android:enabled="false"

@@ -35,8 +35,8 @@
 -->
 <resources>
     <string-array name="error_reporting_choice_labels">
-        <item>selalu laporkan</item>
-        <item>tidak pernah melaporkan</item>
+        <item>Selalu lapor</item>
+        <item>Jangan lapor</item>
         <item>tanya aku</item>
     </string-array>
     <string-array name="gestures_labels">
@@ -50,23 +50,23 @@
         <item>jawab lebih baik dari yang dianjurkan</item>
         <item>Membuka</item>
         <item>edit catatan</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
+        <item>Beri catatan tag</item>
+        <item>Tandai catatan</item>
         <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Pendam kartu</item>
+        <item>Tangguhkan kartu</item>
+        <item>Hapus catatan</item>
+        <item>Putar media</item>
+        <item>Batalkan belajar</item>
+        <item>Pendam catatan</item>
+        <item>Tangguhkan catatan</item>
+        <item>Alih Bendera Merah</item>
+        <item>Alih Bendera Oranye</item>
+        <item>Alih Bendera Hijau</item>
+        <item>Alih Bendera Biru</item>
+        <item>Hapus panji</item>
+        <item>Halaman Atas</item>
+        <item>Halaman Bawah</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>kartu suspend</item>

@@ -35,10 +35,10 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Añadir imagen</string>
-    <string name="multimedia_editor_popup_audio_clip">Añadir archivos de audio</string>
+    <string name="multimedia_editor_popup_audio_clip">Añadir archivo de audio</string>
     <string name="multimedia_editor_popup_audio">Grabar audio</string>
     <string name="multimedia_editor_popup_text">Editor avanzado</string>
-    <string name="multimedia_editor_popup_cloze">Huecos</string>
+    <string name="multimedia_editor_popup_cloze">Pregunta anidada</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Con tecnología de glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -112,17 +112,17 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Grabación fallida</string>
     <string name="multimedia_editor_audio_view_playing_failed">Reproducción fallida</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">No se puede crear la barra de herramientas de grabación</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">Edición fallida</string>
     <string name="title_activity_translation">Traducción</string>
     <string name="title_activity_load_pronounciation">Pronunciación</string>
     <!-- Network failure -->
-    <string name="network_no_connection">Sin conexión.</string>
+    <string name="network_no_connection">Sin conexión</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="crop_image">¿Quieres recortar esta imagen?</string>
+    <string name="crop_button">Recortar imagen</string>
+    <string name="save_dialog_content">El tamaño actual de la imagen es %sMB. El límite predeterminado de la imagen es de 1MB. ¿Deseas recortarla?</string>
+    <string name="select_image_failed">"Error al seleccionar la imagen. Vuelve a intentarlo"</string>
+    <string name="activity_result_unexpected">La aplicación devolvió un valor inesperado. Es posible que necesites usar una aplicación diferente</string>
 </resources>

@@ -83,8 +83,8 @@
         <item>Ingen sortering (snabbare)</item>
         <item>Efter sorteringsfält</item>
         <item>Efter tid skapad</item>
-        <item>Efter senast redigerad</item>
-        <item>Efter senast förändrad</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Efter kötid</item>
         <item>Efter intervall</item>
         <item>Efter lätthet</item>

@@ -9,12 +9,12 @@ import android.widget.Toast;
 import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Collection;
 import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,6 +31,9 @@ public abstract class AbstractSched {
     public abstract void reset();
     /** Ensures that reset is executed before the next card is selected */
     public abstract void deferReset();
+    /**
+     * @param undoneCard a card undone, send back to the reviewer.*/
+    public abstract void deferReset(Card undoneCard);
     public abstract void answerCard(Card card, int ease);
     public abstract int[] counts();
     public abstract int[] counts(Card card);
@@ -39,6 +42,7 @@ public abstract class AbstractSched {
      */
     public abstract int dueForecast();
     public abstract int dueForecast(int days);
+    @Consts.CARD_TYPE
     public abstract int countIdx(Card card);
     public abstract int answerButtons(Card card);
     /**
@@ -227,8 +231,23 @@ public abstract class AbstractSched {
 
         @Override
         public String toString() {
-            return String.format(Locale.US, "%s, %d, %d, %d, %d, %s",
-                    mName, mDid, mRevCount, mLrnCount, mNewCount, mChildren);
+            StringBuffer buf = new StringBuffer();
+            toString(buf);
+            return buf.toString();
+        }
+
+        public void toString(StringBuffer buf) {
+            for (int i = 0; i < getDepth(); i++ ) {
+                buf.append("  ");
+            }
+            buf.append(String.format(Locale.US, "%s, %d, %d, %d, %d\n",
+                    mName, mDid, mRevCount, mLrnCount, mNewCount));
+            if (mChildren == null) {
+                return;
+            }
+            for (DeckDueTreeNode children : mChildren) {
+                children.toString(buf);
+            }
         }
 
         /**
@@ -322,6 +341,33 @@ public abstract class AbstractSched {
                     limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1));
                 }
             }
+        }
+
+        @Override
+        public int hashCode() {
+            int childrenHash = mChildren.hashCode();
+            return getFullDeckName().hashCode() + mRevCount + mLrnCount + mNewCount + (int) (childrenHash ^ (childrenHash >>> 32));
+        }
+
+
+        /**
+         * Whether both elements have the same structure and numbers.
+         * @param object
+         * @return
+         */
+        @Override
+        public boolean equals(Object object) {
+            if (!(object instanceof DeckDueTreeNode)) {
+                return false;
+            }
+            DeckDueTreeNode tree = (DeckDueTreeNode) object;
+            return Decks.equalName(getFullDeckName(), tree.getFullDeckName()) &&
+                    mRevCount == tree.mRevCount &&
+                    mLrnCount == tree.mLrnCount &&
+                    mNewCount == tree.mNewCount &&
+                    (mChildren == tree.mChildren || // Would be the case if both are null, or the same pointer
+                    mChildren.equals(tree.mChildren))
+                    ;
         }
     }
 

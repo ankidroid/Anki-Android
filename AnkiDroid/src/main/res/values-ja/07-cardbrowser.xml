@@ -82,8 +82,8 @@
         <item>並び替えなし（高速）</item>
         <item>ソートフィールド順</item>
         <item>作成日時順</item>
-        <item>編集日時順</item>
-        <item>変更日時順</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>学習予定日時順</item>
         <item>間隔順</item>
         <item>易しさ順</item>

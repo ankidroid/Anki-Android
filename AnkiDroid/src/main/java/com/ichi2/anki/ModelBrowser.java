@@ -54,6 +54,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import timber.log.Timber;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+
 
 
 public class ModelBrowser extends AnkiActivity {
@@ -220,7 +222,7 @@ public class ModelBrowser extends AnkiActivity {
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         this.col = col;
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+        CollectionTask.launchCollectionTask(COUNT_MODELS, mLoadingModelsHandler);
     }
 
 
@@ -499,14 +501,14 @@ public class ModelBrowser extends AnkiActivity {
      * Reloads everything
      */
     private void fullRefresh() {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+        CollectionTask.launchCollectionTask(COUNT_MODELS, mLoadingModelsHandler);
     }
 
     /*
      * Deletes the currently selected model
      */
     private void deleteModel() throws ConfirmModSchemaException {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
+        CollectionTask.launchCollectionTask(DELETE_MODEL, mDeleteModelHandler,
                 new CollectionTask.TaskData(mCurrentID));
         mModels.remove(mModelListPosition);
         mModelIds.remove(mModelListPosition);
@@ -551,7 +553,7 @@ public class ModelBrowser extends AnkiActivity {
      * Used so that the main ListView is able to display the number of notes using the model
      * along with the name.
      */
-    public class DisplayPair {
+    public static class DisplayPair {
         private String name;
         private int count;
 
@@ -607,7 +609,7 @@ public class ModelBrowser extends AnkiActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TEMPLATE_EDIT) {
-            CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+            CollectionTask.launchCollectionTask(COUNT_MODELS, mLoadingModelsHandler);
         }
     }
 }

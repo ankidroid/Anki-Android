@@ -160,6 +160,7 @@ mga natitirang minuto</item>
     <string name="custom_study_deck_name">I-custom ang study session</string>
     <string name="custom_study_deck_exists">Baguhin muna ang pangalan ng existing custom study deck</string>
     <string name="empty_deck">Ang deck na ito ay walang laman</string>
+    <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Ang deck na ito ay walang laman. Pindotin ang + na button para magdagdag ng laman.</string>
     <string name="studyoptions_limit_reached">Ang pang araw - araw na pag - aaral ay naabot na</string>
     <string name="studyoptions_empty_schedule">Walang kard na nakatakdang pag-aralan</string>

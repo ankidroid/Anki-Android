@@ -90,6 +90,8 @@ public class SchedV2 extends AbstractSched {
     protected int mRevCount;
 
     private int mNewCardModulus;
+    // When an action is undone, reset counts need to take the card into account
+    private Card mUndidCard = null;
 
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
@@ -165,8 +167,13 @@ public class SchedV2 extends AbstractSched {
     }
 
     /** Ensures that reset is executed before the next card is selected */
-    public void deferReset(){
+    public void deferReset(Card undidCard){
         mHaveQueues = false;
+        mUndidCard = undidCard;
+    }
+
+    public void deferReset(){
+        deferReset(null);
     }
 
     public void reset() {
@@ -175,6 +182,10 @@ public class SchedV2 extends AbstractSched {
         _resetRev();
         _resetNew();
         mHaveQueues = true;
+        if (mUndidCard != null) {
+            decrementCounts(mUndidCard);
+            mUndidCard = null;
+        }
     }
 
 
@@ -245,6 +256,9 @@ public class SchedV2 extends AbstractSched {
 
 
     public int[] counts() {
+        if (!mHaveQueues) {
+            reset();
+        }
         return new int[] {mNewCount, mLrnCount, mRevCount};
     }
 
@@ -271,6 +285,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @Consts.CARD_QUEUE
     public int countIdx(Card card) {
         if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.getQueue() == Consts.QUEUE_TYPE_PREVIEW) {
             return Consts.QUEUE_TYPE_LRN;
@@ -618,14 +633,11 @@ public class SchedV2 extends AbstractSched {
             // nothing left in the deck; move to next
             mNewDids.remove();
         }
-        if (mNewCount != 0) {
-            // if we didn't get a card but the count is non-zero,
-            // we need to check again for any cards that were
-            // removed from the queue but not buried
-            _resetNew();
-            return _fillNew();
-        }
-        return false;
+        // if we didn't get a card, since the count is non-zero, we
+        // need to check again for any cards that were removed
+        // from the queue but not buried
+        _resetNew();
+        return _fillNew();
     }
 
 
@@ -1279,14 +1291,11 @@ public class SchedV2 extends AbstractSched {
                 return true;
             }
         }
-        if (mRevCount != 0) {
-            // if we didn't get a card but the count is non-zero,
-            // we need to check again for any cards that were
-            // removed from the queue but not buried
-            _resetRev();
-            return _fillRev();
-        }
-        return false;
+        // since we didn't get a card and the count is non-zero, we
+        // need to check again for any cards that were removed from
+        // the queue but not buried
+        _resetRev();
+        return _fillRev();
     }
 
 

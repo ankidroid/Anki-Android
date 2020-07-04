@@ -83,8 +83,8 @@
         <item>Rendezés nélkül (gyorsabb)</item>
         <item>Rendezés mező szerint</item>
         <item>Létrehozás dátuma szerint</item>
-        <item>Utolsó módosítás dátuma szerint</item>
-        <item>Módosítás dátuma szerint</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Esedékesség szerint</item>
         <item>Ismétlési intervallum szerint</item>
         <item>Nehézség szerint</item>

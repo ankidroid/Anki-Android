@@ -79,8 +79,8 @@
     <string name="image_zoom">Zoom de la imagen</string>
     <string name="button_size">Tamaño del botón de respuesta</string>
     <string name="card_browser_font_size">Escalado de fuentes del explorador</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media">Mostrar nombres de archivo en el navegador de tarjetas</string>
+    <string name="card_browser_hide_media_summary">Mostrar nombres de archivos multimedia en los campos de pregunta/respuesta del navegador de tarjetas</string>
     <string name="col_path">Carpeta de AnkiDroid</string>
     <string name="fullscreen_review">Pantalla completa</string>
     <string name="full_screen_off">Desactivado</string>
@@ -94,8 +94,8 @@
     </string-array>
     <string name="gestures">Habilitar gestos</string>
     <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links">Ignorar gestos táctiles en los enlaces</string>
+    <string name="gestures_allow_links_summary">Los gestos de toque no se procesarán si se presiona un enlace/pista.</string>
     <string name="gestures_swipe_up">Deslizar hacia arriba</string>
     <string name="gestures_swipe_down">Deslizar hacia abajo</string>
     <string name="gestures_swipe_left">Deslizar hacia la izquierda</string>
@@ -105,12 +105,12 @@
     <string name="gestures_tap_bottom">Tocar la parte inferior</string>
     <string name="gestures_tap_left">Tocar la parte izquierda</string>
     <string name="gestures_tap_right">Tocar la parte derecha</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_volume_up">Subir volumen</string>
+    <string name="gestures_volume_down">Bajar volumen</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">También puede usar botones kanji/katakana, emoji/kao-moji como desplazamiento</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">Menú ‘%s’</string>
+    <string name="card_browser_enable_external_context_menu_summary">Habilita globalmente el menú contextual ‘%s</string>
     <string name="double_scrolling_gap">Desplazamiento doble</string>
     <string name="double_scrolling_gap_summ">Doblar la distancia de desplazamiento con e-Reader</string>
     <string name="swipe_sensitivity">Sensibilidad de deslizado</string>
@@ -147,14 +147,14 @@
     <string name="safe_display_summ">Deshabilita todas las animaciones y utiliza un método más seguro para dibujar las tarjetas. Dispositivos E-ink podrían requerir esto.</string>
     <string name="disable_extended_text_ui">Desactivar modo de edición de un campo</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Permite el menú contextual \'huecos\' cuando está en modo horizontal.</string>
+    <string name="disable_extended_text_ui_summ">Permite el menú contextual \'preguntas anidadas\' cuando está en modo horizontal.</string>
     <string name="vertical_centering">Alinear al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
     <string name="pref_backup_max">Número máximo de copias de seguridad</string>
     <string name="show_estimates">Mostrar botón tiempo</string>
     <string name="show_estimates_summ">Mostrar el próximo repaso en los botones de respuesta</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Mostrar Barra Superior</string>
+    <string name="show_top_bar_summ">Mostrar recuento de tarjetas, banderas y marcas en la barra superior</string>
     <string name="show_progress">Mostrar restante</string>
     <string name="show_progress_summ">Mostrar contador de tarjetas restantes</string>
     <string name="show_eta">Mostrar tiempo restante</string>
@@ -200,9 +200,9 @@
     <string name="custom_sync_server_enable_title">Usar servidor de sincronización personalizado</string>
     <string name="custom_sync_server_enable_summary">Si no quieres usar el servicio propio de AnkiWeb, puedes especificar un servidor alternativo aquí</string>
     <string name="custom_sync_server_base_url_title">Url de sincronización</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">Url de sincronización no inválido</string>
     <string name="custom_sync_server_media_url_title">Url de sincronización multimedia</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">URL de sincronización de medios inválida</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Los cambios en las opciones del grupo de mazos afectarán a varios mazos. Si desea cambiar sólo el mazo actual, primero añada un nuevo grupo de opciones</string>
     <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>

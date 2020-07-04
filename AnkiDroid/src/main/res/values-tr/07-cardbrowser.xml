@@ -83,8 +83,8 @@
         <item>Sıralamadan (daha hızlı)</item>
         <item>Sıralama alanına göre</item>
         <item>Oluşturulma zamanına göre</item>
-        <item>Düzenleme zamanına göre</item>
-        <item>Değiştirilme zamanına göre</item>
+        <item>By note modification time</item>
+        <item>By card modification time</item>
         <item>Zamana göre</item>
         <item>Aralığa göre</item>
         <item>Kolaylığa göre</item>

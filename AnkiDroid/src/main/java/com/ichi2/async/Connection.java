@@ -50,8 +50,8 @@ import timber.log.Timber;
 
 public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
 
-    private static final int TASK_TYPE_LOGIN = 0;
-    private static final int TASK_TYPE_SYNC = 1;
+    private static final int LOGIN = 0;
+    private static final int SYNC = 1;
     public static final int CONN_TIMEOUT = 30000;
 
 
@@ -177,13 +177,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
     public static Connection login(TaskListener listener, Payload data) {
-        data.taskType = TASK_TYPE_LOGIN;
+        data.taskType = LOGIN;
         return launchConnectionTask(listener, data);
     }
 
 
     public static Connection sync(TaskListener listener, Payload data) {
-        data.taskType = TASK_TYPE_SYNC;
+        data.taskType = SYNC;
         return launchConnectionTask(listener, data);
     }
 
@@ -200,10 +200,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     private Payload doOneInBackground(Payload data) {
         switch (data.taskType) {
-            case TASK_TYPE_LOGIN:
+            case LOGIN:
                 return doInBackgroundLogin(data);
 
-            case TASK_TYPE_SYNC:
+            case SYNC:
                 return doInBackgroundSync(data);
 
             default:

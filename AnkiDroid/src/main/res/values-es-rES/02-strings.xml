@@ -58,21 +58,21 @@
     <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
     <string name="updated_version">Actualizado a la versión %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Guardar pizarra</string>
     <string name="enable_whiteboard">Activar pizarra</string>
     <string name="disable_whiteboard">Desactivar pizarra</string>
     <string name="show_whiteboard">Mostrar pizarra</string>
     <string name="hide_whiteboard">Ocultar pizarra</string>
     <string name="clear_whiteboard">Limpiar pizarra</string>
     <string name="replay_audio">Repetir audio</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="toggle_mic_tool_bar">Comprobar Pronunciación</string>
     <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
     <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
     <string name="corrupt_font">Archivo de fuentes %s corrupto</string>
     <string name="webview_crash_unknown">Error desconocido</string>
     <string name="webview_crash_unknwon_detailed">Esto fue causado por un error interno en WebView</string>
     <string name="webview_crash_oom">Memoria Insuficiente</string>
-    <string name="webview_crash_oom_details">El sistema terminó el WebView, lo que suele ocurrir cuando la aplicación se queda con memoria insuficiente, a menudo debido a fuentes o multimedias grandes.</string>
+    <string name="webview_crash_oom_details">El sistema terminó el WebView, eso suele ocurrir cuando la aplicación se queda con memoria insuficiente, a menudo debido a fuentes o multimedias grandes.</string>
     <string name="webview_crash_nonfatal">El renderizador de WebView se cayó. Causa: %s</string>
     <string name="webview_crash_fatal">Error fatal: El renderizador de WebView se cayó. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Fallo de procesamiento de WebView del sistema</string>
@@ -94,9 +94,9 @@
         <item>Intervalo</item>
         <item>Facilidad</item>
         <item>Programadas</item>
-        <item>Cambiado</item>
+        <item>Card Modified</item>
         <item>Creado</item>
-        <item>Editado</item>
+        <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Aumentar el límite de tarjetas nuevas para hoy</string>
@@ -112,8 +112,8 @@
     <string name="discard_unsaved_changes">¿Cerrar y perder la entrada actual?</string>
     <string name="note_editor_no_cards_created">No se han creado tarjetas. Por favor, rellena más campos</string>
     <string name="note_editor_no_first_field">El primer campo está vacío</string>
-    <string name="note_editor_no_cloze_delations">Este tipo de nota debe contener huecos</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_no_cloze_delations">Este tipo de nota debe contener preguntas anidadas</string>
+    <string name="note_editor_no_cards_created_all_fields">El tipo de nota actual no produjo ninguna tarjeta.\nPor favor, elije otro tipo de nota o haga clic en \"Tarjetas\" y añade un sustituto de campo</string>
     <string name="saving_facts">Guardando nota</string>
     <string name="saving_model">Guardando tipo de nota</string>
     <string name="add">Añadir</string>
@@ -166,18 +166,18 @@
     <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s</string>
     <string name="import_message_add_confirm">¿Añadir \"%s\" a la colección? Esto puede tardar</string>
     <string name="import_log_no_apkg">Este no es un archivo de paquete Anki válido</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
+    <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
+    <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
+    <string name="import_log_failed_validate">falló la validación apkg</string>
+    <string name="import_log_insufficient_space">No hay suficiente espacio para descomprimir el paquete. Necesita %1$d, disponible %2$d</string>
+    <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se borre la caché durante el procesamiento.\nInténtalo de nuevo</string>
+    <string name="import_succeeded_but_check_database">Importación de datos exitosa pero la limpieza posterior a la importación falló. Ejecuta la base de datos de verificación más tarde. Causa raíz: %s</string>
     <string name="import_error_unhandled_request">No se puede procesar la solicitud de importación</string>
     <string name="import_error_exception">Error al importar el paquete\n\n%s</string>
     <string name="import_error_not_apkg_extension">El nombre de archivo “%s” no tiene extensión .apkg o .colpkg</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_error_load_imported_database">Los reemplazos de la base de datos de Anki (.anki2) aún no están soportados. Consulta el manual para obtener instrucciones de reemplazo.</string>
     <string name="import_error_content_provider">AnkiDroid no ha podido importar automáticamente el archivo seleccionado. Por favor, lee el manual de usuario sobre como importar manualmente anki files:  \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() falló (posiblemente fuera de espacio de almacenamiento)</string>
     <string name="import_replacing">Reemplazando colección&#8230;</string>
     <string name="import_interrupted">Importación interrumpida</string>
     <string name="export_include_schedule">Incluir programación</string>
@@ -270,13 +270,13 @@
     <string name="background_image_title">Fondo</string>
     <string name="choose_an_image">Elige una imagen</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default">Restablecer Predefinidos</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">En blanco</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Por favor, activa la pantalla completa para usar Mostrar Cajón de Navegación usando JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Por favor, active la pantalla completa para usar Mostrar Menú de Opciones usando JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Pen color</string>
+    <string name="white_board_image_save_failed">No se pudo guardar la imagen de pizarra. %s</string>
+    <string name="white_board_image_saved">Imagen de pizarra guardada en %s</string>
+    <string name="title_whiteboard_pen_color">Color del lápiz</string>
 </resources>

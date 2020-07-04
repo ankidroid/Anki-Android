@@ -68,7 +68,7 @@ public class HttpTest {
     }
 
 
-    public class TestTaskListener implements Connection.TaskListener {
+    public static class TestTaskListener implements Connection.TaskListener {
 
         private Connection.Payload mPayload;
         private boolean mDisconnectedCalled = false;

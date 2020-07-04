@@ -54,6 +54,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+
 
 public class CustomStudyDialog extends AnalyticsDialogFragment {
     // Different configurations for the context menu
@@ -474,7 +476,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REBUILD_CRAM, new CollectionTask.TaskListener() {
+        CollectionTask.launchCollectionTask(REBUILD_CRAM, new CollectionTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
                     activity.showProgressBar();

@@ -103,8 +103,9 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Models;
-import com.ichi2.libanki.sched.Sched;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.utils.SystemTime;
@@ -128,6 +129,8 @@ import java.util.Locale;
 import java.util.TreeMap;
 
 import timber.log.Timber;
+
+import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
@@ -190,7 +193,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
-    private List<Sched.DeckDueTreeNode> mDueTree;
+    private List<AbstractSched.DeckDueTreeNode> mDueTree;
 
     private List<CollectionTask> tasksToCancelOnClose;
 
@@ -554,7 +557,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     .customView(mDialogEditText, true)
                     .onPositive((dialog, which) -> {
                         String deckName = mDialogEditText.getText().toString();
-                        createNewDeck(deckName);
+                        if (Decks.isValidDeckName(deckName)) {
+                            createNewDeck(deckName);
+                        } else {
+                            Timber.i("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
+                            UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
+                        }
                     })
                     .negativeText(R.string.dialog_cancel)
                     .show();
@@ -653,6 +661,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             String filteredDeckName = mDialogEditText.getText().toString();
+                            if (!Decks.isValidDeckName(filteredDeckName)) {
+                                Timber.i("Not creating deck with invalid name '%s'", filteredDeckName);
+                                UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
+                                return;
+                            }
                             Timber.i("DeckPicker:: Creating filtered deck...");
                             getCol().getDecks().newDyn(filteredDeckName);
                             openStudyOptions(true);
@@ -1216,7 +1229,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_UNDO, new CollectionTask.TaskListener() {
+        CollectionTask.launchCollectionTask(UNDO, new CollectionTask.TaskListener() {
             @Override
             public void onCancelled() {
                 hideProgressBar();
@@ -1358,7 +1371,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback method to handle repairing deck
     public void repairDeck() {
         Timber.i("Repairing Deck");
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REPAIR_DECK, new CollectionTask.TaskListener() {
+        CollectionTask.launchCollectionTask(REPAIR_DECK, new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -1403,13 +1416,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void performIntegrityCheck() {
         Timber.i("performIntegrityCheck()");
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CHECK_DATABASE, new CheckDatabaseListener());
+        CollectionTask.launchCollectionTask(CHECK_DATABASE, new CheckDatabaseListener());
     }
 
 
     @Override
     public void mediaCheck() {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_CHECK_MEDIA, new CollectionTask.TaskListener() {
+        CollectionTask.launchCollectionTask(CHECK_MEDIA, new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
@@ -1851,7 +1864,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_IMPORT, mImportAddListener,
+        CollectionTask.launchCollectionTask(IMPORT, mImportAddListener,
                 new TaskData(importPath, false));
     }
 
@@ -1859,7 +1872,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback to import a file -- replacing the existing collection
     @Override
     public void importReplace(String importPath) {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_IMPORT_REPLACE, mImportReplaceListener, new TaskData(importPath));
+        CollectionTask.launchCollectionTask(IMPORT_REPLACE, mImportReplaceListener, new TaskData(importPath));
     }
 
 
@@ -1891,7 +1904,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         inputArgs[2] = did;
         inputArgs[3] = includeSched;
         inputArgs[4] = includeMedia;
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_EXPORT_APKG, mExportListener, new TaskData(inputArgs));
+        CollectionTask.launchCollectionTask(EXPORT_APKG, mExportListener, new TaskData(inputArgs));
     }
 
 
@@ -2038,7 +2051,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mFocusedDeck = did;
         // Get some info about the deck to handle special cases
         int pos = mDeckListAdapter.findDeckPosition(did);
-        Sched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
+        AbstractSched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
         // Figure out what action to take
         if (deckDueTreeNode.getNewCount() + deckDueTreeNode.getLrnCount() + deckDueTreeNode.getRevCount() > 0) {
             // If there are cards to study then either go to Reviewer or StudyOptions
@@ -2128,7 +2141,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
-        CollectionTask task = CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
+        CollectionTask task = CollectionTask.launchCollectionTask(LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -2151,11 +2164,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showCollectionErrorDialog();
                     return;
                 }
-                mDueTree = (List<Sched.DeckDueTreeNode>) result.getObjArray()[0];
+                mDueTree = (List<AbstractSched.DeckDueTreeNode>) result.getObjArray()[0];
 
                 __renderPage();
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
+                Timber.d("Startup - Deck List UI Completed");
             }
         });
         tasksToCancelOnClose.add(task);
@@ -2244,7 +2258,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 .onPositive((dialog, which) -> {
                     String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
                     Collection col = getCol();
-                    if (!TextUtils.isEmpty(newName) && !newName.equals(currentName)) {
+                    if (!Decks.isValidDeckName(newName)) {
+                        Timber.i("renameDeckDialog not renaming deck to invalid name '%s'", newName);
+                        UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
+                    } else if (!newName.equals(currentName)) {
                         try {
                             col.getDecks().rename(col.getDecks().get(did), newName);
                         } catch (DeckRenameException e) {
@@ -2314,7 +2331,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         deleteDeck(mContextMenuDid);
     }
     public void deleteDeck(final long did) {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_DELETE_DECK, new CollectionTask.TaskListener() {
+        CollectionTask.launchCollectionTask(DELETE_DECK, new CollectionTask.TaskListener() {
             // Flag to indicate if the deck being deleted is the current deck.
             private boolean removingCurrent;
 
@@ -2379,13 +2396,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void rebuildFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_REBUILD_CRAM, mSimpleProgressListener,
+        CollectionTask.launchCollectionTask(REBUILD_CRAM, mSimpleProgressListener,
                 new CollectionTask.TaskData(mFragmented));
     }
 
     public void emptyFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_EMPTY_CRAM, mSimpleProgressListener,
+        CollectionTask.launchCollectionTask(EMPTY_CRAM, mSimpleProgressListener,
                 new CollectionTask.TaskData(mFragmented));
     }
 
@@ -2426,7 +2443,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        CollectionTask.launchCollectionTask(CollectionTask.TASK_TYPE_FIND_EMPTY_CARDS, new CollectionTask.TaskListener() {
+        CollectionTask.launchCollectionTask(FIND_EMPTY_CARDS, new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
@@ -2477,10 +2494,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 .onPositive((dialog, which) -> {
                     String textValue = mDialogEditText.getText().toString();
                     String newName = getCol().getDecks().getSubdeckName(did, textValue);
-                    if (newName != null) {
+                    if (Decks.isValidDeckName(newName)) {
                         createNewDeck(newName);
                     } else {
-                        Timber.d("Failed to obtain subdeck name");
+                        Timber.i("createSubDeckDialog - not creating invalid subdeck name '%s'", newName);
+                        UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
                     }
                     dismissAllDialogFragments();
                     mDeckListAdapter.notifyDataSetChanged();

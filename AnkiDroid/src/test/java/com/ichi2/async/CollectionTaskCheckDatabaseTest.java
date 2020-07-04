@@ -21,6 +21,7 @@ import com.ichi2.testutils.CollectionUtils;
 
 import org.junit.Test;
 
+import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -30,7 +31,7 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
     public void checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase();
 
-        CollectionTask.TaskData result = super.execute(CollectionTask.TASK_TYPE_CHECK_DATABASE);
+        CollectionTask.TaskData result = super.execute(CHECK_DATABASE);
 
         assertThat("The result should specify a failure", result.getBoolean(), is(false));
         Collection.CheckDatabaseResult checkDbResult = assertObjIsDbResult(result);
