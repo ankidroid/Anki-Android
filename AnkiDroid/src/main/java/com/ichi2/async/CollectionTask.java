@@ -199,10 +199,12 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
     /** Cancel the current task */
     public static void cancelTask() {
+        // Copying because there is a risk of concurrent change
+        CollectionTask latestInstance = sLatestInstance;
         try {
-            if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                sLatestInstance.cancel(true);
-                Timber.i("Cancelled task %s", sLatestInstance.mType);
+            if ((latestInstance != null) && (latestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+                latestInstance.cancel(true);
+                Timber.i("Cancelled task %s", latestInstance.mType);
             }
         } catch (Exception e) {
             return;
@@ -212,7 +214,9 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
     /** Cancel the current task only if it's of type taskType */
     public static void cancelTask(TASK_TYPE taskType) {
-        if (sLatestInstance != null && sLatestInstance.mType == taskType) {
+        // Copying because there is a risk of concurrent change
+        CollectionTask latestInstance = sLatestInstance;
+        if (latestInstance != null && latestInstance.mType == taskType) {
             cancelTask();
         }
     }
