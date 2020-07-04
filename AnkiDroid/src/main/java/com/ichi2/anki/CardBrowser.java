@@ -1271,6 +1271,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void invalidate() {
         CollectionTask.cancelAllTasks(SEARCH_CARDS);
         CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
+        CollectionTask.cancelAllTasks(CHECK_CARD_SELECTION);
         mCards.clear();
         mCheckedCards.clear();
     }
@@ -1840,6 +1841,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPostExecute(@NonNull CardBrowser browser, TaskData result) {
+            if (result == null) {
+                return;
+            }
             browser.hideProgressBar();
 
             Object[] resultArr = result.getObjArray();
