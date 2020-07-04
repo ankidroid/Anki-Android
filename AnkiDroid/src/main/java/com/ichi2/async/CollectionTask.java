@@ -1976,8 +1976,4 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             return clazz.isAssignableFrom(val.getClass());
         }
     }
-
-    public static synchronized CollectionTask getInstance() {
-        return sLatestInstance;
-    }
 }
