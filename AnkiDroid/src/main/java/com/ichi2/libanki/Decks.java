@@ -140,9 +140,70 @@ public class Decks {
     private HashMap<Long, JSONObject> mDecks;
     private HashMap<Long, JSONObject> mDconf;
     // Never access mNameMap directly. Uses byName
-    private HashMap<String, JSONObject> mNameMap;
+    private NameMap mNameMap;
     private boolean mChanged;
 
+    private static class NameMap {
+        private final HashMap<String, JSONObject> mNameMap;
+
+        private NameMap() {
+            mNameMap = new HashMap<>();
+        }
+
+        public static NameMap constructor(java.util.Collection<JSONObject> decks) {
+            NameMap map = new NameMap();
+            for (JSONObject deck: decks) {
+                map.add(deck.getString("name"), deck);
+            }
+            return map;
+        }
+
+        public synchronized JSONObject get(String name) {
+            String normalized = normalizeName(name);
+            JSONObject deck = mNameMap.get(normalized);
+            if (deck == null) {
+                return null;
+            }
+            String foundName = deck.getString("name");
+            if (!equalName(name, foundName)) {
+                AnkiDroidApp.sendExceptionReport("We looked for deck \"" + name + "\" and instead got deck \"" + foundName + "\".", "Decks - byName");
+            }
+            return deck;
+        }
+
+        public synchronized void add(String name, JSONObject g) {
+            mNameMap.put(name, g);
+            // Normalized name is also added because it's required to use it in by name.
+            // Non normalized is kept for Parent
+            mNameMap.put(normalizeName(name), g);
+        }
+
+
+        /**
+           Remove name from nameMap if it is equal to expectedDeck.
+
+           It is possible that another deck has been given name `name`,
+           in which case we don't want to remove it from nameMap.
+
+           E.g. if A is renamed to A::B and A::B already existed and get
+           renamed to A::B::B, then we don't want to remove A::B from
+           nameMap when A::B is renamed to A::B::B, since A::B is
+           potentially the correct value.
+        */
+        public synchronized void remove(String name, JSONObject expectedDeck) {
+            String[] names = new String[] {name, normalizeName(name)};
+            for (String name_: names) {
+                JSONObject currentDeck = mNameMap.get(name_);
+                if (currentDeck != null && currentDeck.getLong("id") == expectedDeck.getLong("id")) {
+                    /* Remove name from mapping only if it still maps to
+                     * expectedDeck. I.e. no other deck had been given this
+                     * name yet. */
+                    mNameMap.remove(name_);
+                }
+            }
+        }
+
+    }
 
     /**
      * Registry save/load
@@ -157,7 +218,6 @@ public class Decks {
     public void load(String decks, String dconf) {
         mDecks = new HashMap<>();
         mDconf = new HashMap<>();
-        mNameMap = new HashMap<>();
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
         for (int i = 0; i < ids.length(); i++) {
@@ -265,7 +325,7 @@ public class Decks {
         mDecks.put(id, g);
         save(g);
         maybeAddToActive();
-        nameMapAdd(name, g);
+        mNameMap.add(name, g);
         //runHook("newDeck"); // TODO
         return id;
     }
@@ -328,7 +388,7 @@ public class Decks {
         }
         // delete the deck and add a grave
         mDecks.remove(did);
-        nameMapRemove(deck.getString("name"), deck);
+        mNameMap.remove(deck.getString("name"), deck);
         // ensure we have an active deck
         if (active().contains(did)) {
             select(mDecks.keySet().iterator().next());
@@ -434,16 +494,7 @@ public class Decks {
      */
     @CheckResult
     public JSONObject byName(String name) {
-        String normalized = normalizeName(name);
-        JSONObject deck = mNameMap.get(normalized);
-        if (deck == null) {
-            return null;
-        }
-        String foundName = deck.getString("name");
-        if (!equalName(name, foundName)) {
-            AnkiDroidApp.sendExceptionReport("We looked for deck \"" + name + "\" and instead got deck \"" + foundName + "\".", "Decks - byName");
-        }
-        return deck;
+        return mNameMap.get(name);
     }
 
 
@@ -456,9 +507,9 @@ public class Decks {
         if (oldDeck != null) {
             // In case where another update got the name
             // `oldName`, it would be a mistake to remove it from nameMap
-            nameMapRemove(oldDeck.getString("name"), oldDeck);
+            mNameMap.remove(oldDeck.getString("name"), oldDeck);
         }
-        nameMapAdd(g.getString("name"), g);
+        mNameMap.add(g.getString("name"), g);
         mDecks.put(g.getLong("id"), g);
         maybeAddToActive();
         // mark registry changed, but don't bump mod time
@@ -468,46 +519,7 @@ public class Decks {
     /** Recompute the name map. Most operation deal with updating the name map directly,
      * however, after a failed safety check, doing the whole computation is easier.*/
     private void resetNameMap() {
-        HashMap<String, JSONObject> nameMap = new HashMap<>(mDecks.size());
-        for (JSONObject deck: mDecks.values()) {
-            nameMapAdd(deck.getString("name"), deck, nameMap);
-        }
-        mNameMap = nameMap;
-    }
-
-    private void nameMapAdd(String name, JSONObject g) {
-        nameMapAdd(name, g, mNameMap);
-    }
-
-    private void nameMapAdd(String name, JSONObject g, Map<String, JSONObject> nameMap) {
-        nameMap.put(name, g);
-        // Normalized name is also added because it's required to use it in by name.
-        // Non normalized is kept for Parent
-        nameMap.put(normalizeName(name), g);
-    }
-
-    /**
-        Remove name from nameMap if it is equal to expectedDeck.
-
-        It is possible that another deck has been given name `name`,
-        in which case we don't want to remove it from nameMap.
-
-        E.g. if A is renamed to A::B and A::B already existed and get
-        renamed to A::B::B, then we don't want to remove A::B from
-        nameMap when A::B is renamed to A::B::B, since A::B is
-        potentially the correct value.
-     */
-    private void nameMapRemove(String name, JSONObject expectedDeck) {
-        String[] names = new String[] {name, normalizeName(name)};
-        for (String name_: names) {
-            JSONObject currentDeck = byName(name_);
-            if (currentDeck != null && currentDeck.getLong("id") == expectedDeck.getLong("id")) {
-                /* Remove name from mapping only if it still maps to
-                 * expectedDeck. I.e. no other deck had been given this
-                 * name yet. */
-                mNameMap.remove(name_);
-            }
-        }
+        mNameMap = NameMap.constructor(mDecks.values());
     }
 
     /**
@@ -544,18 +556,18 @@ public class Decks {
             if (grpOldName.startsWith(oldName + "::")) {
                 String grpNewName = grpOldName.replaceFirst(Pattern.quote(oldName + "::"), newName + "::");
                 // In Java, String.replaceFirst consumes a regex so we need to quote the pattern to be safe
-                nameMapRemove(grpOldName, grp);
+                mNameMap.remove(grpOldName, grp);
                 grp.put("name", grpNewName);
-                nameMapAdd(grpNewName, grp);
+                mNameMap.add(grpNewName, grp);
                 save(grp);
             }
         }
-        nameMapRemove(oldName, g);
+        mNameMap.remove(oldName, g);
         // adjust name
         g.put("name", newName);
         // ensure we have parents again, as we may have renamed parent->child
         newName = _ensureParents(newName);
-        nameMapAdd(newName, g);
+        mNameMap.add(newName, g);
         save(g);
         // renaming may have altered active did order
         maybeAddToActive();
