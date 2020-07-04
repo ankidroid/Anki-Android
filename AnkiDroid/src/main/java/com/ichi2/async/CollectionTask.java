@@ -58,6 +58,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -119,6 +120,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
      * A reference to the application context to use to fetch the current Collection object.
      */
     private Context mContext;
+    /**
+     * Tasks which are running or waiting to run.
+     * */
+    private static List<CollectionTask> sTasks = Collections.synchronizedList(new LinkedList<>());
 
 
     /**
@@ -223,11 +228,16 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         mType = type;
         mListener = listener;
         mPreviousTask = previousTask;
+        sTasks.add(this);
     }
 
     @Override
     protected TaskData doInBackground(TaskData... params) {
-        return actualDoInBackground(params);
+        try {
+            return actualDoInBackground(params);
+        } finally {
+            sTasks.remove(this);
+        }
     }
 
     // This method and those that are called here are executed in a new thread
@@ -351,7 +361,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 return doInBackgroundCountModels();
 
             case DELETE_MODEL:
-                return  doInBackGroundDeleteModel(params);
+                return doInBackGroundDeleteModel(params);
 
             case DELETE_FIELD:
                 return doInBackGroundDeleteField(params);
@@ -414,6 +424,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
     @Override
     protected void onCancelled(){
+        sTasks.remove(this);
         if (mListener != null) {
             mListener.onCancelled();
         }
