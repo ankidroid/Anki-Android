@@ -343,6 +343,12 @@ public abstract class AbstractSched {
             }
         }
 
+        @Override
+        public int hashCode() {
+            int childrenHash = mChildren.hashCode();
+            return getFullDeckName().hashCode() + mRevCount + mLrnCount + mNewCount + (int) (childrenHash ^ (childrenHash >>> 32));
+        }
+
 
         /**
          * Whether both elements have the same structure and numbers.
