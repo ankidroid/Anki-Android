@@ -214,6 +214,12 @@ public class ModelBrowser extends AnkiActivity {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        CollectionTask.cancelAllTasks(COUNT_MODELS);
+        super.onDestroy();
+    }
+
 
     // ----------------------------------------------------------------------------
     // ANKI METHODS
