@@ -291,4 +291,5 @@
     <string name="anki_js_unknown_error">(Error Code:0)</string>
     <string name="anki_js_mark_card_not_supported">(Error Code:1)</string>
     <string name="anki_js_flag_card_not_supported">(Error Code:2)</string>
+    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
 </resources>
