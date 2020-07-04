@@ -139,6 +139,7 @@ public class Decks {
     private Collection mCol;
     private HashMap<Long, JSONObject> mDecks;
     private HashMap<Long, JSONObject> mDconf;
+    // Never access mNameMap directly. Uses byName
     private HashMap<String, JSONObject> mNameMap;
     private boolean mChanged;
 
@@ -1024,7 +1025,7 @@ public class Decks {
             List<String> parts = Arrays.asList(path(deck.getString("name")));
             if (parts.size() > 1) {
                 String immediateParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
-                long pid = mNameMap.get(immediateParent).getLong("id");
+                long pid = byName(immediateParent).getLong("id");
                 childMap.get(pid).put(deck.getLong("id"), node);
             }
         }
@@ -1052,7 +1053,7 @@ public class Decks {
         List<JSONObject> oParents = new ArrayList<>();
         for (int i = 0; i < parents.size(); i++) {
             String parentName = parents.get(i);
-            JSONObject deck = mNameMap.get(parentName);
+            JSONObject deck = byName(parentName);
             oParents.add(i, deck);
         }
         return oParents;
