@@ -197,9 +197,8 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
     }
 
-
+    /** Cancel the current task */
     public static void cancelTask() {
-        //cancel the current task
         try {
             if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
                 sLatestInstance.cancel(true);
@@ -211,8 +210,8 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
+    /** Cancel the current task only if it's of type taskType */
     public static void cancelTask(TASK_TYPE taskType) {
-        // cancel the current task only if it's of type taskType
         if (sLatestInstance != null && sLatestInstance.mType == taskType) {
             cancelTask();
         }
