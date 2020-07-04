@@ -699,7 +699,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onStop() {
         Timber.d("onStop()");
         // cancel rendering the question and answer, which has shared access to mCards
-        invalidate();
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
@@ -711,6 +710,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @Override
     protected void onDestroy() {
         Timber.d("onDestroy()");
+        invalidate();
         super.onDestroy();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
