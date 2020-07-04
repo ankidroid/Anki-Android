@@ -857,6 +857,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.d("onPause()");
         killUselessTask();
         mActivityPaused = true;
+        // The deck count will be computed on resume. No need to compute it now
+        CollectionTask.cancelTask(CollectionTask.TASK_TYPE_LOAD_DECK_COUNTS);
         super.onPause();
     }
 
