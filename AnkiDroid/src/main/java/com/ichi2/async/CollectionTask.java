@@ -86,7 +86,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         DISMISS,
         DISMISS_MULTI,
         CHECK_DATABASE,
-        REPAIR_DECK,
+        REPAIR_COLLECTION,
         LOAD_DECK_COUNTS,
         UPDATE_VALUES_FROM_DECK,
         DELETE_DECK,
@@ -293,7 +293,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
-        if (mType != TASK_TYPE.REPAIR_DECK && CollectionHelper.getInstance().getColSafe(mContext) == null) {
+        if (mType != TASK_TYPE.REPAIR_COLLECTION && CollectionHelper.getInstance().getColSafe(mContext) == null) {
             Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", mType);
             return null;
         }
@@ -333,8 +333,8 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             case CHECK_DATABASE:
                 return doInBackgroundCheckDatabase();
 
-            case REPAIR_DECK:
-                return doInBackgroundRepairDeck();
+            case REPAIR_COLLECTION:
+                return doInBackgroundRepairCollection();
 
             case UPDATE_VALUES_FROM_DECK:
                 return doInBackgroundUpdateValuesFromDeck(params);
@@ -1065,11 +1065,11 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
     }
 
 
-    private TaskData doInBackgroundRepairDeck() {
-        Timber.d("doInBackgroundRepairDeck");
+    private TaskData doInBackgroundRepairCollection() {
+        Timber.d("doInBackgroundRepairCollection");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col != null) {
-            Timber.i("RepairDeck: Closing collection");
+            Timber.i("RepairCollection: Closing collection");
             col.close(false);
         }
         return new TaskData(BackupManager.repairCollection(col));

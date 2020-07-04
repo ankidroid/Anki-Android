@@ -1374,9 +1374,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     // Callback method to handle repairing deck
-    public void repairDeck() {
-        Timber.i("Repairing Deck");
-        CollectionTask.launchCollectionTask(REPAIR_DECK, new CollectionTask.TaskListener() {
+    public void repairCollection() {
+        Timber.i("Repairing the Collection");
+        CollectionTask.launchCollectionTask(REPAIR_COLLECTION, new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {

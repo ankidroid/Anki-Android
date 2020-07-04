@@ -178,7 +178,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         .positiveText(res.getString(R.string.dialog_positive_repair))
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .onPositive((inner_dialog, which) -> {
-                            ((DeckPicker) getActivity()).repairDeck();
+                            ((DeckPicker) getActivity()).repairCollection();
                             dismissAllDialogFragments();
                         })
                         .show();
