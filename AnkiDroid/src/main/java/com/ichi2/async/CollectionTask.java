@@ -1872,13 +1872,17 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * Goes through selected cards and checks selected and marked attribute
      * @return If there are unselected cards, if there are unmarked cards
      */
-    public TaskData doInBackgroundCheckCardSelection(TaskData param) {
+    public @Nullable TaskData doInBackgroundCheckCardSelection(TaskData param) {
         Object[] objects = param.getObjArray();
         Set<CardBrowser.CardCache> checkedCards = (Set<CardBrowser.CardCache>) objects[0];
 
         boolean hasUnsuspended = false;
         boolean hasUnmarked = false;
         for (CardBrowser.CardCache c: checkedCards) {
+            if (isCancelled()) {
+                Timber.v("doInBackgroundCheckCardSelection: cancelled.");
+                return null;
+            }
             Card card = c.getCard();
             hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
             hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
