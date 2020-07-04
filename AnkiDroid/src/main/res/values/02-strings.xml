@@ -279,4 +279,18 @@
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
 
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+
+    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
+    <string name="invalid_json_data">Card provided invalid data. %s</string>
+    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
+    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
+    <string name="update_js_api_patch_version">AnkiDroid JS API patch update available. Contact developer %s, or view wiki.</string>
+    <string name="update_js_api_minor_version">AnkiDroid JS API minor update available. Contact developer %s, or view wiki.</string>
+
+    <!-- Error codes for AnkiDroid JS API-->
+    <string name="anki_js_unknown_error">(Error Code:0)</string>
+    <string name="anki_js_mark_card_not_supported">(Error Code:1)</string>
+    <string name="anki_js_flag_card_not_supported">(Error Code:2)</string>
+    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
 </resources>
