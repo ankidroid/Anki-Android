@@ -197,18 +197,33 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
     }
 
-    /** Cancel the current task */
-    public static void cancelTask() {
-        // Copying because there is a risk of concurrent change
-        CollectionTask latestInstance = sLatestInstance;
+    /** Cancel the current task.
+     * @return whether cancelling did occur.*/
+    public boolean safeCancel() {
         try {
-            if ((latestInstance != null) && (latestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                latestInstance.cancel(true);
-                Timber.i("Cancelled task %s", latestInstance.mType);
+            if (getStatus() != AsyncTask.Status.FINISHED) {
+                return cancel(true);
             }
         } catch (Exception e) {
-            return;
+            // Potentially catching SecurityEcexption, from
+            // Thread.interrupt from FutureTask.cancel from
+            // AsyncTask.cancel
+            Timber.w(e, "Exception cancelling task");
+        } finally {
+            sTasks.remove(this);
         }
+        return false;
+    }
+
+
+    /** Cancel the current task only if it's of type taskType */
+    public static void cancelTask() {
+        CollectionTask latestInstance = sLatestInstance;
+        if (latestInstance != null) {
+            if (latestInstance.safeCancel()) {
+                Timber.i("Cancelled task %s", latestInstance.mType);
+            }
+        };
     }
 
 
@@ -217,7 +232,9 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         // Copying because there is a risk of concurrent change
         CollectionTask latestInstance = sLatestInstance;
         if (latestInstance != null && latestInstance.mType == taskType) {
-            cancelTask();
+            if(latestInstance.safeCancel()) {
+                Timber.i("Cancelled task %s", latestInstance.mType);
+            }
         }
     }
 
