@@ -77,11 +77,22 @@ public class Finder {
 
     @CheckResult
     public List<Long> findCards(String query, boolean _order) {
-        return _findCards(query, _order);
+        return findCards(query, _order, null);
+    }
+
+    @CheckResult
+    public List<Long> findCards(String query, boolean _order, CollectionTask task) {
+        return _findCards(query, _order, task);
     }
 
 
+    @CheckResult
     private List<Long> _findCards(String query, Object _order) {
+        return _findCards(query, _order, null);
+    }
+
+    @CheckResult
+    private List<Long> _findCards(String query, Object _order, CollectionTask task) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
@@ -96,6 +107,9 @@ public class Finder {
         String sql = _query(preds, order);
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
+                if (task != null && task.isCancelled()) {
+                    return new ArrayList<>();
+                }
                 res.add(cur.getLong(0));
             }
         } catch (SQLException e) {

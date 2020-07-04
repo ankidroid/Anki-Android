@@ -1134,8 +1134,8 @@ public class Collection {
         return new Finder(this).findCards(search, order);
     }
 
-    public List<Long> findCards(String search, boolean order) {
-        return new Finder(this).findCards(search, order);
+    public List<Long> findCards(String search, boolean order, CollectionTask task) {
+        return new Finder(this).findCards(search, order, task);
     }
 
 
