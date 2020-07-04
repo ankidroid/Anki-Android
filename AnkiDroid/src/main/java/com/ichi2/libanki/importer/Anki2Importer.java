@@ -136,12 +136,17 @@ public class Anki2Importer extends Importer {
                 long id = mDst.getDecks().id(mDeckPrefix);
                 mDst.getDecks().select(id);
             }
+            Timber.i("Preparing Import");
             _prepareTS();
             _prepareModels();
+            Timber.i("Importing notes");
             _importNotes();
+            Timber.i("Importing Cards");
             _importCards();
+            Timber.i("Importing Media");
             _importStaticMedia();
             publishProgress(100, 100, 25);
+            Timber.i("Performing post-import");
             _postImport();
             publishProgress(100, 100, 50);
             mDst.getDb().getDatabase().setTransactionSuccessful();
@@ -158,6 +163,7 @@ public class Anki2Importer extends Importer {
                 try { mDst.getMedia().getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
             }
         }
+        Timber.i("Performing vacuum/analyze");
         try {
             mDst.getDb().execute("vacuum");
         } catch (Exception e) {
