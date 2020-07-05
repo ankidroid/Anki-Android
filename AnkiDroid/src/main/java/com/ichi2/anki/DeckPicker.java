@@ -193,8 +193,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private List<AbstractSched.DeckDueTreeNode> mDueTree;
 
-    private List<CollectionTask> tasksToCancelOnClose;
-
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
      * Since syncing closes the database, this flag allows us to avoid doing any
@@ -385,7 +383,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
-        tasksToCancelOnClose = new ArrayList();
         Timber.d("onCreate()");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
@@ -855,16 +852,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     protected void onPause() {
         Timber.d("onPause()");
-        killUselessTask();
         mActivityPaused = true;
         super.onPause();
-    }
-
-    private void killUselessTask() {
-        for (CollectionTask collectionTask: tasksToCancelOnClose) {
-            collectionTask.cancel(true);
-        }
-        tasksToCancelOnClose.clear();
     }
 
     @Override
@@ -2170,7 +2159,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.d("Startup - Deck List UI Completed");
             }
         });
-        tasksToCancelOnClose.add(task);
     }
 
     public void __renderPage() {
