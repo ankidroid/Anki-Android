@@ -217,7 +217,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
 
 
     /** Cancel the current task only if it's of type taskType */
-    public static void cancelTask() {
+    public static void cancelCurrentlyExecutingTask() {
         CollectionTask latestInstance = sLatestInstance;
         if (latestInstance != null) {
             if (latestInstance.safeCancel()) {
