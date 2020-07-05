@@ -227,9 +227,12 @@ public class SchedV2 extends AbstractSched {
 
     public void reset() {
         _updateCutoff();
-        _resetLrn();
-        _resetRev();
-        _resetNew();
+        _resetLrnCount();
+        _resetLrnQueue();
+        _resetRevCount();
+        _resetRevQueue();
+        _resetNewCount();
+        _resetNewQueue();
         mHaveQueues = true;
         decrementCounts(mUndidCard);
         if (mUndidCard == null) {
