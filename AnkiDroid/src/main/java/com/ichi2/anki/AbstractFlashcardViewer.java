@@ -1622,6 +1622,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mEase3Layout.setVisibility(View.GONE);
         mEase4Layout.setVisibility(View.GONE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
+        mNext1.setText("");
+        mNext2.setText("");
+        mNext3.setText("");
+        mNext4.setText("");
         focusAnswerCompletionField();
     }
 
