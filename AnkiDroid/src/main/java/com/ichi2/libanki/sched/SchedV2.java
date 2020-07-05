@@ -894,6 +894,7 @@ public class SchedV2 extends AbstractSched {
 
     // Overridden: V1 has less queues
     protected void _resetLrnCount() {
+        _updateLrnCutoff(true);
         // sub-day
         mLrnCount = mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit()
@@ -912,7 +913,6 @@ public class SchedV2 extends AbstractSched {
 
     // Overriden: _updateLrnCutoff not called in V1
     protected void _resetLrn() {
-        _updateLrnCutoff(true);
         _resetLrnCount();
         _resetLrnQueue();
     }
@@ -2959,7 +2959,6 @@ public class SchedV2 extends AbstractSched {
     /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
     @Override
     public int[] recalculateCounts() {
-        _updateLrnCutoff(true);
         _resetLrnCount();
         _resetNewCount();
         _resetRevCount();
