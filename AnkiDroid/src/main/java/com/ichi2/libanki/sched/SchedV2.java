@@ -667,6 +667,10 @@ public class SchedV2 extends AbstractSched {
 
     private void _resetNew() {
         _resetNewCount();
+        _resetNewQueue();
+    }
+
+    private void _resetNewQueue() {
         mNewDids = new LinkedList<>(mCol.getDecks().active());
         mNewQueue.clear();
         _updateNewCardRatio();
@@ -910,6 +914,10 @@ public class SchedV2 extends AbstractSched {
     protected void _resetLrn() {
         _updateLrnCutoff(true);
         _resetLrnCount();
+        _resetLrnQueue();
+    }
+
+    protected void _resetLrnQueue() {
         mLrnQueue.clear();
         mLrnDayQueue.clear();
         mLrnDids = mCol.getDecks().active();
@@ -1433,6 +1441,10 @@ public class SchedV2 extends AbstractSched {
     // Overridden: V1 remove clear
     protected void _resetRev() {
         _resetRevCount();
+        _resetRevQueue();
+    }
+
+    protected void _resetRevQueue() {
         mRevQueue.clear();
     }
 

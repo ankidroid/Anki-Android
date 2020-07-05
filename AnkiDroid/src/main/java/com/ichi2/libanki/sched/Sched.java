@@ -357,6 +357,11 @@ public class Sched extends SchedV2 {
     @Override
     protected void _resetLrn() {
         _resetLrnCount();
+        _resetLrnQueue();
+    }
+
+    @Override
+    protected void _resetLrnQueue() {
         mLrnQueue.clear();
         mLrnDayQueue.clear();
         mLrnDids = mCol.getDecks().active();
@@ -716,6 +721,11 @@ public class Sched extends SchedV2 {
     @Override
     protected void _resetRev() {
         _resetRevCount();
+        _resetRevQueue();
+    }
+
+    @Override
+    protected void _resetRevQueue() {
         mRevQueue.clear();
         mRevDids = mCol.getDecks().active();
     }
