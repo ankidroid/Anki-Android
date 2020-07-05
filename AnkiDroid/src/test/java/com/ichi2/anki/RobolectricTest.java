@@ -263,7 +263,7 @@ public class RobolectricTest {
         wait(timeoutMs);
 
         if (!completed[0]) {
-            throw new IllegalStateException(String.format("Task %d didn't finish in %d ms", taskType, timeoutMs));
+            throw new IllegalStateException(String.format("Task %s didn't finish in %d ms", taskType, timeoutMs));
         }
     }
 }
