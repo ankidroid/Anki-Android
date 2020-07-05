@@ -353,13 +353,6 @@ public class Sched extends SchedV2 {
                 mToday, mReportLimit);
     }
 
-
-    @Override
-    protected void _resetLrn() {
-        _resetLrnCount();
-        _resetLrnQueue();
-    }
-
     @Override
     protected void _resetLrnQueue() {
         mLrnQueue.clear();
@@ -717,12 +710,6 @@ public class Sched extends SchedV2 {
                         + " LIMIT ?)", did, mToday, lim);
     }
 
-
-    @Override
-    protected void _resetRev() {
-        _resetRevCount();
-        _resetRevQueue();
-    }
 
     @Override
     protected void _resetRevQueue() {
