@@ -89,6 +89,7 @@ public class SchedV2 extends AbstractSched {
     private int mDynReportLimit;
     protected int mReps;
     protected boolean mHaveQueues;
+    protected boolean mHaveCounts;
     protected Integer mToday;
     public long mDayCutoff;
     private long mLrnCutoff;
@@ -180,6 +181,7 @@ public class SchedV2 extends AbstractSched {
         mReps = 0;
         mToday = null;
         mHaveQueues = false;
+        mHaveCounts = false;
         mLrnCutoff = 0;
         _updateCutoff();
     }
@@ -190,7 +192,7 @@ public class SchedV2 extends AbstractSched {
      */
     public Card getCard() {
         _checkDay();
-        if (!mHaveQueues) {
+        if (!mHaveQueues || !mHaveCounts) {
             reset();
         }
         Card card = _getCard();
@@ -215,6 +217,7 @@ public class SchedV2 extends AbstractSched {
     /** Ensures that reset is executed before the next card is selected */
     public void deferReset(Card undidCard){
         mHaveQueues = false;
+        mHaveCounts = false;
         mUndidCard = undidCard;
     }
 
@@ -235,6 +238,7 @@ public class SchedV2 extends AbstractSched {
             setCurrentCard(mUndidCard);
         }
         mUndidCard = null;
+        mHaveCounts = true;
     }
 
 
@@ -316,7 +320,7 @@ public class SchedV2 extends AbstractSched {
 
 
     public int[] counts() {
-        if (!mHaveQueues) {
+        if (!mHaveCounts) {
             reset();
         }
         return new int[] {mNewCount, mLrnCount, mRevCount};
