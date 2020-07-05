@@ -225,10 +225,13 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         mPreviousTask = previousTask;
     }
 
-
-    // This method and those that are called here are executed in a new thread
     @Override
     protected TaskData doInBackground(TaskData... params) {
+        return actualDoInBackground(params);
+    }
+
+    // This method and those that are called here are executed in a new thread
+    protected TaskData actualDoInBackground(TaskData... params) {
         super.doInBackground(params);
         // Wait for previous thread (if any) to finish before continuing
         if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
