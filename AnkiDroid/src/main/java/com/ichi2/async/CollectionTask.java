@@ -1310,7 +1310,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             boolean reset = (Boolean) obj[0];
             if (reset) {
                 // reset actually required because of counts, which is used in getCollectionTaskListener
-                sched.reset();
+                sched.resetCounts();
             }
             int[] counts = sched.counts();
             int totalNewCount = sched.totalNewForCurrentDeck();
