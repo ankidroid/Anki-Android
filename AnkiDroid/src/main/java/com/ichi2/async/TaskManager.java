@@ -32,10 +32,10 @@ public class TaskManager {
     /**
      * The most recently started {@link CollectionTask} instance.
      */
-    private static CollectionTask sLatestInstance;
+    private static CollectionTask sLatestStartedInstance;
 
     protected static void setLatestInstance(CollectionTask task) {
-        sLatestInstance = task;
+        sLatestStartedInstance = task;
     }
 
 
@@ -70,7 +70,7 @@ public class TaskManager {
     public static <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> launchCollectionTask(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
                                                                                                                                                                                                                                                        @Nullable TaskListener<ProgressListener, ResultListener> listener) {
         // Start new task
-        CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> newTask = new CollectionTask<>(task, listener, sLatestInstance);
+        CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> newTask = new CollectionTask<>(task, listener, sLatestStartedInstance);
         sTasks.add(newTask);
         newTask.execute();
         return newTask;
@@ -91,12 +91,12 @@ public class TaskManager {
      */
     public static boolean waitToFinish(Integer timeoutSeconds) {
         try {
-            if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                Timber.d("CollectionTask: waiting for task %s to finish...", sLatestInstance.getTask().getClass());
+            if ((sLatestStartedInstance != null) && (sLatestStartedInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+                Timber.d("CollectionTask: waiting for task %s to finish...", sLatestStartedInstance.getTask().getClass());
                 if (timeoutSeconds != null) {
-                    sLatestInstance.get(timeoutSeconds, TimeUnit.SECONDS);
+                    sLatestStartedInstance.get(timeoutSeconds, TimeUnit.SECONDS);
                 } else {
-                    sLatestInstance.get();
+                    sLatestStartedInstance.get();
                 }
 
             }
@@ -110,7 +110,7 @@ public class TaskManager {
 
     /** Cancel the current task only if it's of type taskType */
     public static void cancelCurrentlyExecutingTask() {
-        CollectionTask latestInstance = sLatestInstance;
+        CollectionTask latestInstance = sLatestStartedInstance;
         if (latestInstance != null) {
             if (latestInstance.safeCancel()) {
                 Timber.i("Cancelled task %s", latestInstance.getTask().getClass());

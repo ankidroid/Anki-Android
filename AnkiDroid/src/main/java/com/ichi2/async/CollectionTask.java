@@ -206,7 +206,7 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
                 Timber.d(e, "previously running task was cancelled: %s", mPreviousTask.mTask.getClass());
             }
         }
-        setLatestInstance(this);
+        TaskManager.setLatestInstance(this);
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
