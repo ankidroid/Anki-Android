@@ -137,6 +137,11 @@ public class RobolectricTest {
 
     }
 
+    /** This can probably be implemented in a better manner */
+    protected void waitForAsyncTasksToComplete() {
+        advanceRobolectricLooper();
+    }
+
 
     protected Context getTargetContext() {
         return ApplicationProvider.getApplicationContext();
