@@ -1045,27 +1045,34 @@ public class Decks {
         return childMap;
     }
 
+    /**
+     * @return Names of ancestors of parents of name.
+     */
+    private String[] parentsNames(String name) {
+        String[] parts = path(name);
+        String[] parentsNames = new String[parts.length - 1];
+        // Top level names have no parent, so it returns an empty list.
+        // So the array size is 1 less than the number of parts.
+        String prefix = "";
+        for (int i = 0; i < parts.length - 1; i++) {
+            prefix += parts[i];
+            parentsNames[i] = prefix;
+            prefix += "::";
+        }
+        return parentsNames;
+    }
 
     /**
      * All parents of did.
      */
     public List<JSONObject> parents(long did) {
         // get parent and grandparent names
-        List<String> parents = new ArrayList<>();
-        List<String> parts = Arrays.asList(path(get(did).getString("name")));
-        for (int i = 0; i < parts.size() - 1; i++) {
-            String part = parts.get(i);
-            if (parents.size() == 0) {
-                parents.add(part);
-            } else {
-                parents.add(parents.get(parents.size() - 1) + "::" + part);
-            }
-        }
+        String[] parents = parentsNames(get(did).getString("name"));
         // convert to objects
         List<JSONObject> oParents = new ArrayList<>();
-        for (int i = 0; i < parents.size(); i++) {
-            String parentName = parents.get(i);
-            JSONObject deck = byName(parentName);
+        for (int i = 0; i < parents.length; i++) {
+            String parentName = parents[i];
+            JSONObject deck = mNameMap.get(parentName);
             oParents.add(i, deck);
         }
         return oParents;
