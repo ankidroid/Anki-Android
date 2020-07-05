@@ -1544,14 +1544,9 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             }
         });
 
-        try{
-            for (JSONObject n : models) {
-                long modID = n.getLong("id");
-                cardCount.add(col.getModels().nids(col.getModels().get(modID)).size());
-            }
-        } catch (JSONException e) {
-                Timber.e("doInBackgroundLoadModels :: JSONException");
-                return new TaskData(false);
+        for (JSONObject n : models) {
+            long modID = n.getLong("id");
+            cardCount.add(col.getModels().nids(col.getModels().get(modID)).size());
         }
 
         Object[] data = new Object[2];
