@@ -3203,19 +3203,25 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // mark card using javascript
             if (url.startsWith("signal:mark_current_card")) {
-                if (mJsApiListMap.get("markCard")) {
+                if (mJsApiListMap.get("markCard") == null) {
+                    showDeveloperContact(1);
+                    return true;
+                } else if (mJsApiListMap.get("markCard")) {
                     executeCommand(COMMAND_MARK);
                 } else {
                     // see 02-string.xml
-                    showDeveloperContact(1);
+                    showDeveloperContact(2);
                 }
                 return true;
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
-                if (!mJsApiListMap.get("toggleFlag")) {
+                if (mJsApiListMap.get("toggleFlag") == null) {
+                    showDeveloperContact(1);
+                    return true;
+                } else if (!mJsApiListMap.get("toggleFlag")) {
                     // see 02-string.xml
-                    showDeveloperContact(2);
+                    showDeveloperContact(3);
                     return true;
                 }
 
@@ -3487,9 +3493,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         String errorMsg = "";
         switch (errorCode) {
             case 1:
-                errorMsg = getString(R.string.anki_js_mark_card_not_supported);
+                errorMsg = getString(R.string.anki_js_not_implemented);
                 break;
             case 2:
+                errorMsg = getString(R.string.anki_js_mark_card_not_supported);
+                break;
+            case 3:
                 errorMsg = getString(R.string.anki_js_flag_card_not_supported);
                 break;
             default:
