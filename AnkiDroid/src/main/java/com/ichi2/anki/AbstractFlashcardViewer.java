@@ -3535,29 +3535,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             */
             if (mVersionCurrent.equals(mVersionSupplied)) {
                 return true;
-            } else if (mVersionCurrent.getMajorVersion() == mVersionSupplied.getMajorVersion()) {
-
-                if (mVersionCurrent.getMinorVersion() == mVersionSupplied.getMinorVersion()) {
-
-                    if (mVersionCurrent.getPatchVersion() > mVersionSupplied.getPatchVersion()) {
-                        UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.update_js_api_patch_version, mCardSuppliedDeveloperContact), false);
-                        return true;
-                    } else {
-                        UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.valid_js_api_version, mCardSuppliedDeveloperContact), false);
-                        return false;
-                    }
-
-                } else if (mVersionCurrent.getMinorVersion() > mVersionSupplied.getMinorVersion()) {
-                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.update_js_api_minor_version, mCardSuppliedDeveloperContact), false);
-                    return true;
-                } else {
-                    UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.valid_js_api_version, mCardSuppliedDeveloperContact), false);
-                    return false;
-                }
-
-            } else if (mVersionCurrent.greaterThan(mVersionSupplied)) {
+            } else if (mVersionSupplied.lessThan(mVersionCurrent) && mVersionSupplied.greaterThan(Version.valueOf(sMinimumJsApiVersion))) {
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.update_js_api_version, mCardSuppliedDeveloperContact), false);
-                return false;
+                return true;
             } else {
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.valid_js_api_version, mCardSuppliedDeveloperContact), false);
                 return false;
