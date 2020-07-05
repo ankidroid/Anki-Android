@@ -35,18 +35,13 @@ import java.util.List;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import edu.emory.mathcs.backport.java.util.Arrays;
 
+import static com.ichi2.libanki.DecksTest.TEST_DECKS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.platform.commons.util.CollectionUtils.getOnlyElement;
 
 @RunWith(AndroidJUnit4.class)
 public class SchedV2Test extends RobolectricTest {
-
-    protected static final String[] TEST_DECKS = {
-            "scxipjiyozczaaczoawo",
-            "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
-            "cmxieunwoogyxsctnjmv::INSBGDS",
-    };
 
     protected static List<AbstractSched.DeckDueTreeNode> expectedTree(AbstractSched sched, boolean addRev) {
         AbstractSched.DeckDueTreeNode caz = sched.new DeckDueTreeNode("cmxieunwoogyxsctnjmv::abcdefgh::ZYXW", 1, 0, 0, 0);
