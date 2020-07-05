@@ -227,6 +227,20 @@ public class SchedV2 extends AbstractSched {
 
     public void reset() {
         _updateCutoff();
+        resetCounts(false);
+        resetQueues(false);
+    }
+
+    @Override
+    public void resetCounts() {
+        resetCounts(true);
+    }
+
+    /** @param checkCutoff whether we should check cutoff before resetting*/
+    private void resetCounts(boolean checkCutoff) {
+        if (checkCutoff) {
+            _updateCutoff();
+        }
         _resetLrnCount();
         _resetRevCount();
         _resetNewCount();
@@ -238,6 +252,18 @@ public class SchedV2 extends AbstractSched {
         }
         mUndidCard = null;
         mHaveCounts = true;
+    }
+
+    @Override
+    public void resetQueues() {
+        resetQueues(true);
+    }
+
+    /** @param checkCutoff whether we should check cutoff before resetting*/
+    private void resetQueues(boolean checkCutoff) {
+        if (checkCutoff) {
+            _updateCutoff();
+        }
         _resetLrnQueue();
         _resetRevQueue();
         _resetNewQueue();
