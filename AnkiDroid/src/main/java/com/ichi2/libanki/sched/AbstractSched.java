@@ -42,7 +42,7 @@ public abstract class AbstractSched {
      */
     public abstract int dueForecast();
     public abstract int dueForecast(int days);
-    @Consts.CARD_TYPE
+    @Consts.CARD_QUEUE
     public abstract int countIdx(Card card);
     public abstract int answerButtons(Card card);
     /**
