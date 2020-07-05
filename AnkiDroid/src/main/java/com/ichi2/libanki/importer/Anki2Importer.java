@@ -694,7 +694,11 @@ public class Anki2Importer extends Importer {
         for (File f : new File(dir).listFiles()) {
             String fname = f.getName();
             if (fname.startsWith("_") && ! mDst.getMedia().have(fname)) {
-                _writeDstMedia(fname, _srcMediaData(fname));
+                try (BufferedInputStream data = _srcMediaData(fname)) {
+                    _writeDstMedia(fname, data);
+                } catch (IOException e) {
+                    Timber.w(e, "Failed to close stream");
+                }
             }
         }
     }
@@ -758,33 +762,36 @@ public class Anki2Importer extends Importer {
             int fnameIdx = Media.indexOfFname(p);
             while (m.find()) {
                 String fname = m.group(fnameIdx);
-                BufferedInputStream srcData = _srcMediaData(fname);
-                BufferedInputStream dstData = _dstMediaData(fname);
-                if (srcData == null) {
-                    // file was not in source, ignore
-                    m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)));
-                    continue;
-                }
-                // if model-local file exists from a previous import, use that
-                String[] split = Utils.splitFilename(fname);
-                String name = split[0];
-                String ext = split[1];
-
-                String lname = String.format(Locale.US, "%s_%s%s", name, mid, ext);
-                if (mDst.getMedia().have(lname)) {
-                    m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0).replace(fname, lname)));
-                    continue;
-                } else if (dstData == null || compareMedia(srcData, dstData)) { // if missing or the same, pass unmodified
-                    // need to copy?
-                    if (dstData == null) {
-                        _writeDstMedia(fname, srcData);
+                try (BufferedInputStream srcData = _srcMediaData(fname);
+                     BufferedInputStream dstData = _dstMediaData(fname)) {
+                    if (srcData == null) {
+                        // file was not in source, ignore
+                        m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)));
+                        continue;
                     }
-                    m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)));
-                    continue;
+                    // if model-local file exists from a previous import, use that
+                    String[] split = Utils.splitFilename(fname);
+                    String name = split[0];
+                    String ext = split[1];
+
+                    String lname = String.format(Locale.US, "%s_%s%s", name, mid, ext);
+                    if (mDst.getMedia().have(lname)) {
+                        m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0).replace(fname, lname)));
+                        continue;
+                    } else if (dstData == null || compareMedia(srcData, dstData)) { // if missing or the same, pass unmodified
+                        // need to copy?
+                        if (dstData == null) {
+                            _writeDstMedia(fname, srcData);
+                        }
+                        m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)));
+                        continue;
+                    }
+                    // exists but does not match, so we need to dedupe
+                    _writeDstMedia(lname, srcData);
+                    m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0).replace(fname, lname)));
+                } catch (IOException e) {
+                    Timber.w(e, "Failed to close stream");
                 }
-                // exists but does not match, so we need to dedupe
-                _writeDstMedia(lname, srcData);
-                m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0).replace(fname, lname)));
             }
             m.appendTail(sb);
             fields = sb.toString();

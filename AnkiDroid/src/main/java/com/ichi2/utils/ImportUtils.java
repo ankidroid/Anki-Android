@@ -190,11 +190,20 @@ public class ImportUtils {
 
         protected String validateZipFile(Context context, String filePath) {
             File file = new File(filePath);
+            ZipFile zf = null;
             try {
-                new ZipFile(file);
+                zf = new ZipFile(file);
             } catch (Exception e) {
                 Timber.w(e, "Failed to validate zip");
                 return context.getString(R.string.import_log_failed_unzip, e.getLocalizedMessage());
+            } finally {
+                if (zf != null) {
+                    try {
+                        zf.close();
+                    } catch (IOException e) {
+                        Timber.w(e, "Failed to close zip");
+                    }
+                }
             }
             return null;
         }

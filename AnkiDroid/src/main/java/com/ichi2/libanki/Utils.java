@@ -777,6 +777,7 @@ public class Utils {
 
     /**
      * Calls {@link #writeToFileImpl(InputStream, String)} and handles IOExceptions
+     * Does not close the provided stream
      * @throws IOException Rethrows exception after a set number of retries
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
