@@ -32,7 +32,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static com.ichi2.libanki.sched.SchedV2Test.TEST_DECKS;
+import static com.ichi2.libanki.DecksTest.TEST_DECKS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
