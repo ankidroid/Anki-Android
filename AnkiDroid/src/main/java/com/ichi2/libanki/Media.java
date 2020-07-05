@@ -37,6 +37,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -844,8 +845,7 @@ public class Media {
     public Pair<File, List<String>> mediaChangesZip() {
         File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncToServer.zip"));
         Cursor cur = null;
-        try {
-            ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+        try (ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)))) {
             z.setMethod(ZipOutputStream.DEFLATED);
 
             List<String> fnames = new ArrayList<>();
@@ -896,7 +896,6 @@ public class Media {
             z.putNextEntry(new ZipEntry("_meta"));
             z.write(Utils.jsonToString(meta).getBytes());
             z.closeEntry();
-            z.close();
             // Don't leave lingering temp files if the VM terminates.
             f.deleteOnExit();
             return new Pair<>(f, fnames);
@@ -935,7 +934,9 @@ public class Media {
                     name = Utils.nfcNormalized(name);
                     // save file
                     String destPath = dir().concat(File.separator).concat(name);
-                    Utils.writeToFile(z.getInputStream(i), destPath);
+                    try (InputStream zipInputStream = z.getInputStream(i)) {
+                        Utils.writeToFile(zipInputStream, destPath);
+                    }
                     String csum = Utils.fileChecksum(destPath);
                     // update db
                     media.add(new Object[] {name, csum, _mtime(destPath), 0});
