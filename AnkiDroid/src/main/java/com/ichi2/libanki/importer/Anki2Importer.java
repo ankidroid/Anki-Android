@@ -100,8 +100,8 @@ public class Anki2Importer extends Importer {
             } finally {
                 mSrc.close(false);
             }
-        } catch (RuntimeException e) {
-            Timber.e(e, "RuntimeException while importing");
+        } catch (Exception e) {
+            Timber.e(e, "Exception while importing");
             throw new ImportExportException(e.getMessage());
         }
     }
