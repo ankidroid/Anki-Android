@@ -21,6 +21,8 @@ import android.os.AsyncTask;
 import com.ichi2.utils.MethodLogger;
 import com.ichi2.utils.Threads;
 
+import static com.ichi2.anki.AnkiDroidApp.sendExceptionReport;
+
 public class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 
     /** Set this to {@code true} to enable detailed debugging for this class. */
@@ -49,6 +51,9 @@ public class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, P
     protected void onPostExecute(Result result) {
         if (DEBUG) {
             MethodLogger.log();
+        }
+        if (isCancelled()) {
+            sendExceptionReport("onPostExecute called with task cancelled. This should never occur !", "BaseAsyncTask - onPostExecute");
         }
         Threads.checkMainThread();
         super.onPostExecute(result);
