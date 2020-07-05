@@ -118,8 +118,7 @@ public class AnkiPackageImporter extends Anki2Importer {
             File dir = new File(dirPath);
             // We need the opposite mapping in AnkiDroid since our extraction method requires it.
             Map<String, String> numToName = new HashMap<>();
-            try {
-                JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
+            try (JsonReader jr = new JsonReader(new FileReader(mediaMapFile))) {
                 jr.beginObject();
                 String name; // v in anki
                 String num; // k in anki
@@ -135,7 +134,6 @@ public class AnkiPackageImporter extends Anki2Importer {
                     numToName.put(num, name);
                 }
                 jr.endObject();
-                jr.close();
             } catch (FileNotFoundException e) {
                 Timber.e("Apkg did not contain a media dict. No media will be imported.");
             } catch (IOException e) {
