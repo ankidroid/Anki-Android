@@ -33,6 +33,10 @@ public class TaskManager {
      * The most recently started {@link CollectionTask} instance.
      */
     private static CollectionTask sLatestStartedInstance;
+    /**
+     * The most recently created {@link CollectionTask} instance.
+     */
+    private static CollectionTask sLatestCreatedInstance;
 
     protected static void setLatestInstance(CollectionTask task) {
         sLatestStartedInstance = task;
@@ -54,8 +58,7 @@ public class TaskManager {
         return launchCollectionTask(task, null);
     }
 
-
-
+    private static Object lock = new Object();
     /**
      * Starts a new {@link CollectionTask}, with a listener provided for callbacks during execution
      * <p>
@@ -70,8 +73,11 @@ public class TaskManager {
     public static <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> launchCollectionTask(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
                                                                                                                                                                                                                                                        @Nullable TaskListener<ProgressListener, ResultListener> listener) {
         // Start new task
-        CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> newTask = new CollectionTask<>(task, listener, sLatestStartedInstance);
-        sTasks.add(newTask);
+        CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> newTask;
+        synchronized(lock) {
+            newTask = new CollectionTask<>(task, listener, sLatestStartedInstance);
+            sTasks.add(newTask);
+        }
         newTask.execute();
         return newTask;
     }
