@@ -192,8 +192,12 @@ public class SchedV2 extends AbstractSched {
      */
     public Card getCard() {
         _checkDay();
-        if (!mHaveQueues || !mHaveCounts) {
-            reset();
+        // check day deal with cutoff if required. No need to do it in resets
+        if (!mHaveCounts) {
+            resetCounts(false);
+        }
+        if (!mHaveQueues) {
+            resetQueues(false);
         }
         Card card = _getCard();
         if (card != null) {
