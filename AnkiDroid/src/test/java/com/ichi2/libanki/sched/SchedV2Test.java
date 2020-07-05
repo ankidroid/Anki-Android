@@ -28,14 +28,36 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.DecksTest.TEST_DECKS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.platform.commons.util.CollectionUtils.getOnlyElement;
 
 @RunWith(AndroidJUnit4.class)
 public class SchedV2Test extends RobolectricTest {
+
+    protected static List<AbstractSched.DeckDueTreeNode> expectedTree(AbstractSched sched, boolean addRev) {
+        AbstractSched.DeckDueTreeNode caz = sched.new DeckDueTreeNode("cmxieunwoogyxsctnjmv::abcdefgh::ZYXW", 1, 0, 0, 0);
+        caz.setChildren(new ArrayList<>(), addRev);
+        AbstractSched.DeckDueTreeNode ca = sched.new DeckDueTreeNode("cmxieunwoogyxsctnjmv::abcdefgh", 1, 0, 0, 0);
+        ca.setChildren(Arrays.asList(new AbstractSched.DeckDueTreeNode[] {caz}), addRev);
+        AbstractSched.DeckDueTreeNode ci = sched.new DeckDueTreeNode("cmxieunwoogyxsctnjmv::INSBGDS", 1, 0, 0, 0);
+        ci.setChildren(new ArrayList<>(), addRev);
+        AbstractSched.DeckDueTreeNode c = sched.new DeckDueTreeNode("cmxieunwoogyxsctnjmv", 1, 0, 0, 0);
+        c.setChildren(Arrays.asList(new AbstractSched.DeckDueTreeNode[] {ci, ca}), addRev);
+        AbstractSched.DeckDueTreeNode defaul = sched.new DeckDueTreeNode("Default", 1, 0, 0, 0);
+        defaul.setChildren(new ArrayList<>(), addRev);
+        AbstractSched.DeckDueTreeNode s = sched.new DeckDueTreeNode("scxipjiyozczaaczoawo", 1, 0, 0, 0);
+        s.setChildren(new ArrayList<>(), addRev);
+        List<AbstractSched.DeckDueTreeNode> expected = Arrays.asList(new AbstractSched.DeckDueTreeNode[] {defaul, c, s}); // Default is first, because start by an Upper case
+        return expected;
+    }
 
     /** Reported by /u/CarelessSecretary9 on reddit: */
     @Test
