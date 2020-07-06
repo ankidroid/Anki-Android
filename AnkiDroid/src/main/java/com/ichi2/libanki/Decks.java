@@ -227,7 +227,7 @@ public class Decks {
             long longId = Long.parseLong(id);
             mDecks.put(longId, o);
         }
-        resetNameMap();
+        mNameMap = NameMap.constructor(mDecks.values());
         JSONObject confarray = new JSONObject(dconf);
         ids = confarray.names();
         for (int i = 0; ids != null && i < ids.length(); i++) {
@@ -515,12 +515,6 @@ public class Decks {
         maybeAddToActive();
         // mark registry changed, but don't bump mod time
         save();
-    }
-
-    /** Recompute the name map. Most operation deal with updating the name map directly,
-     * however, after a failed safety check, doing the whole computation is easier.*/
-    private void resetNameMap() {
-        mNameMap = NameMap.constructor(mDecks.values());
     }
 
     /**
