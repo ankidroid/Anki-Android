@@ -889,7 +889,7 @@ public class SchedV2 extends AbstractSched {
                     .getDatabase()
                     .query(
                             "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ?"
-                            + "AND id != ? LIMIT ?", new Object[] { cutoff, mReportLimit});
+                            + " AND id != ? LIMIT ?", new Object[] { cutoff, currentCardId(), mReportLimit});
             while (cur.moveToNext()) {
                 mLrnQueue.add(new long[] { cur.getLong(0), currentCardId(), cur.getLong(1) });
             }
