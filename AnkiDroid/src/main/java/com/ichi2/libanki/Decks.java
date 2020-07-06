@@ -889,30 +889,37 @@ public class Decks {
             // ensure no sections are blank
             if ("".equals(deckName)) {
                 Timber.i("Fix deck with empty name");
+                mNameMap.remove(deckName, deck);
                 deckName = "blank";
                 deck.put("name", "blank");
+                mNameMap.add(deck);
                 save(deck);
                 correction = true;
             }
 
             if (deckName.indexOf("::::") != -1) {
                 Timber.i("fix deck with missing sections %s", deck.getString("name"));
+                mNameMap.remove(deckName, deck);
                 do {
                     deckName = deck.getString("name").replace("::::", "::blank::");
                     // We may need to iterate, in order to replace "::::::" and adding to "blank" in it.
                 } while (deckName.indexOf("::::") != -1);
                 deck.put("name", deckName);
+                mNameMap.add(deck);
                 save(deck);
                 correction = true;
             }
 
             // two decks with the same name?
-            if (names.containsKey(normalizeName(deckName))) {
+            JSONObject homonym = names.get(normalizeName(deckName));
+            if (homonym != null) {
                 Timber.i("fix duplicate deck name %s", deckName);
                 do {
                     deckName = deckName + "+";
                     deck.put("name", deckName);
                 } while (names.containsKey(normalizeName(deckName)));
+                mNameMap.add(deck);
+                mNameMap.add(homonym); // Ensuring both names are correctly in mNameMap
                 save(deck);
                 correction = true;
             }
