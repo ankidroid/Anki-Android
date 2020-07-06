@@ -111,7 +111,6 @@ public abstract class AbstractSched {
     /**
      * Return counts over next DAYS. Includes today.
      */
-    public abstract int dueForecast();
     public abstract int dueForecast(int days);
     /** Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.*/
     @Consts.CARD_QUEUE
@@ -137,18 +136,20 @@ public abstract class AbstractSched {
     public abstract int _newForDeck(long did, int lim);
     public abstract int totalNewForCurrentDeck();
     public abstract int totalRevForCurrentDeck();
+    // In this abstract class for testing purpose only
     public abstract @NonNull Pair<Integer, Integer> _fuzzIvlRange(int ivl);
+    // In this abstract class for testing purpose only
+    /** Rebuild selected dynamic deck. */
+    protected abstract void rebuildDyn();
     /** Rebuild a dynamic deck. */
-    public abstract void rebuildDyn();
-    public abstract void rebuildDyn(long did);
+    public abstract @Nullable void rebuildDyn(long did);
     public abstract void emptyDyn(long did);
-    public abstract void emptyDyn(long did, String lim);
+    // In this abstract class for testing purpose only
     public abstract void remFromDyn(long[] cids);
-    public abstract @NonNull DeckConfig _cardConf(@NonNull Card card);
-    public abstract @NonNull String _deckLimit();
+    // In this abstract class for testing purpose only
+    protected abstract @NonNull DeckConfig _cardConf(@NonNull Card card);
     public abstract void _checkDay();
     public abstract @NonNull CharSequence finishedMsg(@NonNull Context context);
-    public abstract @NonNull String _nextDueMsg(@NonNull Context context);
     /** true if there are any rev cards due. */
     public abstract boolean revDue();
     /** true if there are any new cards due. */
@@ -170,13 +171,13 @@ public abstract class AbstractSched {
      * @return A string like “1 min” or “1.7 mo”
      */
     public abstract @NonNull String nextIvlStr(@NonNull Context context, @NonNull Card card, @Consts.BUTTON_TYPE int ease);
+
     /**
      * Return the next interval for CARD, in seconds.
      */
-    public abstract long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease);
+    // In this abstract class for testing purpose only
+    protected abstract long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease);
 
-    protected abstract @NonNull String queueIsBuriedSnippet();
-    protected abstract @NonNull String _restoreQueueSnippet();
     /**
      * Suspend cards.
      */
@@ -207,7 +208,6 @@ public abstract class AbstractSched {
      * Completely reset cards for export.
      */
     public abstract void resetCards(@NonNull Long[] ids);
-    public abstract void sortCards(@NonNull long[] cids, int start);
     public abstract void sortCards(@NonNull long[] cids, int start, int step, boolean shuffle, boolean shift);
     public abstract void randomizeCards(long did);
     public abstract void orderCards(long did);
@@ -215,7 +215,6 @@ public abstract class AbstractSched {
     /**
      * for post-import
      */
-    public abstract void maybeRandomizeDeck();
     public abstract void maybeRandomizeDeck(@NonNull Long did);
     public abstract boolean haveBuried(long did);
     public enum UnburyType {
@@ -227,7 +226,6 @@ public abstract class AbstractSched {
     public abstract void unburyCardsForDeck(long did);
     public abstract @NonNull String getName();
     public abstract int getToday();
-    public abstract void setToday(int today);
     public abstract long getDayCutoff();
 
     protected abstract void incrReps();
@@ -256,12 +254,6 @@ public abstract class AbstractSched {
      * @param reload Force rebuild of estimator rates using the revlog.
      */
     public abstract int eta(int[] counts, boolean reload);
-    /**
-     * Change the counts to reflect that `card` should not be counted anymore. In practice, it means that the card has
-     * been sent to the reviewer. Either through `getCard()` or through `undo`. Assumes that card's queue has not yet
-     * changed. */
-    public abstract void decrementCounts(Card card);
-    public abstract boolean leechActionSuspend(Card card);
     public abstract void setContext(@Nullable WeakReference<Activity> contextReference);
     public abstract @NonNull int[] recalculateCounts();
     public abstract void setReportLimit(int reportLimit);

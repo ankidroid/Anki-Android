@@ -1727,7 +1727,7 @@ public class SchedV2 extends AbstractSched {
         return ivl4;
     }
 
-    protected int _fuzzedIvl(int ivl) {
+    public int _fuzzedIvl(int ivl) {
         Pair<Integer, Integer> minMax = _fuzzIvlRange(ivl);
         // Anki's python uses random.randint(a, b) which returns x in [a, b] while the eq Random().nextInt(a, b)
         // returns x in [0, b-a), hence the +1 diff with libanki
@@ -1834,7 +1834,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     /** Rebuild a dynamic deck. */
-    public void rebuildDyn() {
+    protected void rebuildDyn() {
         rebuildDyn(0);
     }
 
@@ -2355,7 +2355,7 @@ public class SchedV2 extends AbstractSched {
      * Return the next interval for CARD, in seconds.
      */
     // Overriden
-    public long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         // preview mode?
         if (_previewingCard(card)) {
             if (ease == Consts.BUTTON_ONE) {
