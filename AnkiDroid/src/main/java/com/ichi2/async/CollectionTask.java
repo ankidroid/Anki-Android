@@ -959,7 +959,11 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         String query = (String) params[0].getObjArray()[0];
         Boolean order = (Boolean) params[0].getObjArray()[1];
         int numCardsToRender = (int) params[0].getObjArray()[2];
-        List<Long> searchResult_ = col.findCards(query, order);
+        List<Long> searchResult_ = col.findCards(query, order, this);
+        if (isCancelled()) {
+            Timber.d("doInBackgroundSearchCards was cancelled so return null");
+            return null;
+        }
         int resultSize = searchResult_.size();
         List<Map<String,String>> searchResult = new ArrayList<>(resultSize);
         Timber.d("The search found %d cards", resultSize);
@@ -970,6 +974,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         }
         // Render the first few items
         for (int i = 0; i < Math.min(numCardsToRender, searchResult.size()); i++) {
+            if (isCancelled()) {
+                Timber.d("doInBackgroundSearchCards was cancelled so return null");
+                return null;
+            }
             Card c = col.getCard(Long.parseLong(searchResult.get(i).get("id")));
             CardBrowser.updateSearchItemQA(mContext, searchResult.get(i), c, col);
         }
