@@ -153,7 +153,7 @@ public class Decks {
         public static NameMap constructor(java.util.Collection<JSONObject> decks) {
             NameMap map = new NameMap();
             for (JSONObject deck: decks) {
-                map.add(deck.getString("name"), deck);
+                map.add(deck);
             }
             return map;
         }
@@ -171,7 +171,8 @@ public class Decks {
             return deck;
         }
 
-        public synchronized void add(String name, JSONObject g) {
+        public synchronized void add(JSONObject g) {
+            String name = g.getString("name");
             mNameMap.put(name, g);
             // Normalized name is also added because it's required to use it in by name.
             // Non normalized is kept for Parent
@@ -325,7 +326,7 @@ public class Decks {
         mDecks.put(id, g);
         save(g);
         maybeAddToActive();
-        mNameMap.add(name, g);
+        mNameMap.add(g);
         //runHook("newDeck"); // TODO
         return id;
     }
@@ -509,7 +510,7 @@ public class Decks {
             // `oldName`, it would be a mistake to remove it from nameMap
             mNameMap.remove(oldDeck.getString("name"), oldDeck);
         }
-        mNameMap.add(g.getString("name"), g);
+        mNameMap.add(g);
         mDecks.put(g.getLong("id"), g);
         maybeAddToActive();
         // mark registry changed, but don't bump mod time
@@ -558,7 +559,7 @@ public class Decks {
                 // In Java, String.replaceFirst consumes a regex so we need to quote the pattern to be safe
                 mNameMap.remove(grpOldName, grp);
                 grp.put("name", grpNewName);
-                mNameMap.add(grpNewName, grp);
+                mNameMap.add(grp);
                 save(grp);
             }
         }
@@ -567,7 +568,7 @@ public class Decks {
         g.put("name", newName);
         // ensure we have parents again, as we may have renamed parent->child
         newName = _ensureParents(newName);
-        mNameMap.add(newName, g);
+        mNameMap.add(g);
         save(g);
         // renaming may have altered active did order
         maybeAddToActive();
