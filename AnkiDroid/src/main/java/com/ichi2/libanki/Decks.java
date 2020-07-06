@@ -882,7 +882,6 @@ public class Decks {
     private void _checkDeckTree() {
         ArrayList<JSONObject> decks = allSorted();
         Map<String, JSONObject> names = new HashMap<>(decks.size());
-        boolean correction = false;
 
         for (JSONObject deck: decks) {
             String deckName = deck.getString("name");
@@ -894,7 +893,6 @@ public class Decks {
                 deck.put("name", "blank");
                 mNameMap.add(deck);
                 save(deck);
-                correction = true;
             }
 
             if (deckName.indexOf("::::") != -1) {
@@ -907,7 +905,6 @@ public class Decks {
                 deck.put("name", deckName);
                 mNameMap.add(deck);
                 save(deck);
-                correction = true;
             }
 
             // two decks with the same name?
@@ -921,7 +918,6 @@ public class Decks {
                 mNameMap.add(deck);
                 mNameMap.add(homonym); // Ensuring both names are correctly in mNameMap
                 save(deck);
-                correction = true;
             }
 
             // immediate parent must exist
@@ -931,12 +927,8 @@ public class Decks {
                 JSONObject parent = byName(immediateParent);
                 _ensureParents(deckName);
                 names.put(normalizeName(immediateParent), parent);
-                correction = true;
             }
             names.put(normalizeName(deckName), deck);
-        }
-        if (correction) {
-            resetNameMap();
         }
     }
 
