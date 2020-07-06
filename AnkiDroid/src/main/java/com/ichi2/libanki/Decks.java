@@ -880,7 +880,7 @@ public class Decks {
 
     private void _checkDeckTree() {
         ArrayList<JSONObject> decks = allSorted();
-        Set<String> names = new HashSet<String>();
+        Map<String, JSONObject> names = new HashMap<>(decks.size());
         boolean correction = false;
 
         for (JSONObject deck: decks) {
@@ -903,24 +903,25 @@ public class Decks {
             }
 
             // two decks with the same name?
-            if (names.contains(normalizeName(deck.getString("name")))) {
+            if (names.containsKey(normalizeName(deck.getString("name")))) {
                 Timber.i("fix duplicate deck name %s", deck.getString("name"));
                 do {
                     deck.put("name", deck.getString("name") + "+");
-                } while (names.contains(normalizeName(deck.getString("name"))));
+                } while (names.containsKey(normalizeName(deck.getString("name"))));
                 save(deck);
                 correction = true;
             }
 
             // immediate parent must exist
             String immediateParent = parent(deck.getString("name"));
-            if (immediateParent != null && !names.contains(normalizeName(immediateParent))) {
+            if (immediateParent != null && !names.containsKey(normalizeName(immediateParent))) {
                 Timber.i("fix deck with missing parent %s", deck.getString("name"));
+                JSONObject parent = byName(immediateParent);
                 _ensureParents(deck.getString("name"));
-                names.add(normalizeName(immediateParent));
+                names.put(normalizeName(immediateParent), parent);
                 correction = true;
             }
-            names.add(normalizeName(deck.getString("name")));
+            names.put(normalizeName(deck.getString("name")), deck);
         }
         if (correction) {
             resetNameMap();
