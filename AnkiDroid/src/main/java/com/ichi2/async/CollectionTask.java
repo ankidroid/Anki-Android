@@ -184,28 +184,40 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
     }
 
+    /** Ensure all previous tasks are finished.
+     * @return whether computation can occur*/
+    private synchronized boolean allPreviousTasksDoneCorrectly() {
+        while (mPreviousTask != null) {
+            if (mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
+                Timber.d("Waiting for %s to finish before starting %s", mPreviousTask.mTask, mTask.getClass());
+                try {
+                    mPreviousTask.get();
+                    Timber.d("Finished waiting for %s to finish. Status= %s", mPreviousTask.mTask, mPreviousTask.getStatus());
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    // We have been interrupted, return immediately.
+                    Timber.d(e, "interrupted while waiting for previous task: %s", mPreviousTask.mTask);
+                    return false;
+                } catch (ExecutionException e) {
+                    // Ignore failures in the previous task.
+                    Timber.e(e, "previously running task failed with exception: %s", mPreviousTask.mTask);
+                } catch (CancellationException e) {
+                    // Ignore cancellation of previous task
+                    Timber.d(e, "previously running task was cancelled: %s", mPreviousTask.mTask);
+                }
+            }
+            mPreviousTask = mPreviousTask.mPreviousTask;
+        }
+        return true;
+    }
+
     // This method and those that are called here are executed in a new thread
     protected ResultBackground actualDoInBackground() {
         super.doInBackground();
         // Wait for previous thread (if any) to finish before continuing
-        if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
-            Timber.d("Waiting for %s to finish before starting %s", mPreviousTask.mTask, mTask.getClass());
-            try {
-                mPreviousTask.get();
-                Timber.d("Finished waiting for %s to finish. Status= %s", mPreviousTask.mTask, mPreviousTask.getStatus());
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                // We have been interrupted, return immediately.
-                Timber.d(e, "interrupted while waiting for previous task: %s", mPreviousTask.mTask.getClass());
-                return null;
-            } catch (ExecutionException e) {
-                // Ignore failures in the previous task.
-                Timber.e(e, "previously running task failed with exception: %s", mPreviousTask.mTask.getClass());
-            } catch (CancellationException e) {
-                // Ignore cancellation of previous task
-                Timber.d(e, "previously running task was cancelled: %s", mPreviousTask.mTask.getClass());
-            }
-        }
+        if (!allPreviousTasksDoneCorrectly()) {
+            return null;
+        };
         TaskManager.setLatestInstance(this);
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
