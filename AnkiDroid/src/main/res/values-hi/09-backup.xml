@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">खोलने का पुनः प्रयास करें</string>
     <string name="backup_error_menu_repair">डेटाबेस सुधारें</string>
     <string name="backup_repair_deck">सुधारें</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">डेटाबेस सुधारा जा रहा है...</string>
     <string name="backup_error">त्रुटि</string>
     <string name="backup_invalid_file_error">चयनित बैकअप फ़ाइल अमान्य था</string>

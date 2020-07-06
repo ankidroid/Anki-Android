@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">לנסות לפתוח מחדש</string>
     <string name="backup_error_menu_repair">תיקון מסד נתונים</string>
     <string name="backup_repair_deck">תיקון</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">מסד הנתונים מתוקן&#8230;</string>
     <string name="backup_error">שגיאה</string>
     <string name="backup_invalid_file_error">קובץ הגיבוי שנבחר שגוי</string>

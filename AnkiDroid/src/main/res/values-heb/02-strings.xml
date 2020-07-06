@@ -58,7 +58,7 @@
     <string name="sdcard_missing_message">נא לכבות אחסון USB כדי לקבל גישה לחפיסות שלך</string>
     <string name="updated_version">עודקן לגירסה %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">שמור לוח</string>
     <string name="enable_whiteboard">לאפשר ציור</string>
     <string name="disable_whiteboard">בטל הציור</string>
     <string name="show_whiteboard">הצג לוח ציור</string>

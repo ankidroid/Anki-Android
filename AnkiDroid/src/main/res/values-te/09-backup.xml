@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">దీన్ని తెరవడానికి మళ్ళీ ప్రయత్నించండి</string>
     <string name="backup_error_menu_repair">రిపేర్ డేటాబేస్</string>
     <string name="backup_repair_deck">బాగు చేయు</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">డేటాబేస్ మరమత్తు&#8230;</string>
     <string name="backup_error">తప్పు</string>
     <string name="backup_invalid_file_error">ఎంచుకున్న బ్యాకప్ ఫైల్ చెల్లనిది</string>

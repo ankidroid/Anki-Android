@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Nouvelle tentative d’ouverture</string>
     <string name="backup_error_menu_repair">Réparation de la base de données</string>
     <string name="backup_repair_deck">Réparer</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Réparation de la base de données&#8230;</string>
     <string name="backup_error">Erreur</string>
     <string name="backup_invalid_file_error">Ce fichier de sauvegarde est invalide</string>

@@ -83,8 +83,8 @@
         <item>Nessun ordinamento (più veloce)</item>
         <item>Per campo di ordinamento</item>
         <item>Per data di creazione</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Per data di modifica della nota</item>
+        <item>Per data di modifica della carta</item>
         <item>Per data di scadenza</item>
         <item>Per intervallo</item>
         <item>Per facilità</item>

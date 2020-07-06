@@ -119,7 +119,7 @@
     <string name="restore_backup">Via kolekto estos anstataŭigita per eksa kopio. Ĉiu nekonservita progreso perdiĝos.</string>
     <string name="dialog_cancel">Nuligi</string>
     <string name="dialog_ok">Bone</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">Ne</string>
     <string name="dialog_continue">Pluigi</string>
     <string name="dialog_positive_create">Krei</string>
     <string name="dialog_positive_delete">Forigi</string>
@@ -189,6 +189,7 @@
     <string name="error_selecting_image">Eraro dum elekti bildon. Legu la manlibron de uzanto. %s</string>
     <string name="error_deleting_image">Eraro dum forigi bildon</string>
     <string name="failed_to_apply_background_image">Fiaskis apliki fonan bildon %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maksimuma permesata grando de bildo estas %d MB</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

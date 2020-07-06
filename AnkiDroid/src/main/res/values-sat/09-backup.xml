@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
+    <string name="backup_deck_no_space_left">ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱵᱟᱝ ᱥᱟᱱᱪᱟᱣ ᱠᱟᱱᱟ ᱾  SD card ᱨᱮ ᱡᱟᱭᱟᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱜᱷᱟᱹᱛᱤᱨ ᱠᱚᱢ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱚᱞᱜᱟ ᱨᱮᱫ ᱠᱚ ᱚᱰᱚᱠ ᱛᱟᱢ ᱾</string>
     <string name="sd_space_warning">%d MB ᱠᱷᱚᱱ ᱠᱚᱢ ᱡᱟᱭᱟᱜ ᱟᱢᱟᱜ SD card ᱨᱮ ᱢᱮᱱᱟᱜᱼᱟ ᱾\nᱦᱟᱱᱤ ᱠᱚᱢ ᱞᱟᱹᱛᱜᱤᱫ ᱡᱟᱭᱜᱟ ᱠᱚᱢ ᱢᱮ ᱾</string>
     <string name="backup_delete">ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱢᱮᱴᱟᱣ&#8230;</string>
     <string name="backup_restore">ᱱᱚᱠᱚᱞ-ᱡᱚ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">ᱫᱚᱦᱲᱟ ᱡᱷᱤᱡ ᱢᱮ</string>
     <string name="backup_error_menu_repair">ᱰᱟᱴᱟᱵᱮᱥ ᱡᱚᱛᱨᱟᱣ</string>
     <string name="backup_repair_deck">ᱡᱚᱛᱨᱟᱹᱣ</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">ᱰᱟᱴᱟᱵᱮᱥ ᱡᱚᱛᱨᱟᱣ&#8230;</string>
     <string name="backup_error">ᱦᱩᱰᱟᱹᱜ</string>
     <string name="backup_invalid_file_error">ᱪᱚᱭᱚᱱᱠᱟᱱ ᱡᱚᱜᱟᱣ ᱨᱮᱫ ᱫᱚ ᱵᱷᱩᱞ ᱜᱮᱭᱟ</string>

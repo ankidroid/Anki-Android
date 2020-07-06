@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Понови отварање</string>
     <string name="backup_error_menu_repair">Обнављање базе података</string>
     <string name="backup_repair_deck">Обнављање</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Обнављање базе података.\nМолим сачекајте...</string>
     <string name="backup_error">Грешка</string>
     <string name="backup_invalid_file_error">Изабрана резервна датотека није исправна</string>

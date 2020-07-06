@@ -49,17 +49,17 @@
         <item>ᱛᱮᱞᱟ ᱢᱚᱱᱡᱩᱨ (ᱦᱟᱹᱨᱤᱭᱟᱹᱲ)</item>
         <item>ᱢᱚᱱᱡᱩᱨ ᱠᱷᱚᱱ ᱵᱮᱥ ᱛᱮᱞᱟ ᱮᱢᱚᱜ ᱢᱮ</item>
         <item>ᱢᱟᱲᱟᱝᱟᱜ</item>
-        <item>ᱱᱚᱴ ᱥᱟᱯᱲᱟᱣ</item>
-        <item>ᱱᱚᱴ ᱴᱮᱜ ᱢᱮ</item>
-        <item>ᱱᱚᱴ ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</item>
+        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ</item>
+        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱴᱮᱜ ᱢᱮ</item>
+        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</item>
         <item>ᱪᱤᱱᱦᱟ ᱧᱮᱞᱢᱮ</item>
         <item>ᱠᱟᱰ ᱛᱚᱯᱟᱭ ᱢᱮ</item>
         <item>ᱠᱟᱰ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</item>
-        <item>ᱱᱚᱴ ᱜᱮᱫ ᱜᱤᱰᱤ</item>
+        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤ</item>
         <item>ᱢᱮᱰᱤᱭᱟ ᱪᱟᱹᱞᱩᱭ ᱢᱮ</item>
         <item>ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫ ᱛᱷᱟᱲ</item>
-        <item>ᱱᱚᱴ ᱛᱚᱯᱟᱭ ᱢᱮ</item>
-        <item>ᱱᱚᱴ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</item>
+        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱛᱚᱯᱟᱭ ᱢᱮ</item>
+        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</item>
         <item>ᱟᱨᱟᱜ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟ.ᱞ</item>
         <item>ᱜᱮᱨᱩᱟ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</item>
         <item>ᱦᱟᱹᱨᱤᱭᱟᱲ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</item>
@@ -85,11 +85,11 @@
         <item>ᱛᱷᱟᱨ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
         <item>ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ ᱛᱷᱟᱨ ᱢᱮ</item>
         <item>ᱱᱮᱛᱟᱨᱟᱜ ᱥᱮᱞᱮᱫᱟᱜ ᱢᱟᱲᱟᱝ</item>
-        <item>Relative overdueness</item>
+        <item>ᱥᱟᱯᱮᱠᱷᱤᱠ ᱜᱷᱟᱹᱲᱤᱡ</item>
     </string-array>
     <string-array name="add_to_cur_labels">
         <item>ᱱᱤᱛᱚᱜᱟᱜ ᱰᱮᱠ ᱵᱮᱵᱷᱟᱨ ᱢᱮ</item>
-        <item>ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱧᱮᱞᱠᱟᱛᱮ ᱪᱤᱱᱛᱟᱭ ᱢᱮ</item>
+        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱧᱮᱞᱠᱟᱛᱮ ᱪᱤᱱᱛᱟᱭ ᱢᱮ</item>
     </string-array>
     <string-array name="new_spread_labels">
         <item>ᱱᱟᱶᱟ ‌ᱠᱟᱰ ᱟᱨ ᱫᱩᱦᱲᱟ‌ ᱧᱮᱞ ᱠᱚ ᱢᱮᱥᱟᱭ ᱢᱮ</item>
@@ -102,7 +102,7 @@
     </string-array>
     <string-array name="day_theme_labels">
         <item>ᱟᱨᱥᱟᱞ</item>
-        <item>Plain</item>
+        <item>ᱥᱟᱯᱷᱟ</item>
     </string-array>
     <string-array name="night_theme_labels">
         <item>ᱦᱮᱸᱫᱮ</item>

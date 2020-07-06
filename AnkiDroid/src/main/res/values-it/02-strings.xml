@@ -94,9 +94,9 @@
         <item>Intervallo</item>
         <item>Facilità</item>
         <item>Da fare</item>
-        <item>Card Modified</item>
+        <item>Carta modificata</item>
         <item>Creato</item>
-        <item>Note Modified</item>
+        <item>Nota modificata</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Aumenta il limite odierno di carte nuove</string>

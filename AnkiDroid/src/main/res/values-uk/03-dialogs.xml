@@ -201,6 +201,7 @@
     <string name="error_selecting_image">Помилка встановлення зображення. Будь-ласка, перегляньте посібник. %s</string>
     <string name="error_deleting_image">Помилка видалення зображення</string>
     <string name="failed_to_apply_background_image">Не вдалося застосувати тлове зображення %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Максимально допустимий розмір зображення %d МБ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

@@ -41,8 +41,8 @@
     <string name="check_db_title">Periksa basisdata?</string>
     <string name="check_db_warning">Ini dapat memakan waktu lama</string>
     <string name="check_db_acknowledge">Basisdata diperiksa</string>
-    <string name="check_db_acknowledge_shrunk">Database diperiksa dan dioptimalkan. \nMenyusut sebesar %d MB.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Hapus Dek</string>
+    <string name="check_db_acknowledge_shrunk">Basisdata diperiksa dan dioptimalkan. \nMenyusut sebesar %d MB.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Hapus dek</string>
     <string name="delete_deck_default_deck">Dek awalan tidak dapat dihapus</string>
     <string name="delete_deck_title">Hapus Dek?</string>
     <plurals name="delete_deck_message">
@@ -53,66 +53,66 @@
     <string name="initializing_tts">Memulai TTS&#8230;</string>
     <string name="tts_no_tts">Jangan bicara</string>
     <string-array name="about_content">
-        <item><![CDATA[< h2> %1$s: <br/> Flashcard untuk Android </ h2> AnkiDroid adalah aplikasi flashcard yang sepenuhnya kompatibel dengan perangkat lunak desktop <a href=\"%2$s \"> Anki </a>. Kamu dapat membuat, mendownload dan mempelajari materi pada Desktop AnkiDroid atau Anki, dan menyinkronkannya dengan mudah dengan AnkiWeb.]]></item>
+        <item><![CDATA[<h2>%1$s:<br/> Kartu flash untuk Android </h2> AnkiDroid adalah aplikasi flashcard yang sepenuhnya kompatibel dengan perangkat lunak desktop <a href=\"%2$s\"> Anki </a>. Kamu dapat membuat, mendownload dan mempelajari materi pada Desktop AnkiDroid atau Anki, dan menyinkronkannya dengan mudah dengan AnkiWeb.]]></item>
         <item><![CDATA[Untuk membantu kami membuat AnkiDroid lebih baik, harap laporkan bug ke <a href=\"%1$s\">issue tracker</a>; Ide fitur baru juga diterima. Cari jawaban di <a href=\"%2$s\">wiki</a> atau mulai diskusi di <a href=\"%3$s\">forum</a>.]]></item>
-        <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-        <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+        <item><![CDATA[AnkiDroid adalah <a href=\"%1$s\">perangkat lunak sumber terbuka<a/>, semua orang dianjurkan untuk <a href=\"%2$s\">menjadi kontributor</a> :-)]]></item>
+        <item><![CDATA[Yang bukan pengembang juga bisa membantu. Contohnya, kamu dapat <a href=\"%1$s\">membantu menerjemahkan</a> AnkiDroid, menambah artikel wiki, memberikan tangkapan layar, atau membuat postingan tentang AnkiDroid.]]></item>
+        <item><![CDATA[AnkiDroid dirilis dibawah <a href=\"%1$s\">lisensi GNU-GPL v3</a> dan kode sumber tersedia <a href=\"%2$s\">di GitHub</a>.]]></item>
     </string-array>
     <string name="preview_title">Pratinjau</string>
-    <string name="reposition_card_dialog_title">Reposisi kartu baru</string>
+    <string name="reposition_card_dialog_title">Pindah posisi kartu baru</string>
     <string name="reposition_card_dialog_message">Posisi Mulai:</string>
-    <string name="reposition_card_not_new_error">Hanya kartu baru dapat direposisikan</string>
+    <string name="reposition_card_not_new_error">Hanya kartu baru yang dapat pindah posisi</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="other">%d kartu direposisikan</item>
+        <item quantity="other">%d posisi kartu dipindah</item>
     </plurals>
     <string name="reset_card_dialog_title">Reset kemajuan kartu</string>
-    <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
+    <string name="reset_card_dialog_message">Kartu ini akan ditaruh di akhir antrean kartu baru</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="other">%d kartu diulang</item>
+        <item quantity="other">%d kartu direset</item>
     </plurals>
-    <string name="reschedule_card_dialog_title">Kartu penjadwal ulang</string>
+    <string name="reschedule_card_dialog_title">Jadwalkan ulang kartu</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">Jadwalkan ulang kartu</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="other">Interval Sekarang: %d hari</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Penjadwalan ulang untuk ditinjau dalam x hari:</string>
+    <string name="reschedule_card_dialog_message">Jadwalkan ulang untuk diulas dalam x hari</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d kartu dijadwalkan ulang</item>
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Pilih dek di manajer penyimpanan atau kunjungi halaman about:downloads untuk mengimpor</string>
-    <string name="answering_error_title">Ralat database</string>
+    <string name="answering_error_title">Galat basisdata</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Basisdata mungkin korup atau tidak cukup ruang pada penyimpanan. \ n \ n Jika ini sering terjadi, cobalah periksa database, perbaiki koleksi atau mengembalikan dari cadangan. Sentuh \"pengaturan\" untuk ini. \ n \ Atau bisa juga bug dari AnkiDroid; harap laporkan galatnya agar kami bisa mengeceknya.</string>
-    <string name="answering_error_report">Lapor ralat</string>
-    <string name="repair_deck_dialog">Apakah Anda benar-benar ingin mencoba untuk memperbaiki database?\n\nSebelum memulai, salinan akan dibuat dalam subfolder \'%s\'.</string>
-    <string name="intent_add_saved_information">Data yang disimpan</string>
+    <string name="answering_error_report">Laporkan galat</string>
+    <string name="repair_deck_dialog">Apakah kamu benar-benar ingin memperbaiki basisdata?\n\nSebelum memulai, salinan akan dibuat ke dalam subfolder \'%s\'.</string>
+    <string name="intent_add_saved_information">Data tersimpan</string>
     <string name="intent_add_clear_all">Hapus semua</string>
-    <string name="intent_aedict_empty">Kategori \'default\' kosong</string>
-    <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_total_new">Kartu-kartu baru di dek: %d</string>
-    <string name="custom_study_rev_total_rev">Pengulangan yang perlu di deck: %d</string>
-    <string name="custom_study_new_extend">Tingkatkan batas kartu baru hari ini</string>
-    <string name="custom_study_rev_extend">Tingkatkan batas review hari ini oleh</string>
-    <string name="custom_study_forgotten">Mengkaji kartu yang terlupakan dalam x hari terakhir:</string>
-    <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_random">Select x cards randomly from the deck:</string>
-    <string name="custom_study_preview">Preview kartu baru ditambahkan dalam x hari terakhir:</string>
+    <string name="intent_aedict_empty">Kategori \'awalan\' kosong</string>
+    <string name="intent_aedict_category">Untuk menambah kartu ke AnkiDroid hapus semua kategori catatan atau tambahkan satu bernama \"bawaan\"</string>
+    <string name="custom_study_new_total_new">Kartu baru di dek: %d</string>
+    <string name="custom_study_rev_total_rev">Ulasan jatuh tempo di dek: %d</string>
+    <string name="custom_study_new_extend">Tambah batas kartu baru hari ini sampai</string>
+    <string name="custom_study_rev_extend">Tambah batas ulasan hari ini sampai</string>
+    <string name="custom_study_forgotten">Ulas kartu yang terlupakan dalam x hari terakhir:</string>
+    <string name="custom_study_ahead">Ulas duluan sampai x hari:</string>
+    <string name="custom_study_random">Pilih x kartu secara acak dari dek:</string>
+    <string name="custom_study_preview">Pratinjau kartu yang baru ditambahkan dalam x hari terakhir:</string>
     <string name="custom_study_rebuild_deck_corrupt">Tidak dapat membangun dek belajar khusus</string>
-    <string name="rebuild_custom_study_deck">Membangun kembali dek studi adat&#8230;</string>
-    <string name="importing_collection">Mengimpor koleksi.\nSilahkan tunggu&#8230;</string>
-    <string name="import_media_count">Mengimpor file-file media %1$d%%\nSilahkan tunggu&#8230;</string>
-    <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-    <string name="import_update_details">Memperbarui %1$d dari %2$d catatan yang ada...</string>
-    <string name="import_update_ignored">Beberapa pembaruan diabaikan karena jenis catatan telah berubah</string>
+    <string name="rebuild_custom_study_deck">Membuat ulang dek belajar kustom&#8230;</string>
+    <string name="importing_collection">Mengimpor koleksi&#8230;</string>
+    <string name="import_media_count">Mengimpor berkas media %1$d%%&#8230;</string>
+    <string name="import_progress">• Mengimpor catatan: %1$d%%\n• Mengimpor kartu: %2$d%%\n• Proses akhir: %3$d%%</string>
+    <string name="import_update_details">Memperbarui %1$d dari %2$d catatan yang ada.</string>
+    <string name="import_update_ignored">Beberapa pembaruan diabaikan karena tipe catatan telah berubah</string>
     <string name="import_complete_count">Kartu diimpor: %d</string>
     <string name="sd_card_full_title">Kartu SD penuh</string>
     <string name="sd_card_almost_full_title">Kartu SD hampir penuh</string>
     <string name="restore_backup_title">Pulihkan cadangan?</string>
     <string name="restore_backup">Koleksimu akan diganti dengan salinan yang lebih tua. Setiap kemajuan yang tidak disimpan akan hilang.</string>
     <string name="dialog_cancel">Batal</string>
-    <string name="dialog_ok">Baik</string>
+    <string name="dialog_ok">OK</string>
     <string name="dialog_no">Tidak</string>
     <string name="dialog_continue">Lanjut</string>
     <string name="dialog_positive_create">Buat</string>
@@ -124,8 +124,8 @@
     <string name="dialog_positive_replace">Ganti</string>
     <string name="dialog_positive_restore">Pulihkan</string>
     <string name="dialog_positive_set">Set</string>
-    <string name="lookup_button_content">Lihat</string>
-    <string name="dialog_collection_path_not_dir">Jalur yang ditentukan bukan direktori yang valid</string>
+    <string name="lookup_button_content">Cari</string>
+    <string name="dialog_collection_path_not_dir">Jalur yang dipilih bukan direktori yang valid</string>
     <!-- Media checking -->
     <string name="check_media_title">Periksa media?</string>
     <string name="check_media_warning">Ini dapat memakan waktu lama karena koleksi media yang besar</string>
@@ -135,7 +135,7 @@
     <string name="check_media_invalid">Berkas dengan pengodean tidak valid: %d</string>
     <string name="check_media_unused">Berkas di folder media tapi tidak digunakan di kartu manapun: %d</string>
     <string name="check_media_nohave">Berkas digunakan kartu tapi tidak ada di folder media: %d</string>
-    <string name="check_media_no_unused_missing">Tidak ada file tidak terpakai atau hilang ditemukan</string>
+    <string name="check_media_no_unused_missing">Tidak ada berkas tidak terpakai atau hilang ditemukan</string>
     <string name="check_media_db_updated">Basisdata media dibangun ulang</string>
     <string name="check_media_delete_unused">Hapus yang tidak terpakai</string>
     <string name="check_media_deleted">Berkas dihapus: %d</string>
@@ -156,11 +156,11 @@
     <string name="multimedia_editor_audio_permission_denied">Izin merekam audio ditolak</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">Selamat Datang di AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid memerlukan izin penyimpanan, yang kami gunakan hanya untuk koleksi AnkiDroidmu, media flashcard dan cadangan. Kode sumber kami open-source, ditulis oleh relawan, dan dipercayai jutaan orang.\n\nJika kamu punya pertanyaan, harap mengakses manual dalam aplikasi atau kunjungi forum dukungan kami.\n\nTerimakasih telah mencoba AnkiDroid!\n—Tim Pengembang AnkiDroid Development</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid memerlukan izin penyimpanan, yang kami gunakan hanya untuk koleksi AnkiDroidmu, media kartu flash dan cadangan. Kode sumber kami open-source, ditulis oleh relawan, dan dipercayai jutaan orang.\n\nJika kamu punya pertanyaan, harap mengakses manual dalam aplikasi atau kunjungi forum dukungan kami.\n\nTerimakasih telah mencoba AnkiDroid!\n—Tim Pengembang AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">Galat tidak diketahui terjadi saat menampilkan Editor Lanjutan</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Diperbarui</string>
-    <string name="integrity_check_startup_content">AnkiDroid Diperbarui. Pembaruan ini meliputi perbaikan masalah database, dan kami sarankan untuk memeriksa database sekarang</string>
+    <string name="integrity_check_startup_content">AnkiDroid Diperbarui. Pembaruan ini meliputi perbaikan masalah basisdata, dan kami sarankan untuk memeriksa basisdata sekarang</string>
     <string name="integrity_check_positive">Periksa Basisdata</string>
     <string name="integrity_check_continue_anyway">Tetap lanjutkan</string>
     <string name="integrity_check_insufficient_space">Memeriksa Basisdata memerlukan jumlah penyimpanan sementara yang besar.\n\nSangat disarankan untuk memiliki setidaknya %s ruang kosong sebelum melanjutkan.</string>
@@ -180,9 +180,10 @@
     <string name="background_image_applied">Latar belakang gambar diterapkan</string>
     <string name="background_image_removed">Latar belakang gambar dihapus</string>
     <string name="no_image_selected">Tidak ada gambar yang dipilih</string>
-    <string name="error_selecting_image">Galat memilih gambar. Harap lihat manual.</string>
+    <string name="error_selecting_image">Galat memilih gambar. Harap lihat manual. %s</string>
     <string name="error_deleting_image">Galat menghapus gambar</string>
     <string name="failed_to_apply_background_image">Gagal menerapkan gambar latar belakang %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Ukuran gambar maksimal %d MB</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

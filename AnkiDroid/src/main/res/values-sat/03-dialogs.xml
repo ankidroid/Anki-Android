@@ -109,9 +109,9 @@
     <string name="rebuild_custom_study_deck">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱷᱟᱣᱜ ᱰᱮᱠ ᱛᱮᱭᱟᱨᱚᱜᱠᱟᱱᱟ&#8230;</string>
     <string name="importing_collection">ᱴᱩᱢᱟᱹᱞ ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱᱟ...</string>
     <string name="import_media_count">ᱢᱤᱰᱤᱭᱟ ᱨᱮᱫ %1$d%%&#8230; ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱᱟ </string>
-    <string name="import_progress">• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱱᱚᱥ: %1$d%%\n• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱱᱚᱴᱥ: %2$d%%\n• ᱠᱩᱞ-ᱠᱟᱹᱢᱤᱠᱟᱱᱟ: %3$d%%</string>
-    <string name="import_update_details">%1$d of %2$d ᱟᱜᱩᱭᱮᱛ ᱱᱚᱴᱥ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ ᱾</string>
-    <string name="import_update_ignored">ᱠᱤᱪᱷᱤ ᱟᱹᱯᱰᱮᱴ ᱫᱚ ᱟᱰᱟᱜ ᱜᱤᱰᱤ ᱮᱱᱟ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱠᱷᱟᱹᱛᱤᱨ</string>
+    <string name="import_progress">• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱱᱚᱥ: %1$d%%\n• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ: %2$d%%\n• ᱠᱩᱞ-ᱠᱟᱹᱢᱤᱠᱟᱱᱟ: %3$d%%</string>
+    <string name="import_update_details">%1$d of %2$d ᱟᱜᱩᱭᱮᱛ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ ᱾</string>
+    <string name="import_update_ignored">ᱠᱤᱪᱷᱤ ᱟᱹᱯᱰᱮᱴ ᱫᱚ ᱟᱰᱟᱜ ᱜᱤᱰᱤ ᱮᱱᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱷᱟᱹᱛᱤᱨ</string>
     <string name="import_complete_count">ᱠᱟᱰ ᱟᱹᱜᱩᱜᱭᱮᱱᱟ: %d</string>
     <string name="sd_card_full_title">SD ᱠᱟᱰ ᱯᱮᱨᱮᱡ ᱮᱱᱟ</string>
     <string name="sd_card_almost_full_title">SD ᱠᱟᱰ ᱯᱟᱠᱷᱟᱯᱟᱹᱠᱷᱤ ᱯᱮᱨᱮᱡ ᱮᱱᱟ</string>
@@ -119,7 +119,7 @@
     <string name="restore_backup">ᱟᱢᱟᱜ ᱱᱚᱠᱚᱞ ᱫᱚ ᱢᱟᱨᱮ ᱴᱩᱢᱟᱹᱞ ᱥᱟᱞᱟᱜ ᱵᱚᱫᱚᱞᱚᱜ ᱟ ᱾ ᱵᱟᱝ ᱥᱚᱝᱪᱟᱣᱟᱠᱟᱱ ᱠᱟᱹᱢᱤ ᱚᱫ ᱚᱫᱚᱜᱽᱟ ᱾</string>
     <string name="dialog_cancel">ᱵᱟᱰᱨᱟ</string>
     <string name="dialog_ok">ᱴᱷᱤᱠ</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">ᱵᱟᱝ</string>
     <string name="dialog_continue">ᱞᱮᱛᱟᱲ</string>
     <string name="dialog_positive_create">ᱛᱮᱭᱟᱨ</string>
     <string name="dialog_positive_delete">ᱜᱮᱫ ᱜᱤᱰᱤ</string>
@@ -189,6 +189,7 @@
     <string name="error_selecting_image">ᱪᱤᱛᱟᱨ ᱪᱚᱭᱚᱱ ᱡᱚᱠᱷᱟᱜ ᱦᱩᱰᱟᱹᱜ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ ᱾ %s</string>
     <string name="error_deleting_image">ᱪᱤᱛᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱦᱩᱰᱟᱹᱜ</string>
     <string name="failed_to_apply_background_image">ᱚᱱᱚᱰ ᱪᱤᱛᱟᱨ ᱵᱟᱦᱟᱞ ᱰᱤᱜᱟᱹᱣ %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">ᱰᱷᱮᱨ ᱢᱚᱦᱰᱟ %d MB ᱜᱟᱱᱚᱜ ᱟ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

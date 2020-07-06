@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Megnyitás újra</string>
     <string name="backup_error_menu_repair">Adatbázis javítása</string>
     <string name="backup_repair_deck">Javítás</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Adatbázis javítása folyamatban.\nKérlek, várj&#8230;</string>
     <string name="backup_error">Hiba</string>
     <string name="backup_invalid_file_error">A kijelölt biztonsági másolat fájl érvénytelen</string>

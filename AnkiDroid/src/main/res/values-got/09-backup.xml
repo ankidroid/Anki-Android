@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Aftragakiusei uslukan</string>
     <string name="backup_error_menu_repair">Ganasei databes</string>
     <string name="backup_repair_deck">Ganasei</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Ganasjand databes&#8230;</string>
     <string name="backup_error">Airzei</string>
     <string name="backup_invalid_file_error">The selected backup file was invalid</string>
