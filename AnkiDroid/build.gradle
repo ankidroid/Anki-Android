@@ -180,7 +180,7 @@ android {
 
 play {
     serviceAccountCredentials = file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json")
-    track = 'alpha'
+    track = 'beta'
 }
 amazon {
     securityProfile = file("${homePath}/src/AnkiDroid-Amazon-Publish-Security-Profile.json")
