@@ -29,11 +29,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 import static com.ichi2.libanki.DecksTest.TEST_DECKS;
 import static org.hamcrest.MatcherAssert.assertThat;
