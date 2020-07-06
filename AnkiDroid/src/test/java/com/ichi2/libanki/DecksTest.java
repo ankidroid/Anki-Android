@@ -13,6 +13,9 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
+
 @RunWith(AndroidJUnit4.class)
 public class DecksTest extends RobolectricTest {
     // Used in other class to populate decks.
@@ -22,6 +25,17 @@ public class DecksTest extends RobolectricTest {
             "cmxieunwoogyxsctnjmv::INSBGDS",
     };
 
+    @Test
+    public void duplicateName() {
+        Decks decks = getCol().getDecks();
+        decks.load("{2: {\"name\": \"A\", \"id\":2}, 3: {\"name\": \"A\", \"id\":3}, 4: {\"name\": \"A::B\", \"id\":4}}", "{}");
+        decks.checkIntegrity();
+        JSONObject deckA = decks.byName("A");
+        Asserts.notNull(deckA, "A deck with name \"A\" should still exists");
+        assertThat("A deck with name \"A\" should have name \"A\"", deckA.getString("name"), is("A"));
+        JSONObject deckAPlus = decks.byName("A+");
+        Asserts.notNull(deckAPlus, "A deck with name \"A+\" should still exists");
+    }
     @Test
     public void ensureDeckList() {
         Decks decks = getCol().getDecks();
