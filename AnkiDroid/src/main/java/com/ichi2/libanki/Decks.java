@@ -885,44 +885,48 @@ public class Decks {
         boolean correction = false;
 
         for (JSONObject deck: decks) {
+            String deckName = deck.getString("name");
             // ensure no sections are blank
-            if ("".equals(deck.getString("name"))) {
+            if ("".equals(deckName)) {
                 Timber.i("Fix deck with empty name");
+                deckName = "blank";
                 deck.put("name", "blank");
                 save(deck);
                 correction = true;
             }
 
-            if (deck.getString("name").indexOf("::::") != -1) {
+            if (deckName.indexOf("::::") != -1) {
                 Timber.i("fix deck with missing sections %s", deck.getString("name"));
                 do {
-                    deck.put("name", deck.getString("name").replace("::::", "::blank::"));
+                    deckName = deck.getString("name").replace("::::", "::blank::");
                     // We may need to iterate, in order to replace "::::::" and adding to "blank" in it.
-                } while (deck.getString("name").indexOf("::::") != -1);
+                } while (deckName.indexOf("::::") != -1);
+                deck.put("name", deckName);
                 save(deck);
                 correction = true;
             }
 
             // two decks with the same name?
-            if (names.containsKey(normalizeName(deck.getString("name")))) {
-                Timber.i("fix duplicate deck name %s", deck.getString("name"));
+            if (names.containsKey(normalizeName(deckName))) {
+                Timber.i("fix duplicate deck name %s", deckName);
                 do {
-                    deck.put("name", deck.getString("name") + "+");
-                } while (names.containsKey(normalizeName(deck.getString("name"))));
+                    deckName = deckName + "+";
+                    deck.put("name", deckName);
+                } while (names.containsKey(normalizeName(deckName)));
                 save(deck);
                 correction = true;
             }
 
             // immediate parent must exist
-            String immediateParent = parent(deck.getString("name"));
+            String immediateParent = parent(deckName);
             if (immediateParent != null && !names.containsKey(normalizeName(immediateParent))) {
-                Timber.i("fix deck with missing parent %s", deck.getString("name"));
+                Timber.i("fix deck with missing parent %s", deckName);
                 JSONObject parent = byName(immediateParent);
-                _ensureParents(deck.getString("name"));
+                _ensureParents(deckName);
                 names.put(normalizeName(immediateParent), parent);
                 correction = true;
             }
-            names.put(normalizeName(deck.getString("name")), deck);
+            names.put(normalizeName(deckName), deck);
         }
         if (correction) {
             resetNameMap();
