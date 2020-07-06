@@ -39,26 +39,26 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">Kartu jatuh tempo</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="other">%d kartu AnkiDroid yang harus diproses</item>
+        <item quantity="other">%d kartu AnkiDroid jatuh tempo</item>
     </plurals>
-    <string name="widget_no_cards_due">No cards due</string>
-    <string name="widget_loading">Widget loading&#8230;</string>
+    <string name="widget_no_cards_due">Tidak ada kartu jatuh tempo</string>
+    <string name="widget_loading">Memuat gawit&#8230;</string>
     <plurals name="widget_cards_in_decks_due">
-        <item quantity="other">%1$d kartu karena di %2$s</item>
+        <item quantity="other">%1$d kartu jatuh tempo dalam %2$s</item>
     </plurals>
     <plurals name="widget_decks">
-        <item quantity="other">% 1 $ d deck</item>
+        <item quantity="other">%1$d dek</item>
     </plurals>
-    <string name="widget_small">AnkiDroid Kecil</string>
+    <string name="widget_small">AnkiDroid kecil</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
-        <item quantity="other">% d kartu karena</item>
+        <item quantity="other">% d kartu jatuh tempo</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="other">% d menit tersisa</item>
+        <item quantity="other">%d menit lagi</item>
     </plurals>
-    <string name="widget_add_note">Tambahkan catatan</string>
-    <string name="widget_add_note_button">Tambahkan catatan AnkiDroid baru</string>
+    <string name="widget_add_note">Tambah catatan</string>
+    <string name="widget_add_note_button">Tambah catatan AnkiDroid baru</string>
 </resources>

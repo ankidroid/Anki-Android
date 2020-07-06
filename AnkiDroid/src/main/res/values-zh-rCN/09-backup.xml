@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">重新尝试打开</string>
     <string name="backup_error_menu_repair">修复数据库</string>
     <string name="backup_repair_deck">修复</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">修复数据库。 \n 请稍候...</string>
     <string name="backup_error">错误</string>
     <string name="backup_invalid_file_error">选择的备份文件无效</string>

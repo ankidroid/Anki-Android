@@ -189,6 +189,7 @@
     <string name="error_selecting_image">Error al seleccionar la imagen. Por favor vea el manual. %s</string>
     <string name="error_deleting_image">Error al eliminar la imagen</string>
     <string name="failed_to_apply_background_image">Error al aplicar la imagen de fondo %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Tamaño máximo de imagen %d MB permitido</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

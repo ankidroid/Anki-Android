@@ -58,7 +58,7 @@
     <string name="sdcard_missing_message">Malŝaltu USB-konservejon por aliri viajn kartarojn</string>
     <string name="updated_version">Ĝisdatigis al la versio %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Konservi skribtabulon</string>
     <string name="enable_whiteboard">Aktivigi skribtabulon</string>
     <string name="disable_whiteboard">Malaktivigi skribtabulon</string>
     <string name="show_whiteboard">Montri skribtabulon</string>
@@ -94,9 +94,9 @@
         <item>Intertempo</item>
         <item>Facileco</item>
         <item>Lernenda</item>
-        <item>Card Modified</item>
+        <item>Modifis karton</item>
         <item>Kreita</item>
-        <item>Note Modified</item>
+        <item>Modifis noton</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Pliigi hodiaŭan limigon de novaj kartoj</string>
@@ -276,7 +276,7 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Aktivigu plenekranan reĝimon por uzi “montri navigan tirmenuon” per Ĝavoskripto.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Aktivigu plenekranan reĝimon por uzi “montri menuon de agordoj” per Ĝavoskripto.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="white_board_image_save_failed">Fiaskis konservi bildon de skribtabulo. %s</string>
+    <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>
+    <string name="title_whiteboard_pen_color">Koloro por skribi sur skribtabulo</string>
 </resources>

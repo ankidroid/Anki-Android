@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Torneu a intentar l\'obertura</string>
     <string name="backup_error_menu_repair">Reparació de la base de dades</string>
     <string name="backup_repair_deck">Repara</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">S\'està reparant la base de dades.\nUn moment si us plau...</string>
     <string name="backup_error">Error</string>
     <string name="backup_invalid_file_error">El fitxer backup seleccionat era invàlid</string>

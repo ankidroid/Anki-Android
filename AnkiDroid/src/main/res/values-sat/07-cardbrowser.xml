@@ -44,20 +44,20 @@
         <item quantity="other">%d ᱠᱟᱰ ᱫᱮᱠᱷᱟᱣᱼᱮᱱᱟ</item>
     </plurals>
     <string name="card_browser_all_decks">ᱡᱷᱚᱛᱚ ᱰᱮᱠᱥ</string>
-    <string name="card_browser_delete_card">ᱱᱚᱴᱥ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
+    <string name="card_browser_delete_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
     <string name="card_browser_suspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
     <string name="card_browser_toggle_suspend_card">(ᱵᱟᱝ)ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
     <string name="card_browser_change_deck">ᱰᱮᱠᱥ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="card_browser_unsuspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
-    <string name="card_browser_mark_card">ᱱᱚᱴ ᱢᱟᱨᱠ ᱢᱮ</string>
+    <string name="card_browser_mark_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱢᱟᱨᱠ ᱢᱮ</string>
     <string name="card_browser_flag">ᱯᱚᱛᱠᱟ</string>
-    <string name="card_browser_toggle_mark_card">(ᱵᱟᱝ)ᱢᱟᱨᱠ ᱠᱟᱱ ᱱᱚᱴᱥ</string>
-    <string name="card_browser_unmark_card">ᱱᱚᱴ ᱚ-ᱢᱟᱨᱠᱚᱭ ᱢᱮ</string>
-    <string name="delete_card_title">ᱱᱚᱴ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
-    <string name="delete_cards_title">ᱱᱚᱴᱥ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
-    <string name="delete_card_message">ᱱᱚᱴᱥ ᱨᱮᱭᱟᱜ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱲᱤᱼᱟᱢ?\nᱥᱮᱸᱫᱽᱨᱟ ᱡᱟᱭᱜᱟ: %s</string>
+    <string name="card_browser_toggle_mark_card">(ᱵᱟᱝ)ᱢᱟᱨᱠ ᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ</string>
+    <string name="card_browser_unmark_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱚ-ᱢᱟᱨᱠᱚᱭ ᱢᱮ</string>
+    <string name="delete_card_title">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
+    <string name="delete_cards_title">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
+    <string name="delete_card_message">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱨᱮᱭᱟᱜ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱲᱤᱼᱟᱢ?\nᱥᱮᱸᱫᱽᱨᱟ ᱡᱟᱭᱜᱟ: %s</string>
     <string name="delete_card_mult_message">ᱪᱚᱭᱚᱱ ᱠᱟᱱᱟ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱲᱤᱼᱟᱢ ᱥᱮ?\n(ᱪᱚᱭᱚᱱ ᱠᱟᱱ ᱠᱟᱰ ᱦᱚᱸ ᱵᱟᱝᱟ)</string>
-    <string name="deleted_message">ᱱᱚᱴᱥ ᱜᱮᱫ ᱜᱤᱲᱤ ᱮᱱᱟ</string>
+    <string name="deleted_message">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱜᱮᱫ ᱜᱤᱲᱤ ᱮᱱᱟ</string>
     <string name="changed_deck_message">%s ᱛᱮ ᱩᱪᱟᱲᱼᱱᱟ</string>
     <string name="card_browser_suspended_cards">(ᱵᱟᱝ)ᱵᱟᱹᱫ ᱠᱚᱱ ᱠᱟᱰ ᱠᱚ</string>
     <string name="card_browser_show_marked">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱢᱮᱨᱠᱼᱠᱟᱱᱟ</string>
@@ -83,8 +83,8 @@
         <item>ᱢᱚᱦᱰᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ (ᱞᱚᱜᱚᱱ)</item>
         <item>ᱡᱟᱭᱜᱟ ᱢᱚᱦᱰᱟ ᱠᱟᱛᱮ</item>
         <item>ᱛᱮᱭᱟᱨ ᱥᱚᱢᱚᱭ ᱦᱤᱥᱟᱹᱵ ᱛᱮ</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱫᱚᱞ ᱚᱠᱛᱚ ᱠᱟᱛᱮ</item>
+        <item>ᱠᱷᱟᱴᱚ ᱠᱟᱰ ᱵᱚᱫᱚᱞ ᱚᱠᱛᱚ ᱠᱟᱛᱮ</item>
         <item>ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ ᱦᱤᱥᱟᱹᱵ ᱛᱮ</item>
         <item>ᱚᱠᱛᱚ ᱛᱟᱞᱟ ᱛᱮ</item>
         <item>ᱟᱞᱜᱟ ᱛᱮ</item>
@@ -93,12 +93,12 @@
     </string-array>
     <string name="card_browser_select_all">ᱡᱷᱚᱛᱚ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
     <string name="card_browser_select_none">ᱟᱞᱚ ᱪᱚᱭᱚᱱ ᱟ</string>
-    <string name="card_browser_edit_note">ᱱᱚᱴ ᱥᱟᱯᱰᱟᱣ</string>
+    <string name="card_browser_edit_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱰᱟᱣ</string>
     <string name="card_browser_interval_new_card">(ᱱᱟᱶᱟ)</string>
     <string name="card_browser_ease_new_card">(ᱱᱟᱶᱟ)</string>
     <string name="card_browser_due_filtered_card">(ᱪᱷᱟᱹᱱᱤᱭᱟᱜ)</string>
     <string name="card_browser_interval_learning_card">(ᱪᱮᱫᱚᱜ)</string>
-    <string name="card_browser_note_editor_error">ᱱᱚᱴ ᱮᱰᱤᱴᱚᱨ ᱚᱰᱚᱠ ᱡᱚᱠᱷᱟᱜ ᱦᱩᱰᱟᱹᱜ</string>
+    <string name="card_browser_note_editor_error">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱮᱰᱤᱴᱚᱨ ᱚᱰᱚᱠ ᱡᱚᱠᱷᱟᱜ ᱦᱩᱰᱟᱹᱜ</string>
     <string name="card_browser_no_cards_in_deck">ᱰᱮᱠ ᱨᱮ ᱪᱚᱫ ᱠᱟᱰ ᱠᱚ ᱵᱟᱹᱱᱩᱜᱼᱟ ‘%s’</string>
     <string name="card_browser_search_all_decks">ᱠᱷᱚᱛᱚ ᱰᱮᱠᱥ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
     <string name="card_browser_unknown_deck_name">ᱵᱟᱝ ᱵᱟᱰᱟᱭᱟᱜ</string>

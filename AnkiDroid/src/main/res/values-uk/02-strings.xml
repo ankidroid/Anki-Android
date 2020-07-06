@@ -61,7 +61,7 @@
     <string name="save_whiteboard">Зберегти написане</string>
     <string name="enable_whiteboard">Увімкнути дошку</string>
     <string name="disable_whiteboard">Вимкнути дошку</string>
-    <string name="show_whiteboard">Показати Дошку</string>
+    <string name="show_whiteboard">Показати дошку</string>
     <string name="hide_whiteboard">Заховати Дошку</string>
     <string name="clear_whiteboard">Очистити Дошку</string>
     <string name="replay_audio">Повторити звук</string>
@@ -94,9 +94,9 @@
         <item>Проміжок</item>
         <item>Легкість</item>
         <item>Наступний перегляд</item>
-        <item>Card Modified</item>
+        <item>Картку змінено</item>
         <item>Створено</item>
-        <item>Note Modified</item>
+        <item>Запис змінено</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Збільшити сьогоднішній ліміт нових карток</string>

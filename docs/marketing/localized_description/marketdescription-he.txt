@@ -1,17 +1,17 @@
 ניתן לשנן כל דבר עם AnkiDroid!
 
-אנקידרוייד מראה לך כרטיסיות בדיוק לפני שתשכח אותם וככה מאפשר לך ללמוד אותם באופן יעיל ביותר. זה תואם באופן מלא עם התוכנה Anki (כולל סינכרון), אשר זמין עבור Windows, לינוקס ו- MacOS, שמתשמת בחזרות במרווחים.
+AnkiDroid מראה לך כרטיסים בדיוק לפני שתשכח אותם וככה מאפשר לך ללמוד אותם באופן יעיל ביותר. עובד בתיאום (כולל סינכרון) עם התוכנה Anki , אשר זמינה עבור Windows, לינוקס ו- MacOS.
 
-ללמוד כל דבר בכל מקום ובכל זמן שתרצה. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+למד כל דבר בכל מקום ובכל זמן שתרצה. נצל זמן מבוזבז בנסיעות אוטובוס, בתור למכולת ובכל מצב המתנה!
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
+צור חפיסות כרטיסי-זכרון משלך או הורד חפיסות מוכנות עבור שלל שפות ונושאים (יותר מ6000 זמינים).
 
-Add material through the desktop application Anki or directly through AnkiDroid. The application even supports adding material automatically from a dictionary!
+הוסף חומר דרך תוכנת Anki לשולחן העבודה, או ישירות דרך AnkiDroid. האפליקצייה אפילו תומכת בהוספת חומר אוטומטית ממילון!
 
 ★ תכונות מפתח:
-• supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
+תומך בתכני כרטיסי-זכרון: טקסט, תמונות, צלילים ומשוואות LaTeX.
+חזרה לסירוגין (עפ"י אלגוריתם 2 supermemo)
+תמיכה בטקסט לדיבור
 • למעלה מ־6000 חפיסות מוכנות
 • וידג׳ט התקדמות
 • סטטיסטיקה מפורטת

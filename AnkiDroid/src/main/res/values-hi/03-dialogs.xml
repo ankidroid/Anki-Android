@@ -189,6 +189,7 @@
     <string name="error_selecting_image">छवि का चयन करने में त्रुटि। कृपया मैनुअल देखें। %s</string>
     <string name="error_deleting_image">चित्र हटाने में त्रुटि</string>
     <string name="failed_to_apply_background_image">पृष्ठभूमि छवि लागू करने में विफल %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

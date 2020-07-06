@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Повторно отваряне</string>
     <string name="backup_error_menu_repair">Поправка на базата данни</string>
     <string name="backup_repair_deck">Поправяне</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Поправяне на базата данни&#8230;</string>
     <string name="backup_error">Грешка</string>
     <string name="backup_invalid_file_error">Избраният архивен файл е невалиден</string>

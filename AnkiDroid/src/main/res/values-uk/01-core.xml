@@ -54,7 +54,7 @@
     <!-- DeckPicker.java -->
     <string name="expand">Розгорнути</string>
     <string name="collapse">Згорнути</string>
-    <string name="study_more">Вивчати ще</string>
+    <string name="study_more">Вчити ще</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d картка до (%2$s)</item>
         <item quantity="few">%1$d картки до (%2$s)</item>

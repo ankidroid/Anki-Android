@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">重試開啟</string>
     <string name="backup_error_menu_repair">修復資料庫</string>
     <string name="backup_repair_deck">修復</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">修復資料庫中\n請稍後...</string>
     <string name="backup_error">錯誤</string>
     <string name="backup_invalid_file_error">所選的備份檔案無效</string>

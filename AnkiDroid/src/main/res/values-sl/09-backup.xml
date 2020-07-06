@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Ponovno poizkusi odpreti</string>
     <string name="backup_error_menu_repair">Popravi podatkovno zbirko</string>
     <string name="backup_repair_deck">Popravi</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Popravljanje podatkovne zbirke &#8230;</string>
     <string name="backup_error">Napaka</string>
     <string name="backup_invalid_file_error">Izbrana varnostna kopija je neveljavna</string>

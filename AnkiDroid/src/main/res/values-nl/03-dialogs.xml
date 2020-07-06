@@ -189,6 +189,7 @@
     <string name="error_selecting_image">Fout bij het selecteren van een afbeelding. Raadpleeg de handleiding. %s</string>
     <string name="error_deleting_image">Fout bij het wissen van het beeld</string>
     <string name="failed_to_apply_background_image">Toepassing van de achtergrondafbeelding %s mislukt</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximale afbeeldingsgrootte %d MB toegestaan</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

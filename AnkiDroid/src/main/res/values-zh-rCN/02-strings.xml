@@ -94,9 +94,9 @@
         <item>间隔</item>
         <item>难度系数</item>
         <item>到期</item>
-        <item>Card Modified</item>
+        <item>已修改卡牌</item>
         <item>已创建</item>
-        <item>Note Modified</item>
+        <item>已修改笔记</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">增加今天的新卡片数量</string>

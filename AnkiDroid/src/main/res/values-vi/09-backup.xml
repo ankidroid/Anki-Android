@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Thử mở lại</string>
     <string name="backup_error_menu_repair">Sửa cơ sở dữ liệu</string>
     <string name="backup_repair_deck">Sửa chữa</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Đang sửa cơ sở dữ liệu&#8230;</string>
     <string name="backup_error">Lỗi</string>
     <string name="backup_invalid_file_error">Tệp sao lưu đã chọn không hợp lệ</string>

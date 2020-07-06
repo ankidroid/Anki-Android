@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Skúsiť otvoriť znova</string>
     <string name="backup_error_menu_repair">Opraviť databázu</string>
     <string name="backup_repair_deck">Opraviť</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Databáza sa opravuje&#8230;</string>
     <string name="backup_error">Chyba</string>
     <string name="backup_invalid_file_error">Zvolený súbor zálohy je neplatný</string>

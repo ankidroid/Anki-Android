@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">மீண்டும் திறக்க</string>
     <string name="backup_error_menu_repair">பழுதுபார்க்கும் தரவுத்தளம்</string>
     <string name="backup_repair_deck">பழுது</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">பழுதுபார்க்கும் தரவுத்தளம்...</string>
     <string name="backup_error">பிழை</string>
     <string name="backup_invalid_file_error">தேர்ந்தெடுக்கப்பட்ட காப்புப் பிரதி தவறானது</string>

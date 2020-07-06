@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Intente abrir nuevamente</string>
     <string name="backup_error_menu_repair">Reparar base de datos</string>
     <string name="backup_repair_deck">Reparar</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Reparando base de datos.\nPor favor aguarde...</string>
     <string name="backup_error">Error</string>
     <string name="backup_invalid_file_error">El archivo de copia de seguridad seleccionado no es válido</string>
