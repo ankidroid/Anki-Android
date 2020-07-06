@@ -906,7 +906,7 @@ public class Decks {
             if (homonym != null) {
                 Timber.i("fix duplicate deck name %s", deckName);
                 do {
-                    deckName = deckName + "+";
+                    deckName += "+";
                     deck.put("name", deckName);
                 } while (names.containsKey(normalizeName(deckName)));
                 mNameMap.add(deck);
