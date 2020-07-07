@@ -49,6 +49,7 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 // fixmes:
@@ -847,7 +848,8 @@ public class Decks {
 
 
     private static final Pattern spaceAroundSeparator = Pattern.compile("\\s*::\\s*");
-    private static String strip(String deckName) {
+    @VisibleForTesting
+    static String strip(String deckName) {
         //Ends of components are either the ends of the deck name, or near the ::.
         //Deal with all spaces around ::
         deckName = spaceAroundSeparator.matcher(deckName).replaceAll("::");
