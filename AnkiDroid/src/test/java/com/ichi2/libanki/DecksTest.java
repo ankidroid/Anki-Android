@@ -56,4 +56,11 @@ public class DecksTest extends RobolectricTest {
             }
         }
     }
+
+    @Test
+    public void trim() {
+        assertThat(Decks.strip("A\nB C\t D"), is("A\nB C\t D"));
+        assertThat(Decks.strip("\n A\n\t"), is("A"));
+        assertThat(Decks.strip("Z::\n A\n\t::Y"), is("Z::A::Y"));
+    }
 }
