@@ -45,12 +45,10 @@ import com.ichi2.utils.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Random;
 
@@ -378,15 +376,10 @@ public class Sched extends SchedV2 {
                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
                            new Object[]{mDayCutoff, currentCardId(), mReportLimit});
             while (cur.moveToNext()) {
-                mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
+                mLrnQueue.add(new LrnCard(cur.getLong(0), cur.getLong(1) ));
             }
             // as it arrives sorted by did first, we need to sort it
-            Collections.sort(mLrnQueue, new Comparator<long[]>() {
-                @Override
-                public int compare(long[] lhs, long[] rhs) {
-                    return Long.valueOf(lhs[0]).compareTo(rhs[0]);
-                }
-            });
+            Collections.sort(mLrnQueue);
             return !mLrnQueue.isEmpty();
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -409,8 +402,8 @@ public class Sched extends SchedV2 {
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
-            if (mLrnQueue.getFirst()[0] < cutoff) {
-                long id = mLrnQueue.remove()[1];
+            if (mLrnQueue.getFirst().getDue() < cutoff) {
+                long id = mLrnQueue.remove().getId();
                 Card card = mCol.getCard(id);
                 // mLrnCount -= card.getLeft() / 1000; See decrementCount()
                 return card;
@@ -481,7 +474,7 @@ public class Sched extends SchedV2 {
                 // it twice in a row
                 card.setQueue(Consts.QUEUE_TYPE_LRN);
                 if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
-                    long smallestDue = mLrnQueue.getFirst()[0];
+                    long smallestDue = mLrnQueue.getFirst().getDue();
                     card.setDue(Math.max(card.getDue(), smallestDue + 1));
                 }
                 _sortIntoLrn(card.getDue(), card.getId());
@@ -1664,16 +1657,16 @@ public class Sched extends SchedV2 {
      */
     @Override
     protected void _sortIntoLrn(long due, long id) {
-        Iterator i = mLrnQueue.listIterator();
+        Iterator<LrnCard> i = mLrnQueue.listIterator();
         int idx = 0;
         while (i.hasNext()) {
-            if (((long[]) i.next())[0] > due) {
+            if (i.next().getDue() > due) {
                 break;
             } else {
                 idx++;
             }
         }
-        mLrnQueue.add(idx, new long[] { due, id });
+        mLrnQueue.add(idx, new LrnCard(due, id));
     }
 
 
