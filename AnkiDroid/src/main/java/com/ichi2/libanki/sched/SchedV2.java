@@ -891,7 +891,7 @@ public class SchedV2 extends AbstractSched {
                             "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ?"
                             + " AND id != ? LIMIT ?", new Object[] { cutoff, currentCardId(), mReportLimit});
             while (cur.moveToNext()) {
-                mLrnQueue.add(new long[] { cur.getLong(0), currentCardId(), cur.getLong(1) });
+                mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
             }
             // as it arrives sorted by did first, we need to sort it
             Collections.sort(mLrnQueue, new Comparator<long[]>() {
