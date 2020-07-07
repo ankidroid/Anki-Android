@@ -851,21 +851,6 @@ public class Decks {
         return spaceAroundSeparator.matcher(deckName.trim()).replaceAll( "::");
     }
 
-    /** With 2.1.28, anki started strips whitespace of deck name.
-     * This method is here for compatibility while we wait for rust.
-     * It should be executed before other methods, because both "FOO " and "FOO" will be renamed to the same name,
-     * and so this will need to be renamed by _checkDeckTree.*/
-    private void _removeSpaces () {
-        for (JSONObject deck: all()) {
-            String currentName = deck.getString("name");
-            String newName = strip(currentName);
-            if (!currentName.equals(newName)) {
-                deck.put("name", newName);
-                save(deck);
-            }
-        }
-    }
-
     private void _recoverOrphans() {
         Long[] dids = allIds();
         boolean mod = mCol.getDb().getMod();
@@ -879,6 +864,20 @@ public class Decks {
 
         for (JSONObject deck: decks) {
             String deckName = deck.getString("name");
+
+            /** With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for
+             * compatibility while we wait for rust.  It should be executed before other changes, because both "FOO "
+             * and "FOO" will be renamed to the same name, and so this will need to be renamed again in case of
+             * duplicate.*/
+            String strippedName = strip(deckName);
+            if (!deckName.equals(strippedName)) {
+                mNameMap.remove(deckName, deck);
+                deckName = strippedName;
+                deck.put("name", deckName);
+                mNameMap.add(deck);
+                save(deck);
+            }
+
             // ensure no sections are blank
             if ("".equals(deckName)) {
                 Timber.i("Fix deck with empty name");
@@ -927,7 +926,6 @@ public class Decks {
     }
 
     public void checkIntegrity() {
-        _removeSpaces();
         _recoverOrphans();
         _checkDeckTree();
     }
