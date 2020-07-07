@@ -49,7 +49,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -99,7 +98,26 @@ public class SchedV2 extends AbstractSched {
 
     // Queues
     protected final LinkedList<Long> mNewQueue = new LinkedList<>();
-    protected final LinkedList<long[]> mLrnQueue = new LinkedList<>();
+    protected class LrnCard implements Comparable<LrnCard> {
+        private final long mCid;
+        private final long mDue;
+        public LrnCard(long due, long cid) {
+            mCid = cid;
+            mDue = due;
+        }
+        public long getDue () {
+            return mDue;
+        }
+        public long getId() {
+            return mCid;
+        }
+
+        @Override
+        public int compareTo(LrnCard o) {
+            return Long.compare(mDue, o.mDue);
+        }
+    }
+    protected final LinkedList<LrnCard> mLrnQueue = new LinkedList<>();
     protected final LinkedList<Long> mLrnDayQueue = new LinkedList<>();
     protected final LinkedList<Long> mRevQueue = new LinkedList<>();
 
@@ -891,15 +909,10 @@ public class SchedV2 extends AbstractSched {
                             "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ?"
                             + " AND id != ? LIMIT ?", new Object[] { cutoff, currentCardId(), mReportLimit});
             while (cur.moveToNext()) {
-                mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
+                mLrnQueue.add(new LrnCard(cur.getLong(0), cur.getLong(1)));
             }
             // as it arrives sorted by did first, we need to sort it
-            Collections.sort(mLrnQueue, new Comparator<long[]>() {
-                @Override
-                public int compare(long[] lhs, long[] rhs) {
-                    return Long.compare(lhs[0], rhs[0]);
-                }
-            });
+            Collections.sort(mLrnQueue);
             return !mLrnQueue.isEmpty();
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -921,8 +934,8 @@ public class SchedV2 extends AbstractSched {
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
-            if (mLrnQueue.getFirst()[0] < cutoff) {
-                long id = mLrnQueue.remove()[1];
+            if (mLrnQueue.getFirst().getDue() < cutoff) {
+                long id = mLrnQueue.remove().getId();
                 Card card = mCol.getCard(id);
                 // mLrnCount -= 1; see decrementCounts()
                 return card;
@@ -1089,7 +1102,7 @@ public class SchedV2 extends AbstractSched {
                 // sure we don't put it at the head of the queue and end up showing
                 // it twice in a row
                 if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
-                    long smallestDue = mLrnQueue.getFirst()[0];
+                    long smallestDue = mLrnQueue.getFirst().getDue();
                     card.setDue(Math.max(card.getDue(), smallestDue + 1));
                 }
                 _sortIntoLrn(card.getDue(), card.getId());
@@ -2807,16 +2820,16 @@ public class SchedV2 extends AbstractSched {
      * Sorts a card into the lrn queue LIBANKI: not in libanki
      */
     protected void _sortIntoLrn(long due, long id) {
-        Iterator i = mLrnQueue.listIterator();
+        Iterator<LrnCard> i = mLrnQueue.listIterator();
         int idx = 0;
         while (i.hasNext()) {
-            if (((long[]) i.next())[0] > due) {
+            if (i.next().getDue() > due) {
                 break;
             } else {
                 idx++;
             }
         }
-        mLrnQueue.add(idx, new long[] { due, id });
+        mLrnQueue.add(idx, new LrnCard(due, id));
     }
 
 
