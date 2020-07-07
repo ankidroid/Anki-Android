@@ -846,9 +846,14 @@ public class Decks {
     }
 
 
-    private static final Pattern spaceAroundSeparator = Pattern.compile(" *:: *");
+    private static final Pattern spaceAroundSeparator = Pattern.compile("\\s*::\\s*");
     private static String strip(String deckName) {
-        return spaceAroundSeparator.matcher(deckName.trim()).replaceAll( "::");
+        //Ends of components are either the ends of the deck name, or near the ::.
+        //Deal with all spaces around ::
+        deckName = spaceAroundSeparator.matcher(deckName).replaceAll("::");
+        //Deal with spaces at start/end of the deck name.
+        deckName = deckName.trim();
+        return deckName;
     }
 
     private void _recoverOrphans() {
