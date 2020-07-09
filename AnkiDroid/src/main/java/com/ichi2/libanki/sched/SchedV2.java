@@ -614,9 +614,9 @@ public class SchedV2 extends AbstractSched {
      * New cards **************************************************************** *******************************
      */
 
-    /** Same as _resetRev, but assume discardCard is currently in the reviewer and so don't conunt it.*/
+    /** Same as _resetNew, but assume discardCard is currently in the reviewer and so don't conunt it.*/
     protected void _resetNew(@Nullable Card discardCard) {
-        _resetRev();
+        _resetNew();
         if (discardCard != null && discardCard.getQueue() == Consts.QUEUE_TYPE_NEW) {
             mNewCount--;
         }
