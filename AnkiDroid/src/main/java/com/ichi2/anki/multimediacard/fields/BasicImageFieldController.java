@@ -654,13 +654,15 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      */
     private Uri getUriForFile(File file) {
         Timber.d("getUriForFile() %s", file);
-        Uri uri;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(mActivity, mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider", file);
-        } else {
-            uri = Uri.fromFile(file);
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                return FileProvider.getUriForFile(mActivity, mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider", file);
+            }
+        } catch (Exception e) {
+            Timber.w("getUriForFile failed on %s - attempting fallback", file);
         }
-        return uri;
+
+        return Uri.fromFile(file);
     }
 
 
