@@ -154,6 +154,7 @@ public class NoteEditor extends AnkiActivity {
     public static final int REQUEST_ADD = 0;
     public static final int REQUEST_MULTIMEDIA_EDIT = 2;
     public static final int REQUEST_TEMPLATE_EDIT = 3;
+    public static final int REQUEST_PREVIEW = 4;
 
     private boolean mChanged = false;
     private boolean mTagsEdited = false;
@@ -936,7 +937,7 @@ public class NoteEditor extends AnkiActivity {
                 Bundle noteEditorBundle = new Bundle();
                 onSaveInstanceState(noteEditorBundle);
                 previewer.putExtra("noteEditorBundle", noteEditorBundle);
-                startActivityWithoutAnimation(previewer);
+                startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
                 return true;
 
             case R.id.action_save:
@@ -1065,6 +1066,8 @@ public class NoteEditor extends AnkiActivity {
         } else {
             setResult(result);
         }
+        // ensure there are no orphans from possible edit previews
+        TemporaryModel.clearTempModelFiles();
         if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
             finishWithAnimation(ActivityTransitionAnimation.NONE);
         } else {
