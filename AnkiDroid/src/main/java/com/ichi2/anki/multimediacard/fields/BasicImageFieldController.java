@@ -659,7 +659,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 return FileProvider.getUriForFile(mActivity, mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider", file);
             }
         } catch (Exception e) {
-            Timber.w("getUriForFile failed on %s - attempting fallback", file);
+            // #6628 - What would cause this? Is the fallback is effective? Telemetry to diagnose more:
+            Timber.w(e, "getUriForFile failed on %s - attempting fallback", file);
+            AnkiDroidApp.sendExceptionReport(e, "BasicImageFieldController", "Unexpected getUriForFile failure on " + file, true);
         }
 
         return Uri.fromFile(file);
