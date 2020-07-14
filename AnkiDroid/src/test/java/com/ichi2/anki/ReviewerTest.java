@@ -30,7 +30,8 @@ public class ReviewerTest extends RobolectricTest {
 
     @Test
     public void verifyStartupNoCollection() {
-        try (ActivityScenario<NullCollectionReviewer> scenario = ActivityScenario.launch(NullCollectionReviewer.class)) {
+        enableNullCollection();
+        try (ActivityScenario<Reviewer> scenario = ActivityScenario.launch(Reviewer.class)) {
             scenario.onActivity(reviewer -> assertNull("Collection should have been null", reviewer.getCol()));
         }
     }

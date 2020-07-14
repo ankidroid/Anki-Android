@@ -94,6 +94,9 @@ public class RobolectricTest {
         // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
         CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
 
+        // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
+        disableNullCollection();
+
         // After every test, make sure the sqlite implementation is set back to default
         DB.setSqliteOpenHelperFactory(null);
 
@@ -161,6 +164,20 @@ public class RobolectricTest {
         return CollectionHelper.getInstance().getCol(getTargetContext());
     }
 
+    /** Call this method in your test if you to test behavior with a null collection */
+    protected void enableNullCollection() {
+        CollectionHelper.LazyHolder.INSTANCE = new CollectionHelper() {
+            @Override
+            public Collection getCol(Context context) {
+                return null;
+            }
+        };
+    }
+
+    /** Restore regular collection behavior */
+    protected void disableNullCollection() {
+        CollectionHelper.LazyHolder.INSTANCE = new CollectionHelper();
+    }
 
     protected JSONObject getCurrentDatabaseModelCopy(String modelName) throws JSONException {
         Models collectionModels = getCol().getModels();
