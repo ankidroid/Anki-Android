@@ -198,7 +198,8 @@ public class NoteEditorTest extends RobolectricTest {
 
     @Test
     public void verifyStartupAndCloseWithNoCollectionDoesNotCrash() {
-        try (ActivityScenario<NullCollectionNoteEditor> scenario = ActivityScenario.launch(NullCollectionNoteEditor.class)) {
+        enableNullCollection();
+        try (ActivityScenario<NoteEditor> scenario = ActivityScenario.launch(NoteEditor.class)) {
             scenario.onActivity(noteEditor -> {
                 noteEditor.onBackPressed();
                 assertThat("Pressing back should finish the activity", noteEditor.isFinishing());
