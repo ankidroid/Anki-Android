@@ -243,7 +243,7 @@ public class CardBrowserTest extends RobolectricTest {
 
     @Test
     public void flagValueIsShownOnCard() {
-        Note n = addNote("1");
+        Note n = addNoteUsingBasicModel("1", "back");
         flagCardForNote(n, 1);
 
         long cardId = n.cards().get(0).getId();
@@ -336,7 +336,7 @@ public class CardBrowserTest extends RobolectricTest {
 
     private CardBrowser getBrowserWithNotes(int count) {
         for(int i = 0; i < count; i ++) {
-            addNote(Integer.toString(i));
+            addNoteUsingBasicModel(Integer.toString(i), "back");
         }
         ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
                 .create().start().resume().visible();
@@ -346,15 +346,6 @@ public class CardBrowserTest extends RobolectricTest {
 
     private void removeCardFromCollection(Long cardId) {
         getCol().remCards(new long[] { cardId });
-    }
-
-    private Note addNote(String value) {
-        Note n = getCol().newNote();
-        n.setField(0, value);
-        if (getCol().addNote(n) != 1) {
-            throw new IllegalStateException("card was not added");
-        }
-        return n;
     }
 
     @CheckReturnValue
