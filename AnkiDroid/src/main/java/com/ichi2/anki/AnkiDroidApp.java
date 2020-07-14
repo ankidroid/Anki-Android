@@ -335,12 +335,25 @@ public class AnkiDroidApp extends MultiDexApplication {
 
 
     public static void sendExceptionReport(Throwable e, String origin, String additionalInfo) {
+        sendExceptionReport(e, origin, additionalInfo, false);
+    }
+
+
+    public static void sendExceptionReport(Throwable e, String origin, String additionalInfo, boolean onlyIfSilent) {
         UsageAnalytics.sendAnalyticsException(e, false);
+
+        if (onlyIfSilent) {
+            boolean alwaysAccept = getSharedPrefs(getInstance().getApplicationContext()).getBoolean(ACRA.PREF_ALWAYS_ACCEPT, false);
+            if (!alwaysAccept) {
+                Timber.i("sendExceptionReport - onlyIfSilent true, but ACRA is not 'always accept'. Skipping report send.");
+                return;
+            }
+        }
+
         ACRA.getErrorReporter().putCustomData("origin", origin);
         ACRA.getErrorReporter().putCustomData("additionalInfo", additionalInfo);
         ACRA.getErrorReporter().handleException(e);
     }
-
 
     /**
      * If you want to make sure that the next exception of any time is posted, you need to clear limiter data
