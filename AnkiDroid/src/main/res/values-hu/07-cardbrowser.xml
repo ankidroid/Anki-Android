@@ -41,7 +41,7 @@
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
         <item quantity="one">%d kártyát mutat</item>
-        <item quantity="other">%d cards shown</item>
+        <item quantity="other">%d kártyát mutat</item>
     </plurals>
     <string name="card_browser_all_decks">Minden pakli</string>
     <string name="card_browser_delete_card">Jegyzet törlése</string>
@@ -50,7 +50,7 @@
     <string name="card_browser_change_deck">Pakli csere</string>
     <string name="card_browser_unsuspend_card">Kártya felfüggesztése</string>
     <string name="card_browser_mark_card">Jegyzet megjelölése</string>
-    <string name="card_browser_flag">Flag</string>
+    <string name="card_browser_flag">Megjelölés</string>
     <string name="card_browser_toggle_mark_card">Bejegyzések megjelölése</string>
     <string name="card_browser_unmark_card">Bejegyzések elvetése</string>
     <string name="delete_card_title">Jegyzet törlése?</string>
@@ -83,8 +83,8 @@
         <item>Rendezés nélkül (gyorsabb)</item>
         <item>Rendezés mező szerint</item>
         <item>Létrehozás dátuma szerint</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Jegyzetmódosítási időrendben</item>
+        <item>Kártyamódosítási időrendben</item>
         <item>Esedékesség szerint</item>
         <item>Ismétlési intervallum szerint</item>
         <item>Nehézség szerint</item>
@@ -93,13 +93,13 @@
     </string-array>
     <string name="card_browser_select_all">Összes kijelölése</string>
     <string name="card_browser_select_none">Nincs kijelölve semmi</string>
-    <string name="card_browser_edit_note">Edit note</string>
-    <string name="card_browser_interval_new_card">(new)</string>
-    <string name="card_browser_ease_new_card">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_edit_note">Jegyzet szerkesztése</string>
+    <string name="card_browser_interval_new_card">(új)</string>
+    <string name="card_browser_ease_new_card">(új)</string>
+    <string name="card_browser_due_filtered_card">(szűrt)</string>
+    <string name="card_browser_interval_learning_card">(tanulás)</string>
+    <string name="card_browser_note_editor_error">Hiba a Jegyzetszerkesztő megnyitása során</string>
+    <string name="card_browser_no_cards_in_deck">Nem található kártya a \'%s\' pakliban</string>
+    <string name="card_browser_search_all_decks">Összes pakli keresése</string>
+    <string name="card_browser_unknown_deck_name">Ismeretlen</string>
 </resources>

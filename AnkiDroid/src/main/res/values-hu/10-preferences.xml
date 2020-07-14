@@ -79,8 +79,8 @@
     <string name="image_zoom">Képek nagyítása</string>
     <string name="button_size">Válasz gombok mérete</string>
     <string name="card_browser_font_size">Kártya böngésző betűméretezése</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media">Fájlnevek megjelenítése a kártya böngészőben.</string>
+    <string name="card_browser_hide_media_summary">A média fájlneveinek megjelenítése a kártya böngésző kérdés/válasz mezőjében</string>
     <string name="col_path">AnkiDroid könyvtár</string>
     <string name="fullscreen_review">Teljes képernyős mód</string>
     <string name="full_screen_off">Kikapcsol</string>
@@ -94,8 +94,8 @@
     </string-array>
     <string name="gestures">Gesztusvezérlés engedélyezése</string>
     <string name="gestures_summ">Gesztusok hozzárendelése olyan műveletekhez, mint a kártyák megválaszolása és szerkesztése.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links">Érintő gesztusok figyelmen kívül hagyása a linkeken</string>
+    <string name="gestures_allow_links_summary">Az érintő gesztusok nem lesznek feldolgozva ha egy link/segítség le van nyomva.</string>
     <string name="gestures_swipe_up">Felfelé csúsztatás</string>
     <string name="gestures_swipe_down">Lefelé csúsztatás</string>
     <string name="gestures_swipe_left">Balra csúsztatás</string>
@@ -105,12 +105,12 @@
     <string name="gestures_tap_bottom">Alsó rész érintése</string>
     <string name="gestures_tap_left">Baloldali rész érintése</string>
     <string name="gestures_tap_right">Jobboldali rész érintése</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_volume_up">Hangerő fel</string>
+    <string name="gestures_volume_down">Hangerő le</string>
     <string name="more_scrolling_buttons">e-Olvasó</string>
     <string name="more_scrolling_buttons_summ">Kanji/Katakana használata is, az Emoji/Kao-moji gombok görgetéséhez</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">\'%s\' Menü</string>
+    <string name="card_browser_enable_external_context_menu_summary">Engedélyezi a \'%s\' kontextus menüt globálisan</string>
     <string name="double_scrolling_gap">Dupla görgetés</string>
     <string name="double_scrolling_gap_summ">Görgess a kétszeres méretű e-Olvasó méretre</string>
     <string name="swipe_sensitivity">Törlés érzékenysége</string>
@@ -146,16 +146,16 @@
     <string name="select_locale_title">Nyelv kiválasztása</string>
     <string name="safe_display">Biztonságos megjelenítési mód</string>
     <string name="safe_display_summ">Kapcsolja ki az összes animációt, és biztonságosabb módszereket használjon a kártya rajzok számára. Az e-tintaeszközök igényelhetik ezt.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">Egy-Mezőnyi Szerkesztési Mód Kikapcsolása</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Engedélyezi a \'Részleges Törlés\' lehetőséget tájkép módban.</string>
     <string name="vertical_centering">Középre igazítás</string>
     <string name="vertical_centering_summ">A kártyák tartalmának középre igazítása függőlegesen</string>
     <string name="pref_backup_max">Biztonsági másolatok maximális száma</string>
     <string name="show_estimates">Idő mutatása a gombokon</string>
     <string name="show_estimates_summ">A gombokon látszódjon a következő esedékesség időpontja</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Felső Bár mutatása</string>
+    <string name="show_top_bar_summ">Kártya számlálók, jelölők és jelölések mutatása a felső bárban,</string>
     <string name="show_progress">Hátralévő mutatása</string>
     <string name="show_progress_summ">Hátralévő kártyák számának megjelenítése</string>
     <string name="show_eta">ETA megjelenítése</string>
@@ -168,11 +168,11 @@
     <string name="time_limit_summ">XXX perc</string>
     <string name="day_offset">Következő nap kezdete</string>
     <string name="day_offset_summ">XXX órával éjfél után</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver">Kísérleti V2 ütemező</string>
+    <string name="sched_ver_summ">Kísérleti ütemező engedélyezése. A változásokat egy irányba erőlteti a következő szinkronizáláskor</string>
+    <string name="sched_ver_toggle_title">Megerősítés</string>
+    <string name="sched_ver_2to1">Ez visszaállít minden tanult kártyát, kiüríti a szúrt paklikat és megváltoztatja az ütemező verzióját. Folytatja?</string>
+    <string name="sched_ver_1to2">A kísérleti ütemező helytelenül ütemezhet. Kérjük olvassa el a dokumentációt először. Folytatja?</string>
     <string name="pref_keep_screen_on">Ne kapcsolja ki a képernyőt</string>
     <string name="pref_keep_screen_on_summ">Képernyő időtúllépésének kikapcsolása</string>
     <string name="convert_fen_text">A sakk-jelölés támogatása</string>
@@ -185,10 +185,10 @@
     <string name="custom_buttons_setting_if_room">Mutasd ha van hely</string>
     <string name="custom_buttons_setting_menu_only">Csak a menü</string>
     <string name="reset_custom_buttons">Alapértelmezett értékek visszaállítása</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="thirdparty_apps_title">Külsős API alkalmazások</string>
+    <string name="thirdparty_apps_summary">Egy lista az alkalmazásokról, amik az AnkiDroid API-t használják, mint például szótárak és segédprogramok.</string>
+    <string name="html_javascript_debugging">HTML / Javascript hibakeresés</string>
+    <string name="html_javascript_debugging_summ">Távoli WebView kapcsolatok engedélyezése és a HTML kártyák AnkiDroid mappába mentése</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Bővített statisztikák</string>
     <string name="enable_advanced_statistics_title">Bővített statisztikák bekapcsolása</string>
@@ -201,14 +201,14 @@
     <string name="custom_sync_server_enable_title">Használj egyéni szinkronizáló szervert</string>
     <string name="custom_sync_server_enable_summary">Ha nem szeretnéd használni az AnkiWeb saját szolgáltatását, itt egy alternatív kiszolgálót adhatsz meg</string>
     <string name="custom_sync_server_base_url_title">Szinkronizáló Url</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">url szinkronizálás érvénytelen</string>
     <string name="custom_sync_server_media_url_title">Média szinkronizáló url</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">Média url szinkronizálás érvénytelen</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="deck_conf_group_summ">A pakli csoport változtatása több más csoportot is érint. Ha csak a jelenlegi paklit kívánja megváltoztatni, akkor kérjük adjon hozzá egy új csoportot.</string>
     <string name="studyoptions_limit_select_tags">Válassz címkét</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_deck_description">Pakli leírás (csak a jelenlegi paklit érinti)</string>
     <string name="deck_conf_group">Beállítás csoport</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d pakli ezt a csoportot használja</item>
@@ -231,8 +231,8 @@
     <string name="deck_conf_new_bury_summ">A kapcsolódó új kártyákat félretenni a következő napra</string>
     <string name="deck_conf_rev_bury">A kapcsolódó kártyák visszaállítása</string>
     <string name="deck_conf_rev_bury_summ">A kapcsolódó kártyákat a következő napra halasztani</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings">Általános beállítások használata</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Az általános \'Automatikus válaszmegjelenítő\' beállítás használata, a jelenlegi csoporthoz használt beállítások helyett.</string>
     <string name="deck_conf_easy_bonus">Bónusz az \"egyszerű\"</string>
     <string name="deck_conf_ivl_fct">Időtartam változtatása</string>
     <string name="deck_conf_max_ivl">Maximális időtartam</string>
@@ -261,7 +261,7 @@
     <string name="deck_conf_set_subdecks">Alkalmazás minden alcsoportra</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s pakli használata ebben a csoportban</item>
-        <item quantity="other">%s subdecks will use this group</item>
+        <item quantity="other">%s alpakli használata ebben a csoportban</item>
     </plurals>
     <string name="deck_conf_set_subdecks_title">Alkalmazás minden alcsoportra</string>
     <string name="deck_conf_set_subdecks_message">Állítsa be az aktuális opciócsoportot a pakli minden alcsoportjában?</string>
@@ -275,10 +275,10 @@
     <string name="deck_conf_cram_reschedule_summ">A telepített kártyák átütemezése adott válaszaim alapján</string>
     <string name="deck_conf_cram_steps">Egyéni lépések (percben)</string>
     <string name="deck_conf_cram_steps_summ">Add meg az egyéni lépéseket</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_enabled">Emlékeztetők engedélyezése ebben a paklicsoportban található paklikhoz</string>
     <string name="deck_conf_reminders_time">Ne feledd</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_dialog_title">Segítsen az AnkiDroidot jobbá tenni!</string>
+    <string name="analytics_title">Funkiók megosztása</string>
+    <string name="analytics_summ">Hozzájárulhat az AnkiDroidhoz azáltal, hogy megmutatja a fejlesztői csapatnak, milyen funkciókat használnak az emberek</string>
 </resources>

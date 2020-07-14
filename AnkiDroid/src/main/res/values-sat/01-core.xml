@@ -162,8 +162,8 @@
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱦᱩᱰᱟᱹᱜ</string>
     <string name="studyoptions_empty">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ ᱾ + ᱵᱚᱴᱚᱱ ᱯᱨᱮᱥ ᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱡᱤᱱᱥᱚ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭ ᱢᱮ ᱾</string>
     <string name="studyoptions_limit_reached">ᱰᱮᱞᱤ ᱯᱟᱰᱦᱟᱣ ᱚᱠᱛᱚ ᱥᱮᱴᱮᱨ ᱮᱱᱟ </string>
-    <string name="studyoptions_empty_schedule">ᱯᱟᱰᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱟ </string>
-    <string name="studyoptions_congrats_finished">ᱥᱟᱨᱦᱟᱣ! ᱱᱤᱛᱚᱜ ᱞᱟᱜᱤᱫ ᱪᱟᱵᱟ ᱠᱮᱟᱢ</string>
+    <string name="studyoptions_empty_schedule">ᱯᱟᱰᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ </string>
+    <string name="studyoptions_congrats_finished">ᱥᱟᱨᱦᱟᱣ! ᱱᱤᱛᱚᱜ ᱞᱟᱹᱜᱤᱫ ᱪᱟᱵᱟ ᱠᱮᱟᱢ</string>
     <string name="studyoptions_congrats_more_rev">ᱛᱮᱦᱮᱸᱧ ᱞᱟᱹᱜᱤᱫ ᱤᱱᱟᱝᱜᱮ, ᱦᱮᱞᱮ ᱟᱨᱦᱚᱸ ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱧᱮᱞ ᱨᱮᱭᱟᱜ ᱢᱮᱱᱟᱜᱟ ᱾ ᱟᱨᱦᱚᱸ ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱚᱯᱥᱚᱱ ᱨᱮ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱣ ᱫᱟᱲᱮᱭᱟᱼᱜᱟᱢ ᱾ </string>
     <string name="studyoptions_congrats_more_new">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱞᱤᱢᱤᱴ ᱥᱮᱴᱮᱨ ᱮᱱᱟ ᱾ ᱟᱨᱦᱚᱸ ᱱᱟᱶᱟ ᱠᱟᱰ ᱢᱮᱱᱟᱜᱼᱟ; ᱟᱢ ᱚᱯᱥᱚᱱ ᱨᱮ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱚ ᱫᱟᱲᱮᱟᱜᱼᱟᱢ, ᱦᱮᱞᱮ ᱵᱚᱰᱦᱟᱣ ᱞᱮᱠᱷᱟᱱ ᱢᱚᱱᱮ ᱫᱚᱦᱚ ᱞᱚᱰ ᱡᱟᱥᱛᱤ ᱛᱟᱢᱟ ᱾ </string>
     <string name="studyoptions_congrats_custom">ᱱᱚᱨᱢᱟᱞ ᱥᱮᱰᱭᱩᱞ ᱠᱷᱚᱱ ᱵᱟᱦᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱥᱮᱱᱟᱢ ᱠᱷᱟᱱ ᱫᱚ, \&quot;Custom study\&quot; ᱵᱚᱴᱚᱱ ᱨᱮ ᱚᱛᱟᱭ ᱛᱮᱵᱚᱱ ᱢᱮ</string>

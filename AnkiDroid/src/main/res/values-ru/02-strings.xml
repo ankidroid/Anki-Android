@@ -94,9 +94,9 @@
         <item>Интервал</item>
         <item>Лёгкость</item>
         <item>Срок</item>
-        <item>Card Modified</item>
+        <item>Карточка изменена</item>
         <item>Создано</item>
-        <item>Note Modified</item>
+        <item>Запись изменена</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Добавить новых на сегодня</string>
@@ -297,5 +297,5 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Не удалось сохранить изображение доски. %s</string>
     <string name="white_board_image_saved">Изображение доски сохранено в %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_pen_color">Цвет маркера</string>
 </resources>
