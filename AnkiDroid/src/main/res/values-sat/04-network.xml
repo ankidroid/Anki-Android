@@ -92,7 +92,7 @@
     <string name="sync_too_busy">ᱥᱚᱨᱵᱦᱚᱨ ᱵᱤᱡᱤ ᱜᱮᱭᱟ ᱾  ᱛᱟᱭᱚᱢ ᱛᱮ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾</string>
     <string name="sync_remote_db_error">ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱟᱹᱯᱩᱫ ᱜᱮᱭᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱩᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
     <string name="sync_overwrite_error">ᱱᱤᱛᱚᱜᱽᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱨᱮᱫ ᱥᱟᱞᱟᱜ ᱛᱮ ᱵᱟᱝ ᱫᱩᱦᱲᱟ ᱚᱞ ᱲᱫᱟᱲᱮᱟᱜᱟ</string>
-    <string name="sync_connection_error">ᱡᱚᱲᱟᱣ ᱚᱠᱛᱚ ᱵᱟᱦᱨᱮ ᱾ ᱤᱱᱴᱚᱨᱱᱮᱴ ᱡᱚᱲᱟᱣ ᱰᱤᱜᱟᱹᱣ ᱮᱱᱟ, ᱟᱨ ᱵᱟᱝᱠᱦᱟᱱ ᱟᱢ ᱴᱦᱮᱱ ᱱᱟᱶᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱢᱟᱨᱟᱝ ᱨᱚᱫ ᱢᱮᱰᱤᱭᱟ ᱛᱮᱦᱮᱸ ᱠᱚᱜᱽᱟ ᱾</string>
+    <string name="sync_connection_error">ᱡᱚᱲᱟᱣ ᱚᱠᱛᱚ ᱵᱟᱦᱨᱮ ᱾ ᱤᱱᱴᱚᱨᱱᱮᱴ ᱡᱚᱲᱟᱣ ᱰᱤᱜᱟᱹᱣ ᱮᱱᱟ, ᱟᱨ ᱵᱟᱝᱠᱦᱟᱱ ᱟᱢ ᱴᱷᱮᱱ ᱱᱟᱶᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱢᱟᱨᱟᱝ ᱨᱚᱫ ᱢᱮᱰᱤᱭᱟ ᱛᱮᱦᱮᱸ ᱠᱚᱜᱽᱟ ᱾</string>
     <string name="sync_write_access_error">ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱨᱮᱫ SD ᱠᱟᱰ ᱨᱮ ᱵᱟᱝ ᱥᱟᱱᱪᱟᱣᱚᱜ ᱠᱟᱱᱟ ᱾ ᱠᱟᱰ ᱫᱚ read-only ᱨᱮ ᱵᱟᱝ ᱢᱚᱩᱸᱴ ᱠᱟᱱᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱡᱟᱭᱜᱟ ᱠᱚᱢ ᱯᱟᱲᱟᱣᱮᱱᱟ ᱾</string>
     <string name="sync_deletions_message">ᱜᱮᱫ ᱜᱤᱰᱤ ᱠᱚ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="sync_small_objects_message">ᱠᱟᱴᱤᱡ ᱡᱤᱱᱤᱥ ᱠᱚ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
@@ -120,7 +120,7 @@
     <string name="force_full_sync_title">ᱫᱟᱲᱮ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="force_full_sync_summary">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱟᱹᱭᱩᱨ ᱢᱤᱫ, ᱢᱤᱫ ᱱᱟᱜᱷᱟ ᱨᱮ ᱫᱚᱲᱮ ᱵᱚᱫᱚᱞᱮᱱᱟ </string>
     <string name="full_sync_confirmation">ᱵᱚᱫᱚᱞᱠᱟᱱ ᱫᱚᱨᱠᱷᱥᱛᱚ ᱟᱢᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱞᱟᱹᱜᱤᱫ ᱯᱩᱨᱟ ᱞᱟᱫᱮ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ ᱾  ᱚᱞᱜᱟ ᱰᱤᱵᱷᱟᱤᱥ ᱵᱟᱭ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱠᱚᱜ ᱠᱷᱟᱱ ᱰᱟᱴᱟ ᱟᱫᱚᱜ ᱛᱟᱢᱮ, ᱞᱮᱛᱟᱲ ᱟᱢ?</string>
-    <string name="full_sync_confirmation_upgrade">AnkiDroid ᱨᱮᱭᱟᱜ ᱢᱮᱲᱟᱝ ᱵᱷᱚᱨᱥᱚᱱ ᱨᱮ ᱰᱤᱜᱟᱣ ᱧᱚᱢ ᱮᱱᱟ , ᱡᱩᱨ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ</string>
+    <string name="full_sync_confirmation_upgrade">AnkiDroid ᱨᱮᱭᱟᱜ ᱢᱟᱲᱟᱝ ᱵᱷᱚᱨᱥᱚᱱ ᱨᱮ ᱰᱤᱜᱟᱹᱣ ᱧᱟᱢ ᱮᱱᱟ , ᱡᱩᱨ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ</string>
     <string name="sync_error_407_proxy_required">Proxy authentication ᱫᱚᱨᱠᱟᱨ ᱾</string>
     <string name="sync_error_409">ᱢᱤᱫ ᱥᱚᱢᱟᱭ ᱨᱮ ᱢᱤᱫᱴᱟᱝ AnkiWeb ᱠᱞᱟᱮᱸᱴ ᱠᱟᱢᱤ ᱨᱮ ᱟᱜᱩ ᱜᱟᱱᱚᱜᱽᱟ ᱾ ᱢᱟᱲᱟᱝ ᱠᱚᱜ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱭ ᱜᱟᱱᱠᱚᱜ ᱠᱷᱟᱱ ᱫᱚ, ᱯᱚᱨᱮ ᱠᱤᱦᱤ ᱥᱚᱢᱚᱭ ᱯᱚᱨᱮ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾</string>
     <string name="sync_error_413_collection_size">ᱟᱢᱟᱜ ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ/ᱴᱩᱢᱟᱹᱞ ᱫᱚ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱞᱟᱹᱜᱤᱫ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ ᱾</string>

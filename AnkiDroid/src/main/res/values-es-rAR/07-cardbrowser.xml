@@ -83,8 +83,8 @@
         <item>Sin clasificar (más rápido)</item>
         <item>Por campo de ordenamiento</item>
         <item>Por fecha de creación</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Por hora de modificación de la nota</item>
+        <item>Por hora de modificación de la tarjeta</item>
         <item>Por tiempo de próxima aparición</item>
         <item>Por intervalo</item>
         <item>Por dificultad</item>

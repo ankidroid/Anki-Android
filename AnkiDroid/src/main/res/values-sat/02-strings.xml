@@ -159,9 +159,9 @@
     <string name="delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="show_hint">ᱫᱮᱠᱷᱟᱣ %s</string>
     <string name="info_rate">AnkiDroid ᱜᱚᱬᱚᱰ ᱢᱮ</string>
-    <string name="col_load_failed">ᱴᱩᱢᱟᱹᱞ ᱞᱚᱲ ᱦᱩᱲᱟᱜ ᱾\nAnkiDroid ᱵᱚᱸᱫ ᱞᱟᱜᱤᱫ ᱯᱟᱪᱞᱟᱭ ᱢᱮ ᱾</string>
+    <string name="col_load_failed">ᱴᱩᱢᱟᱹᱞ ᱞᱚᱲ ᱦᱩᱲᱟᱜ ᱾\nAnkiDroid ᱵᱚᱸᱫ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱪᱞᱟᱭ ᱢᱮ ᱾</string>
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
-    <string name="import_select_title">ᱛᱮᱛ ᱟᱹᱜᱩᱭᱮᱛ ᱞᱟᱜᱤᱫ ᱪᱚᱭᱚᱱ</string>
+    <string name="import_select_title">ᱛᱮᱛ ᱟᱹᱜᱩᱭᱮᱛ ᱞᱟᱹᱜᱤᱫ ᱪᱚᱭᱚᱱ</string>
     <string name="import_message_add">ᱥᱮᱞᱮᱫ</string>
     <string name="import_message_replace_confirm">ᱱᱚᱶᱟ ᱫᱚ ᱴᱩᱢᱟᱞ ᱜᱮᱫ ᱜᱤᱰᱤᱟᱭ ᱟᱨ ᱚᱱᱟ ᱵᱚᱫᱚᱞ ᱛᱮ ᱚᱱᱟ ᱨᱮᱛ ᱨᱮ ᱥᱟᱹᱠᱷᱤᱭᱟᱹᱛ ᱚᱞᱟᱭ  %s</string>
     <string name="import_message_add_confirm">“%s” ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱥᱮᱞᱮᱫ ᱟᱢ ? ᱱᱚᱶᱟ ᱡᱟᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱰᱮᱟᱜᱼᱟᱭ</string>
@@ -169,13 +169,13 @@
     <string name="import_log_failed_unzip">apkg ᱠᱷᱩᱞᱟᱹ ᱦᱩᱲᱟᱜᱺ %s</string>
     <string name="import_log_failed_copy_to">apkg ᱠᱷᱚᱱ %s ᱱᱚᱠᱚᱞ ᱦᱩᱲᱟᱜ</string>
     <string name="import_log_failed_validate">apkg ᱯᱩᱥᱴᱚᱣ ᱦᱩᱰᱟᱹᱜ</string>
-    <string name="import_log_insufficient_space">ᱯᱮᱠᱮᱡ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱟ ᱾ %1$d ᱫᱚᱨᱠᱟᱨ, %2$d ᱢᱮᱱᱟᱜᱼᱟ</string>
+    <string name="import_log_insufficient_space">ᱯᱮᱠᱮᱡ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ %1$d ᱫᱚᱨᱠᱟᱨ, %2$d ᱢᱮᱱᱟᱜᱼᱟ</string>
     <string name="import_log_file_cache_cleared">ᱨᱮᱫ ᱞᱟᱫᱮ ᱦᱩᱰᱟᱹᱜ, ᱠᱟᱨᱬ ᱠᱮᱪ ᱥᱟᱯᱷᱟ ᱦᱩᱭ ᱠᱚᱜᱼᱟ ᱾\n ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
     <string name="import_succeeded_but_check_database">ᱰᱟᱴᱟ ᱟᱹᱜᱩ ᱦᱩᱭ ᱦᱮᱞᱮ ᱯᱚᱥᱴ-ᱟᱜᱩ ᱠᱞᱤᱱᱚᱯᱷ ᱰᱤᱜᱟᱹᱣ ᱾ ᱪᱮᱠ ᱰᱟᱴᱟᱵᱮᱥ ᱯᱚᱨᱮ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ ᱾ ᱢᱩᱞ ᱠᱟᱨᱚᱬ: %s</string>
     <string name="import_error_unhandled_request">ᱞᱟᱫᱮ ᱱᱮᱦᱚᱨ ᱵᱟᱝ ᱜᱟᱱᱚᱜ ᱠᱟᱱᱟ</string>
     <string name="import_error_exception">ᱯᱟᱠᱟᱡ \n\n%s ᱞᱟᱫᱮ ᱦᱩᱲᱟᱹᱜ</string>
-    <string name="import_error_not_apkg_extension">ᱨᱮᱫᱧᱩᱛᱩᱢ “%s” ᱴᱦᱮᱱ .apkg or .colpkg extension ᱵᱟᱱᱩᱜᱽᱟ</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱸᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
+    <string name="import_error_not_apkg_extension">ᱨᱮᱫᱧᱩᱛᱩᱢ “%s” ᱴᱷᱮᱱ .apkg or .colpkg extension ᱵᱟᱱᱩᱜᱽᱟ</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱸᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
     <string name="import_error_content_provider">ᱪᱚᱭᱚᱱᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱸᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() ᱦᱩᱲᱟᱜ (ᱫᱚᱦᱚ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱯᱟᱞᱮ)</string>
     <string name="import_replacing">ᱴᱩᱢᱟᱹ ᱳᱪᱳᱜᱳᱜ ᱠᱟᱱᱟ&#8230;</string>
@@ -193,7 +193,7 @@
     <string name="export_save_apkg_unsuccessful">Anki ᱯᱮᱠᱮᱡ ᱥᱟᱝᱪᱟᱣ ᱦᱩᱰᱟᱹᱜ</string>
     <string name="export_successful">ᱨᱮᱫ “%s” ᱵᱷᱮᱡᱟᱭ ᱮᱱᱟ ᱾ ᱚᱞᱜᱟ ᱮᱯᱯ ᱛᱮ ᱵᱷᱮᱡᱟ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ?</string>
     <string name="export_email_subject">AnkiDroid ᱯᱷᱟᱥᱠᱟᱰ ᱵᱟᱡᱟᱠᱮᱜᱼᱟᱭ: %s</string>
-    <string name="export_email_text"><![CDATA[ Hi! <br/><br/> ᱱᱟᱶᱟ ᱫᱚ Anki flashcards ᱰᱮᱠ ᱠᱟᱱᱟ ᱱᱚᱶᱟ ᱫᱚ ᱵᱷᱮᱡᱟᱜ ᱠᱟᱱᱟ<a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>ᱱᱚᱶᱟ ᱠᱚ ᱢᱮᱱᱟᱜ ᱠᱷᱚᱱ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱜᱤᱫ ᱪᱮᱥᱴᱟᱭ ᱢᱮ<a href="http://ankisrs.net/#download">Anki distributions</a> ᱟᱨ ᱵᱮᱥ ᱛᱮ ᱪᱮᱫᱚᱜ ᱢᱮ !]]></string>
+    <string name="export_email_text"><![CDATA[ Hi! <br/><br/> ᱱᱟᱶᱟ ᱫᱚ Anki flashcards ᱰᱮᱠ ᱠᱟᱱᱟ ᱱᱚᱶᱟ ᱫᱚ ᱵᱷᱮᱡᱟᱜ ᱠᱟᱱᱟ<a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>ᱱᱚᱶᱟ ᱠᱚ ᱢᱮᱱᱟᱜ ᱠᱷᱚᱱ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱪᱮᱥᱴᱟᱭ ᱢᱮ<a href="http://ankisrs.net/#download">Anki distributions</a> ᱟᱨ ᱵᱮᱥ ᱛᱮ ᱪᱮᱫᱚᱜ ᱢᱮ !]]></string>
     <string name="export_unsuccessful">apkg ᱨᱮᱫ ᱵᱷᱮᱡ ᱦᱩᱰᱟᱹᱜ</string>
     <string name="import_hint">apkg ᱨᱮᱫ ᱫᱚ “%s” ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱫᱚᱦᱚᱭ ᱢᱮ ᱟᱨ “OK” ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ ᱠᱟᱰ ᱵᱷᱮᱡᱟᱭ ᱞᱟᱹᱜᱤᱫ</string>
     <string name="upgrade_import_no_file_found">ᱪᱮᱫ ᱦᱚ ᱵᱷᱮᱡᱟ ᱞᱟᱭᱚᱠ %1$s ᱨᱮᱫ ᱵᱟᱝ ᱧᱟᱢ ᱞᱮᱱᱟ</string>
@@ -201,7 +201,7 @@
     <string name="select_tts">TTS ᱯᱟᱹᱨᱥᱤ ᱥᱮᱴ ᱢᱮ</string>
     <string name="custom_study">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ</string>
     <string name="more_options">ᱰᱷᱮᱨ</string>
-    <string name="dyn_deck_desc">ᱱᱚᱶᱟ ᱫᱚ ᱱᱚᱨᱢᱟᱞ ᱥᱮᱰᱭᱩᱞ ᱠᱷᱣᱱ ᱮᱴᱟᱜ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱞᱟᱜᱤᱫ ᱥᱯᱮᱥᱟᱞ ᱰᱮᱠ ᱠᱟᱱᱟ ᱾ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱤᱣ ᱯᱚᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱢᱩᱞ ᱰᱮᱢᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ ᱾ ᱰᱮᱠ ᱞᱤᱥᱴ ᱠᱷᱚᱱ ᱰᱮᱠᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱮᱠᱷᱱᱟ ᱫᱚ ᱡᱷᱚᱛᱚ ᱠᱟᱲ ᱢᱩᱞ ᱰᱮᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ  </string>
+    <string name="dyn_deck_desc">ᱱᱚᱶᱟ ᱫᱚ ᱱᱚᱨᱢᱟᱞ ᱥᱮᱰᱭᱩᱞ ᱠᱷᱣᱱ ᱮᱴᱟᱜ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱥᱯᱮᱥᱟᱞ ᱰᱮᱠ ᱠᱟᱱᱟ ᱾ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱤᱣ ᱯᱚᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱢᱩᱞ ᱰᱮᱢᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ ᱾ ᱰᱮᱠ ᱞᱤᱥᱴ ᱠᱷᱚᱱ ᱰᱮᱠᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱮᱠᱷᱱᱟ ᱫᱚ ᱡᱷᱚᱛᱚ ᱠᱟᱲ ᱢᱩᱞ ᱰᱮᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ  </string>
     <string name="steps_error">ᱥᱴᱮᱯᱥ ᱫᱚ ᱥᱩᱱᱭᱚ ᱱᱩᱚᱢᱵᱚᱨ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱜᱮ ᱛᱟᱦᱮᱱ ᱢᱟ</string>
     <string name="steps_min_error">ᱠᱚᱢ ᱥᱮ ᱠᱚᱢ ᱢᱤᱫᱴᱟᱝ ᱥᱴᱮᱯ ᱫᱚᱨᱠᱟᱨ</string>
     <string name="sched_end">(ᱢᱩᱪᱟᱹᱫᱽ)</string>
@@ -242,7 +242,7 @@
     <string name="decks_rename_exists">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱢᱟᱰᱟᱝ ᱠᱷᱚᱵ ᱜᱣ ᱢᱮᱱᱟᱜᱼᱟ</string>
     <string name="decks_rename_filtered_nosubdecks">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱨᱮ ᱥᱚᱵᱰᱮᱠ ᱵᱟᱭ ᱛᱟᱦᱮᱸ ᱫᱟᱲᱮᱟᱜᱼᱟ</string>
     <string name="filtered_deck_name">ᱯᱷᱤᱞᱴᱚᱨᱟᱠᱟᱱ ᱰᱮᱠ</string>
-    <string name="reminder_title">ᱯᱟᱲᱦᱟᱣ ᱞᱟᱜᱤᱫ ᱟᱞᱚᱢ ᱦᱤᱲᱤᱧᱟ ᱛᱮᱦᱮᱧ!</string>
+    <string name="reminder_title">ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱚᱢ ᱦᱤᱲᱤᱧᱟ ᱛᱮᱦᱮᱧ!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d ᱠᱟᱰ %1$s ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱧᱮᱞ</item>
         <item quantity="other">%2$d ᱠᱟᱰ %1$s ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱧᱮᱞ</item>
@@ -255,11 +255,11 @@
     <string name="export_v2_dummy_note">ᱱᱚᱶᱟ ᱨᱮᱫ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ Anki ᱨᱮᱭᱟᱜ ᱱᱟᱶᱟ ᱵᱷᱚᱨᱥᱚᱱ ᱫᱚᱨᱠᱟᱨ ᱾</string>
     <string name="export_v2_forbidden">ᱢᱤᱫᱴᱟᱝ ᱰᱮᱠ ᱵᱷᱮᱡᱟ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱫᱚᱭᱟᱟᱛᱮ V1 ᱥᱮᱰᱭᱩᱞᱚᱨ ᱛᱮ ᱦᱩᱭᱩᱜ ᱢᱮ ᱾</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' ᱞᱚᱰ ᱰᱤᱜᱟᱣᱮᱱᱟ ᱾</string>
-    <string name="activity_start_failed">ᱱᱚᱶᱟ ᱥᱮᱤᱴᱚᱢ ᱴᱦᱮᱱ ᱠᱟᱹᱢᱤ ᱠᱚᱨᱟᱣ ᱞᱟᱜᱤᱫ ᱮᱯᱯ ᱵᱟᱹᱱᱩᱜᱟ ᱾</string>
+    <string name="activity_start_failed_load_url">\'%s\' ᱞᱚᱰ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ ᱾</string>
+    <string name="activity_start_failed">ᱱᱚᱶᱟ ᱥᱮᱤᱴᱚᱢ ᱴᱷᱮᱱ ᱠᱟᱹᱢᱤ ᱠᱚᱨᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱮᱯᱯ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ᱠᱮᱢᱨᱟ ᱪᱤᱛᱟᱨ ᱢᱟᱨᱟᱝ ᱜᱮ ᱛᱟᱦᱮᱸ ᱫᱟᱲᱮᱟᱜᱼᱟ ᱾ ᱢᱮᱰᱤᱭᱟ ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱪᱤᱛᱟᱨ ᱠᱚᱥᱚᱴ ᱢᱮ]]></string>
     <string name="no_browser_notification">ᱵᱨᱚᱩᱡᱚᱨ ᱵᱟᱭ ᱧᱟᱢ ᱞᱮᱱᱟ，ᱣᱮᱵᱯᱮᱡ ᱥᱟᱦᱴᱟ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱚᱢᱯᱩᱴᱚᱨ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱢᱚᱵᱚᱤᱞ ᱛᱮ ᱪᱟᱞᱟᱜ ᱢᱮ:</string>
-    <string name="no_outgoing_link_in_cardbrowser">ᱵᱟᱦᱨᱮ ᱡᱟᱱᱟᱲ ᱠᱟᱰ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱟ</string>
+    <string name="no_outgoing_link_in_cardbrowser">ᱵᱟᱦᱨᱮ ᱡᱟᱱᱟᱲ ᱠᱟᱰ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">ᱨᱤᱠᱚᱵᱷᱚᱨ ᱟᱠᱟᱱ ᱠᱟᱰ ᱠᱚ</string>
     <!-- Deckpicker Background -->

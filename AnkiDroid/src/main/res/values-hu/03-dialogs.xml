@@ -41,13 +41,13 @@
     <string name="check_db_title">Adatbázis ellenőrzése</string>
     <string name="check_db_warning">Ez sokáig tarthat</string>
     <string name="check_db_acknowledge">Adatbázis ellenőrizve</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">Adatbázis ellenőrizve és optimalizálva.\n%d MB-t csökkent.</string>
     <string name="contextmenu_deckpicker_delete_deck">Pakli törlése</string>
     <string name="delete_deck_default_deck">Az alapértelmezett pakli nem törölhető</string>
     <string name="delete_deck_title">Pakli törlése</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Minden kártya törlése %1$s? -ból %2$d kártyát tartalmaz.</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+        <item quantity="other">Minden kártya törlése %1$s-ból? %2$d kártyát tartalmaz.</item>
     </plurals>
     <string name="delete_cram_deck_message">Biztosan szeretnéd, hogy a %s kártyái visszakerüljenek az eredeti paklijukba?</string>
     <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
@@ -63,49 +63,49 @@
     <string name="preview_title">Előnézet</string>
     <string name="reposition_card_dialog_title">Helyezze át az új kártyát</string>
     <string name="reposition_card_dialog_message">Kiinduló helyzet:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_not_new_error">Csak az új kártyákat lehet áthelyezni</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d kártya áthelyezve</item>
+        <item quantity="other">%d kártyák áthelyezve</item>
     </plurals>
     <string name="reset_card_dialog_title">Kártya folyamatát alaphelyzetbe</string>
     <string name="reset_card_dialog_message">Ez a kártya az új kártya várólista végére kerül.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d kártya visszaállítva</item>
+        <item quantity="other">%d kártyák visszaállítva</item>
     </plurals>
     <string name="reschedule_card_dialog_title">Kártya átütemezés</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="one">Kártya átütemezése</item>
+        <item quantity="other">Kártyák átütemezése</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Jelenlegi intervallum: %d nap</item>
+        <item quantity="other">Jelenlegi intervallum: %d nap</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Ismétléshez átütemezés x nap:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d kártya átütemezve</item>
+        <item quantity="other">%d kártyák átütemezve</item>
     </plurals>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Válassza ki a kártyát a fájlkezelőjéből vagy látogassa meg az about:downloads oldalt és importálja azt</string>
     <string name="answering_error_title">Adatbázis hiba</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">A gyűjteménybe írás sikertelen. Az adatbázis lehet, hogy korrupt vagy nincs elég hely a lemezen.\n\n. Ha gyakrabban történik ilyen, akkor próbálja ellenőrizni az adatbázist, javítsa meg a gyűjteményt vagy állítsa azt vissza egy biztonsági másolatból. Ehhez nyomjon rá a \"beállításokra\".\n. Vagy lehet, hogy ez egy AnkiDroid bug; kérjük jelentse a hibát, hogy le tudjuk ellenőrizni.</string>
     <string name="answering_error_report">Hibák jelentése</string>
     <string name="repair_deck_dialog">Tényleg megpróbálod megjavítani az adatbázist?\n\nEnnek megkísérlése előtt a program létrehoz egy másolatot a \'%s\' almappában.</string>
     <string name="intent_add_saved_information">Mentett adatok</string>
     <string name="intent_add_clear_all">Mindent töröl</string>
     <string name="intent_aedict_empty">Az \"alap\" kategória üres</string>
     <string name="intent_aedict_category">Hogy új kártyákat adj az AnkiDroid-hoz, távolítsd el az összes Jegyzettömb/Notepad/ kategóriát, vagy adj hozzá egyet \'default\' névvel</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
+    <string name="custom_study_new_total_new">Új kártyák a pakliban: %d</string>
+    <string name="custom_study_rev_total_rev">Ismétlések határideje a pakliban: %d</string>
     <string name="custom_study_new_extend">Mai új kártyák számának növelése</string>
     <string name="custom_study_rev_extend">Mai ismétlések számának növelése</string>
     <string name="custom_study_forgotten">Az elmúlt x napban elfelejtett kártyák ismétlése:</string>
     <string name="custom_study_ahead">Idő előtti, x nappal előre ismétlés:</string>
     <string name="custom_study_random">A pakliból x kártya véletlen kiválasztása:</string>
     <string name="custom_study_preview">Az elmúlt x nap új kártyáinak előre átnézése:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_rebuild_deck_corrupt">Nem lehetett újraépíteni a jelenlegi egyéni tanulókártyákat</string>
     <string name="rebuild_custom_study_deck">Egyéni gyakorlópakli újraépítése.\nKérlek, várj...</string>
     <string name="importing_collection">Gyűjtemény importálása.\nKérlek, várj&#8230;</string>
     <string name="import_media_count">Média fájlok importálása %1$d%%\nKérlek, várj&#8230;</string>
@@ -119,7 +119,7 @@
     <string name="restore_backup">A gyűjteményed egy régi másolattal felül lesz írva. A nem mentett változások elvesznek.</string>
     <string name="dialog_cancel">Mégsem</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">Nem</string>
     <string name="dialog_continue">Folytatás</string>
     <string name="dialog_positive_create">Létrehoz</string>
     <string name="dialog_positive_delete">Töröl</string>
@@ -155,48 +155,48 @@
     <string name="empty_cards_count">%d darab törlendő kártya</string>
     <string name="empty_cards_deleted">%d darab kártya törölve</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">Nem sikerült mikrofon engedélyt szerezni. </string>
+    <string name="multimedia_editor_camera_permission_refused">Nem sikerült kamera engedélyt szerezni. A funkció ki lett kapcsolva.</string>
+    <string name="multimedia_editor_failed">A Multimédia Szerkesztő megnyitása sikertelen</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Audió felvétel engedély megtagadva</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_title">Üdvözöljük az AnkiDroidnál!</string>
+    <string name="collection_load_welcome_request_permissions_details">Az AnkiDroidnak szüksége van tárhely engedélyre, amit csak az AnkiDroid gyűjtemények, szókártyák és biztonsági mentések tárolására használunk. A kódunk nyílt forráskódú, önkéntesek által írva, amiben milliók megbíznak.\n\n.Ha bármilyen kérdések van, kérjük olvassa el az alkalmazáson belüli útmutatót vagy látogassa meg a támogatói fórumainkat.\n\n.Köszönjük, hogy kipróbálta az AnkiDroidot!\n-AnkiDroid Fejlesztői Csapat</string>
+    <string name="mutimedia_editor_assertion_failed">Ismeretlen hiba történt a Bővített Szerkesztő megnyitása során</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">Could not play video</string>
+    <string name="integrity_check_startup_title">Frissített AnkiDroid</string>
+    <string name="integrity_check_startup_content">Az AnkiDroid frissítve lett. Ez a frissítés lehetséges adatbázis problémákat orvosol, javasoljuk, hogy most futtassátok az adatbázis ellenőrzést.</string>
+    <string name="integrity_check_positive">Adatbázis Ellenőrzése</string>
+    <string name="integrity_check_continue_anyway">Folytatás Mindenképpen</string>
+    <string name="integrity_check_insufficient_space">Az Adatbázis ellenőrzés sok ideiglenes helyet használ.\n\n.Erősen ajánlott, hogy legalább %s szabad tárhelyed legyen a készüléken mielőtt folytatnád.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nJelenleg %s szabad hely van.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d kártya helytelen főkártyával lett visszaszerezve. Kérjük olvassa el az útmutatót további információért.</string>
+    <string name="video_creation_error">Nem sikerült lejátszani a videót</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">Nem sikerült paklit változtatni</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">Hiba a kártya adatainak dekódolása közben</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <string name="deck_options_corrupt">Sikertelen a pakli beállításainak feldolgozása: %s</string>
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <string name="database_locked_title">Adatbázis zárolva</string>
+    <string name="database_locked_summary">Az AnkiDroid adatbázist egy másik alkalmazás használja. Kérjük zárja be ezt az alkalmazást, majd nyissa meg újra az AnkiDroidot.</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="background_image_applied">Háttérkép ráillesztve</string>
+    <string name="background_image_removed">Háttérkép eltávolítva</string>
+    <string name="no_image_selected">Nincsen kép kiválasztva</string>
+    <string name="error_selecting_image">Hiba a kép kiválasztása közben. Kérjük olvassa el az útmutatót. %s</string>
+    <string name="error_deleting_image">Hiba a kép törlése közben</string>
+    <string name="failed_to_apply_background_image">Hiba a  %s háttérkép feltevése közben</string>
+    <string name="background_image_too_large"> A Pakli Választó háttérkép túl nagy méretű</string>
+    <string name="image_max_size_allowed"> A maximum képméret %d MB</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Hiányzó tárhely engedély. Kérjük engedélyezze a tárhelyhez való hozzáférést majd próbája újra.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">Nem sikerült betölteni a Kártya Böngésző Kinézetét</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">Az emlékeztetők ütemezése sikertelen</string>
+    <string name="boot_service_too_many_notifications">Túl sok emlékeztető van beütemezve. Néhány nem fog megjelenni</string>
 </resources>

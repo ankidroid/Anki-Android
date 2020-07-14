@@ -191,8 +191,8 @@
     <string name="nothing">Ничего</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Типы карточек</string>
-    <string name="card_template_editor_front">Шаблон лицевой стороны</string>
-    <string name="card_template_editor_back">Шаблон обратной стороны</string>
+    <string name="card_template_editor_front">Шаблон лица</string>
+    <string name="card_template_editor_back">Шаблон оборота</string>
     <string name="card_template_editor_styling">Стилизация</string>
     <string name="card_template_editor_menu_delete">Удалить</string>
     <string name="card_template_editor_menu_card_browser_appearance">Внешний вид списка карточек</string>

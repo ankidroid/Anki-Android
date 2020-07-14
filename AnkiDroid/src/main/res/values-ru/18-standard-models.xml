@@ -20,8 +20,8 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Лицевая сторона</string>
-    <string name="back_field_name">Оборотная сторона</string>
+    <string name="front_field_name">Лицо</string>
+    <string name="back_field_name">Оборот</string>
     <string name="text_field_name">Текст</string>
     <string name="extra_field_name">Дополнительно</string>
     <string name="field_to_ask_front_name">Добавить обратную</string>

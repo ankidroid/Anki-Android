@@ -58,25 +58,25 @@
     <string name="sdcard_missing_message">Az SD kártya nem elérhető, mert USB háttérként van használatban. Válaszd le az USB-ről a készüléket, hogy hozzáférhess a paklikhoz.</string>
     <string name="updated_version">%s verzióra frissítve</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Rajztábla mentése</string>
     <string name="enable_whiteboard">Rajztábla be</string>
     <string name="disable_whiteboard">Rajztábla ki</string>
     <string name="show_whiteboard">Rajztábla mutatása</string>
     <string name="hide_whiteboard">Rajztábla elrejtése</string>
     <string name="clear_whiteboard">Rajztábla törlése</string>
     <string name="replay_audio">Hang ismétlés</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="toggle_mic_tool_bar">Kiejtés ellenőrzése</string>
     <string name="leech_suspend_notification">Kártya megjelölve piócaként és felfüggesztésre került</string>
     <string name="leech_notification">Kártya megjelölve piócaként</string>
     <string name="corrupt_font">Sérült font fájl %s</string>
     <string name="webview_crash_unknown">Ismeretlen hiba</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
+    <string name="webview_crash_unknwon_detailed">Ezt egy belső hiba okozta a WebView-ban</string>
     <string name="webview_crash_oom">Kevés a memória</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_oom_details">A WebView-t a rendszer leállította. Ez általában akkor történik, amikor az alkalmazás kifogy a memóriából, általában nagy betűméret vagy multimédia miatt.</string>
+    <string name="webview_crash_nonfatal">A WebView megjelenítő összeomlott. Hiba oka: %s</string>
+    <string name="webview_crash_fatal">Végzetes Hiba: a WebView megjelenítő összeomlott. Hiba oka: %s</string>
+    <string name="webview_crash_loop_dialog_title">Webview Rendszer Megjenítői Hiba</string>
+    <string name="webview_crash_loop_dialog_content">A WebView rendszer nem tudta megjeleníteni a \'%1$s\' kártyát.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Kérdés</item>
@@ -91,12 +91,12 @@
         <item>Címkék</item>
         <item>Elfelejtések száma</item>
         <item>Ismétlések száma</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>Intervallum</item>
+        <item>Nehézség</item>
+        <item>Határidő</item>
+        <item>A kártya módosítva lett</item>
+        <item>Létrehozva</item>
+        <item>A jegyzet módosítva lett</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ma még több új kártyát tanulok</string>
@@ -110,12 +110,12 @@
     <string name="cardeditor_title_add_note">Jegyzet hozzáadása</string>
     <string name="cardeditor_title_edit_card">Jegyzet szerkesztése</string>
     <string name="discard_unsaved_changes">Bezár és mostani állást elvet?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_no_cards_created">A kártyák nem lettek létrehozva. Kérjük töltsön ki több mezőt</string>
+    <string name="note_editor_no_first_field">Az első mező üres</string>
+    <string name="note_editor_no_cloze_delations">Ennek a jegyzet típusnak részleges törléseket kell tartalmaznia</string>
+    <string name="note_editor_no_cards_created_all_fields">A jelenlegi jegyzettípus nem hozott létre semmilyen kártyát.\nKérjük válasszon más jegyzettípust, vagy kattintson a \"Kártyákra\" és adjon hozzá egy mezőhelyettesítést</string>
     <string name="saving_facts">Jegyzet mentése</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Jegyzettípus mentése</string>
     <string name="add">Hozzáadás</string>
     <string name="save">Mentés</string>
     <string name="close">Bezárás</string>
@@ -130,13 +130,13 @@
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="one">%1$d perc</item>
+        <item quantity="other">%1$d perc</item>
     </plurals>
     <string name="studyoptions_welcome_title">Üdv az AnkiDroidban!</string>
     <string name="fact_adder_intent_title">AnkiDroid Kártya</string>
-    <string name="note_editor_add_note">Add note</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_add_note">Jegyzet hozzáadása</string>
+    <string name="note_editor_copy_note">Jegyzet másolása</string>
     <string name="card_editor_copy_card">Kártya másolása</string>
     <string name="card_editor_reposition_card">Áthelyezés</string>
     <string name="card_editor_reset_card">Reset folyamat</string>
@@ -147,7 +147,7 @@
     <string name="default_conf_delete_error">Az alapértelmezett beállítások csoport nem távolítható el</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d kártya hozzáadva</item>
-        <item quantity="other">%d cards added</item>
+        <item quantity="other">%d kártyák hozzáadva</item>
     </plurals>
     <string name="help_title">Segítség</string>
     <string name="check_db">Adatbázis ellenőrzése</string>
@@ -165,32 +165,32 @@
     <string name="import_message_add">Hozzáadás</string>
     <string name="import_message_replace_confirm">Ez a művelet törölni fogja a már meglévő gyűjteményed és lecseréli a %s fájl tartalmával. Biztos vagy benne?</string>
     <string name="import_message_add_confirm">\"%s\"-t felvenni a gyűjteménybe hosszú ideig tarthat</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_log_no_apkg">Ez nem egy érvényes Anki csomag fájl</string>
+    <string name="import_log_failed_unzip">Nem sikerült kicsomagolni az apkg-t: %s</string>
+    <string name="import_log_failed_copy_to">Nem sikerült átmásolni az apkg-t a(z) %s-hoz</string>
+    <string name="import_log_failed_validate">Az apkg nem ment át az érvényesítésen</string>
+    <string name="import_log_insufficient_space">Nincs elég hely a csomag kicsomagolásához. %1$d kell, %2$d elérhető</string>
+    <string name="import_log_file_cache_cleared">Hiba történt a fájl importálása során valószínű a cache törlés során.\n.Kérjük próbálja újra</string>
+    <string name="import_succeeded_but_check_database">Adat importálás sikeres, de az import utáni takarítás sikertelen. Futass egy adatbázis ellenőrzést később. Hiba eredete: %s</string>
+    <string name="import_error_unhandled_request">Nem sikerült feldolgozni az import folyamat kérést</string>
+    <string name="import_error_exception">Nem sikerült importálni a csomagot\n\n%s</string>
+    <string name="import_error_not_apkg_extension">A \"%s\" fájlnévnek nincsen .apkg vagy .colpkg kiterjesztése</string>
+    <string name="import_error_load_imported_database">Az Anki Adatbázis (.anki2) csere még nem támogatott. Kérjük olvassa el az útmutatót az instrukciókhoz.</string>
     <string name="import_error_content_provider">A kiválasztott fájl nem importálható automatikusan. Olvasd el a felhasználói kézikönyvet, hogy megtudd, hogyan importálhatsz manuálisan anki fájlokat:\n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
+    <string name="import_error_copy_file_to_cache">A copyFileToCache() sikertelen (feltehetőleg nem elég a tárhely)</string>
     <string name="import_replacing">A gyűjtemény cseréje&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Importálás megszakítva</string>
     <string name="export_include_schedule">Ütemezéssel együtt</string>
     <string name="export_include_media">Médiával együtt</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
+    <string name="confirm_apkg_export">Exportálja a gyűjteményt Anki csomagként?</string>
     <string name="confirm_apkg_export_deck">Exportáljon \"%s\"-t apkg-ként?</string>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Send Anki package?</string>
+    <string name="export_in_progress">Anki csomag fájlok exportálása...</string>
+    <string name="export_successful_title">El akarja küldeni az Anki csomagot?</string>
     <string name="export_send_button">Küldés</string>
     <string name="export_save_button">Mentés fájlba</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
+    <string name="export_send_no_handlers">Nincs elérhető alkalmazás, ami kezelni tudja az apkg-t. Mentés...</string>
+    <string name="export_save_apkg_successful">Az Anki csomag sikeresen mentve</string>
+    <string name="export_save_apkg_unsuccessful">Az Anki csomag mentése sikertelen</string>
     <string name="export_successful">A (z) “%s” fájl exportálása megtörtént. Szeretnéd elküldeni egy másik alkalmazással?</string>
     <string name="export_email_subject">AnkiDroid exportált index kártyák: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -201,7 +201,7 @@
     <string name="export_unsuccessful">Hiba történt az apkg fájl exportálásakor</string>
     <string name="import_hint">Kártyák importálásához helyezd az apkg fájlt a %s könyvtárba és nyomd meg az OK gombot</string>
     <string name="upgrade_import_no_file_found">Nem importálható %1$s fájlt található</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Beállítások</string>
     <string name="select_tts">TTS nyelv beállítása</string>
     <string name="custom_study">Egyéni tanulás</string>
     <string name="more_options">Több</string>
@@ -248,35 +248,35 @@
     <string name="filtered_deck_name">Szűrt Pakli</string>
     <string name="reminder_title">Ne feledkezz meg a tanulásról ma sem!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d kártya ismétlése %1$s-ban</item>
+        <item quantity="other">%2$d kártyák ismétlése %1$s-ban</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Hiba történt az apkg fájl megosztásakor</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
+    <string name="import_needs_v2">A V2 ütemező be kell hogy legyen kapcsolva, hogy importálni tudja ezt a fájlt.</string>
+    <string name="import_cannot_with_v2">A V2 ütemező nem tudja importálni a V1-es kártyákat, ha be van kapcsolva az ütemező.</string>
+    <string name="export_v2_dummy_note">A fájlhoz egy újabb Anki verzió szükséges.</string>
+    <string name="export_v2_forbidden">Kérjük váltson V1 ütemezőre mielőtt egyetlen kártyát is exportálna ütemezői információval.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="activity_start_failed_load_url">\'%s\' betöltése sikertelen.</string>
+    <string name="activity_start_failed">Nincsen letöltve olyan alkalmazás, ami végre tudná hajtani ezt a műveletet.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[A kamera képei lehet túl nagyok. Lehet, hogy tömörítenie vagy újra kéne méreteznie őket a média mappájában.]]></string>
+    <string name="no_browser_notification">Nem találtunk böngészőt, kérjük látogasson meg egy weblapot PC-n vagy mobilon: </string>
+    <string name="no_outgoing_link_in_cardbrowser">A kártyán külsős link nem támogatott.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Visszaszerzett Kártya</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="background_image_title">Háttér</string>
+    <string name="choose_an_image">Válasszon egy képet</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default">Alaphelyzetbe állítás</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Üres</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Kérjük kapcsolja be a teljes képernyős módot, hogy a Navigáció Rajzolót be tudja kapcsolni JavaScript használatával.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Kérjük kapcsolja be a teljes képernyős módot, hogy a Beállítások Menü menüpontot használhassa JavaScriptel.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="white_board_image_save_failed">A rajztábla kép mentése sikertelen. %s</string>
+    <string name="white_board_image_saved">A rajztábla kép elmentve %s-ba</string>
+    <string name="title_whiteboard_pen_color">Rajtábla tollszín </string>
 </resources>

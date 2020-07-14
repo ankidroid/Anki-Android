@@ -78,7 +78,7 @@
     <string name="card_details_answer">ᱛᱮᱞᱟ</string>
     <string name="card_details_due">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
     <string name="card_details_tags">ᱴᱮᱜᱥ</string>
-    <string name="card_browser_filtering_cards">ᱠᱟᱰ ᱪᱷᱟᱹᱱᱤ&#8230; \nᱵᱟᱫᱽ ᱞᱟᱜᱤᱫ ᱯᱟᱹᱪᱞᱟ ᱵᱚᱴᱚᱱ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="card_browser_filtering_cards">ᱠᱟᱰ ᱪᱷᱟᱹᱱᱤ&#8230; \nᱵᱟᱫᱽ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱹᱪᱞᱟ ᱵᱚᱴᱚᱱ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string-array name="card_browser_order_labels">
         <item>ᱢᱚᱦᱰᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ (ᱞᱚᱜᱚᱱ)</item>
         <item>ᱡᱟᱭᱜᱟ ᱢᱚᱦᱰᱟ ᱠᱟᱛᱮ</item>

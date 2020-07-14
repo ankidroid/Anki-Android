@@ -54,33 +54,33 @@
     <string name="multimedia_editor_trans_translation_failed">ᱛᱚᱨᱡᱚᱢᱟ ᱰᱤᱜᱟᱹᱣ</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">Pick dictionary</string>
+    <string name="multimedia_editor_trans_pick_translation_source">ᱥᱟᱵᱟᱫ ᱜᱟᱫᱮᱞ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
     <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">Install ColorDict first</string>
+    <string name="multimedia_editor_trans_install_color_dict">ᱯᱨᱩᱛᱷᱩᱢ ColorDict ᱜᱟᱺᱣᱛᱟᱦᱟᱭ ᱢᱮ</string>
     <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Load</string>
-    <string name="multimedia_editor_pron_looking_up">Looking up pronunciation</string>
+    <string name="multimedia_editor_pron_load">ᱞᱟᱫᱮ</string>
+    <string name="multimedia_editor_pron_looking_up">ᱩᱪᱨᱚᱬ ᱠᱚ ᱧᱮᱞ-ᱧᱮᱞᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">Pronunciation failed</string>
-    <string name="multimedia_editor_word_search_try_lower_case">Try using only lower case characters</string>
+    <string name="multimedia_editor_pron_pronunciation_failed">ᱩᱪᱨᱚᱬ ᱰᱮᱜᱟᱹᱣ</string>
+    <string name="multimedia_editor_word_search_try_lower_case">ᱠᱟᱛᱤᱡ ᱚᱠᱭᱚᱨ ᱛᱮ ᱵᱮᱵᱽᱷᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
     <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text">ᱚᱱᱚᱞ</string>
     <string name="multimedia_editor_field_editing_image">ᱪᱤᱛᱟᱹᱨ</string>
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio">ᱥᱟᱲᱮ ᱨᱮᱠᱚᱰ</string>
+    <string name="multimedia_editor_field_editing_audio_clip">ᱥᱟᱲᱮ ᱠᱞᱤᱯ</string>
     <string name="multimedia_editor_field_editing_done">ᱦᱩᱭᱮᱱᱟ</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">ᱯᱟᱱᱛᱮ ᱞᱟᱹᱜᱤᱫᱺ</string>
     <string name="multimedia_editor_text_field_editing_show">ᱪᱤᱛᱟᱹᱨ</string>
-    <string name="multimedia_editor_text_field_editing_say">Pronunciation</string>
-    <string name="multimedia_editor_text_field_editing_clear">Clear</string>
-    <string name="multimedia_editor_text_field_editing_clone">Clone from</string>
+    <string name="multimedia_editor_text_field_editing_say">ᱩᱪᱨᱚᱬ</string>
+    <string name="multimedia_editor_text_field_editing_clear">ᱥᱟᱯᱷᱟ</string>
+    <string name="multimedia_editor_text_field_editing_clone">ᱱᱚᱠᱟᱞ ᱠᱷᱚᱱ</string>
     <string name="multimedia_editor_text_field_editing_translate">ᱛᱚᱨᱡᱚᱢᱟ</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
+    <string name="multimedia_editor_text_field_editing_no_text">ᱠᱤᱪᱷᱤ ᱚᱱᱚᱞ ᱠᱚ ᱚᱞ ᱢᱮ ᱯᱨᱩᱛᱷᱩᱢ</string>
     <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
