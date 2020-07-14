@@ -26,15 +26,6 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ActionProvider;
-import androidx.core.view.MenuItemCompat;
-
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,6 +34,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ActionProvider;
+import androidx.core.view.MenuItemCompat;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -62,7 +62,6 @@ import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
-
 
 import java.lang.ref.WeakReference;
 
@@ -550,7 +549,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_change_whiteboard_pen_color).setVisible(true);
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp).mutate();
-            Drawable whiteboardColorPaletteIcon = ContextCompat.getDrawable(this, R.drawable.ic_color_lens_white_24dp).mutate();
+            Drawable whiteboardColorPaletteIcon = VectorDrawableCompat.create(getResources(), R.drawable.ic_color_lens_white_24dp, null).mutate();
 
             if (mShowWhiteboard) {
                 whiteboardIcon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
