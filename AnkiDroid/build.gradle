@@ -204,7 +204,14 @@ apply from: "./jacoco.gradle"
 apply from: "../lint.gradle"
 
 dependencies {
-    compileOnly 'org.jetbrains:annotations:16.0.1'
+    // Can possibly remove if upstream PR merges https://github.com/JakeWharton/timber/pull/398
+    configurations.all {
+        resolutionStrategy {
+            force 'org.jetbrains:annotations:19.0.0'
+        }
+    }
+
+    compileOnly 'org.jetbrains:annotations:19.0.0'
     compileOnly "com.google.auto.service:auto-service-annotations:1.0-rc7"
     annotationProcessor "com.google.auto.service:auto-service:1.0-rc7"
 
