@@ -354,8 +354,8 @@ public class AnkiDroidApp extends MultiDexApplication {
         UsageAnalytics.sendAnalyticsException(e, false);
 
         if (onlyIfSilent) {
-            boolean alwaysAccept = getSharedPrefs(getInstance().getApplicationContext()).getBoolean(ACRA.PREF_ALWAYS_ACCEPT, false);
-            if (!alwaysAccept) {
+            String reportMode = getSharedPrefs(getInstance().getApplicationContext()).getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK);
+            if (!FEEDBACK_REPORT_ALWAYS.equals(reportMode)) {
                 Timber.i("sendExceptionReport - onlyIfSilent true, but ACRA is not 'always accept'. Skipping report send.");
                 return;
             }
