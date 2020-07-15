@@ -48,6 +48,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
+import com.ichi2.utils.WebViewDebugging;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
@@ -240,6 +241,16 @@ public class AnkiDroidApp extends MultiDexApplication {
         Timber.tag(TAG);
 
         Timber.d("Startup - Application Start");
+
+        // The ACRA process needs a WebView for optimal UsageAnalytics values but it can't have the same data directory.
+        // Analytics falls back to a sensible default if this is not set.
+        if (ACRA.isACRASenderServiceProcess() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            try {
+                WebViewDebugging.setDataDirectorySuffix("acra");
+            } catch (Exception e) {
+                Timber.w(e, "Failed to set WebView data directory");
+            }
+        }
 
         // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
         UsageAnalytics.initialize(this);
