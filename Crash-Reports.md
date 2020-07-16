@@ -12,8 +12,6 @@ Making changes to AnkiDroid's use of ACRA should be tested carefully since this 
 
 Any time the library is updated or the usage is changed, the developer making those changes should take care to test what happens when the application crashes and verify that a report is posted to the crash report server and contains all the relevant details.
 
-**Note:** If you work on [our custom crash report dialog](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/java/com/ichi2/anki/dialogs/AnkiDroidCrashReportDialog.java) your editor will most likely have a problem with the import statements. We have converted to androidx [using the "Jetifier"](https://developer.android.com/topic/libraries/support-library/androidx-overview), which transforms dependent libraries that are on the old android.support libraries. [ACRA is not on androidx and will have a hard time converting](https://github.com/ACRA/acra/pull/698) so waiting on them is not ideal. Until they do, that file will have error notifications on import statements, but compilation and error-reporting work fine.
-
 ## Steps to test:
 
 1.  Open the Settings in the App, go to General Settings, and change the Error Reporting Mode to something other than "Never" (otherwise since it is a debug build, ACRA reports won't be generated)    
