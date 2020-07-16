@@ -30,19 +30,19 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-@PowerMockIgnore("javax.net.ssl.*")
-@PrepareForTest({PreferenceManager.class, GoogleAnalytics.class})
-@RunWith(PowerMockRunner.class)
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.validateMockitoUsage;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 public class AnalyticsTest {
 
     @Mock
@@ -57,96 +57,100 @@ public class AnalyticsTest {
     @Mock
     private SharedPreferences.Editor mMockSharedPreferencesEditor;
 
-    // This is actually a Mockito Spy of GoogleAnalyticsImpl
-    private GoogleAnalytics mAnalytics;
-
     @Before
     public void setUp() {
-        PowerMockito.mockStatic(PreferenceManager.class);
-        PowerMockito.mockStatic(GoogleAnalytics.class);
+        MockitoAnnotations.openMocks(this);
 
-        MockitoAnnotations.initMocks(this);
-
-        Mockito.when(mMockResources.getBoolean(R.bool.ga_anonymizeIp))
+        when(mMockResources.getBoolean(R.bool.ga_anonymizeIp))
                 .thenReturn(true);
-        Mockito.when(mMockResources.getInteger(R.integer.ga_sampleFrequency))
+        when(mMockResources.getInteger(R.integer.ga_sampleFrequency))
                 .thenReturn(10);
-        Mockito.when(mMockContext.getResources())
+        when(mMockContext.getResources())
                 .thenReturn(mMockResources);
 
-        Mockito.when(mMockContext.getString(R.string.ga_trackingId))
+        when(mMockContext.getString(R.string.ga_trackingId))
                 .thenReturn("Mock Tracking ID");
-        Mockito.when(mMockContext.getString(R.string.app_name))
+        when(mMockContext.getString(R.string.app_name))
                 .thenReturn("Mock Application Name");
-        Mockito.when(mMockContext.getPackageName())
+        when(mMockContext.getPackageName())
                 .thenReturn("mock_context");
-        Mockito.when(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
+        when(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
                 .thenReturn(mMockSharedPreferences);
 
-        Mockito.when(mMockSharedPreferences.getBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, false))
+        when(mMockSharedPreferences.getBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, false))
                 .thenReturn(true);
-        Mockito.when(PreferenceManager.getDefaultSharedPreferences(ArgumentMatchers.any()))
-                .thenReturn(mMockSharedPreferences);
 
-
-        Mockito.when(mMockSharedPreferencesEditor.putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, true))
+        when(mMockSharedPreferencesEditor.putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, true))
                 .thenReturn(mMockSharedPreferencesEditor);
 
-        Mockito.when(mMockSharedPreferences.edit())
+        when(mMockSharedPreferences.edit())
                 .thenReturn(mMockSharedPreferencesEditor);
 
-        Mockito.when(GoogleAnalytics.builder())
-                .thenReturn(new SpyGoogleAnalyticsBuilder());
-
-        mAnalytics = UsageAnalytics.initialize(mMockContext);
     }
+
 
     private static class SpyGoogleAnalyticsBuilder extends GoogleAnalyticsBuilder {
         public GoogleAnalytics build() {
             GoogleAnalytics analytics = super.build();
-            return Mockito.spy(analytics);
+            return spy(analytics);
         }
     }
 
+
     @After
     public void validate() {
-        Mockito.validateMockitoUsage();
+        validateMockitoUsage();
     }
+
 
     @Test
     public void testSendException() {
 
-        // no root cause
-        Exception exception = Mockito.mock(Exception.class);
-        Mockito.when(exception.getCause()).thenReturn(null);
-        Throwable cause = UsageAnalytics.getCause(exception);
-        Mockito.verify(exception).getCause();
-        Assert.assertEquals(exception, cause);
+        try (
+                MockedStatic<PreferenceManager> ignored = mockStatic(PreferenceManager.class);
+                MockedStatic<GoogleAnalytics> ignored1 = mockStatic(GoogleAnalytics.class)) {
 
-        // a 3-exception chain inside the actual analytics call
-        Exception childException = Mockito.mock(Exception.class);
-        Mockito.when(childException.getCause()).thenReturn(null);
-        Mockito.when(childException.toString()).thenReturn("child exception toString()");
-        Exception parentException = Mockito.mock(Exception.class);
-        Mockito.when(parentException.getCause()).thenReturn(childException);
-        Exception grandparentException = Mockito.mock(Exception.class);
-        Mockito.when(grandparentException.getCause()).thenReturn(parentException);
+            when(PreferenceManager.getDefaultSharedPreferences(ArgumentMatchers.any()))
+                    .thenReturn(mMockSharedPreferences);
 
-        // prepare analytics so we can inspect what happens
-        ExceptionHit spyHit = Mockito.spy(new ExceptionHit());
-        Mockito.doReturn(spyHit).when(mAnalytics).exception();
+            when(GoogleAnalytics.builder())
+                    .thenReturn(new SpyGoogleAnalyticsBuilder());
 
-        try {
-            UsageAnalytics.sendAnalyticsException(grandparentException, false);
-        } catch (Exception e) {
-            // do nothing - this is expected because UsageAnalytics isn't fully initialized
+            // This is actually a Mockito Spy of GoogleAnalyticsImpl
+            GoogleAnalytics mAnalytics = UsageAnalytics.initialize(mMockContext);
+
+            // no root cause
+            Exception exception = mock(Exception.class);
+            when(exception.getCause()).thenReturn(null);
+            Throwable cause = UsageAnalytics.getCause(exception);
+            verify(exception).getCause();
+            Assert.assertEquals(exception, cause);
+
+            // a 3-exception chain inside the actual analytics call
+            Exception childException = mock(Exception.class);
+            when(childException.getCause()).thenReturn(null);
+            when(childException.toString()).thenReturn("child exception toString()");
+            Exception parentException = mock(Exception.class);
+            when(parentException.getCause()).thenReturn(childException);
+            Exception grandparentException = mock(Exception.class);
+            when(grandparentException.getCause()).thenReturn(parentException);
+
+            // prepare analytics so we can inspect what happens
+            ExceptionHit spyHit = spy(new ExceptionHit());
+            doReturn(spyHit).when(mAnalytics).exception();
+
+            try {
+                UsageAnalytics.sendAnalyticsException(grandparentException, false);
+            } catch (Exception e) {
+                // do nothing - this is expected because UsageAnalytics isn't fully initialized
+            }
+            verify(grandparentException).getCause();
+            verify(parentException).getCause();
+            verify(childException).getCause();
+            verify(mAnalytics).exception();
+            verify(spyHit).exceptionDescription(ArgumentMatchers.anyString());
+            verify(spyHit).sendAsync();
+            Assert.assertEquals(spyHit.exceptionDescription(), "child exception toString()");
         }
-        Mockito.verify(grandparentException).getCause();
-        Mockito.verify(parentException).getCause();
-        Mockito.verify(childException).getCause();
-        Mockito.verify(mAnalytics).exception();
-        Mockito.verify(spyHit).exceptionDescription(ArgumentMatchers.anyString());
-        Mockito.verify(spyHit).sendAsync();
-        Assert.assertEquals(spyHit.exceptionDescription(), "child exception toString()");
     }
 }

@@ -4,10 +4,9 @@ import android.content.SharedPreferences;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.MockitoAnnotations;
 
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static com.ichi2.utils.FunctionalInterfaces.Supplier;
@@ -16,8 +15,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 
 //Unknown issue: @CheckResult should provide warnings on this class when return value is unused, but doesn't.
-//TODO: The preference mock is messy
-@RunWith(PowerMockRunner.class)
 public class PreferenceExtensionsTest {
 
     private static Supplier<String> UNUSED_SUPPLIER = () -> { throw new UnexpectedException();};
@@ -40,6 +37,7 @@ public class PreferenceExtensionsTest {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.openMocks(this);
         Mockito.when(mMockReferences.contains(VALID_KEY)).thenReturn(true);
         Mockito.when(mMockReferences.getString(eq(VALID_KEY), anyString())).thenReturn(VALID_RESULT);
         Mockito.when(mMockReferences.edit()).thenReturn(mockEditor);
