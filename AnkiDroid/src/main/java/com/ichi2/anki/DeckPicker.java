@@ -104,6 +104,7 @@ import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Utils;
@@ -1062,7 +1063,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.i("Fixing font-family definition in templates");
                 try {
                     Models models = getCol().getModels();
-                    for (JSONObject m : models.all()) {
+                    for (Model m : models.all()) {
                         String css = m.getString("css");
                         if (css.contains("font-familiy")) {
                             m.put("css", css.replace("font-familiy", "font-family"));

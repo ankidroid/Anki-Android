@@ -27,6 +27,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 
 import com.ichi2.libanki.Note;
@@ -179,9 +180,9 @@ public class RobolectricTest {
         CollectionHelper.LazyHolder.INSTANCE = new CollectionHelper();
     }
 
-    protected JSONObject getCurrentDatabaseModelCopy(String modelName) throws JSONException {
+    protected Model getCurrentDatabaseModelCopy(String modelName) throws JSONException {
         Models collectionModels = getCol().getModels();
-        return new JSONObject(collectionModels.byName(modelName).toString().trim());
+        return new Model(collectionModels.byName(modelName).toString().trim());
     }
 
     protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
@@ -196,7 +197,7 @@ public class RobolectricTest {
     }
 
     protected Note addNoteUsingModelName(String name, String... fields) {
-        JSONObject model = getCol().getModels().byName(name);
+        Model model = getCol().getModels().byName(name);
         //PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         //Saves a database trip afterwards.
         if (model == null) {
@@ -214,7 +215,7 @@ public class RobolectricTest {
 
 
     protected String addNonClozeModel(String name, String[] fields, String qfmt, String afmt) {
-        JSONObject model = getCol().getModels().newModel(name);
+        Model model = getCol().getModels().newModel(name);
         for (int i = 0; i < fields.length; i++) {
             addField(model, fields[i]);
         }
@@ -226,7 +227,7 @@ public class RobolectricTest {
     }
 
 
-    private void addField(JSONObject model, String name) {
+    private void addField(Model model, String name) {
         Models models = getCol().getModels();
 
         try {

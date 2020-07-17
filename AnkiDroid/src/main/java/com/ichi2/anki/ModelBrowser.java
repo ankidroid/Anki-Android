@@ -45,6 +45,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.widget.WidgetStatus;
 
@@ -70,7 +71,7 @@ public class ModelBrowser extends AnkiActivity {
     private int mModelListPosition;
 
     //Used exclusively to display model name
-    private ArrayList<JSONObject> mModels;
+    private ArrayList<Model> mModels;
     private ArrayList<Integer> mCardCounts;
     private ArrayList<Long> mModelIds;
     private ArrayList<DisplayPair> mModelDisplayList;
@@ -114,7 +115,7 @@ public class ModelBrowser extends AnkiActivity {
                 throw new RuntimeException();
             }
             hideProgressBar();
-            mModels = (ArrayList<JSONObject>) result.getObjArray()[0];
+            mModels = (ArrayList<Model>) result.getObjArray()[0];
             mCardCounts = (ArrayList<Integer>) result.getObjArray()[1];
 
             fillModelList();
@@ -313,7 +314,7 @@ public class ModelBrowser extends AnkiActivity {
         final int numStdModels = mNewModelLabels.size();
 
         if (mModels != null) {
-            for (JSONObject model : mModels) {
+            for (Model model : mModels) {
                 String name = model.getString("name");
                 mNewModelLabels.add(String.format(clone, name));
                 mNewModelNames.add(name);
@@ -370,7 +371,7 @@ public class ModelBrowser extends AnkiActivity {
      * @param position position in dialog the user selected to add / clone the model type from
      */
     private void addNewNoteType(String modelName, int position) {
-        JSONObject model;
+        Model model;
         if (modelName.length() > 0) {
             int nbStdModels = StdModels.stdModels.length;
             if (position < nbStdModels) {
@@ -378,8 +379,8 @@ public class ModelBrowser extends AnkiActivity {
             } else {
                 //New model
                 //Model that is being cloned
-                JSONObject oldModel = mModels.get(position - nbStdModels).deepClone();
-                JSONObject newModel = StdModels.basicModel.add(col);
+                Model oldModel = mModels.get(position - nbStdModels).deepClone();
+                Model newModel = StdModels.basicModel.add(col);
                 oldModel.put("id", newModel.get("id"));
                 model = oldModel;
             }
@@ -452,7 +453,7 @@ public class ModelBrowser extends AnkiActivity {
                             .negativeText(R.string.dialog_cancel)
                             .customView(mModelNameInput, true)
                             .onPositive((dialog, which) -> {
-                                    JSONObject model = mModels.get(mModelListPosition);
+                                    Model model = mModels.get(mModelListPosition);
                                     String deckName = mModelNameInput.getText().toString()
                                             // Anki desktop doesn't allow double quote characters in deck names
                                             .replaceAll("[\"\\n\\r]", "");

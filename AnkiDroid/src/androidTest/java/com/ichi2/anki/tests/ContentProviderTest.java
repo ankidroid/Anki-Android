@@ -39,6 +39,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -139,7 +140,7 @@ public class ContentProviderTest extends InstrumentedTest {
         }
 
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
+        Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         mModelId = model.getLong("id");
         ArrayList<String> fields = Models.fieldNames(model);
         // Use the names of the fields as test values for the notes which will be added
@@ -215,7 +216,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
 
     private void removeAllModelsByName(Collection col, String name) throws Exception {
-        JSONObject testModel = col.getModels().byName(name);
+        Model testModel = col.getModels().byName(name);
         while (testModel != null) {
             col.getModels().rem(testModel);
             testModel = col.getModels().byName(name);
@@ -267,7 +268,7 @@ public class ContentProviderTest extends InstrumentedTest {
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Collection col = getCol();
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
+        Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
         // Add the note
         Uri modelUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId);
@@ -304,7 +305,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // Get required objects for test
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Collection col = getCol();
-        JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
+        Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
         JSONArray initialFieldsArr = model.getJSONArray("flds");
         int initialFieldCount = initialFieldsArr.length();
@@ -512,7 +513,7 @@ public class ContentProviderTest extends InstrumentedTest {
             // Delete the model (this will force a full-sync)
             col.modSchemaNoCheck();
             try {
-                JSONObject model = col.getModels().get(mid);
+                Model model = col.getModels().get(mid);
                 assertNotNull("Check model", model);
                 col.getModels().rem(model);
             } catch (ConfirmModSchemaException e) {

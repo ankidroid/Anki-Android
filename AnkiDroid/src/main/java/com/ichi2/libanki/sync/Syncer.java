@@ -25,6 +25,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -695,8 +696,8 @@ public class Syncer {
 
     private void mergeModels(JSONArray rchg) throws UnexpectedSchemaChange {
         for (int i = 0; i < rchg.length(); i++) {
-            JSONObject r = rchg.getJSONObject(i);
-            JSONObject l = mCol.getModels().get(r.getLong("id"));
+            Model r = new Model(rchg.getJSONObject(i));
+            Model l = mCol.getModels().get(r.getLong("id"));
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
                 // This is a hack to detect when the note type has been altered

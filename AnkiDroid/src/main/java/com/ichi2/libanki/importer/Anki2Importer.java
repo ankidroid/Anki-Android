@@ -27,6 +27,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Media;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.DeckConfig;
@@ -408,13 +409,13 @@ public class Anki2Importer extends Importer {
             return mModelMap.get(srcMid);
         }
         long mid = srcMid;
-        JSONObject srcModel = mSrc.getModels().get(srcMid);
+        Model srcModel = mSrc.getModels().get(srcMid);
         String srcScm = mSrc.getModels().scmhash(srcModel);
         while (true) {
             // missing from target col?
             if (!mDst.getModels().have(mid)) {
                 // copy it over
-                JSONObject model = srcModel.deepClone();
+                Model model = srcModel.deepClone();
                 model.put("id", mid);
                 model.put("mod", Utils.intTime());
                 model.put("usn", mCol.usn());
@@ -422,11 +423,11 @@ public class Anki2Importer extends Importer {
                 break;
             }
             // there's an existing model; do the schemas match?
-            JSONObject dstModel = mDst.getModels().get(mid);
+            Model dstModel = mDst.getModels().get(mid);
             String dstScm = mDst.getModels().scmhash(dstModel);
             if (srcScm.equals(dstScm)) {
                 // they do; we can reuse this mid
-                JSONObject model = srcModel.deepClone();
+                Model model = srcModel.deepClone();
                 model.put("id", mid);
                 model.put("mod", Utils.intTime());
                 model.put("usn", mCol.usn());

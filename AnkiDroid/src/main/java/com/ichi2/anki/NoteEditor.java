@@ -77,6 +77,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Note.ClozeUtils;
 import com.ichi2.libanki.Utils;
@@ -476,7 +477,7 @@ public class NoteEditor extends AnkiActivity {
         mNoteTypeSpinner = findViewById(R.id.note_type_spinner);
         mAllModelIds = new ArrayList<>();
         final ArrayList<String> modelNames = new ArrayList<>();
-        ArrayList<JSONObject> models = getCol().getModels().all();
+        ArrayList<Model> models = getCol().getModels().all();
         Collections.sort(models, NamedJSONComparator.instance);
         for (JSONObject m : models) {
             modelNames.add(m.getString("name"));
@@ -788,8 +789,8 @@ public class NoteEditor extends AnkiActivity {
             CollectionTask.launchCollectionTask(ADD_NOTE, mSaveNoteHandler, new CollectionTask.TaskData(mEditorNote));
         } else {
             // Check whether note type has been changed
-            final JSONObject newModel = getCurrentlySelectedModel();
-            final JSONObject oldModel = mCurrentEditedCard.model();
+            final Model newModel = getCurrentlySelectedModel();
+            final Model oldModel = mCurrentEditedCard.model();
             if (!newModel.equals(oldModel)) {
                 mReloadRequired = true;
                 if (mModelChangeCardMap.size() < mEditorNote.numberOfCards() || mModelChangeCardMap.containsKey(null)) {
@@ -844,7 +845,7 @@ public class NoteEditor extends AnkiActivity {
     /**
      * Change the note type from oldModel to newModel, handling the case where a full sync will be required
      */
-    private void changeNoteTypeWithErrorHandling(final JSONObject oldModel, final JSONObject newModel) {
+    private void changeNoteTypeWithErrorHandling(final Model oldModel, final Model newModel) {
         Resources res = getResources();
         try {
             changeNoteType(oldModel, newModel);
@@ -871,7 +872,7 @@ public class NoteEditor extends AnkiActivity {
      * Change the note type from oldModel to newModel
      * @throws ConfirmModSchemaException If a full sync will be required
      */
-    private void changeNoteType(JSONObject oldModel, JSONObject newModel) throws ConfirmModSchemaException {
+    private void changeNoteType(Model oldModel, Model newModel) throws ConfirmModSchemaException {
         final long [] noteIds = {mEditorNote.getId()};
         getCol().getModels().change(oldModel, noteIds, newModel, mModelChangeFieldMap, mModelChangeCardMap);
         // refresh the note object to reflect the database changes
@@ -1530,7 +1531,7 @@ public class NoteEditor extends AnkiActivity {
 
     private void setNote(Note note) {
         if (note == null || mAddNote) {
-            JSONObject model = getCol().getModels().current();
+            Model model = getCol().getModels().current();
             mEditorNote = new Note(getCol(), model);
         } else {
             mEditorNote = note;
@@ -1611,7 +1612,7 @@ public class NoteEditor extends AnkiActivity {
         return TextUtils.join(" ", tags);
     }
 
-    private JSONObject getCurrentlySelectedModel() {
+    private Model getCurrentlySelectedModel() {
         return getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition()));
     }
 
@@ -1699,7 +1700,7 @@ public class NoteEditor extends AnkiActivity {
             long newId = mAllModelIds.get(pos);
             Timber.i("Changing note type to '%d", newId);
             if (oldModelId != newId) {
-                JSONObject model = getCol().getModels().get(newId);
+                Model model = getCol().getModels().get(newId);
                 if (model == null) {
                     Timber.w("New model %s not found, not changing note type", newId);
                     return;

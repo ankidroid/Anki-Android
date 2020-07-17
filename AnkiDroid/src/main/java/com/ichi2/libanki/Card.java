@@ -278,7 +278,7 @@ public class Card implements Cloneable {
     public HashMap<String, String> _getQA(boolean reload, boolean browser) {
         if (mQA == null || reload) {
             Note f = note(reload);
-            JSONObject m = model();
+            Model m = model();
             JSONObject t = template();
             long did = mODid != 0L ? mODid : mDid;
             if (browser) {
@@ -307,7 +307,7 @@ public class Card implements Cloneable {
 
 
     // not in upstream
-    public JSONObject model() {
+    public Model model() {
         return note().model();
     }
 

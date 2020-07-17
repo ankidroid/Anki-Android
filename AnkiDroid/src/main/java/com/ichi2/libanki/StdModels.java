@@ -17,7 +17,7 @@ public class StdModels {
     private CreateStdModels fun;
 
     interface CreateStdModels {
-        JSONObject create(Models mm, String name);
+        Model create(Models mm, String name);
     }
 
     public StdModels(CreateStdModels fun, @StringRes int defaultName) {
@@ -25,25 +25,25 @@ public class StdModels {
         this.defaultName = defaultName;
     }
 
-    private JSONObject _new(Models mm) {
+    private Model _new(Models mm) {
         String name = getDefaultName();
         return _new(mm, name);
     }
 
-    private JSONObject _new(Models mm, String name) {
+    private Model _new(Models mm, String name) {
         return fun.create(mm, name);
     }
 
-    public JSONObject add(Collection col, String name) {
+    public Model add(Collection col, String name) {
         Models mm = col.getModels();
-        JSONObject model = _new(mm, name);
+        Model model = _new(mm, name);
         mm.add(model);
         return model;
     }
 
-    public JSONObject add(Collection col) {
+    public Model add(Collection col) {
         Models mm = col.getModels();
-        JSONObject model = _new(mm);
+        Model model = _new(mm);
         mm.add(model);
         return model;
     }
@@ -57,7 +57,7 @@ public class StdModels {
 
     public static final StdModels basicModel = new StdModels(
             (Models mm, String name) -> {
-                JSONObject m = mm.newModel(name);
+                Model m = mm.newModel(name);
                 String frontName = AnkiDroidApp.getAppResources().getString(R.string.front_field_name);
                 JSONObject fm = mm.newField(frontName);
                 mm.addFieldInNewModel(m, fm);
@@ -75,7 +75,7 @@ public class StdModels {
 
     public static final StdModels basicTypingModel = new StdModels
         ( (Models mm, String name) -> {
-        JSONObject m = basicModel._new(mm, name);
+        Model m = basicModel._new(mm, name);
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
         String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
         String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
@@ -87,7 +87,7 @@ public class StdModels {
 
     public static final StdModels forwardReverseModel = new StdModels
         ( (Models mm, String name) -> {
-        JSONObject m = basicModel._new(mm, name);
+        Model m = basicModel._new(mm, name);
         String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
         String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
         String cardTwoName = AnkiDroidApp.getAppResources().getString(R.string.card_two_name);
@@ -101,7 +101,7 @@ public class StdModels {
 
     public static final StdModels forwardOptionalReverseModel = new StdModels
         ( (Models mm, String name) -> {
-        JSONObject m = forwardReverseModel._new(mm, name);
+        Model m = forwardReverseModel._new(mm, name);
         String av = AnkiDroidApp.getAppResources().getString(R.string.field_to_ask_front_name);
         JSONObject fm = mm.newField(av);
         mm.addFieldInNewModel(m, fm);
@@ -113,7 +113,7 @@ public class StdModels {
 
     public static final StdModels clozeModel = new StdModels
         ( (Models mm, String name) -> {
-        JSONObject m = mm.newModel(name);
+        Model m = mm.newModel(name);
         m.put("type", Consts.MODEL_CLOZE);
         String txt = AnkiDroidApp.getAppResources().getString(R.string.text_field_name);
         JSONObject fm = mm.newField(txt);

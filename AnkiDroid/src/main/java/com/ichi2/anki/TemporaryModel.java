@@ -33,6 +33,7 @@ import timber.log.Timber;
 
 import com.ichi2.async.CollectionTask;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.Model;
 import com.ichi2.utils.JSONObject;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 
@@ -43,10 +44,10 @@ public class TemporaryModel {
     public static final String INTENT_MODEL_FILENAME = "editedModelFilename";
     private ArrayList<Object[]> mTemplateChanges = new ArrayList<>();
     private String mEditedModelFileName = null;
-    private final @NonNull JSONObject mEditedModel;
+    private final @NonNull Model mEditedModel;
 
 
-    public TemporaryModel(@NonNull JSONObject model) {
+    public TemporaryModel(@NonNull Model model) {
         Timber.d("Constructor called with model");
         mEditedModel = model;
     }
@@ -67,7 +68,7 @@ public class TemporaryModel {
         }
 
         Timber.d("onCreate() loading saved model file %s", mEditedModelFileName);
-        JSONObject tempModelJSON;
+        Model tempModelJSON;
         try {
             tempModelJSON = getTempModel((mEditedModelFileName));
         } catch (IOException e) {
@@ -153,7 +154,7 @@ public class TemporaryModel {
     }
 
 
-    public JSONObject getModel() {
+    public Model getModel() {
         return mEditedModel;
     }
 
@@ -191,11 +192,11 @@ public class TemporaryModel {
      * Get the model temporarily saved into the file represented by the given path
      * @return JSONObject holding the model, or null if there was a problem
      */
-    public static JSONObject getTempModel(@NonNull String tempModelFileName) throws IOException {
+    public static Model getTempModel(@NonNull String tempModelFileName) throws IOException {
         Timber.d("getTempModel() fetching tempModel %s", tempModelFileName);
         try (ByteArrayOutputStream target = new ByteArrayOutputStream()) {
             CompatHelper.getCompat().copyFile(tempModelFileName, target);
-            return new JSONObject(target.toString());
+            return new Model(target.toString());
         } catch (IOException e) {
             Timber.e(e, "Unable to read+parse tempModel from file %s", tempModelFileName);
             throw e;
