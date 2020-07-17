@@ -41,7 +41,7 @@
     <string name="check_db_title">檢查資料庫？</string>
     <string name="check_db_warning">這可能會花上好一段時間</string>
     <string name="check_db_acknowledge">資料庫已檢查</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">資料庫已檢查並整理。\n已縮小 %d MB。</string>
     <string name="contextmenu_deckpicker_delete_deck">刪除牌組</string>
     <string name="delete_deck_default_deck">無法刪除預設的牌組。</string>
     <string name="delete_deck_title">刪除牌組？</string>
@@ -54,10 +54,10 @@
     <string name="tts_no_tts">不要發音</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>給 Android 的單字卡</h2>AnkiDroid 是完全相容桌面版本的單字卡應用程式 <a href=\"%2$s\">Anki</a>。 你可以任意在 AnkiDroid 或是桌面版 Anki 上新增、下載和學習東西，並使用 AnkiWeb 輕鬆同步這些記錄。]]></item>
-        <item><![CDATA[為了協助我們讓 AnkiDroid 更好，請到 <a href=\"%1$s\">issue tracker</a> 回報錯誤; 任何有關新功能的點子也很歡迎。在 <a href=\"%2$s\">wiki</a> 尋找答案或是在<a href=\"%3$s\">論壇</a>參與討論。]]></item>
+        <item><![CDATA[為了協助我們讓 AnkiDroid 更好，請到 <a href=\"%1$s\">Issue Tracker</a> 回報錯誤; 任何有關新功能的點子也歡迎。在 <a href=\"%2$s\">Wiki</a> 尋找答案或是在<a href=\"%3$s\">論壇</a>參與討論。]]></item>
         <item><![CDATA[AnkiDroid 是<a href=\"%1$s\">自由軟體<a/>，所以我們鼓勵任何人<a href=\"%2$s\">成爲貢獻者</a> :-)]]></item>
-        <item><![CDATA[非開發者亦可幫助。例如，你可以<a href=\"%1$s\">幫助翻譯</a>AnkiDroid、更新wiki、提供屏幕截圖，或寫關於AnkiDroid的博客。]]></item>
-        <item><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GNU-GPL v3 授權</a>下釋出且你可在<a href=\"%2$s\">GitHub</a> 上取得其程式碼]]></item>
+        <item><![CDATA[非開發者亦可提供幫助。例如，你可以<a href=\"%1$s\">幫助翻譯</a>AnkiDroid、更新wiki、提供螢幕截圖，或撰寫關於 AnkiDroid 的博客。]]></item>
+        <item><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GNU-GPL v3 授權</a> 下釋出，而且你可在 <a href=\"%2$s\">GitHub</a> 上取得其程式碼。]]></item>
     </string-array>
     <string name="preview_title">預覽</string>
     <string name="reposition_card_dialog_title">變更新卡片位置</string>
@@ -82,9 +82,9 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d 卡片已重置</item>
     </plurals>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">選擇你的檔案管理器中的牌組，或訪問 about:downloads 頁面以匯入</string>
     <string name="answering_error_title">資料庫錯誤</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的收藏或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>
     <string name="answering_error_report">回報錯誤</string>
     <string name="repair_deck_dialog">你真的想要修復資料庫嗎？\n\n在開始修復之前，會先複製一份備份檔案放置於資料夾\'%s\'中。</string>
     <string name="intent_add_saved_information">儲存的資料</string>
@@ -113,7 +113,7 @@
     <string name="restore_backup">你的收藏將會被較舊的版本給覆蓋。任何尚未儲存的進度都會遺失。</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">確定</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">否</string>
     <string name="dialog_continue">繼續</string>
     <string name="dialog_positive_create">新增</string>
     <string name="dialog_positive_delete">刪除</string>
@@ -156,16 +156,16 @@
     <string name="multimedia_editor_audio_permission_denied">音訊錄製權限被拒絕</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">歡迎使用 AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid 需要儲存空間權限，我們僅用於儲存你的 AnkiDroid 收藏，單字卡媒體和備份。我們的原始碼完全開放，由志願者寫成，且被眾人信賴。\n\n如果你有任何問題，請查閱我們的程式內用戶手冊或訪問我們的支援論壇。\n\n感謝您使用 AnkiDroid！\n— AnkiDroid 開發團隊</string>
+    <string name="mutimedia_editor_assertion_failed">展示進階編輯器時發生未知錯誤</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Ankidroid 已更新</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
+    <string name="integrity_check_startup_content">AnkiDroid 已更新，此更新包含修復潛在的資料庫問題，而我們建議您現在執行檢查資料庫。</string>
     <string name="integrity_check_positive">檢查資料庫</string>
     <string name="integrity_check_continue_anyway">仍要繼續</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
+    <string name="integrity_check_insufficient_space">檢查資料庫將使用大量暫存。\n\n強烈推薦您在繼續前保證裝置上至少擁有 %s 閒置空間。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n你當前擁有 %s 空閒。</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d個包括錯誤歸屬牌組的卡片已被移除。請見用戶手冊以取得更多資訊。</string>
     <string name="video_creation_error">無法播放影片</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">無法變更牌組</string>
@@ -175,22 +175,22 @@
     <string name="deck_options_corrupt">無法處理牌組選項：%s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">資料庫已鎖定</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <string name="database_locked_summary">AnkiDroid 的資料庫正在被其他應用程式使用中。請關閉其他程式再重新開啟 AnkiDroid。</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">背景圖片已套用</string>
-    <string name="background_image_removed">背景圖片已移除</string>
-    <string name="no_image_selected">未選擇圖片</string>
-    <string name="error_selecting_image">選擇圖片出錯。請查看使用手冊。%s</string>
-    <string name="error_deleting_image">刪除圖片時出錯</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="background_image_applied">背景圖像已套用</string>
+    <string name="background_image_removed">背景圖像已移除</string>
+    <string name="no_image_selected">未選擇圖像</string>
+    <string name="error_selecting_image">選擇圖像出錯。請查看使用手冊。%s</string>
+    <string name="error_deleting_image">刪除圖像時出錯</string>
+    <string name="failed_to_apply_background_image">套用背景圖像 %s 失敗</string>
+    <string name="background_image_too_large">牌組選取器背景過大</string>
+    <string name="image_max_size_allowed">最大允許的圖像尺寸為 %d MB</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">缺失必須的儲存空間權限。請授予儲存空間權限再執行你的操作。</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">無法載入卡片瀏覽器外觀</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">排定提醒失敗</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_too_many_notifications">已設定太多提醒。部分將不會出現</string>
 </resources>

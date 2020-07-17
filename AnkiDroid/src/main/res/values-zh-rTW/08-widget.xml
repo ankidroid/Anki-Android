@@ -60,5 +60,5 @@
         <item quantity="other">剩餘 %d 分鐘</item>
     </plurals>
     <string name="widget_add_note">增加筆記</string>
-    <string name="widget_add_note_button">添加新的筆記</string>
+    <string name="widget_add_note_button">新增 AnkiDroid 筆記</string>
 </resources>

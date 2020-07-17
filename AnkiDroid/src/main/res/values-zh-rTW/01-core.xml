@@ -44,7 +44,7 @@
     <string name="statistics">統計資料</string>
     <string name="settings">設定</string>
     <string name="help">幫助</string>
-    <string name="send_feedback">傳送意見</string>
+    <string name="send_feedback">傳送問題回報</string>
     <string name="studyoptions_title">牌組總覽</string>
     <string name="studyoptions_due_today">今天到期:</string>
     <string name="studyoptions_new_total">新卡片數量:</string>
@@ -119,7 +119,7 @@
     <string name="menu_search">在%1$s中查詢</string>
     <string name="menu_mark_note">標記筆記</string>
     <string name="menu_unmark_note">取消標記筆記</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">檢查發音</string>
     <string name="new_deck">建立牌組</string>
     <string name="create">建立</string>
     <string name="new_dynamic_deck">新增篩選牌組</string>
@@ -146,15 +146,15 @@
     <string name="time_quantity_months">%.1f個月</string>
     <string name="time_quantity_years">%.1f年</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">正在重建填鴨式牌組。\n請稍後...</string>
+    <string name="rebuild_cram_deck">重建考前複習牌組中&#8230;</string>
     <string name="rebuild_cram_label">重建</string>
     <string name="empty_cram_label">清空</string>
     <string name="create_subdeck">建立子牌組</string>
-    <string name="empty_cram_deck">正在清空填鴨式牌組。\n請稍後...</string>
+    <string name="empty_cram_deck">清空考前複習牌組中...</string>
     <string name="custom_study_deck_name">自訂學程</string>
     <string name="custom_study_deck_exists">請先重新命名現有的「自訂學習」牌組。</string>
     <string name="empty_deck">這個牌組是空的</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="invalid_deck_name">無效牌組名稱</string>
     <string name="studyoptions_empty">這個牌組是空的。按下 + 按鈕增加新內容。</string>
     <string name="studyoptions_limit_reached">已達每日學習上限</string>
     <string name="studyoptions_empty_schedule">沒有預訂的卡片要學習</string>
