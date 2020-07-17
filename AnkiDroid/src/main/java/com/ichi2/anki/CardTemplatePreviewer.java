@@ -185,7 +185,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
                 for (String fieldOrd : noteFields.keySet()) {
                     // In case the fields on the card are out of sync with the bundle
                     int fieldOrdInt = Integer.parseInt(fieldOrd);
-                    if (currentNote.getFields().length < fieldOrdInt) {
+                    if (fieldOrdInt < currentNote.getFields().length) {
                         currentNote.setField(fieldOrdInt, noteFields.getString(fieldOrd));
                     }
                 }
