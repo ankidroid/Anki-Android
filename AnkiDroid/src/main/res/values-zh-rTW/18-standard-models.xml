@@ -32,7 +32,7 @@
     <!--Note type-->
     <string name="basic_model_name">基本</string>
     <string name="cloze_model_name">克漏題</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_typing_model_name">基本型(輸入答案)</string>
+    <string name="forward_reverse_model_name">基本型(含反向的卡片)</string>
+    <string name="forward_optional_reverse_model_name">基本型(可選用反向的卡片)</string>
 </resources>
