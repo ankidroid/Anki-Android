@@ -170,7 +170,11 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
         if (mNoteEditorBundle != null) {
-            mCurrentCard.setDid(mNoteEditorBundle.getLong("did"));
+            long newDid = mNoteEditorBundle.getLong("did");
+            if (col.getDecks().isDyn(newDid)) {
+                mCurrentCard.setODid(mCurrentCard.getDid());
+            }
+            mCurrentCard.setDid(newDid);
 
             Note currentNote = mCurrentCard.note();
             ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
