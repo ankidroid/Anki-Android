@@ -558,7 +558,7 @@ public class Collection {
      * @param m The model to use for the new note
      * @return The new note
      */
-    public Note newNote(JSONObject m) {
+    public Note newNote(Model m) {
         return new Note(this, m);
     }
 
@@ -620,7 +620,7 @@ public class Collection {
      * @return (active), non-empty templates.
      */
     public ArrayList<JSONObject> findTemplates(Note note) {
-        JSONObject model = note.model();
+        Model model = note.model();
         ArrayList<Integer> avail = getModels().availOrds(model, note.getFields());
         return _tmplsFromOrds(model, avail);
     }
@@ -719,7 +719,7 @@ public class Collection {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
                 String flds = cur.getString(2);
-                JSONObject model = getModels().get(mid);
+                Model model = getModels().get(mid);
                 ArrayList<Integer> avail = getModels().availOrds(model, Utils.splitFields(flds));
                 long did = dids.get(nid);
                 // use sibling due if there is one, else use a new id
@@ -945,7 +945,7 @@ public class Collection {
 
     public List<Long> emptyCids() {
         List<Long> rem = new ArrayList<>();
-        for (JSONObject m : getModels().all()) {
+        for (Model m : getModels().all()) {
             rem.addAll(genCards(getModels().nids(m)));
         }
         return rem;
@@ -1000,7 +1000,7 @@ public class Collection {
         ArrayList<Object[]> r = new ArrayList<>();
         for (Object[] o : _fieldData(snids)) {
             String[] fields = Utils.splitFields((String) o[2]);
-            JSONObject model = getModels().get((Long) o[1]);
+            Model model = getModels().get((Long) o[1]);
             if (model == null) {
                 // note point to invalid model
                 continue;
@@ -1019,12 +1019,12 @@ public class Collection {
     /**
      * Returns hash of id, question, answer.
      */
-    public HashMap<String, String> _renderQA(long cid, JSONObject model, long did, int ord, String tags, String[] flist, int flags) {
+    public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags) {
         return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null);
     }
 
 
-    public HashMap<String, String> _renderQA(long cid, JSONObject model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
+    public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
         Map<String, String> fields = new HashMap<>();
@@ -1783,7 +1783,7 @@ public class Collection {
     private List<String> updateFieldCache(Runnable notifyProgress) {
         Timber.d("updateFieldCache");
         // field cache
-        for (JSONObject m : getModels().all()) {
+        for (Model m : getModels().all()) {
             notifyProgress.run();
             updateFieldCache(Utils.arrayList2array(getModels().nids(m)));
         }

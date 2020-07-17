@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
@@ -41,7 +42,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
     public void testPreviewUnsavedTemplate() throws Exception {
 
         String modelName = "Basic";
-        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
         JSONObject template = (JSONObject)collectionBasicModelOriginal.getJSONArray("tmpls").get(0);
         template.put("qfmt", template.getString("qfmt").concat("PREVIEWER_TEST"));
         String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), collectionBasicModelOriginal);
@@ -81,7 +82,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
 
         // Make sure we test previewing a new card template
         String modelName = "Basic (and reversed card)";
-        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
         Card testCard1 = getSavedCard(collectionBasicModelOriginal, 0);
         Card testCard2 = getSavedCard(collectionBasicModelOriginal, 1);
 
@@ -108,7 +109,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }
 
-    private Card getSavedCard(JSONObject model, int ordinal) throws Exception {
+    private Card getSavedCard(Model model, int ordinal) throws Exception {
         Note n = getCol().newNote(model);
         ArrayList<String> fieldNames = Models.fieldNames(model);
         for (int i = 0; i < fieldNames.size(); i++) {

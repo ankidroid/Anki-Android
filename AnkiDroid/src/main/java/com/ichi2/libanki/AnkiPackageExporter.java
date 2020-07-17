@@ -163,7 +163,7 @@ class AnkiExporter extends Exporter {
         }
         // models - start with zero
         Timber.d("Copy models");
-        for (JSONObject m : mSrc.getModels().all()) {
+        for (Model m : mSrc.getModels().all()) {
             if (mids.contains(m.getLong("id"))) {
                 dst.getModels().update(m);
             }

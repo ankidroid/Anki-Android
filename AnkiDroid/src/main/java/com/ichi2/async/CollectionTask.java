@@ -32,6 +32,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.AnkiPackageExporter;
@@ -1444,7 +1445,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundAddTemplate");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object [] args = params[0].getObjArray();
-        JSONObject model = (JSONObject) args[0];
+        Model model = (Model) args[0];
         JSONObject template = (JSONObject) args[1];
         // add the new template
         col.getModels().addTemplateModChanged(model, template);
@@ -1459,7 +1460,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundRemoveTemplate");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object [] args = params[0].getObjArray();
-        JSONObject model = (JSONObject) args[0];
+        Model model = (Model) args[0];
         JSONObject template = (JSONObject) args[1];
         try {
             boolean success = col.getModels().remTemplate(model, template);
@@ -1481,9 +1482,9 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundSaveModel");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Object [] args = params[0].getObjArray();
-        JSONObject model = (JSONObject) args[0];
+        Model model = (Model) args[0];
         ArrayList<Object[]> templateChanges = (ArrayList<Object[]>)args[1];
-        JSONObject oldModel = col.getModels().get(model.getLong("id"));
+        Model oldModel = col.getModels().get(model.getLong("id"));
 
         // TODO need to save all the cards that will go away, for undo
         //  (do I need to remove them from graves during undo also?)
@@ -1551,7 +1552,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundLoadModels");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
 
-        ArrayList<JSONObject> models = col.getModels().all();
+        ArrayList<Model> models = col.getModels().all();
         ArrayList<Integer> cardCount = new ArrayList<>();
         Collections.sort(models, new Comparator<JSONObject>() {
             @Override
@@ -1560,7 +1561,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             }
         });
 
-        for (JSONObject n : models) {
+        for (Model n : models) {
             if (isCancelled()) {
                 Timber.e("doInBackgroundLoadModels :: Cancelled");
                 // onPostExecute not executed if cancelled. Return value not used.
@@ -1601,7 +1602,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackGroundDeleteField");
         Object[] objects = params[0].getObjArray();
 
-        JSONObject model = (JSONObject) objects[0];
+        Model model = (Model) objects[0];
         JSONObject field = (JSONObject) objects[1];
 
 
@@ -1623,7 +1624,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundRepositionField");
         Object[] objects = params[0].getObjArray();
 
-        JSONObject model = (JSONObject) objects[0];
+        Model model = (Model) objects[0];
         JSONObject field = (JSONObject) objects[1];
         int index = (Integer) objects[2];
 
@@ -1646,7 +1647,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundRepositionField");
         Object[] objects = params[0].getObjArray();
 
-        JSONObject model = (JSONObject) objects[0];
+        Model model = (Model) objects[0];
         String fieldName = (String) objects[1];
 
         Collection col = CollectionHelper.getInstance().getCol(mContext);
@@ -1663,7 +1664,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             Timber.d("doInBackgroundChangeSortField");
             Object[] objects = params[0].getObjArray();
 
-            JSONObject model = (JSONObject) objects[0];
+            Model model = (Model) objects[0];
             int idx = (int) objects[1];
 
             Collection col = CollectionHelper.getInstance().getCol(mContext);

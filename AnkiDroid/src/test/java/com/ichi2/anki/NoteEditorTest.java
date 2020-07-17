@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
 
@@ -242,12 +243,12 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     private NoteEditorTestBuilder getNoteEditorAdding(NoteType noteType) {
-        JSONObject n = makeNoteForType(noteType);
+        Model n = makeNoteForType(noteType);
         return new NoteEditorTestBuilder(n);
     }
 
 
-    private JSONObject makeNoteForType(NoteType noteType) {
+    private Model makeNoteForType(NoteType noteType) {
         switch (noteType) {
             case BASIC: return getCol().getModels().byName("Basic");
             case CLOZE: return getCol().getModels().byName("Cloze");
@@ -329,13 +330,13 @@ public class NoteEditorTest extends RobolectricTest {
     @SuppressWarnings("WeakerAccess")
     public class NoteEditorTestBuilder {
 
-        private final JSONObject mModel;
+        private final Model mModel;
         private String mFirstField;
         private String mSecondField;
         private String mThirdField;
 
 
-        public NoteEditorTestBuilder(JSONObject model) {
+        public NoteEditorTestBuilder(Model model) {
             if (model == null) {
                 throw new IllegalArgumentException("model was null");
             }

@@ -44,6 +44,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -286,7 +287,7 @@ public class CardContentProvider extends ContentProvider {
             case MODELS_ID_TEMPLATES: {
                 /* Direct access model templates */
                 Models models = col.getModels();
-                JSONObject currentModel = models.get(getModelIdFromUri(uri, col));
+                Model currentModel = models.get(getModelIdFromUri(uri, col));
                 String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
                 try {
@@ -304,7 +305,7 @@ public class CardContentProvider extends ContentProvider {
                 /* Direct access model template with specific ID */
                 Models models = col.getModels();
                 int ord = Integer.parseInt(uri.getLastPathSegment());
-                JSONObject currentModel = models.get(getModelIdFromUri(uri, col));
+                Model currentModel = models.get(getModelIdFromUri(uri, col));
                 String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
                 try {
@@ -529,7 +530,7 @@ public class CardContentProvider extends ContentProvider {
                 String newLatexPost = values.getAsString(FlashCardsContract.Model.LATEX_POST);
                 String newLatexPre = values.getAsString(FlashCardsContract.Model.LATEX_PRE);
                 // Get the original note JSON
-                JSONObject model = col.getModels().get(getModelIdFromUri(uri, col));
+                Model model = col.getModels().get(getModelIdFromUri(uri, col));
                 try {
                     // Update model name and/or css
                     if (newModelName != null) {
@@ -586,7 +587,7 @@ public class CardContentProvider extends ContentProvider {
                 // Update the model
                 try {
                     Integer templateOrd = Integer.parseInt(uri.getLastPathSegment());
-                    JSONObject existingModel = col.getModels().get(getModelIdFromUri(uri, col));
+                    Model existingModel = col.getModels().get(getModelIdFromUri(uri, col));
                     JSONArray templates = existingModel.getJSONArray("tmpls");
                     JSONObject template = templates.getJSONObject(templateOrd);
                     if (name != null) {
@@ -705,7 +706,7 @@ public class CardContentProvider extends ContentProvider {
                 col.remNotes(new long[]{Long.parseLong(uri.getPathSegments().get(1))});
                 return 1;
             case MODELS_ID_EMPTY_CARDS:
-                JSONObject model = col.getModels().get(getModelIdFromUri(uri, col));
+                Model model = col.getModels().get(getModelIdFromUri(uri, col));
                 if (model == null) {
                     return -1;
                 }
@@ -768,7 +769,7 @@ public class CardContentProvider extends ContentProvider {
 
         // for caching model information (so we don't have to query for each note)
         long modelId = -1L;
-        JSONObject model = null;
+        Model model = null;
 
         col.getDecks().flush(); // is it okay to move this outside the for-loop? Is it needed at all?
         SupportSQLiteDatabase sqldb = col.getDb().getDatabase();
@@ -898,7 +899,7 @@ public class CardContentProvider extends ContentProvider {
                 }
                 // Create a new model
                 Models mm = col.getModels();
-                JSONObject newModel = mm.newModel(modelName);
+                Model newModel = mm.newModel(modelName);
                 try {
                     // Add the fields
                     String[] allFields = Utils.splitFields(fieldNames);
@@ -952,7 +953,7 @@ public class CardContentProvider extends ContentProvider {
             case MODELS_ID_TEMPLATES: {
                 Models models = col.getModels();
                 Long mid = getModelIdFromUri(uri, col);
-                JSONObject existingModel = models.get(mid);
+                Model existingModel = models.get(mid);
                 if (existingModel == null) {
                     throw new IllegalArgumentException("model missing: " + mid);
                 }
@@ -982,7 +983,7 @@ public class CardContentProvider extends ContentProvider {
             case MODELS_ID_FIELDS: {
                 Models models = col.getModels();
                 Long mid = getModelIdFromUri(uri, col);
-                JSONObject existingModel = models.get(mid);
+                Model existingModel = models.get(mid);
                 if (existingModel == null) {
                     throw new IllegalArgumentException("model missing: " + mid);
                 }
@@ -1068,7 +1069,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
     private void addModelToCursor(Long modelId, Models models, MatrixCursor rv, String[] columns) {
-        JSONObject jsonObject = models.get(modelId);
+        Model jsonObject = models.get(modelId);
         MatrixCursor.RowBuilder rb = rv.newRow();
         try {
             for (String column : columns) {
@@ -1213,7 +1214,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void addTemplateToCursor(JSONObject tmpl, JSONObject model, int id, Models models, MatrixCursor rv, String[] columns) {
+    private void addTemplateToCursor(JSONObject tmpl, Model model, int id, Models models, MatrixCursor rv, String[] columns) {
         try {
             MatrixCursor.RowBuilder rb = rv.newRow();
             for (String column : columns) {

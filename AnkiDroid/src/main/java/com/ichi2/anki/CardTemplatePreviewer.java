@@ -22,6 +22,7 @@ import android.view.View;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.NoteUtils;
@@ -40,7 +41,7 @@ import timber.log.Timber;
  */
 public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private String mEditedModelFileName = null;
-    private JSONObject mEditedModel = null;
+    private Model mEditedModel = null;
     private int mOrdinal;
     private long[] mCardList;
     private Bundle mNoteEditorBundle = null;
@@ -201,7 +202,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     }
 
     /** Get a dummy card */
-    protected @Nullable Card getDummyCard(JSONObject model, int ordinal) {
+    protected @Nullable Card getDummyCard(Model model, int ordinal) {
         Timber.d("getDummyCard() Creating dummy note for ordinal %s", ordinal);
         if (model == null) {
             return null;
@@ -277,7 +278,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
         @Override
         /** Override the method that fetches the model so we can render unsaved models */
-        public JSONObject model() {
+        public Model model() {
             if (mEditedModel != null) {
                 return mEditedModel;
             }

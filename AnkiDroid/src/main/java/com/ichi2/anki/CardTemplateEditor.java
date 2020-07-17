@@ -50,6 +50,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.themes.StyledProgressDialog;
 
@@ -161,7 +162,7 @@ public class CardTemplateEditor extends AnkiActivity {
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
         if (getTempModel() == null) {
-            mTempModel = new TemporaryModel(new JSONObject(col.getModels().get(mModelId).toString()));
+            mTempModel = new TemporaryModel(new Model(col.getModels().get(mModelId).toString()));
             //Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
         }
         // Set up the ViewPager with the sections adapter.
@@ -578,7 +579,7 @@ public class CardTemplateEditor extends AnkiActivity {
          * @param model model to remove template from, modified in place by reference
          * @param numAffectedCards number of cards which will be affected
          */
-        private void confirmDeleteCards(final JSONObject tmpl, final JSONObject model,  int numAffectedCards) {
+        private void confirmDeleteCards(final JSONObject tmpl, final Model model,  int numAffectedCards) {
             ConfirmationDialog d = new ConfirmationDialog();
             Resources res = getResources();
             String msg = String.format(res.getQuantityString(R.plurals.card_template_editor_confirm_delete,
@@ -600,7 +601,7 @@ public class CardTemplateEditor extends AnkiActivity {
          * @param tmpl template to remove
          * @param model model to remove template from, modified in place by reference
          */
-        private void deleteTemplateWithCheck(final JSONObject tmpl, final JSONObject model) {
+        private void deleteTemplateWithCheck(final JSONObject tmpl, final Model model) {
             try {
                 mTemplateEditor.getCol().modSchema();
                 deleteTemplate(tmpl, model);
@@ -622,7 +623,7 @@ public class CardTemplateEditor extends AnkiActivity {
          * @param tmpl template to remove
          * @param model model to remove from, updated in place by reference
          */
-        private void deleteTemplate(JSONObject tmpl, JSONObject model) {
+        private void deleteTemplate(JSONObject tmpl, Model model) {
             JSONArray oldTemplates = model.getJSONArray("tmpls");
             JSONArray newTemplates = new JSONArray();
             for (int i = 0; i < oldTemplates.length(); i++) {

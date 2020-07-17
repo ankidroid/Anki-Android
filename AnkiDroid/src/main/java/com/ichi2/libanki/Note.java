@@ -41,7 +41,7 @@ public class Note implements Cloneable {
 
     private long mId;
     private String mGuId;
-    private JSONObject mModel;
+    private Model mModel;
     private long mMid;
     private ArrayList<String> mTags;
     private String[] mFields;
@@ -59,12 +59,12 @@ public class Note implements Cloneable {
     }
 
 
-    public Note(Collection col, JSONObject model) {
+    public Note(Collection col, Model model) {
         this(col, model, null);
     }
 
 
-    public Note(Collection col, JSONObject model, Long id) {
+    public Note(Collection col, Model model, Long id) {
         assert !(model != null && id != null);
         mCol = col;
         if (id != null) {
@@ -163,7 +163,7 @@ public class Note implements Cloneable {
     }
 
 
-    public JSONObject model() {
+    public Model model() {
         return mModel;
     }
 

@@ -32,6 +32,7 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Model;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.widget.WidgetStatus;
 
@@ -55,7 +56,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
     private Collection mCol;
     private JSONArray mNoteFields;
-    private JSONObject mMod;
+    private Model mMod;
 
     private ModelEditorContextMenu mContextMenu;
     private EditText mFieldNameInput;
