@@ -136,7 +136,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
 
     public JSONObject(JSONObject copyFrom) {
         this();
-        for (String key: this) {
+        for (String key: copyFrom) {
             put(key, copyFrom.get(key));
         }
     }
