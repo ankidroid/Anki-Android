@@ -265,14 +265,19 @@ public class Note implements Cloneable {
      * ***********************************************************
      */
 
+    public enum DupeOrEmpty {
+        CORRECT,
+        EMPTY,
+        DUPE,
+    }
     /**
      * 
-     * @return 1 if first is empty; 2 if first is a duplicate, null otherwise.
+     * @return whether it has no content, dupe first field, or nothing remarkable.
      */
-    public Integer dupeOrEmpty() {
+    public DupeOrEmpty dupeOrEmpty() {
         String val = mFields[0];
         if (val.trim().length() == 0) {
-            return 1;
+            return DupeOrEmpty.EMPTY;
         }
         long csum = Utils.fieldChecksum(val);
         // find any matching csums and compare
@@ -282,10 +287,10 @@ public class Note implements Cloneable {
                 0, new Object[] {csum, (mId != 0 ? mId : 0), mMid})) {
             if (Utils.stripHTMLMedia(
                     Utils.splitFields(flds)[0]).equals(Utils.stripHTMLMedia(mFields[0]))) {
-                return 2;
+                return DupeOrEmpty.DUPE;
             }
         }
-        return null;
+        return DupeOrEmpty.CORRECT;
     }
 
 
