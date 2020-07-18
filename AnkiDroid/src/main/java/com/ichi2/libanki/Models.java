@@ -325,7 +325,7 @@ public class Models {
         long id = m.getLong("id");
         boolean current = current().getLong("id") == id;
         // delete notes/cards
-        mCol.remCards(Utils.collection2Array(mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = ?)", id)));
+        mCol.remCards(mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = ?)", id));
         // then the model
         mModels.remove(id);
         save();
@@ -755,7 +755,7 @@ public class Models {
         // ok to proceed; remove cards
         Timber.d("remTemplate proceeding to delete the template and %d cards", cids.size());
         mCol.modSchema();
-        mCol.remCards(Utils.toPrimitive(cids));
+        mCol.remCards(cids);
         // shift ordinals
         mCol.getDb()
             .execute(
@@ -966,7 +966,7 @@ public class Models {
             }
         }
         mCol.getDb().executeMany("update cards set ord=?,usn=?,mod=? where id=?", d);
-        mCol.remCards(Utils.toPrimitive(deleted));
+        mCol.remCards(deleted);
     }
 
     /**

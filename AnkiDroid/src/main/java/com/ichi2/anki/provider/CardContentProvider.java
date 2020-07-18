@@ -711,7 +711,7 @@ public class CardContentProvider extends ContentProvider {
                     return -1;
                 }
                 List<Long> cids = col.genCards(col.getModels().nids(model));
-                col.remCards(Utils.collection2Array(cids));
+                col.remCards(cids);
                 return cids.size();
             default:
                 throw new UnsupportedOperationException();
