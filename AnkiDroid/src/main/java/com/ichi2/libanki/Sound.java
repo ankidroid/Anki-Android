@@ -36,6 +36,7 @@ import android.widget.VideoView;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
+import com.ichi2.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -135,7 +136,7 @@ public class Sound {
             }
 
             // Get the sound file name
-            String sound = matcher.group(1).trim();
+            String sound = matcher.group(1);
 
             // Construct the sound path and store it
             Timber.d("Adding Sound to side: %d", qa);
@@ -193,7 +194,7 @@ public class Sound {
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
             // Get the sound file name
-            String sound = matcher.group(1).trim();
+            String sound = matcher.group(1);
 
             // Construct the sound path
             String soundPath = getSoundPath(soundDir, sound);
@@ -472,10 +473,12 @@ public class Sound {
      * @return absolute URI to the sound file.
      */
     private static String getSoundPath(String soundDir, String sound) {
-        if (hasURIScheme(sound)) {
-            return sound;
+        String trimmedSound = sound.trim();
+        if (hasURIScheme(trimmedSound)) {
+            return trimmedSound;
         }
-        return soundDir + Uri.encode(sound);
+
+        return soundDir + Uri.encode(StringUtil.trimRight(sound));
     }
 
     /**
