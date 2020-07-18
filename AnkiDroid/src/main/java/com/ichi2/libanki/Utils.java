@@ -548,6 +548,14 @@ public class Utils {
         return ar;
     }
 
+    public static List<Long> jsonArrayToLongList(JSONArray jsonArray) throws JSONException {
+        List<Long> ar = new ArrayList<>(jsonArray.length());
+        for (int i = 0; i < jsonArray.length(); i++) {
+            ar.add(jsonArray.getLong(i));
+        }
+        return ar;
+    }
+
 
     public static Object[] jsonArray2Objects(JSONArray array) {
         Object[] o = new Object[array.length()];

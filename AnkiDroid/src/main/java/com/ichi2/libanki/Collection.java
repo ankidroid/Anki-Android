@@ -589,7 +589,7 @@ public class Collection {
     public void remNotes(long[] ids) {
         ArrayList<Long> list = mDb
                 .queryLongList("SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids));
-        remCards(cids);
+        remCards(list);
     }
 
 
@@ -915,18 +915,19 @@ public class Collection {
     /**
      * Bulk delete cards by ID.
      */
-    public void remCards(long[] ids) {
-    	remCards(ids, true);
+    public void remCards(List<Long> ids) {
+        remCards(ids, true);
     }
-    public void remCards(long[] ids, boolean notes) {
-        if (ids.length == 0) {
+
+    public void remCards(java.util.Collection<Long> ids, boolean notes) {
+        if (ids.size() == 0) {
             return;
         }
         String sids = Utils.ids2str(ids);
         long[] nids = Utils
                 .collection2Array(mDb.queryLongList("SELECT nid FROM cards WHERE id IN " + sids));
         // remove cards
-        _logRem(ids, Consts.REM_CARD);
+        _logRem(Utils.collectionOfLong2array(ids), Consts.REM_CARD);
         mDb.execute("DELETE FROM cards WHERE id IN " + sids);
         // then notes
         if (!notes) {
@@ -1674,7 +1675,7 @@ public class Collection {
         notifyProgress.run();
         if (ids.size() != 0) {
             problems.add("Deleted " + ids.size() + " card(s) with missing note.");
-            remCards(Utils.collection2Array(ids));
+            remCards(ids);
         }
         return problems;
     }
@@ -1769,7 +1770,7 @@ public class Collection {
                             "SELECT id FROM notes WHERE mid = ?)", m.getLong("id"));
             if (ids.size() > 0) {
                 problems.add("Deleted " + ids.size() + " card(s) with missing template.");
-                remCards(Utils.collection2Array(ids));
+                remCards(ids);
             }
         }
         return problems;

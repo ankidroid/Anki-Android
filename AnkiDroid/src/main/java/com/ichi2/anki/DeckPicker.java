@@ -2458,7 +2458,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     ConfirmationDialog dialog = new ConfirmationDialog();
                     dialog.setArgs(msg);
                     Runnable confirm = () -> {
-                        getCol().remCards(Utils.collection2Array(cids));
+                        getCol().remCards(cids);
                         UIUtils.showSimpleSnackbar(DeckPicker.this, String.format(
                                 getResources().getString(R.string.empty_cards_deleted), cids.size()), false);
                     };

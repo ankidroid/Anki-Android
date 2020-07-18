@@ -381,7 +381,7 @@ public class Decks {
             if (cardsToo) {
                 // don't use cids(), as we want cards in cram decks too
                 ArrayList<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? OR odid = ?", did, did);
-                mCol.remCards(Utils.collection2Array(cids));
+                mCol.remCards(cids);
             }
         }
         // delete the deck and add a grave
