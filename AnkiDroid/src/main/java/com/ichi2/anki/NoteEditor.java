@@ -1462,9 +1462,9 @@ public class NoteEditor extends AnkiActivity {
         // Update the field in the Note so we can run a dupe check on it.
         updateField(field);
         // 1 is empty, 2 is dupe, null is neither.
-        Integer dupeCode = mEditorNote.dupeOrEmpty();
+        Note.DupeOrEmpty dupeCode = mEditorNote.dupeOrEmpty();
         // Change bottom line color of text field
-        if (dupeCode != null && dupeCode == 2) {
+        if (dupeCode != null && dupeCode == Note.DupeOrEmpty.DUPE) {
             field.setDupeStyle();
         } else {
             field.setDefaultStyle();
