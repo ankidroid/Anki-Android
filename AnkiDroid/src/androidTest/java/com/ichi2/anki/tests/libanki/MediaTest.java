@@ -183,11 +183,11 @@ public class MediaTest {
     }
 
     private List<String> added(Collection d) {
-        return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is not null", 0);
+        return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is not null");
     }
 
     private List<String> removed(Collection d) {
-        return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is null", 0);
+        return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is null");
     }
 
     @Test

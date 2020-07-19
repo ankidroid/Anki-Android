@@ -156,7 +156,7 @@ public class Note implements Cloneable {
     }
 
     public List<Long> cids() {
-        return mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE nid = ? ORDER BY ord", 0,
+        return mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE nid = ? ORDER BY ord",
                 new Object[]{mId});
     }
 
@@ -299,7 +299,7 @@ public class Note implements Cloneable {
         for (String flds : mCol.getDb().queryColumn(
                 String.class,
                 "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
-                0, new Object[] {csum, (mId != 0 ? mId : 0), mMid})) {
+                new Object[] {csum, (mId != 0 ? mId : 0), mMid})) {
             if (Utils.stripHTMLMedia(
                     Utils.splitFields(flds)[0]).equals(Utils.stripHTMLMedia(mFields[0]))) {
                 return DupeOrEmpty.DUPE;
