@@ -246,7 +246,7 @@ public class ContentProviderTest extends InstrumentedTest {
         JSONObject model = col.getModels().get(mModelId);
         assertNotNull("Check model", model);
         int expectedNumCards = model.getJSONArray("tmpls").length();
-        assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.cards().size());
+        assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.cids().size());
         // Now delete the note
         cr.delete(newNoteUri, null, null);
         try {

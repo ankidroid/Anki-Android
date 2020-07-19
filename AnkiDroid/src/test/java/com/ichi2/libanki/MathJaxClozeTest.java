@@ -52,7 +52,7 @@ public class MathJaxClozeTest extends RobolectricTest {
         Note f = c.newNote(c.getModels().byName("Cloze"));
         f.setItem("Text", "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}");
         c.addNote(f);
-        assertEquals(5, f.cards().size());
+        assertEquals(5, f.cids().size());
 
         ArrayList<Card> cards = f.cards();
 

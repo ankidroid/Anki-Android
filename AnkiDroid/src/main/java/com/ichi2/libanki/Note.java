@@ -151,13 +151,18 @@ public class Note implements Cloneable {
     }
 
 
+    public List<Long> cids() {
+        return mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE nid = ? ORDER BY ord", 0,
+                new Object[]{mId});
+    }
+
     public ArrayList<Card> cards() {
         ArrayList<Card> cards = new ArrayList<>();
-        try (Cursor cur = mCol.getDb().getDatabase()
-                .query("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null)) {
-            while (cur.moveToNext()) {
-                cards.add(mCol.getCard(cur.getLong(0)));
-            }
+        for (long cid : cids()) {
+            // each getCard access database. This is inneficient.
+            // Seems impossible to solve without creating a constructor of a list of card.
+            // Not a big trouble since most note have a small number of cards.
+            cards.add(mCol.getCard(cid));
         }
         return cards;
     }
