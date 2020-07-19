@@ -156,7 +156,7 @@ public class Note implements Cloneable {
     }
 
     public List<Long> cids() {
-        return mCol.getDb().list(Long.class, "SELECT id FROM cards WHERE nid = ? ORDER BY ord",
+        return mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid = ? ORDER BY ord",
                 new Object[]{mId});
     }
 
@@ -296,8 +296,7 @@ public class Note implements Cloneable {
         }
         long csum = Utils.fieldChecksum(val);
         // find any matching csums and compare
-        for (String flds : mCol.getDb().list(
-                String.class,
+        for (String flds : mCol.getDb().queryStringList(
                 "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
                 new Object[] {csum, (mId != 0 ? mId : 0), mMid})) {
             if (Utils.stripHTMLMedia(

@@ -283,6 +283,35 @@ public class DB {
         return results;
     }
 
+    /**
+     * Convenience method for querying the database for an entire column of long. 
+     *
+     * @param type The class of the column's data type. Example: int.class, String.class.
+     * @param query The SQL query statement.
+     * @return An ArrayList with the contents of the specified column.
+     */
+    public ArrayList<Long> queryLongList(String query) {
+        return queryLongList(query, null);
+    }
+
+    public ArrayList<Long> queryLongList(String query, Object[] bindArgs) {
+        return list(Long.class, query, bindArgs);
+    }
+
+    /**
+     * Convenience method for querying the database for an entire column of String. 
+     *
+     * @param type The class of the column's data type. Example: int.class, String.class.
+     * @param query The SQL query statement.
+     * @return An ArrayList with the contents of the specified column.
+     */
+    public ArrayList<String> queryStringList(String query) {
+        return queryStringList(query, null);
+    }
+
+    public ArrayList<String> queryStringList(String query, Object[] bindArgs) {
+        return list(String.class, query, bindArgs);
+    }
 
     /**
      * Mapping of Java type names to the corresponding Cursor.get method.

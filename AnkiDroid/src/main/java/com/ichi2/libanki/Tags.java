@@ -179,9 +179,9 @@ public class Tags {
             for (long id : mCol.getDecks().children(did).values()) {
                 dids.add(id);
             }
-            tags = mCol.getDb().list(String.class, "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(Utils.arrayList2array(dids)));
+            tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(Utils.arrayList2array(dids)));
         } else {
-            tags = mCol.getDb().list(String.class, "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = ?", new Object[] {did});
+            tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = ?", new Object[] {did});
         }
         // Cast to set to remove duplicates
         // Use methods used to get all tags to parse tags here as well.
