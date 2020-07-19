@@ -171,6 +171,12 @@ public class Note implements Cloneable {
         return cards;
     }
 
+    /** The first card, assuming it exists.*/
+    public Card firstCard() {
+        return mCol.getCard(mCol.getDb().queryLongScalar("SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1",
+                new Object[] {mId}));
+    }
+
 
     public JSONObject model() {
         return mModel;
