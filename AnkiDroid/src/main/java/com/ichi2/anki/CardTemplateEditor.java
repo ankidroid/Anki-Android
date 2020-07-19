@@ -413,8 +413,8 @@ public class CardTemplateEditor extends AnkiActivity {
                     i.putExtra("ordinal", ordinal);
 
                     // If we have a card for this position, send it, otherwise an empty cardlist signals to show a blank
-                    if (noteId != -1L && ordinal < col.getNote(noteId).cards().size()) {
-                        i.putExtra("cardList", new long[] { col.getNote(noteId).cards().get(ordinal).getId() });
+                    if (noteId != -1L && ordinal < col.getNote(noteId).cids().size()) {
+                        i.putExtra("cardList", new long[] { col.getNote(noteId).cids().get(ordinal) });
                     }
                     // Save the model and pass the filename if updated
                     tempModel.setEditedModelFileName(TemporaryModel.saveTempModel(mTemplateEditor, tempModel.getModel()));
