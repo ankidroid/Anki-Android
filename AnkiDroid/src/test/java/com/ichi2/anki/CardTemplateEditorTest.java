@@ -517,7 +517,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
     private int getModelCardCount(JSONObject model) {
         int cardCount = 0;
         for (Long noteId : getCol().getModels().nids(model)) {
-            cardCount += getCol().getNote(noteId).cids().size();
+            cardCount += getCol().getNote(noteId).numberOfCards();
         }
         return cardCount;
     }

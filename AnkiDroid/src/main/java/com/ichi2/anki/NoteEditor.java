@@ -791,7 +791,7 @@ public class NoteEditor extends AnkiActivity {
             final JSONObject oldModel = mCurrentEditedCard.model();
             if (!newModel.equals(oldModel)) {
                 mReloadRequired = true;
-                if (mModelChangeCardMap.size() < mEditorNote.cids().size() || mModelChangeCardMap.containsKey(null)) {
+                if (mModelChangeCardMap.size() < mEditorNote.numberOfCards() || mModelChangeCardMap.containsKey(null)) {
                     // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
                     ConfirmationDialog dialog = new ConfirmationDialog ();
                     dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing));
@@ -1753,7 +1753,7 @@ public class NoteEditor extends AnkiActivity {
                 // Initialize mapping between cards new model -> old model
                 mModelChangeCardMap = new HashMap<>();
                 for (int i = 0; i < newModel.getJSONArray("tmpls").length() ; i++) {
-                    if (i < mEditorNote.cids().size()) {
+                    if (i < mEditorNote.numberOfCards()) {
                         mModelChangeCardMap.put(i, i);
                     } else {
                         mModelChangeCardMap.put(i, null);
