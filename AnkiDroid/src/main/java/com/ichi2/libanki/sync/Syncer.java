@@ -657,7 +657,7 @@ public class Syncer {
         boolean wasServer = mCol.getServer();
         mCol.setServer(true);
         // notes first, so we don't end up with duplicate graves
-        mCol._remNotes(Utils.jsonArrayToLongArray(graves.getJSONArray("notes")));
+        mCol._remNotes(Utils.jsonArrayToLongList(graves.getJSONArray("notes")));
         // then cards
         mCol.remCards(Utils.jsonArrayToLongList(graves.getJSONArray("cards")), false);
         // and decks

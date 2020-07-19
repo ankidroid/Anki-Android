@@ -355,7 +355,7 @@ public class Decks {
             return;
         }
         // log the removal regardless of whether we have the deck or not
-        mCol._logRem(new long[] { did }, Consts.REM_DECK);
+        mCol._logRem(Arrays.asList(new Long[] { did }), Consts.REM_DECK);
         // do nothing else if doesn't exist
         if (deck == null) {
             return;
