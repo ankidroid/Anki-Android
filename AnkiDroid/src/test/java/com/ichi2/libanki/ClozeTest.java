@@ -42,19 +42,19 @@ public class ClozeTest extends RobolectricTest {
         f = d.newNote(d.getModels().byName("Cloze"));
         f.setItem("Text", "hello {{c1::world}}");
         assertEquals(1, d.addNote(f));
-        assertTrue(f.cards().get(0).q().contains("hello <span class=cloze>[...]</span>"));
-        assertTrue(f.cards().get(0).a().contains("hello <span class=cloze>world</span>"));
+        assertTrue(f.firstCard().q().contains("hello <span class=cloze>[...]</span>"));
+        assertTrue(f.firstCard().a().contains("hello <span class=cloze>world</span>"));
         // and with a comment
         f = d.newNote(d.getModels().byName("Cloze"));
         f.setItem("Text", "hello {{c1::world::typical}}");
         assertEquals(1, d.addNote(f));
-        assertTrue(f.cards().get(0).q().contains("<span class=cloze>[typical]</span>"));
-        assertTrue(f.cards().get(0).a().contains("<span class=cloze>world</span>"));
+        assertTrue(f.firstCard().q().contains("<span class=cloze>[typical]</span>"));
+        assertTrue(f.firstCard().a().contains("<span class=cloze>world</span>"));
         // and with two clozes
         f = d.newNote(d.getModels().byName("Cloze"));
         f.setItem("Text", "hello {{c1::world}} {{c2::bar}}");
         assertEquals(2, d.addNote(f));
-        Card c1 = f.cards().get(0);
+        Card c1 = f.firstCard();
         Card c2 = f.cards().get(1);
         assertTrue(c1.q().contains("<span class=cloze>[...]</span> bar"));
         assertTrue(c1.a().contains("<span class=cloze>world</span> bar"));
@@ -65,7 +65,7 @@ public class ClozeTest extends RobolectricTest {
         f = d.newNote(d.getModels().byName("Cloze"));
         f.setItem("Text", "a {{c1::b}} {{c1::c}}");
         assertEquals(1, d.addNote(f));
-        assertTrue(f.cards().get(0).a().contains("<span class=cloze>b</span> <span class=cloze>c</span>"));
+        assertTrue(f.firstCard().a().contains("<span class=cloze>b</span> <span class=cloze>c</span>"));
         // if we add another cloze, a card should be generated
         int cnt = d.cardCount();
         f.setItem("Text", "{{c2::hello}} {{c1::foo}}");
@@ -80,17 +80,17 @@ public class ClozeTest extends RobolectricTest {
                 "string}}");
         f.flush();
         assertEquals(1, d.addNote(f));
-        String a = f.cards().get(0).q();
-        String b = f.cards().get(0).a();
-        assertTrue(f.cards().get(0).q().contains("Cloze with <span class=cloze>[...]</span>"));
-        assertTrue(f.cards().get(0).a().contains("Cloze with <span class=cloze>multi-line\nstring</span>"));
+        String a = f.firstCard().q();
+        String b = f.firstCard().a();
+        assertTrue(f.firstCard().q().contains("Cloze with <span class=cloze>[...]</span>"));
+        assertTrue(f.firstCard().a().contains("Cloze with <span class=cloze>multi-line\nstring</span>"));
         //try a multiline cloze in p tag
         f.setItem("Text", "<p>Cloze in html tag with {{c1::multi-line\n" +
                 "string}}</p>");
         f.flush();
         assertEquals(1, d.addNote(f));
-        assertTrue(f.cards().get(0).q().contains("<p>Cloze in html tag with <span class=cloze>[...]</span>"));
-        assertTrue(f.cards().get(0).a().contains("<p>Cloze in html tag with <span class=cloze>multi-line\nstring</span>"));
+        assertTrue(f.firstCard().q().contains("<p>Cloze in html tag with <span class=cloze>[...]</span>"));
+        assertTrue(f.firstCard().a().contains("<p>Cloze in html tag with <span class=cloze>multi-line\nstring</span>"));
 
         //make sure multiline cloze things aren't too greedy
         f.setItem("Text", "<p>Cloze in html tag with {{c1::multi-line\n" +
@@ -98,10 +98,10 @@ public class ClozeTest extends RobolectricTest {
                 "one}}</p>");
         f.flush();
         assertEquals(1, d.addNote(f));
-        assertTrue(f.cards().get(0).q().contains("<p>Cloze in html tag with <span class=cloze>[...]</span> and then {{c2:another\n" +
+        assertTrue(f.firstCard().q().contains("<p>Cloze in html tag with <span class=cloze>[...]</span> and then {{c2:another\n" +
                 "one}}</p>"));
 
-        assertTrue(f.cards().get(0).a().contains("<p>Cloze in html tag with <span class=cloze>multi-line\n" +
+        assertTrue(f.firstCard().a().contains("<p>Cloze in html tag with <span class=cloze>multi-line\n" +
                 "string</span> and then {{c2:another\n" +
                 "one}}</p>"));
     }

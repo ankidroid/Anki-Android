@@ -59,7 +59,7 @@ public class ReviewerTest extends RobolectricTest {
     public void jsTime4ShouldBeBlankIfButtonUnavailable() {
         // #6623 - easy should be blank when displaying a card with 3 buttons (after displaying a review)
         Note firstNote = addNoteUsingBasicModel("Hello", "World");
-        moveToReviewQueue(firstNote.cards().get(0));
+        moveToReviewQueue(firstNote.firstCard());
 
         addNoteUsingBasicModel("Hello", "World2");
 

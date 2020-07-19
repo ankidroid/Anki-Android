@@ -114,7 +114,7 @@ public class SchedTest extends RobolectricTest {
     @NonNull
     private Card createBuriedCardInDefaultDeck() {
         Note n = addNoteUsingBasicModel("Hello", "World");
-        Card c = n.cards().get(0);
+        Card c = n.firstCard();
         c.setQueue(Consts.QUEUE_TYPE_SIBLING_BURIED);
         c.flush();
         return c;

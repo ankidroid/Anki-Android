@@ -300,7 +300,7 @@ public class NoteEditorTest extends RobolectricTest {
         switch (from) {
             case REVIEWER:
                 i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
-                AbstractFlashcardViewer.setEditorCard(n.cards().get(0));
+                AbstractFlashcardViewer.setEditorCard(n.firstCard());
                 break;
             case DECK_LIST:
                 i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);

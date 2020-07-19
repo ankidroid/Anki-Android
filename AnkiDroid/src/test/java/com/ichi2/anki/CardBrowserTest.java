@@ -282,7 +282,7 @@ public class CardBrowserTest extends RobolectricTest {
 
 
     private void flagCardForNote(Note n, int flag) {
-        Card c = n.cards().get(0);
+        Card c = n.firstCard();
         c.setUserFlag(flag);
         c.flush();
     }
