@@ -1731,7 +1731,7 @@ public class SchedV2 extends AbstractSched {
         if (lim == null) {
             lim = "did = " + did;
         }
-        mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where " + lim, 0));
+        mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where " + lim));
 
         mCol.getDb().execute(
                 "update cards set did = odid, " + _restoreQueueSnippet() +
@@ -2292,7 +2292,7 @@ public class SchedV2 extends AbstractSched {
      * Unbury all buried cards in all decks
      */
     public void unburyCards() {
-        mCol.log(mCol.getDb().queryColumn( Long.class,"select id from cards where queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")", 0));
+        mCol.log(mCol.getDb().queryColumn( Long.class,"select id from cards where queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")"));
         mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")");
     }
 
@@ -2329,7 +2329,7 @@ public class SchedV2 extends AbstractSched {
 
         String sids = Utils.ids2str(allDecks != null ? allDecks : mCol.getDecks().active());
 
-        mCol.log(mCol.getDb().queryColumn(Long.class,"select id from cards where " + queue + " and did in " + sids, 0));
+        mCol.log(mCol.getDb().queryColumn(Long.class,"select id from cards where " + queue + " and did in " + sids));
         mCol.getDb().execute("update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + " and did in " + sids,
                 new Object[]{mTime.intTime(), mCol.usn()});
     }
@@ -2341,7 +2341,7 @@ public class SchedV2 extends AbstractSched {
      */
     public void buryNote(long nid) {
         long[] cids = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
-                "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW, 0,
+                "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW,
                 new Object[] {nid}));
         buryCards(cids);
     }
@@ -2440,7 +2440,7 @@ public class SchedV2 extends AbstractSched {
      */
     public void resetCards(Long[] ids) {
         long[] nonNew = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
-                "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")", 0));
+                "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")"));
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
         mCol.log((Object[]) ids);
@@ -2514,14 +2514,14 @@ public class SchedV2 extends AbstractSched {
 
 
     public void randomizeCards(long did) {
-        List<Long> cids = mCol.getDb().queryColumn(Long.class, "select id from cards where did = ?", 0,
+        List<Long> cids = mCol.getDb().queryColumn(Long.class, "select id from cards where did = ?",
                                                    new Object[]{did});
         sortCards(Utils.toPrimitive(cids), 1, 1, true, false);
     }
 
 
     public void orderCards(long did) {
-        List<Long> cids = mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE did = ? ORDER BY nid", 0,
+        List<Long> cids = mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE did = ? ORDER BY nid",
                                                    new Object[]{did});
         sortCards(Utils.toPrimitive(cids), 1, 1, false, false);
     }
@@ -2585,7 +2585,7 @@ public class SchedV2 extends AbstractSched {
 
 
         // remove new cards from learning
-        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "select id from cards where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")", 0)));
+        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "select id from cards where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")")));
     }
 
 
