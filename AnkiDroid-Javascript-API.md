@@ -6,7 +6,7 @@ This api allow deck developer to add functionality to cards that can call native
 <br> View this files also for additional information.
 <br>[AbstractFlashcardViewer.java](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/java/com/ichi2/anki/AbstractFlashcardViewer.java#L3404)
 <br>[card.js](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/assets/scripts/card.js#L78)
-<!-- The PR is in progress
+<!-- The PR is in progress. (#6521)
 To initialize the JavaScript API usage.
 ## Initialize 
 Calling functions using JS will not work, if api are not initialized.
@@ -326,7 +326,8 @@ If want to hide card's button / text in current card when reviewing on Anki Desk
 ```
 
 ## Linked issues & PR
-[#6377](https://github.com/ankidroid/Anki-Android/pull/6377) 
+[#6521](https://github.com/ankidroid/Anki-Android/pull/6521)
+<br>[#6377](https://github.com/ankidroid/Anki-Android/pull/6377) 
 <br>[#6307](https://github.com/ankidroid/Anki-Android/pull/6307) 
 <br>[#6388](https://github.com/ankidroid/Anki-Android/pull/6388) 
 <br>[#6393](https://github.com/ankidroid/Anki-Android/pull/6393) 
