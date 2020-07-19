@@ -638,7 +638,7 @@ public class Card implements Cloneable {
         return flags & 0b111;
     }
 
-    public int getUserFlag() {
+    public int userFlag() {
         return Card.intToFlag(mFlags);
     }
 

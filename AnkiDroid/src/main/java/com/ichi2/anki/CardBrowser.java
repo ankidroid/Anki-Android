@@ -1428,7 +1428,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             card.put(DECK, deckName);
             // update flags (marked / suspended / etc) which determine color
             card.put(SUSPENDED, c.getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
-            card.put(FLAGS, (new Integer(c.getUserFlag())).toString());
+            card.put(FLAGS, (new Integer(c.userFlag())).toString());
         }
 
         updateList();
@@ -1526,7 +1526,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         String tags = note.stringTags();
         item.put(TAGS, tags);
         item.put(MARKED, (sMarkedPattern.matcher(item.get(TAGS)).matches())?"marked": null);
-        item.put(FLAGS, (Integer.toString(c.getUserFlag())));
+        item.put(FLAGS, (Integer.toString(c.userFlag())));
         item.put(SUSPENDED, c.getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
         item.put(DECK, col.getDecks().name(c.getDid()));
         item.put(SFLD, note.getSFld());

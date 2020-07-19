@@ -498,7 +498,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         if (mCurrentCard != null) {
-            switch (mCurrentCard.getUserFlag()) {
+            switch (mCurrentCard.userFlag()) {
             case 1:
                 menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_red);
                 break;
