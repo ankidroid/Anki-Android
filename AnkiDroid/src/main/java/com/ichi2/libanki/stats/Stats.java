@@ -1302,7 +1302,7 @@ public class Stats {
             for (Deck d : col.getDecks().all()) {
                 ids.add(d.getLong("id"));
             }
-            return Utils.ids2str(Utils.arrayList2array(ids));
+            return Utils.ids2str(Utils.collection2Array(ids));
         } else {
             // The given deck id and its children
             ArrayList<Long> ids = new ArrayList<>();

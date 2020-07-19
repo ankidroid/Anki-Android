@@ -325,7 +325,7 @@ public class Models {
         long id = m.getLong("id");
         boolean current = current().getLong("id") == id;
         // delete notes/cards
-        mCol.remCards(Utils.arrayList2array(mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = ?)", id)));
+        mCol.remCards(Utils.collection2Array(mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = ?)", id)));
         // then the model
         mModels.remove(id);
         save();
@@ -861,7 +861,7 @@ public class Models {
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // unused upstream as well
     private void _syncTemplates(Model m) {
-        ArrayList<Long> rem = mCol.genCards(Utils.arrayList2array(nids(m)));
+        ArrayList<Long> rem = mCol.genCards(Utils.collection2Array(nids(m)));
     }
 
 
