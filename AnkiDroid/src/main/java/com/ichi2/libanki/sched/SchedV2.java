@@ -29,6 +29,7 @@ import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
+import android.util.Pair;
 
 import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
@@ -1554,19 +1555,19 @@ public class SchedV2 extends AbstractSched {
     }
 
     protected int _fuzzedIvl(int ivl) {
-        int[] minMax = _fuzzIvlRange(ivl);
+        Pair<Integer, Integer> minMax = _fuzzIvlRange(ivl);
         // Anki's python uses random.randint(a, b) which returns x in [a, b] while the eq Random().nextInt(a, b)
         // returns x in [0, b-a), hence the +1 diff with libanki
-        return (new Random().nextInt(minMax[1] - minMax[0] + 1)) + minMax[0];
+        return (new Random().nextInt(minMax.second - minMax.first + 1)) + minMax.first;
     }
 
 
-    public int[] _fuzzIvlRange(int ivl) {
+    public Pair<Integer, Integer> _fuzzIvlRange(int ivl) {
         int fuzz;
         if (ivl < 2) {
-            return new int[]{1, 1};
+            return new Pair<>(1, 1);
         } else if (ivl == 2) {
-            return new int[]{2, 3};
+            return new Pair<>(2, 3);
         } else if (ivl < 7) {
             fuzz = (int)(ivl * 0.25);
         } else if (ivl < 30) {
@@ -1576,7 +1577,7 @@ public class SchedV2 extends AbstractSched {
         }
         // fuzz at least a day
         fuzz = Math.max(fuzz, 1);
-        return new int[]{ivl - fuzz, ivl + fuzz};
+        return new Pair<>(ivl - fuzz, ivl + fuzz);
     }
 
 

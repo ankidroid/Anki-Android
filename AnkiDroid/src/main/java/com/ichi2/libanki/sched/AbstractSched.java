@@ -3,6 +3,7 @@ package com.ichi2.libanki.sched;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Pair;
 import android.widget.Toast;
 
 
@@ -68,7 +69,7 @@ public abstract class AbstractSched {
     public abstract int _deckNewLimitSingle(JSONObject g);
     public abstract int totalNewForCurrentDeck();
     public abstract int totalRevForCurrentDeck();
-    public abstract int[] _fuzzIvlRange(int ivl);
+    public abstract Pair<Integer, Integer> _fuzzIvlRange(int ivl);
     /** Rebuild a dynamic deck. */
     public abstract void rebuildDyn();
     public abstract List<Long> rebuildDyn(long did);
