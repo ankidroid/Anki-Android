@@ -181,7 +181,7 @@ public abstract class Undoable {
                 c.flush(false);
                 ids.add(c.getId());
             }
-            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.collection2Array(ids)));
             return mCid;
         }
     }
@@ -207,7 +207,7 @@ public abstract class Undoable {
                 c.flush(false);
                 ids.add(c.getId());
             }
-            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.collection2Array(ids)));
             return MULTI_CARD;  // don't fetch new card
 
         }

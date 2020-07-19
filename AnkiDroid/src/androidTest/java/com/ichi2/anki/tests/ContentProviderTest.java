@@ -213,7 +213,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // Delete all notes
         List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);
         if (remnantNotes.size() > 0) {
-            long[] noteIds = Utils.arrayList2array(remnantNotes);
+            long[] noteIds = Utils.collection2Array(remnantNotes);
             col.remNotes(noteIds);
             col.save();
             assertEquals("Check that remnant notes have been deleted", 0, col.findNotes("tag:" + TEST_TAG).size());

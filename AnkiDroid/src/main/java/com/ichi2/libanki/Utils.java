@@ -460,7 +460,8 @@ public class Utils {
 
 
     /** LIBANKI: not in libanki */
-    public static long[] arrayList2array(List<Long> list) {
+    /** Transform a collection of Long into an array of Long */
+    public static long[] collection2Array(java.util.Collection<Long> list) {
         long[] ar = new long[list.size()];
         int i = 0;
         for (long l : list) {

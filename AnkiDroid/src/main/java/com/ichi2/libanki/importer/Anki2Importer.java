@@ -32,7 +32,6 @@ import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
-import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -308,7 +307,7 @@ public class Anki2Importer extends Importer {
                 // add to col partially, so as to avoid OOM
                 if (dirty.size() >= thresExecDirty) {
                     totalDirtyCount  += dirty.size();
-                    long[] das = Utils.arrayList2array(dirty);
+                    long[] das = Utils.collection2Array(dirty);
                     mDst.updateFieldCache(das);
                     mDst.getTags().registerNotes(das);
                     dirty.clear();
@@ -356,7 +355,7 @@ public class Anki2Importer extends Importer {
             }
         }
 
-        long[] das = Utils.arrayList2array(dirty);
+        long[] das = Utils.collection2Array(dirty);
         mDst.updateFieldCache(das);
         mDst.getTags().registerNotes(das);
     }

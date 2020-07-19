@@ -381,7 +381,7 @@ public class Decks {
             if (cardsToo) {
                 // don't use cids(), as we want cards in cram decks too
                 ArrayList<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? OR odid = ?", did, did);
-                mCol.remCards(Utils.arrayList2array(cids));
+                mCol.remCards(Utils.collection2Array(cids));
             }
         }
         // delete the deck and add a grave
@@ -839,7 +839,7 @@ public class Decks {
         for(Map.Entry<String, Long> entry : children(did).entrySet()) {
             dids.add(entry.getValue());
         }
-        return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(Utils.arrayList2array(dids))));
+        return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(Utils.collection2Array(dids))));
     }
 
 

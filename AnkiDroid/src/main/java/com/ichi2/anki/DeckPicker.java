@@ -118,7 +118,6 @@ import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -2459,7 +2458,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     ConfirmationDialog dialog = new ConfirmationDialog();
                     dialog.setArgs(msg);
                     Runnable confirm = () -> {
-                        getCol().remCards(Utils.arrayList2array(cids));
+                        getCol().remCards(Utils.collection2Array(cids));
                         UIUtils.showSimpleSnackbar(DeckPicker.this, String.format(
                                 getResources().getString(R.string.empty_cards_deleted), cids.size()), false);
                     };
