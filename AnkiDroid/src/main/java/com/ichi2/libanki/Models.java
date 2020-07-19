@@ -325,7 +325,7 @@ public class Models {
         long id = m.getLong("id");
         boolean current = current().getLong("id") == id;
         // delete notes/cards
-        mCol.remCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
+        mCol.remCards(Utils.arrayList2array(mCol.getDb().list(Long.class,
                                                                      "SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = ?)", new Object[] {id})));
         // then the model
         mModels.remove(id);
@@ -385,7 +385,7 @@ public class Models {
 
     /** Note ids for M */
     public ArrayList<Long> nids(Model m) {
-        return mCol.getDb().queryColumn(Long.class, "SELECT id FROM notes WHERE mid = ?", new Object[] {m.getLong("id")});
+        return mCol.getDb().List(Long.class, "SELECT id FROM notes WHERE mid = ?", new Object[] {m.getLong("id")});
     }
 
     /**
@@ -790,7 +790,7 @@ public class Models {
     public @Nullable long[] getCardIdsForModel(long modelId, int[] ords) {
         String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = " +
                 modelId + " and c2.ord  in " + Utils.ids2str(ords);
-        long[] cids = Utils.toPrimitive(mCol.getDb().queryColumn(Long.class, cardIdsToDeleteSql));
+        long[] cids = Utils.toPrimitive(mCol.getDb().list(Long.class, cardIdsToDeleteSql));
         //Timber.d("cardIdsToDeleteSql was '" + cardIdsToDeleteSql + "' and got %s", Utils.ids2str(cids));
         Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.length, modelId, Utils.ids2str(ords));
 

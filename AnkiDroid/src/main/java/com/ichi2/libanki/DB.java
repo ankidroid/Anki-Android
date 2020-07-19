@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
-import com.ichi2.compat.CompatHelper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -231,11 +230,11 @@ public class DB {
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
-    public <T> ArrayList<T> queryColumn(Class<T> type, String query) {
-        return queryColumn(type, query, null);
+    public <T> ArrayList<T> list(Class<T> type, String query) {
+        return list(type, query, null);
     }
 
-    public <T> ArrayList<T> queryColumn(Class<T> type, String query, Object[] bindArgs) {
+    public <T> ArrayList<T> list(Class<T> type, String query, Object[] bindArgs) {
         int nullExceptionCount = 0;
         InvocationTargetException nullException = null; // to catch the null exception for reporting
         ArrayList<T> results = new ArrayList<>();

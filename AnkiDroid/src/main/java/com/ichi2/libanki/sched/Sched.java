@@ -186,7 +186,7 @@ public class Sched extends SchedV2 {
     @Override
     public void unburyCards() {
         mCol.getConf().put("lastUnburied", mToday);
-        mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = "+ Consts.QUEUE_TYPE_SIBLING_BURIED));
+        mCol.log(mCol.getDb().list(Long.class, "select id from cards where queue = "+ Consts.QUEUE_TYPE_SIBLING_BURIED));
         mCol.getDb().execute("update cards set queue=type where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED);
     }
 
@@ -199,7 +199,7 @@ public class Sched extends SchedV2 {
     private void unburyCardsForDeck(List<Long> allDecks) {
         // Refactored to allow unburying an arbitrary deck
         String sids = Utils.ids2str(allDecks);
-        mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids));
+        mCol.log(mCol.getDb().list(Long.class, "select id from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids));
         mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids,
                 new Object[] { Utils.intTime(), mCol.usn() });
     }
@@ -627,7 +627,7 @@ public class Sched extends SchedV2 {
                 ", usn = ?, odue = 0 where queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type = " + Consts.CARD_TYPE_REV + " " + extra,
                 new Object[] {Utils.intTime(), mCol.usn()});
         // new cards in learning
-        forgetCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " + extra)));
+        forgetCards(Utils.arrayList2array(mCol.getDb().list(Long.class, "SELECT id FROM cards WHERE queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " + extra)));
     }
 
     private int _lrnForDeck(long did) {
@@ -990,7 +990,7 @@ public class Sched extends SchedV2 {
         if (lim == null) {
             lim = "did = " + did;
         }
-        mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where " + lim));
+        mCol.log(mCol.getDb().list(Long.class, "select id from cards where " + lim));
         // move out of cram queue
         mCol.getDb().execute(
                 "update cards set did = odid, queue = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.QUEUE_TYPE_NEW + " " +

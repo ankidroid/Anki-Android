@@ -64,7 +64,7 @@ class Exporter {
     public Long[] cardIds() {
         Long[] cids;
         if (mDid == null) {
-            cids = Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards"));
+            cids = Utils.list2ObjectArray(mCol.getDb().list(Long.class, "select id from cards"));
         } else {
             cids = mCol.getDecks().cids(mDid, true);
         }
@@ -119,7 +119,7 @@ class AnkiExporter extends Exporter {
         Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
                 .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
-        Set<Long> nids = new HashSet<>(mSrc.getDb().queryColumn(Long.class,
+        Set<Long> nids = new HashSet<>(mSrc.getDb().list(Long.class,
                 "select nid from cards where id in " + Utils.ids2str(cids)));
         // notes
         Timber.d("Copy notes");
@@ -129,7 +129,7 @@ class AnkiExporter extends Exporter {
         // remove system tags if not exporting scheduling info
         if (!mIncludeSched) {
             Timber.d("Stripping system tags from list");
-            ArrayList<String> srcTags = mSrc.getDb().queryColumn(String.class,
+            ArrayList<String> srcTags = mSrc.getDb().list(String.class,
                     "select tags from notes where id in " + strnids);
             ArrayList<Object[]> args = new ArrayList<>(srcTags.size());
             Object [] arg = new Object[2];
@@ -142,7 +142,7 @@ class AnkiExporter extends Exporter {
         }
         // models used by the notes
         Timber.d("Finding models used by notes");
-        ArrayList<Long> mids = mSrc.getDb().queryColumn(Long.class,
+        ArrayList<Long> mids = mSrc.getDb().list(Long.class,
                 "select distinct mid from DST_DB.notes where id in " + strnids);
         // card history and revlog
         if (mIncludeSched) {
@@ -210,8 +210,8 @@ class AnkiExporter extends Exporter {
         JSONObject media = new JSONObject();
         mMediaDir = mSrc.getMedia().dir();
         if (mIncludeMedia) {
-            ArrayList<Long> mid = mSrc.getDb().queryColumn(Long.class, "select mid from notes where id in " + strnids);
-            ArrayList<String> flds = mSrc.getDb().queryColumn(String.class,
+            ArrayList<Long> mid = mSrc.getDb().list(Long.class, "select mid from notes where id in " + strnids);
+            ArrayList<String> flds = mSrc.getDb().list(String.class,
                     "select flds from notes where id in " + strnids);
             for (int idx = 0; idx < mid.size(); idx++) {
                 for (String file : mSrc.getMedia().filesInStr(mid.get(idx), flds.get(idx))) {
