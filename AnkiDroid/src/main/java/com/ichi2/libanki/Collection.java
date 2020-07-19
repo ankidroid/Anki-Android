@@ -517,7 +517,7 @@ public class Collection {
      * Deletion logging ********************************************************* **************************************
      */
 
-    public void _logRem(long[] ids, int type) {
+    public void _logRem(java.util.Collection<Long> ids, int type) {
         for (long id : ids) {
             ContentValues values = new ContentValues();
             values.put("usn", usn());
@@ -596,8 +596,8 @@ public class Collection {
     /**
      * Bulk delete notes by ID. Don't call this directly.
      */
-    public void _remNotes(long[] ids) {
-        if (ids.length == 0) {
+    public void _remNotes(java.util.Collection<Long> ids) {
+        if (ids.size() == 0) {
             return;
         }
         String strids = Utils.ids2str(ids);
@@ -924,18 +924,16 @@ public class Collection {
             return;
         }
         String sids = Utils.ids2str(ids);
-        long[] nids = Utils
-                .collection2Array(mDb.queryLongList("SELECT nid FROM cards WHERE id IN " + sids));
+        List<Long> nids = mDb.queryLongList("SELECT nid FROM cards WHERE id IN " + sids);
         // remove cards
-        _logRem(Utils.collectionOfLong2array(ids), Consts.REM_CARD);
+        _logRem(ids, Consts.REM_CARD);
         mDb.execute("DELETE FROM cards WHERE id IN " + sids);
         // then notes
         if (!notes) {
         	return;
         }
-        nids = Utils
-                .collection2Array(mDb.queryLongList("SELECT id FROM notes WHERE id IN " + Utils.ids2str(nids)
-                        + " AND id NOT IN (SELECT nid FROM cards)"));
+        nids = mDb.queryLongList("SELECT id FROM notes WHERE id IN " + Utils.ids2str(nids)
+                        + " AND id NOT IN (SELECT nid FROM cards)");
         _remNotes(nids);
     }
 
@@ -1692,7 +1690,7 @@ public class Collection {
         notifyProgress.run();
         if (ids.size() != 0) {
             problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
-            _remNotes(Utils.collection2Array(ids));
+            _remNotes(ids);
         }
         return problems;
     }
@@ -1743,7 +1741,7 @@ public class Collection {
             notifyProgress.run();
             if (ids.size() > 0) {
                 problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
-                _remNotes(Utils.collection2Array(ids));
+                _remNotes(ids);
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -1787,7 +1785,7 @@ public class Collection {
         notifyProgress.run();
         if (ids.size() != 0) {
             problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
-            _remNotes(Utils.collection2Array(ids));
+            _remNotes(ids);
         }
         return problems;
     }
