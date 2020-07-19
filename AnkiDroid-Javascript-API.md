@@ -6,7 +6,7 @@ This api allow deck developer to add functionality to cards that can call native
 <br> View this files also for additional information.
 <br>[AbstractFlashcardViewer.java](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/java/com/ichi2/anki/AbstractFlashcardViewer.java#L3404)
 <br>[card.js](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/assets/scripts/card.js#L78)
-
+<!-- The PR is in progress
 To initialize the JavaScript API usage.
 ## Initialize 
 Calling functions using JS will not work, if api are not initialized.
@@ -34,7 +34,7 @@ var apiStatus = JSON.parse(apiData);
 console.log(apiStatus);
 </script>
 ```
-
+-->
 ## Show Answer
 ### Name
 ```showAnswer()```
