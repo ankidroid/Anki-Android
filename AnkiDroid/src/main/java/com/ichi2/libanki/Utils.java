@@ -62,6 +62,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -418,8 +419,8 @@ public class Utils {
         return sb.toString();
     }
 
-    /** Given a list of integers, return a string '(int1,int2,...)'. */
-    public static <T> String ids2str(List<T> ids) {
+    /** Given a list of integers, return a string '(int1,int2,...)', in order given by the iterator. */
+    public static <T> String ids2str(Iterable<T> ids) {
         StringBuilder sb = new StringBuilder(512);
         sb.append("(");
         boolean isNotFirst = false;
