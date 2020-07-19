@@ -2604,7 +2604,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     private void toggleFlag(@FlagDef int flag) {
-        if (mCurrentCard.getUserFlag() == flag) {
+        if (mCurrentCard.userFlag() == flag) {
             Timber.i("Toggle flag: unsetting flag");
             onFlag(mCurrentCard, FLAG_NONE);
         } else {
@@ -3039,7 +3039,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected @FlagDef int getFlagToDisplay() {
-        return mCurrentCard.getUserFlag();
+        return mCurrentCard.userFlag();
     }
 
 
@@ -3535,7 +3535,7 @@ see card.js for available functions
         
         @JavascriptInterface
         public int ankiGetCardFlag() {
-            return mCurrentCard.getUserFlag();
+            return mCurrentCard.userFlag();
         }
 
         @JavascriptInterface
