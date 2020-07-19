@@ -68,7 +68,7 @@ public abstract class AbstractSched {
     public abstract int _deckNewLimitSingle(JSONObject g);
     public abstract int totalNewForCurrentDeck();
     public abstract int totalRevForCurrentDeck();
-    public abstract int[] _fuzzedIvlRange(int ivl);
+    public abstract int[] _fuzzIvlRange(int ivl);
     /** Rebuild a dynamic deck. */
     public abstract void rebuildDyn();
     public abstract List<Long> rebuildDyn(long did);

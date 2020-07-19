@@ -1554,14 +1554,14 @@ public class SchedV2 extends AbstractSched {
     }
 
     protected int _fuzzedIvl(int ivl) {
-        int[] minMax = _fuzzedIvlRange(ivl);
+        int[] minMax = _fuzzIvlRange(ivl);
         // Anki's python uses random.randint(a, b) which returns x in [a, b] while the eq Random().nextInt(a, b)
         // returns x in [0, b-a), hence the +1 diff with libanki
         return (new Random().nextInt(minMax[1] - minMax[0] + 1)) + minMax[0];
     }
 
 
-    public int[] _fuzzedIvlRange(int ivl) {
+    public int[] _fuzzIvlRange(int ivl) {
         int fuzz;
         if (ivl < 2) {
             return new int[]{1, 1};
