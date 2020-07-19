@@ -3,20 +3,13 @@ package com.ichi2.libanki;
 import android.content.Context;
 
 import com.ichi2.anki.RobolectricTest;
-import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Models;
-import com.ichi2.libanki.Note;
 import com.ichi2.libanki.template.Template;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -52,7 +45,7 @@ public class MathJaxClozeTest extends RobolectricTest {
         Note f = c.newNote(c.getModels().byName("Cloze"));
         f.setItem("Text", "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}");
         c.addNote(f);
-        assertEquals(5, f.cids().size());
+        assertEquals(5, f.numberOfCards());
 
         ArrayList<Card> cards = f.cards();
 

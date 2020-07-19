@@ -151,6 +151,10 @@ public class Note implements Cloneable {
     }
 
 
+    public int numberOfCards() {
+        return (int) mCol.getDb().queryLongScalar("SELECT count() FROM cards WHERE nid = ?", new Object[]{mId});
+    }
+
     public List<Long> cids() {
         return mCol.getDb().queryColumn(Long.class, "SELECT id FROM cards WHERE nid = ? ORDER BY ord", 0,
                 new Object[]{mId});
