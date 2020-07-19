@@ -746,16 +746,16 @@ public class Models {
             throw new IllegalArgumentException("Invalid template proposed for delete");
         }
         // the code in "isRemTemplateSafe" was in place here in libanki. It is extracted to a method for reuse
-        long[] cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
+        List<Long> cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
         if (cids == null) {
             Timber.d("remTemplate getCardIdsForModel determined it was unsafe to delete the template");
             return false;
         }
 
         // ok to proceed; remove cards
-        Timber.d("remTemplate proceeding to delete the template and %d cards", cids.length);
+        Timber.d("remTemplate proceeding to delete the template and %d cards", cids.size());
         mCol.modSchema();
-        mCol.remCards(cids);
+        mCol.remCards(Utils.toPrimitive(cids));
         // shift ordinals
         mCol.getDb()
             .execute(
@@ -786,12 +786,12 @@ public class Models {
      * @param ords array of ints, each one is the ordinal a the card template in the given model
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
-    public @Nullable long[] getCardIdsForModel(long modelId, int[] ords) {
+    public @Nullable List<Long> getCardIdsForModel(long modelId, int[] ords) {
         String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = " +
                 modelId + " and c2.ord  in " + Utils.ids2str(ords);
-        long[] cids = Utils.toPrimitive(mCol.getDb().queryLongList(cardIdsToDeleteSql));
+        List<Long> cids = mCol.getDb().queryLongList(cardIdsToDeleteSql);
         //Timber.d("cardIdsToDeleteSql was '" + cardIdsToDeleteSql + "' and got %s", Utils.ids2str(cids));
-        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.length, modelId, Utils.ids2str(ords));
+        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size(), modelId, Utils.ids2str(ords));
 
         // all notes with this template must have at least two cards, or we could end up creating orphaned notes
         String noteCountPreDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?)";
