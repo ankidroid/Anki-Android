@@ -57,6 +57,7 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -413,8 +414,11 @@ public class CardTemplateEditor extends AnkiActivity {
                     i.putExtra("ordinal", ordinal);
 
                     // If we have a card for this position, send it, otherwise an empty cardlist signals to show a blank
-                    if (noteId != -1L && ordinal < col.getNote(noteId).cids().size()) {
-                        i.putExtra("cardList", new long[] { col.getNote(noteId).cids().get(ordinal) });
+                    if (noteId != -1L) {
+                        List<Long> cids = col.getNote(noteId).cids();
+                        if (ordinal < cids.size()) {
+                            i.putExtra("cardList", new long[] { cids.get(ordinal) });
+                        }
                     }
                     // Save the model and pass the filename if updated
                     tempModel.setEditedModelFileName(TemporaryModel.saveTempModel(mTemplateEditor, tempModel.getModel()));
