@@ -1231,12 +1231,20 @@ public class Collection {
 
 
     /** Undo menu item name, or "" if undo unavailable. */
-    public String undoName(Resources res) {
+    @VisibleForTesting
+    public DismissType undoType() {
         if (mUndo.size() > 0) {
-            DismissType type = mUndo.getLast().first;
-            return res.getString(type.undoNameId);
+            return mUndo.getLast().first;
         }
-        return "";
+        return null;
+    }
+
+    public String undoName(Resources res) {
+        DismissType dt = undoType();
+        if (dt == null) {
+            return "";
+        }
+        return res.getString(dt.undoNameId);
     }
 
 
