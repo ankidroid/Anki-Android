@@ -637,13 +637,13 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 switch (type) {
                     case BURY_CARD:
                         // collect undo information
-                        col.markUndo(type, new Object[] { col.getDirty(), note.cards(), card.getId() });
+                        col.markUndo(type, new Object[] { note.cards(), card.getId() });
                         // then bury
                         sched.buryCards(new long[] { card.getId() });
                         break;
                     case BURY_NOTE:
                         // collect undo information
-                        col.markUndo(type, new Object[] { col.getDirty(), note.cards(), card.getId() });
+                        col.markUndo(type, new Object[] { note.cards(), card.getId() });
                         // then bury
                         sched.buryNote(note.getId());
                         break;
