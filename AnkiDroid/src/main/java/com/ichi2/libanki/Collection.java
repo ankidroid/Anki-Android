@@ -105,7 +105,7 @@ public class Collection {
     private JSONObject mConf;
     // END: SQL table columns
 
-    private LinkedList<Object[]> mUndo;
+    private LinkedList<Pair<DismissType, Object[]>> mUndo;
 
     private String mPath;
     private boolean mDebugLog;
@@ -1233,7 +1233,7 @@ public class Collection {
     /** Undo menu item name, or "" if undo unavailable. */
     public String undoName(Resources res) {
         if (mUndo.size() > 0) {
-            DismissType type = (DismissType) mUndo.getLast()[0];
+            DismissType type = mUndo.getLast().first;
             return res.getString(type.undoNameId);
         }
         return "";
@@ -1247,13 +1247,15 @@ public class Collection {
 
 
     public long undo() {
-    	Object[] data = mUndo.removeLast();
-        Timber.d("undo() of type %s", data[0]);
-    	switch ((DismissType) data[0]) {
+        Pair<DismissType, Object[]> lastUndo = mUndo.removeLast();
+        DismissType dt = lastUndo.first;
+    	Object[] data = lastUndo.second;
+        Timber.d("undo() of type %s", dt);
+    	switch (dt) {
             case REVIEW: {
-                Card c = (Card) data[1];
+                Card c = (Card) data[0];
                 // remove leech tag if it didn't have it before
-                Boolean wasLeech = (Boolean) data[2];
+                Boolean wasLeech = (Boolean) data[1];
                 if (!wasLeech && c.note().hasTag("leech")) {
                     c.note().delTag("leech");
                     c.note().flush();
@@ -1277,13 +1279,13 @@ public class Collection {
 
             case BURY_NOTE:
                 Timber.i("UNDO: Burying notes");
-                for (Card cc : (ArrayList<Card>) data[2]) {
+                for (Card cc : (ArrayList<Card>) data[1]) {
                     cc.flush(false);
                 }
-                return (Long) data[3];
+                return (Long) data[2];
 
             case SUSPEND_CARD: {
-                Card suspendedCard = (Card) data[1];
+                Card suspendedCard = (Card) data[0];
                 Timber.i("UNDO: Suspend Card %d", suspendedCard.getId());
                 suspendedCard.flush(false);
                 return suspendedCard.getId();
@@ -1291,8 +1293,8 @@ public class Collection {
 
             case SUSPEND_CARD_MULTI: {
                 Timber.i("Undo: Suspend multiple cards");
-                Card[] cards = (Card[]) data[1];
-                boolean[] originalSuspended = (boolean[]) data[2];
+                Card[] cards = (Card[]) data[0];
+                boolean[] originalSuspended = (boolean[]) data[1];
                 List<Long> toSuspendIds = new ArrayList<>();
                 List<Long> toUnsuspendIds = new ArrayList<>();
                 for (int i = 0; i < cards.length; i++) {
@@ -1322,15 +1324,15 @@ public class Collection {
 
             case SUSPEND_NOTE:
                 Timber.i("Undo: Suspend note");
-                for (Card ccc : (ArrayList<Card>) data[1]) {
+                for (Card ccc : (ArrayList<Card>) data[0]) {
                     ccc.flush(false);
                 }
-                return (Long) data[2];
+                return (Long) data[1];
 
             case MARK_NOTE_MULTI: {
                 Timber.i("Undo: Mark notes");
-                List<Note> originalMarked = (List<Note>) data[1];
-                List<Note> originalUnmarked = (List<Note>) data[2];
+                List<Note> originalMarked = (List<Note>) data[0];
+                List<Note> originalUnmarked = (List<Note>) data[1];
                 CardUtils.markAll(originalMarked, true);
                 CardUtils.markAll(originalUnmarked, false);
                 return -1;  // don't fetch new card
@@ -1339,23 +1341,23 @@ public class Collection {
             case DELETE_NOTE: {
                 Timber.i("Undo: Delete note");
                 ArrayList<Long> ids = new ArrayList<>();
-                Note note = (Note) data[1];
+                Note note = (Note) data[0];
                 note.flush(note.getMod(), false);
                 ids.add(note.getId());
-                for (Card c : (ArrayList<Card>) data[2]) {
+                for (Card c : (ArrayList<Card>) data[1]) {
                     c.flush(false);
                     ids.add(c.getId());
                 }
                 mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
-                return (Long) data[3];
+                return (Long) data[2];
             }
 
             case DELETE_NOTE_MULTI: {
                 Timber.i("Undo: Delete notes");
                 // undo all of these at once instead of one-by-one
                 ArrayList<Long> ids = new ArrayList<>();
-                List<Card> allCards = (ArrayList<Card>) data[2];
-                Note[] notes = (Note[]) data[1];
+                List<Card> allCards = (ArrayList<Card>) data[1];
+                Note[] notes = (Note[]) data[0];
                 for (Note n : notes) {
                     n.flush(n.getMod(), false);
                     ids.add(n.getId());
@@ -1370,8 +1372,8 @@ public class Collection {
 
             case CHANGE_DECK_MULTI: {
                 Timber.i("Undo: Change Decks");
-                Card[] cards = (Card[]) data[1];
-                long[] originalDid = (long[]) data[2];
+                Card[] cards = (Card[]) data[0];
+                long[] originalDid = (long[]) data[1];
                 // move cards to original deck
                 for (int i = 0; i < cards.length; i++) {
                     Card card = cards[i];
@@ -1386,17 +1388,17 @@ public class Collection {
 
             case BURY_CARD: {
                 Timber.i("Undo: Bury Card");
-                for (Card cc : (ArrayList<Card>) data[2]) {
+                for (Card cc : (ArrayList<Card>) data[1]) {
                     cc.flush(false);
                 }
-                return (Long) data[3];
+                return (Long) data[2];
             }
 
             case RESET_CARDS:
             case RESCHEDULE_CARDS:
             case REPOSITION_CARDS:
-                Timber.i("Undoing action of type %s on %d cards", data[0], ((Card[])data[1]).length);
-                Card[] cards = (Card[]) data[1];
+                Timber.i("Undoing action of type %s on %d cards", dt, ((Card[])data[0]).length);
+                Card[] cards = (Card[]) data[0];
                 for (int i = 0; i < cards.length; i++) {
                     Card card = cards[i];
                     card.flush(false);
@@ -1413,40 +1415,40 @@ public class Collection {
         Timber.d("markUndo() of type %s", type);
         switch (type) {
             case REVIEW:
-                mUndo.add(new Object[]{type, ((Card) o[0]).clone(), o[1]});
+                mUndo.add(new Pair<>(type, new Object[]{((Card) o[0]).clone(), o[1]});
                 break;
             case BURY_CARD:
-                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                mUndo.add(new Pair<>(type, new Object[]{o[0], o[1], o[2]});
                 break;
             case BURY_NOTE:
-                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                mUndo.add(new Pair<>(type, new Object[]{o[0], o[1], o[2]});
                 break;
             case SUSPEND_CARD:
-                mUndo.add(new Object[]{type, ((Card) o[0]).clone()});
+                mUndo.add(new Pair<>(type, new Object[]{((Card) o[0]).clone()});
                 break;
             case SUSPEND_CARD_MULTI:
-                mUndo.add(new Object[]{type, o[0], o[1]});
+                mUndo.add(new Pair<>(type, new Object[]{o[0], o[1]});
                 break;
             case MARK_NOTE_MULTI:
-                mUndo.add(new Object[]{type, o[0], o[1]});
+                mUndo.add(new Pair<>(type, new Object[]{o[0], o[1]});
                 break;
             case SUSPEND_NOTE:
-                mUndo.add(new Object[]{type, o[0], o[1]});
+                mUndo.add(new Pair<>(type, new Object[]{o[0], o[1]});
                 break;
             case DELETE_NOTE:
-                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                mUndo.add(new Pair<>(type, new Object[]{o[0], o[1], o[2]});
                 break;
             case DELETE_NOTE_MULTI:
-                mUndo.add(new Object[]{type, o[0], o[1]});
+                mUndo.add(new Pair<>(type, new Object[]{o[0], o[1]});
                 break;
             case CHANGE_DECK_MULTI:
-                mUndo.add(new Object[]{type, o[0], o[1]});
+                mUndo.add(new Pair<>(type, new Object[]{o[0], o[1]});
                 break;
             case RESET_CARDS:
             case REPOSITION_CARDS:
             case RESCHEDULE_CARDS:
                 // Card array is cloned in CollectionTask, which pays attention to memory pressure
-                mUndo.add(new Object[]{type, o[0]});
+                mUndo.add(new Pair<>(type, new Object[]{o[0]});
                 break;
             default:
                 Timber.e("markUndo() received unknown type? %s", type);
