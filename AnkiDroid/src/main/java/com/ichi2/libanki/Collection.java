@@ -1277,10 +1277,10 @@ public class Collection {
 
             case BURY_NOTE:
                 Timber.i("UNDO: Burying notes");
-                for (Card cc : (ArrayList<Card>) data[2]) {
+                for (Card cc : (ArrayList<Card>) data[1]) {
                     cc.flush(false);
                 }
-                return (Long) data[3];
+                return (Long) data[2];
 
             case SUSPEND_CARD: {
                 Card suspendedCard = (Card) data[1];
@@ -1386,10 +1386,10 @@ public class Collection {
 
             case BURY_CARD: {
                 Timber.i("Undo: Bury Card");
-                for (Card cc : (ArrayList<Card>) data[2]) {
+                for (Card cc : (ArrayList<Card>) data[1]) {
                     cc.flush(false);
                 }
-                return (Long) data[3];
+                return (Long) data[2];
             }
 
             case RESET_CARDS:
@@ -1416,10 +1416,10 @@ public class Collection {
                 mUndo.add(new Object[]{type, ((Card) o[0]).clone(), o[1]});
                 break;
             case BURY_CARD:
-                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                mUndo.add(new Object[]{type, o[0], o[1]});
                 break;
             case BURY_NOTE:
-                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                mUndo.add(new Object[]{type, o[0], o[1]});
                 break;
             case SUSPEND_CARD:
                 mUndo.add(new Object[]{type, ((Card) o[0]).clone()});
