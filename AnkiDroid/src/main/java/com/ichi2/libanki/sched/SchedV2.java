@@ -64,6 +64,8 @@ import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.sched.SchedV2.UnburyType.*;
+
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
                     "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
@@ -2292,25 +2294,34 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    public enum UnburyType {
+        ALL,
+        MANUAL,
+        SIBLINGS;
+    }
     public void unburyCardsForDeck() {
-        unburyCardsForDeck("all");
+        unburyCardsForDeck(ALL);
     }
 
 
-    public void unburyCardsForDeck(String type) {
+    public void unburyCardsForDeck(UnburyType type) {
         unburyCardsForDeck(type, null);
     }
 
-    public void unburyCardsForDeck(String type, List<Long> allDecks) {
+    public void unburyCardsForDeck(UnburyType type, List<Long> allDecks) {
         String queue;
-        if ("all".equals(type)) {
-            queue = "queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")";
-        } else if ("manual".equals(type)) {
-            queue = "queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED;
-        } else if ("siblings".equals(type)) {
-            queue = "queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
-        } else {
-            throw new RuntimeException("unknown type");
+        switch (type) {
+            case ALL :
+                queue = "queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")";
+                break;
+            case MANUAL:
+                queue = "queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED;
+                break;
+            case SIBLINGS:
+                queue = "queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
+                break;
+            default:
+                throw new RuntimeException("unknown type");
         }
 
         String sids = Utils.ids2str(allDecks != null ? allDecks : mCol.getDecks().active());
@@ -2625,7 +2636,7 @@ public class SchedV2 extends AbstractSched {
     public void unburyCardsForDeck(long did) {
         List<Long> all = new ArrayList<>(mCol.getDecks().children(did).values());
         all.add(did);
-        unburyCardsForDeck("all", all);
+        unburyCardsForDeck(ALL, all);
     }
 
 
