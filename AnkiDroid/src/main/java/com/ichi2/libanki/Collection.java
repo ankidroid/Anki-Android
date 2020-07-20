@@ -26,7 +26,6 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -105,7 +104,7 @@ public class Collection {
     private JSONObject mConf;
     // END: SQL table columns
 
-    private LinkedList<Object[]> mUndo;
+    private LinkedList<Undoable> mUndo;
 
     private String mPath;
     private boolean mDebugLog;
@@ -1233,233 +1232,33 @@ public class Collection {
     /** Undo menu item name, or "" if undo unavailable. */
     public String undoName(Resources res) {
         if (mUndo.size() > 0) {
-            DismissType type = (DismissType) mUndo.getLast()[0];
+            DismissType type = mUndo.getLast().getDismissType();
             return res.getString(type.undoNameId);
         }
         return "";
     }
-
 
     public boolean undoAvailable() {
         Timber.d("undoAvailable() undo size: %s", mUndo.size());
         return mUndo.size() > 0;
     }
 
-
     public long undo() {
-    	Object[] data = mUndo.removeLast();
-        Timber.d("undo() of type %s", data[0]);
-    	switch ((DismissType) data[0]) {
-            case REVIEW: {
-                Card c = (Card) data[1];
-                // remove leech tag if it didn't have it before
-                Boolean wasLeech = (Boolean) data[2];
-                if (!wasLeech && c.note().hasTag("leech")) {
-                    c.note().delTag("leech");
-                    c.note().flush();
-                }
-                Timber.i("Undo Review of card %d, leech: %b", c.getId(), wasLeech);
-                // write old data
-                c.flush(false);
-                // and delete revlog entry
-                long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", new Object [] {c.getId()});
-                mDb.execute("DELETE FROM revlog WHERE id = " + last);
-                // restore any siblings
-                mDb.execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
-                        new Object[]{Utils.intTime(), usn(), c.getNid()});
-                // and finally, update daily count
-                @Consts.CARD_QUEUE int n = c.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : c.getQueue();
-                String type = (new String[]{"new", "lrn", "rev"})[n];
-                mSched._updateStats(c, type, -1);
-                mSched.setReps(mSched.getReps() - 1);
-                return c.getId();
-            }
-
-            case BURY_NOTE:
-                Timber.i("UNDO: Burying notes");
-                for (Card cc : (ArrayList<Card>) data[1]) {
-                    cc.flush(false);
-                }
-                return (Long) data[2];
-
-            case SUSPEND_CARD: {
-                Card suspendedCard = (Card) data[1];
-                Timber.i("UNDO: Suspend Card %d", suspendedCard.getId());
-                suspendedCard.flush(false);
-                return suspendedCard.getId();
-            }
-
-            case SUSPEND_CARD_MULTI: {
-                Timber.i("Undo: Suspend multiple cards");
-                Card[] cards = (Card[]) data[1];
-                boolean[] originalSuspended = (boolean[]) data[2];
-                List<Long> toSuspendIds = new ArrayList<>();
-                List<Long> toUnsuspendIds = new ArrayList<>();
-                for (int i = 0; i < cards.length; i++) {
-                    Card card = cards[i];
-                    if (originalSuspended[i]) {
-                        toSuspendIds.add(card.getId());
-                    } else {
-                        toUnsuspendIds.add(card.getId());
-                    }
-                }
-
-                // unboxing
-                long[] toSuspendIdsArray = new long[toSuspendIds.size()];
-                long[] toUnsuspendIdsArray = new long[toUnsuspendIds.size()];
-                for (int i = 0; i < toSuspendIds.size(); i++) {
-                    toSuspendIdsArray[i] = toSuspendIds.get(i);
-                }
-                for (int i = 0; i < toUnsuspendIds.size(); i++) {
-                    toUnsuspendIdsArray[i] = toUnsuspendIds.get(i);
-                }
-
-                getSched().suspendCards(toSuspendIdsArray);
-                getSched().unsuspendCards(toUnsuspendIdsArray);
-
-                return -1;  // don't fetch new card
-            }
-
-            case SUSPEND_NOTE:
-                Timber.i("Undo: Suspend note");
-                for (Card ccc : (ArrayList<Card>) data[1]) {
-                    ccc.flush(false);
-                }
-                return (Long) data[2];
-
-            case MARK_NOTE_MULTI: {
-                Timber.i("Undo: Mark notes");
-                List<Note> originalMarked = (List<Note>) data[1];
-                List<Note> originalUnmarked = (List<Note>) data[2];
-                CardUtils.markAll(originalMarked, true);
-                CardUtils.markAll(originalUnmarked, false);
-                return -1;  // don't fetch new card
-            }
-
-            case DELETE_NOTE: {
-                Timber.i("Undo: Delete note");
-                ArrayList<Long> ids = new ArrayList<>();
-                Note note = (Note) data[1];
-                note.flush(note.getMod(), false);
-                ids.add(note.getId());
-                for (Card c : (ArrayList<Card>) data[2]) {
-                    c.flush(false);
-                    ids.add(c.getId());
-                }
-                mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
-                return (Long) data[3];
-            }
-
-            case DELETE_NOTE_MULTI: {
-                Timber.i("Undo: Delete notes");
-                // undo all of these at once instead of one-by-one
-                ArrayList<Long> ids = new ArrayList<>();
-                List<Card> allCards = (ArrayList<Card>) data[2];
-                Note[] notes = (Note[]) data[1];
-                for (Note n : notes) {
-                    n.flush(n.getMod(), false);
-                    ids.add(n.getId());
-                }
-                for (Card c : allCards) {
-                    c.flush(false);
-                    ids.add(c.getId());
-                }
-                mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
-                return -1;  // don't fetch new card
-            }
-
-            case CHANGE_DECK_MULTI: {
-                Timber.i("Undo: Change Decks");
-                Card[] cards = (Card[]) data[1];
-                long[] originalDid = (long[]) data[2];
-                // move cards to original deck
-                for (int i = 0; i < cards.length; i++) {
-                    Card card = cards[i];
-                    card.load();
-                    card.setDid(originalDid[i]);
-                    Note note = card.note();
-                    note.flush();
-                    card.flush();
-                }
-                return -1;  // don't fetch new card
-            }
-
-            case BURY_CARD: {
-                Timber.i("Undo: Bury Card");
-                for (Card cc : (ArrayList<Card>) data[1]) {
-                    cc.flush(false);
-                }
-                return (Long) data[2];
-            }
-
-            case RESET_CARDS:
-            case RESCHEDULE_CARDS:
-            case REPOSITION_CARDS:
-                Timber.i("Undoing action of type %s on %d cards", data[0], ((Card[])data[1]).length);
-                Card[] cards = (Card[]) data[1];
-                for (int i = 0; i < cards.length; i++) {
-                    Card card = cards[i];
-                    card.flush(false);
-                }
-                return 0;
-
-            default:
-                return 0;
-        }
+        Undoable lastUndo = mUndo.removeLast();
+        Timber.d("undo() of type %s", lastUndo.getDismissType());
+        return lastUndo.undo(this);
     }
 
-
-    public void markUndo(DismissType type, Object[] o) {
-        Timber.d("markUndo() of type %s", type);
-        switch (type) {
-            case REVIEW:
-                mUndo.add(new Object[]{type, ((Card) o[0]).clone(), o[1]});
-                break;
-            case BURY_CARD:
-                mUndo.add(new Object[]{type, o[0], o[1]});
-                break;
-            case BURY_NOTE:
-                mUndo.add(new Object[]{type, o[0], o[1]});
-                break;
-            case SUSPEND_CARD:
-                mUndo.add(new Object[]{type, ((Card) o[0]).clone()});
-                break;
-            case SUSPEND_CARD_MULTI:
-                mUndo.add(new Object[]{type, o[0], o[1]});
-                break;
-            case MARK_NOTE_MULTI:
-                mUndo.add(new Object[]{type, o[0], o[1]});
-                break;
-            case SUSPEND_NOTE:
-                mUndo.add(new Object[]{type, o[0], o[1]});
-                break;
-            case DELETE_NOTE:
-                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-                break;
-            case DELETE_NOTE_MULTI:
-                mUndo.add(new Object[]{type, o[0], o[1]});
-                break;
-            case CHANGE_DECK_MULTI:
-                mUndo.add(new Object[]{type, o[0], o[1]});
-                break;
-            case RESET_CARDS:
-            case REPOSITION_CARDS:
-            case RESCHEDULE_CARDS:
-                // Card array is cloned in CollectionTask, which pays attention to memory pressure
-                mUndo.add(new Object[]{type, o[0]});
-                break;
-            default:
-                Timber.e("markUndo() received unknown type? %s", type);
-                break;
-        }
+    public void markUndo(Undoable undo) {
+        Timber.d("markUndo() of type %s", undo.getDismissType());
+        mUndo.add(undo);
         while (mUndo.size() > UNDO_SIZE_MAX) {
             mUndo.removeFirst();
         }
     }
 
-
     public void markReview(Card card) {
-        markUndo(DismissType.REVIEW, new Object[]{card, card.note().hasTag("leech")});
+        markUndo(new Undoable.UndoableReview(card, card.note().hasTag("leech")));
     }
 
     /**
