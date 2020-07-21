@@ -221,6 +221,16 @@ If your device does not support ExFAT, one possible workaround for this problem 
 
 While not officially supported, another possible solution may be to organize your media files into subfolders. Of course it is also necessary to update your notes to include the reference to the subfolder.
 
+### I have many media files and syncing them to my phone takes too long
+
+If you have a large number of media files where syncing through AnkiWeb takes too long, it is possible to manually sync the media collection files in AnkiDroid with the following process:
+
+1. Temporarily disable syncing media in AnkiDroid via `Settings` -> `AnkiDroid - General settings` -> `Fetch media on sync`. This is to allow you to open AnkiDroid for later steps without getting stuck downloading the media if you uploaded it to AnkiWeb already
+1. Locate your media collection on your phone in `AnkiDroid/collection.media`
+1. Transfer the desired media from your other Anki client into the `AnkiDroid/collection.media` folder. You can do this over USB or over SFTP with various software like FileZilla and an Android SFTP application of your choosing
+1. After you have transferred all of your files, open up AnkiDroid and in the `...` menu, press `Check media`. This will update AnkiDroid's database with the media you added into `AnkiDroid/collection.media` as manually transferring the files there does not automatically update the database
+1. Once completed, you can re-enable `Fetch media on sync` if you don't want to manually manage your media moving forward. Note that keeping this enabled will require that you do a full media sync to AnkiWeb from AnkiDroid unless you do a full media sync from your other Anki client
+
 ### Why doesn't my sound or image work on AnkiDroid
 The most likely reason is that the media files are not in the main AnkiDroid `collection.media` folder. If you are using sync then please make sure that the "fetch media on sync" preference is enabled in all of your Anki clients, and if not then re-sync from all your clients.
 
