@@ -380,7 +380,7 @@ public class Decks {
             // delete cards too?
             if (cardsToo) {
                 // don't use cids(), as we want cards in cram decks too
-                ArrayList<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? OR odid = ?", new Object[] {did, did});
+                ArrayList<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? OR odid = ?", did, did);
                 mCol.remCards(Utils.arrayList2array(cids));
             }
         }
@@ -814,7 +814,7 @@ public class Decks {
 
     public void setDeck(long[] cids, long did) {
         mCol.getDb().execute("update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-                new Object[] { did, mCol.usn(), Utils.intTime() });
+                did, mCol.usn(), Utils.intTime());
     }
 
 
@@ -832,7 +832,7 @@ public class Decks {
 
     public Long[] cids(long did, boolean children) {
         if (!children) {
-            return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did=?", new Object[] {did}));
+            return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did=?", did));
         }
         List<Long> dids = new ArrayList<>();
         dids.add(did);

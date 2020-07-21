@@ -169,11 +169,7 @@ public class DB {
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
-    public int queryScalar(String query) {
-        return queryScalar(query, null);
-    }
-
-    public int queryScalar(String query, Object[] selectionArgs) {
+    public int queryScalar(String query, Object... selectionArgs) {
         Cursor cursor = null;
         int scalar;
         try {
@@ -191,11 +187,7 @@ public class DB {
     }
 
 
-    public String queryString(String query) throws SQLException {
-        return queryString(query, null);
-    }
-
-    public String queryString(String query, Object[] bindArgs) throws SQLException {
+    public String queryString(String query, Object... bindArgs) throws SQLException {
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             if (!cursor.moveToNext()) {
                 throw new SQLException("No result for query: " + query);
@@ -205,11 +197,7 @@ public class DB {
     }
 
 
-    public long queryLongScalar(String query) {
-        return queryLongScalar(query, null);
-    }
-
-    public long queryLongScalar(String query, Object[] bindArgs) {
+    public long queryLongScalar(String query, Object... bindArgs) {
         long scalar;
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             if (!cursor.moveToNext()) {
@@ -230,11 +218,7 @@ public class DB {
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
-    public <T> ArrayList<T> list(Class<T> type, String query) {
-        return list(type, query, null);
-    }
-
-    public <T> ArrayList<T> list(Class<T> type, String query, Object[] bindArgs) {
+    public <T> ArrayList<T> list(Class<T> type, String query, Object... bindArgs) {
         int nullExceptionCount = 0;
         InvocationTargetException nullException = null; // to catch the null exception for reporting
         ArrayList<T> results = new ArrayList<>();
@@ -290,11 +274,7 @@ public class DB {
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
-    public ArrayList<Long> queryLongList(String query) {
-        return queryLongList(query, null);
-    }
-
-    public ArrayList<Long> queryLongList(String query, Object[] bindArgs) {
+    public ArrayList<Long> queryLongList(String query, Object... bindArgs) {
         return list(Long.class, query, bindArgs);
     }
 
@@ -305,11 +285,7 @@ public class DB {
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
-    public ArrayList<String> queryStringList(String query) {
-        return queryStringList(query, null);
-    }
-
-    public ArrayList<String> queryStringList(String query, Object[] bindArgs) {
+    public ArrayList<String> queryStringList(String query, Object... bindArgs) {
         return list(String.class, query, bindArgs);
     }
 
@@ -336,12 +312,7 @@ public class DB {
     }
 
 
-    public void execute(String sql) {
-        execute(sql, null);
-    }
-
-
-    public void execute(String sql, Object[] object) {
+    public void execute(String sql, Object... object) {
         String s = sql.trim().toLowerCase(Locale.US);
         // mark modified?
         for (String mo : MOD_SQLS) {

@@ -325,7 +325,7 @@ public class Models {
         long id = m.getLong("id");
         boolean current = current().getLong("id") == id;
         // delete notes/cards
-        mCol.remCards(Utils.arrayList2array(mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = ?)", new Object[] {id})));
+        mCol.remCards(Utils.arrayList2array(mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = ?)", id)));
         // then the model
         mModels.remove(id);
         save();
@@ -384,7 +384,7 @@ public class Models {
 
     /** Note ids for M */
     public ArrayList<Long> nids(Model m) {
-        return mCol.getDb().queryLongList("SELECT id FROM notes WHERE mid = ?", new Object[] {m.getLong("id")});
+        return mCol.getDb().queryLongList("SELECT id FROM notes WHERE mid = ?", m.getLong("id"));
     }
 
     /**
@@ -393,7 +393,7 @@ public class Models {
      * @return The number of notes with that model.
      */
     public int useCount(Model m) {
-        return mCol.getDb().queryScalar("select count() from notes where mid = ?", new Object[] {m.getLong("id")});
+        return mCol.getDb().queryScalar("select count() from notes where mid = ?", m.getLong("id"));
     }
 
     /**
@@ -403,7 +403,7 @@ public class Models {
      * @return The number of notes with that model.
      */
     public int tmplUseCount(Model m, int ord) {
-        return mCol.getDb().queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?", new Object[] {m.getLong("id"), ord});
+        return mCol.getDb().queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?", m.getLong("id"), ord);
     }
 
     /**
@@ -760,7 +760,7 @@ public class Models {
         mCol.getDb()
             .execute(
                      "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
-                     new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id"), ord });
+                     mCol.usn(), Utils.intTime(), m.getLong("id"), ord);
         JSONArray tmpls = m.getJSONArray("tmpls");
         JSONArray ja2 = new JSONArray();
         for (int i = 0; i < tmpls.length(); ++i) {
@@ -795,12 +795,12 @@ public class Models {
 
         // all notes with this template must have at least two cards, or we could end up creating orphaned notes
         String noteCountPreDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?)";
-        int preDeleteNoteCount = mCol.getDb().queryScalar(noteCountPreDeleteSql, new Long[] {modelId});
+        int preDeleteNoteCount = mCol.getDb().queryScalar(noteCountPreDeleteSql, modelId);
         Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql);
         Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount);
         String noteCountPostDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in " + Utils.ids2str(ords);
         Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql);
-        int postDeleteNoteCount = mCol.getDb().queryScalar(noteCountPostDeleteSql, new Long[] {modelId});
+        int postDeleteNoteCount = mCol.getDb().queryScalar(noteCountPostDeleteSql, modelId);
         Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount);
 
         if (preDeleteNoteCount != postDeleteNoteCount) {
@@ -856,7 +856,7 @@ public class Models {
         save(m);
         mCol.getDb().execute("update cards set ord = (case " + sb.toString() +
                              " end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
-                             new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id") });
+                             mCol.usn(), Utils.intTime(), m.getLong("id"));
     }
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // unused upstream as well

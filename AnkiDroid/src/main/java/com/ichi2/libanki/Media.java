@@ -677,7 +677,7 @@ public class Media {
         }
         // update media db
         mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
-        mDb.execute("update meta set dirMod = ?", new Object[] { _mtime(dir()) });
+        mDb.execute("update meta set dirMod = ?", _mtime(dir()));
         mDb.commit();
     }
 
@@ -767,7 +767,7 @@ public class Media {
 
 
     public void setLastUsn(int usn) {
-        mDb.execute("update meta set lastUsn = ?", new Object[] { usn });
+        mDb.execute("update meta set lastUsn = ?", usn);
         mDb.commit();
     }
 
@@ -787,7 +787,7 @@ public class Media {
 
     public void markClean(List<String> fnames) {
         for (String fname : fnames) {
-            mDb.execute("update media set dirty=0 where fname=?", new Object[] { fname });
+            mDb.execute("update media set dirty=0 where fname=?", fname);
         }
     }
 
@@ -797,7 +797,7 @@ public class Media {
         if (f.exists()) {
             f.delete();
         }
-        mDb.execute("delete from media where fname=?", new Object[] { fname });
+        mDb.execute("delete from media where fname=?", fname);
     }
 
 
@@ -986,7 +986,7 @@ public class Media {
         Timber.d("Marking media file addition in media db: %s", fname);
         String path = new File(dir(), fname).getAbsolutePath();
         mDb.execute("insert or replace into media values (?,?,?,?)",
-                new Object[] { fname, _checksum(path), _mtime(path), 1 });
+                fname, _checksum(path), _mtime(path), 1);
     }
 
 
@@ -1000,7 +1000,7 @@ public class Media {
         }
         Timber.d("Marking media file removal in media db: %s", fname);
         mDb.execute("insert or replace into media values (?,?,?,?)",
-                new Object[] { fname, null, 0, 1 });
+               fname, null, 0, 1);
     }
 
 
