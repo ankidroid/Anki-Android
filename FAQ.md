@@ -221,7 +221,7 @@ If your device does not support ExFAT, one possible workaround for this problem 
 
 While not officially supported, another possible solution may be to organize your media files into subfolders. Of course it is also necessary to update your notes to include the reference to the subfolder.
 
-### I have many media files and syncing them to my phone takes too long
+### I have many media files and syncing them to my device takes too long
 
 If you have a large number of media files where syncing through AnkiWeb takes too long, it is possible to manually sync the media collection files in AnkiDroid with the following process:
 
