@@ -1,4 +1,4 @@
-This document contains a list of frequently asked questions, it is intended to give 
+This document contains a list of frequently asked questions.
 
 # Installing AnkiDroid
 
