@@ -841,7 +841,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         // whether there exists a sibling not buried.
         return getCol().getDb().queryScalar("select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
-                new Object[] {mCurrentCard.getNid(), mCurrentCard.getId()}) == 1;
+                mCurrentCard.getNid(), mCurrentCard.getId()) == 1;
     }
 
     private boolean buryNoteAvailable() {
@@ -850,7 +850,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         // Whether there exists a sibling which is neither susbended nor buried
         boolean bury = getCol().getDb().queryScalar("select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
-                new Object[] {mCurrentCard.getNid(), mCurrentCard.getId()}) == 1;
+                mCurrentCard.getNid(), mCurrentCard.getId()) == 1;
         return bury;
     }
 

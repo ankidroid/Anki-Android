@@ -134,13 +134,13 @@ public class Note implements Cloneable {
         String fields = joinedFields();
         if (mod == null && mCol.getDb().queryScalar(
                 "select 1 from notes where id = ? and tags = ? and flds = ?",
-                new String[]{Long.toString(mId), tags, fields}) > 0) {
+                Long.toString(mId), tags, fields) > 0) {
             return;
         }
         long csum = Utils.fieldChecksum(mFields[0]);
         mMod = mod != null ? mod : Utils.intTime();
         mCol.getDb().execute("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
-                new Object[] { mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData });
+                mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData);
         mCol.getTags().register(mTags);
         _postFlush();
     }
@@ -298,7 +298,7 @@ public class Note implements Cloneable {
         // find any matching csums and compare
         for (String flds : mCol.getDb().queryStringList(
                 "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
-                new Object[] {csum, (mId != 0 ? mId : 0), mMid})) {
+                csum, (mId != 0 ? mId : 0), mMid)) {
             if (Utils.stripHTMLMedia(
                     Utils.splitFields(flds)[0]).equals(Utils.stripHTMLMedia(mFields[0]))) {
                 return DupeOrEmpty.DUPE;
@@ -317,7 +317,7 @@ public class Note implements Cloneable {
      * have we been added yet?
      */
     private void _preFlush() {
-        mNewlyAdded = mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE nid = ?", new Object[] {mId}) == 0;
+        mNewlyAdded = mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE nid = ?", mId) == 0;
     }
 
 
@@ -356,7 +356,7 @@ public class Note implements Cloneable {
 
 
     public String getSFld() {
-        return mCol.getDb().queryString("SELECT sfld FROM notes WHERE id = ?", new Object [] {mId});
+        return mCol.getDb().queryString("SELECT sfld FROM notes WHERE id = ?", mId);
     }
 
 

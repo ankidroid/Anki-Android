@@ -854,7 +854,7 @@ public class Collection {
         card.setNid(nid);
         ord = template.getInt("ord");
         card.setOrd(ord);
-        did = mDb.queryScalar("select did from cards where nid = ? and ord = ?", new Object[] {nid, ord});
+        did = mDb.queryScalar("select did from cards where nid = ? and ord = ?", nid, ord);
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
             did = template.optLong("did", 0);
@@ -1301,7 +1301,7 @@ public class Collection {
 
             boolean badOrd = mDb.queryScalar("select 1 from cards where (ord < 0 or ord >= ?) and nid in ( " +
                                              "select id from notes where mid = ?) limit 1",
-                                             new Object[] {tmpls.length(), m.getLong("id")}) > 0;
+                                             tmpls.length(), m.getLong("id")) > 0;
             if (badOrd) {
                 return false;
             }
@@ -1771,7 +1771,7 @@ public class Collection {
             // cards with invalid ordinal
             ArrayList<Long> ids = mDb.queryLongList(
                     "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
-                            "SELECT id FROM notes WHERE mid = ?)", new Object[] {m.getLong("id")});
+                            "SELECT id FROM notes WHERE mid = ?)", m.getLong("id"));
             if (ids.size() > 0) {
                 problems.add("Deleted " + ids.size() + " card(s) with missing template.");
                 remCards(Utils.arrayList2array(ids));
@@ -1891,7 +1891,7 @@ public class Collection {
     public void setUserFlag(int flag, long[] cids)  {
         assert (0<= flag && flag <= 7);
         mDb.execute("update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(cids),
-                    new Object[]{0b111, flag, usn(), Utils.intTime()});
+                    0b111, flag, usn(), Utils.intTime());
     }
 
     /**

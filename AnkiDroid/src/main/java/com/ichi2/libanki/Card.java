@@ -187,7 +187,6 @@ public class Card implements Cloneable {
         mCol.getDb().execute(
                 "insert or replace into cards values " +
                 "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                new Object[]{
                 mId,
                 mNid,
                 mDid,
@@ -206,7 +205,7 @@ public class Card implements Cloneable {
                 mODid,
                 mFlags,
                 mData
-        });
+        );
         mCol.log(this);
     }
 
