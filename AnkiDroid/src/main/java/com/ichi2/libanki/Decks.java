@@ -334,7 +334,7 @@ public class Decks {
 
 
     public void rem(long did) {
-        rem(did, false);
+        rem(did, true);
     }
 
 
