@@ -330,8 +330,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.empty_cram_deck), false);
-                CollectionTask.launchCollectionTask(EMPTY_CRAM, getCollectionTaskListener(true),
-                        new TaskData(mFragmented));
+                CollectionTask.launchCollectionTask(EMPTY_CRAM, getCollectionTaskListener(true));
                 return true;
             case R.id.action_rename:
                 ((DeckPicker) getActivity()).renameDeckDialog(getCol().getDecks().selected());
