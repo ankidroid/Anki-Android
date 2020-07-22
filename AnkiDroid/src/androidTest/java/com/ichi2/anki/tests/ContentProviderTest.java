@@ -50,6 +50,7 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,11 +61,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeThat;
 import static org.junit.Assume.assumeTrue;
 
 /**
@@ -137,6 +140,12 @@ public class ContentProviderTest extends InstrumentedTest {
         // (so it is safe) we will try to run with multiple scheduler versions
         if (InstrumentedTest.isEmulator()) {
             col.changeSchedulerVer(schedVersion);
+        } else {
+            if (schedVersion == 1) {
+                assumeThat(col.getSched().getName(), is("std"));
+            } else {
+                assumeThat(col.getSched().getName(), is("std2"));
+            }
         }
 
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
