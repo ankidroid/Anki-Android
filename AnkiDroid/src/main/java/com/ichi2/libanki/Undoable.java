@@ -55,11 +55,11 @@ public abstract class Undoable {
             // write old data
             mCard.flush(false);
             // and delete revlog entry
-            long last = col.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", new Object [] {mCard.getId()});
+            long last = col.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", new Object[] {mCard.getId()});
             col.getDb().execute("DELETE FROM revlog WHERE id = " + last);
             // restore any siblings
             col.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
-                        new Object[]{Utils.intTime(), col.usn(), mCard.getNid()});
+                    new Object[] {Utils.intTime(), col.usn(), mCard.getNid()});
             // and finally, update daily count
             @Consts.CARD_QUEUE int n = mCard.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : mCard.getQueue();
             String type = (new String[]{"new", "lrn", "rev"})[n];
@@ -69,11 +69,11 @@ public abstract class Undoable {
         }
     }
 
-    public static class UndoableBuryCard extends Undoable {
+    private static class UndoableFlushAll extends Undoable {
         private final List<Card> mCards;
         private final long mCid;
-        public UndoableBuryCard(List<Card> cards, long cid) {
-            super(BURY_CARD);
+        public UndoableFlushAll(DismissType dt, List<Card> cards, long cid) {
+            super(dt);
             mCards = cards;
             mCid = cid;
         }
@@ -87,21 +87,15 @@ public abstract class Undoable {
         }
     }
 
-    public static class UndoableBuryNote extends Undoable {
-        private final long mCid;
-        private final List<Card> mCards;
-        public UndoableBuryNote(List<Card> cards, long cid) {
-            super(BURY_NOTE);
-            mCid = cid;
-            mCards = cards;
+    public static class UndoableBuryCard extends UndoableFlushAll {
+        public UndoableBuryCard(List<Card> cards, long cid) {
+            super(BURY_CARD, cards, cid);
         }
+    }
 
-        public long undo(Collection col) {
-            Timber.i("UNDO: Burying notes");
-            for (Card cc : mCards) {
-                cc.flush(false);
-            }
-            return mCid;
+    public static class UndoableBuryNote extends UndoableFlushAll {
+        public UndoableBuryNote(List<Card> cards, long cid) {
+            super(BURY_NOTE, cards, cid);
         }
     }
 
@@ -159,21 +153,9 @@ public abstract class Undoable {
         }
     }
 
-    public static class UndoableSuspendNote extends Undoable {
-        private final List<Card> mCards;
-        private final long mCid;
+    public static class UndoableSuspendNote extends UndoableFlushAll {
         public UndoableSuspendNote(List<Card> cards, long cid) {
-            super(SUSPEND_NOTE);
-            mCards = cards;
-            mCid = cid;
-        }
-
-        public long undo(Collection col) {
-            Timber.i("Undo: Suspend note");
-            for (Card ccc : mCards) {
-                ccc.flush(false);
-            }
-            return mCid;
+            super(SUSPEND_NOTE, cards, cid);
         }
     }
 
