@@ -233,6 +233,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         };
     }
 
+    private Collection getCol() {
+        return CollectionHelper.getInstance().getCol(mContext);
+    }
 
     /** Cancel all tasks of type taskType*/
     public static void cancelAllTasks(TASK_TYPE taskType) {
@@ -471,7 +474,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private TaskData doInBackgroundAddNote(TaskData[] params) {
         Timber.d("doInBackgroundAddNote");
         Note note = params[0].getNote();
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         try {
             DB db = col.getDb();
             db.getDatabase().beginTransaction();
@@ -493,7 +496,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private TaskData doInBackgroundUpdateNote(TaskData[] params) {
         Timber.d("doInBackgroundUpdateNote");
         // Save the note
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         AbstractSched sched = col.getSched();
         Card editCard = params[0].getCard();
         Note editNote = editCard.note();
@@ -536,7 +539,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private TaskData doInBackgroundUpdateNotes(TaskData[] params) {
         Timber.d("doInBackgroundUpdateNotes");
         // Save the note
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         Object[] data = params[0].getObjArray();
         Card[] cards = (Card[]) data[0];
 
@@ -566,7 +569,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
     private TaskData doInBackgroundAnswerCard(TaskData... params) {
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         AbstractSched sched = col.getSched();
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
@@ -601,7 +604,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundLoadDeckCounts() {
         Timber.d("doInBackgroundLoadDeckCounts");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         try {
             // Get due tree
             Object[] o = new Object[] {col.getSched().deckDueTree(this)};
@@ -615,7 +618,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private void doInBackgroundSaveCollection() {
         Timber.d("doInBackgroundSaveCollection");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         if (col != null) {
             try {
                 col.save();
@@ -627,7 +630,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
     private TaskData doInBackgroundDismissNote(TaskData... params) {
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         AbstractSched sched = col.getSched();
         Object[] data = params[0].getObjArray();
         Card card = (Card) data[0];
@@ -698,7 +701,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
     private TaskData doInBackgroundDismissNotes(TaskData... params) {
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         AbstractSched sched = col.getSched();
         Object[] data = params[0].getObjArray();
         long[] cardIds = (long[]) data[0];
@@ -917,7 +920,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
     private TaskData doInBackgroundUndo() {
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         AbstractSched sched = col.getSched();
         try {
             col.getDb().getDatabase().beginTransaction();
@@ -961,7 +964,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundSearchCards(TaskData... params) {
         Timber.d("doInBackgroundSearchCards");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         String query = (String) params[0].getObjArray()[0];
         Boolean order = (Boolean) params[0].getObjArray()[1];
         int numCardsToRender = (int) params[0].getObjArray()[2];
@@ -1001,7 +1004,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         //TODO: Convert this to accept the following to make thread-safe:
         //(Range<Position>, Function<Position, BrowserCard>)
         Timber.d("doInBackgroundRenderBrowserQA");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         List<Map<String, String>> cards = (List<Map<String, String>>) params[0].getObjArray()[0];
         Integer startPos = (Integer) params[0].getObjArray()[1];
         Integer n = (Integer) params[0].getObjArray()[2];
@@ -1066,7 +1069,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundCheckDatabase() {
         Timber.d("doInBackgroundCheckDatabase");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         // Don't proceed if collection closed
         if (col == null) {
             Timber.e("doInBackgroundCheckDatabase :: supplied collection was null");
@@ -1087,7 +1090,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundRepairCollection() {
         Timber.d("doInBackgroundRepairCollection");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         if (col != null) {
             Timber.i("RepairCollection: Closing collection");
             col.close(false);
@@ -1099,7 +1102,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private TaskData doInBackgroundUpdateValuesFromDeck(TaskData... params) {
         Timber.d("doInBackgroundUpdateValuesFromDeck");
         try {
-            Collection col = CollectionHelper.getInstance().getCol(mContext);
+            Collection col = getCol();
             AbstractSched sched = col.getSched();
             Object[] obj = params[0].getObjArray();
             boolean reset = (Boolean) obj[0];
@@ -1121,7 +1124,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundDeleteDeck(TaskData... params) {
         Timber.d("doInBackgroundDeleteDeck");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         long did = params[0].getLong();
         col.getDecks().rem(did, true);
 
@@ -1131,7 +1134,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundRebuildCram() {
         Timber.d("doInBackgroundRebuildCram");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         col.getSched().rebuildDyn(col.getDecks().selected());
         return doInBackgroundUpdateValuesFromDeck(new TaskData(new Object[]{true}));
     }
@@ -1139,7 +1142,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundEmptyCram() {
         Timber.d("doInBackgroundEmptyCram");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         col.getSched().emptyDyn(col.getDecks().selected());
         return doInBackgroundUpdateValuesFromDeck(new TaskData(new Object[]{true}));
     }
@@ -1148,7 +1151,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private TaskData doInBackgroundImportAdd(TaskData... params) {
         Timber.d("doInBackgroundImportAdd");
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         String path = params[0].getString();
         AnkiPackageImporter imp = new AnkiPackageImporter(col, path);
         imp.setProgressCallback(new ProgressCallback(this, res));
@@ -1163,7 +1166,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundImportReplace(TaskData... params) {
         Timber.d("doInBackgroundImportReplace");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         String path = params[0].getString();
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
 
@@ -1326,7 +1329,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundReorder(TaskData... params) {
         Timber.d("doInBackgroundReorder");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         Object[] data = params[0].getObjArray();
         DeckConfig conf = (DeckConfig) data[0];
         col.getSched().resortConf(conf);
@@ -1336,7 +1339,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundConfChange(TaskData... params) {
         Timber.d("doInBackgroundConfChange");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         Object[] data = params[0].getObjArray();
         Deck deck = (Deck) data[0];
         DeckConfig conf = (DeckConfig) data[1];
@@ -1366,7 +1369,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundConfReset(TaskData... params) {
         Timber.d("doInBackgroundConfReset");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         Object[] data = params[0].getObjArray();
         DeckConfig conf = (DeckConfig) data[0];
         col.getDecks().restoreToDefault(conf);
@@ -1377,7 +1380,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundConfRemove(TaskData... params) {
         Timber.d("doInBackgroundConfRemove");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         Object[] data = params[0].getObjArray();
         DeckConfig conf = (DeckConfig) data[0];
         try {
@@ -1402,7 +1405,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundConfSetSubdecks(TaskData... params) {
         Timber.d("doInBackgroundConfSetSubdecks");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         Object[] data = params[0].getObjArray();
         Deck deck = (Deck) data[0];
         DeckConfig conf = (DeckConfig) data[1];
@@ -1431,7 +1434,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      */
     private TaskData doInBackgroundCheckMedia() {
         Timber.d("doInBackgroundCheckMedia");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         // A media check on AnkiDroid will also update the media db
         col.getMedia().findChanges(true);
         // Then do the actual check
@@ -1446,7 +1449,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         // mod should have been changed by addNewTemplateWithCheck in
         // main/java/com/ichi2/anki/CardTemplateEditor
         Timber.d("doInBackgroundAddTemplate");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         Object [] args = params[0].getObjArray();
         Model model = (Model) args[0];
         JSONObject template = (JSONObject) args[1];
@@ -1461,7 +1464,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      */
     private TaskData doInBackgroundRemoveTemplate(TaskData... params) {
         Timber.d("doInBackgroundRemoveTemplate");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         Object [] args = params[0].getObjArray();
         Model model = (Model) args[0];
         JSONObject template = (JSONObject) args[1];
@@ -1483,7 +1486,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      */
     private TaskData doInBackgroundSaveModel(TaskData... params) {
         Timber.d("doInBackgroundSaveModel");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         Object [] args = params[0].getObjArray();
         Model model = (Model) args[0];
         ArrayList<Object[]> templateChanges = (ArrayList<Object[]>)args[1];
@@ -1553,7 +1556,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      */
     private TaskData doInBackgroundCountModels(){
         Timber.d("doInBackgroundLoadModels");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
 
         ArrayList<Model> models = col.getModels().all();
         ArrayList<Integer> cardCount = new ArrayList<>();
@@ -1587,7 +1590,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private TaskData doInBackGroundDeleteModel(TaskData... params){
         Timber.d("doInBackGroundDeleteModel");
         long modID = params[0].getLong();
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         try {
             col.getModels().rem(col.getModels().get(modID));
             col.save();
@@ -1609,7 +1612,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         JSONObject field = (JSONObject) objects[1];
 
 
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         try {
             col.getModels().remField(model, field);
             col.save();
@@ -1632,7 +1635,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         int index = (Integer) objects[2];
 
 
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         try {
             col.getModels().moveField(model, field, index);
             col.save();
@@ -1653,7 +1656,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Model model = (Model) objects[0];
         String fieldName = (String) objects[1];
 
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         col.getModels().addFieldModChanged(model, col.getModels().newField(fieldName));
         col.save();
         return new TaskData(true);
@@ -1670,7 +1673,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             Model model = (Model) objects[0];
             int idx = (int) objects[1];
 
-            Collection col = CollectionHelper.getInstance().getCol(mContext);
+            Collection col = getCol();
             col.getModels().setSortIdx(model, idx);
             col.save();
         } catch(Exception e){
@@ -1681,7 +1684,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
     public TaskData doInBackGroundFindEmptyCards(TaskData... params) {
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         List<Long> cids = col.emptyCids();
         return new TaskData(new Object[] { cids});
     }
@@ -1691,7 +1694,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * @return If there are unselected cards, if there are unmarked cards
      */
     public TaskData doInBackgroundCheckCardSelection(TaskData... params) {
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         Object[] objects = params[0].getObjArray();
         Set<Integer> checkedCardPositions = (Set<Integer>) objects[0];
         List<Map<String, String>> cards = (List<Map<String, String>>) objects[1];
@@ -1710,7 +1713,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
     public void doInBackgroundLoadCollectionComplete() {
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         if (col != null) {
             CollectionHelper.loadCollectionComplete(col);
         }
