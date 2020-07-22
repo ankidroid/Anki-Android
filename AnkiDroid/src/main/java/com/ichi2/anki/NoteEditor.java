@@ -105,6 +105,7 @@ import java.util.Map.Entry;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.TaskData;
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -221,7 +222,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
         @Override
-        public void onProgressUpdate(CollectionTask.TaskData... values) {
+        public void onProgressUpdate(TaskData... values) {
             int count = values[0].getInt();
             if (count > 0) {
                 mChanged = true;
@@ -268,7 +269,7 @@ public class NoteEditor extends AnkiActivity {
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             if (result.getBoolean()) {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     try {
@@ -786,7 +787,7 @@ public class NoteEditor extends AnkiActivity {
             }
             getCol().getModels().current().put("tags", ja);
             getCol().getModels().setChanged();
-            CollectionTask.launchCollectionTask(ADD_NOTE, mSaveNoteHandler, new CollectionTask.TaskData(mEditorNote));
+            CollectionTask.launchCollectionTask(ADD_NOTE, mSaveNoteHandler, new TaskData(mEditorNote));
         } else {
             // Check whether note type has been changed
             final Model newModel = getCurrentlySelectedModel();

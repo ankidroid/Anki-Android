@@ -18,7 +18,7 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 
-import com.ichi2.async.CollectionTask.TaskData;
+import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Collection.CheckDatabaseResult;
 
 import org.junit.Test;

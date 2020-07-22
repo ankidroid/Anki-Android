@@ -72,6 +72,7 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.TaskData;
 
 /**
  * Preferences for the current deck.
@@ -206,7 +207,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 if (oldValue != newValue) {
                                     mOptions.getJSONObject("new").put("order", newValue);
                                     CollectionTask.launchCollectionTask(REORDER, mConfChangeHandler,
-                                            new CollectionTask.TaskData(new Object[] {mOptions}));
+                                            new TaskData(new Object[] {mOptions}));
                                 }
                                 mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
                                 break;
@@ -296,7 +297,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 long newConfId = Long.parseLong((String) value);
                                 mOptions = mCol.getDecks().getConf(newConfId);
                                 CollectionTask.launchCollectionTask(CONF_CHANGE, mConfChangeHandler,
-                                        new CollectionTask.TaskData(new Object[] {mDeck, mOptions}));
+                                        new TaskData(new Object[] {mDeck, mOptions}));
                                 break;
                             }
                             case "confRename": {
@@ -309,7 +310,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "confReset":
                                 if ((Boolean) value) {
                                     CollectionTask.launchCollectionTask(CONF_RESET, mConfChangeHandler,
-                                            new CollectionTask.TaskData(new Object[] {mOptions}));
+                                            new TaskData(new Object[] {mOptions}));
                                 }
                                 break;
                             case "confAdd": {
@@ -355,7 +356,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "confSetSubdecks":
                                 if ((Boolean) value) {
                                     CollectionTask.launchCollectionTask(CONF_SET_SUBDECKS, mConfChangeHandler,
-                                            new CollectionTask.TaskData(new Object[] {mDeck, mOptions}));
+                                            new TaskData(new Object[] {mDeck, mOptions}));
                                 }
                                 break;
                             case "reminderEnabled": {
@@ -529,7 +530,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
 
                 @Override
-                public void onPostExecute(CollectionTask.TaskData result) {
+                public void onPostExecute(TaskData result) {
                     cacheValues();
                     buildLists();
                     updateSummaries();
@@ -547,7 +548,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mCol.getDecks().remConf(mOptions.getLong("id"));
                 // Run the CPU intensive re-sort operation in a background thread
                 CollectionTask.launchCollectionTask(CONF_REMOVE, mConfChangeHandler,
-                                        new CollectionTask.TaskData(new Object[] { mOptions }));
+                                        new TaskData(new Object[] { mOptions }));
                 mDeck.put("conf", 1);
             }
         }

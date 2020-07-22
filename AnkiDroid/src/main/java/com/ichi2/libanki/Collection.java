@@ -68,6 +68,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
+import static com.ichi2.async.CollectionTask.TaskData;
+
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
 // tracked, so unused tags can only be removed from the list with a DB check.
@@ -1806,7 +1808,7 @@ public class Collection {
 
 
     private void fixIntegrityProgress(CollectionTask.ProgressCallback progressCallback, int current, int total) {
-        progressCallback.publishProgress(new CollectionTask.TaskData(
+        progressCallback.publishProgress(new TaskData(
                 progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total));
     }
 

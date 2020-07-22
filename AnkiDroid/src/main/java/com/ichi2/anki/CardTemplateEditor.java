@@ -64,6 +64,7 @@ import java.util.regex.Pattern;
 
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import timber.log.Timber;
+import static com.ichi2.async.CollectionTask.TaskData;
 
 
 /**
@@ -552,7 +553,7 @@ public class CardTemplateEditor extends AnkiActivity {
             }
 
             @Override
-            public void onPostExecute(CollectionTask.TaskData result) {
+            public void onPostExecute(TaskData result) {
                 Timber.d("mSaveModelAndExitHandler::postExecute called");
                 View button = mTemplateEditor.findViewById(R.id.action_confirm);
                 if (button != null) {
