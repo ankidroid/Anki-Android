@@ -789,7 +789,7 @@ public class NoteEditor extends AnkiActivity {
             }
             getCol().getModels().current().put("tags", ja);
             getCol().getModels().setChanged();
-            CollectionTask.launchCollectionTask(ADD_NOTE, mSaveNoteHandler, new TaskData(mEditorNote));
+            new CollectionTask(ADD_NOTE, mSaveNoteHandler).launch(new TaskData(mEditorNote));
         } else {
             // Check whether note type has been changed
             final Model newModel = getCurrentlySelectedModel();

@@ -118,7 +118,7 @@ public class UIUtils {
 
     public static void saveCollectionInBackground() {
         if (CollectionHelper.getInstance().colIsOpen()) {
-            CollectionTask.launchCollectionTask(SAVE_COLLECTION, new CollectionTask.TaskListener() {
+            new CollectionTask(SAVE_COLLECTION, new CollectionTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
                     Timber.d("saveCollectionInBackground: start");

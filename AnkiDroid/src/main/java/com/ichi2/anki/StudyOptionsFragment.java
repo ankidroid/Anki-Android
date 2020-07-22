@@ -323,13 +323,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.rebuild_cram_deck), true);
-                CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
+                new CollectionTask(REBUILD_CRAM, getCollectionTaskListener(true)).launch(new TaskData(mFragmented));
                 return true;
             case R.id.action_empty:
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.empty_cram_deck), false);
-                CollectionTask.launchCollectionTask(EMPTY_CRAM, getCollectionTaskListener(true));
+                new CollectionTask(EMPTY_CRAM, getCollectionTaskListener(true)).launch(new TaskData(mFragmented));
                 return true;
             case R.id.action_rename:
                 ((DeckPicker) getActivity()).renameDeckDialog(getCol().getDecks().selected());
@@ -449,7 +449,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 }
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.rebuild_cram_deck), true);
-                    CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
+                    new CollectionTask(REBUILD_CRAM, getCollectionTaskListener(true)).launch(new TaskData(mFragmented));
             } else {
                 CollectionTask.waitToFinish();
                 refreshInterface(true);
@@ -506,8 +506,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     protected void refreshInterface(boolean resetSched, boolean resetDecklist) {
         Timber.d("Refreshing StudyOptionsFragment");
         // Load the deck counts for the deck from Collection asynchronously
-        CollectionTask.launchCollectionTask(UPDATE_VALUES_FROM_DECK, getCollectionTaskListener(resetDecklist),
-                new TaskData(new Object[]{resetSched}));
+        new CollectionTask(UPDATE_VALUES_FROM_DECK, getCollectionTaskListener(resetDecklist)).launch(new TaskData(new Object[]{resetSched}));
     }
 
 

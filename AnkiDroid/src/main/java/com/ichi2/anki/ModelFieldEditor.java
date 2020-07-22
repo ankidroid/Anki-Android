@@ -181,8 +181,7 @@ public class ModelFieldEditor extends AnkiActivity {
                         //Name is valid, now field is added
                         try {
                             mCol.modSchema();
-                            CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
-                                    new TaskData(new Object[]{mMod, fieldName}));
+                            new CollectionTask(ADD_FIELD, mChangeFieldHandler).launch(new TaskData(new Object[]{mMod, fieldName}));
                         } catch (ConfirmModSchemaException e) {
 
                             //Create dialogue to for schema change
@@ -192,8 +191,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                 mCol.modSchemaNoCheck();
                                 String fieldName1 = mFieldNameInput.getText().toString()
                                         .replaceAll("[\\n\\r]", "");
-                                CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
-                                        new TaskData(new Object[]{mMod, fieldName1}));
+                                new CollectionTask(ADD_FIELD, mChangeFieldHandler).launch(new TaskData(new Object[]{mMod, fieldName1}));
                                 dismissContextMenu();
                             };
 
@@ -242,8 +240,7 @@ public class ModelFieldEditor extends AnkiActivity {
     }
 
     private void deleteField() {
-        CollectionTask.launchCollectionTask(DELETE_FIELD, mChangeFieldHandler,
-                                new TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
+        new CollectionTask(DELETE_FIELD, mChangeFieldHandler).launch(new TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
     }
 
 
@@ -325,8 +322,7 @@ public class ModelFieldEditor extends AnkiActivity {
                             // Input is valid, now attempt to modify
                             try {
                                 mCol.modSchema();
-                                CollectionTask.launchCollectionTask(REPOSITION_FIELD, mChangeFieldHandler,
-                                        new TaskData(new Object[]{mMod,
+                                new CollectionTask(REPOSITION_FIELD, mChangeFieldHandler).launch(new TaskData(new Object[]{mMod,
                                                 mNoteFields.getJSONObject(mCurrentPos), pos - 1}));
                             } catch (ConfirmModSchemaException e) {
 
@@ -338,8 +334,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                         mCol.modSchemaNoCheck();
                                         String newPosition1 = mFieldNameInput.getText().toString();
                                         int pos1 = Integer.parseInt(newPosition1);
-                                        CollectionTask.launchCollectionTask(REPOSITION_FIELD,
-                                                mChangeFieldHandler, new TaskData(new Object[]{mMod,
+                                        new CollectionTask(REPOSITION_FIELD, mChangeFieldHandler).launch(new TaskData(new Object[]{mMod,
                                                         mNoteFields.getJSONObject(mCurrentPos), pos1 - 1}));
                                         dismissContextMenu();
                                     } catch (JSONException e1) {
@@ -400,16 +395,14 @@ public class ModelFieldEditor extends AnkiActivity {
     private void sortByField() {
         try {
             mCol.modSchema();
-            CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
-                    new TaskData(new Object[]{mMod, mCurrentPos}));
+            new CollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler).launch(new TaskData(new Object[]{mMod, mCurrentPos}));
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
             ConfirmationDialog c = new ConfirmationDialog();
             c.setArgs(getResources().getString(R.string.full_sync_confirmation));
             Runnable confirm = () -> {
                 mCol.modSchemaNoCheck();
-                CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
-                        new TaskData(new Object[]{mMod, mCurrentPos}));
+                new CollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler).launch(new TaskData(new Object[]{mMod, mCurrentPos}));
                 dismissContextMenu();
             };
             c.setConfirm(confirm);

@@ -150,7 +150,7 @@ public class TemporaryModel {
         dumpChanges();
         TemporaryModel.clearTempModelFiles();
         TaskData args = new TaskData(new Object[] {mEditedModel, getAdjustedTemplateChanges()});
-        CollectionTask.launchCollectionTask(SAVE_MODEL, listener, args);
+        new CollectionTask(SAVE_MODEL, listener).launch(args);
 
     }
 

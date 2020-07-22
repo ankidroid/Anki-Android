@@ -841,7 +841,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         /** Complete task and enqueue fetching nonessential data for
          * startup. */
-        CollectionTask.launchCollectionTask(LOAD_COLLECTION_COMPLETE);
+        new CollectionTask(LOAD_COLLECTION_COMPLETE).launch();
     }
 
 
@@ -1229,7 +1229,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        CollectionTask.launchCollectionTask(UNDO, new CollectionTask.TaskListener() {
+        new CollectionTask(UNDO, new CollectionTask.TaskListener() {
             @Override
             public void onCancelled() {
                 hideProgressBar();
@@ -1249,7 +1249,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     openReviewer();
                 }
             }
-        });
+        }).launch();
     }
 
 
@@ -1371,7 +1371,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback method to handle repairing deck
     public void repairCollection() {
         Timber.i("Repairing the Collection");
-        CollectionTask.launchCollectionTask(REPAIR_COLLECTION, new CollectionTask.TaskListener() {
+        new CollectionTask(REPAIR_COLLECTION, new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -1390,7 +1390,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showCollectionErrorDialog();
                 }
             }
-        });
+        }).launch();
     }
 
 
@@ -1416,13 +1416,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void performIntegrityCheck() {
         Timber.i("performIntegrityCheck()");
-        CollectionTask.launchCollectionTask(CHECK_DATABASE, new CheckDatabaseListener());
+        new CollectionTask(CHECK_DATABASE, new CheckDatabaseListener()).launch();
     }
 
 
     @Override
     public void mediaCheck() {
-        CollectionTask.launchCollectionTask(CHECK_MEDIA, new CollectionTask.TaskListener() {
+        new CollectionTask(CHECK_MEDIA, new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
@@ -1443,7 +1443,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showSimpleMessageDialog(getResources().getString(R.string.check_media_failed));
                 }
             }
-        });
+        }).launch();
     }
 
 
@@ -1864,15 +1864,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
-        CollectionTask.launchCollectionTask(IMPORT, mImportAddListener,
-                new TaskData(importPath));
+        new CollectionTask(IMPORT, mImportAddListener).launch(new TaskData(importPath, false));
     }
 
 
     // Callback to import a file -- replacing the existing collection
     @Override
     public void importReplace(String importPath) {
-        CollectionTask.launchCollectionTask(IMPORT_REPLACE, mImportReplaceListener, new TaskData(importPath));
+        new CollectionTask(IMPORT_REPLACE, mImportReplaceListener).launch(new TaskData(importPath));
     }
 
 
@@ -1904,7 +1903,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         inputArgs[2] = did;
         inputArgs[3] = includeSched;
         inputArgs[4] = includeMedia;
-        CollectionTask.launchCollectionTask(EXPORT_APKG, mExportListener, new TaskData(inputArgs));
+        new CollectionTask(EXPORT_APKG, mExportListener).launch(new TaskData(inputArgs));
     }
 
 
@@ -2141,7 +2140,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
-        CollectionTask task = CollectionTask.launchCollectionTask(LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
+        new CollectionTask(LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -2171,7 +2170,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
                 Timber.d("Startup - Deck List UI Completed");
             }
-        });
+        }).launch();
     }
 
     public void __renderPage() {
@@ -2330,7 +2329,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         deleteDeck(mContextMenuDid);
     }
     public void deleteDeck(final long did) {
-        CollectionTask.launchCollectionTask(DELETE_DECK, new CollectionTask.TaskListener() {
+        new CollectionTask(DELETE_DECK, new CollectionTask.TaskListener() {
             // Flag to indicate if the deck being deleted is the current deck.
             private boolean removingCurrent;
 
@@ -2370,7 +2369,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // TODO: if we had "undo delete note" like desktop client then we won't need this.
                 getCol().clearUndo();
             }
-        }, new TaskData(did));
+        }).launch( new TaskData(did));
     }
 
     /**
@@ -2395,12 +2394,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void rebuildFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(REBUILD_CRAM, mSimpleProgressListener);
+        new CollectionTask(REBUILD_CRAM, mSimpleProgressListener).launch(new TaskData(mFragmented));
     }
 
     public void emptyFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(EMPTY_CRAM, mSimpleProgressListener);
+        new CollectionTask(EMPTY_CRAM, mSimpleProgressListener).launch(new TaskData(mFragmented));
     }
 
     @Override
@@ -2440,7 +2439,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        CollectionTask.launchCollectionTask(FIND_EMPTY_CARDS, new CollectionTask.TaskListener() {
+        new CollectionTask(FIND_EMPTY_CARDS, new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
@@ -2469,7 +2468,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     mProgressDialog.dismiss();
                 }
             }
-        });
+        }).launch();
     }
 
 

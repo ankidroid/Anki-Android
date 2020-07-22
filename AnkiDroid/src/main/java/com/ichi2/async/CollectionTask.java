@@ -140,38 +140,19 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
     /**
-     * Starts a new {@link CollectionTask}, with no listener
-     * <p>
-     * Tasks will be executed serially, in the order in which they are started.
-     * <p>
-     * This method must be called on the main thread.
-     *
-     * @param type of the task to start
-     * @param params to pass to the task
-     * @return the newly created task
-     */
-    public static CollectionTask launchCollectionTask(TASK_TYPE type, TaskData... params) {
-        return launchCollectionTask(type, null, params);
-    }
-
-    /**
      * Starts a new {@link CollectionTask}, with a listener provided for callbacks during execution
      * <p>
      * Tasks will be executed serially, in the order in which they are started.
      * <p>
      * This method must be called on the main thread.
      *
-     * @param type of the task to start
-     * @param listener to the status and result of the task, may be null
      * @param params to pass to the task
      * @return the newly created task
      */
-    public static CollectionTask launchCollectionTask(TASK_TYPE type, @Nullable Listener listener, TaskData... params) {
+    public void launch(TaskData... params) {
         // Start new task
-        CollectionTask newTask = new CollectionTask(type, listener);
-        newTask.mPreviousTask = sLatestInstance;
-        newTask.execute(params);
-        return newTask;
+        mPreviousTask = sLatestInstance;
+        execute(params);
     }
 
 
@@ -262,6 +243,12 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private CollectionTask mPreviousTask;
 
 
+    public CollectionTask(TASK_TYPE type) {
+        this(type, null);
+    }
+    /**
+     * @param listener to the status and result of the task, may be null
+     * */
     public CollectionTask(TASK_TYPE type, Listener listener) {
         mType = type;
         mListener = listener;

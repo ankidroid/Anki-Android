@@ -288,7 +288,7 @@ public class RobolectricTest {
 
     protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
-        CollectionTask.launchCollectionTask(taskType, listenerForWait(completed));
+        new CollectionTask(taskType, listenerForWait(completed)).launch();
 
         wait(timeoutMs);
 

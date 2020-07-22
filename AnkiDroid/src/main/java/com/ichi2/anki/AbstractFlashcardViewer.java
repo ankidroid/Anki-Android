@@ -1093,24 +1093,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
            note type could have lead to the card being deleted */
         if (data != null && data.hasExtra("reloadRequired")) {
             getCol().getSched().deferReset();
-            CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new TaskData(null, 0));
+            new CollectionTask(ANSWER_CARD, mAnswerCardHandler(false)).launch(new TaskData(null, 0));
         }
 
         if (requestCode == EDIT_CURRENT_CARD) {
             if (resultCode == RESULT_OK) {
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
-                CollectionTask.launchCollectionTask(UPDATE_NOTE, mUpdateCardHandler,
-                        new TaskData(sEditorCard, true));
+                new CollectionTask(UPDATE_NOTE, mUpdateCardHandler).launch(new TaskData(sEditorCard, true));
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard();
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
             getCol().getSched().deferReset();
-            CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new TaskData(null, 0));
+            new CollectionTask(ANSWER_CARD, mAnswerCardHandler(false)).launch(new TaskData(null, 0));
         }
         if (!mDisableClipboard) {
             clipboardSetText("");
@@ -1199,7 +1196,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            CollectionTask.launchCollectionTask(UNDO, mAnswerCardHandler(false));
+            new CollectionTask(UNDO, mAnswerCardHandler(false)).launch();
         }
     }
 
@@ -1352,8 +1349,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(true),
-                new TaskData(mCurrentCard, mCurrentEase));
+        new CollectionTask(ANSWER_CARD, mAnswerCardHandler(true)).launch(new TaskData(mCurrentCard, mCurrentEase));
     }
 
 
@@ -3069,8 +3065,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void dismiss(Collection.DismissType type) {
         blockControls(false);
-        CollectionTask.launchCollectionTask(DISMISS, mDismissCardHandler,
-                new TaskData(new Object[]{mCurrentCard, type}));
+        new CollectionTask(DISMISS, mDismissCardHandler).launch(new TaskData(new Object[]{mCurrentCard, type}));
     }
 
     /** Signals from a WebView represent actions with no parameters */
@@ -3463,8 +3458,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+        new CollectionTask(ANSWER_CARD, mAnswerCardHandler(false)).launch(new TaskData(null, 0));
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {
