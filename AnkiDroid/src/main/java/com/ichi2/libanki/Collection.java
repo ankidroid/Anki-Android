@@ -517,6 +517,16 @@ public class Collection {
      * Deletion logging ********************************************************* **************************************
      */
 
+    public void _logRem(long[] ids, int type) {
+        for (long id : ids) {
+            ContentValues values = new ContentValues();
+            values.put("usn", usn());
+            values.put("oid", id);
+            values.put("type", type);
+            mDb.insert("graves", values);
+        }
+    }
+
     public void _logRem(java.util.Collection<Long> ids, int type) {
         for (long id : ids) {
             ContentValues values = new ContentValues();
