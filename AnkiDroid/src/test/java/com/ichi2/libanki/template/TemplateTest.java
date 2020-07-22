@@ -42,7 +42,7 @@ public class TemplateTest extends RobolectricTest {
 
         String rendered = t.render();
 
-        assertThat(rendered, is("AA[[type:Back]]"));
+        assertThat(rendered, is("AA{{type:Back}}"));
     }
 
     @Test
