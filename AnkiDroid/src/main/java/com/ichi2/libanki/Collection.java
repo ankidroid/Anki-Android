@@ -1265,7 +1265,7 @@ public class Collection {
     }
 
     public void markReview(Card card) {
-        markUndo(new Undoable.UndoableReview(card, card.note().hasTag("leech")));
+        markUndo(new Undoable.UndoableReview(card.clone(), card.note().hasTag("leech")));
     }
 
     /**
