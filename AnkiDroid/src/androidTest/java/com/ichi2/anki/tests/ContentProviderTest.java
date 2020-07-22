@@ -46,6 +46,7 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.libanki.Utils;
 
+import com.ichi2.libanki.sched.Sched;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 import org.junit.After;
@@ -861,7 +862,7 @@ public class ContentProviderTest extends InstrumentedTest {
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
         int cardOrd = card.getOrd();
-        int earlyGraduatingEase = (schedVersion == 1) ? AbstractFlashcardViewer.EASE_3 : AbstractFlashcardViewer.EASE_4;
+        int earlyGraduatingEase = (col.getSched() instanceof Sched) ? AbstractFlashcardViewer.EASE_3 : AbstractFlashcardViewer.EASE_4;
         long timeTaken = 5000; // 5 seconds
 
         values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
@@ -923,7 +924,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
         Card cardAfterUpdate = col.getCard(cardId);
         // QUEUE_TYPE_MANUALLY_BURIED was also used for SIBLING_BURIED in sched v1
-        assertEquals("Card is user-buried", (schedVersion == 1) ? Consts.QUEUE_TYPE_SIBLING_BURIED : Consts.QUEUE_TYPE_MANUALLY_BURIED, cardAfterUpdate.getQueue());
+        assertEquals("Card is user-buried", (col.getSched() instanceof Sched) ? Consts.QUEUE_TYPE_SIBLING_BURIED : Consts.QUEUE_TYPE_MANUALLY_BURIED, cardAfterUpdate.getQueue());
 
         // cleanup, unbury cards
         // ---------------------
