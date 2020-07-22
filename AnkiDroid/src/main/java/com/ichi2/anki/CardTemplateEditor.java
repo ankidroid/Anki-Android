@@ -64,7 +64,7 @@ import java.util.regex.Pattern;
 
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TaskData;
+import com.ichi2.async.TaskData;
 
 
 /**

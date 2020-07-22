@@ -105,7 +105,7 @@ import java.util.Map.Entry;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import static com.ichi2.async.CollectionTask.TaskData;
+import com.ichi2.async.TaskData;
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
