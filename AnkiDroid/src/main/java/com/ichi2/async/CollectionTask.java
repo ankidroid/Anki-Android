@@ -168,7 +168,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      */
     public static CollectionTask launchCollectionTask(TASK_TYPE type, @Nullable Listener listener, TaskData... params) {
         // Start new task
-        CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
+        CollectionTask newTask = new CollectionTask(type, listener);
+        newTask.mPreviousTask = sLatestInstance;
         newTask.execute(params);
         return newTask;
     }
@@ -261,10 +262,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private CollectionTask mPreviousTask;
 
 
-    public CollectionTask(TASK_TYPE type, Listener listener, CollectionTask previousTask) {
+    public CollectionTask(TASK_TYPE type, Listener listener) {
         mType = type;
         mListener = listener;
-        mPreviousTask = previousTask;
         sTasks.add(this);
     }
 
