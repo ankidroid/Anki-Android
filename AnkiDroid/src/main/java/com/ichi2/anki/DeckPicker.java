@@ -2401,8 +2401,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void emptyFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(EMPTY_CRAM, mSimpleProgressListener,
-                new TaskData(mFragmented));
+        CollectionTask.launchCollectionTask(EMPTY_CRAM, mSimpleProgressListener);
     }
 
     @Override
