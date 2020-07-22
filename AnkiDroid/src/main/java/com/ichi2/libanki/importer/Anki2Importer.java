@@ -51,7 +51,7 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-import static com.ichi2.async.CollectionTask.TaskData;
+import com.ichi2.async.TaskData;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",

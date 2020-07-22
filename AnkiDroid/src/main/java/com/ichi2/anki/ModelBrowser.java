@@ -55,7 +55,7 @@ import java.util.Random;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import static com.ichi2.async.CollectionTask.TaskData;
+import com.ichi2.async.TaskData;
 
 
 public class ModelBrowser extends AnkiActivity {

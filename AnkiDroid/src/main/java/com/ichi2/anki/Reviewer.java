@@ -71,7 +71,7 @@ import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import static com.ichi2.async.CollectionTask.TaskData;
+import com.ichi2.async.TaskData;
 
 
 public class Reviewer extends AbstractFlashcardViewer {
