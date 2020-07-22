@@ -75,6 +75,8 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Undoable.*;
+
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
  */
@@ -922,13 +924,17 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
             Card newCard = null;
             try {
                 long cid = col.undo();
-                if (cid == 0) {
+                if (cid == NO_REVIEW) {
                     // /* card schedule change undone, reset and get
                     // new card */
                     Timber.d("Single card non-review change undo succeeded");
                     col.reset();
                     newCard = sched.getCard();
-                } else if (cid > 0) {
+                } else if (cid == MULTI_CARD) {
+                    /* multi-card action undone, no action to take here */
+                    Timber.d("Multi-select undo succeeded");
+                } else {
+                    // cid is actually a card id.
                     // a review was undone,
                      /* card review undone, set up to review that card again */
                     Timber.d("Single card review undo succeeded");
@@ -937,10 +943,6 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                     col.reset();
                     sched.deferReset(newCard);
                     col.getSched().setCurrentCard(newCard);
-                } else {
-                    // cid < 0
-                    /* multi-card action undone, no action to take here */
-                    Timber.d("Multi-select undo succeeded");
                 }
                 // TODO: handle leech undoing properly
                 publishProgress(new TaskData(newCard, 0));
