@@ -650,7 +650,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                         break;
                     case SUSPEND_CARD:
                         // collect undo information
-                        col.markUndo(new UndoableSuspendCard(card));
+                        col.markUndo(new UndoableSuspendCard(card.clone()));
                         // suspend card
                         if (card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
                             sched.unsuspendCards(new long[] { card.getId() });

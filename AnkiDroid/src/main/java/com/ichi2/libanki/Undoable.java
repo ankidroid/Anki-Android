@@ -15,6 +15,9 @@ import static com.ichi2.libanki.Collection.DismissType.*;
 public abstract class Undoable {
     private final DismissType mDt;
 
+    /**
+     * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.
+     * It's the caller reponsability to clone the object if necessary.*/
     public Undoable(DismissType dt) {
         mDt = dt;
     }
@@ -38,7 +41,7 @@ public abstract class Undoable {
         private final boolean mWasLeech;
         public UndoableReview(Card card, boolean wasLeach) {
             super(REVIEW);
-            mCard = card.clone();
+            mCard = card;
             mWasLeech = wasLeach;
         }
 
@@ -106,7 +109,7 @@ public abstract class Undoable {
         private Card mSuspendedCard;
         public UndoableSuspendCard(Card card) {
             super(SUSPEND_CARD);
-            mSuspendedCard = card.clone();
+            mSuspendedCard = card;
         }
 
         public long undo(Collection col) {
