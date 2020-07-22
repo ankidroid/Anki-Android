@@ -323,8 +323,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.rebuild_cram_deck), true);
-                CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true),
-                        new TaskData(mFragmented));
+                CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
                 return true;
             case R.id.action_empty:
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
@@ -450,8 +449,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 }
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.rebuild_cram_deck), true);
-                    CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true),
-                            new TaskData(mFragmented));
+                    CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
             } else {
                 CollectionTask.waitToFinish();
                 refreshInterface(true);
