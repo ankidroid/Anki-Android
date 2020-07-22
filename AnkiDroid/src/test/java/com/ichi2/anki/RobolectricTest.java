@@ -37,6 +37,8 @@ import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+
+import org.apache.tools.ant.Task;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -265,10 +267,8 @@ public class RobolectricTest {
         return (SchedV2) sched;
     }
 
-
-    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
-        boolean[] completed = new boolean[] { false };
-        CollectionTask.launchCollectionTask(taskType, new CollectionTask.TaskListener() {
+    protected synchronized CollectionTask.TaskListener listenerForWait(boolean[] completed) {
+        return new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
 
@@ -282,7 +282,13 @@ public class RobolectricTest {
                     RobolectricTest.this.notify();
                 }
             }
-        });
+        };
+    }
+
+
+    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
+        boolean[] completed = new boolean[] { false };
+        CollectionTask.launchCollectionTask(taskType, listenerForWait(completed));
 
         wait(timeoutMs);
 
