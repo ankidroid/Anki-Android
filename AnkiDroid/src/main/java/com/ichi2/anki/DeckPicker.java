@@ -1865,7 +1865,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
         CollectionTask.launchCollectionTask(IMPORT, mImportAddListener,
-                new TaskData(importPath, false));
+                new TaskData(importPath));
     }
 
 
