@@ -114,6 +114,8 @@ public class ContentProviderTest extends InstrumentedTest {
     private static final String[] TEST_MODEL_AFMT = {"{{BACK}}", "{{FRONTS}}"};
     private static final String[] TEST_NOTE_FIELDS = {"dis is za Fr0nt", "Te$t"};
     private static final String TEST_MODEL_CSS = "styleeeee";
+    // Whether tear down should be executed. I.e. if set up was not cancelled.
+    private boolean tearDown;
 
     private int mNumDecksBeforeTest;
     /* initialCapacity set to expected value when the test is written.
@@ -138,6 +140,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
         // We have parameterized the "schedVersion" variable, if we are on an emulator
         // (so it is safe) we will try to run with multiple scheduler versions
+        tearDown = false;
         if (InstrumentedTest.isEmulator()) {
             col.changeSchedulerVer(schedVersion);
         } else {
@@ -147,6 +150,8 @@ public class ContentProviderTest extends InstrumentedTest {
                 assumeThat(col.getSched().getName(), is("std2"));
             }
         }
+        tearDown = true;
+        // Do not teardown if setup was aborted
 
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
@@ -201,6 +206,9 @@ public class ContentProviderTest extends InstrumentedTest {
     @After
     public void tearDown() throws Exception {
         Log.i(AnkiDroidApp.TAG, "tearDown()");
+        if (!tearDown) {
+            return;
+        }
         final Collection col = getCol();
         // Delete all notes
         List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);
