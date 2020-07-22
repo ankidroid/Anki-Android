@@ -11,12 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.CollectionTask.TaskData;
 
 import java.util.Calendar;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.TaskData;
 
 public class UIUtils {
 

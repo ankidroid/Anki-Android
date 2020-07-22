@@ -142,6 +142,7 @@ import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.TaskData;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor {
@@ -512,7 +513,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(CollectionTask.TaskData... values) {
+        public void onProgressUpdate(TaskData... values) {
             boolean cardChanged = false;
             if (mCurrentCard != values[0].getCard()) {
                 /*
@@ -551,7 +552,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             if (!result.getBoolean()) {
                 // RuntimeException occurred on update cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
@@ -572,7 +573,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(CollectionTask.TaskData... values) {
+        public void onProgressUpdate(TaskData... values) {
             displayNext(values[0].getCard());
         }
 
@@ -620,7 +621,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             postNextCardDisplay(result.getBoolean());
         }
 
@@ -1093,7 +1094,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (data != null && data.hasExtra("reloadRequired")) {
             getCol().getSched().deferReset();
             CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new CollectionTask.TaskData(null, 0));
+                    new TaskData(null, 0));
         }
 
         if (requestCode == EDIT_CURRENT_CARD) {
@@ -1101,7 +1102,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
                 CollectionTask.launchCollectionTask(UPDATE_NOTE, mUpdateCardHandler,
-                        new CollectionTask.TaskData(sEditorCard, true));
+                        new TaskData(sEditorCard, true));
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard();
@@ -1109,7 +1110,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
             getCol().getSched().deferReset();
             CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new CollectionTask.TaskData(null, 0));
+                    new TaskData(null, 0));
         }
         if (!mDisableClipboard) {
             clipboardSetText("");
@@ -1352,7 +1353,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mCurrentEase = ease;
 
         CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(true),
-                new CollectionTask.TaskData(mCurrentCard, mCurrentEase));
+                new TaskData(mCurrentCard, mCurrentEase));
     }
 
 
@@ -3069,7 +3070,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void dismiss(Collection.DismissType type) {
         blockControls(false);
         CollectionTask.launchCollectionTask(DISMISS, mDismissCardHandler,
-                new CollectionTask.TaskData(new Object[]{mCurrentCard, type}));
+                new TaskData(new Object[]{mCurrentCard, type}));
     }
 
     /** Signals from a WebView represent actions with no parameters */
@@ -3463,7 +3464,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     @VisibleForTesting
     void loadInitialCard() {
         CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new CollectionTask.TaskData(null, 0));
+                new TaskData(null, 0));
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {

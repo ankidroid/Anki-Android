@@ -51,6 +51,8 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
+import static com.ichi2.async.CollectionTask.TaskData;
+
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
@@ -873,7 +875,7 @@ public class Anki2Importer extends Importer {
      */
     protected void publishProgress(int notesDone, int cardsDone, int postProcess) {
         if (mProgress != null) {
-            mProgress.publishProgress(new CollectionTask.TaskData(getRes().getString(R.string.import_progress,
+            mProgress.publishProgress(new TaskData(getRes().getString(R.string.import_progress,
                     notesDone, cardsDone, postProcess)));
         }
     }

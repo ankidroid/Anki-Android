@@ -76,11 +76,12 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Undoable.*;
+import static com.ichi2.async.CollectionTask.TaskData;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
  */
-public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, CollectionTask.TaskData, CollectionTask.TaskData> {
+public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> {
 
     public enum TASK_TYPE {
         SAVE_COLLECTION,
@@ -1133,7 +1134,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundRebuildCram");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         col.getSched().rebuildDyn(col.getDecks().selected());
-        return doInBackgroundUpdateValuesFromDeck(new CollectionTask.TaskData(new Object[]{true}));
+        return doInBackgroundUpdateValuesFromDeck(new TaskData(new Object[]{true}));
     }
 
 
@@ -1141,7 +1142,7 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
         Timber.d("doInBackgroundEmptyCram");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         col.getSched().emptyDyn(col.getDecks().selected());
-        return doInBackgroundUpdateValuesFromDeck(new CollectionTask.TaskData(new Object[]{true}));
+        return doInBackgroundUpdateValuesFromDeck(new TaskData(new Object[]{true}));
     }
 
 

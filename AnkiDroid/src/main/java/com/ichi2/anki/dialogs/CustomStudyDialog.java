@@ -56,6 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.TaskData;
 
 
 public class CustomStudyDialog extends AnalyticsDialogFragment {
@@ -484,7 +485,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 }
 
                 @Override
-                public void onPostExecute(CollectionTask.TaskData result) {
+                public void onPostExecute(TaskData result) {
                     activity.hideProgressBar();
                     ((CustomStudyListener) activity).onCreateCustomStudySession();
                 }

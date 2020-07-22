@@ -31,7 +31,7 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
     public void checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase();
 
-        CollectionTask.TaskData result = super.execute(CHECK_DATABASE);
+        TaskData result = super.execute(CHECK_DATABASE);
 
         assertThat("The result should specify a failure", result.getBoolean(), is(false));
         Collection.CheckDatabaseResult checkDbResult = assertObjIsDbResult(result);
@@ -43,7 +43,7 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
         CollectionUtils.lockDatabase(getCol());
     }
 
-    protected Collection.CheckDatabaseResult assertObjIsDbResult(CollectionTask.TaskData result) {
+    protected Collection.CheckDatabaseResult assertObjIsDbResult(TaskData result) {
         return assertResultArraySingleton(result, Collection.CheckDatabaseResult.class);
     }
 }

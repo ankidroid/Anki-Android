@@ -100,7 +100,6 @@ import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
@@ -132,6 +131,7 @@ import java.util.TreeMap;
 import timber.log.Timber;
 
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.TaskData;
 
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
@@ -275,7 +275,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mImportAddListener = new CollectionTask.TaskListener() {
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
@@ -303,7 +303,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(CollectionTask.TaskData... values) {
+        public void onProgressUpdate(TaskData... values) {
             mProgressDialog.setContent(values[0].getString());
         }
     };
@@ -311,7 +311,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private CollectionTask.TaskListener mImportReplaceListener = new CollectionTask.TaskListener() {
         @SuppressWarnings("unchecked")
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             Timber.i("Import: Replace Task Completed");
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
@@ -341,7 +341,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(CollectionTask.TaskData... values) {
+        public void onProgressUpdate(TaskData... values) {
             mProgressDialog.setContent(values[0].getString());
         }
     };
@@ -356,7 +356,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
@@ -1381,7 +1381,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
             @Override
-            public void onPostExecute(CollectionTask.TaskData result) {
+            public void onPostExecute(TaskData result) {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
@@ -2385,7 +2385,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             updateDeckList();
             if (mFragmented) {
                 loadStudyOptionsFragment(false);
@@ -2396,13 +2396,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void rebuildFiltered() {
         getCol().getDecks().select(mContextMenuDid);
         CollectionTask.launchCollectionTask(REBUILD_CRAM, mSimpleProgressListener,
-                new CollectionTask.TaskData(mFragmented));
+                new TaskData(mFragmented));
     }
 
     public void emptyFiltered() {
         getCol().getDecks().select(mContextMenuDid);
         CollectionTask.launchCollectionTask(EMPTY_CRAM, mSimpleProgressListener,
-                new CollectionTask.TaskData(mFragmented));
+                new TaskData(mFragmented));
     }
 
     @Override

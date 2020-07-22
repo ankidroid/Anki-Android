@@ -43,7 +43,6 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
@@ -56,7 +55,7 @@ import java.util.Random;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-
+import static com.ichi2.async.CollectionTask.TaskData;
 
 
 public class ModelBrowser extends AnkiActivity {
@@ -516,7 +515,7 @@ public class ModelBrowser extends AnkiActivity {
      */
     private void deleteModel() throws ConfirmModSchemaException {
         CollectionTask.launchCollectionTask(DELETE_MODEL, mDeleteModelHandler,
-                new CollectionTask.TaskData(mCurrentID));
+                new TaskData(mCurrentID));
         mModels.remove(mModelListPosition);
         mModelIds.remove(mModelListPosition);
         mModelDisplayList.remove(mModelListPosition);
