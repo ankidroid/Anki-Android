@@ -14,6 +14,8 @@ import static com.ichi2.libanki.Collection.DismissType.*;
 
 public abstract class Undoable {
     private final DismissType mDt;
+    public static final long MULTI_CARD = -1L;
+    public static final long NO_REVIEW = 0L;
 
     /**
      * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.
@@ -31,8 +33,8 @@ public abstract class Undoable {
     }
 
     /**
-     * Return -1 when no other action is needed, e.g. for multi card action
-     * Return 0 when we just need to reset the collection
+     * Return MULTI_CARD when no other action is needed, e.g. for multi card action
+     * Return NO_REVIEW when we just need to reset the collection
      * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
     public abstract long undo(Collection col);
 
@@ -148,7 +150,7 @@ public abstract class Undoable {
             col.getSched().suspendCards(toSuspendIdsArray);
             col.getSched().unsuspendCards(toUnsuspendIdsArray);
 
-            return -1;  // don't fetch new card
+            return MULTI_CARD;  // don't fetch new card
 
         }
     }
@@ -206,7 +208,7 @@ public abstract class Undoable {
                 ids.add(c.getId());
             }
             col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
-            return -1;  // don't fetch new card
+            return MULTI_CARD;  // don't fetch new card
 
         }
     }
@@ -231,7 +233,7 @@ public abstract class Undoable {
                 note.flush();
                 card.flush();
             }
-            return -1;  // don't fetch new card
+            return MULTI_CARD;  // don't fetch new card
 
         }
     }
@@ -249,7 +251,7 @@ public abstract class Undoable {
             Timber.i("Undo: Mark notes");
             CardUtils.markAll(mOriginalMarked, true);
             CardUtils.markAll(mOriginalUnmarked, false);
-            return -1;  // don't fetch new card
+            return MULTI_CARD;  // don't fetch new card
         }
     }
 
@@ -260,7 +262,7 @@ public abstract class Undoable {
 
         public long undo(Collection col) {
             Timber.d("Not implemented.");
-            return 0;
+            return NO_REVIEW;
         }
     }
 
@@ -277,7 +279,7 @@ public abstract class Undoable {
                 Card card = mCards[i];
                 card.flush(false);
             }
-            return 0;
+            return NO_REVIEW;
         }
     }
 }
