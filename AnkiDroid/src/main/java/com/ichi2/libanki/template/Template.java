@@ -97,7 +97,7 @@ public class Template {
      */
     public @NonNull String render() {
         String template = render_sections(mTemplate, mContext);
-        return render_tags(template, mContext);
+        return render_some_tags(template, mContext);
     }
 
     /**
@@ -157,21 +157,6 @@ public class Template {
         }
         match.appendTail(sb);
         return sb.toString();
-    }
-
-    /**
-     * Expands all tags, iteratively until all tags (even tags that are replaced by tags) are resolved.
-     */
-    private @NonNull String render_tags(@NonNull String template, @NonNull Map<String, String> context) {
-        /* Apply render_some_tags to the tags, until
-           render_some_tags states that it does not find tags to replace anymore
-           anymore. Return the last template state */
-        String previous_template = null;
-        while (template != null) {
-            previous_template = template;
-            template = render_some_tags(template, context);
-        }
-        return previous_template;
     }
 
     /**
