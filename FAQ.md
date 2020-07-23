@@ -351,7 +351,10 @@ The [formatting wiki page](https://github.com/ankidroid/Anki-Android/wiki/Advanc
 * Center align cards
 * Hide replay audio button
 * Customize colors in night-mode
+* [Remove automatic night mode color inversion](https://github.com/ankidroid/Anki-Android/wiki/Advanced-formatting#customize-night-mode-colors)
 * and much more
+
+search terms: _nightmode night-mode, invert, colour_
 
 # Other questions
 
