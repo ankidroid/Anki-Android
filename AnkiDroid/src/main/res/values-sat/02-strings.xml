@@ -69,12 +69,12 @@
     <string name="leech_suspend_notification">ᱠᱟᱰ ᱫᱚ leech ᱟᱨ ᱵᱚᱸᱫ ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ</string>
     <string name="leech_notification">ᱠᱟᱰ ᱫᱚ leech ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ</string>
     <string name="corrupt_font">%s ᱯᱷᱚᱱᱴ ᱯᱷᱟᱤᱞ corrupt ᱜᱮᱭᱟ</string>
-    <string name="webview_crash_unknown">ᱵᱟᱝᱵᱟᱰᱟᱭᱟᱜ ᱦᱩᱲᱟᱹᱜ</string>
-    <string name="webview_crash_unknwon_detailed">ᱱᱚᱶᱟ ᱫᱚ WebView ᱨᱮ ᱤᱱᱴᱚᱨᱱᱟᱞ ᱦᱩᱲᱟᱹᱜ ᱠᱷᱟᱛᱤᱨ ᱛᱮ </string>
+    <string name="webview_crash_unknown">ᱵᱟᱝᱵᱟᱰᱟᱭᱟᱜ ᱵᱷᱩᱞ</string>
+    <string name="webview_crash_unknwon_detailed">ᱱᱚᱶᱟ ᱫᱚ WebView ᱨᱮ ᱤᱱᱴᱚᱨᱱᱟᱞ ᱵᱷᱩᱞ ᱠᱷᱟᱛᱤᱨ ᱛᱮ </string>
     <string name="webview_crash_oom">ᱢᱮᱢᱚᱨᱤ ᱠᱷᱚᱱ ᱵᱟᱦᱨᱮ</string>
     <string name="webview_crash_oom_details">ᱥᱤᱥᱴᱚᱢ ᱫᱚ Webview ᱵᱚᱸᱫ ᱠᱮᱜᱼᱟᱭ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱡᱟᱹᱥᱛᱤ ᱢᱟᱨᱟᱝ ᱯᱷᱚᱱᱴᱥ ᱟᱨ ᱢᱤᱰᱭᱟ ᱠᱷᱟᱹᱛᱤᱨ ᱟᱣᱩᱴ ᱚᱯᱷ ᱢᱮᱢᱚᱨᱤ ᱫᱮᱠᱷᱟᱣ ᱮᱫ ᱟᱭ ᱾</string>
     <string name="webview_crash_nonfatal">WebView ᱨᱮᱱᱰᱚᱨᱚᱨ ᱠᱨᱟᱥ ᱮᱱᱟ ᱾ ᱠᱟᱨᱚᱬ:%s</string>
-    <string name="webview_crash_fatal">Fatal ᱦᱩᱲᱟᱹᱜ: WebView ᱨᱮᱱᱰᱚᱨᱚᱨ ᱠᱨᱟᱥ ᱮᱱᱟ ᱾ ᱠᱟᱨᱚᱬ:%s</string>
+    <string name="webview_crash_fatal">Fatal ᱵᱷᱩᱞ: WebView ᱨᱮᱱᱰᱚᱨᱚᱨ ᱠᱨᱟᱥ ᱮᱱᱟ ᱾ ᱠᱟᱨᱚᱬ:%s</string>
     <string name="webview_crash_loop_dialog_title">ᱥᱤᱥᱴᱚᱢ WebView ᱨᱮᱱᱰᱚᱨᱤᱝ ᱯᱷᱮᱞ ᱮᱱᱟ</string>
     <string name="webview_crash_loop_dialog_content">ᱥᱤᱥᱴᱚᱢ WebView ᱠᱟᱨᱰ ᱨᱮᱱᱰᱚᱨᱤᱝ ᱡᱚᱠᱷᱟᱜ ᱯᱷᱮᱞ ᱮᱱᱟ \'%1$s\'.\n%2$s</string>
     <!-- Browser -->
@@ -168,12 +168,12 @@
     <string name="import_log_no_apkg">ᱱᱚᱶᱟ ᱫᱚ ᱵᱦᱮᱞᱤᱰ Anki ᱯᱮᱠ ᱵᱟᱝ ᱠᱟᱱᱟ</string>
     <string name="import_log_failed_unzip">apkg ᱠᱷᱩᱞᱟᱹ ᱦᱩᱲᱟᱜᱺ %s</string>
     <string name="import_log_failed_copy_to">apkg ᱠᱷᱚᱱ %s ᱱᱚᱠᱚᱞ ᱦᱩᱲᱟᱜ</string>
-    <string name="import_log_failed_validate">apkg ᱯᱩᱥᱴᱚᱣ ᱦᱩᱰᱟᱹᱜ</string>
+    <string name="import_log_failed_validate">apkg ᱯᱩᱥᱴᱚᱣ ᱵᱷᱩᱞ</string>
     <string name="import_log_insufficient_space">ᱯᱮᱠᱮᱡ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ %1$d ᱫᱚᱨᱠᱟᱨ, %2$d ᱢᱮᱱᱟᱜᱼᱟ</string>
-    <string name="import_log_file_cache_cleared">ᱨᱮᱫ ᱞᱟᱫᱮ ᱦᱩᱰᱟᱹᱜ, ᱠᱟᱨᱬ ᱠᱮᱪ ᱥᱟᱯᱷᱟ ᱦᱩᱭ ᱠᱚᱜᱼᱟ ᱾\n ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
+    <string name="import_log_file_cache_cleared">ᱨᱮᱫ ᱞᱟᱫᱮ ᱵᱷᱩᱞ, ᱠᱟᱨᱬ ᱠᱮᱪ ᱥᱟᱯᱷᱟ ᱦᱩᱭ ᱠᱚᱜᱼᱟ ᱾\n ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
     <string name="import_succeeded_but_check_database">ᱰᱟᱴᱟ ᱟᱹᱜᱩ ᱦᱩᱭ ᱦᱮᱞᱮ ᱯᱚᱥᱴ-ᱟᱜᱩ ᱠᱞᱤᱱᱚᱯᱷ ᱰᱤᱜᱟᱹᱣ ᱾ ᱪᱮᱠ ᱰᱟᱴᱟᱵᱮᱥ ᱯᱚᱨᱮ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ ᱾ ᱢᱩᱞ ᱠᱟᱨᱚᱬ: %s</string>
     <string name="import_error_unhandled_request">ᱞᱟᱫᱮ ᱱᱮᱦᱚᱨ ᱵᱟᱝ ᱜᱟᱱᱚᱜ ᱠᱟᱱᱟ</string>
-    <string name="import_error_exception">ᱯᱟᱠᱟᱡ \n\n%s ᱞᱟᱫᱮ ᱦᱩᱲᱟᱹᱜ</string>
+    <string name="import_error_exception">ᱯᱟᱠᱟᱡ \n\n%s ᱞᱟᱫᱮ ᱵᱷᱩᱞ</string>
     <string name="import_error_not_apkg_extension">ᱨᱮᱫᱧᱩᱛᱩᱢ “%s” ᱴᱷᱮᱱ .apkg or .colpkg extension ᱵᱟᱱᱩᱜᱽᱟ</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱸᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
     <string name="import_error_content_provider">ᱪᱚᱭᱚᱱᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱸᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
@@ -190,11 +190,11 @@
     <string name="export_save_button">ᱨᱟᱫ ᱥᱟᱝᱪᱟᱣ ᱢᱮ</string>
     <string name="export_send_no_handlers">ᱪᱚᱫ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱟᱹᱱᱩᱜᱼᱟ apkg ᱦᱮᱱᱰᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱾ ᱥᱟᱝᱪᱟᱣ ᱪᱟᱹᱞᱩ ᱟᱠᱟᱱᱟ...</string>
     <string name="export_save_apkg_successful">Anki ᱯᱮᱠᱮᱡ ᱵᱮᱥ ᱪᱚᱨᱚᱠ ᱥᱟᱝᱪᱟᱣ ᱮᱱᱟ</string>
-    <string name="export_save_apkg_unsuccessful">Anki ᱯᱮᱠᱮᱡ ᱥᱟᱝᱪᱟᱣ ᱦᱩᱰᱟᱹᱜ</string>
+    <string name="export_save_apkg_unsuccessful">Anki ᱯᱮᱠᱮᱡ ᱥᱟᱝᱪᱟᱣ ᱵᱷᱩᱞ</string>
     <string name="export_successful">ᱨᱮᱫ “%s” ᱵᱷᱮᱡᱟᱭ ᱮᱱᱟ ᱾ ᱚᱞᱜᱟ ᱮᱯᱯ ᱛᱮ ᱵᱷᱮᱡᱟ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ?</string>
     <string name="export_email_subject">AnkiDroid ᱯᱷᱟᱥᱠᱟᱰ ᱵᱟᱡᱟᱠᱮᱜᱼᱟᱭ: %s</string>
     <string name="export_email_text"><![CDATA[ Hi! <br/><br/> ᱱᱟᱶᱟ ᱫᱚ Anki flashcards ᱰᱮᱠ ᱠᱟᱱᱟ ᱱᱚᱶᱟ ᱫᱚ ᱵᱷᱮᱡᱟᱜ ᱠᱟᱱᱟ<a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>ᱱᱚᱶᱟ ᱠᱚ ᱢᱮᱱᱟᱜ ᱠᱷᱚᱱ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱪᱮᱥᱴᱟᱭ ᱢᱮ<a href="http://ankisrs.net/#download">Anki distributions</a> ᱟᱨ ᱵᱮᱥ ᱛᱮ ᱪᱮᱫᱚᱜ ᱢᱮ !]]></string>
-    <string name="export_unsuccessful">apkg ᱨᱮᱫ ᱵᱷᱮᱡ ᱦᱩᱰᱟᱹᱜ</string>
+    <string name="export_unsuccessful">apkg ᱨᱮᱫ ᱵᱷᱮᱡ ᱵᱷᱩᱞ</string>
     <string name="import_hint">apkg ᱨᱮᱫ ᱫᱚ “%s” ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱫᱚᱦᱚᱭ ᱢᱮ ᱟᱨ “OK” ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ ᱠᱟᱰ ᱵᱷᱮᱡᱟᱭ ᱞᱟᱹᱜᱤᱫ</string>
     <string name="upgrade_import_no_file_found">ᱪᱮᱫ ᱦᱚ ᱵᱷᱮᱡᱟ ᱞᱟᱭᱚᱠ %1$s ᱨᱮᱫ ᱵᱟᱝ ᱧᱟᱢ ᱞᱮᱱᱟ</string>
     <string name="study_options">ᱟᱯᱟᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱜ</string>
@@ -248,7 +248,7 @@
         <item quantity="other">%2$d ᱠᱟᱰ %1$s ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱧᱮᱞ</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">apkg ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱦᱩᱰᱟᱹᱜ</string>
+    <string name="apk_share_error">apkg ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱵᱷᱩᱞ</string>
     <!-- Import and export v2 feedback -->
     <string name="import_needs_v2">ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱞᱟᱹᱜᱤᱫ V2 scheduler ᱮᱱᱮᱵᱟᱹᱞ ᱢᱮ ᱾</string>
     <string name="import_cannot_with_v2">V2 scheduler V1 ᱰᱮᱠᱥ ᱵᱟᱭ ᱵᱷᱮᱡᱟ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟᱭ ᱥᱮᱰᱭᱩᱞ ᱛᱟᱦᱮᱸ ᱠᱟᱛᱮ ᱦᱚᱸ ᱾</string>
@@ -272,7 +272,7 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">ᱡᱟᱵᱷᱟᱥᱨᱤᱯᱴ ᱛᱮ ᱱᱮᱵᱷᱤᱠᱮᱥᱚᱱ ᱰᱨᱣᱟᱹᱨ ᱫᱮᱠᱷᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱯᱷᱩᱞᱼᱥᱠᱨᱤᱱ ᱚᱱ ᱛᱟᱢ ᱾</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">ᱡᱟᱵᱷᱟᱥᱨᱤᱯᱴ ᱛᱮ ᱚᱯᱥᱚᱱ ᱢᱮᱱᱩ ᱫᱮᱠᱷᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱯᱷᱩᱞᱼᱥᱠᱨᱤᱱ ᱚᱱ ᱛᱟᱢ ᱾</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱥᱟᱱᱪᱟᱣ ᱦᱩᱰᱟᱹᱜ ᱾. %s </string>
+    <string name="white_board_image_save_failed">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱥᱟᱱᱪᱟᱣ ᱵᱷᱩᱞ ᱾. %s </string>
     <string name="white_board_image_saved">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ %s ᱛᱮ ᱥᱟᱱᱪᱟᱣ</string>
     <string name="title_whiteboard_pen_color">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱠᱚᱞᱚᱢ ᱨᱚᱰ</string>
 </resources>

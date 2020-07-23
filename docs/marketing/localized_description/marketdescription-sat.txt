@@ -18,9 +18,9 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 • syncing with AnkiWeb
 • open source
 
-★ Additional features:
-• write answers (optional)
-• whiteboard
+★ ᱟᱨᱦᱚᱸ ᱯᱷᱤᱪᱚᱨ ᱠᱚ ᱮᱢᱟᱱᱺ
+• ᱛᱮᱞᱟ ᱚᱞᱢᱮ (ᱮᱯᱮᱴᱟᱠ)
+• ᱯᱩᱸᱰ ᱵᱚᱰ
 • card editor/adder
 • ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ
 • tablet layout

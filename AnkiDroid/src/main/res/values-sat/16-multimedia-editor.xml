@@ -81,48 +81,48 @@
     <string name="multimedia_editor_text_field_editing_translate">ᱛᱚᱨᱡᱚᱢᱟ</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">ᱠᱤᱪᱷᱤ ᱚᱱᱚᱞ ᱠᱚ ᱚᱞ ᱢᱮ ᱯᱨᱩᱛᱷᱩᱢ</string>
-    <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
+    <string name="multimedia_editor_text_field_editing_many_words">ᱥᱟᱵᱟᱫ ᱜᱟᱫᱮᱞ ᱢᱤᱫᱴᱟ ᱟᱲᱟ ᱜᱮ ᱟᱥᱟ ᱟᱭ</string>
     <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
+    <string name="multimedia_editor_text_field_editing_clone_source">ᱠᱷᱚᱱ ᱤᱫᱤ ᱠᱟᱱᱟ</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">ᱜᱮᱞᱨᱭ</string>
-    <string name="multimedia_editor_image_field_editing_photo">Camera</string>
-    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <string name="multimedia_editor_image_field_editing_photo">ᱠᱮᱢᱨᱟ</string>
+    <string name="multimedia_editor_image_field_editing_library">ᱯᱩᱛᱷᱤ ᱚᱲᱟᱜ</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱠᱟᱱᱟ</string>
     <!-- when process finishes -->
     <string name="multimedia_editor_general_done">ᱦᱩᱭᱮᱱᱟ</string>
     <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">The word was not found</string>
+    <string name="multimedia_editor_error_word_not_found">ᱟᱲᱟ ᱫᱚ ᱵᱟᱭ ᱧᱟᱢ ᱞᱮᱱᱟ</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">Getting translation failed</string>
+    <string name="multimedia_editor_trans_getting_failure">ᱛᱚᱨᱡᱚᱢᱟ ᱧᱟᱢ ᱰᱤᱜᱟᱹᱣ</string>
     <string name="multimedia_editor_searching_word">ᱚᱱᱚᱞ ᱥᱮᱸᱫᱽᱨᱼᱜ ᱠᱟᱱᱟ</string>
     <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">Wait</string>
+    <string name="multimedia_editor_progress_wait_title">ᱛᱟᱹᱝᱜᱤ</string>
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">Something went wrong</string>
-    <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
-    <string name="multimedia_editor_attach_media">Attach media</string>
+    <string name="multimedia_editor_something_wrong">ᱡᱟᱦᱟᱱᱟᱜ ᱠᱚ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
+    <string name="multimedia_editor_attach_mm_content">%1$s ᱡᱟᱭᱜᱟ ᱨᱮ ᱢᱟᱹᱞᱴᱤᱢᱤᱰᱤᱭᱟ ᱡᱤᱱᱤᱥ ᱞᱟᱴᱷᱟᱭ ᱢᱮ</string>
+    <string name="multimedia_editor_attach_media">ᱢᱮᱰᱤᱭᱟ ᱞᱟᱴᱷᱟᱭ ᱢᱮ</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
-    <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_recording_failed">ᱨᱮᱠᱚᱰ ᱠᱚ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ</string>
+    <string name="multimedia_editor_audio_view_playing_failed">ᱮᱛᱦᱚᱵ ᱠᱚ ᱰᱤᱜᱟᱹᱣ</string>
+    <string name="multimedia_editor_audio_view_create_failed">ᱨᱮᱠᱚᱰ ᱦᱟᱹᱛᱤᱭᱟᱨ ᱵᱟᱨ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">ᱥᱟᱯᱲᱟᱣ ᱡᱟᱭᱜᱟ</string>
     <string name="title_activity_translation">ᱛᱚᱨᱡᱚᱢᱟ</string>
-    <string name="title_activity_load_pronounciation">Pronunciation</string>
+    <string name="title_activity_load_pronounciation">ᱩᱪᱨᱚᱬ</string>
     <!-- Network failure -->
-    <string name="network_no_connection">No connection</string>
+    <string name="network_no_connection">ᱵᱟᱝ ᱡᱩᱰᱟᱹᱣ</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
+    <string name="crop_image">ᱟᱢ ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ?</string>
     <string name="crop_button">ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚᱭ ᱢᱮ</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="save_dialog_content">ᱱᱤᱛᱚᱜ ᱪᱤᱛᱟᱹᱨ ᱨᱮᱭᱟᱜ ᱢᱟᱯ %sMB ᱾ ᱦᱩᱰᱟᱹᱜ ᱪᱤᱛᱹᱨ ᱢᱟᱯ ᱑MB ᱾ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟ ᱠᱟᱱᱟ ᱥᱮ?</string>
+    <string name="select_image_failed">"ᱪᱤᱛᱹᱨ ᱪᱚᱭᱚᱱ ᱦᱩᱰᱟᱹᱜ, ᱫᱚᱭᱚᱠᱟᱛᱮ ᱫᱩᱦᱰᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ"</string>
+    <string name="activity_result_unexpected">ᱮᱯᱯ ᱵᱟᱝ ᱵᱟᱰᱟᱭ ᱠᱟᱱ ᱜᱚᱱᱚᱝ ᱨᱩᱟᱹᱰ ᱮᱢᱚᱜ ᱠᱟᱱᱟᱭ ᱾ ᱟᱢ ᱚᱞᱜᱟ ᱮᱯᱯ ᱵᱮᱵᱷᱨᱟ ᱫᱚᱨᱠᱟᱨᱚᱜ ᱠᱟᱱᱟ</string>
 </resources>

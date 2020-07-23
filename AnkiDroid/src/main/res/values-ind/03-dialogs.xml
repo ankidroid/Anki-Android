@@ -183,7 +183,7 @@
     <string name="error_selecting_image">Galat memilih gambar. Harap lihat manual. %s</string>
     <string name="error_deleting_image">Galat menghapus gambar</string>
     <string name="failed_to_apply_background_image">Gagal menerapkan gambar latar belakang %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
+    <string name="background_image_too_large">Latar Pemilih Dek terlalu besar</string>
     <string name="image_max_size_allowed">Ukuran gambar maksimal %d MB</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

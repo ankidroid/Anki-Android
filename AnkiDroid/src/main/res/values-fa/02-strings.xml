@@ -58,7 +58,7 @@
     <string name="sdcard_missing_message">کارت حافظه در دسترس نیست زیرا حافظه یواس بی در حال استفاده است.اتصال را برای دسترسی به دسته های کارت قطع نمایید.</string>
     <string name="updated_version">به نسخه %s بروزرسانی شد</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">ذخیره تخته سفید</string>
     <string name="enable_whiteboard">فعال سازی تخته سفید</string>
     <string name="disable_whiteboard">غیر فعال کردن تخته سفید</string>
     <string name="show_whiteboard">نمایش تخته سفید</string>
@@ -94,9 +94,9 @@
         <item>بازه</item>
         <item>سهولت</item>
         <item>موعد مرور</item>
-        <item>Card Modified</item>
+        <item>زمان ویرایش کارت</item>
         <item>ساخته شده</item>
-        <item>Note Modified</item>
+        <item>زمان ویرایش یادداشت</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">افزایش محدوده کارتهای جدید امروز</string>
@@ -170,7 +170,7 @@
     <string name="import_log_failed_copy_to">خطا در کپی کردن apkg به %s</string>
     <string name="import_log_failed_validate">apkg معتبر نیست</string>
     <string name="import_log_insufficient_space">فضای کافی برای بازکردن بسته وجود ندارد. لازم %1$d، در دسترس %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
+    <string name="import_log_file_cache_cleared">خطا در ورود فایل، احتمالاً به دلیل پاکسازی کش در هنگام پردازش.\nلطفاً دوباره تلاش کنید</string>
     <string name="import_succeeded_but_check_database">ورود داده موفقیت آمیز بود ولی پاکسازی بعد از ورود ناموفق بود. بعداً بررسی دیتابیس را اجرا کنید. دلیل اصلی: %s</string>
     <string name="import_error_unhandled_request">پردازش درخواست ورود ممکن نیست</string>
     <string name="import_error_exception">خطا در ورود بسته\n\n%s</string>
@@ -248,7 +248,7 @@
     <string name="filtered_deck_name">دسته فیلتر شده</string>
     <string name="reminder_title">فراموش نکنید که امروز مطالعه کنید!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d کارت جدید برای مرور در %1$s</item>
+        <item quantity="one">%2$d کارت برای مرور در %1$s</item>
         <item quantity="other">%2$d cards to review in %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
@@ -276,7 +276,7 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">لطفاً برای نمایش نوار ابزار جاواسکریپت حالت تمام صفحه را فعال کنید.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">لطفاً برای نمایش تنظیمات جاواسکریپت حالت تمام صفحه را فعال کنید.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="white_board_image_save_failed">ذخیرۀ تصویر تخته سفید با مشکل مواجه شد. %s</string>
+    <string name="white_board_image_saved">تصویر تخته سفید در %s ذخیره شد</string>
+    <string name="title_whiteboard_pen_color">رنگ ماژیک تخته سفید</string>
 </resources>

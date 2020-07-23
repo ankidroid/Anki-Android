@@ -41,7 +41,7 @@
     <string name="check_db_title">بررسی پایگاه داده</string>
     <string name="check_db_warning">این عملیات ممکن است مدت زیادی طول بکشد</string>
     <string name="check_db_acknowledge">بانک اطلاعاتی بررسی شد</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">دیتابیس بررسی و بهینه سازی شد.\nحجم کاهش یافته: %d مگابایت.</string>
     <string name="contextmenu_deckpicker_delete_deck">حذف دسته</string>
     <string name="delete_deck_default_deck">دسته پیش فرض نمی تواند حذف شود</string>
     <string name="delete_deck_title">حذف دسته؟</string>
@@ -76,21 +76,21 @@
     </plurals>
     <string name="reschedule_card_dialog_title">زمانبندی دوباره کارت</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="one">زمانبندی مجدد کارت</item>
+        <item quantity="other">زمان‌بندی مجدد کارت</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">بازۀ کنونی: %d روز</item>
+        <item quantity="other">بازه کنونی: %d روز</item>
     </plurals>
     <string name="reschedule_card_dialog_message">زمانبندی مجدد برای مرور در x روز:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d کارت زمان‌بندی مجدد شد</item>
         <item quantity="other">%d کارت زمان‌بندی مجدد شدند</item>
     </plurals>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">دسته را در نرم افزار مدیریت فایل خود انتخاب کنید یا برای وارد کردن آن به صفحۀ about:downloads مراجعه کنید</string>
     <string name="answering_error_title">خطای پایگاه داده</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">ذخیرۀ مجموعه انجام نشد. دیتابیس ممکن است خراب باشد یا ممکن است فضای کافی نداشته باشید.\n\nاگر این اتفاق غالباً رخ می‌دهد، بررسی دیتابیس، تعمیر مجموعه یا بازنشانی مجموعه از یک فایل پشتیبان قبلی را برای حل کردن مشکل امتحان کنید. برای این کار به \"گزینه‌ها\" مراجعه کنید.\nاین خطا همچنین ممکن است به دلیل مشکل در آنکی‌دروید باشد؛ اگر هیچ یک از موارد بالا مشکل شما را حل نکرد، لطفاً خطا را به ما گزارش دهید تا ما بتوانیم به بررسی آن بپردازیم.</string>
     <string name="answering_error_report">گزارش خطا</string>
     <string name="repair_deck_dialog">آیا شما واقعا می خواهید پایگاه داده را تعمیر کنید؟\n\nقبل از شروع , یک کپی در پوشه فرعی \'%s\' به وجود خواهد آمد .</string>
     <string name="intent_add_saved_information">اطلاعات ذخیره شد</string>
@@ -105,7 +105,7 @@
     <string name="custom_study_ahead">مرور پیش از موعد تا x روز:</string>
     <string name="custom_study_random">انتخاب x کارت تصادفی از دسته:</string>
     <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_rebuild_deck_corrupt">بازسازی دستۀ مطالعۀ سفارشی انجام نشد</string>
     <string name="rebuild_custom_study_deck">ساخت مجدد دسته مطالعه سفارشی.\nلطفا صبر کنید...</string>
     <string name="importing_collection">در حال ورود مجموعه.\nلطفا صبر کنید&#8230;</string>
     <string name="import_media_count">در حال وارد کردن فایلهای رسانه %1$d%%&#8230;</string>
@@ -121,7 +121,7 @@
     <string name="restore_backup">مجموعه شما با یک نسخه قدیمی تر جایگزین خواهد شد. موارد ذخیره نشده از بین خواهند رفت.</string>
     <string name="dialog_cancel">لغو</string>
     <string name="dialog_ok">تایید</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">خیر</string>
     <string name="dialog_continue">ادامه</string>
     <string name="dialog_positive_create">ایجاد</string>
     <string name="dialog_positive_delete">حذف</string>
@@ -157,48 +157,48 @@
     <string name="empty_cards_count">کارتها برای اینکه حذف شوند: %d</string>
     <string name="empty_cards_deleted">کارتهای حذف شده: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">دسترسی به میکروفون به آنکی‌دروید داده نشده است.</string>
+    <string name="multimedia_editor_camera_permission_refused">دسترسی به دوربین به آنکی‌دروید داده نشده است. این گزینه غیرفعال شده است.</string>
+    <string name="multimedia_editor_failed">باز کردن ویرایشگر رسانه انجام نشد</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">دسترسی به ضبط صدا به آنکی‌دروید داده نشد</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_title">به آنکی‌دروید خوش آمدید!</string>
+    <string name="collection_load_welcome_request_permissions_details">آنکی‌دروید نیازمند به دسترسی به حافظه می‌باشد. از این دسترسی صرفاً برای ذخیرۀ مجموعۀ، فلش‌کارت‌ها و فایل‌های پشتیبان شما استفاده می‌شود. آنکی نرم‌افزاری اوپن سورس است که توسط افراد داوطلب نوشته شده است و میلیون‌ها نفر به آن اعتماد دارند.\n\n اگر سوالی دارید می‌توانید به راهنمای داخل نرم‌افزار یا انجمن‌های ما مراجعه کنید.\n\از اینکه از آنکی‌دروید استفاده می‌کنید متشکریم!\n--تیم توسعه‌دهندۀ آنکی‌دروید</string>
+    <string name="mutimedia_editor_assertion_failed">در هنگام نمایش ویرایشگر پیشرفته خطایی رخ داد</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">Could not play video</string>
+    <string name="integrity_check_startup_title">آنکی‌دروید به روز‌رسانی شد</string>
+    <string name="integrity_check_startup_content">آنکی دروید به‌روزرسانی شده است. این نسخۀ شامل تعمیراتی برای مشکلات محتمل دیتابیس است، بنابراین ما به شما پیشنهاد می‌کنیم که اکنون از گزینۀ بررسی دیتابیس استفاده کنید.</string>
+    <string name="integrity_check_positive">بررسی دیتابیس</string>
+    <string name="integrity_check_continue_anyway">ادامه بده</string>
+    <string name="integrity_check_insufficient_space">بررسی دیتابیس حجم زیادی از حافظۀ موقت را اشغال خواهد کرد.\n\nبه شدت پیشنهاد می‌کنیم قبل از اجرای بررسی دیتابیس از خالی بودن حداقل %s از حافظۀ موقت دستگاهتان اطمینان حاصل کنید.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\n%sاز حافظۀ موقت شما خالی است.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d کارت که در دستۀ اشتباه بودند بازیابی شدند. برای اطلاعات بیشتر به راهنما مراجعه کنید.</string>
+    <string name="video_creation_error">ویدیو پخش نشد</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">تغییر دسته انجام نشد</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">خطا در دریافت اطلاعات از کارت</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <string name="deck_options_corrupt">پردازش اختیارات دسته انجام نشد: %s</string>
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <string name="database_locked_title">دیتابیس قفل است</string>
+    <string name="database_locked_summary">نرم‌افزاری دیگر در حال استفاده از دیتابیس آنکی‌دروید است. لطفاً نرم افزار دیگر را ببندید سپس آنکی‌دروید را باز کنید.</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="background_image_applied">تصویر پس‌زمینه اعمال شد</string>
+    <string name="background_image_removed">تصویر پس‌زمینه حذف شد</string>
+    <string name="no_image_selected">تصویری انتخاب نشده است</string>
+    <string name="error_selecting_image">خطا در انتخاب تصویر. لطفاً به راهنما مراجعه کنید. %s</string>
+    <string name="error_deleting_image">خطا در حذف تصویر</string>
+    <string name="failed_to_apply_background_image">اعمال تصویر پس‌زمینه با خطا مواجه شد %s</string>
+    <string name="background_image_too_large">حجم تصویر پس‌زمینه بیشتر از حد پشتیبانی است</string>
+    <string name="image_max_size_allowed">حداکثر حجم پشتیبانی شده: %d مگابایت</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">دسترسی حافظه لازم است. لطفاً دسترسی حافظه را به آنکی‌دروید داده و سپس دوباره تلاش کنید.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">ظاهر مرورگر کارت بارگذاری نشد</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">تنظیم یادآور انجام نشد</string>
+    <string name="boot_service_too_many_notifications">یادآورهای زیادی تنظیم شده‌اند. بعضی از آنها نمایش داده نخواهند شد</string>
 </resources>
