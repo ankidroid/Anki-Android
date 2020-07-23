@@ -182,6 +182,7 @@ public class NoteEditor extends AnkiActivity {
     private Spinner mNoteDeckSpinner;
 
     private Note mEditorNote;
+    @Nullable
     public static Card mCurrentEditedCard;
     private ArrayList<String> mSelectedTags;
     private long mCurrentDid;
@@ -733,7 +734,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
         // changed note type?
-        if (!mAddNote) {
+        if (!mAddNote && mCurrentEditedCard != null) {
             final JSONObject newModel = getCurrentlySelectedModel();
             final JSONObject oldModel = mCurrentEditedCard.model();
             if (!newModel.equals(oldModel)) {
@@ -791,7 +792,7 @@ public class NoteEditor extends AnkiActivity {
         } else {
             // Check whether note type has been changed
             final Model newModel = getCurrentlySelectedModel();
-            final Model oldModel = mCurrentEditedCard.model();
+            final Model oldModel = (mCurrentEditedCard == null) ? null : mCurrentEditedCard.model();
             if (!newModel.equals(oldModel)) {
                 mReloadRequired = true;
                 if (mModelChangeCardMap.size() < mEditorNote.numberOfCards() || mModelChangeCardMap.containsKey(null)) {
@@ -813,7 +814,7 @@ public class NoteEditor extends AnkiActivity {
             // Regular changes in note content
             boolean modified = false;
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
-            if (mCurrentEditedCard.getDid() != mCurrentDid) {
+            if (mCurrentEditedCard != null && mCurrentEditedCard.getDid() != mCurrentDid) {
                 mReloadRequired = true;
                 // remove card from filtered deck first (if relevant)
                 getCol().getSched().remFromDyn(new long[] { mCurrentEditedCard.getId() });
@@ -1102,7 +1103,7 @@ public class NoteEditor extends AnkiActivity {
         intent.putExtra("modelId", getCurrentlySelectedModel().getLong("id"));
         Timber.d("showCardTemplateEditor() for model %s", intent.getLongExtra("modelId", -1L));
         // Also pass the note id and ord if not adding new note
-        if (!mAddNote) {
+        if (!mAddNote && mCurrentEditedCard != null) {
             intent.putExtra("noteId", mCurrentEditedCard.note().getId());
             Timber.d("showCardTemplateEditor() with note %s", mCurrentEditedCard.note().getId());
             intent.putExtra("ordId", mCurrentEditedCard.getOrd());
@@ -1169,7 +1170,7 @@ public class NoteEditor extends AnkiActivity {
                     // Model can change regardless of exit type - update ourselves and CardBrowser
                     mReloadRequired = true;
                     mEditorNote.reloadModel();
-                    if (!mEditorNote.cids().contains(mCurrentEditedCard.getId())) {
+                    if (mCurrentEditedCard == null || !mEditorNote.cids().contains(mCurrentEditedCard.getId())) {
                         if (!mAddNote) {
                             /* This can occur, for example, if the
                              * card type was deleted or if the note
@@ -1502,7 +1503,7 @@ public class NoteEditor extends AnkiActivity {
         if (mCurrentDid != 0) {
             return;
         }
-        if (note == null || mAddNote) {
+        if (note == null || mAddNote || mCurrentEditedCard == null) {
             JSONObject conf = getCol().getConf();
             JSONObject model = getCol().getModels().current();
             if (conf.optBoolean("addToCur", true)) {
@@ -1734,6 +1735,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
+    /* Uses only if mCurrentEditedCard is set, so from reviewer or card browser.*/
     private class EditNoteTypeListener implements OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
