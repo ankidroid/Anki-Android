@@ -423,6 +423,7 @@ public class NoteEditor extends AnkiActivity {
 
 
         mAedictIntent = false;
+        mCurrentEditedCard = null;
 
         switch (mCaller) {
             case CALLER_NOCALLER:
