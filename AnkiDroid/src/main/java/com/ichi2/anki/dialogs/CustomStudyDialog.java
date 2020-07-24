@@ -478,7 +478,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
-        CollectionTask.Listener listener = new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 activity.showProgressBar();

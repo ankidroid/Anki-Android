@@ -166,7 +166,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * @param params to pass to the task
      * @return the newly created task
      */
-    public static CollectionTask launchCollectionTask(TASK_TYPE type, @Nullable Listener listener, TaskData... params) {
+    public static CollectionTask launchCollectionTask(TASK_TYPE type, @Nullable TaskListener listener, TaskData... params) {
         // Start new task
         CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
         newTask.execute(params);
@@ -257,11 +257,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
     private final TASK_TYPE mType;
-    private final Listener mListener;
+    private final TaskListener mListener;
     private CollectionTask mPreviousTask;
 
 
-    private CollectionTask(TASK_TYPE type, Listener listener, CollectionTask previousTask) {
+    private CollectionTask(TASK_TYPE type, TaskListener listener, CollectionTask previousTask) {
         mType = type;
         mListener = listener;
         mPreviousTask = previousTask;
@@ -437,7 +437,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     protected void onPreExecute() {
         super.onPreExecute();
         if (mListener != null) {
-            mListener.onPreExecute(this);
+            mListener.onPreExecute();
         }
     }
 
@@ -447,7 +447,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     protected void onProgressUpdate(TaskData... values) {
         super.onProgressUpdate(values);
         if (mListener != null) {
-            mListener.onProgressUpdate(this, values);
+            mListener.onProgressUpdate(values);
         }
     }
 
@@ -457,7 +457,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     protected void onPostExecute(TaskData result) {
         super.onPostExecute(result);
         if (mListener != null) {
-            mListener.onPostExecute(this, result);
+            mListener.onPostExecute(result);
         }
         Timber.d("enabling garbage collection of mPreviousTask...");
         mPreviousTask = null;
@@ -1726,42 +1726,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * <p>
      * Their semantics is equivalent to the methods of {@link AsyncTask}.
      */
-    public interface Listener {
-
-        /** Invoked before the task is started. */
-        void onPreExecute(CollectionTask task);
-
-
-        /**
-         * Invoked after the task has completed.
-         * <p>
-         * The semantics of the result depends on the task itself.
-         */
-        void onPostExecute(CollectionTask task, TaskData result);
-
-
-        /**
-         * Invoked when the background task publishes an update.
-         * <p>
-         * The semantics of the update data depends on the task itself.
-         */
-        void onProgressUpdate(CollectionTask task, TaskData... values);
-
-        /**
-         * Invoked when the background task is cancelled.
-         */        
-        void onCancelled();
-
-    }
-
-    /**
-     * Adapter for the old interface, where the CollectionTask itself was not passed to the listener.
-     * <p>
-     * All methods are invoked on the main thread.
-     * <p>
-     * The semantics of the methods is equivalent to the semantics of the methods in the regular {@link Listener}.
-     */
-    public static abstract class TaskListener implements Listener {
+    public static abstract class TaskListener {
 
         /** Invoked before the task is started. */
         public abstract void onPreExecute();
@@ -1784,25 +1749,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             // most implementations do nothing with this, provide them a default implementation
         }
 
-
-        @Override
-        public void onPreExecute(CollectionTask task) {
-            onPreExecute();
-        }
-
-
-        @Override
-        public void onPostExecute(CollectionTask task, TaskData result) {
-            onPostExecute(result);
-        }
-
-
-        @Override
-        public void onProgressUpdate(CollectionTask task, TaskData... values) {
-            onProgressUpdate(values);
-        }
-
-        @Override
         public void onCancelled() {
             // most implementations do nothing with this, provide them a default implementation
         }
