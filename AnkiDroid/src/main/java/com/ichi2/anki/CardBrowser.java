@@ -880,11 +880,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private boolean hasSelectedCards() {
-        return mCheckedCards.size() > 0;
+        return checkedCardCount() > 0;
     }
 
     private boolean hasSelectedAllCards() {
-        return mCheckedCards.size() >= getCardCount(); //must handle 0.
+        return checkedCardCount() >= getCardCount(); //must handle 0.
     }
 
 
@@ -1054,7 +1054,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_preview: {
                 Intent previewer = new Intent(CardBrowser.this, Previewer.class);
-                if (mInMultiSelectMode && mCheckedCards.size() > 1) {
+                if (mInMultiSelectMode && checkedCardCount() > 1) {
                     // Multiple cards have been explicitly selected, so preview only those cards
                     previewer.putExtra("index", 0);
                     previewer.putExtra("cardList", getSelectedCardIds());
@@ -1578,7 +1578,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         protected void actualPostExecute(TaskData result) {
             hideProgressBar();
-            mActionBarTitle.setText(Integer.toString(mCheckedCards.size()));
+            mActionBarTitle.setText(Integer.toString(checkedCardCount()));
             invalidateOptionsMenu();    // maybe the availability of undo changed
             // snackbar to offer undo
             mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, getString(R.string.deleted_message), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
@@ -1992,7 +1992,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
 
             updateMultiselectMenu();
-            mActionBarTitle.setText(Integer.toString(mCheckedCards.size()));
+            mActionBarTitle.setText(Integer.toString(checkedCardCount()));
         } finally {
             mCardsAdapter.notifyDataSetChanged();
         }
@@ -2251,7 +2251,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mInMultiSelectMode = true;
         // show title and hide spinner
         mActionBarTitle.setVisibility(View.VISIBLE);
-        mActionBarTitle.setText(String.valueOf(mCheckedCards.size()));
+        mActionBarTitle.setText(String.valueOf(checkedCardCount()));
         mActionBarSpinner.setVisibility(View.GONE);
         // reload the actionbar using the multi-select mode actionbar
         supportInvalidateOptionsMenu();
