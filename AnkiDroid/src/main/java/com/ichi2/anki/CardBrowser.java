@@ -1411,8 +1411,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         Map<Long, Integer> idToPos = getPositionMap(getCards());
         for (Card c : cards) {
             // get position in the mCards search results HashMap
-            int pos = idToPos.containsKey(c.getId()) ? idToPos.get(c.getId()) : -1;
-            if (pos < 0 || pos >= getCardCount()) {
+            Integer pos = idToPos.get(c.getId());
+            if (pos == null || pos >= getCardCount()) {
                 continue;
             }
             // update Q & A etc
