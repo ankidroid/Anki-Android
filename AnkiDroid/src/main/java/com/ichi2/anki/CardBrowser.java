@@ -1408,7 +1408,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * @param updatedCardTags Mapping note id -> updated tags
      */
     private void updateCardsInList(List<Card> cards, Map<Long, String> updatedCardTags) {
-        Map<Long, Integer> idToPos = getPositionMap(getCards());
+        List<CardCache> cardList = getCards();
+        Map<Long, Integer> idToPos = getPositionMap(cardList);
         for (Card c : cards) {
             // get position in the mCards search results HashMap
             Integer pos = idToPos.get(c.getId());
@@ -1416,7 +1417,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 continue;
             }
             // update Q & A etc
-            getCards().get(pos).load(true, mColumn1Index, mColumn2Index);
+            cardList.get(pos).load(true, mColumn1Index, mColumn2Index);
         }
 
         updateList();
