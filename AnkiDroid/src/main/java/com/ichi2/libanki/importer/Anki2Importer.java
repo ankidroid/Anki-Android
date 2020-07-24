@@ -874,7 +874,7 @@ public class Anki2Importer extends Importer {
      */
     protected void publishProgress(int notesDone, int cardsDone, int postProcess) {
         if (mProgress != null) {
-            mProgress.publishProgress(new TaskData(getRes().getString(R.string.import_progress,
+            mProgress.doProgress(new TaskData(getRes().getString(R.string.import_progress,
                     notesDone, cardsDone, postProcess)));
         }
     }

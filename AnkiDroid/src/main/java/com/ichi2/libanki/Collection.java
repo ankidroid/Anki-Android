@@ -1812,7 +1812,7 @@ public class Collection {
 
 
     private void fixIntegrityProgress(CollectionTask.ProgressCallback progressCallback, int current, int total) {
-        progressCallback.publishProgress(new TaskData(
+        progressCallback.doProgress(new TaskData(
                 progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total));
     }
 
