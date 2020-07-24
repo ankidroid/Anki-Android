@@ -120,13 +120,18 @@ public class DialogHandler extends Handler {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mActivity.get());
             Resources res = mActivity.get().getResources();
             String hkey = preferences.getString("hkey", "");
-            boolean limited = Utils.intTime(1000) - preferences.getLong("lastSyncTime", 0) < INTENT_SYNC_MIN_INTERVAL;
+            long millisecondsSinceLastSync = Utils.intTime(1000) - preferences.getLong("lastSyncTime", 0);
+            boolean limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL;
             if (!limited && hkey.length() > 0 && Connection.isOnline()) {
                 ((DeckPicker) mActivity.get()).sync();
             } else {
                 String err = res.getString(R.string.sync_error);
                 if (limited) {
-                    mActivity.get().showSimpleNotification(err, res.getString(R.string.sync_too_busy), NotificationChannels.Channel.SYNC);
+                    long remainingTimeInSeconds = Math.max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1);
+                    // getQuantityString needs an int
+                    int remaining = (int) Math.min(Integer.MAX_VALUE, remainingTimeInSeconds);
+                    String message = res.getQuantityString(R.plurals.sync_automatic_sync_needs_more_time, remaining, remaining);
+                    mActivity.get().showSimpleNotification(err, message, NotificationChannels.Channel.SYNC);
                 } else {
                     mActivity.get().showSimpleNotification(err, res.getString(R.string.youre_offline), NotificationChannels.Channel.SYNC);
                 }
