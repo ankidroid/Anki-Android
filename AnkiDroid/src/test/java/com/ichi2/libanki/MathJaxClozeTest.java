@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -49,12 +53,12 @@ public class MathJaxClozeTest extends RobolectricTest {
 
         ArrayList<Card> cards = f.cards();
 
-        assertTrue(cards.get(0).q().contains("class=cloze"));
-        assertTrue(cards.get(1).q().contains("class=cloze"));
+        assertThat(cards.get(0).q(), containsString("class=cloze"));
+        assertThat(cards.get(1).q(), containsString("class=cloze"));
         String s = cards.get(2).q();
-        assertFalse(cards.get(2).q().contains("class=cloze"));
-        assertTrue(cards.get(3).q().contains("class=cloze"));
-        assertTrue(cards.get(4).q().contains("class=cloze"));
+        assertThat(cards.get(2).q(), not(containsString("class=cloze")));
+        assertThat(cards.get(3).q(), containsString("class=cloze"));
+        assertThat(cards.get(4).q(), containsString("class=cloze"));
     }
 
     @Test
@@ -71,9 +75,9 @@ public class MathJaxClozeTest extends RobolectricTest {
             Card c2 = cards.get(0);
             String q = c2.q();
             String a = c2.a();
-            assertTrue(q.contains("\\(1 \\div 2 =\\)"));
-            assertTrue(a.contains("\\(1 \\div 2 =\\)"));
-            assertTrue(a.contains("<span class=cloze>\\(\\frac{1}{2}\\)</span>"));
+            assertThat(q, containsString("\\(1 \\div 2 =\\)"));
+            assertThat(a, containsString("\\(1 \\div 2 =\\)"));
+            assertThat(a, containsString("<span class=cloze>\\(\\frac{1}{2}\\)</span>"));
 	}
 
 	{
@@ -83,7 +87,7 @@ public class MathJaxClozeTest extends RobolectricTest {
             ArrayList<Card> cards = f.cards();
             Card c2 = cards.get(0);
             String q = c2.q();
-            assertTrue(q.contains("\\(a\\) <span class=cloze>[...]</span> \\[ [...] \\]"));
+            assertThat(q, containsString("\\(a\\) <span class=cloze>[...]</span> \\[ [...] \\]"));
 	}
     }
 
@@ -101,8 +105,8 @@ public class MathJaxClozeTest extends RobolectricTest {
         Card c2 = cards.get(0);
         String q = c2.q();
         String a = c2.a();
-        assertTrue(q.endsWith("</style>the \\((\\)<span class=cloze>[...]</span>\\()\\) is \\(y\\) but not <span class=cloze>[...]</span> or \\(\\lambda\\)"));
-        assertTrue(a.endsWith("</style>the \\((\\)<span class=cloze>\\(x\\)</span>\\()\\) is \\(y\\) but not <span class=cloze>\\(z\\)</span> or \\(\\lambda\\)<br>\n"));
+        assertThat(q, endsWith("</style>the \\((\\)<span class=cloze>[...]</span>\\()\\) is \\(y\\) but not <span class=cloze>[...]</span> or \\(\\lambda\\)"));
+        assertThat(a, endsWith("</style>the \\((\\)<span class=cloze>\\(x\\)</span>\\()\\) is \\(y\\) but not <span class=cloze>\\(z\\)</span> or \\(\\lambda\\)<br>\n"));
     }
 
     @Test
