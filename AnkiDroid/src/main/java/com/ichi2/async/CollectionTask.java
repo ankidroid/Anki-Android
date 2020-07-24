@@ -261,7 +261,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private CollectionTask mPreviousTask;
 
 
-    public CollectionTask(TASK_TYPE type, Listener listener, CollectionTask previousTask) {
+    private CollectionTask(TASK_TYPE type, Listener listener, CollectionTask previousTask) {
         mType = type;
         mListener = listener;
         mPreviousTask = previousTask;
