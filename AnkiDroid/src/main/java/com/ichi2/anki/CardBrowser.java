@@ -1290,7 +1290,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private Map<Long, Integer> getPositionMap(List<CardCache> list) {
+    private static Map<Long, Integer> getPositionMap(List<CardCache> list) {
         Map<Long, Integer> positions = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
             positions.put(list.get(i).getId(), i);
