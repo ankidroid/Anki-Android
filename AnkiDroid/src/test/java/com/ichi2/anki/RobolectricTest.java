@@ -268,7 +268,7 @@ public class RobolectricTest {
 
     protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
-        CollectionTask.Listener listener = new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
 

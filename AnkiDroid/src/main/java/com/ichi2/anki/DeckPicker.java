@@ -1228,7 +1228,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        CollectionTask.Listener listener = new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             @Override
             public void onCancelled() {
                 hideProgressBar();
@@ -1371,7 +1371,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback method to handle repairing deck
     public void repairCollection() {
         Timber.i("Repairing the Collection");
-        CollectionTask.Listener listener= new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener= new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -1423,7 +1423,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void mediaCheck() {
-        CollectionTask.Listener listener = new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
@@ -2143,7 +2143,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
-        CollectionTask.Listener listener = new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -2333,7 +2333,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         deleteDeck(mContextMenuDid);
     }
     public void deleteDeck(final long did) {
-        CollectionTask.Listener listener = new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             // Flag to indicate if the deck being deleted is the current deck.
             private boolean removingCurrent;
 
@@ -2444,7 +2444,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        CollectionTask.Listener listener = new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
