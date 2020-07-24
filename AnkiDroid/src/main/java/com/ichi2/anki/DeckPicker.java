@@ -142,7 +142,6 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
 public class DeckPicker extends NavigationDrawerActivity implements

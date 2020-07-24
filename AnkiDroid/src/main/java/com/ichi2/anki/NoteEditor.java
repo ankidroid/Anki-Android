@@ -105,7 +105,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
 /**

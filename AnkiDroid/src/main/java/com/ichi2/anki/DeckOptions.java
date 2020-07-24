@@ -76,7 +76,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import timber.log.Timber;
-
 import com.ichi2.async.TaskData;
 
 /**

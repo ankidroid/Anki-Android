@@ -84,47 +84,6 @@ import static com.ichi2.libanki.Undoable.*;
  */
 public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> {
 
-    public enum TASK_TYPE {
-        SAVE_COLLECTION,
-        ANSWER_CARD,
-        ADD_NOTE,
-        UPDATE_NOTE,
-        UPDATE_NOTES_MULTI,
-        UNDO,
-        DISMISS,
-        DISMISS_MULTI,
-        CHECK_DATABASE,
-        REPAIR_COLLECTION,
-        LOAD_DECK_COUNTS,
-        UPDATE_VALUES_FROM_DECK,
-        DELETE_DECK,
-        REBUILD_CRAM,
-        EMPTY_CRAM,
-        IMPORT,
-        IMPORT_REPLACE,
-        SEARCH_CARDS,
-        EXPORT_APKG,
-        REORDER,
-        CONF_CHANGE,
-        CONF_RESET,
-        CONF_REMOVE,
-        CONF_SET_SUBDECKS,
-        RENDER_BROWSER_QA,
-        CHECK_MEDIA,
-        ADD_TEMPLATE,
-        REMOVE_TEMPLATE,
-        COUNT_MODELS,
-        DELETE_MODEL,
-        DELETE_FIELD,
-        REPOSITION_FIELD,
-        ADD_FIELD,
-        CHANGE_SORT_FIELD,
-        SAVE_MODEL,
-        FIND_EMPTY_CARDS,
-        CHECK_CARD_SELECTION,
-        LOAD_COLLECTION_COMPLETE,
-    }
-
     /**
      * A reference to the application context to use to fetch the current Collection object.
      */

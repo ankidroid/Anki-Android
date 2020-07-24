@@ -36,7 +36,6 @@ import com.ichi2.async.task.SaveModel;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Model;
 import com.ichi2.utils.JSONObject;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
 
