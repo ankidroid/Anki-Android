@@ -100,6 +100,19 @@ import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.task.CheckDatabase;
+import com.ichi2.async.task.CheckMedia;
+import com.ichi2.async.task.DeleteDeck;
+import com.ichi2.async.task.EmptyCram;
+import com.ichi2.async.task.ExportApkg;
+import com.ichi2.async.task.FindEmptyCards;
+import com.ichi2.async.task.Import;
+import com.ichi2.async.task.ImportReplace;
+import com.ichi2.async.task.LoadCollectionComplete;
+import com.ichi2.async.task.LoadDeckCounts;
+import com.ichi2.async.task.RebuildCram;
+import com.ichi2.async.task.RepairCollection;
+import com.ichi2.async.task.Undo;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
@@ -840,7 +853,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         /** Complete task and enqueue fetching nonessential data for
          * startup. */
-        CollectionTask.launchCollectionTask(LOAD_COLLECTION_COMPLETE);
+        CollectionTask.launchCollectionTask(new LoadCollectionComplete());
     }
 
 
@@ -864,7 +877,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.d("onPause()");
         mActivityPaused = true;
         // The deck count will be computed on resume. No need to compute it now
-        CollectionTask.cancelAllTasks(LOAD_DECK_COUNTS);
+        CollectionTask.cancelAllTasks(LoadDeckCounts.class);
         super.onPause();
     }
 
@@ -1249,7 +1262,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
         };
-        CollectionTask.launchCollectionTask(UNDO, listener);
+        CollectionTask.launchCollectionTask(new Undo(), listener);
     }
 
 
@@ -1391,7 +1404,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
         };
-        CollectionTask.launchCollectionTask(REPAIR_COLLECTION, listener);
+        CollectionTask.launchCollectionTask(new RepairCollection(), listener);
     }
 
 
@@ -1417,7 +1430,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void performIntegrityCheck() {
         Timber.i("performIntegrityCheck()");
-        CollectionTask.launchCollectionTask(CHECK_DATABASE, new CheckDatabaseListener());
+        CollectionTask.launchCollectionTask(new CheckDatabase(), new CheckDatabaseListener());
     }
 
 
@@ -1445,7 +1458,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
         };
-        CollectionTask.launchCollectionTask(CHECK_MEDIA, listener);
+        CollectionTask.launchCollectionTask(new CheckMedia(), listener);
     }
 
 
@@ -1866,15 +1879,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
-        CollectionTask.launchCollectionTask(IMPORT, mImportAddListener,
-                new TaskData(importPath));
+        CollectionTask.launchCollectionTask(new Import(importPath), mImportAddListener);
     }
 
 
     // Callback to import a file -- replacing the existing collection
     @Override
     public void importReplace(String importPath) {
-        CollectionTask.launchCollectionTask(IMPORT_REPLACE, mImportReplaceListener, new TaskData(importPath));
+        CollectionTask.launchCollectionTask(new ImportReplace(importPath), mImportReplaceListener);
     }
 
 
@@ -1900,13 +1912,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             exportPath = new File(exportDir, newFileName);
         }
         // add input arguments to new generic structure
-        Object[] inputArgs = new Object[5];
-        inputArgs[0] = getCol();
-        inputArgs[1] = exportPath.getPath();
-        inputArgs[2] = did;
-        inputArgs[3] = includeSched;
-        inputArgs[4] = includeMedia;
-        CollectionTask.launchCollectionTask(EXPORT_APKG, mExportListener, new TaskData(inputArgs));
+        CollectionTask.launchCollectionTask(new ExportApkg(exportPath.getPath(), did, includeSched, includeMedia), mExportListener);
     }
 
 
@@ -2174,7 +2180,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.d("Startup - Deck List UI Completed");
             }
         };
-        CollectionTask task = CollectionTask.launchCollectionTask(LOAD_DECK_COUNTS, listener);
+        CollectionTask task = CollectionTask.launchCollectionTask(new LoadDeckCounts(), listener);
     }
 
     public void __renderPage() {
@@ -2374,7 +2380,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 getCol().clearUndo();
             }
         };
-        CollectionTask.launchCollectionTask(DELETE_DECK, listener, new TaskData(did));
+        CollectionTask.launchCollectionTask(new DeleteDeck(did), listener);
     }
 
     /**
@@ -2399,12 +2405,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void rebuildFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(REBUILD_CRAM, mSimpleProgressListener);
+        CollectionTask.launchCollectionTask(new RebuildCram(), mSimpleProgressListener);
     }
 
     public void emptyFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(EMPTY_CRAM, mSimpleProgressListener);
+        CollectionTask.launchCollectionTask(new EmptyCram(), mSimpleProgressListener);
     }
 
     @Override
@@ -2474,7 +2480,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
         };
-        CollectionTask.launchCollectionTask(FIND_EMPTY_CARDS, listener);
+        CollectionTask.launchCollectionTask(new FindEmptyCards(), listener);
     }
 
 

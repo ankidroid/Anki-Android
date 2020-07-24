@@ -44,6 +44,7 @@ import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.task.RebuildCram;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 
@@ -490,7 +491,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 ((CustomStudyListener) activity).onCreateCustomStudySession();
             }
         };
-        CollectionTask.launchCollectionTask(REBUILD_CRAM, listener);
+        CollectionTask.launchCollectionTask(new RebuildCram(), listener);
 
         // Hide the dialogs
         activity.dismissAllDialogFragments();

@@ -73,6 +73,7 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.task.AddNote;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -789,7 +790,7 @@ public class NoteEditor extends AnkiActivity {
             }
             getCol().getModels().current().put("tags", ja);
             getCol().getModels().setChanged();
-            CollectionTask.launchCollectionTask(ADD_NOTE, mSaveNoteHandler, new TaskData(mEditorNote));
+            CollectionTask.launchCollectionTask(new AddNote(mEditorNote), mSaveNoteHandler);
         } else {
             // Check whether note type has been changed
             final Model newModel = getCurrentlySelectedModel();

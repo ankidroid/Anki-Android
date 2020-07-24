@@ -18,10 +18,8 @@ package com.ichi2.libanki.sched;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskData;
+import com.ichi2.async.task.Undo;
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Consts;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,10 +31,8 @@ import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 import java.util.Arrays;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 
 // Note: These tests can't be run individually but can from the class-level
 // gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.sched.AbstractSchedTest.*"
@@ -79,7 +75,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
         sched.answerCard(cardBeforeUndo, EASE_3);
 
-        waitForTask(UNDO, 5000);
+        waitForTask(new Undo(), 5000);
 
         int[] countsAfterUndo = sched.counts();
 

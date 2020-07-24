@@ -96,6 +96,10 @@ import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.task.AnswerCard;
+import com.ichi2.async.task.Dismiss;
+import com.ichi2.async.task.Undo;
+import com.ichi2.async.task.UpdateNote;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -1093,24 +1097,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
            note type could have lead to the card being deleted */
         if (data != null && data.hasExtra("reloadRequired")) {
             getCol().getSched().deferReset();
-            CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new TaskData(null, 0));
+            CollectionTask.launchCollectionTask(new AnswerCard(), mAnswerCardHandler(false));
         }
 
         if (requestCode == EDIT_CURRENT_CARD) {
             if (resultCode == RESULT_OK) {
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
-                CollectionTask.launchCollectionTask(UPDATE_NOTE, mUpdateCardHandler,
-                        new TaskData(sEditorCard, true));
+                CollectionTask.launchCollectionTask(new UpdateNote(sEditorCard, true), mUpdateCardHandler);
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard();
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
             getCol().getSched().deferReset();
-            CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new TaskData(null, 0));
+            CollectionTask.launchCollectionTask(new AnswerCard(), mAnswerCardHandler(false));
         }
         if (!mDisableClipboard) {
             clipboardSetText("");
@@ -1199,7 +1200,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            CollectionTask.launchCollectionTask(UNDO, mAnswerCardHandler(false));
+            CollectionTask.launchCollectionTask(new Undo(), mAnswerCardHandler(false));
         }
     }
 
@@ -1352,8 +1353,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(true),
-                new TaskData(mCurrentCard, mCurrentEase));
+        CollectionTask.launchCollectionTask(new AnswerCard(mCurrentCard, mCurrentEase), mAnswerCardHandler(true));
     }
 
 
@@ -3069,8 +3069,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void dismiss(Collection.DismissType type) {
         blockControls(false);
-        CollectionTask.launchCollectionTask(DISMISS, mDismissCardHandler,
-                new TaskData(new Object[]{mCurrentCard, type}));
+        CollectionTask.launchCollectionTask(new Dismiss(mCurrentCard, type), mDismissCardHandler);
     }
 
     /** Signals from a WebView represent actions with no parameters */
@@ -3463,8 +3462,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+        CollectionTask.launchCollectionTask(new AnswerCard(), mAnswerCardHandler(false));
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {
