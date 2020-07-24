@@ -67,7 +67,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
-import static com.ichi2.libanki.sched.SchedV2.UnburyType.*;
+import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
@@ -2297,11 +2297,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public enum UnburyType {
-        ALL,
-        MANUAL,
-        SIBLINGS;
-    }
     public void unburyCardsForDeck() {
         unburyCardsForDeck(ALL);
     }

@@ -145,6 +145,12 @@ public abstract class AbstractSched {
     public abstract void maybeRandomizeDeck();
     public abstract void maybeRandomizeDeck(Long did);
     public abstract boolean haveBuried(long did);
+    public enum UnburyType {
+        ALL,
+        MANUAL,
+        SIBLINGS;
+    }
+    public abstract void unburyCardsForDeck(UnburyType type);
     public abstract void unburyCardsForDeck(long did);
     public abstract String getName();
     public abstract int getToday();
