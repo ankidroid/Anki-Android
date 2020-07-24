@@ -565,10 +565,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
                             .putInt("cardBrowserColumn2", mColumn2Index).commit();
                     Column[] fromMap = mCardsAdapter.getFromMapping();
-                    fromMap[1] = COLUMN2_KEYS[mColumn2Index];
-                    if (fromMap[1] == null) {
-                        fromMap[1] = ANSWER;
-                    }
                     mCardsAdapter.setFromMapping(fromMap);
                 }
             }
@@ -582,9 +578,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
         String sflCustomFont = preferences.getString("browserEditorFont", "");
         Column[] columnsContent = {COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]};
-        if (columnsContent[1] == null) {
-            columnsContent[1] = ANSWER;
-        }
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         mCardsAdapter = new MultiColumnListAdapter(
                 this,
