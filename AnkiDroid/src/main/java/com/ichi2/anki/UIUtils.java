@@ -118,7 +118,7 @@ public class UIUtils {
 
     public static void saveCollectionInBackground() {
         if (CollectionHelper.getInstance().colIsOpen()) {
-            CollectionTask.launchCollectionTask(SAVE_COLLECTION, new CollectionTask.TaskListener() {
+            CollectionTask.Listener listener = new CollectionTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
                     Timber.d("saveCollectionInBackground: start");
@@ -129,7 +129,8 @@ public class UIUtils {
                 public void onPostExecute(TaskData result) {
                     Timber.d("saveCollectionInBackground: finished");
                 }
-            });
+            };
+            CollectionTask.launchCollectionTask(SAVE_COLLECTION, listener);
         }
     }
 }
