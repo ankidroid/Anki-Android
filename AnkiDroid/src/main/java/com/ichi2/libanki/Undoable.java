@@ -38,38 +38,7 @@ public abstract class Undoable {
      * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
     public abstract long undo(Collection col);
 
-    public static class UndoableReview extends Undoable {
-        private final Card mCard;
-        private final boolean mWasLeech;
-        public UndoableReview(Card card, boolean wasLeach) {
-            super(REVIEW);
-            mCard = card;
-            mWasLeech = wasLeach;
-        }
 
-        public long undo(Collection col) {
-            // remove leech tag if it didn't have it before
-            if (!mWasLeech && mCard.note().hasTag("leech")) {
-                mCard.note().delTag("leech");
-                mCard.note().flush();
-            }
-            Timber.i("Undo Review of card %d, leech: %b", mCard.getId(), mWasLeech);
-            // write old data
-            mCard.flush(false);
-            // and delete revlog entry
-            long last = col.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", new Object[] {mCard.getId()});
-            col.getDb().execute("DELETE FROM revlog WHERE id = " + last);
-            // restore any siblings
-            col.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
-                    new Object[] {Utils.intTime(), col.usn(), mCard.getNid()});
-            // and finally, update daily count
-            @Consts.CARD_QUEUE int n = mCard.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : mCard.getQueue();
-            String type = (new String[]{"new", "lrn", "rev"})[n];
-            col.getSched()._updateStats(mCard, type, -1);
-            col.getSched().setReps(col.getSched().getReps() - 1);
-            return mCard.getId();
-        }
-    }
 
     private static class UndoableFlushAll extends Undoable {
         private final List<Card> mCards;

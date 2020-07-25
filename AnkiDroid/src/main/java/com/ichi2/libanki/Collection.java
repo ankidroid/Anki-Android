@@ -70,6 +70,8 @@ import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
 
+import static com.ichi2.libanki.Collection.DismissType.REVIEW;
+
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
 // tracked, so unused tags can only be removed from the list with a DB check.
@@ -1271,7 +1273,33 @@ public class Collection {
     }
 
     public void markReview(Card card) {
-        markUndo(new Undoable.UndoableReview(card.clone(), card.note().hasTag("leech")));
+        boolean wasLeech = card.note().hasTag("leech");
+        Card clonedCard = card.clone();
+        Undoable undoableReview = new Undoable(REVIEW) {
+            public long undo(Collection col) {
+                // remove leech tag if it didn't have it before
+                if (!wasLeech && clonedCard.note().hasTag("leech")) {
+                    clonedCard.note().delTag("leech");
+                    clonedCard.note().flush();
+                }
+                Timber.i("Undo Review of card %d, leech: %b", clonedCard.getId(), wasLeech);
+                // write old data
+                clonedCard.flush(false);
+                // and delete revlog entry
+                long last = col.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", new Object[] {clonedCard.getId()});
+                col.getDb().execute("DELETE FROM revlog WHERE id = " + last);
+                // restore any siblings
+                col.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
+                        new Object[] {Utils.intTime(), col.usn(), clonedCard.getNid()});
+                // and finally, update daily count
+                @Consts.CARD_QUEUE int n = clonedCard.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : clonedCard.getQueue();
+                String type = (new String[]{"new", "lrn", "rev"})[n];
+                col.getSched()._updateStats(clonedCard, type, -1);
+                col.getSched().setReps(col.getSched().getReps() - 1);
+                return clonedCard.getId();
+            }
+        };
+        markUndo(undoableReview);
     }
 
     /**
