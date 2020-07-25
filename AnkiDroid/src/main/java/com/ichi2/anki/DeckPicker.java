@@ -317,11 +317,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
             Resources res = getResources();
             if (result != null && result.getBoolean()) {
-                int code = result.getInt();
-                if (code == -2) {
-                    // not a valid apkg file
-                    showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg));
-                }
                 updateDeckList();
             } else {
                 showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
