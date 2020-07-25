@@ -31,10 +31,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.task.AddField;
-import com.ichi2.async.task.ChangeSortField;
-import com.ichi2.async.task.DeleteField;
-import com.ichi2.async.task.RepositionField;
+import com.ichi2.async.task.Task;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.themes.StyledProgressDialog;
@@ -46,6 +43,8 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import com.ichi2.async.TaskData;
+
+import timber.log.Timber;
 
 public class ModelFieldEditor extends AnkiActivity {
 
@@ -243,7 +242,26 @@ public class ModelFieldEditor extends AnkiActivity {
     }
 
     private void deleteField() {
-        CollectionTask.launchCollectionTask(new DeleteField(mMod, mNoteFields.getJSONObject(mCurrentPos)), mChangeFieldHandler);
+        Model model = mMod;
+        JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
+        Task deleteField = new Task() {
+            /**
+             * Deletes thje given field in the given model
+             */
+            public TaskData background(CollectionTask task) {
+                Timber.d("doInBackGroundDeleteField");
+                Collection col = task.getCol();
+                try {
+                    col.getModels().remField(model, field);
+                    col.save();
+                } catch (ConfirmModSchemaException e) {
+                    //Should never be reached
+                    return new TaskData(false);
+                }
+                return new TaskData(true);
+            }
+        };
+        CollectionTask.launchCollectionTask(deleteField, mChangeFieldHandler);
     }
 
 
@@ -323,10 +341,29 @@ public class ModelFieldEditor extends AnkiActivity {
                             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
                         } else {
                             // Input is valid, now attempt to modify
+                            Model model = mMod;
+                            JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
+                            int index = pos - 1;
+                            Task repositionField = new Task() {
+                                /**
+                                 * Repositions the given field in the given model
+                                 */
+                                public TaskData background(CollectionTask task) {
+                                    Timber.d("doInBackgroundRepositionField");
+                                    Collection col = task.getCol();
+                                    try {
+                                        col.getModels().moveField(model, field, index);
+                                        col.save();
+                                    } catch (ConfirmModSchemaException e) {
+                                        //Should never be reached
+                                        return new TaskData(false);
+                                    }
+                                    return new TaskData(true);
+                                }
+                            };
                             try {
                                 mCol.modSchema();
-                                CollectionTask.launchCollectionTask(new RepositionField(mMod,
-                                                mNoteFields.getJSONObject(mCurrentPos), pos - 1), mChangeFieldHandler);
+                                CollectionTask.launchCollectionTask(repositionField, mChangeFieldHandler);
                             } catch (ConfirmModSchemaException e) {
 
                                 // Handle mod schema confirmation
@@ -337,8 +374,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                         mCol.modSchemaNoCheck();
                                         String newPosition1 = mFieldNameInput.getText().toString();
                                         int pos1 = Integer.parseInt(newPosition1);
-                                        CollectionTask.launchCollectionTask(new RepositionField(mMod,
-                                                        mNoteFields.getJSONObject(mCurrentPos), pos1 - 1),
+                                        CollectionTask.launchCollectionTask(repositionField,
                                                 mChangeFieldHandler);
                                         dismissContextMenu();
                                     } catch (JSONException e1) {
@@ -392,21 +428,39 @@ public class ModelFieldEditor extends AnkiActivity {
         fullRefreshList();
     }
 
-
     /*
      * Changes the sort field (that displays in card browser) to the current field
      */
     private void sortByField() {
+        Model model = mMod;
+        int idx = mCurrentPos;
+        Task changeSortField = new Task() {
+                /**
+                 * Adds a field of with name in given model
+                 */
+                public TaskData background(CollectionTask task) {
+                    Collection col = task.getCol();
+                    try {
+                        Timber.d("doInBackgroundChangeSortField");
+                        col.getModels().setSortIdx(model, idx);
+                        col.save();
+                    } catch(Exception e){
+                        Timber.e(e, "Error changing sort field");
+                        return new TaskData(false);
+                    }
+                    return new TaskData(true);
+                }
+            };
         try {
             mCol.modSchema();
-            CollectionTask.launchCollectionTask(new ChangeSortField(mMod, mCurrentPos), mChangeFieldHandler);
+            CollectionTask.launchCollectionTask(changeSortField, mChangeFieldHandler);
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
             ConfirmationDialog c = new ConfirmationDialog();
             c.setArgs(getResources().getString(R.string.full_sync_confirmation));
             Runnable confirm = () -> {
                 mCol.modSchemaNoCheck();
-                CollectionTask.launchCollectionTask(new ChangeSortField(mMod, mCurrentPos), mChangeFieldHandler);
+                CollectionTask.launchCollectionTask(changeSortField, mChangeFieldHandler);
                 dismissContextMenu();
             };
             c.setConfirm(confirm);
@@ -539,4 +593,25 @@ public class ModelFieldEditor extends AnkiActivity {
                 break;
         }
     };
+
+    private class AddField extends Task {
+        private final Model mModel;
+        private final String mFieldName;
+
+        public AddField(Model model, String fieldName) {
+            mModel = model;
+            mFieldName = fieldName;
+        }
+
+        /**
+         * Adds a field with name in given model
+         */
+        public TaskData background(CollectionTask task) {
+            Timber.d("doInBackgroundRepositionField");
+            Collection col = task.getCol();
+            col.getModels().addFieldModChanged(mModel, col.getModels().newField(mFieldName));
+            col.save();
+            return new TaskData(true);
+        }
+    }
 }

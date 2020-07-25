@@ -43,8 +43,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.task.CountModels;
-import com.ichi2.async.task.DeleteModel;
+import com.ichi2.async.task.Task;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
@@ -53,6 +52,8 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 import timber.log.Timber;
@@ -221,6 +222,42 @@ public class ModelBrowser extends AnkiActivity {
         super.onDestroy();
     }
 
+    private class CountModels extends Task {
+        /*
+         * Async task for the ModelBrowser Class
+         * Returns an ArrayList of all models alphabetically ordered and the number of notes
+         * associated with each model.
+         *
+         * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
+         */
+        public TaskData background(CollectionTask task) {
+            Collection col = task.getCol();
+            Timber.d("doInBackgroundLoadModels");
+
+            ArrayList<Model> models = col.getModels().all();
+            ArrayList<Integer> cardCount = new ArrayList<>();
+            Collections.sort(models, new Comparator<JSONObject>() {
+                @Override
+                public int compare(JSONObject a, JSONObject b) {
+                    return a.getString("name").compareTo(b.getString("name"));
+                }
+            });
+
+            for (Model n : models) {
+                if (task.isCancelled()) {
+                    Timber.e("doInBackgroundLoadModels :: Cancelled");
+                    // onPostExecute not executed if cancelled. Return value not used.
+                    return new TaskData(false);
+                }
+                cardCount.add(col.getModels().useCount(n));
+            }
+
+            Object[] data = new Object[2];
+            data[0] = models;
+            data[1] = cardCount;
+            return (new TaskData(0, data, true));
+        }
+    }
 
     // ----------------------------------------------------------------------------
     // ANKI METHODS
@@ -515,7 +552,26 @@ public class ModelBrowser extends AnkiActivity {
      * Deletes the currently selected model
      */
     private void deleteModel() throws ConfirmModSchemaException {
-        CollectionTask.launchCollectionTask(new DeleteModel(mCurrentID), mDeleteModelHandler);
+        long modId = mCurrentID;
+        Task deleteModel = new Task() {
+            /**
+             * Deletes the given model (stored in the long field of TaskData)
+             * and all notes associated with it
+             */
+            public TaskData background(CollectionTask task) {
+                Timber.d("doInBackGroundDeleteModel");
+                Collection col = task.getCol();
+                try {
+                    col.getModels().rem(col.getModels().get(modId));
+                    col.save();
+                } catch (ConfirmModSchemaException e) {
+                    Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
+                    return new TaskData(false);
+                }
+                return new TaskData(true);
+            }
+        };
+        CollectionTask.launchCollectionTask(deleteModel, mDeleteModelHandler);
         mModels.remove(mModelListPosition);
         mModelIds.remove(mModelListPosition);
         mModelDisplayList.remove(mModelListPosition);

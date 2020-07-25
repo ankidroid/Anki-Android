@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.view.KeyEvent;
 
 import com.ichi2.anki.reviewer.ReviewerUi;
+import com.ichi2.async.task.Dismiss;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 
@@ -442,8 +443,8 @@ public class ReviewerKeyboardInputTest {
         }
 
         @Override
-        protected void dismiss(Collection.DismissType type) {
-            this.mDismissType = type;
+        protected void dismiss(Dismiss type) {
+            this.mDismissType = type.getType();
         }
 
         @Override

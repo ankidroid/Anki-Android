@@ -12,6 +12,7 @@ import com.ichi2.libanki.sched.AbstractSched;
 
 import java.util.ArrayList;
 
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public abstract class Dismiss extends Task {
@@ -21,6 +22,11 @@ public abstract class Dismiss extends Task {
     protected Dismiss(Card card, Collection.DismissType type) {
         mCard = card;
         mType = type;
+    }
+
+    @VisibleForTesting
+    public Collection.DismissType getType() {
+        return mType;
     }
 
     protected Card getCard() {

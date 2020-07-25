@@ -96,17 +96,14 @@ import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.task.AnswerCard;
-import com.ichi2.async.task.BuryCard;
-import com.ichi2.async.task.BuryNote;
-import com.ichi2.async.task.DeleteNote;
 import com.ichi2.async.task.Dismiss;
-import com.ichi2.async.task.SuspendCard;
-import com.ichi2.async.task.SuspendNote;
+import com.ichi2.async.task.Task;
 import com.ichi2.async.task.Undo;
 import com.ichi2.async.task.UpdateNote;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Undoable;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -1083,6 +1080,48 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return text != null ? text : "";
     }
 
+    protected class AnswerCard extends Task {
+        private final Card mOldCard;
+        private final int mCurrentEase;
+        public AnswerCard() {
+            this(null, 0);
+        }
+        public AnswerCard(Card oldCard, int currentEase) {
+            mOldCard = oldCard;
+            mCurrentEase = currentEase;
+        }
+
+        public TaskData background(CollectionTask task) {
+            Collection col = task.getCol();
+            AbstractSched sched = col.getSched();
+            Card newCard = null;
+            Timber.i(mOldCard != null ? "Answering card" : "Obtaining card");
+            try {
+                DB db = col.getDb();
+                db.getDatabase().beginTransaction();
+                try {
+                    if (mOldCard != null) {
+                        Timber.i("Answering card %d", mOldCard.getId());
+                        sched.answerCard(mOldCard, mCurrentEase);
+                    }
+                    newCard = sched.getCard();
+                    if (newCard != null) {
+                        // render cards before locking database
+                        newCard._getQA(true);
+                    }
+                    task.doProgress(new TaskData(newCard));
+                    db.getDatabase().setTransactionSuccessful();
+                } finally {
+                    db.getDatabase().endTransaction();
+                }
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
+                return new TaskData(false);
+            }
+            return new TaskData(true);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1277,6 +1316,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void showDeleteNoteDialog() {
         Resources res = getResources();
+        Card card = mCurrentCard;
+        Dismiss deleteNote = new Dismiss(card, Collection.DismissType.DELETE_NOTE) {
+            @Override
+            protected void actualBackground(Collection col) {
+                Note note = getCard().note();
+                // collect undo information
+                ArrayList<Card> allCs = note.cards();
+                col.markUndo(new Undoable.UndoableDeleteNote(note, allCs, getCard().getId()));
+                // delete note
+                col.remNotes(new long[] { note.getId() });
+            }
+        };
         new MaterialDialog.Builder(this)
                 .title(res.getString(R.string.delete_card_title))
                 .iconAttr(R.attr.dialogErrorIcon)
@@ -1287,7 +1338,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .onPositive((dialog, which) -> {
                     Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                     mSoundPlayer.stopSounds();
-                    dismiss(new DeleteNote(mCurrentCard));
+                    dismiss(deleteNote);
                 })
                 .build().show();
     }
@@ -2482,6 +2533,77 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mIsSelecting = true;
         } catch (Exception e) {
             throw new AssertionError(e);
+        }
+    }
+
+    protected class BuryCard extends Dismiss {
+        public BuryCard(Card card) {
+            super(card, Collection.DismissType.BURY_CARD);
+        }
+
+        @Override
+        protected void actualBackground(Collection col) {
+            AbstractSched sched = col.getSched();
+            Note note = getCard().note();
+            // collect undo information
+            col.markUndo(new Undoable.UndoableBuryCard(note.cards(), getCard().getId()));
+            // then bury
+            sched.buryCards(new long[] { getCard().getId() });
+        }
+    }
+
+    protected class BuryNote extends Dismiss {
+        public BuryNote(Card card) {
+            super(card, Collection.DismissType.BURY_NOTE);
+        }
+
+        @Override
+        protected void actualBackground(Collection col) {
+            Note note = getCard().note();
+            AbstractSched sched = col.getSched();
+            // collect undo information
+            col.markUndo(new Undoable.UndoableBuryNote(note.cards(), getCard().getId()));
+            // then bury
+            sched.buryNote(note.getId());
+        }
+    }
+
+    protected class SuspendCard extends Dismiss{
+        public SuspendCard(Card card) {
+            super(card, Collection.DismissType.SUSPEND_CARD);
+        }
+
+        @Override
+        protected void actualBackground(Collection col) {
+            AbstractSched sched = col.getSched();
+            // collect undo information
+            col.markUndo(new Undoable.UndoableSuspendCard(getCard().clone()));
+            // suspend card
+            if (getCard().getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
+                sched.unsuspendCards(new long[] { getCard().getId() });
+            } else {
+                sched.suspendCards(new long[] { getCard().getId() });
+            }
+        }
+    }
+
+    protected class SuspendNote extends Dismiss {
+        public SuspendNote(Card card) {
+            super(card, Collection.DismissType.SUSPEND_NOTE);
+        }
+        @Override
+        protected void actualBackground(Collection col) {
+            AbstractSched sched = col.getSched();
+            Note note = getCard().note();
+            // collect undo information
+            ArrayList<Card> cards = note.cards();
+            long[] cids = new long[cards.size()];
+            for (int i = 0; i < cards.size(); i++) {
+                cids[i] = cards.get(i).getId();
+            }
+            col.markUndo(new Undoable.UndoableSuspendNote(cards, getCard().getId()));
+            // suspend note
+            sched.suspendCards(cids);
         }
     }
 

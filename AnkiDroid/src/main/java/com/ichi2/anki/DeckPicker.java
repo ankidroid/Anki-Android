@@ -58,6 +58,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.JsonReader;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -93,6 +94,7 @@ import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
+import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.web.HostNumFactory;
@@ -100,24 +102,19 @@ import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.task.CheckDatabase;
-import com.ichi2.async.task.CheckMedia;
-import com.ichi2.async.task.DeleteDeck;
 import com.ichi2.async.task.EmptyCram;
-import com.ichi2.async.task.ExportApkg;
-import com.ichi2.async.task.FindEmptyCards;
-import com.ichi2.async.task.Import;
-import com.ichi2.async.task.ImportReplace;
-import com.ichi2.async.task.LoadCollectionComplete;
-import com.ichi2.async.task.LoadDeckCounts;
 import com.ichi2.async.task.RebuildCram;
 import com.ichi2.async.task.RepairCollection;
+import com.ichi2.async.task.Task;
 import com.ichi2.async.task.Undo;
+import com.ichi2.async.task.UpdateValuesFromDeck;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
@@ -133,16 +130,22 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TreeMap;
 
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
+
+import org.apache.commons.compress.archivers.zip.ZipFile;
 
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
@@ -850,9 +853,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
             updateDeckList();
             setTitle(getResources().getString(R.string.app_name));
         }
+
+        Task loadCollectionComplete = new Task() {
+            public TaskData background(CollectionTask task) {
+                Collection col = task.getCol();
+                if (col != null) {
+                    CollectionHelper.loadCollectionComplete(col);
+                }
+                return null;
+            }
+        };
+
         /** Complete task and enqueue fetching nonessential data for
          * startup. */
-        CollectionTask.launchCollectionTask(new LoadCollectionComplete());
+        CollectionTask.launchCollectionTask(loadCollectionComplete);
     }
 
 
@@ -868,6 +882,25 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mContextMenuDid = savedInstanceState.getLong("mContextMenuDid");
+    }
+
+    private class LoadDeckCounts extends Task {
+
+        public LoadDeckCounts() {
+        }
+
+        public TaskData background(CollectionTask task) {
+            Timber.d("doInBackgroundLoadDeckCounts");
+            Collection col = task.getCol();
+            try {
+                // Get due tree
+                Object[] o = new Object[] {col.getSched().deckDueTree(task)};
+                return new TaskData(o);
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundLoadDeckCounts - error");
+                return null;
+            }
+        }
     }
 
 
@@ -1426,12 +1459,32 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    @VisibleForTesting
+    public static class CheckDatabase extends Task{
+            public TaskData background(CollectionTask task) {
+                Timber.d("doInBackgroundCheckDatabase");
+                Collection col = task.getCol();
+                // Don't proceed if collection closed
+                if (col == null) {
+                    Timber.e("doInBackgroundCheckDatabase :: supplied collection was null");
+                    return new TaskData(false);
+                }
 
+                Collection.CheckDatabaseResult result = col.fixIntegrity(new CollectionTask.ProgressCallback(task, AnkiDroidApp.getAppResources()));
+                if (result.getFailed()) {
+                    //we can fail due to a locked database, which requires knowledge of the failure.
+                    return new TaskData(false, new Object[] { result });
+                } else {
+                    // Close the collection and we restart the app to reload
+                    CollectionHelper.getInstance().closeCollection(true, "Check Database Completed");
+                    return new TaskData(true, new Object[] { result });
+                }
+            }
+        }
     private void performIntegrityCheck() {
-        Timber.i("performIntegrityCheck()");
+        Timber.i("performIntegrityCheck()");;
         CollectionTask.launchCollectionTask(new CheckDatabase(), new CheckDatabaseListener());
     }
-
 
     @Override
     public void mediaCheck() {
@@ -1457,7 +1510,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
         };
-        CollectionTask.launchCollectionTask(new CheckMedia(), listener);
+        Task checkMedia = new Task() {
+                /**
+                 * @return The results list from the check, or false if any errors.
+                 */
+                public TaskData background(CollectionTask task) {
+                    Collection col = task.getCol();
+                    Timber.d("doInBackgroundCheckMedia");
+                    // A media check on AnkiDroid will also update the media db
+                    col.getMedia().findChanges(true);
+                    // Then do the actual check
+                    List<List<String>> result = col.getMedia().check();
+                    return new TaskData(0, new Object[]{result}, true);
+                }
+            };
+        CollectionTask.launchCollectionTask(checkMedia, listener);
     }
 
 
@@ -1878,14 +1945,159 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
-        CollectionTask.launchCollectionTask(new Import(importPath), mImportAddListener);
+        Task importTask = new Task() {
+            public TaskData background(CollectionTask task) {
+                Timber.d("doInBackgroundImportAdd");
+                Collection col = task.getCol();
+                Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+                AnkiPackageImporter imp = new AnkiPackageImporter(col, importPath);
+                imp.setProgressCallback(new CollectionTask.ProgressCallback(task, res));
+                try {
+                    imp.run();
+                } catch (ImportExportException e) {
+                    return new TaskData(e.getMessage(), true);
+                }
+                return new TaskData(new Object[] {imp});
+            }
+        };
+        CollectionTask.launchCollectionTask(importTask, mImportAddListener);
     }
 
 
     // Callback to import a file -- replacing the existing collection
     @Override
     public void importReplace(String importPath) {
-        CollectionTask.launchCollectionTask(new ImportReplace(importPath), mImportReplaceListener);
+        Task importReplace = new Task() {
+            public TaskData background(CollectionTask task) {
+                Timber.d("doInBackgroundImportReplace");
+                Collection col = task.getCol();
+                Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+
+                // extract the deck from the zip file
+                String colPath = col.getPath();
+                File dir = new File(new File(colPath).getParentFile(), "tmpzip");
+                if (dir.exists()) {
+                    BackupManager.removeDir(dir);
+                }
+
+                // from anki2.py
+                String colname = "collection.anki21";
+                ZipFile zip;
+                try {
+                    zip = new ZipFile(new File(importPath));
+                } catch (IOException e) {
+                    Timber.e(e, "doInBackgroundImportReplace - Error while unzipping");
+                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
+                    return new TaskData(false);
+                }
+                try {
+                    // v2 scheduler?
+                    if (zip.getEntry(colname) == null) {
+                        colname = CollectionHelper.COLLECTION_FILENAME;
+                    }
+                    Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] { colname, "media" }, null);
+                } catch (IOException e) {
+                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - unzip");
+                    return new TaskData(-2, null, false);
+                }
+                String colFile = new File(dir, colname).getAbsolutePath();
+                if (!(new File(colFile)).exists()) {
+                    return new TaskData(-2, null, false);
+                }
+
+                Collection tmpCol = null;
+                try {
+                    tmpCol = Storage.Collection(task.getContext(), colFile);
+                    if (!tmpCol.validCollection()) {
+                        tmpCol.close();
+                        return new TaskData(-2, null, false);
+                    }
+                } catch (Exception e) {
+                    Timber.e("Error opening new collection file... probably it's invalid");
+                    try {
+                        tmpCol.close();
+                    } catch (Exception e2) {
+                        // do nothing
+                    }
+                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
+                    return new TaskData(-2, null, false);
+                } finally {
+                    if (tmpCol != null) {
+                        tmpCol.close();
+                    }
+                }
+
+                task.doProgress(new TaskData(res.getString(R.string.importing_collection)));
+                if (col != null) {
+                    // unload collection and trigger a backup
+                    CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
+                    CollectionHelper.getInstance().lockCollection();
+                    BackupManager.performBackupInBackground(colPath, true);
+                }
+                // overwrite collection
+                File f = new File(colFile);
+                if (!f.renameTo(new File(colPath))) {
+                    // Exit early if this didn't work
+                    return new TaskData(-2, null, false);
+                }
+                int addedCount = -1;
+                try {
+                    CollectionHelper.getInstance().unlockCollection();
+
+                    // because users don't have a backup of media, it's safer to import new
+                    // data and rely on them running a media db check to get rid of any
+                    // unwanted media. in the future we might also want to duplicate this step
+                    // import media
+                    HashMap<String, String> nameToNum = new HashMap<>();
+                    HashMap<String, String> numToName = new HashMap<>();
+                    File mediaMapFile = new File(dir.getAbsolutePath(), "media");
+                    if (mediaMapFile.exists()) {
+                        JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
+                        jr.beginObject();
+                        String name;
+                        String num;
+                        while (jr.hasNext()) {
+                            num = jr.nextName();
+                            name = jr.nextString();
+                            nameToNum.put(name, num);
+                            numToName.put(num, name);
+                        }
+                        jr.endObject();
+                        jr.close();
+                    }
+                    String mediaDir = col.getMedia().dir();
+                    int total = nameToNum.size();
+                    int i = 0;
+                    for (Map.Entry<String, String> entry : nameToNum.entrySet()) {
+                        String file = entry.getKey();
+                        String c = entry.getValue();
+                        File of = new File(mediaDir, file);
+                        if (!of.exists()) {
+                            Utils.unzipFiles(zip, mediaDir, new String[] { c }, numToName);
+                        }
+                        ++i;
+                        task.doProgress(new TaskData(res.getString(R.string.import_media_count, (i + 1) * 100 / total)));
+                    }
+                    zip.close();
+                    // delete tmp dir
+                    BackupManager.removeDir(dir);
+                    return new TaskData(true);
+                } catch (RuntimeException e) {
+                    Timber.e(e, "doInBackgroundImportReplace - RuntimeException");
+                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
+                    return new TaskData(false);
+                } catch (FileNotFoundException e) {
+                    Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException");
+                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace2");
+                    return new TaskData(false);
+                } catch (IOException e) {
+                    Timber.e(e, "doInBackgroundImportReplace - IOException");
+                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
+                    return new TaskData(false);
+                }
+            }
+        };
+        CollectionTask.launchCollectionTask(importReplace, mImportReplaceListener);
     }
 
 
@@ -1910,8 +2122,35 @@ public class DeckPicker extends NavigationDrawerActivity implements
             String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
             exportPath = new File(exportDir, newFileName);
         }
+        String apkgPath = exportPath.getPath();
+        Task exportApkg = new Task() {
+            public TaskData background(CollectionTask task) {
+                Collection col = task.getCol();
+                Timber.d("doInBackgroundExportApkg");
+                try {
+                    AnkiPackageExporter exporter = new AnkiPackageExporter(col);
+                    exporter.setIncludeSched(includeSched);
+                    exporter.setIncludeMedia(includeMedia);
+                    exporter.setDid(did);
+                    exporter.exportInto(apkgPath, task.getContext());
+                } catch (FileNotFoundException e) {
+                    Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
+                    return new TaskData(false);
+                } catch (IOException e) {
+                    Timber.e(e, "IOException in doInBackgroundExportApkg");
+                    return new TaskData(false);
+                } catch (JSONException e) {
+                    Timber.e(e, "JSOnException in doInBackgroundExportApkg");
+                    return new TaskData(false);
+                } catch (ImportExportException e) {
+                    Timber.e(e, "ImportExportException in doInBackgroundExportApkg");
+                    return new TaskData(e.getMessage(), true);
+                }
+                return new TaskData(apkgPath);
+            }
+        };
         // add input arguments to new generic structure
-        CollectionTask.launchCollectionTask(new ExportApkg(exportPath.getPath(), did, includeSched, includeMedia), mExportListener);
+        CollectionTask.launchCollectionTask(exportApkg, mExportListener);
     }
 
 
@@ -2379,7 +2618,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 getCol().clearUndo();
             }
         };
-        CollectionTask.launchCollectionTask(new DeleteDeck(did), listener);
+        Task delete = new Task() {
+            public TaskData background(CollectionTask task) {
+                Collection col = task.getCol();
+                Timber.d("doInBackgroundDeleteDeck");
+                col.getDecks().rem(did, true);
+
+                return new TaskData(true);
+            }
+        };
+        CollectionTask.launchCollectionTask(delete, listener);
     }
 
     /**
@@ -2479,7 +2727,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
         };
-        CollectionTask.launchCollectionTask(new FindEmptyCards(), listener);
+        Task findEmptyCards = new Task() {
+            public TaskData background(CollectionTask task) {
+                Collection col = task.getCol();
+                List<Long> cids = col.emptyCids();
+                return new TaskData(new Object[] { cids});
+            }
+        };
+        CollectionTask.launchCollectionTask(findEmptyCards, listener);
     }
 
 

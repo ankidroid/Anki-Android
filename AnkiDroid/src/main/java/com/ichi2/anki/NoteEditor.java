@@ -73,11 +73,12 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.task.AddNote;
+import com.ichi2.async.task.Task;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Note.ClozeUtils;
@@ -789,7 +790,29 @@ public class NoteEditor extends AnkiActivity {
             }
             getCol().getModels().current().put("tags", ja);
             getCol().getModels().setChanged();
-            CollectionTask.launchCollectionTask(new AddNote(mEditorNote), mSaveNoteHandler);
+            Note note = mEditorNote;
+            Task addNote = new Task() {
+                    public TaskData background(CollectionTask task) {
+                        Timber.d("doInBackgroundAddNote");
+                        Collection col = task.getCol();
+                        try {
+                            DB db = col.getDb();
+                            db.getDatabase().beginTransaction();
+                            try {
+                                task.doProgress(new TaskData(col.addNote(note)));
+                                db.getDatabase().setTransactionSuccessful();
+                            } finally {
+                                db.getDatabase().endTransaction();
+                            }
+                        } catch (RuntimeException e) {
+                            Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note");
+                            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote");
+                            return new TaskData(false);
+                        }
+                        return new TaskData(true);
+                    }
+                };
+            CollectionTask.launchCollectionTask(addNote, mSaveNoteHandler);
         } else {
             // Check whether note type has been changed
             final Model newModel = getCurrentlySelectedModel();

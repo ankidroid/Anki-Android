@@ -16,7 +16,7 @@
 
 package com.ichi2.async;
 
-import com.ichi2.async.task.CheckDatabase;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.libanki.Collection;
 import com.ichi2.testutils.CollectionUtils;
 
@@ -31,7 +31,7 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
     public void checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase();
 
-        TaskData result = super.execute(new CheckDatabase());
+        TaskData result = super.execute(new DeckPicker.CheckDatabase());
 
         assertThat("The result should specify a failure", result.getBoolean(), is(false));
         Collection.CheckDatabaseResult checkDbResult = assertObjIsDbResult(result);
