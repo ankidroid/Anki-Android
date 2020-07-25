@@ -68,10 +68,19 @@ import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.task.ChangeDeckMulti;
 import com.ichi2.async.task.CheckCardSelection;
+import com.ichi2.async.task.DeleteNoteMulti;
 import com.ichi2.async.task.DismissMulti;
+import com.ichi2.async.task.Flag;
+import com.ichi2.async.task.MarkNoteMulti;
 import com.ichi2.async.task.RenderBrowserQA;
+import com.ichi2.async.task.RepositionCards;
+import com.ichi2.async.task.RescheduleCards;
+import com.ichi2.async.task.RescheduleRepositionReset;
+import com.ichi2.async.task.ResetCards;
 import com.ichi2.async.task.SearchCards;
+import com.ichi2.async.task.SuspendCardMulti;
 import com.ichi2.async.task.Undo;
 import com.ichi2.async.task.UpdateNote;
 import com.ichi2.compat.Compat;
@@ -890,7 +899,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private void flagTask (int flag) {
-        CollectionTask.launchCollectionTask(new DismissMulti(getSelectedCardIds(), Collection.DismissType.FLAG, flag),
+        CollectionTask.launchCollectionTask(new Flag(getSelectedCardIds(), flag),
                                 mFlagCardHandler);
     }
 
@@ -983,7 +992,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_delete_card:
                 if (mInMultiSelectMode) {
-                    CollectionTask.launchCollectionTask(new DismissMulti(getSelectedCardIds(), Collection.DismissType.DELETE_NOTE_MULTI),
+                    CollectionTask.launchCollectionTask(new DeleteNoteMulti(getSelectedCardIds()),
                             mDeleteNoteHandler);
 
                     mCheckedCardPositions.clear();
@@ -993,14 +1002,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_mark_card:
-                CollectionTask.launchCollectionTask(new DismissMulti(getSelectedCardIds(), Collection.DismissType.MARK_NOTE_MULTI),
+                CollectionTask.launchCollectionTask(new MarkNoteMulti(getSelectedCardIds()),
                         mMarkCardHandler);
 
                 return true;
 
 
             case R.id.action_suspend_card:
-                CollectionTask.launchCollectionTask(new DismissMulti(getSelectedCardIds(), Collection.DismissType.SUSPEND_CARD_MULTI),
+                CollectionTask.launchCollectionTask(new SuspendCardMulti(getSelectedCardIds()),
                         mSuspendCardHandler);
 
                 return true;
@@ -1075,7 +1084,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 dialog.setArgs(title, message);
                 Runnable confirm = () -> {
                     Timber.i("CardBrowser:: ResetProgress button pressed");
-                    CollectionTask.launchCollectionTask(new DismissMulti(getSelectedCardIds(), Collection.DismissType.RESET_CARDS),
+                    CollectionTask.launchCollectionTask(new ResetCards(getSelectedCardIds()),
                             mResetProgressCardHandler);
                 };
                 dialog.setConfirm(confirm);
@@ -1087,7 +1096,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
                 long[] selectedCardIds = getSelectedCardIds();
                 FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
-                    CollectionTask.launchCollectionTask(new DismissMulti(selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays),
+                    CollectionTask.launchCollectionTask(new RescheduleCards(selectedCardIds, newDays),
                         mRescheduleCardHandler);
 
                 RescheduleDialog rescheduleDialog;
@@ -1125,7 +1134,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         getString(R.string.reposition_card_dialog_message),
                         5);
                 repositionDialog.setCallbackRunnable(days ->
-                    CollectionTask.launchCollectionTask(new DismissMulti(cardIds, Collection.DismissType.REPOSITION_CARDS, days), mRepositionCardHandler)
+                    CollectionTask.launchCollectionTask(new RepositionCards(cardIds, days), mRepositionCardHandler)
                 );
                 showDialogFragment(repositionDialog);
                 return true;
@@ -2291,7 +2300,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) //should only be called from changeDeck()
     void executeChangeCollectionTask(long[] ids, long newDid) {
         mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
-        CollectionTask.launchCollectionTask(new DismissMulti(ids, Collection.DismissType.CHANGE_DECK_MULTI, newDid), mChangeDeckHandler);
+        CollectionTask.launchCollectionTask(new ChangeDeckMulti(ids, newDid), mChangeDeckHandler);
     }
 
 

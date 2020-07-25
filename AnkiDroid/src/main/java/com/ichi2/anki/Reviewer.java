@@ -55,6 +55,8 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.task.AnswerCard;
 import com.ichi2.async.task.DismissMulti;
+import com.ichi2.async.task.RescheduleCards;
+import com.ichi2.async.task.ResetCards;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
@@ -452,8 +454,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days ->
-            CollectionTask.launchCollectionTask(new DismissMulti(new long[]{mCurrentCard.getId()},
-                    Collection.DismissType.RESCHEDULE_CARDS, days), mRescheduleCardHandler
+            CollectionTask.launchCollectionTask(new RescheduleCards(new long[]{mCurrentCard.getId()},  days), mRescheduleCardHandler
             );
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
 
@@ -471,7 +472,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         dialog.setArgs(title, message);
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
-            CollectionTask.launchCollectionTask(new DismissMulti(new long[] {mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS), mResetProgressCardHandler);
+            CollectionTask.launchCollectionTask(new ResetCards(new long[] {mCurrentCard.getId()}), mResetProgressCardHandler);
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);
