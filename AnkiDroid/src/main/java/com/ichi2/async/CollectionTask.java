@@ -78,6 +78,7 @@ import timber.log.Timber;
 
 import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
 import static com.ichi2.libanki.Collection.DismissType.BURY_NOTE;
+import static com.ichi2.libanki.Collection.DismissType.CHANGE_DECK_MULTI;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
 import static com.ichi2.libanki.Undoable.*;
 
@@ -864,6 +865,35 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
+    
+    private static class UndoChangeDeckMulti extends Undoable {
+        private final Card[] cards;
+        private final long[] originalDids;
+
+
+        public UndoChangeDeckMulti(Card[] cards, long[] originalDids) {
+            super(Collection.DismissType.CHANGE_DECK_MULTI);
+            this.cards = cards;
+            this.originalDids = originalDids;
+        }
+
+
+        public long undo(Collection col) {
+            Timber.i("Undo: Change Decks");
+            // move cards to original deck
+            for (int i = 0; i < cards.length; i++) {
+                Card card = cards[i];
+                card.load();
+                card.setDid(originalDids[i]);
+                Note note = card.note();
+                note.flush();
+                card.flush();
+            }
+            return MULTI_CARD;  // don't fetch new card
+
+        }
+    }
+
 
     private TaskData doInBackgroundDismissNotes(TaskData param) {
         Collection col = getCol();
@@ -1024,9 +1054,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                             card.flush();
                         }
 
+                        Undoable changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
                         // mark undo for all at once
-                        col.markUndo(new UndoableChangeDeckMulti(cards, originalDids));
-
+                        col.markUndo(changeDeckMulti);
                         break;
                     }
 
