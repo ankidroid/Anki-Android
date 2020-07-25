@@ -366,6 +366,9 @@ public class Reviewer extends AbstractFlashcardViewer {
                 //on the enabled status
                 setWhiteboardEnabledState(mPrefWhiteboard);
                 setWhiteboardVisibility(mPrefWhiteboard);
+                if (!mPrefWhiteboard) {
+                    colorPalette.setVisibility(View.GONE);
+                }
                 refreshActionBar();
                 break;
 
