@@ -415,12 +415,12 @@ public class Media {
      *
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
-    public List<List<String>> check() {
+    public List<ArrayList<String>> check() {
         return check(null);
     }
 
 
-    private List<List<String>> check(File[] local) {
+    private List<ArrayList<String>> check(File[] local) {
         File mdir = new File(dir());
         // gather all media references in NFC form
         Set<String> allRefs = new HashSet<>();
@@ -443,8 +443,8 @@ public class Media {
             }
         }
         // loop through media folder
-        List<String> unused = new ArrayList<>();
-        List<String> invalid = new ArrayList<>();
+        ArrayList<String> unused = new ArrayList<>();
+        ArrayList<String> invalid = new ArrayList<>();
         File[] files;
         if (local == null) {
             files = mdir.listFiles();
@@ -490,7 +490,7 @@ public class Media {
         if (renamedFiles) {
             return check(local);
         }
-        List<String> nohave = new ArrayList<>();
+        ArrayList<String> nohave = new ArrayList<>();
         for (String x : allRefs) {
             if (!x.startsWith("_")) {
                 nohave.add(x);
@@ -502,7 +502,7 @@ public class Media {
         } catch (SQLException ignored) {
             _deleteDB();
         }
-        List<List<String>> result = new ArrayList<>();
+        List<ArrayList<String>> result = new ArrayList<>();
         result.add(nohave);
         result.add(unused);
         result.add(invalid);

@@ -1683,7 +1683,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         // A media check on AnkiDroid will also update the media db
         col.getMedia().findChanges(true);
         // Then do the actual check
-        List<List<String>> result = col.getMedia().check();
+        List<ArrayList<String>> result = col.getMedia().check();
         return new TaskData(0, new Object[]{result}, true);
     }
 

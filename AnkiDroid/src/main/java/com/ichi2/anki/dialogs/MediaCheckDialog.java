@@ -16,7 +16,7 @@ public class MediaCheckDialog extends AsyncDialogFragment {
 
     public interface MediaCheckDialogListener {
         void showMediaCheckDialog(int dialogType);
-        void showMediaCheckDialog(int dialogType, List<List<String>> checkList);
+        void showMediaCheckDialog(int dialogType, List<ArrayList<String>> checkList);
         void mediaCheck();
         void deleteUnused(List<String> unused);
         void dismissAllDialogFragments();
@@ -32,7 +32,7 @@ public class MediaCheckDialog extends AsyncDialogFragment {
     }
 
 
-    public static MediaCheckDialog newInstance(int dialogType, List<List<String>> checkList) {
+    public static MediaCheckDialog newInstance(int dialogType, List<ArrayList<String>> checkList) {
         MediaCheckDialog f = new MediaCheckDialog();
         Bundle args = new Bundle();
         args.putStringArrayList("nohave", new ArrayList<>(checkList.get(0)));

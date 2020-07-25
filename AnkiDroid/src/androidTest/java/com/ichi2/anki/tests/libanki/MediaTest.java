@@ -169,7 +169,7 @@ public class MediaTest {
         os.write("test".getBytes());
         os.close();
         // check media
-        List<List<String>> ret = testCol.getMedia().check();
+        List<ArrayList<String>> ret = testCol.getMedia().check();
         List<String> expected;
         List<String> actual;
         expected = Collections.singletonList("fake2.png");
