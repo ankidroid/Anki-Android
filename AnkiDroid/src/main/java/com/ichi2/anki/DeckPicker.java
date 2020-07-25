@@ -2344,10 +2344,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @SuppressWarnings("unchecked")
             @Override
-            public void onPostExecute(TaskData result) {
-                if (result == null) {
-                    return;
-                }
+            public void onPostExecute(@Nullable TaskData result) {
                 // In fragmented mode, if the deleted deck was the current deck, we need to reload
                 // the study options fragment with a valid deck and re-center the deck list to the
                 // new current deck. Otherwise we just update the list normally.

@@ -350,7 +350,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 return doInBackgroundUpdateValuesFromDeck(params);
 
             case DELETE_DECK:
-                return doInBackgroundDeleteDeck(params);
+                doInBackgroundDeleteDeck(params);
+                break;
 
             case REBUILD_CRAM:
                 return doInBackgroundRebuildCram();
@@ -1122,13 +1123,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    private TaskData doInBackgroundDeleteDeck(TaskData... params) {
+    private void doInBackgroundDeleteDeck(TaskData... params) {
         Timber.d("doInBackgroundDeleteDeck");
         Collection col = getCol();
         long did = params[0].getLong();
         col.getDecks().rem(did, true);
-
-        return new TaskData(true);
     }
 
 
