@@ -681,6 +681,36 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
+
+    private static class UndoDeleteNote extends Undoable {
+        private final Note note;
+        private final ArrayList<Card> allCs;
+        private final long cid;
+
+
+        public UndoDeleteNote(Note note, ArrayList<Card> allCs, long cid) {
+            super(Collection.DismissType.DELETE_NOTE);
+            this.note = note;
+            this.allCs = allCs;
+            this.cid = cid;
+        }
+
+
+        public long undo(Collection col) {
+            Timber.i("Undo: Delete note");
+            ArrayList<Long> ids = new ArrayList<>();
+            note.flush(note.getMod(), false);
+            ids.add(note.getId());
+            for (Card c : allCs) {
+                c.flush(false);
+                ids.add(c.getId());
+            }
+            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.collection2Array(ids)));
+            return cid;
+        }
+    }
+
+
     private TaskData doInBackgroundDismissNote(TaskData param) {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
@@ -735,7 +765,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                     case DELETE_NOTE: {
                         // collect undo information
                         ArrayList<Card> allCs = note.cards();
-                        col.markUndo(new UndoableDeleteNote(note, allCs, card.getId()));
+                        long cid = card.getId();
+                        Undoable deleteNote = new UndoDeleteNote(note, allCs, cid);
+                        col.markUndo(deleteNote);
                         // delete note
                         col.remNotes(new long[] { note.getId() });
                         break;
@@ -1888,5 +1920,4 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     public void doProgress(TaskData value) {
         publishProgress(value);
     }
-
 }
