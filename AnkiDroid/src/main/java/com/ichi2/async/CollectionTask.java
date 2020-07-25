@@ -663,6 +663,24 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
+
+    private static class UndoSuspendCard extends Undoable {
+        private final Card suspendedCard;
+
+
+        public UndoSuspendCard(Card suspendedCard) {
+            super(Collection.DismissType.SUSPEND_CARD);
+            this.suspendedCard = suspendedCard;
+        }
+
+
+        public long undo(Collection col) {
+            Timber.i("UNDO: Suspend Card %d", suspendedCard.getId());
+            suspendedCard.flush(false);
+            return suspendedCard.getId();
+        }
+    }
+
     private TaskData doInBackgroundDismissNote(TaskData param) {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
@@ -691,7 +709,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         break;
                     case SUSPEND_CARD:
                         // collect undo information
-                        col.markUndo(new UndoableSuspendCard(card.clone()));
+                        Card suspendedCard = card.clone();
+                        Undoable suspendCard = new UndoSuspendCard(suspendedCard);
+                        col.markUndo(suspendCard);
                         // suspend card
                         if (card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
                             sched.unsuspendCards(new long[] { card.getId() });
