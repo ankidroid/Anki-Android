@@ -42,6 +42,7 @@ import android.os.SystemClock;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -125,6 +126,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -200,6 +203,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private static final String sCurrentJsApiVersion = "0.0.1";
     private static final String sMinimumJsApiVersion = "0.0.1";
+
+    // JS API ERROR CODE
+    private static final int ankiJsErrorCodeDefault = 0;
+    private static final int ankiJsErrorCodeMarkCard = 1;
+    private static final int ankiJsErrorCodeFlagCard = 2;
 
     // JS api list enable/disable status
     private HashMap<String, Boolean> mJsApiListMap = new HashMap<String, Boolean>();
@@ -3203,25 +3211,25 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // mark card using javascript
             if (url.startsWith("signal:mark_current_card")) {
-                if (mJsApiListMap.get("markCard") == null) {
-                    showDeveloperContact(1);
+                if (isAnkiApiNull("markCard")) {
+                    showDeveloperContact(ankiJsErrorCodeDefault);
                     return true;
                 } else if (mJsApiListMap.get("markCard")) {
                     executeCommand(COMMAND_MARK);
                 } else {
                     // see 02-string.xml
-                    showDeveloperContact(2);
+                    showDeveloperContact(ankiJsErrorCodeMarkCard);
                 }
                 return true;
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
-                if (mJsApiListMap.get("toggleFlag") == null) {
-                    showDeveloperContact(1);
+                if (isAnkiApiNull("toggleFlag")) {
+                    showDeveloperContact(ankiJsErrorCodeDefault);
                     return true;
                 } else if (!mJsApiListMap.get("toggleFlag")) {
                     // see 02-string.xml
-                    showDeveloperContact(3);
+                    showDeveloperContact(ankiJsErrorCodeFlagCard);
                     return true;
                 }
 
@@ -3481,6 +3489,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
+    // Check if value null
+    private boolean isAnkiApiNull(String api) {
+        if (mJsApiListMap.get(api) == null) {
+            return true;
+        }
+        return false;
+    }
+
     /*
      * see 02-strings.xml
      * Show Error code when mark card or flag card unsupported
@@ -3490,21 +3506,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * show developer contact if js api used in card is deprecated
      */
     private void showDeveloperContact(int errorCode) {
-        String errorMsg = "";
-        switch (errorCode) {
-            case 1:
-                errorMsg = getString(R.string.anki_js_not_implemented);
-                break;
-            case 2:
-                errorMsg = getString(R.string.anki_js_mark_card_not_supported);
-                break;
-            case 3:
-                errorMsg = getString(R.string.anki_js_flag_card_not_supported);
-                break;
-            default:
-                errorMsg = getString(R.string.anki_js_unknown_error);
-                break;
-        }
+        String errorMsg = getString(R.string.anki_js_error_code, errorCode);
 
         View parentLayout = findViewById(android.R.id.content);
         String snackbarMsg;
@@ -3631,28 +3633,25 @@ see card.js for available functions
         @JavascriptInterface
         public String init(String jsonData) {
             JSONObject data;
+            String apiStatusJson = "";
+
             try {
                 data = new JSONObject(jsonData);
                 if (!(data == JSONObject.NULL)) {
                     mCardSuppliedApiVersion = data.optString("version", "");
                     mCardSuppliedDeveloperContact  = data.optString("developer", "");
+
+                    if (requireApiVersion(mCardSuppliedApiVersion, mCardSuppliedDeveloperContact)) {
+                        enableJsApi();
+                    } else {
+                        disableJsApi();
+                    }
+                    apiStatusJson = sGson.toJson(mJsApiListMap);
                 }
 
             } catch (JSONException j) {
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.invalid_json_data, j.getLocalizedMessage()), false);
             }
-
-            String apiStatusJson = "";
-
-            if (requireApiVersion(mCardSuppliedApiVersion, mCardSuppliedDeveloperContact)) {
-                enableJsApi();
-                apiStatusJson = sGson.toJson(mJsApiListMap);
-            } else {
-                disableJsApi();
-                apiStatusJson = sGson.toJson(mJsApiListMap);
-                return String.valueOf(apiStatusJson);
-            }
-
             return String.valueOf(apiStatusJson);
         }
 
