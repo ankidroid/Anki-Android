@@ -1160,7 +1160,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         } catch (ImportExportException e) {
             return new TaskData(e.getMessage(), true);
         }
-        return new TaskData(new Object[] {imp});
+        return new TaskData(imp);
     }
 
 

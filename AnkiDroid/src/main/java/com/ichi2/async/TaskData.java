@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.importer.AnkiPackageImporter;
 
 import java.util.List;
 import java.util.Map;
@@ -20,10 +21,15 @@ public class TaskData {
     private Context mContext;
     private int mType;
     private Object[] mObjects;
+    private AnkiPackageImporter mImp;
 
 
     public TaskData(Object[] obj) {
         mObjects = obj;
+    }
+
+    public TaskData(AnkiPackageImporter imp) {
+        mImp = imp;
     }
 
 
@@ -90,6 +96,9 @@ public class TaskData {
         mBool = bool;
     }
 
+    public AnkiPackageImporter getImp() {
+        return mImp;
+    }
 
     public TaskData(long value, boolean bool) {
         mLong = value;

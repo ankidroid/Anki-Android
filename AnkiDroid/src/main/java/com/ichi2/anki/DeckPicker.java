@@ -285,7 +285,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 showSimpleMessageDialog(result.getString());
             } else {
                 Timber.i("Import: Add succeeded");
-                AnkiPackageImporter imp = (AnkiPackageImporter) result.getObjArray()[0];
+                AnkiPackageImporter imp = result.getImp();
                 showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
                 updateDeckList();
             }
