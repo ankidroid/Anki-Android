@@ -58,17 +58,6 @@ public abstract class Undoable {
         }
     }
 
-
-
-
-
-    public static class UndoableSuspendNote extends UndoableFlushAll {
-        public UndoableSuspendNote(List<Card> cards, long cid) {
-            super(SUSPEND_NOTE, cards, cid);
-        }
-    }
-
-
     public static class UndoableChangeDeckMulti extends Undoable {
         private final Card[] mCards;
         private final long[] mOriginalDid;
