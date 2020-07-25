@@ -1483,10 +1483,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
-                if (result != null && result.getBoolean()) {
-                    @SuppressWarnings("unchecked")
-                    Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> checkList = (Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>>) result.getObjArray()[0];
-                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
+                if (result != null) {
+                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result.getMedias());
                 } else {
                     showSimpleMessageDialog(getResources().getString(R.string.check_media_failed));
                 }

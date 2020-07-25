@@ -5,7 +5,9 @@ import android.content.Context;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
+import com.ichi2.utils.Triple;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +22,7 @@ public class TaskData {
     private Context mContext;
     private int mType;
     private Object[] mObjects;
+    private Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> mMedias;
 
 
     public TaskData(Object[] obj) {
@@ -36,6 +39,10 @@ public class TaskData {
     public TaskData(Object[] obj, boolean bool) {
         mObjects = obj;
         mBool = bool;
+    }
+
+    public TaskData(Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> medias) {
+        mMedias = medias;
     }
 
 
@@ -199,6 +206,10 @@ public class TaskData {
 
     public Object[] getObjArray() {
         return mObjects;
+    }
+
+    public Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> getMedias() {
+        return mMedias;
     }
 
 
