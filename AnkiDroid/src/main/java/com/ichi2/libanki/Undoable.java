@@ -60,45 +60,7 @@ public abstract class Undoable {
 
 
 
-    public static class UndoableSuspendCardMulti extends Undoable {
-        private final Card[] mCards;
-        private final boolean[] mOriginalSuspended;
-        public UndoableSuspendCardMulti(Card[] cards, boolean[] originalSuspended) {
-            super(SUSPEND_CARD_MULTI);
-            mCards = cards;
-            mOriginalSuspended = originalSuspended;
-        }
 
-        public long undo(Collection col) {
-            Timber.i("Undo: Suspend multiple cards");
-            List<Long> toSuspendIds = new ArrayList<>();
-            List<Long> toUnsuspendIds = new ArrayList<>();
-            for (int i = 0; i < mCards.length; i++) {
-                Card card = mCards[i];
-                if (mOriginalSuspended[i]) {
-                    toSuspendIds.add(card.getId());
-                } else {
-                    toUnsuspendIds.add(card.getId());
-                }
-            }
-
-            // unboxing
-            long[] toSuspendIdsArray = new long[toSuspendIds.size()];
-            long[] toUnsuspendIdsArray = new long[toUnsuspendIds.size()];
-            for (int i = 0; i < toSuspendIds.size(); i++) {
-                toSuspendIdsArray[i] = toSuspendIds.get(i);
-            }
-            for (int i = 0; i < toUnsuspendIds.size(); i++) {
-                toUnsuspendIdsArray[i] = toUnsuspendIds.get(i);
-            }
-
-            col.getSched().suspendCards(toSuspendIdsArray);
-            col.getSched().unsuspendCards(toUnsuspendIdsArray);
-
-            return MULTI_CARD;  // don't fetch new card
-
-        }
-    }
 
     public static class UndoableSuspendNote extends UndoableFlushAll {
         public UndoableSuspendNote(List<Card> cards, long cid) {
