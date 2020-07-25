@@ -1579,7 +1579,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Object[] data = new Object[2];
         data[0] = models;
         data[1] = cardCount;
-        return (new TaskData(0, data, true));
+        return (new TaskData(data, true));
     }
 
 

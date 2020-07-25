@@ -33,6 +33,11 @@ public class TaskData {
         mBool = bool;
     }
 
+    public TaskData(Object[] obj, boolean bool) {
+        mObjects = obj;
+        mBool = bool;
+    }
+
 
     public TaskData(int value, Card card) {
         this(value);
