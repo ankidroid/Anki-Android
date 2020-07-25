@@ -513,9 +513,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(TaskData... values) {
+        public void onProgressUpdate(TaskData value) {
             boolean cardChanged = false;
-            if (mCurrentCard != values[0].getCard()) {
+            if (mCurrentCard != value.getCard()) {
                 /*
                  * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
                  * then we need to display it as a new card, without showing the answer.
@@ -523,7 +523,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 sDisplayAnswer = false;
                 cardChanged = true;  // Keep track of that so we can run a bit of new-card code
             }
-            mCurrentCard = values[0].getCard();
+            mCurrentCard = value.getCard();
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
@@ -573,8 +573,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(TaskData... values) {
-            displayNext(values[0].getCard());
+        public void onProgressUpdate(TaskData value) {
+            displayNext(value.getCard());
         }
 
         protected void displayNext(Card nextCard) {

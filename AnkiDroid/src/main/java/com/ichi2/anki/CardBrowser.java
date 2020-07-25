@@ -1437,8 +1437,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mUpdateCardHandler = new ListenerWithProgressBarCloseOnFalse("Card Browser - mUpdateCardHandler.onPostExecute()"){
         @Override
-        public void onProgressUpdate(TaskData... values) {
-            updateCardInList(values[0].getCard(), values[0].getString());
+        public void onProgressUpdate(TaskData value) {
+            updateCardInList(value.getCard(), value.getString());
         }
 
         @Override
@@ -1633,8 +1633,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mDeleteNoteHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
-        public void onProgressUpdate(TaskData... values) {
-            Card[] cards = (Card[]) values[0].getObjArray();
+        public void onProgressUpdate(TaskData value) {
+            Card[] cards = (Card[]) value.getObjArray();
             //we don't need to reorder cards here as we've already deselected all notes,
             removeNotesView(cards, false);
         }
@@ -1754,7 +1754,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mRenderQAHandler = new CollectionTask.TaskListener() {
         @Override
-        public void onProgressUpdate(TaskData... values) {
+        public void onProgressUpdate(TaskData value) {
             // Note: This is called every time a card is rendered.
             // It blocks the long-click callback while the task is running, so usage of the task should be minimized
             mCardsAdapter.notifyDataSetChanged();

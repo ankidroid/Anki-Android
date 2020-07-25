@@ -445,10 +445,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     /** Delegates to the {@link TaskListener} for this task. */
     @Override
-    protected void onProgressUpdate(TaskData... values) {
-        super.onProgressUpdate(values);
+    protected void onProgressUpdate(TaskData... value) {
+        super.onProgressUpdate(value);
         if (mListener != null) {
-            mListener.onProgressUpdate(values);
+            mListener.onProgressUpdate(value[0]);
         }
     }
 
@@ -1744,7 +1744,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
          * <p>
          * The semantics of the update data depends on the task itself.
          */
-        public void onProgressUpdate(TaskData... values) {
+        public void onProgressUpdate(TaskData value) {
             // most implementations do nothing with this, provide them a default implementation
         }
 
@@ -1776,15 +1776,15 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public void publishProgress(TaskData values) {
+        public void publishProgress(TaskData value) {
             if (task != null) {
-                task.doProgress(values);
+                task.doProgress(value);
             }
         }
     }
 
 
-    public void doProgress(TaskData values) {
-        publishProgress(values);
+    public void doProgress(TaskData value) {
+        publishProgress(value);
     }
 }
