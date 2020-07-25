@@ -33,6 +33,7 @@ import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Undoable;
 import com.ichi2.libanki.Undoable.*;
 import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -75,6 +76,7 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
 import static com.ichi2.libanki.Undoable.*;
 
 /**
@@ -674,7 +676,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 switch (type) {
                     case BURY_CARD:
                         // collect undo information
-                        col.markUndo(new UndoableBuryCard(note.cards(), card.getId()));
+                        Undoable buryCard = new UndoableFlushAll(BURY_CARD, note.cards(), card.getId());
+                        col.markUndo(buryCard);
                         // then bury
                         sched.buryCards(new long[] { card.getId() });
                         break;

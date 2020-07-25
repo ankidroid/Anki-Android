@@ -40,7 +40,7 @@ public abstract class Undoable {
 
 
 
-    private static class UndoableFlushAll extends Undoable {
+    public static class UndoableFlushAll extends Undoable {
         private final List<Card> mCards;
         private final long mCid;
         public UndoableFlushAll(DismissType dt, List<Card> cards, long cid) {
@@ -58,11 +58,7 @@ public abstract class Undoable {
         }
     }
 
-    public static class UndoableBuryCard extends UndoableFlushAll {
-        public UndoableBuryCard(List<Card> cards, long cid) {
-            super(BURY_CARD, cards, cid);
-        }
-    }
+
 
     public static class UndoableBuryNote extends UndoableFlushAll {
         public UndoableBuryNote(List<Card> cards, long cid) {
