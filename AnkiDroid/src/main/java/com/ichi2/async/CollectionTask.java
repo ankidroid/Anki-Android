@@ -78,6 +78,7 @@ import timber.log.Timber;
 
 import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
 import static com.ichi2.libanki.Collection.DismissType.BURY_NOTE;
+import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
 import static com.ichi2.libanki.Undoable.*;
 
 /**
@@ -756,7 +757,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         for (int i = 0; i < cards.size(); i++) {
                             cids[i] = cards.get(i).getId();
                         }
-                        col.markUndo(new UndoableSuspendNote(cards, card.getId()));
+                        col.markUndo(new UndoableFlushAll(SUSPEND_NOTE, cards, card.getId()));
                         // suspend note
                         sched.suspendCards(cids);
                         break;
