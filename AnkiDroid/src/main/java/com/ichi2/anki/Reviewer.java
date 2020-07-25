@@ -325,10 +325,10 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_change_whiteboard_pen_color:
                 Timber.i("Reviewer:: Pen Color button pressed");
-                if (colorPalette.getVisibility() == View.INVISIBLE) {
+                if (colorPalette.getVisibility() == View.GONE) {
                     colorPalette.setVisibility(View.VISIBLE);
                 } else {
-                    colorPalette.setVisibility(View.INVISIBLE);
+                    colorPalette.setVisibility(View.GONE);
                 }
                 break;
 
