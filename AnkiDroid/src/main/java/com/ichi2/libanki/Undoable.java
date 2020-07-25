@@ -58,19 +58,7 @@ public abstract class Undoable {
         }
     }
 
-    public static class UndoableSuspendCard extends Undoable {
-        private Card mSuspendedCard;
-        public UndoableSuspendCard(Card card) {
-            super(SUSPEND_CARD);
-            mSuspendedCard = card;
-        }
 
-        public long undo(Collection col) {
-            Timber.i("UNDO: Suspend Card %d", mSuspendedCard.getId());
-            mSuspendedCard.flush(false);
-            return mSuspendedCard.getId();
-        }
-    }
 
     public static class UndoableSuspendCardMulti extends Undoable {
         private final Card[] mCards;
