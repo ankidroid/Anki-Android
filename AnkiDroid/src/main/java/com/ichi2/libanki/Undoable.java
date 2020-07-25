@@ -58,30 +58,7 @@ public abstract class Undoable {
         }
     }
 
-    public static class UndoableChangeDeckMulti extends Undoable {
-        private final Card[] mCards;
-        private final long[] mOriginalDid;
-        public UndoableChangeDeckMulti(Card[]cards, long[] originalDid) {
-            super(CHANGE_DECK_MULTI);
-            mCards = cards;
-            mOriginalDid = originalDid;
-        }
 
-        public long undo(Collection col) {
-            Timber.i("Undo: Change Decks");
-            // move cards to original deck
-            for (int i = 0; i < mCards.length; i++) {
-                Card card = mCards[i];
-                card.load();
-                card.setDid(mOriginalDid[i]);
-                Note note = card.note();
-                note.flush();
-                card.flush();
-            }
-            return MULTI_CARD;  // don't fetch new card
-
-        }
-    }
 
     public static class UndoableMarkNoteMulti extends Undoable {
         private final List<Note> mOriginalMarked;
