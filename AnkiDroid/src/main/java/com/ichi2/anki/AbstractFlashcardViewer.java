@@ -3584,6 +3584,11 @@ see card.js for available functions
         }
 
         @JavascriptInterface
+        public boolean ankiIsTopbarShown() {
+            return mPrefShowTopbar;
+        }
+
+        @JavascriptInterface
         public boolean ankiIsInNightMode() {
             return isInNightMode();
         }
