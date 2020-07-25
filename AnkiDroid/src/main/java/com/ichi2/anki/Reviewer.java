@@ -54,9 +54,13 @@ import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.task.AnswerCard;
+import com.ichi2.async.task.BuryCard;
+import com.ichi2.async.task.BuryNote;
 import com.ichi2.async.task.DismissMulti;
 import com.ichi2.async.task.RescheduleCards;
 import com.ichi2.async.task.ResetCards;
+import com.ichi2.async.task.SuspendCard;
+import com.ichi2.async.task.SuspendNote;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
@@ -310,7 +314,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 Timber.i("Reviewer:: Bury button pressed");
                 if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
                     Timber.d("Bury card due to no submenu");
-                    dismiss(DismissType.BURY_CARD);
+                    dismiss(new BuryCard(mCurrentCard));
                 }
                 break;
 
@@ -318,7 +322,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 Timber.i("Reviewer:: Suspend button pressed");
                 if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
                     Timber.d("Suspend card due to no submenu");
-                    dismiss(DismissType.SUSPEND_CARD);
+                    dismiss(new SuspendCard(mCurrentCard));
                 }
                 break;
 
@@ -884,10 +888,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_suspend_card:
-                    dismiss(DismissType.SUSPEND_CARD);
+                    dismiss(new SuspendCard(mCurrentCard));
                     return true;
                 case R.id.action_suspend_note:
-                    dismiss(DismissType.SUSPEND_NOTE);
+                    dismiss(new SuspendNote(mCurrentCard));
                     return true;
                 default:
                     return false;
@@ -926,10 +930,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_bury_card:
-                    dismiss(DismissType.BURY_CARD);
+                    dismiss(new BuryCard(mCurrentCard));
                     return true;
                 case R.id.action_bury_note:
-                    dismiss(DismissType.BURY_NOTE);
+                    dismiss(new BuryNote(mCurrentCard));
                     return true;
                 default:
                     return false;

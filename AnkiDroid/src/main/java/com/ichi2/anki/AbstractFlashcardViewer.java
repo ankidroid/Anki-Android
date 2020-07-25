@@ -97,7 +97,12 @@ import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.task.AnswerCard;
+import com.ichi2.async.task.BuryCard;
+import com.ichi2.async.task.BuryNote;
+import com.ichi2.async.task.DeleteNote;
 import com.ichi2.async.task.Dismiss;
+import com.ichi2.async.task.SuspendCard;
+import com.ichi2.async.task.SuspendNote;
 import com.ichi2.async.task.Undo;
 import com.ichi2.async.task.UpdateNote;
 import com.ichi2.compat.CompatHelper;
@@ -1282,7 +1287,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .onPositive((dialog, which) -> {
                     Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                     mSoundPlayer.stopSounds();
-                    dismiss(Collection.DismissType.DELETE_NOTE);
+                    dismiss(new DeleteNote(mCurrentCard));
                 })
                 .build().show();
     }
@@ -2533,16 +2538,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 lookUpOrSelectText();
                 return true;
             case COMMAND_BURY_CARD:
-                dismiss(Collection.DismissType.BURY_CARD);
+                dismiss(new BuryCard(mCurrentCard));
                 return true;
             case COMMAND_BURY_NOTE:
-                dismiss(Collection.DismissType.BURY_NOTE);
+                dismiss(new BuryNote(mCurrentCard));
                 return true;
             case COMMAND_SUSPEND_CARD:
-                dismiss(Collection.DismissType.SUSPEND_CARD);
+                dismiss(new SuspendCard(mCurrentCard));
                 return true;
             case COMMAND_SUSPEND_NOTE:
-                dismiss(Collection.DismissType.SUSPEND_NOTE);
+                dismiss(new SuspendNote(mCurrentCard));
                 return true;
             case COMMAND_DELETE:
                 showDeleteNoteDialog();
@@ -3066,9 +3071,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } */
     }
 
-    protected void dismiss(Collection.DismissType type) {
+    protected void dismiss(Dismiss type) {
         blockControls(false);
-        CollectionTask.launchCollectionTask(new Dismiss(mCurrentCard, type), mDismissCardHandler);
+        CollectionTask.launchCollectionTask(type, mDismissCardHandler);
     }
 
     /** Signals from a WebView represent actions with no parameters */
