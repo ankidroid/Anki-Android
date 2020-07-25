@@ -62,6 +62,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -1315,6 +1316,7 @@ public class Collection {
 
 
     /** Fix possible problems and rebuild caches. */
+    @NonNull
     public CheckDatabaseResult fixIntegrity(CollectionTask.ProgressCallback progressCallback) {
         File file = new File(mPath);
         CheckDatabaseResult result = new CheckDatabaseResult(file.length());
@@ -2103,11 +2105,13 @@ public class Collection {
             this.mFailed = failedIntegrity;
         }
 
+        @NonNull
         public CheckDatabaseResult markAsFailed() {
             this.setFailed(true);
             return this;
         }
 
+        @NonNull
         public CheckDatabaseResult markAsLocked() {
             this.setLocked(true);
             return markAsFailed();
