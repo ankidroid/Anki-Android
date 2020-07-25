@@ -73,20 +73,5 @@ public abstract class Undoable {
         }
     }
 
-    public static class UndoableRepositionRescheduleResetCards extends Undoable {
-        private final Card[] mCards;
-        public UndoableRepositionRescheduleResetCards(DismissType dt, Card[] cards) {
-            super(dt);
-            mCards = cards;
-        }
 
-        public long undo(Collection col) {
-            Timber.i("Undoing action of type %s on %d cards", getDismissType(), mCards.length);
-            for (int i = 0; i < mCards.length; i++) {
-                Card card = mCards[i];
-                card.flush(false);
-            }
-            return NO_REVIEW;
-        }
-    }
 }

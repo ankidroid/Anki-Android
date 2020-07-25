@@ -913,6 +913,27 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
+
+    private static class UndoRepositionRescheduleResetCards extends Undoable {
+        private final Card[] cards_copied;
+
+
+        public UndoRepositionRescheduleResetCards(Collection.DismissType type, Card[] cards_copied) {
+            super(type);
+            this.cards_copied = cards_copied;
+        }
+
+
+        public long undo(Collection col) {
+            Timber.i("Undoing action of type %s on %d cards", getDismissType(), cards_copied.length);
+            for (int i = 0; i < cards_copied.length; i++) {
+                Card card = cards_copied[i];
+                card.flush(false);
+            }
+            return NO_REVIEW;
+        }
+    }
+
     private TaskData doInBackgroundDismissNotes(TaskData param) {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
@@ -1085,7 +1106,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         // collect undo information, sensitive to memory pressure, same for all 3 cases
                         try {
                             Timber.d("Saving undo information of type %s on %d cards", type, cards.length);
-                            col.markUndo(new UndoableRepositionRescheduleResetCards(type, deepCopyCardArray(cards)));
+                            Card[] cards_copied = deepCopyCardArray(cards);
+                            Undoable repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(type, cards_copied);
+                            col.markUndo(repositionRescheduleResetCards);
                         } catch (CancellationException ce) {
                             Timber.i(ce, "Cancelled while handling type %s, skipping undo", type);
                         }
