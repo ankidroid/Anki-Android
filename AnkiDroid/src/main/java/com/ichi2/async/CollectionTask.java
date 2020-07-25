@@ -833,6 +833,37 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
+    private static class UndoDeleteNoteMulti extends Undoable {
+        private final Note[] notesArr;
+        private final List<Card> allCards;
+
+
+        public UndoDeleteNoteMulti(Note[] notesArr, List<Card> allCards) {
+            super(Collection.DismissType.DELETE_NOTE_MULTI);
+            this.notesArr = notesArr;
+            this.allCards = allCards;
+        }
+
+
+        public long undo(Collection col) {
+            Timber.i("Undo: Delete notes");
+            // undo all of these at once instead of one-by-one
+            ArrayList<Long> ids = new ArrayList<>();
+            for (Note n : notesArr) {
+                n.flush(n.getMod(), false);
+                ids.add(n.getId());
+            }
+            for (Card c : allCards) {
+                c.flush(false);
+                ids.add(c.getId());
+            }
+            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.collection2Array(ids)));
+            return MULTI_CARD;  // don't fetch new card
+
+        }
+    }
+
+
     private TaskData doInBackgroundDismissNotes(TaskData param) {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
@@ -935,7 +966,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                             count++;
                         }
 
-                        col.markUndo(new UndoableDeleteNoteMulti(notesArr, allCards));
+
+                        Undoable deleteNoteMulti = new UndoDeleteNoteMulti(notesArr, allCards);
+
+                        col.markUndo(deleteNoteMulti);
 
                         col.remNotes(uniqueNoteIds);
                         sched.deferReset();
