@@ -78,7 +78,6 @@ import timber.log.Timber;
 
 import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
 import static com.ichi2.libanki.Collection.DismissType.BURY_NOTE;
-import static com.ichi2.libanki.Collection.DismissType.CHANGE_DECK_MULTI;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
 import static com.ichi2.libanki.Undoable.*;
 
@@ -894,6 +893,25 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
+    private static class UndoMarkNoteMulti extends Undoable {
+        private final List<Note> originalMarked;
+        private final List<Note> originalUnmarked;
+
+
+        public UndoMarkNoteMulti(List<Note> originalMarked, List<Note> originalUnmarked) {
+            super(Collection.DismissType.MARK_NOTE_MULTI);
+            this.originalMarked = originalMarked;
+            this.originalUnmarked = originalUnmarked;
+        }
+
+
+        public long undo(Collection col) {
+            Timber.i("Undo: Mark notes");
+            CardUtils.markAll(originalMarked, true);
+            CardUtils.markAll(originalUnmarked, false);
+            return MULTI_CARD;  // don't fetch new card
+        }
+    }
 
     private TaskData doInBackgroundDismissNotes(TaskData param) {
         Collection col = getCol();
@@ -972,8 +990,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
                         CardUtils.markAll(new ArrayList<>(notes), !originalUnmarked.isEmpty());
 
+                        Undoable markNoteMulti = new UndoMarkNoteMulti(originalMarked, originalUnmarked);
                         // mark undo for all at once
-                        col.markUndo(new UndoableMarkNoteMulti(originalMarked, originalUnmarked));
+                        col.markUndo(markNoteMulti);
 
                         // reload cards because they'll be passed back to caller
                         for (Card c : cards) {
