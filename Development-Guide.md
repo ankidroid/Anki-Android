@@ -164,6 +164,11 @@ As described in the [contributing wiki](https://github.com/ankidroid/Anki-Androi
 * Before release a project owner will run another script which pulls all the current translations from crowdin and overwrites the existing files
 * These new files are then committed and pushed to github
 
+### Translation Conventions
+
+* Avoid ending a string with a full stop unless there are multiple sentences
+* Plurals should use `<plurals`. Only define `one` and `other` for English as CrowdIn handles other plural types
+
 ## Making "parallel" builds
 If you want to run several different versions of AnkiDroid side by side (e.g. as described in the [FAQ on using profiles](https://github.com/ankidroid/Anki-Android/wiki/FAQ#how-to-use-different-anki-profiles)), you need to edit the package ID (from com.ichi2.anki) in the following places so that every version of AnkiDroid that you install has a unique ID:
 
