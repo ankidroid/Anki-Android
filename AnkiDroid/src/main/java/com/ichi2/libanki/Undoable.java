@@ -58,20 +58,4 @@ public abstract class Undoable {
         }
     }
 
-
-
-
-
-    public static class UndoableFlag extends Undoable {
-        public UndoableFlag(Collection col) {
-            super(FLAG);
-        }
-
-        public long undo(Collection col) {
-            Timber.d("Not implemented.");
-            return NO_REVIEW;
-        }
-    }
-
-
 }
