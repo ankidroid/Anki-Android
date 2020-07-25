@@ -1195,11 +1195,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] { colname, "media" }, null);
         } catch (IOException e) {
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - unzip");
-            return new TaskData(-2, null, false);
+            return new TaskData(false);
         }
         String colFile = new File(dir, colname).getAbsolutePath();
         if (!(new File(colFile)).exists()) {
-            return new TaskData(-2, null, false);
+            return new TaskData(false);
         }
 
         Collection tmpCol = null;
@@ -1207,7 +1207,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             tmpCol = Storage.Collection(mContext, colFile);
             if (!tmpCol.validCollection()) {
                 tmpCol.close();
-                return new TaskData(-2, null, false);
+                return new TaskData(false);
             }
         } catch (Exception e) {
             Timber.e("Error opening new collection file... probably it's invalid");
@@ -1217,7 +1217,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 // do nothing
             }
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
-            return new TaskData(-2, null, false);
+            return new TaskData(false);
         } finally {
             if (tmpCol != null) {
                 tmpCol.close();
@@ -1235,7 +1235,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         File f = new File(colFile);
         if (!f.renameTo(new File(colPath))) {
             // Exit early if this didn't work
-            return new TaskData(-2, null, false);
+            return new TaskData(false);
         }
         int addedCount = -1;
         try {
