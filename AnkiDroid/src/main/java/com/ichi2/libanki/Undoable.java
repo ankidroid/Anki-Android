@@ -38,8 +38,6 @@ public abstract class Undoable {
      * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
     public abstract long undo(Collection col);
 
-
-
     public static class UndoableFlushAll extends Undoable {
         private final List<Card> mCards;
         private final long mCid;
