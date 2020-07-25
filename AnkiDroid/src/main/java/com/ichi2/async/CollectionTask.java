@@ -756,6 +756,51 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
+
+    private static class UndoSuspendCardMulti extends Undoable {
+        private final Card[] cards;
+        private final boolean[] originalSuspended;
+
+
+        public UndoSuspendCardMulti(Card[] cards, boolean[] originalSuspended) {
+            super(Collection.DismissType.SUSPEND_CARD_MULTI);
+            this.cards = cards;
+            this.originalSuspended = originalSuspended;
+        }
+
+
+        public long undo(Collection col) {
+            Timber.i("Undo: Suspend multiple cards");
+            List<Long> toSuspendIds = new ArrayList<>();
+            List<Long> toUnsuspendIds = new ArrayList<>();
+            for (int i = 0; i < cards.length; i++) {
+                Card card = cards[i];
+                if (originalSuspended[i]) {
+                    toSuspendIds.add(card.getId());
+                } else {
+                    toUnsuspendIds.add(card.getId());
+                }
+            }
+
+            // unboxing
+            long[] toSuspendIdsArray = new long[toSuspendIds.size()];
+            long[] toUnsuspendIdsArray = new long[toUnsuspendIds.size()];
+            for (int i = 0; i < toSuspendIds.size(); i++) {
+                toSuspendIdsArray[i] = toSuspendIds.get(i);
+            }
+            for (int i = 0; i < toUnsuspendIds.size(); i++) {
+                toUnsuspendIdsArray[i] = toUnsuspendIds.get(i);
+            }
+
+            col.getSched().suspendCards(toSuspendIdsArray);
+            col.getSched().unsuspendCards(toUnsuspendIdsArray);
+
+            return MULTI_CARD;  // don't fetch new card
+
+        }
+    }
+
+
     private TaskData doInBackgroundDismissNotes(TaskData param) {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
@@ -796,8 +841,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                             sched.unsuspendCards(cids);
                         }
 
+                        Undoable suspendCardMulti = new UndoSuspendCardMulti(cards, originalSuspended);
                         // mark undo for all at once
-                        col.markUndo(new UndoableSuspendCardMulti(cards, originalSuspended));
+                        col.markUndo(suspendCardMulti);
 
                         // reload cards because they'll be passed back to caller
                         for (Card c : cards) {
@@ -1842,4 +1888,5 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     public void doProgress(TaskData value) {
         publishProgress(value);
     }
+
 }
