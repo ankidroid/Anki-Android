@@ -68,30 +68,6 @@ public abstract class Undoable {
         }
     }
 
-    public static class UndoableDeleteNote extends Undoable {
-        private final Note mNote;
-        private final List<Card> mCards;
-        private final long mCid;
-        public UndoableDeleteNote(Note note, List<Card> cards, long cid) {
-            super(DELETE_NOTE);
-            mNote = note;
-            mCards = cards;
-            mCid = cid;
-        }
-
-        public long undo(Collection col) {
-            Timber.i("Undo: Delete note");
-            ArrayList<Long> ids = new ArrayList<>();
-            mNote.flush(mNote.getMod(), false);
-            ids.add(mNote.getId());
-            for (Card c : mCards) {
-                c.flush(false);
-                ids.add(c.getId());
-            }
-            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.collection2Array(ids)));
-            return mCid;
-        }
-    }
 
     public static class UndoableDeleteNoteMulti extends Undoable {
         private final List<Card> mAllCards;
