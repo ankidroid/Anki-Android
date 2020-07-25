@@ -77,6 +77,7 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
+import static com.ichi2.libanki.Collection.DismissType.BURY_NOTE;
 import static com.ichi2.libanki.Undoable.*;
 
 /**
@@ -683,7 +684,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         break;
                     case BURY_NOTE:
                         // collect undo information
-                        col.markUndo(new UndoableBuryNote(note.cards(), card.getId()));
+                        Undoable buryNote = new UndoableFlushAll(BURY_NOTE, note.cards(), card.getId());
+                        col.markUndo(buryNote);
                         // then bury
                         sched.buryNote(note.getId());
                         break;

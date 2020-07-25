@@ -58,14 +58,6 @@ public abstract class Undoable {
         }
     }
 
-
-
-    public static class UndoableBuryNote extends UndoableFlushAll {
-        public UndoableBuryNote(List<Card> cards, long cid) {
-            super(BURY_NOTE, cards, cid);
-        }
-    }
-
     public static class UndoableSuspendCard extends Undoable {
         private Card mSuspendedCard;
         public UndoableSuspendCard(Card card) {
