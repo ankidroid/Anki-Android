@@ -6,6 +6,7 @@ import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
+import com.ichi2.utils.Triple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class MediaCheckDialog extends AsyncDialogFragment {
 
     public interface MediaCheckDialogListener {
         void showMediaCheckDialog(int dialogType);
-        void showMediaCheckDialog(int dialogType, List<ArrayList<String>> checkList);
+        void showMediaCheckDialog(int dialogType, Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> checkList);
         void mediaCheck();
         void deleteUnused(List<String> unused);
         void dismissAllDialogFragments();
@@ -32,12 +33,12 @@ public class MediaCheckDialog extends AsyncDialogFragment {
     }
 
 
-    public static MediaCheckDialog newInstance(int dialogType, List<ArrayList<String>> checkList) {
+    public static MediaCheckDialog newInstance(int dialogType, Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> checkList) {
         MediaCheckDialog f = new MediaCheckDialog();
         Bundle args = new Bundle();
-        args.putStringArrayList("nohave", new ArrayList<>(checkList.get(0)));
-        args.putStringArrayList("unused", new ArrayList<>(checkList.get(1)));
-        args.putStringArrayList("invalid", new ArrayList<>(checkList.get(2)));
+        args.putStringArrayList("nohave", checkList.first);
+        args.putStringArrayList("unused", checkList.second);
+        args.putStringArrayList("invalid", checkList.third);
         args.putInt("dialogType", dialogType);
         f.setArguments(args);
         return f;

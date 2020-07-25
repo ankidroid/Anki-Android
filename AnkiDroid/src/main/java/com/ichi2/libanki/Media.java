@@ -29,6 +29,7 @@ import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.Triple;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -415,12 +416,12 @@ public class Media {
      *
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
-    public List<ArrayList<String>> check() {
+    public Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> check() {
         return check(null);
     }
 
 
-    private List<ArrayList<String>> check(File[] local) {
+    private Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> check(File[] local) {
         File mdir = new File(dir());
         // gather all media references in NFC form
         Set<String> allRefs = new HashSet<>();
@@ -502,11 +503,7 @@ public class Media {
         } catch (SQLException ignored) {
             _deleteDB();
         }
-        List<ArrayList<String>> result = new ArrayList<>();
-        result.add(nohave);
-        result.add(unused);
-        result.add(invalid);
-        return result;
+        return new Triple<>(nohave, unused, invalid);
     }
 
 

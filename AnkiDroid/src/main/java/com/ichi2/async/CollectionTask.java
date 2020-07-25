@@ -54,6 +54,7 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
+import com.ichi2.utils.Triple;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -1683,7 +1684,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         // A media check on AnkiDroid will also update the media db
         col.getMedia().findChanges(true);
         // Then do the actual check
-        List<ArrayList<String>> result = col.getMedia().check();
+        Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> result = col.getMedia().check();
         return new TaskData(0, new Object[]{result}, true);
     }
 

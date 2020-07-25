@@ -15,6 +15,7 @@ import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.utils.Triple;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -94,10 +95,10 @@ public class DialogHandler extends Handler {
             // Media check results
             int id = msgData.getInt("dialogType");
             if (id!=MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK) {
-                List<ArrayList<String>> checkList = new ArrayList<>();
-                checkList.add(msgData.getStringArrayList("nohave"));
-                checkList.add(msgData.getStringArrayList("unused"));
-                checkList.add(msgData.getStringArrayList("invalid"));
+                Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> checkList = new Triple<>(
+                        msgData.getStringArrayList("nohave"),
+                        msgData.getStringArrayList("unused"),
+                        msgData.getStringArrayList("invalid"));
                 ((DeckPicker) mActivity.get()).showMediaCheckDialog(id, checkList);
             }
         } else if (msg.what == MSG_SHOW_DATABASE_ERROR_DIALOG) {

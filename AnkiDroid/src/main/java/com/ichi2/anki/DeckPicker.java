@@ -117,6 +117,7 @@ import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
+import com.ichi2.utils.Triple;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
@@ -1313,7 +1314,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     @Override
-    public void showMediaCheckDialog(int id, List<ArrayList<String>> checkList) {
+    public void showMediaCheckDialog(int id, Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> checkList) {
         showAsyncDialogFragment(MediaCheckDialog.newInstance(id, checkList));
     }
 
@@ -1484,7 +1485,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
                 if (result != null && result.getBoolean()) {
                     @SuppressWarnings("unchecked")
-                    List<ArrayList<String>> checkList = (List<ArrayList<String>>) result.getObjArray()[0];
+                    Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> checkList = (Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>>) result.getObjArray()[0];
                     showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
                 } else {
                     showSimpleMessageDialog(getResources().getString(R.string.check_media_failed));

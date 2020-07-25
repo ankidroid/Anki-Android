@@ -18,12 +18,12 @@ package com.ichi2.anki.tests.libanki;
 import android.Manifest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
-
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.tests.Shared;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Note;
+import com.ichi2.utils.Triple;
 
 import org.junit.After;
 import org.junit.Before;
@@ -34,6 +34,7 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -169,15 +170,15 @@ public class MediaTest {
         os.write("test".getBytes());
         os.close();
         // check media
-        List<ArrayList<String>> ret = testCol.getMedia().check();
+        Triple<ArrayList<String>, ArrayList<String>, ArrayList<String>> ret = testCol.getMedia().check();
         List<String> expected;
         List<String> actual;
         expected = Collections.singletonList("fake2.png");
-        actual = ret.get(0);
+        actual = ret.first;
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
         expected = Collections.singletonList("foo.jpg");
-        actual = ret.get(1);
+        actual = ret.second;
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
     }
