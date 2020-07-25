@@ -17,6 +17,7 @@
 package com.ichi2.async;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.libanki.Collection;
 
 import org.junit.runner.RunWith;
 
@@ -37,13 +38,5 @@ public abstract class AbstractCollectionTaskTest extends RobolectricTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    protected <T> T assertResultArraySingleton(TaskData result, Class<T> clazz) {
-        assertThat("The result object should be non-null", result.getObjArray(), notNullValue());
-        assertThat("There should only be one result object", result.getObjArray(), arrayWithSize(1));
-        assertThat(String.format("Result should be instance of type '%s'", clazz.getName()), result.getObjArray()[0], instanceOf(clazz));
-        //noinspection unchecked
-        return (T) result.getObjArray()[0];
     }
 }

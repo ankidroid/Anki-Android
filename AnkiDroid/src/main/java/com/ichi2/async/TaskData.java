@@ -4,6 +4,7 @@ package com.ichi2.async;
 import android.content.Context;
 
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 
 import java.util.List;
@@ -20,12 +21,17 @@ public class TaskData {
     private Context mContext;
     private int mType;
     private Object[] mObjects;
+    private Collection.CheckDatabaseResult mDatabaseResult;
 
 
     public TaskData(Object[] obj) {
         mObjects = obj;
     }
 
+    public TaskData(boolean bool, Collection.CheckDatabaseResult dr) {
+        mDatabaseResult = dr;
+        mBool = bool;
+    }
 
     public TaskData(int value, Object[] obj, boolean bool) {
         mObjects = obj;
@@ -134,6 +140,9 @@ public class TaskData {
         mInteger = value;
     }
 
+    public Collection.CheckDatabaseResult getDatabaseResult() {
+        return mDatabaseResult;
+    }
 
     public TaskData(String msg, long cardId, boolean bool) {
         mMsg = msg;

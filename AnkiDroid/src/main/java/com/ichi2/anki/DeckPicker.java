@@ -2534,7 +2534,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 return;
             }
 
-            if (!result.objAtIndexIs(0, Collection.CheckDatabaseResult.class)) {
+            Collection.CheckDatabaseResult databaseResult = result.getDatabaseResult();
+
+            if (databaseResult == null) {
                 if (result.getBoolean()) {
                     Timber.w("Expected result data, got nothing");
                 } else {
@@ -2543,7 +2545,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 return;
             }
 
-            Collection.CheckDatabaseResult databaseResult = (Collection.CheckDatabaseResult) result.getObjArray()[0];
 
             if (!result.getBoolean() || databaseResult.getFailed()) {
                 if (databaseResult.getDatabaseLocked()) {

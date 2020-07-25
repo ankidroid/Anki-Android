@@ -1079,11 +1079,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection.CheckDatabaseResult result = col.fixIntegrity(new ProgressCallback(this, AnkiDroidApp.getAppResources()));
         if (result.getFailed()) {
             //we can fail due to a locked database, which requires knowledge of the failure.
-            return new TaskData(false, new Object[] { result });
+            return new TaskData(false, result);
         } else {
             // Close the collection and we restart the app to reload
             CollectionHelper.getInstance().closeCollection(true, "Check Database Completed");
-            return new TaskData(true, new Object[] { result });
+            return new TaskData(true, result);
         }
     }
 

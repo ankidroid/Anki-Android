@@ -24,6 +24,7 @@ import org.junit.Test;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest {
 
@@ -34,7 +35,8 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
         TaskData result = super.execute(CHECK_DATABASE);
 
         assertThat("The result should specify a failure", result.getBoolean(), is(false));
-        Collection.CheckDatabaseResult checkDbResult = assertObjIsDbResult(result);
+        Collection.CheckDatabaseResult checkDbResult = result.getDatabaseResult();
+        assertThat("The result object should be non-null", checkDbResult, notNullValue());
 
         assertThat("The result should specify the database was locked", checkDbResult.getDatabaseLocked());
     }
@@ -43,7 +45,4 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
         CollectionUtils.lockDatabase(getCol());
     }
 
-    protected Collection.CheckDatabaseResult assertObjIsDbResult(TaskData result) {
-        return assertResultArraySingleton(result, Collection.CheckDatabaseResult.class);
-    }
 }

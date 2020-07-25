@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.content.Intent;
 
 import com.ichi2.async.TaskData;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.CheckDatabaseResult;
 
 import org.junit.Test;
@@ -144,8 +145,12 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
     }
 
     @NonNull
-    private TaskData validResultWithData(Object... obj) {
-        return new TaskData(true, obj);
+    private TaskData validResultWithData() {
+        return new TaskData(true);
+    }
+
+    private TaskData validResultWithData(Collection.CheckDatabaseResult result) {
+        return new TaskData(true, result);
     }
 
 
