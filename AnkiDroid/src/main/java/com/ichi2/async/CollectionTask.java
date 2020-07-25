@@ -113,7 +113,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         CONF_SET_SUBDECKS,
         RENDER_BROWSER_QA,
         CHECK_MEDIA,
-        REMOVE_TEMPLATE,
         COUNT_MODELS,
         DELETE_MODEL,
         DELETE_FIELD,
@@ -417,9 +416,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case CHECK_MEDIA:
                 return doInBackgroundCheckMedia();
-
-            case REMOVE_TEMPLATE:
-                return doInBackgroundRemoveTemplate(param);
 
             case COUNT_MODELS:
                 return doInBackgroundCountModels();
@@ -1646,28 +1642,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         // Then do the actual check
         List<List<String>> result = col.getMedia().check();
         return new TaskData(0, new Object[]{result}, true);
-    }
-
-    /**
-     * Remove a card template. Note: it's necessary to call save model after this to re-generate the cards
-     */
-    private TaskData doInBackgroundRemoveTemplate(TaskData param) {
-        Timber.d("doInBackgroundRemoveTemplate");
-        Collection col = getCol();
-        Object [] args = param.getObjArray();
-        Model model = (Model) args[0];
-        JSONObject template = (JSONObject) args[1];
-        try {
-            boolean success = col.getModels().remTemplate(model, template);
-            if (! success) {
-                return new TaskData("removeTemplateFailed", false);
-            }
-            col.save();
-        } catch (ConfirmModSchemaException e) {
-            Timber.e("doInBackgroundRemoveTemplate :: ConfirmModSchemaException");
-            return new TaskData(false);
-        }
-        return new TaskData(true);
     }
 
     /**
