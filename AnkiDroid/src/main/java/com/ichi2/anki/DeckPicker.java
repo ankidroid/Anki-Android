@@ -302,8 +302,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(TaskData... values) {
-            mProgressDialog.setContent(values[0].getString());
+        public void onProgressUpdate(TaskData value) {
+            mProgressDialog.setContent(value.getString());
         }
     };
 
@@ -340,8 +340,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(TaskData... values) {
-            mProgressDialog.setContent(values[0].getString());
+        public void onProgressUpdate(TaskData value) {
+            mProgressDialog.setContent(value.getString());
         }
     };
 
@@ -2574,8 +2574,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(TaskData... values) {
-            mProgressDialog.setContent(values[0].getString());
+        public void onProgressUpdate(TaskData value) {
+            mProgressDialog.setContent(value.getString());
         }
     }
 }

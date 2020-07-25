@@ -223,8 +223,8 @@ public class NoteEditor extends AnkiActivity {
         }
 
         @Override
-        public void onProgressUpdate(TaskData... values) {
-            int count = values[0].getInt();
+        public void onProgressUpdate(TaskData value) {
+            int count = value.getInt();
             if (count > 0) {
                 mChanged = true;
                 mSourceText = null;
