@@ -327,7 +327,11 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_change_whiteboard_pen_color:
                 Timber.i("Reviewer:: Pen Color button pressed");
-                colorPalette.setVisibility(View.VISIBLE);
+                if (colorPalette.getVisibility() == View.GONE) {
+                    colorPalette.setVisibility(View.VISIBLE);
+                } else {
+                    colorPalette.setVisibility(View.GONE);
+                }
                 break;
 
             case R.id.action_save_whiteboard:
@@ -364,6 +368,9 @@ public class Reviewer extends AbstractFlashcardViewer {
                 //on the enabled status
                 setWhiteboardEnabledState(mPrefWhiteboard);
                 setWhiteboardVisibility(mPrefWhiteboard);
+                if (!mPrefWhiteboard) {
+                    colorPalette.setVisibility(View.GONE);
+                }
                 refreshActionBar();
                 break;
 
