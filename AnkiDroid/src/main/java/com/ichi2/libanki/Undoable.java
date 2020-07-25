@@ -60,22 +60,7 @@ public abstract class Undoable {
 
 
 
-    public static class UndoableMarkNoteMulti extends Undoable {
-        private final List<Note> mOriginalMarked;
-        private final List<Note> mOriginalUnmarked;
-        public UndoableMarkNoteMulti(List<Note> originalMarked, List<Note> originalUnmarked) {
-            super(MARK_NOTE_MULTI);
-            mOriginalMarked = originalMarked;
-            mOriginalUnmarked = originalUnmarked;
-        }
 
-        public long undo(Collection col) {
-            Timber.i("Undo: Mark notes");
-            CardUtils.markAll(mOriginalMarked, true);
-            CardUtils.markAll(mOriginalUnmarked, false);
-            return MULTI_CARD;  // don't fetch new card
-        }
-    }
 
     public static class UndoableFlag extends Undoable {
         public UndoableFlag(Collection col) {
