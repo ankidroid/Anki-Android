@@ -92,7 +92,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         ANSWER_CARD,
         ADD_NOTE,
         UPDATE_NOTE,
-        UPDATE_NOTES_MULTI,
         UNDO,
         DISMISS,
         DISMISS_MULTI,
@@ -359,9 +358,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             case UPDATE_NOTE:
                 return doInBackgroundUpdateNote(param);
 
-            case UPDATE_NOTES_MULTI:
-                return doInBackgroundUpdateNotes(param);
-
             case UNDO:
                 return doInBackgroundUndo();
 
@@ -558,38 +554,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 } else {
                     publishProgress(new TaskData(editCard, editNote.stringTags()));
                 }
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                col.getDb().getDatabase().endTransaction();
-            }
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
-            return new TaskData(false);
-        }
-        return new TaskData(true);
-    }
-
-    // same as doInBackgroundUpdateNote but for multiple notes
-    private TaskData doInBackgroundUpdateNotes(TaskData param) {
-        Timber.d("doInBackgroundUpdateNotes");
-        // Save the note
-        Collection col = getCol();
-        Object[] data = param.getObjArray();
-        Card[] cards = (Card[]) data[0];
-
-        try {
-            col.getDb().getDatabase().beginTransaction();
-            try {
-                for (Card card : cards) {
-                    Note note = card.note();
-                    // TODO: undo integration
-                    note.flush();
-                    // flush card too, in case, did has been changed
-                    card.flush();
-                    publishProgress(new TaskData(card, note.stringTags()));
-                }
-
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
                 col.getDb().getDatabase().endTransaction();
