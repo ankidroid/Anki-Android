@@ -113,7 +113,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         CONF_SET_SUBDECKS,
         RENDER_BROWSER_QA,
         CHECK_MEDIA,
-        ADD_TEMPLATE,
         REMOVE_TEMPLATE,
         COUNT_MODELS,
         DELETE_MODEL,
@@ -418,9 +417,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case CHECK_MEDIA:
                 return doInBackgroundCheckMedia();
-
-            case ADD_TEMPLATE:
-                return doInBackgroundAddTemplate(param);
 
             case REMOVE_TEMPLATE:
                 return doInBackgroundRemoveTemplate(param);
@@ -1650,23 +1646,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         // Then do the actual check
         List<List<String>> result = col.getMedia().check();
         return new TaskData(0, new Object[]{result}, true);
-    }
-
-    /**
-     * Add a new card template
-     */
-    private TaskData doInBackgroundAddTemplate(TaskData param) {
-        // mod should have been changed by addNewTemplateWithCheck in
-        // main/java/com/ichi2/anki/CardTemplateEditor
-        Timber.d("doInBackgroundAddTemplate");
-        Collection col = getCol();
-        Object [] args = param.getObjArray();
-        Model model = (Model) args[0];
-        JSONObject template = (JSONObject) args[1];
-        // add the new template
-        col.getModels().addTemplateModChanged(model, template);
-        col.save();
-        return new TaskData(true);
     }
 
     /**
