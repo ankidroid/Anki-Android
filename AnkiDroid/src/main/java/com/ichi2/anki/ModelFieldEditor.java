@@ -34,6 +34,8 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.TaskListener;
+import com.ichi2.async.Task;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.themes.StyledProgressDialog;
@@ -251,9 +253,33 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         }
     }
 
+    private static class DeleteFieldTask implements Task {
+        private final Model mModel;
+        private final JSONObject mField;
+        public DeleteFieldTask(Model mModel, JSONObject mField) {
+            this.mModel = mModel;
+            this.mField = mField;
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackGroundDeleteField");
+
+
+            Collection col = collectionTask.getCol();
+            try {
+                col.getModels().remField(mModel, mField);
+                col.save();
+            } catch (ConfirmModSchemaException e) {
+                //Should never be reached
+                return new TaskData(false);
+            }
+            return new TaskData(true);
+        }
+    }
+
     private void deleteField() {
-        CollectionTask.launchCollectionTask(DELETE_FIELD, changeFieldHandler(),
-                                new TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
+        JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
+        CollectionTask.launchCollectionTask(null, changeFieldHandler(), new TaskData(new DeleteFieldTask(mMod, field)));
     }
 
 

@@ -101,7 +101,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         SEARCH_CARDS,
         RENDER_BROWSER_QA,
         COUNT_MODELS,
-        DELETE_FIELD,
         REPOSITION_FIELD,
         ADD_FIELD,
         CHANGE_SORT_FIELD,
@@ -365,9 +364,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case COUNT_MODELS:
                 return doInBackgroundCountModels();
-
-            case DELETE_FIELD:
-                return doInBackGroundDeleteField(param);
 
             case REPOSITION_FIELD:
                 return doInBackGroundRepositionField(param);
@@ -1206,27 +1202,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         return (new TaskData(data, true));
     }
 
-    /**
-     * Deletes thje given field in the given model
-     */
-    private TaskData doInBackGroundDeleteField(TaskData param){
-        Timber.d("doInBackGroundDeleteField");
-        Object[] objects = param.getObjArray();
-
-        Model model = (Model) objects[0];
-        JSONObject field = (JSONObject) objects[1];
-
-
-        Collection col = getCol();
-        try {
-            col.getModels().remField(model, field);
-            col.save();
-        } catch (ConfirmModSchemaException e) {
-            //Should never be reached
-            return new TaskData(false);
-        }
-        return new TaskData(true);
-    }
 
     /**
      * Repositions the given field in the given model
