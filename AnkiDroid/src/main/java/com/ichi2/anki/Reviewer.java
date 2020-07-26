@@ -56,7 +56,6 @@ import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.TaskListener;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.themes.Themes;
@@ -236,8 +235,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         getCol().startTimebox();
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+        CollectionTask.launchCollectionTask(null, answerCard, new TaskData(new AnswerCard(false)));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity

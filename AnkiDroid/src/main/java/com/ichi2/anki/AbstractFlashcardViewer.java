@@ -104,6 +104,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.Task;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Undoable;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -748,14 +749,57 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected TaskListener mAnswerCardHandler (boolean quick) {
-        return new NextCardHandler() {
-            @Override
-            public void onPreExecute() {
-                super.onPreExecute();
-                blockControls(quick);
+    protected class AnswerCard extends NextCardHandler implements Task {
+        private final Card mOldCard;
+        @Consts.BUTTON_TYPE private final int mEase;
+        private final boolean mQuick;
+
+        public AnswerCard(boolean quick) {
+            this(quick, null, 0);
+        }
+
+        public AnswerCard(boolean quick, Card oldCard, @Consts.BUTTON_TYPE int ease) {
+            mQuick = quick;
+            mOldCard = oldCard;
+            mEase = ease;
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            Collection col = collectionTask.getCol();
+            AbstractSched sched = col.getSched();
+            Card newCard = null;
+            Timber.i(mOldCard != null ? "Answering card" : "Obtaining card");
+            try {
+                DB db = col.getDb();
+                db.getDatabase().beginTransaction();
+                try {
+                    if (mOldCard != null) {
+                        Timber.i("Answering card %d", mOldCard.getId());
+                        sched.answerCard(mOldCard, mEase);
+                    }
+                    newCard = sched.getCard();
+                    if (newCard != null) {
+                        // render cards before locking database
+                        newCard._getQA(true);
+                    }
+                    collectionTask.doProgress(new TaskData(newCard));
+                    db.getDatabase().setTransactionSuccessful();
+                } finally {
+                    db.getDatabase().endTransaction();
+                }
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
+                return new TaskData(false);
             }
-        };
+            return new TaskData(true);
+        }
+
+        @Override
+        public void onPreExecute() {
+            super.onPreExecute();
+            blockControls(mQuick);
+        }
     }
 
 
@@ -1199,8 +1243,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
            note type could have lead to the card being deleted */
         if (data != null && data.hasExtra("reloadRequired")) {
             getCol().getSched().deferReset();
-            CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new TaskData(null, 0));
+            AnswerCard answerCard = new AnswerCard(false);
+            CollectionTask.launchCollectionTask(null, answerCard, new TaskData(answerCard));
         }
 
         if (requestCode == EDIT_CURRENT_CARD) {
@@ -1215,8 +1259,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
             getCol().getSched().deferReset();
-            CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new TaskData(null, 0));
+            AnswerCard answerCard = new AnswerCard(false);
+            CollectionTask.launchCollectionTask(null, answerCard, new TaskData(answerCard));
         }
         if (!mDisableClipboard) {
             clipboardSetText("");
@@ -1305,7 +1349,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            CollectionTask.launchCollectionTask(UNDO, mAnswerCardHandler(false));
+            // We only use the listener part of answerCard, not its background part.
+            CollectionTask.launchCollectionTask(UNDO, new AnswerCard(false));
         }
     }
 
@@ -1459,8 +1504,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(true),
-                new TaskData(mCurrentCard, mCurrentEase));
+        AnswerCard answerCard = new AnswerCard(false, mCurrentCard, mCurrentEase);
+        CollectionTask.launchCollectionTask(null, answerCard, new TaskData(answerCard));
     }
 
 
@@ -3781,8 +3826,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+        AnswerCard answerCard = new AnswerCard(false);
+        CollectionTask.launchCollectionTask(null, answerCard, new TaskData(answerCard));
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {

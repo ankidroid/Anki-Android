@@ -89,7 +89,6 @@ import static com.ichi2.libanki.Undoable.*;
 public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> {
 
     public enum TASK_TYPE {
-        ANSWER_CARD,
         UPDATE_NOTE,
         UNDO,
         DISMISS_MULTI,
@@ -326,9 +325,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             case LOAD_DECK_COUNTS:
                 return doInBackgroundLoadDeckCounts();
 
-            case ANSWER_CARD:
-                return doInBackgroundAnswerCard(param);
-
             case UPDATE_NOTE:
                 return doInBackgroundUpdateNote(param);
 
@@ -443,40 +439,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
-            return new TaskData(false);
-        }
-        return new TaskData(true);
-    }
-
-
-    private TaskData doInBackgroundAnswerCard(TaskData param) {
-        Collection col = getCol();
-        AbstractSched sched = col.getSched();
-        Card oldCard = param.getCard();
-        @Consts.BUTTON_TYPE int ease = param.getInt();
-        Card newCard = null;
-        Timber.i(oldCard != null ? "Answering card" : "Obtaining card");
-        try {
-            DB db = col.getDb();
-            db.getDatabase().beginTransaction();
-            try {
-                if (oldCard != null) {
-                    Timber.i("Answering card %d", oldCard.getId());
-                    sched.answerCard(oldCard, ease);
-                }
-                newCard = sched.getCard();
-                if (newCard != null) {
-                    // render cards before locking database
-                    newCard._getQA(true);
-                }
-                doProgress(new TaskData(newCard));
-                db.getDatabase().setTransactionSuccessful();
-            } finally {
-                db.getDatabase().endTransaction();
-            }
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
             return new TaskData(false);
         }
         return new TaskData(true);
