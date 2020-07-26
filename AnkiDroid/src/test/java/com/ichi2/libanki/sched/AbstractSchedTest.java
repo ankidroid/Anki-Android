@@ -126,7 +126,7 @@ public class AbstractSchedTest extends RobolectricTest {
         sched.answerCard(card, 3);
         sched.getCard();
         final boolean[] executed = {false};
-        launchCollectionTask(new TaskListener() {
+        launchCollectionTask(new TaskListener<TaskData, TaskData>() {
                     Card card;
                     @Override
                     public void onPreExecute() {

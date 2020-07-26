@@ -487,7 +487,7 @@ public class SchedV2 extends AbstractSched {
     }
 
     // Overridden
-    public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask) {
+    public List<DeckDueTreeNode> deckDueList(CollectionTask<?, ?> collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         ArrayList<Deck> decks = mCol.getDecks().allSorted();
@@ -530,7 +530,7 @@ public class SchedV2 extends AbstractSched {
         return deckDueTree(null);
     }
 
-    public List<DeckDueTreeNode> deckDueTree(CollectionTask collectionTask) {
+    public List<DeckDueTreeNode> deckDueTree(CollectionTask<?, ?> collectionTask) {
         List<DeckDueTreeNode> deckDueTree = deckDueList(collectionTask);
         if (deckDueTree == null) {
             return null;
@@ -703,10 +703,10 @@ public class SchedV2 extends AbstractSched {
      * be a card in review or not. */
     // No need for a static object. The scheduler is not removed from memory
     public void preloadNextCardTaskInBackground() {
-        Task task = (CollectionTask collectionTask) -> {
+        Task<TaskData, ?> task = (CollectionTask<TaskData, ?> collectionTask) -> {
             for (CardQueue<? extends Card.Cache> caches: _fillNextCard()) {
                 caches.loadFirstCard();
-            };
+            }
             return null;
         };
         CollectionTask.launchCollectionTask(task);

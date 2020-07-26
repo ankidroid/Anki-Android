@@ -90,7 +90,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private DeckPreferenceHack mPref;
 
     // Should be called in background. Either to change one task conf, or to change all conf of subdeck of a deck
-    public static TaskData confChange(CollectionTask task, Deck deck, DeckConfig conf) {
+    public static TaskData confChange(CollectionTask<?, ?> task, Deck deck, DeckConfig conf) {
         Timber.d("doInBackgroundConfChange");
         Collection col = task.getCol();
         try {
@@ -637,14 +637,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     }
 
-    private static class ConfSetSubdecksTask implements Task {
+    private static class ConfSetSubdecksTask implements Task<TaskData, TaskData> {
         private final Deck mDeck;
         private final DeckConfig mConf;
         public ConfSetSubdecksTask(Deck deck, DeckConfig conf) {
             mDeck = deck;
             mConf = conf;
         }
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundConfSetSubdecks");
             Collection col = collectionTask.getCol();
             try {
@@ -666,12 +666,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         }
     }
 
-    private static class RemConfTask implements Task {
+    private static class RemConfTask implements Task<TaskData, TaskData> {
         private final DeckConfig mConf;
         public RemConfTask(DeckConfig mConf) {
             this.mConf = mConf;
         }
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundConfRemove");
             Collection col = collectionTask.getCol();
             try {
@@ -694,14 +694,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         }
     }
 
-    private static class ConfResetTask implements Task {
+    private static class ConfResetTask implements Task<TaskData, TaskData> {
         private final DeckConfig mConf;
 
         private ConfResetTask(DeckConfig mConf) {
             this.mConf = mConf;
         }
 
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundConfReset");
             Collection col = collectionTask.getCol();
             col.getDecks().restoreToDefault(mConf);
@@ -710,31 +710,31 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         }
     }
 
-    private static class DeckConfTask implements Task {
+    private static class DeckConfTask implements Task<TaskData, TaskData> {
         private final Deck mDeck;
         private final DeckConfig mConf;
         public DeckConfTask(Deck deck, DeckConfig conf) {
             this.mDeck = deck;
             this.mConf = conf;
         }
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             return confChange(collectionTask, mDeck, mConf);
         }
     }
 
-    private static class NewOrderTask implements Task {
+    private static class NewOrderTask implements Task<TaskData, TaskData> {
         private final DeckConfig mConf;
         public NewOrderTask(DeckConfig conf) {
             mConf = conf;
         }
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundReorder");
             collectionTask.getCol().getSched().resortConf(mConf);
             return new TaskData(true);
         }
     }
 
-    private static class ConfChangeHandler extends TaskListenerWithContext<DeckPreferenceHack> {
+    private static class ConfChangeHandler extends TaskListenerWithContext<DeckPreferenceHack, TaskData, TaskData> {
         public ConfChangeHandler(DeckPreferenceHack deckPreferenceHack) {
             super(deckPreferenceHack);
         }

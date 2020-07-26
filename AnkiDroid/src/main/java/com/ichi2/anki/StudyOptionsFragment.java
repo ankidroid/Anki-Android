@@ -495,7 +495,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     // This method should be called in background.
     // Either to empty/delete cram, or to update counts
-    public static TaskData updateValuesFromDeck(CollectionTask task, boolean resetSched) {
+    public static TaskData updateValuesFromDeck(CollectionTask<?, ?> task, boolean resetSched) {
         Timber.d("doInBackgroundUpdateValuesFromDeck");
         try {
             Collection col = task.getCol();
@@ -515,7 +515,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
-    private static class UpdateValuesFromDeck implements Task {
+    private static class UpdateValuesFromDeck implements Task<TaskData, TaskData> {
         private final boolean mResetSched;
 
 
@@ -524,7 +524,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
 
 
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             return updateValuesFromDeck(collectionTask, mResetSched);
         }
     }
@@ -550,8 +550,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
      *                        to reflect the latest values.
      */
-    private TaskListener getCollectionTaskListener(final boolean refreshDecklist) {
-        return new TaskListener() {
+    private TaskListener<TaskData, TaskData> getCollectionTaskListener(final boolean refreshDecklist) {
+        return new TaskListener<TaskData, TaskData>() {
             @Override
             public void onPreExecute() {
 

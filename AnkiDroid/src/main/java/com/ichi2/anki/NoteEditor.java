@@ -225,7 +225,8 @@ public class NoteEditor extends AnkiActivity {
     private SaveNote saveNote(Note note) {
         return new SaveNote(this, note);
     }
-    private static class SaveNote extends TaskAndListenerWithContext<NoteEditor> {
+
+    private static class SaveNote extends TaskAndListenerWithContext<NoteEditor, TaskData, TaskData> {
         private boolean mCloseAfter = false;
         private Intent mIntent;
         private final Note mNote;
@@ -235,7 +236,7 @@ public class NoteEditor extends AnkiActivity {
             mNote = note;
         }
 
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundAddNote");
             Collection col = collectionTask.getCol();
             try {

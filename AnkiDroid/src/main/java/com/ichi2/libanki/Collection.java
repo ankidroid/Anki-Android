@@ -1202,7 +1202,7 @@ public class Collection<T extends Time> {
         return findCards(search, order, null);
     }
 
-    public List<Long> findCards(String search, boolean order, CollectionTask task) {
+    public List<Long> findCards(String search, boolean order, CollectionTask<?, ?> task) {
         return new Finder(this).findCards(search, order, task);
     }
 
@@ -1389,7 +1389,7 @@ public class Collection<T extends Time> {
 
 
     /** Fix possible problems and rebuild caches. */
-    public CheckDatabaseResult fixIntegrity(CollectionTask.ProgressCallback progressCallback) {
+    public CheckDatabaseResult fixIntegrity(CollectionTask.ProgressCallback<TaskData> progressCallback) {
         File file = new File(mPath);
         CheckDatabaseResult result = new CheckDatabaseResult(file.length());
         final int[] currentTask = {1};
@@ -1885,7 +1885,7 @@ public class Collection<T extends Time> {
     }
 
 
-    private void fixIntegrityProgress(CollectionTask.ProgressCallback progressCallback, int current, int total) {
+    private void fixIntegrityProgress(CollectionTask.ProgressCallback<TaskData> progressCallback, int current, int total) {
         progressCallback.publishProgress(new TaskData(
                 progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total));
     }

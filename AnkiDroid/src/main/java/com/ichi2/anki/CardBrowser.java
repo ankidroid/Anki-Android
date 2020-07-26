@@ -269,7 +269,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new RepositionCardHandler(this);
     }
 
-    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser> {
+    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser, TaskData, TaskData> {
         public RepositionCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -293,7 +293,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private ResetProgressCardHandler resetProgressCardHandler() {
         return new ResetProgressCardHandler(this);
     }
-    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser>{
+    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser, TaskData, TaskData>{
         public ResetProgressCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -317,7 +317,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private RescheduleCardHandler rescheduleCardHandler() {
         return new RescheduleCardHandler(this);
     }
-    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser>{
+    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser, TaskData, TaskData>{
         public RescheduleCardHandler (CardBrowser browser) {
             super(browser);
         }
@@ -377,30 +377,30 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mType = type;
         }
 
-        public TaskData actualBackground(CollectionTask task, Card[] cards) {
-            Collection col = task.getCol();
+        public TaskData actualBackground(CollectionTask<TaskData, ?> collectionTask, Card[] cards) {
+            Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             // collect undo information, sensitive to memory pressure, same for all 3 cases
             try {
                 Timber.d("Saving undo information of type %s on %d cards", mType, cards.length);
-                col.markUndo(new UndoRepositionRescheduleResetCards(mType, deepCopyCardArray(task, cards)));
+                col.markUndo(new UndoRepositionRescheduleResetCards(mType, deepCopyCardArray(collectionTask, cards)));
             } catch (CancellationException ce) {
                 Timber.i(ce, "Cancelled while handling type %s, skipping undo", mType);
             }
             actualActualBackground(sched);
             // In all cases schedule a new card so Reviewer doesn't sit on the old one
             col.reset();
-            task.doProgress(new TaskData(sched.getCard(), 0));
+            collectionTask.doProgress(new TaskData(sched.getCard(), 0));
             return null;
         }
 
         protected abstract void actualActualBackground(AbstractSched sched);
 
-        private Card[] deepCopyCardArray(CollectionTask task, Card[] originals) throws CancellationException {
+        private Card[] deepCopyCardArray(CollectionTask<TaskData, ?> collectionTask, Card[] originals) throws CancellationException {
             Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
             Card[] copies = new Card[originals.length];
             for (int i = 0; i < originals.length; i++) {
-                if (task.isCancelled()) {
+                if (collectionTask.isCancelled()) {
                     Timber.i("Cancelled during deep copy, probably memory pressure?");
                     throw new CancellationException("Cancelled during deep copy");
                 }
@@ -797,8 +797,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private static class SearchCards implements Task {
-
+    private static class SearchCards implements Task<TaskData, TaskData> {
         private final String mQuery;
         private final boolean mOrder;
         private final int mNumCardsToRender;
@@ -814,7 +813,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundSearchCards");
             if (collectionTask.isCancelled()) {
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
@@ -837,7 +836,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
                 searchResult.get(i).load(false, mColumn1Index, mColumn2Index);
             }
-            // Finish off the task
+            // Finish off the collectionTask
             if (collectionTask.isCancelled()) {
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
                 return null;
@@ -1074,8 +1073,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        public TaskData actualBackground(CollectionTask task, Card[] cards) {
-            Collection col = task.getCol();
+        public TaskData actualBackground(CollectionTask<TaskData, ?> collectionTask, Card[] cards) {
+            Collection col = collectionTask.getCol();
             int flag = mData;
             col.setUserFlag(flag, getCardIds());
             for (Card c : cards) {
@@ -1564,7 +1563,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private static abstract class ListenerWithProgressBar extends TaskListenerWithContext<CardBrowser>{
+    private static abstract class ListenerWithProgressBar extends TaskListenerWithContext<CardBrowser, TaskData, TaskData>{
         public ListenerWithProgressBar(CardBrowser browser) {
             super(browser);
         }
@@ -1682,7 +1681,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+        public TaskData actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
             Collection col = task.getCol();
 
             Timber.i("Changing %d cards to deck: '%d'", cards.length, mNewDid);
@@ -1866,7 +1865,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             super(cardIds);
         }
 
-        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+        public TaskData actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
             Collection col = task.getCol();
             AbstractSched sched = col.getSched();
             // collect undo information
@@ -2003,7 +2002,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+        public TaskData actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
             Collection col = task.getCol();
             Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
             // collect undo information
@@ -2056,7 +2055,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+        public TaskData actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
             Collection col = task.getCol();
             AbstractSched sched = col.getSched();
             // list of all ids to pass to remNotes method.
@@ -2223,7 +2222,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         RenderQA renderQA = new RenderQA(this, cards, startPos, n, column1Index, column2Index);
         CollectionTask.launchCollectionTask(renderQA, renderQA);
     }
-    private static class RenderQA extends TaskAndListenerWithContext<CardBrowser> {
+    private static class RenderQA extends TaskAndListenerWithContext<CardBrowser, TaskData, TaskData> {
 
         private final List<CardCache> mCards;
         private final int mStartPos;
@@ -2240,7 +2239,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mColumn2Index = column2Index;
         }
 
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             //TODO: Convert this to accept the following to make thread-safe:
             //(Range<Position>, Function<Position, BrowserCard>)
             Timber.d("doInBackgroundRenderBrowserQA");
@@ -2337,7 +2336,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private static class CheckSelectedCards extends ListenerWithProgressBar implements Task {
+    private static class CheckSelectedCards extends ListenerWithProgressBar implements Task<TaskData, TaskData> {
         private final Set<CardCache> mCheckedCardPositions;
 
         public CheckSelectedCards(CardBrowser browser, Set<CardCache> checkedCardPositions) {
@@ -2345,7 +2344,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCheckedCardPositions = checkedCardPositions;
         }
 
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Collection col = collectionTask.getCol();
 
             boolean hasUnsuspended = false;

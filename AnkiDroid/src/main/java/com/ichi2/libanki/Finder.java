@@ -84,7 +84,7 @@ public class Finder {
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order, CollectionTask task) {
+    public List<Long> findCards(String query, boolean _order, CollectionTask<?, ?> task) {
         return _findCards(query, _order, task);
     }
 
@@ -95,7 +95,7 @@ public class Finder {
     }
 
     @CheckResult
-    private List<Long> _findCards(String query, Object _order, CollectionTask task) {
+    private List<Long> _findCards(String query, Object _order, CollectionTask<?, ?> task) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;

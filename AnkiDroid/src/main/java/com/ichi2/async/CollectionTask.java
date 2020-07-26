@@ -66,7 +66,7 @@ import static com.ichi2.libanki.Undoable.*;
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
  */
-public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> {
+public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Progress, Result> {
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
@@ -94,7 +94,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * @param type of the task to start
      * @return the newly created task
      */
-    public static CollectionTask launchCollectionTask(Task type) {
+    public static <Progress, Result> CollectionTask<Progress, Result> launchCollectionTask(Task<Progress, Result> type) {
         return launchCollectionTask(null, type);
     }
 
@@ -109,23 +109,23 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    public static CollectionTask launchCollectionTask(@Nullable TaskListener listener, Task type) {
+    public static <Progress, Result> CollectionTask<Progress, Result> launchCollectionTask(@Nullable TaskListener<Progress, Result> listener, Task<Progress, Result> type) {
         // Start new task
-        CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
+        CollectionTask<Progress, Result> newTask = new CollectionTask<Progress, Result>(type, listener, sLatestInstance);
         newTask.execute();
         return newTask;
     }
 
 
     /**
-     * Block the current thread until the currently running CollectionTask instance (if any) has finished.
+     * Block the current thread until the currently running CollectionTask<Progress, Result> instance (if any) has finished.
      */
     public static void waitToFinish() {
         waitToFinish(null);
     }
 
     /**
-     * Block the current thread until the currently running CollectionTask instance (if any) has finished.
+     * Block the current thread until the currently running CollectionTask<Progress, Result> instance (if any) has finished.
      * @param timeout timeout in seconds
      * @return whether or not the previous task was successful or not
      */
@@ -219,12 +219,12 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    private final Task mType;
-    private final TaskListener mListener;
+    private final Task<Progress, Result> mType;
+    private final TaskListener<Progress, Result> mListener;
     private CollectionTask mPreviousTask;
 
 
-    private CollectionTask(Task type, TaskListener listener, CollectionTask previousTask) {
+    private CollectionTask(Task<Progress, Result> type, TaskListener<Progress, Result> listener, CollectionTask previousTask) {
         mType = type;
         mListener = listener;
         mPreviousTask = previousTask;
@@ -232,7 +232,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
     @Override
-    protected TaskData doInBackground(TaskData... params) {
+    protected Result doInBackground(TaskData... params) {
         try {
             return actualDoInBackground();
         } finally {
@@ -241,7 +241,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
     // This method and those that are called here are executed in a new thread
-    protected TaskData actualDoInBackground() {
+    protected Result actualDoInBackground() {
         super.doInBackground();
         // Wait for previous thread (if any) to finish before continuing
         if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
@@ -267,7 +267,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         // Skip the task if the collection cannot be opened
         if (!(mType instanceof DeckPicker.RepairCollection) && CollectionHelper.getInstance().getColSafe(mContext) == null) {
-            Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", mType);
+            Timber.e("CollectionTask %s as Collection could not be opened", mType);
             return null;
         }
         // Actually execute the task now that we are at the front of the queue.
@@ -287,7 +287,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     /** Delegates to the {@link TaskListener} for this task. */
     @Override
-    protected void onProgressUpdate(TaskData... values) {
+    protected void onProgressUpdate(Progress... values) {
         super.onProgressUpdate(values);
         if (mListener != null) {
             mListener.onProgressUpdate(values[0]);
@@ -297,7 +297,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     /** Delegates to the {@link TaskListener} for this task. */
     @Override
-    protected void onPostExecute(TaskData result) {
+    protected void onPostExecute(Result result) {
         super.onPostExecute(result);
         if (mListener != null) {
             mListener.onPostExecute(result);
@@ -316,7 +316,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
 
-    public static class UpdateNote implements Task {
+    public static class UpdateNote implements Task<TaskData, TaskData> {
         private final Card mEditCard;
         private final boolean mFromReviewer;
 
@@ -328,7 +328,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
         @Override
-        public TaskData background(CollectionTask task) {
+        public TaskData background(CollectionTask<TaskData, ?> task) {
             Timber.d("doInBackgroundUpdateNote");
             // Save the note
             Collection col = task.getCol();
@@ -389,7 +389,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    public abstract static class DismissMulti implements Task {
+    public abstract static class DismissMulti implements Task<TaskData, TaskData> {
         private final long[] mCardIds;
 
         public DismissMulti(long[] cardIds) {
@@ -400,9 +400,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             return mCardIds;
         }
 
-        public abstract TaskData actualBackground(CollectionTask task, Card[] cards);
+        public abstract TaskData actualBackground(CollectionTask<TaskData, ?> task, Card[] cards);
 
-        public TaskData background(CollectionTask task) {
+        public TaskData background(CollectionTask<TaskData, ?> task) {
             Collection col = task.getCol();
             AbstractSched sched = col.getSched();
             // query cards
@@ -435,7 +435,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    public static final Task sRebuildCram = (collectionTask) -> {
+    public static final Task<TaskData, TaskData> sRebuildCram = (collectionTask) -> {
         Timber.d("doInBackgroundRebuildCram");
         Collection col = collectionTask.getCol();
         col.getSched().rebuildDyn(col.getDecks().selected());
@@ -443,26 +443,27 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     };
 
 
-    public static final class EmptyCram implements Task {
+    public static final class EmptyCram implements Task<TaskData, TaskData> {
         @Override
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundEmptyCram");
             Collection col = collectionTask.getCol();
             col.getSched().emptyDyn(col.getDecks().selected());
             return StudyOptionsFragment.updateValuesFromDeck(collectionTask, true);
         }
-    };
+    }
+
 
 
     /**
      * Helper class for allowing inner function to publish progress of an AsyncTask.
      */
-    public static class ProgressCallback {
+    public static class ProgressCallback<Progress> {
         private Resources res;
-        private CollectionTask task;
+        private CollectionTask<Progress, ?> task;
 
 
-        public ProgressCallback(CollectionTask task, Resources res) {
+        public ProgressCallback(CollectionTask<Progress, ?> task, Resources res) {
             this.res = res;
             if (res != null) {
                 this.task = task;
@@ -477,7 +478,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public void publishProgress(TaskData value) {
+        public void publishProgress(Progress value) {
             if (task != null) {
                 task.doProgress(value);
             }
@@ -485,7 +486,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    public void doProgress(TaskData value) {
+    public void doProgress(Progress value) {
         publishProgress(value);
     }
 }

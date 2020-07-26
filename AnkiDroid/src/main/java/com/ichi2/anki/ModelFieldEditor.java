@@ -167,14 +167,14 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     // CONTEXT MENU DIALOGUES
     // ----------------------------------------------------------------------------
 
-    private static class AddFieldTask implements Task {
+    private static class AddFieldTask implements Task<TaskData, TaskData> {
         private final String mFieldName;
         private final Model mModel;
         public AddFieldTask(Model model, String fieldName) {
             this.mFieldName = fieldName;
             this.mModel = model;
         }
-        public TaskData background(CollectionTask collectionTask)  {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask)  {
             Timber.d("doInBackgroundRepositionField");
 
             Collection col = collectionTask.getCol();
@@ -268,7 +268,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         }
     }
 
-    private static class DeleteFieldTask implements Task {
+    private static class DeleteFieldTask implements Task<TaskData, TaskData> {
         private final Model mModel;
         private final JSONObject mField;
         public DeleteFieldTask(Model mModel, JSONObject mField) {
@@ -276,7 +276,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             this.mField = mField;
         }
 
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackGroundDeleteField");
 
 
@@ -347,7 +347,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 .show();
     }
 
-    private static class RepositionFieldDialogTask implements Task {
+    private static class RepositionFieldDialogTask implements Task<TaskData, TaskData> {
         private final Model mModel;
         private final JSONObject mField;
         private final int mIndex;
@@ -358,7 +358,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             this.mIndex = mIndex;
         }
 
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundRepositionField");
             Collection col = collectionTask.getCol();
             try {
@@ -470,14 +470,14 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         fullRefreshList();
     }
 
-    private static class SortByFieldTask implements Task {
+    private static class SortByFieldTask implements Task<TaskData, TaskData> {
         private final Model mModel;
         private final int mIdx;
         public SortByFieldTask(Model model, int idx) {
             this.mModel = model;
             this.mIdx = idx;
         }
-        public TaskData background(CollectionTask collectionTask)  {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask)  {
             try {
                 Timber.d("doInBackgroundChangeSortField");
                 Collection col = collectionTask.getCol();
@@ -564,7 +564,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     private changeHandler changeFieldHandler() {
         return new changeHandler(this);
     }
-    private static class changeHandler extends TaskListenerWithContext<ModelFieldEditor> {
+    private static class changeHandler extends TaskListenerWithContext<ModelFieldEditor, TaskData, TaskData> {
         public changeHandler(ModelFieldEditor modelFieldEditor) {
             super(modelFieldEditor);
         }

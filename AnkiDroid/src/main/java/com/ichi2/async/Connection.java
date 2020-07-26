@@ -519,11 +519,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
-    public interface TaskListener {
+    public interface TaskListener<Progress, Result> {
         void onPreExecute();
 
 
-        void onProgressUpdate(Object... values);
+        void onProgressUpdate(Progress... values);
 
 
         void onPostExecute(Payload data);
@@ -532,7 +532,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         void onDisconnected();
     }
 
-    public interface CancellableTaskListener extends TaskListener {
+    public interface CancellableTaskListener<Progress, Result> extends TaskListener<Progress, Result> {
         void onCancelled();
     }
 

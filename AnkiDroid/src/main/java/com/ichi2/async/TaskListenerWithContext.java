@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 /** Similar to task listener, but if the context disappear, no action are executed.
  * We ensure that the context can't disappear during the execution of the methods. */
-public abstract class TaskListenerWithContext<CTX> extends TaskListener {
+public abstract class TaskListenerWithContext<CTX, Progress, Result> extends TaskListener<Progress, Result> {
     private WeakReference<CTX> mContext;
     protected TaskListenerWithContext(CTX context) {
         mContext = new WeakReference<>(context);
@@ -21,7 +21,7 @@ public abstract class TaskListenerWithContext<CTX> extends TaskListener {
     };
 
 
-    final public void onProgressUpdate(TaskData value) {
+    final public void onProgressUpdate(Progress value) {
         CTX context = mContext.get();
         if (context != null) {
             actualOnProgressUpdate(context, value);
@@ -35,7 +35,7 @@ public abstract class TaskListenerWithContext<CTX> extends TaskListener {
      * The semantics of the update data depends on the task itself.
      * Assumes context exists.
      */
-    public void actualOnProgressUpdate(@NonNull CTX context, TaskData value) {
+    public void actualOnProgressUpdate(@NonNull CTX context, Progress value) {
         // most implementations do nothing with this, provide them a default implementation
     }
 
@@ -44,7 +44,7 @@ public abstract class TaskListenerWithContext<CTX> extends TaskListener {
     public abstract void actualOnPreExecute(@NonNull CTX context);
 
 
-    final public void onPostExecute(TaskData result) {
+    final public void onPostExecute(Result result) {
         CTX context = mContext.get();
         if (context != null) {
             actualOnPostExecute(context, result);
@@ -57,7 +57,7 @@ public abstract class TaskListenerWithContext<CTX> extends TaskListener {
      * <p>
      * The semantics of the result depends on the task itself.
      */
-    public abstract void actualOnPostExecute(@NonNull CTX context, TaskData result);
+    public abstract void actualOnPostExecute(@NonNull CTX context, Result result);
 
 
     public void onCancelled() {

@@ -562,7 +562,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     // Todo: make static when listener can be static
-    protected abstract class DismissCard extends NextCardHandler implements Task {
+    protected abstract class DismissCard extends NextCardHandler implements Task<TaskData, TaskData> {
         /* superclass is sufficient for listener*/
 
         private final Collection.DismissType mType;
@@ -577,7 +577,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         @Override
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             Note note = getCard().note();
@@ -600,15 +600,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return new TaskData(true);
         }
 
-        protected abstract void actualBackground(CollectionTask task);
+        protected abstract void actualBackground(CollectionTask<TaskData, ?> task);
 
-        public CollectionTask launch() {
+        public CollectionTask<TaskData, TaskData> launch() {
             return CollectionTask.launchCollectionTask(this, this);
         }
     }
 
 
-    private final TaskListener mUpdateCardHandler = new TaskListener() {
+    private final TaskListener<TaskData, TaskData> mUpdateCardHandler = new TaskListener<TaskData, TaskData>() {
         private boolean mNoMoreCards;
 
 
@@ -672,7 +672,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    abstract class NextCardHandler extends TaskListener {
+    abstract class NextCardHandler extends TaskListener<TaskData, TaskData> {
         private boolean mNoMoreCards;
 
 
@@ -748,7 +748,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected class AnswerCard extends NextCardHandler implements Task {
+    protected class AnswerCard extends NextCardHandler implements Task<TaskData, TaskData> {
         private final Card mOldCard;
         @Consts.BUTTON_TYPE private final int mEase;
         private final boolean mQuick;
@@ -763,7 +763,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mEase = ease;
         }
 
-        public TaskData background(CollectionTask collectionTask) {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             Card newCard = null;
@@ -800,7 +800,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             blockControls(mQuick);
         }
 
-        public CollectionTask launch() {
+        public CollectionTask<TaskData, TaskData> launch() {
             return CollectionTask.launchCollectionTask(this, this);
         }
     }
@@ -3255,7 +3255,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
 
-        protected void actualBackground(CollectionTask collectionTask) {
+        protected void actualBackground(CollectionTask<TaskData, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             Note note = getCard().note();
@@ -3270,7 +3270,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
 
-        protected void actualBackground(CollectionTask collectionTask) {
+        protected void actualBackground(CollectionTask<TaskData, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             // collect undo information
             col.markUndo(revertToProvidedState(BURY_CARD, getCard()));
@@ -3287,7 +3287,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
 
-        protected void actualBackground(CollectionTask collectionTask) {
+        protected void actualBackground(CollectionTask<TaskData, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             col.markUndo(revertToProvidedState(SUSPEND_CARD, getCard()));
             AbstractSched sched = col.getSched();
@@ -3306,7 +3306,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
 
-        protected void actualBackground(CollectionTask task) {
+        protected void actualBackground(CollectionTask<TaskData, ?> task) {
             Collection col = task.getCol();
             col.markUndo(revertToProvidedState(SUSPEND_NOTE, getCard()));
             AbstractSched sched = col.getSched();
@@ -3334,7 +3334,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
 
-        protected void actualBackground(CollectionTask task) {
+        protected void actualBackground(CollectionTask<TaskData, ?> task) {
             Collection col = task.getCol();
             col.markUndo(new UndoDeleteNote(mNote, mAllCs, mCid));
             Note note = getCard().note();

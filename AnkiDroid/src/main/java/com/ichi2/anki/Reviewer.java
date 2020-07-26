@@ -85,13 +85,13 @@ public class Reviewer extends AbstractFlashcardViewer {
     private ActionButtons mActionButtons = new ActionButtons(this);
 
 
-    private TaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
+    private TaskListener<TaskData, TaskData> mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reschedule_cards_dialog_acknowledge;
         }
     };
 
-    private TaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
+    private TaskListener<TaskData, TaskData> mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reset_cards_dialog_acknowledge;
         }

@@ -59,8 +59,8 @@ public abstract class Undoable {
 
 
 
-    public static class Task implements com.ichi2.async.Task {
-        public TaskData background(CollectionTask collectionTask) {
+    public static class Task implements com.ichi2.async.Task<TaskData, TaskData> {
+        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             try {

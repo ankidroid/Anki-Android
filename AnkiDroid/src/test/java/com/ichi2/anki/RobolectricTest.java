@@ -285,9 +285,9 @@ public class RobolectricTest {
     }
 
 
-    protected synchronized void waitForTask(Task taskType, int timeoutMs) throws InterruptedException {
+    protected synchronized <Progress, Result> void  waitForTask(Task<Progress, Result> taskType,  int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
-        TaskListener listener = new TaskListener() {
+        TaskListener<Progress, Result> listener = new TaskListener<Progress, Result>() {
             @Override
             public void onPreExecute() {
 
@@ -295,7 +295,7 @@ public class RobolectricTest {
 
 
             @Override
-            public void onPostExecute(TaskData result) {
+            public void onPostExecute(Result result) {
                 completed[0] = true;
                 synchronized (RobolectricTest.this) {
                     RobolectricTest.this.notify();

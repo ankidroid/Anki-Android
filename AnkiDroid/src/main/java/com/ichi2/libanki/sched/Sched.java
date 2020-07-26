@@ -206,7 +206,7 @@ public class Sched extends SchedV2 {
      * Returns [deckname, did, rev, lrn, new]
      */
     @Override
-    public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask) {
+    public List<DeckDueTreeNode> deckDueList(CollectionTask<?, ?> collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         ArrayList<Deck> decks = mCol.getDecks().allSorted();
