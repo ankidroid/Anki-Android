@@ -369,7 +369,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    protected abstract static class RescheduleRepositionReset extends CollectionTask.DismissMulti {
+    protected abstract static class RescheduleRepositionReset extends CollectionTask.DismissMulti<TaskData> {
         private final Collection.DismissType mType;
 
         public RescheduleRepositionReset(long[] cardDids, Collection.DismissType type) {
@@ -1065,7 +1065,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private static class FlagCardHandler extends SuspendCardHandler{public FlagCardHandler(CardBrowser browser) {super(browser);}};
 
-    public static class Flag extends CollectionTask.DismissMulti {
+    public static class Flag extends CollectionTask.DismissMulti<TaskData> {
         public int mData;
         public Flag(long[] cardIds, int data) {
             super(cardIds);
@@ -1673,7 +1673,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    public static class ChangeDeckMulti extends CollectionTask.DismissMulti {
+    public static class ChangeDeckMulti extends CollectionTask.DismissMulti<TaskData> {
         private long mNewDid;
         public ChangeDeckMulti(long[] cardIds, long newDid) {
             super(cardIds);
@@ -1860,7 +1860,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    public static class SuspendCardMulti extends CollectionTask.DismissMulti {
+    public static class SuspendCardMulti extends CollectionTask.DismissMulti<TaskData> {
         public SuspendCardMulti(long[] cardIds) {
             super(cardIds);
         }
@@ -1996,7 +1996,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     };
 
 
-    public static class MarkNoteMulti extends CollectionTask.DismissMulti {
+    public static class MarkNoteMulti extends CollectionTask.DismissMulti<TaskData> {
         public MarkNoteMulti(long[] cardIds) {
             super(cardIds);
         }
@@ -2049,7 +2049,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    public static class DeleteNoteMulti extends CollectionTask.DismissMulti {
+    public static class DeleteNoteMulti extends CollectionTask.DismissMulti<TaskData> {
         public DeleteNoteMulti(long[] cardIds) {
             super(cardIds);
         }

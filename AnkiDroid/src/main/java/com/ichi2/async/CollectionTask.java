@@ -389,7 +389,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Pr
     }
 
 
-    public abstract static class DismissMulti implements Task<TaskData, TaskData> {
+    public abstract static class DismissMulti<Progress> implements Task<Progress, TaskData> {
         private final long[] mCardIds;
 
         public DismissMulti(long[] cardIds) {
@@ -400,9 +400,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Pr
             return mCardIds;
         }
 
-        public abstract TaskData actualBackground(CollectionTask<TaskData, ?> task, Card[] cards);
+        public abstract TaskData actualBackground(CollectionTask<Progress, ?> task, Card[] cards);
 
-        public TaskData background(CollectionTask<TaskData, ?> task) {
+        public TaskData background(CollectionTask<Progress, ?> task) {
             Collection col = task.getCol();
             AbstractSched sched = col.getSched();
             // query cards
