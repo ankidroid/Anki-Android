@@ -147,6 +147,18 @@ In full screen, a button can be added to show side navigation drawer.
 <button onclick="ankiShowNavDrawer()">Show Navigation Drawer</button>
 ```
 
+## Get show / hide status of topbar
+### Name
+```AnkiDroidJS.ankiIsTopbarShown()```
+### Info
+It can be used to show / hide custom topbar design. See #6747 for more.
+### Usage
+```javascript
+<script>
+console.log(AnkiDroidJS.ankiIsTopbarShown());
+</script>
+```
+
 
 ## Available information about current cards in WebView 
 Add functions to ```Front / Back side``` of card to get info. 
