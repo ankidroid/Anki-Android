@@ -296,11 +296,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             return null;
         }
         // Actually execute the task now that we are at the front of the queue.
-        switch (mType) {
-
-        default:
-            return doInBackgroundCode(param);
-        }
+        return doInBackgroundCode(param);
     }
 
 
