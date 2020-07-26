@@ -2881,15 +2881,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         new HandleEmptyCard(this).launch();
     }
 
-    private static class HandleEmptyCard extends TaskAndListenerWithContext<DeckPicker, TaskData, TaskData> {
+    private static class HandleEmptyCard extends TaskAndListenerWithContext<DeckPicker, TaskData, List<Long>> {
         public HandleEmptyCard(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public List<Long> background(CollectionTask<TaskData, ?> collectionTask) {
             Collection col = collectionTask.getCol();
-            List<Long> cids = col.emptyCids();
-            return new TaskData(new Object[] {cids});
+            return  col.emptyCids();
         }
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
@@ -2898,8 +2897,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
-            final List<Long> cids = (List<Long>) result.getObjArray()[0];
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, List<Long> cids) {
             if (cids.size() == 0) {
                 deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.empty_cards_none));
             } else {
