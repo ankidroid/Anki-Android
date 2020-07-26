@@ -155,7 +155,7 @@
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
     <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
+    <string name="time_quantity_hours">%d g</string>
     <string name="time_quantity_days">%d dni</string>
     <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f mc</string>

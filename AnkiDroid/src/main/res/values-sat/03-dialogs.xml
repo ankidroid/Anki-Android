@@ -131,7 +131,7 @@
     <string name="dialog_positive_restore">ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
     <string name="dialog_positive_set">ᱥᱟᱡᱟᱣ ᱢᱮ</string>
     <string name="lookup_button_content">ᱪᱮᱛᱟᱱ ᱧᱮᱞ</string>
-    <string name="dialog_collection_path_not_dir">ᱦᱚᱨ ᱨᱮ ᱢᱮᱱᱟᱜ ᱩᱫᱩᱫᱩᱜ ᱵᱟᱭ ᱴᱦᱤᱠ ᱟᱟ</string>
+    <string name="dialog_collection_path_not_dir">ᱦᱚᱨ ᱨᱮ ᱢᱮᱱᱟᱜ ᱩᱫᱩᱫᱩᱜ ᱵᱟᱭ ᱴᱷᱤᱠ ᱟᱟ</string>
     <!-- Media checking -->
     <string name="check_media_title">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ ?</string>
     <string name="check_media_warning">ᱢᱟᱨᱟᱝ ᱢᱮᱰᱤᱭᱟ ᱴᱩᱢᱟᱹᱞ ᱫᱚ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤᱟᱭ</string>
@@ -199,4 +199,9 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱰᱤᱜᱟᱹᱣ</string>
     <string name="boot_service_too_many_notifications">ᱟᱹᱰᱤᱜᱟᱱ ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱾ ᱛᱤᱱᱟᱹᱝᱜᱟᱱ ᱡᱤᱱᱥ ᱵᱟᱭ ᱫᱮᱠᱷᱟᱣᱟ</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">An automatic sync may be triggered in %d second</item>
+        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+    </plurals>
 </resources>

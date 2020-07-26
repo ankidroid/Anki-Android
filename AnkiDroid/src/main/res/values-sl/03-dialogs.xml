@@ -211,4 +211,11 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">An automatic sync may be triggered in %d second</item>
+        <item quantity="two">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+    </plurals>
 </resources>

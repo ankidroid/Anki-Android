@@ -249,7 +249,7 @@
     <string name="reminder_title">فراموش نکنید که امروز مطالعه کنید!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d کارت برای مرور در %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="other">%2$d کارت برای مرور در %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">اشتراک گذاری فایل apkg با خطا مواجه شد</string>

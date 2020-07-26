@@ -242,7 +242,7 @@
     <string name="decks_rename_exists">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱢᱟᱰᱟᱝ ᱠᱷᱚᱵ ᱜᱣ ᱢᱮᱱᱟᱜᱼᱟ</string>
     <string name="decks_rename_filtered_nosubdecks">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱨᱮ ᱥᱚᱵᱰᱮᱠ ᱵᱟᱭ ᱛᱟᱦᱮᱸ ᱫᱟᱲᱮᱟᱜᱼᱟ</string>
     <string name="filtered_deck_name">ᱯᱷᱤᱞᱴᱚᱨᱟᱠᱟᱱ ᱰᱮᱠ</string>
-    <string name="reminder_title">ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱚᱢ ᱦᱤᱲᱤᱧᱟ ᱛᱮᱦᱮᱧ!</string>
+    <string name="reminder_title">ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱚᱢ ᱦᱤᱲᱤᱧᱟ ᱛᱮᱦᱮᱸᱧ!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d ᱠᱟᱰ %1$s ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱧᱮᱞ</item>
         <item quantity="other">%2$d ᱠᱟᱰ %1$s ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱧᱮᱞ</item>

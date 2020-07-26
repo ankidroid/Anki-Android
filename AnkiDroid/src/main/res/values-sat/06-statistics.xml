@@ -54,7 +54,7 @@
     <string name="stats_cumulative_time_hours">ᱢᱮᱥᱟᱦᱟᱜ ᱴᱟᱲᱟᱝ</string>
     <string name="stats_cumulative">ᱢᱮᱥᱟᱦᱟᱜ</string>
     <string name="stats_cumulative_percentage">ᱢᱮᱥᱟᱦᱟᱜ ᱥᱟᱭᱟᱠ</string>
-    <string formatted="false" name="stats_cumulative_correct_percentage">ᱢᱮᱥᱟᱦᱟᱜ ᱴᱦᱤᱠ %</string>
+    <string formatted="false" name="stats_cumulative_correct_percentage">ᱢᱮᱥᱟᱦᱟᱜ ᱴᱷᱤᱠ %</string>
     <string name="stats_answers">ᱛᱮᱞᱟ</string>
     <string name="stats_minutes">ᱴᱤᱯᱤᱡ</string>
     <string name="stats_hours">ᱴᱟᱲᱟᱝ</string>
@@ -92,9 +92,9 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; ᱪᱟᱸᱫᱚ</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; ᱫᱤᱱ</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; ᱴᱟᱲᱟᱝ</string>
-    <string name="stats_overview_answer_buttons_learn">ᱪᱮᱫᱚᱜ: &lt;b&gt;%1$.2f%%&lt;/b&gt; ᱴᱦᱤᱠ (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_young">ᱡᱚᱣᱟᱱ: &lt;b&gt;%1$.2f%%&lt;/b&gt; ᱴᱦᱤᱠ (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_mature">ᱰᱟᱹᱝᱜᱩᱟᱹ: &lt;b&gt;%1$.2f%%&lt;/b&gt; ᱴᱦᱤᱠ (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_learn">ᱪᱮᱫᱚᱜ: &lt;b&gt;%1$.2f%%&lt;/b&gt; ᱴᱷᱤᱠ (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">ᱡᱚᱣᱟᱱ: &lt;b&gt;%1$.2f%%&lt;/b&gt; ᱴᱷᱤᱠ (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">ᱰᱟᱹᱝᱜᱩᱟᱹ: &lt;b&gt;%1$.2f%%&lt;/b&gt; ᱴᱷᱤᱠ (%2$d of %3$d)</string>
     <string name="stats_overview_card_types_total_cards">ᱢᱩᱴ ᱠᱟᱰ: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_overview_card_types_total_notes">ᱢᱩᱴ ᱠᱟᱰ: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_overview_card_types_lowest_ease">ᱡᱚᱛᱚ ᱠᱷᱚᱱ ᱠᱚᱢ ᱥᱚᱦᱚᱡ: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
@@ -107,7 +107,7 @@
         <item>ᱦᱟᱴ</item>
         <item>ᱪᱟᱸᱫᱚ</item>
     </string-array>
-    <string name="stats_today">ᱛᱮᱦᱮᱧ</string>
+    <string name="stats_today">ᱛᱮᱦᱮᱸᱧ</string>
     <string name="stats_overview">ᱧᱮᱼᱧᱮᱞ</string>
     <string name="stats_forecast">ᱢᱟᱲᱝᱼᱠᱚᱛᱷᱚᱱ</string>
     <string name="stats_review_count">ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱦᱤᱥᱟᱹᱵ</string>

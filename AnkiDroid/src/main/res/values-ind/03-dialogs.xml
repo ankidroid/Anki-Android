@@ -193,4 +193,8 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Gagal menjadwalkan pengingat</string>
     <string name="boot_service_too_many_notifications">Terlalu banyak pengingat dijadwalkan. Sebagian tidak akan muncul</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+    </plurals>
 </resources>

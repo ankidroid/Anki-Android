@@ -199,4 +199,9 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Erinnerungen konnten nicht eingeplant werden</string>
     <string name="boot_service_too_many_notifications">Zu viele Erinnerungen eingeplant. Einige werden nicht erscheinen.</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">An automatic sync may be triggered in %d second</item>
+        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+    </plurals>
 </resources>

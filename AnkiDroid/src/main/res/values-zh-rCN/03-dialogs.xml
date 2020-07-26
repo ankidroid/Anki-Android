@@ -193,4 +193,8 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">计划提醒失败</string>
     <string name="boot_service_too_many_notifications">已计划的提醒太多。有些提醒将不会出现</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+    </plurals>
 </resources>

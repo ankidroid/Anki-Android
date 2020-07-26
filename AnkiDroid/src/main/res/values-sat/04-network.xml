@@ -88,7 +88,7 @@
     <string name="sync_no_changes_message">ᱵᱟᱭ ᱵᱚᱫᱚᱞ ᱠᱟᱱᱟ</string>
     <string name="sync_database_acknowledge">ᱴᱩᱢᱟᱹᱞ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="sync_log_error_specific">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ , ᱯᱨᱚᱠᱟᱨ: %1$s, ᱠᱷᱚᱵᱚᱨ: %2$s</string>
-    <string name="sync_corrupt_database">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱟᱹᱯᱩᱫ ᱮᱱᱟ ᱾ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱟᱲᱟᱹᱝ ᱨᱮ ᱴᱷᱤᱠ ᱢᱮ ᱾ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱴᱦᱤᱠ ᱞᱟᱹᱜᱤᱫ \n\nᱧᱮᱞᱢᱮ %s ᱾</string>
+    <string name="sync_corrupt_database">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱟᱹᱯᱩᱫ ᱮᱱᱟ ᱾ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱟᱲᱟᱹᱝ ᱨᱮ ᱴᱷᱤᱠ ᱢᱮ ᱾ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ \n\nᱧᱮᱞᱢᱮ %s ᱾</string>
     <string name="sync_too_busy">ᱥᱚᱨᱵᱦᱚᱨ ᱵᱤᱡᱤ ᱜᱮᱭᱟ ᱾  ᱛᱟᱭᱚᱢ ᱛᱮ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾</string>
     <string name="sync_remote_db_error">ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱟᱹᱯᱩᱫ ᱜᱮᱭᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱩᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
     <string name="sync_overwrite_error">ᱱᱤᱛᱚᱜᱽᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱨᱮᱫ ᱥᱟᱞᱟᱜ ᱛᱮ ᱵᱟᱝ ᱫᱩᱦᱲᱟ ᱚᱞ ᱲᱫᱟᱲᱮᱟᱜᱟ</string>
@@ -110,8 +110,8 @@
     <string name="sync_media_success">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱮᱱᱟ</string>
     <string name="sync_media_changes_count">%d ᱞᱟᱫᱮ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱰᱤᱭᱟ ᱵᱚᱫᱚᱞᱮᱱᱟ</string>
     <string name="sync_media_downloaded_count">%d ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱮᱟ</string>
-    <string name="sync_sanity_failed">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱯᱚᱨᱮ, ᱴᱩᱢᱟᱹᱞ ᱴᱦᱤᱠ ᱚᱵᱚᱥᱛᱷᱟ ᱨᱮ ᱵᱟᱱᱤᱜᱜᱽᱟ ᱾ ᱰᱤᱜᱟᱹᱣ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ, AnkiDroid ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱟᱭ ᱾ ᱚᱠᱟ ᱟᱦᱴᱟ ᱫᱦᱚ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱪᱚᱭᱟᱱ ᱢᱮ ᱾</string>
-    <string name="sync_media_sanity_failed">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱪᱟᱵᱟᱭᱱᱟ, ᱢᱮᱰᱤᱭᱟ ᱥᱚᱨᱵᱷᱚᱨ ᱥᱟᱞᱟᱜ ᱛᱟᱞᱢᱮᱞ ᱴᱦᱤᱠ ᱵᱟᱝᱟ ᱾ ᱤᱱᱟ ᱛᱟᱭᱚᱢ ᱵᱷᱩᱞ ᱴᱦᱤᱠ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱚᱜᱟ ᱾</string>
+    <string name="sync_sanity_failed">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱯᱚᱨᱮ, ᱴᱩᱢᱟᱹᱞ ᱴᱷᱤᱠ ᱚᱵᱚᱥᱛᱷᱟ ᱨᱮ ᱵᱟᱱᱤᱜᱜᱽᱟ ᱾ ᱰᱤᱜᱟᱹᱣ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ, AnkiDroid ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱟᱭ ᱾ ᱚᱠᱟ ᱟᱦᱴᱟ ᱫᱦᱚ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱪᱚᱭᱟᱱ ᱢᱮ ᱾</string>
+    <string name="sync_media_sanity_failed">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱪᱟᱵᱟᱭᱱᱟ, ᱢᱮᱰᱤᱭᱟ ᱥᱚᱨᱵᱷᱚᱨ ᱥᱟᱞᱟᱜ ᱛᱟᱞᱢᱮᱞ ᱴᱷᱤᱠ ᱵᱟᱝᱟ ᱾ ᱤᱱᱟ ᱛᱟᱭᱚᱢ ᱵᱷᱩᱞ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱚᱜᱟ ᱾</string>
     <string name="sync_media_db_error">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱦᱩᱲᱟᱜ ᱱᱤᱛᱚᱜᱟᱜ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱟᱹᱯᱩᱫ ᱜᱮᱭᱟ ᱾ ᱢᱮᱰᱩᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱫᱚᱨᱠᱟᱨᱚᱜ ᱠᱟᱱᱟ ᱾</string>
     <string name="sync_media_error">ᱢᱮᱰᱤᱭᱟ ᱥᱟᱠᱷᱤᱭᱟᱛ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ</string>
     <string name="sync_media_error_check">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱡᱚᱠᱷᱟᱜ ᱵᱷᱩᱞ ᱾ ᱢᱮᱰᱩᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱫᱚᱨᱠᱟᱨᱚᱜ ᱠᱟᱱᱟ ᱾</string>

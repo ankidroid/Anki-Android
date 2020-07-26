@@ -51,22 +51,22 @@
         <item>بازگردانی</item>
         <item>ويرايش يادداشت</item>
         <item>برچسب یادداشت</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>نشان کردن یادداشت</item>
+        <item>جستجوی عبارت</item>
+        <item>دفن کردن کارت</item>
+        <item>تعلیق کارت</item>
+        <item>حذف یادداشت</item>
+        <item>پخش رسانه</item>
+        <item>لغو یادگیری</item>
+        <item>دفن کردن یادداشت</item>
+        <item>تعلیق یادداشت</item>
+        <item>پرچم قرمز</item>
+        <item>پرچم نارنجی</item>
+        <item>پرچم سبز</item>
+        <item>پرچم آبی</item>
+        <item>حذف پرچم</item>
+        <item>بالا بردن صفحه</item>
+        <item>پایین بردن صفحه</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>تعلیق کارت</item>
