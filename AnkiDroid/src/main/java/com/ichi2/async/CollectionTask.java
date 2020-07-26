@@ -88,7 +88,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     public enum TASK_TYPE {
         ANSWER_CARD,
-        ADD_NOTE,
         UPDATE_NOTE,
         UNDO,
         DISMISS,
@@ -348,9 +347,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             case ANSWER_CARD:
                 return doInBackgroundAnswerCard(param);
 
-            case ADD_NOTE:
-                return doInBackgroundAddNote(param);
-
             case UPDATE_NOTE:
                 return doInBackgroundUpdateNote(param);
 
@@ -492,26 +488,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
-    private TaskData doInBackgroundAddNote(TaskData param) {
-        Timber.d("doInBackgroundAddNote");
-        Note note = param.getNote();
-        Collection col = getCol();
-        try {
-            DB db = col.getDb();
-            db.getDatabase().beginTransaction();
-            try {
-                doProgress(new TaskData(col.addNote(note)));
-                db.getDatabase().setTransactionSuccessful();
-            } finally {
-                db.getDatabase().endTransaction();
-            }
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote");
-            return new TaskData(false);
-        }
-        return new TaskData(true);
-    }
 
 
     private TaskData doInBackgroundUpdateNote(TaskData param) {

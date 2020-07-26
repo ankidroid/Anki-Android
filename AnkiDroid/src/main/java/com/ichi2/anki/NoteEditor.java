@@ -76,13 +76,13 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
-import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.TaskAndListenerWithContext;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Note.ClozeUtils;
@@ -112,7 +112,6 @@ import java.util.Map.Entry;
 
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
@@ -223,18 +222,38 @@ public class NoteEditor extends AnkiActivity {
     // restoring the Activity.
     private Bundle mSavedFields;
 
-    private SaveNoteHandler saveNoteHandler() {
-        return new SaveNoteHandler(this);
+    private SaveNote saveNote(Note note) {
+        return new SaveNote(this, note);
     }
-    private static class SaveNoteHandler extends TaskListenerWithContext<NoteEditor> {
+    private static class SaveNote extends TaskAndListenerWithContext<NoteEditor> {
         private boolean mCloseAfter = false;
         private Intent mIntent;
+        private final Note mNote;
 
-
-        private SaveNoteHandler(NoteEditor noteEditor) {
+        private SaveNote(NoteEditor noteEditor, Note note) {
             super(noteEditor);
+            mNote = note;
         }
 
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundAddNote");
+            Collection col = collectionTask.getCol();
+            try {
+                DB db = col.getDb();
+                db.getDatabase().beginTransaction();
+                try {
+                    collectionTask.doProgress(new TaskData(col.addNote(mNote)));
+                    db.getDatabase().setTransactionSuccessful();
+                } finally {
+                    db.getDatabase().endTransaction();
+                }
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote");
+                return new TaskData(false);
+            }
+            return new TaskData(true);
+        }
 
         @Override
         public void actualOnPreExecute(@NonNull NoteEditor noteEditor) {
@@ -822,7 +841,6 @@ public class NoteEditor extends AnkiActivity {
         return mAllModelIds != null;
     }
 
-
     @VisibleForTesting
     void saveNote() {
         final Resources res = getResources();
@@ -853,7 +871,7 @@ public class NoteEditor extends AnkiActivity {
             getCol().getModels().current().put("tags", tags);
             getCol().getModels().setChanged();
             mReloadRequired = true;
-            CollectionTask.launchCollectionTask(ADD_NOTE, saveNoteHandler(), new TaskData(mEditorNote));
+            saveNote(mEditorNote).launch();
         } else {
             // Check whether note type has been changed
             final Model newModel = getCurrentlySelectedModel();
