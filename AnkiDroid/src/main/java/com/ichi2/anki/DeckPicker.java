@@ -135,6 +135,7 @@ import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
+import com.ichi2.utils.Triple;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
@@ -302,14 +303,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    private static class ImportAdd extends TaskAndListenerWithContext<DeckPicker, String, TaskData> {
+    private static class ImportAdd extends TaskAndListenerWithContext<DeckPicker, String, Triple<Boolean, String, AnkiPackageImporter>> {
         private final String mPath;
         public ImportAdd(DeckPicker deckPicker, String path) {
             super(deckPicker);
             mPath = path;
         }
 
-        public TaskData background(CollectionTask<String, ?> collectionTask) {
+        public Triple<Boolean, String, AnkiPackageImporter> background(CollectionTask<String, ?> collectionTask) {
             Timber.d("doInBackgroundImportAdd");
             Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
             Collection col = collectionTask.getCol();
@@ -318,25 +319,25 @@ public class DeckPicker extends NavigationDrawerActivity implements
             try {
                 imp.run();
             } catch (ImportExportException e) {
-                return new TaskData(e.getMessage(), true);
+                return new Triple(true, e.getMessage(), null);
             }
-            return new TaskData(new Object[] {imp});
+            return new Triple(null, null, imp);
         };
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Triple<Boolean, String, AnkiPackageImporter> result) {
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
             // If boolean and string are both set, we are signalling an error message
             // instead of a successful result.
-            if (result.getBoolean() && result.getString() != null) {
-                Timber.w("Import: Add Failed: %s", result.getString());
-                deckPicker.showSimpleMessageDialog(result.getString());
+            if (result.first && result.second != null) {
+                Timber.w("Import: Add Failed: %s", result.second);
+                deckPicker.showSimpleMessageDialog(result.second);
             } else {
                 Timber.i("Import: Add succeeded");
-                AnkiPackageImporter imp = (AnkiPackageImporter) result.getObjArray()[0];
+                AnkiPackageImporter imp = result.third;
                 deckPicker.showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
                 deckPicker.updateDeckList();
             }
