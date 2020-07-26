@@ -96,7 +96,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         REPAIR_COLLECTION,
         LOAD_DECK_COUNTS,
         REBUILD_CRAM,
-        EMPTY_CRAM,
         SEARCH_CARDS,
         RENDER_BROWSER_QA,
         COUNT_MODELS,
@@ -345,9 +344,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case REBUILD_CRAM:
                 return doInBackgroundRebuildCram();
-
-            case EMPTY_CRAM:
-                return doInBackgroundEmptyCram();
 
             default:
                 return doInBackgroundCode(param);
@@ -961,12 +957,15 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    private TaskData doInBackgroundEmptyCram() {
-        Timber.d("doInBackgroundEmptyCram");
-        Collection col = getCol();
-        col.getSched().emptyDyn(col.getDecks().selected());
-        return StudyOptionsFragment.updateValuesFromDeck(this, true);
-    }
+    public static final class EmptyCram implements Task {
+        @Override
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundEmptyCram");
+            Collection col = collectionTask.getCol();
+            col.getSched().emptyDyn(col.getDecks().selected());
+            return StudyOptionsFragment.updateValuesFromDeck(collectionTask, true);
+        }
+    };
 
 
     public TaskData doInBackgroundCode(TaskData param) {
