@@ -266,7 +266,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         };
     }
 
-    private Collection getCol() {
+    public Collection getCol() {
         return CollectionHelper.getInstance().getCol(mContext);
     }
 
